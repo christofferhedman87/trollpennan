@@ -131,29 +131,33 @@ function Eld({ ankare }: { ankare: Ankare }) {
 }
 
 function Aura({ ankare }: { ankare: Ankare }) {
-  const mat = useRef<THREE.MeshBasicMaterial>(null);
-  const radie = Math.max(0.25, ankare.bredd * 0.8);
+  const mat = useRef<THREE.SpriteMaterial>(null);
+  const textur = useMemo(() => mjukPunkt(), []);
   const fram = framZ(ankare);
+  const bredd = Math.max(0.25, ankare.bredd);
+  const storlek = bredd * 1.5;
+  const mittY = ankare.hojd * 0.5;
+  const bakom = -fram * bredd * 0.55;
   useFrame((state) => {
     const m = mat.current;
     if (!m) return;
     const puls = 0.5 + 0.5 * Math.sin(state.clock.elapsedTime * 2.1);
-    m.opacity = 0.38 + puls * 0.32;
+    m.opacity = 0.25 + puls * 0.2;
   });
   return (
-    <mesh position={[0, ankare.hojd * 0.48, -fram * radie * 0.15]} renderOrder={-1}>
-      <sphereGeometry args={[radie, 18, 14]} />
-      <meshBasicMaterial
+    <sprite position={[0, mittY, bakom]} scale={[storlek, storlek, 1]} renderOrder={-1}>
+      <spriteMaterial
         ref={mat}
-        color="#FFE082"
+        map={textur}
+        color="#FFD56A"
         transparent
-        opacity={0.55}
+        opacity={0.35}
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        depthTest
+        blending={THREE.NormalBlending}
         toneMapped={false}
-        side={THREE.DoubleSide}
       />
-    </mesh>
+    </sprite>
   );
 }
 
