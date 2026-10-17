@@ -257,6 +257,26 @@ function byggKrona(farg: string) {
   return g;
 }
 
+/** #5E35B1 är trollkarlshatten. Lexikonet lagrar den som id "hatt" och färgen här. */
+function arTrollkarlshatt(farg: string | null) {
+  return (farg ?? "").toLowerCase() === "#5e35b1";
+}
+
+function byggHatt(farg: string | null) {
+  const mat = toonMat(farg ?? "#8D6E63");
+  const g = new THREE.Group();
+  g.name = "tillbehor-hatt";
+  // Cylindergeometrins höjd är 0,28 och konens 0,46. Y-positionen lägger bottnen i origo = huvudTopp.
+  if (arTrollkarlshatt(farg)) {
+    g.add(del(GEO.cyl, mat, 0, 0.02, 0, 0.95, 0.14, 0.95, 1.22));
+    g.add(del(GEO.kon, mat, 0, 0.04 + 0.55, 0, 0.85, 2.4, 0.85, 1.18));
+  } else {
+    g.add(del(GEO.cyl, mat, 0, 0.016, 0, 1.2, 0.12, 1.2, 1.22));
+    g.add(del(GEO.cyl, mat, 0, 0.15, 0, 0.62, 0.78, 0.62, 1.18));
+  }
+  return g;
+}
+
 function byggGlas(farg: string) {
   const mat = toonMat(farg);
   const g = new THREE.Group();
@@ -269,10 +289,11 @@ function byggGlas(farg: string) {
   return g;
 }
 
-/** Bara krona och glasögon. Andra id ger null. */
+/** Krona, glasögon och hatt. Andra id ger null. */
 export function byggTillbehor(t: TillbehorSpec, _a: Ankare): THREE.Group | null {
   if (t.id === "krona") return byggKrona(kronFarg(t.farg));
   if (t.id === "glasögon") return byggGlas(glasFarg(t.farg));
+  if (t.id === "hatt") return byggHatt(t.farg);
   return null;
 }
 
@@ -290,11 +311,15 @@ function skalaFor(id: string, a: Ankare, kropp: string) {
     const minSynlig = a.bredd * 0.34;
     return Math.max(minSynlig, Math.min(a.bredd * 1.35, a.hojd * 0.72)) * 0.8;
   }
+  if (id === "hatt") {
+    // Brättets diameter i modellrum är 1,2. Skalan gör brättet något bredare än huvudet.
+    return Math.max(0.34, Math.min(a.bredd * 1.05, a.hojd * 0.5));
+  }
   return 1;
 }
 
 function platsFor(id: string, a: Ankare) {
-  if (id === "krona") return a.huvudTopp;
+  if (id === "krona" || id === "hatt") return a.huvudTopp;
   return a.ansikte;
 }
 

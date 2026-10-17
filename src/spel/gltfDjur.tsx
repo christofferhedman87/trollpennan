@@ -187,7 +187,6 @@ const KRO_GEO = {
   box: new THREE.BoxGeometry(1, 1, 1),
 };
 const HALS_MAT = new THREE.MeshStandardMaterial({ color: "#E57373", metalness: 0, roughness: 0.8 });
-const HATT_MAT = new THREE.MeshStandardMaterial({ color: "#5C6BC0", metalness: 0, roughness: 0.7 });
 
 function HalsdukMesh() {
   const g = new THREE.Group();
@@ -235,10 +234,8 @@ function fastAnkare(rot: THREE.Object3D, spec: Sparad, s: number) {
   const huvud = hit.huvud;
   const kropp = hit.kropp;
   const hals = hit.hals;
-  const ankare = huvud ?? kropp ?? rot;
   faestTillbehor(rot, ankareFor(rot, spec.kropp, s), spec);
   const harHals = spec.tillbehor.some((t) => t.id === "halsduk");
-  const harHatt = spec.tillbehor.some((t) => t.id === "hatt" || t.id === "trollkarlshatt");
   const inv = 1 / Math.max(0.001, s);
   if (harHals) {
     const h = HalsdukMesh();
@@ -254,19 +251,6 @@ function fastAnkare(rot: THREE.Object3D, spec: Sparad, s: number) {
     } else {
       h.scale.setScalar(inv);
       (hals ?? kropp ?? rot).add(h);
-    }
-  }
-  if (harHatt) {
-    const hatt = new THREE.Mesh(KRO_GEO.cyl, HATT_MAT);
-    if ((spec.kropp === "drake" || spec.kropp === "häst") && huvud) {
-      const g = new THREE.Group();
-      hatt.scale.set(0.18, 0.28, 0.18);
-      g.add(hatt);
-      faestPaBen(huvud, rot, g, 0, 0.34, 0.04);
-    } else {
-      hatt.scale.set(0.18 * inv, 0.28 * inv, 0.18 * inv);
-      hatt.position.set(0, 0.16 * inv, 0);
-      ankare.add(hatt);
     }
   }
 }

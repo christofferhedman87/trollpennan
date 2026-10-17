@@ -5,8 +5,6 @@ export type DjurBygg = {
   farg: string;
   halsduk: boolean;
   krona: boolean;
-  hatt: boolean;
-  hattFarg: string;
   horn: boolean;
   monster: boolean;
   monsterFarg: string;
@@ -318,11 +316,6 @@ export function byggPack(b: DjurBygg): Pack {
     lagg(acc, "kon", guld, [-0.12, y + 0.08, k === "drake" ? 0.48 : 0.12], [0.05, 0.14, 0.05]);
     lagg(acc, "kon", guld, [0, y + 0.1, k === "drake" ? 0.48 : 0.12], [0.05, 0.16, 0.05]);
     lagg(acc, "kon", guld, [0.12, y + 0.08, k === "drake" ? 0.48 : 0.12], [0.05, 0.14, 0.05]);
-  }
-  if (b.hatt) {
-    const y = k === "drake" ? 1.22 : 1.12;
-    lagg(acc, "cyl", b.hattFarg, [0, y + 0.12, 0.1], [0.16, 0.22, 0.16]);
-    lagg(acc, "cyl", b.hattFarg, [0, y, 0.1], [0.28, 0.04, 0.28]);
   }
   if (b.horn && k !== "drake") {
     lagg(acc, "kon", guld, [0, 1.2, 0.16], [0.05, 0.28, 0.05]);
