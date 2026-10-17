@@ -280,7 +280,8 @@ function skalaFor(id: string, a: Ankare, kropp: string) {
   if (id === "krona") {
     const bas = Math.max(0.28, Math.min(a.bredd * 1.15, a.hojd * 0.55));
     // Ekorren får en krona nästan lika stor som huvudet. Kanin, groda och fisk behåller 1,6.
-    const faktor = kropp === "ekorre" ? 1.12 : 1.6;
+    // Drakens krona var större än huvudet: 1,6 * 0,7 sänker den med cirka 30 %.
+    const faktor = kropp === "ekorre" || kropp === "drake" ? 1.12 : 1.6;
     return bas * faktor;
   }
   if (id === "glasögon") {
