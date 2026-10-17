@@ -3,10 +3,7 @@ import * as THREE from "three";
 export type DjurBygg = {
   kropp: string;
   farg: string;
-  halsduk: boolean;
   krona: boolean;
-  hatt: boolean;
-  hattFarg: string;
   horn: boolean;
   monster: boolean;
   monsterFarg: string;
@@ -308,21 +305,12 @@ export function byggPack(b: DjurBygg): Pack {
     lagg(acc, "boll", f, [0.14, 0.12, 0.16], [0.08, 0.07, 0.09]);
   }
 
-  if (b.halsduk) {
-    lagg(acc, "box", "#E57373", [0, 0.62, 0.12], [0.42, 0.08, 0.16], [0.4, 0, 0]);
-    lagg(acc, "box", "#E57373", [0.08, 0.48, 0.16], [0.08, 0.18, 0.05]);
-  }
   if (b.krona) {
     const y = k === "groda" ? 0.72 : k === "drake" ? 1.28 : 1.16;
     lagg(acc, "cyl", guld, [0, y, k === "drake" ? 0.48 : 0.12], [0.22, 0.08, 0.2]);
     lagg(acc, "kon", guld, [-0.12, y + 0.08, k === "drake" ? 0.48 : 0.12], [0.05, 0.14, 0.05]);
     lagg(acc, "kon", guld, [0, y + 0.1, k === "drake" ? 0.48 : 0.12], [0.05, 0.16, 0.05]);
     lagg(acc, "kon", guld, [0.12, y + 0.08, k === "drake" ? 0.48 : 0.12], [0.05, 0.14, 0.05]);
-  }
-  if (b.hatt) {
-    const y = k === "drake" ? 1.22 : 1.12;
-    lagg(acc, "cyl", b.hattFarg, [0, y + 0.12, 0.1], [0.16, 0.22, 0.16]);
-    lagg(acc, "cyl", b.hattFarg, [0, y, 0.1], [0.28, 0.04, 0.28]);
   }
   if (b.horn && k !== "drake") {
     lagg(acc, "kon", guld, [0, 1.2, 0.16], [0.05, 0.28, 0.05]);

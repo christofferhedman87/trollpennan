@@ -1,0 +1,2 @@
+Halsduken på hund, kanin och fisk flyttades från 0,6·djup (bakom bålen) till skarven bakom huvudet, eftersom de Kenney-djuren har ansiktet på min.z; grisens generiska hals lämnades. Det är inte kontrollerat mot en renderad bild.
+Kattens rosett drogs in till 0,24·bredd minus 3 cm så den inte följer hela kroppens bbox, och groda och fisk fick 1,4× skalan. test:product, typecheck:pages och build:pages gick igenom; själva placeringen är inte sedd i vyn.
