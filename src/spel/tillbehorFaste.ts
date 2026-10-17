@@ -222,13 +222,30 @@ export function ankareFor(rot: THREE.Object3D, kropp: string, _s: number): Ankar
   const ansZ = fagel ? b.max.z + fram : kenney ? b.min.z : b.max.z;
   const munZ = kenney || fagel ? b.min.z : b.max.z;
   const ogonX = 0.16 * w;
+  // Ansiktet på hund, kanin och fisk är min.z. 0,6 · dz hamnar i bålen, bakom pälsen.
+  // Halsen är skarven strax bakom huvudet: synlig ring, inte en punkt inuti kroppen.
+  let halsY = b.min.y + 0.5 * h;
+  let halsZ = b.min.z + dz * 0.6;
+  if (kropp === "hund") {
+    // Hjässa 0,92·h vid 0,28·dz, ögon 0,78·h vid min.z. Halsen under skallen, bakom nosen.
+    halsY = b.min.y + 0.62 * h;
+    halsZ = b.min.z + dz * 0.36;
+  } else if (kropp === "kanin") {
+    // Öronen är taket; hjässan är spärrad till 0,72·h och 0,42·dz. Halsen under den.
+    halsY = b.min.y + 0.46 * h;
+    halsZ = b.min.z + dz * 0.46;
+  } else if (kropp === "fisk") {
+    // Huvudet tar främre ~0,26 av längden. Gälarna ligger där, inte vid 0,6 (kroppens mitt).
+    halsY = b.min.y + 0.5 * h;
+    halsZ = b.min.z + dz * 0.34;
+  }
   return {
     huvudTopp: new THREE.Vector3(cx, toppY, toppZ),
     ansikte: new THREE.Vector3(cx, ansY, ansZ),
     ogonL: new THREE.Vector3(cx - ogonX, ansY, ansZ),
     ogonR: new THREE.Vector3(cx + ogonX, ansY, ansZ),
     mun: new THREE.Vector3(cx, b.min.y + 0.5 * h, munZ),
-    hals: new THREE.Vector3(cx, b.min.y + 0.5 * h, b.min.z + (b.max.z - b.min.z) * 0.6),
+    hals: new THREE.Vector3(cx, halsY, halsZ),
     rygg: new THREE.Vector3(cx, b.min.y + 0.55 * h, b.min.z + 0.15 * (b.max.z - b.min.z)),
     bredd: Math.min(w, h * (kropp === "fågel" || kropp === "uggla" ? 0.55 : 0.9)),
     hojd: h,
