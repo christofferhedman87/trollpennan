@@ -358,7 +358,11 @@ function skalaFor(id: string, a: Ankare, kropp: string) {
     // Brättets diameter i modellrum är 1,2. Skalan gör brättet något bredare än huvudet.
     return Math.max(0.34, Math.min(a.bredd * 1.05, a.hojd * 0.5));
   }
-  if (id === "rosett") return Math.max(0.22, Math.min(a.bredd * 0.85, a.hojd * 0.4));
+  if (id === "rosett") {
+    const bas = Math.max(0.22, Math.min(a.bredd * 0.85, a.hojd * 0.4));
+    // Grodans och fiskens huvud är litet mot samma rosett som katten.
+    return kropp === "groda" || kropp === "fisk" ? bas * 1.4 : bas;
+  }
   if (id === "halsduk") {
     // Yttre diameter i modellrum är ungefär 0,22 * 2 * 1,35. Skalan gör ringen synlig på mobil.
     return Math.max(0.55, Math.min(a.bredd * 1.45, a.hojd * 0.7));
@@ -369,7 +373,7 @@ function skalaFor(id: string, a: Ankare, kropp: string) {
 const _plats = new THREE.Vector3();
 const _sida = new THREE.Vector3();
 
-function platsFor(id: string, a: Ankare, rot: THREE.Object3D) {
+function platsFor(id: string, a: Ankare, rot: THREE.Object3D, kropp: string) {
   if (id === "krona" || id === "hatt") return a.huvudTopp;
   if (id === "halsduk") return a.hals;
   if (id === "rosett") {
@@ -377,7 +381,11 @@ function platsFor(id: string, a: Ankare, rot: THREE.Object3D) {
     if (a.varld) {
       rot.getWorldQuaternion(_q);
       _sida.set(-1, 0, 0).applyQuaternion(_q);
-      _plats.copy(a.ansikte).addScaledVector(_sida, Math.max(0.06, a.bredd * 0.46));
+      // Kattens bbox är hela kroppen. 0,46·bredd lägger rosetten utanför huvudet.
+      // 0,24·bredd minus ett par centimeter sätter den i pälsen vid sidan.
+      const faktor = kropp === "katt" ? 0.24 : 0.46;
+      const ut = Math.max(0.04, a.bredd * faktor - (kropp === "katt" ? 0.03 : 0));
+      _plats.copy(a.ansikte).addScaledVector(_sida, ut);
       _plats.y += Math.max(0.02, a.hojd * 0.05);
       return _plats;
     }
@@ -416,7 +424,7 @@ export function faestTillbehor(
   for (const t of spec.tillbehor) {
     const obj = byggTillbehor(t, a);
     if (!obj) continue;
-    const pos = platsFor(t.id, a, rot);
+    const pos = platsFor(t.id, a, rot, spec.kropp);
     const skala = skalaFor(t.id, a, spec.kropp);
     if (a.varld) fastVarld(parent, rot, obj, pos, skala);
     else {
