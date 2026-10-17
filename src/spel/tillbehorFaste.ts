@@ -209,16 +209,19 @@ export function ankareFor(rot: THREE.Object3D, kropp: string, _s: number): Ankar
     toppZ = cz;
   }
   const kenney = kropp === "kanin" || kropp === "katt" || kropp === "hund" || kropp === "fisk" || kropp === "fågel" || kropp === "uggla";
-  const ogonFr = kropp === "fågel" || kropp === "uggla" ? 0.8 : kropp === "fisk" ? 0.62 : kropp === "groda" ? 0.72 : 0.78;
+  // Kycklingens ögon sitter på främre halvan av huvudet, inte uppe vid hjässan.
+  const ogonFr = kropp === "fågel" || kropp === "uggla" ? 0.56 : kropp === "fisk" ? 0.62 : kropp === "groda" ? 0.72 : 0.78;
   const ansY = b.min.y + ogonFr * h;
   // Kenney-djuren vrids ett halvt varv i scenen, så ansiktet är nativt −z. Övriga möter kameran åt +z.
+  // Fågel/uggla: ett steg framför ytan så bågarna inte sjunker in i huvudet.
   const ansZ = kenney ? b.min.z : b.max.z;
+  const fram = kropp === "fågel" || kropp === "uggla" ? Math.max(0.05, dz * 0.08) : 0;
   const ogonX = 0.16 * w;
   return {
     huvudTopp: new THREE.Vector3(cx, toppY, toppZ),
-    ansikte: new THREE.Vector3(cx, ansY, ansZ),
-    ogonL: new THREE.Vector3(cx - ogonX, ansY, ansZ),
-    ogonR: new THREE.Vector3(cx + ogonX, ansY, ansZ),
+    ansikte: new THREE.Vector3(cx, ansY, ansZ - fram),
+    ogonL: new THREE.Vector3(cx - ogonX, ansY, ansZ - fram),
+    ogonR: new THREE.Vector3(cx + ogonX, ansY, ansZ - fram),
     mun: new THREE.Vector3(cx, b.min.y + 0.5 * h, ansZ),
     hals: new THREE.Vector3(cx, b.min.y + 0.5 * h, b.min.z + (b.max.z - b.min.z) * 0.6),
     rygg: new THREE.Vector3(cx, b.min.y + 0.55 * h, b.min.z + 0.15 * (b.max.z - b.min.z)),
