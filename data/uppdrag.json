@@ -1,0 +1,143 @@
+{
+ "_om": "Uppdrag i äventyret. Startas av en lapp/skylt (skyltar.json 'startar') eller när barnet kommer till området första gången. Visas i 'Uppdragsboken' (en flik i boken). Inga tidsgränser, alla uppdrag kan göras i valfri ordning och tas upp igen när som helst.",
+ "typer": {
+  "hitta": "Ett gömt föremål (ritas procedurellt, se skatter.json) som barnet trycker på. I mörker syns det bara inom ljuscirkeln.",
+  "van": "Bli vän med ett vilt djur (vilda-djur.json).",
+  "ge": "Som 'van' men själva gåvan är målet.",
+  "skicka": "Barnet trycker på platsen och väljer ett av sina djur som har taggen. Djuret går/flyger/simmar dit och gör sin förmåga."
+ },
+ "texter": {
+  "rubrik": "Uppdragsboken",
+  "nytt": "Nytt uppdrag: {text}",
+  "klart": "Uppdrag klart!",
+  "inga": "Inga uppdrag än. Läs skyltar och lappar ute på äventyret!",
+  "flik_pagaende": "Pågår",
+  "flik_klara": "Klara"
+ },
+ "uppdrag": [
+  {
+   "id": "hitta-kotte",
+   "omrade": "skogen",
+   "typ": "hitta",
+   "text": "Hitta Ekorrens silverkotte bland svamparna.",
+   "mal": {
+    "tryck": "silverkotte",
+    "gomd_vid": "svamparna"
+   },
+   "klart": "Min kotte! Tack, nu kan jag sova gott i natt. /Ekorren",
+   "stjarnor": 2,
+   "skatt": "silverkotte"
+  },
+  {
+   "id": "mossugglan",
+   "omrade": "skogen",
+   "typ": "van",
+   "text": "Väck Mossugglan med något blått och bli hennes vän.",
+   "mal": {
+    "van": "mossugglan"
+   },
+   "klart": "Hu-hu! Jag har aldrig haft en vän som dig.",
+   "stjarnor": 3,
+   "skatt": null
+  },
+  {
+   "id": "svampring",
+   "omrade": "skogen",
+   "typ": "skicka",
+   "text": "Någon har lagt svampar i en ring. Det sägs att den som hoppar i ringen får tur. Skicka dit ett djur som kan hoppa!",
+   "mal": {
+    "skicka_tagg": "hoppa",
+    "plats": "svampringen"
+   },
+   "klart": "Boing, boing! Det känns som tur!",
+   "stjarnor": 2,
+   "skatt": "fyrklöver"
+  },
+  {
+   "id": "bavern",
+   "omrade": "sjon",
+   "typ": "ge",
+   "text": "Ge Gamla bävern pinnar eller löv till hans nya damm.",
+   "mal": {
+    "van": "gamla-bavern"
+   },
+   "klart": "Dammen är klar! Kom och bada när du vill.",
+   "stjarnor": 3,
+   "skatt": null
+  },
+  {
+   "id": "parlhajen",
+   "omrade": "sjon",
+   "typ": "van",
+   "text": "Bli vän med Pärlhajen vid bryggan.",
+   "mal": {
+    "van": "parlhajen"
+   },
+   "klart": "Jag simmar runt och visar alla min nya vän!",
+   "stjarnor": 3,
+   "skatt": "parla"
+  },
+  {
+   "id": "fyren",
+   "omrade": "sjon",
+   "typ": "skicka",
+   "text": "Fyren på ön har slocknat. Ta med ett djur som lyser ut till ön.",
+   "mal": {
+    "skicka_tagg": "lysa",
+    "plats": "on"
+   },
+   "klart": "Fyren lyser igen! Nu hittar båtarna hem.",
+   "stjarnor": 3,
+   "skatt": "fyrlampa"
+  },
+  {
+   "id": "vindhasten",
+   "omrade": "sjon",
+   "typ": "van",
+   "text": "Någon stor och vit har landat på ön. Vad tycker hästar om att äta?",
+   "mal": {
+    "van": "vindhasten"
+   },
+   "klart": "Vill du flyga en sväng någon gång? Säg bara till!",
+   "stjarnor": 4,
+   "skatt": null
+  },
+  {
+   "id": "kristallgrodan",
+   "omrade": "grottan",
+   "typ": "van",
+   "text": "Få Kristallgrodan att sjunga.",
+   "mal": {
+    "van": "kristallgrodan"
+   },
+   "klart": "Kvack-la-la-la! Det ekar så fint i grottan.",
+   "stjarnor": 3,
+   "skatt": "kristall"
+  },
+  {
+   "id": "nattdraken",
+   "omrade": "grottan",
+   "typ": "van",
+   "text": "Bli vän med Nattdraken längst in i grottan.",
+   "mal": {
+    "van": "nattdraken"
+   },
+   "klart": "Jag har väntat så länge på en vän. Tack för att du kom.",
+   "stjarnor": 4,
+   "skatt": null
+  },
+  {
+   "id": "skatten",
+   "omrade": "grottan",
+   "typ": "hitta",
+   "text": "Hitta skattkistan där kristallerna är lila.",
+   "mal": {
+    "tryck": "skattkista",
+    "gomd_vid": "lila kristaller"
+   },
+   "klart": "Skattkistan är full av guldmynt och en gammal karta!",
+   "stjarnor": 3,
+   "skatt": "skattkista"
+  }
+ ]
+}

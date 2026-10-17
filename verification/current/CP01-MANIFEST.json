@@ -1,0 +1,38 @@
+{
+  "checkpoint": "CP01",
+  "status": "TECHNICAL_BASELINE_PASS",
+  "based_on": "CP00",
+  "commands": [
+    {
+      "command": "npm ci --ignore-scripts --no-audit --no-fund",
+      "exit": 0
+    },
+    {
+      "command": "npm run test:product",
+      "exit": 0,
+      "tests": 70,
+      "pass": 70,
+      "fail": 0
+    },
+    {
+      "command": "npm run typecheck:pages",
+      "exit": 0
+    },
+    {
+      "command": "npm run build:pages",
+      "exit": 0
+    },
+    {
+      "command": "npm run check:pages-output",
+      "exit": 0,
+      "files": 504,
+      "bytes": 14936744
+    }
+  ],
+  "changed_product_files": [
+    "src/spel/Spel.tsx",
+    "src/spel/dialogFokus.ts"
+  ],
+  "node_modules_included": false,
+  "restore": "Unzip to an empty directory, run npm ci, then npm run build:pages."
+}

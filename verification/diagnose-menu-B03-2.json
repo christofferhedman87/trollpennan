@@ -1,0 +1,114 @@
+{
+  "info": {
+    "rect": {
+      "x": 315,
+      "y": 8,
+      "w": 52,
+      "h": 52,
+      "top": 8,
+      "bottom": 60
+    },
+    "viewport": {
+      "w": 375,
+      "h": 812,
+      "scrollX": 0,
+      "scrollY": 0
+    },
+    "top": {
+      "tag": "SPAN",
+      "cls": "",
+      "testid": null,
+      "html": "<span></span>"
+    },
+    "style": {
+      "pointerEvents": "auto",
+      "transform": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "visibility": "visible",
+      "display": "grid",
+      "opacity": "1"
+    },
+    "ancestors": [
+      {
+        "tag": "BUTTON",
+        "cls": "meny-knapp",
+        "testid": "meny",
+        "pe": "auto",
+        "z": "auto",
+        "pos": "static",
+        "transform": "none",
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "cls": "hud",
+        "testid": null,
+        "pe": "none",
+        "z": "8",
+        "pos": "absolute",
+        "transform": "none",
+        "overflow": "visible"
+      },
+      {
+        "tag": "SECTION",
+        "cls": "ang tred",
+        "testid": null,
+        "pe": "auto",
+        "z": "auto",
+        "pos": "relative",
+        "transform": "none",
+        "overflow": "hidden"
+      },
+      {
+        "tag": "MAIN",
+        "cls": "spel",
+        "testid": null,
+        "pe": "auto",
+        "z": "auto",
+        "pos": "static",
+        "transform": "none",
+        "overflow": "hidden"
+      },
+      {
+        "tag": "DIV",
+        "cls": "",
+        "testid": null,
+        "pe": "auto",
+        "z": "auto",
+        "pos": "static",
+        "transform": "none",
+        "overflow": "visible"
+      },
+      {
+        "tag": "BODY",
+        "cls": "",
+        "testid": null,
+        "pe": "auto",
+        "z": "auto",
+        "pos": "static",
+        "transform": "none",
+        "overflow": "hidden"
+      },
+      {
+        "tag": "HTML",
+        "cls": "",
+        "testid": null,
+        "pe": "auto",
+        "z": "auto",
+        "pos": "static",
+        "transform": "none",
+        "overflow": "visible"
+      }
+    ]
+  },
+  "click": {
+    "normal": "TimeoutError: locator.click: Timeout 3000ms exceeded.\nCall log:\n  - waiting for getByTestId('meny')\n    - locator resolved to <button type=\"button\" aria-label=\"Meny\" class=\"meny-knapp\" data-testid=\"meny\" aria-expanded=\"false\">…</button>\n  - attempting click action\n    - waiting for element to be visible, enabled and stable\n",
+    "expandedAfterNormal": "false",
+    "dispatch": "pass",
+    "expandedAfterDispatch": "true",
+    "force": "pass",
+    "expandedAfterForce": "false"
+  },
+  "errors": []
+}

@@ -1,0 +1,10 @@
+{
+  "checkpoint": "CP00",
+  "status": "SOURCE_RECOVERED_PATCH_APPLIED_NOT_REBUILT",
+  "base_sha256": "f64ee9a18ec96327c15dcb02ca521eb91bb5898d09c48a91abc6297e55f20056",
+  "patch_sha256": "b3b92fa349a5532199423f49cf398f097d091c561e5b5c4e9f649d948ca0f088",
+  "changed_product_files": [
+    "src/spel/Spel.tsx",
+    "src/spel/dialogFokus.ts"
+  ]
+}

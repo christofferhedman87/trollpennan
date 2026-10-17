@@ -1,0 +1,712 @@
+{
+ "_om": "Önskningar som djuren ibland visar i en pratbubbla. Barnet uppfyller dem genom att skriva. Allt i 'text', 'tack' och 'exempel' är svenska på en sjuårings läsnivå.",
+ "regler": {
+  "typer": {
+   "ge": "Barnet skriver ett tillägg till JUST det här djuret ('med halsduk', 'som sprutar eld', 'röd'). Allt i svaret läggs på djuret: färgord byter kroppsfärg, tillbehör läggs till enligt platsregeln, förmågor/mönster läggs till. Svaret behöver inget djurord; skriver hon ett djurord ignoreras det tyst. Uppfylld om de NYA delarnas taggar träffar minst en i 'nagon_av'.",
+   "kompis": "Barnet skriver ett nytt djur som vanligt. Uppfylld om det nya djurets taggar (inklusive kroppens taggar) träffar minst en i 'nagon_av' och alla i 'alla'."
+  },
+  "nar": "Högst 1 synlig önskan åt gången på ängen. Ett djur kan visa en önskan när det funnits minst 30 s och barnet inte skriver just nu. Ny önskan tidigast 20 s efter förra. Välj inte en ge-önskan som djuret redan uppfyller (taggarna finns redan).",
+  "visning": "Pratbubbla med en liten stjärna och texten. Tryck på bubblan: boken visar önskan överst ('Önskan: …') och barnet skriver. Knappen 'Inte nu' stänger utan förlust; önskan finns kvar på djuret.",
+  "aldrig": "Önskningar går aldrig ut, djuret blir aldrig ledset eller argt, inget straff, ingen timer.",
+  "fel_svar": "Om svaret inte passar: delarna läggs ändå på djuret (det är aldrig fel att skriva), och djuret säger en av 'nastan'-raderna. Önskan finns kvar.",
+  "uppfylld": "Djuret blir glatt (glad-pose + hopp), säger 'tack'-raden, stjärnorna flyger till stjärnräknaren i bokens hörn."
+ },
+ "nastan": [
+  "Oj, vad fint! Men jag önskade mig något annat …",
+  "Tack! Men det jag drömmer om är något annat.",
+  "Hihi, det var roligt! Men min önskan finns kvar."
+ ],
+ "onskningar": [
+  {
+   "id": "frusna-tassar",
+   "typ": "ge",
+   "text": "Brr, jag fryser så om tassarna …",
+   "nagon_av": [
+    "varm"
+   ],
+   "alla": [],
+   "exempel": [
+    "med halsduk",
+    "med mantel",
+    "som sprutar eld"
+   ],
+   "tack": "Åh, nu är jag varm ända ut i tårna!",
+   "stjarnor": 2
+  },
+  {
+   "id": "frusna-oron",
+   "typ": "ge",
+   "text": "Mina öron är alldeles kalla i vinden.",
+   "nagon_av": [
+    "varm"
+   ],
+   "alla": [],
+   "exempel": [
+    "med hatt",
+    "med halsduk"
+   ],
+   "tack": "Tack! Nu fryser jag inte om öronen.",
+   "stjarnor": 2
+  },
+  {
+   "id": "stark-sol",
+   "typ": "ge",
+   "text": "Solen är så stark. Jag kisar hela tiden!",
+   "nagon_av": [
+    "sol"
+   ],
+   "alla": [],
+   "exempel": [
+    "med glasögon",
+    "med hatt",
+    "med solglasögon"
+   ],
+   "tack": "Skönt! Nu kan jag titta på molnen igen.",
+   "stjarnor": 2
+  },
+  {
+   "id": "regn",
+   "typ": "ge",
+   "text": "Det ser ut att bli regn. Jag vill inte bli blöt!",
+   "nagon_av": [
+    "regn"
+   ],
+   "alla": [],
+   "exempel": [
+    "med hatt",
+    "med mantel"
+   ],
+   "tack": "Nu får det regna bäst det vill!",
+   "stjarnor": 2
+  },
+  {
+   "id": "kalas",
+   "typ": "ge",
+   "text": "Jag ska på kalas i kväll. Kan du göra mig fin?",
+   "nagon_av": [
+    "fin"
+   ],
+   "alla": [],
+   "exempel": [
+    "med rosett",
+    "glittrig",
+    "med krona"
+   ],
+   "tack": "Jag är finast på hela kalaset!",
+   "stjarnor": 1
+  },
+  {
+   "id": "kung",
+   "typ": "ge",
+   "text": "Jag drömmer om att bli kung över hela ängen.",
+   "nagon_av": [
+    "kunglig"
+   ],
+   "alla": [],
+   "exempel": [
+    "med krona",
+    "med mantel"
+   ],
+   "tack": "Hör upp, alla djur! Här kommer kungen!",
+   "stjarnor": 2
+  },
+  {
+   "id": "suddigt",
+   "typ": "ge",
+   "text": "Jag ser så suddigt. Vad är det där borta?",
+   "nagon_av": [
+    "se"
+   ],
+   "alla": [],
+   "exempel": [
+    "med glasögon",
+    "med solglasögon"
+   ],
+   "tack": "Oj! Det var ju en blomma. Nu ser jag allt!",
+   "stjarnor": 1
+  },
+  {
+   "id": "se-uppifran",
+   "typ": "ge",
+   "text": "Jag vill se ängen uppifrån, som fåglarna gör.",
+   "nagon_av": [
+    "flyga"
+   ],
+   "alla": [],
+   "exempel": [
+    "som flyger",
+    "med vingar"
+   ],
+   "tack": "Wiii! Allt ser så litet ut härifrån!",
+   "stjarnor": 2
+  },
+  {
+   "id": "simma",
+   "typ": "ge",
+   "text": "Dammen ser så skön ut. Men jag kan inte simma!",
+   "nagon_av": [
+    "simma"
+   ],
+   "alla": [],
+   "exempel": [
+    "som simmar",
+    "med fenor"
+   ],
+   "tack": "Plask! Vattnet är alldeles lagom varmt.",
+   "stjarnor": 2
+  },
+  {
+   "id": "morkradd",
+   "typ": "ge",
+   "text": "Snart blir det mörkt, och jag är lite mörkrädd.",
+   "nagon_av": [
+    "lysa"
+   ],
+   "alla": [],
+   "exempel": [
+    "som lyser",
+    "självlysande",
+    "som sprutar eld"
+   ],
+   "tack": "Nu lyser jag som en lykta. Jag är inte rädd längre!",
+   "stjarnor": 2
+  },
+  {
+   "id": "kull",
+   "typ": "ge",
+   "text": "När vi leker kull hinner jag aldrig ifatt någon.",
+   "nagon_av": [
+    "snabb"
+   ],
+   "alla": [],
+   "exempel": [
+    "som springer snabbt",
+    "supersnabb"
+   ],
+   "tack": "Kull på dig! Nu är det jag som är snabbast!",
+   "stjarnor": 2
+  },
+  {
+   "id": "appel",
+   "typ": "ge",
+   "text": "Jag vill nå de röda äpplena högst upp i trädet.",
+   "nagon_av": [
+    "hoppa",
+    "flyga",
+    "stor"
+   ],
+   "alla": [],
+   "exempel": [
+    "som hoppar",
+    "som flyger",
+    "jättestor"
+   ],
+   "tack": "Mums! Det var det godaste äpplet jag har ätit.",
+   "stjarnor": 2
+  },
+  {
+   "id": "kurragomma",
+   "typ": "ge",
+   "text": "Vi leker kurragömma. Hjälp mig att gömma mig!",
+   "nagon_av": [
+    "gomma",
+    "liten"
+   ],
+   "alla": [],
+   "exempel": [
+    "osynlig",
+    "pytteliten"
+   ],
+   "tack": "Hihi, ingen kommer att hitta mig nu!",
+   "stjarnor": 3
+  },
+  {
+   "id": "resa",
+   "typ": "ge",
+   "text": "Jag ska ut på en lång resa till andra sidan sjön. Hur ska jag ta mig dit?",
+   "nagon_av": [
+    "packa",
+    "flyga",
+    "simma",
+    "snabb"
+   ],
+   "alla": [],
+   "exempel": [
+    "med ryggsäck",
+    "som flyger",
+    "som simmar"
+   ],
+   "tack": "Hej då! Jag skickar ett vykort!",
+   "stjarnor": 2
+  },
+  {
+   "id": "magisk",
+   "typ": "ge",
+   "text": "Jag vill vara magisk, precis som i sagorna!",
+   "nagon_av": [
+    "magi"
+   ],
+   "alla": [],
+   "exempel": [
+    "med horn",
+    "som lyser",
+    "glittrig"
+   ],
+   "tack": "Pling! Kände du? Nu är jag magisk!",
+   "stjarnor": 2
+  },
+  {
+   "id": "stjarnor",
+   "typ": "ge",
+   "text": "Jag vill glittra som stjärnorna på natten.",
+   "nagon_av": [
+    "glittra"
+   ],
+   "alla": [],
+   "exempel": [
+    "glittrig",
+    "skimrande",
+    "gnistrande"
+   ],
+   "tack": "Titta så jag glittrar!",
+   "stjarnor": 2
+  },
+  {
+   "id": "fler-farger",
+   "typ": "ge",
+   "text": "Jag tycker att jag är lite grå. Får jag fler färger?",
+   "nagon_av": [
+    "farggrann"
+   ],
+   "alla": [],
+   "exempel": [
+    "regnbågsfärgad",
+    "med regnbåge"
+   ],
+   "tack": "Alla färger på en gång! Det är ju jag!",
+   "stjarnor": 2
+  },
+  {
+   "id": "for-liten",
+   "typ": "ge",
+   "text": "Jag är så liten att ingen ser mig.",
+   "nagon_av": [
+    "stor"
+   ],
+   "alla": [],
+   "exempel": [
+    "stor",
+    "jättestor",
+    "enorm"
+   ],
+   "tack": "Hallå där nere! Nu ser alla mig!",
+   "stjarnor": 2
+  },
+  {
+   "id": "for-stor",
+   "typ": "ge",
+   "text": "Jag är så stor att jag inte får plats någonstans.",
+   "nagon_av": [
+    "liten"
+   ],
+   "alla": [],
+   "exempel": [
+    "liten",
+    "pytteliten"
+   ],
+   "tack": "Perfekt! Nu får jag plats överallt.",
+   "stjarnor": 2
+  },
+  {
+   "id": "rod",
+   "typ": "ge",
+   "text": "Jag vill ha en varm färg, som löven på hösten. Röd eller orange!",
+   "nagon_av": [
+    "farg:röd",
+    "farg:orange"
+   ],
+   "alla": [],
+   "exempel": [
+    "röd",
+    "orange"
+   ],
+   "tack": "Nu är jag lika fin som ett höstlöv!",
+   "stjarnor": 1
+  },
+  {
+   "id": "gul",
+   "typ": "ge",
+   "text": "Jag vill vara gul som solen.",
+   "nagon_av": [
+    "farg:gul",
+    "farg:gyllene",
+    "farg:guld"
+   ],
+   "alla": [],
+   "exempel": [
+    "gul",
+    "gyllene",
+    "guld"
+   ],
+   "tack": "Nu strålar jag som solen!",
+   "stjarnor": 1
+  },
+  {
+   "id": "bla",
+   "typ": "ge",
+   "text": "Jag vill vara blå som himlen.",
+   "nagon_av": [
+    "farg:blå",
+    "farg:ljusblå",
+    "farg:turkos"
+   ],
+   "alla": [],
+   "exempel": [
+    "blå",
+    "ljusblå",
+    "turkos"
+   ],
+   "tack": "Nu ser jag ut som en bit av himlen!",
+   "stjarnor": 1
+  },
+  {
+   "id": "gron",
+   "typ": "ge",
+   "text": "Grönt är min favoritfärg. Kan jag bli grön?",
+   "nagon_av": [
+    "farg:grön",
+    "farg:ljusgrön",
+    "farg:mörkgrön"
+   ],
+   "alla": [],
+   "exempel": [
+    "grön",
+    "ljusgrön",
+    "mörkgrön"
+   ],
+   "tack": "Grön som gräset! Nu kan jag gömma mig i det.",
+   "stjarnor": 1
+  },
+  {
+   "id": "lila",
+   "typ": "ge",
+   "text": "Jag vill ha samma färg som himlen när det skymmer. Lila kanske, eller mörkblå?",
+   "nagon_av": [
+    "farg:lila",
+    "farg:mörkblå"
+   ],
+   "alla": [],
+   "exempel": [
+    "lila",
+    "mörkblå"
+   ],
+   "tack": "Precis som kvällshimlen! Nu kan stjärnorna komma.",
+   "stjarnor": 1
+  },
+  {
+   "id": "prickar",
+   "typ": "ge",
+   "text": "Jag vill ha prickar, som en nyckelpiga.",
+   "nagon_av": [
+    "prickar"
+   ],
+   "alla": [],
+   "exempel": [
+    "prickig",
+    "med prickar",
+    "spräcklig"
+   ],
+   "tack": "Räkna mina prickar! Jag tror att jag har hundra.",
+   "stjarnor": 1
+  },
+  {
+   "id": "ranger",
+   "typ": "ge",
+   "text": "Tigrar har ränder. Det vill jag också ha!",
+   "nagon_av": [
+    "ränder"
+   ],
+   "alla": [],
+   "exempel": [
+    "randig",
+    "tigerrandig",
+    "med ränder"
+   ],
+   "tack": "Raaaw! Jag är lika randig som en tiger.",
+   "stjarnor": 1
+  },
+  {
+   "id": "staketet",
+   "typ": "ge",
+   "text": "Jag vill kunna hoppa högre än staketet!",
+   "nagon_av": [
+    "hoppa"
+   ],
+   "alla": [],
+   "exempel": [
+    "som hoppar",
+    "som studsar"
+   ],
+   "tack": "Boing! Jag kom ända upp över staketet!",
+   "stjarnor": 1
+  },
+  {
+   "id": "modig",
+   "typ": "ge",
+   "text": "Draken är så modig. Jag vill också kunna spruta eld!",
+   "nagon_av": [
+    "eld"
+   ],
+   "alla": [],
+   "exempel": [
+    "som sprutar eld",
+    "eldsprutande"
+   ],
+   "tack": "Fff! Titta, jag sprutar eld. Men jag är försiktig med blommorna.",
+   "stjarnor": 2
+  },
+  {
+   "id": "huvud",
+   "typ": "ge",
+   "text": "Jag vill ha något fint på huvudet.",
+   "nagon_av": [
+    "huvud"
+   ],
+   "alla": [],
+   "exempel": [
+    "med hatt",
+    "med krona",
+    "med rosett"
+   ],
+   "tack": "Snyggt! Den ska jag ha på mig varje dag.",
+   "stjarnor": 1
+  },
+  {
+   "id": "blixt",
+   "typ": "ge",
+   "text": "Jag vill vara snabbast på hela ängen!",
+   "nagon_av": [
+    "snabb"
+   ],
+   "alla": [],
+   "exempel": [
+    "blixtsnabb",
+    "som springer snabbt"
+   ],
+   "tack": "Svisch! Såg du mig? Inte? Jag var för snabb!",
+   "stjarnor": 2
+  },
+  {
+   "id": "ensam",
+   "typ": "kompis",
+   "text": "Jag är så ensam. Kan du skriva en kompis åt mig?",
+   "nagon_av": [
+    "kompis"
+   ],
+   "alla": [],
+   "exempel": [
+    "en katt",
+    "en rosa gris"
+   ],
+   "tack": "En kompis! Nu kan vi leka hela dagen.",
+   "stjarnor": 2
+  },
+  {
+   "id": "kompis-simma",
+   "typ": "kompis",
+   "text": "Jag vill ha en kompis som kan simma med mig i dammen.",
+   "nagon_av": [
+    "simma"
+   ],
+   "alla": [
+    "kompis"
+   ],
+   "exempel": [
+    "en fisk",
+    "en groda som simmar",
+    "en haj"
+   ],
+   "tack": "Kom, vi simmar ett varv runt dammen!",
+   "stjarnor": 2
+  },
+  {
+   "id": "kompis-flyga",
+   "typ": "kompis",
+   "text": "Jag vill ha en kompis som kan flyga med mig.",
+   "nagon_av": [
+    "flyga"
+   ],
+   "alla": [
+    "kompis"
+   ],
+   "exempel": [
+    "en fågel",
+    "en uggla",
+    "en katt som flyger"
+   ],
+   "tack": "Vi flyger upp till molnen tillsammans!",
+   "stjarnor": 2
+  },
+  {
+   "id": "kompis-liten",
+   "typ": "kompis",
+   "text": "Kan du skriva en kompis som är lika liten som jag?",
+   "nagon_av": [
+    "liten"
+   ],
+   "alla": [
+    "kompis"
+   ],
+   "exempel": [
+    "en liten kanin",
+    "en kattunge",
+    "en pytteliten groda"
+   ],
+   "tack": "Vi är lika små! Vi kan gömma oss i blommorna.",
+   "stjarnor": 2
+  },
+  {
+   "id": "kompis-fisk",
+   "typ": "kompis",
+   "text": "Jag skulle vilja träffa en fisk. Kan du skriva en?",
+   "nagon_av": [
+    "kropp:fisk",
+    "kropp:haj"
+   ],
+   "alla": [
+    "kompis"
+   ],
+   "exempel": [
+    "en fisk",
+    "en guldfisk",
+    "en haj"
+   ],
+   "tack": "Hej fisken! Bubbel, bubbel!",
+   "stjarnor": 1
+  },
+  {
+   "id": "kompis-hatt",
+   "typ": "kompis",
+   "text": "Jag längtar efter en kompis med en fin hatt.",
+   "nagon_av": [
+    "tillbehor:hatt",
+    "tillbehor:krona"
+   ],
+   "alla": [
+    "kompis"
+   ],
+   "exempel": [
+    "en hund med hatt",
+    "en uggla med trollkarlshatt"
+   ],
+   "tack": "Vilken hatt! Får jag låna den någon gång?",
+   "stjarnor": 2
+  },
+  {
+   "id": "kompis-drake",
+   "typ": "kompis",
+   "text": "Jag har aldrig sett en drake. Kan du skriva en?",
+   "nagon_av": [
+    "kropp:drake"
+   ],
+   "alla": [
+    "kompis"
+   ],
+   "exempel": [
+    "en drake",
+    "en liten grön drake"
+   ],
+   "tack": "En riktig drake! Den är ju jättesnäll.",
+   "stjarnor": 1
+  },
+  {
+   "id": "kompis-snabb",
+   "typ": "kompis",
+   "text": "Jag vill ha en kompis som springer lika fort som jag.",
+   "nagon_av": [
+    "snabb"
+   ],
+   "alla": [
+    "kompis"
+   ],
+   "exempel": [
+    "en hund som springer snabbt",
+    "en ekorre",
+    "en supersnabb häst"
+   ],
+   "tack": "Klara, färdiga, gå! Vi springer i kapp!",
+   "stjarnor": 2
+  },
+  {
+   "id": "kompis-lysa",
+   "typ": "kompis",
+   "text": "Kan du skriva ett djur som lyser? Då kan vi leka i mörkret.",
+   "nagon_av": [
+    "lysa"
+   ],
+   "alla": [
+    "kompis"
+   ],
+   "exempel": [
+    "en katt som lyser",
+    "en självlysande fisk"
+   ],
+   "tack": "Nu är det mysigt även när det blir mörkt.",
+   "stjarnor": 2
+  },
+  {
+   "id": "kompis-rosa",
+   "typ": "kompis",
+   "text": "Jag vill ha en kompis som är rosa, för rosa är fint!",
+   "nagon_av": [
+    "farg:rosa",
+    "farg:ljusrosa"
+   ],
+   "alla": [
+    "kompis"
+   ],
+   "exempel": [
+    "en rosa kanin",
+    "en gris",
+    "en ljusrosa häst"
+   ],
+   "tack": "Rosa är verkligen finast!",
+   "stjarnor": 1
+  },
+  {
+   "id": "kompis-enhorning",
+   "typ": "kompis",
+   "text": "Jag drömmer om att träffa en riktig enhörning!",
+   "nagon_av": [
+    "kropp:häst"
+   ],
+   "alla": [
+    "kompis",
+    "tillbehor:horn"
+   ],
+   "exempel": [
+    "en enhörning",
+    "en vit häst med horn"
+   ],
+   "tack": "En enhörning! Jag trodde att de bara fanns i sagor.",
+   "stjarnor": 3
+  },
+  {
+   "id": "kompis-urtid",
+   "typ": "kompis",
+   "text": "Jag vill träffa ett djur från urtiden, för länge sedan.",
+   "nagon_av": [
+    "kropp:dinosaurie"
+   ],
+   "alla": [
+    "kompis"
+   ],
+   "exempel": [
+    "en dinosaurie",
+    "en dino"
+   ],
+   "tack": "Wow, en riktig dinosaurie! Den är större än huset!",
+   "stjarnor": 2
+  }
+ ]
+}

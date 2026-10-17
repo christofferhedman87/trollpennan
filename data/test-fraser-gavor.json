@@ -1,0 +1,171 @@
+{
+ "_om": "Förväntade utfall för gåvotolken (runda 5), framtagna med tools/gavotolk.py. Gör dem till tester.",
+ "fraser": [
+  {
+   "fras": "ett äpple",
+   "formel": "ett äpple",
+   "gavor": [
+    {
+     "gava": "äpple",
+     "antal": 1,
+     "farg": "röd"
+    }
+   ]
+  },
+  {
+   "fras": "tre röda äpplen",
+   "formel": "tre röda äpplen",
+   "gavor": [
+    {
+     "gava": "äpple",
+     "antal": 3,
+     "farg": "röd"
+    }
+   ]
+  },
+  {
+   "fras": "en stor kanelbulle",
+   "formel": "en stor kanelbulle",
+   "gavor": [
+    {
+     "gava": "kanelbulle",
+     "antal": 1,
+     "farg": "brun"
+    }
+   ]
+  },
+  {
+   "fras": "lite honung",
+   "formel": "lite honung",
+   "gavor": [
+    {
+     "gava": "honung",
+     "antal": 1,
+     "farg": "gul"
+    }
+   ]
+  },
+  {
+   "fras": "blåbär och en kotte",
+   "formel": "blåbär och en kotte",
+   "gavor": [
+    {
+     "gava": "blåbär",
+     "antal": 2,
+     "farg": "blå"
+    },
+    {
+     "gava": "kotte",
+     "antal": 1,
+     "farg": "brun"
+    }
+   ]
+  },
+  {
+   "fras": "två nötter",
+   "formel": "två nötter",
+   "gavor": [
+    {
+     "gava": "nöt",
+     "antal": 2,
+     "farg": "brun"
+    }
+   ]
+  },
+  {
+   "fras": "fem pärlor",
+   "formel": "fem pärlor",
+   "gavor": [
+    {
+     "gava": "pärla",
+     "antal": 5,
+     "farg": "vit"
+    }
+   ]
+  },
+  {
+   "fras": "en morot",
+   "formel": "en morot",
+   "gavor": [
+    {
+     "gava": "morot",
+     "antal": 1,
+     "farg": "orange"
+    }
+   ]
+  },
+  {
+   "fras": "ett blått äpple",
+   "formel": "ett blått äpple",
+   "gavor": [
+    {
+     "gava": "äpple",
+     "antal": 1,
+     "farg": "blå"
+    }
+   ]
+  },
+  {
+   "fras": "hallon",
+   "formel": "hallon",
+   "gavor": [
+    {
+     "gava": "hallon",
+     "antal": 2,
+     "farg": "rosa"
+    }
+   ]
+  },
+  {
+   "fras": "sju jordgubbar",
+   "formel": "sju jordgubbar",
+   "gavor": [
+    {
+     "gava": "jordgubbe",
+     "antal": 5,
+     "farg": "röd"
+    }
+   ]
+  },
+  {
+   "fras": "en liten glass",
+   "formel": "en liten glass",
+   "gavor": [
+    {
+     "gava": "glass",
+     "antal": 1,
+     "farg": "rosa"
+    }
+   ]
+  },
+  {
+   "fras": "två fjädrar och en snäcka",
+   "formel": "två fjädrar och en snäcka",
+   "gavor": [
+    {
+     "gava": "fjäder",
+     "antal": 2,
+     "farg": "vit"
+    },
+    {
+     "gava": "snäcka",
+     "antal": 1,
+     "farg": "vit"
+    }
+   ]
+  },
+  {
+   "fras": "en katt",
+   "forvantat": "texter-aventyr.gavoruta.djur_i_rutan"
+  },
+  {
+   "fras": "ett äple",
+   "forvantat": "forslag",
+   "forslag": "äpple"
+  },
+  {
+   "fras": "en bil",
+   "forvantat": "texter-aventyr.gavoruta.okant (bil sparas på önskelistan)"
+  }
+ ]
+}

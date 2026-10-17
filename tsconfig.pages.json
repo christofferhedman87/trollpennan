@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/pages-main.tsx",
+    "src/spel/**/*.ts",
+    "src/spel/**/*.tsx",
+    "src/tolk/**/*.ts",
+    "vite.pages.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist-pages"
+  ]
+}

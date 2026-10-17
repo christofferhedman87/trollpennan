@@ -1,0 +1,23 @@
+{
+  "guide": "Välj ord eller skriv själv. Tryck sedan på Vakna!",
+  "examplesTitle": "Prova en idé",
+  "examples": [
+    "rosa drake",
+    "rosa drake med krona",
+    "blå kanin med hatt",
+    "liten katt",
+    "grön groda",
+    "stor häst"
+  ],
+  "storage": "Du kan fortsätta spela, men det går inte att spara just nu. Be en vuxen spara en kopia i föräldramenyn.",
+  "damaged": "Det sparade spelet gick inte att läsa. Be en vuxen kontrollera en sparad kopia.",
+  "sceneTitle": "Dina skapelser",
+  "sceneEmpty": "Ängen väntar på din första skapelse.",
+  "inputLabel": "Skriv vad du vill skapa",
+  "inputPlaceholder": "Till exempel rosa drake",
+  "load": "Ängen vaknar …",
+  "error": "Ängen kunde inte öppnas. Dina sparade skapelser finns kvar i webbläsaren.",
+  "reload": "Försök igen",
+  "storageTitle": "Spelet sparas inte just nu",
+  "damagedTitle": "Det sparade spelet behöver hjälp"
+}

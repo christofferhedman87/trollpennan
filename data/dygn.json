@@ -1,0 +1,37 @@
+{
+ "_om": "Dag och kväll i spelet. Tiden går bara när spelet är öppet (inte efter klockan i verkligheten), så det blir aldrig 'stängt' och inget missas.",
+ "langd_minuter": {
+  "dag": 8,
+  "kvall": 3
+ },
+ "overgang_sekunder": 20,
+ "kvall": {
+  "himmel": "Tona himlen mot #5C6BC0 och ängen 25 % mörkare. Stjärnor (små vita prickar) tänds en i taget.",
+  "ljus": "Lyktor, fyren och djur med förmågan aura lyser med en mjuk ljuscirkel.",
+  "djur": "Djur som har ett hem på gården går hem och somnar (Zzz). Ugglor vaknar och flyger. Djur utan hem lägger sig under ett träd.",
+  "aldrig": "Kvällen hindrar ingenting. Barnet kan väcka djur, bygga och gå på äventyr som vanligt."
+ },
+ "texter": {
+  "kvall_borjar": [
+   "Solen går ner. Snart är det kväll på gården.",
+   "Titta, den första stjärnan!"
+  ],
+  "morgon": [
+   "God morgon! En ny dag på gården.",
+   "Tuppen gal! Nej förresten, vi har ingen tupp. God morgon ändå!"
+  ],
+  "sover": [
+   "Zzz …",
+   "Snark …",
+   "Mmm, jag drömmer om moln …"
+  ],
+  "vacks_pa_kvallen": [
+   "Gäsp! Är det redan morgon? Nähä. God natt igen.",
+   "Jag var precis mitt i en dröm om kanelbullar."
+  ],
+  "uggla_kvall": [
+   "Hu-hu! Nu är det min tid!",
+   "Natten är det bästa som finns."
+  ]
+ }
+}

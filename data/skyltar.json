@@ -1,0 +1,89 @@
+{
+ "_om": "Skyltar (fasta, korta) och lappar (lite längre, ofta början på ett uppdrag). Barnet trycker för att läsa. Texten visas stort (minst 20 px) i en pappersruta. Ingen uppläsning.",
+ "skyltar": [
+  {
+   "id": "skogen-1",
+   "omrade": "skogen",
+   "typ": "skylt",
+   "text": "Välkommen till Skogen! Gå varsamt, här bor många djur.",
+   "startar": null
+  },
+  {
+   "id": "skogen-2",
+   "omrade": "skogen",
+   "typ": "lapp",
+   "text": "Jag har tappat min fina silverkotte någonstans bland svamparna. Om du hittar den, lägg den vid stubben. /Ekorren",
+   "startar": "hitta-kotte"
+  },
+  {
+   "id": "skogen-3",
+   "omrade": "skogen",
+   "typ": "lapp",
+   "text": "Mossugglan sover hela dagen. Men om man lägger något blått vid hennes träd vaknar hon kanske.",
+   "startar": "mossugglan"
+  },
+  {
+   "id": "skogen-4",
+   "omrade": "skogen",
+   "typ": "skylt",
+   "text": "Till Grottan →  (Stor sten på vägen!)",
+   "startar": null
+  },
+  {
+   "id": "sjon-5",
+   "omrade": "sjon",
+   "typ": "skylt",
+   "text": "Badplats. Inga hajar här! (Utom en snäll.)",
+   "startar": null
+  },
+  {
+   "id": "sjon-6",
+   "omrade": "sjon",
+   "typ": "lapp",
+   "text": "Gamla bävern bygger en ny damm på ön men har slut på pinnar. Kan någon hjälpa?",
+   "startar": "bavern"
+  },
+  {
+   "id": "sjon-7",
+   "omrade": "sjon",
+   "typ": "lapp",
+   "text": "Ibland syns något vitt och skimrande under vattnet nära bryggan. Det tycker om sådant som glänser.",
+   "startar": "parlhajen"
+  },
+  {
+   "id": "sjon-8",
+   "omrade": "sjon",
+   "typ": "skylt",
+   "text": "Fyren på ön har slocknat. Vem kan tända den igen?",
+   "startar": "fyren"
+  },
+  {
+   "id": "grottan-9",
+   "omrade": "grottan",
+   "typ": "skylt",
+   "text": "Grottan. Varning för halka och för glitter!",
+   "startar": null
+  },
+  {
+   "id": "grottan-10",
+   "omrade": "grottan",
+   "typ": "lapp",
+   "text": "Längst in i grottan sover en drake. Den blir glad av allt som är sött.",
+   "startar": "nattdraken"
+  },
+  {
+   "id": "grottan-11",
+   "omrade": "grottan",
+   "typ": "lapp",
+   "text": "Kristallgrodan sjunger när den får något som glänser. Har du hört den?",
+   "startar": "kristallgrodan"
+  },
+  {
+   "id": "grottan-12",
+   "omrade": "grottan",
+   "typ": "lapp",
+   "text": "Här har någon gömt en skattkista. Ledtråd: den står där kristallerna är lila.",
+   "startar": "skatten"
+  }
+ ]
+}

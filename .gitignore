@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist-pages/
+screenshots/
+attachments/
+*.log
+.DS_Store

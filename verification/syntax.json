@@ -1,0 +1,5 @@
+{
+  "method": "transpileModule syntax diagnostics only; NOT typecheck",
+  "files": 6,
+  "errors": []
+}

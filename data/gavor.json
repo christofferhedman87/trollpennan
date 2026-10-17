@@ -1,0 +1,347 @@
+{
+ "_om": "Gåvoord: barnet skriver vad hon ger ett vilt djur. Böjningar ur SALDO (CC BY 4.0). Färg- och storleksord ur data/ord.json, böjda efter genus (som i byggtolken).",
+ "grammatik": {
+  "mening": "[antal|en|ett|lite] [adjektiv ...] GÅVA [och GÅVA ...]. Exempel: 'tre röda äpplen', 'en stor kanelbulle', 'lite honung', 'blåbär och en kotte'.",
+  "antal": "Högst 5 av en gåva. 'lite' fungerar framför alla gåvor (formel: 'lite honung').",
+  "sammanhang": "Gåvotolken används bara när barnet skriver i en gåvoruta ('Vad vill du ge {djur}?'). Då går gåvoord före djur- och byggord. Står ett djurord i gåvorutan: 'Djur kan man inte ge bort! Skriv något att äta eller något fint.'",
+  "formel": "Behåll barnets ord och böj rätt: 'tre röda äpplen', 'en stor kanelbulle', 'ett blåbär'."
+ },
+ "funktionsord": {
+  "lite": [
+   "lite"
+  ]
+ },
+ "gavor": [
+  {
+   "id": "äpple",
+   "genus": "ett",
+   "former": [
+    "äpple",
+    "äpplet",
+    "äpplen",
+    "äpplena"
+   ],
+   "farg": "röd",
+   "taggar": [
+    "frukt",
+    "sott"
+   ],
+   "ritning": "Röd cirkel med liten brun stjälk och grönt blad.",
+   "kit_nyckel": "gavor/äpple"
+  },
+  {
+   "id": "päron",
+   "genus": "ett",
+   "former": [
+    "päron",
+    "päronet",
+    "päron",
+    "päronen"
+   ],
+   "farg": "ljusgrön",
+   "taggar": [
+    "frukt",
+    "sott"
+   ],
+   "ritning": "Droppform, ljusgrön, stjälk.",
+   "kit_nyckel": "gavor/päron"
+  },
+  {
+   "id": "morot",
+   "genus": "en",
+   "former": [
+    "morot",
+    "moroten",
+    "morötter",
+    "morötterna"
+   ],
+   "farg": "orange",
+   "taggar": [
+    "gront"
+   ],
+   "ritning": "Orange spetsig kon med gröna blad i toppen.",
+   "kit_nyckel": "gavor/morot"
+  },
+  {
+   "id": "blåbär",
+   "genus": "ett",
+   "former": [
+    "blåbär",
+    "blåbäret",
+    "blåbär",
+    "blåbären"
+   ],
+   "farg": "blå",
+   "taggar": [
+    "bar",
+    "sott"
+   ],
+   "ritning": "Liten mörkblå cirkel med stjärna i toppen.",
+   "kit_nyckel": "gavor/blåbär"
+  },
+  {
+   "id": "jordgubbe",
+   "genus": "en",
+   "former": [
+    "jordgubbe",
+    "jordgubben",
+    "jordgubbar",
+    "jordgubbarna"
+   ],
+   "farg": "röd",
+   "taggar": [
+    "bar",
+    "sott"
+   ],
+   "ritning": "Röd hjärtform med gula prickar och grön krona.",
+   "kit_nyckel": "gavor/jordgubbe"
+  },
+  {
+   "id": "hallon",
+   "genus": "ett",
+   "former": [
+    "hallon",
+    "hallonet",
+    "hallon",
+    "hallonen"
+   ],
+   "farg": "rosa",
+   "taggar": [
+    "bar",
+    "sott"
+   ],
+   "ritning": "Rosa-röd klump av små cirklar.",
+   "kit_nyckel": "gavor/hallon"
+  },
+  {
+   "id": "smultron",
+   "genus": "ett",
+   "former": [
+    "smultron",
+    "smultronet",
+    "smultron",
+    "smultronen"
+   ],
+   "farg": "röd",
+   "taggar": [
+    "bar",
+    "sott"
+   ],
+   "ritning": "Liten röd droppe med gula prickar.",
+   "kit_nyckel": "gavor/smultron"
+  },
+  {
+   "id": "nöt",
+   "genus": "en",
+   "former": [
+    "nöt",
+    "nöten",
+    "nötter",
+    "nötterna"
+   ],
+   "farg": "brun",
+   "taggar": [
+    "notter"
+   ],
+   "ritning": "Brun oval med ljusare hatt.",
+   "kit_nyckel": "gavor/nöt"
+  },
+  {
+   "id": "kotte",
+   "genus": "en",
+   "former": [
+    "kotte",
+    "kotten",
+    "kottar",
+    "kottarna"
+   ],
+   "farg": "brun",
+   "taggar": [
+    "notter"
+   ],
+   "ritning": "Brun avlång form med fjällmönster.",
+   "kit_nyckel": "gavor/kotte"
+  },
+  {
+   "id": "honung",
+   "genus": "en",
+   "former": [
+    "honung",
+    "honungen",
+    "honungar",
+    "honungarna"
+   ],
+   "farg": "gul",
+   "taggar": [
+    "sott"
+   ],
+   "ritning": "Liten glasburk med gyllene honung och en tygbit på locket.",
+   "kit_nyckel": "gavor/honung"
+  },
+  {
+   "id": "ost",
+   "genus": "en",
+   "former": [
+    "ost",
+    "osten",
+    "ostar",
+    "ostarna"
+   ],
+   "farg": "gul",
+   "taggar": [
+    "mat"
+   ],
+   "ritning": "Gul trekant med hål.",
+   "kit_nyckel": "gavor/ost"
+  },
+  {
+   "id": "kanelbulle",
+   "genus": "en",
+   "former": [
+    "kanelbulle",
+    "kanelbullen",
+    "kanelbullar",
+    "kanelbullarna"
+   ],
+   "farg": "brun",
+   "taggar": [
+    "sott",
+    "mat"
+   ],
+   "ritning": "Brun spiral med vita pärlsockerprickar.",
+   "kit_nyckel": "gavor/kanelbulle"
+  },
+  {
+   "id": "glass",
+   "genus": "en",
+   "former": [
+    "glass",
+    "glassen",
+    "glassar",
+    "glassarna"
+   ],
+   "farg": "rosa",
+   "taggar": [
+    "sott",
+    "kallt"
+   ],
+   "ritning": "Strut (brun trekant) med rosa kula.",
+   "kit_nyckel": "gavor/glass"
+  },
+  {
+   "id": "snäcka",
+   "genus": "en",
+   "former": [
+    "snäcka",
+    "snäckan",
+    "snäckor",
+    "snäckorna"
+   ],
+   "farg": "vit",
+   "taggar": [
+    "glansigt",
+    "hav"
+   ],
+   "ritning": "Spiralsnäcka i vitt och ljusrosa.",
+   "kit_nyckel": "gavor/snäcka"
+  },
+  {
+   "id": "pärla",
+   "genus": "en",
+   "former": [
+    "pärla",
+    "pärlan",
+    "pärlor",
+    "pärlorna"
+   ],
+   "farg": "vit",
+   "taggar": [
+    "glansigt",
+    "hav"
+   ],
+   "ritning": "Vit blank cirkel med glansprick.",
+   "kit_nyckel": "gavor/pärla"
+  },
+  {
+   "id": "fjäder",
+   "genus": "en",
+   "former": [
+    "fjäder",
+    "fjädern",
+    "fjädrar",
+    "fjädrarna"
+   ],
+   "farg": "vit",
+   "taggar": [
+    "mjukt"
+   ],
+   "ritning": "Lång böjd fjäder.",
+   "kit_nyckel": "gavor/fjäder"
+  },
+  {
+   "id": "pinne",
+   "genus": "en",
+   "former": [
+    "pinne",
+    "pinnen",
+    "pinnar",
+    "pinnarna"
+   ],
+   "farg": "brun",
+   "taggar": [
+    "tra"
+   ],
+   "ritning": "Brun pinne med en liten kvist.",
+   "kit_nyckel": "gavor/pinne"
+  },
+  {
+   "id": "löv",
+   "genus": "ett",
+   "former": [
+    "löv",
+    "lövet",
+    "löv",
+    "löven"
+   ],
+   "farg": "grön",
+   "taggar": [
+    "gront"
+   ],
+   "ritning": "Grönt löv med nerv i mitten.",
+   "kit_nyckel": "gavor/löv"
+  },
+  {
+   "id": "klöver",
+   "genus": "en",
+   "former": [
+    "klöver",
+    "klövern",
+    "klöver",
+    "klöverna"
+   ],
+   "farg": "grön",
+   "taggar": [
+    "gront"
+   ],
+   "ritning": "Tre (eller fyra!) gröna hjärtformade blad på en stjälk.",
+   "kit_nyckel": "gavor/klöver"
+  },
+  {
+   "id": "maskros",
+   "genus": "en",
+   "former": [
+    "maskros",
+    "maskrosen",
+    "maskrosor",
+    "maskrosorna"
+   ],
+   "farg": "gul",
+   "taggar": [
+    "gront",
+    "blomma"
+   ],
+   "ritning": "Gul taggig blomma på grön stjälk.",
+   "kit_nyckel": "gavor/maskros"
+  }
+ ]
+}

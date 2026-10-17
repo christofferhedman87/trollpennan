@@ -1,0 +1,172 @@
+[
+  {
+    "path": "BLOCK-STATUS.md",
+    "status": "added",
+    "sha256": "da98484185768efe73013d31a4e0795350015b0e34709a03a73ad0b39f0e14fc"
+  },
+  {
+    "path": "CHANGELOG.md",
+    "status": "added",
+    "sha256": "537516f5bf1c52fe8a0cf7d4ef6260ab039b06d4bd215a3f30748200056dfc99"
+  },
+  {
+    "path": "HANDOFF.md",
+    "status": "modified",
+    "sha256": "31a5db6914d67bc728c66b857da9524fd601b15fe147688d580117454112d8cb"
+  },
+  {
+    "path": "IMPROVEMENT-LOG.md",
+    "status": "added",
+    "sha256": "d4aff9a624545918bc19b946361085919ea275412aafb34dd342ae74c2d076fd"
+  },
+  {
+    "path": "README.md",
+    "status": "modified",
+    "sha256": "0c015c1af5b0a0e566abbf3f5123b303a81cced17de174e570d6b5087bed8d40"
+  },
+  {
+    "path": "RELEASE-REPORT.md",
+    "status": "added",
+    "sha256": "ed02bbca6e45a8021ad85df0771588c0f100ea70755ce4160a534b203cb4fbe6"
+  },
+  {
+    "path": "data/upplevelse.json",
+    "status": "added",
+    "sha256": "0169273274f96896b6cfada8747898eb439d051f06db41a5ed8769cca753b764"
+  },
+  {
+    "path": "index.html",
+    "status": "added",
+    "sha256": "2d55559fb19929db27f73ea0eab007cf7e4d365e5777e8ad0eaa121b59cbba1c"
+  },
+  {
+    "path": "package.json",
+    "status": "modified",
+    "sha256": "33e84dbcf3b6a8b58d0341f8bad6f48dfc015e045c4d454b4fa8b92ed84df787"
+  },
+  {
+    "path": "projektregler.md",
+    "status": "modified",
+    "sha256": "151d901f33294cf3115e010aaa91f32683682e2b05b770c4aad0e74126fc7f6b"
+  },
+  {
+    "path": "public/_headers",
+    "status": "added",
+    "sha256": "4722877d3f9842fc8e0633983a03eb8bf12a6ac57585522b1ba5b4e8f250fd4a"
+  },
+  {
+    "path": "public/_redirects",
+    "status": "added",
+    "sha256": "6036983e5fc00f0169c9e939b1816ed771eee00e27f2fcc517b819041460b9ef"
+  },
+  {
+    "path": "recovery/pre-cloudflare/HANDOFF.md",
+    "status": "added",
+    "sha256": "dd7023ae228c207a5bce970244aea4fd05ff378b719b9690f956b9ee2722b705"
+  },
+  {
+    "path": "recovery/pre-cloudflare/README.md",
+    "status": "added",
+    "sha256": "583c8fa4d7b574eedd0a012d5acae2da66bc68e96e9c4ae3c6351ccb3d64162b"
+  },
+  {
+    "path": "recovery/pre-cloudflare/package.json",
+    "status": "added",
+    "sha256": "1b6a090837680164352c76909fd5d924a02061b7636096ba08200ad3bc4b18ae"
+  },
+  {
+    "path": "recovery/pre-cloudflare/projektregler.md",
+    "status": "added",
+    "sha256": "6093e33d1417da567ca034b7abe3466dcb2236b2bd259bf2af8470264eb5c12a"
+  },
+  {
+    "path": "recovery/pre-cloudflare/vite.config.ts",
+    "status": "added",
+    "sha256": "5451c22b17e7d8408674909b3d231f0ae4a4d017b740491ce7df008d961a7eee"
+  },
+  {
+    "path": "src/pages-main.tsx",
+    "status": "added",
+    "sha256": "9b3c942f67f93712af722acbd52faa7835f88d3e6d5844442f6748b48c41a7a8"
+  },
+  {
+    "path": "src/spel/LagringsInfo.tsx",
+    "status": "added",
+    "sha256": "a226ac1a751c0d1c82e14561b81629cc2aee3fe8c1450b7401889c7720df4bed"
+  },
+  {
+    "path": "src/spel/Spel.tsx",
+    "status": "modified",
+    "sha256": "40f7af635255c01f3d164832f3c91145e189e9d415c1e69f6de566d23355c610"
+  },
+  {
+    "path": "src/spel/ideer.test.ts",
+    "status": "added",
+    "sha256": "66e10c325c6211d15dc608a26a00654e53b772a586650a4b992399fc31da7967"
+  },
+  {
+    "path": "src/spel/lagring.test.ts",
+    "status": "added",
+    "sha256": "a956d80f1596ad0522a6435ad58cb251c4cb378285b254eb77b757d7b077bdf0"
+  },
+  {
+    "path": "src/spel/lagring.ts",
+    "status": "added",
+    "sha256": "3afce0ec0ff956541835ae5f947eef36f02e976c083192f02e3e3b9b17eadbe2"
+  },
+  {
+    "path": "src/spel/minne.ts",
+    "status": "modified",
+    "sha256": "6079d152788c6a0a73871c7259682b66c89c62819c1c5ad9e7135302ba108a8b"
+  },
+  {
+    "path": "src/styles.css",
+    "status": "modified",
+    "sha256": "6c5daadd7e91af677f4b9abee286ba10da7e7ff1a4011fccd664c8cc89b15f5c"
+  },
+  {
+    "path": "verification/STATUS.json",
+    "status": "added",
+    "sha256": "fc72ac9b616e054391667d8b3951961aa042b1d890c7744ebd358beea5cc63fa"
+  },
+  {
+    "path": "verification/baseline.log",
+    "status": "added",
+    "sha256": "bf44ad3dd98ecd5584a0cb4a445e2a2d62b39e0f1bc941e81228d63659add5f3"
+  },
+  {
+    "path": "verification/pages-build.log",
+    "status": "added",
+    "sha256": "29d535e8fd45a281ae6dd5ae97bbcbdd0cda3d078a0ba677392ec6a09db837f6"
+  },
+  {
+    "path": "verification/product-tests.log",
+    "status": "added",
+    "sha256": "dd24985c856486fc46c5c6d2fa82474e9766ebf4b9a422146bbd275d47d677b6"
+  },
+  {
+    "path": "verification/storage-typecheck.log",
+    "status": "added",
+    "sha256": "fba903974fe7442ca23b9a90ac11c263cbda329ff690fbff4f4933e984fb293c"
+  },
+  {
+    "path": "verification/syntax-check.cjs",
+    "status": "added",
+    "sha256": "0066a5f2c74fb6d8af9c626207a9c87d9b9804a769e871026b14a4339bf3a4e3"
+  },
+  {
+    "path": "verification/syntax.json",
+    "status": "added",
+    "sha256": "d7c45c73e2d49909ef835dbfc8466fcd3637d782ccd2406fb688ade5da242356"
+  },
+  {
+    "path": "verification/tsconfig.storage.json",
+    "status": "added",
+    "sha256": "add6f7ce6957d8165b02f93b37e54396ee4bfa82c117f2c30ad8ec79d354de5e"
+  },
+  {
+    "path": "vite.pages.config.ts",
+    "status": "added",
+    "sha256": "0e63decbb54b886069b3e5ddf8f85ecd1b7ea7ee752751e76a19eebdf85eee7c"
+  }
+]

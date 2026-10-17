@@ -1,0 +1,82 @@
+{
+ "_om": "Äventyrets områden. Taggarna i 'kraver' är samma som i data/egenskaper.json (runda 3), och här räknas även kroppens egna taggar (fågel flyger, fisk simmar, dinosaurie är stor). Ett djur med rätt tagg kan följa med som följeslagare. Ett område som är öppnat förblir öppet.",
+ "karta": {
+  "rubrik": "Kartan",
+  "knapp": "Ut på äventyr",
+  "hjalp": "Tryck på en plats. Vissa platser behöver ett djur som kan något särskilt.",
+  "valj_djur": "Vem ska följa med? Välj ett djur som {kan}.",
+  "kan_text": {
+   "flyga": "kan flyga",
+   "simma": "kan simma",
+   "lysa": "lyser",
+   "stor": "är jättestort"
+  },
+  "inget_djur": "Inget av dina djur {kan} än. Skriv ett nytt djur som {kan}!",
+  "hem": "Hem till gården"
+ },
+ "omraden": [
+  {
+   "id": "skogen",
+   "namn": "Skogen",
+   "nas_fran": "garden",
+   "hinder": {
+    "text": "Floden är för bred att gå över. Den som kan flyga kanske kan bära dig över?",
+    "kraver": {
+     "nagon_av": [
+      "flyga"
+     ]
+    },
+    "eller_bygg": "bro",
+    "eller_text": "Eller bygg en bro på gården, så kommer alla över!",
+    "klart": "Wiii! {djur} bar dig över floden!"
+   },
+   "beskrivning": "Höga granar, mossa, svampar och solstrålar mellan träden.",
+   "ritning_reserv": "Ängens bakgrund tonad mörkgrön (multiplicera #81C784) + 6-8 procedurgranar från bygg.json i två djupled + några svampar.",
+   "musik": null
+  },
+  {
+   "id": "sjon",
+   "namn": "Sjön",
+   "nas_fran": "garden",
+   "hinder": null,
+   "del_omrade": {
+    "id": "on",
+    "namn": "Ön",
+    "text": "Mitt i sjön ligger en liten ö med en fyr. Det är för långt att simma för dig – men kanske för någon annan?",
+    "kraver": {
+     "nagon_av": [
+      "simma"
+     ]
+    },
+    "klart": "Plask! {djur} simmade med dig ända ut till ön!"
+   },
+   "beskrivning": "En stor blå sjö med vass, en brygga och en ö med fyr långt ut.",
+   "ritning_reserv": "Övre halvan himmel, nedre halvan blå vattenyta (#4FC3F7 med vita vågstreck) + brygga (bruna rektanglar) + ön som en grön halvcirkel med fyren från bygg.json."
+  },
+  {
+   "id": "grottan",
+   "namn": "Grottan",
+   "nas_fran": "skogen",
+   "hinder": {
+    "text": "En jättestor sten ligger framför grottans öppning. Någon riktigt stor och stark skulle kunna rulla bort den.",
+    "kraver": {
+     "nagon_av": [
+      "stor"
+     ]
+    },
+    "klart": "Dunk! {djur} rullade bort stenen!"
+   },
+   "inne": {
+    "text": "Det är kolsvart här inne. Jag ser ingenting! Någon som lyser skulle hjälpa.",
+    "kraver": {
+     "nagon_av": [
+      "lysa"
+     ]
+    },
+    "klart": "{djur} lyser upp hela grottan. Oj, vad det glittrar!"
+   },
+   "beskrivning": "En grotta med glittrande kristaller i väggarna och en underjordisk sjö.",
+   "ritning_reserv": "Mörk bakgrund (#263238) med lila och turkosa kristaller (trianglar). Utan ljus: allt svart utom en liten cirkel runt pekaren. Med lysande djur: en stor ljuscirkel runt djuret."
+  }
+ ]
+}

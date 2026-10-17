@@ -1,0 +1,3105 @@
+{
+ "version": 1,
+ "duk": {
+  "b": 600,
+  "h": 600
+ },
+ "bakgrund": "bakgrund/ang.png",
+ "damm": {
+  "x": 0.05,
+  "y": 0.79,
+  "b": 0.37,
+  "h": 0.1
+ },
+ "kroppar": {
+  "kanin": {
+   "lager": {
+    "bas": "kroppar/kanin/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/kanin/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/kanin/prickar.png",
+    "ränder": "kroppar/kanin/rander.png",
+    "glitter": "kroppar/kanin/glitter.png",
+    "regnbåge": "kroppar/kanin/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     300,
+     170
+    ],
+    "ogon": [
+     300,
+     264
+    ],
+    "mun": [
+     320,
+     314
+    ],
+    "rygg": [
+     300,
+     376
+    ],
+    "sida": [
+     300,
+     410
+    ],
+    "svans": [
+     384,
+     468
+    ],
+    "fotter": [
+     300,
+     526
+    ],
+    "mitt": [
+     300,
+     353
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/kanin/linje_utan_ansikte.png",
+   "monstermask": "kroppar/kanin/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/kanin/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/kanin/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/kanin/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/kanin/glad/prickar.png",
+     "ränder": "kroppar/kanin/glad/rander.png",
+     "glitter": "kroppar/kanin/glad/glitter.png",
+     "regnbåge": "kroppar/kanin/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/kanin/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/kanin/ansikte_normal.png",
+    "blink": "kroppar/kanin/ansikte_blink.png",
+    "glad": "kroppar/kanin/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 300,
+     "y": 170,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "head_side": {
+     "x": 396,
+     "y": 188,
+     "rot": 20,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 264,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "neck": {
+     "x": 300,
+     "y": 364,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "chest": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "back": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 353.0,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 224,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 376,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 260,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 340,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 384,
+     "y": 468,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 320,
+     "y": 314,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 162,
+     "y": 146,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {},
+   "anim": {
+    "pivot_rot": [
+     300,
+     526
+    ],
+    "pivot_huvud": [
+     300,
+     364
+    ],
+    "svavar": false
+   }
+  },
+  "katt": {
+   "lager": {
+    "bas": "kroppar/katt/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/katt/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/katt/prickar.png",
+    "ränder": "kroppar/katt/rander.png",
+    "glitter": "kroppar/katt/glitter.png",
+    "regnbåge": "kroppar/katt/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     300,
+     170
+    ],
+    "ogon": [
+     300,
+     264
+    ],
+    "mun": [
+     324,
+     312
+    ],
+    "rygg": [
+     300,
+     376
+    ],
+    "sida": [
+     300,
+     410
+    ],
+    "svans": [
+     428,
+     304
+    ],
+    "fotter": [
+     300,
+     526
+    ],
+    "mitt": [
+     300,
+     353
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/katt/linje_utan_ansikte.png",
+   "monstermask": "kroppar/katt/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/katt/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/katt/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/katt/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/katt/glad/prickar.png",
+     "ränder": "kroppar/katt/glad/rander.png",
+     "glitter": "kroppar/katt/glad/glitter.png",
+     "regnbåge": "kroppar/katt/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/katt/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/katt/ansikte_normal.png",
+    "blink": "kroppar/katt/ansikte_blink.png",
+    "glad": "kroppar/katt/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 300,
+     "y": 170,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "head_side": {
+     "x": 379.4,
+     "y": 196.3,
+     "rot": 18,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 264,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "neck": {
+     "x": 300,
+     "y": 364,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "chest": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "back": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 353.0,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 224,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 376,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 260,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 340,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 428,
+     "y": 304,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 324,
+     "y": 312,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 162,
+     "y": 166,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {},
+   "anim": {
+    "pivot_rot": [
+     300,
+     526
+    ],
+    "pivot_huvud": [
+     300,
+     364
+    ],
+    "svavar": false
+   }
+  },
+  "hund": {
+   "lager": {
+    "bas": "kroppar/hund/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/hund/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/hund/prickar.png",
+    "ränder": "kroppar/hund/rander.png",
+    "glitter": "kroppar/hund/glitter.png",
+    "regnbåge": "kroppar/hund/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     300,
+     170
+    ],
+    "ogon": [
+     300,
+     264
+    ],
+    "mun": [
+     324,
+     320
+    ],
+    "rygg": [
+     300,
+     376
+    ],
+    "sida": [
+     300,
+     410
+    ],
+    "svans": [
+     438,
+     354
+    ],
+    "fotter": [
+     300,
+     526
+    ],
+    "mitt": [
+     300,
+     353
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/hund/linje_utan_ansikte.png",
+   "monstermask": "kroppar/hund/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/hund/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/hund/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/hund/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/hund/glad/prickar.png",
+     "ränder": "kroppar/hund/glad/rander.png",
+     "glitter": "kroppar/hund/glad/glitter.png",
+     "regnbåge": "kroppar/hund/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/hund/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/hund/ansikte_normal.png",
+    "blink": "kroppar/hund/ansikte_blink.png",
+    "glad": "kroppar/hund/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 300,
+     "y": 170,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "head_side": {
+     "x": 382,
+     "y": 172,
+     "rot": 18,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 264,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "neck": {
+     "x": 300,
+     "y": 364,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "chest": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "back": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 353.0,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 224,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 376,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 260,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 340,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 438,
+     "y": 354,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 324,
+     "y": 320,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 158,
+     "y": 166,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {},
+   "anim": {
+    "pivot_rot": [
+     300,
+     526
+    ],
+    "pivot_huvud": [
+     300,
+     364
+    ],
+    "svavar": false
+   }
+  },
+  "drake": {
+   "lager": {
+    "bas": "kroppar/drake/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/drake/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/drake/prickar.png",
+    "ränder": "kroppar/drake/rander.png",
+    "glitter": "kroppar/drake/glitter.png",
+    "regnbåge": "kroppar/drake/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     300,
+     172
+    ],
+    "ogon": [
+     300,
+     264
+    ],
+    "mun": [
+     336,
+     314
+    ],
+    "rygg": [
+     300,
+     376
+    ],
+    "sida": [
+     300,
+     410
+    ],
+    "svans": [
+     488,
+     354
+    ],
+    "fotter": [
+     300,
+     526
+    ],
+    "mitt": [
+     300,
+     353
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/drake/linje_utan_ansikte.png",
+   "monstermask": "kroppar/drake/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/drake/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/drake/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/drake/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/drake/glad/prickar.png",
+     "ränder": "kroppar/drake/glad/rander.png",
+     "glitter": "kroppar/drake/glad/glitter.png",
+     "regnbåge": "kroppar/drake/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/drake/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/drake/ansikte_normal.png",
+    "blink": "kroppar/drake/ansikte_blink.png",
+    "glad": "kroppar/drake/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 300,
+     "y": 172,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "head_side": {
+     "x": 379.4,
+     "y": 196.3,
+     "rot": 18,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 264,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "neck": {
+     "x": 300,
+     "y": 364,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "chest": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "back": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 353.0,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 224,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 376,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 260,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 340,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 488,
+     "y": 354,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 336,
+     "y": 314,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 162,
+     "y": 166,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {},
+   "anim": {
+    "pivot_rot": [
+     300,
+     526
+    ],
+    "pivot_huvud": [
+     300,
+     364
+    ],
+    "svavar": false
+   }
+  },
+  "häst": {
+   "lager": {
+    "bas": "kroppar/hast/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/hast/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/hast/prickar.png",
+    "ränder": "kroppar/hast/rander.png",
+    "glitter": "kroppar/hast/glitter.png",
+    "regnbåge": "kroppar/hast/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     300,
+     126
+    ],
+    "ogon": [
+     300,
+     232
+    ],
+    "mun": [
+     328,
+     356
+    ],
+    "rygg": [
+     300,
+     376
+    ],
+    "sida": [
+     300,
+     410
+    ],
+    "svans": [
+     448,
+     534
+    ],
+    "fotter": [
+     300,
+     526
+    ],
+    "mitt": [
+     300,
+     344
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/hast/linje_utan_ansikte.png",
+   "monstermask": "kroppar/hast/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/hast/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/hast/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/hast/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/hast/glad/prickar.png",
+     "ränder": "kroppar/hast/glad/rander.png",
+     "glitter": "kroppar/hast/glad/glitter.png",
+     "regnbåge": "kroppar/hast/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/hast/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/hast/ansikte_normal.png",
+    "blink": "kroppar/hast/ansikte_blink.png",
+    "glad": "kroppar/hast/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 300,
+     "y": 126,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "head_side": {
+     "x": 374,
+     "y": 164,
+     "rot": 16,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 232,
+     "rot": 0,
+     "skala": 0.96
+    },
+    "neck": {
+     "x": 300,
+     "y": 390,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "chest": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "back": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 344.0,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 224,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 376,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 260,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 340,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 448,
+     "y": 534,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 328,
+     "y": 356,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 168,
+     "y": 154,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {},
+   "anim": {
+    "pivot_rot": [
+     300,
+     526
+    ],
+    "pivot_huvud": [
+     300,
+     390
+    ],
+    "svavar": false
+   }
+  },
+  "fågel": {
+   "lager": {
+    "bas": "kroppar/fagel/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/fagel/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/fagel/prickar.png",
+    "ränder": "kroppar/fagel/rander.png",
+    "glitter": "kroppar/fagel/glitter.png",
+    "regnbåge": "kroppar/fagel/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     300,
+     170
+    ],
+    "ogon": [
+     300,
+     258
+    ],
+    "mun": [
+     304,
+     326
+    ],
+    "rygg": [
+     300,
+     372
+    ],
+    "sida": [
+     300,
+     410
+    ],
+    "svans": [
+     458,
+     454
+    ],
+    "fotter": [
+     300,
+     531
+    ],
+    "mitt": [
+     300,
+     356
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/fagel/linje_utan_ansikte.png",
+   "monstermask": "kroppar/fagel/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/fagel/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/fagel/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/fagel/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/fagel/glad/prickar.png",
+     "ränder": "kroppar/fagel/glad/rander.png",
+     "glitter": "kroppar/fagel/glad/glitter.png",
+     "regnbåge": "kroppar/fagel/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/fagel/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/fagel/ansikte_normal.png",
+    "blink": "kroppar/fagel/ansikte_blink.png",
+    "glad": "kroppar/fagel/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 300,
+     "y": 170,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "head_side": {
+     "x": 379.4,
+     "y": 198.6,
+     "rot": 18,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 258,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "neck": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "chest": {
+     "x": 300,
+     "y": 372,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "back": {
+     "x": 300,
+     "y": 372,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 356.0,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 214,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 386,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 266,
+     "y": 531,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 334,
+     "y": 531,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 458,
+     "y": 454,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 304,
+     "y": 326,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 162,
+     "y": 166,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {},
+   "anim": {
+    "pivot_rot": [
+     300,
+     531
+    ],
+    "pivot_huvud": [
+     300,
+     376
+    ],
+    "svavar": false
+   }
+  },
+  "fisk": {
+   "lager": {
+    "bas": "kroppar/fisk/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/fisk/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/fisk/prickar.png",
+    "ränder": "kroppar/fisk/rander.png",
+    "glitter": "kroppar/fisk/glitter.png",
+    "regnbåge": "kroppar/fisk/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     300,
+     210
+    ],
+    "ogon": [
+     300,
+     300
+    ],
+    "mun": [
+     314,
+     388
+    ],
+    "rygg": [
+     300,
+     310
+    ],
+    "sida": [
+     300,
+     334
+    ],
+    "svans": [
+     506,
+     330
+    ],
+    "fotter": [
+     300,
+     482
+    ],
+    "mitt": [
+     300,
+     330
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/fisk/linje_utan_ansikte.png",
+   "monstermask": "kroppar/fisk/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/fisk/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/fisk/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/fisk/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/fisk/glad/prickar.png",
+     "ränder": "kroppar/fisk/glad/rander.png",
+     "glitter": "kroppar/fisk/glad/glitter.png",
+     "regnbåge": "kroppar/fisk/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/fisk/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/fisk/ansikte_normal.png",
+    "blink": "kroppar/fisk/ansikte_blink.png",
+    "glad": "kroppar/fisk/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 300,
+     "y": 210,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "head_side": {
+     "x": 392,
+     "y": 238,
+     "rot": 20,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 300,
+     "rot": 0,
+     "skala": 1.12
+    },
+    "neck": {
+     "x": 300,
+     "y": 420,
+     "rot": 0,
+     "skala": 1.3
+    },
+    "chest": {
+     "x": 300,
+     "y": 370,
+     "rot": 0,
+     "skala": 1.15
+    },
+    "back": {
+     "x": 300,
+     "y": 310,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 330,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 174,
+     "y": 334,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 426,
+     "y": 334,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 256,
+     "y": 482,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 344,
+     "y": 482,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 506,
+     "y": 330,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 314,
+     "y": 388,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 148,
+     "y": 218,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {
+    "fart_skor_L": {
+     "dold": true
+    },
+    "fart_skor_R": {
+     "dold": true
+    },
+    "fena_L": {
+     "skala": 0.9
+    },
+    "fena_R": {
+     "skala": 0.9
+    },
+    "halsduk": {
+     "skala": 1.3
+    },
+    "ryggsack_remmar": {
+     "skala": 1.2
+    },
+    "mantel_spanne": {
+     "skala": 1.25
+    },
+    "mantel_bak": {
+     "skala": 1.15,
+     "dy": -150
+    }
+   },
+   "anim": {
+    "pivot_rot": [
+     300,
+     482
+    ],
+    "pivot_huvud": [
+     300,
+     420
+    ],
+    "svavar": true
+   }
+  },
+  "groda": {
+   "lager": {
+    "bas": "kroppar/groda/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/groda/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/groda/prickar.png",
+    "ränder": "kroppar/groda/rander.png",
+    "glitter": "kroppar/groda/glitter.png",
+    "regnbåge": "kroppar/groda/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     300,
+     186
+    ],
+    "ogon": [
+     300,
+     214
+    ],
+    "mun": [
+     366,
+     326
+    ],
+    "rygg": [
+     300,
+     390
+    ],
+    "sida": [
+     300,
+     418
+    ],
+    "svans": [
+     386,
+     472
+    ],
+    "fotter": [
+     300,
+     528
+    ],
+    "mitt": [
+     300,
+     373
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/groda/linje_utan_ansikte.png",
+   "monstermask": "kroppar/groda/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/groda/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/groda/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/groda/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/groda/glad/prickar.png",
+     "ränder": "kroppar/groda/glad/rander.png",
+     "glitter": "kroppar/groda/glad/glitter.png",
+     "regnbåge": "kroppar/groda/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/groda/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/groda/ansikte_normal.png",
+    "blink": "kroppar/groda/ansikte_blink.png",
+    "glad": "kroppar/groda/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 300,
+     "y": 186,
+     "rot": 0,
+     "skala": 0.85
+    },
+    "head_side": {
+     "x": 406,
+     "y": 184,
+     "rot": 20,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 214,
+     "rot": 0,
+     "skala": 1.3
+    },
+    "neck": {
+     "x": 300,
+     "y": 382,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "chest": {
+     "x": 300,
+     "y": 390,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "back": {
+     "x": 300,
+     "y": 390,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 373.0,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 216,
+     "y": 418,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 384,
+     "y": 418,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 248,
+     "y": 528,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 352,
+     "y": 528,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 386,
+     "y": 472,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 366,
+     "y": 326,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 144,
+     "y": 184,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {
+    "horn": {
+     "skala": 1.1
+    }
+   },
+   "anim": {
+    "pivot_rot": [
+     300,
+     528
+    ],
+    "pivot_huvud": [
+     300,
+     382
+    ],
+    "svavar": false
+   }
+  },
+  "gris": {
+   "lager": {
+    "bas": "kroppar/gris/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/gris/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/gris/prickar.png",
+    "ränder": "kroppar/gris/rander.png",
+    "glitter": "kroppar/gris/glitter.png",
+    "regnbåge": "kroppar/gris/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     300,
+     170
+    ],
+    "ogon": [
+     300,
+     258
+    ],
+    "mun": [
+     336,
+     354
+    ],
+    "rygg": [
+     300,
+     376
+    ],
+    "sida": [
+     300,
+     410
+    ],
+    "svans": [
+     444,
+     380
+    ],
+    "fotter": [
+     300,
+     526
+    ],
+    "mitt": [
+     300,
+     353
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/gris/linje_utan_ansikte.png",
+   "monstermask": "kroppar/gris/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/gris/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/gris/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/gris/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/gris/glad/prickar.png",
+     "ränder": "kroppar/gris/glad/rander.png",
+     "glitter": "kroppar/gris/glad/glitter.png",
+     "regnbåge": "kroppar/gris/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/gris/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/gris/ansikte_normal.png",
+    "blink": "kroppar/gris/ansikte_blink.png",
+    "glad": "kroppar/gris/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 300,
+     "y": 170,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "head_side": {
+     "x": 384,
+     "y": 174,
+     "rot": 18,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 258,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "neck": {
+     "x": 300,
+     "y": 364,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "chest": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "back": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 353.0,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 224,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 376,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 260,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 340,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 444,
+     "y": 380,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 336,
+     "y": 354,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 158,
+     "y": 166,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {},
+   "anim": {
+    "pivot_rot": [
+     300,
+     526
+    ],
+    "pivot_huvud": [
+     300,
+     364
+    ],
+    "svavar": false
+   },
+   "grundkropp": "hund",
+   "standardfarg": "#F8BBD0",
+   "standardfarg_ord": "ljusrosa"
+  },
+  "dinosaurie": {
+   "lager": {
+    "bas": "kroppar/dinosaurie/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/dinosaurie/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/dinosaurie/prickar.png",
+    "ränder": "kroppar/dinosaurie/rander.png",
+    "glitter": "kroppar/dinosaurie/glitter.png",
+    "regnbåge": "kroppar/dinosaurie/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     300,
+     174
+    ],
+    "ogon": [
+     300,
+     264
+    ],
+    "mun": [
+     346,
+     318
+    ],
+    "rygg": [
+     300,
+     376
+    ],
+    "sida": [
+     300,
+     410
+    ],
+    "svans": [
+     488,
+     354
+    ],
+    "fotter": [
+     300,
+     526
+    ],
+    "mitt": [
+     300,
+     353
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/dinosaurie/linje_utan_ansikte.png",
+   "monstermask": "kroppar/dinosaurie/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/dinosaurie/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/dinosaurie/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/dinosaurie/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/dinosaurie/glad/prickar.png",
+     "ränder": "kroppar/dinosaurie/glad/rander.png",
+     "glitter": "kroppar/dinosaurie/glad/glitter.png",
+     "regnbåge": "kroppar/dinosaurie/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/dinosaurie/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/dinosaurie/ansikte_normal.png",
+    "blink": "kroppar/dinosaurie/ansikte_blink.png",
+    "glad": "kroppar/dinosaurie/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 300,
+     "y": 174,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "head_side": {
+     "x": 388,
+     "y": 192,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 264,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "neck": {
+     "x": 300,
+     "y": 364,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "chest": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "back": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 353.0,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 224,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 376,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 260,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 340,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 488,
+     "y": 354,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 346,
+     "y": 318,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 162,
+     "y": 166,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {},
+   "anim": {
+    "pivot_rot": [
+     300,
+     526
+    ],
+    "pivot_huvud": [
+     300,
+     364
+    ],
+    "svavar": false
+   },
+   "grundkropp": "drake",
+   "standardfarg": "#43A047",
+   "standardfarg_ord": "grön"
+  },
+  "uggla": {
+   "lager": {
+    "bas": "kroppar/uggla/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/uggla/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/uggla/prickar.png",
+    "ränder": "kroppar/uggla/rander.png",
+    "glitter": "kroppar/uggla/glitter.png",
+    "regnbåge": "kroppar/uggla/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     300,
+     172
+    ],
+    "ogon": [
+     300,
+     262
+    ],
+    "mun": [
+     304,
+     316
+    ],
+    "rygg": [
+     300,
+     372
+    ],
+    "sida": [
+     300,
+     410
+    ],
+    "svans": [
+     370,
+     504
+    ],
+    "fotter": [
+     300,
+     531
+    ],
+    "mitt": [
+     300,
+     356
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/uggla/linje_utan_ansikte.png",
+   "monstermask": "kroppar/uggla/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/uggla/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/uggla/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/uggla/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/uggla/glad/prickar.png",
+     "ränder": "kroppar/uggla/glad/rander.png",
+     "glitter": "kroppar/uggla/glad/glitter.png",
+     "regnbåge": "kroppar/uggla/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/uggla/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/uggla/ansikte_normal.png",
+    "blink": "kroppar/uggla/ansikte_blink.png",
+    "glad": "kroppar/uggla/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 300,
+     "y": 172,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "head_side": {
+     "x": 396,
+     "y": 188,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 262,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "neck": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "chest": {
+     "x": 300,
+     "y": 372,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "back": {
+     "x": 300,
+     "y": 372,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 356.0,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 214,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 386,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 266,
+     "y": 531,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 334,
+     "y": 531,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 370,
+     "y": 504,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 304,
+     "y": 316,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 158,
+     "y": 166,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {},
+   "anim": {
+    "pivot_rot": [
+     300,
+     531
+    ],
+    "pivot_huvud": [
+     300,
+     376
+    ],
+    "svavar": false
+   },
+   "grundkropp": "fågel",
+   "standardfarg": "#8D6E63",
+   "standardfarg_ord": "brun"
+  },
+  "ekorre": {
+   "lager": {
+    "bas": "kroppar/ekorre/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/ekorre/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/ekorre/prickar.png",
+    "ränder": "kroppar/ekorre/rander.png",
+    "glitter": "kroppar/ekorre/glitter.png",
+    "regnbåge": "kroppar/ekorre/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     300,
+     170
+    ],
+    "ogon": [
+     300,
+     264
+    ],
+    "mun": [
+     322,
+     318
+    ],
+    "rygg": [
+     300,
+     376
+    ],
+    "sida": [
+     300,
+     410
+    ],
+    "svans": [
+     508,
+     234
+    ],
+    "fotter": [
+     300,
+     526
+    ],
+    "mitt": [
+     300,
+     353
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/ekorre/linje_utan_ansikte.png",
+   "monstermask": "kroppar/ekorre/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/ekorre/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/ekorre/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/ekorre/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/ekorre/glad/prickar.png",
+     "ränder": "kroppar/ekorre/glad/rander.png",
+     "glitter": "kroppar/ekorre/glad/glitter.png",
+     "regnbåge": "kroppar/ekorre/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/ekorre/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/ekorre/ansikte_normal.png",
+    "blink": "kroppar/ekorre/ansikte_blink.png",
+    "glad": "kroppar/ekorre/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 300,
+     "y": 170,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "head_side": {
+     "x": 379.4,
+     "y": 196.3,
+     "rot": 18,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 264,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "neck": {
+     "x": 300,
+     "y": 364,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "chest": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "back": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 353.0,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 224,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 376,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 260,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 340,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 508,
+     "y": 234,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 322,
+     "y": 318,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 162,
+     "y": 166,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {},
+   "anim": {
+    "pivot_rot": [
+     300,
+     526
+    ],
+    "pivot_huvud": [
+     300,
+     364
+    ],
+    "svavar": false
+   },
+   "grundkropp": "katt",
+   "standardfarg": "#FB8C00",
+   "standardfarg_ord": "orange"
+  },
+  "bäver": {
+   "lager": {
+    "bas": "kroppar/baver/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/baver/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/baver/prickar.png",
+    "ränder": "kroppar/baver/rander.png",
+    "glitter": "kroppar/baver/glitter.png",
+    "regnbåge": "kroppar/baver/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     300,
+     172
+    ],
+    "ogon": [
+     300,
+     264
+    ],
+    "mun": [
+     330,
+     326
+    ],
+    "rygg": [
+     300,
+     376
+    ],
+    "sida": [
+     300,
+     410
+    ],
+    "svans": [
+     484,
+     454
+    ],
+    "fotter": [
+     300,
+     526
+    ],
+    "mitt": [
+     300,
+     354
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/baver/linje_utan_ansikte.png",
+   "monstermask": "kroppar/baver/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/baver/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/baver/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/baver/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/baver/glad/prickar.png",
+     "ränder": "kroppar/baver/glad/rander.png",
+     "glitter": "kroppar/baver/glad/glitter.png",
+     "regnbåge": "kroppar/baver/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/baver/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/baver/ansikte_normal.png",
+    "blink": "kroppar/baver/ansikte_blink.png",
+    "glad": "kroppar/baver/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 300,
+     "y": 172,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "head_side": {
+     "x": 380,
+     "y": 172,
+     "rot": 18,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 264,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "neck": {
+     "x": 300,
+     "y": 366,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "chest": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "back": {
+     "x": 300,
+     "y": 376,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 354.0,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 224,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 376,
+     "y": 410,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 260,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 340,
+     "y": 526,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 484,
+     "y": 454,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 330,
+     "y": 326,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 158,
+     "y": 168,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {},
+   "anim": {
+    "pivot_rot": [
+     300,
+     526
+    ],
+    "pivot_huvud": [
+     300,
+     366
+    ],
+    "svavar": false
+   },
+   "grundkropp": "kanin",
+   "standardfarg": "#8D6E63",
+   "standardfarg_ord": "brun"
+  },
+  "haj": {
+   "lager": {
+    "bas": "kroppar/haj/bas.png",
+    "skugga": "kroppar/tom_skugga.png",
+    "linje": "kroppar/haj/linje.png"
+   },
+   "monster": {
+    "prickar": "kroppar/haj/prickar.png",
+    "ränder": "kroppar/haj/rander.png",
+    "glitter": "kroppar/haj/glitter.png",
+    "regnbåge": "kroppar/haj/regnbage.png"
+   },
+   "ankare": {
+    "huvud": [
+     250,
+     222
+    ],
+    "ogon": [
+     300,
+     290
+    ],
+    "mun": [
+     360,
+     384
+    ],
+    "rygg": [
+     300,
+     310
+    ],
+    "sida": [
+     300,
+     334
+    ],
+    "svans": [
+     510,
+     330
+    ],
+    "fotter": [
+     300,
+     468
+    ],
+    "mitt": [
+     300,
+     330
+    ]
+   },
+   "tillbehorsskala": 1.0,
+   "linje_utan_ansikte": "kroppar/haj/linje_utan_ansikte.png",
+   "monstermask": "kroppar/haj/monstermask.png",
+   "glad": {
+    "lager": {
+     "bas": "kroppar/haj/glad/bas.png",
+     "skugga": "kroppar/tom_skugga.png",
+     "linje": "kroppar/haj/glad/linje.png"
+    },
+    "linje_utan_ansikte": "kroppar/haj/glad/linje_utan_ansikte.png",
+    "monster": {
+     "prickar": "kroppar/haj/glad/prickar.png",
+     "ränder": "kroppar/haj/glad/rander.png",
+     "glitter": "kroppar/haj/glad/glitter.png",
+     "regnbåge": "kroppar/haj/glad/regnbage.png"
+    },
+    "monstermask": "kroppar/haj/glad/monstermask.png"
+   },
+   "ansikten": {
+    "normal": "kroppar/haj/ansikte_normal.png",
+    "blink": "kroppar/haj/ansikte_blink.png",
+    "glad": "kroppar/haj/ansikte_glad.png"
+   },
+   "ankare_detalj": {
+    "head_top": {
+     "x": 250,
+     "y": 222,
+     "rot": -14,
+     "skala": 1.0
+    },
+    "head_side": {
+     "x": 204,
+     "y": 240,
+     "rot": -20,
+     "skala": 1.0
+    },
+    "eyes": {
+     "x": 300,
+     "y": 290,
+     "rot": 0,
+     "skala": 1.08
+    },
+    "neck": {
+     "x": 300,
+     "y": 420,
+     "rot": 0,
+     "skala": 1.3
+    },
+    "chest": {
+     "x": 300,
+     "y": 370,
+     "rot": 0,
+     "skala": 1.15
+    },
+    "back": {
+     "x": 300,
+     "y": 310,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "center": {
+     "x": 300,
+     "y": 330,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_L": {
+     "x": 170,
+     "y": 334,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "side_R": {
+     "x": 430,
+     "y": 334,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_L": {
+     "x": 256,
+     "y": 468,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "feet_R": {
+     "x": 344,
+     "y": 468,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "tail": {
+     "x": 510,
+     "y": 330,
+     "rot": 0,
+     "skala": 1.0
+    },
+    "mouth": {
+     "x": 360,
+     "y": 384,
+     "rot": 22,
+     "skala": 1.0
+    },
+    "fx": {
+     "x": 144,
+     "y": 222,
+     "rot": 0,
+     "skala": 1.0
+    }
+   },
+   "justeringar": {},
+   "anim": {
+    "pivot_rot": [
+     300,
+     468
+    ],
+    "pivot_huvud": [
+     300,
+     420
+    ],
+    "svavar": false
+   },
+   "grundkropp": "fisk",
+   "standardfarg": "#9E9E9E",
+   "standardfarg_ord": "grå"
+  }
+ },
+ "formagor": {
+  "vingar": {
+   "fil": "formagor/vingar.png",
+   "ankare": "rygg",
+   "pivot": [
+    257,
+    211
+   ],
+   "bakom": true,
+   "ord": "flyger",
+   "delar": [
+    {
+     "namn": "vingar",
+     "fil": "delar/formagor/vingar.png",
+     "ankare": "back",
+     "pivot": [
+      230,
+      210
+     ],
+     "rot": 0,
+     "skala": 1.12,
+     "z": -30,
+     "bakom": true
+    }
+   ]
+  },
+  "fenor": {
+   "fil": "formagor/fenor.png",
+   "ankare": "sida",
+   "pivot": [
+    205,
+    102
+   ],
+   "bakom": true,
+   "ord": "simmar",
+   "delar": [
+    {
+     "namn": "fena_L",
+     "fil": "delar/formagor/fena_L.png",
+     "ankare": "side_L",
+     "pivot": [
+      120,
+      60
+     ],
+     "rot": 22,
+     "skala": 1.15,
+     "z": -10,
+     "bakom": true
+    },
+    {
+     "namn": "fena_R",
+     "fil": "delar/formagor/fena_R.png",
+     "ankare": "side_R",
+     "pivot": [
+      30,
+      60
+     ],
+     "rot": -22,
+     "skala": 1.15,
+     "z": -10,
+     "bakom": true
+    },
+    {
+     "namn": "bubblor",
+     "fil": "delar/formagor/bubblor.png",
+     "ankare": "fx",
+     "pivot": [
+      50,
+      100
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": 80,
+     "bakom": false
+    }
+   ]
+  },
+  "aura": {
+   "fil": "formagor/aura.png",
+   "ankare": "mitt",
+   "pivot": [
+    258,
+    274
+   ],
+   "bakom": true,
+   "ord": "lyser",
+   "delar": [
+    {
+     "namn": "aura",
+     "fil": "delar/formagor/aura.png",
+     "ankare": "center",
+     "pivot": [
+      260,
+      270
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": -50,
+     "bakom": true
+    },
+    {
+     "namn": "aura_gnistor",
+     "fil": "delar/formagor/aura_gnistor.png",
+     "ankare": "center",
+     "pivot": [
+      280,
+      280
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": 90,
+     "bakom": false
+    }
+   ]
+  },
+  "flammor": {
+   "fil": "formagor/flammor.png",
+   "ankare": "mun",
+   "pivot": [
+    14,
+    41
+   ],
+   "bakom": false,
+   "ord": "sprutar eld",
+   "delar": [
+    {
+     "namn": "eld",
+     "fil": "delar/formagor/eld.png",
+     "ankare": "mouth",
+     "pivot": [
+      14,
+      96
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": 70,
+     "bakom": false
+    }
+   ]
+  },
+  "fartlinjer": {
+   "fil": "formagor/fartlinjer.png",
+   "ankare": "mitt",
+   "pivot": [
+    278,
+    136
+   ],
+   "bakom": true,
+   "ord": "springer snabbt",
+   "delar": [
+    {
+     "namn": "fart_linjer",
+     "fil": "delar/formagor/fart_linjer.png",
+     "ankare": "center",
+     "pivot": [
+      280,
+      180
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": -28,
+     "bakom": true
+    },
+    {
+     "namn": "fart_skor_L",
+     "fil": "delar/formagor/fart_skor_L.png",
+     "ankare": "feet_L",
+     "pivot": [
+      60,
+      66
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": 60,
+     "bakom": false
+    },
+    {
+     "namn": "fart_skor_R",
+     "fil": "delar/formagor/fart_skor_R.png",
+     "ankare": "feet_R",
+     "pivot": [
+      60,
+      66
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": 60,
+     "bakom": false
+    }
+   ]
+  },
+  "studs": {
+   "fil": "formagor/studs.png",
+   "ankare": "fotter",
+   "pivot": [
+    81,
+    6
+   ],
+   "bakom": true,
+   "ord": "hoppar",
+   "delar": [
+    {
+     "namn": "studs_L",
+     "fil": "delar/formagor/studs_L.png",
+     "ankare": "feet_L",
+     "pivot": [
+      50,
+      6
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": -5,
+     "bakom": true
+    },
+    {
+     "namn": "studs_R",
+     "fil": "delar/formagor/studs_R.png",
+     "ankare": "feet_R",
+     "pivot": [
+      50,
+      6
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": -5,
+     "bakom": true
+    }
+   ]
+  }
+ },
+ "tillbehor": {
+  "hatt": {
+   "fil": "tillbehor/hatt.png",
+   "ankare": "huvud",
+   "pivot": [
+    83,
+    105
+   ],
+   "plats": "huvud",
+   "delar": [
+    {
+     "namn": "hatt",
+     "fil": "delar/tillbehor/hatt.png",
+     "ankare": "head_top",
+     "pivot": [
+      95,
+      110
+     ],
+     "rot": -10,
+     "skala": 1.0,
+     "z": 50,
+     "bakom": false,
+     "bas": "delar/tillbehor/hatt_bas.png",
+     "linje": "delar/tillbehor/hatt_linje.png",
+     "standardfarg": "#6C4FE0",
+     "fasta_delar": "band (gul) och stjärna"
+    }
+   ],
+   "farg": {
+    "bas": "tillbehor/hatt_bas.png",
+    "linje": "tillbehor/hatt_linje.png",
+    "standardfarg": "#6C4FE0",
+    "fasta_delar": "band (gul) och stjärna"
+   }
+  },
+  "krona": {
+   "fil": "tillbehor/krona.png",
+   "ankare": "huvud",
+   "pivot": [
+    95,
+    98
+   ],
+   "plats": "huvud",
+   "delar": [
+    {
+     "namn": "krona",
+     "fil": "delar/tillbehor/krona.png",
+     "ankare": "head_top",
+     "pivot": [
+      95,
+      104
+     ],
+     "rot": -9,
+     "skala": 1.0,
+     "z": 50,
+     "bakom": false,
+     "bas": "delar/tillbehor/krona_bas.png",
+     "linje": "delar/tillbehor/krona_linje.png",
+     "standardfarg": "#FFC83D",
+     "fasta_delar": "ädelstenar (rosa, blå)"
+    }
+   ],
+   "farg": {
+    "bas": "tillbehor/krona_bas.png",
+    "linje": "tillbehor/krona_linje.png",
+    "standardfarg": "#FFC83D",
+    "fasta_delar": "ädelstenar (rosa, blå)"
+   }
+  },
+  "glasögon": {
+   "fil": "tillbehor/glasogon.png",
+   "ankare": "ogon",
+   "pivot": [
+    106,
+    48
+   ],
+   "plats": "ogon",
+   "delar": [
+    {
+     "namn": "glasogon",
+     "fil": "delar/tillbehor/glasogon.png",
+     "ankare": "eyes",
+     "pivot": [
+      130,
+      60
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": 30,
+     "bakom": false,
+     "bas": "delar/tillbehor/glasogon_bas.png",
+     "linje": "delar/tillbehor/glasogon_linje.png",
+     "standardfarg": "#FF5C7A",
+     "fasta_delar": "glas och glans"
+    }
+   ],
+   "farg": {
+    "bas": "tillbehor/glasogon_bas.png",
+    "linje": "tillbehor/glasogon_linje.png",
+    "standardfarg": "#FF5C7A",
+    "fasta_delar": "glas och glans"
+   }
+  },
+  "halsduk": {
+   "fil": "tillbehor/halsduk.png",
+   "ankare": "rygg",
+   "pivot": [
+    113,
+    35
+   ],
+   "plats": "hals",
+   "delar": [
+    {
+     "namn": "halsduk",
+     "fil": "delar/tillbehor/halsduk.png",
+     "ankare": "neck",
+     "pivot": [
+      120,
+      26
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": 20,
+     "bakom": false,
+     "bas": "delar/tillbehor/halsduk_bas.png",
+     "linje": "delar/tillbehor/halsduk_linje.png",
+     "standardfarg": "#FF6B4A",
+     "fasta_delar": "inga (ränderna blir ljusare nyans)"
+    }
+   ],
+   "farg": {
+    "bas": "tillbehor/halsduk_bas.png",
+    "linje": "tillbehor/halsduk_linje.png",
+    "standardfarg": "#FF6B4A",
+    "fasta_delar": "inga (ränderna blir ljusare nyans)"
+   }
+  },
+  "rosett": {
+   "fil": "tillbehor/rosett.png",
+   "ankare": "huvud",
+   "pivot": [
+    -25,
+    37
+   ],
+   "plats": "huvudsida",
+   "delar": [
+    {
+     "namn": "rosett",
+     "fil": "delar/tillbehor/rosett.png",
+     "ankare": "head_side",
+     "pivot": [
+      75,
+      50
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": 40,
+     "bakom": false,
+     "bas": "delar/tillbehor/rosett_bas.png",
+     "linje": "delar/tillbehor/rosett_linje.png",
+     "standardfarg": "#FF4D6D",
+     "fasta_delar": "inga"
+    }
+   ],
+   "farg": {
+    "bas": "tillbehor/rosett_bas.png",
+    "linje": "tillbehor/rosett_linje.png",
+    "standardfarg": "#FF4D6D",
+    "fasta_delar": "inga"
+   }
+  },
+  "horn": {
+   "fil": "tillbehor/horn.png",
+   "ankare": "huvud",
+   "pivot": [
+    49,
+    104
+   ],
+   "plats": "huvud",
+   "delar": [
+    {
+     "namn": "horn",
+     "fil": "delar/tillbehor/horn.png",
+     "ankare": "head_top",
+     "pivot": [
+      55,
+      118
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": 50,
+     "bakom": false,
+     "bas": "delar/tillbehor/horn_bas.png",
+     "linje": "delar/tillbehor/horn_linje.png",
+     "standardfarg": "#FFF0C2",
+     "fasta_delar": "gnistan"
+    }
+   ],
+   "farg": {
+    "bas": "tillbehor/horn_bas.png",
+    "linje": "tillbehor/horn_linje.png",
+    "standardfarg": "#FFF0C2",
+    "fasta_delar": "gnistan"
+   }
+  },
+  "ryggsäck": {
+   "fil": "tillbehor/ryggsack.png",
+   "ankare": "rygg",
+   "pivot": [
+    74,
+    10
+   ],
+   "plats": "rygg",
+   "delar": [
+    {
+     "namn": "ryggsack_bak",
+     "fil": "delar/tillbehor/ryggsack_bak.png",
+     "ankare": "back",
+     "pivot": [
+      120,
+      100
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": -20,
+     "bakom": true,
+     "bas": "delar/tillbehor/ryggsack_bak_bas.png",
+     "linje": "delar/tillbehor/ryggsack_bak_linje.png",
+     "standardfarg": "#FFB23F",
+     "fasta_delar": "inga"
+    },
+    {
+     "namn": "ryggsack_remmar",
+     "fil": "delar/tillbehor/ryggsack_remmar.png",
+     "ankare": "chest",
+     "pivot": [
+      80,
+      10
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": 10,
+     "bakom": false,
+     "bas": "delar/tillbehor/ryggsack_remmar_bas.png",
+     "linje": "delar/tillbehor/ryggsack_remmar_linje.png",
+     "standardfarg": "#FFB23F",
+     "fasta_delar": "spännen (gula)"
+    }
+   ],
+   "farg": {
+    "bas": "tillbehor/ryggsack_bas.png",
+    "linje": "tillbehor/ryggsack_linje.png",
+    "standardfarg": "#FFB23F",
+    "fasta_delar": "inga; spännen (gula)"
+   }
+  },
+  "mantel": {
+   "fil": "tillbehor/mantel.png",
+   "ankare": "rygg",
+   "pivot": [
+    72,
+    30
+   ],
+   "plats": "rygg",
+   "delar": [
+    {
+     "namn": "mantel_bak",
+     "fil": "delar/tillbehor/mantel_bak.png",
+     "ankare": "neck",
+     "pivot": [
+      165,
+      14
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": -40,
+     "bakom": true,
+     "bas": "delar/tillbehor/mantel_bak_bas.png",
+     "linje": "delar/tillbehor/mantel_bak_linje.png",
+     "standardfarg": "#E2334F",
+     "fasta_delar": "inga"
+    },
+    {
+     "namn": "mantel_spanne",
+     "fil": "delar/tillbehor/mantel_spanne.png",
+     "ankare": "neck",
+     "pivot": [
+      80,
+      20
+     ],
+     "rot": 0,
+     "skala": 1.0,
+     "z": 22,
+     "bakom": false,
+     "bas": "delar/tillbehor/mantel_spanne_bas.png",
+     "linje": "delar/tillbehor/mantel_spanne_linje.png",
+     "standardfarg": "#E2334F",
+     "fasta_delar": "spänne (guld) med stjärna"
+    }
+   ],
+   "farg": {
+    "bas": "tillbehor/mantel_bas.png",
+    "linje": "tillbehor/mantel_linje.png",
+    "standardfarg": "#E2334F",
+    "fasta_delar": "inga; spänne (guld) med stjärna"
+   }
+  }
+ },
+ "_tillagg": "Allt utöver kontraktet i karna.md är valfritt. Se LASMIG.md.",
+ "stil": "A (tjock kontur)",
+ "standardfarg": "#B7BCC6",
+ "storlekar": {
+  "liten": 0.75,
+  "mellan": 1.0,
+  "stor": 1.3
+ },
+ "monsterfarg": {
+  "prickar": {
+   "blanda_med": "#FFFFFF",
+   "andel": 0.62
+  },
+  "ränder": {
+   "blanda_med": "#1E2A6E",
+   "andel": 0.38
+  },
+  "glitter": null,
+  "regnbåge": null
+ },
+ "platser": {
+  "huvud": [
+   "hatt",
+   "krona",
+   "horn"
+  ],
+  "rygg": [
+   "ryggsäck",
+   "mantel"
+  ],
+  "hals": [
+   "halsduk"
+  ],
+  "ogon": [
+   "glasögon"
+  ],
+  "huvudsida": [
+   "rosett"
+  ],
+  "regel": "Ett tillbehör per plats. Det senast nämnda ordet vinner."
+ },
+ "bakgrund_hd": {
+  "2x": "bakgrund/ang@2x.png",
+  "3x": "bakgrund/ang@3x.png"
+ },
+ "bakgrund_utan_damm": "bakgrund/ang_utan_damm.png",
+ "anim": "anim.json",
+ "logo": {
+  "hel": "logo/trollpennan_logo.png",
+  "halv": "logo/trollpennan_logo_halv.png"
+ },
+ "penna": {
+  "vilar": "penna/penna_idle.png",
+  "skriver": "penna/penna_skriver.png"
+ },
+ "tillbehorsfarg": {
+  "regel": "Färgord på ett tillbehör ('röd hatt'): rita bas (vit) tonad med färgen och sedan linje ovanpå, i stället för fil. Gäller både tillbehor.<t>.farg (bakad, samma pivot som fil) och varje del i delar (bas/linje). Utan färgord: rita fil som förut. fasta_delar = det som behåller sin färg (t.ex. kronans ädelstenar, glasögonens glas)."
+ },
+ "recept": {
+  "enhörning": {
+   "kropp": "häst",
+   "tillbehor": [
+    "horn"
+   ],
+   "farg": "#FAFAFA",
+   "ord": [
+    "enhörning",
+    "enhörningen",
+    "enhörningar",
+    "enhörningarna"
+   ]
+  },
+  "gris": {
+   "kropp": "gris",
+   "farg": "#F8BBD0",
+   "ord": [
+    "gris",
+    "grisen",
+    "grisar",
+    "grisarna",
+    "nöff",
+    "nöffen",
+    "nöffar",
+    "nöffarna",
+    "nasse",
+    "nassen",
+    "nassar",
+    "nassarna",
+    "kulting",
+    "kultingen",
+    "kultingar",
+    "kultingarna"
+   ]
+  },
+  "dinosaurie": {
+   "kropp": "dinosaurie",
+   "farg": "#43A047",
+   "ord": [
+    "dinosaurie",
+    "dinosaurien",
+    "dinosaurier",
+    "dinosaurierna",
+    "dino",
+    "dinon",
+    "dinos",
+    "dinosar",
+    "dinosarna"
+   ]
+  },
+  "uggla": {
+   "kropp": "uggla",
+   "farg": "#8D6E63",
+   "ord": [
+    "uggla",
+    "ugglan",
+    "ugglor",
+    "ugglorna"
+   ]
+  },
+  "ekorre": {
+   "kropp": "ekorre",
+   "farg": "#FB8C00",
+   "ord": [
+    "ekorre",
+    "ekorren",
+    "ekorrar",
+    "ekorrarna"
+   ]
+  },
+  "bäver": {
+   "kropp": "bäver",
+   "farg": "#8D6E63",
+   "ord": [
+    "bäver",
+    "bävern",
+    "bävrar",
+    "bävrarna"
+   ]
+  },
+  "haj": {
+   "kropp": "haj",
+   "farg": "#9E9E9E",
+   "ord": [
+    "haj",
+    "hajen",
+    "hajar",
+    "hajarna"
+   ]
+  }
+ },
+ "recept_regel": "Valfritt. Ord -> recept. 'kropp' är en nyckel i kroppar; 'tillbehor'/'formagor' läggs till som om barnet skrivit dem (ett senare ord på samma plats vinner); 'farg' är standardfärg när inget färgord finns. 'ord' = alla former och smeknamn som ska ge receptet. Samma ord finns i ord_tillagg.json i ord.json-format (del.kropp/del.farg) för spel som bara läser ord.json."
+}

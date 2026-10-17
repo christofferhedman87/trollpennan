@@ -1,0 +1,21 @@
+{
+ "_om": "Nytt på föräldrasidan i runda 6. Allt räknas och sparas bara lokalt.",
+ "sammanfattning": {
+  "rubrik": "Så här går det",
+  "rader": [
+   "Ord som skrivits: {n}",
+   "Guldord: {n}",
+   "Hemliga ord hittade: {n} av {total}",
+   "Önskningar uppfyllda: {n}",
+   "Byggen: {n}",
+   "Vilda vänner: {n} av 7",
+   "Ord som Trollpennan inte kunde (önskelistan): {n}"
+  ]
+ },
+ "ordlista": {
+  "knapp": "Ladda ner alla skrivna ord",
+  "hjalp": "En textfil med alla ord hon har skrivit, med de vanligaste först.",
+  "filnamn": "trollpennan-ord.txt"
+ },
+ "tid": "Ingen speltid eller spårning visas eller sparas utöver räknarna ovan."
+}

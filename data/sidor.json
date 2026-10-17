@@ -1,0 +1,166 @@
+{
+ "_om": "Bokens sidor. Barnet köper själv sidor med stjärnor, i valfri ordning. Varje sida visar sina ord som gåtor (ledtradar.json) och tre 'prova'-meningar att läsa och skriva av. Skrivna ord fungerar ALLTID oavsett sidor; sidorna ger bara mål och ledtrådar.",
+ "ekonomi": {
+  "kostnad_i_kopordning": [
+   3,
+   5,
+   8,
+   10,
+   12,
+   15
+  ],
+  "kostnad_not": "Första sidan barnet köper kostar 3, andra 5 osv., oavsett vilken sida hon väljer.",
+  "intjaning": {
+   "onskan": "1-3 enligt onskningar.json",
+   "hemligt_ord_forsta_gangen": 1,
+   "guldord_forsta_gangen": 1
+  },
+  "aldrig": "Stjärnor försvinner aldrig. Inga köp för pengar, inga erbjudanden, ingen nedräkning. Räknaren visar bara hur många hon har.",
+  "spara": "Stjärnor, köpta sidor och hittade ord sparas i localStorage tillsammans med djuren.",
+  "uppskattat_tempo": "Ca 5 önskningar på en kvart, alltså första sidan efter 3-5 minuter."
+ },
+ "sidor": [
+  {
+   "id": "bondgard",
+   "titel": "Bondgårdens sida",
+   "ikon_kropp": "gris",
+   "farg": "#F8BBD0",
+   "ord": [
+    "kattunge",
+    "kisse",
+    "valp",
+    "vovve",
+    "ponny",
+    "föl",
+    "gris",
+    "nöff",
+    "nasse",
+    "kulting",
+    "ljusrosa"
+   ],
+   "prova": [
+    "en ljusrosa kulting",
+    "tre valpar med rosett",
+    "en kattunge med hatt"
+   ],
+   "oppnas": "Mu! Nu vaknar bondgårdens djur i boken."
+  },
+  {
+   "id": "havet",
+   "titel": "Havets sida",
+   "ikon_kropp": "haj",
+   "farg": "#4FC3F7",
+   "ord": [
+    "haj",
+    "fenor",
+    "ljusblå",
+    "mörkblå",
+    "skimrande",
+    "genomskinlig",
+    "silvrig",
+    "silver",
+    "solglasögon"
+   ],
+   "prova": [
+    "en skimrande haj",
+    "en katt med fenor",
+    "en mörkblå fisk med solglasögon"
+   ],
+   "oppnas": "Plask! Havets ord simmar in i boken."
+  },
+  {
+   "id": "skogen",
+   "titel": "Skogens sida",
+   "ikon_kropp": "uggla",
+   "farg": "#66BB6A",
+   "ord": [
+    "padda",
+    "uggla",
+    "ekorre",
+    "bäver",
+    "spräcklig",
+    "mörkgrön",
+    "ljusgrön",
+    "kappa",
+    "studsar"
+   ],
+   "prova": [
+    "en uggla med kappa",
+    "en spräcklig padda",
+    "en ekorre som studsar"
+   ],
+   "oppnas": "Prassel i löven! Skogens ord har kommit."
+  },
+  {
+   "id": "natten",
+   "titel": "Natthimlens sida",
+   "ikon_kropp": "fågel",
+   "farg": "#5C6BC0",
+   "ord": [
+    "självlysande",
+    "lysande",
+    "flygande",
+    "vingar",
+    "pytteliten",
+    "jätteliten",
+    "prickar"
+   ],
+   "prova": [
+    "en självlysande uggla",
+    "en pytteliten flygande gris",
+    "en hund med vingar"
+   ],
+   "oppnas": "Nu tänds stjärnorna i boken."
+  },
+  {
+   "id": "sagan",
+   "titel": "Sagosidan",
+   "ikon_kropp": "häst",
+   "farg": "#BA68C8",
+   "ord": [
+    "enhörning",
+    "trollkarlshatt",
+    "guldkrona",
+    "gyllene",
+    "guld",
+    "glittrar",
+    "gnistrande",
+    "osynlig",
+    "regnbågsfärgad",
+    "regnbåge",
+    "glitter"
+   ],
+   "prova": [
+    "en regnbågsfärgad enhörning",
+    "en katt med trollkarlshatt",
+    "en osynlig drake"
+   ],
+   "oppnas": "Det var en gång … en helt ny sida!"
+  },
+  {
+   "id": "urtiden",
+   "titel": "Urtidssidan",
+   "ikon_kropp": "dinosaurie",
+   "farg": "#8D6E63",
+   "ord": [
+    "dinosaurie",
+    "dino",
+    "enorm",
+    "jättestor",
+    "tigerrandig",
+    "ränder",
+    "eldsprutande",
+    "eld",
+    "blixtsnabb",
+    "supersnabb",
+    "snabb"
+   ],
+   "prova": [
+    "en enorm dinosaurie",
+    "en tigerrandig dino",
+    "en blixtsnabb eldsprutande gris"
+   ],
+   "oppnas": "Dunk, dunk! Urtidens ord stampar in i boken."
+  }
+ ]
+}

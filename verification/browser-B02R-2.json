@@ -1,0 +1,49 @@
+{
+  "results": [
+    {
+      "name": "adventure menu opens map through UI",
+      "pass": true
+    },
+    {
+      "name": "forest initially reachable; cave gated",
+      "pass": true
+    },
+    {
+      "name": "lake opens through map UI",
+      "pass": true
+    },
+    {
+      "name": "return from lake through UI",
+      "pass": true
+    },
+    {
+      "name": "forest without flying companion gives guidance",
+      "pass": true
+    },
+    {
+      "name": "missing dragon model triggers real fallback",
+      "pass": true
+    },
+    {
+      "name": "missing model does not replace app with error screen",
+      "pass": true
+    },
+    {
+      "name": "can create second animal after model failure",
+      "pass": true
+    },
+    {
+      "name": "missing-model animal survives reload",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "expectedModelErrors": [
+    "Could not load /models/drake.glb: fetch for \"http://127.0.0.1:4173/models/drake.glb\" responded with 404: Not Found"
+  ],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Texture key already in use: kroppar/tom_skugga.png",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ]
+}

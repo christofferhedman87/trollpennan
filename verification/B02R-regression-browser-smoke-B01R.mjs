@@ -1,0 +1,45 @@
+import { chromium } from 'playwright';
+import http from 'node:http';
+import fs from 'node:fs';
+import path from 'node:path';
+const root=path.resolve('dist-pages');
+const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.glb':'model/gltf-binary','.png':'image/png','.svg':'image/svg+xml','.mp3':'audio/mpeg','.woff2':'font/woff2','.ttf':'font/ttf'};
+const server=http.createServer((req,res)=>{let file=path.join(root,decodeURIComponent(new URL(req.url,'http://localhost').pathname));if(!file.startsWith(root)){res.writeHead(403);res.end();return;}if(!fs.existsSync(file)||fs.statSync(file).isDirectory())file=path.join(root,'index.html');res.setHeader('Content-Type',mime[path.extname(file)]||'application/octet-stream');res.end(fs.readFileSync(file));});
+await new Promise(r=>server.listen(4173,'127.0.0.1',r));
+const browser=await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1208/chrome-linux64/chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const results=[];const errors=[];const responses=[];
+function checkpoint(){fs.writeFileSync('verification/browser-B01R.json',JSON.stringify({results,errors,responses},null,2));}
+const push=results.push.bind(results);results.push=(x)=>{push(x);checkpoint();console.log(x.name,x.pass);};
+try {
+ const context=await browser.newContext({viewport:{width:375,height:812}}); const page=await context.newPage();page.setDefaultTimeout(10000);
+ page.on('pageerror',e=>errors.push(e.message)); page.on('response',r=>{if(r.status()>=400)responses.push({url:r.url(),status:r.status()});});
+ await page.goto('http://127.0.0.1:4173',{waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>!!window.__troll,{timeout:15000});
+ results.push({name:'production startup',pass:true});
+ await page.getByTestId('intro-hoppa').waitFor({state:'visible',timeout:10000}).catch(()=>{}); if(await page.getByTestId('intro-hoppa').isVisible()) await page.getByTestId('intro-hoppa').click(); await page.waitForFunction(()=>!document.querySelector('.ang[inert]'),null,{timeout:20000});
+ await page.waitForTimeout(1500);
+ await page.getByTestId('pennans-bok').click();
+ await page.getByText('Prova en idé',{exact:true}).click();
+ await page.getByRole('button',{name:'rosa drake med krona',exact:true}).click();
+ await page.getByTestId('vakna').click();
+ await page.waitForTimeout(1200);
+ const state=await page.evaluate(()=>window.__troll.state());
+ results.push({name:'idea UI creates dragon with crown',pass:state.ang.some(a=>a.kropp==='drake'&&a.tillbehor.some(t=>t.id==='krona')),state});
+ await page.screenshot({path:'verification/mobile-created-B01R.png',animations:'disabled',timeout:5000}).catch(()=>{});
+ const save=await page.evaluate(()=>localStorage.getItem('trollpennan-v2'));
+ await page.reload({waitUntil:'domcontentloaded'});await page.waitForFunction(()=>!!window.__troll);await page.waitForTimeout(1000);
+ results.push({name:'reload restores dragon',pass:(await page.evaluate(()=>window.__troll.state())).ang.some(a=>a.kropp==='drake')});
+ await page.evaluate(()=>window.__troll.plats('gard'));await page.waitForTimeout(700);await page.evaluate(()=>window.__troll.vakna('hus'));await page.waitForTimeout(800);
+ results.push({name:'garden build via existing debug API',pass:(await page.evaluate(()=>window.__troll.state())).garden.length>0});
+ await page.screenshot({path:'verification/mobile-garden-B01R.png',animations:'disabled',timeout:5000}).catch(()=>{});
+ await page.evaluate(()=>window.__troll.aterstall());await page.waitForTimeout(500);
+ results.push({name:'reset clears scene',pass:(await page.evaluate(()=>window.__troll.state())).ang.length===0});
+ await page.setViewportSize({width:1280,height:800});await page.reload({waitUntil:'domcontentloaded'});await page.waitForFunction(()=>!!window.__troll);
+ if(await page.getByTestId('intro-hoppa').count())await page.getByTestId('intro-hoppa').click({timeout:2000}).catch(()=>{});
+ await page.screenshot({path:'verification/desktop-B01R.png',animations:'disabled',timeout:5000}).catch(()=>{});
+ results.push({name:'desktop startup',pass:true});
+ await context.close();
+ const corrupt=await browser.newContext({viewport:{width:375,height:812}});await corrupt.addInitScript(()=>localStorage.setItem('trollpennan-v2','{broken'));const cp=await corrupt.newPage();await cp.goto('http://127.0.0.1:4173',{waitUntil:'domcontentloaded'});await cp.waitForFunction(()=>!!window.__troll,null,{timeout:10000});results.push({name:'corrupt storage starts safely',pass:await cp.locator('.lagrings-info').count()===1});await corrupt.close();
+ fs.writeFileSync('verification/browser-B01R.json',JSON.stringify({method:'Chromium production build via local HTTP; SwiftShader, not real mobile GPU',results,errors,responses},null,2));
+ console.log(JSON.stringify({results:results.map(({state,...x})=>x),errors,responses},null,2));
+} catch(e){console.error(e);fs.writeFileSync('verification/browser-B01R.json',JSON.stringify({results,errors,responses,failure:String(e)},null,2));process.exitCode=1;}finally{await browser.close();server.closeAllConnections();await new Promise(r=>server.close(r));}

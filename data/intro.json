@@ -1,0 +1,23 @@
+{
+  "_om": "Introts texter. Rösten i public/ljud/intro/saga.mp3 läser samma meningar och stavar kanin: kå, a, en, i, en, sedan kanin.",
+  "hoppa": "Hoppa över",
+  "meny": "Se introt",
+  "hor": "Hör pennan",
+  "ljud": "/ljud/intro/saga.mp3",
+  "ord": ["K", "A", "N", "I", "N"],
+  "langd": 15.2,
+  "scener": [
+    { "fas": 0, "text": "Hej! Jag är Trollpennan.", "fran": 0 },
+    { "fas": 1, "text": "Det jag skriver … vaknar.", "fran": 2.35 },
+    { "fas": 2, "text": "Titta här:", "fran": 4.3, "ord": 0 },
+    { "fas": 2, "text": "Titta här:", "fran": 5.28, "ord": 1 },
+    { "fas": 2, "text": "Titta här:", "fran": 5.84, "ord": 2 },
+    { "fas": 2, "text": "Titta här:", "fran": 6.24, "ord": 3 },
+    { "fas": 2, "text": "Titta här:", "fran": 6.74, "ord": 4 },
+    { "fas": 2, "text": "Titta här:", "fran": 7.11, "ord": 5 },
+    { "fas": 2, "text": "Kanin.", "fran": 7.45, "ord": 5, "ordklar": true },
+    { "fas": 3, "text": "Där är den!", "fran": 8.4 },
+    { "fas": 4, "text": "Men jag kan inte välja själv. Jag behöver dig.", "fran": 9.35 },
+    { "fas": 5, "text": "Vad ska vi väcka först?", "fran": 12.25 }
+  ]
+}

@@ -1,0 +1,522 @@
+{
+  "version": 1,
+  "duk": {
+    "b": 512,
+    "h": 512
+  },
+  "bakgrund": "bakgrund/ang.svg",
+  "damm": {
+    "x": 0.08,
+    "y": 0.78,
+    "b": 0.3,
+    "h": 0.14
+  },
+  "kroppar": {
+    "kanin": {
+      "lager": {
+        "bas": "kroppar/kanin/bas.svg",
+        "skugga": "kroppar/kanin/skugga.svg",
+        "linje": "kroppar/kanin/linje.svg"
+      },
+      "monster": {
+        "prickar": "kroppar/kanin/prickar.svg",
+        "ränder": "kroppar/kanin/rander.svg",
+        "glitter": "kroppar/kanin/glitter.svg",
+        "regnbåge": "kroppar/kanin/regnbage.svg"
+      },
+      "ankare": {
+        "huvud": [
+          256,
+          108
+        ],
+        "ogon": [
+          256,
+          168
+        ],
+        "mun": [
+          256,
+          198
+        ],
+        "rygg": [
+          250,
+          248
+        ],
+        "sida": [
+          360,
+          300
+        ],
+        "svans": [
+          140,
+          340
+        ],
+        "fotter": [
+          256,
+          460
+        ],
+        "mitt": [
+          256,
+          300
+        ]
+      },
+      "tillbehorsskala": 1
+    },
+    "katt": {
+      "lager": {
+        "bas": "kroppar/katt/bas.svg",
+        "skugga": "kroppar/katt/skugga.svg",
+        "linje": "kroppar/katt/linje.svg"
+      },
+      "monster": {
+        "prickar": "kroppar/katt/prickar.svg",
+        "ränder": "kroppar/katt/rander.svg",
+        "glitter": "kroppar/katt/glitter.svg",
+        "regnbåge": "kroppar/katt/regnbage.svg"
+      },
+      "ankare": {
+        "huvud": [
+          268,
+          112
+        ],
+        "ogon": [
+          268,
+          176
+        ],
+        "mun": [
+          268,
+          206
+        ],
+        "rygg": [
+          250,
+          250
+        ],
+        "sida": [
+          370,
+          300
+        ],
+        "svans": [
+          120,
+          280
+        ],
+        "fotter": [
+          270,
+          460
+        ],
+        "mitt": [
+          270,
+          310
+        ]
+      },
+      "tillbehorsskala": 1
+    },
+    "hund": {
+      "lager": {
+        "bas": "kroppar/hund/bas.svg",
+        "skugga": "kroppar/hund/skugga.svg",
+        "linje": "kroppar/hund/linje.svg"
+      },
+      "monster": {
+        "prickar": "kroppar/hund/prickar.svg",
+        "ränder": "kroppar/hund/rander.svg",
+        "glitter": "kroppar/hund/glitter.svg",
+        "regnbåge": "kroppar/hund/regnbage.svg"
+      },
+      "ankare": {
+        "huvud": [
+          256,
+          112
+        ],
+        "ogon": [
+          256,
+          178
+        ],
+        "mun": [
+          256,
+          230
+        ],
+        "rygg": [
+          256,
+          260
+        ],
+        "sida": [
+          370,
+          320
+        ],
+        "svans": [
+          120,
+          330
+        ],
+        "fotter": [
+          256,
+          468
+        ],
+        "mitt": [
+          256,
+          320
+        ]
+      },
+      "tillbehorsskala": 1
+    },
+    "drake": {
+      "lager": {
+        "bas": "kroppar/drake/bas.svg",
+        "skugga": "kroppar/drake/skugga.svg",
+        "linje": "kroppar/drake/linje.svg"
+      },
+      "monster": {
+        "prickar": "kroppar/drake/prickar.svg",
+        "ränder": "kroppar/drake/rander.svg",
+        "glitter": "kroppar/drake/glitter.svg",
+        "regnbåge": "kroppar/drake/regnbage.svg"
+      },
+      "ankare": {
+        "huvud": [
+          330,
+          108
+        ],
+        "ogon": [
+          320,
+          145
+        ],
+        "mun": [
+          400,
+          160
+        ],
+        "rygg": [
+          230,
+          250
+        ],
+        "sida": [
+          370,
+          320
+        ],
+        "svans": [
+          100,
+          370
+        ],
+        "fotter": [
+          250,
+          468
+        ],
+        "mitt": [
+          260,
+          320
+        ]
+      },
+      "tillbehorsskala": 1
+    },
+    "häst": {
+      "lager": {
+        "bas": "kroppar/häst/bas.svg",
+        "skugga": "kroppar/häst/skugga.svg",
+        "linje": "kroppar/häst/linje.svg"
+      },
+      "monster": {
+        "prickar": "kroppar/häst/prickar.svg",
+        "ränder": "kroppar/häst/rander.svg",
+        "glitter": "kroppar/häst/glitter.svg",
+        "regnbåge": "kroppar/häst/regnbage.svg"
+      },
+      "ankare": {
+        "huvud": [
+          330,
+          78
+        ],
+        "ogon": [
+          340,
+          115
+        ],
+        "mun": [
+          370,
+          150
+        ],
+        "rygg": [
+          240,
+          250
+        ],
+        "sida": [
+          380,
+          300
+        ],
+        "svans": [
+          110,
+          330
+        ],
+        "fotter": [
+          270,
+          470
+        ],
+        "mitt": [
+          260,
+          310
+        ]
+      },
+      "tillbehorsskala": 1
+    },
+    "fågel": {
+      "lager": {
+        "bas": "kroppar/fågel/bas.svg",
+        "skugga": "kroppar/fågel/skugga.svg",
+        "linje": "kroppar/fågel/linje.svg"
+      },
+      "monster": {
+        "prickar": "kroppar/fågel/prickar.svg",
+        "ränder": "kroppar/fågel/rander.svg",
+        "glitter": "kroppar/fågel/glitter.svg",
+        "regnbåge": "kroppar/fågel/regnbage.svg"
+      },
+      "ankare": {
+        "huvud": [
+          256,
+          112
+        ],
+        "ogon": [
+          250,
+          162
+        ],
+        "mun": [
+          340,
+          185
+        ],
+        "rygg": [
+          230,
+          240
+        ],
+        "sida": [
+          360,
+          280
+        ],
+        "svans": [
+          160,
+          250
+        ],
+        "fotter": [
+          250,
+          450
+        ],
+        "mitt": [
+          256,
+          300
+        ]
+      },
+      "tillbehorsskala": 1
+    },
+    "fisk": {
+      "lager": {
+        "bas": "kroppar/fisk/bas.svg",
+        "skugga": "kroppar/fisk/skugga.svg",
+        "linje": "kroppar/fisk/linje.svg"
+      },
+      "monster": {
+        "prickar": "kroppar/fisk/prickar.svg",
+        "ränder": "kroppar/fisk/rander.svg",
+        "glitter": "kroppar/fisk/glitter.svg",
+        "regnbåge": "kroppar/fisk/regnbage.svg"
+      },
+      "ankare": {
+        "huvud": [
+          300,
+          200
+        ],
+        "ogon": [
+          330,
+          230
+        ],
+        "mun": [
+          390,
+          270
+        ],
+        "rygg": [
+          270,
+          220
+        ],
+        "sida": [
+          380,
+          300
+        ],
+        "svans": [
+          90,
+          270
+        ],
+        "fotter": [
+          280,
+          400
+        ],
+        "mitt": [
+          280,
+          280
+        ]
+      },
+      "tillbehorsskala": 1
+    },
+    "groda": {
+      "lager": {
+        "bas": "kroppar/groda/bas.svg",
+        "skugga": "kroppar/groda/skugga.svg",
+        "linje": "kroppar/groda/linje.svg"
+      },
+      "monster": {
+        "prickar": "kroppar/groda/prickar.svg",
+        "ränder": "kroppar/groda/rander.svg",
+        "glitter": "kroppar/groda/glitter.svg",
+        "regnbåge": "kroppar/groda/regnbage.svg"
+      },
+      "ankare": {
+        "huvud": [
+          256,
+          168
+        ],
+        "ogon": [
+          256,
+          188
+        ],
+        "mun": [
+          256,
+          250
+        ],
+        "rygg": [
+          256,
+          260
+        ],
+        "sida": [
+          390,
+          320
+        ],
+        "svans": [
+          120,
+          340
+        ],
+        "fotter": [
+          256,
+          450
+        ],
+        "mitt": [
+          256,
+          310
+        ]
+      },
+      "tillbehorsskala": 1
+    }
+  },
+  "formagor": {
+    "vingar": {
+      "fil": "formagor/vingar.svg",
+      "ankare": "rygg",
+      "pivot": [
+        120,
+        118
+      ],
+      "bakom": true
+    },
+    "fenor": {
+      "fil": "formagor/fenor.svg",
+      "ankare": "sida",
+      "pivot": [
+        16,
+        46
+      ],
+      "bakom": false
+    },
+    "aura": {
+      "fil": "formagor/aura.svg",
+      "ankare": "mitt",
+      "pivot": [
+        256,
+        256
+      ],
+      "bakom": true
+    },
+    "flammor": {
+      "fil": "formagor/flammor.svg",
+      "ankare": "mun",
+      "pivot": [
+        45,
+        118
+      ],
+      "bakom": false
+    },
+    "fartlinjer": {
+      "fil": "formagor/fartlinjer.svg",
+      "ankare": "svans",
+      "pivot": [
+        170,
+        35
+      ],
+      "bakom": true
+    },
+    "studs": {
+      "fil": "formagor/studs.svg",
+      "ankare": "fotter",
+      "pivot": [
+        70,
+        8
+      ],
+      "bakom": true
+    }
+  },
+  "tillbehor": {
+    "hatt": {
+      "fil": "tillbehor/hatt.svg",
+      "ankare": "huvud",
+      "pivot": [
+        100,
+        120
+      ]
+    },
+    "krona": {
+      "fil": "tillbehor/krona.svg",
+      "ankare": "huvud",
+      "pivot": [
+        85,
+        90
+      ]
+    },
+    "glasögon": {
+      "fil": "tillbehor/glasogon.svg",
+      "ankare": "ogon",
+      "pivot": [
+        95,
+        36
+      ]
+    },
+    "halsduk": {
+      "fil": "tillbehor/halsduk.svg",
+      "ankare": "mun",
+      "pivot": [
+        85,
+        24
+      ]
+    },
+    "rosett": {
+      "fil": "tillbehor/rosett.svg",
+      "ankare": "sida",
+      "pivot": [
+        70,
+        45
+      ]
+    },
+    "horn": {
+      "fil": "tillbehor/horn.svg",
+      "ankare": "huvud",
+      "pivot": [
+        40,
+        118
+      ]
+    },
+    "ryggsäck": {
+      "fil": "tillbehor/ryggsack.svg",
+      "ankare": "rygg",
+      "pivot": [
+        75,
+        30
+      ]
+    },
+    "mantel": {
+      "fil": "tillbehor/mantel.svg",
+      "ankare": "rygg",
+      "pivot": [
+        120,
+        24
+      ]
+    }
+  }
+}

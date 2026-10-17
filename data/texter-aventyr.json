@@ -1,0 +1,19 @@
+{
+ "_om": "Övriga texter i äventyret.",
+ "foljeslagare": {
+  "foljer": "{djur} följer med dig!",
+  "byt": "Byt följeslagare",
+  "hem": "{djur} går hem till gården."
+ },
+ "forsta_gangen": [
+  "Nu får du gå ut på äventyr! Tryck på kartan.",
+  "Dina djur kan hjälpa dig. Den som flyger, simmar, lyser eller är jättestor kan ta dig till nya platser."
+ ],
+ "gavoruta": {
+  "placeholder": "Skriv en gåva …",
+  "knapp": "Ge",
+  "djur_i_rutan": "Djur kan man inte ge bort! Skriv något att äta eller något fint.",
+  "okant": "Det ordet kan Trollpennan inte som gåva. Prova till exempel ett äpple eller en kotte."
+ },
+ "omrade_klart": "Du har gjort allt i {omrade}! Bra jobbat, äventyrare."
+}

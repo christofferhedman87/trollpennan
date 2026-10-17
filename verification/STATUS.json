@@ -1,0 +1,104 @@
+{
+  "block": "B03-2",
+  "status": "PARTIAL_STRICT_GATES_PASS",
+  "baseline": "B03",
+  "unit_tests": {
+    "pass": 70,
+    "fail": 0
+  },
+  "layout_checks": {
+    "pass": 20,
+    "fail": 0,
+    "viewports": [
+      [
+        375,
+        812
+      ],
+      [
+        320,
+        640
+      ],
+      [
+        812,
+        375
+      ],
+      [
+        1280,
+        800
+      ]
+    ]
+  },
+  "new_vite_build": true,
+  "new_typecheck": true,
+  "js_bundles": "unchanged B02R-3",
+  "next_block": "B03-2 remaining dialog combinations and full scene matrix; B04 not started",
+  "current_run_date": "2026-10-13",
+  "typecheck_scope": {
+    "pages_main": true,
+    "spel_matches": 40,
+    "tolk_matches": 11,
+    "vite_pages_config": true
+  },
+  "pages_output": {
+    "files": 504,
+    "bytes": 14936433,
+    "check_passed": true
+  },
+  "browser_current": {
+    "touch_regression": {
+      "pass": 8,
+      "fail": 0,
+      "chromium_swiftshader": true,
+      "normal_motion": true,
+      "debug_api_used": true
+    },
+    "keyboard_focus_storage": {
+      "pass": 11,
+      "fail": 0
+    },
+    "initial_locator_click_failure_classification": "test actionability/stability issue; direct touch and dispatched native click activated product control",
+    "b02r2_touch": {
+      "pass": 9,
+      "fail": 0,
+      "normal_touch": true
+    },
+    "legacy_extended_b01r": {
+      "true_assertions": 9,
+      "false_assertions": 1,
+      "process_exit": 0,
+      "accepted_as_gate": false,
+      "reason": "script does not fail process on false assertion; newer focused keyboard suite passes 11/11"
+    }
+  },
+  "physical_device_tested": false,
+  "final_rerun": {
+    "typecheck_pages": true,
+    "unit_tests_pass": 70,
+    "unit_tests_fail": 0,
+    "build_pages": true,
+    "pages_output_checked": true,
+    "pages_output_files": 504,
+    "pages_output_bytes": 14936783
+  },
+  "product_code_changed": false,
+  "remaining_before_close": [
+    "complete overlaid-dialog matrix with book plus purchase/backup-reset layers",
+    "complete meadow/lake/forest/cave endurance matrix",
+    "physical iOS or Android test"
+  ],
+  "strict_verdicts": {
+    "dialog_keyboard": 11,
+    "scene_progression": 8,
+    "map_fallback": 9,
+    "fail": 0
+  },
+  "final_three_step_gate": {
+    "typecheck": true,
+    "product_tests": {
+      "pass": 70,
+      "fail": 0
+    },
+    "build": true,
+    "output_check": true
+  }
+}

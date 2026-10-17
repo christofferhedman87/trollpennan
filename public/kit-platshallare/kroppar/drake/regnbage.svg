@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><defs><clipPath id="c"><ellipse cx="246" cy="340" rx="128" ry="108"/>
+   <ellipse cx="318" cy="210" rx="48" ry="72"/>
+   <ellipse cx="352" cy="148" rx="62" ry="40"/>
+   <polygon points="400,132 468,156 396,184"/>
+   <polygon points="168,250 128,188 214,228"/>
+   <polygon points="206,236 176,168 246,214"/>
+   <polygon points="248,228 236,156 292,208"/>
+   <ellipse cx="150" cy="360" rx="52" ry="20" transform="rotate(18 150 360)"/>
+   <ellipse cx="92" cy="392" rx="36" ry="16" transform="rotate(36 92 392)"/>
+   <ellipse cx="190" cy="462" rx="28" ry="14"/>
+   <ellipse cx="310" cy="464" rx="28" ry="14"/></clipPath></defs><g clip-path="url(#c)"><rect x="40" y="0" width="70" height="512" fill="#E53935" opacity="0.9"/><rect x="110" y="0" width="70" height="512" fill="#FB8C00" opacity="0.9"/><rect x="180" y="0" width="70" height="512" fill="#FDD835" opacity="0.9"/><rect x="250" y="0" width="70" height="512" fill="#43A047" opacity="0.9"/><rect x="320" y="0" width="70" height="512" fill="#1E88E5" opacity="0.9"/><rect x="390" y="0" width="70" height="512" fill="#8E24AA" opacity="0.9"/></g></svg>

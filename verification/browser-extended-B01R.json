@@ -1,0 +1,45 @@
+{
+  "results": [
+    {
+      "name": "incomplete v1 save migrates",
+      "pass": true
+    },
+    {
+      "name": "valid save import through file UI",
+      "pass": true
+    },
+    {
+      "name": "corrupt import preserves current scene",
+      "pass": true
+    },
+    {
+      "name": "keyboard Enter creates Swedish horse",
+      "pass": false
+    },
+    {
+      "name": "320px no horizontal document overflow",
+      "pass": true
+    },
+    {
+      "name": "reduced motion preference active",
+      "pass": true
+    },
+    {
+      "name": "blocked storage allows creation",
+      "pass": true
+    },
+    {
+      "name": "blocked storage shows warning",
+      "pass": true
+    },
+    {
+      "name": "full storage allows creation",
+      "pass": true
+    },
+    {
+      "name": "full storage shows warning",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

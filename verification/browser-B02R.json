@@ -1,0 +1,49 @@
+{
+  "results": [
+    {
+      "name": "Enter opens book without creating",
+      "pass": true
+    },
+    {
+      "name": "focus moves inside book",
+      "pass": true
+    },
+    {
+      "name": "Tab stays inside book",
+      "pass": true
+    },
+    {
+      "name": "Escape closes book",
+      "pass": true
+    },
+    {
+      "name": "focus returns to opener",
+      "pass": true
+    },
+    {
+      "name": "Space opens book natively",
+      "pass": true
+    },
+    {
+      "name": "Enter selects idea, does not create yet",
+      "pass": true
+    },
+    {
+      "name": "Enter on Vakna creates once",
+      "pass": true
+    },
+    {
+      "name": "storage warning initially collapsed",
+      "pass": true
+    },
+    {
+      "name": "storage help expands",
+      "pass": true
+    },
+    {
+      "name": "collapsed warning under 100px",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

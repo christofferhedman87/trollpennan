@@ -1,0 +1,73 @@
+{
+  "package": "Trollpennan-B003-komplett-overlamning-2026-10-14.zip",
+  "purpose": "Continue and finish B003 only",
+  "current_state": "CP01 passed; CP02 additional dialog matrix fails; no product changes after CP01",
+  "file_count": 1878,
+  "total_uncompressed_bytes": 164991623,
+  "excluded": [
+    "node_modules",
+    ".git"
+  ],
+  "critical_files": [
+    {
+      "path": "PROJECT_CURRENT/package.json",
+      "bytes": 4341,
+      "sha256": "080a2b9a1e4ef1b640876d717857ce5c5d2a956b9f600ee109f38baced416ad6"
+    },
+    {
+      "path": "PROJECT_CURRENT/src/spel/Spel.tsx",
+      "bytes": 113118,
+      "sha256": "9a8abd32fce9591e441079b85641bd130e694187b483c970dfb21cc8e7dd027b"
+    },
+    {
+      "path": "PROJECT_CURRENT/src/spel/dialogFokus.ts",
+      "bytes": 2676,
+      "sha256": "29444784221115bec210757c4096cd335ef929a1261615c2b58c1dc36cd3afd4"
+    },
+    {
+      "path": "PROJECT_CURRENT/verification/current/CP01-MANIFEST.json",
+      "bytes": 794,
+      "sha256": "6479e8e40624192142a5c3795eb12c3a0398ef4ac2e6c3f1c1dcec223f68e02b"
+    },
+    {
+      "path": "PROJECT_CURRENT/verification/current/CP02-dialog-matrix.mjs",
+      "bytes": 7315,
+      "sha256": "0653b4a56a4d532422e482b03f708da02ae4b702926d1b0bf1b25c228f92fc57"
+    },
+    {
+      "path": "PROJECT_CURRENT/verification/current/CP02-dialog-matrix.json",
+      "bytes": 5122,
+      "sha256": "4e9fab3107c29cf960985c178428e0f21023e9d1c790f6a1ffe5b1acc33c8fba"
+    },
+    {
+      "path": "PROJECT_CURRENT/verification/current/CP02-dialog-matrix-first.log",
+      "bytes": 2181,
+      "sha256": "e53acf026cda8d1a5d13e2af4839899c160ae965f0ab1b2e3f84edd38325c6ec"
+    },
+    {
+      "path": "RESTORE_POINTS/Trollpennan-B03-CP01-teknisk-baslinje-godkand-2026-10-14.zip",
+      "bytes": 78341606,
+      "sha256": "e99cf41182574d0658ac76e361dae99479e29e0c331454a26244e616158f09fa"
+    },
+    {
+      "path": "RESTORE_POINTS/Trollpennan-B03-CP01-SHA256.txt",
+      "bytes": 127,
+      "sha256": "37e0fba8a43566e14a6d14274f9e9689729f829811c4998773dc99c095048b93"
+    },
+    {
+      "path": "HANDOFF/AKTUELL-STATUS-B003.md",
+      "bytes": 3078,
+      "sha256": "798b8884f81e3935a651926919d1c582490b85dddb01e038a5b94e410b06f5e7"
+    },
+    {
+      "path": "HANDOFF/CHECKPOINTPROTOKOLL.md",
+      "bytes": 2293,
+      "sha256": "ddc8f962979398f048706b23216623e0b8517e9faf9e03963da5ac105776a643"
+    },
+    {
+      "path": "HANDOFF/STARTPROMPT-NY-CHATT-B003.md",
+      "bytes": 5723,
+      "sha256": "f03cc961e42a60a38209e21c0eecbb63978737baadd2e35ebd003b1e663e79b9"
+    }
+  ]
+}

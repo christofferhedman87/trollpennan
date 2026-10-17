@@ -1,0 +1,207 @@
+{
+ "_om": "Egenskapstaggar för önskningar. Ett djurs taggar = unionen av taggarna för allt det har (kropp, färg, mönster, förmågor, tillbehör, storlek, genomskinlighet) plus de automatiska taggarna. Läses av spelet; inga ord här visas för barnet.",
+ "automatiska": {
+  "kropp": "kropp:<id>, t.ex. kropp:fisk",
+  "farg": "farg:<färg-id> för kroppens färg (slå upp hex i fargtaggar), samt 'farg' om kroppen har någon färg alls som barnet skrivit",
+  "tillbehor": "tillbehor:<id>, t.ex. tillbehor:hatt",
+  "formaga": "formaga:<id>",
+  "monster": "monster:<id>",
+  "kompis": "sätts på varje NYTT djur som vaknar medan en kompis-önskan är aktiv"
+ },
+ "formaga": {
+  "vingar": [
+   "flyga"
+  ],
+  "fenor": [
+   "simma"
+  ],
+  "aura": [
+   "lysa",
+   "magi"
+  ],
+  "flammor": [
+   "eld",
+   "varm",
+   "lysa"
+  ],
+  "fartlinjer": [
+   "snabb"
+  ],
+  "studs": [
+   "hoppa"
+  ]
+ },
+ "tillbehor": {
+  "hatt": [
+   "sol",
+   "regn",
+   "fin",
+   "huvud",
+   "varm"
+  ],
+  "krona": [
+   "kunglig",
+   "fin",
+   "huvud"
+  ],
+  "glasögon": [
+   "se",
+   "sol"
+  ],
+  "halsduk": [
+   "varm",
+   "fin"
+  ],
+  "rosett": [
+   "fin",
+   "huvud"
+  ],
+  "horn": [
+   "magi",
+   "huvud"
+  ],
+  "ryggsäck": [
+   "packa"
+  ],
+  "mantel": [
+   "varm",
+   "regn",
+   "kunglig",
+   "magi"
+  ]
+ },
+ "monster": {
+  "glitter": [
+   "glittra",
+   "fin",
+   "magi"
+  ],
+  "regnbåge": [
+   "farggrann",
+   "magi",
+   "fin"
+  ],
+  "prickar": [
+   "prickar"
+  ],
+  "ränder": [
+   "ränder"
+  ]
+ },
+ "genomskinlighet": {
+  "regel": "alpha <= 0.6 ger taggen",
+  "taggar": [
+   "gomma"
+  ]
+ },
+ "storlek": {
+  "stor": {
+   "regel": "skala >= 1.3",
+   "taggar": [
+    "stor"
+   ]
+  },
+  "liten": {
+   "regel": "skala <= 0.75",
+   "taggar": [
+    "liten"
+   ]
+  }
+ },
+ "kropp": {
+  "fågel": [
+   "flyga"
+  ],
+  "uggla": [
+   "flyga",
+   "se"
+  ],
+  "fisk": [
+   "simma"
+  ],
+  "haj": [
+   "simma"
+  ],
+  "bäver": [
+   "simma"
+  ],
+  "groda": [
+   "hoppa",
+   "simma"
+  ],
+  "kanin": [
+   "hoppa"
+  ],
+  "ekorre": [
+   "snabb"
+  ],
+  "drake": [
+   "eld"
+  ],
+  "dinosaurie": [
+   "stor"
+  ]
+ },
+ "kropp_not": "Kroppens egna taggar räknas bara för kompis-önskningar, inte för ge-önskningar (där räknas bara det som barnet just lagt till).",
+ "fargtaggar": {
+  "#E53935": [
+   "farg:röd"
+  ],
+  "#FB8C00": [
+   "farg:orange"
+  ],
+  "#FDD835": [
+   "farg:gul"
+  ],
+  "#43A047": [
+   "farg:grön"
+  ],
+  "#1E88E5": [
+   "farg:blå"
+  ],
+  "#8E24AA": [
+   "farg:lila"
+  ],
+  "#F48FB1": [
+   "farg:rosa"
+  ],
+  "#2B2B2B": [
+   "farg:svart"
+  ],
+  "#FAFAFA": [
+   "farg:vit"
+  ],
+  "#9E9E9E": [
+   "farg:grå"
+  ],
+  "#8D6E63": [
+   "farg:brun"
+  ],
+  "#26C6DA": [
+   "farg:turkos"
+  ],
+  "#90CAF9": [
+   "farg:ljusblå"
+  ],
+  "#1A237E": [
+   "farg:mörkblå"
+  ],
+  "#A5D6A7": [
+   "farg:ljusgrön"
+  ],
+  "#1B5E20": [
+   "farg:mörkgrön"
+  ],
+  "#F8BBD0": [
+   "farg:ljusrosa"
+  ],
+  "#FFC107": [
+   "farg:gyllene",
+   "farg:guld"
+  ],
+  "#CFD8DC": [
+   "farg:silvrig",
+   "farg:silver"
+  ]
+ }
+}

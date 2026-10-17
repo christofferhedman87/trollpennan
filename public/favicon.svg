@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Trollpennan">
+  <rect width="32" height="32" rx="7" fill="#F4E2BC"/>
+  <g transform="rotate(-40 16 16)">
+    <rect x="11" y="2.5" width="10" height="18" rx="2" fill="#E0A106"/>
+    <rect x="11" y="2.5" width="10" height="4" fill="#C23B62"/>
+    <path d="M11 20.5h10L16 30z" fill="#2C2416"/>
+  </g>
+</svg>

@@ -1,0 +1,161 @@
+{
+ "_om": "Vilda djur som barnet blir vän med genom att skriva gåvor. Alla byggs av befintliga kroppar och delar i kitet (ingen ny konst krävs). Ett vilt djur är lite skyggt: det står still, tittar, och springer en bit undan om man trycker två gånger snabbt.",
+ "regler": {
+  "vanskap": "Varje gåva som djuret gillar ger ett hjärta. Två hjärtan: djuret blir vän, säger sin 'tack'-rad och följer med hem. Det kan sedan bo på ängen eller gården och visas i albumet (runda 6).",
+  "gillar": "farg = gåvans färg (skriven färg, annars gåvans naturliga färg) är någon av dessa; taggar = gåvan har någon av taggarna; gavor = gåvan är någon av dessa.",
+  "inte_gillar": [
+   "Nja, det äter jag inte. Men tack ändå!",
+   "Hmm, det var inte riktigt min smak.",
+   "Snällt av dig! Men jag vill helst ha något annat."
+  ],
+  "ledtrad": "Efter ett gåvoförsök som inte passade: visa djurets 'ledtrad' i en pratbubbla.",
+  "ruta": "Vad vill du ge {namn}?",
+  "hjarta": "{namn} tycker om dig lite mer!",
+  "ny_van": "{namn} är din vän nu! Den följer med dig hem.",
+  "stjarnor": 3
+ },
+ "djur": [
+  {
+   "id": "mossugglan",
+   "namn": "Mossugglan",
+   "omrade": "skogen",
+   "utseende": {
+    "kropp": "uggla",
+    "farg": "#1B5E20",
+    "monster": "prickar",
+    "monsterfarg": "#A5D6A7"
+   },
+   "gillar": {
+    "farg": [
+     "blå",
+     "ljusblå",
+     "mörkblå"
+    ]
+   },
+   "ledtrad": "Hon gillar saker som är blå. Kanske blåbär? Eller kan man göra något annat blått?",
+   "tack": "Hu-hu … är det blått? Mums!",
+   "sallsynthet": "sällsynt"
+  },
+  {
+   "id": "silverekorren",
+   "namn": "Silverekorren",
+   "omrade": "skogen",
+   "utseende": {
+    "kropp": "ekorre",
+    "farg": "#CFD8DC",
+    "glans": true
+   },
+   "gillar": {
+    "taggar": [
+     "notter"
+    ]
+   },
+   "ledtrad": "Den samlar på allt man kan knapra på i skogen.",
+   "tack": "Knaper, knaper! Precis vad jag ville ha.",
+   "sallsynthet": "sällsynt"
+  },
+  {
+   "id": "gamla-bavern",
+   "namn": "Gamla bävern",
+   "omrade": "sjon",
+   "utseende": {
+    "kropp": "bäver",
+    "farg": "#6D4C41",
+    "tillbehor": [
+     {
+      "id": "glasögon",
+      "farg": null
+     }
+    ]
+   },
+   "gillar": {
+    "gavor": [
+     "pinne",
+     "löv"
+    ]
+   },
+   "ledtrad": "Han bygger och bygger och behöver alltid byggmaterial från träden.",
+   "tack": "Tack, tack! Nu blir dammen klar.",
+   "sallsynthet": "ovanlig"
+  },
+  {
+   "id": "parlhajen",
+   "namn": "Pärlhajen",
+   "omrade": "sjon",
+   "utseende": {
+    "kropp": "haj",
+    "farg": "#FAFAFA",
+    "monster": "glitter"
+   },
+   "gillar": {
+    "taggar": [
+     "glansigt"
+    ]
+   },
+   "ledtrad": "Den älskar saker som glänser och kommer från havet.",
+   "tack": "Åh, så blankt! Den ska jag ha i min samling.",
+   "sallsynthet": "sällsynt"
+  },
+  {
+   "id": "vindhasten",
+   "namn": "Vindhästen",
+   "omrade": "sjon",
+   "utseende": {
+    "kropp": "häst",
+    "farg": "#FAFAFA",
+    "formagor": [
+     "vingar"
+    ],
+    "monster": "glitter"
+   },
+   "gillar": {
+    "gavor": [
+     "äpple",
+     "morot"
+    ]
+   },
+   "ledtrad": "Den landar bara på ön och äter det som hästar tycker bäst om.",
+   "tack": "Gnägg! Nu är vi vänner för alltid.",
+   "sallsynthet": "legendarisk"
+  },
+  {
+   "id": "kristallgrodan",
+   "namn": "Kristallgrodan",
+   "omrade": "grottan",
+   "utseende": {
+    "kropp": "groda",
+    "farg": "#26C6DA",
+    "alpha": 0.6,
+    "monster": "glitter"
+   },
+   "gillar": {
+    "taggar": [
+     "glansigt"
+    ]
+   },
+   "ledtrad": "Den sjunger när den får något blankt.",
+   "tack": "Kvack-la-la! Hör du hur fint jag sjunger?",
+   "sallsynthet": "sällsynt"
+  },
+  {
+   "id": "nattdraken",
+   "namn": "Nattdraken",
+   "omrade": "grottan",
+   "utseende": {
+    "kropp": "drake",
+    "farg": "#1A237E",
+    "formagor": [
+     "aura"
+    ]
+   },
+   "gillar": {
+    "taggar": [
+     "sott"
+    ]
+   },
+   "ledtrad": "Den har världens största sötsug.",
+   "tack": "Mmm, sött! Jag lovar att aldrig spruta eld på dig.",
+   "sallsynthet": "legendarisk"
+  }
+ ]
+}

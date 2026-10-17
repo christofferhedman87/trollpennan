@@ -1,0 +1,2252 @@
+{
+ "version": 3,
+ "kalla": "Böjningsformer ur SALDO, Språkbanken Text, Göteborgs universitet (CC BY 4.0). Ord märkta \"hand\" är handgranskade tillägg.",
+ "nivaer": {
+  "kort": "Finns som ordkort och går också att skriva.",
+  "fritt": "Bara genom att skriva själv. Syns som hemliga ord i Ordboken."
+ },
+ "kategorier": {
+  "djur": "Djur",
+  "farg": "Färg",
+  "storlek": "Storlek",
+  "monster": "Mönster",
+  "formaga": "Kan",
+  "tillbehor": "Har",
+  "egenskap": "Hemligt"
+ },
+ "grammatik": "[antal] [storlek] [färg|mönster|egenskap]* DJUR [med [färg] TILLBEHÖR|MÖNSTER-SUBSTANTIV (och ...)]* [som|kan VERB (och VERB)*]. Ordningen är fri bland adjektiven. Artiklar ignoreras. Böjningsfel godtas; formelkortet visar alltid rätt form.",
+ "kortgrans": "Med ordkort: 1 färg, 1 mönster, 1 storlek, 1 förmåga, 1 tillbehör. Skriver man själv: flera förmågor och tillbehör, färg på tillbehör, förstärkningar och sammansättningar.",
+ "funktionsord": {
+  "som": [
+   "som"
+  ],
+  "med": [
+   "med"
+  ],
+  "och": [
+   "och",
+   "och så"
+  ],
+  "kan": [
+   "kan"
+  ],
+  "artiklar": [
+   "en",
+   "ett",
+   "den",
+   "det",
+   "de",
+   "min",
+   "mitt",
+   "mina"
+  ],
+  "antal": {
+   "två": 2,
+   "tre": 3,
+   "fyra": 4,
+   "fem": 5,
+   "många": 5,
+   "sex": 6,
+   "sju": 7,
+   "åtta": 8,
+   "nio": 9,
+   "tio": 10
+  },
+  "forstarkning": {
+   "jätte": "storlek+",
+   "super": "storlek+",
+   "pytte": "storlek-",
+   "mini": "storlek-"
+  },
+  "antal_tak": 6,
+  "antal_not": "Högst antal_tak djur per mening. 'tio katter' ger 6 katter och formeln säger ändå 'tio katter'."
+ },
+ "sammansattningar": {
+  "regel": "Ett okänt ord delas bakifrån: sista delen ska vara ett djur (eller ett tillbehör efter \"med\"). Förlederna läses från vänster. Ett fogande s mellan delarna godtas alltid (regnbågskanin, fågelskatt).",
+  "forled": {
+   "eld": {
+    "formaga": "flammor"
+   },
+   "elds": {
+    "formaga": "flammor"
+   },
+   "regnbåg": {
+    "monster": "regnbåge"
+   },
+   "regnbågs": {
+    "monster": "regnbåge"
+   },
+   "glitter": {
+    "monster": "glitter"
+   },
+   "prick": {
+    "monster": "prickar"
+   },
+   "rand": {
+    "monster": "ränder"
+   },
+   "guld": {
+    "farg": "#FFC107",
+    "glans": true
+   },
+   "silver": {
+    "farg": "#CFD8DC",
+    "glans": true
+   },
+   "jätte": {
+    "skala": 1.8
+   },
+   "pytte": {
+    "skala": 0.45
+   },
+   "mini": {
+    "skala": 0.5
+   },
+   "super": {
+    "skala": 1.6
+   },
+   "flyg": {
+    "formaga": "vingar"
+   },
+   "sjö": {
+    "formaga": "fenor"
+   },
+   "sim": {
+    "formaga": "fenor"
+   },
+   "lys": {
+    "formaga": "aura"
+   },
+   "ljus": {
+    "ljusare": true
+   },
+   "mörk": {
+    "morkare": true
+   },
+   "röd": {
+    "farg": "#E53935"
+   },
+   "gul": {
+    "farg": "#FDD835"
+   },
+   "grön": {
+    "farg": "#43A047"
+   },
+   "blå": {
+    "farg": "#1E88E5"
+   },
+   "lila": {
+    "farg": "#8E24AA"
+   },
+   "rosa": {
+    "farg": "#F48FB1"
+   },
+   "svart": {
+    "farg": "#2B2B2B"
+   },
+   "vit": {
+    "farg": "#FAFAFA"
+   },
+   "grå": {
+    "farg": "#9E9E9E"
+   },
+   "brun": {
+    "farg": "#8D6E63"
+   },
+   "turkos": {
+    "farg": "#26C6DA"
+   },
+   "orange": {
+    "farg": "#FB8C00"
+   }
+  },
+  "djur_som_forled": "Ett djur som förled ger sin signatur till efterleden, t.ex. drakhäst = häst + vingar, fiskkatt = katt + fenor. Signaturen står på varje djur.",
+  "okand_forled": "Om efterleden är känd men förleden inte: skapa efterleden, säg vänligt vilket ord Trollpennan inte kunde och spara förleden på önskelistan (t.ex. monsterkanin → kanin + \"monster\" sparas).",
+  "exempel": {
+   "eldkanin": "kanin + flammor",
+   "regnbågsdrake": "drake + regnbåge",
+   "guldfisk": "fisk + guldfärg + glans",
+   "jättegroda": "groda, skala 1.8",
+   "sjöhäst": "häst + fenor",
+   "flygfisk": "fisk + vingar",
+   "drakkatt": "katt + vingar (drakens signatur)",
+   "ljuslila kanin": "kanin, ljusare lila",
+   "eldregnbågsdrake": "drake + flammor + regnbåge"
+  }
+ },
+ "stavning": {
+  "regel": "Rätta aldrig tyst. Ett ord som inte finns jämförs med alla former i ordlistan.",
+  "avstand": "Damerau-Levenshtein. Högst 1 för ord med 1–5 bokstäver, högst 2 för 6 eller fler.",
+  "billiga_fel": "Kostar 0,5: a/å/ä, o/ö, e/ä, dubbel/enkel konsonant (kanin/kannin), ng/gn, j/g/hj/lj i början.",
+  "svar": "Ett bästa förslag: \"Menade du kanin?\" med ordkortet. Två eller tre lika nära: visa upp till tre kort. Barnet trycker på kortet för att välja, eller \"Nej\" för en puff.",
+  "guld": "Ett ord som rättats via \"Menade du …?\" räknas som hittat men blir inte guld."
+ },
+ "repliker": {
+  "hej": [
+   "Hej! Här kommer {formel}!",
+   "Tjohej! Vad roligt att få vakna!",
+   "Åh, vilken fin äng!"
+  ],
+  "vingar": [
+   "Titta, jag kan flyga! Hoppas att du inte blir yr.",
+   "Jag flög ända upp till molnen och tillbaka."
+  ],
+  "fenor": [
+   "Plask! Dammen är min favoritplats.",
+   "Vet du att jag kan hålla andan jättelänge?"
+  ],
+  "aura": [
+   "När det blir mörkt lyser jag som en lykta.",
+   "Jag lyser lite extra när jag är glad."
+  ],
+  "flammor": [
+   "Akta dig, jag nyser eld när jag blir glad!",
+   "Jag lovar att aldrig bränna blommorna."
+  ],
+  "fartlinjer": [
+   "Ingen på hela ängen springer fortare än jag!",
+   "Vill du tävla? Jag har redan vunnit."
+  ],
+  "studs": [
+   "Boing, boing! Jag kan inte sluta hoppa.",
+   "Jag studsade så högt att jag såg hela ängen."
+  ],
+  "utan_formaga": [
+   "Jag gillar att ligga i gräset och titta på molnen.",
+   "Kan du skriva en kompis åt mig?"
+  ],
+  "osynlig": [
+   "Ser du mig? Inte? Bra, då leker vi kurragömma!"
+  ],
+  "sover": [
+   "Nu går jag och vilar i Ordboken. Kalla på mig när du vill!"
+  ]
+ },
+ "overraskningar": [
+  {
+   "om": [
+    "monster:regnbåge",
+    "formaga:flammor"
+   ],
+   "effekt": "regnbågsflammor",
+   "text": "Regnbågseld! Det har ingen sett förut."
+  },
+  {
+   "om": [
+    "monster:glitter",
+    "formaga:aura"
+   ],
+   "effekt": "stjarnregn",
+   "text": "Det regnar små stjärnor runt mig!"
+  },
+  {
+   "om": [
+    "skala>=1.8",
+    "formaga:fenor"
+   ],
+   "effekt": "stora_vagor",
+   "text": "När jag hoppar i dammen blir det tsunami!"
+  },
+  {
+   "om": [
+    "egenskap:osynlig",
+    "formaga:flammor"
+   ],
+   "effekt": "svavande_eld",
+   "text": "Nu ser det ut som om elden flyger själv."
+  }
+ ],
+ "ord": [
+  {
+   "id": "kanin",
+   "klass": "djur",
+   "niva": "kort",
+   "visa": "kanin",
+   "genus": "u",
+   "former": [
+    "kanin",
+    "kaninen",
+    "kaniner",
+    "kaninerna"
+   ],
+   "sammansattningsled": [
+    "kanin"
+   ],
+   "signatur": "studs",
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "kanin"
+   }
+  },
+  {
+   "id": "katt",
+   "klass": "djur",
+   "niva": "kort",
+   "visa": "katt",
+   "genus": "u",
+   "former": [
+    "katt",
+    "katten",
+    "katter",
+    "katterna"
+   ],
+   "sammansattningsled": [
+    "katt"
+   ],
+   "signatur": "fartlinjer",
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "katt"
+   }
+  },
+  {
+   "id": "hund",
+   "klass": "djur",
+   "niva": "kort",
+   "visa": "hund",
+   "genus": "u",
+   "former": [
+    "hund",
+    "hunden",
+    "hundar",
+    "hundarna"
+   ],
+   "sammansattningsled": [
+    "hund"
+   ],
+   "signatur": "studs",
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "hund"
+   }
+  },
+  {
+   "id": "drake",
+   "klass": "djur",
+   "niva": "kort",
+   "visa": "drake",
+   "genus": "u",
+   "former": [
+    "drake",
+    "draken",
+    "drakar",
+    "drakarna"
+   ],
+   "sammansattningsled": [
+    "drak"
+   ],
+   "signatur": "vingar",
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "drake"
+   }
+  },
+  {
+   "id": "häst",
+   "klass": "djur",
+   "niva": "kort",
+   "visa": "häst",
+   "genus": "u",
+   "former": [
+    "häst",
+    "hästen",
+    "hästar",
+    "hästarna"
+   ],
+   "sammansattningsled": [
+    "häst"
+   ],
+   "signatur": "fartlinjer",
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "häst"
+   }
+  },
+  {
+   "id": "fågel",
+   "klass": "djur",
+   "niva": "kort",
+   "visa": "fågel",
+   "genus": "u",
+   "former": [
+    "fågel",
+    "fågeln",
+    "fåglar",
+    "fåglarna"
+   ],
+   "sammansattningsled": [
+    "fågel",
+    "fågels"
+   ],
+   "signatur": "vingar",
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "fågel"
+   }
+  },
+  {
+   "id": "fisk",
+   "klass": "djur",
+   "niva": "kort",
+   "visa": "fisk",
+   "genus": "u",
+   "former": [
+    "fisk",
+    "fisken",
+    "fiskar",
+    "fiskarna"
+   ],
+   "sammansattningsled": [
+    "fisk"
+   ],
+   "signatur": "fenor",
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "fisk"
+   }
+  },
+  {
+   "id": "groda",
+   "klass": "djur",
+   "niva": "kort",
+   "visa": "groda",
+   "genus": "u",
+   "former": [
+    "groda",
+    "grodan",
+    "grodor",
+    "grodorna"
+   ],
+   "sammansattningsled": [
+    "grod"
+   ],
+   "signatur": "studs",
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "groda"
+   }
+  },
+  {
+   "id": "kattunge",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kattunge",
+   "genus": "u",
+   "former": [
+    "kattunge",
+    "kattungen",
+    "kattungar",
+    "kattungarna"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "katt",
+    "storlek": "liten"
+   }
+  },
+  {
+   "id": "kisse",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kisse",
+   "genus": "u",
+   "former": [
+    "kisse",
+    "kissen",
+    "kissar",
+    "kissarna"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "katt"
+   }
+  },
+  {
+   "id": "valp",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "valp",
+   "genus": "u",
+   "former": [
+    "valp",
+    "valpen",
+    "valpar",
+    "valparna"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "hund",
+    "storlek": "liten"
+   }
+  },
+  {
+   "id": "vovve",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "vovve",
+   "genus": "u",
+   "former": [
+    "vovve",
+    "vovven",
+    "vovvar",
+    "vovvarna"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "hund"
+   }
+  },
+  {
+   "id": "ponny",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "ponny",
+   "genus": "u",
+   "former": [
+    "ponny",
+    "ponnyn",
+    "ponnier",
+    "ponnies",
+    "ponnyer",
+    "ponnysar",
+    "ponnierna",
+    "ponnyerna",
+    "ponniesarna",
+    "ponnysarna"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "häst",
+    "storlek": "liten"
+   }
+  },
+  {
+   "id": "föl",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "föl",
+   "genus": "n",
+   "former": [
+    "föl",
+    "fölet",
+    "fölen"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "häst",
+    "storlek": "liten"
+   }
+  },
+  {
+   "id": "padda",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "padda",
+   "genus": "u",
+   "former": [
+    "padda",
+    "paddan",
+    "paddor",
+    "paddorna"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "kropp": "groda",
+    "farg": "brun"
+   }
+  },
+  {
+   "id": "röd",
+   "klass": "farg",
+   "niva": "kort",
+   "visa": "röd",
+   "former": [
+    "röd",
+    "rött",
+    "röda",
+    "röde"
+   ],
+   "bojning": {
+    "u": "röd",
+    "n": "rött",
+    "pl": "röda"
+   },
+   "sammansattningsled": [
+    "röd"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#E53935"
+   }
+  },
+  {
+   "id": "orange",
+   "klass": "farg",
+   "niva": "kort",
+   "visa": "orange",
+   "former": [
+    "orange",
+    "orangea",
+    "oranga",
+    "orangt",
+    "oranget"
+   ],
+   "bojning": {
+    "u": "orange",
+    "n": "orange",
+    "pl": "orange"
+   },
+   "sammansattningsled": [
+    "orange"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#FB8C00"
+   }
+  },
+  {
+   "id": "gul",
+   "klass": "farg",
+   "niva": "kort",
+   "visa": "gul",
+   "former": [
+    "gul",
+    "gult",
+    "gula",
+    "gule"
+   ],
+   "bojning": {
+    "u": "gul",
+    "n": "gult",
+    "pl": "gula"
+   },
+   "sammansattningsled": [
+    "gul"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#FDD835"
+   }
+  },
+  {
+   "id": "grön",
+   "klass": "farg",
+   "niva": "kort",
+   "visa": "grön",
+   "former": [
+    "grön",
+    "grönt",
+    "gröna",
+    "gröne"
+   ],
+   "bojning": {
+    "u": "grön",
+    "n": "grönt",
+    "pl": "gröna"
+   },
+   "sammansattningsled": [
+    "grön"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#43A047"
+   }
+  },
+  {
+   "id": "blå",
+   "klass": "farg",
+   "niva": "kort",
+   "visa": "blå",
+   "former": [
+    "blå",
+    "blått",
+    "blåa",
+    "blåe"
+   ],
+   "bojning": {
+    "u": "blå",
+    "n": "blått",
+    "pl": "blåa"
+   },
+   "sammansattningsled": [
+    "blå"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#1E88E5"
+   }
+  },
+  {
+   "id": "lila",
+   "klass": "farg",
+   "niva": "kort",
+   "visa": "lila",
+   "former": [
+    "lila"
+   ],
+   "bojning": {
+    "u": "lila",
+    "n": "lila",
+    "pl": "lila"
+   },
+   "sammansattningsled": [
+    "lila"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#8E24AA"
+   }
+  },
+  {
+   "id": "rosa",
+   "klass": "farg",
+   "niva": "kort",
+   "visa": "rosa",
+   "former": [
+    "rosa"
+   ],
+   "bojning": {
+    "u": "rosa",
+    "n": "rosa",
+    "pl": "rosa"
+   },
+   "sammansattningsled": [
+    "rosa"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#F48FB1"
+   }
+  },
+  {
+   "id": "svart",
+   "klass": "farg",
+   "niva": "kort",
+   "visa": "svart",
+   "former": [
+    "svart",
+    "svarta",
+    "svarte"
+   ],
+   "bojning": {
+    "u": "svart",
+    "n": "svart",
+    "pl": "svarta"
+   },
+   "sammansattningsled": [
+    "svart"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#2B2B2B"
+   }
+  },
+  {
+   "id": "vit",
+   "klass": "farg",
+   "niva": "kort",
+   "visa": "vit",
+   "former": [
+    "vit",
+    "vitt",
+    "vita",
+    "vite"
+   ],
+   "bojning": {
+    "u": "vit",
+    "n": "vitt",
+    "pl": "vita"
+   },
+   "sammansattningsled": [
+    "vit"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#FAFAFA"
+   }
+  },
+  {
+   "id": "grå",
+   "klass": "farg",
+   "niva": "kort",
+   "visa": "grå",
+   "former": [
+    "grå",
+    "grått",
+    "gråa",
+    "gråe"
+   ],
+   "bojning": {
+    "u": "grå",
+    "n": "grått",
+    "pl": "gråa"
+   },
+   "sammansattningsled": [
+    "grå"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#9E9E9E"
+   }
+  },
+  {
+   "id": "brun",
+   "klass": "farg",
+   "niva": "kort",
+   "visa": "brun",
+   "former": [
+    "brun",
+    "brunt",
+    "bruna",
+    "brune"
+   ],
+   "bojning": {
+    "u": "brun",
+    "n": "brunt",
+    "pl": "bruna"
+   },
+   "sammansattningsled": [
+    "brun"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#8D6E63"
+   }
+  },
+  {
+   "id": "turkos",
+   "klass": "farg",
+   "niva": "kort",
+   "visa": "turkos",
+   "former": [
+    "turkos",
+    "turkost",
+    "turkosa",
+    "turkose"
+   ],
+   "bojning": {
+    "u": "turkos",
+    "n": "turkost",
+    "pl": "turkosa"
+   },
+   "sammansattningsled": [
+    "turkos"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#26C6DA"
+   }
+  },
+  {
+   "id": "ljusblå",
+   "klass": "farg",
+   "niva": "fritt",
+   "visa": "ljusblå",
+   "former": [
+    "ljusblå",
+    "ljusblått",
+    "ljusblåa",
+    "ljusblåe"
+   ],
+   "bojning": {
+    "u": "ljusblå",
+    "n": "ljusblått",
+    "pl": "ljusblåa"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#90CAF9"
+   }
+  },
+  {
+   "id": "mörkblå",
+   "klass": "farg",
+   "niva": "fritt",
+   "visa": "mörkblå",
+   "former": [
+    "mörkblå",
+    "mörkblått",
+    "mörkblåa",
+    "mörkblåe"
+   ],
+   "bojning": {
+    "u": "mörkblå",
+    "n": "mörkblått",
+    "pl": "mörkblåa"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#1A237E"
+   }
+  },
+  {
+   "id": "ljusgrön",
+   "klass": "farg",
+   "niva": "fritt",
+   "visa": "ljusgrön",
+   "former": [
+    "ljusgrön",
+    "ljusgrönt",
+    "ljusgröna",
+    "ljusgröne"
+   ],
+   "bojning": {
+    "u": "ljusgrön",
+    "n": "ljusgrönt",
+    "pl": "ljusgröna"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#A5D6A7"
+   }
+  },
+  {
+   "id": "mörkgrön",
+   "klass": "farg",
+   "niva": "fritt",
+   "visa": "mörkgrön",
+   "former": [
+    "mörkgrön",
+    "mörkgrönt",
+    "mörkgröna",
+    "mörkgröne"
+   ],
+   "bojning": {
+    "u": "mörkgrön",
+    "n": "mörkgrönt",
+    "pl": "mörkgröna"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#1B5E20"
+   }
+  },
+  {
+   "id": "ljusrosa",
+   "klass": "farg",
+   "niva": "fritt",
+   "visa": "ljusrosa",
+   "former": [
+    "ljusrosa"
+   ],
+   "bojning": {
+    "u": "ljusrosa",
+    "n": "ljusrosa",
+    "pl": "ljusrosa"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#F8BBD0"
+   }
+  },
+  {
+   "id": "gyllene",
+   "klass": "farg",
+   "niva": "fritt",
+   "visa": "gyllene",
+   "former": [
+    "gyllene"
+   ],
+   "bojning": {
+    "u": "gyllene",
+    "n": "gyllene",
+    "pl": "gyllene"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#FFC107",
+    "glans": true
+   }
+  },
+  {
+   "id": "silvrig",
+   "klass": "farg",
+   "niva": "fritt",
+   "visa": "silvrig",
+   "former": [
+    "silvrig",
+    "silvrigt",
+    "silvriga",
+    "silvrige"
+   ],
+   "bojning": {
+    "u": "silvrig",
+    "n": "silvrigt",
+    "pl": "silvriga"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#CFD8DC",
+    "glans": true
+   }
+  },
+  {
+   "id": "guld",
+   "klass": "farg",
+   "niva": "fritt",
+   "visa": "guld",
+   "former": [
+    "guld",
+    "guldet"
+   ],
+   "sammansattningsled": [
+    "guld"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#FFC107",
+    "glans": true
+   },
+   "not": "Används främst i sammansättningar: guldfisk, guldkrona."
+  },
+  {
+   "id": "silver",
+   "klass": "farg",
+   "niva": "fritt",
+   "visa": "silver",
+   "former": [
+    "silver",
+    "silvret"
+   ],
+   "sammansattningsled": [
+    "silver"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "farg": "#CFD8DC",
+    "glans": true
+   }
+  },
+  {
+   "id": "liten",
+   "klass": "storlek",
+   "niva": "kort",
+   "visa": "liten",
+   "former": [
+    "liten",
+    "litet",
+    "små",
+    "lilla",
+    "lille"
+   ],
+   "bojning": {
+    "u": "liten",
+    "n": "litet",
+    "pl": "små"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "skala": 0.7
+   }
+  },
+  {
+   "id": "stor",
+   "klass": "storlek",
+   "niva": "kort",
+   "visa": "stor",
+   "former": [
+    "stor",
+    "stort",
+    "stora",
+    "store"
+   ],
+   "bojning": {
+    "u": "stor",
+    "n": "stort",
+    "pl": "stora"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "skala": 1.35
+   }
+  },
+  {
+   "id": "jättestor",
+   "klass": "storlek",
+   "niva": "fritt",
+   "visa": "jättestor",
+   "former": [
+    "jättestor",
+    "jättestort",
+    "jättestora",
+    "jättestore"
+   ],
+   "bojning": {
+    "u": "jättestor",
+    "n": "jättestort",
+    "pl": "jättestora"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "skala": 1.8
+   }
+  },
+  {
+   "id": "enorm",
+   "klass": "storlek",
+   "niva": "fritt",
+   "visa": "enorm",
+   "former": [
+    "enorm",
+    "enormt",
+    "enorma",
+    "enorme"
+   ],
+   "bojning": {
+    "u": "enorm",
+    "n": "enormt",
+    "pl": "enorma"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "skala": 2.0
+   }
+  },
+  {
+   "id": "pytteliten",
+   "klass": "storlek",
+   "niva": "fritt",
+   "visa": "pytteliten",
+   "former": [
+    "pytteliten",
+    "pyttelitet",
+    "pyttesmå",
+    "pyttelilla",
+    "pyttelille"
+   ],
+   "bojning": {
+    "u": "pytteliten",
+    "n": "pyttelitet",
+    "pl": "pyttesmå"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "skala": 0.45
+   }
+  },
+  {
+   "id": "jätteliten",
+   "klass": "storlek",
+   "niva": "fritt",
+   "visa": "jätteliten",
+   "former": [
+    "jätteliten",
+    "jättelitet",
+    "jättelilla",
+    "jättesmå"
+   ],
+   "bojning": {
+    "u": "jätteliten",
+    "n": "jättelitet",
+    "pl": "jättesmå"
+   },
+   "kalla": "hand (jätte- + liten)",
+   "del": {
+    "skala": 0.5
+   }
+  },
+  {
+   "id": "prickig",
+   "klass": "monster",
+   "niva": "kort",
+   "visa": "prickig",
+   "former": [
+    "prickig",
+    "prickigt",
+    "prickiga",
+    "prickige"
+   ],
+   "bojning": {
+    "u": "prickig",
+    "n": "prickigt",
+    "pl": "prickiga"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "monster": "prickar"
+   }
+  },
+  {
+   "id": "randig",
+   "klass": "monster",
+   "niva": "kort",
+   "visa": "randig",
+   "former": [
+    "randig",
+    "randigt",
+    "randiga",
+    "randige"
+   ],
+   "bojning": {
+    "u": "randig",
+    "n": "randigt",
+    "pl": "randiga"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "monster": "ränder"
+   }
+  },
+  {
+   "id": "glittrig",
+   "klass": "monster",
+   "niva": "kort",
+   "visa": "glittrig",
+   "former": [
+    "glittrig",
+    "glittrigt",
+    "glittriga",
+    "glittrige"
+   ],
+   "bojning": {
+    "u": "glittrig",
+    "n": "glittrigt",
+    "pl": "glittriga"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "monster": "glitter"
+   }
+  },
+  {
+   "id": "spräcklig",
+   "klass": "monster",
+   "niva": "fritt",
+   "visa": "spräcklig",
+   "former": [
+    "spräcklig",
+    "spräckligt",
+    "spräckliga",
+    "spräcklige"
+   ],
+   "bojning": {
+    "u": "spräcklig",
+    "n": "spräckligt",
+    "pl": "spräckliga"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "monster": "prickar"
+   }
+  },
+  {
+   "id": "tigerrandig",
+   "klass": "monster",
+   "niva": "fritt",
+   "visa": "tigerrandig",
+   "former": [
+    "tigerrandig",
+    "tigerrandigt",
+    "tigerrandiga",
+    "tigerrandige"
+   ],
+   "bojning": {
+    "u": "tigerrandig",
+    "n": "tigerrandigt",
+    "pl": "tigerrandiga"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "monster": "ränder",
+    "farg": "#FB8C00",
+    "monsterfarg": "#2B2B2B"
+   }
+  },
+  {
+   "id": "regnbågsfärgad",
+   "klass": "monster",
+   "niva": "fritt",
+   "visa": "regnbågsfärgad",
+   "former": [
+    "regnbågsfärgad",
+    "regnbågsfärgat",
+    "regnbågsfärgade",
+    "regnbågsfärgada"
+   ],
+   "bojning": {
+    "u": "regnbågsfärgad",
+    "n": "regnbågsfärgat",
+    "pl": "regnbågsfärgade"
+   },
+   "kalla": "hand (finns ej i SALDO; regelbunden -ad-böjning)",
+   "del": {
+    "monster": "regnbåge"
+   }
+  },
+  {
+   "id": "gnistrande",
+   "klass": "monster",
+   "niva": "fritt",
+   "visa": "gnistrande",
+   "former": [
+    "gnistrande"
+   ],
+   "bojning": {
+    "u": "gnistrande",
+    "n": "gnistrande",
+    "pl": "gnistrande"
+   },
+   "kalla": "SALDO (som particip/adjektiv)",
+   "del": {
+    "monster": "glitter",
+    "formaga": "aura"
+   }
+  },
+  {
+   "id": "skimrande",
+   "klass": "monster",
+   "niva": "fritt",
+   "visa": "skimrande",
+   "former": [
+    "skimrande"
+   ],
+   "bojning": {
+    "u": "skimrande",
+    "n": "skimrande",
+    "pl": "skimrande"
+   },
+   "kalla": "SALDO (som particip/adjektiv)",
+   "del": {
+    "monster": "glitter"
+   }
+  },
+  {
+   "id": "prickar",
+   "klass": "monster",
+   "niva": "fritt",
+   "visa": "prickar",
+   "former": [
+    "prick",
+    "pricken",
+    "prickar",
+    "prickarna"
+   ],
+   "efter": "med",
+   "kalla": "SALDO",
+   "del": {
+    "monster": "prickar"
+   }
+  },
+  {
+   "id": "ränder",
+   "klass": "monster",
+   "niva": "fritt",
+   "visa": "ränder",
+   "former": [
+    "rand",
+    "randen",
+    "ränder",
+    "ränderna"
+   ],
+   "efter": "med",
+   "kalla": "SALDO",
+   "del": {
+    "monster": "ränder"
+   }
+  },
+  {
+   "id": "glitter",
+   "klass": "monster",
+   "niva": "fritt",
+   "visa": "glitter",
+   "former": [
+    "glitter",
+    "glittret"
+   ],
+   "efter": "med",
+   "sammansattningsled": [
+    "glitter"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "monster": "glitter"
+   }
+  },
+  {
+   "id": "regnbåge",
+   "klass": "monster",
+   "niva": "fritt",
+   "visa": "regnbåge",
+   "former": [
+    "regnbåge",
+    "regnbågen",
+    "regnbågar",
+    "regnbågarna"
+   ],
+   "efter": "med",
+   "sammansattningsled": [
+    "regnbågs",
+    "regnbåg"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "monster": "regnbåge"
+   }
+  },
+  {
+   "id": "flyger",
+   "klass": "formaga",
+   "niva": "kort",
+   "visa": "flyger",
+   "former": [
+    "flyger",
+    "flög",
+    "flyg",
+    "flyga",
+    "flugit"
+   ],
+   "sammansattningsled": [
+    "flyg"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "vingar"
+   }
+  },
+  {
+   "id": "simmar",
+   "klass": "formaga",
+   "niva": "kort",
+   "visa": "simmar",
+   "former": [
+    "simmar",
+    "sam",
+    "simmade",
+    "simma",
+    "simmat",
+    "simmande"
+   ],
+   "sammansattningsled": [
+    "sim"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "fenor"
+   }
+  },
+  {
+   "id": "lyser",
+   "klass": "formaga",
+   "niva": "kort",
+   "visa": "lyser",
+   "former": [
+    "lyser",
+    "lyste",
+    "lys",
+    "lysa",
+    "lyst"
+   ],
+   "sammansattningsled": [
+    "lys"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "aura"
+   }
+  },
+  {
+   "id": "sprutar eld",
+   "klass": "formaga",
+   "niva": "kort",
+   "visa": "sprutar eld",
+   "fras": [
+    [
+     "sprutar",
+     "sprutade",
+     "spruta",
+     "sprutat",
+     "sprutande"
+    ],
+    [
+     "eld",
+     "elden",
+     "eldar",
+     "eldarna"
+    ]
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "flammor"
+   },
+   "former": []
+  },
+  {
+   "id": "springer snabbt",
+   "klass": "formaga",
+   "niva": "kort",
+   "visa": "springer snabbt",
+   "fras": [
+    [
+     "springer",
+     "sprang",
+     "spring",
+     "springa",
+     "sprungit",
+     "springande"
+    ],
+    [
+     "snabbt",
+     "fort"
+    ]
+   ],
+   "valfritt_ord2": true,
+   "kalla": "SALDO + hand (snabbt/fort)",
+   "del": {
+    "formaga": "fartlinjer"
+   },
+   "not": "\"springer\" ensamt räcker också.",
+   "former": []
+  },
+  {
+   "id": "hoppar",
+   "klass": "formaga",
+   "niva": "kort",
+   "visa": "hoppar",
+   "former": [
+    "hoppar",
+    "hoppade",
+    "hoppa",
+    "hoppat",
+    "hoppande"
+   ],
+   "sammansattningsled": [
+    "hopp"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "studs"
+   }
+  },
+  {
+   "id": "studsar",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "studsar",
+   "former": [
+    "studsar",
+    "studsade",
+    "studsa",
+    "studsat",
+    "studsande"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "studs"
+   }
+  },
+  {
+   "id": "glittrar",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "glittrar",
+   "former": [
+    "glittrar",
+    "glittrade",
+    "glittra",
+    "glittrat",
+    "glittrande"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "monster": "glitter",
+    "formaga": "aura"
+   }
+  },
+  {
+   "id": "flygande",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "flygande",
+   "former": [
+    "flygande"
+   ],
+   "bojning": {
+    "u": "flygande",
+    "n": "flygande",
+    "pl": "flygande"
+   },
+   "ordklass": "adjektiv",
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "vingar"
+   }
+  },
+  {
+   "id": "lysande",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "lysande",
+   "former": [
+    "lysande"
+   ],
+   "bojning": {
+    "u": "lysande",
+    "n": "lysande",
+    "pl": "lysande"
+   },
+   "ordklass": "adjektiv",
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "aura"
+   }
+  },
+  {
+   "id": "självlysande",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "självlysande",
+   "former": [
+    "självlysande"
+   ],
+   "bojning": {
+    "u": "självlysande",
+    "n": "självlysande",
+    "pl": "självlysande"
+   },
+   "ordklass": "adjektiv",
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "aura"
+   }
+  },
+  {
+   "id": "eldsprutande",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "eldsprutande",
+   "former": [
+    "eldsprutande"
+   ],
+   "bojning": {
+    "u": "eldsprutande",
+    "n": "eldsprutande",
+    "pl": "eldsprutande"
+   },
+   "ordklass": "adjektiv",
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "flammor"
+   }
+  },
+  {
+   "id": "snabb",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "snabb",
+   "former": [
+    "snabb",
+    "snabbt",
+    "snabba",
+    "snabbe"
+   ],
+   "bojning": {
+    "u": "snabb",
+    "n": "snabbt",
+    "pl": "snabba"
+   },
+   "ordklass": "adjektiv",
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "fartlinjer"
+   }
+  },
+  {
+   "id": "blixtsnabb",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "blixtsnabb",
+   "former": [
+    "blixtsnabb",
+    "blixtsnabbt",
+    "blixtsnabba",
+    "blixtsnabbe"
+   ],
+   "bojning": {
+    "u": "blixtsnabb",
+    "n": "blixtsnabbt",
+    "pl": "blixtsnabba"
+   },
+   "ordklass": "adjektiv",
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "fartlinjer"
+   }
+  },
+  {
+   "id": "supersnabb",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "supersnabb",
+   "former": [
+    "supersnabb",
+    "supersnabbt",
+    "supersnabba",
+    "supersnabbe"
+   ],
+   "bojning": {
+    "u": "supersnabb",
+    "n": "supersnabbt",
+    "pl": "supersnabba"
+   },
+   "ordklass": "adjektiv",
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "fartlinjer"
+   }
+  },
+  {
+   "id": "vingar",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "vingar",
+   "former": [
+    "vinge",
+    "vingen",
+    "vingar",
+    "vingarna"
+   ],
+   "efter": "med",
+   "sammansattningsled": [
+    "ving"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "vingar"
+   }
+  },
+  {
+   "id": "fenor",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "fenor",
+   "former": [
+    "fena",
+    "fenan",
+    "fenor",
+    "fenorna"
+   ],
+   "efter": "med",
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "fenor"
+   }
+  },
+  {
+   "id": "eld",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "eld",
+   "former": [
+    "eld",
+    "elden"
+   ],
+   "sammansattningsled": [
+    "eld",
+    "elds"
+   ],
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "flammor"
+   },
+   "not": "Mest som förled: eldkanin, elddrake."
+  },
+  {
+   "id": "hatt",
+   "klass": "tillbehor",
+   "niva": "kort",
+   "visa": "hatt",
+   "genus": "u",
+   "former": [
+    "hatt",
+    "hatten",
+    "hattar",
+    "hattarna"
+   ],
+   "efter": "med",
+   "kalla": "SALDO",
+   "del": {
+    "tillbehor": "hatt"
+   }
+  },
+  {
+   "id": "krona",
+   "klass": "tillbehor",
+   "niva": "kort",
+   "visa": "krona",
+   "genus": "u",
+   "former": [
+    "krona",
+    "kronan",
+    "kronor",
+    "kronorna"
+   ],
+   "efter": "med",
+   "kalla": "SALDO",
+   "del": {
+    "tillbehor": "krona"
+   }
+  },
+  {
+   "id": "glasögon",
+   "klass": "tillbehor",
+   "niva": "kort",
+   "visa": "glasögon",
+   "genus": "pl",
+   "former": [
+    "glasögon",
+    "glasögonen"
+   ],
+   "efter": "med",
+   "kalla": "SALDO",
+   "del": {
+    "tillbehor": "glasögon"
+   }
+  },
+  {
+   "id": "halsduk",
+   "klass": "tillbehor",
+   "niva": "kort",
+   "visa": "halsduk",
+   "genus": "u",
+   "former": [
+    "halsduk",
+    "halsduken",
+    "halsdukar",
+    "halsdukarna"
+   ],
+   "efter": "med",
+   "kalla": "SALDO",
+   "del": {
+    "tillbehor": "halsduk"
+   }
+  },
+  {
+   "id": "rosett",
+   "klass": "tillbehor",
+   "niva": "kort",
+   "visa": "rosett",
+   "genus": "u",
+   "former": [
+    "rosett",
+    "rosetten",
+    "rosetter",
+    "rosetterna"
+   ],
+   "efter": "med",
+   "kalla": "SALDO",
+   "del": {
+    "tillbehor": "rosett"
+   }
+  },
+  {
+   "id": "horn",
+   "klass": "tillbehor",
+   "niva": "kort",
+   "visa": "horn",
+   "genus": "pl",
+   "former": [
+    "horn",
+    "hornet",
+    "hornen"
+   ],
+   "efter": "med",
+   "kalla": "SALDO",
+   "del": {
+    "tillbehor": "horn"
+   }
+  },
+  {
+   "id": "ryggsäck",
+   "klass": "tillbehor",
+   "niva": "kort",
+   "visa": "ryggsäck",
+   "genus": "u",
+   "former": [
+    "ryggsäck",
+    "ryggsäcken",
+    "ryggsäckar",
+    "ryggsäckarna"
+   ],
+   "efter": "med",
+   "kalla": "SALDO",
+   "del": {
+    "tillbehor": "ryggsäck"
+   }
+  },
+  {
+   "id": "mantel",
+   "klass": "tillbehor",
+   "niva": "kort",
+   "visa": "mantel",
+   "genus": "u",
+   "former": [
+    "mantel",
+    "manteln",
+    "mantlar",
+    "mantlarna"
+   ],
+   "efter": "med",
+   "kalla": "SALDO",
+   "del": {
+    "tillbehor": "mantel"
+   }
+  },
+  {
+   "id": "kappa",
+   "klass": "tillbehor",
+   "niva": "fritt",
+   "visa": "kappa",
+   "genus": "u",
+   "former": [
+    "kappa",
+    "kappan",
+    "kappor",
+    "kapporna"
+   ],
+   "efter": "med",
+   "kalla": "SALDO",
+   "del": {
+    "tillbehor": "mantel"
+   }
+  },
+  {
+   "id": "trollkarlshatt",
+   "klass": "tillbehor",
+   "niva": "fritt",
+   "visa": "trollkarlshatt",
+   "genus": "u",
+   "former": [
+    "trollkarlshatt",
+    "trollkarlshatten",
+    "trollkarlshattar",
+    "trollkarlshattarna"
+   ],
+   "efter": "med",
+   "kalla": "hand (sammansättning, böjs som hatt)",
+   "del": {
+    "tillbehor": "hatt",
+    "tillbehorsfarg": "#5E35B1"
+   }
+  },
+  {
+   "id": "solglasögon",
+   "klass": "tillbehor",
+   "niva": "fritt",
+   "visa": "solglasögon",
+   "genus": "pl",
+   "former": [
+    "solglasögon",
+    "solglasögonen"
+   ],
+   "efter": "med",
+   "kalla": "hand (böjs som glasögon)",
+   "del": {
+    "tillbehor": "glasögon",
+    "tillbehorsfarg": "#212121"
+   }
+  },
+  {
+   "id": "guldkrona",
+   "klass": "tillbehor",
+   "niva": "fritt",
+   "visa": "guldkrona",
+   "genus": "u",
+   "former": [
+    "guldkrona",
+    "guldkronan",
+    "guldkronor",
+    "guldkronorna"
+   ],
+   "efter": "med",
+   "kalla": "hand (böjs som krona)",
+   "del": {
+    "tillbehor": "krona",
+    "tillbehorsfarg": "#FFC107",
+    "glans": true
+   }
+  },
+  {
+   "id": "osynlig",
+   "klass": "egenskap",
+   "niva": "fritt",
+   "visa": "osynlig",
+   "former": [
+    "osynlig",
+    "osynligt",
+    "osynliga",
+    "osynlige"
+   ],
+   "bojning": {
+    "u": "osynlig",
+    "n": "osynligt",
+    "pl": "osynliga"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "genomskinlighet": 0.25,
+    "kontur": true
+   }
+  },
+  {
+   "id": "genomskinlig",
+   "klass": "egenskap",
+   "niva": "fritt",
+   "visa": "genomskinlig",
+   "former": [
+    "genomskinlig",
+    "genomskinligt",
+    "genomskinliga",
+    "genomskinlige"
+   ],
+   "bojning": {
+    "u": "genomskinlig",
+    "n": "genomskinligt",
+    "pl": "genomskinliga"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "genomskinlighet": 0.55
+   }
+  },
+  {
+   "id": "gris",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "gris",
+   "genus": "u",
+   "former": [
+    "gris",
+    "grisen",
+    "grisar",
+    "grisarna"
+   ],
+   "sammansattningsled": [
+    "gris"
+   ],
+   "signatur": "studs",
+   "kalla": "Trollpennan kit runda 3",
+   "del": {
+    "kropp": "gris",
+    "farg": "ljusrosa"
+   }
+  },
+  {
+   "id": "nöff",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "nöff",
+   "genus": "u",
+   "former": [
+    "nöff",
+    "nöffen",
+    "nöffar",
+    "nöffarna"
+   ],
+   "kalla": "Trollpennan kit runda 3",
+   "del": {
+    "kropp": "gris",
+    "farg": "ljusrosa"
+   }
+  },
+  {
+   "id": "nasse",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "nasse",
+   "genus": "u",
+   "former": [
+    "nasse",
+    "nassen",
+    "nassar",
+    "nassarna"
+   ],
+   "kalla": "Trollpennan kit runda 3",
+   "del": {
+    "kropp": "gris",
+    "farg": "ljusrosa"
+   }
+  },
+  {
+   "id": "kulting",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kulting",
+   "genus": "u",
+   "former": [
+    "kulting",
+    "kultingen",
+    "kultingar",
+    "kultingarna"
+   ],
+   "kalla": "Trollpennan kit runda 3",
+   "del": {
+    "kropp": "gris",
+    "farg": "ljusrosa",
+    "storlek": "liten"
+   }
+  },
+  {
+   "id": "dinosaurie",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "dinosaurie",
+   "genus": "u",
+   "former": [
+    "dinosaurie",
+    "dinosaurien",
+    "dinosaurier",
+    "dinosaurierna"
+   ],
+   "sammansattningsled": [
+    "dinosaurie"
+   ],
+   "signatur": "fartlinjer",
+   "kalla": "Trollpennan kit runda 3",
+   "del": {
+    "kropp": "dinosaurie",
+    "farg": "grön"
+   }
+  },
+  {
+   "id": "dino",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "dino",
+   "genus": "u",
+   "former": [
+    "dino",
+    "dinon",
+    "dinos",
+    "dinosar",
+    "dinosarna"
+   ],
+   "sammansattningsled": [
+    "dino"
+   ],
+   "kalla": "Trollpennan kit runda 3",
+   "del": {
+    "kropp": "dinosaurie",
+    "farg": "grön"
+   }
+  },
+  {
+   "id": "uggla",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "uggla",
+   "genus": "u",
+   "former": [
+    "uggla",
+    "ugglan",
+    "ugglor",
+    "ugglorna"
+   ],
+   "sammansattningsled": [
+    "uggle"
+   ],
+   "signatur": "vingar",
+   "kalla": "Trollpennan kit runda 3",
+   "del": {
+    "kropp": "uggla",
+    "farg": "brun"
+   }
+  },
+  {
+   "id": "ekorre",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "ekorre",
+   "genus": "u",
+   "former": [
+    "ekorre",
+    "ekorren",
+    "ekorrar",
+    "ekorrarna"
+   ],
+   "sammansattningsled": [
+    "ekorr"
+   ],
+   "signatur": "fartlinjer",
+   "kalla": "Trollpennan kit runda 3",
+   "del": {
+    "kropp": "ekorre",
+    "farg": "orange"
+   }
+  },
+  {
+   "id": "bäver",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "bäver",
+   "genus": "u",
+   "former": [
+    "bäver",
+    "bävern",
+    "bävrar",
+    "bävrarna"
+   ],
+   "sammansattningsled": [
+    "bäver"
+   ],
+   "signatur": "fenor",
+   "kalla": "Trollpennan kit runda 3",
+   "del": {
+    "kropp": "bäver",
+    "farg": "brun"
+   }
+  },
+  {
+   "id": "haj",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "haj",
+   "genus": "u",
+   "former": [
+    "haj",
+    "hajen",
+    "hajar",
+    "hajarna"
+   ],
+   "sammansattningsled": [
+    "haj"
+   ],
+   "signatur": "fenor",
+   "kalla": "Trollpennan kit runda 3",
+   "del": {
+    "kropp": "haj",
+    "farg": "grå"
+   }
+  },
+  {
+   "id": "enhörning",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "enhörning",
+   "genus": "u",
+   "former": [
+    "enhörning",
+    "enhörningen",
+    "enhörningar",
+    "enhörningarna"
+   ],
+   "sammansattningsled": [
+    "enhörnings"
+   ],
+   "kalla": "Trollpennan kit runda 3",
+   "del": {
+    "kropp": "häst",
+    "tillbehor": "horn",
+    "farg": "vit"
+   },
+   "not": "Kräver att applyDel lägger del.tillbehor som ett tillbehör (som 'med horn')."
+  }
+ ],
+ "kollisioner": {},
+ "runda3": {
+  "standardfarg": "En kropps del.farg (t.ex. gris -> ljusrosa) gäller bara om barnet inte skrivit något färgord. 'blå gris' blir blå.",
+  "del_tillbehor": "Ett djurord med del.tillbehor (enhörning) får tillbehöret som om barnet skrivit 'med horn'. Ett senare tillbehör på samma plats vinner.",
+  "egna_ord_i_formeln": "Formeln behåller barnets eget ord: eldkanin -> 'en eldkanin', guldfisk -> 'en guldfisk', sjöhäst -> 'en sjöhäst', drakkatt -> 'en drakkatt', kattunge -> 'en kattunge'. Böj bara artikel och adjektiv efter ordets genus (sammansättningens efterled styr: eldkanin = en, eldföl = ett). Plural: 'tre eldkaniner' (efterledets plural). Samma för förmåge- och mönsterord som barnet skrev som adjektiv: 'en självlysande uggla' (inte 'en uggla som lyser'), 'en ekorre som studsar' (inte 'som hoppar'), 'en blixtsnabb eldsprutande gris'. Skrev hon 'som flyger' står det 'som flyger'.",
+  "sammansatt_felstavning": "Om ett ord inte känns igen: prova att dela det i känd förled + felstavat efterled (eller tvärtom) och fråga 'Menade du eldkanin?'. Samma avståndsregler som för vanliga ord, räknat på den felstavade delen.",
+  "tva_farger": "'röd och blå katt' (två färgord med 'och' före djuret): första färgen = kroppen, andra färgen = ränder i den färgen om inget mönster redan finns; finns ett mönster (prickig, randig) får mönstret den andra färgen. Formeln: 'en röd och blå katt'. Tre färger eller fler: kroppen + mönster i den andra, resten sparas inte (inget skäll)."
+ }
+}

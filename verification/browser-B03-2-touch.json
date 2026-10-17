@@ -1,0 +1,39 @@
+{
+  "results": [
+    {
+      "name": "forest asks for flying companion",
+      "pass": true
+    },
+    {
+      "name": "companion dialog receives focus",
+      "pass": true
+    },
+    {
+      "name": "companion selection enters forest",
+      "pass": true
+    },
+    {
+      "name": "forest unlock enables cave route",
+      "pass": true
+    },
+    {
+      "name": "repeated lake/garden transitions remain usable",
+      "pass": true
+    },
+    {
+      "name": "no duplicate texture warnings across transitions",
+      "pass": true
+    },
+    {
+      "name": "forest progression persists after reload",
+      "pass": true
+    },
+    {
+      "name": "no uncaught page errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "textureWarnings": [],
+  "shadowRequests": 2
+}

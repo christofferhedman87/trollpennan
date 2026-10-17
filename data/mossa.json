@@ -1,0 +1,232 @@
+{
+ "_om": "Trollet Mossa, ägaren till Trollpennan, bor i en stubbe på gården och ger tre små uppdrag per spel-dag (se dygn.json). Inga uppdrag går ut. Är de tre gjorda: 'Mossa har inga fler uppdrag i dag – men du kan göra precis vad du vill!' Nästa spel-dag kommer tre nya. Ej gjorda uppdrag ligger kvar, högst 3 åt gången.",
+ "figur": {
+  "namn": "Mossa",
+  "beskrivning": "Ett litet, runt, mossgrönt troll med stora öron, en röd luva och Trollpennan bakom örat. Snäll, lite tankspridd, älskar ord.",
+  "reserv": "Tills konst finns: rita Mossa med kitet som en mörkgrön groda (kropp groda, farg #2E7D32) med röd hatt (tint) och mantel, skala 0.9, stående still vid en stubbe (brun cylinder ritad procedurellt)."
+ },
+ "halsningar": [
+  "Hej hej! Det är jag, Mossa. Jag har lånat ut min penna till dig.",
+  "Där är du ju! Jag har tre små saker jag undrar över i dag.",
+  "God morgon, ordmästare!"
+ ],
+ "klart": [
+  "Tack! Det var precis vad jag hoppades på.",
+  "Hihi, du är så klurig!",
+  "Toppen! Det skriver jag upp i min lilla bok."
+ ],
+ "alla_klara": "Mossa har inga fler uppdrag i dag – men du kan göra precis vad du vill!",
+ "beloning": {
+  "per_uppdrag": 1,
+  "alla_tre": 2,
+  "text": "+{n} stjärnor från Mossa!"
+ },
+ "val": "Välj tre olika uppdrag. Välj bara uppdrag som går att göra med det barnet har låst upp (t.ex. inga bygg-uppdrag innan Gården finns, inga gris-uppdrag om hon redan har en gris).",
+ "uppdrag": [
+  {
+   "id": "djur-flyga",
+   "typ": "skriv",
+   "text": "Skriv ett djur som kan flyga.",
+   "mal": {
+    "tagg": "flyga"
+   }
+  },
+  {
+   "id": "djur-simma",
+   "typ": "skriv",
+   "text": "Skriv ett djur som kan simma.",
+   "mal": {
+    "tagg": "simma"
+   }
+  },
+  {
+   "id": "djur-lila",
+   "typ": "skriv",
+   "text": "Jag vill se ett lila djur i dag.",
+   "mal": {
+    "tagg": "farg:lila"
+   }
+  },
+  {
+   "id": "djur-hatt",
+   "typ": "skriv",
+   "text": "Skriv ett djur med hatt. Jag älskar hattar!",
+   "mal": {
+    "tagg": "tillbehor:hatt"
+   }
+  },
+  {
+   "id": "djur-prickar",
+   "typ": "skriv",
+   "text": "Skriv ett djur med prickar.",
+   "mal": {
+    "tagg": "prickar"
+   }
+  },
+  {
+   "id": "djur-stor",
+   "typ": "skriv",
+   "text": "Skriv ett jättestort djur.",
+   "mal": {
+    "tagg": "stor"
+   }
+  },
+  {
+   "id": "djur-liten",
+   "typ": "skriv",
+   "text": "Skriv ett pyttelitet djur.",
+   "mal": {
+    "tagg": "liten"
+   }
+  },
+  {
+   "id": "djur-tre",
+   "typ": "skriv",
+   "text": "Skriv tre djur på en gång.",
+   "mal": {
+    "antal_min": 3
+   }
+  },
+  {
+   "id": "djur-sammansatt",
+   "typ": "skriv",
+   "text": "Hitta på ett eget djurord, som eldkanin eller drakkatt.",
+   "mal": {
+    "sammansattning": true
+   }
+  },
+  {
+   "id": "djur-gris",
+   "typ": "skriv",
+   "text": "Jag har aldrig sett en gris. Kan du skriva en?",
+   "mal": {
+    "tagg": "kropp:gris"
+   }
+  },
+  {
+   "id": "bygg-hus",
+   "typ": "bygg",
+   "text": "Bygg ett hus med fler än två fönster.",
+   "mal": {
+    "bygg": [
+     "hus",
+     "stuga"
+    ],
+    "del_min": {
+     "fönster": 3
+    }
+   }
+  },
+  {
+   "id": "bygg-blommor",
+   "typ": "bygg",
+   "text": "Gården behöver fler blommor. Bygg tre stycken!",
+   "mal": {
+    "bygg": [
+     "blomma"
+    ],
+    "antal_min": 3
+   }
+  },
+  {
+   "id": "bygg-tra",
+   "typ": "bygg",
+   "text": "Bygg något av trä.",
+   "mal": {
+    "material": [
+     "trä"
+    ]
+   }
+  },
+  {
+   "id": "bygg-lek",
+   "typ": "bygg",
+   "text": "Bygg något roligt att leka med.",
+   "mal": {
+    "typ": [
+     "lek"
+    ]
+   }
+  },
+  {
+   "id": "ge-gava",
+   "typ": "ge",
+   "text": "Ge en gåva till ett av dina djur.",
+   "mal": {
+    "gava": true
+   }
+  },
+  {
+   "id": "ge-sott",
+   "typ": "ge",
+   "text": "Ge någon något sött.",
+   "mal": {
+    "gava_tagg": "sott"
+   }
+  },
+  {
+   "id": "ge-favorit",
+   "typ": "ge",
+   "text": "Hitta favoritgåvan till ett av dina djur.",
+   "mal": {
+    "favorit": true
+   }
+  },
+  {
+   "id": "onskan",
+   "typ": "onskan",
+   "text": "Uppfyll en önskan.",
+   "mal": {
+    "onskan": 1
+   }
+  },
+  {
+   "id": "onskan-tva",
+   "typ": "onskan",
+   "text": "Uppfyll två önskningar.",
+   "mal": {
+    "onskan": 2
+   }
+  },
+  {
+   "id": "hemligt-ord",
+   "typ": "ord",
+   "text": "Hitta ett nytt hemligt ord till boken.",
+   "mal": {
+    "hemligt_ord": 1
+   }
+  },
+  {
+   "id": "guldord",
+   "typ": "ord",
+   "text": "Skriv ett guldord alldeles själv.",
+   "mal": {
+    "guldord": 1
+   }
+  },
+  {
+   "id": "aventyr",
+   "typ": "aventyr",
+   "text": "Gå på äventyr med ett djur.",
+   "mal": {
+    "aventyr": true
+   }
+  },
+  {
+   "id": "foto",
+   "typ": "album",
+   "text": "Ta ett foto av ditt finaste djur.",
+   "mal": {
+    "foto": true
+   }
+  },
+  {
+   "id": "sallsynt",
+   "typ": "album",
+   "text": "Skriv ett sällsynt djur (minst 4 saker i formeln).",
+   "mal": {
+    "sallsynthet_min": "sallsynt"
+   }
+  }
+ ]
+}

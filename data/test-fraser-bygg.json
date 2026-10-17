@@ -1,0 +1,391 @@
+{
+ "_om": "Förväntade utfall för byggtolken (runda 4). Framtagna med referenstolken tools/byggtolk.py. Gör dem till tester.",
+ "fraser": [
+  {
+   "fras": "ett hus",
+   "formel": "ett hus",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "antal": 1,
+     "material": null,
+     "farg": [],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett rött hus med tre fönster och blått tak",
+   "formel": "ett rött hus med tre fönster och blått tak",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "antal": 1,
+     "material": null,
+     "farg": [
+      "röd"
+     ],
+     "delar": {
+      "fönster": 3,
+      "tak": 1
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett hus med fönster",
+   "formel": "ett hus med fönster",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "antal": 1,
+     "material": null,
+     "farg": [],
+     "delar": {
+      "fönster": 2
+     }
+    }
+   ]
+  },
+  {
+   "fras": "en röd stuga med vita fönster",
+   "formel": "en röd stuga med vita fönster",
+   "byggen": [
+    {
+     "bygg": "stuga",
+     "antal": 1,
+     "material": null,
+     "farg": [
+      "röd"
+     ],
+     "delar": {
+      "fönster": 2
+     }
+    }
+   ]
+  },
+  {
+   "fras": "två stora granar",
+   "formel": "två stora granar",
+   "byggen": [
+    {
+     "bygg": "gran",
+     "antal": 2,
+     "material": null,
+     "farg": [],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "fem träd",
+   "formel": "fem träd",
+   "byggen": [
+    {
+     "bygg": "träd",
+     "antal": 3,
+     "material": null,
+     "farg": [],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett isslott med fyra torn",
+   "formel": "ett isslott med fyra torn",
+   "byggen": [
+    {
+     "bygg": "slott",
+     "antal": 1,
+     "material": "is",
+     "farg": [],
+     "delar": {
+      "torn": 4
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett slott av is med fyra torn",
+   "formel": "ett slott av is med fyra torn",
+   "byggen": [
+    {
+     "bygg": "slott",
+     "antal": 1,
+     "material": "is",
+     "farg": [],
+     "delar": {
+      "torn": 4
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett godishus",
+   "formel": "ett godishus",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "antal": 1,
+     "material": "godis",
+     "farg": [],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus av choklad",
+   "formel": "ett hus av choklad",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "antal": 1,
+     "material": "choklad",
+     "farg": [],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett pepparkakshus med skorsten",
+   "formel": "ett pepparkakshus med en skorsten",
+   "byggen": [
+    {
+     "bygg": "pepparkakshus",
+     "antal": 1,
+     "material": null,
+     "farg": [],
+     "delar": {
+      "skorsten": 1
+     }
+    }
+   ]
+  },
+  {
+   "fras": "en regnbågsbro",
+   "formel": "en regnbågsbro",
+   "byggen": [
+    {
+     "bygg": "regnbågsbro",
+     "antal": 1,
+     "material": null,
+     "farg": [],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett äppelträd och en fontän",
+   "formel": "ett äppelträd och en fontän",
+   "byggen": [
+    {
+     "bygg": "äppelträd",
+     "antal": 1,
+     "material": null,
+     "farg": [],
+     "delar": {}
+    },
+    {
+     "bygg": "fontän",
+     "antal": 1,
+     "material": null,
+     "farg": [],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en blå hundkoja med rött tak",
+   "formel": "en blå hundkoja med rött tak",
+   "byggen": [
+    {
+     "bygg": "hundkoja",
+     "antal": 1,
+     "material": null,
+     "farg": [
+      "blå"
+     ],
+     "delar": {
+      "tak": 1
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett slott med fyra torn och flaggor",
+   "formel": "ett slott med fyra torn och flaggor",
+   "byggen": [
+    {
+     "bygg": "slott",
+     "antal": 1,
+     "material": null,
+     "farg": [],
+     "delar": {
+      "torn": 4,
+      "flagga": 2
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett litet lila hus med en dörr och två röda flaggor",
+   "formel": "ett litet lila hus med en dörr och två röda flaggor",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "antal": 1,
+     "material": null,
+     "farg": [
+      "lila"
+     ],
+     "delar": {
+      "dörr": 1,
+      "flagga": 2
+     }
+    }
+   ]
+  },
+  {
+   "fras": "en stor damm",
+   "formel": "en stor damm",
+   "byggen": [
+    {
+     "bygg": "damm",
+     "antal": 1,
+     "material": null,
+     "farg": [],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "tre blommor",
+   "formel": "tre blommor",
+   "byggen": [
+    {
+     "bygg": "blomma",
+     "antal": 3,
+     "material": null,
+     "farg": [],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en gul studsmatta",
+   "formel": "en gul studsmatta",
+   "byggen": [
+    {
+     "bygg": "studsmatta",
+     "antal": 1,
+     "material": null,
+     "farg": [
+      "gul"
+     ],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett trädhus",
+   "formel": "ett trädhus",
+   "byggen": [
+    {
+     "bygg": "trädhus",
+     "antal": 1,
+     "material": null,
+     "farg": [],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus med tak av guld",
+   "formel": "ett hus med tak av guld",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "antal": 1,
+     "material": null,
+     "farg": [],
+     "delar": {
+      "tak": 1
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett molnslott med två torn",
+   "formel": "ett molnslott med två torn",
+   "byggen": [
+    {
+     "bygg": "slott",
+     "antal": 1,
+     "material": "moln",
+     "farg": [],
+     "delar": {
+      "torn": 2
+     }
+    }
+   ]
+  },
+  {
+   "fras": "en prickig svamp",
+   "formel": "en prickig svamp",
+   "byggen": [
+    {
+     "bygg": "svamp",
+     "antal": 1,
+     "material": null,
+     "farg": [],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "tre lyktor",
+   "formel": "tre lyktor",
+   "byggen": [
+    {
+     "bygg": "lykta",
+     "antal": 3,
+     "material": null,
+     "farg": [],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en randig karusell",
+   "formel": "en randig karusell",
+   "byggen": [
+    {
+     "bygg": "karusell",
+     "antal": 1,
+     "material": null,
+     "farg": [],
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "rödhus",
+   "forvantat": "forslag",
+   "text": "Menade du ett rött hus?"
+  },
+  {
+   "fras": "ett slot",
+   "forvantat": "forslag",
+   "forslag": "slott"
+  },
+  {
+   "fras": "ett hus med fönstrer",
+   "forvantat": "forslag",
+   "forslag": "fönster"
+  },
+  {
+   "fras": "en katt",
+   "forvantat": "djur (som förut, på ängen)"
+  }
+ ]
+}

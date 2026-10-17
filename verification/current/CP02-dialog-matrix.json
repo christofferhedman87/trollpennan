@@ -1,0 +1,269 @@
+{
+  "results": [
+    {
+      "name": "320x640 reset focus",
+      "pass": true
+    },
+    {
+      "name": "320x640 reset underlying inert",
+      "pass": false
+    },
+    {
+      "name": "320x640 reset controls reachable",
+      "pass": false
+    },
+    {
+      "name": "320x640 reset Tab trap",
+      "pass": true
+    },
+    {
+      "name": "320x640 reset ShiftTab trap",
+      "pass": true
+    },
+    {
+      "name": "320x640 reset Escape layer",
+      "pass": true
+    },
+    {
+      "name": "320x640 reset focus return",
+      "pass": true
+    },
+    {
+      "name": "320x640 reset touch cancel",
+      "pass": true
+    },
+    {
+      "name": "320x640 no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "320x640 import focus",
+      "pass": true
+    },
+    {
+      "name": "320x640 import underlying inert",
+      "pass": false
+    },
+    {
+      "name": "320x640 import Tab trap",
+      "pass": true
+    },
+    {
+      "name": "320x640 import ShiftTab trap",
+      "pass": true
+    },
+    {
+      "name": "320x640 import Escape layer",
+      "pass": true
+    },
+    {
+      "name": "320x640 import touch cancel",
+      "pass": true
+    },
+    {
+      "name": "320x640 purchase focus",
+      "pass": true
+    },
+    {
+      "name": "320x640 purchase underlying inert",
+      "pass": false
+    },
+    {
+      "name": "320x640 purchase Tab trap",
+      "pass": true
+    },
+    {
+      "name": "320x640 purchase ShiftTab trap",
+      "pass": true
+    },
+    {
+      "name": "320x640 purchase Escape layer",
+      "pass": true
+    },
+    {
+      "name": "320x640 purchase focus return",
+      "pass": true
+    },
+    {
+      "name": "320x640 purchase touch cancel",
+      "pass": true
+    },
+    {
+      "name": "375x812 reset focus",
+      "pass": true
+    },
+    {
+      "name": "375x812 reset underlying inert",
+      "pass": false
+    },
+    {
+      "name": "375x812 reset controls reachable",
+      "pass": false
+    },
+    {
+      "name": "375x812 reset Tab trap",
+      "pass": true
+    },
+    {
+      "name": "375x812 reset ShiftTab trap",
+      "pass": true
+    },
+    {
+      "name": "375x812 reset Escape layer",
+      "pass": true
+    },
+    {
+      "name": "375x812 reset focus return",
+      "pass": true
+    },
+    {
+      "name": "375x812 reset touch cancel",
+      "pass": true
+    },
+    {
+      "name": "375x812 no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "375x812 import focus",
+      "pass": true
+    },
+    {
+      "name": "375x812 import underlying inert",
+      "pass": false
+    },
+    {
+      "name": "375x812 import Tab trap",
+      "pass": true
+    },
+    {
+      "name": "375x812 import ShiftTab trap",
+      "pass": true
+    },
+    {
+      "name": "375x812 import Escape layer",
+      "pass": true
+    },
+    {
+      "name": "375x812 import touch cancel",
+      "pass": true
+    },
+    {
+      "name": "375x812 purchase focus",
+      "pass": true
+    },
+    {
+      "name": "375x812 purchase underlying inert",
+      "pass": false
+    },
+    {
+      "name": "375x812 purchase Tab trap",
+      "pass": true
+    },
+    {
+      "name": "375x812 purchase ShiftTab trap",
+      "pass": true
+    },
+    {
+      "name": "375x812 purchase Escape layer",
+      "pass": true
+    },
+    {
+      "name": "375x812 purchase focus return",
+      "pass": true
+    },
+    {
+      "name": "375x812 purchase touch cancel",
+      "pass": true
+    },
+    {
+      "name": "812x375 reset focus",
+      "pass": true
+    },
+    {
+      "name": "812x375 reset underlying inert",
+      "pass": false
+    },
+    {
+      "name": "812x375 reset controls reachable",
+      "pass": false
+    },
+    {
+      "name": "812x375 reset Tab trap",
+      "pass": true
+    },
+    {
+      "name": "812x375 reset ShiftTab trap",
+      "pass": true
+    },
+    {
+      "name": "812x375 reset Escape layer",
+      "pass": true
+    },
+    {
+      "name": "812x375 reset focus return",
+      "pass": true
+    },
+    {
+      "name": "812x375 reset touch cancel",
+      "pass": true
+    },
+    {
+      "name": "812x375 no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "812x375 import focus",
+      "pass": true
+    },
+    {
+      "name": "812x375 import underlying inert",
+      "pass": false
+    },
+    {
+      "name": "812x375 import Tab trap",
+      "pass": true
+    },
+    {
+      "name": "812x375 import ShiftTab trap",
+      "pass": true
+    },
+    {
+      "name": "812x375 import Escape layer",
+      "pass": true
+    },
+    {
+      "name": "812x375 import touch cancel",
+      "pass": true
+    },
+    {
+      "name": "812x375 purchase focus",
+      "pass": true
+    },
+    {
+      "name": "812x375 purchase underlying inert",
+      "pass": false
+    },
+    {
+      "name": "812x375 purchase Tab trap",
+      "pass": true
+    },
+    {
+      "name": "812x375 purchase ShiftTab trap",
+      "pass": true
+    },
+    {
+      "name": "812x375 purchase Escape layer",
+      "pass": true
+    },
+    {
+      "name": "812x375 purchase focus return",
+      "pass": true
+    },
+    {
+      "name": "812x375 purchase touch cancel",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

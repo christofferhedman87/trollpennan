@@ -1,0 +1,50 @@
+{
+ "_om": "Skatter som barnet får från uppdrag. De hamnar i Lådan på gården och kan ställas ut som dekoration (som byggen, räknas mot max_pa_garden). De ritas procedurellt tills konst finns.",
+ "texter": {
+  "fick": "Du fick {namn}! Den ligger i Lådan på gården."
+ },
+ "skatter": [
+  {
+   "id": "silverkotte",
+   "namn": "Silverkotten",
+   "text": "En kotte som glänser som silver.",
+   "ritning": "Kotte-form i silvrigt med glans.",
+   "kit_nyckel": "skatter/silverkotte"
+  },
+  {
+   "id": "fyrklöver",
+   "namn": "Fyrklövern",
+   "text": "En klöver med fyra blad. Den ger tur!",
+   "ritning": "Fyra gröna hjärtblad på en stjälk.",
+   "kit_nyckel": "skatter/fyrklöver"
+  },
+  {
+   "id": "parla",
+   "namn": "Den stora pärlan",
+   "text": "Pärlhajens gåva. Den skimrar i alla färger.",
+   "ritning": "Stor vit cirkel med regnbågsglans.",
+   "kit_nyckel": "skatter/parla"
+  },
+  {
+   "id": "fyrlampa",
+   "namn": "Fyrlampan",
+   "text": "En liten lampa från fyren. Den lyser på natten.",
+   "ritning": "Liten röd-vit lykta som glöder.",
+   "kit_nyckel": "skatter/fyrlampa"
+  },
+  {
+   "id": "kristall",
+   "namn": "Grottkristallen",
+   "text": "En lila kristall från grottans vägg.",
+   "ritning": "Lila kantig kristall med gnistor.",
+   "kit_nyckel": "skatter/kristall"
+  },
+  {
+   "id": "skattkista",
+   "namn": "Skattkistan",
+   "text": "Full av guldmynt och en gammal karta.",
+   "ritning": "Brun kista med guldkanter och öppet lock med guldmynt.",
+   "kit_nyckel": "skatter/skattkista"
+  }
+ ]
+}

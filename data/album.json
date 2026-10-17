@@ -1,0 +1,78 @@
+{
+ "_om": "Samlingsalbumet: en egen bok som fylls av allt barnet har skapat och hittat. Allt sparas lokalt.",
+ "sidor": [
+  {
+   "id": "kroppar",
+   "titel": "Mina djur",
+   "inne": "En ruta per kropp i kitet (14). Fylls när barnet väckt minst ett sådant djur. Visar det finaste (högst sällsynthet) med formel, hjärtan och favoritgåva om den är hittad. Okänd ruta: djurets siluett och '?'."
+  },
+  {
+   "id": "vilda",
+   "titel": "Vilda vänner",
+   "inne": "De 7 vilda djuren. Okända visas som siluett med området där de bor ('Bor i Skogen')."
+  },
+  {
+   "id": "skatter",
+   "titel": "Skatter",
+   "inne": "De 6 skatterna med namn och text."
+  },
+  {
+   "id": "byggen",
+   "titel": "Mina byggen",
+   "inne": "En ruta per byggord (36). Fylls när det byggts första gången."
+  },
+  {
+   "id": "foton",
+   "titel": "Foton",
+   "inne": "Barnet kan trycka 'Ta foto' på ett djur. Max 60 foton; när det är fullt: 'Albumet är fullt. Ta bort ett foto först.'"
+  }
+ ],
+ "sallsynthet": {
+  "poang": "1 poäng var för: skriven färg, mönster, varje förmåga, varje tillbehör, storlek (inte mellan), glans, genomskinlig. Vilda djur har sin egen sällsynthet.",
+  "nivaer": [
+   {
+    "id": "vanlig",
+    "namn": "Vanlig",
+    "form": "vanligt",
+    "min": 0,
+    "stjarnor": 1
+   },
+   {
+    "id": "ovanlig",
+    "namn": "Ovanlig",
+    "form": "ovanligt",
+    "min": 2,
+    "stjarnor": 2
+   },
+   {
+    "id": "sallsynt",
+    "namn": "Sällsynt",
+    "form": "sällsynt",
+    "min": 4,
+    "stjarnor": 3
+   },
+   {
+    "id": "legendarisk",
+    "namn": "Legendarisk",
+    "form": "legendariskt",
+    "min": 6,
+    "stjarnor": 4
+   }
+  ],
+  "ny_niva_text": [
+   "Ett {niva} djur! Det får en plats i albumet.",
+   "Wow, ett {niva} djur! Ett sådant har du inte haft förut."
+  ]
+ },
+ "texter": {
+  "knapp": "Albumet",
+  "ta_foto": "Ta foto",
+  "foto_klart": "Klick! Fotot ligger i albumet.",
+  "full": "Albumet är fullt. Ta bort ett foto först.",
+  "ta_bort": "Ta bort fotot",
+  "framsteg": "Du har samlat {n} av {total}",
+  "favorit": "Favoritgåva: {gava}",
+  "okand_favorit": "Favoritgåva: ?",
+  "hjartan": "Hjärtan"
+ }
+}

@@ -1,0 +1,152 @@
+{
+ "_om": "Standardbeteende per kropp. Gäller när barnet INTE skrivit en förmåga. Skrivna förmågor vinner alltid, i ordningen vingar(flyg) > fenor(sim) > fartlinjer(rus) > studs(hopp). Zoner anges som andel av världens bredd/höjd (0-1). Dammen = kit.json 'damm'.",
+ "stilar": {
+  "ga": "Promenerar lugnt till nya punkter inom sin zon, sätter sig ibland, somnar ibland.",
+  "rus": "Springer HELA vägen tvärs över ängen (kant till kant inom zonen) i fart ca 45 % av skärmbredden per sekund, vänder med en liten sladd, vilar 1-3 s, springer igen. Aldrig på stället. Spegelvänd sprite efter riktning.",
+  "hopp": "Hoppar i bågar (höjd ca 1/3 av egen höjd) mellan punkter. Groda: hoppar ibland ner i dammen och upp igen.",
+  "flyg": "Flyger i mjuka åttor i himmelszonen, landar ibland på marken 2-4 s och lyfter igen. Lätt vinglande upp/ner.",
+  "sim": "Simmar i dammen. Nedre tredjedelen av kroppen döljs av vattenytan (mask eller klippning), små ringar på vattnet. Får aldrig stå på gräset."
+ },
+ "zoner": {
+  "himmel": {
+   "x": [
+    0.08,
+    0.92
+   ],
+   "y": [
+    0.12,
+    0.4
+   ]
+  },
+  "ang": {
+   "x": [
+    0.08,
+    0.92
+   ],
+   "y": [
+    0.5,
+    0.76
+   ]
+  },
+  "damm": {
+   "x": [
+    0.07,
+    0.4
+   ],
+   "y": [
+    0.8,
+    0.87
+   ]
+  },
+  "dammkant": {
+   "x": [
+    0.05,
+    0.5
+   ],
+   "y": [
+    0.72,
+    0.82
+   ]
+  }
+ },
+ "kroppar": {
+  "kanin": {
+   "stil": "hopp",
+   "zon": "ang"
+  },
+  "katt": {
+   "stil": "ga",
+   "zon": "ang",
+   "ibland": "rus",
+   "ibland_andel": 0.15
+  },
+  "hund": {
+   "stil": "ga",
+   "zon": "ang",
+   "ibland": "rus",
+   "ibland_andel": 0.25
+  },
+  "drake": {
+   "stil": "ga",
+   "zon": "ang",
+   "ibland": "flyg",
+   "ibland_andel": 0.2,
+   "not": "Draken har vingar i bilden men flyger bara ibland om barnet inte skrivit 'som flyger'."
+  },
+  "häst": {
+   "stil": "ga",
+   "zon": "ang",
+   "ibland": "rus",
+   "ibland_andel": 0.25
+  },
+  "fågel": {
+   "stil": "flyg",
+   "zon": "himmel"
+  },
+  "uggla": {
+   "stil": "flyg",
+   "zon": "himmel",
+   "not": "Landar oftare och längre än fågeln."
+  },
+  "fisk": {
+   "stil": "sim",
+   "zon": "damm"
+  },
+  "haj": {
+   "stil": "sim",
+   "zon": "damm",
+   "not": "Samma damm. Hajen är snäll och simmar långsamt."
+  },
+  "groda": {
+   "stil": "hopp",
+   "zon": "dammkant"
+  },
+  "bäver": {
+   "stil": "ga",
+   "zon": "dammkant",
+   "ibland": "sim",
+   "ibland_andel": 0.4
+  },
+  "gris": {
+   "stil": "ga",
+   "zon": "ang"
+  },
+  "dinosaurie": {
+   "stil": "ga",
+   "zon": "ang",
+   "not": "Tunga, långsamma steg (fart 0.7x)."
+  },
+  "ekorre": {
+   "stil": "rus",
+   "zon": "ang"
+  }
+ },
+ "formaga_overstyr": {
+  "vingar": {
+   "stil": "flyg",
+   "zon": "himmel"
+  },
+  "fenor": {
+   "stil": "sim",
+   "zon": "damm"
+  },
+  "fartlinjer": {
+   "stil": "rus",
+   "zon": "ang"
+  },
+  "studs": {
+   "stil": "hopp",
+   "zon": "ang"
+  }
+ },
+ "storlek": {
+  "_om": "Hur stora djuren ska vara på en 375 px bred mobilskärm.",
+  "bas_bredd_andel": 0.24,
+  "min_bredd_px": 72,
+  "max_samtidigt_fullstora": 6,
+  "krympning": "Fler än 6 djur: krymp alla jämnt ner till högst 0.75x bas. Aldrig mindre än min_bredd_px * skala.",
+  "djup": "Djur längre ner (närmare) ritas något större (upp till 1.15x) och ovanpå djur längre upp. Sortera ritordning efter y.",
+  "inte_rader": "Startpunkter slumpas inom zonen med minsta avstånd ca 0.6 djurbredder. Aldrig rutnät eller rader.",
+  "nytt_djur": "Ett nyss väckt djur hamnar i mittre tredjedelen av skärmen (i sin zon) så barnet ser det, och dess bubbla sitter precis ovanför djuret."
+ }
+}

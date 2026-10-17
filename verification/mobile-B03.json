@@ -1,0 +1,86 @@
+[
+  {
+    "viewport": [
+      375,
+      812
+    ],
+    "after": {
+      "bookTop": 276.09375,
+      "bookHeight": 535.90625,
+      "vaknaHeight": 52,
+      "vaknaBottom": 526.890625,
+      "headerHeight": 64,
+      "overflow": false
+    },
+    "checks": {
+      "no_horizontal_overflow": true,
+      "vakna_44px": true,
+      "vakna_in_view": true,
+      "header_44px": true,
+      "creates_dragon": true
+    }
+  },
+  {
+    "viewport": [
+      320,
+      640
+    ],
+    "after": {
+      "bookTop": 153.609375,
+      "bookHeight": 486.390625,
+      "vaknaHeight": 52,
+      "vaknaBottom": 383.609375,
+      "headerHeight": 64,
+      "overflow": false
+    },
+    "checks": {
+      "no_horizontal_overflow": true,
+      "vakna_44px": true,
+      "vakna_in_view": true,
+      "header_44px": true,
+      "creates_dragon": true
+    }
+  },
+  {
+    "viewport": [
+      812,
+      375
+    ],
+    "after": {
+      "bookTop": 0,
+      "bookHeight": 375,
+      "vaknaHeight": 44,
+      "vaknaBottom": 224,
+      "headerHeight": 64,
+      "overflow": false
+    },
+    "checks": {
+      "no_horizontal_overflow": true,
+      "vakna_44px": true,
+      "vakna_in_view": true,
+      "header_44px": true,
+      "creates_dragon": true
+    }
+  },
+  {
+    "viewport": [
+      1280,
+      800
+    ],
+    "after": {
+      "bookTop": 0,
+      "bookHeight": 800,
+      "vaknaHeight": 52,
+      "vaknaBottom": 266.484375,
+      "headerHeight": 64,
+      "overflow": false
+    },
+    "checks": {
+      "no_horizontal_overflow": true,
+      "vakna_44px": true,
+      "vakna_in_view": true,
+      "header_44px": true,
+      "creates_dragon": true
+    }
+  }
+]

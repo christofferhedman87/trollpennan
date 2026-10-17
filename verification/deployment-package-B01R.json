@@ -1,0 +1,13 @@
+{
+  "files": 503,
+  "bytes": 14931826,
+  "largest_file_bytes": 1311513,
+  "index_references": [
+    "/favicon.svg",
+    "/assets/index-BelS_SEH.js",
+    "/assets/index-e-r4gZuG.css"
+  ],
+  "references_exist": true,
+  "source_code_excluded": true,
+  "status": "BUILT_TEST_CANDIDATE_NOT_FINAL"
+}

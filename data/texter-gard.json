@@ -1,0 +1,88 @@
+{
+ "_om": "Alla nya knapp- och pratbubbeltexter för Gården. Inga andra texter får hittas på.",
+ "flikar": {
+  "angen": "Ängen",
+  "garden": "Gården",
+  "byggboken": "Byggboken"
+ },
+ "forsta_besok": [
+  "Det här är din gård! Här kan du bygga vad du vill.",
+  "Skriv till exempel: ett rött hus med tre fönster"
+ ],
+ "penna_bygg": {
+  "placeholder": "Vad vill du bygga?",
+  "knapp": "Bygg!"
+ },
+ "bygg_nagot": "Bygg något",
+ "tred_hint": "Dra för att titta runt",
+ "borja_om": {
+  "knapp": "Börja om",
+  "fraga": "Vill du börja om? Alla djur och byggen försvinner.",
+  "ja": "Ja, börja om"
+ },
+ "klapp": {
+  "en": [
+   "Det kittlas!",
+   "Du kom tillbaka! Jag väntade.",
+   "Ängen är finast när du är här.",
+   "Vi är ett superlag, du och jag."
+  ],
+  "mer": [
+   "Mer! Mer klappar!",
+   "Det kittlas!",
+   "Vi är ett superlag, du och jag."
+  ]
+ },
+ "demo": {
+  "senare": "Kommer senare – i fulla spelet kan du bygga hus och gå på äventyr i skogen.",
+  "snart": "Kommer snart!"
+ },
+ "byggt": [
+  "Tadaa! Här är {formel}!",
+  "Klart! {formel} står på gården.",
+  "Wow, {formel}! Snyggt bygge!"
+ ],
+ "meny": {
+  "flytta": "Flytta",
+  "bygg_om": "Bygg om",
+  "lada": "Lägg i lådan",
+  "bo": "Vem ska bo här?"
+ },
+ "flytta_hjalp": "Dra dit du vill ha den.",
+ "bygg_om_hjalp": "Skriv hur den ska se ut nu.",
+ "lada": {
+  "rubrik": "Lådan",
+  "tom": "Lådan är tom.",
+  "ta_fram": "Ställ ut",
+  "full": "Gården är full! Lägg något i lådan först."
+ },
+ "bo": {
+  "valj": "Tryck på ett djur som ska bo här.",
+  "flyttar_in": [
+   "{djur} flyttar in i {hem}!",
+   "{djur} tycker om sitt nya hem!"
+  ],
+  "full": "Det bor redan så många här som får plats.",
+  "passar_inte": "{djur} vill hellre bo någon annanstans. Prova ett annat hem!",
+  "ingen": "Inget djur kan bo här än. Väck ett djur på ängen först!"
+ },
+ "djur_repliker_hemma": [
+  "Jag älskar mitt hem!",
+  "Välkommen hem till mig!",
+  "Här är det mysigt.",
+  "Jag har bästa utsikten på hela gården."
+ ],
+ "hem_namn": "{formel_bestamd}",
+ "hem_namn_not": "Bestämd form för pratbubblor: 'det röda huset', 'den blå hundkojan', 'isslottet'. Använd byggordets bestämda form (former[1]) och adjektivets a-form.",
+ "backup": {
+  "rubrik": "Spara en kopia",
+  "spara": "Ladda ner en kopia",
+  "spara_hjalp": "Sparar allt (djur, gård, stjärnor, ord) som en fil på den här enheten.",
+  "las_in": "Läs in en kopia",
+  "las_in_fraga": "Vill du byta allt i spelet mot kopian? Det som finns nu försvinner.",
+  "las_in_ja": "Ja, byt",
+  "las_in_nej": "Avbryt",
+  "klart": "Klart! Kopian är inläst.",
+  "fel": "Den filen gick inte att läsa. Inget har ändrats."
+ }
+}

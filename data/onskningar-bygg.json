@@ -1,0 +1,317 @@
+{
+ "_om": "Önskningar som handlar om Gården. Samma system och regler som data/onskningar.json (runda 3) men barnet uppfyller dem genom att bygga på Gården. Visas bara när Gården är upplåst. Blanda in dem bland de vanliga önskningarna (ungefär var tredje).",
+ "passar": "Uppfylld när barnet bygger något som matchar 'krav' efter att önskan visats. bygg = byggordets id (eller efterled för sammansättningar), farg = färgord-id för byggnaden, material = material-id, del_min = minst så många av delen, antal_min = minst så många av byggordet i meningen, typ = byggordets typ, hem_for_djuret = ett hem där just det här djuret kan bo (djuret flyttar in automatiskt), bara_for = visa önskan bara för dessa kroppar, eller_bygg = alternativa byggord.",
+ "onskningar": [
+  {
+   "id": "eget-hem",
+   "text": "Jag vill ha ett eget hem på gården!",
+   "krav": {
+    "hem_for_djuret": true
+   },
+   "exempel": [
+    "ett hus",
+    "en stuga",
+    "en koja"
+   ],
+   "tack": "Mitt alldeles egna hem! Tack!",
+   "stjarnor": 3
+  },
+  {
+   "id": "fonster-manga",
+   "text": "Jag vill bo i ett hus med massor av fönster, så jag ser ut åt alla håll.",
+   "krav": {
+    "bygg": [
+     "hus",
+     "stuga",
+     "slott",
+     "torn"
+    ],
+    "del_min": {
+     "fönster": 4
+    }
+   },
+   "exempel": [
+    "ett hus med fyra fönster",
+    "ett slott med sex fönster"
+   ],
+   "tack": "Nu ser jag hela gården från mitt fönster!",
+   "stjarnor": 2
+  },
+  {
+   "id": "rott-hus",
+   "text": "Jag drömmer om ett rött hus med vita knutar, som i Bullerbyn.",
+   "krav": {
+    "bygg": [
+     "stuga",
+     "hus"
+    ],
+    "farg": [
+     "röd"
+    ]
+   },
+   "exempel": [
+    "en röd stuga",
+    "ett rött hus"
+   ],
+   "tack": "Precis som i Bullerbyn!",
+   "stjarnor": 2
+  },
+  {
+   "id": "skugga",
+   "text": "Solen är så varm. Kan du bygga något som ger skugga?",
+   "krav": {
+    "bygg": [
+     "träd",
+     "äppelträd",
+     "gran",
+     "palm",
+     "trädhus"
+    ]
+   },
+   "exempel": [
+    "ett träd",
+    "en gran",
+    "ett äppelträd"
+   ],
+   "tack": "Ahh, skön skugga!",
+   "stjarnor": 1
+  },
+  {
+   "id": "bada",
+   "text": "Jag vill bada! Finns det något vatten på gården?",
+   "krav": {
+    "bygg": [
+     "damm",
+     "vallgrav",
+     "fontän"
+    ]
+   },
+   "exempel": [
+    "en damm",
+    "en stor damm",
+    "en fontän"
+   ],
+   "tack": "Plask! Det här är bästa badet!",
+   "stjarnor": 2
+  },
+  {
+   "id": "blommor",
+   "text": "Gården skulle bli så fin med blommor.",
+   "krav": {
+    "bygg": [
+     "blomma"
+    ],
+    "antal_min": 2
+   },
+   "exempel": [
+    "tre blommor",
+    "två gula blommor"
+   ],
+   "tack": "Vad det doftar gott!",
+   "stjarnor": 1
+  },
+  {
+   "id": "vila",
+   "text": "Mina tassar är trötta. Jag vill sitta ner en stund.",
+   "krav": {
+    "bygg": [
+     "bänk"
+    ]
+   },
+   "exempel": [
+    "en bänk",
+    "en blå bänk"
+   ],
+   "tack": "Skönt att vila benen.",
+   "stjarnor": 1
+  },
+  {
+   "id": "morkt",
+   "text": "Det blir så mörkt på gården när solen går ner.",
+   "krav": {
+    "bygg": [
+     "lykta",
+     "fyr"
+    ]
+   },
+   "exempel": [
+    "en lykta",
+    "två lyktor"
+   ],
+   "tack": "Nu lyser det så mysigt.",
+   "stjarnor": 1
+  },
+  {
+   "id": "leka",
+   "text": "Jag vill leka! Kan du bygga något roligt?",
+   "krav": {
+    "typ": [
+     "lek"
+    ]
+   },
+   "exempel": [
+    "en gunga",
+    "en rutschkana",
+    "en studsmatta"
+   ],
+   "tack": "Wiii! Igen, igen!",
+   "stjarnor": 2
+  },
+  {
+   "id": "studsa",
+   "text": "Jag har alltid velat studsa jättehögt.",
+   "krav": {
+    "bygg": [
+     "studsmatta"
+    ]
+   },
+   "exempel": [
+    "en studsmatta",
+    "en stor studsmatta"
+   ],
+   "tack": "Boing, boing! Jag når nästan molnen!",
+   "stjarnor": 2
+  },
+  {
+   "id": "slott",
+   "text": "Jag vill bo i ett riktigt slott, med torn och flaggor!",
+   "krav": {
+    "bygg": [
+     "slott"
+    ],
+    "del_min": {
+     "torn": 1
+    }
+   },
+   "exempel": [
+    "ett slott med två torn",
+    "ett slott med fyra torn och flaggor"
+   ],
+   "tack": "Jag känner mig som en prinsessa och en riddare på samma gång!",
+   "stjarnor": 3
+  },
+  {
+   "id": "over-vattnet",
+   "text": "Jag vill komma över vattnet utan att bli blöt.",
+   "krav": {
+    "bygg": [
+     "bro",
+     "regnbågsbro"
+    ]
+   },
+   "exempel": [
+    "en bro",
+    "en regnbågsbro"
+   ],
+   "tack": "Torrskodd hela vägen över!",
+   "stjarnor": 2
+  },
+  {
+   "id": "godis",
+   "text": "Tänk att bo i ett hus man kan äta upp! Mums.",
+   "krav": {
+    "material": [
+     "godis",
+     "choklad"
+    ],
+    "eller_bygg": [
+     "pepparkakshus"
+    ]
+   },
+   "exempel": [
+    "ett godishus",
+    "ett pepparkakshus",
+    "ett hus av choklad"
+   ],
+   "tack": "Mums! Jag tar bara en liten tugga av taket.",
+   "stjarnor": 3
+  },
+  {
+   "id": "kallt",
+   "text": "Det är så varmt i sommar. Jag vill bo någonstans där det är svalt.",
+   "krav": {
+    "material": [
+     "is"
+    ]
+   },
+   "exempel": [
+    "ett ishus",
+    "ett slott av is"
+   ],
+   "tack": "Brr, vad skönt svalt!",
+   "stjarnor": 2
+  },
+  {
+   "id": "moln",
+   "text": "Jag vill bo uppe bland molnen.",
+   "krav": {
+    "material": [
+     "moln"
+    ]
+   },
+   "exempel": [
+    "ett molnhus",
+    "ett slott av moln"
+   ],
+   "tack": "Här uppe är det mjukt som bomull.",
+   "stjarnor": 3
+  },
+  {
+   "id": "hundkoja",
+   "text": "Varje hund borde ha en egen koja. Tycker jag.",
+   "krav": {
+    "bygg": [
+     "hundkoja"
+    ],
+    "bara_for": [
+     "hund"
+    ]
+   },
+   "exempel": [
+    "en hundkoja",
+    "en röd hundkoja"
+   ],
+   "tack": "Voff! Den är perfekt.",
+   "stjarnor": 2
+  },
+  {
+   "id": "holk",
+   "text": "Jag behöver ett litet hus högt upp, där ingen katt når mig.",
+   "krav": {
+    "bygg": [
+     "fågelholk",
+     "trädhus"
+    ],
+    "bara_for": [
+     "fågel",
+     "uggla"
+    ]
+   },
+   "exempel": [
+    "en fågelholk",
+    "ett trädhus"
+   ],
+   "tack": "Pip! Ett hem högt uppe i luften.",
+   "stjarnor": 2
+  },
+  {
+   "id": "hast-stall",
+   "text": "Jag vill ha ett stall med mycket hö.",
+   "krav": {
+    "bygg": [
+     "stall"
+    ],
+    "bara_for": [
+     "häst",
+     "gris"
+    ]
+   },
+   "exempel": [
+    "ett stall",
+    "ett rött stall"
+   ],
+   "tack": "Gnägg! Det luktar hö och sommar.",
+   "stjarnor": 2
+  }
+ ]
+}

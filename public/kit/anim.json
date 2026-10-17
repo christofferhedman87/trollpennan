@@ -1,0 +1,587 @@
+{
+ "note": "Whole-sprite tweens around pivot_root (feet / belly) plus pose & face swaps. Times in ms, translate in canvas px at size 1.0 (multiply by runtime size). Easing names as in GSAP/Tween.js.",
+ "bodies": {
+  "kanin": {
+   "pivot_root": {
+    "x": 300,
+    "y": 526
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 364
+   },
+   "floats": false,
+   "poses": {
+    "idle": "kroppar.kanin.lager",
+    "glad": "kroppar.kanin.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/kanin/ansikte_normal.png",
+    "blink": "kroppar/kanin/ansikte_blink.png",
+    "glad": "kroppar/kanin/ansikte_glad.png"
+   }
+  },
+  "katt": {
+   "pivot_root": {
+    "x": 300,
+    "y": 526
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 364
+   },
+   "floats": false,
+   "poses": {
+    "idle": "kroppar.katt.lager",
+    "glad": "kroppar.katt.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/katt/ansikte_normal.png",
+    "blink": "kroppar/katt/ansikte_blink.png",
+    "glad": "kroppar/katt/ansikte_glad.png"
+   }
+  },
+  "hund": {
+   "pivot_root": {
+    "x": 300,
+    "y": 526
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 364
+   },
+   "floats": false,
+   "poses": {
+    "idle": "kroppar.hund.lager",
+    "glad": "kroppar.hund.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/hund/ansikte_normal.png",
+    "blink": "kroppar/hund/ansikte_blink.png",
+    "glad": "kroppar/hund/ansikte_glad.png"
+   }
+  },
+  "drake": {
+   "pivot_root": {
+    "x": 300,
+    "y": 526
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 364
+   },
+   "floats": false,
+   "poses": {
+    "idle": "kroppar.drake.lager",
+    "glad": "kroppar.drake.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/drake/ansikte_normal.png",
+    "blink": "kroppar/drake/ansikte_blink.png",
+    "glad": "kroppar/drake/ansikte_glad.png"
+   }
+  },
+  "häst": {
+   "pivot_root": {
+    "x": 300,
+    "y": 526
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 390
+   },
+   "floats": false,
+   "poses": {
+    "idle": "kroppar.häst.lager",
+    "glad": "kroppar.häst.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/hast/ansikte_normal.png",
+    "blink": "kroppar/hast/ansikte_blink.png",
+    "glad": "kroppar/hast/ansikte_glad.png"
+   }
+  },
+  "fågel": {
+   "pivot_root": {
+    "x": 300,
+    "y": 531
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 376
+   },
+   "floats": false,
+   "poses": {
+    "idle": "kroppar.fågel.lager",
+    "glad": "kroppar.fågel.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/fagel/ansikte_normal.png",
+    "blink": "kroppar/fagel/ansikte_blink.png",
+    "glad": "kroppar/fagel/ansikte_glad.png"
+   }
+  },
+  "fisk": {
+   "pivot_root": {
+    "x": 300,
+    "y": 482
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 420
+   },
+   "floats": true,
+   "poses": {
+    "idle": "kroppar.fisk.lager",
+    "glad": "kroppar.fisk.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/fisk/ansikte_normal.png",
+    "blink": "kroppar/fisk/ansikte_blink.png",
+    "glad": "kroppar/fisk/ansikte_glad.png"
+   }
+  },
+  "groda": {
+   "pivot_root": {
+    "x": 300,
+    "y": 528
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 382
+   },
+   "floats": false,
+   "poses": {
+    "idle": "kroppar.groda.lager",
+    "glad": "kroppar.groda.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/groda/ansikte_normal.png",
+    "blink": "kroppar/groda/ansikte_blink.png",
+    "glad": "kroppar/groda/ansikte_glad.png"
+   }
+  },
+  "gris": {
+   "pivot_root": {
+    "x": 300,
+    "y": 526
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 364
+   },
+   "floats": false,
+   "poses": {
+    "idle": "kroppar.gris.lager",
+    "glad": "kroppar.gris.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/gris/ansikte_normal.png",
+    "blink": "kroppar/gris/ansikte_blink.png",
+    "glad": "kroppar/gris/ansikte_glad.png"
+   }
+  },
+  "dinosaurie": {
+   "pivot_root": {
+    "x": 300,
+    "y": 526
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 364
+   },
+   "floats": false,
+   "poses": {
+    "idle": "kroppar.dinosaurie.lager",
+    "glad": "kroppar.dinosaurie.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/dinosaurie/ansikte_normal.png",
+    "blink": "kroppar/dinosaurie/ansikte_blink.png",
+    "glad": "kroppar/dinosaurie/ansikte_glad.png"
+   }
+  },
+  "uggla": {
+   "pivot_root": {
+    "x": 300,
+    "y": 531
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 376
+   },
+   "floats": false,
+   "poses": {
+    "idle": "kroppar.uggla.lager",
+    "glad": "kroppar.uggla.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/uggla/ansikte_normal.png",
+    "blink": "kroppar/uggla/ansikte_blink.png",
+    "glad": "kroppar/uggla/ansikte_glad.png"
+   }
+  },
+  "ekorre": {
+   "pivot_root": {
+    "x": 300,
+    "y": 526
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 364
+   },
+   "floats": false,
+   "poses": {
+    "idle": "kroppar.ekorre.lager",
+    "glad": "kroppar.ekorre.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/ekorre/ansikte_normal.png",
+    "blink": "kroppar/ekorre/ansikte_blink.png",
+    "glad": "kroppar/ekorre/ansikte_glad.png"
+   }
+  },
+  "bäver": {
+   "pivot_root": {
+    "x": 300,
+    "y": 526
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 366
+   },
+   "floats": false,
+   "poses": {
+    "idle": "kroppar.bäver.lager",
+    "glad": "kroppar.bäver.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/baver/ansikte_normal.png",
+    "blink": "kroppar/baver/ansikte_blink.png",
+    "glad": "kroppar/baver/ansikte_glad.png"
+   }
+  },
+  "haj": {
+   "pivot_root": {
+    "x": 300,
+    "y": 468
+   },
+   "pivot_head": {
+    "x": 300,
+    "y": 420
+   },
+   "floats": false,
+   "poses": {
+    "idle": "kroppar.haj.lager",
+    "glad": "kroppar.haj.glad.lager"
+   },
+   "faces": {
+    "idle": "kroppar/haj/ansikte_normal.png",
+    "blink": "kroppar/haj/ansikte_blink.png",
+    "glad": "kroppar/haj/ansikte_glad.png"
+   }
+  }
+ },
+ "states": {
+  "idle": {
+   "loop": true,
+   "pose": "idle",
+   "face": "idle",
+   "tweens": [
+    {
+     "prop": "scaleY",
+     "from": 1.0,
+     "to": 1.03,
+     "ms": 1100,
+     "ease": "sineInOut",
+     "yoyo": true,
+     "pivot": "root"
+    },
+    {
+     "prop": "scaleX",
+     "from": 1.0,
+     "to": 0.985,
+     "ms": 1100,
+     "ease": "sineInOut",
+     "yoyo": true,
+     "pivot": "root"
+    }
+   ],
+   "blink": {
+    "face": "blink",
+    "ms": 120,
+    "every_ms": [
+     2200,
+     4800
+    ],
+    "double_blink_chance": 0.2
+   },
+   "fisk_override": {
+    "tweens": [
+     {
+      "prop": "y",
+      "from": 0,
+      "to": -10,
+      "ms": 1400,
+      "ease": "sineInOut",
+      "yoyo": true
+     }
+    ]
+   }
+  },
+  "hopp": {
+   "loop": false,
+   "pose": "idle",
+   "face_sequence": [
+    [
+     "idle",
+     0
+    ],
+    [
+     "glad",
+     90
+    ],
+    [
+     "idle",
+     760
+    ]
+   ],
+   "keys": [
+    {
+     "t": 0,
+     "scaleX": 1.0,
+     "scaleY": 1.0,
+     "y": 0
+    },
+    {
+     "t": 90,
+     "scaleX": 1.14,
+     "scaleY": 0.86,
+     "y": 0,
+     "ease": "quadOut"
+    },
+    {
+     "t": 330,
+     "scaleX": 0.92,
+     "scaleY": 1.1,
+     "y": -90,
+     "ease": "quadOut"
+    },
+    {
+     "t": 560,
+     "scaleX": 1.0,
+     "scaleY": 1.0,
+     "y": 0,
+     "ease": "quadIn"
+    },
+    {
+     "t": 640,
+     "scaleX": 1.16,
+     "scaleY": 0.84,
+     "y": 0,
+     "ease": "quadOut"
+    },
+    {
+     "t": 820,
+     "scaleX": 1.0,
+     "scaleY": 1.0,
+     "y": 0,
+     "ease": "backOut"
+    }
+   ],
+   "pivot": "root",
+   "with_hoppar_ability": {
+    "y_multiplier": 1.7,
+    "spring_scaleY_on_squash": 0.6
+   }
+  },
+  "glad": {
+   "loop": false,
+   "pose": "glad",
+   "face": "glad",
+   "duration_ms": 900,
+   "keys": [
+    {
+     "t": 0,
+     "y": 0,
+     "rot": 0
+    },
+    {
+     "t": 150,
+     "y": -18,
+     "rot": -4,
+     "ease": "quadOut"
+    },
+    {
+     "t": 300,
+     "y": 0,
+     "rot": 0,
+     "ease": "quadIn"
+    },
+    {
+     "t": 450,
+     "y": -18,
+     "rot": 4,
+     "ease": "quadOut"
+    },
+    {
+     "t": 600,
+     "y": 0,
+     "rot": 0,
+     "ease": "quadIn"
+    }
+   ],
+   "pivot": "root",
+   "then": "idle"
+  }
+ },
+ "attachable_fx": {
+  "vingar": {
+   "prop": "scaleX",
+   "from": 1.0,
+   "to": 0.82,
+   "ms": 260,
+   "yoyo": true,
+   "ease": "sineInOut",
+   "pivot": "own"
+  },
+  "fena_L": {
+   "prop": "rot",
+   "from": 0,
+   "to": 10,
+   "ms": 500,
+   "yoyo": true,
+   "ease": "sineInOut",
+   "pivot": "own"
+  },
+  "fena_R": {
+   "prop": "rot",
+   "from": 0,
+   "to": -10,
+   "ms": 500,
+   "yoyo": true,
+   "ease": "sineInOut",
+   "pivot": "own"
+  },
+  "bubblor": {
+   "prop": "y",
+   "from": 0,
+   "to": -24,
+   "ms": 1600,
+   "loop": true,
+   "fade_out": true
+  },
+  "aura": {
+   "props": {
+    "scale": [
+     0.96,
+     1.04
+    ],
+    "alpha": [
+     0.75,
+     1.0
+    ]
+   },
+   "ms": 1200,
+   "yoyo": true,
+   "ease": "sineInOut"
+  },
+  "aura_gnistor": {
+   "prop": "rot",
+   "from": 0,
+   "to": 360,
+   "ms": 12000,
+   "loop": true,
+   "plus_twinkle_alpha": [
+    0.4,
+    1.0
+   ]
+  },
+  "eld": {
+   "props": {
+    "scaleX": [
+     0.9,
+     1.08
+    ],
+    "scaleY": [
+     0.94,
+     1.06
+    ]
+   },
+   "ms": 140,
+   "yoyo": true,
+   "ease": "linear",
+   "pivot": "own"
+  },
+  "fart_linjer": {
+   "prop": "x",
+   "from": 0,
+   "to": -16,
+   "ms": 300,
+   "loop": true,
+   "alpha": [
+    1.0,
+    0.3
+   ]
+  },
+  "studs_L": {
+   "prop": "scaleY",
+   "note": "squash with body in 'hopp'",
+   "pivot": "bottom"
+  },
+  "studs_R": {
+   "prop": "scaleY",
+   "note": "squash with body in 'hopp'",
+   "pivot": "bottom"
+  },
+  "mantel_bak": {
+   "prop": "skewX",
+   "from": -3,
+   "to": 3,
+   "ms": 900,
+   "yoyo": true,
+   "ease": "sineInOut",
+   "pivot": "own"
+  },
+  "halsduk": {
+   "note": "static"
+  }
+ },
+ "penna": {
+  "idle": {
+   "file": "penna/penna_idle.png",
+   "tweens": [
+    {
+     "prop": "y",
+     "from": 0,
+     "to": -12,
+     "ms": 1300,
+     "yoyo": true,
+     "ease": "sineInOut"
+    },
+    {
+     "prop": "rot",
+     "from": -3,
+     "to": 3,
+     "ms": 2600,
+     "yoyo": true,
+     "ease": "sineInOut"
+    }
+   ]
+  },
+  "skriver": {
+   "file": "penna/penna_skriver.png",
+   "tweens": [
+    {
+     "prop": "x",
+     "from": -6,
+     "to": 6,
+     "ms": 180,
+     "yoyo": true
+    }
+   ],
+   "note": "show while the child types; spawn extra sparkles along the text caret"
+  }
+ },
+ "note_dropin": "Kroppsnycklar och sökvägar följer kit.json. attachable_fx-nycklarna = 'namn' i formagor/tillbehor .delar. Ansiktsbyte kräver att linje_utan_ansikte + ansikte ritas i stället för linje."
+}

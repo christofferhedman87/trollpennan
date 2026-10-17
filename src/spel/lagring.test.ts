@@ -1,0 +1,27 @@
+import { test, beforeEach } from "node:test";
+import assert from "node:assert/strict";
+import { lasLokalt, skrivLokalt, normalisera, sakerJson, arDjur, arBygge, lagringsStatus, tillatSkrivning } from "./lagring.ts";
+beforeEach(() => tillatSkrivning());
+const bas = { version: 2, ang: [], garden: [], stjarnor: 0, startLage: "kort", ljudPa: true, mossaRakn: { onskan: 0, hemligt: 0, guld: 0 } };
+test("tom lagring", () => assert.equal(lasLokalt(() => ({ getItem: () => null, setItem() {} })), null));
+test("giltig äldre sparning", () => assert.equal(normalisera({ version: 1, stjarnor: 8 }, bas)?.version, 2));
+test("ofullständig sparning får standardfält", () => assert.deepEqual(normalisera({ version: 2 }, bas), bas));
+test("giltiga fält bevaras", () => assert.equal(normalisera({ version: 2, stjarnor: 42 }, bas)?.stjarnor, 42));
+test("felaktig fälttyp ersätts", () => assert.deepEqual(normalisera({ version: 2, ang: null }, bas)?.ang, []));
+test("okänd version avvisas", () => assert.equal(normalisera({ version: 3 }, bas), null));
+test("null avvisas", () => assert.equal(normalisera(null, bas), null));
+test("metodfält kopieras inte", () => assert.equal('importera' in normalisera({ version: 2, importera: 'skadad' }, bas)!, false));
+test("prototypnyckel avvisas", () => assert.equal(sakerJson(JSON.parse('{"__proto__":{}}')), false));
+test("icke ändliga tal avvisas", () => assert.equal(normalisera({ version: 2, stjarnor: Infinity }, bas), null));
+test("nästlade räknare kompletteras", () => assert.deepEqual(normalisera({ version: 2, mossaRakn: { guld: 3 } }, bas)?.mossaRakn, { onskan: 0, hemligt: 0, guld: 3 }));
+test("korrupt JSON kraschar inte", () => { assert.equal(lasLokalt(() => ({ getItem: () => '{', setItem() {} })), null); assert.equal(lagringsStatus(), 'skadad'); });
+test("blockerad läsning kraschar inte", () => assert.equal(lasLokalt(() => { throw new Error('SecurityError'); }), null));
+test("full lagring kraschar inte", () => assert.equal(skrivLokalt(() => ({ getItem: () => null, setItem() { throw new Error('QuotaExceededError'); } }), bas), false));
+test("blockerad getter kraschar inte", () => assert.equal(skrivLokalt(() => { throw new Error('SecurityError'); }, bas), false));
+test("lyckad skrivning använder v2", () => { tillatSkrivning(); let key = ''; assert.equal(skrivLokalt(() => ({ getItem: () => null, setItem(k) { key = k; } }), bas), true); assert.equal(key, 'trollpennan-v2'); });
+test("giltigt djur accepteras", () => assert.equal(arDjur({ uid:'a', kropp:'drake', formel:'rosa drake', beskrivning:'en rosa drake', skapad:1, skala:1, alpha:1, formagor:[], tillbehor:[], overraskningar:[] }), true));
+test("trasigt djur avvisas", () => assert.equal(arDjur({ uid:'a', kropp:'drake' }), false));
+test("trasigt bygge avvisas", () => assert.equal(arBygge({ uid:'a', bygg:'hus', delar:null }), false));
+test("giltigt bygge accepteras", () => assert.equal(arBygge({ uid:'a', bygg:'hus', formel:'hus', ord:'hus', x:.5, y:.5, antal:1, delar:[], boende:[] }), true));
+
+test("korrupt original skrivs inte över", () => { lasLokalt(() => ({ getItem: () => '{', setItem() {} })); let skrivet = false; assert.equal(skrivLokalt(() => ({ getItem: () => null, setItem() { skrivet = true; } }), bas), false); assert.equal(skrivet, false); tillatSkrivning(); });

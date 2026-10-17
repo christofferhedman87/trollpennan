@@ -1,0 +1,194 @@
+{
+ "_om": "Korta ljudeffekter som genereras med WebAudio (OscillatorNode + GainNode, ev. BiquadFilter/brus). Inga ljudfiler, ingen röst, ingen bakgrundsloop. Kostar inget. Max 0.6 s per ljud, max volym 0.25 (master). Startas först efter barnets första tryck (webbläsarregel).",
+ "foralder": {
+  "knapp": "Ljud: på / av",
+  "standard": "på",
+  "plats": "Föräldrasidan (bakom håll-in-knappen). Sparas i localStorage."
+ },
+ "ljud": {
+  "pling": {
+   "nar": "En bokstav eller ett kort trycks",
+   "toner": [
+    {
+     "typ": "sine",
+     "hz": 880,
+     "start": 0,
+     "langd": 0.08
+    }
+   ],
+   "volym": 0.12
+  },
+  "puff": {
+   "nar": "Ett djur vaknar ur pennan",
+   "brus": {
+    "langd": 0.25,
+    "filter": "lowpass",
+    "hz_fran": 1800,
+    "hz_till": 300
+   },
+   "toner": [
+    {
+     "typ": "triangle",
+     "hz": 330,
+     "till_hz": 660,
+     "start": 0.05,
+     "langd": 0.2
+    }
+   ],
+   "volym": 0.2
+  },
+  "boing": {
+   "nar": "Tryck på ett djur",
+   "toner": [
+    {
+     "typ": "sine",
+     "hz": 220,
+     "till_hz": 520,
+     "start": 0,
+     "langd": 0.18
+    }
+   ],
+   "volym": 0.18
+  },
+  "stjarna": {
+   "nar": "Varje stjärna som flyger till räknaren",
+   "toner": [
+    {
+     "typ": "triangle",
+     "hz": 1319,
+     "start": 0,
+     "langd": 0.1
+    },
+    {
+     "typ": "triangle",
+     "hz": 1568,
+     "start": 0.07,
+     "langd": 0.12
+    }
+   ],
+   "volym": 0.15
+  },
+  "onskan": {
+   "nar": "En önskebubbla dyker upp",
+   "toner": [
+    {
+     "typ": "sine",
+     "hz": 659,
+     "start": 0,
+     "langd": 0.12
+    },
+    {
+     "typ": "sine",
+     "hz": 784,
+     "start": 0.12,
+     "langd": 0.16
+    }
+   ],
+   "volym": 0.1
+  },
+  "uppfylld": {
+   "nar": "En önskan uppfylls",
+   "toner": [
+    {
+     "typ": "triangle",
+     "hz": 523,
+     "start": 0,
+     "langd": 0.12
+    },
+    {
+     "typ": "triangle",
+     "hz": 659,
+     "start": 0.1,
+     "langd": 0.12
+    },
+    {
+     "typ": "triangle",
+     "hz": 784,
+     "start": 0.2,
+     "langd": 0.25
+    }
+   ],
+   "volym": 0.2
+  },
+  "guld": {
+   "nar": "Guldord",
+   "toner": [
+    {
+     "typ": "triangle",
+     "hz": 784,
+     "start": 0,
+     "langd": 0.1
+    },
+    {
+     "typ": "triangle",
+     "hz": 988,
+     "start": 0.08,
+     "langd": 0.1
+    },
+    {
+     "typ": "triangle",
+     "hz": 1175,
+     "start": 0.16,
+     "langd": 0.1
+    },
+    {
+     "typ": "triangle",
+     "hz": 1568,
+     "start": 0.24,
+     "langd": 0.3
+    }
+   ],
+   "volym": 0.2
+  },
+  "sida": {
+   "nar": "En ny sida öppnas",
+   "brus": {
+    "langd": 0.3,
+    "filter": "bandpass",
+    "hz_fran": 3000,
+    "hz_till": 1200
+   },
+   "toner": [
+    {
+     "typ": "sine",
+     "hz": 523,
+     "start": 0.15,
+     "langd": 0.3
+    },
+    {
+     "typ": "sine",
+     "hz": 784,
+     "start": 0.15,
+     "langd": 0.3
+    }
+   ],
+   "volym": 0.18
+  },
+  "nastan": {
+   "nar": "Svaret passade inte önskan (mjukt, aldrig ett fel-ljud)",
+   "toner": [
+    {
+     "typ": "sine",
+     "hz": 440,
+     "start": 0,
+     "langd": 0.12
+    },
+    {
+     "typ": "sine",
+     "hz": 392,
+     "start": 0.1,
+     "langd": 0.15
+    }
+   ],
+   "volym": 0.08
+  }
+ },
+ "kuvert": "Varje ton: gain 0 -> volym på 0.01 s, exponentiellt ner till 0.0001 vid start+langd. 'till_hz' = exponentialRampToValueAtTime på frekvensen.",
+ "aldrig": [
+  "ljud vid fel",
+  "summer/buzzer",
+  "ljud som upprepas av sig självt",
+  "röst",
+  "musik i loop"
+ ]
+}

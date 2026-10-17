@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><g fill="none" stroke="#2C2416" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="274" cy="324" rx="108" ry="116"/>
+   <circle cx="274" cy="186" r="74"/>
+   <polygon points="214,150 168,58 250,132"/>
+   <polygon points="330,146 378,52 292,124"/>
+   <ellipse cx="156" cy="300" rx="24" ry="40" transform="rotate(-50 156 300)"/>
+   <ellipse cx="112" cy="246" rx="18" ry="34" transform="rotate(-8 112 246)"/>
+   <ellipse cx="214" cy="452" rx="28" ry="16"/>
+   <ellipse cx="334" cy="450" rx="28" ry="16"/></g><circle cx="250" cy="178" r="7" fill="#2C2416"/><circle cx="298" cy="178" r="7" fill="#2C2416"/><circle cx="252" cy="176" r="2" fill="#fff"/><circle cx="300" cy="176" r="2" fill="#fff"/><path d="M258 206 Q274 222 290 206" fill="none" stroke="#2C2416" stroke-width="6" stroke-linecap="round"/><path d="M210 196 H168 M338 196 H380 M214 208 H160 M334 208 H388" stroke="#2C2416" stroke-width="3" stroke-linecap="round"/></svg>

@@ -1,0 +1,157 @@
+{
+  "method": "Chromium production build via local HTTP; SwiftShader, not real mobile GPU",
+  "results": [
+    {
+      "name": "production startup",
+      "pass": true
+    },
+    {
+      "name": "idea UI creates dragon with crown",
+      "pass": true,
+      "state": {
+        "ang": [
+          {
+            "uid": "4dd341d3-2029-4706-a9cc-f88f7b82be29",
+            "formel": "en rosa kanin",
+            "kropp": "kanin",
+            "formagor": [],
+            "tillbehor": [],
+            "glans": false
+          },
+          {
+            "uid": "47b0b241-8eb6-4cf4-ace7-1e32beab19cb",
+            "formel": "en rosa drake med krona",
+            "kropp": "drake",
+            "formagor": [],
+            "tillbehor": [
+              {
+                "id": "krona",
+                "farg": null,
+                "glans": false
+              }
+            ],
+            "glans": false
+          }
+        ],
+        "funna": {
+          "drake": {
+            "guld": false
+          },
+          "rosa": {
+            "guld": false
+          },
+          "krona": {
+            "guld": false
+          }
+        },
+        "onskelista": [],
+        "formler": [],
+        "sovande": [],
+        "text": "",
+        "stjarnor": 0,
+        "onskan": null,
+        "garden": [],
+        "lada": [],
+        "hemma": [],
+        "koptaSidor": [],
+        "byggSidor": [
+          "start"
+        ],
+        "ljudPa": true,
+        "ljudlogg": [
+          "pop",
+          "landa",
+          "pling",
+          "puff",
+          "pop"
+        ],
+        "fas": "dag",
+        "natt": 0,
+        "dygnMs": 12248.899999999441,
+        "mossa": [
+          {
+            "id": "bygg-blommor",
+            "klar": false
+          },
+          {
+            "id": "djur-prickar",
+            "klar": false
+          },
+          {
+            "id": "djur-tre",
+            "klar": false
+          }
+        ],
+        "mossaExtra": false,
+        "album": {
+          "kanin": {
+            "formel": "en rosa kanin",
+            "poang": 1,
+            "niva": "vanlig",
+            "hjartan": 0
+          },
+          "drake": {
+            "formel": "en rosa drake med krona",
+            "poang": 2,
+            "niva": "ovanlig",
+            "hjartan": 0
+          }
+        },
+        "foton": [],
+        "liv": {
+          "4dd341d3-2029-4706-a9cc-f88f7b82be29": {
+            "humor": "pratsam",
+            "humorMs": 4416.799999999814,
+            "humorLangd": 84686,
+            "favorit": "hav",
+            "favoritHittad": false,
+            "hjartan": 0
+          },
+          "47b0b241-8eb6-4cf4-ace7-1e32beab19cb": {
+            "humor": "pratsam",
+            "humorMs": 10641.299999999814,
+            "humorLangd": 114838,
+            "favorit": "bar",
+            "favoritHittad": false,
+            "hjartan": 0
+          }
+        },
+        "hjartanLiv": {
+          "4dd341d3-2029-4706-a9cc-f88f7b82be29": 0,
+          "47b0b241-8eb6-4cf4-ace7-1e32beab19cb": 0
+        },
+        "ordFrek": {
+          "rosa": 1,
+          "drake": 1,
+          "med": 1,
+          "krona": 1
+        },
+        "onskanAntal": 0,
+        "van": [],
+        "byggda": []
+      }
+    },
+    {
+      "name": "reload restores dragon",
+      "pass": true
+    },
+    {
+      "name": "garden build via existing debug API",
+      "pass": true
+    },
+    {
+      "name": "reset clears scene",
+      "pass": true
+    },
+    {
+      "name": "desktop startup",
+      "pass": true
+    },
+    {
+      "name": "corrupt storage starts safely",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "responses": []
+}

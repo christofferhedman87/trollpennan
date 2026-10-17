@@ -1,0 +1,284 @@
+{
+ "_om": "Förväntade utfall för runda 3. 'kraver_kod': false = fungerar redan med nya ord.json och befintlig tolk (verifierat 10 okt). true = ska fungera efter runda 3. Gör dem till tester i src/tolk/tolk.test.ts (formel/kropp/farg/tillbehor) och i scen-tester eller skärmbevis (stil/i_dammen/springer_over_angen).",
+ "fraser": [
+  {
+   "fras": "gris",
+   "formel": "en gris",
+   "kontroll": {
+    "kropp": "gris",
+    "farg": "#F8BBD0"
+   },
+   "kraver_kod": false
+  },
+  {
+   "fras": "blå gris",
+   "formel": "en blå gris",
+   "kontroll": {
+    "kropp": "gris",
+    "farg": "#1E88E5"
+   },
+   "kraver_kod": false
+  },
+  {
+   "fras": "tre dinosaurier",
+   "formel": "tre dinosaurier",
+   "kontroll": {
+    "kropp": "dinosaurie",
+    "antal": 3
+   },
+   "kraver_kod": false
+  },
+  {
+   "fras": "nasse",
+   "formel": "en nasse",
+   "kontroll": {
+    "kropp": "gris"
+   },
+   "kraver_kod": false
+  },
+  {
+   "fras": "uggla",
+   "formel": "en uggla",
+   "kontroll": {
+    "kropp": "uggla",
+    "stil": "flyg"
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "en fisk",
+   "formel": "en fisk",
+   "kontroll": {
+    "kropp": "fisk",
+    "stil": "sim",
+    "i_dammen": true
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "en haj",
+   "formel": "en haj",
+   "kontroll": {
+    "kropp": "haj",
+    "stil": "sim",
+    "i_dammen": true
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "en ekorre",
+   "formel": "en ekorre",
+   "kontroll": {
+    "kropp": "ekorre",
+    "stil": "rus",
+    "springer_over_angen": true
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "en hund som springer snabbt",
+   "formel": "en hund som springer snabbt",
+   "kontroll": {
+    "stil": "rus",
+    "springer_over_angen": true
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "enhörning",
+   "formel": "en enhörning",
+   "kontroll": {
+    "kropp": "häst",
+    "farg": "#FAFAFA",
+    "tillbehor": [
+     "horn"
+    ]
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "en rosa enhörning med krona",
+   "formel": "en rosa enhörning med krona",
+   "kontroll": {
+    "kropp": "häst",
+    "farg": "#F48FB1",
+    "tillbehor": [
+     "horn",
+     "krona"
+    ]
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "en katt med röd hatt",
+   "formel": "en katt med röd hatt",
+   "kontroll": {
+    "tillbehor": [
+     {
+      "id": "hatt",
+      "farg": "#E53935"
+     }
+    ],
+    "ritas": "tint(bas)+linje, hatten SYNS röd"
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "en hund med blå halsduk",
+   "formel": "en hund med blå halsduk",
+   "kontroll": {
+    "tillbehor": [
+     {
+      "id": "halsduk",
+      "farg": "#1E88E5"
+     }
+    ]
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "en gris med krona",
+   "formel": "en gris med krona",
+   "kontroll": {
+    "tillbehor": [
+     {
+      "id": "krona",
+      "farg": null
+     }
+    ],
+    "ritas": "krona.fil (ofärgad)"
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "sex hundar",
+   "formel": "sex hundar",
+   "kontroll": {
+    "antal_pa_angen": 6
+   },
+   "kraver_kod": false
+  },
+  {
+   "fras": "tio katter",
+   "formel": "tio katter",
+   "kontroll": {
+    "antal_pa_angen": 6
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "en röd och blå katt",
+   "formel": "en röd och blå katt",
+   "kontroll": {
+    "farg": "#E53935",
+    "monster": "ränder",
+    "monsterfarg": "#1E88E5"
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "en röd och blå prickig katt",
+   "formel": "en röd och blå prickig katt",
+   "kontroll": {
+    "farg": "#E53935",
+    "monster": "prickar",
+    "monsterfarg": "#1E88E5"
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "eldkanin",
+   "formel": "en eldkanin",
+   "kontroll": {
+    "kropp": "kanin",
+    "formagor": [
+     "flammor"
+    ]
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "tre eldkaniner",
+   "formel": "tre eldkaniner",
+   "kontroll": {
+    "antal": 3
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "guldfisk",
+   "formel": "en guldfisk",
+   "kontroll": {
+    "kropp": "fisk",
+    "farg": "#FFC107"
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "sjöhäst",
+   "formel": "en sjöhäst",
+   "kontroll": {
+    "kropp": "häst",
+    "formagor": [
+     "fenor"
+    ]
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "ugglekatt",
+   "formel": "en ugglekatt",
+   "kontroll": {
+    "kropp": "katt",
+    "formagor": [
+     "vingar"
+    ]
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "en självlysande uggla",
+   "formel": "en självlysande uggla",
+   "kontroll": {
+    "formagor": [
+     "aura"
+    ]
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "en ekorre som studsar",
+   "formel": "en ekorre som studsar",
+   "kontroll": {
+    "formagor": [
+     "studs"
+    ]
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "eldkanim",
+   "formel": "forslag",
+   "kontroll": {
+    "forslag": "eldkanin"
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "drakkat",
+   "formel": "forslag",
+   "kontroll": {
+    "forslag": "drakkatt"
+   },
+   "kraver_kod": true
+  },
+  {
+   "fras": "guldfiks",
+   "formel": "forslag",
+   "kontroll": {
+    "forslag": "guldfisk"
+   },
+   "kraver_kod": true
+  }
+ ]
+}

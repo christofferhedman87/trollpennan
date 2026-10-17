@@ -1,0 +1,31 @@
+{
+  "status": "SOURCE_RECONSTRUCTED_BUILD_NOT_VERIFIED",
+  "original_files_preserved": 1209,
+  "extraction_errors": [],
+  "source_code_modified": false,
+  "tests": {
+    "command": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts",
+    "pass": 37,
+    "fail": 0,
+    "rerun_on_reconstructed_source": true
+  },
+  "build": "not run in reconstruction",
+  "lint": "not run in reconstruction",
+  "typecheck": "not run in reconstruction",
+  "browser": "not run",
+  "licenses": "preserved declarations, not independently verified",
+  "generated_files": [
+    "README.md",
+    "HANDOFF.md",
+    "recovery/ARCHITECTURE.md",
+    "recovery/DEPENDENCIES.md",
+    "recovery/RECOVERY-MANIFEST.json",
+    "recovery/regression-tests.log",
+    "recovery/previous-attempt/Trollpennan-analysrapport.md",
+    "recovery/previous-attempt/Trollpennan-resursinventering.json",
+    "recovery/previous-attempt/all-script-tests.log",
+    "recovery/previous-attempt/build.log",
+    "recovery/previous-attempt/lint.log",
+    "recovery/previous-attempt/typecheck.log"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+ "_om": "Texter för firanden och framsteg. {ord}, {n}, {total}, {sida} byts ut.",
+ "guldord": {
+  "text": [
+   "Guldord! Du skrev {ord} alldeles själv!",
+   "Guldord! {ord} – och du stavade helt rätt!",
+   "Wow, {ord}! Ett guldord till boken!"
+  ],
+  "regel": "Ett hemligt ord som barnet skriver bokstav för bokstav på tangentbordet, utan att trycka på ett förslag eller ett kort. Gäller första gången per ord. Firas med ett guld-glitter över djuret och ljudet 'guld'.",
+  "stjarnor": 1
+ },
+ "hemligt_ord": {
+  "text": [
+   "Nytt ord i boken: {ord}!",
+   "Du hittade {ord}!"
+  ],
+  "stjarnor": 1
+ },
+ "framsteg": {
+  "text": "Du har hittat {n} av {total} ord",
+  "kort": "{n}/{total}",
+  "plats": "Överst i boken och på varje sida ('Havets sida: {n} av {total}').",
+  "total_regel": "total = alla ord med niva 'fritt' (58 nu) + alla kortord. Räkna från ord.json, hårdkoda inte."
+ },
+ "stjarnor": {
+  "fa": "+{n} stjärnor!",
+  "fa_en": "+1 stjärna!",
+  "har": "Du har {n} stjärnor",
+  "kop": "Öppna {sida} för {n} stjärnor?",
+  "kop_ja": "Ja, öppna!",
+  "kop_nej": "Inte nu",
+  "for_fa": "Du behöver {n} stjärnor till. Uppfyll en önskan!"
+ },
+ "ny_sida": {
+  "text": "Ny sida i boken: {sida}!",
+  "fortsatt": "Titta i boken!"
+ },
+ "sida_klar": {
+  "text": "Alla ord på {sida} är hittade! Du är en riktig ordmästare.",
+  "stjarnor": 2
+ },
+ "bok_klar": {
+  "text": "Du har hittat alla ord i hela boken! Trollpennan är så stolt över dig."
+ },
+ "onskan": {
+  "knapp": "Uppfyll önskan",
+  "inte_nu": "Inte nu",
+  "rubrik": "Önskan:",
+  "led": "Prova till exempel",
+  "onskar": "{djur} önskar:",
+  "andra": "Ändra {djur}",
+  "kompis": "Väck en ny kompis"
+ }
+}

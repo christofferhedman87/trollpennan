@@ -1,0 +1,299 @@
+{
+ "_om": "En gåta per hemligt ord (alla ord med niva 'fritt'). Visas i boken först när ordets sida är köpt. Visa gåtan + första bokstaven + en streck per bokstav, t.ex. 'U _ _ _ _ _'. Gåtan innehåller aldrig själva ordet.",
+ "visning": {
+  "bokstav": "Första bokstaven stor, sedan '_' per återstående bokstav, mellanslag mellan.",
+  "hittat": "När ordet är hittat: visa ordet, en liten bild av djuret som hittade det (om möjligt) och gåtan i grått."
+ },
+ "ledtradar": {
+  "kattunge": {
+   "gata": "En katt som är alldeles nyfödd och jätteliten.",
+   "forsta": "K",
+   "langd": 8
+  },
+  "kisse": {
+   "gata": "Ett gosigt smeknamn på en katt. Mjau!",
+   "forsta": "K",
+   "langd": 5
+  },
+  "valp": {
+   "gata": "En hund som fortfarande är ett litet barn.",
+   "forsta": "V",
+   "langd": 4
+  },
+  "vovve": {
+   "gata": "Ett gosigt smeknamn på en hund. Vov vov!",
+   "forsta": "V",
+   "langd": 5
+  },
+  "ponny": {
+   "gata": "En liten häst som barn ofta rider på.",
+   "forsta": "P",
+   "langd": 5
+  },
+  "föl": {
+   "gata": "En häst som nyss har fötts.",
+   "forsta": "F",
+   "langd": 3
+  },
+  "padda": {
+   "gata": "Den liknar en groda men är brun och knottrig.",
+   "forsta": "P",
+   "langd": 5
+  },
+  "ljusblå": {
+   "gata": "Färgen på himlen en solig sommardag.",
+   "forsta": "L",
+   "langd": 7
+  },
+  "mörkblå": {
+   "gata": "Färgen på himlen precis när natten kommer.",
+   "forsta": "M",
+   "langd": 7
+  },
+  "ljusgrön": {
+   "gata": "Färgen på nya löv på våren.",
+   "forsta": "L",
+   "langd": 8
+  },
+  "mörkgrön": {
+   "gata": "Färgen på granarna i skogen.",
+   "forsta": "M",
+   "langd": 8
+  },
+  "ljusrosa": {
+   "gata": "En blek och gullig färg, som en sockervadd.",
+   "forsta": "L",
+   "langd": 8
+  },
+  "gyllene": {
+   "gata": "Ett finare ord för något som glänser som guld.",
+   "forsta": "G",
+   "langd": 7
+  },
+  "silvrig": {
+   "gata": "Blank och gråvit, som en sked som glänser.",
+   "forsta": "S",
+   "langd": 7
+  },
+  "guld": {
+   "gata": "En blank, gul metall. Man får den som förstapris.",
+   "forsta": "G",
+   "langd": 4
+  },
+  "silver": {
+   "gata": "En blank, grå metall. Man får den som andrapris.",
+   "forsta": "S",
+   "langd": 6
+  },
+  "jättestor": {
+   "gata": "Mycket, mycket större än stor. Börjar som en jätte.",
+   "forsta": "J",
+   "langd": 9
+  },
+  "enorm": {
+   "gata": "Så stor att den nästan inte får plats på skärmen.",
+   "forsta": "E",
+   "langd": 5
+  },
+  "pytteliten": {
+   "gata": "Så liten att man nästan inte ser den. Börjar på pytte.",
+   "forsta": "P",
+   "langd": 10
+  },
+  "jätteliten": {
+   "gata": "Mycket, mycket mindre än liten. Börjar också på jätte-.",
+   "forsta": "J",
+   "langd": 10
+  },
+  "spräcklig": {
+   "gata": "Full av små fläckar, som ett ägg från en fågel.",
+   "forsta": "S",
+   "langd": 9
+  },
+  "tigerrandig": {
+   "gata": "Orange med svarta band, som ett stort kattdjur i djungeln.",
+   "forsta": "T",
+   "langd": 11
+  },
+  "regnbågsfärgad": {
+   "gata": "Med alla färger som syns på himlen när solen tittar fram efter regnet.",
+   "forsta": "R",
+   "langd": 14
+  },
+  "gnistrande": {
+   "gata": "Som ett tomtebloss som sprakar.",
+   "forsta": "G",
+   "langd": 10
+  },
+  "skimrande": {
+   "gata": "Som en såpbubbla som glänser i solen.",
+   "forsta": "S",
+   "langd": 9
+  },
+  "prickar": {
+   "gata": "Nyckelpigan har sju svarta sådana.",
+   "forsta": "P",
+   "langd": 7
+  },
+  "ränder": {
+   "gata": "Zebran har svarta och vita sådana.",
+   "forsta": "R",
+   "langd": 6
+  },
+  "glitter": {
+   "gata": "Små blanka bitar som glimmar på julgranen och i pysslet.",
+   "forsta": "G",
+   "langd": 7
+  },
+  "regnbåge": {
+   "gata": "En båge med alla färger som syns på himlen efter regn.",
+   "forsta": "R",
+   "langd": 8
+  },
+  "studsar": {
+   "gata": "Det en boll gör när den slår i golvet. Boing!",
+   "forsta": "S",
+   "langd": 7
+  },
+  "glittrar": {
+   "gata": "Det snön gör när solen skiner på den.",
+   "forsta": "G",
+   "langd": 8
+  },
+  "flygande": {
+   "gata": "Ett ord för någon som är uppe i luften, som en fjäril.",
+   "forsta": "F",
+   "langd": 8
+  },
+  "lysande": {
+   "gata": "Det en lampa är när den är tänd.",
+   "forsta": "L",
+   "langd": 7
+  },
+  "självlysande": {
+   "gata": "Lyser helt av sig själv i mörkret, utan lampa.",
+   "forsta": "S",
+   "langd": 12
+  },
+  "eldsprutande": {
+   "gata": "Det draken är när det kommer lågor ur munnen.",
+   "forsta": "E",
+   "langd": 12
+  },
+  "snabb": {
+   "gata": "Motsatsen till långsam.",
+   "forsta": "S",
+   "langd": 5
+  },
+  "blixtsnabb": {
+   "gata": "Lika snabb som när det smäller till på himlen i ett åskväder.",
+   "forsta": "B",
+   "langd": 10
+  },
+  "supersnabb": {
+   "gata": "Snabbare än snabb. Som en superhjälte.",
+   "forsta": "S",
+   "langd": 10
+  },
+  "vingar": {
+   "gata": "Fåglar och fjärilar har två sådana.",
+   "forsta": "V",
+   "langd": 6
+  },
+  "fenor": {
+   "gata": "Fiskar har sådana så att de kan simma.",
+   "forsta": "F",
+   "langd": 5
+  },
+  "eld": {
+   "gata": "Den är varm, orange och fladdrar i lägerelden.",
+   "forsta": "E",
+   "langd": 3
+  },
+  "kappa": {
+   "gata": "En lång jacka utan ärmar, som en mantel.",
+   "forsta": "K",
+   "langd": 5
+  },
+  "trollkarlshatt": {
+   "gata": "En lång spetsig hatt som en magiker har.",
+   "forsta": "T",
+   "langd": 14
+  },
+  "solglasögon": {
+   "gata": "Mörka glasögon som man har på stranden.",
+   "forsta": "S",
+   "langd": 11
+  },
+  "guldkrona": {
+   "gata": "Det kungen har på huvudet, gjort av den gula metallen.",
+   "forsta": "G",
+   "langd": 9
+  },
+  "osynlig": {
+   "gata": "Så att ingen kan se en, som ett spöke.",
+   "forsta": "O",
+   "langd": 7
+  },
+  "genomskinlig": {
+   "gata": "Man kan se rakt igenom, som ett fönster.",
+   "forsta": "G",
+   "langd": 12
+  },
+  "gris": {
+   "gata": "Den säger nöff och gillar att rulla sig i lera.",
+   "forsta": "G",
+   "langd": 4
+  },
+  "nöff": {
+   "gata": "Ett smeknamn på grisen, precis som ljudet den säger.",
+   "forsta": "N",
+   "langd": 4
+  },
+  "nasse": {
+   "gata": "Ett gosigt smeknamn på en gris, som Nalle Puhs kompis.",
+   "forsta": "N",
+   "langd": 5
+  },
+  "kulting": {
+   "gata": "En liten grisunge.",
+   "forsta": "K",
+   "langd": 7
+  },
+  "dinosaurie": {
+   "gata": "Ett jättestort djur som levde för länge, länge sedan.",
+   "forsta": "D",
+   "langd": 10
+  },
+  "dino": {
+   "gata": "Ett kort smeknamn på urtidsdjuret med de stora fötterna.",
+   "forsta": "D",
+   "langd": 4
+  },
+  "uggla": {
+   "gata": "Den är vaken på natten och säger hu-hu.",
+   "forsta": "U",
+   "langd": 5
+  },
+  "ekorre": {
+   "gata": "Den har en yvig svans och samlar kottar och nötter.",
+   "forsta": "E",
+   "langd": 6
+  },
+  "bäver": {
+   "gata": "Den har stora tänder och bygger dammar av pinnar.",
+   "forsta": "B",
+   "langd": 5
+  },
+  "haj": {
+   "gata": "Den simmar i havet och har en spetsig fena på ryggen.",
+   "forsta": "H",
+   "langd": 3
+  },
+  "enhörning": {
+   "gata": "En sagohäst med ett enda horn i pannan.",
+   "forsta": "E",
+   "langd": 9
+  }
+ }
+}

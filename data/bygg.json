@@ -1,0 +1,1024 @@
+{
+ "_om": "Byggord för Gården (runda 4). Böjningar ur SALDO (Språkbanken, CC BY 4.0). Färg-, storleks- och mönsterord läses ur data/ord.json (klass farg/storlek/monster) och böjs efter byggordets genus.",
+ "grammatik": {
+  "mening": "[antal|en|ett] [adjektiv ...] BYGGORD [av MATERIAL] [med DEL-led] [och DEL-led ...]. 'och' + nytt byggord startar ett nytt bygge i samma mening (högst 3 byggen per mening): 'ett äppelträd och en fontän'.",
+  "del_led": "[antal|en|ett] [färg] DEL [av MATERIAL]. Plural utan antal ('med flaggor') = 2. T.ex. 'tre fönster', 'blått tak', 'två röda dörrar', 'ett tak av guld'",
+  "material": "Antingen 'av sten' efter byggordet eller som förled: stenhus, isslott, godishus, glasfontän, molnslott.",
+  "fog": "Förled + efterled skrivs ihop. Godta både med och utan s bara där svenskan gör det: 'regnbågsbro', 'stenhus', 'trähus', 'glashus', 'ishus', 'godishus', 'chokladhus', 'molnhus', 'kristallhus', 'guldhus'. Färg som förled: 'rödhus' finns inte på svenska – säg 'Menade du ett rött hus?'.",
+  "adjektivbojning": "en-ord: röd/stor/liten. ett-ord: rött/stort/litet. Plural: röda/stora/små. Odeklinerade: lila, rosa, orange, ljusrosa, gyllene (samma i alla former).",
+  "antal": "Byggord: högst 3 av samma per mening ('fem träd' ger 3 träd men formeln säger fem träd). Delar: högst delens 'max'.",
+  "formel": "Behåll barnets ord: 'ett rött hus med tre fönster och blått tak', 'ett isslott med fyra torn', 'två stora granar'.",
+  "fel": "Inga fel-ljud. Okänt ord: samma puff och önskelista som för djur. Byggord på en sida som inte är köpt: se byggsidor.json 'last_ord'."
+ },
+ "bygg_ord": [
+  {
+   "id": "hus",
+   "genus": "ett",
+   "former": [
+    "hus",
+    "huset",
+    "hus",
+    "husen"
+   ],
+   "typ": "byggnad",
+   "sida": "start",
+   "hem": {
+    "kroppar": [
+     "kanin",
+     "katt",
+     "hund",
+     "drake",
+     "häst",
+     "gris",
+     "dinosaurie",
+     "ekorre",
+     "bäver"
+    ],
+    "platser": 2
+   },
+   "standardfarg": "#E57373",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "skorsten",
+    "torn",
+    "flagga"
+   ],
+   "ritning": "Rektangel (bredd 1, höjd 0.8) + triangeltak (höjd 0.45, mörkare färg), dörr i mitten nertill, fönster jämnt fördelade i rader.",
+   "kit_nyckel": "bygg/hus"
+  },
+  {
+   "id": "stuga",
+   "genus": "en",
+   "former": [
+    "stuga",
+    "stugan",
+    "stugor",
+    "stugorna"
+   ],
+   "typ": "byggnad",
+   "sida": "start",
+   "hem": {
+    "kroppar": [
+     "kanin",
+     "katt",
+     "hund",
+     "drake",
+     "häst",
+     "gris",
+     "dinosaurie",
+     "ekorre",
+     "bäver"
+    ],
+    "platser": 2
+   },
+   "standardfarg": "#C62828",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "skorsten",
+    "flagga"
+   ],
+   "ritning": "Som hus men 0.8 bred och 0.65 hög, vita knutar i hörnen (smala vita rektanglar) – svensk röd stuga som standard.",
+   "kit_nyckel": "bygg/stuga"
+  },
+  {
+   "id": "koja",
+   "genus": "en",
+   "former": [
+    "koja",
+    "kojan",
+    "kojor",
+    "kojorna"
+   ],
+   "typ": "byggnad",
+   "sida": "start",
+   "hem": {
+    "kroppar": [
+     "kanin",
+     "katt",
+     "hund",
+     "drake",
+     "häst",
+     "gris",
+     "dinosaurie",
+     "ekorre",
+     "bäver"
+    ],
+    "platser": 1
+   },
+   "standardfarg": "#A1887F",
+   "delar": [
+    "fönster",
+    "dörr",
+    "flagga"
+   ],
+   "ritning": "Liten triangel av brädor (3 vågräta linjer), mörk öppning i mitten.",
+   "kit_nyckel": "bygg/koja"
+  },
+  {
+   "id": "tält",
+   "genus": "ett",
+   "former": [
+    "tält",
+    "tältet",
+    "tält",
+    "tälten"
+   ],
+   "typ": "byggnad",
+   "sida": "start",
+   "hem": {
+    "kroppar": [
+     "kanin",
+     "katt",
+     "hund",
+     "drake",
+     "häst",
+     "gris",
+     "dinosaurie",
+     "ekorre",
+     "bäver"
+    ],
+    "platser": 1
+   },
+   "standardfarg": "#FFB74D",
+   "delar": [
+    "flagga"
+   ],
+   "ritning": "Triangel med mörk triangelöppning och en pinne i toppen.",
+   "kit_nyckel": "bygg/tält"
+  },
+  {
+   "id": "staket",
+   "genus": "ett",
+   "former": [
+    "staket",
+    "staketet",
+    "staket",
+    "staketen"
+   ],
+   "typ": "natur",
+   "sida": "start",
+   "hem": null,
+   "standardfarg": "#FFFFFF",
+   "delar": [],
+   "ritning": "5 smala stående rektanglar med spetsig topp + 2 tvärslåar. 'tre staket' = tre bitar i rad.",
+   "kit_nyckel": "bygg/staket"
+  },
+  {
+   "id": "träd",
+   "genus": "ett",
+   "former": [
+    "träd",
+    "trädet",
+    "träd",
+    "träden"
+   ],
+   "typ": "natur",
+   "sida": "start",
+   "hem": {
+    "kroppar": [
+     "fågel",
+     "uggla",
+     "ekorre"
+    ],
+    "platser": 1
+   },
+   "standardfarg": "#43A047",
+   "delar": [],
+   "ritning": "Brun stam (rektangel) + stor rund krona (3 överlappande cirklar).",
+   "kit_nyckel": "bygg/träd"
+  },
+  {
+   "id": "blomma",
+   "genus": "en",
+   "former": [
+    "blomma",
+    "blomman",
+    "blommor",
+    "blommorna"
+   ],
+   "typ": "natur",
+   "sida": "start",
+   "hem": null,
+   "standardfarg": "#F06292",
+   "delar": [],
+   "ritning": "Grön stjälk + 5 cirkelkronblad runt en gul mitt. 'tre blommor' = tre bredvid varandra.",
+   "kit_nyckel": "bygg/blomma"
+  },
+  {
+   "id": "buske",
+   "genus": "en",
+   "former": [
+    "buske",
+    "busken",
+    "buskar",
+    "buskarna"
+   ],
+   "typ": "natur",
+   "sida": "start",
+   "hem": null,
+   "standardfarg": "#66BB6A",
+   "delar": [],
+   "ritning": "3-4 överlappande cirklar nära marken.",
+   "kit_nyckel": "bygg/buske"
+  },
+  {
+   "id": "damm",
+   "genus": "en",
+   "former": [
+    "damm",
+    "dammen",
+    "dammar",
+    "dammarna"
+   ],
+   "typ": "natur",
+   "sida": "start",
+   "hem": {
+    "kroppar": [
+     "fisk",
+     "haj",
+     "groda",
+     "bäver"
+    ],
+    "platser": 3
+   },
+   "standardfarg": "#4FC3F7",
+   "delar": [],
+   "ritning": "Ljusblå ellips med mörkare kant och små vita glimtar. Simmare som bor här simmar i den.",
+   "kit_nyckel": "bygg/damm"
+  },
+  {
+   "id": "bänk",
+   "genus": "en",
+   "former": [
+    "bänk",
+    "bänken",
+    "bänkar",
+    "bänkarna"
+   ],
+   "typ": "natur",
+   "sida": "start",
+   "hem": null,
+   "standardfarg": "#8D6E63",
+   "delar": [],
+   "ritning": "Sits (låg bred rektangel) + rygg + två ben.",
+   "kit_nyckel": "bygg/bänk"
+  },
+  {
+   "id": "lykta",
+   "genus": "en",
+   "former": [
+    "lykta",
+    "lyktan",
+    "lyktor",
+    "lyktorna"
+   ],
+   "typ": "natur",
+   "sida": "start",
+   "hem": null,
+   "standardfarg": "#37474F",
+   "delar": [],
+   "ritning": "Smal stolpe + liten ruta upptill med gul glödande cirkel (svag pulsering).",
+   "kit_nyckel": "bygg/lykta"
+  },
+  {
+   "id": "äppelträd",
+   "genus": "ett",
+   "former": [
+    "äppelträd",
+    "äppelträdet",
+    "äppelträd",
+    "äppelträden"
+   ],
+   "typ": "natur",
+   "sida": "tradgard",
+   "hem": {
+    "kroppar": [
+     "fågel",
+     "uggla",
+     "ekorre"
+    ],
+    "platser": 1
+   },
+   "standardfarg": "#43A047",
+   "delar": [],
+   "ritning": "Som träd + 5-7 små röda cirklar i kronan.",
+   "kit_nyckel": "bygg/äppelträd"
+  },
+  {
+   "id": "gran",
+   "genus": "en",
+   "former": [
+    "gran",
+    "granen",
+    "granar",
+    "granarna"
+   ],
+   "typ": "natur",
+   "sida": "tradgard",
+   "hem": {
+    "kroppar": [
+     "fågel",
+     "uggla",
+     "ekorre"
+    ],
+    "platser": 1
+   },
+   "standardfarg": "#2E7D32",
+   "delar": [],
+   "ritning": "Tre staplade trianglar + kort stam.",
+   "kit_nyckel": "bygg/gran"
+  },
+  {
+   "id": "svamp",
+   "genus": "en",
+   "former": [
+    "svamp",
+    "svampen",
+    "svampar",
+    "svamparna"
+   ],
+   "typ": "natur",
+   "sida": "tradgard",
+   "hem": null,
+   "standardfarg": "#E53935",
+   "delar": [],
+   "ritning": "Vit stam + halvcirkelhatt med vita prickar (flugsvamp som standard).",
+   "kit_nyckel": "bygg/svamp"
+  },
+  {
+   "id": "brunn",
+   "genus": "en",
+   "former": [
+    "brunn",
+    "brunnen",
+    "brunnar",
+    "brunnarna"
+   ],
+   "typ": "natur",
+   "sida": "tradgard",
+   "hem": null,
+   "standardfarg": "#90A4AE",
+   "delar": [],
+   "ritning": "Rund stenkant (ellips) + litet tak på två stolpar + hink.",
+   "kit_nyckel": "bygg/brunn"
+  },
+  {
+   "id": "fontän",
+   "genus": "en",
+   "former": [
+    "fontän",
+    "fontänen",
+    "fontäner",
+    "fontänerna"
+   ],
+   "typ": "natur",
+   "sida": "tradgard",
+   "hem": null,
+   "standardfarg": "#B0BEC5",
+   "delar": [],
+   "ritning": "Skål (halvellips) + vattenstråle av små blå droppar som faller i en båge (animera).",
+   "kit_nyckel": "bygg/fontän"
+  },
+  {
+   "id": "palm",
+   "genus": "en",
+   "former": [
+    "palm",
+    "palmen",
+    "palmer",
+    "palmerna"
+   ],
+   "typ": "natur",
+   "sida": "tradgard",
+   "hem": {
+    "kroppar": [
+     "fågel",
+     "ekorre"
+    ],
+    "platser": 1
+   },
+   "standardfarg": "#43A047",
+   "delar": [],
+   "ritning": "Böjd brun stam + 5 långa gröna blad i en stjärna.",
+   "kit_nyckel": "bygg/palm"
+  },
+  {
+   "id": "gunga",
+   "genus": "en",
+   "former": [
+    "gunga",
+    "gungan",
+    "gungor",
+    "gungorna"
+   ],
+   "typ": "lek",
+   "sida": "lekplats",
+   "hem": null,
+   "standardfarg": "#FFB300",
+   "delar": [],
+   "ritning": "Två lutande ben + tvärslå + sits i två linjer som gungar sakta.",
+   "kit_nyckel": "bygg/gunga"
+  },
+  {
+   "id": "rutschkana",
+   "genus": "en",
+   "former": [
+    "rutschkana",
+    "rutschkanan",
+    "rutschkanor",
+    "rutschkanorna"
+   ],
+   "typ": "lek",
+   "sida": "lekplats",
+   "hem": null,
+   "standardfarg": "#29B6F6",
+   "delar": [],
+   "ritning": "Stege till vänster + lutande ränna ner till höger.",
+   "kit_nyckel": "bygg/rutschkana"
+  },
+  {
+   "id": "studsmatta",
+   "genus": "en",
+   "former": [
+    "studsmatta",
+    "studsmattan",
+    "studsmattor",
+    "studsmattorna"
+   ],
+   "typ": "lek",
+   "sida": "lekplats",
+   "hem": null,
+   "standardfarg": "#7E57C2",
+   "delar": [],
+   "ritning": "Svart ellips med färgad kant och korta ben. Djur som står på den studsar.",
+   "kit_nyckel": "bygg/studsmatta"
+  },
+  {
+   "id": "sandlåda",
+   "genus": "en",
+   "former": [
+    "sandlåda",
+    "sandlådan",
+    "sandlådor",
+    "sandlådorna"
+   ],
+   "typ": "lek",
+   "sida": "lekplats",
+   "hem": null,
+   "standardfarg": "#FFE082",
+   "delar": [],
+   "ritning": "Låg träram (brun) med sand (ljusgul) och en liten spade.",
+   "kit_nyckel": "bygg/sandlåda"
+  },
+  {
+   "id": "karusell",
+   "genus": "en",
+   "former": [
+    "karusell",
+    "karusellen",
+    "karuseller",
+    "karusellerna"
+   ],
+   "typ": "lek",
+   "sida": "lekplats",
+   "hem": null,
+   "standardfarg": "#EC407A",
+   "delar": [],
+   "ritning": "Rund platta + mittstolpe + randigt tak som snurrar sakta.",
+   "kit_nyckel": "bygg/karusell"
+  },
+  {
+   "id": "klätterställning",
+   "genus": "en",
+   "former": [
+    "klätterställning",
+    "klätterställningen",
+    "klätterställningar",
+    "klätterställningarna"
+   ],
+   "typ": "lek",
+   "sida": "lekplats",
+   "hem": null,
+   "standardfarg": "#26A69A",
+   "delar": [],
+   "ritning": "Rutnät av stänger 3x3 + litet tak.",
+   "kit_nyckel": "bygg/klätterställning"
+  },
+  {
+   "id": "hundkoja",
+   "genus": "en",
+   "former": [
+    "hundkoja",
+    "hundkojan",
+    "hundkojor",
+    "hundkojorna"
+   ],
+   "typ": "djurhem",
+   "sida": "djurhem",
+   "hem": {
+    "kroppar": [
+     "hund"
+    ],
+    "platser": 1
+   },
+   "standardfarg": "#8D6E63",
+   "delar": [
+    "tak",
+    "flagga"
+   ],
+   "ritning": "Liten hus-form med rund öppning i stället för dörr.",
+   "kit_nyckel": "bygg/hundkoja"
+  },
+  {
+   "id": "fågelholk",
+   "genus": "en",
+   "former": [
+    "fågelholk",
+    "fågelholken",
+    "fågelholkar",
+    "fågelholkarna"
+   ],
+   "typ": "djurhem",
+   "sida": "djurhem",
+   "hem": {
+    "kroppar": [
+     "fågel",
+     "uggla"
+    ],
+    "platser": 1
+   },
+   "standardfarg": "#A1887F",
+   "delar": [
+    "tak"
+   ],
+   "ritning": "Litet hus på en hög stolpe med rund öppning.",
+   "kit_nyckel": "bygg/fågelholk"
+  },
+  {
+   "id": "stall",
+   "genus": "ett",
+   "former": [
+    "stall",
+    "stallet",
+    "stall",
+    "stallen"
+   ],
+   "typ": "djurhem",
+   "sida": "djurhem",
+   "hem": {
+    "kroppar": [
+     "häst",
+     "gris",
+     "dinosaurie"
+    ],
+    "platser": 2
+   },
+   "standardfarg": "#B71C1C",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "flagga"
+   ],
+   "ritning": "Bred lada med vita kryss på dubbeldörren.",
+   "kit_nyckel": "bygg/stall"
+  },
+  {
+   "id": "slott",
+   "genus": "ett",
+   "former": [
+    "slott",
+    "slottet",
+    "slott",
+    "slotten"
+   ],
+   "typ": "byggnad",
+   "sida": "slott",
+   "hem": {
+    "kroppar": [
+     "kanin",
+     "katt",
+     "hund",
+     "drake",
+     "häst",
+     "gris",
+     "dinosaurie",
+     "ekorre",
+     "bäver",
+     "fågel",
+     "uggla"
+    ],
+    "platser": 4
+   },
+   "standardfarg": "#B0BEC5",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "torn",
+    "flagga"
+   ],
+   "ritning": "Bred mur med tinnar (taggig överkant) + två torn (smala rektanglar med koniska tak) + port med rundad topp. Fler torn = fler torn i rad.",
+   "kit_nyckel": "bygg/slott"
+  },
+  {
+   "id": "torn",
+   "genus": "ett",
+   "former": [
+    "torn",
+    "tornet",
+    "torn",
+    "tornen"
+   ],
+   "typ": "byggnad",
+   "sida": "slott",
+   "hem": {
+    "kroppar": [
+     "kanin",
+     "katt",
+     "hund",
+     "drake",
+     "häst",
+     "gris",
+     "dinosaurie",
+     "ekorre",
+     "bäver",
+     "fågel",
+     "uggla"
+    ],
+    "platser": 1
+   },
+   "standardfarg": "#B0BEC5",
+   "delar": [
+    "fönster",
+    "flagga",
+    "tak"
+   ],
+   "ritning": "Hög smal rektangel med tinnar eller koniskt tak.",
+   "kit_nyckel": "bygg/torn"
+  },
+  {
+   "id": "mur",
+   "genus": "en",
+   "former": [
+    "mur",
+    "muren",
+    "murar",
+    "murarna"
+   ],
+   "typ": "byggnad",
+   "sida": "slott",
+   "hem": null,
+   "standardfarg": "#9E9E9E",
+   "delar": [],
+   "ritning": "Låg bred rektangel med tinnar och stenmönster (förskjutna rader).",
+   "kit_nyckel": "bygg/mur"
+  },
+  {
+   "id": "port",
+   "genus": "en",
+   "former": [
+    "port",
+    "porten",
+    "portar",
+    "portarna"
+   ],
+   "typ": "byggnad",
+   "sida": "slott",
+   "hem": null,
+   "standardfarg": "#795548",
+   "delar": [],
+   "ritning": "Två stenpelare + rundad port med järnband.",
+   "kit_nyckel": "bygg/port"
+  },
+  {
+   "id": "vallgrav",
+   "genus": "en",
+   "former": [
+    "vallgrav",
+    "vallgraven",
+    "vallgravar",
+    "vallgravarna"
+   ],
+   "typ": "natur",
+   "sida": "slott",
+   "hem": {
+    "kroppar": [
+     "fisk",
+     "haj",
+     "groda",
+     "bäver"
+    ],
+    "platser": 2
+   },
+   "standardfarg": "#4FC3F7",
+   "delar": [],
+   "ritning": "Lång smal vattenränna (avlång ellips). Simmare kan bo här.",
+   "kit_nyckel": "bygg/vallgrav"
+  },
+  {
+   "id": "bro",
+   "genus": "en",
+   "former": [
+    "bro",
+    "bron",
+    "broar",
+    "broarna"
+   ],
+   "typ": "byggnad",
+   "sida": "slott",
+   "hem": null,
+   "standardfarg": "#8D6E63",
+   "delar": [],
+   "ritning": "Båge av brädor med räcke. Om den står över en damm eller vallgrav: ligger ovanpå.",
+   "kit_nyckel": "bygg/bro"
+  },
+  {
+   "id": "pepparkakshus",
+   "genus": "ett",
+   "former": [
+    "pepparkakshus",
+    "pepparkakshuset",
+    "pepparkakshus",
+    "pepparkakshusen"
+   ],
+   "typ": "byggnad",
+   "sida": "saga",
+   "hem": {
+    "kroppar": [
+     "kanin",
+     "katt",
+     "hund",
+     "drake",
+     "häst",
+     "gris",
+     "dinosaurie",
+     "ekorre",
+     "bäver"
+    ],
+    "platser": 2
+   },
+   "standardfarg": "#A1887F",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "skorsten"
+   ],
+   "ritning": "Hus i pepparkaksbrunt med vita glasyrkanter (vågiga linjer) och färgade godisprickar på taket.",
+   "kit_nyckel": "bygg/pepparkakshus"
+  },
+  {
+   "id": "fyr",
+   "genus": "en",
+   "former": [
+    "fyr",
+    "fyren",
+    "fyrar",
+    "fyrarna"
+   ],
+   "typ": "byggnad",
+   "sida": "saga",
+   "hem": null,
+   "standardfarg": "#FFFFFF",
+   "delar": [
+    "fönster",
+    "flagga"
+   ],
+   "ritning": "Hög smal rödvitrandig kon + glödande lampa i toppen som sveper (ljuskägla).",
+   "kit_nyckel": "bygg/fyr"
+  },
+  {
+   "id": "trädhus",
+   "genus": "ett",
+   "former": [
+    "trädhus",
+    "trädhuset",
+    "trädhus",
+    "trädhusen"
+   ],
+   "typ": "byggnad",
+   "sida": "tradgard",
+   "hem": {
+    "kroppar": [
+     "kanin",
+     "katt",
+     "hund",
+     "drake",
+     "häst",
+     "gris",
+     "dinosaurie",
+     "ekorre",
+     "bäver",
+     "fågel",
+     "uggla"
+    ],
+    "platser": 2
+   },
+   "standardfarg": "#E57373",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "skorsten",
+    "torn",
+    "flagga"
+   ],
+   "ritning": "Hus uppe i ett träd: trädkrona + litet hus ovanpå stammen + en stege.",
+   "kit_nyckel": "bygg/hus",
+   "efterled": "hus"
+  },
+  {
+   "id": "regnbågsbro",
+   "genus": "en",
+   "former": [
+    "regnbågsbro",
+    "regnbågsbron",
+    "regnbågsbroar",
+    "regnbågsbroarna"
+   ],
+   "typ": "byggnad",
+   "sida": "saga",
+   "hem": null,
+   "standardfarg": "#8D6E63",
+   "delar": [],
+   "ritning": "Båge av sju färgade band (röd, orange, gul, grön, blå, indigo, lila) utan räcke.",
+   "kit_nyckel": "bygg/bro",
+   "efterled": "bro",
+   "monster": "regnbåge"
+  }
+ ],
+ "delar": [
+  {
+   "id": "fönster",
+   "genus": "ett",
+   "former": [
+    "fönster",
+    "fönstret",
+    "fönster",
+    "fönstren"
+   ],
+   "max": 6,
+   "ritning": "Fyrkant med ljusblått glas och vitt kors. Antal styr hur många."
+  },
+  {
+   "id": "dörr",
+   "genus": "en",
+   "former": [
+    "dörr",
+    "dörren",
+    "dörrar",
+    "dörrarna"
+   ],
+   "max": 2,
+   "ritning": "Avlång rektangel med rundad topp och ett litet handtag."
+  },
+  {
+   "id": "tak",
+   "genus": "ett",
+   "former": [
+    "tak",
+    "taket",
+    "tak",
+    "taken"
+   ],
+   "max": 1,
+   "ritning": "Taket på byggnaden. Bara färg/material, inget antal."
+  },
+  {
+   "id": "skorsten",
+   "genus": "en",
+   "former": [
+    "skorsten",
+    "skorstenen",
+    "skorstenar",
+    "skorstenarna"
+   ],
+   "max": 2,
+   "ritning": "Liten rektangel på taket, ibland lite rök (grå cirklar som stiger)."
+  },
+  {
+   "id": "torn",
+   "genus": "ett",
+   "former": [
+    "torn",
+    "tornet",
+    "torn",
+    "tornen"
+   ],
+   "max": 4,
+   "ritning": "Smalt torn på sidan/ovanpå med koniskt tak."
+  },
+  {
+   "id": "flagga",
+   "genus": "en",
+   "former": [
+    "flagga",
+    "flaggan",
+    "flaggor",
+    "flaggorna"
+   ],
+   "max": 4,
+   "ritning": "Stång + liten vimpel som fladdrar, i delens färg (standard röd)."
+  }
+ ],
+ "material": [
+  {
+   "id": "trä",
+   "forled": "trä",
+   "sida": "start",
+   "farg": "#A1887F",
+   "glans": false,
+   "alpha": 1.0,
+   "ritning": "Brädlinjer över ytan."
+  },
+  {
+   "id": "sten",
+   "forled": "sten",
+   "sida": "start",
+   "farg": "#9E9E9E",
+   "glans": false,
+   "alpha": 1.0,
+   "ritning": "Rundade stenar i förskjutna rader."
+  },
+  {
+   "id": "glas",
+   "forled": "glas",
+   "sida": "start",
+   "farg": "#B3E5FC",
+   "glans": true,
+   "alpha": 0.6,
+   "ritning": "Halvgenomskinligt ljusblått med vita glansstreck."
+  },
+  {
+   "id": "is",
+   "forled": "is",
+   "sida": "saga",
+   "farg": "#E1F5FE",
+   "glans": true,
+   "alpha": 0.75,
+   "ritning": "Vitblått med glans och små iskristaller i hörnen."
+  },
+  {
+   "id": "godis",
+   "forled": "godis",
+   "sida": "saga",
+   "farg": "#F48FB1",
+   "glans": false,
+   "alpha": 1.0,
+   "ritning": "Rosa med färgade prickar och randiga klubbor i kanterna."
+  },
+  {
+   "id": "choklad",
+   "forled": "choklad",
+   "sida": "saga",
+   "farg": "#6D4C41",
+   "glans": false,
+   "alpha": 1.0,
+   "ritning": "Chokladbrunt med rutmönster som en chokladkaka."
+  },
+  {
+   "id": "moln",
+   "forled": "moln",
+   "sida": "saga",
+   "farg": "#FFFFFF",
+   "glans": false,
+   "alpha": 0.9,
+   "ritning": "Vita bulliga kanter; byggnaden svävar lite över marken och guppar."
+  },
+  {
+   "id": "kristall",
+   "forled": "kristall",
+   "sida": "saga",
+   "farg": "#CE93D8",
+   "glans": true,
+   "alpha": 0.8,
+   "ritning": "Kantiga facetter i ljuslila med gnistor."
+  },
+  {
+   "id": "guld",
+   "forled": "guld",
+   "sida": "saga",
+   "farg": "#FFC107",
+   "glans": true,
+   "alpha": 1.0,
+   "ritning": "Guldgult med glans."
+  }
+ ],
+ "max_pa_garden": 15,
+ "funktionsord": {
+  "av": [
+   "av"
+  ],
+  "med": [
+   "med"
+  ],
+  "och": [
+   "och"
+  ]
+ }
+}

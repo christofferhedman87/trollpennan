@@ -1,0 +1,119 @@
+{
+ "_om": "Byggboken: en egen bok på Gården. Startbygget är gratis. Övriga sidor köps med samma stjärnor som i runda 3, i valfri ordning, för priset som står.",
+ "sidor": [
+  {
+   "id": "start",
+   "titel": "Startbygget",
+   "kostnad": 0,
+   "beskrivning": "Allt du behöver för att börja: hus, stugor, träd och dammar.",
+   "exempel": "ett rött hus med tre fönster",
+   "ord": [
+    "hus",
+    "stuga",
+    "koja",
+    "tält",
+    "staket",
+    "träd",
+    "blomma",
+    "buske",
+    "damm",
+    "bänk",
+    "lykta"
+   ],
+   "material": [
+    "trä",
+    "sten",
+    "glas"
+   ]
+  },
+  {
+   "id": "tradgard",
+   "titel": "Trädgårdssidan",
+   "kostnad": 4,
+   "beskrivning": "Äppelträd, granar, svampar och en fontän som porlar.",
+   "exempel": "ett äppelträd och en fontän",
+   "ord": [
+    "äppelträd",
+    "gran",
+    "svamp",
+    "brunn",
+    "fontän",
+    "palm",
+    "trädhus"
+   ],
+   "material": []
+  },
+  {
+   "id": "lekplats",
+   "titel": "Lekplatssidan",
+   "kostnad": 6,
+   "beskrivning": "Gungor, rutschkanor och en studsmatta för djuren.",
+   "exempel": "en lila studsmatta",
+   "ord": [
+    "gunga",
+    "rutschkana",
+    "studsmatta",
+    "sandlåda",
+    "karusell",
+    "klätterställning"
+   ],
+   "material": []
+  },
+  {
+   "id": "djurhem",
+   "titel": "Djurhemssidan",
+   "kostnad": 8,
+   "beskrivning": "Hundkojor, fågelholkar och ett stall – egna hem åt djuren.",
+   "exempel": "en blå hundkoja med rött tak",
+   "ord": [
+    "hundkoja",
+    "fågelholk",
+    "stall"
+   ],
+   "material": []
+  },
+  {
+   "id": "slott",
+   "titel": "Slottssidan",
+   "kostnad": 10,
+   "beskrivning": "Slott, torn, murar och vallgravar. Och en bro!",
+   "exempel": "ett slott med fyra torn och två flaggor",
+   "ord": [
+    "slott",
+    "torn",
+    "mur",
+    "port",
+    "vallgrav",
+    "bro"
+   ],
+   "material": []
+  },
+  {
+   "id": "saga",
+   "titel": "Sagobyggen",
+   "kostnad": 12,
+   "beskrivning": "Bygg av is, godis, choklad, moln, kristall och guld. Regnbågsbro och pepparkakshus!",
+   "exempel": "ett isslott med tre torn",
+   "ord": [
+    "pepparkakshus",
+    "fyr",
+    "regnbågsbro"
+   ],
+   "material": [
+    "is",
+    "godis",
+    "choklad",
+    "moln",
+    "kristall",
+    "guld"
+   ]
+  }
+ ],
+ "last_ord": {
+  "regel": "Skriver barnet ett byggord från en sida som inte är köpt: inget byggs, ordet sparas som 'snart' på sidan och Trollpennan säger texten nedan. Aldrig fel-ljud. Djurord fungerar alltid som förut.",
+  "text": [
+   "Det ordet finns i {sida}. Den kostar {n} stjärnor.",
+   "Oj, {ord}! Det står i {sida}. Den kostar {n} stjärnor."
+  ]
+ }
+}

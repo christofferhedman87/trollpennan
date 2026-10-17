@@ -1,0 +1,6 @@
+Fortsätt Trollpennan från B03 delcheckpoint, inte från äldre B02R-versioner.
+Öppna källcheckpointen och det statiska B03-testpaketet från länkarna jag tillhandahåller. Inspektera arkiven lokalt. Läs HANDOFF.md, RELEASE-REPORT.md, BLOCK-STATUS.md och verification/STATUS.json innan ändringar.
+Mål: en färdig, högkvalitativ lärspelsapp för Cloudflare Pages. Behåll befintliga renderers, parser, sparnycklar, modeller och texturkö. Inga godkännanden behövs mellan block.
+B03 innehåller ett separat CSS-lager, inte en ny full Vite-build. 70 tester och 20 layoutkontroller passerade, men full build/typecheck och kvalitetsgrind återstår.
+Gör B03-2 först: återställ låsta beroenden, riktig build/typecheck, normal-rörelse peköppning, små kortlistor, nästlade dialoger, varningsöverlapp och längre scenbyten. Rätta fel och verifiera innan B04. Därefter B04 innehåll, B05 tillgänglighet, B06 prestanda och B07 release. Uppfinn inte detaljer i ursprungsbeställningen som inte finns i underlaget.
+Redovisa nya tester separat från historiska resultat. Leverera faktisk källcheckpoint, statiskt deploymentpaket och rapport med begränsningar. Arbeta endast i aktuell körning, inte asynkront. Om kontexten påverkar kvaliteten: skapa full överlämning och startprompt.
