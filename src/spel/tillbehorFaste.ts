@@ -33,7 +33,7 @@ const KONTUR = new THREE.MeshBasicMaterial({ color: "#3B2F2F", side: THREE.BackS
 const GEO = {
   cyl: new THREE.CylinderGeometry(0.5, 0.55, 0.28, 7),
   kon: new THREE.ConeGeometry(0.16, 0.46, 5),
-  ring: new THREE.TorusGeometry(0.2, 0.045, 6, 12),
+  ring: new THREE.TorusGeometry(0.22, 0.07, 6, 14),
   brygga: new THREE.BoxGeometry(1, 1, 1),
   skalm: new THREE.BoxGeometry(1, 1, 1),
 };
@@ -94,17 +94,17 @@ const STANDARD: ProcRad = {
 
 const PROC_ANKARE: Record<string, ProcRad> = {
   standard: STANDARD,
-  gris: { ...STANDARD, bredd: 0.9 },
-  dinosaurie: STANDARD,
+  gris: { ...STANDARD, bredd: 0.9, ogonZ: 0.52 },
+  dinosaurie: { ...STANDARD, ogonZ: 0.52 },
   bäver: STANDARD,
   katt: STANDARD,
   kanin: STANDARD,
-  ekorre: STANDARD,
+  ekorre: { ...STANDARD, ogonZ: 0.52 },
   hund: { ...STANDARD, mun: [0, 0.78, 0.75], bredd: 0.9 },
   fågel: { topp: [0, 1.14, 0.08], ogonY: 0.94, ogonZ: 0.26, ogonX: 0.1, mun: [0, 0.82, 0.4], bredd: 0.5, hojd: 1.14 },
   uggla: { topp: [0, 1.14, 0.08], ogonY: 0.94, ogonZ: 0.26, ogonX: 0.1, mun: [0, 0.82, 0.4], bredd: 0.5, hojd: 1.14 },
   fisk: { topp: [0, 0.4, 0.16], ogonY: 0.28, ogonZ: 0.3, ogonX: 0.1, mun: [0, 0.24, 0.42], bredd: 0.4, hojd: 0.44 },
-  haj: { topp: [0, 0.4, 0.16], ogonY: 0.28, ogonZ: 0.3, ogonX: 0.1, mun: [0, 0.24, 0.42], bredd: 0.42, hojd: 0.46 },
+  haj: { topp: [0, 0.4, 0.16], ogonY: 0.28, ogonZ: 0.4, ogonX: 0.1, mun: [0, 0.24, 0.42], bredd: 0.42, hojd: 0.46 },
   groda: { topp: [0, 0.78, 0.06], ogonY: 0.68, ogonZ: 0.36, ogonX: 0.16, mun: [0, 0.55, 0.4], bredd: 0.7, hojd: 0.85 },
   drake: { topp: [0, 1.34, 0.42], ogonY: 1.05, ogonZ: 0.82, ogonX: 0.14, mun: [0, 0.9, 1.06], bredd: 0.7, hojd: 1.4 },
   häst: { topp: [0, 1.24, 0.42], ogonY: 1.02, ogonZ: 0.66, ogonX: 0.08, mun: [0, 0.88, 0.78], bredd: 0.42, hojd: 1.35 },
@@ -257,11 +257,11 @@ function byggGlas(farg: string) {
   const mat = toonMat(farg);
   const g = new THREE.Group();
   g.name = "tillbehor-glasogon";
-  g.add(del(GEO.ring, mat, -0.28, 0, 0, 1, 1, 1));
-  g.add(del(GEO.ring, mat, 0.28, 0, 0, 1, 1, 1));
-  g.add(del(GEO.brygga, mat, 0, 0.02, 0, 0.2, 0.05, 0.05));
-  g.add(del(GEO.skalm, mat, -0.46, 0.02, -0.12, 0.04, 0.04, 0.22));
-  g.add(del(GEO.skalm, mat, 0.46, 0.02, -0.12, 0.04, 0.04, 0.22));
+  g.add(del(GEO.ring, mat, -0.28, 0, 0, 1, 1, 1, 1.26));
+  g.add(del(GEO.ring, mat, 0.28, 0, 0, 1, 1, 1, 1.26));
+  g.add(del(GEO.brygga, mat, 0, 0.02, 0, 0.22, 0.07, 0.07, 1.26));
+  g.add(del(GEO.skalm, mat, -0.5, 0.02, -0.12, 0.055, 0.055, 0.24, 1.26));
+  g.add(del(GEO.skalm, mat, 0.5, 0.02, -0.12, 0.055, 0.055, 0.24, 1.26));
   return g;
 }
 
@@ -277,7 +277,11 @@ function skalaFor(id: string, a: Ankare) {
     const bas = Math.max(0.28, Math.min(a.bredd * 1.15, a.hojd * 0.55));
     return bas * 1.6;
   }
-  if (id === "glasögon") return Math.max(0.28, Math.min(a.bredd * 1.25, a.hojd * 0.62));
+  if (id === "glasögon") {
+    // Yttre bredd i modellrum är ~1,1. 0,34 * huvudbredd ger minst 30 % av huvudet.
+    const minSynlig = a.bredd * 0.34;
+    return Math.max(minSynlig, Math.min(a.bredd * 1.35, a.hojd * 0.72));
+  }
   return 1;
 }
 
