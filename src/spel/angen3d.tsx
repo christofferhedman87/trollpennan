@@ -14,6 +14,7 @@ import { sagaNatt, sagaNu } from "./saga.ts";
 import type { SparatBygge } from "./bygge.ts";
 import { GltfDjur, harModell, type DjurSignal } from "./gltfDjur.tsx";
 import { faestTillbehor, procAnkare } from "./tillbehorFaste.ts";
+import { DjurEffekter } from "./effekter.tsx";
 import { KenneyNatur } from "./kenneyNatur.tsx";
 
 const HINT = (texterJson as { tred_hint: string }).tred_hint;
@@ -723,6 +724,24 @@ function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
   const index = alla.findIndex((d) => d.uid === spec.uid);
   const flyg = flygare(spec);
   const sim = simmare(spec);
+  const ankare = useMemo(() => {
+    const a = procAnkare(spec.kropp);
+    const kenneyMotMinusZ =
+      harModell(spec.kropp) &&
+      (spec.kropp === "kanin" || spec.kropp === "katt" || spec.kropp === "hund" || spec.kropp === "fisk");
+    if (!kenneyMotMinusZ) return a;
+    const spegla = (v: THREE.Vector3) => new THREE.Vector3(v.x, v.y, -v.z);
+    return {
+      ...a,
+      huvudTopp: spegla(a.huvudTopp),
+      ansikte: spegla(a.ansikte),
+      ogonL: spegla(a.ogonL),
+      ogonR: spegla(a.ogonR),
+      mun: spegla(a.mun),
+      hals: spegla(a.hals),
+      rygg: spegla(a.rygg),
+    };
+  }, [spec.kropp]);
   useEffect(() => {
     return () => {
       if (upp.current) window.removeEventListener("pointerup", upp.current);
@@ -900,6 +919,7 @@ function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
         ) : (
           <DjurForm spec={spec} />
         )}
+        <DjurEffekter varelse={spec} ankare={ankare} />
       </group>
     </group>
   );
