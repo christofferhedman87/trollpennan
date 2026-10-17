@@ -1,0 +1,2 @@
+Fågel och uggla får glasögonen vid box.max.z plus ett litet steg, i samma ögonhöjd (0,56 av höjden), eftersom ansiktet pekar mot +z och 3B lade dem bakom hjässan vid min.z.
+Glasögonen är 20 procent mindre på alla djur och ekorrens krona 30 procent mindre. Kanin, groda och fisk har samma krona. Jag har inte sett en renderad bild, så om fågelns näbb trots det pekar mot −z sitter bågarna fortfarande fel.

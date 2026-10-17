@@ -4,6 +4,7 @@ import { useLayoutEffect, useMemo, useRef } from "react";
 import { SkeletonUtils } from "three-stdlib";
 import * as THREE from "three";
 import type { Sparad } from "./brygga.ts";
+import { ankareFor, faestTillbehor } from "./tillbehorFaste.ts";
 
 /** Kodbyggd reserv om en GLB saknas. Komponenten skickas in utifrån så den här filen inte drar in hela ängen. */
 export type DjurSignal = { klapp: number; ror: number };
@@ -185,23 +186,8 @@ const KRO_GEO = {
   kon: new THREE.ConeGeometry(0.16, 0.42, 5),
   box: new THREE.BoxGeometry(1, 1, 1),
 };
-const KRO_MAT = new THREE.MeshStandardMaterial({ color: "#F2B632", metalness: 0.15, roughness: 0.45 });
 const HALS_MAT = new THREE.MeshStandardMaterial({ color: "#E57373", metalness: 0, roughness: 0.8 });
 const HATT_MAT = new THREE.MeshStandardMaterial({ color: "#5C6BC0", metalness: 0, roughness: 0.7 });
-
-function KronaMesh() {
-  const g = new THREE.Group();
-  const bas = new THREE.Mesh(KRO_GEO.cyl, KRO_MAT);
-  bas.scale.set(0.22, 0.22, 0.22);
-  g.add(bas);
-  for (const x of [-0.1, 0, 0.1]) {
-    const t = new THREE.Mesh(KRO_GEO.kon, KRO_MAT);
-    t.position.set(x, 0.1, 0);
-    t.scale.setScalar(x === 0 ? 1 : 0.8);
-    g.add(t);
-  }
-  return g;
-}
 
 function HalsdukMesh() {
   const g = new THREE.Group();
@@ -250,38 +236,10 @@ function fastAnkare(rot: THREE.Object3D, spec: Sparad, s: number) {
   const kropp = hit.kropp;
   const hals = hit.hals;
   const ankare = huvud ?? kropp ?? rot;
-  const harKrona = spec.tillbehor.some((t) => t.id === "krona" || t.id === "guldkrona");
+  faestTillbehor(rot, ankareFor(rot, spec.kropp, s), spec);
   const harHals = spec.tillbehor.some((t) => t.id === "halsduk");
   const harHatt = spec.tillbehor.some((t) => t.id === "hatt" || t.id === "trollkarlshatt");
   const inv = 1 / Math.max(0.001, s);
-  if (harKrona) {
-    const k = KronaMesh();
-    if (spec.kropp === "drake" && huvud) {
-      // Hornspetsarna ligger ~0.38 över benet. Kronan sitter mellan dem.
-      faestPaBen(huvud, rot, k, 0, 0.4, 0.08, 1.45);
-    } else if (spec.kropp === "häst" && huvud) {
-      faestPaBen(huvud, rot, k, 0, 0.4, -0.02, 1.35);
-    } else if (spec.kropp === "groda") {
-      const box = new THREE.Box3().setFromObject(rot);
-      const top = new THREE.Vector3((box.min.x + box.max.x) / 2, box.max.y - 0.05, (box.min.z + box.max.z) / 2);
-      rot.worldToLocal(top);
-      k.position.copy(top);
-      k.scale.setScalar(inv * 0.75);
-      rot.add(k);
-    } else if (kropp) {
-      const b = new THREE.Box3().setFromObject(kropp);
-      const top = new THREE.Vector3((b.min.x + b.max.x) / 2, b.max.y, (b.min.z + b.max.z) / 2);
-      kropp.worldToLocal(top);
-      top.y += 0.02 * inv;
-      k.position.copy(top);
-      k.scale.setScalar(inv);
-      kropp.add(k);
-    } else {
-      k.scale.setScalar(inv);
-      k.position.set(0, 0.2 * inv, 0);
-      ankare.add(k);
-    }
-  }
   if (harHals) {
     const h = HalsdukMesh();
     if ((spec.kropp === "drake" || spec.kropp === "häst") && (hals || huvud)) {
@@ -331,7 +289,7 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
   const fas = useRef<"skapas" | "idle" | "gar" | "klapp">("skapas");
   const senKlapp = useRef(0);
   const klappTid = useRef(0);
-  const sign = `${spec.kropp}|${spec.farg ?? ""}|${spec.glans ? 1 : 0}|${spec.tillbehor.map((t) => t.id).join(",")}`;
+  const sign = `${spec.kropp}|${spec.farg ?? ""}|${spec.glans ? 1 : 0}|${spec.tillbehor.map((t) => `${t.id}:${t.farg ?? ""}`).join(",")}`;
   const klon = useMemo(() => {
     const c = SkeletonUtils.clone(gltf.scene) as THREE.Object3D;
     metallNoll(c);
