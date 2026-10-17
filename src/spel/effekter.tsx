@@ -7,9 +7,51 @@ import type { Ankare } from "./tillbehorFaste.ts";
 const ELD_N = 24;
 const GLITTER_N = 20;
 
+const ROD = [0xe8 / 255, 0x34 / 255, 0x1c / 255] as const;
+const ORANGE = [1, 0x7a / 255, 0x1a / 255] as const;
+const GUL = [1, 0xd2 / 255, 0x3f / 255] as const;
+
+let mjukCache: THREE.CanvasTexture | null = null;
+
+/** En mjuk rund punkt. Skapas en gång och delas av eld, glöd och glitter. */
+function mjukPunkt() {
+  if (mjukCache) return mjukCache;
+  const c = document.createElement("canvas");
+  c.width = 64;
+  c.height = 64;
+  const ctx = c.getContext("2d");
+  if (!ctx) {
+    const tom = new THREE.CanvasTexture(c);
+    mjukCache = tom;
+    return tom;
+  }
+  const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+  g.addColorStop(0, "rgba(255,255,255,1)");
+  g.addColorStop(0.4, "rgba(255,255,255,0.85)");
+  g.addColorStop(0.72, "rgba(255,255,255,0.25)");
+  g.addColorStop(1, "rgba(255,255,255,0)");
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 64, 64);
+  const tex = new THREE.CanvasTexture(c);
+  tex.needsUpdate = true;
+  mjukCache = tex;
+  return tex;
+}
+
 function framZ(ankare: Ankare) {
   // Munnen pekar längs lokal z. Kenney-GLB har mun mot −z, procedurformer mot +z.
   return ankare.mun.z >= 0 ? 1 : -1;
+}
+
+function lerp3(
+  a: readonly [number, number, number],
+  b: readonly [number, number, number],
+  t: number,
+  ut: { r: number; g: number; b: number },
+) {
+  ut.r = a[0] + (b[0] - a[0]) * t;
+  ut.g = a[1] + (b[1] - a[1]) * t;
+  ut.b = a[2] + (b[2] - a[2]) * t;
 }
 
 function Eld({ ankare }: { ankare: Ankare }) {
@@ -37,39 +79,51 @@ function Eld({ ankare }: { ankare: Ankare }) {
     g.setAttribute("color", new THREE.BufferAttribute(col, 3));
     return g;
   }, []);
+  const textur = useMemo(() => mjukPunkt(), []);
   const ref = useRef<THREE.Points>(null);
+  const farg = useRef({ r: 0, g: 0, b: 0 });
   useFrame((state) => {
     const p = ref.current;
     if (!p) return;
     const attr = p.geometry.getAttribute("position") as THREE.BufferAttribute;
+    const col = p.geometry.getAttribute("color") as THREE.BufferAttribute;
     const arr = attr.array as Float32Array;
+    const carg = col.array as Float32Array;
     const t = state.clock.elapsedTime;
-    const rack = Math.max(0.42, ankare.bredd * 1.15);
+    const langd = Math.min(0.5, Math.max(0.28, ankare.bredd * 0.5));
     const mx = ankare.mun.x;
     const my = ankare.mun.y;
     const mz = ankare.mun.z;
+    const ton = farg.current;
     for (let i = 0; i < ELD_N; i++) {
       const fas = bas[i * 3] ?? 0;
       const forsk = bas[i * 3 + 1] ?? 0;
       const fart = bas[i * 3 + 2] ?? 0.7;
       const liv = (t * fart + forsk) % 1;
-      const sid = Math.sin(fas + t * 6) * liv * 0.12;
-      arr[i * 3] = mx + Math.cos(fas) * sid;
-      arr[i * 3 + 1] = my + liv * (0.28 + ankare.hojd * 0.22);
-      arr[i * 3 + 2] = mz + fram * liv * rack;
+      const sid = Math.sin(fas) * liv * 0.035;
+      arr[i * 3] = mx + sid;
+      arr[i * 3 + 1] = my + Math.cos(fas) * liv * 0.03 + liv * 0.05;
+      arr[i * 3 + 2] = mz + fram * liv * langd;
+      if (liv < 0.4) lerp3(ROD, ORANGE, liv / 0.4, ton);
+      else lerp3(ORANGE, GUL, (liv - 0.4) / 0.6, ton);
+      carg[i * 3] = ton.r;
+      carg[i * 3 + 1] = ton.g;
+      carg[i * 3 + 2] = ton.b;
     }
     attr.needsUpdate = true;
+    col.needsUpdate = true;
   });
   return (
-    <points ref={ref} geometry={geo} frustumCulled={false}>
+    <points ref={ref} geometry={geo} frustumCulled={false} renderOrder={2}>
       <pointsMaterial
-        size={14}
+        map={textur}
+        size={16}
         sizeAttenuation={false}
         vertexColors
         transparent
-        opacity={0.95}
+        opacity={0.92}
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={THREE.NormalBlending}
         toneMapped={false}
       />
     </points>
