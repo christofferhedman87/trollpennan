@@ -579,7 +579,7 @@ const OGA_MAT = new THREE.MeshBasicMaterial({ vertexColors: true });
 function DjurForm({ spec }: { spec: Sparad }) {
   const farg = djurFarg(spec);
   const pack = useMemo(() => {
-    const hatt = spec.tillbehor.some((t) => t.id === "hatt" || t.id === "trollkarlshatt");
+    const hattSpec = spec.tillbehor.find((t) => t.id === "hatt");
     const horn = spec.tillbehor.some((t) => t.id === "horn") || spec.kropp === "enhörning";
     const halsduk = spec.kropp === "hund" || spec.tillbehor.some((t) => t.id === "halsduk");
     return byggPack({
@@ -587,8 +587,8 @@ function DjurForm({ spec }: { spec: Sparad }) {
       farg,
       halsduk,
       krona: false,
-      hatt,
-      hattFarg: spec.tillbehor.some((t) => t.id === "trollkarlshatt") ? "#5C6BC0" : "#8D6E63",
+      hatt: Boolean(hattSpec),
+      hattFarg: hattSpec?.farg ?? "#8D6E63",
       horn,
       monster: Boolean(spec.monster),
       monsterFarg: spec.monsterfarg ?? "#6D4C41",
