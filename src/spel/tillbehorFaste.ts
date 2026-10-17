@@ -50,11 +50,11 @@ function toonMat(color: string) {
   return m;
 }
 
-function del(geo: THREE.BufferGeometry, mat: THREE.Material, x: number, y: number, z: number, sx: number, sy: number, sz: number) {
+function del(geo: THREE.BufferGeometry, mat: THREE.Material, x: number, y: number, z: number, sx: number, sy: number, sz: number, kantSkala = 1.18) {
   const g = new THREE.Group();
   const mesh = new THREE.Mesh(geo, mat);
   const kant = new THREE.Mesh(geo, KONTUR);
-  kant.scale.setScalar(1.07);
+  kant.scale.setScalar(kantSkala);
   g.add(mesh, kant);
   g.position.set(x, y, z);
   g.scale.set(sx, sy, sz);
@@ -103,8 +103,8 @@ const PROC_ANKARE: Record<string, ProcRad> = {
   hund: { ...STANDARD, mun: [0, 0.78, 0.75], bredd: 0.9 },
   fågel: { topp: [0, 1.14, 0.08], ogonY: 0.94, ogonZ: 0.26, ogonX: 0.1, mun: [0, 0.82, 0.4], bredd: 0.5, hojd: 1.14 },
   uggla: { topp: [0, 1.14, 0.08], ogonY: 0.94, ogonZ: 0.26, ogonX: 0.1, mun: [0, 0.82, 0.4], bredd: 0.5, hojd: 1.14 },
-  fisk: { topp: [0, 0.44, 0.02], ogonY: 0.28, ogonZ: 0.3, ogonX: 0.1, mun: [0, 0.24, 0.42], bredd: 0.4, hojd: 0.44 },
-  haj: { topp: [0, 0.46, 0.02], ogonY: 0.28, ogonZ: 0.3, ogonX: 0.1, mun: [0, 0.24, 0.42], bredd: 0.42, hojd: 0.46 },
+  fisk: { topp: [0, 0.4, 0.16], ogonY: 0.28, ogonZ: 0.3, ogonX: 0.1, mun: [0, 0.24, 0.42], bredd: 0.4, hojd: 0.44 },
+  haj: { topp: [0, 0.4, 0.16], ogonY: 0.28, ogonZ: 0.3, ogonX: 0.1, mun: [0, 0.24, 0.42], bredd: 0.42, hojd: 0.46 },
   groda: { topp: [0, 0.78, 0.06], ogonY: 0.68, ogonZ: 0.36, ogonX: 0.16, mun: [0, 0.55, 0.4], bredd: 0.7, hojd: 0.85 },
   drake: { topp: [0, 1.34, 0.42], ogonY: 1.05, ogonZ: 0.82, ogonX: 0.14, mun: [0, 0.9, 1.06], bredd: 0.7, hojd: 1.4 },
   häst: { topp: [0, 1.24, 0.42], ogonY: 1.02, ogonZ: 0.66, ogonX: 0.08, mun: [0, 0.88, 0.78], bredd: 0.42, hojd: 1.35 },
@@ -202,10 +202,11 @@ export function ankareFor(rot: THREE.Object3D, kropp: string, _s: number): Ankar
     toppY = b.max.y + 0.02;
     toppZ = b.min.z + 0.28 * dz;
   } else if (kropp === "fisk") {
-    toppY = b.max.y + 0.02;
-    toppZ = cz;
+    // Huvudet är mot −z. Ryggfenan är bbox-taket, så max.y får kronan att sväva.
+    toppY = b.min.y + 0.68 * h;
+    toppZ = b.min.z + 0.26 * dz;
   } else if (kropp === "groda") {
-    toppY = b.max.y + 0.06;
+    toppY = b.max.y;
     toppZ = cz;
   }
   const kenney = kropp === "kanin" || kropp === "katt" || kropp === "hund" || kropp === "fisk" || kropp === "fågel" || kropp === "uggla";
@@ -236,17 +237,18 @@ function byggKrona(farg: string) {
   const mat = toonMat(farg);
   const g = new THREE.Group();
   g.name = "tillbehor-krona";
-  g.add(del(GEO.cyl, mat, 0, 0.08, 0, 0.46, 0.7, 0.4));
+  // Bandets underkant ligger i origo så huvudTopp är kronans botten. Tjock mörk kant mot gul/orange päls.
+  g.add(del(GEO.cyl, mat, 0, 0.1, 0, 0.46, 0.7, 0.4, 1.28));
   const taggar: [number, number, number][] = [
-    [0, 0.22, 0.12],
-    [-0.14, 0.18, 0.06],
-    [0.14, 0.18, 0.06],
-    [-0.1, 0.16, -0.08],
-    [0.1, 0.16, -0.08],
+    [0, 0.24, 0.12],
+    [-0.14, 0.2, 0.06],
+    [0.14, 0.2, 0.06],
+    [-0.1, 0.18, -0.08],
+    [0.1, 0.18, -0.08],
   ];
   taggar.forEach(([x, y, z], i) => {
     const h = i === 0 ? 1 : 0.78;
-    g.add(del(GEO.kon, mat, x, y, z, h, h, h));
+    g.add(del(GEO.kon, mat, x, y, z, h, h, h, 1.28));
   });
   return g;
 }
@@ -271,7 +273,10 @@ export function byggTillbehor(t: TillbehorSpec, _a: Ankare): THREE.Group | null 
 }
 
 function skalaFor(id: string, a: Ankare) {
-  if (id === "krona") return Math.max(0.28, Math.min(a.bredd * 1.15, a.hojd * 0.55));
+  if (id === "krona") {
+    const bas = Math.max(0.28, Math.min(a.bredd * 1.15, a.hojd * 0.55));
+    return bas * 1.6;
+  }
   if (id === "glasögon") return Math.max(0.28, Math.min(a.bredd * 1.25, a.hojd * 0.62));
   return 1;
 }
