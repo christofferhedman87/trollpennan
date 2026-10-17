@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import introJson from "../../data/intro.json" with { type: "json" };
+import upplevelseJson from "../../data/upplevelse.json" with { type: "json" };
 import { sagaNu } from "./saga.ts";
 
 type Scen = { fas: number; text: string; fran: number; ord?: number; ordklar?: boolean };
@@ -16,15 +17,20 @@ const INTRO = introJson as {
 
 const SCENER = INTRO.scener;
 const LANGD = INTRO.langd;
+const FORSTA_IDEER = [0, 2, 3, 4]
+  .map((i) => (upplevelseJson as { examples: string[] }).examples[i])
+  .filter((ex): ex is string => Boolean(ex));
 
 export function Intro({
   ljudPa,
   onKlar,
   onSteg,
+  onIde,
 }: {
   ljudPa: boolean;
   onKlar: () => void;
   onSteg: (fas: number) => void;
+  onIde: (ex: string) => void;
 }) {
   const [i, setI] = useState(0);
   const [hor, setHor] = useState(false);
@@ -102,6 +108,7 @@ export function Intro({
         setI(next);
       }
       if (t >= LANGD) {
+        if (scenNu.fas >= 5) return;
         avsluta();
         return;
       }
@@ -180,6 +187,15 @@ export function Intro({
       <p className="intro-text" data-testid="intro-text">
         {scen.text}
       </p>
+      {scen.fas >= 5 ? (
+        <div className="intro-ideer" data-testid="intro-ideer" role="group" aria-label={scen.text}>
+          {FORSTA_IDEER.map((ex) => (
+            <button key={ex} type="button" className="intro-ide" data-testid="intro-ide" onClick={() => onIde(ex)}>
+              {ex}
+            </button>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -1,9 +1,9 @@
-/** Isolate sibling branches and preserve the original inert state. */
+/** Isolate sibling branches. Only elements this hook itself sets inert are restored. */
 export function skapaDialogIsolering() {
-  const tidigare = new Map<HTMLElement, boolean>();
+  const satta = new Set<HTMLElement>();
   const aterstall = () => {
-    for (const [element, inert] of tidigare) element.inert = inert;
-    tidigare.clear();
+    for (const element of satta) element.inert = false;
+    satta.clear();
   };
   const isolera = (dialog: HTMLElement | null) => {
     if (!dialog) return;
@@ -12,7 +12,8 @@ export function skapaDialogIsolering() {
       const parent = gren.parentElement;
       for (const syskon of Array.from(parent.children)) {
         if (syskon === gren || !(syskon instanceof HTMLElement)) continue;
-        if (!tidigare.has(syskon)) tidigare.set(syskon, syskon.inert);
+        if (syskon.inert) continue;
+        satta.add(syskon);
         syskon.inert = true;
       }
       if (parent === document.body) break;

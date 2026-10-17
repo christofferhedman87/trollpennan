@@ -1,6 +1,7 @@
 /* B03: skrivbok med skyddade huvudkontroller och mer synlig spelvärld. */
 @media (max-width: 899px) and (orientation: portrait) {
  .bok-skarm .bok { height: 66dvh; max-height: 66dvh; }
+ .bok-skarm .bok:has(.tangenter) { height: auto; max-height: 92dvh; }
  .bok-huvud { flex-shrink: 0; min-height: 56px; padding: 6px 10px; }
  .bok-huvud h2 { font-size: 1.35rem; }
  .bok .skapar-guide { flex-shrink: 0; margin: 0 10px 4px; padding: 4px 8px; }
