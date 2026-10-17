@@ -1,6 +1,10 @@
-# Aktuellt mandat 2026-10-13
+# Aktuellt mandat 2026-10-17
 
-Beställningen för Cloudflare Pages har företräde framför äldre tekniska begränsningar. React/R3F och Phaser bevaras tills ett byte har motiverats och verifierats. Lokal klientbuild finns som kandidat i vite.pages.config.ts, men är inte byggverifierad. Historiska regler finns i recovery/pre-cloudflare/projektregler.md.
+Cloudflare Pages är inte ett krav. Publicering sker som statiskt bygge (`npm run build:pages`) på valfri plattform. React/R3F och Phaser bevaras tills ett byte har motiverats och verifierats.
+
+Bevis per runda är högst 8 numrerade skärmbilder. Inga nya checkpoint- eller överlämningsdokument. Rör inte `recovery/`.
+
+Historiska regler finns i `recovery/pre-cloudflare/projektregler.md` och gäller inte före detta mandat.
 
 # Trollpennan – projektregler (gäller varje runda)
 
@@ -52,8 +56,8 @@ Beställningen för Cloudflare Pages har företräde framför äldre tekniska be
 - Ängen syns direkt vid start. Ladda bara de kroppar som behövs.
 
 ## Bevis i varje runda
-- Numrerade skärmbilder i 375×812 (och dator) för varje acceptanskrav.
-- En kall genomgång: vad ett barn ser och gör, skärm för skärm.
+- Högst 8 numrerade skärmbilder i 375×812 för det rundan ber om.
+- Inga nya checkpoint- eller överlämningsdokument. Rör inte `recovery/`.
 - En lista över det som inte är gjort, och dina tre svagaste punkter, ärligt.
 - Parsertesterna i `src/tolk` och fraserna i `data/test-fraser.json` ska gå igenom. Rör du `ord.json`, kör testerna igen.
 

@@ -26,3 +26,11 @@ test('new sibling is isolated on next synchronization',()=>{
  const t=tree(),s=skapaDialogIsolering();s.isolera(t.dialog);const added=new Element(t.root);
  s.aterstall();s.isolera(t.dialog);assert.equal(added.inert,true);s.aterstall();assert.equal(added.inert,false);
 });
+test('React removes inert while the hook is active',()=>{
+ const t=tree();t.background.inert=true;const s=skapaDialogIsolering();s.isolera(t.dialog);
+ assert.equal(t.background.inert,true);assert.equal(t.sibling.inert,true);
+ t.background.inert=false;
+ s.aterstall();
+ assert.equal(t.background.inert,false);
+ assert.equal(t.sibling.inert,false);
+});

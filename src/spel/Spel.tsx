@@ -610,8 +610,8 @@ export function Spel() {
       const start = ensam ? [] : prev;
       if (ovan) {
         const i3d = typeof document !== "undefined" && !!document.querySelector("[data-testid='angen-3d']");
-        const xx = i3d ? Math.min(0.9, Math.max(0.1, x)) : Math.min(0.64, Math.max(0.36, x));
-        const yy = i3d ? Math.min(1.2, Math.max(0.12, y)) : Math.max(0.48, Math.min(0.72, y));
+        const xx = i3d ? Math.min(0.82, Math.max(0.18, x)) : Math.min(0.64, Math.max(0.36, x));
+        const yy = i3d ? Math.min(0.78, Math.max(0.58, y)) : Math.max(0.48, Math.min(0.72, y));
         return [...start, { id, text: texten, x: xx, y: yy, hjarta, ovan: true }].slice(-2);
       }
       const hoger = start.some((a) => a.x > 0.5);
@@ -1408,6 +1408,19 @@ export function Spel() {
     setVal({});
   }
 
+  function vackIde(ex: string) {
+    ljud.lasOpp();
+    ljud.pling();
+    textRef.current = ex;
+    setText(ex);
+    setHand(true);
+    handRef.current = true;
+    setForslag(null);
+    setBehover(null);
+    setVal({});
+    utfor(ex, { hand: true });
+  }
+
   function stangOnska() {
     onskaSkrivRef.current = false;
     setOnskaOpp(false);
@@ -2063,6 +2076,12 @@ export function Spel() {
             useMinne.getState().sattIntro();
             setIntro(false);
           }}
+          onIde={(ex) => {
+            vackIde(ex);
+            sagaNu.aktiv = false;
+            useMinne.getState().sattIntro();
+            setIntro(false);
+          }}
         />
       ) : null}
       <section className={visa3d ? "ang tred" : "ang"} ref={angRef} aria-label={varld === "gard" ? TEXTER.flikar.garden : TEXTER.flikar.angen} inert={intro}>
@@ -2439,6 +2458,7 @@ export function Spel() {
 
         {panel === "spel" || (panel === "byggbok" && lage === "skriv") ? (
           <>
+            <div className="bok-mitt">
             {(onskaOpp || (onskan && !onskaSyns)) && onskan ? (
               <div className="onska-remsa" data-testid="onska-remsa">
                 {andrar && onskaDjur ? (
@@ -2497,23 +2517,6 @@ export function Spel() {
                 </details>
               </div>
             ) : null}
-            <div className="remsa" data-testid="remsa">
-              {text ? (
-                text
-              ) : (
-                <span className="tom">
-                  {gavaTill
-                    ? TEXTER_AV.gavoruta.placeholder
-                    : varld === "gard" && !omrade
-                      ? TEXTER.penna_bygg.placeholder
-                      : " "}
-                </span>
-              )}
-              {lage === "skriv" ? <i className="caret" /> : null}
-            </div>
-            <button type="button" className={visaOnskaHjalp && text.trim() ? "vakna redo" : "vakna"} data-testid="vakna" onClick={vaknaNu}>
-              {vaknaText}
-            </button>
             {forslag ? (
               <div className="forslag" data-testid="forslag">
                 <p>{forslag.text}</p>
@@ -2591,6 +2594,24 @@ export function Spel() {
                 </div>
               </>
             ) : null}
+            </div>
+            <div className="remsa" data-testid="remsa">
+              {text ? (
+                text
+              ) : (
+                <span className="tom">
+                  {gavaTill
+                    ? TEXTER_AV.gavoruta.placeholder
+                    : varld === "gard" && !omrade
+                      ? TEXTER.penna_bygg.placeholder
+                      : " "}
+                </span>
+              )}
+              {lage === "skriv" ? <i className="caret" /> : null}
+            </div>
+            <button type="button" className={visaOnskaHjalp && text.trim() ? "vakna redo" : "vakna"} data-testid="vakna" onClick={vaknaNu}>
+              {vaknaText}
+            </button>
             {lage === "skriv" && !forslag && !behover ? (
               <div className="tangenter" data-testid="tangentbord">
                 {RADER.slice(0, 2).map((rad) => (
