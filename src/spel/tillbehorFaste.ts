@@ -94,13 +94,13 @@ const STANDARD: ProcRad = {
 
 const PROC_ANKARE: Record<string, ProcRad> = {
   standard: STANDARD,
-  gris: STANDARD,
+  gris: { ...STANDARD, bredd: 0.9 },
   dinosaurie: STANDARD,
   bäver: STANDARD,
   katt: STANDARD,
   kanin: STANDARD,
   ekorre: STANDARD,
-  hund: { ...STANDARD, mun: [0, 0.78, 0.75], bredd: 0.74 },
+  hund: { ...STANDARD, mun: [0, 0.78, 0.75], bredd: 0.9 },
   fågel: { topp: [0, 1.14, 0.08], ogonY: 0.94, ogonZ: 0.26, ogonX: 0.1, mun: [0, 0.82, 0.4], bredd: 0.5, hojd: 1.14 },
   uggla: { topp: [0, 1.14, 0.08], ogonY: 0.94, ogonZ: 0.26, ogonX: 0.1, mun: [0, 0.82, 0.4], bredd: 0.5, hojd: 1.14 },
   fisk: { topp: [0, 0.44, 0.02], ogonY: 0.28, ogonZ: 0.3, ogonX: 0.1, mun: [0, 0.24, 0.42], bredd: 0.4, hojd: 0.44 },
@@ -132,15 +132,13 @@ export function procAnkare(kropp: string): Ankare {
 }
 
 function hitta(rot: THREE.Object3D) {
-  let huvud: THREE.Object3D | null = null;
-  let hals: THREE.Object3D | null = null;
-  let body: THREE.Object3D | null = null;
+  const hit = { huvud: null as THREE.Object3D | null, hals: null as THREE.Object3D | null, body: null as THREE.Object3D | null };
   rot.traverse((o) => {
-    if (o.name === "Head") huvud = o;
-    if (o.name === "Neck") hals = o;
-    if (o.name === "body") body = o;
+    if (o.name === "Head") hit.huvud = o;
+    if (o.name === "Neck") hit.hals = o;
+    if (o.name === "body") hit.body = o;
   });
-  return { huvud, hals, body };
+  return hit;
 }
 
 function lyft(bas: THREE.Vector3, q: THREE.Quaternion, x: number, y: number, z: number) {
@@ -149,7 +147,9 @@ function lyft(bas: THREE.Vector3, q: THREE.Quaternion, x: number, y: number, z: 
 
 export function ankareFor(rot: THREE.Object3D, kropp: string, _s: number): Ankare {
   rot.updateMatrixWorld(true);
-  const { huvud, body } = hitta(rot);
+  const hit = hitta(rot);
+  const huvud = hit.huvud;
+  const body = hit.body;
   const box = new THREE.Box3().setFromObject(rot);
   const breddR = Math.max(0.2, box.max.x - box.min.x);
   const hojd = Math.max(0.2, box.max.y - box.min.y);
@@ -188,27 +188,31 @@ export function ankareFor(rot: THREE.Object3D, kropp: string, _s: number): Ankar
   const cz = (b.min.z + b.max.z) / 2;
   let toppY = b.max.y;
   let toppZ = cz;
+  const dz = b.max.z - b.min.z;
   if (kropp === "kanin") {
     toppY = Math.min(b.max.y, b.min.y + 0.72 * h);
-    toppZ = b.min.z + 0.48 * (b.max.z - b.min.z);
+    toppZ = b.min.z + 0.42 * dz;
   } else if (kropp === "katt") {
-    toppY = b.min.y + 0.9 * h;
-    toppZ = b.min.z + 0.55 * (b.max.z - b.min.z);
+    toppY = b.min.y + 0.93 * h;
+    toppZ = b.min.z + 0.22 * dz;
   } else if (kropp === "hund") {
-    toppY = b.min.y + 0.9 * h;
-    toppZ = b.min.z + 0.62 * (b.max.z - b.min.z);
-  } else if (kropp === "fågel" || kropp === "uggla") {
     toppY = b.min.y + 0.92 * h;
-    toppZ = b.min.z + 0.55 * (b.max.z - b.min.z);
-  } else if (kropp === "fisk") {
-    toppY = b.min.y + 0.78 * h;
-    toppZ = b.min.z + 0.58 * (b.max.z - b.min.z);
-  } else if (kropp === "groda") {
+    toppZ = b.min.z + 0.28 * dz;
+  } else if (kropp === "fågel" || kropp === "uggla") {
     toppY = b.max.y + 0.02;
-    toppZ = b.min.z + 0.42 * (b.max.z - b.min.z);
+    toppZ = b.min.z + 0.28 * dz;
+  } else if (kropp === "fisk") {
+    toppY = b.max.y + 0.02;
+    toppZ = cz;
+  } else if (kropp === "groda") {
+    toppY = b.max.y + 0.06;
+    toppZ = cz;
   }
-  const ansY = b.min.y + (kropp === "fisk" ? 0.55 : kropp === "groda" ? 0.72 : 0.62) * h;
-  const ansZ = b.max.z;
+  const kenney = kropp === "kanin" || kropp === "katt" || kropp === "hund" || kropp === "fisk" || kropp === "fågel" || kropp === "uggla";
+  const ogonFr = kropp === "fågel" || kropp === "uggla" ? 0.8 : kropp === "fisk" ? 0.62 : kropp === "groda" ? 0.72 : 0.78;
+  const ansY = b.min.y + ogonFr * h;
+  // Kenney-djuren vrids ett halvt varv i scenen, så ansiktet är nativt −z. Övriga möter kameran åt +z.
+  const ansZ = kenney ? b.min.z : b.max.z;
   const ogonX = 0.16 * w;
   return {
     huvudTopp: new THREE.Vector3(cx, toppY, toppZ),
@@ -218,7 +222,7 @@ export function ankareFor(rot: THREE.Object3D, kropp: string, _s: number): Ankar
     mun: new THREE.Vector3(cx, b.min.y + 0.5 * h, ansZ),
     hals: new THREE.Vector3(cx, b.min.y + 0.5 * h, b.min.z + (b.max.z - b.min.z) * 0.6),
     rygg: new THREE.Vector3(cx, b.min.y + 0.55 * h, b.min.z + 0.15 * (b.max.z - b.min.z)),
-    bredd: Math.min(w, h * 0.9),
+    bredd: Math.min(w, h * (kropp === "fågel" || kropp === "uggla" ? 0.55 : 0.9)),
     hojd: h,
     ben: mat,
     varld: true,
@@ -264,8 +268,8 @@ export function byggTillbehor(t: TillbehorSpec, _a: Ankare): THREE.Group | null 
 }
 
 function skalaFor(id: string, a: Ankare) {
-  if (id === "krona") return Math.max(0.22, Math.min(a.bredd * 0.85, a.hojd * 0.42));
-  if (id === "glasögon") return Math.max(0.2, Math.min(a.bredd * 0.95, a.hojd * 0.5));
+  if (id === "krona") return Math.max(0.28, Math.min(a.bredd * 1.15, a.hojd * 0.55));
+  if (id === "glasögon") return Math.max(0.28, Math.min(a.bredd * 1.25, a.hojd * 0.62));
   return 1;
 }
 
