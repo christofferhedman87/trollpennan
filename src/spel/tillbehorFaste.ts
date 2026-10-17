@@ -277,6 +277,18 @@ function byggHatt(farg: string | null) {
   return g;
 }
 
+function byggRosett(farg: string | null) {
+  const mat = toonMat(farg ?? "#F48FB1");
+  const g = new THREE.Group();
+  g.name = "tillbehor-rosett";
+  const vanster = del(GEO.brygga, mat, -0.16, 0, 0, 0.22, 0.14, 0.06, 1.22);
+  vanster.rotation.z = 0.55;
+  const hoger = del(GEO.brygga, mat, 0.16, 0, 0, 0.22, 0.14, 0.06, 1.22);
+  hoger.rotation.z = -0.55;
+  g.add(vanster, hoger, del(GEO.brygga, mat, 0, 0, 0.02, 0.09, 0.09, 0.08, 1.16));
+  return g;
+}
+
 function byggGlas(farg: string) {
   const mat = toonMat(farg);
   const g = new THREE.Group();
@@ -289,11 +301,12 @@ function byggGlas(farg: string) {
   return g;
 }
 
-/** Krona, glasögon och hatt. Andra id ger null. */
+/** Krona, glasögon, hatt och rosett. Andra id ger null. */
 export function byggTillbehor(t: TillbehorSpec, _a: Ankare): THREE.Group | null {
   if (t.id === "krona") return byggKrona(kronFarg(t.farg));
   if (t.id === "glasögon") return byggGlas(glasFarg(t.farg));
   if (t.id === "hatt") return byggHatt(t.farg);
+  if (t.id === "rosett") return byggRosett(t.farg);
   return null;
 }
 
@@ -315,11 +328,29 @@ function skalaFor(id: string, a: Ankare, kropp: string) {
     // Brättets diameter i modellrum är 1,2. Skalan gör brättet något bredare än huvudet.
     return Math.max(0.34, Math.min(a.bredd * 1.05, a.hojd * 0.5));
   }
+  if (id === "rosett") return Math.max(0.22, Math.min(a.bredd * 0.85, a.hojd * 0.4));
   return 1;
 }
 
-function platsFor(id: string, a: Ankare) {
+const _plats = new THREE.Vector3();
+const _sida = new THREE.Vector3();
+
+function platsFor(id: string, a: Ankare, rot: THREE.Object3D) {
   if (id === "krona" || id === "hatt") return a.huvudTopp;
+  if (id === "rosett") {
+    // Örats sida: ut från ansiktets mitt längs djurets vänster (−x i rotens rum).
+    if (a.varld) {
+      rot.getWorldQuaternion(_q);
+      _sida.set(-1, 0, 0).applyQuaternion(_q);
+      _plats.copy(a.ansikte).addScaledVector(_sida, Math.max(0.06, a.bredd * 0.46));
+      _plats.y += Math.max(0.02, a.hojd * 0.05);
+      return _plats;
+    }
+    _plats.copy(a.ogonL);
+    _plats.x -= a.bredd * 0.2;
+    _plats.y += 0.05;
+    return _plats;
+  }
   return a.ansikte;
 }
 
@@ -350,7 +381,7 @@ export function faestTillbehor(
   for (const t of spec.tillbehor) {
     const obj = byggTillbehor(t, a);
     if (!obj) continue;
-    const pos = platsFor(t.id, a);
+    const pos = platsFor(t.id, a, rot);
     const skala = skalaFor(t.id, a, spec.kropp);
     if (a.varld) fastVarld(parent, rot, obj, pos, skala);
     else {
