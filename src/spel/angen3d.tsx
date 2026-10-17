@@ -13,6 +13,7 @@ import { ljud } from "./ljud.ts";
 import { sagaNatt, sagaNu } from "./saga.ts";
 import type { SparatBygge } from "./bygge.ts";
 import { GltfDjur, harModell, type DjurSignal } from "./gltfDjur.tsx";
+import { faestTillbehor, procAnkare } from "./tillbehorFaste.ts";
 import { KenneyNatur } from "./kenneyNatur.tsx";
 
 const HINT = (texterJson as { tred_hint: string }).tred_hint;
@@ -578,7 +579,6 @@ const OGA_MAT = new THREE.MeshBasicMaterial({ vertexColors: true });
 function DjurForm({ spec }: { spec: Sparad }) {
   const farg = djurFarg(spec);
   const pack = useMemo(() => {
-    const krona = spec.tillbehor.some((t) => t.id === "krona" || t.id === "guldkrona");
     const hatt = spec.tillbehor.some((t) => t.id === "hatt" || t.id === "trollkarlshatt");
     const horn = spec.tillbehor.some((t) => t.id === "horn") || spec.kropp === "enhörning";
     const halsduk = spec.kropp === "hund" || spec.tillbehor.some((t) => t.id === "halsduk");
@@ -586,7 +586,7 @@ function DjurForm({ spec }: { spec: Sparad }) {
       kropp: spec.kropp,
       farg,
       halsduk,
-      krona,
+      krona: false,
       hatt,
       hattFarg: spec.tillbehor.some((t) => t.id === "trollkarlshatt") ? "#5C6BC0" : "#8D6E63",
       horn,
@@ -594,6 +594,12 @@ function DjurForm({ spec }: { spec: Sparad }) {
       monsterFarg: spec.monsterfarg ?? "#6D4C41",
     });
   }, [farg, spec]);
+  const tillSign = spec.tillbehor.map((t) => `${t.id}:${t.farg ?? ""}`).join(",");
+  const extra = useMemo(() => {
+    const g = new THREE.Group();
+    faestTillbehor(g, procAnkare(spec.kropp), spec);
+    return g;
+  }, [spec, tillSign]);
   const mat = useMemo(() => {
     if (!spec.glans) return KROPP_MAT;
     return new THREE.MeshToonMaterial({
@@ -638,6 +644,7 @@ function DjurForm({ spec }: { spec: Sparad }) {
       <mesh geometry={pack.outline} material={KONTUR_MAT} renderOrder={1} />
       <mesh geometry={pack.geo} material={mat} castShadow renderOrder={2} />
       <mesh geometry={pack.ogon} material={OGA_MAT} renderOrder={3} />
+      <primitive object={extra} />
       {spec.kropp === "drake" ? (
         <mesh ref={rok} visible={false}>
           <sphereGeometry args={[1, 6, 5]} />
