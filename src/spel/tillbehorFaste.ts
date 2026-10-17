@@ -276,15 +276,18 @@ export function byggTillbehor(t: TillbehorSpec, _a: Ankare): THREE.Group | null 
   return null;
 }
 
-function skalaFor(id: string, a: Ankare) {
+function skalaFor(id: string, a: Ankare, kropp: string) {
   if (id === "krona") {
     const bas = Math.max(0.28, Math.min(a.bredd * 1.15, a.hojd * 0.55));
-    return bas * 1.6;
+    // Ekorren får en krona nästan lika stor som huvudet. Kanin, groda och fisk behåller 1,6.
+    const faktor = kropp === "ekorre" ? 1.12 : 1.6;
+    return bas * faktor;
   }
   if (id === "glasögon") {
     // Yttre bredd i modellrum är ~1,1. 0,34 * huvudbredd ger minst 30 % av huvudet.
+    // 0,8 tar bort ungefär en femtedel så bågarna inte täcker grisens och hundens ansikte.
     const minSynlig = a.bredd * 0.34;
-    return Math.max(minSynlig, Math.min(a.bredd * 1.35, a.hojd * 0.72));
+    return Math.max(minSynlig, Math.min(a.bredd * 1.35, a.hojd * 0.72)) * 0.8;
   }
   return 1;
 }
@@ -322,7 +325,7 @@ export function faestTillbehor(
     const obj = byggTillbehor(t, a);
     if (!obj) continue;
     const pos = platsFor(t.id, a);
-    const skala = skalaFor(t.id, a);
+    const skala = skalaFor(t.id, a, spec.kropp);
     if (a.varld) fastVarld(parent, rot, obj, pos, skala);
     else {
       obj.position.copy(pos);
