@@ -1,0 +1,3 @@
+Drakens krona är ungefär 30 % mindre i skalan (faktor 1,12 i stället för 1,6). Jag har inte tittat på den i en vy, så jag vet inte om den nu ryms på huvudet.
+Hatt, rosett och halsduk ritas i samma fäste som krona och glasögon, med delad geometri och material. Trollkarlshatten känns igen enbart på färgen #5E35B1. Hundar får inte längre en halsduk bara för att de är hundar.
+Halsduken är en torus kring ankaret `hals` plus en flik, och hatten sitter med bottnen i `huvudTopp`. Ankarna är de som redan fanns. Jag har inte mätt om ringen eller brättet hamnar i kroppen på GLB-djuren. `test:product` (75), `typecheck:pages` och `build:pages` gick igenom med Node 22.
