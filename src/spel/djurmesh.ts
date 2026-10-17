@@ -3,7 +3,6 @@ import * as THREE from "three";
 export type DjurBygg = {
   kropp: string;
   farg: string;
-  halsduk: boolean;
   krona: boolean;
   horn: boolean;
   monster: boolean;
@@ -306,10 +305,6 @@ export function byggPack(b: DjurBygg): Pack {
     lagg(acc, "boll", f, [0.14, 0.12, 0.16], [0.08, 0.07, 0.09]);
   }
 
-  if (b.halsduk) {
-    lagg(acc, "box", "#E57373", [0, 0.62, 0.12], [0.42, 0.08, 0.16], [0.4, 0, 0]);
-    lagg(acc, "box", "#E57373", [0.08, 0.48, 0.16], [0.08, 0.18, 0.05]);
-  }
   if (b.krona) {
     const y = k === "groda" ? 0.72 : k === "drake" ? 1.28 : 1.16;
     lagg(acc, "cyl", guld, [0, y, k === "drake" ? 0.48 : 0.12], [0.22, 0.08, 0.2]);

@@ -580,11 +580,9 @@ function DjurForm({ spec }: { spec: Sparad }) {
   const farg = djurFarg(spec);
   const pack = useMemo(() => {
     const horn = spec.tillbehor.some((t) => t.id === "horn") || spec.kropp === "enhörning";
-    const halsduk = spec.kropp === "hund" || spec.tillbehor.some((t) => t.id === "halsduk");
     return byggPack({
       kropp: spec.kropp,
       farg,
-      halsduk,
       krona: false,
       horn,
       monster: Boolean(spec.monster),

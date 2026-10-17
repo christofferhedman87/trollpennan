@@ -181,78 +181,8 @@ function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
   });
 }
 
-const KRO_GEO = {
-  cyl: new THREE.CylinderGeometry(0.5, 0.55, 0.28, 6),
-  kon: new THREE.ConeGeometry(0.16, 0.42, 5),
-  box: new THREE.BoxGeometry(1, 1, 1),
-};
-const HALS_MAT = new THREE.MeshStandardMaterial({ color: "#E57373", metalness: 0, roughness: 0.8 });
-
-function HalsdukMesh() {
-  const g = new THREE.Group();
-  const a = new THREE.Mesh(KRO_GEO.box, HALS_MAT);
-  a.scale.set(0.28, 0.08, 0.12);
-  g.add(a);
-  const b = new THREE.Mesh(KRO_GEO.box, HALS_MAT);
-  b.position.set(0.06, -0.1, 0.04);
-  b.scale.set(0.07, 0.14, 0.05);
-  g.add(b);
-  return g;
-}
-
-const _onskad = new THREE.Matrix4();
-const _benInv = new THREE.Matrix4();
-const _lokal = new THREE.Matrix4();
-const _bas = new THREE.Vector3();
-const _off = new THREE.Vector3();
-const _rotQ = new THREE.Quaternion();
-const _skala = new THREE.Vector3(1, 1, 1);
-
-/** Offset i den färdigskalade modellens rum (Y upp), inte i benets egna axlar.
- *  Quaternius-riggar har Y längs benet och scale 100, så en rå ben-offset hamnar utanför kameran. */
-function faestPaBen(ben: THREE.Object3D, rot: THREE.Object3D, obj: THREE.Object3D, ox: number, oy: number, oz: number, skala = 1) {
-  rot.updateWorldMatrix(true, true);
-  rot.getWorldQuaternion(_rotQ);
-  ben.getWorldPosition(_bas);
-  _off.set(ox, oy, oz).applyQuaternion(_rotQ);
-  _bas.add(_off);
-  _skala.set(skala, skala, skala);
-  _onskad.compose(_bas, _rotQ, _skala);
-  _benInv.copy(ben.matrixWorld).invert();
-  _lokal.multiplyMatrices(_benInv, _onskad);
-  _lokal.decompose(obj.position, obj.quaternion, obj.scale);
-  ben.add(obj);
-}
-
 function fastAnkare(rot: THREE.Object3D, spec: Sparad, s: number) {
-  const hit = { huvud: null as THREE.Object3D | null, kropp: null as THREE.Object3D | null, hals: null as THREE.Object3D | null };
-  rot.traverse((o) => {
-    if (o.name === "Head") hit.huvud = o;
-    if (o.name === "body") hit.kropp = o;
-    if (o.name === "Neck") hit.hals = o;
-  });
-  const huvud = hit.huvud;
-  const kropp = hit.kropp;
-  const hals = hit.hals;
   faestTillbehor(rot, ankareFor(rot, spec.kropp, s), spec);
-  const harHals = spec.tillbehor.some((t) => t.id === "halsduk");
-  const inv = 1 / Math.max(0.001, s);
-  if (harHals) {
-    const h = HalsdukMesh();
-    if ((spec.kropp === "drake" || spec.kropp === "häst") && (hals || huvud)) {
-      faestPaBen(hals ?? huvud!, rot, h, 0, -0.06, 0.1);
-    } else if (kropp) {
-      const b = new THREE.Box3().setFromObject(kropp);
-      const p = new THREE.Vector3((b.min.x + b.max.x) / 2, b.min.y + (b.max.y - b.min.y) * 0.35, b.max.z);
-      kropp.worldToLocal(p);
-      h.position.copy(p);
-      h.scale.setScalar(inv);
-      kropp.add(h);
-    } else {
-      h.scale.setScalar(inv);
-      (hals ?? kropp ?? rot).add(h);
-    }
-  }
 }
 
 export function harModell(kropp: string) {
