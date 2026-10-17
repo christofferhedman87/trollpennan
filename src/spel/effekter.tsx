@@ -162,53 +162,58 @@ function Aura({ ankare }: { ankare: Ankare }) {
 }
 
 function GlitterRing({ ankare }: { ankare: Ankare }) {
-  const geo = useMemo(() => {
+  const textur = useMemo(() => mjukPunkt(), []);
+  const pack = useMemo(() => {
     const pos = new Float32Array(GLITTER_N * 3);
     const col = new Float32Array(GLITTER_N * 3);
-    const rad = Math.max(0.28, ankare.bredd * 0.85);
-    const y0 = ankare.hojd * 0.45;
+    const bas = new Float32Array(GLITTER_N * 3);
+    const rad = Math.max(0.32, ankare.bredd * 0.95);
+    const y0 = ankare.hojd * 0.42;
     for (let i = 0; i < GLITTER_N; i++) {
       const a = (i / GLITTER_N) * Math.PI * 2;
       pos[i * 3] = Math.cos(a) * rad;
-      pos[i * 3 + 1] = y0 + Math.sin(a * 2) * ankare.hojd * 0.12;
+      pos[i * 3 + 1] = y0 + Math.sin(a * 2) * ankare.hojd * 0.1;
       pos[i * 3 + 2] = Math.sin(a) * rad * 0.72;
-      const guld = i % 2 === 0;
-      col[i * 3] = 1;
-      col[i * 3 + 1] = guld ? 0.78 : 1;
-      col[i * 3 + 2] = guld ? 0.25 : 1;
+      const vit = i % 5 === 0;
+      bas[i * 3] = 1;
+      bas[i * 3 + 1] = vit ? 1 : 0xc8 / 255;
+      bas[i * 3 + 2] = vit ? 1 : 0x3d / 255;
+      col[i * 3] = bas[i * 3] ?? 1;
+      col[i * 3 + 1] = bas[i * 3 + 1] ?? 1;
+      col[i * 3 + 2] = bas[i * 3 + 2] ?? 1;
     }
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
     g.setAttribute("color", new THREE.BufferAttribute(col, 3));
-    return g;
+    return { geo: g, bas };
   }, [ankare]);
   const ref = useRef<THREE.Points>(null);
   useFrame((state) => {
     const p = ref.current;
     if (!p) return;
-    const mat = p.material as THREE.PointsMaterial;
-    const blink = Math.abs(Math.sin(state.clock.elapsedTime * 4.5));
-    mat.opacity = 0.25 + blink * 0.75;
     const col = p.geometry.getAttribute("color") as THREE.BufferAttribute;
     const arr = col.array as Float32Array;
+    const bas = pack.bas;
+    const t = state.clock.elapsedTime;
     for (let i = 0; i < GLITTER_N; i++) {
-      const t = (Math.sin(state.clock.elapsedTime * 5 + i) + 1) / 2;
-      arr[i * 3] = 1;
-      arr[i * 3 + 1] = 0.78 + t * 0.22;
-      arr[i * 3 + 2] = 0.25 + t * 0.75;
+      const blink = 0.2 + 0.8 * (0.5 + 0.5 * Math.sin(t * 4.2 + i * 0.85));
+      arr[i * 3] = (bas[i * 3] ?? 1) * blink;
+      arr[i * 3 + 1] = (bas[i * 3 + 1] ?? 1) * blink;
+      arr[i * 3 + 2] = (bas[i * 3 + 2] ?? 1) * blink;
     }
     col.needsUpdate = true;
   });
   return (
-    <points ref={ref} geometry={geo} frustumCulled={false}>
+    <points ref={ref} geometry={pack.geo} frustumCulled={false}>
       <pointsMaterial
-        size={11}
+        map={textur}
+        size={12}
         sizeAttenuation={false}
         vertexColors
         transparent
-        opacity={0.9}
+        opacity={0.95}
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={THREE.NormalBlending}
         toneMapped={false}
       />
     </points>
