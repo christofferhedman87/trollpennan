@@ -209,21 +209,25 @@ export function ankareFor(rot: THREE.Object3D, kropp: string, _s: number): Ankar
     toppY = b.max.y;
     toppZ = cz;
   }
-  const kenney = kropp === "kanin" || kropp === "katt" || kropp === "hund" || kropp === "fisk" || kropp === "fågel" || kropp === "uggla";
+  const fagel = kropp === "fågel" || kropp === "uggla";
+  const kenney = kropp === "kanin" || kropp === "katt" || kropp === "hund" || kropp === "fisk";
   // Kycklingens ögon sitter på främre halvan av huvudet, inte uppe vid hjässan.
-  const ogonFr = kropp === "fågel" || kropp === "uggla" ? 0.56 : kropp === "fisk" ? 0.62 : kropp === "groda" ? 0.72 : 0.78;
+  const ogonFr = fagel ? 0.56 : kropp === "fisk" ? 0.62 : kropp === "groda" ? 0.72 : 0.78;
   const ansY = b.min.y + ogonFr * h;
-  // Kenney-djuren vrids ett halvt varv i scenen, så ansiktet är nativt −z. Övriga möter kameran åt +z.
-  // Fågel/uggla: ett steg framför ytan så bågarna inte sjunker in i huvudet.
-  const ansZ = kenney ? b.min.z : b.max.z;
-  const fram = kropp === "fågel" || kropp === "uggla" ? Math.max(0.05, dz * 0.08) : 0;
+  // Kanin, katt, hund och fisk vrids ett halvt varv, så ansiktet är nativt −z.
+  // Fågel och uggla pekar mot +z (Kenney-ögonen sitter på huvudets framkant):
+  // box.max.z är ytan, och ett litet positivt steg lägger bågarna framför den.
+  // I 3B drogs de mot min.z och hamnade bakom hjässan.
+  const fram = fagel ? Math.max(0.05, dz * 0.08) : 0;
+  const ansZ = fagel ? b.max.z + fram : kenney ? b.min.z : b.max.z;
+  const munZ = kenney || fagel ? b.min.z : b.max.z;
   const ogonX = 0.16 * w;
   return {
     huvudTopp: new THREE.Vector3(cx, toppY, toppZ),
-    ansikte: new THREE.Vector3(cx, ansY, ansZ - fram),
-    ogonL: new THREE.Vector3(cx - ogonX, ansY, ansZ - fram),
-    ogonR: new THREE.Vector3(cx + ogonX, ansY, ansZ - fram),
-    mun: new THREE.Vector3(cx, b.min.y + 0.5 * h, ansZ),
+    ansikte: new THREE.Vector3(cx, ansY, ansZ),
+    ogonL: new THREE.Vector3(cx - ogonX, ansY, ansZ),
+    ogonR: new THREE.Vector3(cx + ogonX, ansY, ansZ),
+    mun: new THREE.Vector3(cx, b.min.y + 0.5 * h, munZ),
     hals: new THREE.Vector3(cx, b.min.y + 0.5 * h, b.min.z + (b.max.z - b.min.z) * 0.6),
     rygg: new THREE.Vector3(cx, b.min.y + 0.55 * h, b.min.z + 0.15 * (b.max.z - b.min.z)),
     bredd: Math.min(w, h * (kropp === "fågel" || kropp === "uggla" ? 0.55 : 0.9)),
