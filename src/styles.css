@@ -702,3 +702,9 @@ position:absolute;top:2px;right:0;width:30px;height:30px;border-radius:50%;backg
 @media (prefers-reduced-motion:reduce){.npc-figur.nytt{animation:none}}
 .uppdrag-remsa{
 margin:0 0 8px;padding:10px 12px;border-radius:14px;background:#fff6d6;color:var(--color-ink);font-size:1.0625rem;font-weight:700;line-height:1.35;box-shadow:0 3px 0 var(--color-paper-deep)}
+.uppdrag-val{
+display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margin:0 0 6px;padding:0 4px 2px;scroll-snap-type:x proximity}
+.uppdrag-val-grupp{display:flex;align-items:center;gap:6px;flex:none}
+.uppdrag-val-rubrik{flex:none;font-size:1rem;font-weight:800;color:var(--color-moss)}
+.uppdrag-val-etikett{flex:none;font-size:.875rem;font-weight:800;opacity:.75}
+.uppdrag-val .onska-chip{flex:none;min-height:44px;padding:2px 12px;font-size:1.0625rem;scroll-snap-align:start}

@@ -48,7 +48,7 @@ export const FIR = firandeJson as {
   ny_sida: { text: string };
   sida_klar: { text: string; stjarnor: number };
   bok_klar: { text: string };
-  onskan: { knapp: string; inte_nu: string; rubrik: string; led: string; onskar: string; andra: string; kompis: string };
+  onskan: { knapp: string; inte_nu: string; rubrik: string; led: string; onskar: string; andra: string; kompis: string; fran_bengtsson: string; fran_bengtsson_djur: string; knapp_bengtsson: string };
 };
 export const LED = (ledJson as { ledtradar: Record<string, Led> }).ledtradar;
 export const LJUD_KNAPP = (ljudJson as { foralder: { knapp: string } }).foralder.knapp;

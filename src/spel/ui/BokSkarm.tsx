@@ -96,19 +96,19 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
         {panel === "spel" || (panel === "byggbok" && lage === "skriv") ? (
           <>
             <div className="bok-mitt">
-            {panel === "spel" ? <UppdragsRemsa uppdrag={aktivtSkrivUppdrag(uppdragSpar)} /> : null}
+            {panel === "spel" ? <UppdragsRemsa uppdrag={aktivtSkrivUppdrag(uppdragSpar)} fyllForslag={fyllExempel} /> : null}
             {(onskaOpp || (onskan && !onskaSyns)) && onskan ? (
               <div className="onska-remsa" data-testid="onska-remsa">
                 {andrar && onskaDjur ? (
                   <div className="onska-topp" data-testid="onska-topp">
                     <OnskaAnsikte djur={onskaDjur} />
                     <p className="onska-text">
-                      {fyll(FIR.onskan.onskar, { djur: bestamdAv(onskaDjur.kropp, true) })} {onskan.text}
+                      {fyll(FIR.onskan.fran_bengtsson_djur, { djur: bestamdAv(onskaDjur.kropp, true), text: onskan.text })}
                     </p>
                   </div>
                 ) : (
                   <p className="onska-text">
-                    ★ {FIR.onskan.rubrik} {onskan.text}
+                    ★ {fyll(FIR.onskan.fran_bengtsson, { text: onskan.text })}
                   </p>
                 )}
                 {onskaEx.length ? (
@@ -150,7 +150,7 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
                 <details>
                   <summary>{upplevelse.examplesTitle}</summary>
                   <div className="ideer">
-                    {upplevelse.examples.map(ex => <button type="button" className="kort" key={ex} onClick={() => fyllExempel(ex)}>{ex}</button>)}
+                    {(aktivtSkrivUppdrag(uppdragSpar)?.val?.grupper.flatMap((g) => g.forslag.map((f) => f.fras)) ?? upplevelse.examples).map(ex => <button type="button" className="kort" key={ex} onClick={() => fyllExempel(ex)}>{ex}</button>)}
                   </div>
                 </details>
               </div>
@@ -307,7 +307,7 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
             <div className="kort-yta byggbok">
               {onskan?.kalla === "bygg" ? (
                 <p className="onska-text">
-                  ★ {FIR.onskan.rubrik} {onskan.text}
+                  ★ {fyll(FIR.onskan.fran_bengtsson, { text: onskan.text })}
                 </p>
               ) : null}
               <h2>{byggSida.titel}</h2>
