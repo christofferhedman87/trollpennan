@@ -119,7 +119,7 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
 | R1 Dela `Spel.tsx` | **R1A klar (PR #14); R1B JA** | Alla 7 uppfyllda: ren flytt utan nytt beteende, ritning och prompt i `rundor/R1-dela-spel/`, bevis = strukturvakt + typkontroll + DOM-jämförelse + bilder. Delad i två körningar enligt `build-prompt` (mätt omfattning > 40 turer). Lägst risk, störst hävstång |
 | R2 Tillbehör som data | **JA** | JSON och kod skrivna och provkörda av Arkitekten (utan Build), bifogade som `git apply`-patch; Build kopplar bara in och kontrollerar. 5B och 5B-1 misslyckades för att Build skulle mäta/skriva dem. R1 är mergad |
 | R3A Entiteter (djuren) + manifest | **JA** | Förbyggd patch och data, ett körsteg, hårda stoppregler (ritningen avsnitt 8); R2 är mergad. Byggnader och reservform ingår inte |
-| R3B Reservform (ordkristall) | **JA** (bilden godkänns av Christoffer efter merge) | Förbyggd patch, data, bild och provkörning; `tolka.ts` orörd; gissningsrättningen ingår (verb 25,2 → 1,6 %, hållet urval 14,8 → 0,4 %). Ritning och prompt i `rundor/R3B-reservform/`. Produktregeln i `projektregler.md` ändras först när han sett `docs/skarmbilder/r3b/ordkristall-elefant-375x812.png` |
+| R3B Reservform (ordägg + lista över saknade ord för Modellspanaren, bara lokalt, ingen server) | **JA** (bilden godkänns av Christoffer efter merge) | Förbyggd patch, data, bild och provkörning; `tolka.ts` orörd; gissningsrättningen ingår (verb 25,2 → 1,6 %, hållet urval 14,8 → 0,4 %). Ritning och prompt i `rundor/R3B-reservform/`. Produktregeln i `projektregler.md` ändras först när han sett `docs/skarmbilder/r3b/ordagg-elefant-375x812.png` |
 | R3C Bulkrutin + första 50 modellerna | **NEJ (idag)** | Beror på R3A; kräver Christoffers ja till vilka paket som hämtas (10.2 punkt 4) |
 | R4A Dela `angen3d.tsx` | **NEJ (idag)** | Ren flytt; ska komma efter R3 så R3:s nya filer inte krockar. Blir JA när R3C är mergad |
 | R4B Kamera | **NEJ (idag)** | Beror på R4A (kameran bor i `ang-kamera.tsx`) och Christoffers smak-ja efter två bilder |
@@ -169,11 +169,11 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
 - **Storlek:** liten, 12–18 turer, 0,6–1,2 USD (gissning). **Hårda stoppregler i prompten:** commit + rapport senast tur 24 av 30, högst ett kontaktark, inga dataändringar, ingen mätning. **Grind: JA.**
 
 ### R3B – Reservform: ordens väg till synlig form (avsnitt 12; körklar ritning: `rundor/R3B-reservform/RITNING.md`)
-- **Mål:** inget ord ger "ingenting". Okänt ord → kategori (lista, lemma, sammansatt, regel, plats) → generisk synlig form (ordkristallen) med ordets text; varje steg i data. **Ändring mot ursprungsritningen (12.4):** `tolka.ts` ändras *inte*; `tolkaMedReserv()` i `src/tolk/reserv.ts` anropar `tolka()` och lägger kristaller på utfallet (`Varelse.reserv?`), så inga befintliga tester ändras. Kropp `"kristall"` för mening utan djur, små svävande kristaller över ett vanligt djur.
-- **Filer:** NYA `data/reserv.json`, `data/kategori-ord.json` (387 grundord, handskrivna), `data/test-fraser-reserv.json` (50 fraser), `src/tolk/reserv.ts`, `src/tolk/reserv.test.ts` (12 tester), `src/spel/ordkristall.tsx`; ÄNDRAS `typer.ts`, `Spel.tsx` (ett anrop), `angen3d.tsx`, `liv.ts`, `package.json` (`test:reserv`). Allt i en förbyggd patch (`ref/r3b-reservform.patch`, 8 filer, 659 rader); Build applicerar och kontrollerar. Kompatibel med R3A och R2.1 i alla ordningar.
-- **Bevis:** 12 tester + 28 gamla testfraser oförändrade, `test:product` 83/83 (91/91 med R3A), DOM-tur 27 av 28 lika (den 28:e är den avsiktliga ändringen), `kristall-tur` 0 sidfel, bild `docs/skarmbilder/r3b/ordkristall-elefant-375x812.png`, ark `provkorning-ark.png`.
+- **Mål:** inget ord ger "ingenting". Okänt ord → kategori (lista, lemma, sammansatt, regel, plats) → generisk synlig form (ordägget) med ordets text; varje steg i data. **Ändring mot ursprungsritningen (12.4):** `tolka.ts` ändras *inte*; `tolkaMedReserv()` i `src/tolk/reserv.ts` anropar `tolka()` och lägger ägg på utfallet (`Varelse.reserv?`), så inga befintliga tester ändras. Kropp `"ägg"` för mening utan djur, små svävande ägg över ett vanligt djur.
+- **Filer:** NYA `data/reserv.json`, `data/kategori-ord.json` (387 grundord, handskrivna), `data/test-fraser-reserv.json` (50 fraser), `src/tolk/reserv.ts`, `src/tolk/reserv.test.ts` (12 tester), `src/tolk/saknade.ts` + test (8), `src/spel/ordagg.tsx`, `src/spel/ui/SaknadeOrd.tsx`, `data/saknade-ord.json`, `scripts/saknade-ord.mjs` (+ test, 4), `docs/modellbestallning/`; ÄNDRAS `typer.ts`, `Spel.tsx` (ett anrop), `angen3d.tsx`, `liv.ts`, `package.json` (`test:reserv`). Allt i en förbyggd patch (`ref/r3b-reservform.patch`, 8 filer, 659 rader); Build applicerar och kontrollerar. Kompatibel med R3A och R2.1 i alla ordningar.
+- **Bevis:** 12 tester + 28 gamla testfraser oförändrade, `test:product` 91/91, `test:reserv` 20/20, DOM-tur 27 av 28 lika (den 28:e är den avsiktliga ändringen), `agg-tur` 0 sidfel och 0 nätverksbegäranden utanför servern, bild `docs/skarmbilder/r3b/ordagg-elefant-375x812.png`, ark `provkorning-ark.png`.
 - **Mått mot grundtanken:** *synlig* andel av okända ord (Kelly topp-1000) substantiv 0 → 97,6 %, verb 0 → 97,2 %, adjektiv 0 → 97,1 % (resten är egen form, spärrat eller en kvarvarande gissning); felaktiga "Menade du …?" för verb **25,2 % → 1,6 %** (hållet urval 14,8 → 0,4 %); riktiga djurstavfel som fortfarande ger rätt gissning 92,4 %.
-- **Storlek:** liten–medel, 8–12 turer, 0,4–0,8 USD (gissning). **Risk/osäkerhet:** utseendet är Arkitektens förslag (Christoffer har inte sett det); kristall syns inte i Gården (Phaser, försvinner i R7); verb/adjektiv blir kristaller, inte rörelse/färg (R3C). **Grind: JA.**
+- **Storlek:** liten–medel, 8–12 turer, 0,4–0,8 USD (gissning). **Risk/osäkerhet:** utseendet är Arkitektens förslag (Christoffer har inte sett det); ägg syns inte i Gården (Phaser, försvinner i R7); verb/adjektiv blir ägg, inte rörelse/färg (R3C). **Grind: JA.**
 
 ### R3C – Bulkrutin och första modellsatsen (avsnitt 13)
 - **Mål:** `assets/inkorg/` + manifest → validerade, optimerade modeller med entitetsrad **utan kod**. Första satsen: ca 50 modeller ur de licensverifierade paketen (9.5).
@@ -270,7 +270,7 @@ Spelet visar bara kredit för CC BY (idag groda, `Spel.tsx` r.2953). CC0 kräver
 
 ### 10.2 Kräver Christoffers ja (smak, pengar, kvot, publicering, push/PR/merge)
 1. **Publicera `main` på https://trollpennan.grok.me/ (R0).** Live är äldre än `main` (avsnitt 17). *Rekommendation: ja,* så fort Runda 1–5A-innehållet är kontrollerat i bild; annars testas fel version.
-2. **Ändra produktregeln "Bara ord i ord.json skapar något" (`projektregler.md`, Säkerhet) så att varje icke-spärrat ord får en synlig reservform (ordkristall).** Det är en smakfråga och en regeländring: grundtanken ("nästan oavsett vad hen skriver") kräver den, men utseendet och tonen ("Det här har jag aldrig sett – jag ritade en gissning") är hans. *Rekommendation: ja,* med att han godkänner kristallen på bild i R3B. Spärrlistan gäller alltid och ger aldrig en form.
+2. **Ändra produktregeln "Bara ord i ord.json skapar något" (`projektregler.md`, Säkerhet) så att varje icke-spärrat ord får en synlig reservform (ordägg).** Det är en smakfråga och en regeländring: grundtanken ("nästan oavsett vad hen skriver") kräver den, men utseendet och tonen ("Det här har jag aldrig sett – jag ritade en gissning") är hans. *Rekommendation: ja,* med att han godkänner äggen på bild i R3B. Spärrlistan gäller alltid och ger aldrig en form.
 3. **Kvot och pengar.** Mina gissningar: R1 2–3 USD, R2 2–3, R3A 0,6–1,2 (nu liten), R3B 3, R3C 3–4, R4A 2, R4B 2–3, R5 6–8, R6 8–12, R7 3, summa ca 35–45 USD (inte mätta; `rounds.tsv` visar ca 25,7 USD för 17 rundor, varav 5 utan resultat). *Rekommendation: ja till R1–R2 nu* (lägst risk, stoppar läckan) *och R3A–R3C därefter;* R4–R7 beslutas efter R3C med uppmätta kostnader.
 4. **Vilka modellpaket som hämtas (stil och smak).** Förslag i 9.5; första satsen R3C: Quaternius Ultimate Animated Animals, Cute Fish, Farm Animal Pack, Kenney Food Kit och Furniture Kit (alla CC0, licenssidor kontrollerade 2026-10-18). *Rekommendation: ja till dessa fem* (inget laddas innan du säger ja).
 5. **Push och PR för `arkitekt/project-md`** (PROJECT.md, projektregler.md, mätunderlag, skärmbilder). *Rekommendation: ja,* så att alla agenter läser samma plan.
@@ -332,7 +332,7 @@ Mätta förhållanden i dagens data (`ord.json`, 97 ord): djur 26 ord → 14 kro
 | Verb (förmåga/handling) | 100 | 0 | **≈ 33** animationsklipp eller effekter (3 ord per effekt) | Kenney-djuren har klippen `idle/walk/run/eat/dance`; fler klipp kräver rigg |
 | **Valfritt ord (reservform)** | 1 (hela `reserv.json`) | **0–7 generiska** | 0 | alla okända ord blir synliga från dag 1 |
 
-Läsning: **de första 100 orden kostar 55–65 modeller om de ska ha egen form,** och mindre än 10 modeller om reservformen finns först. Därför ligger reservformen (R3B) före modellbulken (R3C) i planen: hela ordmängden blir synlig direkt, och modellerna ersätter kristallen ord för ord där barnen faktiskt skriver (onskelistan visar vilka).
+Läsning: **de första 100 orden kostar 55–65 modeller om de ska ha egen form,** och mindre än 10 modeller om reservformen finns först. Därför ligger reservformen (R3B) före modellbulken (R3C) i planen: hela ordmängden blir synlig direkt, och modellerna ersätter äggen ord för ord där barnen faktiskt skriver (onskelistan visar vilka).
 
 ## 12. Reservform: hur ett okänt ord ändå blir något synligt
 
@@ -348,36 +348,36 @@ Okänt ord: (1) tyst ignorerat i ett skapat djur (`en kanin med paraply` → kan
 | 4 | **Synonym** | `synonymer.json`: `{ "kisse": "katt", "mössa": "hatt", "sjal": "halsduk" }` | `mössa`→`hatt` |
 | 5 | **Kategori ur lexikon** | `kategori-ord.json` (genereras offline ur SALDO/Blingbring, båda CC BY 4.0 enligt Språkbankens lista; **att verifiera vid bygget**): `{ "elefant": "djur", "tårta": "mat", "paraply": "foremal", "skog": "plats", "glad": "kansla", "dansa": "handling" }` | `tårta`→`mat` |
 | 6 | **Kategori via enkel regel** | `reserv.json` `regler`: suffix/prefix → kategori (`-are`,`-ist`→person; `-het`,`-ning`,`-else`→abstrakt→`kansla`-ikon; `-blomma`,`-träd`,`-bär`→växt; `-hus`,`-stuga`,`-stall`→byggnad; `-bil`,`-båt`,`-tåg`→fordon; `-a` + verbläge→handling) | `kaninbur`→byggnad |
-| 7 | **Generisk form** | `reserv.json` `kategorier.<k>.form`: en **ordkristall** per kategori | `hmmmx`→kristall (kategori `okant`) |
+| 7 | **Generisk form** | `reserv.json` `kategorier.<k>.form`: ett **ordägg** per kategori (mönster per kategori) | `hmmmx`→ägg (kategori `okant`) |
 
 Stavningsgissningen (`avstand.ts`, "Menade du …?") körs **före** steg 5–7 men skärps: `forslag.minlangd` 4 tecken, `forslag.maxavstand` 1, och ett förslag visas bara om ordet i förslaget har samma kategori som den plats ordet står på (verb efter "som", substantiv efter "med"); annars går kedjan vidare. Det tar bort `går`→`grå` och `dansar`→`dino` (11–12 av 33 verb i slumpurvalet fick fel gissning live).
 
 ### 12.3 Hur reservformen ser ut (förslag, Christoffer godkänner på bild i R3B)
-**Ordkristallen:** en facetterad, mjukt lysande låg-poly-kristall (samma toon- och konturstil som djuren) som svävar och guppar, färgad ur en fast, behaglig palett om 12 färger vald med ordets hash (`fnv1a32(ord) % 12`, så samma ord får samma färg varje gång), med **ordets egen text** som etikett (en Html-/sprite-etikett över den, max 16 tecken, spärrlistan gäller). Sex kategorivarianter (samma kristall med olika siluett): `djur` (kristall på fyra små ben – "mystisk varelse"; använder närmaste kroppsform, `djur`→ hund-kropp skalad efter `storleksgrupp` när ordet har en känd), `mat` (kristall på ett fat), `foremal` (kristall på en liten sockel), `vaxt` (kristall med blad), `byggnad` (kristallhus), `kansla` (kristall med en emote-ikon över). Handling (verb) blir **en animation + pratbubbla med ordet** på djuret (hopp/skak/snurr enligt `reserv.json` `handling`), inte ett föremål. Adjektiv utan känd attribut ger **en aura i ordets färg + ordet i en bubbla**. Allt i barnets ord, ingenting är ett fel. Pennans svar (data, Copilot granskar): "Det här har jag aldrig sett! Jag ritade en gissning. Vill du lära mig hur det ser ut?" – ordet läggs i `onskelista`, som blir innehållsteamets att-göra-lista (vilka ord barnen faktiskt skriver).
+**Ordägget** (skissen här var ursprungligen en kristall; Christoffer valde ett ägg 2026-10-18, och i R3B är ägget en äggform med *mönster* per kategori i stället för siluett, se `rundor/R3B-reservform/RITNING.md`): en mjukt lysande låg-poly-äggform (samma toon- och konturstil som djuren) som svävar och guppar, färgad ur en fast, behaglig palett om 12 färger vald med ordets hash (`fnv1a32(ord) % 12`, så samma ord får samma färg varje gång), med **ordets egen text** som etikett (en Html-/sprite-etikett över den, max 16 tecken, spärrlistan gäller). Sex kategorivarianter (samma ägg med olika siluett): `djur` (ägg på fyra små ben – "mystisk varelse"; använder närmaste kroppsform, `djur`→ hund-kropp skalad efter `storleksgrupp` när ordet har en känd), `mat` (ägg på ett fat), `foremal` (ägg på en liten sockel), `vaxt` (ägg med blad), `byggnad` (ägghus), `kansla` (ägg med en emote-ikon över). Handling (verb) blir **en animation + pratbubbla med ordet** på djuret (hopp/skak/snurr enligt `reserv.json` `handling`), inte ett föremål. Adjektiv utan känd attribut ger **en aura i ordets färg + ordet i en bubbla**. Allt i barnets ord, ingenting är ett fel. Pennans svar (data, Copilot granskar): "Det här har jag aldrig sett! Jag ritade en gissning. Vill du lära mig hur det ser ut?" – ordet läggs i `onskelista`, som blir innehållsteamets att-göra-lista (vilka ord barnen faktiskt skriver).
 
 ### 12.4 Dataformer och filer
 `data/reserv.json`:
 ```json
 {
   "version": 1,
-  "kedja": ["exakt", "lemma", "sammansatt", "synonym", "kategori_ord", "kategori_regel", "kristall"],
+  "kedja": ["exakt", "lemma", "sammansatt", "synonym", "kategori_ord", "kategori_regel", "agg"],
   "andelser": ["en","et","ar","or","er","n","na","s"],
   "forslag": { "minlangd": 4, "maxavstand": 1, "samma_plats": true },
   "regler": [ { "suffix": "are", "kategori": "person" }, { "suffix": "het", "kategori": "kansla" }, { "suffix": "hus", "kategori": "byggnad" } ],
   "kategorier": {
-    "djur":    { "form": "generisk/kristall-djur",    "kropp": "hund",  "skala": 1.0 },
-    "mat":     { "form": "generisk/kristall-mat",     "skala": 0.6 },
-    "foremal": { "form": "generisk/kristall-foremal", "skala": 0.6 },
-    "vaxt":    { "form": "generisk/kristall-vaxt",    "skala": 0.8 },
-    "byggnad": { "form": "generisk/kristall-hus",     "skala": 1.4 },
-    "kansla":  { "form": "generisk/kristall",         "ikon": "emote" },
+    "djur":    { "form": "generisk/agg-djur",    "kropp": "hund",  "skala": 1.0 },
+    "mat":     { "form": "generisk/agg-mat",     "skala": 0.6 },
+    "foremal": { "form": "generisk/agg-foremal", "skala": 0.6 },
+    "vaxt":    { "form": "generisk/agg-vaxt",    "skala": 0.8 },
+    "byggnad": { "form": "generisk/agg-hus",     "skala": 1.4 },
+    "kansla":  { "form": "generisk/agg",         "ikon": "emote" },
     "handling":{ "animation": ["hopp","skak","snurr"] },
-    "okant":   { "form": "generisk/kristall",         "skala": 0.7 }
+    "okant":   { "form": "generisk/agg",         "skala": 0.7 }
   },
-  "kristall": { "palett": ["#F06292","#BA68C8","#7986CB","#4FC3F7","#4DB6AC","#81C784","#DCE775","#FFD54F","#FFB74D","#FF8A65","#A1887F","#90A4AE"], "hash": "fnv1a32", "etikett_max": 16 }
+  "agg": { "palett": ["#F06292","#BA68C8","#7986CB","#4FC3F7","#4DB6AC","#81C784","#DCE775","#FFD54F","#FFB74D","#FF8A65","#A1887F","#90A4AE"], "hash": "fnv1a32", "etikett_max": 16 }
 }
 ```
-`Utfall` (typer.ts) utökas additivt: `{ typ:"skapad", varelse:{ …, reserv?: { ord: string; kategori: string; steg: "lemma"|"sammansatt"|"synonym"|"kategori_ord"|"kategori_regel"|"kristall"; entitet?: string }[] } }`. `Varelse.reserv` ritas av `src/spel/ordkristall.tsx`. En mening utan känt djur (`en pizza`) skapar **reservdjuret** (kategori `djur`/`okant`) i stället för `behover_djur` (kortbygget "Pennan behöver ett djur" finns kvar bara för tom text). `src/tolk/reserv.ts` är en ren funktion `reservFor(token: string, plats: "djur"|"med"|"som"|"adj"): Reserv` utan three-import, testbar med `node --test`.
+`Utfall` (typer.ts) utökas additivt: `{ typ:"skapad", varelse:{ …, reserv?: { ord: string; kategori: string; steg: "lemma"|"sammansatt"|"synonym"|"kategori_ord"|"kategori_regel"|"agg"; entitet?: string }[] } }`. `Varelse.reserv` ritas av `src/spel/ordagg.tsx`. En mening utan känt djur (`en pizza`) skapar **reservdjuret** (kategori `djur`/`okant`) i stället för `behover_djur` (kortbygget "Pennan behöver ett djur" finns kvar bara för tom text). `src/tolk/reserv.ts` är en ren funktion `reservFor(token: string, plats: "djur"|"med"|"som"|"adj"): Reserv` utan three-import, testbar med `node --test`.
 
 ### 12.5 Bevis (R3B)
 `reserv.test.ts`: (1) varje ord i `verification/tackning-2026-10-18.md` ger `reserv` eller en känd form (100 %); (2) spärrade ord ger aldrig en form; (3) befintliga 28 + bygg- och gåvofraser ger oförändrat resultat; (4) samma ord ger samma färg; (5) bilder (≤ 5) av `elefant`, `pizza`, `kanin med paraply`, `hmmmx`, tre okända i samma mening.
@@ -639,12 +639,12 @@ Kör via riktiga UI-vägen (Pennans bok → pennan → skärmtangentbord → Vak
 |---|---|---|---|
 | 1 | `en blå drake med krona` | Blå drake, krona på huvudet; 3 stjärnor | Som väntat, krona syns (bild 02) |
 | 2 | `rosa enhörning med glasögon` | Rosa häst med horn **och** glasögon; guldord "enhörning" | Formel rätt (häst, horn, glasögon), men varken horn eller glasögon syns i bild (rosa häst bakifrån) |
-| 3 | `en elefant` | "Pennan behöver ett djur. Prova … kanin/katt/hund"; ordet i önskelistan | Som väntat (bild 03). *Efter R3B:* en kristallvarelse med texten "elefant" |
-| 4 | `en kanin med paraply` | Kanin utan paraply, inget meddelande | Som väntat. *Efter R3B:* kanin med en kristall/ikon "paraply" över huvudet |
+| 3 | `en elefant` | "Pennan behöver ett djur. Prova … kanin/katt/hund"; ordet i önskelistan | Som väntat (bild 03). *Efter R3B:* ett ägg med texten "elefant" |
+| 4 | `en kanin med paraply` | Kanin utan paraply, inget meddelande | Som väntat. *Efter R3B:* kanin med ett ägg/ikon "paraply" över huvudet |
 | 5 | `en kannin med glasögen` (felstavat) | "Menade du kanin?" (ett förslag åt gången) | Som väntat (bild 04) |
 | 6 | `en glad kanin som dansar` (okända adjektiv/verb) | I kod: "Menade du dino / nasse?" (fel gissning) | Som väntat (bild 05); *Efter R3B:* kanin som dansar-animation, ingen gissning |
 | 7 | `tre röda hundar som kan flyga och spruta eld` | Tre röda hundar med vingar och eld | Formel rätt (`flyger och sprutar eld`), 3 djur |
-| 8 | `blå hmmmx` / `en pizza` (nonsens/okänt) | "Pennan behöver ett djur …", ordet sparas | Som väntat. *Efter R3B:* kristall med texten, aldrig ett fel |
+| 8 | `blå hmmmx` / `en pizza` (nonsens/okänt) | "Pennan behöver ett djur …", ordet sparas | Som väntat. *Efter R3B:* ägg med texten, aldrig ett fel |
 | 9 | `ett hus med fönster och en pool` (Gården) | Hus med 2 fönster; poolen ignoreras | Som väntat (bild 08) |
 | 10 | `en katt med hatt och glasögon och halsduk` | **Alla tre syns på katten** (hatt ovanpå, glasögon framför ögonen, halsduk runt halsen) | **Syns inte alls** (bild 06) – kör mot `main` |
 | 11 | `en häst med mantel` + `en fågel med ryggsäck` | Mantel och ryggsäck syns (5A: häst bra, fågel svag) | Syns inte live – kör mot `main` |

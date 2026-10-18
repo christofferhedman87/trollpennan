@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "_om": "Reservkedjan: vad som händer med ett ord som tolka() inte känner. Första träff vinner: kategori_ord → lemma → sammansatt → regel → plats → kristall. Steg 1 'exakt' är ord.json och sköts av tolka() före reservkedjan. Allt här är data: ett nytt ord, en ny regel eller en ny form kräver ingen kod. Texter som barnet ser granskas av innehållsteamet.",
+  "_om": "Reservkedjan: vad som händer med ett ord som tolka() inte känner. Första träff vinner: kategori_ord → lemma → sammansatt → regel → plats → ägg. Steg 1 'exakt' är ord.json och sköts av tolka() före reservkedjan. Allt här är data: ett nytt ord, en ny regel eller en ny form kräver ingen kod. Texter som barnet ser granskas av innehållsteamet.",
   "kedja": [
     "kategori_ord",
     "lemma",
     "sammansatt",
     "regel",
     "plats",
-    "kristall"
+    "agg"
   ],
   "andelar": {
     "substantiv": [
@@ -86,81 +86,83 @@
   "kategorier": {
     "okant": {
       "form": {
-        "kropp": "okta",
-        "hojd": 1
+        "monster": "prickar",
+        "antal": 6,
+        "hojd": 1.0
       }
     },
     "djur": {
       "form": {
-        "kropp": "okta",
-        "ben": 4,
-        "hojd": 0.9
+        "monster": "flackar",
+        "antal": 4,
+        "hojd": 1.0
       }
     },
     "mat": {
       "form": {
-        "kropp": "dodeka",
-        "sockel": "skiva",
-        "hojd": 0.8
+        "monster": "prickar",
+        "antal": 9,
+        "hojd": 1.0
       }
     },
     "foremal": {
       "form": {
-        "kropp": "okta",
-        "sockel": "ruta",
-        "hojd": 0.9
+        "monster": "band",
+        "antal": 1,
+        "hojd": 1.0
       }
     },
     "vaxt": {
       "form": {
-        "kropp": "okta",
-        "blad": 2,
-        "hojd": 0.9
+        "monster": "rander",
+        "antal": 4,
+        "hojd": 1.0
       }
     },
     "byggnad": {
       "form": {
-        "kropp": "ruta",
-        "tak": true,
-        "hojd": 0.9
+        "monster": "band",
+        "antal": 3,
+        "hojd": 1.0
       }
     },
     "person": {
       "form": {
-        "kropp": "okta",
-        "huvud": true,
-        "hojd": 0.8
+        "monster": "stjarnor",
+        "antal": 5,
+        "hojd": 1.0
       }
     },
     "kansla": {
       "form": {
-        "kropp": "ikosa",
-        "ring": true,
-        "hojd": 0.9
+        "monster": "stjarnor",
+        "antal": 3,
+        "hojd": 1.0
       }
     },
     "natur": {
       "form": {
-        "kropp": "ikosa",
-        "sockel": "skiva",
-        "hojd": 0.9
+        "monster": "flackar",
+        "antal": 6,
+        "hojd": 1.0
       }
     },
     "handling": {
       "form": {
-        "kropp": "okta",
-        "ring": true,
-        "hojd": 0.8
+        "monster": "band",
+        "antal": 2,
+        "hojd": 1.0
       }
     },
     "egenskap": {
       "form": {
-        "kropp": "ikosa",
-        "hojd": 0.8
+        "monster": "rander",
+        "antal": 3,
+        "hojd": 1.0
       }
     }
   },
-  "kristall": {
+  "agg": {
     "palett": [
       "#F06292",
       "#BA68C8",
@@ -177,10 +179,11 @@
     ],
     "hash": "fnv1a32",
     "etikett_max": 16,
-    "max_totalt": 4
+    "max_totalt": 4,
+    "_om": "Äggets färg per ord: palett[fnv1a32(ord) % antal]. etikett_max = längsta text på etiketten. max_totalt = högst så här många ägg/ord per formel. Äggen gungar lite (väntar på att kläckas); ingen data lämnar spelet."
   },
   "forslag": {
-    "_om": "När är en 'Menade du …?'-gissning trovärdig? Avstånd i fel (avstand.ts) högst 'max' för ordets längd, och gissningen måste vara av en ordklass som passar platsen. Annars blir ordet en kristall. ej_om_kand: ett ord som står i kategori-ord.json (även via lemma) är ett riktigt ord och gissas aldrig om.",
+    "_om": "När är en 'Menade du …?'-gissning trovärdig? Avstånd i fel (avstand.ts) högst 'max' för ordets längd, och gissningen måste vara av en ordklass som passar platsen. Annars blir ordet ett ägg. ej_om_kand: ett ord som står i kategori-ord.json (även via lemma) är ett riktigt ord och gissas aldrig om.",
     "max_fel": [
       {
         "upptill": 3,
@@ -220,10 +223,11 @@
     "ej_om_kand": true
   },
   "texter": {
-    "ny": "Det här har jag aldrig sett! Jag ritade en gissning: {ord}.",
-    "formel": "en {ord}-kristall",
-    "beskrivning": "{ord}-kristall",
+    "ny": "Det här ordet har jag aldrig sett! Det blev ett ägg som väntar på att kläckas: {ord}.",
+    "formel": "ett {ord}-ägg",
+    "beskrivning": "{ord}-ägg",
     "sparr": "Det ordet kan Trollpennan inte.",
     "ersatter": "Det ordet kan Trollpennan inte än"
-  }
+  },
+  "_om_kategorier": "Äggets utseende per kategori: monster = slat | prickar | flackar | band | rander | stjarnor, antal = hur många. Äggets grundfärg kommer ur ordet (agg.palett, hash av ordet); mönstret i en ljusare/mörkare nyans av samma färg. Ett nytt mönster är en rad i ordagg.tsx (MONSTER), en ny kategori är en rad här."
 }
