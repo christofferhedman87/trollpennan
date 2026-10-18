@@ -55,14 +55,28 @@ test("djuren i entiteter.json är exakt de kroppar ord.json kan skapa, i albumet
   };
   gå(ordJson);
   assert.deepEqual([...new Set(ur)].sort(), [...djurIds()].sort());
-  // De 14 första är albumets ordning; djur som R3C lägger in (inlagd: "R3C") kommer efter dem.
+  // De 14 första är albumets ordning; djur som bulkrundorna lägger in (inlagd: "R3C", "R3D") kommer efter dem.
   assert.deepEqual(djurIds().slice(0, 14), ["kanin", "katt", "hund", "drake", "häst", "fågel", "fisk", "groda", "gris", "dinosaurie", "uggla", "ekorre", "bäver", "haj"]);
-  assert.ok(djurIds().slice(14).every((k) => ENTITETER[k]?.inlagd === "R3C"), "djur efter de 14 ska vara inlagda av R3C");
+  assert.ok(djurIds().slice(14).every((k) => arBulk(k)), "djur efter de 14 ska vara inlagda av en bulkrunda (R3C eller R3D)");
 });
 
-test("R3C-modeller hämtas när ordet används: forladda är false och startnedladdningen växer inte", () => {
-  const r3c = djurIds().filter((k) => ENTITETER[k]?.inlagd === "R3C");
-  assert.ok(r3c.every((k) => ENTITETER[k]?.forladda === false), "alla R3C-rader ska ha forladda: false");
+/** Bulkrundornas rader (data/inlagg.json, scripts/modell-inlagg.mjs): inlagd är rundans namn. */
+const arBulk = (k: string) => /^R3[CD]$/.test(String(ENTITETER[k]?.inlagd ?? ""));
+
+test("R3D: andra bulkomgången är inne, bara CC0, och varje modellfil finns", () => {
+  const r3d = Object.keys(ENTITETER).filter((k) => ENTITETER[k]?.inlagd === "R3D");
+  assert.ok(r3d.length >= 200, `R3D ska ha minst 200 rader, har ${r3d.length}`);
+  for (const k of r3d) {
+    const t = TILLGANGAR[ENTITETER[k]!.modell as string];
+    assert.ok(t, `${k}: tillgång saknas`);
+    assert.equal(t.licens, "CC0-1.0", `${k}: bara CC0 i R3D (CC-BY väntar på kreditvisning, R3E)`);
+    assert.ok(t.fil && fs.existsSync(path.join("public", t.fil)), `${k}: ${t.fil} finns inte`);
+  }
+});
+
+test("modeller från bulkrundorna hämtas när ordet används: forladda är false och startnedladdningen växer inte", () => {
+  const r3c = Object.keys(ENTITETER).filter((k) => arBulk(k));
+  assert.ok(r3c.every((k) => ENTITETER[k]?.forladda === false), "alla bulkrader ska ha forladda: false");
   const start = new Set(forladdaUrls());
   for (const k of r3c) {
     const u = modellUrl(k);

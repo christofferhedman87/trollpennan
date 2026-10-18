@@ -26,24 +26,41 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 
 | Paket | Upphov | Licens | Källa | Antal modeller |
 |---|---|---|---|---|
-| gobkit-cc0-djur-och-natur | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 12 |
+| gobkit-cc0-djur-och-natur | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 49 |
 | kaykit-city-builder-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/city-builder-bits | 1 |
-| kaykit-holiday-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/holiday-bits | 2 |
-| kenney-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/car-kit | 3 |
+| kaykit-furniture-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/furniture-bits | 2 |
+| kaykit-holiday-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/holiday-bits | 3 |
+| kaykit-restaurant-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/restaurant-bits | 3 |
+| kaykit-rpg-tools-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/rpg-tools-bits | 15 |
+| kenney-blocky-characters | Kenney | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 1 |
+| kenney-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/car-kit | 8 |
+| kenney-castle-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/castle-kit | 1 |
 | kenney-city-kit-suburban | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-suburban | 1 |
-| kenney-cube-pets | Kenney | CC0-1.0 | https://kenney.nl/assets/cube-pets | 3 |
-| kenney-fantasy-town-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/fantasy-town-kit | 2 |
-| kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 3 |
-| kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 1 |
-| kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 1 |
-| kenney-mini-dungeon | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-dungeon | 1 |
-| kenney-nature-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/nature-kit | 1 |
-| kenney-pirate-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/pirate-kit | 1 |
-| kenney-space-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/space-kit | 1 |
-| polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 5 |
-| quaternius-cute-fish | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutefish.html | 1 |
-| quaternius-cute-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutemonsters.html | 1 |
-| quaternius-farm-buildings | Quaternius | CC0-1.0 | https://quaternius.com/packs/farmbuildings.html | 3 |
+| kenney-cube-pets | Kenney | CC0-1.0 | https://kenney.nl/assets/cube-pets | 13 |
+| kenney-fantasy-town-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/fantasy-town-kit | 7 |
+| kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 29 |
+| kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 15 |
+| kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 6 |
+| kenney-holiday-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/holiday-kit | 5 |
+| kenney-mini-dungeon | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-dungeon | 9 |
+| kenney-mini-forest | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-forest | 2 |
+| kenney-modular-cave-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/modular-cave-kit | 3 |
+| kenney-nature-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/nature-kit | 23 |
+| kenney-pirate-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/pirate-kit | 5 |
+| kenney-platformer-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/platformer-kit | 6 |
+| kenney-space-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/space-kit | 5 |
+| kenney-survival-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/survival-kit | 1 |
+| kenney-toy-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/toy-car-kit | 2 |
+| kenney-train-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/train-kit | 3 |
+| oga-cc0 | Teh_Bucket | CC0-1.0 | https://opengameart.org/content/hats-clothing-props | 7 |
+| polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 22 |
+| quaternius-cute-fish | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutefish.html | 6 |
+| quaternius-cute-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutemonsters.html | 5 |
+| quaternius-farm-animals | Quaternius | CC0-1.0 | https://quaternius.com/packs/farmanimal.html | 2 |
+| quaternius-farm-buildings | Quaternius | CC0-1.0 | https://quaternius.com/packs/farmbuildings.html | 8 |
+| quaternius-ships | Quaternius | CC0-1.0 | https://quaternius.com/packs/ships.html | 1 |
+| quaternius-ultimate-animated-animals | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimateanimatedanimals.html | 5 |
+| quaternius-ultimate-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimatemonsters.html | 3 |
 
 Alla paket ovan är CC0 om inget annat står. Fullständig lista per fil finns i LICENSES.md.
 
