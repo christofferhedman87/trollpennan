@@ -50,12 +50,14 @@ const skott = async (namn) => {
 };
 const mine = () => p.getByTestId("npc-figur").getAttribute("data-mine");
 const stj = async () => Number((await p.getByTestId("stjarnor").innerText()).replace(/\D/g, ""));
+// Skriver som barnet: å/ä/ö via skärmtangenten (Playwrights keyboard.type skickar dem som insertText utan keydown, som appen aldrig ser: "blå" blev "bl"),
+// övriga tecken via tangentbordet, mellanslag via skärmtangenten.
 const skriv = async (t) => {
   await p.getByTestId("tangentbord").waitFor();
-  const ord = t.split(" ");
-  for (let i = 0; i < ord.length; i++) {
-    await p.keyboard.type(ord[i], { delay: 20 });
-    if (i < ord.length - 1) await p.getByTestId("mellanslag").click(); // som barnet: skärmtangenten för mellanslag
+  for (const tecken of t) {
+    if (tecken === " ") await p.getByTestId("mellanslag").click();
+    else if ("åäö".includes(tecken)) await p.getByTestId("tangentbord").getByRole("button", { name: tecken, exact: true }).click();
+    else await p.keyboard.type(tecken, { delay: 20 });
   }
   await p.getByTestId("vakna").click();
 };

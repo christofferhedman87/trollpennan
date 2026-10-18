@@ -1,0 +1,33 @@
+{
+ "remsa": "Doktor Bengtsson: Det verkar som att din kanin fryser. Se om du kan skriva fram något som värmer.",
+ "grupper": 2,
+ "knappar": [
+  "mössa",
+  "tröja",
+  "luva",
+  "lägereld",
+  "stuga"
+ ],
+ "fritext_kvar": true,
+ "knapp_hojd": 44,
+ "forsta_synlig": true,
+ "falt_efter_tryck": "en kanin med mössa",
+ "status_fore_vakna": "pagar",
+ "klar_replik_syns": true,
+ "status_efter_tryck": "klar",
+ "stjarnor_plus": 2,
+ "remsa2": "Doktor Bengtsson: Oj, det börjar regna! Kan du skriva fram något som skyddar mot regnet?",
+ "knappar2": [
+  "tält",
+  "grotta",
+  "träd",
+  "stuga"
+ ],
+ "klar2_replik_syns": true,
+ "status_fritext": "klar",
+ "bok_givare": [
+  "bengtsson"
+ ],
+ "sidfel": [],
+ "ok": true
+}

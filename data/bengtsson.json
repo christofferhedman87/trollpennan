@@ -1,6 +1,6 @@
 {
  "version": 1,
- "_om": "Uppdrag som Bengtsson ger på ängen och som löses genom att barnet SKRIVER i Skapa-menyn (Pennans bok). Samma form som data/uppdrag.json plus 'krav': det barnet skrev måste innehålla minst 'min' olika ord ur 'ord' (rättvist: ordet får vara böjt eller ingå i ett sammansatt ord, 'filten', 'ullmössa'; ordet behöver INTE ha en modell, ett ägg räknas). Ett fel svar ger ett skämt och ingen förlust; djuret/ägget skapas ändå. Status delas med data/uppdrag.json (useMinne.uppdrag), id:n får inte kollidera. Texterna är Arkitektens utkast (granskad: false); Christoffers egen formulering i kanin-fryser. De 24 utkasten (rundor/R6A-bengtsson, RITNING avsnitt 5) kommer i R6A-3 efter Copilots granskning.",
+ "_om": "Uppdrag som Bengtsson ger på ängen och som löses genom att barnet SKRIVER i Skapa-menyn (Pennans bok). Samma form som data/uppdrag.json plus 'krav': det barnet skrev måste innehålla minst 'min' olika ord ur 'ord' (rättvist: ordet får vara böjt eller ingå i ett sammansatt ord, 'filten', 'ullmössa'; ordet behöver INTE ha en modell, ett ägg räknas). Ett fel svar ger ett skämt och ingen förlust; djuret/ägget skapas ändå. Status delas med data/uppdrag.json (useMinne.uppdrag), id:n får inte kollidera. Texterna är Arkitektens utkast (granskad: false); Christoffers egen formulering i kanin-fryser. De 24 utkasten (rundor/R6A-bengtsson, RITNING avsnitt 5) kommer i R6A-4 efter Copilots granskning. R6A-3: 'val' = guidande förslag under uppdraget (knapprad, 'Prova en idé' och ordlistan visar uppdragets egna förslag, inte de allmänna). Varje förslag är {ord, fras}: ordet MÅSTE ha en modell i data/entiteter.json + tillgangar.json (eller bära 'agg': 'skäl' som undantag) och frasen innehåller ett djur så att spelet skapar något och kontrollen körs. Förslag utan modell står i rundor/R6A-3-bara-bengtsson/modellbehov.tsv (till Modellspanaren) och läggs hit som en datarad när modellen finns. Fritext är alltid kvar; 'krav' avgör vad som godkänns. Utkast, Copilot ska granska orden och fraserna (en/ett).",
  "uppdrag": [
   {
    "id": "kanin-fryser",
@@ -37,11 +37,48 @@
      "ljus",
      "kakao",
      "soppa",
-     "te"
+     "te",
+     "luva",
+     "stuga"
     ],
     "min": 1
    },
-   "granskad": false
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Att ha på sig",
+      "forslag": [
+       {
+        "ord": "mössa",
+        "fras": "en kanin med mössa"
+       },
+       {
+        "ord": "tröja",
+        "fras": "en kanin med tröja"
+       },
+       {
+        "ord": "luva",
+        "fras": "en kanin med luva"
+       }
+      ]
+     },
+     {
+      "etikett": "Något varmt",
+      "forslag": [
+       {
+        "ord": "lägereld",
+        "fras": "en kanin vid en lägereld"
+       },
+       {
+        "ord": "stuga",
+        "fras": "en kanin i en stuga"
+       }
+      ]
+     }
+    ]
+   }
   },
   {
    "id": "regn-skydd",
@@ -75,7 +112,33 @@
     ],
     "min": 1
    },
-   "granskad": false
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Något att stå under",
+      "forslag": [
+       {
+        "ord": "tält",
+        "fras": "en kanin i ett tält"
+       },
+       {
+        "ord": "grotta",
+        "fras": "en kanin i en grotta"
+       },
+       {
+        "ord": "träd",
+        "fras": "en kanin under ett träd"
+       },
+       {
+        "ord": "stuga",
+        "fras": "en kanin i en stuga"
+       }
+      ]
+     }
+    ]
+   }
   },
   {
    "id": "sol-skugga",
@@ -107,7 +170,42 @@
     ],
     "min": 1
    },
-   "granskad": false
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "På huvudet",
+      "forslag": [
+       {
+        "ord": "keps",
+        "fras": "en kanin med keps"
+       }
+      ]
+     },
+     {
+      "etikett": "Något som ger skugga",
+      "forslag": [
+       {
+        "ord": "träd",
+        "fras": "en kanin under ett träd"
+       },
+       {
+        "ord": "moln",
+        "fras": "en kanin under ett moln"
+       },
+       {
+        "ord": "tält",
+        "fras": "en kanin i ett tält"
+       },
+       {
+        "ord": "grotta",
+        "fras": "en kanin i en grotta"
+       }
+      ]
+     }
+    ]
+   }
   }
  ]
 }

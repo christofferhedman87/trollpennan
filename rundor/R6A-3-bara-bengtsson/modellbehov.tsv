@@ -1,0 +1,12 @@
+ord	uppdrag	kategori	varfor (naturligt forslag utan modell i data/entiteter.json)
+paraply	regn-skydd	foremal	det första barnet tänker på mot regn
+regnrock (regnjacka)	regn-skydd	klader	kläd mot regn
+stövlar (gummistövlar)	regn-skydd	klader	kläd mot regn
+tak	regn-skydd, sol-skugga	hus	enkelt tak/skärmtak att stå under
+hatt (solhatt)	sol-skugga	klader	allmän hatt; bara häxhatt, cylinderhatt, keps och alvmössa finns
+parasoll	sol-skugga	foremal	det första barnet tänker på mot sol
+filt (pläd)	kanin-fryser	foremal	det första barnet tänker på mot kyla
+kappa (mantel)	kanin-fryser	klader	kläd mot kyla
+halsduk	kanin-fryser	klader	kläd mot kyla
+jacka (kofta)	kanin-fryser	klader	kläd mot kyla
+kamin (spis finns)	kanin-fryser	mobel	värmekälla inomhus
