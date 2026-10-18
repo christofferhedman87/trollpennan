@@ -200,7 +200,9 @@ function Aura({ ankare }: { ankare: Ankare }) {
   const mat = useRef<THREE.SpriteMaterial>(null);
   const textur = useMemo(() => glodPunkt(), []);
   const bredd = Math.max(0.25, ankare.bredd);
-  const storlek = bredd * 1.8;
+  // Ca 2,2× kroppens bredd och minst kroppens höjd, så ringen sticker ut runt silhuetten.
+  const sx = bredd * 2.2;
+  const sy = Math.max(sx, Math.max(0.25, ankare.hojd) * 2.2);
   const mittY = ankare.hojd * 0.5;
   useFrame((state) => {
     const m = mat.current;
@@ -209,7 +211,7 @@ function Aura({ ankare }: { ankare: Ankare }) {
     m.opacity = 0.45 + puls * 0.25;
   });
   return (
-    <sprite position={[0, mittY, 0]} scale={[storlek, storlek, 1]} renderOrder={-1}>
+    <sprite position={[0, mittY, 0]} scale={[sx, sy, 1]} renderOrder={-2}>
       <spriteMaterial
         ref={mat}
         map={textur}
@@ -217,7 +219,7 @@ function Aura({ ankare }: { ankare: Ankare }) {
         transparent
         opacity={0.55}
         depthWrite={false}
-        depthTest
+        depthTest={false}
         blending={THREE.NormalBlending}
         toneMapped={false}
       />
