@@ -1,0 +1,57 @@
+diff --git a/package.json b/package.json
+index 19c8b61..789129c 100644
+--- a/package.json
++++ b/package.json
+@@ -25,7 +25,8 @@
+     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
+     "check:pages-output": "node scripts/check-pages-output.mjs",
+     "check:struktur": "node scripts/check-spel-struktur.mjs",
+-    "check:struktur:a": "node scripts/check-spel-struktur.mjs --steg a"
++    "check:struktur:a": "node scripts/check-spel-struktur.mjs --steg a",
++    "test:bok": "node --test src/spel/bokSkrollning.test.mjs"
+   },
+   "dependencies": {
+     "@electric-sql/pglite": "^0.5.4",
+diff --git a/src/spel/bokSkrollning.test.mjs b/src/spel/bokSkrollning.test.mjs
+new file mode 100644
+index 0000000..7b279b8
+--- /dev/null
++++ b/src/spel/bokSkrollning.test.mjs
+@@ -0,0 +1,23 @@
++// R2.1: vakt mot att fingerskrollningen i Pennans bok går sönder igen (se rundor/R2-1-bok-skrollning/RITNING.md).
++// Ren textkontroll av CSS-filerna; själva fingerdraget bevisas av rundor/R2-1-bok-skrollning/bok-touch.mjs i en webbläsare.
++import assert from "node:assert/strict";
++import fs from "node:fs";
++import test from "node:test";
++
++const css = fs.readFileSync(new URL("../styles.css", import.meta.url), "utf8");
++const regel = (kalla, valjare) => {
++  const i = kalla.indexOf(valjare + "{");
++  assert.ok(i >= 0, `regeln ${valjare} saknas`);
++  return kalla.slice(i, kalla.indexOf("}", i));
++};
++
++test("kort-yta i bok-mitt är ingen egen skrollyta (annars fastnar fingret i den)", () => {
++  const r = regel(css, ".bok .bok-mitt .kort-yta");
++  assert.match(r, /overflow:visible/);
++  assert.match(r, /overscroll-behavior:auto/);
++});
++
++test("bok-mitt är bokens skrollyta och flikarna ligger kvar överst", () => {
++  assert.match(regel(css, ".bok-mitt"), /overflow:auto/);
++  assert.match(regel(css, ".bok .bok-mitt .flikar"), /position:sticky/);
++});
+diff --git a/src/styles.css b/src/styles.css
+index c359269..9f26d74 100644
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -352,6 +352,9 @@ flex-direction:column;gap:4px;display:flex}
+ background:var(--color-gold-soft);min-height:44px;color:var(--color-ink);font-weight:800;font-size:var(--text-ui);border:0;border-radius:12px}
+ .bok-mitt{
+ flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain}
++/* R2.1: bok-mitt är bokens enda skrollyta. En inre overflow:auto-yta (kort-yta) som inte är högre än sitt innehåll stoppade fingerskrollningen (overscroll-behavior:contain i mobile-b03.css), så listan gick inte att dra. */
++.bok .bok-mitt .kort-yta{overflow:visible;overscroll-behavior:auto;flex:none}
++.bok .bok-mitt .flikar{position:sticky;top:0;z-index:1;background:var(--color-paper)}
+ .bok .remsa,.bok .vakna,.bok .tangenter,.bok-huvud{flex-shrink:0}
+ .tangenter{
+ flex-direction:column;flex:0 0 auto;justify-content:flex-end;gap:4px;min-height:0;padding:0 6px 4px;display:flex}
