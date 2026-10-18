@@ -38,7 +38,30 @@ const GEO = {
   skalm: new THREE.BoxGeometry(1, 1, 1),
   /** Rundad säck. Radie 0,5 så skalan i `del` är hela storleken. */
   sack: new THREE.SphereGeometry(0.5, 8, 6),
+  /** Platt trapets. Origon är nacken, +z är bakåt, tyget hänger ned. */
+  mantel: mantelGeo(),
 };
+
+function mantelGeo() {
+  const top = 0.46;
+  const bot = 0.86;
+  const drop = 1.15;
+  const back = 0.5;
+  const A = [-top, 0, 0];
+  const B = [top, 0, 0];
+  const C = [bot, -drop, back];
+  const D = [-bot, -drop, back];
+  const pos = new Float32Array([
+    A[0]!, A[1]!, A[2]!, B[0]!, B[1]!, B[2]!, C[0]!, C[1]!, C[2]!,
+    A[0]!, A[1]!, A[2]!, C[0]!, C[1]!, C[2]!, D[0]!, D[1]!, D[2]!,
+    A[0]!, A[1]!, A[2]!, C[0]!, C[1]!, C[2]!, B[0]!, B[1]!, B[2]!,
+    A[0]!, A[1]!, A[2]!, D[0]!, D[1]!, D[2]!, C[0]!, C[1]!, C[2]!,
+  ]);
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  geo.computeVertexNormals();
+  return geo;
+}
 
 const toonCache = new Map<string, THREE.MeshToonMaterial>();
 
@@ -375,6 +398,16 @@ function byggRyggsack(farg: string | null) {
   return g;
 }
 
+function byggMantel(farg: string | null) {
+  const mat = toonMat(farg ?? "#6A1B9A");
+  const g = new THREE.Group();
+  g.name = "tillbehor-mantel";
+  g.add(del(GEO.mantel, mat, 0, 0, 0, 1, 1, 1, 1.05));
+  g.add(del(GEO.brygga, mat, 0, 0.02, 0, 0.72, 0.08, 0.1, 1.12));
+  g.add(del(GEO.sack, mat, 0, 0.04, -0.06, 0.2, 0.2, 0.2, 1.18));
+  return g;
+}
+
 function byggGlas(farg: string) {
   const mat = toonMat(farg);
   const g = new THREE.Group();
@@ -387,7 +420,7 @@ function byggGlas(farg: string) {
   return g;
 }
 
-/** Krona, glasögon, hatt, rosett, halsduk och ryggsäck. Andra id ger null. */
+/** Krona, glasögon, hatt, rosett, halsduk, ryggsäck och mantel. Andra id ger null. */
 export function byggTillbehor(t: TillbehorSpec, _a: Ankare): THREE.Group | null {
   if (t.id === "krona") return byggKrona(kronFarg(t.farg));
   if (t.id === "glasögon") return byggGlas(glasFarg(t.farg));
@@ -395,6 +428,7 @@ export function byggTillbehor(t: TillbehorSpec, _a: Ankare): THREE.Group | null 
   if (t.id === "rosett") return byggRosett(t.farg);
   if (t.id === "halsduk") return byggHalsduk(t.farg);
   if (t.id === "ryggsäck") return byggRyggsack(t.farg);
+  if (t.id === "mantel") return byggMantel(t.farg);
   return null;
 }
 
@@ -432,15 +466,40 @@ function skalaFor(id: string, a: Ankare, kropp: string) {
     if (kropp === "drake") return bas * 0.9;
     return bas;
   }
+  if (id === "mantel") {
+    const bas = Math.max(0.34, Math.min(a.bredd * 1.05, a.hojd * 0.5));
+    if (kropp === "fisk" || kropp === "groda") return bas * 1.45;
+    if (kropp === "drake") return bas * 1.2;
+    return bas * 1.25;
+  }
   return 1;
 }
 
 const _plats = new THREE.Vector3();
 const _sida = new THREE.Vector3();
 
+function mantelPlats(a: Ankare, rot: THREE.Object3D, kropp: string) {
+  if (kropp === "drake" || kropp === "häst") {
+    _plats.copy(a.hals).lerp(a.rygg, 0.4);
+    return _plats;
+  }
+  _plats.copy(a.hals).lerp(a.huvudTopp, 0.28);
+  const bakPlus = a.varld && (kropp === "kanin" || kropp === "katt" || kropp === "hund" || kropp === "fisk");
+  const steg = Math.max(0.04, a.bredd * 0.14);
+  if (a.varld) {
+    rot.getWorldQuaternion(_q);
+    _sida.set(0, 0, bakPlus ? 1 : -1).applyQuaternion(_q);
+    _plats.addScaledVector(_sida, steg);
+  } else {
+    _plats.z -= steg;
+  }
+  return _plats;
+}
+
 function platsFor(id: string, a: Ankare, rot: THREE.Object3D, kropp: string) {
   if (id === "krona" || id === "hatt") return a.huvudTopp;
   if (id === "ryggsäck") return a.rygg;
+  if (id === "mantel") return mantelPlats(a, rot, kropp);
   if (id === "halsduk") return a.hals;
   if (id === "rosett") {
     // Örats sida: ut från ansiktets mitt längs djurets vänster (−x i rotens rum).
@@ -504,6 +563,6 @@ export function faestTillbehor(
       obj.scale.setScalar(skala);
       parent.add(obj);
     }
-    if (t.id === "ryggsäck" && vandRygg(a.varld, spec.kropp)) obj.rotateY(Math.PI);
+    if ((t.id === "ryggsäck" || t.id === "mantel") && vandRygg(a.varld, spec.kropp)) obj.rotateY(Math.PI);
   }
 }
