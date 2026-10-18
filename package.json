@@ -23,7 +23,9 @@
     "preview:pages": "vite preview --config vite.pages.config.ts",
     "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/dialogIsolering.test.mjs",
     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
-    "check:pages-output": "node scripts/check-pages-output.mjs"
+    "check:pages-output": "node scripts/check-pages-output.mjs",
+    "check:struktur": "node scripts/check-spel-struktur.mjs",
+    "check:struktur:a": "node scripts/check-spel-struktur.mjs --steg a"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.4",
