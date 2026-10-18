@@ -36,6 +36,8 @@ const GEO = {
   ring: new THREE.TorusGeometry(0.22, 0.07, 6, 14),
   brygga: new THREE.BoxGeometry(1, 1, 1),
   skalm: new THREE.BoxGeometry(1, 1, 1),
+  /** Rundad säck. Radie 0,5 så skalan i `del` är hela storleken. */
+  sack: new THREE.SphereGeometry(0.5, 8, 6),
 };
 
 const toonCache = new Map<string, THREE.MeshToonMaterial>();
@@ -110,7 +112,49 @@ const PROC_ANKARE: Record<string, ProcRad> = {
   häst: { topp: [0, 1.24, 0.42], ogonY: 1.02, ogonZ: 0.66, ogonX: 0.08, mun: [0, 0.88, 0.78], bredd: 0.42, hojd: 1.35 },
 };
 
-function radTillAnkare(r: ProcRad): Ankare {
+/**
+ * Kanin, katt, hund och fisk har ansiktet mot min.z. Övriga GLB (fågel, groda, …) mot max.z.
+ * y är bålens ovansida, inte öronen.
+ */
+function glbRygg(kropp: string, b: THREE.Box3, cx: number, h: number, dz: number) {
+  let zF = 0.36;
+  let yF = 0.68;
+  if (kropp === "kanin") {
+    zF = 0.66;
+    yF = 0.56;
+  } else if (kropp === "katt") {
+    zF = 0.64;
+    yF = 0.58;
+  } else if (kropp === "hund") {
+    zF = 0.62;
+    yF = 0.6;
+  } else if (kropp === "fisk") {
+    zF = 0.58;
+    yF = 0.8;
+  } else if (kropp === "fågel" || kropp === "uggla") {
+    zF = 0.34;
+    yF = 0.62;
+  } else if (kropp === "groda") {
+    zF = 0.34;
+    yF = 0.9;
+  }
+  return new THREE.Vector3(cx, b.min.y + yF * h, b.min.z + zF * dz);
+}
+
+/** Procedurens ansikte pekar mot +z. Ryggen är −z, och y ligger på bålens ovansida. */
+function procRygg(kropp: string): THREE.Vector3 {
+  if (kropp === "fisk" || kropp === "haj") return new THREE.Vector3(0, 0.42, -0.06);
+  if (kropp === "fågel" || kropp === "uggla") return new THREE.Vector3(0, 0.82, -0.14);
+  if (kropp === "groda") return new THREE.Vector3(0, 0.58, -0.18);
+  if (kropp === "drake") return new THREE.Vector3(0, 0.86, -0.08);
+  if (kropp === "häst") return new THREE.Vector3(0, 0.9, -0.22);
+  if (kropp === "kanin" || kropp === "ekorre") return new THREE.Vector3(0, 0.7, -0.14);
+  if (kropp === "katt") return new THREE.Vector3(0, 0.72, -0.14);
+  if (kropp === "hund") return new THREE.Vector3(0, 0.7, -0.16);
+  return new THREE.Vector3(0, 0.74, -0.16);
+}
+
+function radTillAnkare(r: ProcRad, kropp: string): Ankare {
   const ansikte = new THREE.Vector3(0, r.ogonY, r.ogonZ);
   return {
     huvudTopp: new THREE.Vector3(...r.topp),
@@ -119,7 +163,7 @@ function radTillAnkare(r: ProcRad): Ankare {
     ogonR: new THREE.Vector3(r.ogonX, r.ogonY, r.ogonZ),
     mun: new THREE.Vector3(...r.mun),
     hals: new THREE.Vector3(0, r.ogonY - 0.28, r.ogonZ * 0.45),
-    rygg: new THREE.Vector3(0, r.hojd * 0.55, -0.2),
+    rygg: procRygg(kropp),
     bredd: r.bredd,
     hojd: r.hojd,
     ben: null,
@@ -128,7 +172,7 @@ function radTillAnkare(r: ProcRad): Ankare {
 }
 
 export function procAnkare(kropp: string): Ankare {
-  return radTillAnkare(PROC_ANKARE[kropp] ?? STANDARD);
+  return radTillAnkare(PROC_ANKARE[kropp] ?? STANDARD, kropp);
 }
 
 function hitta(rot: THREE.Object3D) {
@@ -172,7 +216,8 @@ export function ankareFor(rot: THREE.Object3D, kropp: string, _s: number): Ankar
       ogonR: lyft(bas, q, ogonSpr, kropp === "drake" ? 0.16 : 0.22, kropp === "drake" ? 0.28 : 0.22),
       mun: lyft(bas, q, 0, kropp === "drake" ? 0.02 : 0.08, kropp === "drake" ? 0.42 : 0.34),
       hals: lyft(bas, q, 0, -0.06, 0.1),
-      rygg: lyft(bas, q, 0, -0.15, -0.25),
+      // Bakom skallen, på manken. +z är nosen, så ryggsäcken ligger på −z.
+      rygg: lyft(bas, q, 0, kropp === "drake" ? -0.12 : -0.02, kropp === "drake" ? -0.5 : -0.4),
       bredd: kropp === "drake" ? Math.min(bredd, 0.85) : Math.min(bredd, 0.55),
       hojd,
       ben: huvud,
@@ -246,7 +291,7 @@ export function ankareFor(rot: THREE.Object3D, kropp: string, _s: number): Ankar
     ogonR: new THREE.Vector3(cx + ogonX, ansY, ansZ),
     mun: new THREE.Vector3(cx, b.min.y + 0.5 * h, munZ),
     hals: new THREE.Vector3(cx, halsY, halsZ),
-    rygg: new THREE.Vector3(cx, b.min.y + 0.55 * h, b.min.z + 0.15 * (b.max.z - b.min.z)),
+    rygg: glbRygg(kropp, b, cx, h, dz),
     bredd: Math.min(w, h * (kropp === "fågel" || kropp === "uggla" ? 0.55 : 0.9)),
     hojd: h,
     ben: mat,
@@ -318,6 +363,18 @@ function byggRosett(farg: string | null) {
   return g;
 }
 
+function byggRyggsack(farg: string | null) {
+  const mat = toonMat(farg ?? "#1E88E5");
+  const g = new THREE.Group();
+  g.name = "tillbehor-ryggsack";
+  // Botten nära origo (ryggytan). +z är bakåt så säcken blir en kulle ut från kroppen.
+  g.add(del(GEO.sack, mat, 0, 0.32, 0.16, 0.82, 0.72, 0.52, 1.16));
+  g.add(del(GEO.brygga, mat, -0.16, 0.14, -0.2, 0.07, 0.07, 0.46, 1.14));
+  g.add(del(GEO.brygga, mat, 0.16, 0.14, -0.2, 0.07, 0.07, 0.46, 1.14));
+  g.add(del(GEO.brygga, mat, 0, 0.34, 0.34, 0.4, 0.22, 0.06, 1.12));
+  return g;
+}
+
 function byggGlas(farg: string) {
   const mat = toonMat(farg);
   const g = new THREE.Group();
@@ -330,13 +387,14 @@ function byggGlas(farg: string) {
   return g;
 }
 
-/** Krona, glasögon, hatt, rosett och halsduk. Andra id ger null. */
+/** Krona, glasögon, hatt, rosett, halsduk och ryggsäck. Andra id ger null. */
 export function byggTillbehor(t: TillbehorSpec, _a: Ankare): THREE.Group | null {
   if (t.id === "krona") return byggKrona(kronFarg(t.farg));
   if (t.id === "glasögon") return byggGlas(glasFarg(t.farg));
   if (t.id === "hatt") return byggHatt(t.farg);
   if (t.id === "rosett") return byggRosett(t.farg);
   if (t.id === "halsduk") return byggHalsduk(t.farg);
+  if (t.id === "ryggsäck") return byggRyggsack(t.farg);
   return null;
 }
 
@@ -367,6 +425,13 @@ function skalaFor(id: string, a: Ankare, kropp: string) {
     // Yttre diameter i modellrum är ungefär 0,22 * 2 * 1,35. Skalan gör ringen synlig på mobil.
     return Math.max(0.55, Math.min(a.bredd * 1.45, a.hojd * 0.7));
   }
+  if (id === "ryggsäck") {
+    // Samma tak som hatten, så säcken följer huvudets storlek per djur.
+    const bas = Math.max(0.34, Math.min(a.bredd * 1.05, a.hojd * 0.5));
+    if (kropp === "fisk" || kropp === "fågel" || kropp === "uggla" || kropp === "groda") return bas * 1.25;
+    if (kropp === "drake") return bas * 0.9;
+    return bas;
+  }
   return 1;
 }
 
@@ -375,6 +440,7 @@ const _sida = new THREE.Vector3();
 
 function platsFor(id: string, a: Ankare, rot: THREE.Object3D, kropp: string) {
   if (id === "krona" || id === "hatt") return a.huvudTopp;
+  if (id === "ryggsäck") return a.rygg;
   if (id === "halsduk") return a.hals;
   if (id === "rosett") {
     // Örats sida: ut från ansiktets mitt längs djurets vänster (−x i rotens rum).
@@ -402,6 +468,12 @@ const _inv = new THREE.Matrix4();
 const _lokal = new THREE.Matrix4();
 const _q = new THREE.Quaternion();
 const _s = new THREE.Vector3();
+
+/** Modellens +z är bakåt. Vänd när djurets rygg är −z (procedur, fågel, drake, häst, groda). */
+function vandRygg(varld: boolean, kropp: string) {
+  if (!varld) return true;
+  return !(kropp === "kanin" || kropp === "katt" || kropp === "hund" || kropp === "fisk");
+}
 
 function fastVarld(parent: THREE.Object3D, rot: THREE.Object3D, obj: THREE.Object3D, pos: THREE.Vector3, skala: number) {
   rot.updateWorldMatrix(true, true);
@@ -432,5 +504,6 @@ export function faestTillbehor(
       obj.scale.setScalar(skala);
       parent.add(obj);
     }
+    if (t.id === "ryggsäck" && vandRygg(a.varld, spec.kropp)) obj.rotateY(Math.PI);
   }
 }
