@@ -1,13 +1,13 @@
 {
- "url": "http://127.0.0.1:45173/?kvalitet=hog",
+ "url": "http://127.0.0.1:41835/?kvalitet=hog",
  "namn": "mjuk",
  "matt": {
-  "bildrutor": 36,
-  "medel_ms": 113.3,
-  "p95_ms": 233.3,
-  "draw_per_ruta": 130.5,
-  "tri_per_ruta": 21892,
-  "heap_mb": 45
+  "bildrutor": 37,
+  "medel_ms": 111.4,
+  "p95_ms": 200,
+  "draw_per_ruta": 130.3,
+  "tri_per_ruta": 21888,
+  "heap_mb": 43
  },
  "fel": []
 }

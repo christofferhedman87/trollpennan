@@ -1,0 +1,13 @@
+{
+ "url": "http://127.0.0.1:37091/?kvalitet=lag",
+ "namn": "lag",
+ "matt": {
+  "bildrutor": 48,
+  "medel_ms": 83.9,
+  "p95_ms": 150,
+  "draw_per_ruta": 130.8,
+  "tri_per_ruta": 21899,
+  "heap_mb": 58
+ },
+ "fel": []
+}

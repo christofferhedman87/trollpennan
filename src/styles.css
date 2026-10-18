@@ -69,6 +69,8 @@ content:"";width:18px;height:86px;border-radius:8px 8px 3px 3px;background:linea
 @keyframes penna{50%{transform:rotate(18deg) translateY(8px)}}
 .ang.tred{background:#7ec8f2}
 .ang.tred::after{display:none}
+.angen-3d canvas{filter:saturate(var(--grad-m,1)) contrast(var(--grad-k,1))}
+.vinjett{position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at 50% 55%,transparent 58%,rgba(20,40,10,var(--vinjett,0)) 100%)}
 .ladd-3d{
 position:absolute;inset:0;z-index:4;display:grid;place-items:center;align-content:center;gap:16px;
 background:linear-gradient(180deg,#7ec8f2 0 42%,#fff4dc 42% 58%,#8fd16a 58% 100%);color:var(--color-ink)}
