@@ -1,3 +1,9 @@
+# Grundtanken (Christoffer, 2026-10-18) – allt mäts mot den
+
+> Trollpennan är ett spel där yngre barn skapar en helt egen värld genom att använda svenska korrekt och kreativt. Det barnet skriver ska materialiseras/visualiseras på skärmen, nästan oavsett vad hen skriver. Därför behövs enorma mängder modeller och attribut, och att få in modeller enkelt och i bulk är helt centralt. Nu djur, men även hus, stall, hagar mm. Uppdrag på andra platser (skogen, sjön, grottan), främst från Doktor Bengtsson. Fast kameravinkel som i Hay Day är ok.
+
+Varje runda, varje plan och varje beslut ska kunna svara på: *ökar detta andelen av det barnet skriver som syns på skärmen, eller gör det enklare att få in fler modeller och attribut?* Mått och plan: `PROJECT.md` (täckningsmått i avsnitt 11, färdplan i avsnitt 8).
+
 # Aktuellt mandat 2026-10-17
 
 Cloudflare Pages är inte ett krav. Publicering sker som statiskt bygge (`npm run build:pages`) på valfri plattform. React/R3F och Phaser bevaras tills ett byte har motiverats och verifierats.
