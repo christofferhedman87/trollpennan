@@ -12,6 +12,49 @@ export type DjurSignal = { klapp: number; ror: number };
 
 const texCache = new Map<string, THREE.CanvasTexture>();
 
+/** R8 färgrundan: bulkmodeller delar en standardpalett (nyans 25), men Kenney-modeller är en gemensam färgatlas där isbjörnen är vit/gräddvit och inte alls brun, så ingen pixel träffas och färgen "tas inte". Därför mäter vi vilken färg just den här kroppen använder (texeln vid nätets UV, vanligaste färgen) och ställer in paletten efter den. */
+function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): { from: number; range: number; bodyL: number } | null {
+  const img = tex.image as CanvasImageSource | undefined;
+  const uv = mesh.geometry?.attributes?.uv;
+  if (!img || !uv) return null;
+  const w = (img as HTMLImageElement).width || (img as ImageBitmap).width;
+  const h = (img as HTMLImageElement).height || (img as ImageBitmap).height;
+  if (!w || !h) return null;
+  const c = document.createElement("canvas");
+  c.width = w;
+  c.height = h;
+  const x = c.getContext("2d", { willReadFrequently: true });
+  if (!x) return null;
+  x.drawImage(img, 0, 0);
+  const d = x.getImageData(0, 0, w, h).data;
+  const rakna = new Map<number, { n: number; r: number; g: number; b: number }>();
+  const steg = Math.max(1, Math.floor(uv.count / 1500));
+  for (let i = 0; i < uv.count; i += steg) {
+    const px = Math.min(w - 1, Math.max(0, Math.floor(uv.getX(i) * w)));
+    const py = Math.min(h - 1, Math.max(0, Math.floor((tex.flipY ? 1 - uv.getY(i) : uv.getY(i)) * h)));
+    const o = (py * w + px) * 4;
+    if ((d[o + 3] ?? 0) < 8) continue;
+    const r = d[o] ?? 0;
+    const g = d[o + 1] ?? 0;
+    const b = d[o + 2] ?? 0;
+    const k = (r >> 4) * 256 + (g >> 4) * 16 + (b >> 4);
+    const p = rakna.get(k) ?? { n: 0, r: 0, g: 0, b: 0 };
+    p.n++;
+    p.r += r;
+    p.g += g;
+    p.b += b;
+    rakna.set(k, p);
+  }
+  let bast: { n: number; r: number; g: number; b: number } | null = null;
+  for (const p of rakna.values()) if (!bast || p.n > bast.n) bast = p;
+  if (!bast) return null;
+  const col = new THREE.Color(bast.r / bast.n / 255, bast.g / bast.n / 255, bast.b / bast.n / 255);
+  const hsl = { h: 0, s: 0, l: 0 };
+  col.getHSL(hsl);
+  // låg färgmättnad (vit, grå, gräddvit): neutralt läge (range < 0), annars färgens egen nyans
+  return hsl.s < 0.35 ? { from: 0, range: -1, bodyL: hsl.l } : { from: Math.round(hsl.h * 360), range: 22, bodyL: hsl.l };
+}
+
 function paletteSwap(tex: THREE.Texture, fromHue: number, range: number, toHex: string, bodyL: number) {
   const nyckel = `${fromHue}|${range}|${bodyL}|${toHex}|${tex.uuid}`;
   const finns = texCache.get(nyckel);
@@ -40,7 +83,7 @@ function paletteSwap(tex: THREE.Texture, fromHue: number, range: number, toHex: 
     tmp.getHSL(hsl);
     let dh = Math.abs(hsl.h * 360 - fromHue);
     dh = Math.min(dh, 360 - dh);
-    const hit = range < 0 ? hsl.s < 0.2 && hsl.l > 0.2 && hsl.l < 0.85 : dh <= range && hsl.s > 0.25;
+    const hit = range < 0 ? hsl.s < 0.35 && Math.abs(hsl.l - bodyL) < 0.12 : dh <= range && hsl.s > 0.25;
     if (!hit) continue;
     tmp.setHSL(th.h, th.s, THREE.MathUtils.clamp(th.l + (hsl.l - bodyL) * 0.6, 0.06, 0.95));
     d.data[i] = tmp.r * 255;
@@ -139,7 +182,8 @@ function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
         if (roll === "farg" && hex) m.color.set(hex);
         if (roll === "ljus") m.color.set(hex ? ljusare(hex) : "#ffd27a");
       } else if (pal && hex && m.map) {
-        m.map = paletteSwap(m.map, pal.from, pal.range, hex, pal.bodyL);
+        const egen = ent?.inlagd ? karnfarg(mesh, m.map) : null;
+        m.map = egen ? paletteSwap(m.map, egen.from, egen.range, hex, egen.bodyL) : paletteSwap(m.map, pal.from, pal.range, hex, pal.bodyL);
         m.color.set("#ffffff");
       }
       if (glans && (roll === "farg" || (!ent?.material && pal))) {

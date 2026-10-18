@@ -17,6 +17,7 @@ import { artFarg, flyger, hoppHojd, simmar, svavar, vikt } from "./entiteter.ts"
 import { faestTillbehor, procAnkare } from "./tillbehor/index.ts";
 import { DjurEffekter } from "./effekter.tsx";
 import { KenneyNatur } from "./kenneyNatur.tsx";
+import { KV, MILJO, markTextur } from "./miljo.ts";
 import { AGG_KROPP, OrdAgg, ReservAgg } from "./ordagg.tsx";
 
 const HINT = (texterJson as { tred_hint: string }).tred_hint;
@@ -507,7 +508,7 @@ const TOON_MAP = (() => {
   t.needsUpdate = true;
   return t;
 })();
-const KONTUR_MAT = new THREE.MeshBasicMaterial({ color: "#3B2F2F", side: THREE.BackSide });
+const KONTUR_MAT = new THREE.MeshBasicMaterial({ color: MILJO.kontur.farg, side: THREE.BackSide });
 const GEO = {
   boll: new THREE.SphereGeometry(1, 8, 6),
   kon: new THREE.ConeGeometry(0.5, 1, 5),
@@ -1061,6 +1062,7 @@ const TUVOR: [number, number][] = [
 
 const STENAR: [number, number, number][] = [[1.7, -0.05, 0.14]];
 
+const MARK_TEX = markTextur(THREE);
 const MARK_GEO = (() => {
   const g = new THREE.PlaneGeometry(160, 160, 28, 28);
   const pos = g.attributes.position;
@@ -1127,7 +1129,7 @@ function SvajMark({ color, natt }: { color: string; natt: number }) {
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
       <primitive object={MARK_GEO} attach="geometry" />
-      <meshToonMaterial ref={mat} color={color} vertexColors gradientMap={TOON_MAP} onBeforeCompile={kompilera} />
+      <meshToonMaterial ref={mat} color={color} vertexColors map={MARK_TEX} gradientMap={TOON_MAP} onBeforeCompile={kompilera} />
     </mesh>
   );
 }
@@ -1769,16 +1771,16 @@ void main() {
 
 function Himmel({ natt }: { natt: number }) {
   const mesh = useRef<THREE.Mesh>(null);
-  const dagTop = useMemo(() => new THREE.Color("#7EC8F2"), []);
-  const dagHor = useMemo(() => new THREE.Color("#A9CDE6"), []);
+  const dagTop = useMemo(() => new THREE.Color(MILJO.himmel.dag_topp), []);
+  const dagHor = useMemo(() => new THREE.Color(MILJO.himmel.dag_horisont), []);
   const nattTop = useMemo(() => new THREE.Color("#1A2344"), []);
   const nattHor = useMemo(() => new THREE.Color("#3A4A72"), []);
   const top = useRef(new THREE.Color("#7EC8F2"));
   const hor = useRef(new THREE.Color("#A9CDE6"));
   const uniforms = useMemo(
     () => ({
-      uTop: { value: new THREE.Color("#7EC8F2") },
-      uHor: { value: new THREE.Color("#A9CDE6") },
+      uTop: { value: new THREE.Color(MILJO.himmel.dag_topp) },
+      uHor: { value: new THREE.Color(MILJO.himmel.dag_horisont) },
     }),
     [],
   );
@@ -1980,8 +1982,9 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
   const djur = useMinne((s) => s.ang);
   const garden = useMinne((s) => s.garden);
   const vis = saga ? 0 : 0 * natt;
-  const himmel = "#7EC8F2";
+  const himmel = MILJO.himmel.bakgrund;
   const mark = "#ffffff";
+  const L = MILJO.ljus;
   const amb = useRef<THREE.AmbientLight>(null);
   const hem = useRef<THREE.HemisphereLight>(null);
   const dir = useRef<THREE.DirectionalLight>(null);
@@ -1992,18 +1995,18 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
   return (
     <>
       <color attach="background" args={[himmel]} />
-      <fog attach="fog" args={["#C5D5E0", 28, 55]} />
+      <fog attach="fog" args={[MILJO.dis.farg, MILJO.dis.nara, MILJO.dis.fjarran]} />
       <Himmel natt={vis} />
-      <ambientLight ref={amb} intensity={0.15} color="#fff6ea" />
-      <hemisphereLight ref={hem} args={["#dff3ff", "#a8c97a", 2.4]} />
+      <ambientLight ref={amb} intensity={L.ambient.styrka} color={L.ambient.farg} />
+      <hemisphereLight ref={hem} args={[L.hemi.himmel, L.hemi.mark, L.hemi.styrka]} />
       <directionalLight
         ref={dir}
-        color="#fff1dc"
-        position={[3, 6, 5]}
-        intensity={2.6}
+        color={L.nyckel.farg}
+        position={L.nyckel.position as [number, number, number]}
+        intensity={L.nyckel.styrka}
         castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
+        shadow-mapSize-width={KV.skuggkarta}
+        shadow-mapSize-height={KV.skuggkarta}
         shadow-camera-near={0.5}
         shadow-camera-far={28}
         shadow-camera-left={-8}
@@ -2011,8 +2014,8 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
         shadow-camera-top={8}
         shadow-camera-bottom={-8}
       />
-      <directionalLight ref={fyll} color="#cfe6ff" position={[-6, 3, 4]} intensity={0.9} />
-      <directionalLight ref={kantL} color="#ffffff" position={[-2, 4, -5]} intensity={1.2} />
+      <directionalLight ref={fyll} color={L.fyll.farg} position={[-6, 3, 4]} intensity={L.fyll.styrka} />
+      <directionalLight ref={kantL} color={L.kant.farg} position={[-2, 4, -5]} intensity={L.kant.styrka} />
       <SagaLjus natt={vis} amb={amb} hem={hem} dir={dir} sol={sol} fyll={fyll} kant={kantL} />
       <mesh position={[-1.5, 5.5, -6]}>
         <sphereGeometry args={[0.42, 8, 6]} />
@@ -2131,7 +2134,7 @@ export function Angen3D({ natt, saga = false }: { natt: number; saga?: boolean }
     dolj.current = window.setTimeout(() => setPrat(false), 2400);
   }, []);
   return (
-    <div ref={rot} className="angen-3d" data-testid="angen-3d" data-djur={djur.length} data-byggen={garden.length} data-saga={saga ? "ja" : "nej"}>
+    <div ref={rot} className="angen-3d" data-testid="angen-3d" style={{ "--grad-m": KV.farggrad ? MILJO.farggrad.mattnad : 1, "--grad-k": KV.farggrad ? MILJO.farggrad.kontrast : 1, "--vinjett": MILJO.vinjett.styrka } as React.CSSProperties} data-djur={djur.length} data-byggen={garden.length} data-saga={saga ? "ja" : "nej"}>
       {!saga && !dragit ? (
         <p className="tred-hint" data-testid="tred-hint">
           {HINT}
@@ -2149,7 +2152,7 @@ export function Angen3D({ natt, saga = false }: { natt: number; saga?: boolean }
       <TredGren>
         <Canvas
           camera={{ position: [0, 4.15, 9.8], fov: 58, near: 0.1, far: 90 }}
-          dpr={[1, 2]}
+          dpr={[1, KV.dpr_max]}
           shadows
           gl={{ antialias: true, toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1 }}
           onCreated={({ gl }) => {
@@ -2164,6 +2167,7 @@ export function Angen3D({ natt, saga = false }: { natt: number; saga?: boolean }
           <Scen natt={natt} onSnart={onSnart} saga={saga} />
         </Canvas>
       </TredGren>
+      <div className="vinjett" aria-hidden />
     </div>
   );
 }
