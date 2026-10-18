@@ -1,0 +1,25 @@
+{
+ "mine_start": "framsida",
+ "utrop_start": 1,
+ "figur_ruta": {
+  "x": 4,
+  "y": 562,
+  "w": 118,
+  "h": 176
+ },
+ "malstorlek_ok": true,
+ "remsa": "Doktor Bengtsson: Det verkar som att din kanin fryser. Se om du kan skriva fram något som värmer.",
+ "skriver": true,
+ "mine_fel": "automat",
+ "status_efter_fel": "pagar",
+ "klar_replik_syns": true,
+ "mine_klar": "glad",
+ "stjarnor_plus": 2,
+ "status_efter_klar": "klar",
+ "bok_klara": [
+  "Doktor Bengtsson: Det verkar som att din kanin fryser. Se om du kan skriva fram något som värmer."
+ ],
+ "sidfel": [],
+ "bildfel": [],
+ "ok": true
+}
