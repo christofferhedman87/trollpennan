@@ -580,12 +580,12 @@ const OGA_MAT = new THREE.MeshBasicMaterial({ vertexColors: true });
 function DjurForm({ spec }: { spec: Sparad }) {
   const farg = djurFarg(spec);
   const pack = useMemo(() => {
-    const horn = spec.tillbehor.some((t) => t.id === "horn") || spec.kropp === "enhörning";
     return byggPack({
       kropp: spec.kropp,
       farg,
       krona: false,
-      horn,
+      // Hornet ritas av faestTillbehor så barnets färg syns. Inte en extra guldkon i meshen.
+      horn: false,
       monster: Boolean(spec.monster),
       monsterFarg: spec.monsterfarg ?? "#6D4C41",
     });
