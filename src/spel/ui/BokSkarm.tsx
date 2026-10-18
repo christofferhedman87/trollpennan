@@ -10,7 +10,7 @@ import { fyll } from "../fyll.ts";
 import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
 import { OnskaAnsikte } from "./OnskaAnsikte.tsx";
 import { bestamdAv, frasForByggOrd, kanEtikett, kortIkon } from "./hjalp.ts";
-import { FIR, FLIKAR, RADER, TEXTER } from "./spelData.ts";
+import { FIR, FLIKAR, TANGENTBORD, TEXTER } from "./spelData.ts";
 import type { Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
 
 type BokSkarmProps = {
@@ -96,19 +96,19 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
         {panel === "spel" || (panel === "byggbok" && lage === "skriv") ? (
           <>
             <div className="bok-mitt">
-            {panel === "spel" ? <UppdragsRemsa uppdrag={aktivtSkrivUppdrag(uppdragSpar)} /> : null}
+            {panel === "spel" ? <UppdragsRemsa uppdrag={aktivtSkrivUppdrag(uppdragSpar)} fyllForslag={fyllExempel} /> : null}
             {(onskaOpp || (onskan && !onskaSyns)) && onskan ? (
               <div className="onska-remsa" data-testid="onska-remsa">
                 {andrar && onskaDjur ? (
                   <div className="onska-topp" data-testid="onska-topp">
                     <OnskaAnsikte djur={onskaDjur} />
                     <p className="onska-text">
-                      {fyll(FIR.onskan.onskar, { djur: bestamdAv(onskaDjur.kropp, true) })} {onskan.text}
+                      {fyll(FIR.onskan.fran_bengtsson_djur, { djur: bestamdAv(onskaDjur.kropp, true), text: onskan.text })}
                     </p>
                   </div>
                 ) : (
                   <p className="onska-text">
-                    ★ {FIR.onskan.rubrik} {onskan.text}
+                    ★ {fyll(FIR.onskan.fran_bengtsson, { text: onskan.text })}
                   </p>
                 )}
                 {onskaEx.length ? (
@@ -150,7 +150,7 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
                 <details>
                   <summary>{upplevelse.examplesTitle}</summary>
                   <div className="ideer">
-                    {upplevelse.examples.map(ex => <button type="button" className="kort" key={ex} onClick={() => fyllExempel(ex)}>{ex}</button>)}
+                    {(aktivtSkrivUppdrag(uppdragSpar)?.val?.grupper.flatMap((g) => g.forslag.map((f) => f.fras)) ?? upplevelse.examples).map(ex => <button type="button" className="kort" key={ex} onClick={() => fyllExempel(ex)}>{ex}</button>)}
                   </div>
                 </details>
               </div>
@@ -252,30 +252,25 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
             </button>
             {lage === "skriv" && !forslag && !behover ? (
               <div className="tangenter" data-testid="tangentbord">
-                {RADER.slice(0, 2).map((rad) => (
-                  <div className="rad" key={rad[0]}>
-                    {rad.map((t) => (
-                      <button key={t} type="button" className="tangent" onClick={() => skrivTecken(t)}>
-                        {t}
-                      </button>
-                    ))}
+                {TANGENTBORD.rader.map((rad) => (
+                  <div className="rad" key={rad.join("")}>
+                    {rad.map((t) =>
+                      t === "{radera}" ? (
+                        <button key={t} type="button" className="tangent radera" data-testid="radera" aria-label="Sudda" onClick={sudda}>
+                          ⌫
+                        </button>
+                      ) : t === "{mellanslag}" ? (
+                        <button key={t} type="button" className="tangent mellanslag" data-testid="mellanslag" aria-label="Mellanslag" onClick={() => skrivTecken(" ")}>
+                          mellanslag
+                        </button>
+                      ) : (
+                        <button key={t} type="button" className="tangent" onClick={() => skrivTecken(t)}>
+                          {t}
+                        </button>
+                      ),
+                    )}
                   </div>
                 ))}
-                <div className="rad">
-                  <button type="button" className="tangent radera" aria-label="Sudda" onClick={sudda}>
-                    ⌫
-                  </button>
-                  {RADER[2]!.map((t) => (
-                    <button key={t} type="button" className="tangent" onClick={() => skrivTecken(t)}>
-                      {t}
-                    </button>
-                  ))}
-                </div>
-                <div className="rad">
-                  <button type="button" className="tangent mellanslag" data-testid="mellanslag" aria-label="Mellanslag" onClick={() => skrivTecken(" ")}>
-                    mellanslag
-                  </button>
-                </div>
               </div>
             ) : null}
           </>
@@ -307,7 +302,7 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
             <div className="kort-yta byggbok">
               {onskan?.kalla === "bygg" ? (
                 <p className="onska-text">
-                  ★ {FIR.onskan.rubrik} {onskan.text}
+                  ★ {fyll(FIR.onskan.fran_bengtsson, { text: onskan.text })}
                 </p>
               ) : null}
               <h2>{byggSida.titel}</h2>

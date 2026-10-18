@@ -16,6 +16,7 @@ import {
   omradeMed,
   passarDjur,
   nyttUppdragRad,
+  skyltText,
   uppdragFor,
   uppdragKlart,
   varelseAv,
@@ -106,10 +107,10 @@ export function startaForPlats(plats: string): string[] {
 export function lasSkylt(id: string): { text: string; nytt: string | null } {
   const s = SKYLTAR.skyltar.find((x) => x.id === id);
   if (!s) return { text: "", nytt: null };
-  if (!s.startar || useMinne.getState().uppdrag[s.startar]) return { text: s.text, nytt: null };
+  if (!s.startar || useMinne.getState().uppdrag[s.startar]) return { text: skyltText(s), nytt: null };
   useMinne.getState().sattUppdrag(s.startar, "pagar");
   const u = uppdragFor(s.startar);
-  return { text: s.text, nytt: u ? nyttUppdragRad(u) : null };
+  return { text: skyltText(s), nytt: u ? nyttUppdragRad(u) : null };
 }
 
 export type HinderSvar =

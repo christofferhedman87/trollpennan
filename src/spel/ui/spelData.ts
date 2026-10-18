@@ -1,4 +1,5 @@
 import byggSidorJson from "../../../data/byggsidor.json" with { type: "json" };
+import tangentbordJson from "../../../data/tangentbord.json" with { type: "json" };
 import firandeJson from "../../../data/firande.json" with { type: "json" };
 import ledJson from "../../../data/ledtradar.json" with { type: "json" };
 import ljudJson from "../../../data/ljud.json" with { type: "json" };
@@ -48,7 +49,7 @@ export const FIR = firandeJson as {
   ny_sida: { text: string };
   sida_klar: { text: string; stjarnor: number };
   bok_klar: { text: string };
-  onskan: { knapp: string; inte_nu: string; rubrik: string; led: string; onskar: string; andra: string; kompis: string };
+  onskan: { knapp: string; inte_nu: string; rubrik: string; led: string; onskar: string; andra: string; kompis: string; fran_bengtsson: string; fran_bengtsson_djur: string; knapp_bengtsson: string };
 };
 export const LED = (ledJson as { ledtradar: Record<string, Led> }).ledtradar;
 export const LJUD_KNAPP = (ljudJson as { foralder: { knapp: string } }).foralder.knapp;
@@ -64,8 +65,5 @@ export const FLIKAR: { id: Slot; namn: string }[] = [
   { id: "tillbehor", namn: "Har" },
 ];
 
-export const RADER = [
-  ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "å"],
-  ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ö", "ä"],
-  ["z", "x", "c", "v", "b", "n", "m"],
-];
+// Skärmtangentbordets layout ligger i data/tangentbord.json (R6A-3B): rader av tangenter, specialtangenter i {klammer}.
+export const TANGENTBORD = tangentbordJson as { rader: string[][] };

@@ -1,7 +1,9 @@
 // R6A: alla uppdrag ges av Doktor Bengtsson. Målen och reglerna är oförändrade; originaltexterna rörs inte.
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { test } from "node:test";
-import { NPC, OMR, SKATTER, UPP, nyttUppdragRad, uppdragKlart, uppdragText, type Uppdrag } from "./aventyr.ts";
+import { FIR } from "./ui/spelData.ts";
+import { NPC, OMR, SKATTER, SKYLTAR, UPP, nyttUppdragRad, skyltText, uppdragKlart, uppdragText, type Uppdrag } from "./aventyr.ts";
 
 /** Ögonblicksbild av uppdrag.json före R6A (mål, regler och de ursprungliga, granskade texterna). */
 const FORE: Record<string, { omrade: string; typ: string; mal: unknown; stjarnor: number; skatt: string | null; text: string; klart: string }> = {
@@ -180,4 +182,28 @@ test("varje område och skatt som uppdragen pekar på finns", () => {
     assert.ok(OMR.omraden.some((o) => o.id === u.omrade), `${u.id}: område ${u.omrade}`);
     if (u.skatt) assert.ok(SKATTER.skatter.some((s) => s.id === u.skatt), `${u.id}: skatt ${u.skatt}`);
   }
+});
+
+// R6A-3: bara Bengtsson ger uppdrag. Djurens lappar som startar ett uppdrag visar hans text; deras ursprungstexter rörs inte.
+test("lapparna: de som startar ett uppdrag ges av Bengtsson, ursprungstexterna är orörda", () => {
+  const hash = createHash("sha256").update(JSON.stringify(SKYLTAR.skyltar.map((s) => [s.id, s.text]))).digest("hex");
+  assert.equal(hash, "f59cbd977d7a69b2e0828524701502f83507bc3e4f48850a9c29f98e4e3c38bc", "en ursprungstext (text) i skyltar.json ändrades");
+  const startande = SKYLTAR.skyltar.filter((s) => s.startar);
+  assert.equal(startande.length, 8);
+  for (const s of startande) {
+    assert.equal(s.givare, "bengtsson", s.id);
+    assert.ok(s.text_bengtsson && s.text_bengtsson !== s.text && s.text_bengtsson.length <= 140, s.id);
+    assert.equal(s.granskad, false, `${s.id}: utkast tills Copilot granskat`);
+    assert.equal(skyltText(s), s.text_bengtsson);
+    assert.ok(UPP.uppdrag.some((u) => u.id === s.startar), `${s.id} startar ett uppdrag som finns`);
+  }
+  for (const s of SKYLTAR.skyltar.filter((s) => !s.startar)) assert.equal(skyltText(s), s.text, `${s.id}: vanliga skyltar är oförändrade`);
+});
+
+// R6A-3: önskebubblan (djurens önskningar) har Bengtssons röst via datamallar; djurens egna texter (onskningar.json) rörs inte.
+test("önskningar visas i Bengtssons röst: mallar i firande.json, originaltexterna orörda", () => {
+  assert.match(FIR.onskan.fran_bengtsson, /^Doktor Bengtsson: .*\{text\}/);
+  assert.match(FIR.onskan.fran_bengtsson_djur, /^Doktor Bengtsson: \{djur\} .*\{text\}/);
+  assert.ok(FIR.onskan.knapp_bengtsson.length > 0 && FIR.onskan.knapp, "originalknappen finns kvar i datan");
+  assert.equal(FIR.onskan.onskar, "{djur} önskar:", "ursprungsmallen orörd");
 });

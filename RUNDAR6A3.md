@@ -1,0 +1,2 @@
+# R6A-3 + R6A-3B
+Patcharna r6a-3-1 och r6a-3b-2 applicerade i ordning, byte-lika mot ref/. Bevis: test:product 107/107, typecheck 0 fel, check:struktur grön (Spel.tsx 1809 rader), eslint 17 (som före), build:pages grön, forslag-prov, val-prov och tangent-prov exit 0. Bubbelbilder (375x812): `docs/skarmbilder/r6a3/efter/onska-bubbla.png`, `onska-bok.png`: texten läsbar och skymmer inte knappen; mallen i data/firande.json orörd. DOM-tur: bara önskebubbla/-bok (Bengtssons röst) och data-testid="radera" skiljer. Modellspanaren får rundor/R6A-3-bara-bengtsson/modellbehov.tsv.

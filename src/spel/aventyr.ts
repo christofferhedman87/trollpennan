@@ -71,6 +71,8 @@ export type Uppdrag = {
   skatt: string | null;
   /** R6A-2: löses genom att barnet skriver. Minst `min` olika ord ur `ord` (data/bengtsson.json). */
   krav?: { ord: string[]; min?: number };
+  /** R6A-3: guidande förslag (knappar) under uppdraget. Varje fras ska uppfylla `krav`; fritext är kvar som alternativ. */
+  val?: { rubrik: string; grupper: { etikett: string; forslag: { ord: string; fras: string; agg?: string }[] }[] };
 };
 
 export const OMR = omradenJson as {
@@ -98,8 +100,25 @@ export const VILDA = vildaJson as {
   djur: Vild[];
 };
 
+export type Skylt = {
+  id: string;
+  omrade: string;
+  typ: string;
+  text: string;
+  startar: string | null;
+  /** R6A-3: en lapp som startar ett uppdrag ges av Bengtsson; då visas `text_bengtsson` (utkast) i stället för `text`. */
+  givare?: string;
+  text_bengtsson?: string;
+  granskad?: boolean;
+};
+
+/** Texten som visas när barnet läser skylten/lappen: givarens (Bengtsson) när den finns, annars den ursprungliga. */
+export function skyltText(s: Skylt): string {
+  return s.givare && s.text_bengtsson ? s.text_bengtsson : s.text;
+}
+
 export const SKYLTAR = skyltarJson as {
-  skyltar: { id: string; omrade: string; typ: string; text: string; startar: string | null }[];
+  skyltar: Skylt[];
 };
 
 export const UPP = uppdragJson as {

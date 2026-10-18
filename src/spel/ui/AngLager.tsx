@@ -9,6 +9,7 @@ import { useMinne } from "../minne.ts";
 import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
 import { nattvaken } from "../entiteter.ts";
 import { dukStil } from "./hjalp.ts";
+import { fyll } from "../fyll.ts";
 import { FIR, TEXTER } from "./spelData.ts";
 import type { Banner, Bubbla, Varld } from "./typer.ts";
 
@@ -117,8 +118,8 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
               data-testid="onska-bubbla"
               onClick={oppnaOnska}
             >
-              <p>★ {onskan.text}</p>
-              <p className="gor">{FIR.onskan.knapp}</p>
+              <p>★ {fyll(FIR.onskan.fran_bengtsson, { text: onskan.text })}</p>
+              <p className="gor">{FIR.onskan.knapp_bengtsson}</p>
             </button>
           ) : null}
           {meny ? (

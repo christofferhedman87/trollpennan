@@ -110,3 +110,20 @@ test("bilder: varje mine pekar på en fil som finns, är WebP och ryms i budgete
   const bengt = Object.values(NPC_DEL.bengtsson!.bilder).reduce((s, u) => s + fs.statSync(path.join(rot, u)).size, 0);
   assert.ok(bengt <= 400 * 1024, `Bengtssons åtta miner ${Math.round(bengt / 1024)} KB, budget 400 KB`);
 });
+
+// R6A-3: guidande val. Knapparna hjälper, fritext är kvar, och varje förslag klarar uppdraget och får spelet att skapa något.
+test("guidande val: varje skriv-uppdrag har förslag, och varje förslag uppfyller kravet och skapar något", () => {
+  for (const u of SKRIV) {
+    assert.ok(u.val, `${u.id} saknar val`);
+    const forslag = u.val!.grupper.flatMap((g) => g.forslag);
+    assert.ok(u.val!.grupper.length >= 1 && forslag.length >= 3 && forslag.length <= 8, `${u.id}: några få knappar`);
+    for (const g of u.val!.grupper) assert.ok(g.etikett && g.forslag.length >= 1 && g.forslag.length <= 4, `${u.id}/${g.etikett}`);
+    for (const f of forslag) {
+      assert.ok(kravUppfyllt(u.krav!, f.fras), `${u.id}: förslaget "${f.fras}" klarar inte kravet`);
+      assert.ok(ordIText(f.fras).includes(f.ord), `${u.id}: knappen "${f.ord}" står inte i "${f.fras}"`);
+      assert.equal(tolkaMedReserv(f.fras).typ, "skapad", `${u.id}: "${f.fras}" ger inget djur, då körs kontrollen aldrig`);
+    }
+    assert.equal(new Set(forslag.map((f) => f.fras)).size, forslag.length, `${u.id}: dubbletter`);
+    assert.ok(u.krav!.ord.length >= 8, `${u.id}: fritext räknas fortfarande (kravlistan är kvar)`);
+  }
+});
