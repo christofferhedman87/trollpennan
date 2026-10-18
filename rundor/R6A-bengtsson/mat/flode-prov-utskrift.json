@@ -1,0 +1,14 @@
+{
+ "lapp": {
+  "text": "Jag har tappat min fina silverkotte någonstans bland svamparna. Om du hittar den, lägg den vid stubben. /Ekorren",
+  "nytt": "Nytt uppdrag från Doktor Bengtsson: Hoppsan! Ekorren har tappat sin silverkotte och är ledsen. Kan du leta efter den bland svamparna?"
+ },
+ "klar": {
+  "texter": [
+   "Uppdrag klart!",
+   "Där var den! Nu kan Ekorren sova gott i natt. Tack för hjälpen!",
+   "Du fick Silverkotten! Den ligger i Lådan på gården."
+  ],
+  "stj": 2
+ }
+}
