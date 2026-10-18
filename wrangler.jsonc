@@ -1,0 +1,1 @@
+{"$schema":"node_modules/wrangler/config-schema.json","name":"trollpennan","compatibility_date":"2026-10-01","assets":{"directory":"./dist-pages","not_found_handling":"single-page-application"}}
