@@ -28,7 +28,7 @@ test("en rad får aldrig bära mer än ord, grundord, kategori, antal och datum"
 
 test("beställningen: tabell sorterad på antal, täckta och ignorerade tas bort, tom lista ger tydlig text", () => {
   const lista = sammanfoga([rad("elefant", 5), rad("pizza", 9, { kategori: "mat", grund: "pizza" }), rad("zebra", 2), rad("spöke", 1, { status: "ignorerad" })]);
-  const text = bestallning(lista, { datum: "2026-10-18", takta: taktaOrd({ entiteter: { zebra: {} } }) });
+  const text = bestallning(lista, { datum: "2026-10-18", takta: taktaOrd({ entiteter: { zebra: { typ: "djur" }, hus: { typ: "byggnad" } } }) });
   assert.match(text, /Ord att hitta modell till \(2\)/);
   assert.ok(text.indexOf("**pizza**") < text.indexOf("**elefant**"));
   assert.doesNotMatch(text, /\*\*spöke\*\*/);

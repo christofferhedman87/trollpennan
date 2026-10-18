@@ -1,0 +1,1132 @@
+{
+ "sammanfattning": {
+  "rader": 28,
+  "ok": 0,
+  "ok_flaggad": 15,
+  "hoppade": 7,
+  "fel": 6,
+  "klarar_utan_flagga_procent": 0,
+  "klarar_procent": 53.6,
+  "unika_nya_ord": 20,
+  "felorsaker": {
+   "filen går inte att läsa som GLB: ENOENT: no such file or dir": 3,
+   "Ntrianglar (högst Nför hus). Förenkla i Blender (Decimate) e": 1,
+   "Ntrianglar (högst Nför kläder). Förenkla i Blender (Decimate": 1,
+   "Ntrianglar (högst Nför människa). Förenkla i Blender (Decima": 1
+  },
+  "flaggor": {
+   "stil": 21,
+   "framsidan kunde inte mätas": 3,
+   "framsidan verkar vara -z": 2,
+   "framsidan verkar vara +x": 1,
+   "upphov": 8
+  }
+ },
+ "rader": [
+  {
+   "fil": "oga-cc0/butterfly-animated.glb",
+   "kategori": "djur",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)",
+    "framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket."
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "djur",
+   "ord": [
+    "fjäril"
+   ],
+   "ordTagna": [],
+   "flyttaKat": [],
+   "id": "fjaril",
+   "matt": {
+    "tri": 240,
+    "hojd": 1.319,
+    "bredd": 10.44,
+    "djup": 5.436,
+    "material": 1,
+    "texturer": 0,
+    "maxTextur": 0,
+    "skinnad": true,
+    "animationer": 3
+   },
+   "ankare": [],
+   "anim": [
+    "Flying",
+    "Sitting1",
+    "Sitting2"
+   ],
+   "fram": {
+    "axel": null,
+    "metod": "bbox",
+    "saker": false,
+    "orsak": "högsta punkterna ligger i mitten"
+   },
+   "texturstorlek": 512,
+   "bytesFore": 66312,
+   "bytes": 52928,
+   "efter": {
+    "tri": 240,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": {
+    "materialnamn": "Butterfly",
+    "faktor": [
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "malhojdMatt": 1.319225251674652
+  },
+  {
+   "fil": "oga-cc0/camel-basemesh.glb",
+   "kategori": "djur",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)",
+    "framsidan verkar vara -z (gissad ur bounding box), standard är +z. framAxel läggs in på entiteten."
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "djur",
+   "ord": [
+    "kamel"
+   ],
+   "ordTagna": [],
+   "flyttaKat": [],
+   "id": "kamel",
+   "matt": {
+    "tri": 772,
+    "hojd": 1.717,
+    "bredd": 0.201,
+    "djup": 2.262,
+    "material": 1,
+    "texturer": 0,
+    "maxTextur": 0,
+    "skinnad": false,
+    "animationer": 0
+   },
+   "ankare": [],
+   "anim": [],
+   "fram": {
+    "axel": "-z",
+    "metod": "bbox",
+    "saker": false,
+    "gissning": "-z"
+   },
+   "texturstorlek": 512,
+   "bytesFore": 14928,
+   "bytes": 7200,
+   "efter": {
+    "tri": 772,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": {
+    "materialnamn": "default",
+    "faktor": [
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "malhojdMatt": 1.7172504318084978
+  },
+  {
+   "fil": "oga-cc0/crocodile-croc2.glb",
+   "kategori": "djur",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "djur",
+   "ord": [
+    "krokodil"
+   ],
+   "ordTagna": [],
+   "flyttaKat": [],
+   "id": "krokodil",
+   "matt": {
+    "tri": 354,
+    "hojd": 1.582,
+    "bredd": 0.988,
+    "djup": 9.283,
+    "material": 0,
+    "texturer": 0,
+    "maxTextur": 0,
+    "skinnad": false,
+    "animationer": 0
+   },
+   "ankare": [],
+   "anim": [],
+   "fram": {
+    "axel": "+z",
+    "metod": "bbox",
+    "saker": false,
+    "gissning": "+z"
+   },
+   "texturstorlek": 512,
+   "bytesFore": 15740,
+   "bytes": 7916,
+   "efter": {
+    "tri": 354,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": null,
+   "malhojdMatt": 1.581791341304779
+  },
+  {
+   "fil": "oga-cc0/crocodile-br.glb",
+   "kategori": "djur",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "HOPPAD",
+   "undertyp": "djur",
+   "ord": [],
+   "ordTagna": [
+    "krokodil (denna körning)"
+   ],
+   "flyttaKat": [],
+   "hoppa": "ordet är redan taget eller spärrat",
+   "id": "crocodile-br"
+  },
+  {
+   "fil": "oga-cc0/raven.glb",
+   "kategori": "djur",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)",
+    "framsidan verkar vara +x (gissad ur bounding box), standard är +z. framAxel läggs in på entiteten."
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "djur",
+   "ord": [
+    "kråka",
+    "korp"
+   ],
+   "ordTagna": [],
+   "flyttaKat": [],
+   "id": "kraka",
+   "matt": {
+    "tri": 1190,
+    "hojd": 1.151,
+    "bredd": 2.352,
+    "djup": 1.685,
+    "material": 1,
+    "texturer": 0,
+    "maxTextur": 0,
+    "skinnad": true,
+    "animationer": 3
+   },
+   "ankare": [],
+   "anim": [
+    "Default",
+    "fly",
+    "stand"
+   ],
+   "fram": {
+    "axel": "+x",
+    "metod": "bbox",
+    "saker": false,
+    "gissning": "+x"
+   },
+   "texturstorlek": 512,
+   "bytesFore": 143100,
+   "bytes": 94116,
+   "efter": {
+    "tri": 1190,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": {
+    "materialnamn": "raven_mat",
+    "faktor": [
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "malhojdMatt": 1.1512113809585571
+  },
+  {
+   "fil": "oga-cc0/mouse-basemesh.glb",
+   "kategori": "djur",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)",
+    "framsidan verkar vara -z (gissad ur bounding box), standard är +z. framAxel läggs in på entiteten."
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "djur",
+   "ord": [
+    "mus"
+   ],
+   "ordTagna": [],
+   "flyttaKat": [],
+   "id": "mus",
+   "matt": {
+    "tri": 710,
+    "hojd": 1.001,
+    "bredd": 0.363,
+    "djup": 4.721,
+    "material": 1,
+    "texturer": 0,
+    "maxTextur": 0,
+    "skinnad": false,
+    "animationer": 0
+   },
+   "ankare": [],
+   "anim": [],
+   "fram": {
+    "axel": "-z",
+    "metod": "bbox",
+    "saker": false,
+    "gissning": "-z"
+   },
+   "texturstorlek": 512,
+   "bytesFore": 13864,
+   "bytes": 6632,
+   "efter": {
+    "tri": 710,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": {
+    "materialnamn": "default",
+    "faktor": [
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "malhojdMatt": 1.0009747979951742
+  },
+  {
+   "fil": "polypizza-cc0/mus-oud9ue.glb",
+   "kategori": "djur",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)",
+    "upphov: kontrollerat bara mot Poly Pizzas angivelse"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "HOPPAD",
+   "undertyp": "djur",
+   "ord": [],
+   "ordTagna": [
+    "mus (denna körning)"
+   ],
+   "flyttaKat": [],
+   "hoppa": "ordet är redan taget eller spärrat",
+   "id": "mus-oud9ue"
+  },
+  {
+   "fil": "polypizza-cc0/mus-iltq5b.glb",
+   "kategori": "djur",
+   "fel": [],
+   "flaggor": [
+    "upphov: kontrollerat bara mot Poly Pizzas angivelse"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "djur",
+   "ord": [
+    "råtta"
+   ],
+   "ordTagna": [
+    "mus (denna körning)"
+   ],
+   "flyttaKat": [],
+   "id": "ratta",
+   "matt": {
+    "tri": 4004,
+    "hojd": 2.292,
+    "bredd": 1.486,
+    "djup": 6.976,
+    "material": 2,
+    "texturer": 0,
+    "maxTextur": 0,
+    "skinnad": true,
+    "animationer": 6
+   },
+   "ankare": [],
+   "anim": [
+    "RatArmature|Rat_Attack",
+    "RatArmature|Rat_Death",
+    "RatArmature|Rat_Idle",
+    "RatArmature|Rat_Jump",
+    "RatArmature|Rat_Run",
+    "RatArmature|Rat_Walk"
+   ],
+   "fram": {
+    "axel": "+z",
+    "metod": "ben",
+    "saker": true
+   },
+   "texturstorlek": 512,
+   "bytesFore": 550764,
+   "bytes": 202120,
+   "efter": {
+    "tri": 4004,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": {
+    "materialnamn": "Pink",
+    "faktor": [
+     0.64000004529953,
+     0.368318110704422,
+     0.32935419678688,
+     1
+    ]
+   },
+   "malhojdMatt": 2.291565133336655
+  },
+  {
+   "fil": "oga-cc0/pony.glb",
+   "kategori": "djur",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "HOPPAD",
+   "undertyp": "djur",
+   "ord": [],
+   "ordTagna": [
+    "ponny (ord.json:ponny)",
+    "häst (ord.json:häst)"
+   ],
+   "flyttaKat": [],
+   "hoppa": "ordet är redan taget eller spärrat",
+   "id": "pony"
+  },
+  {
+   "fil": "polypizza-cc0/ponny-f8haac.glb",
+   "kategori": "djur",
+   "fel": [],
+   "flaggor": [
+    "upphov: kontrollerat bara mot Poly Pizzas angivelse"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "HOPPAD",
+   "undertyp": "djur",
+   "ord": [],
+   "ordTagna": [
+    "ponny (ord.json:ponny)",
+    "häst (ord.json:häst)"
+   ],
+   "flyttaKat": [],
+   "hoppa": "ordet är redan taget eller spärrat",
+   "id": "ponny-f8haac"
+  },
+  {
+   "fil": "polypizza-cc0/ponny-qvtrsg.glb",
+   "kategori": "djur",
+   "fel": [],
+   "flaggor": [
+    "upphov: kontrollerat bara mot Poly Pizzas angivelse"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "HOPPAD",
+   "undertyp": "djur",
+   "ord": [],
+   "ordTagna": [
+    "ponny (ord.json:ponny)",
+    "häst (ord.json:häst)"
+   ],
+   "flyttaKat": [],
+   "hoppa": "ordet är redan taget eller spärrat",
+   "id": "ponny-qvtrsg"
+  },
+  {
+   "fil": "oga-cc0/rat-pack.glb",
+   "kategori": "djur",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "HOPPAD",
+   "undertyp": "djur",
+   "ord": [],
+   "ordTagna": [
+    "råtta (denna körning)",
+    "mus (denna körning)"
+   ],
+   "flyttaKat": [],
+   "hoppa": "ordet är redan taget eller spärrat",
+   "id": "rat-pack"
+  },
+  {
+   "fil": "kenney-mini-market/display-fruit.glb",
+   "kategori": "föremål",
+   "fel": [
+    "filen går inte att läsa som GLB: ENOENT: no such file or directory, open '/workspace/modell-inkorg/_luckor-1/kenney-mini-market/Textures/colormap.png'"
+   ],
+   "flaggor": [],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "FEL",
+   "undertyp": "föremål",
+   "ord": [
+    "fruktdisk",
+    "butiksdisk"
+   ],
+   "ordTagna": [],
+   "flyttaKat": [],
+   "id": "fruktdisk"
+  },
+  {
+   "fil": "kenney-mini-market/cash-register.glb",
+   "kategori": "föremål",
+   "fel": [
+    "filen går inte att läsa som GLB: ENOENT: no such file or directory, open '/workspace/modell-inkorg/_luckor-1/kenney-mini-market/Textures/colormap.png'"
+   ],
+   "flaggor": [],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "FEL",
+   "undertyp": "föremål",
+   "ord": [
+    "kassaapparat",
+    "kassa"
+   ],
+   "ordTagna": [],
+   "flyttaKat": [],
+   "id": "kassaapparat"
+  },
+  {
+   "fil": "kenney-mini-market/shopping-cart.glb",
+   "kategori": "föremål",
+   "fel": [
+    "filen går inte att läsa som GLB: ENOENT: no such file or directory, open '/workspace/modell-inkorg/_luckor-1/kenney-mini-market/Textures/colormap.png'"
+   ],
+   "flaggor": [],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "FEL",
+   "undertyp": "föremål",
+   "ord": [
+    "kundvagn"
+   ],
+   "ordTagna": [],
+   "flyttaKat": [],
+   "id": "kundvagn"
+  },
+  {
+   "fil": "oga-cc0/school-moscow.glb",
+   "kategori": "hus",
+   "fel": [
+    "11669 trianglar (högst 4000 för hus). Förenkla i Blender (Decimate) eller välj en annan modell."
+   ],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "FEL",
+   "undertyp": "hus",
+   "ord": [
+    "skola",
+    "skolbyggnad"
+   ],
+   "ordTagna": [],
+   "flyttaKat": [
+    "skola"
+   ],
+   "id": "skola"
+  },
+  {
+   "fil": "oga-cc0/elf-hat.glb",
+   "kategori": "kläder",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "kläder",
+   "ord": [
+    "alvmössa",
+    "tomteluva",
+    "mössa"
+   ],
+   "ordTagna": [],
+   "flyttaKat": [
+    "mössa"
+   ],
+   "id": "alvmossa",
+   "matt": {
+    "tri": 3704,
+    "hojd": 0.501,
+    "bredd": 0.521,
+    "djup": 0.507,
+    "material": 2,
+    "texturer": 1,
+    "maxTextur": 1024,
+    "skinnad": true,
+    "animationer": 0
+   },
+   "ankare": [],
+   "anim": [],
+   "texturstorlek": 512,
+   "bytesFore": 1016772,
+   "bytes": 72728,
+   "efter": {
+    "tri": 3704,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "EXT_texture_webp",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": null,
+   "malhojdMatt": 0.5005751499017546
+  },
+  {
+   "fil": "oga-cc0/beret-hat.glb",
+   "kategori": "kläder",
+   "fel": [
+    "5066 trianglar (högst 4000 för kläder). Förenkla i Blender (Decimate) eller välj en annan modell."
+   ],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "FEL",
+   "undertyp": "kläder",
+   "ord": [
+    "basker"
+   ],
+   "ordTagna": [
+    "hatt (ord.json:hatt)"
+   ],
+   "flyttaKat": [],
+   "id": "basker"
+  },
+  {
+   "fil": "polypizza-cc0/hatt-lnn3pl.glb",
+   "kategori": "kläder",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)",
+    "upphov: kontrollerat bara mot Poly Pizzas angivelse"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "HOPPAD",
+   "undertyp": "kläder",
+   "ord": [],
+   "ordTagna": [
+    "hatt (ord.json:hatt)"
+   ],
+   "flyttaKat": [],
+   "hoppa": "ordet är redan taget eller spärrat",
+   "id": "hatt-lnn3pl"
+  },
+  {
+   "fil": "oga-cc0/witch-hat.glb",
+   "kategori": "kläder",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "kläder",
+   "ord": [
+    "häxhatt"
+   ],
+   "ordTagna": [
+    "hatt (ord.json:hatt)"
+   ],
+   "flyttaKat": [],
+   "id": "haxhatt",
+   "matt": {
+    "tri": 148,
+    "hojd": 4.981,
+    "bredd": 6.3,
+    "djup": 6.442,
+    "material": 1,
+    "texturer": 0,
+    "maxTextur": 0,
+    "skinnad": false,
+    "animationer": 0
+   },
+   "ankare": [],
+   "anim": [],
+   "texturstorlek": 512,
+   "bytesFore": 11244,
+   "bytes": 4640,
+   "efter": {
+    "tri": 148,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": null,
+   "malhojdMatt": 4.980702757835388
+  },
+  {
+   "fil": "oga-cc0/top-hat.glb",
+   "kategori": "kläder",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "kläder",
+   "ord": [
+    "cylinderhatt"
+   ],
+   "ordTagna": [
+    "hatt (ord.json:hatt)"
+   ],
+   "flyttaKat": [],
+   "id": "cylinderhatt",
+   "matt": {
+    "tri": 1470,
+    "hojd": 5.624,
+    "bredd": 7.882,
+    "djup": 8.473,
+    "material": 0,
+    "texturer": 0,
+    "maxTextur": 0,
+    "skinnad": false,
+    "animationer": 0
+   },
+   "ankare": [],
+   "anim": [],
+   "texturstorlek": 512,
+   "bytesFore": 52144,
+   "bytes": 25660,
+   "efter": {
+    "tri": 1470,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": null,
+   "malhojdMatt": 5.623856425285339
+  },
+  {
+   "fil": "oga-cc0/flatcap.glb",
+   "kategori": "kläder",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "kläder",
+   "ord": [
+    "keps"
+   ],
+   "ordTagna": [
+    "mössa (denna körning)"
+   ],
+   "flyttaKat": [],
+   "id": "keps",
+   "matt": {
+    "tri": 1984,
+    "hojd": 4.176,
+    "bredd": 6.052,
+    "djup": 7.783,
+    "material": 0,
+    "texturer": 0,
+    "maxTextur": 0,
+    "skinnad": false,
+    "animationer": 0
+   },
+   "ankare": [],
+   "anim": [],
+   "texturstorlek": 512,
+   "bytesFore": 47760,
+   "bytes": 18824,
+   "efter": {
+    "tri": 1984,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": null,
+   "malhojdMatt": 4.176001499878797
+  },
+  {
+   "fil": "oga-cc0/santa-hat.glb",
+   "kategori": "kläder",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "kläder",
+   "ord": [
+    "luva"
+   ],
+   "ordTagna": [
+    "tomteluva (denna körning)",
+    "mössa (denna körning)"
+   ],
+   "flyttaKat": [],
+   "id": "luva",
+   "matt": {
+    "tri": 312,
+    "hojd": 0.23,
+    "bredd": 0.242,
+    "djup": 0.335,
+    "material": 1,
+    "texturer": 1,
+    "maxTextur": 512,
+    "skinnad": false,
+    "animationer": 0
+   },
+   "ankare": [],
+   "anim": [],
+   "texturstorlek": 512,
+   "bytesFore": 354988,
+   "bytes": 33192,
+   "efter": {
+    "tri": 312,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "EXT_texture_webp",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": null,
+   "malhojdMatt": 0.2297987937927246
+  },
+  {
+   "fil": "oga-cc0/magician-hat-stick.glb",
+   "kategori": "kläder",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)",
+    "1 material gjordes täckande (alfa 0/MASK utan textur renderas osynligt)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "kläder",
+   "ord": [
+    "trollstav"
+   ],
+   "ordTagna": [
+    "trollkarlshatt (ord.json:trollkarlshatt)",
+    "hatt (ord.json:hatt)"
+   ],
+   "flyttaKat": [],
+   "id": "trollstav",
+   "matt": {
+    "tri": 664,
+    "hojd": 1.479,
+    "bredd": 1.833,
+    "djup": 1.834,
+    "material": 1,
+    "texturer": 0,
+    "maxTextur": 0,
+    "skinnad": false,
+    "animationer": 0
+   },
+   "ankare": [],
+   "anim": [],
+   "texturstorlek": 512,
+   "bytesFore": 22260,
+   "bytes": 9668,
+   "efter": {
+    "tri": 664,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": null,
+   "malhojdMatt": 1.4785817858718833
+  },
+  {
+   "fil": "oga-cc0/sweatshirt.glb",
+   "kategori": "kläder",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)",
+    "1 material gjordes täckande (alfa 0/MASK utan textur renderas osynligt)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "kläder",
+   "ord": [
+    "tröja",
+    "luvtröja"
+   ],
+   "ordTagna": [],
+   "flyttaKat": [
+    "tröja"
+   ],
+   "id": "troja",
+   "matt": {
+    "tri": 3284,
+    "hojd": 0.701,
+    "bredd": 1.466,
+    "djup": 0.353,
+    "material": 1,
+    "texturer": 0,
+    "maxTextur": 0,
+    "skinnad": true,
+    "animationer": 0
+   },
+   "ankare": [],
+   "anim": [],
+   "texturstorlek": 512,
+   "bytesFore": 184800,
+   "bytes": 41860,
+   "efter": {
+    "tri": 3284,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": null,
+   "malhojdMatt": 0.7005417346954346
+  },
+  {
+   "fil": "polypizza-cc0/troja-gklbor.glb",
+   "kategori": "människa",
+   "fel": [
+    "6206 trianglar (högst 6000 för människa). Förenkla i Blender (Decimate) eller välj en annan modell."
+   ],
+   "flaggor": [
+    "upphov: kontrollerat bara mot Poly Pizzas angivelse"
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "FEL",
+   "undertyp": "människa",
+   "ord": [],
+   "ordTagna": [
+    "tröja (denna körning)",
+    "luvtröja (denna körning)"
+   ],
+   "flyttaKat": [],
+   "hoppa": "ordet är redan taget eller spärrat",
+   "id": "troja-gklbor"
+  },
+  {
+   "fil": "polypizza-cc0/tomte-yy3yuq.glb",
+   "kategori": "sagoväsen",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)",
+    "upphov: kontrollerat bara mot Poly Pizzas angivelse",
+    "framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket."
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)",
+    "flyttas ut ur kategori-ord.json (blir ett riktigt djur): tomte"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "sagoväsen",
+   "ord": [
+    "tomte",
+    "gnom"
+   ],
+   "ordTagna": [],
+   "flyttaKat": [
+    "tomte"
+   ],
+   "id": "tomte",
+   "matt": {
+    "tri": 3684,
+    "hojd": 5.256,
+    "bredd": 1.858,
+    "djup": 4.308,
+    "material": 1,
+    "texturer": 1,
+    "maxTextur": 1024,
+    "skinnad": false,
+    "animationer": 0
+   },
+   "ankare": [],
+   "anim": [],
+   "fram": {
+    "axel": null,
+    "metod": "bbox",
+    "saker": false,
+    "orsak": "högsta punkterna ligger i mitten"
+   },
+   "texturstorlek": 512,
+   "bytesFore": 767668,
+   "bytes": 83216,
+   "efter": {
+    "tri": 3684,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "EXT_texture_webp",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": {
+    "materialnamn": "_047_David",
+    "faktor": [
+     1,
+     1,
+     1,
+     1
+    ],
+    "palett": {
+     "from": 15,
+     "range": 22,
+     "bodyL": 0.59
+    }
+   },
+   "malhojdMatt": 5.2563384652172385
+  },
+  {
+   "fil": "polypizza-cc0/trollkarlsgnom-deuyze.glb",
+   "kategori": "sagoväsen",
+   "fel": [],
+   "flaggor": [
+    "stil: avvikande (avvikande från Kenney/Quaternius-stilen)",
+    "upphov: kontrollerat bara mot Poly Pizzas angivelse",
+    "framsidan kunde inte mätas (bbox: nästan lika lång som bred); +z antas. Titta på kontaktarket."
+   ],
+   "info": [
+    "ingen licensfil i paketet (licensen styrkt av URL per modell)"
+   ],
+   "status": "OK_FLAGGAD",
+   "undertyp": "sagoväsen",
+   "ord": [
+    "trollkarlsgnom"
+   ],
+   "ordTagna": [
+    "tomte (denna körning)"
+   ],
+   "flyttaKat": [],
+   "id": "trollkarlsgnom",
+   "matt": {
+    "tri": 3160,
+    "hojd": 5.447,
+    "bredd": 3.693,
+    "djup": 3.834,
+    "material": 1,
+    "texturer": 1,
+    "maxTextur": 1080,
+    "skinnad": false,
+    "animationer": 0
+   },
+   "ankare": [],
+   "anim": [],
+   "fram": {
+    "axel": null,
+    "metod": "bbox",
+    "saker": false,
+    "orsak": "nästan lika lång som bred"
+   },
+   "texturstorlek": 512,
+   "bytesFore": 134700,
+   "bytes": 47032,
+   "efter": {
+    "tri": 3160,
+    "tillagg": [
+     "EXT_meshopt_compression",
+     "EXT_texture_webp",
+     "KHR_mesh_quantization"
+    ]
+   },
+   "farg": {
+    "materialnamn": "_078_Pipe",
+    "faktor": [
+     1,
+     1,
+     1,
+     1
+    ],
+    "palett": {
+     "from": 35,
+     "range": 22,
+     "bodyL": 0.69
+    }
+   },
+   "malhojdMatt": 5.446538433177203
+  }
+ ]
+}

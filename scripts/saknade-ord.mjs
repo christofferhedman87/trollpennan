@@ -7,7 +7,7 @@
 //   node scripts/saknade-ord.mjs bestall [--ut BESTALLNING.md] [--datum 2026-10-18] [--min 1]   skriv beställningsfilen
 //   node scripts/saknade-ord.mjs status                        kort översikt
 //   node scripts/saknade-ord.mjs bort <ord …>                  ta bort ord (t.ex. ett namn ett barn skrivit)
-//   node scripts/saknade-ord.mjs bestalld <ord …> | ignorera <ord …>   sätt status (täckt blir ett ord av sig självt när det får en rad i data/entiteter.json)
+//   node scripts/saknade-ord.mjs bestalld <ord …> | ignorera <ord …>   sätt status (täckt blir ett ord av sig självt när det får en djurrad i data/entiteter.json)
 //
 // Integritet: filen innehåller bara ord, grundord, kategori, antal och datum. Aldrig meningar, djur eller något om barnet.
 // Ett barn kan ha skrivit ett namn: titta igenom listan innan den delas (kommandot `bort` tar bort rader).
@@ -78,11 +78,12 @@ export function lasExport(text, spärrade = new Set()) {
   return { ok, avvisade };
 }
 
-/** Ord som redan har en modell: nycklarna i entiteter.json och orden i entiteternas ord-fält. */
+/** Ord som redan har en modell: djuren i entiteter.json (nyckel och ord-fält). Hus, föremål och natur räknas inte: de blir ändå ägg tills en runda ritar dem. */
 export function taktaOrd(entiteterJson) {
   const s = new Set();
   const e = entiteterJson?.entiteter ?? {};
   for (const [id, rad] of Object.entries(e)) {
+    if (rad?.typ !== "djur") continue;
     s.add(id);
     for (const o of [].concat(rad?.ord ?? [])) s.add(String(o));
   }
