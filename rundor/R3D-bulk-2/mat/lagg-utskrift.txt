@@ -1,0 +1,128 @@
+ FLAGGA kenney-cube-pets/animal-caterpillar.glb  → larv: framsidan kunde inte mätas (bbox: nästan lika lång som bred); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-cube-pets/animal-chick.glb  → kyckling: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-cube-pets/animal-cow.glb  → ko: framsidan kunde inte mätas (bbox: nästan lika lång som bred); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-cube-pets/animal-deer.glb  → hjort: framsidan kunde inte mätas (bbox: nästan lika lång som bred); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-cube-pets/animal-hog.glb  → vildsvin: framsidan kunde inte mätas (bbox: nästan lika lång som bred); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-cube-pets/animal-koala.glb  → koala: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-cube-pets/animal-monkey.glb  → apa: framsidan kunde inte mätas (bbox: nästan lika lång som bred); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-cube-pets/animal-parrot.glb  → papegoja: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-nature-kit/canoe.glb  → kanot: framsidan kunde inte mätas (bbox: bounding-boxregeln är opålitlig för fordon (gissade fel på alla Kenney-bilar)); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-pirate-kit/boat-row-large.glb  → roddbat: framsidan kunde inte mätas (bbox: bounding-boxregeln är opålitlig för fordon (gissade fel på alla Kenney-bilar)); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-pirate-kit/ship-pirate-large.glb  → piratskepp: framsidan kunde inte mätas (bbox: bounding-boxregeln är opålitlig för fordon (gissade fel på alla Kenney-bilar)); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-space-kit/rover.glb  → manbil: framsidan kunde inte mätas (bbox: bounding-boxregeln är opålitlig för fordon (gissade fel på alla Kenney-bilar)); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-toy-car-kit/vehicle-monster-truck.glb  → monstertruck: framsidan kunde inte mätas (bbox: bounding-boxregeln är opålitlig för fordon (gissade fel på alla Kenney-bilar)); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-toy-car-kit/vehicle-vintage-racer.glb  → veteranbil: framsidan kunde inte mätas (bbox: bounding-boxregeln är opålitlig för fordon (gissade fel på alla Kenney-bilar)); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-train-kit/train-electric-bullet-a.glb  → snabbtag: framsidan kunde inte mätas (bbox: bounding-boxregeln är opålitlig för fordon (gissade fel på alla Kenney-bilar)); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-train-kit/train-locomotive-a.glb  → anglok: framsidan kunde inte mätas (bbox: bounding-boxregeln är opålitlig för fordon (gissade fel på alla Kenney-bilar)); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-train-kit/train-tram-classic.glb  → sparvagn: framsidan kunde inte mätas (bbox: bounding-boxregeln är opålitlig för fordon (gissade fel på alla Kenney-bilar)); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-blocky-characters/character-a.glb  → manniska: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-graveyard-kit/character-keeper.glb  → kyrkogardsvaktmastare: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-mini-dungeon/character-human.glb  → hjalte: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-mini-forest/character-archer.glb  → bagskytt: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-graveyard-kit/character-skeleton.glb  → skelett: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-graveyard-kit/character-vampire.glb  → vampyr: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-graveyard-kit/character-zombie.glb  → zombie: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-holiday-kit/nutcracker.glb  → notknappare: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-holiday-kit/snowman.glb  → snogubbe: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-mini-dungeon/character-orc.glb  → orch: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA kenney-space-kit/alien.glb  → rymdvarelse: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA quaternius-cute-fish/swordfish.glb  → svardfisk: framsidan verkar vara -z (gissad ur bounding box), standard är +z. framAxel läggs in på entiteten.
+ FLAGGA quaternius-cute-fish/tuna.glb  → tonfisk: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA quaternius-ultimate-animated-animals/alpaca.glb  → alpacka: 427 KB är över riktvärdet 350 KB för djur (hårt tak 650 KB): bra kandidat att hämta först när ordet används.
+ FLAGGA quaternius-ultimate-animated-animals/donkey.glb  → asna: 602 KB är över riktvärdet 350 KB för djur (hårt tak 650 KB): bra kandidat att hämta först när ordet används.
+ FLAGGA quaternius-ultimate-animated-animals/husky.glb  → husky: 511 KB är över riktvärdet 350 KB för djur (hårt tak 650 KB): bra kandidat att hämta först när ordet används.
+ FLAGGA quaternius-ultimate-animated-animals/stag.glb  → kronhjort: 481 KB är över riktvärdet 350 KB för djur (hårt tak 650 KB): bra kandidat att hämta först när ordet används.
+ FLAGGA quaternius-ultimate-animated-animals/wolf.glb  → varg: 541 KB är över riktvärdet 350 KB för djur (hårt tak 650 KB): bra kandidat att hämta först när ordet används.
+ FLAGGA quaternius-ships/viking-boat.glb  → vikingaskepp: framsidan kunde inte mätas (bbox: bounding-boxregeln är opålitlig för fordon (gissade fel på alla Kenney-bilar)); +z antas. Titta på kontaktarket.
+ FLAGGA quaternius-cute-monsters/cthulhu.glb  → blackfiskmonster: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA quaternius-cute-monsters/cyclops.glb  → cyklop: framsidan kunde inte mätas (bbox: nästan lika lång som bred); +z antas. Titta på kontaktarket.
+ FLAGGA quaternius-cute-monsters/demon.glb  → demon: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA quaternius-cute-monsters/mushroom.glb  → svampmonster: framsidan kunde inte mätas (bbox: nästan lika lång som bred); +z antas. Titta på kontaktarket.
+ FLAGGA quaternius-ultimate-monsters/flyg-goleling.glb  → golem: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA quaternius-ultimate-monsters/flyg-squidle.glb  → blackfisk: framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA quaternius-ultimate-monsters/klump-wizard.glb  → trollkarl: framsidan kunde inte mätas (bbox: nästan lika lång som bred); +z antas. Titta på kontaktarket.
+ FLAGGA gobkit-cc0-djur-och-natur/anglerfish.glb  → marulk: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/bat.glb  → fladdermus: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/bee.glb  → bi: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/bluetang.glb  → kirurgfisk: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/corgi.glb  → corgi: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/dino-ankylosaurus.glb  → ankylosaurus: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/dino-plesiosaurus.glb  → plesiosaurie: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/dino-pterodactylus.glb  → pterodactylus: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/dino-triceratops.glb  → triceratops: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/doe.glb  → hind: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/farm-bull.glb  → tjur: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/farm-highlandcow.glb  → highlandsko: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/farm-lamb.glb  → lamm: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/flamingo.glb  → flamingo: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/fugu.glb  → blasfisk: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/goat.glb  → get: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/goose.glb  → gas: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/hare.glb  → hare: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/hedgehog.glb  → igelkott: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/hummingbird.glb  → kolibri: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/jellyfish.glb  → manet: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/kiwi.glb  → kiwi: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/macaw.glb  → ara: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/marmot.glb  → murmeldjur: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/peacock.glb  → pafagel: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/pelican.glb  → pelikan: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/platypus.glb  → nabbdjur: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/rhino.glb  → noshorning: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/rooster.glb  → tupp: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/seal.glb  → sal: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/toucan.glb  → tukan: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/stalactite001.glb  → droppsten: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/cliff001.glb  → klippvagg: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/hill001.glb  → kulle: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/mountain001.glb  → berg: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/minion-a01.glb  → smavarelse: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA gobkit-cc0-djur-och-natur/minion-b01.glb  → nisse: ursprung: kan vara AI-genererat (Gobkit), CC0 enligt utgivaren
+ FLAGGA polypizza-cc0/chicken-chicken-inev9p.glb  → hona: upphov: kontrollerat bara mot Poly Pizzas angivelse; framsidan kunde inte mätas (bbox: nästan lika lång som bred); +z antas. Titta på kontaktarket.
+ FLAGGA polypizza-cc0/raccoon-raccoon-xmmx6v.glb  → tvattbjorn: upphov: kontrollerat bara mot Poly Pizzas angivelse
+ FLAGGA polypizza-cc0/spider-spider-yryjia.glb  → spindel: upphov: kontrollerat bara mot Poly Pizzas angivelse; framsidan verkar vara -z (mätt via ben), standard är +z. framAxel läggs in på entiteten.
+ FLAGGA polypizza-cc0/turkey-turkey-ofnmwn.glb  → kalkon: upphov: kontrollerat bara mot Poly Pizzas angivelse; framsidan verkar vara +x (gissad ur bounding box), standard är +z. framAxel läggs in på entiteten.
+ FLAGGA polypizza-cc0/skateboard-skateboard-tyizbm.glb  → skateboard: upphov: kontrollerat bara mot Poly Pizzas angivelse; framsidan kunde inte mätas (bbox: bounding-boxregeln är opålitlig för fordon (gissade fel på alla Kenney-bilar)); +z antas. Titta på kontaktarket.
+ FLAGGA polypizza-cc0/book-open-book-fscige.glb  → bok: upphov: kontrollerat bara mot Poly Pizzas angivelse
+ FLAGGA polypizza-cc0/fishing-rod-fishing-rod-0yar0l.glb  → fiskespo: upphov: kontrollerat bara mot Poly Pizzas angivelse
+ FLAGGA polypizza-cc0/magic-book-book-h3wh4f.glb  → trollbok: upphov: kontrollerat bara mot Poly Pizzas angivelse
+ FLAGGA polypizza-cc0/television-television-vintage-asmz6h.glb  → tv: upphov: kontrollerat bara mot Poly Pizzas angivelse
+ FLAGGA polypizza-cc0/hut-hut-4mjwby.glb  → koja: upphov: kontrollerat bara mot Poly Pizzas angivelse
+ FLAGGA polypizza-cc0/dress-woman-in-dress-zmyplq.glb  → klanning: upphov: kontrollerat bara mot Poly Pizzas angivelse
+ FLAGGA polypizza-cc0/ninja-ninja-xgymed.glb  → ninja: upphov: kontrollerat bara mot Poly Pizzas angivelse; framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA polypizza-cc0/woman-animated-woman-9kf7et.glb  → kvinna: upphov: kontrollerat bara mot Poly Pizzas angivelse; framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.; 477 KB är över riktvärdet 350 KB för människa (hårt tak 650 KB): bra kandidat att hämta först när ordet används.
+ FLAGGA polypizza-cc0/mus-oud9ue.glb  → mus: stil: avvikande (avvikande från Kenney/Quaternius-stilen); upphov: kontrollerat bara mot Poly Pizzas angivelse; framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA polypizza-cc0/mus-iltq5b.glb  → ratta: upphov: kontrollerat bara mot Poly Pizzas angivelse
+ FLAGGA polypizza-cc0/tomte-yy3yuq.glb  → tomte: stil: avvikande (avvikande från Kenney/Quaternius-stilen); upphov: kontrollerat bara mot Poly Pizzas angivelse; framsidan kunde inte mätas (bbox: högsta punkterna ligger i mitten); +z antas. Titta på kontaktarket.
+ FLAGGA polypizza-cc0/trollkarlsgnom-deuyze.glb  → trollkarlsgnom: stil: avvikande (avvikande från Kenney/Quaternius-stilen); upphov: kontrollerat bara mot Poly Pizzas angivelse; framsidan kunde inte mätas (bbox: nästan lika lång som bred); +z antas. Titta på kontaktarket.
+ FLAGGA oga-cc0/elf-hat.glb  → alvmossa: stil: avvikande (avvikande från Kenney/Quaternius-stilen)
+ FLAGGA oga-cc0/witch-hat.glb  → haxhatt: stil: avvikande (avvikande från Kenney/Quaternius-stilen)
+ FLAGGA oga-cc0/top-hat.glb  → cylinderhatt: stil: avvikande (avvikande från Kenney/Quaternius-stilen)
+ FLAGGA oga-cc0/flatcap.glb  → keps: stil: avvikande (avvikande från Kenney/Quaternius-stilen)
+ FLAGGA oga-cc0/santa-hat.glb  → luva: stil: avvikande (avvikande från Kenney/Quaternius-stilen)
+ FLAGGA oga-cc0/magician-hat-stick.glb  → trollstav: stil: avvikande (avvikande från Kenney/Quaternius-stilen)
+ FLAGGA oga-cc0/sweatshirt.glb  → troja: stil: avvikande (avvikande från Kenney/Quaternius-stilen)
+ 
+ Inlagt: 234 modeller (100 djurord, 192 kategoriord).
+ {
+   "rader": 234,
+   "ok": 130,
+   "ok_flaggad": 104,
+   "hoppade": 0,
+   "fel": 0,
+   "klarar_utan_flagga_procent": 55.6,
+   "klarar_procent": 100,
+   "unika_nya_ord": 292,
+   "felorsaker": {},
+   "flaggor": {
+     "framsidan kunde inte mätas": 44,
+     "framsidan verkar vara -z": 2,
+     "NKB är över riktvärdet NKB för djur": 5,
+     "ursprung": 37,
+     "upphov": 17,
+     "framsidan verkar vara +x": 1,
+     "NKB är över riktvärdet NKB för människa": 1,
+     "stil": 10
+   }
+ }
+ KLAR

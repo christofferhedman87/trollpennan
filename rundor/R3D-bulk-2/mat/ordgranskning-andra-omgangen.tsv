@@ -1,0 +1,101 @@
+ord	genus	former (gissade)	entitet	fil
+larv	u	larv, larven, larvar, larvarna	larv	kenney-cube-pets/animal-caterpillar.glb
+kyckling	u	kyckling, kycklingen, kycklingar, kycklingarna	kyckling	kenney-cube-pets/animal-chick.glb
+ko	u	ko, kon	ko	kenney-cube-pets/animal-cow.glb
+hjort	u	hjort, hjorten, hjortar, hjortarna	hjort	kenney-cube-pets/animal-deer.glb
+vildsvin	u	vildsvin, vildsvinen, vildsvinar, vildsvinarna	vildsvin	kenney-cube-pets/animal-hog.glb
+koala	u	koala, koalan, koalor, koalorna	koala	kenney-cube-pets/animal-koala.glb
+apa	u	apa, apan, apor, aporna	apa	kenney-cube-pets/animal-monkey.glb
+papegoja	u	papegoja, papegojan, papegojor, papegojorna	papegoja	kenney-cube-pets/animal-parrot.glb
+isbjörn	u	isbjörn, isbjörnen, isbjörnar, isbjörnarna	isbjorn	kenney-cube-pets/animal-polar.glb
+tiger	u	tiger, tigeren, tigerer, tigererna	tiger	kenney-cube-pets/animal-tiger.glb
+människa	u	människa, människan, människor, människorna	manniska	kenney-blocky-characters/character-a.glb
+kyrkogårdsvaktmästare	u	kyrkogårdsvaktmästare, kyrkogårdsvaktmästaren, kyrkogårdsvaktmästarar, kyrkogårdsvaktmästararna	kyrkogardsvaktmastare	kenney-graveyard-kit/character-keeper.glb
+gubbe	u	gubbe, gubben, gubbar, gubbarna	kyrkogardsvaktmastare	kenney-graveyard-kit/character-keeper.glb
+hjälte	u	hjälte, hjälten, hjältar, hjältarna	hjalte	kenney-mini-dungeon/character-human.glb
+riddare	u	riddare, riddaren, riddarar, riddararna	hjalte	kenney-mini-dungeon/character-human.glb
+bågskytt	u	bågskytt, bågskytten, bågskyttar, bågskyttarna	bagskytt	kenney-mini-forest/character-archer.glb
+skelett	n	skelett, skelettet, skeletten	skelett	kenney-graveyard-kit/character-skeleton.glb
+vampyr	u	vampyr, vampyren, vampyrer, vampyrerna	vampyr	kenney-graveyard-kit/character-vampire.glb
+zombie	u	zombie, zombien, zombiar, zombiarna	zombie	kenney-graveyard-kit/character-zombie.glb
+nötknäppare	u	nötknäppare, nötknäpparen, nötknäpparar, nötknäppararna	notknappare	kenney-holiday-kit/nutcracker.glb
+rudolf	u	rudolf, rudolfen, rudolfar, rudolfarna	rudolf	kenney-holiday-kit/reindeer.glb
+snögubbe	u	snögubbe, snögubben, snögubbar, snögubbarna	snogubbe	kenney-holiday-kit/snowman.glb
+orch	u	orch, orchen, orchar, orcharna	orch	kenney-mini-dungeon/character-orc.glb
+troll	n	troll, trollet, trollen	orch	kenney-mini-dungeon/character-orc.glb
+rymdvarelse	u	rymdvarelse, rymdvarelsen, rymdvarelsar, rymdvarelsarna	rymdvarelse	kenney-space-kit/alien.glb
+utomjording	u	utomjording, utomjordingen, utomjordingar, utomjordingarna	rymdvarelse	kenney-space-kit/alien.glb
+flundra	u	flundra, flundran, flundror, flundrorna	flundra	quaternius-cute-fish/flatfish.glb
+plattfisk	u	plattfisk, plattfisken, plattfiskar, plattfiskarna	flundra	quaternius-cute-fish/flatfish.glb
+koi	u	koi, koin	koi	quaternius-cute-fish/koi.glb
+karp	u	karp, karpen, karpar, karparna	koi	quaternius-cute-fish/koi.glb
+piraya	u	piraya, pirayan, pirayor, pirayorna	piraya	quaternius-cute-fish/piranha.glb
+svärdfisk	u	svärdfisk, svärdfisken, svärdfiskar, svärdfiskarna	svardfisk	quaternius-cute-fish/swordfish.glb
+tonfisk	u	tonfisk, tonfisken, tonfiskar, tonfiskarna	tonfisk	quaternius-cute-fish/tuna.glb
+lama	u	lama, laman, lamor, lamorna	lama	quaternius-farm-animals/llama.glb
+mops	u	mops, mopsen, mopsar, mopsarna	mops	quaternius-farm-animals/pug.glb
+alpacka	u	alpacka, alpackan, alpackor, alpackorna	alpacka	quaternius-ultimate-animated-animals/alpaca.glb
+åsna	u	åsna, åsnan, åsnor, åsnorna	asna	quaternius-ultimate-animated-animals/donkey.glb
+husky	u	husky, huskyn	husky	quaternius-ultimate-animated-animals/husky.glb
+draghund	u	draghund, draghunden, draghundar, draghundarna	husky	quaternius-ultimate-animated-animals/husky.glb
+kronhjort	u	kronhjort, kronhjorten, kronhjortar, kronhjortarna	kronhjort	quaternius-ultimate-animated-animals/stag.glb
+älg	u	älg, älgen, älgar, älgarna	kronhjort	quaternius-ultimate-animated-animals/stag.glb
+varg	u	varg, vargen, vargar, vargarna	varg	quaternius-ultimate-animated-animals/wolf.glb
+bläckfiskmonster	u	bläckfiskmonster, bläckfiskmonsteren, bläckfiskmonsterar, bläckfiskmonsterarna	blackfiskmonster	quaternius-cute-monsters/cthulhu.glb
+cyklop	u	cyklop, cyklopen, cyklopar, cykloparna	cyklop	quaternius-cute-monsters/cyclops.glb
+jätte	u	jätte, jätten, jättar, jättarna	cyklop	quaternius-cute-monsters/cyclops.glb
+demon	u	demon, demonen, demoner, demonerna	demon	quaternius-cute-monsters/demon.glb
+svampmonster	u	svampmonster, svampmonsteren, svampmonsterar, svampmonsterarna	svampmonster	quaternius-cute-monsters/mushroom.glb
+golem	u	golem, golemen, golemar, golemarna	golem	quaternius-ultimate-monsters/flyg-goleling.glb
+stenvarelse	u	stenvarelse, stenvarelsen, stenvarelsar, stenvarelsarna	golem	quaternius-ultimate-monsters/flyg-goleling.glb
+bläckfisk	u	bläckfisk, bläckfisken, bläckfiskar, bläckfiskarna	blackfisk	quaternius-ultimate-monsters/flyg-squidle.glb
+trollkarl	u	trollkarl, trollkarlen, trollkarlar, trollkarlarna	trollkarl	quaternius-ultimate-monsters/klump-wizard.glb
+magiker	u	magiker, magikeren, magikerar, magikerarna	trollkarl	quaternius-ultimate-monsters/klump-wizard.glb
+marulk	u	marulk, marulken, marulkar, marulkarna	marulk	gobkit-cc0-djur-och-natur/anglerfish.glb
+fladdermus	u	fladdermus, fladdermusen, fladdermusar, fladdermusarna	fladdermus	gobkit-cc0-djur-och-natur/bat.glb
+bi	n	bi, bit, bin, binen	bi	gobkit-cc0-djur-och-natur/bee.glb
+kirurgfisk	u	kirurgfisk, kirurgfisken, kirurgfiskar, kirurgfiskarna	kirurgfisk	gobkit-cc0-djur-och-natur/bluetang.glb
+corgi	u	corgi, corgin	corgi	gobkit-cc0-djur-och-natur/corgi.glb
+ankylosaurus	u	ankylosaurus, ankylosaurusen, ankylosaurusar, ankylosaurusarna	ankylosaurus	gobkit-cc0-djur-och-natur/dino-ankylosaurus.glb
+plesiosaurie	u	plesiosaurie, plesiosaurien, plesiosauriar, plesiosauriarna	plesiosaurie	gobkit-cc0-djur-och-natur/dino-plesiosaurus.glb
+sjöodjur	u	sjöodjur, sjöodjuren, sjöodjurar, sjöodjurarna	plesiosaurie	gobkit-cc0-djur-och-natur/dino-plesiosaurus.glb
+pterodactylus	u	pterodactylus, pterodactylusen, pterodactylusar, pterodactylusarna	pterodactylus	gobkit-cc0-djur-och-natur/dino-pterodactylus.glb
+flygödla	u	flygödla, flygödlan, flygödlor, flygödlorna	pterodactylus	gobkit-cc0-djur-och-natur/dino-pterodactylus.glb
+triceratops	u	triceratops, triceratopsen, triceratopsar, triceratopsarna	triceratops	gobkit-cc0-djur-och-natur/dino-triceratops.glb
+hind	u	hind, hinden, hindar, hindarna	hind	gobkit-cc0-djur-och-natur/doe.glb
+rådjur	u	rådjur, rådjuren, rådjurar, rådjurarna	hind	gobkit-cc0-djur-och-natur/doe.glb
+tjur	u	tjur, tjuren, tjurar, tjurarna	tjur	gobkit-cc0-djur-och-natur/farm-bull.glb
+highlandsko	u	highlandsko, highlandskon	highlandsko	gobkit-cc0-djur-och-natur/farm-highlandcow.glb
+lamm	n	lamm, lammet, lammen	lamm	gobkit-cc0-djur-och-natur/farm-lamb.glb
+flamingo	u	flamingo, flamingon	flamingo	gobkit-cc0-djur-och-natur/flamingo.glb
+blåsfisk	u	blåsfisk, blåsfisken, blåsfiskar, blåsfiskarna	blasfisk	gobkit-cc0-djur-och-natur/fugu.glb
+fugu	u	fugu, fugun	blasfisk	gobkit-cc0-djur-och-natur/fugu.glb
+get	u	get, geten, getar, getarna	get	gobkit-cc0-djur-och-natur/goat.glb
+gås	u	gås, gåsen, gåsar, gåsarna	gas	gobkit-cc0-djur-och-natur/goose.glb
+hare	u	hare, haren, harar, hararna	hare	gobkit-cc0-djur-och-natur/hare.glb
+igelkott	u	igelkott, igelkotten, igelkottar, igelkottarna	igelkott	gobkit-cc0-djur-och-natur/hedgehog.glb
+kolibri	u	kolibri, kolibrin	kolibri	gobkit-cc0-djur-och-natur/hummingbird.glb
+manet	u	manet, maneten, manetar, manetarna	manet	gobkit-cc0-djur-och-natur/jellyfish.glb
+kiwi	u	kiwi, kiwin	kiwi	gobkit-cc0-djur-och-natur/kiwi.glb
+ara	u	ara, aran, aror, arorna	ara	gobkit-cc0-djur-och-natur/macaw.glb
+murmeldjur	n	murmeldjur, murmeldjuret, murmeldjuren	murmeldjur	gobkit-cc0-djur-och-natur/marmot.glb
+påfågel	u	påfågel, påfågelen, påfågelar, påfågelarna	pafagel	gobkit-cc0-djur-och-natur/peacock.glb
+pelikan	u	pelikan, pelikanen, pelikanar, pelikanarna	pelikan	gobkit-cc0-djur-och-natur/pelican.glb
+näbbdjur	n	näbbdjur, näbbdjuret, näbbdjuren	nabbdjur	gobkit-cc0-djur-och-natur/platypus.glb
+noshörning	u	noshörning, noshörningen, noshörningar, noshörningarna	noshorning	gobkit-cc0-djur-och-natur/rhino.glb
+tupp	u	tupp, tuppen, tuppar, tupparna	tupp	gobkit-cc0-djur-och-natur/rooster.glb
+säl	u	säl, sälen, sälar, sälarna	sal	gobkit-cc0-djur-och-natur/seal.glb
+tukan	u	tukan, tukanen, tukanar, tukanarna	tukan	gobkit-cc0-djur-och-natur/toucan.glb
+småvarelse	u	småvarelse, småvarelsen, småvarelsar, småvarelsarna	smavarelse	gobkit-cc0-djur-och-natur/minion-a01.glb
+nisse	u	nisse, nissen, nissar, nissarna	nisse	gobkit-cc0-djur-och-natur/minion-b01.glb
+höna	u	höna, hönan, hönor, hönorna	hona	polypizza-cc0/chicken-chicken-inev9p.glb
+tvättbjörn	u	tvättbjörn, tvättbjörnen, tvättbjörnar, tvättbjörnarna	tvattbjorn	polypizza-cc0/raccoon-raccoon-xmmx6v.glb
+spindel	u	spindel, spindelen, spindelar, spindelarna	spindel	polypizza-cc0/spider-spider-yryjia.glb
+kalkon	u	kalkon, kalkonen, kalkonar, kalkonarna	kalkon	polypizza-cc0/turkey-turkey-ofnmwn.glb
+ninja	u	ninja, ninjan, ninjor, ninjorna	ninja	polypizza-cc0/ninja-ninja-xgymed.glb
+kvinna	u	kvinna, kvinnan, kvinnor, kvinnorna	kvinna	polypizza-cc0/woman-animated-woman-9kf7et.glb
+mus	u	mus, musen, musar, musarna	mus	polypizza-cc0/mus-oud9ue.glb
+råtta	u	råtta, råttan, råttor, råttorna	ratta	polypizza-cc0/mus-iltq5b.glb
+tomte	u	tomte, tomten, tomtar, tomtarna	tomte	polypizza-cc0/tomte-yy3yuq.glb
+gnom	u	gnom, gnomen, gnomar, gnomarna	tomte	polypizza-cc0/tomte-yy3yuq.glb
+trollkarlsgnom	u	trollkarlsgnom, trollkarlsgnomen, trollkarlsgnomar, trollkarlsgnomarna	trollkarlsgnom	polypizza-cc0/trollkarlsgnom-deuyze.glb

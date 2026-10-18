@@ -4,7 +4,9 @@
 // Ingen kod per modell: reglerna står i data/inlagg.json.
 //
 //   node scripts/modell-inlagg.mjs kontrollera --mapp <dir> --manifest <tsv> [--urval <fil>] [--tillval <tsv>] [--ut <json>] [--snabb]
-//   node scripts/modell-inlagg.mjs lagg       --mapp <dir> --manifest <tsv> --urval <fil> [--tillval <tsv>] [--repo .] [--ut <json>]
+//   node scripts/modell-inlagg.mjs lagg       --mapp <dir> --manifest <tsv> --urval <fil> [--tillval <tsv>] [--repo .] [--runda R3D] [--ut <json>]
+//   node scripts/modell-inlagg.mjs urval      --fran <kontroll.json> [--alla] [--prio] [--ut <fil>]   (OK och FLAGGA ur en kontrollkörning → urvalsfil; --alla = alla rader; --prio = paketordning ur inlagg.json)
+//   --mapp och --manifest kan vara kommaseparerade listor (samma ordning): flera inkorgar i ETT lagg-steg (R3D).
 //   node scripts/modell-inlagg.mjs licenser   [--repo .]
 //   node scripts/modell-inlagg.mjs matt       [--repo .] [--ut <json>]
 //
@@ -539,7 +541,8 @@ const kb = (n) => Math.round(n / 1024);
 export function planera(rad, ctx, o) {
   const { cfg } = ctx;
   const res = { fil: `${rad.paket}/${rad.fil}`, kategori: rad.kategori, fel: [], flaggor: [], info: [], status: "OK" };
-  const sokvag = path.join(o.mapp, rad.paket, rad.fil);
+  const mapp = rad.mapp ?? o.mapp;
+  const sokvag = path.join(mapp, rad.paket, rad.fil);
   if (!fs.existsSync(sokvag)) {
     res.fel.push(`filen finns inte: ${sokvag}`);
     res.status = "FEL";
@@ -549,7 +552,7 @@ export function planera(rad, ctx, o) {
   if (!tier) res.fel.push(`kategorin "${rad.kategori}" finns inte i data/inlagg.json (kategorier).`);
   // licens
   let licensfil = null;
-  for (const kand of [path.join(o.mapp, rad.paket, cfg.licens.licensfil), path.join(o.mapp, "..", rad.paket, cfg.licens.licensfil)]) {
+  for (const kand of [path.join(mapp, rad.paket, cfg.licens.licensfil), path.join(mapp, "..", rad.paket, cfg.licens.licensfil)]) {
     if (fs.existsSync(kand)) {
       licensfil = fs.readFileSync(kand, "utf8");
       break;
@@ -583,7 +586,7 @@ export function planera(rad, ctx, o) {
   res.id = id;
   if (nya.length && !/^[a-z][a-z0-9-]{1,31}$/.test(id)) res.fel.push(`id "${id}" är ogiltigt. Använd gemener a–z och bindestreck, t.ex. "ko".`);
   if (ctx.entIds.has(id) || ctx.tillIds.has(id)) {
-    if (ctx.ent.entiteter[id]?.inlagd === "R3C") res.hoppa = "redan inlagd i en tidigare körning";
+    if (ctx.ent.entiteter[id]?.inlagd) res.hoppa = `redan inlagd i en tidigare körning (${ctx.ent.entiteter[id].inlagd})`;
     else res.hoppa = res.hoppa ?? `id "${id}" finns redan i data/entiteter.json eller tillgangar.json`;
   }
   if (o.ids.has(id) && !res.hoppa) res.hoppa = `variant av "${id}" (samma id som en tidigare rad i körningen; en modell per ord)`;
@@ -609,7 +612,7 @@ export async function tungt(res, rad, ctx, o) {
   const { cfg } = ctx;
   const tier = res.tier;
   const id = res.id;
-  const sokvag = path.join(o.mapp, rad.paket, rad.fil);
+  const sokvag = path.join(rad.mapp ?? o.mapp, rad.paket, rad.fil);
   delete res.tier;
   if (res.status !== "OK") return res;
   if (o.snabb) return res;
@@ -700,6 +703,7 @@ export async function tungt(res, rad, ctx, o) {
 
 export function radFor(res, rad, ctx) {
   const { cfg } = ctx;
+  const runda = ctx.runda ?? "R3C";
   const tier = cfg.kategorier[rad.kategori];
   const ordLista = res.ord;
   const hojd = Math.max(...ordLista.map((w) => cfg.malhojd_ord?.[w] ?? 0), 0) || tier.malhojd;
@@ -714,7 +718,7 @@ export function radFor(res, rad, ctx) {
   else if (f?.axel && f.axel !== "+z" && rad.framsida !== "nej") ent.framAxel = f.axel;
   if (!(cfg.forladda_id ?? []).includes(res.id)) ent.forladda = false;
   ent.ord = ordLista;
-  ent.inlagd = "R3C";
+  ent.inlagd = runda;
   const till = {
     fil: `/models/bulk/${res.id}.glb`,
     licens: rad.licens,
@@ -724,7 +728,7 @@ export function radFor(res, rad, ctx) {
     trianglar: res.efter.tri,
     bytes: res.bytes,
     stil: rad.stil || "nära",
-    inlagd: "R3C",
+    inlagd: runda,
   };
   const ordRader = [];
   if (tier.typ === "djur") {
@@ -734,7 +738,7 @@ export function radFor(res, rad, ctx) {
         id: w, klass: "djur", niva: "fritt", visa: w, genus, former: formerFor(w, genus, cfg),
       };
       if (rorelse) r.signatur = cfg.signatur_rorelse?.[rorelse] ?? "studs";
-      r.kalla = `R3C ${rad.paket}`;
+      r.kalla = `${runda} ${rad.paket}`;
       r.del = { kropp: res.id };
       ordRader.push(r);
     }
@@ -811,7 +815,7 @@ function argv() {
   for (let i = 0; i < rest.length; i++) {
     if (!rest[i].startsWith("--")) continue;
     const n = rest[i].slice(2);
-    if (["snabb", "tillat-cc-by", "torrt", "alla"].includes(n)) a.flaggor.add(n);
+    if (["snabb", "tillat-cc-by", "torrt", "alla", "prio"].includes(n)) a.flaggor.add(n);
     else a[n] = rest[++i];
   }
   return a;
@@ -838,22 +842,30 @@ export function sammanfatta(resultat) {
   return { rader: n, ok, ok_flaggad: okF, hoppade: hopp, fel: felN, klarar_utan_flagga_procent: +((100 * ok) / n).toFixed(1), klarar_procent: +((100 * (ok + okF)) / n).toFixed(1), unika_nya_ord: unikaOrd, felorsaker: fel, flaggor: flagg };
 }
 
+/** "a,b" + "x,y" → [{ mapp: a, manifest: x }, { mapp: b, manifest: y }] (en inkorg per par). */
+export function delaKallor(mapp, manifest) {
+  const m = String(mapp).split(",").map((x) => x.trim()).filter(Boolean);
+  const f = String(manifest).split(",").map((x) => x.trim()).filter(Boolean);
+  if (m.length !== f.length) throw new Error(`--mapp (${m.length}) och --manifest (${f.length}) måste vara lika många`);
+  return m.map((x, i) => ({ mapp: path.resolve(x), manifest: f[i] }));
+}
+
 async function laddaRader(a) {
-  const mapp = path.resolve(a.mapp);
-  const rader = lasTsv(fs.readFileSync(a.manifest, "utf8")).map(normRad);
+  const kallor = delaKallor(a.mapp, a.manifest);
+  const rader = kallor.flatMap((k) => lasTsv(fs.readFileSync(k.manifest, "utf8")).map(normRad).map((r) => ({ ...r, mapp: k.mapp })));
   let urval = null;
   if (a.urval) urval = lasUrval(fs.readFileSync(a.urval, "utf8"));
   const val = urval ? urval.map((u) => {
     const r = rader.find((x) => `${x.paket}/${x.fil}` === u || x.fil === u);
-    if (!r) throw new Error(`urvalet nämner ${u} som inte finns i manifestet`);
+    if (!r) throw new Error(`urvalet nämner ${u} som inte finns i något manifest`);
     return r;
   }) : rader;
   let tillval = null;
   if (a.tillval) {
     tillval = new Map();
-    for (const o of lasTsv(fs.readFileSync(a.tillval, "utf8"))) tillval.set(o.fil.includes("/") ? o.fil : o.fil, { id: o.id || undefined, ord: o.ord || undefined, fram: o.fram || undefined });
+    for (const o of lasTsv(fs.readFileSync(a.tillval, "utf8"))) tillval.set(o.fil, { id: o.id || undefined, ord: o.ord || undefined, fram: o.fram || undefined });
   }
-  return { mapp, val, tillval };
+  return { mapp: kallor[0].mapp, val, tillval };
 }
 
 function skrivUt(resultat) {
@@ -868,6 +880,7 @@ function skrivUt(resultat) {
 async function planeraOchKor(a, behall) {
   const repo = path.resolve(a.repo ?? ".");
   const ctx = byggKontext(repo);
+  ctx.runda = a.runda ?? "R3C";
   ctx.fastpunkter = lasJson(path.join(repo, "data", "fastpunkter.json"));
   const { mapp, val, tillval } = await laddaRader(a);
   const o = { mapp, tillval, snabb: a.flaggor.has("snabb"), tillatCcBy: a.flaggor.has("tillat-cc-by"), ids: new Set(), behall };
@@ -1011,7 +1024,7 @@ function cmdMatt(a) {
   const storlek = (f) => (f && fs.existsSync(path.join(pub, f)) ? fs.statSync(path.join(pub, f)).size : 0);
   const rad = [];
   for (const [id, t] of Object.entries(till)) {
-    if (t.fil) rad.push({ id, bytes: storlek(t.fil), bulk: t.inlagd === "R3C" });
+    if (t.fil) rad.push({ id, bytes: storlek(t.fil), bulk: !!t.inlagd });
   }
   const summa = (l) => l.reduce((s, x) => s + x.bytes, 0);
   const bulk = rad.filter((x) => x.bulk);
@@ -1032,12 +1045,33 @@ function cmdMatt(a) {
   if (a.ut) fs.writeFileSync(a.ut, JSON.stringify(ut, null, 1) + "\n");
 }
 
+/** Stabil sortering: paket vars namn börjar med en tidigare post i `prio` kommer först (förstkommen får ordet). */
+export function sorteraPaket(filer, prio = []) {
+  const plats = (f) => {
+    const i = prio.findIndex((p) => f.startsWith(p));
+    return i < 0 ? prio.length : i;
+  };
+  return filer.map((f, i) => ({ f, i })).sort((x, y) => plats(x.f) - plats(y.f) || x.i - y.i).map((x) => x.f);
+}
+
+function cmdUrval(a) {
+  const d = JSON.parse(fs.readFileSync(a.fran, "utf8"));
+  const cfg = lasJson(path.join(path.resolve(a.repo ?? "."), "data", "inlagg.json"));
+  const bara = a.flaggor.has("alla") ? d.rader : d.rader.filter((r) => r.status === "OK" || r.status === "OK_FLAGGAD");
+  const lista = sorteraPaket(bara.map((r) => r.fil), a.flaggor.has("prio") ? cfg.paket_prioritet ?? [] : []);
+  const text = `# Urval (${lista.length} modeller) ur ${path.basename(a.fran)}${a.flaggor.has("alla") ? ": alla rader" : ": alla OK och FLAGGA"}${a.flaggor.has("prio") ? ", paketprioritet ur data/inlagg.json (paket_prioritet)" : ""}.\n# Format: paket/filnamn. Rader som börjar med # hoppas över.\n${lista.join("\n")}\n`;
+  if (a.ut) fs.writeFileSync(a.ut, text);
+  else process.stdout.write(text);
+  console.error(`${lista.length} rader`);
+}
+
 async function main() {
   const a = argv();
   if (a.kommando === "kontrollera") return cmdKontrollera(a);
   if (a.kommando === "lagg") return cmdLagg(a);
   if (a.kommando === "licenser") return void licenser(path.resolve(a.repo ?? "."));
   if (a.kommando === "matt") return cmdMatt(a);
+  if (a.kommando === "urval") return cmdUrval(a);
   console.log("Användning: node scripts/modell-inlagg.mjs kontrollera|lagg|licenser|matt  (se filens topp)");
   process.exitCode = 2;
 }

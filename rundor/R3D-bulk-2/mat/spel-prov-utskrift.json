@@ -1,0 +1,73 @@
+{
+ "bulk_glb_vid_start": 0,
+ "resultat": [
+  {
+   "fras": "en noshörning",
+   "forvantad_kropp": "noshorning",
+   "kroppar": [
+    "noshorning"
+   ],
+   "hamtade": [
+    "/models/bulk/noshorning.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "en tiger med krona",
+   "forvantad_kropp": "tiger",
+   "kroppar": [
+    "tiger"
+   ],
+   "hamtade": [
+    "/models/bulk/tiger.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "en koala",
+   "forvantad_kropp": "koala",
+   "kroppar": [
+    "koala"
+   ],
+   "hamtade": [
+    "/models/bulk/koala.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "en flamingo",
+   "forvantad_kropp": "flamingo",
+   "kroppar": [
+    "flamingo"
+   ],
+   "hamtade": [
+    "/models/bulk/flamingo.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "en blå isbjörn",
+   "forvantad_kropp": "isbjorn",
+   "kroppar": [
+    "isbjorn"
+   ],
+   "hamtade": [
+    "/models/bulk/isbjorn.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "en ko",
+   "forvantad_kropp": "ko",
+   "kroppar": [
+    "ko"
+   ],
+   "hamtade": [
+    "/models/bulk/ko.glb"
+   ],
+   "ok": true
+  }
+ ],
+ "glb_med_fel": [],
+ "sidfel": []
+}

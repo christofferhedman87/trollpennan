@@ -5,7 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { axelFranVektor, formerFor, infogaRader, kontrolleraLicens, lasTsv, licenstexter, normRad, ordKandidater, rorelseFor, slug, sammanfatta, tillModellRum } from "./modell-inlagg.mjs";
+import { axelFranVektor, delaKallor, formerFor, infogaRader, kontrolleraLicens, lasTsv, licenstexter, normRad, ordKandidater, rorelseFor, slug, sammanfatta, sorteraPaket, tillModellRum } from "./modell-inlagg.mjs";
 
 const rot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const cfg = JSON.parse(fs.readFileSync(path.join(rot, "data", "inlagg.json"), "utf8"));
@@ -100,4 +100,13 @@ test("verktygskedjan: en riktig GLB går genom optimize → prune → meshopt (h
   } finally {
     fs.rmSync(tmp, { recursive: true, force: true });
   }
+});
+
+test("R3D: flera inkorgar i ett steg (--mapp/--manifest i par) och paketprioritet för förstkommen-får-ordet", () => {
+  const k = delaKallor("/a,/b", "x.tsv,y.tsv");
+  assert.deepEqual(k.map((x) => [x.mapp, x.manifest]), [["/a", "x.tsv"], ["/b", "y.tsv"]]);
+  assert.throws(() => delaKallor("/a,/b", "x.tsv"), /lika många/);
+  const prio = cfg.paket_prioritet;
+  assert.ok(Array.isArray(prio) && prio[0].startsWith("kenney"), "Kenney först (stilen finns redan i spelet)");
+  assert.deepEqual(sorteraPaket(["gobkit-x/a.glb", "oga-cc0/b.glb", "kenney-y/c.glb", "kenney-y/d.glb", "okand/e.glb"], prio), ["kenney-y/c.glb", "kenney-y/d.glb", "gobkit-x/a.glb", "oga-cc0/b.glb", "okand/e.glb"]);
 });

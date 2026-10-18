@@ -1,0 +1,24 @@
+{
+  "modellerGamla": 9,
+  "kbGamla": 1274,
+  "modellerBulk": 277,
+  "kbBulk": 11829,
+  "medelKbBulk": 43,
+  "medianKbBulk": 21,
+  "p90KbBulk": 76,
+  "storstaKbBulk": 602,
+  "forladdat": {
+    "modeller": 0,
+    "kb": 0,
+    "budgetKb": 1200
+  },
+  "omAllaForladdades": {
+    "kb": 13103,
+    "mot_budget": 1200
+  },
+  "lazy": {
+    "forstaLaddning_kb": 0,
+    "perNyttOrd_kb_medel": 43,
+    "perNyttOrd_kb_p90": 76
+  }
+}
