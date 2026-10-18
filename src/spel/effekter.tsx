@@ -5,7 +5,7 @@ import type { Varelse } from "../tolk/typer.ts";
 import type { Ankare } from "./tillbehorFaste.ts";
 
 const ELD_N = 24;
-const GLITTER_N = 20;
+const GLITTER_N = 32;
 
 const ROD = [0xe8 / 255, 0x34 / 255, 0x1c / 255] as const;
 const ORANGE = [1, 0x7a / 255, 0x1a / 255] as const;
@@ -235,20 +235,22 @@ function GlitterRing({ ankare }: { ankare: Ankare }) {
     const storlek = new Float32Array(GLITTER_N);
     const fas = new Float32Array(GLITTER_N);
     const full = new Float32Array(GLITTER_N);
-    const rad = Math.max(0.3, Math.min(ankare.bredd * 0.9, ankare.hojd * 0.46));
-    const yMitt = ankare.hojd * 0.52;
+    // Ellips utanför hela kroppen: sidor (bredd) och över/under (höjd), inte en liten ring uppe.
+    const rx = Math.max(0.28, ankare.bredd * 0.72);
+    const ry = Math.max(0.28, ankare.hojd * 0.62);
+    const yMitt = ankare.hojd * 0.5;
     for (let i = 0; i < GLITTER_N; i++) {
       const a = (i / GLITTER_N) * Math.PI * 2;
-      pos[i * 3] = Math.cos(a) * rad;
-      pos[i * 3 + 1] = yMitt + Math.sin(a) * rad;
+      pos[i * 3] = Math.cos(a) * rx;
+      pos[i * 3 + 1] = yMitt + Math.sin(a) * ry;
       pos[i * 3 + 2] = 0;
-      const vit = i % 5 === 0;
+      const vit = i % 2 === 0;
       col[i * 3] = 1;
       col[i * 3 + 1] = vit ? 1 : 0xc8 / 255;
       col[i * 3 + 2] = vit ? 1 : 0x3d / 255;
       fas[i] = a;
-      full[i] = 12 + (i % 5);
-      storlek[i] = full[i] ?? 14;
+      full[i] = 16 + (i % 7);
+      storlek[i] = full[i] ?? 18;
     }
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
@@ -267,8 +269,9 @@ function GlitterRing({ ankare }: { ankare: Ankare }) {
     const fas = pack.fas;
     const full = pack.full;
     for (let i = 0; i < GLITTER_N; i++) {
-      const blink = Math.max(0, Math.sin(t * 4.2 + (fas[i] ?? 0)));
-      arr[i] = (full[i] ?? 14) * blink;
+      const våg = 0.5 + 0.5 * Math.sin(t * 4.2 + (fas[i] ?? 0));
+      const bas = full[i] ?? 18;
+      arr[i] = 16 + (bas - 16) * våg;
     }
     stor.needsUpdate = true;
   });
