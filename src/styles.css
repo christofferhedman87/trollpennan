@@ -352,6 +352,9 @@ flex-direction:column;gap:4px;display:flex}
 background:var(--color-gold-soft);min-height:44px;color:var(--color-ink);font-weight:800;font-size:var(--text-ui);border:0;border-radius:12px}
 .bok-mitt{
 flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain}
+/* R2.1: bok-mitt är bokens enda skrollyta. En inre overflow:auto-yta (kort-yta) som inte är högre än sitt innehåll stoppade fingerskrollningen (overscroll-behavior:contain i mobile-b03.css), så listan gick inte att dra. */
+.bok .bok-mitt .kort-yta{overflow:visible;overscroll-behavior:auto;flex:none}
+.bok .bok-mitt .flikar{position:sticky;top:0;z-index:1;background:var(--color-paper)}
 .bok .remsa,.bok .vakna,.bok .tangenter,.bok-huvud{flex-shrink:0}
 .tangenter{
 flex-direction:column;flex:0 0 auto;justify-content:flex-end;gap:4px;min-height:0;padding:0 6px 4px;display:flex}

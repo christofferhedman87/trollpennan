@@ -25,7 +25,8 @@
     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
     "check:pages-output": "node scripts/check-pages-output.mjs",
     "check:struktur": "node scripts/check-spel-struktur.mjs",
-    "check:struktur:a": "node scripts/check-spel-struktur.mjs --steg a"
+    "check:struktur:a": "node scripts/check-spel-struktur.mjs --steg a",
+    "test:bok": "node --test src/spel/bokSkrollning.test.mjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.4",
