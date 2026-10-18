@@ -685,3 +685,20 @@ summary:focus-visible { outline: 3px solid #204e8a; outline-offset: 3px; }
 .lagrings-info summary { min-height: 44px; padding: .5rem .75rem; font-weight: 700; cursor: pointer; }
 .lagrings-info p { margin: 0; padding: .5rem .75rem .75rem; }
 :where(button, a, input, select, textarea, summary):focus-visible { outline: 3px solid #204e8a; outline-offset: 3px; }
+
+/* R6A-2: Bengtsson som klickbar figur på ängen och uppdragsremsan i Skapa-menyn */
+.npc-figur{
+position:absolute;z-index:7;left:4px;bottom:74px;height:176px;width:118px;padding:0;border:0;background:none;display:block;touch-action:manipulation;filter:drop-shadow(0 3px 4px #2c241659)}
+.npc-figur img{
+display:block;width:100%;height:100%;object-fit:contain;object-position:bottom;pointer-events:none;user-select:none}
+.npc-figur.nytt{
+animation:npc-hopp 2.4s ease-in-out infinite}
+.npc-utrop{
+position:absolute;top:2px;right:0;width:30px;height:30px;border-radius:50%;background:var(--color-berry);color:var(--color-cream);font-family:var(--font-display);font-size:1.25rem;font-weight:800;display:grid;place-items:center;box-shadow:0 3px 0 #8e2344}
+@keyframes npc-hopp{
+0%,70%,100%{transform:translateY(0)}
+80%{transform:translateY(-8px)}
+90%{transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.npc-figur.nytt{animation:none}}
+.uppdrag-remsa{
+margin:0 0 8px;padding:10px 12px;border-radius:14px;background:#fff6d6;color:var(--color-ink);font-size:1.0625rem;font-weight:700;line-height:1.35;box-shadow:0 3px 0 var(--color-paper-deep)}
