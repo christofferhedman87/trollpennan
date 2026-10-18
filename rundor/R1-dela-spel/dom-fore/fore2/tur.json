@@ -1,0 +1,102 @@
+[
+  {
+    "namn": "01-start",
+    "sha": "bda5df95b5b2277876ab2588e70cd982972d824a65126c73ad0054470016183a",
+    "bytes": 1568
+  },
+  {
+    "namn": "02-ang-djur",
+    "sha": "84dd1738490dccc68f94a6830ece4a491f7fefe76b5fd0327ea59551a2de5a84",
+    "bytes": 1610
+  },
+  {
+    "namn": "03-bok-kort",
+    "sha": "6993bb21c38dfb3f1d4afdd9265afa464931dfbf6263907763cc8145b31f0fab",
+    "bytes": 4870
+  },
+  {
+    "namn": "04-bok-skriv",
+    "sha": "6993bb21c38dfb3f1d4afdd9265afa464931dfbf6263907763cc8145b31f0fab",
+    "bytes": 4870
+  },
+  {
+    "namn": "05-bok-forslag",
+    "sha": "cdc8f44ce21cd5bfc3c8df1676350ebbc85c13050d6d202b0fd8c3d493c45ce5",
+    "bytes": 3322
+  },
+  {
+    "namn": "06-bok-behover",
+    "sha": "b2d8b6789a20bbd3f2e70c75181dd362ef3d300c262bbf2bbd6d7654fb35e923",
+    "bytes": 3419
+  },
+  {
+    "namn": "07-meny",
+    "sha": "237590ec3f87307128a8bb6b35b90b0423ce51ef2e4a839f28e998a4bb250e96",
+    "bytes": 4202
+  },
+  {
+    "namn": "08-meny-last",
+    "sha": "2701284b2554bad69cb933013c21a501878b33003a2164e21a81aa9b1bd33259",
+    "bytes": 4329
+  },
+  {
+    "namn": "09-karta",
+    "sha": "718325bb20159398963a97b433ecbe00c3cb8f195ba1905197a9fdb401b6a6e0",
+    "bytes": 1796
+  },
+  {
+    "namn": "10-skogen-valj",
+    "sha": "299c496050ae6f0f0822946ebfb301059daafb839d811a1d559ea0b0ccc34b1c",
+    "bytes": 2291
+  },
+  {
+    "namn": "11-skogen",
+    "sha": "0be19d400419029d319489ff859319da8f676f8f04600716187e3deb7df994c9",
+    "bytes": 1229
+  },
+  {
+    "namn": "12-ordbok",
+    "sha": "0671e6e648fe3e4d9b00622cb9e7f6bc64d9ea6c0cb52414bd8183740fc9b563",
+    "bytes": 5830
+  },
+  {
+    "namn": "13-foralder",
+    "sha": "b3934261b1b1ffbfc352b7c4e929a8b75a989652db76c5d93709540cb95e4aee",
+    "bytes": 3438
+  },
+  {
+    "namn": "14-album",
+    "sha": "3e41323f6a7cf9c8a80f6263c0c8199832ed5d560cb01405ea1e4c50bd3ca427",
+    "bytes": 3618
+  },
+  {
+    "namn": "15-formel",
+    "sha": "8427b10335c2a23508408284c5c2c98785220333690fa49c2e31eba584a393f0",
+    "bytes": 1940
+  },
+  {
+    "namn": "16-onska",
+    "sha": "ff924e6f695225da58887e7e19f01d4a8721a6138798538b3f36dbdb65bf2954",
+    "bytes": 1786
+  },
+  {
+    "namn": "17-onska-bok",
+    "sha": "f0724424834337677d5392daf2dc99ee65cb2d7c3b69beafee3e686fc9bbe99d",
+    "bytes": 4652
+  },
+  {
+    "namn": "18-gard",
+    "sha": "dac28284fc3a30c536fe573e8b7affaaf5a512f13caad1ab7f2b7f7885221762",
+    "bytes": 1644
+  },
+  {
+    "namn": "19-gard-bygger",
+    "sha": "dac28284fc3a30c536fe573e8b7affaaf5a512f13caad1ab7f2b7f7885221762",
+    "bytes": 1644
+  },
+  {
+    "namn": "20-gard-bok",
+    "sha": "a6dc04e135e5145bc4fb395412ec40ffbae5d4d9308695476507afee13a8598d",
+    "bytes": 6071
+  }
+]
