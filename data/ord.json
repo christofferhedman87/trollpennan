@@ -1099,7 +1099,7 @@
    },
    "kalla": "SALDO",
    "del": {
-    "skala": 2.0
+    "skala": 2
    }
   },
   {
@@ -2239,6 +2239,416 @@
     "farg": "vit"
    },
    "not": "Kräver att applyDel lägger del.tillbehor som ett tillbehör (som 'med horn')."
+  },
+  {
+   "id": "elefant",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "elefant",
+   "genus": "u",
+   "former": [
+    "elefant",
+    "elefanten",
+    "elefanter",
+    "elefanterna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "elefant"
+   }
+  },
+  {
+   "id": "lejon",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "lejon",
+   "genus": "u",
+   "former": [
+    "lejon",
+    "lejonen",
+    "lejonar",
+    "lejonarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "lejon"
+   }
+  },
+  {
+   "id": "zebra",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "zebra",
+   "genus": "u",
+   "former": [
+    "zebra",
+    "zebran",
+    "zebror",
+    "zebrorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "zebra"
+   }
+  },
+  {
+   "id": "pingvin",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "pingvin",
+   "genus": "u",
+   "former": [
+    "pingvin",
+    "pingvinen",
+    "pingvinar",
+    "pingvinarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "pingvin"
+   }
+  },
+  {
+   "id": "räv",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "räv",
+   "genus": "u",
+   "former": [
+    "räv",
+    "räven",
+    "rävar",
+    "rävarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "rav"
+   }
+  },
+  {
+   "id": "flodhäst",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "flodhäst",
+   "genus": "u",
+   "former": [
+    "flodhäst",
+    "flodhästen",
+    "flodhästar",
+    "flodhästarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "flodhast"
+   }
+  },
+  {
+   "id": "anka",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "anka",
+   "genus": "u",
+   "former": [
+    "anka",
+    "ankan",
+    "ankor",
+    "ankorna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3C gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "anka"
+   }
+  },
+  {
+   "id": "örn",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "örn",
+   "genus": "u",
+   "former": [
+    "örn",
+    "örnen",
+    "örnar",
+    "örnarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3C gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "orn"
+   }
+  },
+  {
+   "id": "tyrannosaurus",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "tyrannosaurus",
+   "genus": "u",
+   "former": [
+    "tyrannosaurus",
+    "tyrannosaurusen",
+    "tyrannosaurusar",
+    "tyrannosaurusarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "tyrannosaurus"
+   }
+  },
+  {
+   "id": "giraff",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "giraff",
+   "genus": "u",
+   "former": [
+    "giraff",
+    "giraffen",
+    "giraffer",
+    "girafferna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C kenney-cube-pets",
+   "del": {
+    "kropp": "giraff"
+   }
+  },
+  {
+   "id": "panda",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "panda",
+   "genus": "u",
+   "former": [
+    "panda",
+    "pandan",
+    "pandor",
+    "pandorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C kenney-cube-pets",
+   "del": {
+    "kropp": "panda"
+   }
+  },
+  {
+   "id": "krabba",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "krabba",
+   "genus": "u",
+   "former": [
+    "krabba",
+    "krabban",
+    "krabbor",
+    "krabborna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3C kenney-cube-pets",
+   "del": {
+    "kropp": "krabba"
+   }
+  },
+  {
+   "id": "delfin",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "delfin",
+   "genus": "u",
+   "former": [
+    "delfin",
+    "delfinen",
+    "delfinar",
+    "delfinarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3C polypizza-cc0",
+   "del": {
+    "kropp": "delfin"
+   }
+  },
+  {
+   "id": "orm",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "orm",
+   "genus": "u",
+   "former": [
+    "orm",
+    "ormen",
+    "ormar",
+    "ormarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C polypizza-cc0",
+   "del": {
+    "kropp": "orm"
+   }
+  },
+  {
+   "id": "clownfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "clownfisk",
+   "genus": "u",
+   "former": [
+    "clownfisk",
+    "clownfisken",
+    "clownfiskar",
+    "clownfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3C quaternius-cute-fish",
+   "del": {
+    "kropp": "clownfisk"
+   }
+  },
+  {
+   "id": "nemo",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "nemo",
+   "genus": "u",
+   "former": [
+    "nemo",
+    "nemon"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3C quaternius-cute-fish",
+   "del": {
+    "kropp": "clownfisk"
+   }
+  },
+  {
+   "id": "spöke",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "spöke",
+   "genus": "n",
+   "former": [
+    "spöke",
+    "spöket",
+    "spöken",
+    "spökenen"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C kenney-graveyard-kit",
+   "del": {
+    "kropp": "spoke"
+   }
+  },
+  {
+   "id": "robot",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "robot",
+   "genus": "u",
+   "former": [
+    "robot",
+    "roboten",
+    "roboter",
+    "roboterna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C polypizza-cc0",
+   "del": {
+    "kropp": "robot"
+   }
+  },
+  {
+   "id": "yeti",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "yeti",
+   "genus": "u",
+   "former": [
+    "yeti",
+    "yetin"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C quaternius-cute-monsters",
+   "del": {
+    "kropp": "yeti"
+   }
+  },
+  {
+   "id": "snömänniska",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "snömänniska",
+   "genus": "u",
+   "former": [
+    "snömänniska",
+    "snömänniskan",
+    "snömänniskor",
+    "snömänniskorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C quaternius-cute-monsters",
+   "del": {
+    "kropp": "yeti"
+   }
+  },
+  {
+   "id": "astronaut",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "astronaut",
+   "genus": "u",
+   "former": [
+    "astronaut",
+    "astronauten",
+    "astronautar",
+    "astronautarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C kenney-space-kit",
+   "del": {
+    "kropp": "astronaut"
+   }
+  },
+  {
+   "id": "rymdfarare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "rymdfarare",
+   "genus": "u",
+   "former": [
+    "rymdfarare",
+    "rymdfararen",
+    "rymdfararar",
+    "rymdfarararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C kenney-space-kit",
+   "del": {
+    "kropp": "astronaut"
+   }
+  },
+  {
+   "id": "bonde",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "bonde",
+   "genus": "u",
+   "former": [
+    "bonde",
+    "bonden",
+    "bondar",
+    "bondarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3C polypizza-cc0",
+   "del": {
+    "kropp": "bonde"
+   }
   }
  ],
  "kollisioner": {},

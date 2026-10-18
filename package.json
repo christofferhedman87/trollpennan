@@ -27,7 +27,8 @@
     "check:pages-output": "node scripts/check-pages-output.mjs",
     "check:struktur": "node scripts/check-spel-struktur.mjs",
     "check:struktur:a": "node scripts/check-spel-struktur.mjs --steg a",
-    "test:bok": "node --test src/spel/bokSkrollning.test.mjs"
+    "test:bok": "node --test src/spel/bokSkrollning.test.mjs",
+    "test:inlagg": "node --test scripts/modell-inlagg.test.mjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.4",

@@ -28,6 +28,12 @@ export type Entitet = {
   material?: Record<string, "farg" | "ljus">;
   /** Valfri åsidosättning. Saknas = modellens framsida är +z och djuret står vänt mot kameran. */
   framAxel?: FramAxel;
+  /** false = modellen hämtas först när ordet används (R3C). Saknas = hämtas direkt vid start, som de första djuren. */
+  forladda?: boolean;
+  /** Orden som skapar djuret (R3C-rader; ord.json är sanningen om vilka ord som fungerar). */
+  ord?: string[];
+  /** Vilken runda/rutin som lade in raden (R3C). */
+  inlagd?: string;
 };
 export type Tillgang = { fil?: string; mapp?: string; licens: string; upphov: string; kalla: string; anvands?: boolean };
 
@@ -47,6 +53,17 @@ export function entitet(kropp: string): Entitet | undefined {
 /** Alla djur i den ordning de visas i albumet (ordningen i entiteter.json). */
 export function djurIds(): string[] {
   return Object.keys(ENTITETER).filter((k) => ENTITETER[k]?.typ === "djur");
+}
+
+/** Modeller som ska hämtas direkt vid start. Resten (forladda: false) hämtas när ordet används. */
+export function forladdaUrls(): string[] {
+  const urls = new Set<string>();
+  for (const [id, e] of Object.entries(ENTITETER)) {
+    if (e.typ !== "djur" || e.forladda === false) continue;
+    const u = modellUrl(id);
+    if (u) urls.add(u);
+  }
+  return [...urls];
 }
 
 export function modellUrl(kropp: string): string | null {

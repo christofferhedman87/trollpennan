@@ -4,7 +4,7 @@ import { useLayoutEffect, useMemo, useRef } from "react";
 import { SkeletonUtils } from "three-stdlib";
 import * as THREE from "three";
 import type { Sparad } from "./brygga.ts";
-import { entitet, framVinkel, malhojd, modellUrl as modellUrlAv, ENTITETER } from "./entiteter.ts";
+import { entitet, forladdaUrls, framVinkel, malhojd, modellUrl as modellUrlAv } from "./entiteter.ts";
 import { faestTillbehor } from "./tillbehor/index.ts";
 
 /** Kodbyggd reserv om en GLB saknas. Komponenten skickas in utifrån så den här filen inte drar in hela ängen. */
@@ -113,6 +113,13 @@ function metallNoll(rot: THREE.Object3D) {
   });
 }
 
+/** Animerade modeller (skinnade nät) har en omslutande sfär för vilopositionen; utan det här kan de klippas bort mitt i en rörelse. */
+function ingenKulling(rot: THREE.Object3D) {
+  rot.traverse((o) => {
+    if ((o as THREE.SkinnedMesh).isSkinnedMesh) o.frustumCulled = false;
+  });
+}
+
 function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
   const hex = fargAv(spec);
   const ent = entitet(spec.kropp);
@@ -157,7 +164,7 @@ export function modellUrl(kropp: string) {
   return modellUrlAv(kropp);
 }
 
-for (const url of new Set(Object.keys(ENTITETER).map(modellUrlAv).filter((u): u is string => Boolean(u)))) useGLTF.preload(url);
+for (const url of forladdaUrls()) useGLTF.preload(url);
 
 export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: DjurSignal } }) {
   const url = modellUrlAv(spec.kropp) ?? modellUrlAv("kanin")!;
@@ -171,6 +178,7 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
   const klon = useMemo(() => {
     const c = SkeletonUtils.clone(gltf.scene) as THREE.Object3D;
     metallNoll(c);
+    ingenKulling(c);
     fargaKlon(c, spec);
     c.updateMatrixWorld(true);
     const box = new THREE.Box3().setFromObject(c);

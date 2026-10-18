@@ -8,6 +8,7 @@ import {
   TILLGANGAR,
   artFarg,
   djurIds,
+  forladdaUrls,
   entitet,
   flyger,
   framVinkel,
@@ -54,7 +55,20 @@ test("djuren i entiteter.json är exakt de kroppar ord.json kan skapa, i albumet
   };
   gå(ordJson);
   assert.deepEqual([...new Set(ur)].sort(), [...djurIds()].sort());
-  assert.deepEqual(djurIds(), ["kanin", "katt", "hund", "drake", "häst", "fågel", "fisk", "groda", "gris", "dinosaurie", "uggla", "ekorre", "bäver", "haj"]);
+  // De 14 första är albumets ordning; djur som R3C lägger in (inlagd: "R3C") kommer efter dem.
+  assert.deepEqual(djurIds().slice(0, 14), ["kanin", "katt", "hund", "drake", "häst", "fågel", "fisk", "groda", "gris", "dinosaurie", "uggla", "ekorre", "bäver", "haj"]);
+  assert.ok(djurIds().slice(14).every((k) => ENTITETER[k]?.inlagd === "R3C"), "djur efter de 14 ska vara inlagda av R3C");
+});
+
+test("R3C-modeller hämtas när ordet används: forladda är false och startnedladdningen växer inte", () => {
+  const r3c = djurIds().filter((k) => ENTITETER[k]?.inlagd === "R3C");
+  assert.ok(r3c.every((k) => ENTITETER[k]?.forladda === false), "alla R3C-rader ska ha forladda: false");
+  const start = new Set(forladdaUrls());
+  for (const k of r3c) {
+    const u = modellUrl(k);
+    if (u) assert.ok(!start.has(u), `${k}: ${u} ska inte hämtas vid start`);
+  }
+  assert.ok(start.has("/models/animal-bunny.glb"), "de första djuren hämtas som förut");
 });
 
 test("varje modellfil finns, och varje fil i public/models har en rad i tillgangar.json", () => {
@@ -83,7 +97,7 @@ test("saknade fält ger standard: inget fält krävs per djur", () => {
   assert.equal(hoppHojd("okänt-djur"), null);
   assert.equal(nattvaken("okänt-djur"), false);
   assert.equal(framVinkel(entitet("kanin")?.framAxel), 0);
-  assert.ok(djurIds().every((k) => entitet(k)?.framAxel === undefined), "inget av de 14 djuren behöver framAxel");
+  assert.ok(djurIds().slice(0, 14).every((k) => entitet(k)?.framAxel === undefined), "inget av de 14 djuren behöver framAxel");
 });
 
 test("värden som koden hade i tabellerna", () => {
@@ -100,7 +114,7 @@ test("värden som koden hade i tabellerna", () => {
   assert.deepEqual([vikt("drake"), vikt("häst"), vikt("hund")], [3, 2, 1]);
   assert.equal(hoppHojd("fågel"), 0.32);
   assert.equal(hoppHojd("kanin"), 0.55);
-  assert.deepEqual(djurIds().filter(nattvaken), ["uggla"]);
+  assert.deepEqual(djurIds().slice(0, 14).filter(nattvaken), ["uggla"]);
 });
 
 test("framVinkel lägger vald axel mot +z (där kameran står)", () => {
