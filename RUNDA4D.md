@@ -1,0 +1,2 @@
+Glöd ritas nu bakom djuret (depthTest av, renderOrder -2) i storlek 2,2× bredd och höjd med samma gula textur; glitter är 32 prickar i en ellips runt ankare.bredd/hojd, 16–22 px, guld/vitt och fasförskjuten puls. Eldkoden är orörd.
+Jag har inte tittat på nya renderade bilder, så jag vet inte om hästens halo och fågelns ring faktiskt ser rätt ut. typecheck:pages och build:pages gick igenom. test:product föll direkt: Node v20.19.2 tar inte flaggan --experimental-strip-types.
