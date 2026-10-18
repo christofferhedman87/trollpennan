@@ -4,7 +4,7 @@ import { useLayoutEffect, useMemo, useRef } from "react";
 import { SkeletonUtils } from "three-stdlib";
 import * as THREE from "three";
 import type { Sparad } from "./brygga.ts";
-import { ankareFor, faestTillbehor } from "./tillbehorFaste.ts";
+import { faestTillbehor } from "./tillbehor/index.ts";
 
 /** Kodbyggd reserv om en GLB saknas. Komponenten skickas in utifrån så den här filen inte drar in hela ängen. */
 export type DjurSignal = { klapp: number; ror: number };
@@ -181,8 +181,8 @@ function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
   });
 }
 
-function fastAnkare(rot: THREE.Object3D, spec: Sparad, s: number) {
-  faestTillbehor(rot, ankareFor(rot, spec.kropp, s), spec);
+function fastAnkare(rot: THREE.Object3D, spec: Sparad) {
+  faestTillbehor(rot, spec.kropp, spec.tillbehor, "modell");
 }
 
 export function harModell(kropp: string) {
@@ -216,7 +216,7 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
     c.scale.setScalar(s);
     c.position.y = -box.min.y * s;
     c.updateMatrixWorld(true);
-    fastAnkare(c, spec, s);
+    fastAnkare(c, spec);
     return c;
     // spec läses via sign så klonen inte byggs om varje render
     // eslint-disable-next-line react-hooks/exhaustive-deps

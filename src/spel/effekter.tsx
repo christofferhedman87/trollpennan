@@ -2,7 +2,7 @@ import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import type { Varelse } from "../tolk/typer.ts";
-import type { Ankare } from "./tillbehorFaste.ts";
+import type { Ankare } from "./tillbehor/index.ts";
 
 const ELD_N = 24;
 const GLITTER_N = 32;

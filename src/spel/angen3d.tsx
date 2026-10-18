@@ -13,7 +13,7 @@ import { ljud } from "./ljud.ts";
 import { sagaNatt, sagaNu } from "./saga.ts";
 import type { SparatBygge } from "./bygge.ts";
 import { GltfDjur, harModell, type DjurSignal } from "./gltfDjur.tsx";
-import { faestTillbehor, procAnkare } from "./tillbehorFaste.ts";
+import { faestTillbehor, procAnkare } from "./tillbehor/index.ts";
 import { DjurEffekter } from "./effekter.tsx";
 import { KenneyNatur } from "./kenneyNatur.tsx";
 
@@ -593,7 +593,7 @@ function DjurForm({ spec }: { spec: Sparad }) {
   const tillSign = spec.tillbehor.map((t) => `${t.id}:${t.farg ?? ""}`).join(",");
   const extra = useMemo(() => {
     const g = new THREE.Group();
-    faestTillbehor(g, procAnkare(spec.kropp), spec);
+    faestTillbehor(g, spec.kropp, spec.tillbehor);
     return g;
   }, [spec, tillSign]);
   const mat = useMemo(() => {
@@ -724,24 +724,7 @@ function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
   const index = alla.findIndex((d) => d.uid === spec.uid);
   const flyg = flygare(spec);
   const sim = simmare(spec);
-  const ankare = useMemo(() => {
-    const a = procAnkare(spec.kropp);
-    const kenneyMotMinusZ =
-      harModell(spec.kropp) &&
-      (spec.kropp === "kanin" || spec.kropp === "katt" || spec.kropp === "hund" || spec.kropp === "fisk");
-    if (!kenneyMotMinusZ) return a;
-    const spegla = (v: THREE.Vector3) => new THREE.Vector3(v.x, v.y, -v.z);
-    return {
-      ...a,
-      huvudTopp: spegla(a.huvudTopp),
-      ansikte: spegla(a.ansikte),
-      ogonL: spegla(a.ogonL),
-      ogonR: spegla(a.ogonR),
-      mun: spegla(a.mun),
-      hals: spegla(a.hals),
-      rygg: spegla(a.rygg),
-    };
-  }, [spec.kropp]);
+  const ankare = useMemo(() => procAnkare(spec.kropp), [spec.kropp]);
   useEffect(() => {
     return () => {
       if (upp.current) window.removeEventListener("pointerup", upp.current);
@@ -812,9 +795,8 @@ function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
       g.position.z = sim ? Math.sin(t * 0.7 + index) * 0.16 : wz;
       g.position.y = y + bob + lyft;
       const yaw = Math.atan2(spx, spz);
-      const kenney = spec.kropp === "kanin" || spec.kropp === "katt" || spec.kropp === "hund" || spec.kropp === "fisk" || spec.kropp === "fågel" || spec.kropp === "uggla";
       g.rotation.z = 0;
-      g.rotation.y = snurr.current > 0 ? t * 7 : (kenney ? Math.PI : 0) + yaw * 0.35;
+      g.rotation.y = snurr.current > 0 ? t * 7 : yaw * 0.35;
     }
     const gnist = puff.current;
     if (gnist) {
