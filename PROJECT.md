@@ -1,0 +1,680 @@
+# PROJECT.md – Trollpennan (projektkarta)
+
+## Grundtanken (Christoffer, 2026-10-18) – allt i den här filen mäts mot den
+
+> Trollpennan är ett spel där yngre barn skapar en helt egen värld genom att använda svenska korrekt och kreativt. Det barnet skriver ska materialiseras/visualiseras på skärmen, nästan oavsett vad hen skriver. Därför behövs enorma mängder modeller och attribut, och att få in modeller enkelt och i bulk är helt centralt. Nu djur, men även hus, stall, hagar mm. Uppdrag på andra platser (skogen, sjön, grottan), främst från Doktor Bengtsson. Fast kameravinkel som i Hay Day är ok.
+
+**Mätaren (avsnitt 11):** andel av det barnet skriver som blir något synligt. Idag (mätt 2026-10-18, kod och live överensstämmer): **1,2 % av de 1 000 vanligaste substantiven, 1,9 % av adjektiven och 0,5 % av verben** blir en egen synlig form; ca 13 % av en handvald barnlista med 70 vardagssubstantiv. Ett okänt ord blir **ingenting** (en "Pennan behöver ett djur"-ruta; ordet sparas i en lista som barnet inte ser). Se avsnitt 12 för reservformen som ska göra det till 100 % synligt.
+
+**Viktigaste fyndet i live-spelningen (avsnitt 17):** den publicerade versionen på https://trollpennan.grok.me/ är **äldre än `main`**: den saknar Runda 1 och alla tillbehörsrundor. Hatt, halsduk, glasögon, rosett, mantel och ryggsäck syns inte alls där. Ingen verifiering av `main` är gjord i spelad version förrän `main` är publicerad.
+
+Skriven av Arkitekten 2026-10-18 mot `main` = `697be95` ("Runda 5A: ryggsäck, mantel och horn (#11)", 2026-10-18 10:39 Stockholmstid). Allt som är "läst" kommer ur filer, git och `gh`; allt som är "mätt" är körda lässkript (parsern `tolka`/`tolkaBygg` buntad med esbuild utanför repot, ingen spelstart); allt som är "live" är spelat headless mot den publicerade adressen (Playwright, 375×812, touch). Där något är en slutsats eller gissning står det. Uppdatera filen efter varje sammanslagen runda (grindregel 1 i skillen `build-round-gate`).
+
+Källor: `/workspace/trollpennan-nulage/` (copilot-inventering.md, ritning-tillbehor.md, motorjamforelse.md, analys-kod.md, plan-A-B.md, natt-rapport-runda*.md, rounds.tsv, assets-bengtsson/RAPPORT.md, bengtsson-uppdrag.md, spel/rapport.md), repots `HANDOFF.md`, `projektregler.md`, `CREDITS.md`, `data/*.json`, `src/`, samt `git` och `gh pr list`. Mätunderlag: `verification/tackning-2026-10-18.md`. Skärmbilder: `docs/skarmbilder/` (avsnitt 17).
+
+---
+
+## 1. Vad spelet är
+Trollpennan är ett 3D-lässpel för barn 7–12 på mobil (375×812 stående är måttet). Barnet skriver/väljer ord (97 ord i `data/ord.json`) och det som skrivs blir levande: en gul kanin, en drake med krona, ett hus. Skrivandet är verbet, aldrig ett prov (inga röda kryss, inga liv, ingen tidspress; se `projektregler.md`).
+Spelaren i tankarna är Dagny, 7 år, som älskar Minecraft och Slime Rancher. Publiceras som statiskt bygge (`npm run build:pages` → `dist-pages`); Cloudflare Pages/Workers är inte ett krav (`wrangler.jsonc` finns, PR #10).
+
+## 2. Vad som finns (med sökvägar)
+Mått från `wc -l` på `main` 697be95. Totalt ca 16 000 rader i `src/spel/`, `src/tolk/`, `src/pages-main.tsx`.
+
+### 2.1 Två renderare, båda aktiva
+| Renderare | Filer | Vad den ritar |
+|---|---|---|
+| **R3F/Three (3D)** | `src/spel/angen3d.tsx` (2202), `gltfDjur.tsx` (327), `djurmesh.ts` (447), `tillbehorFaste.ts` (619), `effekter.tsx` (311), `kenneyNatur.tsx` (277) | Ängen (`varld === "ang"`, `visa3d` i `Spel.tsx` r.2044 → `<Angen3D>` r.2090), djuren (9 GLB + procedurella former), tillbehör, effekter (eld, glöd, glitter), Kenney-natur |
+| **Phaser 2D** | `src/spel/starta.ts` (47, dynamisk import från `Spel.tsx` r.1654), `scen.ts` (967, ängen i 2D, dold bakom 3D), `gard.ts` (563, Gården + byggläge), `avscen.ts` (556, äventyret: skog/sjö/grotta), `ritaBygg.ts` (811, byggen ritade proceduellt), `avbro.ts` (41, React→Phaser-brygga), `deladeBilder.ts`, `texturKo.ts`, `natthimmel.ts` (53, nattljus i Phaser-scenerna), `kit.ts` (380, läser 2D-kitet; `billboard.ts` (138) ritar djurbilder till canvas för bok/önskebubblor via `Spel.tsx`) | Gård, byggande och äventyr. 2D-konst från `public/kit/` (8 MB, 349 PNG enligt motorjamforelse.md) |
+Phaser används i 7–8 filer, ca 3 000 rader (motorjamforelse.md). Båda motorerna laddas: JS-chunkarna är ca 1,3 MB (R3F/Three) och 1,25 MB (Phaser) enligt motorjamforelse.md (inte omräknade).
+**Konsekvens:** de nya 3D-djuren och 3D-tillbehören syns inte i Gården och äventyret, som visar 2D-kitet. Två konststilar, två världar.
+
+### 2.2 UI och tillstånd
+- `src/spel/Spel.tsx` – **3133 rader**, en komponent `Spel()` (r.466–3091) med **50 `useState`**, 9 `useEffect`/`useLayoutEffect`, **108 `data-testid`** i JSX. Innehåller: karta, område, HUD, meny, Pennans bok (`panel`: `spel`/`byggbok`/`uppdrag`), skylt, välj-djur, formelkort, ordbok, köp-fråga, föräldravy, mossa-panel, ca 20 händelsefunktioner (`tryckPlats` r.753, `utfor` r.1202, `skrivTecken` r.1285, `oppnaOnska` r.1377, `flyttaInDjur` r.1454 …). Rader 104–205 är JSON-importer/konstanter, 206–465 hjälpfunktioner (`OnskaAnsikte`, `kanEtikett`, `lastBygge`, `exportera` …), 3092–3133 `HoldOppnare`.
+- `src/spel/minne.ts` (494; zustand + sparformat `trollpennan-v2/v1`, `lagring.ts`), `liv.ts` (472; album, skatter, vilda vänner, sällsynthet), `samling.tsx` (214; album), `intro.tsx` (201), `formel.tsx` (104), `onska.ts` (150), `ljud.ts` (115), `dialogFokus.ts`/`dialogIsolering.ts`, `ideer`/`replik`/`saga`/`fyll`/`beteende.ts`.
+
+### 2.3 Ordtolkning (renderar-oberoende)
+`src/tolk/` – `tolka.ts` (833; ord → `Varelse`, `laggTillbehor` ~r.453, `laggFormaga` ~r.123), `byggtolk.ts` (375; fri text → byggstruktur), `gavotolk.ts` (140), `lexikon.ts`, `avstand.ts` (stavningsavstånd), `typer.ts` (`TillbehorSpec = {id, farg, glans}` r.83, `Varelse` r.85), `sparr.ts`, `data.ts`. Tester: `tolk.test.ts` (344), `bygg.test.ts`, `gavo.test.ts` + `data/test-fraser*.json`.
+
+### 2.4 Äventyr, uppdrag, byggande (spelregler)
+`src/spel/aventyr.ts` (183, typer/uppslag), `avflode.ts` (242, regler: öppna hinder, skicka djur, bli vän, gåvor, plocka skatt), `bygge.ts` (82, sparformat `SparatBygge`), `taggar.ts`, `brygga.ts` (`Sparad`-typen). Se även 4 för status i menyn.
+
+### 2.5 Data (`data/*.json`, 30 filer, alla importeras av någon källfil)
+`ord.json` (39 KB; 97 ord; 12 med `klass: "tillbehor"`: hatt, krona, glasögon, halsduk, rosett, horn, ryggsäck, mantel, kappa, trollkarlshatt, solglasögon, guldkrona), `bygg.json` (20 KB; 36 byggord, 6 delar, 9 material), `onskningar.json`, `onskningar-bygg.json`, `byggsidor.json`, `sidor.json`, `omraden.json`, `uppdrag.json` (12 uppdrag), `skyltar.json` (12), `skatter.json` (6), `vilda-djur.json` (7), `album.json`, `ledtradar.json`, `gavor.json`, `egenskaper.json`, `beteenden.json`, `texter-gard.json`, `texter-aventyr.json`, `firande.json`, `dygn.json`, `humor.json`, `intro.json`, `ljud.json`, `mossa.json`, `foralder-r6.json`, `upplevelse.json`, `blocklist.json`, `test-fraser*.json` (3, bara tester). Inget av detta beskriver *utseende i 3D*; det ligger i kod (se 5).
+
+### 2.6 Tillgångar (`public/`, 13 MB; `public/models/` 1,6 MB)
+- **GLB-djur (9 filer, 9 kroppar):** `animal-bunny/cat/dog/fish/chick/parrot.glb` + `Textures/colormap.png` (Kenney Cube Pets; fågel och uggla delar `animal-chick.glb`), `drake.glb` (Quaternius, skinnad, ben `Head`/`Neck`/`Head_end`), `hast.glb` (Quaternius, skinnad, ben `Head`/`Neck`/`Body`), `groda.glb` (en enda mesh, **CC BY 3.0**). Kenney-djuren har noderna `root > body` + ben och animationerna `static/idle/walk/run/eat/dance`; **inga huvudben och inga ankarnoder** (läst ur GLB-filernas JSON 2026-10-18).
+- **Kroppar utan GLB (procedurella former i `djurmesh.ts`):** gris, dinosaurie, ekorre, bäver, haj (+ uggla delar fågelns GLB). Förmågor och mönster ritas av `effekter.tsx` och `djurmesh.ts`.
+- **Natur:** `public/models/natur/*.glb` (22 filer, Kenney Nature Kit), används av `kenneyNatur.tsx`.
+- **2D-kit:** `public/kit/` (`kit.json`, `LASMIG.md`, 14 kroppar med lager + ankare, tillbehör i `tillbehor/*.png` med `bas`/`linje`, `platser`, `anim.json`). **Kitet är redan datadrivet** (`kit.json` → `tillbehor.<id>.{ankare,plats,delar,farg}`, `platser`: huvud→hatt/krona/horn, rygg→ryggsäck/mantel, hals→halsduk, ogon→glasögon, huvudsida→rosett). Det är mönstret 3D saknar.
+- Ljud `public/ljud/` (Kenney Interface Sounds), `ljud-ui/`, `intro/`, typsnitt `typsnitt/`.
+- Licenser: `CREDITS.md` (tabell). Groda-krediten visas i spelet (`Spel.tsx` r.2953, testid `groda-kredit`).
+
+### 2.7 Beroenden (`package.json`)
+Spelet använder: `react`/`react-dom` 19, `three` 0.186, `@react-three/fiber` 9, `@react-three/drei` 10 (+ `three-stdlib` via drei), `phaser` 3.90, `zustand` 5, `vite` 8, `typescript` 5.7, `@fontsource/fraunces|nunito`, `playwright` 1.62 (dev). **Mall-ballast från Groks fullstack-mall** (inte använd av `build:pages`): `@tanstack/*`, `better-auth`, `kysely`, `pg`, `@electric-sql/pglite`, `jose`, `nitro`, `recharts`, `react-hook-form`, `zod`, alla `@radix-ui/*`, `cmdk`, `vaul`, `sonner`, `date-fns` m.fl. Dessutom `server/`, `migrations/`, `src/lib/`, `src/routes/`, `routeTree.gen.ts`, `vercel.json`. analys-kod.md uppskattade ca 70 oanvända beroenden och ca 5 000 rader plattformsballast; jag har inte räknat om det. `typecheck`, `lint` och `npm test` (plattformssviten) var röda enligt analys-kod.md; gränsen som gäller för produkten är `typecheck:pages` + `test:product` + `build:pages` (75/75 tester i runda 5A).
+Verktyg som inte finns i repot: `@gltf-transform/cli` (4.5.1, MIT, verifierat på npm 2026-10-18) – ingår i flödet i avsnitt 9.
+
+## 3. Låst eller halvkopplat
+**Byggt men inte inkopplat / dolt (koden finns, ingången saknas):**
+- Menyknapparna **Gården, Byggboken, Albumet, Ut på äventyr, Uppdragsboken, Bok** är hårdkodat låsta som demoläge (`lasMeny` → "Kommer senare – i fulla spelet …", `data/texter-gard.json` `demo.senare`, `Spel.tsx` r.2346–2365; **verifierat live**, avsnitt 17). Gården nås ändå via kartan ("Gården" → `tryckPlats("garden")` → "Bygg något").
+- `panel === "uppdrag"` (`Spel.tsx` r.2644–2736) har ingen ingång (inget anropar `setPanel("uppdrag")`); albumet (`samling.tsx`) öppnas bara via `window.__troll`-kroken.
+- `scen.ts` (ängen i 2D) körs men döljs bakom 3D-ängen.
+- Ljud, album, föräldravy (`foralder-r6.json`) är kopplade men bakom lås.
+- **Tillbehör i 3D finns men är per-sak-kod** (se 5): 8 tillbehörsformer + placering/skala per djur och per sak i `tillbehorFaste.ts`. Glasögon, krona, hatt, rosett, halsduk, horn, ryggsäck, mantel är kopplade; svagheter enligt natt-rapport-runda5a.md: mantel katt/kanin, horn katt/häst, ryggsäck fågel.
+- Äventyret har ingen React-vy för områden; skogen/sjön/grottan är Phaser-scenen `avscen.ts`. Kartan är React-knappar, inte en ritad karta.
+- Byggord ritas i 3D bara som 6 grova former (`angen3d.tsx` `slag()` ~r.171); alla 36 ord ritas först i 2D (`ritaBygg.ts`).
+
+**Får inte röras utan beställning (låst):**
+- **Text/data som Copilot redan granskat:** `data/ord.json`, `onskningar*.json`, `sidor.json`, `ledtradar.json`, `firande.json`, `texter-*.json`, `humor.json` m.fl. samt `text/granskning-1` (rättade texter, ej ombaserade, 3 commits före main på `origin/text/granskning-1`) och `copilot-jobb` (ordlistefix `regnbågsfärgada`, stavningstester). Rör inte; nämn bara.
+- Parser och tester: `src/tolk/*`, `data/test-fraser*.json` ska passera oförändrade.
+- **Sparformat:** nycklarna `trollpennan-v2`/`v1` (`lagring.ts`, `minne.ts`); parser och sparnycklar får inte brytas (HANDOFF.md).
+- `recovery/` (rör inte, mandatet 2026-10-17), `_handoff-copilot/` (gammal, gäller inget), `RUNDA*.md` och `HANDOFF.md`/`BLOCK-STATUS.md`/`IMPROVEMENT-LOG.md` är historik.
+- Mandat (`projektregler.md`): "React/R3F och Phaser bevaras tills ett byte har motiverats och verifierats". Phaser tas alltså inte bort utan Christoffers ja. Högst 8 numrerade skärmbilder per runda; inga nya checkpoint-dokument.
+
+## 4. Arkitekturregler
+1. **Innehåll är data, inte kod.** Ett nytt djur, tillbehör, byggord, uppdrag eller ord = **en datarad + en tillgångsfil**, läst av ett generellt system. Lägger en runda till per-sak-kod (`byggKrona`, `skalaFor("hatt")`, `if (kropp === "katt")`) ska rundan stoppas och systemet ritas om först (grindregel 3).
+2. **En renderväg.** Målet är R3F för allt (rekommendation i motorjamforelse.md, "väg 1"). Ingen ny vy byggs i Phaser. Under övergången gäller: nya tillbehör/effekter/byggdelar skrivs bara för R3F; Phaser får bara bugfixar. Phaser tas bort i R7 efter verifierade R5–R6 (beslut a, avsnitt 10.1).
+3. **`Spel.tsx` ska delas.** Ingen ny vy, panel eller dialog läggs i `Spel.tsx`. Ny UI = egen komponent i `src/spel/ui/`; ny logik = egen hook/modul. Gräns som skripten ska vakta: ingen ny fil över 800 rader. Idag över 800: `Spel.tsx` (3133), `angen3d.tsx` (2202), `scen.ts` (967), `tolka.ts` (833), `ritaBygg.ts` (811). Planen delar `Spel.tsx` (R1) och `angen3d.tsx` (R4A) och tar bort `scen.ts`/`ritaBygg.ts` (R7); **`angen3d.tsx` (2202) delas i R4A** (beslut d, avsnitt 10.1); `tolka.ts` (833) har ingen runda ännu.
+4. **Inga modeller utan dokumenterad licens.** Varje fil i `public/models/` har en rad i `data/tillgangar.json` (manifest) och `LICENSES.md` med källa-URL, upphovsperson, licens och hämtdatum. Tillåtna licenser: CC0. CC BY (kräver namn) bara med synlig kredit i spelet; ingen NC, ingen ND, ingen "personligt bruk". Idag: `groda.glb` är CC BY 3.0 (jeremy) och krediten visas.
+5. **Ankare i modellerna, siffror i data.** Placeringspunkter för tillbehör är namngivna noder (`anchor_*`) i GLB-filen, med reservvärden i `data/djur.json`. Inga `kropp === "…"`-kedjor i koden.
+6. **Bevis är bilder, inte rapporter.** Granska mot skärmbilder 375×812, inte mot Builds egen rapport (grindskillen). Högst 8 bilder per runda.
+7. **Plattformsrörelsen:** `npm run build:pages` är bygget; kör inte `npm run build` (injicerar Grok-script och migrering, plan-A-B.md).
+
+## 5. Tillbehörskoden som ska ersättas (läget idag)
+Tillbehör tog 9 rundor (3A–3F, 5A, 5B, 5B-1; ca 11,9 USD av ca 25,7 USD totalt enligt `rounds.tsv`, summerat av mig) eftersom varje sak och varje djur är kod:
+- `src/spel/tillbehorFaste.ts` (619 rader; en bygg-funktion per sak plus gren per sak och djur): `byggKrona` r.325, `byggHatt` r.350, `byggHalsduk` r.365, `byggRosett` r.377, `byggRyggsack` r.389, `byggMantel` r.401, `byggHorn` r.411, `byggGlas` r.420 (formerna), `skalaFor` r.445–494 (en gren per tillbehör och djur), `platsFor` r.549, `pannaPlats` r.516, `mantelPlats` r.531, `framRiktning` r.498, `vandRygg` r.583 (54 förekomster av `kropp ===`/djurnamn), `PROC_ANKARE` r.120 (ankare för 14 generiska kroppar), `glbRygg`/`procRygg` r.142–178, `ankareFor` r.215–324 (ankare ur `Box3`-fraktioner, speciallösningar för drake/häst).
+- `src/spel/gltfDjur.tsx`: `FIL` r.12, `MAL_HOJD` r.24, `PALETT` r.38 (djurdata i kod), `fastAnkare` r.184.
+- `src/spel/djurmesh.ts` r.308–330: gamla `krona`/`horn` bakade i formen (`byggPack`), död väg (`angen3d.tsx` r.586–588 skickar `krona:false`, `horn:false`).
+- `src/spel/kit.ts` (2D) har redan det datadrivna mönstret (`kit.json`), men läses bara av Phaser/formelkort.
+
+---
+
+## 6. Öppna PR och grenar (`gh pr list --repo christofferhedman87/trollpennan --state all`, hämtat 2026-10-18)
+**Öppna PR: inga.** 11 PR totalt: 9 sammanslagna (#1, #2, #4, #5, #6, #8, #9, #10, #11), 2 stängda utan merge (#3 runda 3B, #7 runda 4). Senast: #11 "Runda 5A" sammanslagen 2026-10-18 08:39 UTC (10:39 Stockholm).
+Fjärrgrenar på `origin` (14): `main` (standard, repot är privat), `build/runda-1, 3a, 3b, 3c, 3d, 3e, 4, 4c, 4e, 5a` (alla sammanslagna eller stängda, kan städas), `cloudflare-wrangler` (sammanslagen #10), `copilot-jobb` (Copilots textgren, 1 commit före main), `text/granskning-1` (3 commits före main; ej ombaserad).
+**Bara lokala grenar** i `/workspace/trollpennan-build` (separat klon, ej pushade): `build/runda-3f`, `4b`, `5b`, `5b1` (inga commits före main), **`build/runda-4d`** (3 commits före main; 4D:s glitter, glöden gick vidare i 4E). I `/workspace/trollpennan-repo`: `cloudflare-wrangler`, `copilot-jobb`, `text/granskning-1`, `main`, och `arkitekt/project-md` (den här filen, ej pushad). `git worktree list` i repot: bara huvudträdet. `/workspace/trollpennan-nulage` är inte ett git-repo (arbetsmapp med rapporter och skärmbilder).
+
+## 7. De tre senaste rundorna (natt-rapporter, `rounds.tsv`, git)
+| Runda | Mål | Resultat | Lärdom |
+|---|---|---|---|
+| **5A** (build-fast medium, 30 turer, 2,92 USD) | ryggsäck, mantel, horn | **Delvis bra, PR #11 sammanslagen.** `tillbehorFaste.ts` +191, `angen3d.tsx` (horn ritas inte dubbelt). Mantel tydlig på häst/drake/gris; horn bra på drake/fågel/gris/kanin. **Fel kvar:** ryggsäck på fågel (båge över huvudet), mantel katt/kanin (mörk kil), horn katt (flyter) och häst (förskjutet). Nådde max-turer före `RUNDA5A.md` | Ännu en runda med per-sak-kod; det genererar nästa felrunda |
+| **5B** (medium, ~40 turer, ~1 USD) | tillbehör som data (alla steg) | **Inget.** Build mätte kroppars bbox i stället för att skriva `data/fastpunkter.json`/`tillbehor.json`; avbruten (SIGTERM 10:50) | Beställningen var för stor och tillät mätning |
+| **5B-1** (low, 20 turer) | bara datafilerna | **Inget.** `Transport error` (API) i omförsök, avbruten 11:00 | Tillfälligt API-fel; omkörning stoppades av grinden. Skriv filerna utan Build eller kör om efter 5 min med Arkitektens ritning |
+Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på häst/katt, svag på kanin) och **4D** (partial, glitter bra, glöden för stor; lokal gren). `rounds.tsv` har 17 rundor (ca 25,7 USD): 7 merged (1, 3A, 3C, 3E, 4C, 4E, 5A), 5 partial (3B, 3D, 4, 4B, 4D), **5 utan resultat** (2, 2B, 3F, 5B, 5B-1); orsaker i `rounds.tsv`: för stor beställning, Build mätte i stället för att ändra, API-fel, ingen ritning/fastpunkter.
+
+---
+
+## 8. Färdplan: rundor i ordning (följer grundtanken)
+Alla rundor: Grok Build CLI, `--prompt-file`, gren per runda (`build/runda-N`), loggfil, commit efter varje delmål, `RUNDA<N>.md` först. Ingen mätning/utforskning i Build; Arkitekten lägger siffror och filrader i prompten. Kostnadsuppskattningar är min gissning utifrån `rounds.tsv` (low/medium, 11–30 turer = 0,5–3 USD), inte mätta.
+
+**Ordning och varför:** R1 delar `Spel.tsx` (annars krockar allt). R2 gör tillbehören till data (stoppar 10-rundors-läckan). **R3 är rundan som gör grundtanken sann: ordens väg till synlig form** – entitetsmodell, reservform (okänt ord blir ändå något synligt), bulkrutin för modeller. Därefter delas `angen3d.tsx` (R4A), kameran byggs (R4B), sedan byggnader (R5), uppdragsmotor och platser (R6) och till sist tas Phaser bort (R7). Före allt: **R0 publicera `main`** (Christoffers ja, avsnitt 10.2), annars går inget att verifiera spelat.
+
+**Mått mot grundtanken** (varje runda anger före/efter; mätmetod i avsnitt 11): *täckning* = andel av orden i `verification/tackning-2026-10-18.md` (slumpurval 100, barnurval 70 + 30 + 30, topp-1000) som blir en egen synlig form; *synlig* = egen form **eller** reservform. Utgångsläge: egen form 1,2 % / 1,9 % / 0,5 % (topp-1000 substantiv/adjektiv/verb), barnlistans substantiv 9/70, synlig 0 % för okända ord.
+
+Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) återanvändning kontrollerad, (3) arkitekturregeln hålls, (4) ritning i prompten, (5) bevis definierat, (6) inställningar valda, (7) ett logiskt mål. **Grindutlåtande idag (2026-10-18), före start:**
+
+| Runda | Grind | Skäl |
+|---|---|---|
+| R0 Publicera `main` | **Christoffers ja** | Ingen kodrunda; ger spelbar verifiering. Rekommendation: ja |
+| R1 Dela `Spel.tsx` | **JA** | Alla 7 uppfyllda när PROJECT.md är mergad: ren flytt utan nytt beteende, ritning nedan, bevis = testid-ögonblicksbild + skärmbilder. Lägst risk, störst hävstång |
+| R2 Tillbehör som data | **JA, med villkor** | Villkor: JSON-filerna skrivs av Arkitekten (utan Build) och bifogas prompten; Build kopplar bara in. 5B och 5B-1 misslyckades för att Build skulle mäta/skriva dem. R1 mergad helst |
+| R3A Entiteter + manifest | **NEJ (idag)** | Beror på R2:s dataform (delar ankarnamn) |
+| R3B Reservform | **NEJ (idag)** | Beror på R3A (entitetskategorier) och på Christoffers ja till produktregeln (10.2 punkt 2) |
+| R3C Bulkrutin + första 50 modellerna | **NEJ (idag)** | Beror på R3A; kräver Christoffers ja till vilka paket som hämtas (10.2 punkt 4) |
+| R4A Dela `angen3d.tsx` | **NEJ (idag)** | Ren flytt; ska komma efter R3 så R3:s nya filer inte krockar. Blir JA när R3C är mergad |
+| R4B Kamera | **NEJ (idag)** | Beror på R4A (kameran bor i `ang-kamera.tsx`) och Christoffers smak-ja efter två bilder |
+| R5 Byggnader i R3F (Gården) | **NEJ** | Beror på R3A, R4A–B. Kräver ett ja till att Phaser-gården ersätts |
+| R6 Uppdragsmotor + platser i R3F | **NEJ** | Beror på R5; Bengtsson-texter behöver Copilots granskning och Christoffers smak-ja |
+| R7 Phaser bort | **NEJ** | Beror på R5–R6 verifierade i bild |
+
+### R1 – Dela `Spel.tsx` (ren flytt, noll beteendeändring)
+- **Mål:** `Spel.tsx` från 3133 till ≤ 1900 rader genom att flytta ut JSX-block, konstanter och hjälpkomponenter. Hook-delning av händelsefunktioner (r.575–1600) är R1B, första steget i R4.
+- **Filer (nya, `src/spel/ui/`):** `spelData.ts` (r.104–205: JSON-importer, `SIDOR`, `BYGGSIDOR`, `TEXTER`, `FIR`, `LED`, `RADER`), `hjalp.ts` (r.228–465 rena funktioner: `kanEtikett`, `kortIkon`, `meningAv`, `normFras`, `exempelFor`, `bastaFlik`, `bytOrd`, `taBortOrd`, `djurPris`, `lastBygge`, `exportera` …), `OnskaAnsikte.tsx` (r.206–227), `HoldOppnare.tsx` (r.3092–3133), `KartaLager.tsx` (r.2248–2286, karta + område), `Hud.tsx` (r.2287–2432: HUD, meny, `hud-bot`), `BokPanel.tsx` (r.2433–2643), `UppdragPanel.tsx` (r.2644–2736), `Dialoger.tsx` (r.2737–3091: skylt, valj-djur, formel, ordbok-sida, kop-fraga, foralder, mossa-panel).
+- **Funktioner/dataformer:** varje komponent tar en tydligt typad `props` med exakt de värden/funktioner JSX:en redan använder (state och handlers stannar i `Spel()` i R1). Inga nya state, inga ändrade `data-testid`, inga ändrade klassnamn, ingen ny logik. Exporterna typas; ingen cirkulär import in i `Spel.tsx`.
+- **Bevisning (Doodle):** (a) nytt skript `scripts/check-spel-struktur.mjs` + `npm run check:struktur`: misslyckas om `Spel.tsx` > 1900 rader eller om mängden `data-testid` i `src/spel/**/*.tsx` skiljer sig från `verification/testid-baseline.json` (skapas av skriptet ur main före ändring) – **röd före, grön efter**; (b) `npm run typecheck:pages`, `test:product`, `build:pages` gröna; (c) `verification/browser-B02R-3.mjs` oförändrad grön; (d) fyra bilder 375×812, före/efter sida vid sida: `01-intro`, `02-ang-med-djur`, `03-bok-oppen`, `04-karta`; pixlarna ska vara lika (kontrollera med bildjämförelse, inte ögonmått).
+- **Storlek:** medium, ca 25–30 turer, 2–3 USD (gissning). **Risk:** props-drilling blir stor; acceptera, det är ett mellansteg.
+- **Mått mot grundtanken:** ingen täckningsändring (parsern rörs inte): `git diff main -- src/tolk data` ska vara tomt och täckningstalen i avsnitt 11 oförändrade. Rundans värde för grundtanken är att `Spel.tsx` inte längre blockerar R3.
+- **Förutsättning att kontrollera:** `test:product` använder `node --experimental-strip-types` som kräver Node ≥ 22.6; Build körde Node 20.19.2 i 4D och testerna föll direkt (RUNDA4D.md på den lokala grenen). Prompten ska ange Node-version (`node -v` ≥ 22.6) eller köra testerna via `npx tsx`.
+- **Grind: JA** (se tabell).
+
+### R2 – Tillbehör som data + ett generellt fästsystem (ersätter ca 450 rader per-sak-kod)
+- **Mål:** ett nytt tillbehör = en rad i `data/tillbehor.json` (+ ordrad i `ord.json` + glTF vid behov). Placering/skala/riktning kommer ur data per djur, aldrig ur `kropp ===`. De fem kända felen (5A) rättas genom att ändra *siffror i JSON*, och det är rundans bevis.
+- **Filer:** NYA `data/tillbehor.json`, `data/fastpunkter.json`, `src/spel/tillbehorData.ts` (typer, laddning, `kontrolleraTillbehor()`; **ingen three-import** så det går att testa med `node --experimental-strip-types`), `src/spel/tillbehorData.test.ts`; ÄNDRAS `src/spel/tillbehorFaste.ts` (faestTillbehor blir generisk), `src/spel/gltfDjur.tsx` (`fastAnkare`, r.184), `package.json` (lägg testfilen i `test:product` och `test`), `src/spel/djurmesh.ts` (ta bort r.308–330 krona/horn) och `angen3d.tsx` r.586–588.
+- **Dataform – `data/tillbehor.json`** (ersätter `byggKrona…byggGlas`, `skalaFor`, `platsFor`; samma idé som `kit.json`):
+```json
+{
+  "version": 1,
+  "tillbehor": {
+    "krona": {
+      "ankare": "anchor_head",
+      "delar": [
+        { "form": "cyl",  "pos": [0, 0, 0],    "skala": [1, 0.6, 1], "farg": "$tillbehor", "kant": true },
+        { "form": "kon",  "pos": [0.2, 0.3, 0], "skala": [0.5, 1, 0.5], "farg": "$tillbehor" }
+      ],
+      "modell": null,
+      "standardfarg": "#F2B632",
+      "skala": { "mot": "huvudbredd", "faktor": 1.6, "min": 0.28, "max_hojd_andel": 0.55 },
+      "framat": 0.0,
+      "lyft": 0.0,
+      "vrid": "fram"
+    },
+    "glasögon": { "ankare": "anchor_face", "…": "…" },
+    "mantel":   { "ankare": "anchor_back", "vrid": "bak", "…": "…" }
+  }
+}
+```
+`form` är en av `cyl|kon|ring|sack|box|torus|kil` (primitiverna som redan finns i `GEO`, r.33–44; `mantel` blir `kil` med parametrar). `modell` (sökväg till glTF i `public/models/tillbehor/`) ersätter `delar` när en riktig modell finns (R3). `skala.mot` ∈ `huvudbredd|kroppsbredd|hojd`. Färg: `$tillbehor` = färgen från `TillbehorSpec.farg` (idag ignoreras den i GLB-vägen, enligt ritning-tillbehor.md; testa).
+- **Dataform – `data/fastpunkter.json`** (ersätter `PROC_ANKARE`, `glbRygg`, `procRygg`, specialgrenarna i `ankareFor` och alla `kropp ===` i `skalaFor/platsFor/vandRygg`):
+```json
+{
+  "version": 1,
+  "kroppar": {
+    "katt": {
+      "fram": "-z",
+      "ankare": {
+        "anchor_head": [0, 0.92, -0.10], "anchor_brow": [0, 0.78, -0.40],
+        "anchor_face": [0, 0.62, -0.55], "anchor_neck": [0, 0.5, -0.30],
+        "anchor_back": [0, 0.55, 0.20],  "anchor_ear_l": [-0.2, 0.9, -0.2]
+      },
+      "huvudbredd": 0.45,
+      "overstyr": { "mantel": { "skala": 0.9, "lyft": 0.05 }, "horn": { "framat": 0.1 } }
+    }
+  }
+}
+```
+(Siffrorna ovan är exempel på formen; riktiga värden transkriberas av Arkitekten ur `tillbehorFaste.ts` r.120–324 och `ankareFor`:s fraktioner innan rundan startar; de är normaliserade mot djurets `MAL_HOJD`.) Koordinater i djurets lokala rum, normaliserat; `fram` ∈ `+z|-z` ersätter `vandRygg`/`framRiktning`.
+- **Funktion (ny kärna):** `faestTillbehor(rot, kropp, tillbehor[])`: 1) slå upp rad i `TILLBEHOR[t.id]`; 2) hitta ankarpunkt: `rot.getObjectByName(rad.ankare)` om noden finns i GLB, annars `FASTPUNKTER[kropp].ankare[rad.ankare]`; 3) skala = `skala.faktor * <mått>` begränsad av `min`/`max_hojd_andel`, gånger `overstyr[t.id].skala`; 4) rikta med `fram`/`vrid`; 5) bygg ur `delar` eller ladda `modell`; 6) lägg under benet/noden så den följer idle. Allt tillbehör följer samma sju rader kod.
+- **Tas bort/ersätts:** `byggKrona`, `byggHatt`, `byggHalsduk`, `byggRosett`, `byggRyggsack`, `byggMantel`, `byggHorn`, `byggGlas`, `arTrollkarlshatt`, `skalaFor`, `platsFor`, `pannaPlats`, `mantelPlats`, `framRiktning`, `vandRygg`, `PROC_ANKARE`, `STANDARD`, `glbRygg`, `procRygg` (ca 450 av 619 rader). Behåll: `Ankare`-typ, `TOON`, `KONTUR`, `del()`, `toonMat()`, `fastVarld()`.
+- **Bevisning (Doodle):** (a) `tillbehorData.test.ts` – röd före (modulen saknas), grön efter: varje `del.tillbehor` i `ord.json` har en rad; varje rads `ankare` finns för alla 14 kroppar i `fastpunkter.json`; alla vektorer ändliga; inga okända `form`; (b) `scripts/ark-tillbehor.mjs` (Playwright, 375×812, `window.__troll`) tar ett ark per tillbehör med alla 10 kroppar (9 GLB + gris): `01-krona` … `08-mantel` (8 bilder = max); (c) före/efter: de som var bra i 5A får inte ändras; de fem felen (fågel ryggsäck, katt/kanin mantel, katt/häst horn) ska vara rättade **med en JSON-ändring per fel** (visa diff); (d) `rg "kropp ===" src/spel/tillbehorFaste.ts` ger 0 träffar.
+- **Storlek:** medium, 25–30 turer, 2–3 USD; JSON-filerna förbereds utanför Build. **Risk:** att riktningen (`fram`/`vrid`) blir fel för skinnade djur (drake/häst) – ge dem `anchor_*` via ben i R3, tills dess `ben`-fältet i `fastpunkter`.
+- **Mått mot grundtanken:** kostnaden för ett nytt tillbehör: **idag ca 9 rundor / 11,9 USD för 8 tillbehör (≈1,5 USD och en runda per tillbehör)** → **efter: en datarad** (bevis: ett nytt testtillbehör, t.ex. `mössa`, läggs till som endast data i en temporär kopia och syns på alla 10 kroppar utan kodändring). Täckning oförändrad (inga nya ord i R2).
+- **Grind: JA, med villkor** (JSON bifogas; R1 mergad helst).
+
+### R3A – Entiteter: en gemensam datamodell för djur, tillbehör, byggnader och föremål (avsnitt 14)
+- **Mål:** `data/entiteter.json` blir sanningen om *vad som finns*; djurlistan (`FIL`, `MAL_HOJD`, `PALETT` i `gltfDjur.tsx`, `ART`/`flygare()`/`simmare()`/`vikt` i `angen3d.tsx`, 116 `kropp ===`-grenar i `src/spel/`) flyttas till data. Tillgångsmanifestet `data/tillgangar.json` och `LICENSES.md` införs (avsnitt 9.4, 13).
+- **Filer:** NYA `data/entiteter.json`, `data/tillgangar.json`, `LICENSES.md` (genereras), `src/spel/entiteter.ts` (typer, laddning, `entitet(id)`, **ingen three-import**), `src/spel/entiteter.test.ts`; ÄNDRAS `gltfDjur.tsx`, `angen3d.tsx` (`djurPlats` läser `rorelse`), `djurmesh.ts`, `tillbehorData.ts` (läser ankare ur entiteten), `package.json`.
+- **Dataform:** avsnitt 14.2. **Funktioner:** `entitet(id)`, `entitetFranOrd(ordId)`, `kontrolleraEntiteter()` (varje `modell` finns, varje `licens` finns i manifestet, varje ankare finns, varje `ord`-referens finns i `ord.json`).
+- **Bevisning:** (a) `entiteter.test.ts` röd→grön; (b) `rg -c 'kropp ===' src/spel` ≤ 10 (idag 116); (c) bilder 375×812, före/efter: `01-nio-djur-oforandrade`, `02-tillbehor-oforandrade` (pixlar lika; bildjämförelse, inte ögonmått).
+- **Mått mot grundtanken:** inga nya ord; mäter *tid att lägga till en kropp*: nytt djur = en rad + en GLB (bevis: lägg `hund2` som kopia av hund i en temporär kopia, syns utan kodändring). Täckning oförändrad.
+- **Storlek:** medium–stor, 30–40 turer, 3–4 USD (gissning). **Risk:** 14 kroppar × tillbehör; skinnade drake/häst. **Grind: NEJ idag** (beror på R2).
+
+### R3B – Reservform: ordens väg till synlig form (avsnitt 12)
+- **Mål:** inget ord ger "ingenting". Okänt ord → kategori → generisk synlig form (ordkristallen) med ordets text; varje steg i kedjan i data. Ändrar `tolka()` additivt: `Utfall` får `reserv`.
+- **Filer:** NYA `data/reserv.json`, `data/synonymer.json`, `data/kategori-ord.json` (genereras av `scripts/bygg-kategorier.mjs` ur öppen tesaurus/lexikon, avsnitt 12.3), `src/tolk/reserv.ts` (ren funktion, ingen three), `src/tolk/reserv.test.ts`, `src/spel/ordkristall.tsx` (R3F) + `public/models/generisk/*.glb` (1 + 6 kategorivarianter, CC0, eller procedurellt); ÄNDRAS `src/tolk/tolka.ts` (anropa `reservFor` där `okand`/`behover_djur` skapas), `src/tolk/typer.ts` (`Varelse.reserv?`), `Spel.tsx`/hook för visning, `data/test-fraser-reserv.json` (nytt; **befintliga testfraser ska passera oförändrade** utom de två testerna som idag kräver `behover_djur` för okänt ord, `tolk.test.ts` r.168–188, som uppdateras med Christoffers ja).
+- **Bevisning:** (a) `reserv.test.ts` med minst 40 fraser (de 9 live-fraserna i avsnitt 17 + 31 till) – varje icke-spärrat ord ger `reserv` ≠ null; spärrade ord (`blocklist.json`) ger ingen kristall; (b) mätskriptet: andel synliga av urvalet 0 % → 100 %; (c) bilder: `01-elefant`, `02-pizza`, `03-kanin-med-paraply`, `04-hmmmx`, `05-flera-okanda` (kristallen ska se ut som tänkt; **Christoffer godkänner utseendet på bild**).
+- **Mått mot grundtanken:** *synlig* andel av okända ord 0 % → 100 %; felaktiga "Menade du …?"-gissningar för verb 25 % (252/1000) → ≤ 5 % (`forslag.minlangd` och kategorikrav i `reserv.json`); *egen form* oförändrad (reservformen räknas separat).
+- **Storlek:** medium, 25–35 turer, 3 USD (gissning). **Risk:** stavningsgissningen (`avstand.ts`) kolliderar med reservformen; ordningen i kedjan måste testas. **Grind: NEJ idag** (beror på R3A; produktregeln kräver Christoffers ja, 10.2 punkt 2).
+
+### R3C – Bulkrutin och första modellsatsen (avsnitt 13)
+- **Mål:** `assets/inkorg/` + manifest → validerade, optimerade modeller med entitetsrad **utan kod**. Första satsen: ca 50 modeller ur de licensverifierade paketen (9.5).
+- **Filer:** NYA `scripts/inkorg/kor.mjs`, `scripts/inkorg/kontrollera.mjs` (+ `.test.mjs`), `scripts/inkorg/ankare.mjs`, `assets/inkorg/LASMIG.md`, `assets/inkorg/manifest.json` (mall), `package.json` (devDependency `@gltf-transform/cli`/`core`, scripts `inkorg`, `kontrollera:tillgangar`); ÄNDRAS `data/entiteter.json`, `data/tillgangar.json`, `LICENSES.md` (genereras).
+- **Bevisning:** (a) `kontrollera.mjs` felmeddelandena i avsnitt 13.4 testas med falska filer (för stor, saknad licens, saknat ankare, för många trianglar, felaktigt namn); (b) en körning på 5 modeller ger 5 entitetsrader + 5 manifestrader + oförändrad `LICENSES.md`-struktur; (c) bilder: `01-nya-djur-i-anga`, `02-nya-foremal`, `03-tillbehor-som-modell`.
+- **Mått mot grundtanken:** egen form för barnlistans substantiv **9/70 → minst 40/70** (kräver ord- och entitetsrader som Copilot granskar, utanför Builds ramar), modeller per runda 9 → ≥ 50, **tid per ny modell ≤ 10 minuter handpåläggning (gissning, mäts i rundan)**.
+- **Storlek:** medium, 30 turer, 3–4 USD (gissning) + Arkitektens manuella urval/licenskontroll. **Risk:** FBX→GLB-konvertering (Blender utanför repot), Quaternius levererar FBX; `optimize`-flaggorna (9.3). **Grind: NEJ idag** (beror på R3A; paketurvalet kräver Christoffers ja).
+
+### R4A – Dela `angen3d.tsx` (2202 rader, ren flytt)
+- **Mål:** ingen fil över 800 rader. **Filer (nya, `src/spel/ang/`):** `scen.tsx` (`Scen`, ljus, natt), `djur-i-scen.tsx` (`DjurIScen`, `djurPlats`, `ModellGren`), `natur.tsx` (`TradOchBlommor`, `GrasTuvor`, `Stenar`, `Nackrosor`, `Forgrund`, `NaturGren`), `saga.tsx` (`SagaKamera`, `SagaPenna`, `SagaBoll`, `SagaKanin`, `SagaLjus`), `kamera.tsx` (`KameraRam`, OrbitControls), `ang3d.tsx` (`Angen3D`, `TredGren`, sonden `window.__tred`). **Bevis:** `check-spel-struktur` utökas till `angen3d`; bilder oförändrade pixel för pixel. **Mått:** täckning oförändrad. **Storlek:** medium, 20–25 turer, 2 USD (gissning). **Grind: NEJ idag.**
+
+### R4B – Kamera: fast Hay Day-liknande vy (avsnitt 16)
+- **Mål:** ortografisk kamera, fast vinkel, pan/zoom med gränser, stående mobil som mått. **Filer:** NY `data/kamera.json`, `src/spel/ang/kamera.tsx` (ersätter `KameraRam`/OrbitControls), test `kamera.test.ts` (rena beräkningar: frustum, pan-gränser). **Bevis:** bilder `01-ang-10-djur`, `02-ang-zoom-in`, `03-ang-pan-gransen`, `04-landskap`; kontroll att ingen av 10 djur + 8 byggnader klipps på 375×812. **Mått:** andel av scenen som syns utan att barnet drar: alla djur 100 %. **Storlek:** medium, 20–30 turer, 2–3 USD (gissning). **Risk:** touch-gester i R3F (skillen `controls`), HUD-ytor. **Grind: NEJ idag** (Christoffers smak).
+
+### R5 – Byggnader i R3F (Gården, avsnitt 14.3)
+- **Mål:** de 36 byggorden i `data/bygg.json` som entiteter (`typ:"byggnad"`) i `data/entiteter.json`, ritade i 3D via samma system som djur och tillbehör (ankarpunkter `anchor_door`, `anchor_window_*`, `anchor_roof`, `anchor_chimney`, `anchor_slot_*` för boende). **Filer:** NYA `src/spel/gard3d.tsx`, `src/spel/byggdelar3d.ts`; ÄNDRAS `Spel.tsx` (`varld === "gard"` → `<Gard3D/>`), `data/entiteter.json`; `bygge.ts`/`SparatBygge` och `data/bygg.json` rörs inte (läses). **Bevis:** bilder `01-gard-tom`, `02-hus-3-fonster`, `03-stall-med-djur`, `04-flytta-byggnad`, `05-hage-och-staket`, `06-alla-grundbyggen`. **Mått:** byggord med egen 3D-form **6 av 36 grova former (`slag()`) → ≥ 24 av 36 egna modeller/material**; byggord utan form → reservform (kategori `byggnad`). **Storlek:** stor, 2 rundor à 30–40 turer, 6–8 USD (gissning). **Grind: NEJ.**
+
+### R6 – Uppdragsmotor, platser och Doktor Bengtsson (avsnitt 15)
+- **Mål:** skog/sjö/grotta som R3F-scener ur `data/platser.json`; uppdrag ur `data/uppdrag.json` (v2) med givare, ordkrav och belöning; ingång till Uppdragsboken; Bengtsson som NPC. **Filer:** avsnitt 15.2. **Bevis:** bilder `01-karta`, `02-skog`, `03-sjo`, `04-grotta`, `05-uppdragsboken`, `06-bengtsson-uppdrag-1`, `07-belonning-syns`. **Mått:** spelbara uppdrag via spelets egen väg **0 (idag: uppdragsvyn har ingen ingång, 10 uppdrag ligger oåtkomliga) → 10 + de 9 N1-uppdragen**; nytt uppdrag = en datarad. **Storlek:** stor, 2–3 rundor à 30–40 turer, 8–12 USD (gissning). **Grind: NEJ.**
+
+### R7 – Phaser bort och menyn upplåst
+- **Mål:** `phaser`, `scen.ts`, `gard.ts`, `avscen.ts`, `starta.ts`, `avbro.ts`, `ritaBygg.ts`, `deladeBilder.ts` bort; menyknapparna (Gården, Byggboken, Albumet, Ut på äventyr, Uppdragsboken, Bok) upplåsta (`lasMeny` bort, `Spel.tsx` r.2346–2365). **Bevis:** `rg -l phaser src package.json` = 0; Phaser-chunken (1,25 MB) borta i `check:pages-output`; bilder `01-meny-upplast`, `02-alla-vyer-r3f`. **Mått:** bundle −1,25 MB; alla vyer visar samma 3D-modeller (tillbehören syns i Gården och äventyret). **Storlek:** medium, 25–30 turer, 3 USD (gissning). **Grind: NEJ** (beror på R5–R6; upplåsning = Christoffers ja, 10.2).
+
+---
+
+## 9. Tillgångsflöde (utkast; bulkrutinen med inkorg och validering är avsnitt 13)
+Stil i en rad (ur koden): **mjuk low-poly leksak, platt toon-skuggning (3-stegs `DataTexture` 72/158/255), tjock mörk kontur `#3B2F2F` via inverterat skal (`BackSide`, 1,18× större kopia)**. Alla fria 3D-modeller saknar kontur; kontur och toon läggs i koden för allt, då smälter olika paket ihop (assets-bengtsson/RAPPORT.md).
+
+### 9.1 Namngivning och mappar
+`public/models/<kategori>/<id>.glb`, kategori ∈ `djur | tillbehor | bygg | natur | foremal`. `<id>` = ASCII-gemener med bindestreck (`hast`, `trollkarlshatt`; inga å/ä/ö i filnamn; svenska namnet bor i data). Befintliga filer (`animal-*.glb`, `drake.glb`, `hast.glb`, `groda.glb`, `natur/`) flyttas inte; de får manifestrader. Nodnamn i filen: `anchor_*` (gemener, understreck) för ankare, `attach` för tillbehörets fästpunkt. Källfiler (FBX/Blend) sparas **inte** i repot.
+
+### 9.2 Skala och orientering
+- Enhet: 1 = en meter i modellen; **koden normaliserar djur till `malhojd`** (`MAL_HOJD`, idag 0,7–1,5) så importen behöver inte skalas exakt, men filens egen höjd ska vara 0,3–3,0.
+- Y upp, **framåt = +z** i nya filer. Äldre Kenney-djur har ansiktet mot −z; det anges som `"fram":"-z"` i `djur.json` (idag fångas det med `kropp ===`-grenar).
+- Origo i marken under djurets mitt (fötterna på y=0). Tillbehör: origo = fästpunkten (kronans bas, glasögonens mitt mellan ögonen), bredd mot huvudets bredd = 1,0 enhet.
+- Ankarnoder (tomma noder, +z ut från ytan, skala 1): `anchor_head` (huvudets topp), `anchor_brow` (pannan, för horn), `anchor_face` (mitt mellan ögonen, för glasögon), `anchor_ear_l`/`anchor_ear_r` (rosett), `anchor_neck` (halsduk), `anchor_back` (ryggsäck/mantel), `anchor_mouth` (eld). På skinnade modeller (drake, häst) är noderna barn till benet (`Head`, `Neck`, `Body`) så de följer animationen; på Kenney-djuren (inget huvudben) barn till `body`.
+
+### 9.3 gltf-transform-steg (CLI 4.5.1, MIT; flaggor verifierade med `--help` 2026-10-18)
+```bash
+npx @gltf-transform/cli@4.5.1 validate in.glb
+npx @gltf-transform/cli@4.5.1 inspect  in.glb            # trianglar, texturer, noder
+# 1) optimera UTAN att platta scenträdet (annars försvinner ankare och ben)
+npx @gltf-transform/cli@4.5.1 optimize in.glb tmp.glb \
+  --flatten false --join false --instance false --palette false --prune false \
+  --compress meshopt --texture-compress webp --texture-size 512
+# 2) rensa ändå, men behåll tomma noder (ankare!)
+npx @gltf-transform/cli@4.5.1 prune tmp.glb public/models/djur/<id>.glb --keep-leaves true
+# 3) lägg ankare (eget skript, gltf-transform-API): node scripts/tillgangar/ankare.mjs <id>
+```
+Flaggorna `--flatten`, `--join`, `--instance`, `--palette`, `--prune`, `--compress`, `--texture-compress`, `--texture-size` och `prune --keep-leaves` finns i 4.5.1. **Standardvärdena för `optimize` är `flatten=true`, `join=true`, `prune=true`**: kör aldrig bara `optimize in out`. `drei useGLTF` laddar Meshopt som standard (att verifiera i R3). FBX → GLB: Blender eller `FBX2glTF` utanför repot (Quaternius Farm Animal/Cute Monsters/Cute Fish/Dinosaurs levereras som FBX/OBJ/Blend, inte glTF).
+
+### 9.4 Manifest och `LICENSES.md`
+`data/tillgangar.json` (se R3) är källan; `LICENSES.md` genereras av skriptet och checkas in:
+```
+## <titel> – <upphov>
+- Licens: CC0-1.0   (CC-BY-3.0 → "Kredit i spelet: ja, <testid>")
+- Källa: <URL till paketets/modellens licenssida>
+- Hämtad: 2026-10-18   Av: <vem>
+- Filer: public/models/djur/hast.glb, …
+- Ändringar: gltf-transform optimize …; ankarnoder tillagda
+```
+Spelet visar bara kredit för CC BY (idag groda, `Spel.tsx` r.2953). CC0 kräver ingen kredit men skrivs in här.
+
+### 9.5 Kandidater (licens verifierad via WebFetch/curl av licenssidorna 2026-10-18; inget är nedladdat eller inlagt i repot)
+| # | Paket / modell | Upphov | Licens (verifierad på) | Passar till |
+|---|---|---|---|---|
+| 1 | Cube Pets 2.0 – https://kenney.nl/assets/cube-pets | Kenney | CC0 ("License: Creative Commons CC0" på paketsidan; Kenneys support https://kenney.nl/support säger CC0, attribution ej krav) | Redan använd (6 djur). Mer av samma stil |
+| 2 | Ultimate Animated Animals – https://quaternius.com/packs/ultimateanimatedanimals.html | Quaternius | CC0 (paketsidan "License CC0"; https://quaternius.com/faq.html "All models are under the CC0 License", ingen kredit krävs). 12 djur, 12+ animationer, **glTF ingår** | Luckor: groda (byter ut CC BY-grodan, **art i paketet ej kontrollerad**), ekorre, bäver, gris – kontrollera artlista vid nedladdning |
+| 3 | Animated Dinosaurs – https://quaternius.com/packs/animateddinosaurs.html | Quaternius | CC0 (paketsidan). 6 dinosaurier, FBX/OBJ/Blend (konvertera) | `dinosaurie` (idag procedurell form) |
+| 4 | Farm Animal Pack – https://quaternius.com/packs/farmanimal.html | Quaternius | CC0 (paketsidan). 7 gårdsdjur, FBX/OBJ/Blend | Gris och gårdsdjur till Gården |
+| 5 | Cute Fish – https://quaternius.com/packs/cutefish.html | Quaternius | CC0 (paketsidan). 50+ animerade fiskar | `haj`, fler fiskar i sjön |
+| 6 | Cute Monsters / Ultimate Monsters – https://quaternius.com/packs/cutemonsters.html, https://quaternius.com/packs/ultimatemonsters.html | Quaternius | CC0 (båda paketsidorna). 21 resp. 50 monster. Dragon: https://poly.pizza/m/3rUm1cN3yp (CC0 1.0, Poly Pizza-sidan) är redan `drake.glb` | Vilda djur i äventyret, nattdraken |
+| 7 | Nature Kit – https://kenney.nl/assets/nature-kit | Kenney | CC0 (paketsidan). Redan använd (22 filer) | Äventyrets skog/sjö/grotta (R5) |
+| 8 | Furniture Kit / Food Kit / Holiday Kit – https://kenney.nl/assets/furniture-kit, https://kenney.nl/assets/food-kit, https://kenney.nl/assets/holiday-kit | Kenney | CC0 (alla tre paketsidor) | Gårdens inredning, gåvor, lyktor, bänkar (se assets-bengtsson/RAPPORT.md för valda filer) |
+| 9 | Crown – https://poly.pizza/m/i0PZVuVlYv; Cupcake – https://poly.pizza/m/XL70IUDIrZ; Arrow Sign – https://poly.pizza/m/dwmvPHHCdq | Quaternius (via Poly Pizza) | CC0 1.0 (modellsidorna visar `Licence: CC0 1.0`) | Krona som riktig tillbehörsmodell i R3, gåva, skylt |
+| 10 | Hat (fedora, "hat-stylised") – https://poly.pizza/m/lNN3PlrjSa | hat_my_guy (Poly Pizza) | CC0 1.0 (modellsidan) | Hatt-kandidat; "vuxen" form enligt assets-bengtsson/RAPPORT.md, kitets hatt är sötare |
+| 11 | KayKit Halloween Bits – https://kaylousberg.itch.io/halloween-bits; KayKit Adventurers – https://kaylousberg.itch.io/kaykit-adventurers | Kay Lousberg | CC0 (itch-sidans "Asset license: Creative Commons Zero v1.0 Universal" och "no attribution required"). Adventurers har vapen: välj bort för barnspel | Hattar/rekvisita (innehåll ej inspekterat) |
+| 12 | Cute Cloud (2D SVG) – https://opengameart.org/content/cute-cloud | Urs Roesch (insänd av qubodup) | CC0 (OpenGameArt-sidan "License(s): CC0") | Moln/väder i 2D-UI |
+**Redan i spelet med krav:** `groda.glb`, "Frog" av jeremy, **CC BY 3.0** (https://poly.pizza/m/07-wJ9bkzul, Poly Pizza-sidan visar `Licence: CC-BY 3.0`) – namnangivelse krävs och finns. Mål: byt mot en CC0-groda.
+**Fällor:** Poly Pizza-sidor har *olika* licens per modell (CC0 eller CC BY); kontrollera varje modell, inte sajten. Poly Pizzas FAQ/about-sidor (https://poly.pizza/faq, /about) gav 404 vid försök; verifiering skedde på modellsidorna. Quaternius' FAQ visar licenstexten men svaren är hopfällda i den hämtade sidan; paketsidorna visar "License CC0". Licenskontroller görs om vid varje ny hämtning (datum i manifestet).
+
+---
+
+
+## 10. Beslut och öppna frågor
+
+### 10.1 Beslut (Arkitekten) – fattade, ingen fråga till Christoffer
+- **(a) Phaser tas bort, i R7.** Skäl: grundtanken kräver att allt barnet skriver syns med samma modeller överallt, och med två renderare (R3F och Phaser) måste varje tillbehör, byggnad och uppdragsscen göras två gånger; mätt idag syns inte de 3D-tillbehören i Gården och äventyret. Men inte förrän R5 (Gården) och R6 (äventyret) är verifierade i bild; fram till dess bevaras Phaser (mandatet i `projektregler.md`: "bevaras tills ett byte har motiverats och verifierats" – motiveringen är den här, verifieringen sker i R5–R6) och får bara bugfixar. Under övergången en nödutgång `?renderare=phaser`.
+- **(b) `LICENSES.md` (genereras ur `data/tillgangar.json`) och `CREDITS.md` blir en kort pekare plus den publika krediten för CC BY (grodan).** Skäl: en maskinläst, komplett licensfil som skriptet kan kontrollera och skriva om utan att handskrivna tack skrivs över; spelet visar bara det som licensen kräver.
+- **(c) `build/runda-4d` (lokal gren i `/workspace/trollpennan-build`, commits `db8a1e4`, `29dff5d`, `b772cf1`): släng.** Skäl (granskat): grenen ändrar bara `src/spel/effekter.tsx` (+20/−13) och `RUNDA4D.md`; 4E (PR #9, redan i `main`) bygger vidare på samma kod och har samma glittervärden (32 prickar) och en annan glöd (rund gloria), så ingenting unikt finns kvar. Lärdomen i `RUNDA4D.md` ("`test:product` föll: Node 20.19.2 tar inte `--experimental-strip-types`") är införd i R1:s förutsättningar. Utfört: **nej** (jag rör inte den klonen); den som städar kör `git branch -D build/runda-4d` i `/workspace/trollpennan-build` (hasharna ovan återskapar den).
+- **(d) `angen3d.tsx` delas i R4A, direkt efter R3 och före kamera (R4B) och byggnader (R5).** Skäl: R3 lägger nya filer i stället för i den, kameran och Gården måste in i den, och 2202 rader är nästa `Spel.tsx`-problem. Ren flytt, inga nya beteenden, bevis = oförändrade bilder.
+- **Grenhantering generellt:** en gren per runda `build/runda-N` utgår från aktuell `origin/main`; Arkitektens dokument ligger på `arkitekt/*`; en gren raderas lokalt och på `origin` när PR:en är sammanslagen eller stängd (raderingen på `origin` kräver ja, se 10.2); inga långlivade lokala grenar utan PR (idag lokalt i `/workspace/trollpennan-build`: `build/runda-3f`, `4b`, `5b`, `5b1` utan commits före `main`, och `4d`: alla raderas); `text/granskning-1` och `copilot-jobb` är Copilots och rörs inte av Arkitekten; en runda startas bara när föregående är sammanslagen eller avvisad, så grenarna aldrig staplas.
+- **Övrigt beslutat:** Ordningen R1 före R2 (10.3 punkt 9 gäller fortfarande som konfliktrisk). `HANDOFF.md`, `BLOCK-STATUS.md`, `IMPROVEMENT-LOG.md` ligger kvar som historik tills vidare (ingen åtgärd, ingen risk). Reservformen (avsnitt 12) och entitetsmodellen (avsnitt 14) är mina beslutade riktningar; själva ändringen av produktregeln och utseendet kräver ja nedan.
+
+### 10.2 Kräver Christoffers ja (smak, pengar, kvot, publicering, push/PR/merge)
+1. **Publicera `main` på https://trollpennan.grok.me/ (R0).** Live är äldre än `main` (avsnitt 17). *Rekommendation: ja,* så fort Runda 1–5A-innehållet är kontrollerat i bild; annars testas fel version.
+2. **Ändra produktregeln "Bara ord i ord.json skapar något" (`projektregler.md`, Säkerhet) så att varje icke-spärrat ord får en synlig reservform (ordkristall).** Det är en smakfråga och en regeländring: grundtanken ("nästan oavsett vad hen skriver") kräver den, men utseendet och tonen ("Det här har jag aldrig sett – jag ritade en gissning") är hans. *Rekommendation: ja,* med att han godkänner kristallen på bild i R3B. Spärrlistan gäller alltid och ger aldrig en form.
+3. **Kvot och pengar.** Mina gissningar: R1 2–3 USD, R2 2–3, R3A 3–4, R3B 3, R3C 3–4, R4A 2, R4B 2–3, R5 6–8, R6 8–12, R7 3, summa ca 35–45 USD (inte mätta; `rounds.tsv` visar ca 25,7 USD för 17 rundor, varav 5 utan resultat). *Rekommendation: ja till R1–R2 nu* (lägst risk, stoppar läckan) *och R3A–R3C därefter;* R4–R7 beslutas efter R3C med uppmätta kostnader.
+4. **Vilka modellpaket som hämtas (stil och smak).** Förslag i 9.5; första satsen R3C: Quaternius Ultimate Animated Animals, Cute Fish, Farm Animal Pack, Kenney Food Kit och Furniture Kit (alla CC0, licenssidor kontrollerade 2026-10-18). *Rekommendation: ja till dessa fem* (inget laddas innan du säger ja).
+5. **Push och PR för `arkitekt/project-md`** (PROJECT.md, projektregler.md, mätunderlag, skärmbilder). *Rekommendation: ja,* så att alla agenter läser samma plan.
+6. **Radera de 10 gamla fjärrgrenarna `build/runda-*` på `origin`** (alla sammanslagna eller stängda). *Rekommendation: ja,* men först när R1 är startad så ingen historik behövs.
+7. **Doktor Bengtssons uppdrag: ton och innehåll (smak).** 24 utkast ligger i `/workspace/trollpennan-nulage/bengtsson-uppdrag.md`; spelets 10 befintliga uppdrag har andra givare (Ekorren, Mossugglan, Bävern …) vilket strider mot regeln "bara Bengtsson ger uppdrag". *Rekommendation: ja till att alla givare blir Bengtsson i R6* (de 10 gamla texterna skrivs om av Copilot) och att du läser de sex första uppdragen på bild innan resten görs.
+8. **Kamerastilen (smak):** ortografisk, 35° ned, fast, pan/zoom i gränser (avsnitt 16). *Rekommendation: ja,* efter två bilder i R4B (före/efter).
+9. **Upplåsning av menyknapparna (Gården, Byggboken, Albumet, Ut på äventyr, Uppdragsboken, Bok)** – idag hårdkodade som "Kommer senare" (demoläge, `data/texter-gard.json` `demo.senare`). *Rekommendation: ja, i R7* (efter att vyerna finns i R3F), inte tidigare.
+
+### 10.3 Osäkerheter (ärligt)
+1. **Inget av det som är "kodläst" är körts om i en byggd `main`**; live-spelningen (avsnitt 17) gäller en äldre version. Rundkostnaderna i `rounds.tsv` är delvis uppskattade (5B, 5B-1: `grok usage` saknar registrering).
+2. **Kvarvarande tillbehörsfel är bedömda ur Builds och min bildläsning (5A-rapporten), inte omkontrollerade** i spelad version.
+3. **`HANDOFF.md` i repot är gammal** (B03-checkpoint, 2026-10-13) och stämmer inte med läget.
+4. **`ord.json` rörs inte av planen,** men nya ord (R3C) kräver ordrader som Copilot/Christoffer granskar; det är utanför Builds ramar.
+5. **Mobilprestanda är omätt** (ingen riktig telefon; allt är SwiftShader). Triangel- och filbudgetarna är mina startvärden, inte mätta.
+6. **Licensverifieringen av Quaternius FAQ:** de enskilda paketsidorna visar CC0; zip-filernas egna licensfiler är inte öppnade (inget nedladdat). Artlistorna i paket 2–5 är inte kontrollerade.
+7. **Kelly-listans licens är dubbeltydig** (resurssidan: filerna CC-BY-4.0; beskrivningstexten: CC-BY-SA 3.0/LGPL 3.0). Jag använde den bara för mätning och lagrar den inte i repot; mätunderlaget innehåller bara de ord jag räknat, inte listan.
+8. **Täckningsmåttet mäter kodens beteende mot en frekvenslista för vuxen webbtext,** som underrepresenterar barnens konkreta ord. Därför finns även en handvald barnlista (Arkitektens urval, inte ur lista). Båda är ofullkomliga mått; det viktiga är trenden före/efter.
+9. **Ordningen på R1/R2:** kan köras i valfri ordning tekniskt (olika filer), men R2 kräver att R1 inte pågår samtidigt i `Spel.tsx`/`gltfDjur.tsx` (konfliktrisk i `package.json`).
+10. **Gamla 2D-bilder** (`public/kit/tillbehor/*.png`) används kvar i bok och formelkort; om UI också ska visa 3D-bilder är inte beslutat.
+
+## 11. Täckningsmått: hur mycket av det barnet skriver blir synligt (mätt 2026-10-18)
+
+### 11.1 Hur text tolkas idag (läst i koden, bekräftat mätt och live)
+`tolka()` (`src/tolk/tolka.ts`) delar texten i ord (`tokensAv`), slår upp varje ord mot `data/ord.json` (97 ord: 26 djur, 21 färger, 18 förmågor, 12 mönster, 12 tillbehör, 6 storlekar, 2 egenskaper; `lexikon.ts`), delar sammansättningar bakifrån (sista delen måste vara ett djur eller tillbehör, `delaOrd`/`lasPrefix`; förleden ur `ord.json` `sammansattningar.forled`, 31 stycken), gissar stavning (`avstand.ts`, `felgrans`: ≤5 tecken 1 fel, annars 2) och föreslår "Menade du …?". Byggord går en annan väg (`byggtolk.ts`, `data/bygg.json`: 36 byggord, 6 delar, 9 material) och gåvor en tredje (`gavotolk.ts`, 20 gåvor).
+**Ett okänt ord** blir `okand`: ett *skapat djur* ignorerar ordet tyst (och sparar det inte: `Spel.tsx` sparar bara okända ord vid `behover_djur` och byggen), en mening utan djur ger rutan "Pennan behöver ett djur. Prova … kanin / katt / hund" och sparar ordet i `onskelista` (högst 80, visas bara under "Önskelista – Ord som Trollpennan inte kunde än" i föräldravyn (håll inne 3 s), `Spel.tsx` r.3028–3034, alltså inte för barnet). Ingenting ritas för ordet. **Täckningen för "okänt ord" är alltså 0 %.**
+
+### 11.2 Metod
+- **Källa:** Kelly-listan, Språkbanken Text (Volodina & Johansson Kokkinakis; 8 425 lemman ur webbkorpusen SweWaC, 114 miljoner ord; uppdaterad 2017-09-15; https://spraakbanken.gu.se/en/resources/kelly; licens: se 10.3 punkt 7). Rangordning efter `wpm` (ord per miljon) bland poster med uppmätt frekvens (källa SweWaC). Ordklasser: substantiv = `noun-en`, `noun-ett`, `noun`; adjektiv; verb. Lemmat är grundform.
+- **Urval:** (A) topp 1 000 substantiv (997 unika lemman) och topp 1 000 verb; **adjektiv: 849** (så många har uppmätt frekvens; hela listan har 1 354); (B) alla A1–A2-ord (CEFR, 1 251 / 390 / 614); (C) **handvalt barnurval** (Arkitektens, ej ur frekvenslista): 70 vardagssubstantiv, 30 adjektiv, 30 verb; (D) **slumpurval 100** (frö 20261018) ur A: 34 substantiv, 33 adjektiv, 33 verb, spelat **live** (avsnitt 17).
+- **Test per ordklass** (parsern `tolka`/`tolkaBygg` buntad med esbuild utanför repot, ingen spelstart): *substantiv* = något av `tolka("N")` skapar något utan att N är okänt, `tolka("en kanin med N")` ändrar djuret, eller `tolkaBygg("ett N")` bygger något; *adjektiv* = `tolka("en ADJ kanin")` ändrar djuret och ordet är inte okänt; *verb* = `tolka("en kanin som kan V")` eller `…som <presens>` (-ar/-er/-r) ändrar djuret. "Blir synligt" = djurets formel/kropp/tillbehör/förmåga/färg/mönster/storlek skiljer sig från `en kanin`. **Förslag** ("Menade du …?") räknas inte som täckt: det är en gissning, inget syns.
+- **Begränsningar:** böjningar av verb är en regel (-ar/-er/-r + infinitiv efter "kan"), inte SALDO; substantiv testas i grundform. Verbfalska träffar rättade för hand (nedan).
+
+### 11.3 Resultat (kod)
+| Urval | n | Blir egen synlig form | Andel | "Menade du"-gissning | Frekvensviktad täckning |
+|---|---|---|---|---|---|
+| Substantiv, topp 1 000 | 1 000 (997 unika) | **12** unika: hus, port, katt, hund, häst, fisk, träd, mur, krona, sjö, eld, guld | **1,2 %** | 117 (11,7 %) | 1,1 % |
+| Adjektiv, topp 849 | 849 | **16**: liten, stor, vit, svart, snabb, röd, grön, enorm, blå, gul, grå, rödgrön, rosa, osynlig, brun, gyllene | **1,9 %** | 42 (4,9 %) | 21,1 % (liten, stor väger tungt) |
+| Verb, topp 1 000 | 1 000 | rått 8, **5 äkta**: hoppa, springa, flyga, lysa, simma (supa, pricka, fiska är slumpträffar: `super`, `prickar`, `fiskar`) | **0,5 %** | 252 (25,2 %) | 0,2 % |
+| A1–A2: substantiv / adj / verb | 1 251 / 390 / 614 | 18 / 10 / 4 | 1,4 % / 2,6 % / 0,7 % | 130 / 23 / 176 | – |
+| Barnurval (C): substantiv | 70 | 9: gris, blomma, regnbåge, tält, rutschkana, gunga, stall, bro, sjö | **13 %** | 6 (får, mus, stol, kanon, skatt, grotta) | – |
+| Barnurval (C): adjektiv / verb | 30 / 30 | 1 (randig) / 5 (springa, hoppa, flyga, simma, lysa) | 3 % / 17 % | 2 / 12 | – |
+
+**Verkliga felgissningar (viktigt för barn):** `en kanin som går` → "Menade du *grå*?"; `en kanin som dansar` → "Menade du *dino* / *nasse*?"; `med land` → "*ränder*"; `viga` → "*vit*"/"*vingar*"; `hänga` → "*hund*, *häst*, *vingar*, *ränder*"; `stå` → "*liten* / *stor*". 25 % av de vanligaste verben ger en gissning som är fel.
+
+**Konkretandel (min handbedömning, inte mätt):** av 100 slumpade ur topp-1000 substantiv bedömde jag 18 som något man kan rita som en sak (orm, katt, ost, ben, gata, hotell, restaurang, gåva, mur, flod, hamn, himmel, mage, konung, far, mamma, te, peng). Det ger ca 18 % (± ca 8 procentenheter, litet urval) = **ca 180 av 1 000 vanliga substantiv är ritbara; 8–9 av dem har form idag (≈ 5 %).** Resten (arbete, skillnad, verksamhet …) är abstrakta och är exakt de ord som behöver *reservformen* (avsnitt 12) i stället för en modell.
+
+**Live mot kod (slumpurval D):** substantiv 1/34 (bara `port`, och den är låst bakom "Slottssidan, 10 stjärnor", så ingenting byggs), adjektiv 3/33 (blå, liten, snabb), verb 0/33; **koden förutsåg alla 100 orden rätt** (efter att jag rättat en mätartefakt: ett kvarliggande meddelande i Gården gav 13 falska träffar i första sammanställningen). Slutsats: täckningsmåttet från koden stämmer mot spelad version för parsern; osäkerheten ligger i stickprovets storlek, inte i metoden. Underlag: `verification/tackning-2026-10-18.md`.
+
+### 11.4 Vad som krävs per 100 nya ord
+Mätta förhållanden i dagens data (`ord.json`, 97 ord): djur 26 ord → 14 kroppar (**1,9 ord per kropp**, 9 med GLB); förmågor 18 ord → 6 effekter (**3,0 ord per effekt**); tillbehör 12 ord → 8 former (**1,5 ord per form**); färg 21 ord → 0 modeller (bara ett hexvärde); mönster 12 ord → 4 mönster. En ordrad är ca 400 byte JSON (39 KB / 97). Med dessa kvoter (uppskattning, inte mätt för nya ord):
+
+| 100 nya ord av typen | Ordrader | Modeller (GLB) | Attribut/effekter | Övrigt |
+|---|---|---|---|---|
+| Substantiv, djur/föremål/mat | 100 (ca 55 `entiteter`-rader) | **≈ 55** (1,8 ord per modell, synonymer delar modell) | 0 | licensrad per paket, ankare per kropp (6 noder) |
+| Substantiv, tillbehör | 100 | ≈ 65 (1,5 ord/form) | 0 | ankarnamn finns (`anchor_*`) |
+| Substantiv, byggnader/hagar | 100 | ≈ 40 (material och färg ger varianter) | 0 | 4–6 ankarnoder per byggnad |
+| Adjektiv (färg/storlek/mönster) | 100 | 0 | ≈ 0 (hexvärde, skalfaktor) | färger och storlekar är rena datarader |
+| Adjektiv (känsla: glad, arg, trött) | 100 | 0 | **≈ 30** (ansiktsuttryck/ikon, ca 3,3 ord per effekt) | Kenney Emotes Pack (8 stilar, CC0, redan hämtat i `assets-bengtsson/`) täcker bara en bråkdel; resten ritas |
+| Verb (förmåga/handling) | 100 | 0 | **≈ 33** animationsklipp eller effekter (3 ord per effekt) | Kenney-djuren har klippen `idle/walk/run/eat/dance`; fler klipp kräver rigg |
+| **Valfritt ord (reservform)** | 1 (hela `reserv.json`) | **0–7 generiska** | 0 | alla okända ord blir synliga från dag 1 |
+
+Läsning: **de första 100 orden kostar 55–65 modeller om de ska ha egen form,** och mindre än 10 modeller om reservformen finns först. Därför ligger reservformen (R3B) före modellbulken (R3C) i planen: hela ordmängden blir synlig direkt, och modellerna ersätter kristallen ord för ord där barnen faktiskt skriver (onskelistan visar vilka).
+
+## 12. Reservform: hur ett okänt ord ändå blir något synligt
+
+### 12.1 Nuvarande beteende (läst + live-bekräftat, avsnitt 11.1, 17)
+Okänt ord: (1) tyst ignorerat i ett skapat djur (`en kanin med paraply` → kanin, inget om paraplyet, inget sparat); (2) i en mening utan djur "Pennan behöver ett djur. Prova … kanin/katt/hund" + ordet sparas för föräldravyn (`elefant`, `pizza`, `hmmmx`, `pojke`, `tårta`); (3) nära ett känt ord "Menade du …?" (rätt för `kannin`→`kanin`, fel för `dansar`→`dino`). Aldrig en synlig form. Strider mot grundtanken.
+
+### 12.2 Reservkedja (varje steg är data, första träff vinner)
+| # | Steg | Källa (data) | Exempel |
+|---|---|---|---|
+| 1 | **Exakt ord** | `ord.json` (befintliga ord) + `entiteter.json` `ord[]` | `kanin`, `krona` |
+| 2 | **Lemma/böjning** | `former[]` i entiteten; ändelseregler i `reserv.json` `andelser` (`-en`, `-et`, `-ar`, `-or`, `-er`, `-n`, `-na`, `-s`) | `elefanten`→`elefant`, `paraplyer`→`paraply` |
+| 3 | **Sammansättning** | sista ledet slås upp (finns redan för djur/tillbehör, utvidgas till alla entiteter): huvudledet ger form, förleden ger färg/material/förmåga | `pepparkakshus`→`hus`+`pepparkaka`, `regnbågskanin` (finns) |
+| 4 | **Synonym** | `synonymer.json`: `{ "kisse": "katt", "mössa": "hatt", "sjal": "halsduk" }` | `mössa`→`hatt` |
+| 5 | **Kategori ur lexikon** | `kategori-ord.json` (genereras offline ur SALDO/Blingbring, båda CC BY 4.0 enligt Språkbankens lista; **att verifiera vid bygget**): `{ "elefant": "djur", "tårta": "mat", "paraply": "foremal", "skog": "plats", "glad": "kansla", "dansa": "handling" }` | `tårta`→`mat` |
+| 6 | **Kategori via enkel regel** | `reserv.json` `regler`: suffix/prefix → kategori (`-are`,`-ist`→person; `-het`,`-ning`,`-else`→abstrakt→`kansla`-ikon; `-blomma`,`-träd`,`-bär`→växt; `-hus`,`-stuga`,`-stall`→byggnad; `-bil`,`-båt`,`-tåg`→fordon; `-a` + verbläge→handling) | `kaninbur`→byggnad |
+| 7 | **Generisk form** | `reserv.json` `kategorier.<k>.form`: en **ordkristall** per kategori | `hmmmx`→kristall (kategori `okant`) |
+
+Stavningsgissningen (`avstand.ts`, "Menade du …?") körs **före** steg 5–7 men skärps: `forslag.minlangd` 4 tecken, `forslag.maxavstand` 1, och ett förslag visas bara om ordet i förslaget har samma kategori som den plats ordet står på (verb efter "som", substantiv efter "med"); annars går kedjan vidare. Det tar bort `går`→`grå` och `dansar`→`dino` (11–12 av 33 verb i slumpurvalet fick fel gissning live).
+
+### 12.3 Hur reservformen ser ut (förslag, Christoffer godkänner på bild i R3B)
+**Ordkristallen:** en facetterad, mjukt lysande låg-poly-kristall (samma toon- och konturstil som djuren) som svävar och guppar, färgad ur en fast, behaglig palett om 12 färger vald med ordets hash (`fnv1a32(ord) % 12`, så samma ord får samma färg varje gång), med **ordets egen text** som etikett (en Html-/sprite-etikett över den, max 16 tecken, spärrlistan gäller). Sex kategorivarianter (samma kristall med olika siluett): `djur` (kristall på fyra små ben – "mystisk varelse"; använder närmaste kroppsform, `djur`→ hund-kropp skalad efter `storleksgrupp` när ordet har en känd), `mat` (kristall på ett fat), `foremal` (kristall på en liten sockel), `vaxt` (kristall med blad), `byggnad` (kristallhus), `kansla` (kristall med en emote-ikon över). Handling (verb) blir **en animation + pratbubbla med ordet** på djuret (hopp/skak/snurr enligt `reserv.json` `handling`), inte ett föremål. Adjektiv utan känd attribut ger **en aura i ordets färg + ordet i en bubbla**. Allt i barnets ord, ingenting är ett fel. Pennans svar (data, Copilot granskar): "Det här har jag aldrig sett! Jag ritade en gissning. Vill du lära mig hur det ser ut?" – ordet läggs i `onskelista`, som blir innehållsteamets att-göra-lista (vilka ord barnen faktiskt skriver).
+
+### 12.4 Dataformer och filer
+`data/reserv.json`:
+```json
+{
+  "version": 1,
+  "kedja": ["exakt", "lemma", "sammansatt", "synonym", "kategori_ord", "kategori_regel", "kristall"],
+  "andelser": ["en","et","ar","or","er","n","na","s"],
+  "forslag": { "minlangd": 4, "maxavstand": 1, "samma_plats": true },
+  "regler": [ { "suffix": "are", "kategori": "person" }, { "suffix": "het", "kategori": "kansla" }, { "suffix": "hus", "kategori": "byggnad" } ],
+  "kategorier": {
+    "djur":    { "form": "generisk/kristall-djur",    "kropp": "hund",  "skala": 1.0 },
+    "mat":     { "form": "generisk/kristall-mat",     "skala": 0.6 },
+    "foremal": { "form": "generisk/kristall-foremal", "skala": 0.6 },
+    "vaxt":    { "form": "generisk/kristall-vaxt",    "skala": 0.8 },
+    "byggnad": { "form": "generisk/kristall-hus",     "skala": 1.4 },
+    "kansla":  { "form": "generisk/kristall",         "ikon": "emote" },
+    "handling":{ "animation": ["hopp","skak","snurr"] },
+    "okant":   { "form": "generisk/kristall",         "skala": 0.7 }
+  },
+  "kristall": { "palett": ["#F06292","#BA68C8","#7986CB","#4FC3F7","#4DB6AC","#81C784","#DCE775","#FFD54F","#FFB74D","#FF8A65","#A1887F","#90A4AE"], "hash": "fnv1a32", "etikett_max": 16 }
+}
+```
+`Utfall` (typer.ts) utökas additivt: `{ typ:"skapad", varelse:{ …, reserv?: { ord: string; kategori: string; steg: "lemma"|"sammansatt"|"synonym"|"kategori_ord"|"kategori_regel"|"kristall"; entitet?: string }[] } }`. `Varelse.reserv` ritas av `src/spel/ordkristall.tsx`. En mening utan känt djur (`en pizza`) skapar **reservdjuret** (kategori `djur`/`okant`) i stället för `behover_djur` (kortbygget "Pennan behöver ett djur" finns kvar bara för tom text). `src/tolk/reserv.ts` är en ren funktion `reservFor(token: string, plats: "djur"|"med"|"som"|"adj"): Reserv` utan three-import, testbar med `node --test`.
+
+### 12.5 Bevis (R3B)
+`reserv.test.ts`: (1) varje ord i `verification/tackning-2026-10-18.md` ger `reserv` eller en känd form (100 %); (2) spärrade ord ger aldrig en form; (3) befintliga 28 + bygg- och gåvofraser ger oförändrat resultat; (4) samma ord ger samma färg; (5) bilder (≤ 5) av `elefant`, `pizza`, `kanin med paraply`, `hmmmx`, tre okända i samma mening.
+
+## 13. Bulkrutin: en mapp med GLB-filer + manifest ger nya ord och modeller utan kod
+
+*Ritning för en framtida runda (R3C), ingen kod.* Bygger på tillgångsflödet i avsnitt 9 (namn, skala, ankare, licenser) och entiteterna i avsnitt 14.
+
+### 13.1 Mappen
+```
+assets/inkorg/
+  LASMIG.md                 # 10 rader: så här lägger du in en modell
+  manifest.json             # en rad per fil, se 13.2 (handskrivs eller skapas av `npm run inkorg:ny`)
+  djur/ tillbehor/ bygg/ foremal/ natur/     # GLB-filer som ska in; källfiler (FBX/Blend) ligger kvar utanför repot
+  _klart/                   # skriptet flyttar godkända filer hit (original sparas, tas inte med i bygget)
+  _avvisade/                # + <fil>.fel.txt med felmeddelandena
+```
+`npm run inkorg` kör hela kedjan (13.3); `npm run kontrollera:tillgangar` kör bara kontrollen mot `public/models/**` (ingår i `test:product`).
+
+### 13.2 Manifestformat (`assets/inkorg/manifest.json`)
+```json
+{
+  "version": 1,
+  "paket": {
+    "quaternius-farm-animals": {
+      "titel": "Farm Animal Pack", "upphov": "Quaternius", "licens": "CC0-1.0",
+      "kalla": "https://quaternius.com/packs/farmanimal.html", "hamtad": "2026-10-18", "av": "arkitekten",
+      "kredit_i_spel": false
+    }
+  },
+  "filer": [
+    { "fil": "djur/cow.glb", "id": "ko", "typ": "djur", "paket": "quaternius-farm-animals",
+      "ord": ["ko", "kon", "kor", "korna", "kossa"], "genus": "u",
+      "malhojd": 1.2, "fram": "+z", "rorelse": "land", "kategori": "djur",
+      "ankare": "auto", "storlek": "normal" }
+  ]
+}
+```
+`typ` ∈ `djur | tillbehor | bygg | foremal | natur`; `ankare:"auto"` låter `ankare.mjs` lägga noderna från kroppens bounding box enligt fraktionerna i `data/entiteter.json` `ankarmall.<typ>`, annars en lista `["anchor_head", …]` för modeller som redan har dem; `ord` ger ordraden (Copilot granskar ordlistan innan den slås in i `ord.json`).
+
+### 13.3 Kedjan (per fil)
+1. `kontrollera.mjs --fas fore` (namn, paketets licens, att filen är en giltig GLB: `gltf-transform validate`).
+2. **gltf-transform**, i exakt denna ordning (flaggorna verifierade i 4.5.1, avsnitt 9.3):
+```bash
+npx @gltf-transform/cli@4.5.1 optimize in.glb tmp.glb \
+  --flatten false --join false --instance false --palette false --prune false \
+  --compress meshopt --texture-compress webp --texture-size 512
+npx @gltf-transform/cli@4.5.1 prune tmp.glb ut.glb --keep-leaves true
+```
+(`optimize`s standardvärden är `flatten`, `join` och `prune` = sant, vilket tar bort ankarnoder och ben; därför tre `false` och sedan `prune --keep-leaves true`.)
+3. `ankare.mjs <id>`: lägger tomma noder `anchor_*` (gltf-transform-API) i rätt fäste (barn till benet `Head`/`Neck`/`Body` på skinnade modeller, annars till `body`).
+4. `kontrollera.mjs --fas efter` (regler nedan) på den färdiga filen.
+5. Kopia till `public/models/<typ>/<id>.glb`, en rad i `data/tillgangar.json`, en rad i `data/entiteter.json`, omgenerera `LICENSES.md`.
+
+### 13.4 Valideringsskriptet `scripts/inkorg/kontrollera.mjs`
+**In:** `--fas fore|efter`, valfritt `--fil <sökväg>`; läser `assets/inkorg/manifest.json`, `data/tillgangar.json`, `LICENSES.md`, `data/entiteter.json`. **Ut:** utskrift per fil (`OK <fil>` eller `FEL <fil>: <meddelande>`), exit 0 om alla OK, 1 annars; JSON-rapport `verification/inkorg-rapport.json`. Alla fel är på svenska och säger vad som ska göras:
+
+| Kontroll | Regel | Felmeddelande |
+|---|---|---|
+| **Licens** | paketet finns i manifestet, har `kalla`/`upphov`/`licens`/`hamtad`; licens är `CC0-1.0` (eller `CC-BY-3.0\|4.0` med `kredit_i_spel:true` och kredit-testid i källkoden); **och** paketets rad finns i `LICENSES.md` | `FEL djur/ko.glb: paketet "quaternius-farm-animals" saknar licens i manifestet. Lägg till licens, källa och hämtdatum, eller ta bort filen.` / `… licensen "CC-BY-NC-4.0" är inte tillåten (endast CC0, eller CC BY med kredit i spelet).` / `… finns inte i LICENSES.md. Kör npm run inkorg:licenser.` |
+| **Namngivning** | `id` = ASCII-gemener och bindestreck, 2–32 tecken, unikt i `entiteter.json`; filnamn = `<id>.glb`; inga å/ä/ö | `FEL …: id "Kö" är ogiltigt. Använd gemener a–z och bindestreck, t.ex. "ko".` / `… id "ko" finns redan.` |
+| **Skala** | modellens höjd (bounding box) 0,3–3,0 enhet; origo i marken (min.y inom ±0,05) | `FEL …: höjden är 7,2 (tillåtet 0,3–3,0). Skala modellen i Blender eller sätt "malhojd".` / `… står inte på marken (min.y = 0,40).` |
+| **Ankarnoder** | för `djur`: `anchor_head`, `anchor_face`, `anchor_neck`, `anchor_back` finns; `bygg`: `anchor_door`, `anchor_roof`; `tillbehor`: `attach` | `FEL …: saknar noderna anchor_head, anchor_back. Kör node scripts/inkorg/ankare.mjs ko.` |
+| **Triangelbudget** | djur ≤ 6 000, tillbehör ≤ 800, byggnad ≤ 4 000, natur/föremål ≤ 1 500 (startvärden, mäts om efter första satsen) | `FEL …: 12 480 trianglar (högst 6 000 för djur). Förenkla i Blender (Decimate) eller välj en annan modell.` |
+| **Filstorlek** | djur ≤ 300 KB, tillbehör ≤ 60 KB, byggnad ≤ 200 KB, natur/föremål ≤ 80 KB (efter `optimize`) | `FEL …: 1,8 MB (högst 300 KB för djur). Kontrollera texturen (högst 512 px).` |
+| **Struktur** | exakt en scen, inga kameror/ljus, högst 1 material per 2 000 trianglar, texturer inbäddade | `FEL …: filen innehåller 2 kameror. Ta bort dem.` |
+| **Dubbletter/manifest** | varje GLB i `public/models/**` finns i `tillgangar.json` (och tvärtom) | `FEL public/models/djur/ko.glb: saknas i data/tillgangar.json.` |
+
+**Enhetstest** (`kontrollera.test.mjs`): sju falska filer i en temporär kopia, en per rad ovan, ska ge exakt respektive felmeddelande; en korrekt fil ger `OK`.
+
+### 13.5 Vad rutinen ger per modell
+En fil + en rad i manifestet → ordrad(er) (efter Copilots granskning), entitetsrad, manifestrad, licensrad, och modellen syns i spelet utan kodändring och får automatiskt tillbehörsplatser. Målet i R3C: ≤ 10 minuters handpåläggning per modell (gissning, mäts).
+
+## 14. Byggande (hus, stall, hagar) som samma datamodell som djuren: `data/entiteter.json`
+
+### 14.1 Idag: tre modeller för "saker som finns"
+- **Djur:** ord i `ord.json` (`klass:"djur"`, `del.kropp`) + allt om utseende i kod: `gltfDjur.tsx` (`FIL`, `MAL_HOJD`, `PALETT`), `djurmesh.ts` (procedurella former), `angen3d.tsx` (`ART`, `flygare()`, `simmare()`, `vikt`, `LAND_SLOT` – 8 fasta platser x ±1,6, z −0,15…1,05), `tillbehorFaste.ts`. 14 kroppar, 9 med GLB. 116 `kropp ===`-grenar i `src/spel/`. Kitet (`public/kit/kit.json`) har en egen, delvis datadriven djurmodell för 2D.
+- **Byggnader:** `data/bygg.json` (`bygg_ord`: 36, med `typ` natur 14 / byggnad 13 / lek 6 / djurhem 3; `delar` (6), `material` (9)) + `src/tolk/byggtolk.ts` (fri text → `ByggeTolk`) + `src/spel/bygge.ts` (`SparatBygge`: `bygg, ord, antal, fargId, fargHex, monster, material, delar[], x, y, boende[]`) + **ritning i kod**: `ritaBygg.ts` (811 rader, 59 jämförelser per byggords id, 2D) och `angen3d.tsx` `slag()` (36 byggord → **6 grova former**: hus, träd, blomma, damm, tält, mur). 17 byggord är `hem` för djur (`hem.kroppar[]`, `hem.platser`, 1–4).
+- **Föremål/gåvor/skatter:** `gavor.json` (20), `skatter.json` (6), ritade procedurellt i `ritaBygg.ts` (`ritaSkatt`).
+Tre scheman, tre kodvägar. Grundtanken ("hus, stall, hagar, allt") och arkitekturregeln (en datarad + en tillgångsfil) kräver **ett** schema.
+
+### 14.2 Gemensam entitetsmodell
+`data/entiteter.json` (R3A) – en post per sak:
+```json
+{
+  "version": 1,
+  "ankarmall": { "djur": ["anchor_head","anchor_face","anchor_neck","anchor_back"], "byggnad": ["anchor_door","anchor_roof"] },
+  "entiteter": {
+    "hund": {
+      "typ": "djur", "kategori": "djur",
+      "ord": ["hund", "hunden", "hundar", "hundarna", "vovve", "valp"],
+      "modell": "/models/animal-dog.glb", "licens": "kenney-cube-pets",
+      "fram": "-z", "malhojd": 1.05, "storlek": "normal",
+      "attribut": { "farg": true, "monster": true, "skala": true, "formaga": ["springa","hoppa","flyga","lysa","simma"] },
+      "ankare": { "anchor_head": [0, 0.92, -0.10], "anchor_back": [0, 0.58, 0.16] },
+      "platser": [],
+      "beteende": { "rorelse": "land", "klipp": {"vila":"idle","gang":"walk"}, "vikt": 1 }
+    },
+    "stall": {
+      "typ": "byggnad", "kategori": "byggnad",
+      "ord": ["stall", "stallet", "stall", "stallen"],
+      "modell": "/models/bygg/stall.glb", "licens": "quaternius-farm",
+      "fram": "+z", "malhojd": 1.6, "storlek": "stor",
+      "attribut": { "farg": true, "material": true, "monster": false, "delar": ["fönster","dörr","tak","skorsten","flagga"] },
+      "ankare": { "anchor_door": [0,0,0.6], "anchor_roof": [0,1.2,0] },
+      "platser": [ { "id": "box-1", "pos": [-0.3,0,0.2], "for": ["häst","ko","får"] }, { "id": "box-2", "pos": [0.3,0,0.2], "for": ["häst","ko","får"] } ],
+      "beteende": { "rorelse": "fast", "sida": "start", "pris": 0, "max_pa_garden": 15, "hem": true }
+    },
+    "hage": {
+      "typ": "byggnad", "kategori": "byggnad", "ord": ["hage","hagen","hagar","hagarna"],
+      "modell": "/models/bygg/hage.glb", "licens": "kenney-nature",
+      "attribut": { "farg": false, "skala": true, "kakel": { "stapel": "staket", "storlek": [4,4] } },
+      "platser": [ { "id": "inne", "area": [4,4], "for": ["*"] } ],
+      "beteende": { "rorelse": "fast", "hem": true }
+    }
+  }
+}
+```
+**Fält:** `typ` ∈ `djur | tillbehor | byggnad | foremal | natur` (styr vilka fält som krävs, kontrolleras av `kontrolleraEntiteter()`); `kategori` är reservformens kategori (avsnitt 12); `ord[]` ersätter `former`/`id`-listorna (böjningar ur SALDO); `modell`/`licens` pekar på manifestet; `ankare` har reservvärden (nodernas värden i GLB vinner); `platser[]` är *vart något kan placeras i entiteten* (boxar i ett stall, en yta i en hage, `sit`-platser på en bänk) och ersätter `hem.platser` (ett tal); `beteende.rorelse` ∈ `land | flyg | sim | fast` ersätter `flygare()`/`simmare()`/`kropp ===`.
+**Hur byggnaderna ryms:** `bygg_ord[]` → `entiteter` med `typ:"byggnad"`: `typ` (natur/byggnad/lek/djurhem) blir `kategori` + tagg, `hem.kroppar` blir `platser[].for`, `delar` blir `attribut.delar`, `material`/färg ligger kvar i `bygg.json` och refereras. `byggtolk.ts` läser entiteterna i stället för `bord`/`delar` (`bord.get(w)` blir `entitetFranOrd(w)`). `SparatBygge` ändras **inte** (spar­format låst); `bygg` är entitetens `id`. En 6-formsritning i `slag()` ersätts av `modell` (R5) med `reservform` för byggord som saknar modell.
+**Hagar:** en hage är en byggnad med `attribut.kakel` (staketet upprepas runt en yta) och en stor `platser[0].area`; djur som "bor" i den placeras fritt inom ytan, inte i en slot (nytt i R5: `flyttaIn` i `minne.ts` får `plats` som id i stället för ett antal).
+**Skalbarhet:** ett nytt hus eller djur = en rad i `entiteter.json` + en GLB + (efter Copilots granskning) en ordrad. Inga `if (kropp === …)`, inga `ritaBygg`-funktioner per byggord.
+
+### 14.3 Bevis
+`entiteter.test.ts`: (1) varje `bygg_ord` i `bygg.json` har en entitet; (2) varje entitet med `hem` har `platser` med `for`; (3) alla ankarnoder finns i entiteten eller GLB; (4) `rg 'bygg === "' src/spel` ≈ 0; (5) alla 14 kroppar migrerade, bilderna från R2 oförändrade.
+
+## 15. Doktor Bengtsson och platserna (skogen, sjön, grottan) som uppdragsmotor i data
+
+### 15.1 Vad som finns idag (läst + live)
+- **Doktor Bengtsson finns inte i repot** (`rg Bengtsson` i repot: 0 träffar). Hans 24 uppdrag ligger bara som utkast i `/workspace/trollpennan-nulage/bengtsson-uppdrag.md`: fyra nivåer (N1 välj bland fyra ord, N2 välj/fyll i, N3 skriv en kort fras, N4 fri text), regler från Christoffer 17 okt ("bara Bengtsson ger uppdrag; svårigheten växer; varje uppdrag ger synlig belöning"), plus en gag (sjön Chargoggagogg…).
+- **Uppdrag i spelet:** `data/uppdrag.json` – **10 uppdrag i 3 områden** (skogen 3, sjön 4, grottan 3), 4 typer (`hitta`, `van`, `ge`, `skicka`), givare är djur och lappar (Ekorren, Mossugglan, Gamla bävern, Pärlhajen, Nattdraken …), `mal`, `klart`, `stjarnor`, `skatt`. `data/skyltar.json` 12 skyltar/lappar (`startar` → uppdrag), `data/skatter.json` 6 skatter, `data/vilda-djur.json` 7 vilda vänner (`gillar`, `ledtrad`, `tack`), `data/gavor.json` 20 gåvor, `data/omraden.json` 3 områden (`skogen` ← gården, `sjon` ← gården, `grottan` ← skogen; `hinder.kraver.nagon_av:["flyga"]`, `eller_bygg:"bro"`; sjön har delområdet ön med `kraver:["simma"]`). Reglerna i `avflode.ts` (`oppnaHinder`, `skickaDjur`, `bliVan`, `geGava`, `plockaSkatt`).
+- **Vyer:** områdena är Phaser-scenen `avscen.ts` (ritar skog/sjö/grotta procedurellt "ritning_reserv"); **Uppdragsboken (`panel === "uppdrag"`, `Spel.tsx` r.2644–2736) har ingen ingång** och menyn är låst; **live: "Ut på äventyr" och "Uppdragsboken" är låsta (lås-ikon, "Kommer senare")** – inga uppdrag går att spela via spelets egen väg.
+- **Ordkrav idag:** bara indirekt (taggar: `skicka_tagg:"hoppa"`, vilda djur `gillar.farg/taggar/gavor`). Ingen kontroll av *vilket ord barnet skrev*, och ingen fritext-bedömning.
+- **Belöning idag:** stjärnor + en skatt i Lådan på gården; Bengtssons utkast kräver synlig belöning på djuren/världen (filt på alla djur, regnbåge på himlen, natthimmel efter text) – **finns inte**, och 7 av 9 N1-svaren är okända ord idag (mätt: `filt`, `paraply`, `havregryn`, `kudde`, `badkar`, `tårta`, `mössa` ger ingen form; `solhatt` och `lykta` gör det).
+
+### 15.2 Vad som saknas
+(1) Bengtsson som NPC (entitet, plats, röst). (2) En plats som data i stället för Phaser-kod. (3) Uppdrag med *ordkrav* (ett visst ord, en kategori, ett attribut). (4) Belöningar som effekter på djuren/världen. (5) Ingång till Uppdragsboken och kartan. (6) Fritextnivåerna N3–N4 (tolka med `tolka()` och bedöma: "kräver att varelsen har ett tillbehör i kategori `plagg`"). (7) Att de 10 befintliga uppdragens givare enligt regeln ska bli Bengtsson (Christoffers ja, 10.2 punkt 7).
+
+### 15.3 Dataform (R6)
+`data/platser.json`:
+```json
+{ "skogen": { "namn": "Skogen", "nas_fran": "garden", "scen": "scener/skogen", "ljus": "dag", "musik": null,
+              "hinder": { "text": "…", "kraver": { "nagon_av": ["flyga"] }, "eller_bygg": "bro" },
+              "karta": { "x": 0.3, "y": 0.4 },
+              "objekt": [ { "entitet": "gran", "pos": [2,0,-3], "vrid": 0.4 } ],
+              "skyltar": { "skogen-1": [1,0,-2] }, "vilda": { "mossugglan": [3,0,1] } } }
+```
+`data/npc.json`: `{ "bengtsson": { "namn": "Doktor Bengtsson", "entitet": "bengtsson", "plats": "garden", "ton": "språkdoktor, varm, lite virrig" } }`.
+`data/uppdrag.json` (v2; de 10 gamla behåller `typ`/`mal`, får `givare:"bengtsson"`):
+```json
+{ "id": "n1-regn", "plats": "garden", "givare": "bengtsson", "niva": 1,
+  "typ": "valj",
+  "fraga": "Det regnar! Något på P som skyddar mot regn?",
+  "alternativ": { "ratt": ["paraply"], "fel": ["pizza","penna","pinne"] },
+  "ordkrav": { "ord": ["paraply"] },
+  "belonning": { "effekt": "tillbehor_alla", "entitet": "paraply", "stjarnor": 2 },
+  "klart": "Tack! Nu blir ingen blöt." }
+{ "id": "n3-klader", "plats": "garden", "givare": "bengtsson", "niva": 3,
+  "typ": "skriv", "fraga": "Skriv vad djuren ska ha på sig, och vilken färg.",
+  "ordkrav": { "kategori": "plagg", "min": 1, "farg": true },
+  "belonning": { "effekt": "tillbehor_alla_av_ord" } }
+```
+`typ` ∈ `valj | fyll | skriv | fri | hitta | van | ge | skicka`; `ordkrav` ∈ `{ord:[…]}` (exakt ord), `{kategori, min, farg?}` (kategori ur `entiteter.json`, avsnitt 14; reservformsord räknas om kategorin är känd), `{tagg}`; `belonning.effekt` ∈ `tillbehor_alla | entitet_pa_gard | vader | natthimmel | nytt_djur | stjarnor`, definierade i `data/belonningar.json` (varje effekt = en funktion, men *ett* ställe; nya uppdrag återanvänder effekterna). Kontrolltest `uppdrag.test.ts`: varje `plats`, `givare`, `entitet`, `effekt`, `kategori` och `skatt` finns.
+`src/spel/uppdragsmotor.ts` (ersätter delar av `avflode.ts`): `startaUppdrag(id)`, `bedomSvar(uppdrag, utfall)` (matchar `ordkrav` mot `Utfall.funna`/`varelse`/`reserv`), `delUtBelonning(uppdrag)`. `Spel.tsx`: ingång till `UppdragPanel` från menyn och via Bengtsson-lappen på gården.
+**Hur platserna passar grundtanken:** `scener/*.json` är entitetslistor (avsnitt 14) med positioner; ett nytt ställe (en äng, en strand) = en plats-rad + entiteter ur befintliga modeller. Uppdrag på platser använder samma ordtolkning och reservform, så *vad barnet skriver* alltid blir synligt också där.
+
+## 16. Kameran: fast Hay Day-liknande vy i R3F
+
+### 16.1 Idag (`angen3d.tsx`, läst)
+Perspektivkamera, `fov` 58 stående / 46 liggande (`KameraRam`, r.1984), startposition (0, 4,15, 9,8) som tittar mot (0, 1,05, −0,15): **ca 17° över horisonten**, avstånd ca 10,4. `OrbitControls` (r.2092): `enablePan={false}`, azimut ±1,05 rad (±60°), polarvinkel 1,1–1,42 rad (**8–27° över horisonten**), avstånd 6–14, `touches: ONE=ROTATE, TWO=DOLLY_PAN`, dämpning 0,08. Dessutom en `SagaKamera` (sagoläge, r.1584) som flyttar kameran längs en bana och ett test-/sondobjekt `window.__tred` som läser kamerans position, fov och zoom. Djuren står på 8 fasta platser (x ±1,6, z −0,15…1,05) plus en flygrad (y 1,55) och en damm; ängen visar max 10 djur. **Det är en lågt sittande, fritt orbiterande perspektivvy – inte Hay Day** (där kameran är fast, ser snett ovanifrån och barnet panorerar och zoomar). Ingen gräns för att det barnet byggde ska synas, och byggnader (36 byggord, 6 former) är små i bild.
+
+### 16.2 Förslag (data i `data/kamera.json`, komponent `src/spel/ang/kamera.tsx`, R4B)
+- **Typ:** `OrthographicCamera` (parallellprojektion: alla djur och byggnader är lika stora oavsett djup, byggnader går att lägga i ett rutnät, ingen perspektivförvrängning av ansikten och tillbehör, enklare att räkna ut vad som är synligt).
+- **Vinkel:** **35° ned** (isometrisk-lik; Hay Days ca 30–40°), **yaw 0°** på ängen (djuren tittar mot kameran så ansikte och tillbehör syns, som idag), **yaw 30–35°** i Gården (diagonal Hay Day-känsla för byggnader). Ingen orbit: barnet roterar inte (det är det som gör vyn "fast").
+- **Zoom (synlig världsbredd vid zoom 1):** ängen **5,0 enheter**, Gården **9,0 enheter**; djuret är ca 1 enhet högt, så ett djur blir ca 75 px högt på 375 px bredd (bra för att se ansiktet; idag ca 100 px högt i live-bild 02, grov bedömning ur skärmbilden). Pinch: zoom 0,7–1,6 (Gården upp till 2,0).
+- **Pan och gränser:** ett finger på tom mark panorerar; hårda gränser = markrektangeln minus halva synfältet (kameran kan aldrig visa tomhet); om världen är mindre än vyn (ängen) låses axeln. Mjuk dämpning, 0,12 s. Dubbeltryck återställer. **Långt tryck (350 ms)** på en byggnad/djur i Gården plockar upp för flytt, tryck markerar. (Tryck och drag på djur får inte kollidera med pan: drag på tom mark = pan.)
+- **Stående mobil (375×812):** vyn är 2,17 × högre än bred. Bredd 5,0 ger synlig markdjup ≈ 5,0 × 2,17 / sin(35°) ≈ 19 enheter längs marken (alla 8 djurplatser plus flygrad + dammen får plats utan att barnet drar). Säkra ytor: topp 72 px (HUD, stjärnor) och botten 96 px (knappen "Pennans bok"); kameran skjuter fokuspunkten så att leken ligger mellan dem (`setViewOffset`). Liggande: samma synlig höjd, bredare värld.
+- **Dataform:**
+```json
+{ "version": 1,
+  "scener": {
+    "ang":  { "typ": "ortho", "elev": 35, "yaw": 0,  "bredd": 5.0, "zoom": [0.7, 1.6], "pan": false, "safe": { "topp": 72, "botten": 96 }, "mal": [0, 0.6, 0.4] },
+    "gard": { "typ": "ortho", "elev": 38, "yaw": 33, "bredd": 9.0, "zoom": [0.6, 2.0], "pan": true,  "mark": [24, 24], "safe": { "topp": 72, "botten": 96 } }
+  },
+  "gester": { "pan": "ett_finger_tom_mark", "zoom": "pinch", "plocka_upp_ms": 350, "dubbeltryck": "centrera" } }
+```
+- **Bevis (R4B):** `kamera.test.ts` (rena funktioner `frustum(bredd, aspekt)`, `klammaPan(mal, mark, frustum)`: 5 testfall), bilder `01-ang-10-djur` (inga klippta), `02-gard-8-byggnader`, `03-zoom-in`, `04-pan-gransen`, `05-liggande`; `window.__tred` utökas med `typ:"ortho"` så att befintliga skript fortsätter fungera. `SagaKamera` behålls oförändrad som läge.
+
+## 17. Live-läge (publicerad version, https://trollpennan.grok.me/)
+Spelad 2026-10-18 kl. ca 11:30–11:50 (Stockholmstid) med Playwright (Chromium headless 156, viewport 375×812, `hasTouch`, mobil-UA iPhone, SwiftShader/ANGLE), ett skript per test utanför repot (`/workspace/arkitekt-verk/`). Inga formulär skickades och ingen data lämnade webbläsaren utöver att läsa sidan och spela. Alla skärmbilder ligger i `docs/skarmbilder/` (8 st, 375×812 CSS-px i 2× upplösning; överst syns plattformens "Created with Grok / Remix"-list, den ligger inte i spelet).
+
+### 17.1 Motsvarar publicerad version `main`? **Nej, den är äldre.**
+**Så avgjorde jag det (och vad jag inte kunde):**
+- **Hash/byggdatum:** sidan laddar `assets/index-Cwk_3HJv.js`, `routes-CdcM0cXe.js` (1,3 MB, innehåller Spel + R3F), `starta-oFY4Y7gm.js` (Phaser) och `styles-B3KduHyE.css`; `last-modified` på `index-…js` är **Sun, 18 Oct 2026 09:24:37 GMT = 11:24 Stockholmstid**, alltså publicerad ca två minuter innan jag hämtade den. (Så den är *nypublicerad men innehåller äldre kod*.) Det är plattformens bygge (TanStack-start, `/__grok/manifest.webmanifest`, `grok-app-builder/extensions.js`), **inte** `npm run build:pages`; jag har inga lokala byggen att jämföra hashar mot (jag får inte bygga, och Vite-hashar beror på byggmiljön), så **hash-jämförelse mot `main` gick inte**.
+- **Strängmarkörer ur git:** jag sökte, för varje commit på `main`, de strängar commiten lade till i `src/` och `data/` i den publicerade bundlen. Resultat: importcommiten `ef7b64b` ("Importera Trollpennan B003 (Version0006) från Copilot-handoff", 2026-10-17 14:07) hittas (1 306 av 2 065 strängar; resten är sannolikt bortminifierade eller i annan form), men **Runda 1 (`1f9c261`) 0 av 6, och inga av tillbehörsrundornas strängar** finns: `intro-ideer`, "Prova en idé", `tillbehor-krona|hatt|halsduk|rosett|glasogon|ryggsack|mantel|horn`, `anchor`, `faestTillbehor`, glöd/glitter-markörer (alla 0 träffar i `routes.js`). Däremot finns `__troll`, `__tred`, `groda-kredit`, `ladd-3d`, `trollpennan-v2`, `Kommer senare`.
+- **Synliga funktioner (spelat):** hatt, halsduk, glasögon, rosett, mantel, ryggsäck syns inte på något djur (bild 06); introt saknar idéknapparna; i övrigt som koden. Kronan syns på draken (bakad i formen i äldre koden, `djurmesh.ts` r.308–330); på `rosa enhörning med glasögon` syns varken horn eller glasögon (rosa häst bakifrån; bilden är inte bland de åtta).
+- **Slutsats:** den publicerade versionen är **ungefär importen B003 (`ef7b64b`), före Runda 1** (merge `7896342`) och före alla tillbehörsrundor; `main` = `697be95` är **37 commits nyare** (9 sammanslagna PR). Jag kan **inte** avgöra exakt vilken commit (bundlen är minifierad, det finns ingen versionssträng eller byggdatum i sidan, och inga lokala byggen att jämföra hash mot). Grenarna (`copilot-jobb`, `text/granskning-1`) kunde jag inte skilja från `main` via strängar utan att veta deras text; jag har inte jämfört dem.
+- **Åtgärd:** R0 (publicera `main`) är Christoffers ja (10.2 punkt 1).
+
+### 17.2 Spelat läge (bilder 01–08)
+| Moment | Resultat live | Bild |
+|---|---|---|
+| Laddning | `load` efter 2,3 s på ett vanligt nät; introt spelar självt (pennan skriver K-A-N-I-N); "Hör pennan" och "Hoppa över" syns; inga `console.error`; bara varningar (THREE.Clock, GPU-stall) | 01 |
+| Ängen efter introt | 3D-äng med damm, träd, växthus; ett rosa kaninbarn finns redan; hint "Dra för att titta runt"; stjärnor 0; knappen "Pennans bok" | 01, 02 |
+| Skriva (bok + eget tangentbord) | pennan → skärmtangentbord (inget systemtangentbord); `Vakna!`; fungerar med tryck | 03–05 |
+| Meny (☰) | **Ängen** öppen, **Gården, Byggboken, Albumet, Ut på äventyr, Uppdragsboken, Bok: alla låsta (lås-ikon)**; tryck ger "Kommer senare – i fulla spelet kan du bygga hus och gå på äventyr i skogen." (demoläge, hårdkodat) | 07 |
+| Uppdragsvy | **Går inte att nå** via spelet (Uppdragsboken och "Ut på äventyr" låsta; ingen testkrok för den). Ej spelad; bara kodläst | – |
+| Gården | Nås bara med testkroken `__troll.plats("gard")`; 2D (Phaser) med knappen "Bygg något"; `ett hus med fönster` byggs (`Klart! ett hus med fönster står på gården.`); `… och en pool` → poolen **ignoreras tyst**; `ett torn` → "Det ordet finns i Slottssidan. Den kostar 10 stjärnor." | 08 |
+| Tillbehör | `en blå drake med krona`: krona syns (bild 02). `en katt med hatt och glasögon och halsduk`: **ingenting syns** (bild 06); sex djur med hatt/halsduk/rosett/mantel/ryggsäck/glasögon: **inget tillbehör syns** (utom sådant som är bakat i formen) | 02, 06 |
+
+Skärmbilder (alla 375×812 CSS-px, 2×): `docs/skarmbilder/01-intro-start.png`, `02-ang-bla-drake-med-krona.png`, `03-okant-ord-elefant.png`, `04-felstavat-menade-du.png`, `05-glad-kanin-som-dansar.png`, `06-katt-med-hatt-glasogon-halsduk-syns-ej.png`, `07-meny-allt-last.png`, `08-garden-hus-med-fonster.png`.
+
+### 17.3 Övriga fynd i live
+1. **Testkroken `window.__troll` (25 funktioner: `vakna`, `plats`, `stjarnor`, `kop`, `aterstall` …) finns i den publicerade versionen** och kan ge stjärnor, köpa sidor och radera spelet från konsolen. Produktfråga: ska den tas bort i produktionsbygget? (Går inte att åtgärda utan en kodrunda; läggs i R1:s förutsättningar som liten punkt.)
+2. Plattformens "Created with Grok / Remix"-list tar ca 43 CSS-px överst (mätt ur bilden, 86 av 1 624 bildpunkter) i varje bild; HUD:en ligger under den.
+3. Pratbubblan och guldordsbannern överlappar varandra (bild 02: "Guldord! Du skrev …" delvis under "Hej! Här kommer …").
+4. Det skapade djurets ord som saknas (paraply, mössa) ignoreras **utan meddelande** och sparas inte (live bekräftar koden).
+5. Rutan "Pennan behöver ett djur" erbjuder bara kanin/katt/hund (de tre första "kort"-djuren), även när barnet skrev `elefant` eller `pizza`.
+6. Verbgissningar är ofta fel: `dansar` → "dino/nasse" (bild 05); live-slumpurvalet gav "Menade du …" för 11 av 33 verb, t.ex. `hänga` → hund/häst/vingar/ränder, `stå` → liten/stor, `viga` → vit/vingar, `summa` → simmar.
+7. Gården i 2D visar en grön groda med röd hatt i mitten medan ängens djur var en rosa kanin; jag har inte kartlagt varför.
+
+### 17.4 Täckning mätt live (slumpurval, frö 20261018, 100 ord)
+Substantiv 34, adjektiv 33, verb 33 ur topp-1000 (adjektiv ur topp 849). Substantiv testades som `N`, `en kanin med N`, och som `ett N` i Gården (via `__troll.vakna`); adjektiv som `en ADJ kanin`; verb som `en kanin som kan V` och tre presensformer. "Synligt" = djurets formel ändrades (live-djurets `formel`, tillbehör, förmågor), för byggord att något byggdes.
+| Ordklass | Live synligt | Kod förutsåg | Kommentar |
+|---|---|---|---|
+| Substantiv (34) | **0** byggdes; 1 igenkänt men låst (`port`, Slottssidan 10 ★) | 1 | 32 gav "Pennan behöver ett djur", 1 gav förslag (`summa`→`simmar`) |
+| Adjektiv (33) | **3** (blå, liten, snabb) | 3 | 30 ignorerades tyst; inga förslag |
+| Verb (33) | **0** | 0 | 11 gav felaktig gissning, 22 ignorerades tyst |
+Kod och live **överensstämmer på alla 100 ord** (efter rättning av en mätartefakt, avsnitt 11.3). Rådata och skript: `verification/tackning-2026-10-18.md`. Stickprovet är litet (konfidensintervall för 3/33 är grovt 2–24 %); det är jämförelsen kod mot live som är poängen, och den håller.
+
+## 18. Verklighetskontroll: vad är verifierat i spelad version?
+Status 2026-10-18 efter live-spelningen (avsnitt 17). **Viktigt: allt "live" gäller den publicerade versionen, som är äldre än `main`.** Ingen del av `main` från Runda 1 och framåt är verifierad i spelad version av mig.
+
+| Påstående i PROJECT.md | Status |
+|---|---|
+| Parsern (`tolka`, `tolkaBygg`) beter sig som koden säger: okänt ord → "Pennan behöver ett djur" och sparas; skapat djur ignorerar okänt ord tyst; fuzzy-förslag | **Verifierat live** (9 fraser + slumpurval 100) och **mätt** i kod; stämmer |
+| Täckningstalen (avsnitt 11) | **Mätt** i kod, **verifierat live** på 100 ord (3 av 3 ordklasser stämmer) |
+| Menyn är låst (Gården, Byggboken, Albumet, Ut på äventyr, Uppdragsboken, Bok) | **Verifierat live** (bild 07, texten "Kommer senare …") |
+| Uppdragsvyn saknar ingång | **Verifierat live** (går inte att nå; bara via kod: ingen `setPanel("uppdrag")`) |
+| Gården (Phaser, 2D) fungerar med byggord | **Verifierat live** (hus byggs; kräver testkrok för att nå) |
+| Krona och horn syns på djuren | **Delvis live:** krona på drake syns (bild 02); **horn syns inte** på enhörningen |
+| Hatt, halsduk, glasögon, rosett, mantel, ryggsäck syns | **Motbevisat live:** syns inte i den publicerade versionen (äldre kod) |
+| 3D-tillbehören syns inte i Gården/äventyret (två renderare) | **Kodläst; delvis live:** Gården är 2D och visar inga 3D-tillbehör |
+| Runda 5A: mantel/ryggsäck/horn på häst/drake/gris bra, fel kvar på fågel/katt/kanin | **Kodläst + Builds/min bildläsning, inte verifierat** (live saknar koden) |
+| Glöd/glitter/eld (4C–4E) | **Ej verifierat** (live saknar koden; kodläst) |
+| Uppdrag (10 st), skyltar, vilda djur, skatter, områden | **Kodläst/datalästa, ej spelade** (äventyret går inte att nå) |
+| `Spel.tsx` 3133 rader, 50 `useState`, 108 testid; `angen3d.tsx` 2202 | **Mätt i kod** (`wc -l`, `rg`) |
+| Phaser 1,25 MB / R3F 1,3 MB chunkar | **Delvis live:** `routes.js` är 1,3 MB, `starta-…js` hämtas; storlek på Phaser-chunken inte omräknad |
+| Mobilprestanda | **Ej verifierat** (SwiftShader, ingen telefon). Laddtid 2,3 s mot `load` i min miljö |
+| Föräldravyn (håll 3 s), Önskelista, ljud, album | **Ej spelade** (kod + bakom lås) |
+| Svenska texter är granskade (Copilot) | **Utanför min kontroll;** jag rör dem inte |
+| 75/75 `test:product` | **Ej omkört** (Node 20.19.2 här stöder inte `--experimental-strip-types`) |
+
+### 18.1 Testfraser för Doodle mot en körande build av `main` (förväntat resultat)
+Kör via riktiga UI-vägen (Pennans bok → pennan → skärmtangentbord → Vakna!). Fraserna 1–9 är redan spelade mot den **publicerade** versionen; kolumnen visar vad som förväntas på en build av `main` och vad live gav.
+| # | Fras (barnskriven) | Förväntat på `main` (kod) | Live idag |
+|---|---|---|---|
+| 1 | `en blå drake med krona` | Blå drake, krona på huvudet; 3 stjärnor | Som väntat, krona syns (bild 02) |
+| 2 | `rosa enhörning med glasögon` | Rosa häst med horn **och** glasögon; guldord "enhörning" | Formel rätt (häst, horn, glasögon), men varken horn eller glasögon syns i bild (rosa häst bakifrån) |
+| 3 | `en elefant` | "Pennan behöver ett djur. Prova … kanin/katt/hund"; ordet i önskelistan | Som väntat (bild 03). *Efter R3B:* en kristallvarelse med texten "elefant" |
+| 4 | `en kanin med paraply` | Kanin utan paraply, inget meddelande | Som väntat. *Efter R3B:* kanin med en kristall/ikon "paraply" över huvudet |
+| 5 | `en kannin med glasögen` (felstavat) | "Menade du kanin?" (ett förslag åt gången) | Som väntat (bild 04) |
+| 6 | `en glad kanin som dansar` (okända adjektiv/verb) | I kod: "Menade du dino / nasse?" (fel gissning) | Som väntat (bild 05); *Efter R3B:* kanin som dansar-animation, ingen gissning |
+| 7 | `tre röda hundar som kan flyga och spruta eld` | Tre röda hundar med vingar och eld | Formel rätt (`flyger och sprutar eld`), 3 djur |
+| 8 | `blå hmmmx` / `en pizza` (nonsens/okänt) | "Pennan behöver ett djur …", ordet sparas | Som väntat. *Efter R3B:* kristall med texten, aldrig ett fel |
+| 9 | `ett hus med fönster och en pool` (Gården) | Hus med 2 fönster; poolen ignoreras | Som väntat (bild 08) |
+| 10 | `en katt med hatt och glasögon och halsduk` | **Alla tre syns på katten** (hatt ovanpå, glasögon framför ögonen, halsduk runt halsen) | **Syns inte alls** (bild 06) – kör mot `main` |
+| 11 | `en häst med mantel` + `en fågel med ryggsäck` | Mantel och ryggsäck syns (5A: häst bra, fågel svag) | Syns inte live – kör mot `main` |
+| 12 | `en ko som kan sjunga` | Idag: tyst ignorerat + förslag; *efter R3B/R3C:* ko-modell, sjunga som animation | – |
+Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`, spärrat ord (ska ge puff, aldrig form).
