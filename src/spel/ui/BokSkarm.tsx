@@ -2,7 +2,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { Lock, Pencil } from "lucide-react";
 import type { ForslagKort, Ord } from "@/tolk/typer.ts";
 import upplevelse from "../../../data/upplevelse.json";
-import { TEXTER_AV, UPP, VILDA } from "../aventyr.ts";
+import { NPC, TEXTER_AV, UPP, VILDA, uppdragText } from "../aventyr.ts";
 import type { Sparad } from "../brygga.ts";
 import { fyll } from "../fyll.ts";
 import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
@@ -293,8 +293,9 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
             {UPP.uppdrag
               .filter((u) => (uppFlik === "klar" ? uppdragSpar[u.id] === "klar" : uppdragSpar[u.id] === "pagar"))
               .map((u) => (
-                <p key={u.id} className="uppdrag-rad" data-testid={`uppdrag-${u.id}`}>
-                  {u.text}
+                <p key={u.id} className="uppdrag-rad" data-testid={`uppdrag-${u.id}`} data-givare={u.givare ?? ""}>
+                  {u.givare && NPC[u.givare] ? <b>{NPC[u.givare]!.namn}: </b> : null}
+                  {uppdragText(u)}
                 </p>
               ))}
           </div>
