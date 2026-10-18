@@ -5,6 +5,8 @@
 //   node verification/r1-dom-tur.mjs --dist dist-pages --ut /tmp/r1/fore       (egen statisk server)
 //   node verification/r1-dom-tur.mjs --url https://trollpennan.grok.me/ --ut /tmp/r1/live
 //   node verification/r1-dom-tur.mjs --jamfor /tmp/r1/fore1 /tmp/r1/fore2 /tmp/r1/efter   (exit 1 vid skillnad)
+//   --bara namn1,namn2   kör bara lägen vars namn ingår (numreringen är densamma; för omkörning av ett läge)
+// Lägen 01–20 skrevs för R1A, 21–28 lades till inför R1B (dialoger som 01–20 inte nådde).
 // Webbläsare: env CHROMIUM_PATH om satt, annars Playwrights egen chromium.
 import fs from "node:fs";
 import http from "node:http";
@@ -105,6 +107,7 @@ async function dom() {
     .replace(/Du har \d+ stjärn/g, "Du har N stjärn")
     .replace(/★ \d+/g, "★ N");
 }
+const bara = arg("--bara")?.split(",");
 const tur = [];
 let nr = 0;
 const t = (id) => p.getByTestId(id);
@@ -121,6 +124,7 @@ const medDjur = (text = "en blå fågel") => troll((x) => window.__troll.vakna(x
 async function lage(namn, forberedelse, handling) {
   nr += 1;
   const id = `${String(nr).padStart(2, "0")}-${namn}`;
+  if (bara && !bara.includes(namn)) return;
   let fel;
   try {
     await rent();
@@ -161,6 +165,16 @@ await lage("onska-bok", async () => { await medDjur("en rosa kanin"); await trol
 await lage("gard", inget, async () => { await troll(() => window.__troll.plats("gard")); await p.waitForTimeout(800); });
 await lage("gard-bygger", async () => { await troll(() => window.__troll.plats("gard")); await p.waitForTimeout(800); }, () => troll(() => window.__troll.vakna("ett hus med fönster")));
 await lage("gard-bok", async () => { await troll(() => window.__troll.plats("gard")); await p.waitForTimeout(800); }, async () => { await t("bygg-nagot").click(); });
+// Lägen 21–28 (R1B): dialoger och paneler som 01–20 inte når.
+const saga = (id) => p.getByTestId(id);
+await lage("foralder-borja", () => troll(() => window.__troll.foralder(true)), async () => { await t("borja-om").click(); });
+await lage("meny-borja", oppnaMeny, async () => { await t("meny-borja").click(); });
+await lage("ordbok-for-fa", () => troll(() => window.__troll.ordbok(true)), async () => { await p.locator('[data-testid^="sida-"] button.kort').first().click(); });
+await lage("ordbok-kop", async () => { await troll(() => window.__troll.stjarnor(99)); await troll(() => window.__troll.ordbok(true)); }, async () => { await p.locator('[data-testid^="sida-"] button.kort').first().click(); });
+await lage("ordbok-kopt", async () => { await troll(() => window.__troll.stjarnor(99)); await troll(() => window.__troll.ordbok(true)); await p.locator('[data-testid^="sida-"] button.kort').first().click(); }, async () => { await saga("kop-ja").click(); });
+await lage("bygg-for-fa", async () => { await troll(() => window.__troll.plats("gard")); await p.waitForTimeout(800); await t("bygg-nagot").click(); }, async () => { await p.locator('[data-testid="bygg-last"] button.last-ikon').first().click(); });
+await lage("bygg-kop", async () => { await troll(() => window.__troll.stjarnor(99)); await troll(() => window.__troll.plats("gard")); await p.waitForTimeout(800); await t("bygg-nagot").click(); }, async () => { await p.locator('[data-testid="bygg-last"] button.last-ikon').first().click(); });
+await lage("kvall", medDjur, () => troll(() => window.__troll.kvall()));
 
 fs.writeFileSync(path.join(ut, "tur.json"), JSON.stringify(tur, null, 2));
 fs.writeFileSync(path.join(ut, "sidfel.json"), JSON.stringify(sidfel, null, 2));

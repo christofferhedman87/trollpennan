@@ -1,0 +1,17 @@
+[
+ {"namn":"AngLager","fil":"AngLager.tsx","rad":1709},
+ {"namn":"KartaLager","fil":"KartaLager.tsx","cond":1866},
+ {"namn":"OmradeHud","fil":"KartaLager.tsx","cond":1895},
+ {"namn":"Hud","fil":"Hud.tsx","rad":1905},
+ {"namn":"MenyPanel","fil":"Hud.tsx","fragment":true,"fran":1946,"till":2023},
+ {"namn":"HudBot","fil":"Hud.tsx","rad":2024},
+ {"namn":"BokSkarm","fil":"BokSkarm.tsx","cond":2050},
+ {"namn":"SkyltDialog","fil":"Dialoger.tsx","cond":2354,"nonNull":["skylt"]},
+ {"namn":"ValjDjurDialog","fil":"Dialoger.tsx","cond":2372,"nonNull":["valj"]},
+ {"namn":"VisKortDjur","fil":"Dialoger.tsx","cond":2389,"typ":{"visKort":"Extract<NonNullable<VisKort>, { slag: \"djur\" }>"}},
+ {"namn":"VisKortBygg","fil":"Dialoger.tsx","cond":2418,"typ":{"visKort":"Extract<NonNullable<VisKort>, { slag: \"bygg\" }>"}},
+ {"namn":"OrdbokDialog","fil":"OrdbokDialog.tsx","cond":2431},
+ {"namn":"KopDialog","fil":"Dialoger.tsx","cond":2551,"nonNull":["kop"]},
+ {"namn":"ForalderDialog","fil":"ForalderDialog.tsx","cond":2567},
+ {"namn":"MossaPanel","fil":"Dialoger.tsx","cond":2684}
+]

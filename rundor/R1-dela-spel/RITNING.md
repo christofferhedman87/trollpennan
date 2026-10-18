@@ -1,10 +1,10 @@
 # R1 – Ritning: dela `Spel.tsx` (ren flytt, noll beteendeändring)
 
-Skriven av Arkitekten 2026-10-18. Bas: `origin/main` = `37913b3` (PR #12). Allt här är **läst och mätt** i den koden; mätskript finns i `rundor/R1-dela-spel/mat/`. Gissningar är märkta **(gissning)**. Prompten till Build: `PROMPT.md` (körning R1A). Körning R1B skrivs färdig efter granskning av R1A (build-prompt-skillen: "send run 1 only").
+Skriven av Arkitekten 2026-10-18. Bas: `origin/main` = `37913b3` (PR #12). Allt här är **läst och mätt** i den koden; mätskript finns i `rundor/R1-dela-spel/mat/`. Gissningar är märkta **(gissning)**. Prompten till Build: `PROMPT.md` (körning R1A, genomförd) och `PROMPT-R1B.md` (körning R1B, skriven 2026-10-18 efter granskning av R1A; bas `89fd859`). Avsnitt 5 och 7–11 är uppdaterade efter R1A; avsnitt 3 och 4 beskriver läget före R1A (`37913b3`) och är historik.
 
 ## 0. Grindutlåtande (skillen `build-round-gate`, 7 punkter)
 
-**Utlåtande: JA för R1A (prompten är färdig och dess blueprint är provkörd i en skräpkopia: 0 typfel). JA för R1B när R1A är mergad och grön.** Rundan är uppdelad i två körningar, se avsnitt 2.
+**Utlåtande R1A: genomförd** (PR #14, `89fd859`, granskad i 4.7). **Utlåtande R1B: JA** (alla sju punkter nedan, kolumnen R1B; prompten är `PROMPT-R1B.md`, blueprinten är provkörd i en skräpkopia: 0 typfel, 28 av 28 DOM-lägen identiska). Rundan är uppdelad i två körningar, se avsnitt 2.
 
 | # | Punkt | Status | Belägg |
 |---|---|---|---|
@@ -13,13 +13,14 @@ Skriven av Arkitekten 2026-10-18. Bas: `origin/main` = `37913b3` (PR #12). Allt 
 | 3 | Arkitekturregeln hålls | **Ja** | Rundan lägger inget innehåll; den flyttar ordagrant kod. Ingen ny per-sak-kod (`rg -o "kropp ===" src/spel \| wc -l` ska vara **141 före och 141 efter**) |
 | 4 | Ritning i prompten | **Ja** | Exakta rader, filer, signaturer och typer i avsnitt 4–5; `PROMPT.md` pekar på dem |
 | 5 | Bevis definierat | **Ja** | `check:struktur` röd→grön, testid-baslinje, `typecheck:pages`, `test:product` (Node ≥ 22.6), DOM-tur före/efter, bilder 375×812 (avsnitt 7) |
-| 6 | Inställningar valda | **Ja** | `grok-4.7-build-fast`, `--reasoning-effort low`, `--max-turns 35` (R1A), `--prompt-file`, gren, loggfil (avsnitt 9) |
+| 6 | Inställningar valda | **Ja** | `grok-4.7-build-fast`, `--reasoning-effort low`, `--max-turns 35` (R1A) och `30` (R1B), `--prompt-file`, gren, loggfil (avsnitt 9) |
 | 7 | Ett logiskt mål | **Ja** | "Flytta ut data, hjälpfunktioner och JSX-block ur `Spel.tsx` utan att något ändras." Delningen i A och B följer skillens ordning: data/format först, sedan inkoppling |
 
 **Avvikelser från `PROJECT.md` (mätta, rättas i den här PR:n):**
-1. Målet "≤ 1 900 rader" var en gissning på felaktiga radnummer (JSX-blocken sitter på r.2091–3087, inte r.2248–3091 som angavs). Rätt mätt uppskattning efter R1: **ca 1 960 rader (gissning ± 60)**, eftersom 170 props måste skickas vidare (avsnitt 3). Gränsen sätts till **≤ 2 050**. Under 1 900 kommer `Spel.tsx` först när händelsefunktionerna delas i hooks (R1B-hook, första steget i R4; ingår inte här).
+1. Målet "≤ 1 900 rader" var en gissning på felaktiga radnummer (JSX-blocken sitter på r.2091–3087, inte r.2248–3091 som angavs). Min första uppskattning efter R1 var ca 1 960 rader (gissning), gräns ≤ 2 050 (ersatt, se nedan). **Rättat efter R1A-provkörning: R1B ger 1 781 rader (mätt), gräns nu ≤ 1 850** (anropen blev en rad vardera, inte flera). Under ca 1 780 rader kommer `Spel.tsx` först när händelsefunktionerna delas i hooks (R1B-hook, första steget i R4; ingår inte här).
 2. "25–30 turer, 2–3 USD" gällde en körning. Mätt omfattning (15 nya filer, 170 props) överstiger skillens gräns (2–3 × antal ändringar + 10 > 40) → två körningar.
 3. `kropp ===` är **141 förekomster på 85 rader i 9 filer** (`rg -o "kropp ===" src/spel | wc -l`), inte 116. Siffran kunde inte återskapas; `PROJECT.md` rättas.
+5. (Tillkom vid R1B) Prognosen "ca 1 960 rader" var för hög; skriptad flytt ger 1 781. `PROJECT.md` rättas i samma PR som `PROMPT-R1B.md`.
 4. "Pixlarna ska vara lika" är **inte mätbart**: ängen är en animerad 3D-scen (SwiftShader), två skärmbilder av samma kod skiljer sig. Bevisningen blir i stället jämförelse av den normaliserade DOM-strukturen (avsnitt 7), plus bilder för mänsklig granskning.
 
 ## 1. Mål
@@ -35,9 +36,9 @@ Skillen: räkna ändringarna, `--max-turns` ≈ 2–3 × ändringar + 10, över 
 | Körning | Innehåll | Nya filer | Ändringar (ungefär) | `--max-turns` | `Spel.tsx` efter (rader) |
 |---|---|---|---|---|---|
 | **R1A** (prompt klar) | skydd + typer + data + hjälpfunktioner + två små komponenter | 5 i `src/spel/ui/` + 2 skript + baslinje | 10 | 35 | **2 740 (mätt i provkörning, avsnitt 4.6)**, gräns 2 800 |
-| **R1B** (skrivs efter granskning av R1A) | 9 JSX-block till 7 filer | 7 i `src/spel/ui/` | 11 | 40 (delas i B1/B2 om R1A tog > 28 turer) | ca 1 960 (gissning), gräns 2 050 |
+| **R1B** (prompt klar: `PROMPT-R1B.md`) | 9 JSX-block (15 komponenter) till 7 filer, med skript | 7 i `src/spel/ui/` | 1 skriptkörning + bevis (skriptet gör de 11 ändringarna) | **30** (R1A tog 23 av 35) | **1 781 (mätt i provkörning, 5.8)**, gräns 1 850 |
 
-R1A är nyttig och säker för sig själv (flyttar bara data och rena funktioner, inget JSX). R1B kan inte skrivas med säkra radnummer förrän R1A är mergad, eftersom R1A tar bort ca 400 rader överst i filen.
+R1A var nyttig och säker för sig själv (flyttade bara data och rena funktioner, inget JSX). R1B kunde inte skrivas med säkra radnummer förrän R1A var mergad, eftersom R1A tog bort 393 rader; det är nu gjort (bas `89fd859`). Eftersom R1A visade att en mekanisk flytt (kommandon med radankare) fungerar och R1B har 15 block, är R1B inte handskriven av Build utan körs som ett skript (5.1) som Build bara kör och bevisar.
 
 ## 3. Läget idag (mätt på `37913b3`)
 
@@ -226,338 +227,416 @@ För att inte skicka en ritning som inte håller kördes exakt `sed`-blocket i 4
 | Filstorlekar | `typer.ts` 23, `spelData.ts` 71, `hjalp.ts` 284, `OnskaAnsikte.tsx` 25, `HoldOppnare.tsx` 12 rader |
 Inte provat: `npm run build:pages`, DOM-turen mot den nya koden, `test:product` mot den nya koden (de rör inte `Spel.tsx` och är orörda av flytten men har inte körts efter den).
 
-## 5. Körning R1B – blueprint (utkast; radnummer räknas om efter R1A)
+### 4.7 Granskning av R1A (Arkitekten, 2026-10-18, efter merge av PR #14 → `89fd859`)
 
-R1B flyttar de nio JSX-blocken till sju filer i `src/spel/ui/`. **Utkastet gäller `37913b3`.** När R1A är mergad kör Arkitekten om `mat/props.mjs` på den nya `Spel.tsx` och skriver `PROMPT-R1B.md` med färska radnummer (R1A tar bort ca 400 rader överst). Typerna och propnamnen nedan ändras inte av R1A.
+Allt kört av mig på `origin/main`, läser bara:
+| Kontroll | Resultat |
+|---|---|
+| `check-spel-struktur.mjs --steg a` | GRÖN: 2 740 rader, testid 124/126, 5 ui-filer |
+| `tsc --noEmit -p tsconfig.pages.json` | 0 fel |
+| `eslint src/spel/Spel.tsx src/spel/ui` | 0 fel, 4 varningar (3 i `Spel()`, 1 i `OnskaAnsikte`, alla fanns före) |
+| `rg -o "kropp ===" src/spel \| wc -l` | 141 |
+| `git diff 37913b3 origin/main -- data src/tolk public` | tom |
+| De fem `ui/`-filerna och `Spel.tsx` mot min provkörning | **byte-identiska** (`cmp`), alltså exakt ritningen |
+| `Spel()`-kroppen (r.466–3091 före) mot efter | **identisk** rad för rad (enda skillnaden i intervallet är att `declare global` nu ligger direkt efter funktionen) |
+| Min egen byggda `89fd859` + DOM-turen mot de av Build incheckade före-körningarna `fore1`/`fore2` | **20 av 20 stabila och identiska** (oberoende bekräftelse av Builds "efterA"; hans efter-utdata checkades inte in) |
 
-### 5.1 Regler (gäller alla komponentfiler)
+**Avvikelser (alla små, ingen skadade något):**
+1. Build körde `medium` i stället för `low` som ritningen sa: 23 turer, 1,04 USD (`rounds.tsv`). Inom ramen (23 av 35 turer).
+2. `RUNDAR1A.md` säger "gren `runda-r1a`, inte pushad"; grenen mergades ändå som PR #14 (squash av fyra commits) av Doodle/Christoffer. Rätt beslut eftersom alla bevis var gröna; men prompten sa "pusha inte", och det efterlevdes av Build.
+3. `check:struktur` (steg b) är röd på `main` tills R1B är mergad. Den är inte kopplad till något CI (det finns inget `.github/`), så ingenting går sönder; den som kör `npm run check:struktur` ser röd, som tänkt.
+4. `scripts/check-spel-struktur.mjs` och `verification/r1-dom-tur.mjs` är kopior av `rundor/R1-dela-spel/…`; i R1B-PR:n är båda uppdaterade och synkade (gräns steg b 1 850; turen har 28 lägen).
+5. `verification/r1-dom-tur.mjs` hade 20 lägen; de åtta nya (21–28) har före-körningar (`fore1`/`fore2`) som jag körde mot `89fd859` och checkade in i R1B-PR:n (de gamla 20 är oförändrade: samma hash).
 
-1. **Kroppen är det inre JSX:et ordagrant** (raderna i tabellerna), placerat i `return ( … );`. Ingen omskrivning, ingen omformatering, ingen `prettier`.
-2. **Props = exakt namnen i tabellerna** (samma namn som variabeln i `Spel()`). Signatur: `export function X({ a, b, c }: XProps)` med `type XProps = { … }` direkt ovanför. Kroppen får inte byta variabelnamn.
-3. **Villkoret stannar i `Spel.tsx`.** Exempel: `{kartaOpp ? ( … ) : null}` (rad `kartaOpp`-villkoret till `) : null}`) ersätts med `{kartaOpp ? <KartaLager forstaRad={forstaRad} kartaText={kartaText} tryckPlats={tryckPlats} oppna={oppna} /> : null}`. TypeScript smalnar av (`skylt`, `valj`, `kop`, `visKort` är icke-null inne i villkoret), så propparna typas **utan `null`**.
-4. **Utan villkor** (anropas alltid, på samma plats i samma ordning): `AngLager`, `Hud`, `HudBot`. `MenyPanel` tar `menyOpp` och innehåller de två `{menyOpp ? … : null}`-uttrycken ordagrant (r.2328–2405) i ett fragment.
-5. **Samma DOM:** komponenten returnerar exakt de element som stod på platsen. Ingen extra `div`, ingen ändrad ordning, ingen ändrad `key`.
-6. **Inga nya hooks, ingen `React.memo`, ingen `useCallback`.** Spel-beteendet (omritning vid varje tillståndsändring) är samma som idag.
-7. **Ref-props** heter som i `Spel()` (`valjKor`, `filRef`, `textRef`, `omUidRef`), aldrig `ref`.
-8. **Importer** i nya filer: det `typecheck:pages` kräver, namnen i 5.2. När ikoner/hjälpare blir oanvända i `Spel.tsx` tar du bort dem (skriptet säger vilka).
-9. **Typer** från tabellerna (utskrivna av `tsc`); specialfall: `Dispatch<unknown>` är `Dispatch<SetStateAction<unknown>>`; `RefObject<T>` som utskrivet (React 19; om `tsc` klagar på tilldelningen från `useRef`, använd `MutableRefObject<T>`); `liv: Data["liv"]` (från `../minne.ts`), `lada: SparatBygge[]` (från `../bygge.ts`), `hemma: Hemdjur[]` (`../minne.ts`), `VisKortDjur.visKort: Extract<NonNullable<VisKort>, { slag: "djur" }>` och `VisKortBygg.visKort: Extract<NonNullable<VisKort>, { slag: "bygg" }>`, `Sparad` från `../brygga.ts`, `Ord`/`ForslagKort` från `@/tolk/typer.ts`, `Lage`/`OnskaSpar` från `../minne.ts`, `Banner`/`Bubbla`/`Forslag`/`KopFraga`/`Slot`/`Val`/`Varld`/`VisKort`/`SidaBygg` från `./typer.ts`.
+## 5. Körning R1B – körklar blueprint (bas `89fd859`, `Spel.tsx` 2 740 rader)
 
-### 5.2 Filer och vad var och en använder (mätt)
+R1B flyttar de nio JSX-blocken (15 komponenter) ur `Spel()` till sju filer i `src/spel/ui/`. **Allt nedan är mätt på `89fd859` (R1A mergad) och provkört i en skräpkopia utanför repot** (4.7 och 5.8). Prompten är `PROMPT-R1B.md`.
 
-| Fil | Exporterar | Importerar (utöver typer) |
+### 5.1 Hur flytten görs: ett skript, inga handpåläggningar
+
+`node rundor/R1-dela-spel/r1b-flytta.mjs` (skrivet och provkört av Arkitekten; datat i `rundor/R1-dela-spel/r1b-plan.json`, återskapas med `mat/r1b-plan-gen.mjs`) gör **allt** i ett svep, och Build ska inte skriva något av detta för hand:
+
+1. Kräver att `Spel.tsx` har exakt 2 740 rader och att inga av de sju filerna finns. Kontrollerar **alla 15 radankare** (första och sista raden i varje block, plus villkorsraden och `) : null}` för de elva villkorade). Avviker något: skriver `STOPP: …` och slutar med **exit 2 utan att ändra något**.
+2. Skriver de sju filerna: importer (exakt de som blocken använder, uppmätta med kompilatorn), `type XProps = { … }`, `export function X({ … }: XProps) { return ( <blockets inre JSX ordagrant, byte för byte> ); }`. `MenyPanel` får ett fragment `<> … </>` runt de två syskonuttrycken.
+3. Ersätter blocken i `Spel.tsx` nerifrån och upp med **ett anrop vardera**: `<X a={a} b={b} />`; villkoret stannar i `Spel.tsx`: `{kartaOpp ? <KartaLager … /> : null}`.
+4. Tar bort de importer i `Spel.tsx` som därmed blivit oanvända (hela satser eller enskilda namn) och lägger till sju nya `./ui/…`-importer efter den sista importen.
+5. Skriver ut `Klart: 7 filer skrivna, 15 block ersatta, Spel.tsx har nu 1781 rader.`
+
+Därefter är det *bara bevis* kvar. Build ändrar ingen kod, så länge `typecheck:pages` är grön direkt efter skriptet (den var det i provkörningen). Är den röd: STOPP (avsnitt 10), gissa inte.
+
+### 5.2 Vad skriptet skapar (provkört; rader mätta)
+
+| Fil | Komponenter | Rader | Importer (utöver `react`-typer och `./typer.ts`) |
+|---|---|---|---|
+| `AngLager.tsx` | `AngLager` | 208 | `Heart` ← `lucide-react`; `brygga` ← `../brygga.ts`; `ALBUM, HUMOR_IKON, poangAv, sovText, sparaFoto` ← `../liv.ts`; `useMinne` ← `../minne.ts`; `dukStil` ← `./hjalp.ts`; `FIR, TEXTER` ← `./spelData.ts` |
+| `KartaLager.tsx` | `KartaLager`, `OmradeHud` | 59 | `OMR, TEXTER_AV` ← `../aventyr.ts`; `TEXTER` ← `./spelData.ts` |
+| `Hud.tsx` | `Hud`, `MenyPanel`, `HudBot` | 209 | `Lock, Pencil` ← `lucide-react`; `introJson` ← `../../../data/intro.json`; `OMR, UPP` ← `../aventyr.ts`; `fyll` ← `../fyll.ts`; `ALBUM` ← `../liv.ts`; `HoldOppnare` ← `./HoldOppnare.tsx`; `FIR, TEXTER` ← `./spelData.ts` |
+| `BokSkarm.tsx` | `BokSkarm` | 370 | `Lock, Pencil` ← `lucide-react`; `upplevelse` ← `../../../data/upplevelse.json`; `TEXTER_AV, UPP, VILDA` ← `../aventyr.ts`; `fyll` ← `../fyll.ts`; `OnskaAnsikte` ← `./OnskaAnsikte.tsx`; `bestamdAv, frasForByggOrd, kanEtikett, kortIkon` ← `./hjalp.ts`; `FIR, FLIKAR, RADER, TEXTER` ← `./spelData.ts` |
+| `Dialoger.tsx` | `SkyltDialog`, `ValjDjurDialog`, `VisKortDjur`, `VisKortBygg`, `KopDialog`, `MossaPanel` | 171 | `FormelBild` ← `../formel.tsx`; `fyll` ← `../fyll.ts`; `ALBUM, MOSSA, poangAv, sparaFoto` ← `../liv.ts`; `FIR` ← `./spelData.ts` |
+| `OrdbokDialog.tsx` | `OrdbokDialog` | 156 | `fyll` ← `../fyll.ts`; `useMinne` ← `../minne.ts`; `replik` ← `../replik.ts`; `djurPris, streck` ← `./hjalp.ts`; `FIR, SIDOR` ← `./spelData.ts` |
+| `ForalderDialog.tsx` | `ForalderDialog` | 144 | `ljud` ← `../ljud.ts`; `useMinne` ← `../minne.ts`; `ForalderLiv` ← `../samling.tsx`; `LJUD_AV, LJUD_PA, TEXTER` ← `./spelData.ts` |
+
+`Spel.tsx` efter skriptet: **1 781 rader** (var 2 740). De sju filerna blir 1 317 rader tillsammans.
+
+### 5.3 De 15 komponenterna (radnummer gäller `89fd859`)
+
+| Komponent | Fil | Block i `Spel.tsx` (villkorsrad / inre JSX) | Anrop i `Spel.tsx` | Props |
+|---|---|---|---|---|
+| `AngLager` | `AngLager.tsx` | – / 1709–1865 | alltid | 31 |
+| `KartaLager` | `KartaLager.tsx` | 1866 / 1867–1893 | `{kartaOpp ? … : null}` | 4 |
+| `OmradeHud` | `KartaLager.tsx` | 1895 / 1896–1903 | `{omrade && !kartaOpp ? … : null}` | 2 |
+| `Hud` | `Hud.tsx` | – / 1905–1945 | alltid | 10 |
+| `MenyPanel` | `Hud.tsx` | – / 1946–2023 | alltid | 15 |
+| `HudBot` | `Hud.tsx` | – / 2024–2047 | alltid | 6 |
+| `BokSkarm` | `BokSkarm.tsx` | 2050 / 2051–2351 | `{bokOpp ? … : null}` | 49 |
+| `SkyltDialog` | `Dialoger.tsx` | 2354 / 2355–2369 | `{skylt ? … : null}` | 2 |
+| `ValjDjurDialog` | `Dialoger.tsx` | 2372 / 2373–2386 | `{valj ? … : null}` | 3 |
+| `VisKortDjur` | `Dialoger.tsx` | 2389 / 2390–2415 | `{visKort?.slag === "djur" ? … : null}` | 4 |
+| `VisKortBygg` | `Dialoger.tsx` | 2418 / 2419–2428 | `{visKort?.slag === "bygg" ? … : null}` | 2 |
+| `OrdbokDialog` | `OrdbokDialog.tsx` | 2431 / 2432–2548 | `{ordbok ? … : null}` | 21 |
+| `KopDialog` | `Dialoger.tsx` | 2551 / 2552–2564 | `{kop ? … : null}` | 3 |
+| `ForalderDialog` | `ForalderDialog.tsx` | 2567 / 2568–2682 | `{foralder ? … : null}` | 15 |
+| `MossaPanel` | `Dialoger.tsx` | 2684 / 2685–2703 | `{mossaOpp ? … : null}` | 4 |
+
+Totalt 171 props, 136 unika namn. Alla props har **samma namn** som variabeln i `Spel()` och skickas som `namn={namn}`. Typerna kommer från kompilatorn (`mat/r1b-plan-gen.mjs`); `skylt`, `valj`, `kop` är utan `| null` eftersom villkoret redan smalnat av dem; `visKort` är `Extract<NonNullable<VisKort>, { slag: "djur" }>` resp. `"bygg"`.
+
+**De 15 anropsraderna** (så ska de se ut i `Spel.tsx`; `r1b-ordagrant.mjs` kontrollerar varje rad):
+```tsx
+<AngLager natt={natt} varld={varld} omrade={omrade} panel={panel} ang={ang} hemma={hemma} liv={liv} fotoMal={fotoMal} visaBanner={visaBanner} visaMossa={visaMossa} setFotoMal={setFotoMal} banners={banners} bubblor={bubblor} onskan={onskan} onskaOpp={onskaOpp} onskaSyns={onskaSyns} ank={ank} oppnaOnska={oppnaOnska} meny={meny} setMeny={setMeny} omUidRef={omUidRef} setLage={setLage} setBokOpp={setBokOpp} setLadaOpp={setLadaOpp} menyHem={menyHem} setBoUid={setBoUid} lada={lada} ladaOpp={ladaOpp} boUid={boUid} boDjur={boDjur} flyttaInDjur={flyttaInDjur} />
+{kartaOpp ? <KartaLager forstaRad={forstaRad} kartaText={kartaText} tryckPlats={tryckPlats} oppna={oppna} /> : null}
+{omrade && !kartaOpp ? <OmradeHud tryckPlats={tryckPlats} bytFolje={bytFolje} /> : null}
+<Hud haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} />
+<MenyPanel menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} senare={senare} panel={panel} varld={varld} valjVarld={valjVarld} lasMeny={lasMeny} setBokOpp={setBokOpp} oppnaKarta={oppnaKarta} setIntroNy={setIntroNy} setIntro={setIntro} menySaker={menySaker} borjaOm={borjaOm} />
+<HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} />
+{bokOpp ? <BokSkarm stangBok={stangBok} andrar={andrar} panel={panel} lage={lage} setLage={setLage} setForslag={setForslag} byggPuff={byggPuff} onskaOpp={onskaOpp} onskan={onskan} onskaSyns={onskaSyns} onskaDjur={onskaDjur} onskaEx={onskaEx} fyllExempel={fyllExempel} gavaTill={gavaTill} ang={ang} hemma={hemma} varld={varld} forslag={forslag} valjForslag={valjForslag} nejForslag={nejForslag} behover={behover} utfor={utfor} flik={flik} onskaKort={onskaKort} setFlik={setFlik} kort={kort} val={val} onskaIds={onskaIds} kortGang={kortGang} valjKort={valjKort} oppnaSkrivMig={oppnaSkrivMig} text={text} omrade={omrade} visaOnskaHjalp={visaOnskaHjalp} vaknaNu={vaknaNu} vaknaText={vaknaText} skrivTecken={skrivTecken} sudda={sudda} uppFlik={uppFlik} setUppFlik={setUppFlik} uppdragSpar={uppdragSpar} byggSida={byggSida} agdaSidor={agdaSidor} setByggSidaId={setByggSidaId} setByggPuff={setByggPuff} byggFras={byggFras} kopRad={kopRad} lastaSidor={lastaSidor} forsokKop={forsokKop} /> : null}
+{skylt ? <SkyltDialog skylt={skylt} setSkylt={setSkylt} /> : null}
+{valj ? <ValjDjurDialog valj={valj} valjKor={valjKor} setValj={setValj} /> : null}
+{visKort?.slag === "djur" ? <VisKortDjur visKort={visKort} visaBanner={visaBanner} visaMossa={visaMossa} setVisKort={setVisKort} /> : null}
+{visKort?.slag === "bygg" ? <VisKortBygg visKort={visKort} setVisKort={setVisKort} /> : null}
+{ordbok ? <OrdbokDialog hittatAntal={hittatAntal} totalOrd={totalOrd} stjarnor={stjarnor} kopRad={kopRad} koptaSidor={koptaSidor} funna={funna} sidOpp={sidOpp} forsokKop={forsokKop} setSidOpp={setSidOpp} textRef={textRef} setText={setText} setHand={setHand} setLage={setLage} setOrdbok={setOrdbok} kvar={kvar} hittade={hittade} hemliga={hemliga} formler={formler} setVisKort={setVisKort} sovande={sovande} visaBanner={visaBanner} /> : null}
+{kop ? <KopDialog kop={kop} bekraftaKop={bekraftaKop} setKop={setKop} /> : null}
+{foralder ? <ForalderDialog startLage={startLage} setLage={setLage} ljudPa={ljudPa} sparaKopia={sparaKopia} filRef={filRef} lasFil={lasFil} foralderRad={foralderRad} kopia={kopia} lasInKopia={lasInKopia} setKopia={setKopia} onskelista={onskelista} setSaker={setSaker} saker={saker} borjaOm={borjaOm} setForalder={setForalder} /> : null}
+{mossaOpp ? <MossaPanel halsning={halsning} mossaLista={mossaLista} mossaExtra={mossaExtra} setMossaOpp={setMossaOpp} /> : null}
+```
+
+### 5.4 Props och typer per komponent (signaturerna)
+
+#### `AngLager` – `export function AngLager({ … }: AngLagerProps)` i `ui/AngLager.tsx`
+| prop | typ | var den bor i `Spel()` |
 |---|---|---|
-| `AngLager.tsx` | `AngLager` | `brygga` (`../brygga.ts`); `HUMOR_IKON, sovText, sparaFoto, ALBUM, poangAv` (`../liv.ts`); `useMinne` (`../minne.ts`); `Heart` (`lucide-react`); `dukStil` (`./hjalp.ts`); `FIR, TEXTER` (`./spelData.ts`) |
-| `KartaLager.tsx` | `KartaLager`, `OmradeHud` | `OMR, TEXTER_AV` (`../aventyr.ts`); `TEXTER` (`./spelData.ts`) |
-| `Hud.tsx` | `Hud`, `MenyPanel`, `HudBot` | `fyll` (`../fyll.ts`); `Lock, Pencil` (`lucide-react`); `ALBUM` (`../liv.ts`); `OMR, UPP` (`../aventyr.ts`); `introJson` (`../../../data/intro.json`, med `with { type: "json" }`); `HoldOppnare` (`./HoldOppnare.tsx`); `FIR, TEXTER` (`./spelData.ts`) |
-| `BokSkarm.tsx` | `BokSkarm` | `Pencil, Lock` (`lucide-react`); `fyll`; `VILDA, TEXTER_AV, UPP` (`../aventyr.ts`); `upplevelse` (`../../../data/upplevelse.json`); `OnskaAnsikte` (`./OnskaAnsikte.tsx`); `FIR, FLIKAR, RADER, TEXTER` (`./spelData.ts`); `bestamdAv, kortIkon, kanEtikett, frasForByggOrd` (`./hjalp.ts`) |
-| `Dialoger.tsx` | `SkyltDialog`, `ValjDjurDialog`, `VisKortDjur`, `VisKortBygg`, `KopDialog`, `MossaPanel` | `FormelBild` (`../formel.tsx`); `sparaFoto, ALBUM, poangAv, MOSSA` (`../liv.ts`); `fyll`; `FIR` (`./spelData.ts`) |
-| `OrdbokDialog.tsx` | `OrdbokDialog` | `fyll`; `useMinne`; `replik` (`../replik.ts`); `FIR, SIDOR` (`./spelData.ts`); `djurPris, streck` (`./hjalp.ts`) |
-| `ForalderDialog.tsx` | `ForalderDialog` | `ForalderLiv` (`../samling.tsx`); `useMinne`; `ljud` (`../ljud.ts`); `LJUD_PA, LJUD_AV, TEXTER` (`./spelData.ts`) |
+| `natt` | `number` | `useState` (värde) |
+| `varld` | `Varld` | `useState` (värde) |
+| `omrade` | `string \| null` | `useState` (värde) |
+| `panel` | `"spel" \| "byggbok" \| "uppdrag"` | `useState` (värde) |
+| `ang` | `Sparad[]` | `useMinne`-selektor |
+| `hemma` | `Hemdjur[]` | `useMinne`-selektor |
+| `liv` | `Record<string, { humor: string; humorMs: number; humorLangd: number; favorit: string; favoritHittad: boolean; hjartan: number; }>` | `useMinne`-selektor |
+| `fotoMal` | `{ uid: string; x: number; y: number; } \| null` | `useState` (värde) |
+| `visaBanner` | `(texten: string, slag: Banner["slag"]) => void` | funktion/handler |
+| `visaMossa` | `(h: Parameters<typeof mossaHand>[0]) => void` | funktion/handler |
+| `setFotoMal` | `Dispatch<SetStateAction<{ uid: string; x: number; y: number; } \| null>>` | setter för `fotoMal` |
+| `banners` | `Banner[]` | `useState` (värde) |
+| `bubblor` | `Bubbla[]` | `useState` (värde) |
+| `onskan` | `OnskaSpar \| null` | `useMinne`-selektor |
+| `onskaOpp` | `boolean` | `useState` (värde) |
+| `onskaSyns` | `boolean` | `useState` (värde) |
+| `ank` | `{ x: number; y: number; vanster: boolean; }` | härlett värde |
+| `oppnaOnska` | `() => void` | funktion/handler |
+| `meny` | `{ uid: string; x: number; y: number; } \| null` | `useState` (värde) |
+| `setMeny` | `Dispatch<SetStateAction<{ uid: string; x: number; y: number; } \| null>>` | setter för `meny` |
+| `omUidRef` | `RefObject<string \| null>` | `useRef` |
+| `setLage` | `Dispatch<SetStateAction<Lage>>` | setter för `lage` |
+| `setBokOpp` | `Dispatch<SetStateAction<boolean>>` | setter för `bokOpp` |
+| `setLadaOpp` | `Dispatch<SetStateAction<boolean>>` | setter för `ladaOpp` |
+| `menyHem` | `{ kroppar: string[]; platser: number; } \| null \| undefined` | härlett värde |
+| `setBoUid` | `Dispatch<SetStateAction<string \| null>>` | setter för `boUid` |
+| `lada` | `SparatBygge[]` | `useMinne`-selektor |
+| `ladaOpp` | `boolean` | `useState` (värde) |
+| `boUid` | `string \| null` | `useState` (värde) |
+| `boDjur` | `Sparad[]` | härlett värde |
+| `flyttaInDjur` | `(djurUid: string) => void` | funktion/handler |
 
-### 5.3 Komponenter, anrop och props
+#### `KartaLager` – `export function KartaLager({ … }: KartaLagerProps)` i `ui/KartaLager.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `forstaRad` | `string[] \| null` | `useState` (värde) |
+| `kartaText` | `string \| null` | `useState` (värde) |
+| `tryckPlats` | `(id: string) => void` | funktion/handler |
+| `oppna` | `string[]` | `useMinne`-selektor |
 
-Villkorsrader (orig): `kartaOpp` r.2248 (inre 2249–2275, slut `) : null}` r.2276) · `omrade && !kartaOpp` r.2277 (2278–2285, slut 2286) · `bokOpp` r.2432 (2433–2733, slut 2734) · `skylt` r.2736 (2737–2751, 2752) · `valj` r.2754 (2755–2768, 2769) · `visKort?.slag === "djur"` r.2771 (2772–2797, 2798) · `visKort?.slag === "bygg"` r.2800 (2801–2810, 2811) · `ordbok` r.2813 (2814–2930, 2931) · `kop` r.2933 (2934–2946, 2947) · `foralder` r.2949 (2950–3064, 3065) · `mossaOpp` r.3066 (3067–3085, 3086). `{albumOpp ? <AlbumVy … /> : null}` (r.3087) stannar som den är.
+#### `OmradeHud` – `export function OmradeHud({ … }: OmradeHudProps)` i `ui/KartaLager.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `tryckPlats` | `(id: string) => void` | funktion/handler |
+| `bytFolje` | `() => void` | funktion/handler |
 
-#### `AngLager` (utan villkor)
-Fil `src/spel/ui/AngLager.tsx` · inre JSX r.2091–2247 (hela `div.ang-lager`) (orig `37913b3`) · anrop i `Spel.tsx`: `<AngLager … />` i stället för r.2091–2247
+#### `Hud` – `export function Hud({ … }: HudProps)` i `ui/Hud.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `haller` | `boolean` | `useState` (värde) |
+| `setHaller` | `Dispatch<SetStateAction<boolean>>` | setter för `haller` |
+| `setForalder` | `Dispatch<SetStateAction<boolean>>` | setter för `foralder` |
+| `stjarnor` | `number` | `useMinne`-selektor |
+| `hittatAntal` | `number` | härlett värde |
+| `totalOrd` | `number` | härlett värde |
+| `menyOpp` | `boolean` | `useState` (värde) |
+| `setMenyOpp` | `Dispatch<SetStateAction<boolean>>` | setter för `menyOpp` |
+| `setMenySaker` | `Dispatch<SetStateAction<boolean>>` | setter för `menySaker` |
+| `setSenare` | `Dispatch<SetStateAction<boolean>>` | setter för `senare` |
 
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
+#### `MenyPanel` – `export function MenyPanel({ … }: MenyPanelProps)` i `ui/Hud.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `menyOpp` | `boolean` | `useState` (värde) |
+| `setMenyOpp` | `Dispatch<SetStateAction<boolean>>` | setter för `menyOpp` |
+| `setMenySaker` | `Dispatch<SetStateAction<boolean>>` | setter för `menySaker` |
+| `setSenare` | `Dispatch<SetStateAction<boolean>>` | setter för `senare` |
+| `senare` | `boolean` | `useState` (värde) |
+| `panel` | `"spel" \| "byggbok" \| "uppdrag"` | `useState` (värde) |
+| `varld` | `Varld` | `useState` (värde) |
+| `valjVarld` | `(id: "ang" \| "gard" \| "byggbok") => void` | funktion/handler |
+| `lasMeny` | `() => void` | funktion/handler |
+| `setBokOpp` | `Dispatch<SetStateAction<boolean>>` | setter för `bokOpp` |
+| `oppnaKarta` | `() => void` | funktion/handler |
+| `setIntroNy` | `Dispatch<SetStateAction<number>>` | setter för `introNy` |
+| `setIntro` | `Dispatch<SetStateAction<boolean>>` | setter för `intro` |
+| `menySaker` | `boolean` | `useState` (värde) |
+| `borjaOm` | `() => void` | funktion/handler |
+
+#### `HudBot` – `export function HudBot({ … }: HudBotProps)` i `ui/Hud.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `varld` | `Varld` | `useState` (värde) |
+| `omrade` | `string \| null` | `useState` (värde) |
+| `kartaOpp` | `boolean` | `useState` (värde) |
+| `oppnaBygglage` | `() => void` | funktion/handler |
+| `setPanel` | `Dispatch<SetStateAction<"spel" \| "byggbok" \| "uppdrag">>` | setter för `panel` |
+| `setBokOpp` | `Dispatch<SetStateAction<boolean>>` | setter för `bokOpp` |
+
+#### `BokSkarm` – `export function BokSkarm({ … }: BokSkarmProps)` i `ui/BokSkarm.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `stangBok` | `() => void` | funktion/handler |
+| `andrar` | `boolean` | härlett värde |
+| `panel` | `"spel" \| "byggbok" \| "uppdrag"` | `useState` (värde) |
+| `lage` | `Lage` | `useState` (värde) |
+| `setLage` | `Dispatch<SetStateAction<Lage>>` | setter för `lage` |
+| `setForslag` | `Dispatch<SetStateAction<Forslag \| null>>` | setter för `forslag` |
+| `byggPuff` | `string \| null` | `useState` (värde) |
+| `onskaOpp` | `boolean` | `useState` (värde) |
+| `onskan` | `OnskaSpar \| null` | `useMinne`-selektor |
+| `onskaSyns` | `boolean` | `useState` (värde) |
+| `onskaDjur` | `Sparad \| undefined` | härlett värde |
+| `onskaEx` | `string[]` | härlett värde |
+| `fyllExempel` | `(ex: string) => void` | funktion/handler |
+| `gavaTill` | `string \| null` | `useState` (värde) |
+| `ang` | `Sparad[]` | `useMinne`-selektor |
+| `hemma` | `Hemdjur[]` | `useMinne`-selektor |
+| `varld` | `Varld` | `useState` (värde) |
+| `forslag` | `Forslag \| null` | `useState` (värde) |
+| `valjForslag` | `(kortet: ForslagKort) => void` | funktion/handler |
+| `nejForslag` | `() => void` | funktion/handler |
+| `behover` | `{ text: string; djur: { id: string; visa: string; }[]; } \| null` | `useState` (värde) |
+| `utfor` | `(raw: string, opt: { hand: boolean; inteGuld?: string[]; }) => void` | funktion/handler |
+| `flik` | `Slot` | `useState` (värde) |
+| `onskaKort` | `Ord[]` | härlett värde |
+| `setFlik` | `Dispatch<SetStateAction<Slot>>` | setter för `flik` |
+| `kort` | `Ord[]` | härlett värde |
+| `val` | `Partial<Record<Slot, Ord>>` | `useState` (värde) |
+| `onskaIds` | `Set<string>` | härlett värde |
+| `kortGang` | `Record<string, number>` | `useMinne`-selektor |
+| `valjKort` | `(ord: Ord) => void` | funktion/handler |
+| `oppnaSkrivMig` | `(ord: Ord) => void` | funktion/handler |
+| `text` | `string` | `useState` (värde) |
+| `omrade` | `string \| null` | `useState` (värde) |
+| `visaOnskaHjalp` | `boolean` | härlett värde |
+| `vaknaNu` | `() => void` | funktion/handler |
+| `vaknaText` | `string` | härlett värde |
+| `skrivTecken` | `(bit: string) => void` | funktion/handler |
+| `sudda` | `() => void` | funktion/handler |
+| `uppFlik` | `"pagar" \| "klar"` | `useState` (värde) |
+| `setUppFlik` | `Dispatch<SetStateAction<"pagar" \| "klar">>` | setter för `uppFlik` |
+| `uppdragSpar` | `Record<string, "pagar" \| "klar">` | `useMinne`-selektor |
+| `byggSida` | `SidaBygg` | härlett värde |
+| `agdaSidor` | `SidaBygg[]` | härlett värde |
+| `setByggSidaId` | `Dispatch<SetStateAction<string>>` | setter för `byggSidaId` |
+| `setByggPuff` | `Dispatch<SetStateAction<string \| null>>` | setter för `byggPuff` |
+| `byggFras` | `(fras: string) => void` | funktion/handler |
+| `kopRad` | `string \| null` | `useState` (värde) |
+| `lastaSidor` | `SidaBygg[]` | härlett värde |
+| `forsokKop` | `(slag: "djur" \| "bygg", id: string, titel: string, pris: number) => void` | funktion/handler |
+
+#### `SkyltDialog` – `export function SkyltDialog({ … }: SkyltDialogProps)` i `ui/Dialoger.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `skylt` | `{ text: string; nytt: string \| null; }` | `useState` (värde) |
+| `setSkylt` | `Dispatch<SetStateAction<{ text: string; nytt: string \| null; } \| null>>` | setter för `skylt` |
+
+#### `ValjDjurDialog` – `export function ValjDjurDialog({ … }: ValjDjurDialogProps)` i `ui/Dialoger.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `valj` | `{ rubrik: string; eller?: string; djur: Sparad[]; nyckel: string; }` | `useState` (värde) |
+| `valjKor` | `RefObject<(d: Sparad) => void>` | `useRef` |
+| `setValj` | `Dispatch<SetStateAction<{ rubrik: string; eller?: string; djur: Sparad[]; nyckel: string; } \| null>>` | setter för `valj` |
+
+#### `VisKortDjur` – `export function VisKortDjur({ … }: VisKortDjurProps)` i `ui/Dialoger.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `visKort` | `Extract<NonNullable<VisKort>, { slag: "djur" }>` | `useState` (värde) |
+| `visaBanner` | `(texten: string, slag: Banner["slag"]) => void` | funktion/handler |
+| `visaMossa` | `(h: Parameters<typeof mossaHand>[0]) => void` | funktion/handler |
+| `setVisKort` | `Dispatch<SetStateAction<VisKort>>` | setter för `visKort` |
+
+#### `VisKortBygg` – `export function VisKortBygg({ … }: VisKortByggProps)` i `ui/Dialoger.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `visKort` | `Extract<NonNullable<VisKort>, { slag: "bygg" }>` | `useState` (värde) |
+| `setVisKort` | `Dispatch<SetStateAction<VisKort>>` | setter för `visKort` |
+
+#### `OrdbokDialog` – `export function OrdbokDialog({ … }: OrdbokDialogProps)` i `ui/OrdbokDialog.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `hittatAntal` | `number` | härlett värde |
+| `totalOrd` | `number` | härlett värde |
+| `stjarnor` | `number` | `useMinne`-selektor |
+| `kopRad` | `string \| null` | `useState` (värde) |
+| `koptaSidor` | `string[]` | `useMinne`-selektor |
+| `funna` | `Record<string, { guld: boolean; }>` | `useMinne`-selektor |
+| `sidOpp` | `string \| null` | `useState` (värde) |
+| `forsokKop` | `(slag: "djur" \| "bygg", id: string, titel: string, pris: number) => void` | funktion/handler |
+| `setSidOpp` | `Dispatch<SetStateAction<string \| null>>` | setter för `sidOpp` |
+| `textRef` | `RefObject<string>` | `useRef` |
+| `setText` | `Dispatch<SetStateAction<string>>` | setter för `text` |
+| `setHand` | `Dispatch<SetStateAction<boolean>>` | setter för `hand` |
+| `setLage` | `Dispatch<SetStateAction<Lage>>` | setter för `lage` |
+| `setOrdbok` | `Dispatch<SetStateAction<boolean>>` | setter för `ordbok` |
+| `kvar` | `number` | härlett värde |
+| `hittade` | `Ord[]` | härlett värde |
+| `hemliga` | `Ord[]` | härlett värde |
+| `formler` | `{ text: string; spec: Sparad; }[]` | `useMinne`-selektor |
+| `setVisKort` | `Dispatch<SetStateAction<VisKort>>` | setter för `visKort` |
+| `sovande` | `Sparad[]` | `useMinne`-selektor |
+| `visaBanner` | `(texten: string, slag: Banner["slag"]) => void` | funktion/handler |
+
+#### `KopDialog` – `export function KopDialog({ … }: KopDialogProps)` i `ui/Dialoger.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `kop` | `KopFraga` | `useState` (värde) |
+| `bekraftaKop` | `() => void` | funktion/handler |
+| `setKop` | `Dispatch<SetStateAction<KopFraga \| null>>` | setter för `kop` |
+
+#### `ForalderDialog` – `export function ForalderDialog({ … }: ForalderDialogProps)` i `ui/ForalderDialog.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `startLage` | `Lage` | `useMinne`-selektor |
+| `setLage` | `Dispatch<SetStateAction<Lage>>` | setter för `lage` |
+| `ljudPa` | `boolean` | `useMinne`-selektor |
+| `sparaKopia` | `() => void` | funktion/handler |
+| `filRef` | `RefObject<HTMLInputElement \| null>` | `useRef` |
+| `lasFil` | `(fil: File) => Promise<void>` | funktion/handler |
+| `foralderRad` | `string \| null` | `useState` (värde) |
+| `kopia` | `unknown` | `useState` (värde) |
+| `lasInKopia` | `() => void` | funktion/handler |
+| `setKopia` | `Dispatch<unknown>` | setter för `kopia` |
+| `onskelista` | `string[]` | `useMinne`-selektor |
+| `setSaker` | `Dispatch<SetStateAction<boolean>>` | setter för `saker` |
+| `saker` | `boolean` | `useState` (värde) |
+| `borjaOm` | `() => void` | funktion/handler |
+| `setForalder` | `Dispatch<SetStateAction<boolean>>` | setter för `foralder` |
+
+#### `MossaPanel` – `export function MossaPanel({ … }: MossaPanelProps)` i `ui/Dialoger.tsx`
+| prop | typ | var den bor i `Spel()` |
+|---|---|---|
+| `halsning` | `string` | `useState` (värde) |
+| `mossaLista` | `{ id: string; klar: boolean; }[]` | `useMinne`-selektor |
+| `mossaExtra` | `boolean` | `useMinne`-selektor |
+| `setMossaOpp` | `Dispatch<SetStateAction<boolean>>` | setter för `mossaOpp` |
+
+### 5.5 Vilka `useState` som används av vilka komponenter
+
+Alla 49 `useState`, 21 `useRef`, 20 `useMinne`-selektorer, 48 funktioner och 9 effekter **stannar i `Spel()` på samma plats i samma ordning**; komponenterna får bara värdet eller settern som props. 38 `useState`-värden och 30 settrar skickas vidare; resten (sista raden) används bara i `Spel()`.
+
+| `useState` | värdet används av | settern används av |
+|---|---|---|
+| `text` | BokSkarm | OrdbokDialog |
+| `lage` | BokSkarm | AngLager, BokSkarm, OrdbokDialog, ForalderDialog |
+| `flik` | BokSkarm | BokSkarm |
+| `val` | BokSkarm | – |
+| `hand` | – | OrdbokDialog |
+| `forslag` | BokSkarm | BokSkarm |
+| `behover` | BokSkarm | – |
+| `bubblor` | AngLager | – |
+| `banners` | AngLager | – |
+| `visKort` | VisKortDjur, VisKortBygg | VisKortDjur, VisKortBygg, OrdbokDialog |
+| `ordbok` | – | OrdbokDialog |
+| `foralder` | – | Hud, ForalderDialog |
+| `natt` | AngLager | – |
+| `mossaOpp` | – | MossaPanel |
+| `halsning` | MossaPanel | – |
+| `fotoMal` | AngLager | AngLager |
+| `haller` | Hud | Hud |
+| `bokOpp` | – | AngLager, MenyPanel, HudBot |
+| `menyOpp` | Hud, MenyPanel | Hud, MenyPanel |
+| `intro` | – | MenyPanel |
+| `introNy` | – | MenyPanel |
+| `saker` | ForalderDialog | ForalderDialog |
+| `menySaker` | MenyPanel | Hud, MenyPanel |
+| `senare` | MenyPanel | Hud, MenyPanel |
+| `varld` | AngLager, MenyPanel, HudBot, BokSkarm | – |
+| `panel` | AngLager, MenyPanel, BokSkarm | HudBot |
+| `meny` | AngLager | AngLager |
+| `boUid` | AngLager | AngLager |
+| `ladaOpp` | AngLager | AngLager |
+| `byggSidaId` | – | BokSkarm |
+| `byggPuff` | BokSkarm | BokSkarm |
+| `sidOpp` | OrdbokDialog | OrdbokDialog |
+| `kop` | KopDialog | KopDialog |
+| `kopRad` | BokSkarm, OrdbokDialog | – |
+| `onskaOpp` | AngLager, BokSkarm | – |
+| `onskaSyns` | AngLager, BokSkarm | – |
+| `foralderRad` | ForalderDialog | – |
+| `kopia` | ForalderDialog | ForalderDialog |
+| `kartaOpp` | HudBot | – |
+| `forstaRad` | KartaLager | – |
+| `kartaText` | KartaLager | – |
+| `omrade` | AngLager, HudBot, BokSkarm | – |
+| `gavaTill` | BokSkarm | – |
+| `skylt` | SkyltDialog | SkyltDialog |
+| `valj` | ValjDjurDialog | ValjDjurDialog |
+| `uppFlik` | BokSkarm | BokSkarm |
+| *bara i `Spel()` (3 st)* | `albumOpp`, `onskaPos`, `skriverAv` | |
+
+**Handlers och funktioner** (27 av de 48 funktionerna skickas som props; de **bor kvar** i `Spel()` och flyttas inte): se kolumnen "funktion/handler" i 5.4. Inga `useEffect` flyttas.
+
+### 5.6 Ordning, definition of done, inställningar
+
+Steg (prompten har dem i ordning): 1 förflyg → 2 skydd röd → 3 skriptet + `typecheck:pages` → 4 bevis utan webbläsare → 5 DOM-tur efter + bilder → 6 `RUNDAR1B.md`.
+- **DoD:** `npm run check:struktur` (steg b, gräns **1 850** rader) grön, var röd före; `node rundor/R1-dela-spel/r1b-ordagrant.mjs` grön; `typecheck:pages` grön; `eslint src/spel/Spel.tsx src/spel/ui`: 0 fel, 4 varningar (samma som före); `test:product` 75/75 på Node ≥ 22.6; `--jamfor fore1 fore2 efterB` exit 0 med **28 stabila lägen**; `kropp ===` = 141; `git diff origin/main --stat -- data src/tolk` tomt; sex `efter-*.png`; `RUNDAR1B.md`.
+- **Inställningar:** `--max-turns 30`, `grok-4.7-build-fast`, `--reasoning-effort low`. Förväntat 15–22 turer (R1A tog 23 av 40 med mer handarbete; här är handarbetet ett skript).
+- **Förväntat resultat:** `Spel.tsx` **1 781 rader** (mätt i provkörning; gränsen 1 850 ger 69 rader marginal).
+
+### 5.7 Kompletterande bevis för det DOM-turen inte når
+
+DOM-turen fick åtta nya lägen (21–28): `foralder-borja` (bekräftelse i `ForalderDialog`), `meny-borja` (`MenyPanel`), `ordbok-for-fa`, `ordbok-kop`, `ordbok-kopt` (`OrdbokDialog` + `KopDialog` + köp genomfört), `bygg-for-fa`, `bygg-kop` (`BokSkarm` byggbok + `KopDialog`), `kvall` (`AngLager` på kvällen). `formel` täcker `VisKortDjur`, `ordbok`, `foralder`, `skogen-valj` (`ValjDjurDialog`), `karta`, `meny`, `bok-*` täcker resten.
+
+**Ingen spelväg från UI:t når** `SkyltDialog` (skylt tänds av ett tryck på en skylt i 2D-äventyret), `MossaPanel` (tryck på mossan på gården), uppdragsvyn (`panel === "uppdrag"`), byggmenyn (`bygg-meny`), lådan och bo-panelen i `AngLager`, samt `backup-*`. För dem är beviset i stället **textlikhet**: `node rundor/R1-dela-spel/r1b-ordagrant.mjs` jämför varje komponents kropp **byte för byte** mot `git show 89fd859:src/spel/Spel.tsx` (de ursprungliga raderna), bekräftar att resten av `Spel()` är **ändrad i ingen rad** utom de 15 anropen, och kontrollerar att varje anrop skickar varje prop som `namn={namn}`; `tsc` bevisar att varje namn och typ stämmer. Provkörning: 15/15 byte-lika, 1 671 rader i `Spel()` jämförda, GRÖN. Negativa tester: en ändrad `className` i en flyttad kropp ger RÖD ("SkyltDialog: kroppen … skiljer sig"), en ändrad rad i `Spel()` ger RÖD. Bevisets gräns: det bevisar att koden är densamma, inte att dialogen ser rätt ut; men koden *är* densamma, och därmed även beteendet så länge propparna är desamma (bevisat av `tsc`).
+
+### 5.8 Provkörning av R1B (Arkitekten, skräpkopia av `89fd859` utanför repot)
+
+Exakt `r1b-flytta.mjs` kördes på en kopia av `origin/main` (`89fd859`), därefter byggdes kopian (`vite build --config vite.pages.config.ts`, 2 s) och DOM-turen kördes mot bygget. Ingenting av detta finns i repot.
+| Kontroll | Resultat |
 |---|---|
-| `natt` | `number` |
-| `varld` | `Varld` |
-| `omrade` | `string \| null` |
-| `panel` | `"spel" \| "byggbok" \| "uppdrag"` |
-| `ang` | `Sparad[]` |
-| `hemma` | `Hemdjur[]` |
-| `liv` | `Record<string, { humor: string; humorMs: number; humorLangd: number; favorit: string; favoritHittad: boolean; hjartan: number; }>` |
-| `fotoMal` | `{ uid: string; x: number; y: number; } \| null` |
-| `visaBanner` | `(texten: string, slag: Banner["slag"]) => void` |
-| `visaMossa` | `(h: Parameters<typeof mossaHand>[0]) => void` |
-| `setFotoMal` | `Dispatch<SetStateAction<{ uid: string; x: number; y: number; } \| null>>` |
-| `banners` | `Banner[]` |
-| `bubblor` | `Bubbla[]` |
-| `onskan` | `OnskaSpar \| null` |
-| `onskaOpp` | `boolean` |
-| `onskaSyns` | `boolean` |
-| `ank` | `{ x: number; y: number; vanster: boolean; }` |
-| `oppnaOnska` | `() => void` |
-| `meny` | `{ uid: string; x: number; y: number; } \| null` |
-| `setMeny` | `Dispatch<SetStateAction<{ uid: string; x: number; y: number; } \| null>>` |
-| `omUidRef` | `RefObject<string \| null>` |
-| `setLage` | `Dispatch<SetStateAction<Lage>>` |
-| `setBokOpp` | `Dispatch<SetStateAction<boolean>>` |
-| `setLadaOpp` | `Dispatch<SetStateAction<boolean>>` |
-| `menyHem` | `{ kroppar: string[]; platser: number; } \| null \| undefined` |
-| `setBoUid` | `Dispatch<SetStateAction<string \| null>>` |
-| `lada` | `SparatBygge[]` |
-| `ladaOpp` | `boolean` |
-| `boUid` | `string \| null` |
-| `boDjur` | `Sparad[]` |
-| `flyttaInDjur` | `(djurUid: string) => void` |
-
-#### `KartaLager`
-Fil `src/spel/ui/KartaLager.tsx` · inre JSX r.2249–2275 (orig `37913b3`) · anrop i `Spel.tsx`: `{kartaOpp ? <KartaLager … /> : null}`
-
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `forstaRad` | `string[] \| null` |
-| `kartaText` | `string \| null` |
-| `tryckPlats` | `(id: string) => void` |
-| `oppna` | `string[]` |
-
-#### `OmradeHud`
-Fil `src/spel/ui/KartaLager.tsx` · inre JSX r.2278–2285 (orig `37913b3`) · anrop i `Spel.tsx`: `{omrade && !kartaOpp ? <OmradeHud … /> : null}`
-
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `tryckPlats` | `(id: string) => void` |
-| `bytFolje` | `() => void` |
-
-#### `Hud` (utan villkor; innehåller `<HoldOppnare … />`)
-Fil `src/spel/ui/Hud.tsx` · inre JSX r.2287–2327 (orig `37913b3`) · anrop i `Spel.tsx`: `<Hud … />`
-
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `haller` | `boolean` |
-| `setHaller` | `Dispatch<SetStateAction<boolean>>` |
-| `setForalder` | `Dispatch<SetStateAction<boolean>>` |
-| `stjarnor` | `number` |
-| `hittatAntal` | `number` |
-| `totalOrd` | `number` |
-| `menyOpp` | `boolean` |
-| `setMenyOpp` | `Dispatch<SetStateAction<boolean>>` |
-| `setMenySaker` | `Dispatch<SetStateAction<boolean>>` |
-| `setSenare` | `Dispatch<SetStateAction<boolean>>` |
-
-#### `MenyPanel` (får `menyOpp`, innehåller båda villkorsuttrycken)
-Fil `src/spel/ui/Hud.tsx` · inre JSX r.2328–2405 (båda `{menyOpp ? … : null}`) (orig `37913b3`) · anrop i `Spel.tsx`: `<MenyPanel … />`
-
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `setMenyOpp` | `Dispatch<SetStateAction<boolean>>` |
-| `setMenySaker` | `Dispatch<SetStateAction<boolean>>` |
-| `setSenare` | `Dispatch<SetStateAction<boolean>>` |
-| `senare` | `boolean` |
-| `panel` | `"spel" \| "byggbok" \| "uppdrag"` |
-| `varld` | `Varld` |
-| `valjVarld` | `(id: "ang" \| "gard" \| "byggbok") => void` |
-| `lasMeny` | `() => void` |
-| `setBokOpp` | `Dispatch<SetStateAction<boolean>>` |
-| `oppnaKarta` | `() => void` |
-| `setIntroNy` | `Dispatch<SetStateAction<number>>` |
-| `setIntro` | `Dispatch<SetStateAction<boolean>>` |
-| `menySaker` | `boolean` |
-| `borjaOm` | `() => void` |
-| `menyOpp` | `boolean` |
-
-#### `HudBot` (utan villkor)
-Fil `src/spel/ui/Hud.tsx` · inre JSX r.2406–2429 (orig `37913b3`) · anrop i `Spel.tsx`: `<HudBot … />`
-
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `varld` | `Varld` |
-| `omrade` | `string \| null` |
-| `kartaOpp` | `boolean` |
-| `oppnaBygglage` | `() => void` |
-| `setPanel` | `Dispatch<SetStateAction<"spel" \| "byggbok" \| "uppdrag">>` |
-| `setBokOpp` | `Dispatch<SetStateAction<boolean>>` |
-
-#### `BokSkarm`
-Fil `src/spel/ui/BokSkarm.tsx` · inre JSX r.2433–2733 (`div.bok-skarm` med rubrik, kortläge, uppdragsflik och byggbok) (orig `37913b3`) · anrop i `Spel.tsx`: `{bokOpp ? <BokSkarm … /> : null}`
-Obs: `stangBok`, `andrar`, `fyllExempel`, `valjForslag` m.fl. är funktioner/värden som fortsatt **bor i `Spel()`**.
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `stangBok` | `() => void` |
-| `andrar` | `boolean` |
-| `panel` | `"uppdrag" \| "spel" \| "byggbok"` |
-| `lage` | `Lage` |
-| `setLage` | `Dispatch<SetStateAction<Lage>>` |
-| `setForslag` | `Dispatch<SetStateAction<Forslag \| null>>` |
-| `byggPuff` | `string \| null` |
-| `onskaOpp` | `boolean` |
-| `onskan` | `OnskaSpar \| null` |
-| `onskaSyns` | `boolean` |
-| `onskaDjur` | `Sparad \| undefined` |
-| `onskaEx` | `string[]` |
-| `fyllExempel` | `(ex: string) => void` |
-| `gavaTill` | `string \| null` |
-| `ang` | `Sparad[]` |
-| `hemma` | `Hemdjur[]` |
-| `varld` | `Varld` |
-| `forslag` | `Forslag \| null` |
-| `valjForslag` | `(kortet: ForslagKort) => void` |
-| `nejForslag` | `() => void` |
-| `behover` | `{ text: string; djur: { id: string; visa: string; }[]; } \| null` |
-| `utfor` | `(raw: string, opt: { hand: boolean; inteGuld?: string[]; }) => void` |
-| `flik` | `Slot` |
-| `onskaKort` | `Ord[]` |
-| `setFlik` | `Dispatch<SetStateAction<Slot>>` |
-| `kort` | `Ord[]` |
-| `val` | `Partial<Record<Slot, Ord>>` |
-| `onskaIds` | `Set<string>` |
-| `kortGang` | `Record<string, number>` |
-| `valjKort` | `(ord: Ord) => void` |
-| `oppnaSkrivMig` | `(ord: Ord) => void` |
-| `text` | `string` |
-| `omrade` | `string \| null` |
-| `visaOnskaHjalp` | `boolean` |
-| `vaknaNu` | `() => void` |
-| `vaknaText` | `string` |
-| `skrivTecken` | `(bit: string) => void` |
-| `sudda` | `() => void` |
-| `uppFlik` | `"pagar" \| "klar"` |
-| `setUppFlik` | `Dispatch<SetStateAction<"pagar" \| "klar">>` |
-| `uppdragSpar` | `Record<string, "pagar" \| "klar">` |
-| `byggSida` | `SidaBygg` |
-| `agdaSidor` | `SidaBygg[]` |
-| `setByggSidaId` | `Dispatch<SetStateAction<string>>` |
-| `setByggPuff` | `Dispatch<SetStateAction<string \| null>>` |
-| `byggFras` | `(fras: string) => void` |
-| `kopRad` | `string \| null` |
-| `lastaSidor` | `SidaBygg[]` |
-| `forsokKop` | `(slag: "djur" \| "bygg", id: string, titel: string, pris: number) => void` |
-
-#### `SkyltDialog`
-Fil `src/spel/ui/Dialoger.tsx` · inre JSX r.2737–2751 (orig `37913b3`) · anrop i `Spel.tsx`: `{skylt ? <SkyltDialog skylt={skylt} setSkylt={setSkylt} /> : null}`
-
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `skylt` | `{ text: string; nytt: string \| null; }` |
-| `setSkylt` | `Dispatch<SetStateAction<{ text: string; nytt: string \| null; } \| null>>` |
-
-#### `ValjDjurDialog`
-Fil `src/spel/ui/Dialoger.tsx` · inre JSX r.2755–2768 (orig `37913b3`) · anrop i `Spel.tsx`: `{valj ? <ValjDjurDialog … /> : null}`
-
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `valj` | `{ rubrik: string; eller?: string; djur: Sparad[]; nyckel: string; }` |
-| `valjKor` | `RefObject<(d: Sparad) => void>` |
-| `setValj` | `Dispatch<SetStateAction<{ rubrik: string; eller?: string; djur: Sparad[]; nyckel: string; } \| null>>` |
-
-#### `VisKortDjur`
-Fil `src/spel/ui/Dialoger.tsx` · inre JSX r.2772–2797 (orig `37913b3`) · anrop i `Spel.tsx`: `{visKort?.slag === "djur" ? <VisKortDjur … /> : null}`
-
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `visKort` | `VisKort` |
-| `visaBanner` | `(texten: string, slag: Banner["slag"]) => void` |
-| `visaMossa` | `(h: Parameters<typeof mossaHand>[0]) => void` |
-| `setVisKort` | `Dispatch<SetStateAction<VisKort>>` |
-
-#### `VisKortBygg`
-Fil `src/spel/ui/Dialoger.tsx` · inre JSX r.2801–2810 (orig `37913b3`) · anrop i `Spel.tsx`: `{visKort?.slag === "bygg" ? <VisKortBygg … /> : null}`
-
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `visKort` | `VisKort` |
-| `setVisKort` | `Dispatch<SetStateAction<VisKort>>` |
-
-#### `OrdbokDialog`
-Fil `src/spel/ui/OrdbokDialog.tsx` · inre JSX r.2814–2930 (orig `37913b3`) · anrop i `Spel.tsx`: `{ordbok ? <OrdbokDialog … /> : null}`
-
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `hittatAntal` | `number` |
-| `totalOrd` | `number` |
-| `stjarnor` | `number` |
-| `kopRad` | `string \| null` |
-| `koptaSidor` | `string[]` |
-| `funna` | `Record<string, { guld: boolean; }>` |
-| `sidOpp` | `string \| null` |
-| `forsokKop` | `(slag: "djur" \| "bygg", id: string, titel: string, pris: number) => void` |
-| `setSidOpp` | `Dispatch<SetStateAction<string \| null>>` |
-| `textRef` | `RefObject<string>` |
-| `setText` | `Dispatch<SetStateAction<string>>` |
-| `setHand` | `Dispatch<SetStateAction<boolean>>` |
-| `setLage` | `Dispatch<SetStateAction<Lage>>` |
-| `setOrdbok` | `Dispatch<SetStateAction<boolean>>` |
-| `kvar` | `number` |
-| `hittade` | `Ord[]` |
-| `hemliga` | `Ord[]` |
-| `formler` | `{ text: string; spec: Sparad; }[]` |
-| `setVisKort` | `Dispatch<SetStateAction<VisKort>>` |
-| `sovande` | `Sparad[]` |
-| `visaBanner` | `(texten: string, slag: Banner["slag"]) => void` |
-
-#### `KopDialog`
-Fil `src/spel/ui/Dialoger.tsx` · inre JSX r.2934–2946 (orig `37913b3`) · anrop i `Spel.tsx`: `{kop ? <KopDialog … /> : null}`
-
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `kop` | `KopFraga` |
-| `bekraftaKop` | `() => void` |
-| `setKop` | `Dispatch<SetStateAction<KopFraga \| null>>` |
-
-#### `ForalderDialog`
-Fil `src/spel/ui/ForalderDialog.tsx` · inre JSX r.2950–3064 (orig `37913b3`) · anrop i `Spel.tsx`: `{foralder ? <ForalderDialog … /> : null}`
-
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `startLage` | `Lage` |
-| `setLage` | `Dispatch<SetStateAction<Lage>>` |
-| `ljudPa` | `boolean` |
-| `sparaKopia` | `() => void` |
-| `filRef` | `RefObject<HTMLInputElement \| null>` |
-| `lasFil` | `(fil: File) => Promise<void>` |
-| `foralderRad` | `string \| null` |
-| `kopia` | `unknown` |
-| `lasInKopia` | `() => void` |
-| `setKopia` | `Dispatch<unknown>` |
-| `onskelista` | `string[]` |
-| `setSaker` | `Dispatch<SetStateAction<boolean>>` |
-| `saker` | `boolean` |
-| `borjaOm` | `() => void` |
-| `setForalder` | `Dispatch<SetStateAction<boolean>>` |
-
-#### `MossaPanel`
-Fil `src/spel/ui/Dialoger.tsx` · inre JSX r.3067–3085 (orig `37913b3`) · anrop i `Spel.tsx`: `{mossaOpp ? <MossaPanel … /> : null}`
-
-| prop | typ (från `tsc`, deklarationen i `Spel()`) |
-|---|---|
-| `halsning` | `string` |
-| `mossaLista` | `{ id: string; klar: boolean; }[]` |
-| `mossaExtra` | `boolean` |
-| `setMossaOpp` | `Dispatch<SetStateAction<boolean>>` |
-
-
-### 5.4 Vilka `useState` som används av vilka komponenter (värde eller setter)
-
-`useState` (49 st) stannar alla i `Spel()`. Varje komponent får bara det den använder:
-
-| useState | används av |
-|---|---|
-| `text` | BokSkarm, OrdbokDialog |
-| `lage` | AngLager, BokSkarm, ForalderDialog, OrdbokDialog |
-| `flik`, `val`, `forslag`, `behover`, `gavaTill`, `uppFlik`, `byggSidaId`, `byggPuff` | BokSkarm |
-| `hand` | OrdbokDialog |
-| `bubblor`, `banners`, `natt`, `fotoMal`, `meny`, `boUid`, `ladaOpp` | AngLager |
-| `visKort` | OrdbokDialog, VisKortBygg, VisKortDjur |
-| `ordbok`, `sidOpp` | OrdbokDialog |
-| `foralder` | ForalderDialog, Hud |
-| `foralderRad`, `kopia`, `saker` | ForalderDialog |
-| `mossaOpp`, `halsning` | MossaPanel |
-| `haller` | Hud |
-| `bokOpp` | AngLager, HudBot, MenyPanel |
-| `menyOpp` | Hud, MenyPanel |
-| `intro`, `introNy` | MenyPanel |
-| `menySaker`, `senare` | Hud, MenyPanel |
-| `varld`, `panel` | AngLager, BokSkarm, HudBot, MenyPanel |
-| `omrade` | AngLager, BokSkarm, HudBot |
-| `kartaOpp` | HudBot |
-| `forstaRad`, `kartaText` | KartaLager |
-| `skylt` | SkyltDialog |
-| `valj` | ValjDjurDialog |
-| `kop` | KopDialog |
-| `kopRad` | BokSkarm, OrdbokDialog |
-| `onskaOpp`, `onskaSyns` | AngLager, BokSkarm |
-| `albumOpp`, `onskaPos`, `skriverAv` | bara `Spel()` (handlers) |
-
-### 5.5 Ordning, DoD och inställningar för R1B (utkast)
-
-Steg i tur och ordning, commit efter varje: (1) `AngLager`, (2) `KartaLager.tsx` + `Hud.tsx`, (3) `BokSkarm`, (4) `Dialoger.tsx`, (5) `OrdbokDialog` + `ForalderDialog`, (6) efter-bevis, (7) `RUNDAR1B.md`. Efter varje steg `typecheck:pages` grön.
-- **DoD:** `npm run check:struktur` (steg b) grön; `typecheck:pages` grön; `test:product` 75/75 (Node ≥ 22.6); `--jamfor fore1 fore2 efterB` exit 0 mot de i R1A incheckade `dom-fore`; fyra bilder `docs/skarmbilder/r1/efter-<läge>.png` mot `fore-<läge>.png` (granskas av Arkitekten, ej pixelkrav); `rg -o "kropp ===" src/spel | wc -l` = 141; `git diff origin/main --stat -- data src/tolk` tomt; `RUNDAR1B.md` skriven.
-- **Inställningar:** `--max-turns 40`, `grok-4.7-build-fast`, `--reasoning-effort low`. Om R1A tog över 28 turer: dela i **B1** (steg 1–2) och **B2** (steg 3–6).
-- **Förväntat resultat:** `Spel.tsx` ca 1 960 rader (gissning ± 60), gräns 2 050.
+| Skriptet | `Klart: 7 filer skrivna, 15 block ersatta, Spel.tsx har nu 1781 rader.` (exit 0) |
+| `tsc --noEmit -p tsconfig.pages.json` | **0 fel** direkt efter skriptet, utan någon handrättning |
+| `check-spel-struktur.mjs` (steg b) | **GRÖN**: 1 781 rader (gräns 1 850), testid 124/126 oförändrade, 12 `ui/`-filer, inga oanvända importer |
+| `r1b-ordagrant.mjs` | **GRÖN**: 15/15 kroppar byte-lika, 1 671 rader i `Spel()` jämförda |
+| `eslint src/spel/Spel.tsx src/spel/ui` | 0 fel, 4 varningar (samma fyra som före) |
+| `test:product` (Node 22.23.3) | 75/75 |
+| `kropp ===` | 141 |
+| DOM-tur: 28 lägen före ×2 (R1A-bygget) mot efter (R1B-bygget) | **28 av 28 stabila och identiska, 0 sidfel** |
+| Negativt test av turen | en ändrad `className` i `HudBot` (ett tecken) gav ett annat DOM-hash i läge `01-start` (1 568 mot 1 569 byte): turen ser små ändringar |
+| Negativt test av `r1b-ordagrant.mjs` | ändrad `className` i en flyttad kropp → RÖD; ändrad rad i `Spel()` → RÖD |
+Inte provat: att `grok` kör skriptet (det är en vanlig `node`-körning), och bilderna `efter-*.png` (Build tar dem; jag har granskat `fore-ordbok-kop.png` och `fore-foralder-borja.png` mot motsvarande från provbygget och de är lika).
 
 ## 6. Vad som INTE får ändras (båda körningarna)
 
@@ -573,7 +652,7 @@ Steg i tur och ordning, commit efter varje: (1) `AngLager`, (2) `KartaLager.tsx`
 ## 7. Bevisning
 
 ### 7.1 Strukturvakt `npm run check:struktur` (röd före, grön efter)
-`scripts/check-spel-struktur.mjs` (skriven och provkörd av Arkitekten, `rundor/R1-dela-spel/check-spel-struktur.mjs`) kontrollerar fem saker: (1) radantal i `Spel.tsx` (steg a ≤ 2 800, steg b ≤ 2 050), (2) mängden `data-testid` i `src/spel/**/*.tsx` är identisk med `rundor/R1-dela-spel/testid-baslinje.json`, (3) inga oanvända importer i `Spel.tsx` och `ui/**`, (4) ingen fil i `ui/` importerar `Spel.tsx`, (5) alla krävda `ui/`-filer finns.
+`scripts/check-spel-struktur.mjs` (skriven och provkörd av Arkitekten, `rundor/R1-dela-spel/check-spel-struktur.mjs`) kontrollerar fem saker: (1) radantal i `Spel.tsx` (steg a ≤ 2 800, steg b ≤ 1 850), (2) mängden `data-testid` i `src/spel/**/*.tsx` är identisk med `rundor/R1-dela-spel/testid-baslinje.json`, (3) inga oanvända importer i `Spel.tsx` och `ui/**`, (4) ingen fil i `ui/` importerar `Spel.tsx`, (5) alla krävda `ui/`-filer finns.
 **Provkörning på `37913b3` (före):** `steg a: Spel.tsx: 3133 rader (gräns 2800); data-testid: 124 olika, 126 förekomster; ui-filer: 0` → **RÖD** (radantal + 5 filer saknas); steg b likaså (12 filer). Baslinjen är mätt: **124 olika `data-testid` i 126 JSX-förekomster** (102 i `Spel.tsx`, 13 `samling.tsx`, 7 `intro.tsx`, 4 `angen3d.tsx`). Dynamiska testid (`plats-${o.id}` m.fl.) räknas som uttryck.
 
 ### 7.2 Typkontroll, lint
@@ -583,7 +662,7 @@ Steg i tur och ordning, commit efter varje: (1) `AngLager`, (2) `KartaLager.tsx`
 `npm run test:product` med **Node ≥ 22.6** (avsnitt 8): baslinje **75/75 gröna, 0,27 s** (Node 22.23.3, `37913b3`). Obs: testerna täcker `tolk`, `onska`, `lagring`, `ideer`, `texturKo`, `dialogIsolering` – **inte `Spel.tsx`**. De bevisar därför bara att tolkning och lagring är orörda, inte att flytten är ren. Flyttens renhet bevisas av 7.1, 7.2 och 7.4.
 
 ### 7.4 DOM-tur före/efter (`verification/r1-dom-tur.mjs`)
-Spelar 20 lägen i en riktig webbläsare (375×812, touch) via `window.__troll` och `data-testid`: `start, ang-djur, bok-kort, bok-skriv, bok-forslag, bok-behover, meny, meny-last, karta, skogen-valj, skogen, ordbok, foralder, album, formel, onska, onska-bok, gard, gard-bygger, gard-bok`. Varje läge startar från tömd lagring + ny sidladdning. Skriptet sparar den **normaliserade DOM:en** (3D-canvas, dygnstid, slumpade humör-ikoner, uid, stjärnantal och tidsstyrda banderoller/bubblor är bortnormaliserade) och en skärmbild per läge.
+Spelar 28 lägen (20 från R1A + 8 från R1B, 5.7) i en riktig webbläsare (375×812, touch) via `window.__troll` och `data-testid`: `start, ang-djur, bok-kort, bok-skriv, bok-forslag, bok-behover, meny, meny-last, karta, skogen-valj, skogen, ordbok, foralder, album, formel, onska, onska-bok, gard, gard-bygger, gard-bok`. Varje läge startar från tömd lagring + ny sidladdning. Skriptet sparar den **normaliserade DOM:en** (3D-canvas, dygnstid, slumpade humör-ikoner, uid, stjärnantal och tidsstyrda banderoller/bubblor är bortnormaliserade) och en skärmbild per läge.
 - **Före:** två körningar av *oförändrad* kod (`fore1`, `fore2`). Lägen där de två skiljer sig är *ostabila* (slump i spelet) och räknas inte.
 - **Efter:** en körning (`efterA`/`efterB`). `--jamfor fore1 fore2 efter` ger exit 0 bara om **minst 12 lägen är stabila och alla stabila är identiska** med efter.
 - **Vad den inte täcker (ärligt):** uppdragsvyn (`panel === "uppdrag"` har ingen ingång i UI:t), `SkyltDialog`, `MossaPanel`, `KopDialog`, byggmenyn, lådan, bo-panelen, `valj-djur` med flera djur, och tidsstyrda banderoller/bubblor. De täcks av typkontroll (rätt props och typer) och av att koden flyttas ordagrant; se osäkerheter (avsnitt 11).
@@ -596,7 +675,7 @@ Skriptet läser `CHROMIUM_PATH` om satt, annars Playwrights egen Chromium. `veri
 Fyra lägen, före och efter, 375×812: `02-ang-djur`, `03-bok-kort`, `07-meny`, `12-ordbok` → `docs/skarmbilder/r1/fore-*.png` (R1A) och `efter-*.png` (R1B). Pixellikhet krävs inte (ängen är animerad); layout, texter och knappar ska vara desamma. Bilder ensamma är inte bevis; DOM-turen är det.
 
 ### 7.7 Grundtanke-mått
-Före/efter: `git diff origin/main --stat -- data src/tolk` = tomt; täckningstalen i `PROJECT.md` avsnitt 11 oförändrade (parser orörd). Strukturtal: `Spel.tsx` 3 133 → 2 740 (R1A, mätt i provkörning) → ca 1 960 (R1B, gissning); `useState` i `Spel.tsx` 49 → 49; `kropp ===` 141 → 141.
+Före/efter: `git diff origin/main --stat -- data src/tolk` = tomt; täckningstalen i `PROJECT.md` avsnitt 11 oförändrade (parser orörd). Strukturtal: `Spel.tsx` 3 133 → 2 740 (R1A, mätt i provkörning) → 1 781 (R1B, mätt i provkörning 5.8); `useState` i `Spel.tsx` 49 → 49; `kropp ===` 141 → 141.
 
 ## 8. Node-krav (≥ 22.6) för `test:product`
 
@@ -611,16 +690,16 @@ Provat av Arkitekten: `npm i node@22` ger Node 22.23.3 på ca 4 s utan att röra
 
 ## 9. Storlek, kostnad, inställningar
 
-| | R1A | R1B |
+| | R1A (utfall mätt) | R1B |
 |---|---|---|
-| Ändringar i ritningen | 10 | 11 |
-| `--max-turns` | **35** (2–3 × 10 + 10 = 30–40) | **40** (2–3 × 11 + 10 = 32–43) |
+| Ändringar i ritningen | 10 | 1 skriptkörning (skriptet gör 15 block, 7 filer) + bevis |
+| `--max-turns` | **35** (2–3 × 10 + 10 = 30–40) | **30** (1 ändring + bevissteg; skillens formel ger 12–16, men beviskedjan (build, två kommandon, bilder, rapport) kräver ≈ 15–20) |
 | Modell / ansträngning | `grok-4.7-build-fast`, `--reasoning-effort low` (skillen: smala körningar; alla radnummer och typer ges, inget att resonera om) | samma |
-| Förväntade turer **(gissning)** | 25–32 | 30–38 |
-| Kostnad **(gissning)** | 1–2 USD | 1,5–3 USD |
+| Turer | **23** (utfall; gissning var 25–32) | 15–22 **(gissning)** |
+| Kostnad | **1,04 USD** (utfall, `medium`; gissning var 1–2) | 0,5–1,2 USD **(gissning; R1A kostade 1,04 med `medium` och mer handarbete)** |
 | Kontext | `Spel.tsx` läses en gång (≈ 113 kB) | läses en gång; komponentfiler är små |
 
-Kostnaderna är min gissning utifrån `rounds.tsv` (5A: 30 turer medium 2,92 USD; 4E: 11 turer low 0,52 USD; 5B: 40 turer ≈ 1 USD som misslyckades av för stor beställning). Kvoten är okänd: kontrollera `/usage` före (skillen `grok-build-cli`). Summa R1: **ca 2,5–5 USD (gissning)**, högre än `PROJECT.md`:s 2–3 USD, eftersom rundan nu är mätt och delad.
+Kostnaderna är min gissning utifrån `rounds.tsv` (5A: 30 turer medium 2,92 USD; 4E: 11 turer low 0,52 USD; 5B: 40 turer ≈ 1 USD som misslyckades av för stor beställning). Kvoten är okänd: kontrollera `/usage` före (skillen `grok-build-cli`). Summa R1: R1A 1,04 USD (utfall) + R1B ca 0,5–1,2 USD (gissning) = **ca 1,5–2,3 USD**, i nivå med `PROJECT.md`:s 2–3 USD.
 
 Kör (efter att Arkitekten/Christoffer sagt ja till körning; denna ritning kör inget):
 ```bash
@@ -630,9 +709,30 @@ grok --prompt-file rundor/R1-dela-spel/PROMPT.md --cwd /workspace/trollpennan-re
   --output-format json --max-turns 35 -m grok-4.7-build-fast --reasoning-effort low --always-approve \
   > /workspace/runda-r1a.json 2> /workspace/runda-r1a.err
 ```
+R1B (efter att Arkitekten/Christoffer sagt ja till körning):
+```bash
+export PATH=$PATH:~/.grok/bin; cd /workspace/trollpennan-repo
+git fetch origin && git switch -c runda-r1b origin/main
+grok --prompt-file rundor/R1-dela-spel/PROMPT-R1B.md --cwd /workspace/trollpennan-repo --trust \
+  --output-format json --max-turns 30 -m grok-4.7-build-fast --reasoning-effort low --always-approve \
+  > /workspace/runda-r1b.json 2> /workspace/runda-r1b.err
+```
 (Flaggorna kontrollerade mot `grok --help` v1.0.62: `--prompt-file`, `--max-turns`, `--output-format`, `-m`, `--reasoning-effort`, `--always-approve`, `--cwd`. Skillens exempel skriver `grok -p --prompt-file …`, men enligt `--help` tar `-p` själv en prompttext, så `-p` utelämnas här. `--trust` finns i skillen men syns inte i `--help`-utskriften: bekräfta före körning, annars laddas inte `AGENTS.md`.) Timeout 40 min. Efter körning: granska mot DOM-jämförelse och bilder, inte mot Builds egen rapport; skriv `rounds.tsv`.
 
 ## 10. Stoppvillkor och fallback
+
+### R1B
+**Stoppa direkt, skriv `RUNDAR1B.md` med orsaken och lämna grenen opushad, om:**
+1. `git diff 89fd859 -- src` är inte tomt, eller `Spel.tsx` inte har 2 740 rader, vid start.
+2. `r1b-flytta.mjs` slutar med exit 2 (`STOPP: …`): skriptet har då inte ändrat något; kör det **inte** om med ändrade ankare och skriv inga komponenter för hand.
+3. `npm run typecheck:pages` är röd efter skriptet: `git restore src && git clean -fd src/spel/ui` (bara de sju nya filerna) och stopp. Rätta inte för hand.
+4. `check:struktur`, `r1b-ordagrant.mjs` eller eslint (fler än 0 fel) är röda efter skriptet: stopp.
+5. `--jamfor` visar SKILLNAD: kör hela turen en gång till (`/tmp/r1/efterB2`); är det kvar: stopp och rapportera läget och `diff`-raderna. Ändra inte koden för att få grönt.
+6. Ingen källfil ändrad efter 8 verktygsanrop (skriptet har inte körts).
+7. Transport-/API-fel upprepas: avsluta (Arkitekten väntar 5 min och kör om en gång).
+**Fallback:** steg 3 (skriptet) och 4 (bevis utan webbläsare) är det som räknas. Är turerna nästan slut: skriv `RUNDAR1B.md` först. R1B går att merga om steg 1–4 är gröna även om DOM-turen inte hann köras (ingen webbläsare); Arkitekten kör då turen själv.
+
+### R1A (historik)
 
 **Stoppa direkt, skriv `RUNDAR1A.md` med orsaken och lämna grenen opushad, om:**
 1. `git diff 37913b3 -- src` är inte tomt vid start (radnumren stämmer inte).
@@ -645,12 +745,13 @@ grok --prompt-file rundor/R1-dela-spel/PROMPT.md --cwd /workspace/trollpennan-re
 
 ## 11. Osäkerheter (ärligt)
 
-1. **Skripten är inte körda mot `main`:s bygge** (jag får inte bygga). `check-spel-struktur.mjs` är provkörd på `37913b3` (röd som väntat). `r1-dom-tur.mjs` är provkörd mot den publicerade, äldre versionen (där `ut-pa-aventyr` och några lägen skiljer sig), inte mot `main`. Förväntat: alla 20 lägen nås på `main` (kodläst: `ut-pa-aventyr` är olåst, r.2381–2385; `browser-B02R-3.mjs` använder samma väg), men det är inte bevisat.
+1. **(Uppdaterat efter R1A)** Skripten är nu körda mot byggen av `89fd859` (Builds före-körningar och mina egna) och mot ett provbygge av R1B. Äldre text: skripten är inte körda mot `main`:s bygge (jag fick inte bygga). `check-spel-struktur.mjs` är provkörd på `37913b3` (röd som väntat). `r1-dom-tur.mjs` är provkörd mot den publicerade, äldre versionen (där `ut-pa-aventyr` och några lägen skiljer sig), inte mot `main`. Förväntat: alla 20 lägen nås på `main` (kodläst: `ut-pa-aventyr` är olåst, r.2381–2385; `browser-B02R-3.mjs` använder samma väg), men det är inte bevisat.
 2. **Slumpen i spelet** (vilda djur, humör, dygn) kan göra fler lägen ostabila än de få jag såg; kravet "minst 12 stabila av 20" är mitt val.
-3. **Storlek efter R1B** (ca 1 960 ± 60) är en uppskattning; om `Spel.tsx` hamnar över 2 050 efter att alla block flyttats betyder det att propparna kräver fler rader än jag räknat: då höjs gränsen med skäl i `RUNDAR1B.md`, inte genom att trixa med radbrytningar.
+3. ~~Storlek efter R1B~~ **mätt**: 1 781 rader med skriptet (gräns 1 850). Skriver Build ändå komponenter för hand (vilket prompten förbjuder) kan resultatet bli större.
 4. **Typutskrifterna** kommer från `tsc` med `tsconfig.pages.json`; små skillnader (t.ex. `RefObject` mot `MutableRefObject`, `Dispatch<unknown>`) är noterade i 5.1.
 5. **Kostnad/turer** är gissningar; `rounds.tsv` saknar kostnad för den här sortens ren flytt.
-6. **Okontrollerat:** att Build-miljön har en Playwright-webbläsare, och att `--trust` är en giltig flagga i CLI 1.0.62 (syns inte i `--help`).
+6. **Delvis avklarat:** Build hade en Playwright-webbläsare i R1A (`chromium-1248` i `~/.cache/ms-playwright`, samma maskin som mina körningar). `--trust` (syns inte i `--help`) och exakt vilka flaggor Doodle använde i R1A har jag inte sett; körkommandot ovan är oprovat.
+8. **R1B-specifikt:** (a) Skriptet använder bara `node:fs`/`node:path` och `typescript` från repots `node_modules`; provkört på Node 20.19.2 (inte på 22). (b) De sex dialogerna/panelerna som UI:t inte når (5.7) bevisas bara med textlikhet och `tsc`, inte med en skärm. (c) Läge `28-kvall` och övriga nya lägen är stabila i två körningar på min maskin; en tredje maskin kan visa en ostabil. (d) Flytten gör att varje tillståndsändring fortfarande ritar om hela `Spel()` (ingen `memo`): ingen prestandaförändring väntas men ingen är mätt.
 7. **Mätskripten** (`mat/*.mjs`) använder TypeScript-kompilatorn i repots `node_modules` och är endast till för att kunna återskapa siffrorna; de ändrar inget.
 
 ## 12. Bilaga: återskapa siffrorna (alla skript läser bara)
@@ -662,4 +763,8 @@ node rundor/R1-dela-spel/mat/helpmap.mjs                                        
 node rundor/R1-dela-spel/check-spel-struktur.mjs --steg a                        # röd före
 rg -o "kropp ===" src/spel | wc -l                                               # 141
 npx tsc --noEmit -p tsconfig.pages.json                                          # 0 fel
+# R1B (på 89fd859, före skriptet):
+node rundor/R1-dela-spel/mat/r1b-plan-gen.mjs rundor/R1-dela-spel/mat/r1b-spec.json  # props, typer och importer per block (rådata till r1b-plan.json)
+node rundor/R1-dela-spel/check-spel-struktur.mjs                                  # steg b, röd före / grön efter
+node rundor/R1-dela-spel/r1b-ordagrant.mjs                                        # röd före (filer saknas) / grön efter
 ```

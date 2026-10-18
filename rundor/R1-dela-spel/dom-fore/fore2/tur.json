@@ -98,5 +98,45 @@
     "namn": "20-gard-bok",
     "sha": "a6dc04e135e5145bc4fb395412ec40ffbae5d4d9308695476507afee13a8598d",
     "bytes": 6071
+  },
+  {
+    "namn": "21-foralder-borja",
+    "sha": "7a277008bebadddb7a8421106bd24a2cd844afedb2cf791a10a9719b1faee057",
+    "bytes": 3976
+  },
+  {
+    "namn": "22-meny-borja",
+    "sha": "865a4831a6bb3255c9179b176c22f986a7686555ef16794aab5e8636890a6e9d",
+    "bytes": 4457
+  },
+  {
+    "namn": "23-ordbok-for-fa",
+    "sha": "65aa9ad3260b9267d112624059c216f6948598ebca6a8ae8bea9e99d74770e56",
+    "bytes": 5883
+  },
+  {
+    "namn": "24-ordbok-kop",
+    "sha": "414326483e2aff0402654a44cdd1b2eda4161d58913718e0720f70b2274eac87",
+    "bytes": 6148
+  },
+  {
+    "namn": "25-ordbok-kopt",
+    "sha": "6454be542511b43ad15b62480f1e89332c4886c4b272b9dc03463a851307f8a4",
+    "bytes": 5835
+  },
+  {
+    "namn": "26-bygg-for-fa",
+    "sha": "ec68bc4738db2ecba8deedeff1e2742282416dfc246f41fc0d041f9e08d087a5",
+    "bytes": 6168
+  },
+  {
+    "namn": "27-bygg-kop",
+    "sha": "542c0ffefaadd714cae41db8af9ccc62141775bf01ffdd580895c4c685c36ab8",
+    "bytes": 6387
+  },
+  {
+    "namn": "28-kvall",
+    "sha": "84dd1738490dccc68f94a6830ece4a491f7fefe76b5fd0327ea59551a2de5a84",
+    "bytes": 1610
   }
 ]

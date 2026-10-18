@@ -1,0 +1,1033 @@
+{
+ "forvantat_rader_spel": 2740,
+ "filer": {
+  "AngLager.tsx": {
+   "import": [
+    "import type { Dispatch, RefObject, SetStateAction } from \"react\";",
+    "import { Heart } from \"lucide-react\";",
+    "import { brygga } from \"../brygga.ts\";",
+    "import type { Sparad } from \"../brygga.ts\";",
+    "import type { SparatBygge } from \"../bygge.ts\";",
+    "import { ALBUM, HUMOR_IKON, poangAv, sovText, sparaFoto } from \"../liv.ts\";",
+    "import type { mossaHand } from \"../liv.ts\";",
+    "import { useMinne } from \"../minne.ts\";",
+    "import type { Hemdjur, Lage, OnskaSpar } from \"../minne.ts\";",
+    "import { dukStil } from \"./hjalp.ts\";",
+    "import { FIR, TEXTER } from \"./spelData.ts\";",
+    "import type { Banner, Bubbla, Varld } from \"./typer.ts\";"
+   ],
+   "komponenter": [
+    "AngLager"
+   ]
+  },
+  "KartaLager.tsx": {
+   "import": [
+    "import { OMR, TEXTER_AV } from \"../aventyr.ts\";",
+    "import { TEXTER } from \"./spelData.ts\";"
+   ],
+   "komponenter": [
+    "KartaLager",
+    "OmradeHud"
+   ]
+  },
+  "Hud.tsx": {
+   "import": [
+    "import type { Dispatch, SetStateAction } from \"react\";",
+    "import { Lock, Pencil } from \"lucide-react\";",
+    "import introJson from \"../../../data/intro.json\" with { type: \"json\" };",
+    "import { OMR, UPP } from \"../aventyr.ts\";",
+    "import { fyll } from \"../fyll.ts\";",
+    "import { ALBUM } from \"../liv.ts\";",
+    "import { HoldOppnare } from \"./HoldOppnare.tsx\";",
+    "import { FIR, TEXTER } from \"./spelData.ts\";",
+    "import type { Varld } from \"./typer.ts\";"
+   ],
+   "komponenter": [
+    "Hud",
+    "MenyPanel",
+    "HudBot"
+   ]
+  },
+  "BokSkarm.tsx": {
+   "import": [
+    "import type { Dispatch, SetStateAction } from \"react\";",
+    "import { Lock, Pencil } from \"lucide-react\";",
+    "import type { ForslagKort, Ord } from \"@/tolk/typer.ts\";",
+    "import upplevelse from \"../../../data/upplevelse.json\";",
+    "import { TEXTER_AV, UPP, VILDA } from \"../aventyr.ts\";",
+    "import type { Sparad } from \"../brygga.ts\";",
+    "import { fyll } from \"../fyll.ts\";",
+    "import type { Hemdjur, Lage, OnskaSpar } from \"../minne.ts\";",
+    "import { OnskaAnsikte } from \"./OnskaAnsikte.tsx\";",
+    "import { bestamdAv, frasForByggOrd, kanEtikett, kortIkon } from \"./hjalp.ts\";",
+    "import { FIR, FLIKAR, RADER, TEXTER } from \"./spelData.ts\";",
+    "import type { Forslag, SidaBygg, Slot, Varld } from \"./typer.ts\";"
+   ],
+   "komponenter": [
+    "BokSkarm"
+   ]
+  },
+  "Dialoger.tsx": {
+   "import": [
+    "import type { Dispatch, RefObject, SetStateAction } from \"react\";",
+    "import type { Sparad } from \"../brygga.ts\";",
+    "import { FormelBild } from \"../formel.tsx\";",
+    "import { fyll } from \"../fyll.ts\";",
+    "import { ALBUM, MOSSA, poangAv, sparaFoto } from \"../liv.ts\";",
+    "import type { mossaHand } from \"../liv.ts\";",
+    "import { FIR } from \"./spelData.ts\";",
+    "import type { Banner, KopFraga, VisKort } from \"./typer.ts\";"
+   ],
+   "komponenter": [
+    "SkyltDialog",
+    "ValjDjurDialog",
+    "VisKortDjur",
+    "VisKortBygg",
+    "KopDialog",
+    "MossaPanel"
+   ]
+  },
+  "OrdbokDialog.tsx": {
+   "import": [
+    "import type { Dispatch, RefObject, SetStateAction } from \"react\";",
+    "import type { Ord } from \"@/tolk/typer.ts\";",
+    "import type { Sparad } from \"../brygga.ts\";",
+    "import { fyll } from \"../fyll.ts\";",
+    "import { useMinne } from \"../minne.ts\";",
+    "import type { Lage } from \"../minne.ts\";",
+    "import { replik } from \"../replik.ts\";",
+    "import { djurPris, streck } from \"./hjalp.ts\";",
+    "import { FIR, SIDOR } from \"./spelData.ts\";",
+    "import type { Banner, VisKort } from \"./typer.ts\";"
+   ],
+   "komponenter": [
+    "OrdbokDialog"
+   ]
+  },
+  "ForalderDialog.tsx": {
+   "import": [
+    "import type { Dispatch, RefObject, SetStateAction } from \"react\";",
+    "import { ljud } from \"../ljud.ts\";",
+    "import { useMinne } from \"../minne.ts\";",
+    "import type { Lage } from \"../minne.ts\";",
+    "import { ForalderLiv } from \"../samling.tsx\";",
+    "import { LJUD_AV, LJUD_PA, TEXTER } from \"./spelData.ts\";"
+   ],
+   "komponenter": [
+    "ForalderDialog"
+   ]
+  }
+ },
+ "komponenter": [
+  {
+   "namn": "AngLager",
+   "fil": "AngLager.tsx",
+   "cond": null,
+   "condRad": null,
+   "fran": 1709,
+   "till": 1865,
+   "forst": "<div className=\"ang-lager\">",
+   "sist": "</div>",
+   "condForst": null,
+   "condSist": null,
+   "fragment": false,
+   "props": [
+    {
+     "n": "natt",
+     "t": "number"
+    },
+    {
+     "n": "varld",
+     "t": "Varld"
+    },
+    {
+     "n": "omrade",
+     "t": "string | null"
+    },
+    {
+     "n": "panel",
+     "t": "\"spel\" | \"byggbok\" | \"uppdrag\""
+    },
+    {
+     "n": "ang",
+     "t": "Sparad[]"
+    },
+    {
+     "n": "hemma",
+     "t": "Hemdjur[]"
+    },
+    {
+     "n": "liv",
+     "t": "Record<string, { humor: string; humorMs: number; humorLangd: number; favorit: string; favoritHittad: boolean; hjartan: number; }>"
+    },
+    {
+     "n": "fotoMal",
+     "t": "{ uid: string; x: number; y: number; } | null"
+    },
+    {
+     "n": "visaBanner",
+     "t": "(texten: string, slag: Banner[\"slag\"]) => void"
+    },
+    {
+     "n": "visaMossa",
+     "t": "(h: Parameters<typeof mossaHand>[0]) => void"
+    },
+    {
+     "n": "setFotoMal",
+     "t": "Dispatch<SetStateAction<{ uid: string; x: number; y: number; } | null>>"
+    },
+    {
+     "n": "banners",
+     "t": "Banner[]"
+    },
+    {
+     "n": "bubblor",
+     "t": "Bubbla[]"
+    },
+    {
+     "n": "onskan",
+     "t": "OnskaSpar | null"
+    },
+    {
+     "n": "onskaOpp",
+     "t": "boolean"
+    },
+    {
+     "n": "onskaSyns",
+     "t": "boolean"
+    },
+    {
+     "n": "ank",
+     "t": "{ x: number; y: number; vanster: boolean; }"
+    },
+    {
+     "n": "oppnaOnska",
+     "t": "() => void"
+    },
+    {
+     "n": "meny",
+     "t": "{ uid: string; x: number; y: number; } | null"
+    },
+    {
+     "n": "setMeny",
+     "t": "Dispatch<SetStateAction<{ uid: string; x: number; y: number; } | null>>"
+    },
+    {
+     "n": "omUidRef",
+     "t": "RefObject<string | null>"
+    },
+    {
+     "n": "setLage",
+     "t": "Dispatch<SetStateAction<Lage>>"
+    },
+    {
+     "n": "setBokOpp",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "setLadaOpp",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "menyHem",
+     "t": "{ kroppar: string[]; platser: number; } | null | undefined"
+    },
+    {
+     "n": "setBoUid",
+     "t": "Dispatch<SetStateAction<string | null>>"
+    },
+    {
+     "n": "lada",
+     "t": "SparatBygge[]"
+    },
+    {
+     "n": "ladaOpp",
+     "t": "boolean"
+    },
+    {
+     "n": "boUid",
+     "t": "string | null"
+    },
+    {
+     "n": "boDjur",
+     "t": "Sparad[]"
+    },
+    {
+     "n": "flyttaInDjur",
+     "t": "(djurUid: string) => void"
+    }
+   ]
+  },
+  {
+   "namn": "KartaLager",
+   "fil": "KartaLager.tsx",
+   "cond": "kartaOpp",
+   "condRad": 1866,
+   "fran": 1867,
+   "till": 1893,
+   "forst": "<div className=\"karta-lager\" data-testid=\"karta\">",
+   "sist": "</div>",
+   "condForst": "{kartaOpp ? (",
+   "condSist": ") : null}",
+   "fragment": false,
+   "props": [
+    {
+     "n": "forstaRad",
+     "t": "string[] | null"
+    },
+    {
+     "n": "kartaText",
+     "t": "string | null"
+    },
+    {
+     "n": "tryckPlats",
+     "t": "(id: string) => void"
+    },
+    {
+     "n": "oppna",
+     "t": "string[]"
+    }
+   ]
+  },
+  {
+   "namn": "OmradeHud",
+   "fil": "KartaLager.tsx",
+   "cond": "omrade && !kartaOpp",
+   "condRad": 1895,
+   "fran": 1896,
+   "till": 1903,
+   "forst": "<div className=\"omrade-hud\">",
+   "sist": "</div>",
+   "condForst": "{omrade && !kartaOpp ? (",
+   "condSist": ") : null}",
+   "fragment": false,
+   "props": [
+    {
+     "n": "tryckPlats",
+     "t": "(id: string) => void"
+    },
+    {
+     "n": "bytFolje",
+     "t": "() => void"
+    }
+   ]
+  },
+  {
+   "namn": "Hud",
+   "fil": "Hud.tsx",
+   "cond": null,
+   "condRad": null,
+   "fran": 1905,
+   "till": 1945,
+   "forst": "<div className=\"hud\">",
+   "sist": "</div>",
+   "condForst": null,
+   "condSist": null,
+   "fragment": false,
+   "props": [
+    {
+     "n": "haller",
+     "t": "boolean"
+    },
+    {
+     "n": "setHaller",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "setForalder",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "stjarnor",
+     "t": "number"
+    },
+    {
+     "n": "hittatAntal",
+     "t": "number"
+    },
+    {
+     "n": "totalOrd",
+     "t": "number"
+    },
+    {
+     "n": "menyOpp",
+     "t": "boolean"
+    },
+    {
+     "n": "setMenyOpp",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "setMenySaker",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "setSenare",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    }
+   ]
+  },
+  {
+   "namn": "MenyPanel",
+   "fil": "Hud.tsx",
+   "cond": null,
+   "condRad": null,
+   "fran": 1946,
+   "till": 2023,
+   "forst": "{menyOpp ? (",
+   "sist": ") : null}",
+   "condForst": null,
+   "condSist": null,
+   "fragment": true,
+   "props": [
+    {
+     "n": "menyOpp",
+     "t": "boolean"
+    },
+    {
+     "n": "setMenyOpp",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "setMenySaker",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "setSenare",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "senare",
+     "t": "boolean"
+    },
+    {
+     "n": "panel",
+     "t": "\"spel\" | \"byggbok\" | \"uppdrag\""
+    },
+    {
+     "n": "varld",
+     "t": "Varld"
+    },
+    {
+     "n": "valjVarld",
+     "t": "(id: \"ang\" | \"gard\" | \"byggbok\") => void"
+    },
+    {
+     "n": "lasMeny",
+     "t": "() => void"
+    },
+    {
+     "n": "setBokOpp",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "oppnaKarta",
+     "t": "() => void"
+    },
+    {
+     "n": "setIntroNy",
+     "t": "Dispatch<SetStateAction<number>>"
+    },
+    {
+     "n": "setIntro",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "menySaker",
+     "t": "boolean"
+    },
+    {
+     "n": "borjaOm",
+     "t": "() => void"
+    }
+   ]
+  },
+  {
+   "namn": "HudBot",
+   "fil": "Hud.tsx",
+   "cond": null,
+   "condRad": null,
+   "fran": 2024,
+   "till": 2047,
+   "forst": "<div className=\"hud-bot\">",
+   "sist": "</div>",
+   "condForst": null,
+   "condSist": null,
+   "fragment": false,
+   "props": [
+    {
+     "n": "varld",
+     "t": "Varld"
+    },
+    {
+     "n": "omrade",
+     "t": "string | null"
+    },
+    {
+     "n": "kartaOpp",
+     "t": "boolean"
+    },
+    {
+     "n": "oppnaBygglage",
+     "t": "() => void"
+    },
+    {
+     "n": "setPanel",
+     "t": "Dispatch<SetStateAction<\"spel\" | \"byggbok\" | \"uppdrag\">>"
+    },
+    {
+     "n": "setBokOpp",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    }
+   ]
+  },
+  {
+   "namn": "BokSkarm",
+   "fil": "BokSkarm.tsx",
+   "cond": "bokOpp",
+   "condRad": 2050,
+   "fran": 2051,
+   "till": 2351,
+   "forst": "<div className=\"bok-skarm\" data-testid=\"bok-skarm\" onClick={stangBok}>",
+   "sist": "</div>",
+   "condForst": "{bokOpp ? (",
+   "condSist": ") : null}",
+   "fragment": false,
+   "props": [
+    {
+     "n": "stangBok",
+     "t": "() => void"
+    },
+    {
+     "n": "andrar",
+     "t": "boolean"
+    },
+    {
+     "n": "panel",
+     "t": "\"spel\" | \"byggbok\" | \"uppdrag\""
+    },
+    {
+     "n": "lage",
+     "t": "Lage"
+    },
+    {
+     "n": "setLage",
+     "t": "Dispatch<SetStateAction<Lage>>"
+    },
+    {
+     "n": "setForslag",
+     "t": "Dispatch<SetStateAction<Forslag | null>>"
+    },
+    {
+     "n": "byggPuff",
+     "t": "string | null"
+    },
+    {
+     "n": "onskaOpp",
+     "t": "boolean"
+    },
+    {
+     "n": "onskan",
+     "t": "OnskaSpar | null"
+    },
+    {
+     "n": "onskaSyns",
+     "t": "boolean"
+    },
+    {
+     "n": "onskaDjur",
+     "t": "Sparad | undefined"
+    },
+    {
+     "n": "onskaEx",
+     "t": "string[]"
+    },
+    {
+     "n": "fyllExempel",
+     "t": "(ex: string) => void"
+    },
+    {
+     "n": "gavaTill",
+     "t": "string | null"
+    },
+    {
+     "n": "ang",
+     "t": "Sparad[]"
+    },
+    {
+     "n": "hemma",
+     "t": "Hemdjur[]"
+    },
+    {
+     "n": "varld",
+     "t": "Varld"
+    },
+    {
+     "n": "forslag",
+     "t": "Forslag | null"
+    },
+    {
+     "n": "valjForslag",
+     "t": "(kortet: ForslagKort) => void"
+    },
+    {
+     "n": "nejForslag",
+     "t": "() => void"
+    },
+    {
+     "n": "behover",
+     "t": "{ text: string; djur: { id: string; visa: string; }[]; } | null"
+    },
+    {
+     "n": "utfor",
+     "t": "(raw: string, opt: { hand: boolean; inteGuld?: string[]; }) => void"
+    },
+    {
+     "n": "flik",
+     "t": "Slot"
+    },
+    {
+     "n": "onskaKort",
+     "t": "Ord[]"
+    },
+    {
+     "n": "setFlik",
+     "t": "Dispatch<SetStateAction<Slot>>"
+    },
+    {
+     "n": "kort",
+     "t": "Ord[]"
+    },
+    {
+     "n": "val",
+     "t": "Partial<Record<Slot, Ord>>"
+    },
+    {
+     "n": "onskaIds",
+     "t": "Set<string>"
+    },
+    {
+     "n": "kortGang",
+     "t": "Record<string, number>"
+    },
+    {
+     "n": "valjKort",
+     "t": "(ord: Ord) => void"
+    },
+    {
+     "n": "oppnaSkrivMig",
+     "t": "(ord: Ord) => void"
+    },
+    {
+     "n": "text",
+     "t": "string"
+    },
+    {
+     "n": "omrade",
+     "t": "string | null"
+    },
+    {
+     "n": "visaOnskaHjalp",
+     "t": "boolean"
+    },
+    {
+     "n": "vaknaNu",
+     "t": "() => void"
+    },
+    {
+     "n": "vaknaText",
+     "t": "string"
+    },
+    {
+     "n": "skrivTecken",
+     "t": "(bit: string) => void"
+    },
+    {
+     "n": "sudda",
+     "t": "() => void"
+    },
+    {
+     "n": "uppFlik",
+     "t": "\"pagar\" | \"klar\""
+    },
+    {
+     "n": "setUppFlik",
+     "t": "Dispatch<SetStateAction<\"pagar\" | \"klar\">>"
+    },
+    {
+     "n": "uppdragSpar",
+     "t": "Record<string, \"pagar\" | \"klar\">"
+    },
+    {
+     "n": "byggSida",
+     "t": "SidaBygg"
+    },
+    {
+     "n": "agdaSidor",
+     "t": "SidaBygg[]"
+    },
+    {
+     "n": "setByggSidaId",
+     "t": "Dispatch<SetStateAction<string>>"
+    },
+    {
+     "n": "setByggPuff",
+     "t": "Dispatch<SetStateAction<string | null>>"
+    },
+    {
+     "n": "byggFras",
+     "t": "(fras: string) => void"
+    },
+    {
+     "n": "kopRad",
+     "t": "string | null"
+    },
+    {
+     "n": "lastaSidor",
+     "t": "SidaBygg[]"
+    },
+    {
+     "n": "forsokKop",
+     "t": "(slag: \"djur\" | \"bygg\", id: string, titel: string, pris: number) => void"
+    }
+   ]
+  },
+  {
+   "namn": "SkyltDialog",
+   "fil": "Dialoger.tsx",
+   "cond": "skylt",
+   "condRad": 2354,
+   "fran": 2355,
+   "till": 2369,
+   "forst": "<div className=\"skarm\" role=\"dialog\" data-testid=\"skylt\">",
+   "sist": "</div>",
+   "condForst": "{skylt ? (",
+   "condSist": ") : null}",
+   "fragment": false,
+   "props": [
+    {
+     "n": "skylt",
+     "t": "{ text: string; nytt: string | null; }"
+    },
+    {
+     "n": "setSkylt",
+     "t": "Dispatch<SetStateAction<{ text: string; nytt: string | null; } | null>>"
+    }
+   ]
+  },
+  {
+   "namn": "ValjDjurDialog",
+   "fil": "Dialoger.tsx",
+   "cond": "valj",
+   "condRad": 2372,
+   "fran": 2373,
+   "till": 2386,
+   "forst": "<div className=\"skarm\" role=\"dialog\" data-testid=\"valj-djur\">",
+   "sist": "</div>",
+   "condForst": "{valj ? (",
+   "condSist": ") : null}",
+   "fragment": false,
+   "props": [
+    {
+     "n": "valj",
+     "t": "{ rubrik: string; eller?: string; djur: Sparad[]; nyckel: string; }"
+    },
+    {
+     "n": "valjKor",
+     "t": "RefObject<(d: Sparad) => void>"
+    },
+    {
+     "n": "setValj",
+     "t": "Dispatch<SetStateAction<{ rubrik: string; eller?: string; djur: Sparad[]; nyckel: string; } | null>>"
+    }
+   ]
+  },
+  {
+   "namn": "VisKortDjur",
+   "fil": "Dialoger.tsx",
+   "cond": "visKort?.slag === \"djur\"",
+   "condRad": 2389,
+   "fran": 2390,
+   "till": 2415,
+   "forst": "<div className=\"skarm\" role=\"dialog\" aria-label=\"Formelkort\" data-testid=\"formel\">",
+   "sist": "</div>",
+   "condForst": "{visKort?.slag === \"djur\" ? (",
+   "condSist": ") : null}",
+   "fragment": false,
+   "props": [
+    {
+     "n": "visKort",
+     "t": "Extract<NonNullable<VisKort>, { slag: \"djur\" }>"
+    },
+    {
+     "n": "visaBanner",
+     "t": "(texten: string, slag: Banner[\"slag\"]) => void"
+    },
+    {
+     "n": "visaMossa",
+     "t": "(h: Parameters<typeof mossaHand>[0]) => void"
+    },
+    {
+     "n": "setVisKort",
+     "t": "Dispatch<SetStateAction<VisKort>>"
+    }
+   ]
+  },
+  {
+   "namn": "VisKortBygg",
+   "fil": "Dialoger.tsx",
+   "cond": "visKort?.slag === \"bygg\"",
+   "condRad": 2418,
+   "fran": 2419,
+   "till": 2428,
+   "forst": "<div className=\"skarm\" role=\"dialog\" aria-label=\"Formelkort\" data-testid=\"formel\">",
+   "sist": "</div>",
+   "condForst": "{visKort?.slag === \"bygg\" ? (",
+   "condSist": ") : null}",
+   "fragment": false,
+   "props": [
+    {
+     "n": "visKort",
+     "t": "Extract<NonNullable<VisKort>, { slag: \"bygg\" }>"
+    },
+    {
+     "n": "setVisKort",
+     "t": "Dispatch<SetStateAction<VisKort>>"
+    }
+   ]
+  },
+  {
+   "namn": "OrdbokDialog",
+   "fil": "OrdbokDialog.tsx",
+   "cond": "ordbok",
+   "condRad": 2431,
+   "fran": 2432,
+   "till": 2548,
+   "forst": "<div className=\"skarm\" role=\"dialog\" aria-label=\"Ordboken\" data-testid=\"ordbok-sida\">",
+   "sist": "</div>",
+   "condForst": "{ordbok ? (",
+   "condSist": ") : null}",
+   "fragment": false,
+   "props": [
+    {
+     "n": "hittatAntal",
+     "t": "number"
+    },
+    {
+     "n": "totalOrd",
+     "t": "number"
+    },
+    {
+     "n": "stjarnor",
+     "t": "number"
+    },
+    {
+     "n": "kopRad",
+     "t": "string | null"
+    },
+    {
+     "n": "koptaSidor",
+     "t": "string[]"
+    },
+    {
+     "n": "funna",
+     "t": "Record<string, { guld: boolean; }>"
+    },
+    {
+     "n": "sidOpp",
+     "t": "string | null"
+    },
+    {
+     "n": "forsokKop",
+     "t": "(slag: \"djur\" | \"bygg\", id: string, titel: string, pris: number) => void"
+    },
+    {
+     "n": "setSidOpp",
+     "t": "Dispatch<SetStateAction<string | null>>"
+    },
+    {
+     "n": "textRef",
+     "t": "RefObject<string>"
+    },
+    {
+     "n": "setText",
+     "t": "Dispatch<SetStateAction<string>>"
+    },
+    {
+     "n": "setHand",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "setLage",
+     "t": "Dispatch<SetStateAction<Lage>>"
+    },
+    {
+     "n": "setOrdbok",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "kvar",
+     "t": "number"
+    },
+    {
+     "n": "hittade",
+     "t": "Ord[]"
+    },
+    {
+     "n": "hemliga",
+     "t": "Ord[]"
+    },
+    {
+     "n": "formler",
+     "t": "{ text: string; spec: Sparad; }[]"
+    },
+    {
+     "n": "setVisKort",
+     "t": "Dispatch<SetStateAction<VisKort>>"
+    },
+    {
+     "n": "sovande",
+     "t": "Sparad[]"
+    },
+    {
+     "n": "visaBanner",
+     "t": "(texten: string, slag: Banner[\"slag\"]) => void"
+    }
+   ]
+  },
+  {
+   "namn": "KopDialog",
+   "fil": "Dialoger.tsx",
+   "cond": "kop",
+   "condRad": 2551,
+   "fran": 2552,
+   "till": 2564,
+   "forst": "<div className=\"skarm\" role=\"dialog\" data-testid=\"kop-fraga\">",
+   "sist": "</div>",
+   "condForst": "{kop ? (",
+   "condSist": ") : null}",
+   "fragment": false,
+   "props": [
+    {
+     "n": "kop",
+     "t": "KopFraga"
+    },
+    {
+     "n": "bekraftaKop",
+     "t": "() => void"
+    },
+    {
+     "n": "setKop",
+     "t": "Dispatch<SetStateAction<KopFraga | null>>"
+    }
+   ]
+  },
+  {
+   "namn": "ForalderDialog",
+   "fil": "ForalderDialog.tsx",
+   "cond": "foralder",
+   "condRad": 2567,
+   "fran": 2568,
+   "till": 2682,
+   "forst": "<div className=\"skarm\" role=\"dialog\" aria-label=\"För vuxna\" data-testid=\"foralder\">",
+   "sist": "</div>",
+   "condForst": "{foralder ? (",
+   "condSist": ") : null}",
+   "fragment": false,
+   "props": [
+    {
+     "n": "startLage",
+     "t": "Lage"
+    },
+    {
+     "n": "setLage",
+     "t": "Dispatch<SetStateAction<Lage>>"
+    },
+    {
+     "n": "ljudPa",
+     "t": "boolean"
+    },
+    {
+     "n": "sparaKopia",
+     "t": "() => void"
+    },
+    {
+     "n": "filRef",
+     "t": "RefObject<HTMLInputElement | null>"
+    },
+    {
+     "n": "lasFil",
+     "t": "(fil: File) => Promise<void>"
+    },
+    {
+     "n": "foralderRad",
+     "t": "string | null"
+    },
+    {
+     "n": "kopia",
+     "t": "unknown"
+    },
+    {
+     "n": "lasInKopia",
+     "t": "() => void"
+    },
+    {
+     "n": "setKopia",
+     "t": "Dispatch<unknown>"
+    },
+    {
+     "n": "onskelista",
+     "t": "string[]"
+    },
+    {
+     "n": "setSaker",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    },
+    {
+     "n": "saker",
+     "t": "boolean"
+    },
+    {
+     "n": "borjaOm",
+     "t": "() => void"
+    },
+    {
+     "n": "setForalder",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    }
+   ]
+  },
+  {
+   "namn": "MossaPanel",
+   "fil": "Dialoger.tsx",
+   "cond": "mossaOpp",
+   "condRad": 2684,
+   "fran": 2685,
+   "till": 2703,
+   "forst": "<div className=\"skarm\" role=\"dialog\" data-testid=\"mossa-panel\" aria-label={MOSSA.figur.namn}>",
+   "sist": "</div>",
+   "condForst": "{mossaOpp ? (",
+   "condSist": ") : null}",
+   "fragment": false,
+   "props": [
+    {
+     "n": "halsning",
+     "t": "string"
+    },
+    {
+     "n": "mossaLista",
+     "t": "{ id: string; klar: boolean; }[]"
+    },
+    {
+     "n": "mossaExtra",
+     "t": "boolean"
+    },
+    {
+     "n": "setMossaOpp",
+     "t": "Dispatch<SetStateAction<boolean>>"
+    }
+   ]
+  }
+ ],
+ "bas": "89fd859"
+}
