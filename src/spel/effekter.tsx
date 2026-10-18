@@ -12,6 +12,7 @@ const ORANGE = [1, 0x7a / 255, 0x1a / 255] as const;
 const GUL = [1, 0xd2 / 255, 0x3f / 255] as const;
 
 let mjukCache: THREE.CanvasTexture | null = null;
+let glodCache: THREE.CanvasTexture | null = null;
 
 /** En mjuk rund punkt. Skapas en gång och delas av eld, glöd och glitter. */
 function mjukPunkt() {
@@ -35,6 +36,33 @@ function mjukPunkt() {
   const tex = new THREE.CanvasTexture(c);
   tex.needsUpdate = true;
   mjukCache = tex;
+  return tex;
+}
+
+/** Vit kärna, ljusgul fyllning, orange kant. Syns mot ljusgrönt gräs. */
+function glodPunkt() {
+  if (glodCache) return glodCache;
+  const c = document.createElement("canvas");
+  c.width = 64;
+  c.height = 64;
+  const ctx = c.getContext("2d");
+  if (!ctx) {
+    const tom = new THREE.CanvasTexture(c);
+    glodCache = tom;
+    return tom;
+  }
+  const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+  g.addColorStop(0, "rgba(255,255,255,1)");
+  g.addColorStop(0.16, "rgba(255,255,255,1)");
+  g.addColorStop(0.4, "#FFE066");
+  g.addColorStop(0.68, "#FFC44A");
+  g.addColorStop(0.84, "rgba(255,140,20,0.95)");
+  g.addColorStop(1, "rgba(255,120,0,0)");
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 64, 64);
+  const tex = new THREE.CanvasTexture(c);
+  tex.needsUpdate = true;
+  glodCache = tex;
   return tex;
 }
 
@@ -170,26 +198,24 @@ function Eld({ ankare }: { ankare: Ankare }) {
 
 function Aura({ ankare }: { ankare: Ankare }) {
   const mat = useRef<THREE.SpriteMaterial>(null);
-  const textur = useMemo(() => mjukPunkt(), []);
-  const fram = framZ(ankare);
+  const textur = useMemo(() => glodPunkt(), []);
   const bredd = Math.max(0.25, ankare.bredd);
-  const storlek = bredd * 1.5;
+  const storlek = bredd * 1.8;
   const mittY = ankare.hojd * 0.5;
-  const bakom = -fram * bredd * 0.55;
   useFrame((state) => {
     const m = mat.current;
     if (!m) return;
     const puls = 0.5 + 0.5 * Math.sin(state.clock.elapsedTime * 2.1);
-    m.opacity = 0.25 + puls * 0.2;
+    m.opacity = 0.45 + puls * 0.25;
   });
   return (
-    <sprite position={[0, mittY, bakom]} scale={[storlek, storlek, 1]} renderOrder={-1}>
+    <sprite position={[0, mittY, 0]} scale={[storlek, storlek, 1]} renderOrder={-1}>
       <spriteMaterial
         ref={mat}
         map={textur}
-        color="#FFD56A"
+        color="#ffffff"
         transparent
-        opacity={0.35}
+        opacity={0.55}
         depthWrite={false}
         depthTest
         blending={THREE.NormalBlending}
