@@ -1,3 +1,4 @@
+import bengtssonJson from "../../data/bengtsson.json" with { type: "json" };
 import npcJson from "../../data/npc.json" with { type: "json" };
 import omradenJson from "../../data/omraden.json" with { type: "json" };
 import skatterJson from "../../data/skatter.json" with { type: "json" };
@@ -68,6 +69,8 @@ export type Uppdrag = {
   granskad?: boolean;
   stjarnor: number;
   skatt: string | null;
+  /** R6A-2: löses genom att barnet skriver. Minst `min` olika ord ur `ord` (data/bengtsson.json). */
+  krav?: { ord: string[]; min?: number };
 };
 
 export const OMR = omradenJson as {
@@ -111,6 +114,12 @@ export const UPP = uppdragJson as {
   };
   uppdrag: Uppdrag[];
 };
+
+/** Uppdrag som löses i Skapa-menyn (data/bengtsson.json). Status delas med UPP.uppdrag. */
+export const SKRIV = (bengtssonJson as { uppdrag: Uppdrag[] }).uppdrag;
+
+/** Alla uppdrag i spelet: äventyrens (uppdrag.json) och ängens skriv-uppdrag (bengtsson.json). */
+export const ALLA_UPPDRAG: Uppdrag[] = [...UPP.uppdrag, ...SKRIV];
 
 export const NPC = npcJson.npc as Record<string, { namn: string; roll: string; ton: string; entitet: string | null; granskad: boolean }>;
 
@@ -186,7 +195,7 @@ export function allaEgna(ang: Sparad[], hemma: { spec: Sparad }[]): Sparad[] {
 }
 
 export function uppdragFor(id: string): Uppdrag | undefined {
-  return UPP.uppdrag.find((u) => u.id === id);
+  return ALLA_UPPDRAG.find((u) => u.id === id);
 }
 
 export function omradeArKlart(omrade: string, status: Record<string, "pagar" | "klar">): boolean {

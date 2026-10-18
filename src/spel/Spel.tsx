@@ -94,6 +94,8 @@ import { KopDialog, MossaPanel, SkyltDialog, ValjDjurDialog, VisKortBygg, VisKor
 import { ForalderDialog } from "./ui/ForalderDialog.tsx";
 import { nattvaken } from "./entiteter.ts";
 import { Hud, HudBot, MenyPanel } from "./ui/Hud.tsx";
+import { NpcFigur } from "./ui/NpcFigur.tsx";
+import { useBengtsson } from "./ui/useBengtsson.ts";
 import { KartaLager, OmradeHud } from "./ui/KartaLager.tsx";
 import { OrdbokDialog } from "./ui/OrdbokDialog.tsx";
 
@@ -525,6 +527,15 @@ export function Spel() {
     setBokOpp(true);
   }
 
+  function oppnaSkapa() {
+    setPanel("spel");
+    setLage("skriv");
+    setForslag(null);
+    setBehover(null);
+    setBokOpp(true);
+  }
+  const bengtsson = useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdragsbok: oppnaUppdrag });
+
   function stangBok() {
     const paGard = varldRef.current === "gard";
     setBokOpp(false);
@@ -792,6 +803,7 @@ export function Spel() {
         poang: poangAv(utfall.varelse),
       });
     }
+    bengtsson.prova(raw); // först, så Bengtssons rad hamnar före de vanliga bannrarna i kön
     belona(utfall, utfall.guld.length && opt.hand ? sista?.uid : undefined, opt.hand);
     for (const m of utfall.meddelanden) visaBanner(m, "okand");
     for (const o of utfall.varelse.overraskningar) visaBanner(o.text, "ovr");
@@ -1737,6 +1749,9 @@ export function Spel() {
         {omrade && !kartaOpp ? <OmradeHud tryckPlats={tryckPlats} bytFolje={bytFolje} /> : null}
         <Hud haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} />
         <MenyPanel menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} senare={senare} panel={panel} varld={varld} valjVarld={valjVarld} lasMeny={lasMeny} oppnaUppdrag={oppnaUppdrag} setBokOpp={setBokOpp} oppnaKarta={oppnaKarta} setIntroNy={setIntroNy} setIntro={setIntro} menySaker={menySaker} borjaOm={borjaOm} />
+        {varld === "ang" && !omrade && !bokOpp && !menyOpp && !intro && !overlayRef.current ? (
+          <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
+        ) : null}
         <HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} />
       </section>
 

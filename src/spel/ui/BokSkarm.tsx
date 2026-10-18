@@ -2,7 +2,9 @@ import type { Dispatch, SetStateAction } from "react";
 import { Lock, Pencil } from "lucide-react";
 import type { ForslagKort, Ord } from "@/tolk/typer.ts";
 import upplevelse from "../../../data/upplevelse.json";
-import { NPC, TEXTER_AV, UPP, VILDA, uppdragText } from "../aventyr.ts";
+import { ALLA_UPPDRAG, NPC, TEXTER_AV, VILDA, UPP, uppdragText } from "../aventyr.ts";
+import { aktivtSkrivUppdrag } from "../uppdragsmotor.ts";
+import { UppdragsRemsa } from "./UppdragsRemsa.tsx";
 import type { Sparad } from "../brygga.ts";
 import { fyll } from "../fyll.ts";
 import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
@@ -94,6 +96,7 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
         {panel === "spel" || (panel === "byggbok" && lage === "skriv") ? (
           <>
             <div className="bok-mitt">
+            {panel === "spel" ? <UppdragsRemsa uppdrag={aktivtSkrivUppdrag(uppdragSpar)} /> : null}
             {(onskaOpp || (onskan && !onskaSyns)) && onskan ? (
               <div className="onska-remsa" data-testid="onska-remsa">
                 {andrar && onskaDjur ? (
@@ -287,10 +290,10 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
                 {UPP.texter.flik_klara}
               </button>
             </div>
-            {UPP.uppdrag.filter((u) => (uppFlik === "klar" ? uppdragSpar[u.id] === "klar" : uppdragSpar[u.id] === "pagar")).length === 0 ? (
+            {ALLA_UPPDRAG.filter((u) => (uppFlik === "klar" ? uppdragSpar[u.id] === "klar" : uppdragSpar[u.id] === "pagar")).length === 0 ? (
               <p>{UPP.texter.inga}</p>
             ) : null}
-            {UPP.uppdrag
+            {ALLA_UPPDRAG
               .filter((u) => (uppFlik === "klar" ? uppdragSpar[u.id] === "klar" : uppdragSpar[u.id] === "pagar"))
               .map((u) => (
                 <p key={u.id} className="uppdrag-rad" data-testid={`uppdrag-${u.id}`} data-givare={u.givare ?? ""}>
