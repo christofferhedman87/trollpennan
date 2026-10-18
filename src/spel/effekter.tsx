@@ -230,57 +230,48 @@ function GlitterRing({ ankare }: { ankare: Ankare }) {
   const pack = useMemo(() => {
     const pos = new Float32Array(GLITTER_N * 3);
     const col = new Float32Array(GLITTER_N * 3);
-    const bas = new Float32Array(GLITTER_N * 3);
-    const rad = Math.max(0.32, ankare.bredd * 0.95);
-    const y0 = ankare.hojd * 0.42;
+    const storlek = new Float32Array(GLITTER_N);
+    const fas = new Float32Array(GLITTER_N);
+    const full = new Float32Array(GLITTER_N);
+    const rad = Math.max(0.3, Math.min(ankare.bredd * 0.9, ankare.hojd * 0.46));
+    const yMitt = ankare.hojd * 0.52;
     for (let i = 0; i < GLITTER_N; i++) {
       const a = (i / GLITTER_N) * Math.PI * 2;
       pos[i * 3] = Math.cos(a) * rad;
-      pos[i * 3 + 1] = y0 + Math.sin(a * 2) * ankare.hojd * 0.1;
-      pos[i * 3 + 2] = Math.sin(a) * rad * 0.72;
+      pos[i * 3 + 1] = yMitt + Math.sin(a) * rad;
+      pos[i * 3 + 2] = 0;
       const vit = i % 5 === 0;
-      bas[i * 3] = 1;
-      bas[i * 3 + 1] = vit ? 1 : 0xc8 / 255;
-      bas[i * 3 + 2] = vit ? 1 : 0x3d / 255;
-      col[i * 3] = bas[i * 3] ?? 1;
-      col[i * 3 + 1] = bas[i * 3 + 1] ?? 1;
-      col[i * 3 + 2] = bas[i * 3 + 2] ?? 1;
+      col[i * 3] = 1;
+      col[i * 3 + 1] = vit ? 1 : 0xc8 / 255;
+      col[i * 3 + 2] = vit ? 1 : 0x3d / 255;
+      fas[i] = a;
+      full[i] = 12 + (i % 5);
+      storlek[i] = full[i] ?? 14;
     }
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
     g.setAttribute("color", new THREE.BufferAttribute(col, 3));
-    return { geo: g, bas };
+    g.setAttribute("pstorlek", new THREE.BufferAttribute(storlek, 1));
+    return { geo: g, fas, full };
   }, [ankare]);
+  const mat = useMemo(() => punktMedStorlek(textur, 1), [textur]);
   const ref = useRef<THREE.Points>(null);
   useFrame((state) => {
     const p = ref.current;
     if (!p) return;
-    const col = p.geometry.getAttribute("color") as THREE.BufferAttribute;
-    const arr = col.array as Float32Array;
-    const bas = pack.bas;
+    const stor = p.geometry.getAttribute("pstorlek") as THREE.BufferAttribute;
+    const arr = stor.array as Float32Array;
     const t = state.clock.elapsedTime;
+    const fas = pack.fas;
+    const full = pack.full;
     for (let i = 0; i < GLITTER_N; i++) {
-      const blink = 0.2 + 0.8 * (0.5 + 0.5 * Math.sin(t * 4.2 + i * 0.85));
-      arr[i * 3] = (bas[i * 3] ?? 1) * blink;
-      arr[i * 3 + 1] = (bas[i * 3 + 1] ?? 1) * blink;
-      arr[i * 3 + 2] = (bas[i * 3 + 2] ?? 1) * blink;
+      const blink = Math.max(0, Math.sin(t * 4.2 + (fas[i] ?? 0)));
+      arr[i] = (full[i] ?? 14) * blink;
     }
-    col.needsUpdate = true;
+    stor.needsUpdate = true;
   });
   return (
-    <points ref={ref} geometry={pack.geo} frustumCulled={false}>
-      <pointsMaterial
-        map={textur}
-        size={12}
-        sizeAttenuation={false}
-        vertexColors
-        transparent
-        opacity={0.95}
-        depthWrite={false}
-        blending={THREE.NormalBlending}
-        toneMapped={false}
-      />
-    </points>
+    <points ref={ref} geometry={pack.geo} material={mat} frustumCulled={false} />
   );
 }
 
