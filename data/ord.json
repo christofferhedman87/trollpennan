@@ -2649,6 +2649,1783 @@
    "del": {
     "kropp": "bonde"
    }
+  },
+  {
+   "id": "larv",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "larv",
+   "genus": "u",
+   "former": [
+    "larv",
+    "larven",
+    "larvar",
+    "larvarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-cube-pets",
+   "del": {
+    "kropp": "larv"
+   }
+  },
+  {
+   "id": "kyckling",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kyckling",
+   "genus": "u",
+   "former": [
+    "kyckling",
+    "kycklingen",
+    "kycklingar",
+    "kycklingarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-cube-pets",
+   "del": {
+    "kropp": "kyckling"
+   }
+  },
+  {
+   "id": "ko",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "ko",
+   "genus": "u",
+   "former": [
+    "ko",
+    "kon"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-cube-pets",
+   "del": {
+    "kropp": "ko"
+   }
+  },
+  {
+   "id": "hjort",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "hjort",
+   "genus": "u",
+   "former": [
+    "hjort",
+    "hjorten",
+    "hjortar",
+    "hjortarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-cube-pets",
+   "del": {
+    "kropp": "hjort"
+   }
+  },
+  {
+   "id": "vildsvin",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "vildsvin",
+   "genus": "u",
+   "former": [
+    "vildsvin",
+    "vildsvinen",
+    "vildsvinar",
+    "vildsvinarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-cube-pets",
+   "del": {
+    "kropp": "vildsvin"
+   }
+  },
+  {
+   "id": "koala",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "koala",
+   "genus": "u",
+   "former": [
+    "koala",
+    "koalan",
+    "koalor",
+    "koalorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-cube-pets",
+   "del": {
+    "kropp": "koala"
+   }
+  },
+  {
+   "id": "apa",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "apa",
+   "genus": "u",
+   "former": [
+    "apa",
+    "apan",
+    "apor",
+    "aporna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-cube-pets",
+   "del": {
+    "kropp": "apa"
+   }
+  },
+  {
+   "id": "papegoja",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "papegoja",
+   "genus": "u",
+   "former": [
+    "papegoja",
+    "papegojan",
+    "papegojor",
+    "papegojorna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3D kenney-cube-pets",
+   "del": {
+    "kropp": "papegoja"
+   }
+  },
+  {
+   "id": "isbjörn",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "isbjörn",
+   "genus": "u",
+   "former": [
+    "isbjörn",
+    "isbjörnen",
+    "isbjörnar",
+    "isbjörnarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-cube-pets",
+   "del": {
+    "kropp": "isbjorn"
+   }
+  },
+  {
+   "id": "tiger",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "tiger",
+   "genus": "u",
+   "former": [
+    "tiger",
+    "tigeren",
+    "tigerer",
+    "tigererna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-cube-pets",
+   "del": {
+    "kropp": "tiger"
+   }
+  },
+  {
+   "id": "människa",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "människa",
+   "genus": "u",
+   "former": [
+    "människa",
+    "människan",
+    "människor",
+    "människorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-blocky-characters",
+   "del": {
+    "kropp": "manniska"
+   }
+  },
+  {
+   "id": "kyrkogårdsvaktmästare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kyrkogårdsvaktmästare",
+   "genus": "u",
+   "former": [
+    "kyrkogårdsvaktmästare",
+    "kyrkogårdsvaktmästaren",
+    "kyrkogårdsvaktmästarar",
+    "kyrkogårdsvaktmästararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-graveyard-kit",
+   "del": {
+    "kropp": "kyrkogardsvaktmastare"
+   }
+  },
+  {
+   "id": "gubbe",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "gubbe",
+   "genus": "u",
+   "former": [
+    "gubbe",
+    "gubben",
+    "gubbar",
+    "gubbarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-graveyard-kit",
+   "del": {
+    "kropp": "kyrkogardsvaktmastare"
+   }
+  },
+  {
+   "id": "hjälte",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "hjälte",
+   "genus": "u",
+   "former": [
+    "hjälte",
+    "hjälten",
+    "hjältar",
+    "hjältarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-mini-dungeon",
+   "del": {
+    "kropp": "hjalte"
+   }
+  },
+  {
+   "id": "riddare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "riddare",
+   "genus": "u",
+   "former": [
+    "riddare",
+    "riddaren",
+    "riddarar",
+    "riddararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-mini-dungeon",
+   "del": {
+    "kropp": "hjalte"
+   }
+  },
+  {
+   "id": "bågskytt",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "bågskytt",
+   "genus": "u",
+   "former": [
+    "bågskytt",
+    "bågskytten",
+    "bågskyttar",
+    "bågskyttarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-mini-forest",
+   "del": {
+    "kropp": "bagskytt"
+   }
+  },
+  {
+   "id": "skelett",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "skelett",
+   "genus": "n",
+   "former": [
+    "skelett",
+    "skelettet",
+    "skeletten"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-graveyard-kit",
+   "del": {
+    "kropp": "skelett"
+   }
+  },
+  {
+   "id": "vampyr",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "vampyr",
+   "genus": "u",
+   "former": [
+    "vampyr",
+    "vampyren",
+    "vampyrer",
+    "vampyrerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-graveyard-kit",
+   "del": {
+    "kropp": "vampyr"
+   }
+  },
+  {
+   "id": "zombie",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "zombie",
+   "genus": "u",
+   "former": [
+    "zombie",
+    "zombien",
+    "zombiar",
+    "zombiarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-graveyard-kit",
+   "del": {
+    "kropp": "zombie"
+   }
+  },
+  {
+   "id": "nötknäppare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "nötknäppare",
+   "genus": "u",
+   "former": [
+    "nötknäppare",
+    "nötknäpparen",
+    "nötknäpparar",
+    "nötknäppararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-holiday-kit",
+   "del": {
+    "kropp": "notknappare"
+   }
+  },
+  {
+   "id": "rudolf",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "rudolf",
+   "genus": "u",
+   "former": [
+    "rudolf",
+    "rudolfen",
+    "rudolfar",
+    "rudolfarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-holiday-kit",
+   "del": {
+    "kropp": "rudolf"
+   }
+  },
+  {
+   "id": "snögubbe",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "snögubbe",
+   "genus": "u",
+   "former": [
+    "snögubbe",
+    "snögubben",
+    "snögubbar",
+    "snögubbarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-holiday-kit",
+   "del": {
+    "kropp": "snogubbe"
+   }
+  },
+  {
+   "id": "orch",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "orch",
+   "genus": "u",
+   "former": [
+    "orch",
+    "orchen",
+    "orchar",
+    "orcharna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-mini-dungeon",
+   "del": {
+    "kropp": "orch"
+   }
+  },
+  {
+   "id": "troll",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "troll",
+   "genus": "n",
+   "former": [
+    "troll",
+    "trollet",
+    "trollen"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-mini-dungeon",
+   "del": {
+    "kropp": "orch"
+   }
+  },
+  {
+   "id": "rymdvarelse",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "rymdvarelse",
+   "genus": "u",
+   "former": [
+    "rymdvarelse",
+    "rymdvarelsen",
+    "rymdvarelsar",
+    "rymdvarelsarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-space-kit",
+   "del": {
+    "kropp": "rymdvarelse"
+   }
+  },
+  {
+   "id": "utomjording",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "utomjording",
+   "genus": "u",
+   "former": [
+    "utomjording",
+    "utomjordingen",
+    "utomjordingar",
+    "utomjordingarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D kenney-space-kit",
+   "del": {
+    "kropp": "rymdvarelse"
+   }
+  },
+  {
+   "id": "flundra",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "flundra",
+   "genus": "u",
+   "former": [
+    "flundra",
+    "flundran",
+    "flundror",
+    "flundrorna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D quaternius-cute-fish",
+   "del": {
+    "kropp": "flundra"
+   }
+  },
+  {
+   "id": "plattfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "plattfisk",
+   "genus": "u",
+   "former": [
+    "plattfisk",
+    "plattfisken",
+    "plattfiskar",
+    "plattfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D quaternius-cute-fish",
+   "del": {
+    "kropp": "flundra"
+   }
+  },
+  {
+   "id": "koi",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "koi",
+   "genus": "u",
+   "former": [
+    "koi",
+    "koin"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D quaternius-cute-fish",
+   "del": {
+    "kropp": "koi"
+   }
+  },
+  {
+   "id": "karp",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "karp",
+   "genus": "u",
+   "former": [
+    "karp",
+    "karpen",
+    "karpar",
+    "karparna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D quaternius-cute-fish",
+   "del": {
+    "kropp": "koi"
+   }
+  },
+  {
+   "id": "piraya",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "piraya",
+   "genus": "u",
+   "former": [
+    "piraya",
+    "pirayan",
+    "pirayor",
+    "pirayorna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D quaternius-cute-fish",
+   "del": {
+    "kropp": "piraya"
+   }
+  },
+  {
+   "id": "svärdfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "svärdfisk",
+   "genus": "u",
+   "former": [
+    "svärdfisk",
+    "svärdfisken",
+    "svärdfiskar",
+    "svärdfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D quaternius-cute-fish",
+   "del": {
+    "kropp": "svardfisk"
+   }
+  },
+  {
+   "id": "tonfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "tonfisk",
+   "genus": "u",
+   "former": [
+    "tonfisk",
+    "tonfisken",
+    "tonfiskar",
+    "tonfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D quaternius-cute-fish",
+   "del": {
+    "kropp": "tonfisk"
+   }
+  },
+  {
+   "id": "lama",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "lama",
+   "genus": "u",
+   "former": [
+    "lama",
+    "laman",
+    "lamor",
+    "lamorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-farm-animals",
+   "del": {
+    "kropp": "lama"
+   }
+  },
+  {
+   "id": "mops",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mops",
+   "genus": "u",
+   "former": [
+    "mops",
+    "mopsen",
+    "mopsar",
+    "mopsarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-farm-animals",
+   "del": {
+    "kropp": "mops"
+   }
+  },
+  {
+   "id": "alpacka",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "alpacka",
+   "genus": "u",
+   "former": [
+    "alpacka",
+    "alpackan",
+    "alpackor",
+    "alpackorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-ultimate-animated-animals",
+   "del": {
+    "kropp": "alpacka"
+   }
+  },
+  {
+   "id": "åsna",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "åsna",
+   "genus": "u",
+   "former": [
+    "åsna",
+    "åsnan",
+    "åsnor",
+    "åsnorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-ultimate-animated-animals",
+   "del": {
+    "kropp": "asna"
+   }
+  },
+  {
+   "id": "husky",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "husky",
+   "genus": "u",
+   "former": [
+    "husky",
+    "huskyn"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-ultimate-animated-animals",
+   "del": {
+    "kropp": "husky"
+   }
+  },
+  {
+   "id": "draghund",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "draghund",
+   "genus": "u",
+   "former": [
+    "draghund",
+    "draghunden",
+    "draghundar",
+    "draghundarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-ultimate-animated-animals",
+   "del": {
+    "kropp": "husky"
+   }
+  },
+  {
+   "id": "kronhjort",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kronhjort",
+   "genus": "u",
+   "former": [
+    "kronhjort",
+    "kronhjorten",
+    "kronhjortar",
+    "kronhjortarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-ultimate-animated-animals",
+   "del": {
+    "kropp": "kronhjort"
+   }
+  },
+  {
+   "id": "älg",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "älg",
+   "genus": "u",
+   "former": [
+    "älg",
+    "älgen",
+    "älgar",
+    "älgarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-ultimate-animated-animals",
+   "del": {
+    "kropp": "kronhjort"
+   }
+  },
+  {
+   "id": "varg",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "varg",
+   "genus": "u",
+   "former": [
+    "varg",
+    "vargen",
+    "vargar",
+    "vargarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-ultimate-animated-animals",
+   "del": {
+    "kropp": "varg"
+   }
+  },
+  {
+   "id": "bläckfiskmonster",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "bläckfiskmonster",
+   "genus": "u",
+   "former": [
+    "bläckfiskmonster",
+    "bläckfiskmonsteren",
+    "bläckfiskmonsterar",
+    "bläckfiskmonsterarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-cute-monsters",
+   "del": {
+    "kropp": "blackfiskmonster"
+   }
+  },
+  {
+   "id": "cyklop",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "cyklop",
+   "genus": "u",
+   "former": [
+    "cyklop",
+    "cyklopen",
+    "cyklopar",
+    "cykloparna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-cute-monsters",
+   "del": {
+    "kropp": "cyklop"
+   }
+  },
+  {
+   "id": "jätte",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "jätte",
+   "genus": "u",
+   "former": [
+    "jätte",
+    "jätten",
+    "jättar",
+    "jättarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-cute-monsters",
+   "del": {
+    "kropp": "cyklop"
+   }
+  },
+  {
+   "id": "demon",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "demon",
+   "genus": "u",
+   "former": [
+    "demon",
+    "demonen",
+    "demoner",
+    "demonerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-cute-monsters",
+   "del": {
+    "kropp": "demon"
+   }
+  },
+  {
+   "id": "svampmonster",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "svampmonster",
+   "genus": "u",
+   "former": [
+    "svampmonster",
+    "svampmonsteren",
+    "svampmonsterar",
+    "svampmonsterarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-cute-monsters",
+   "del": {
+    "kropp": "svampmonster"
+   }
+  },
+  {
+   "id": "golem",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "golem",
+   "genus": "u",
+   "former": [
+    "golem",
+    "golemen",
+    "golemar",
+    "golemarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-ultimate-monsters",
+   "del": {
+    "kropp": "golem"
+   }
+  },
+  {
+   "id": "stenvarelse",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "stenvarelse",
+   "genus": "u",
+   "former": [
+    "stenvarelse",
+    "stenvarelsen",
+    "stenvarelsar",
+    "stenvarelsarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-ultimate-monsters",
+   "del": {
+    "kropp": "golem"
+   }
+  },
+  {
+   "id": "bläckfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "bläckfisk",
+   "genus": "u",
+   "former": [
+    "bläckfisk",
+    "bläckfisken",
+    "bläckfiskar",
+    "bläckfiskarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-ultimate-monsters",
+   "del": {
+    "kropp": "blackfisk"
+   }
+  },
+  {
+   "id": "trollkarl",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "trollkarl",
+   "genus": "u",
+   "former": [
+    "trollkarl",
+    "trollkarlen",
+    "trollkarlar",
+    "trollkarlarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-ultimate-monsters",
+   "del": {
+    "kropp": "trollkarl"
+   }
+  },
+  {
+   "id": "magiker",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "magiker",
+   "genus": "u",
+   "former": [
+    "magiker",
+    "magikeren",
+    "magikerar",
+    "magikerarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D quaternius-ultimate-monsters",
+   "del": {
+    "kropp": "trollkarl"
+   }
+  },
+  {
+   "id": "marulk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "marulk",
+   "genus": "u",
+   "former": [
+    "marulk",
+    "marulken",
+    "marulkar",
+    "marulkarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "marulk"
+   }
+  },
+  {
+   "id": "fladdermus",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "fladdermus",
+   "genus": "u",
+   "former": [
+    "fladdermus",
+    "fladdermusen",
+    "fladdermusar",
+    "fladdermusarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "fladdermus"
+   }
+  },
+  {
+   "id": "bi",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "bi",
+   "genus": "n",
+   "former": [
+    "bi",
+    "bit",
+    "bin",
+    "binen"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "bi"
+   }
+  },
+  {
+   "id": "kirurgfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kirurgfisk",
+   "genus": "u",
+   "former": [
+    "kirurgfisk",
+    "kirurgfisken",
+    "kirurgfiskar",
+    "kirurgfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "kirurgfisk"
+   }
+  },
+  {
+   "id": "corgi",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "corgi",
+   "genus": "u",
+   "former": [
+    "corgi",
+    "corgin"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "corgi"
+   }
+  },
+  {
+   "id": "ankylosaurus",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "ankylosaurus",
+   "genus": "u",
+   "former": [
+    "ankylosaurus",
+    "ankylosaurusen",
+    "ankylosaurusar",
+    "ankylosaurusarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "ankylosaurus"
+   }
+  },
+  {
+   "id": "plesiosaurie",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "plesiosaurie",
+   "genus": "u",
+   "former": [
+    "plesiosaurie",
+    "plesiosaurien",
+    "plesiosauriar",
+    "plesiosauriarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "plesiosaurie"
+   }
+  },
+  {
+   "id": "sjöodjur",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "sjöodjur",
+   "genus": "u",
+   "former": [
+    "sjöodjur",
+    "sjöodjuren",
+    "sjöodjurar",
+    "sjöodjurarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "plesiosaurie"
+   }
+  },
+  {
+   "id": "pterodactylus",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "pterodactylus",
+   "genus": "u",
+   "former": [
+    "pterodactylus",
+    "pterodactylusen",
+    "pterodactylusar",
+    "pterodactylusarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "pterodactylus"
+   }
+  },
+  {
+   "id": "flygödla",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "flygödla",
+   "genus": "u",
+   "former": [
+    "flygödla",
+    "flygödlan",
+    "flygödlor",
+    "flygödlorna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "pterodactylus"
+   }
+  },
+  {
+   "id": "triceratops",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "triceratops",
+   "genus": "u",
+   "former": [
+    "triceratops",
+    "triceratopsen",
+    "triceratopsar",
+    "triceratopsarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "triceratops"
+   }
+  },
+  {
+   "id": "hind",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "hind",
+   "genus": "u",
+   "former": [
+    "hind",
+    "hinden",
+    "hindar",
+    "hindarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "hind"
+   }
+  },
+  {
+   "id": "rådjur",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "rådjur",
+   "genus": "u",
+   "former": [
+    "rådjur",
+    "rådjuren",
+    "rådjurar",
+    "rådjurarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "hind"
+   }
+  },
+  {
+   "id": "tjur",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "tjur",
+   "genus": "u",
+   "former": [
+    "tjur",
+    "tjuren",
+    "tjurar",
+    "tjurarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "tjur"
+   }
+  },
+  {
+   "id": "highlandsko",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "highlandsko",
+   "genus": "u",
+   "former": [
+    "highlandsko",
+    "highlandskon"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "highlandsko"
+   }
+  },
+  {
+   "id": "lamm",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "lamm",
+   "genus": "n",
+   "former": [
+    "lamm",
+    "lammet",
+    "lammen"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "lamm"
+   }
+  },
+  {
+   "id": "flamingo",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "flamingo",
+   "genus": "u",
+   "former": [
+    "flamingo",
+    "flamingon"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "flamingo"
+   }
+  },
+  {
+   "id": "blåsfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "blåsfisk",
+   "genus": "u",
+   "former": [
+    "blåsfisk",
+    "blåsfisken",
+    "blåsfiskar",
+    "blåsfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "blasfisk"
+   }
+  },
+  {
+   "id": "fugu",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "fugu",
+   "genus": "u",
+   "former": [
+    "fugu",
+    "fugun"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "blasfisk"
+   }
+  },
+  {
+   "id": "get",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "get",
+   "genus": "u",
+   "former": [
+    "get",
+    "geten",
+    "getar",
+    "getarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "get"
+   }
+  },
+  {
+   "id": "gås",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "gås",
+   "genus": "u",
+   "former": [
+    "gås",
+    "gåsen",
+    "gåsar",
+    "gåsarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "gas"
+   }
+  },
+  {
+   "id": "hare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "hare",
+   "genus": "u",
+   "former": [
+    "hare",
+    "haren",
+    "harar",
+    "hararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "hare"
+   }
+  },
+  {
+   "id": "igelkott",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "igelkott",
+   "genus": "u",
+   "former": [
+    "igelkott",
+    "igelkotten",
+    "igelkottar",
+    "igelkottarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "igelkott"
+   }
+  },
+  {
+   "id": "kolibri",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kolibri",
+   "genus": "u",
+   "former": [
+    "kolibri",
+    "kolibrin"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "kolibri"
+   }
+  },
+  {
+   "id": "manet",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "manet",
+   "genus": "u",
+   "former": [
+    "manet",
+    "maneten",
+    "manetar",
+    "manetarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "manet"
+   }
+  },
+  {
+   "id": "kiwi",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kiwi",
+   "genus": "u",
+   "former": [
+    "kiwi",
+    "kiwin"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "kiwi"
+   }
+  },
+  {
+   "id": "ara",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "ara",
+   "genus": "u",
+   "former": [
+    "ara",
+    "aran",
+    "aror",
+    "arorna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "ara"
+   }
+  },
+  {
+   "id": "murmeldjur",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "murmeldjur",
+   "genus": "n",
+   "former": [
+    "murmeldjur",
+    "murmeldjuret",
+    "murmeldjuren"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "murmeldjur"
+   }
+  },
+  {
+   "id": "påfågel",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "påfågel",
+   "genus": "u",
+   "former": [
+    "påfågel",
+    "påfågelen",
+    "påfågelar",
+    "påfågelarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "pafagel"
+   }
+  },
+  {
+   "id": "pelikan",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "pelikan",
+   "genus": "u",
+   "former": [
+    "pelikan",
+    "pelikanen",
+    "pelikanar",
+    "pelikanarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "pelikan"
+   }
+  },
+  {
+   "id": "näbbdjur",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "näbbdjur",
+   "genus": "n",
+   "former": [
+    "näbbdjur",
+    "näbbdjuret",
+    "näbbdjuren"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "nabbdjur"
+   }
+  },
+  {
+   "id": "noshörning",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "noshörning",
+   "genus": "u",
+   "former": [
+    "noshörning",
+    "noshörningen",
+    "noshörningar",
+    "noshörningarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "noshorning"
+   }
+  },
+  {
+   "id": "tupp",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "tupp",
+   "genus": "u",
+   "former": [
+    "tupp",
+    "tuppen",
+    "tuppar",
+    "tupparna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "tupp"
+   }
+  },
+  {
+   "id": "säl",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "säl",
+   "genus": "u",
+   "former": [
+    "säl",
+    "sälen",
+    "sälar",
+    "sälarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "sal"
+   }
+  },
+  {
+   "id": "tukan",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "tukan",
+   "genus": "u",
+   "former": [
+    "tukan",
+    "tukanen",
+    "tukanar",
+    "tukanarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "tukan"
+   }
+  },
+  {
+   "id": "småvarelse",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "småvarelse",
+   "genus": "u",
+   "former": [
+    "småvarelse",
+    "småvarelsen",
+    "småvarelsar",
+    "småvarelsarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "smavarelse"
+   }
+  },
+  {
+   "id": "nisse",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "nisse",
+   "genus": "u",
+   "former": [
+    "nisse",
+    "nissen",
+    "nissar",
+    "nissarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "nisse"
+   }
+  },
+  {
+   "id": "höna",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "höna",
+   "genus": "u",
+   "former": [
+    "höna",
+    "hönan",
+    "hönor",
+    "hönorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D polypizza-cc0",
+   "del": {
+    "kropp": "hona"
+   }
+  },
+  {
+   "id": "tvättbjörn",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "tvättbjörn",
+   "genus": "u",
+   "former": [
+    "tvättbjörn",
+    "tvättbjörnen",
+    "tvättbjörnar",
+    "tvättbjörnarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D polypizza-cc0",
+   "del": {
+    "kropp": "tvattbjorn"
+   }
+  },
+  {
+   "id": "spindel",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "spindel",
+   "genus": "u",
+   "former": [
+    "spindel",
+    "spindelen",
+    "spindelar",
+    "spindelarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D polypizza-cc0",
+   "del": {
+    "kropp": "spindel"
+   }
+  },
+  {
+   "id": "kalkon",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kalkon",
+   "genus": "u",
+   "former": [
+    "kalkon",
+    "kalkonen",
+    "kalkonar",
+    "kalkonarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D polypizza-cc0",
+   "del": {
+    "kropp": "kalkon"
+   }
+  },
+  {
+   "id": "ninja",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "ninja",
+   "genus": "u",
+   "former": [
+    "ninja",
+    "ninjan",
+    "ninjor",
+    "ninjorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D polypizza-cc0",
+   "del": {
+    "kropp": "ninja"
+   }
+  },
+  {
+   "id": "kvinna",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kvinna",
+   "genus": "u",
+   "former": [
+    "kvinna",
+    "kvinnan",
+    "kvinnor",
+    "kvinnorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D polypizza-cc0",
+   "del": {
+    "kropp": "kvinna"
+   }
+  },
+  {
+   "id": "mus",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mus",
+   "genus": "u",
+   "former": [
+    "mus",
+    "musen",
+    "musar",
+    "musarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D polypizza-cc0",
+   "del": {
+    "kropp": "mus"
+   }
+  },
+  {
+   "id": "råtta",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "råtta",
+   "genus": "u",
+   "former": [
+    "råtta",
+    "råttan",
+    "råttor",
+    "råttorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D polypizza-cc0",
+   "del": {
+    "kropp": "ratta"
+   }
+  },
+  {
+   "id": "tomte",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "tomte",
+   "genus": "u",
+   "former": [
+    "tomte",
+    "tomten",
+    "tomtar",
+    "tomtarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D polypizza-cc0",
+   "del": {
+    "kropp": "tomte"
+   }
+  },
+  {
+   "id": "gnom",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "gnom",
+   "genus": "u",
+   "former": [
+    "gnom",
+    "gnomen",
+    "gnomar",
+    "gnomarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D polypizza-cc0",
+   "del": {
+    "kropp": "tomte"
+   }
+  },
+  {
+   "id": "trollkarlsgnom",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "trollkarlsgnom",
+   "genus": "u",
+   "former": [
+    "trollkarlsgnom",
+    "trollkarlsgnomen",
+    "trollkarlsgnomar",
+    "trollkarlsgnomarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3D polypizza-cc0",
+   "del": {
+    "kropp": "trollkarlsgnom"
+   }
   }
  ],
  "kollisioner": {},
