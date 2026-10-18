@@ -1,6 +1,6 @@
 # R3B – Reservform: okänt ord blir en ordkristall (ritning)
 
-Skriven av Arkitekten 2026-10-18. Bas: `origin/main` = `08cb63b`. **Läst** = ur filerna, **mätt** = ur körda skript, **provkört** = i skräpkopior utanför repot (`/workspace/arkitekt-r3b/`: `sA` = main + patchen, `sK` = main + R3A-patchen + R3B-patchen, byggd och spelad). Prompten till Build: `PROMPT.md`. Bilden som ska godkännas: `docs/skarmbilder/r3b/ordkristall-elefant-375x812.png`.
+Skriven av Arkitekten 2026-10-18. Bas: `origin/main` = `414f807` (R2.1 mergad; provkört på `08cb63b` + R2.1-patchen, samma innehåll, och `git apply --check` är kört mot `414f807`). **Läst** = ur filerna, **mätt** = ur körda skript, **provkört** = i skräpkopior utanför repot (`/workspace/arkitekt-r3b/`: `sA` = main + patchen, `sK` = main + R3A-patchen + R3B-patchen, byggd och spelad). Prompten till Build: `PROMPT.md`. Bilden som ska godkännas: `docs/skarmbilder/r3b/ordkristall-elefant-375x812.png`.
 
 ## 1. Vad R3B gör och medvetet inte gör
 
