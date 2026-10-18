@@ -1,0 +1,113 @@
+{
+ "version": 1,
+ "_om": "Uppdrag som Bengtsson ger på ängen och som löses genom att barnet SKRIVER i Skapa-menyn (Pennans bok). Samma form som data/uppdrag.json plus 'krav': det barnet skrev måste innehålla minst 'min' olika ord ur 'ord' (rättvist: ordet får vara böjt eller ingå i ett sammansatt ord, 'filten', 'ullmössa'; ordet behöver INTE ha en modell, ett ägg räknas). Ett fel svar ger ett skämt och ingen förlust; djuret/ägget skapas ändå. Status delas med data/uppdrag.json (useMinne.uppdrag), id:n får inte kollidera. Texterna är Arkitektens utkast (granskad: false); Christoffers egen formulering i kanin-fryser. De 24 utkasten (rundor/R6A-bengtsson, RITNING avsnitt 5) kommer i R6A-3 efter Copilots granskning.",
+ "uppdrag": [
+  {
+   "id": "kanin-fryser",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Din kanin fryser. Skriv fram något som värmer.",
+   "mal": {},
+   "klart": "Åh, vad skönt!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Det verkar som att din kanin fryser. Se om du kan skriva fram något som värmer.",
+   "klart_bengtsson": "Ahh, så skönt! Nu är kaninen varm igen. Tack för hjälpen!",
+   "krav": {
+    "ord": [
+     "filt",
+     "pläd",
+     "täcke",
+     "mössa",
+     "halsduk",
+     "tröja",
+     "jacka",
+     "kofta",
+     "kappa",
+     "mantel",
+     "vantar",
+     "strumpor",
+     "päls",
+     "varm",
+     "eld",
+     "brasa",
+     "kamin",
+     "lägereld",
+     "ljus",
+     "kakao",
+     "soppa",
+     "te"
+    ],
+    "min": 1
+   },
+   "granskad": false
+  },
+  {
+   "id": "regn-skydd",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Det regnar. Skriv fram något som skyddar mot regnet.",
+   "mal": {},
+   "klart": "Nu blir ingen blöt.",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Oj, det börjar regna! Kan du skriva fram något som skyddar mot regnet?",
+   "klart_bengtsson": "Nu blir ingen blöt! Vilken fin idé.",
+   "krav": {
+    "ord": [
+     "paraply",
+     "regnkappa",
+     "regnrock",
+     "regnjacka",
+     "stövlar",
+     "stövel",
+     "gummistövlar",
+     "kapuschong",
+     "tak",
+     "hus",
+     "stuga",
+     "tält",
+     "grotta",
+     "träd",
+     "skärm"
+    ],
+    "min": 1
+   },
+   "granskad": false
+  },
+  {
+   "id": "sol-skugga",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Solen steker. Skriv fram något som ger skugga.",
+   "mal": {},
+   "klart": "Ahh, skugga.",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Solen steker! Se om du kan skriva fram något som ger skugga.",
+   "klart_bengtsson": "Ahh, skugga! Nu kan alla vila i det svala.",
+   "krav": {
+    "ord": [
+     "parasoll",
+     "solhatt",
+     "hatt",
+     "keps",
+     "paraply",
+     "träd",
+     "tak",
+     "tält",
+     "moln",
+     "hus",
+     "stuga",
+     "grotta",
+     "skärm"
+    ],
+    "min": 1
+   },
+   "granskad": false
+  }
+ ]
+}

@@ -1,13 +1,104 @@
 {
- "version": 1,
- "_om": "Figurer som ger uppdrag. R6A: alla uppdrag i spelet ges av Doktor Bengtsson. Namnet och tonen kommer från Christoffer; 'granskad: false' = utkast, Copilot har inte granskat och Christoffer har inte godkänt tonen. Utseende (entitet) kommer med R5/R6B; tills dess syns bara namnet.",
+ "version": 2,
+ "_om": "Figurer (NPC). R6A-1: Doktor Bengtsson ger uppdragen. R6A-2: han syns som en klickbar 2D-bild; 'bilder' = en bild per mine, 'miner' = regler i prioritetsordning (första träffande läge vinner, annars 'standard'), 'repliker' = hans rader när han klickas. Ett nytt ansikte eller en ny figur = en bild i public/npc/ + rader här, ingen kod. 'granskad: false' = utkast, Copilot har inte granskat och Christoffer har inte godkänt tonen. Bilderna är Christoffers egna (AI-genererade), källa i 'kalla'.",
+ "kalla": "Christoffer, OneDrive Troll/Bengtsson (egna bilder, AI-genererade; 848x1264 PNG utan genomskinlighet, frilagda och omgjorda till WebP, se rundor/R6A-2-klicka-bengtsson/RITNING.md)",
  "npc": {
   "bengtsson": {
    "namn": "Doktor Bengtsson",
    "roll": "uppdragsgivare",
    "ton": "språkdoktor, varm, lite virrig",
    "entitet": null,
-   "granskad": false
+   "granskad": false,
+   "alt": "Doktor Bengtsson. Tryck för att få ett uppdrag.",
+   "bilder": {
+    "framsida": "/npc/bengtsson/framsida.webp",
+    "glad": "/npc/bengtsson/glad.webp",
+    "tankande": "/npc/bengtsson/tankande.webp",
+    "besegrat": "/npc/bengtsson/besegrat.webp",
+    "solbrand": "/npc/bengtsson/solbrand.webp",
+    "telefon": "/npc/bengtsson/telefon.webp",
+    "karta": "/npc/bengtsson/karta.webp",
+    "automat": "/npc/bengtsson/automat.webp"
+   },
+   "standard": "framsida",
+   "miner": [
+    {
+     "lage": "fel",
+     "bild": "automat",
+     "not": "barnets text höll inte kravet: biljettautomaten 'Okänd destination'-skämtet, inget straff",
+     "varar_ms": 5000
+    },
+    {
+     "lage": "klar_nyss",
+     "bild": "glad",
+     "not": "uppdraget klarades för några sekunder sedan",
+     "varar_ms": 9000
+    },
+    {
+     "lage": "pagar",
+     "bild": "tankande",
+     "not": "ett uppdrag pågår"
+    },
+    {
+     "lage": "bara_aventyr",
+     "bild": "karta",
+     "not": "inga fler uppdrag på ängen, äventyrsuppdrag väntar"
+    },
+    {
+     "lage": "alla_klara",
+     "bild": "solbrand",
+     "not": "allt klart: han åker på semester (sjö-gagen)"
+    }
+   ],
+   "reserverade": {
+    "telefon": "R6A-3: Bengtsson ringer (biljett-gagen G1)",
+    "besegrat": "R6A-3: syntaxviruset besegrat (uppdrag 22 och 24)"
+   },
+   "repliker": {
+    "fel": [
+     "Hmm, det där ser fint ut, men jag tror inte att det hjälper. Försök med något annat!",
+     "Intressant! Men jag tänkte på något annat. Vad mer kan du komma på?",
+     "Oj, vad roligt! Men det var inte riktigt det jag letade efter. Prova igen!"
+    ],
+    "inga_fler": "Nu har du hjälpt mig med allt jag kommer på just nu. Tack, du är en riktig språkdoktor!",
+    "bara_aventyr": "Här på ängen har jag inga fler uppdrag just nu. Ute på äventyret väntar fler. Titta i Uppdragsboken!",
+    "granskad": false
+   }
+  },
+  "syntaxviruset": {
+   "namn": "Syntaxviruset",
+   "roll": "fiende",
+   "ton": "blandar ihop orden, men är mest blyg",
+   "entitet": null,
+   "granskad": false,
+   "alt": "Syntaxviruset",
+   "bilder": {
+    "blyg": "/npc/syntax/1-blyg.webp",
+    "radd": "/npc/syntax/2-radd.webp",
+    "besegrad": "/npc/syntax/3-besegrad.webp",
+    "arg": "/npc/syntax/4-arg.webp",
+    "arg_ny": "/npc/syntax/4-arg-ny.webp"
+   },
+   "standard": "blyg",
+   "miner": [],
+   "reserverade": {
+    "alla": "R6A-3/R6B: uppdrag 22 och 24 (syntaxvirus). Blyg = första mötet, rädd = hotas av en rätt ordföljd, besegrad = klart, arg = slutbossen. arg_ny är en omritad variant av arg."
+   }
+  }
+ },
+ "foremal": {
+  "_om": "Stillbilder (inte figurer) som uppdragen kan visa. Ännu inte kopplade.",
+  "biljett": {
+   "bild": "/npc/ovrigt/biljett.webp",
+   "tanke": "Bengtssons biljett i sjö-gagen (G1)"
+  },
+  "sjo": {
+   "bild": "/npc/ovrigt/sjo.webp",
+   "tanke": "vykortet från sjön (G2), eller bakgrund till uppdrag vid sjön"
+  },
+  "solros": {
+   "bild": "/npc/ovrigt/solros.webp",
+   "tanke": "belöningen när barnet bygger SOL + ROS (uppdrag 12)"
   }
  }
 }
