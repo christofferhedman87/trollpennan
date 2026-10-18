@@ -1,0 +1,2 @@
+Elden är en kon från munnen (+25° runt y, 20° spridning, 14–26 px, röd–orange–gul), men jag har inte tittat på en renderad bild, så den kan fortfarande se ut som en klump om `pstorlek` inte når shadern.
+Glöden sitter i kroppens mitt med vit kärna, #FFE066 och orange kant (opacitet 0,45–0,7); glittret är en jämn ring som blinkar i skala 12–16 px med fast guld eller vitt. `typecheck:pages` och `build:pages` gick igenom. `test:product` startade inte: Node 20.19 saknar `--experimental-strip-types`.
