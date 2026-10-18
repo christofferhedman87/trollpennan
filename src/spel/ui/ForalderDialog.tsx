@@ -3,6 +3,7 @@ import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
 import type { Lage } from "../minne.ts";
 import { ForalderLiv } from "../samling.tsx";
+import { SaknadeOrd } from "./SaknadeOrd.tsx";
 import { LJUD_AV, LJUD_PA, TEXTER } from "./spelData.ts";
 
 type ForalderDialogProps = {
@@ -110,6 +111,7 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
                 <li key={o}>{o}</li>
               ))}
             </ul>
+            <SaknadeOrd />
             <h3>{TEXTER.borja_om.knapp}</h3>
             <button type="button" className="farlig" data-testid="borja-om" style={{ width: "100%" }} onClick={() => setSaker(true)}>
               {TEXTER.borja_om.knapp}

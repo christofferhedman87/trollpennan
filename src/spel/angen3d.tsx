@@ -17,6 +17,7 @@ import { artFarg, flyger, hoppHojd, simmar, svavar, vikt } from "./entiteter.ts"
 import { faestTillbehor, procAnkare } from "./tillbehor/index.ts";
 import { DjurEffekter } from "./effekter.tsx";
 import { KenneyNatur } from "./kenneyNatur.tsx";
+import { AGG_KROPP, OrdAgg, ReservAgg } from "./ordagg.tsx";
 
 const HINT = (texterJson as { tred_hint: string }).tred_hint;
 const SNART = (texterJson as { demo: { snart: string } }).demo.snart;
@@ -879,9 +880,12 @@ function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
               <GltfDjur spec={spec} signal={signal} />
             </Suspense>
           </ModellGren>
+        ) : spec.kropp === AGG_KROPP ? (
+          <OrdAgg spec={spec} />
         ) : (
           <DjurForm spec={spec} />
         )}
+        <ReservAgg spec={spec} />
         <DjurEffekter varelse={spec} ankare={ankare} />
       </group>
     </group>

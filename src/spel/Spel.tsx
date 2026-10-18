@@ -3,6 +3,8 @@ import upplevelse from "../../data/upplevelse.json";
 import { LagringsInfo } from "./LagringsInfo";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { hemligaKvar, ordLista, tolka } from "@/tolk/tolka.ts";
+import { tolkaMedReserv } from "@/tolk/reserv.ts";
+import { noteraSaknade } from "@/tolk/saknade.ts";
 import type { ForslagKort, Ord, Utfall } from "@/tolk/typer.ts";
 import { BYGG, byggMedId, formelBygg, tolkaBygg } from "@/tolk/byggtolk.ts";
 import { bestamdHem, franTolk, ledigPlats } from "./bygge.ts";
@@ -739,7 +741,7 @@ export function Spel() {
       return;
     }
 
-    const utfall: Utfall = tolka(raw, { kalla: opt.hand ? "skriv" : "kort", inteGuld: opt.inteGuld });
+    const utfall: Utfall = tolkaMedReserv(raw, { kalla: opt.hand ? "skriv" : "kort", inteGuld: opt.inteGuld });
     if (utfall.typ === "sparr") {
       rensaSkriv();
       visaBanner(utfall.text, "sparr");
@@ -758,6 +760,10 @@ export function Spel() {
       setBehover({ text: utfall.text, djur: utfall.djur });
       setForslag(null);
       return;
+    }
+    if (utfall.varelse.reserv?.length) {
+      useMinne.getState().sparaOkanda(utfall.okanda);
+      noteraSaknade(utfall.varelse.reserv);
     }
     if (utfall.guld.length) utfall.varelse.glans = true;
     const { nya, somnade } = useMinne.getState().laggPaAng(utfall.varelse, utfall.antal);

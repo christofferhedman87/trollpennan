@@ -82,6 +82,17 @@ export type BlockData = {
 
 export type TillbehorSpec = { id: string; farg: string | null; glans: boolean };
 
+/** Ett ord som tolka() inte känner, ritat som ett ägg (data/reserv.json, src/tolk/reserv.ts). */
+export type ReservDel = {
+  ord: string;
+  kategori: string;
+  steg: "kategori_ord" | "lemma" | "sammansatt" | "regel" | "plats" | "agg";
+  plats: "djur" | "med" | "som" | "adj";
+  farg: string;
+  /** Ordet i kategori-ord.json som träffen byggde på (för listan över saknade ord); null = regel eller plats. */
+  grund?: string | null;
+};
+
 export type Varelse = {
   kropp: string;
   farg: string | null;
@@ -96,6 +107,8 @@ export type Varelse = {
   formel: string;
   beskrivning: string;
   overraskningar: { effekt: string; text: string }[];
+  /** Okända ord som ägg. Vid kropp "agg" är första posten själva kroppen, övriga svävar ovanför. */
+  reserv?: ReservDel[];
 };
 
 export type ForslagKort = { id: string; visa: string };

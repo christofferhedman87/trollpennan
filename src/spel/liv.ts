@@ -318,6 +318,7 @@ export function komIhagDjur(v: Varelse & { uid: string }): string | null {
     ny = niva.form;
   }
   if (!s.liv[v.uid]) useMinne.setState({ liv: { ...s.liv, [v.uid]: liv } });
+  if (v.kropp === "agg") return null; // ordägget har liv men är ingen albumkropp
   useMinne.setState({
     albumKropp: { ...useMinne.getState().albumKropp, [v.kropp]: bast },
     seddaNiva: [...sedda],
