@@ -5,7 +5,7 @@
 //   node scripts/check-spel-struktur.mjs            efter körning R1B (slutläget, = --steg b)
 //   node scripts/check-spel-struktur.mjs --skriv    skriv ny testid-baslinje (används INTE i R1)
 // Kontroller (alla måste vara gröna):
-//   1. src/spel/Spel.tsx har högst MAX_SPEL rader (steg a: 2800, steg b: 2050)
+//   1. src/spel/Spel.tsx har högst MAX_SPEL rader (steg a: 2800, steg b: 1850)
 //   2. mängden data-testid (JSX-attribut) i src/spel/**/*.tsx är identisk med baslinjen
 //   3. src/spel/Spel.tsx och src/spel/ui/** har inga oanvända importer
 //   4. inga filer i src/spel/ui/ importerar Spel.tsx (ingen cirkulär import)
@@ -19,7 +19,7 @@ if (STEG !== "a" && STEG !== "b") {
   console.error('--steg måste vara "a" eller "b"');
   process.exit(2);
 }
-const MAX_SPEL = STEG === "a" ? 2800 : 2050;
+const MAX_SPEL = STEG === "a" ? 2800 : 1850;
 const BASLINJE = "rundor/R1-dela-spel/testid-baslinje.json";
 const KRAVD_A = ["typer.ts", "spelData.ts", "hjalp.ts", "OnskaAnsikte.tsx", "HoldOppnare.tsx"];
 const KRAVD_B = [
