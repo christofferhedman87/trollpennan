@@ -38,6 +38,8 @@
     "mat": { "typ": "foremal", "kat": "mat", "tri": 1500, "kb": 80, "malhojd": 0.4, "art": "#FFB74D", "kategoriord": "mat" },
     "kläder": { "typ": "tillbehor", "kat": "kläder", "tri": 4000, "kb": 200, "malhojd": 0.5, "art": "#9575CD", "kategoriord": "foremal" }
   },
+  "paket_prioritet": ["kenney-", "quaternius-", "kaykit-", "gobkit-", "polypizza-", "oga-"],
+  "_paket_prioritet": "Ordning när flera modeller vill ha samma ord (förstkommen får ordet; --prio i urval-kommandot). Kenney/Quaternius/KayKit har stilen som redan finns i spelet (nära) och går före Gobkit, Poly Pizza och OpenGameArt (avvikande eller okänt ursprung).",
   "forladda_id": [],
   "_forladda_id": "Id som hämtas direkt vid start (inom budget.forladdat_kb). Alla andra R3C-modeller får forladda: false och hämtas när ordet används.",
   "fram_per_paket": {
