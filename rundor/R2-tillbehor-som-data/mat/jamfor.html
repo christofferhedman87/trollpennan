@@ -1,0 +1,41 @@
+<!doctype html><body><script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import * as SU from "three/examples/jsm/utils/SkeletonUtils.js";
+import * as ny from "/src/spel/tillbehor/index.ts";
+import * as old from "/src/spel/_gammal.ts";
+import { byggPack, forma } from "/src/spel/djurmesh.ts";
+const FIL={kanin:"animal-bunny",katt:"animal-cat",hund:"animal-dog",fisk:"animal-fish","fågel":"animal-chick",uggla:"animal-chick",drake:"drake",groda:"groda","häst":"hast"};
+const MAL={kanin:1,katt:1,hund:1.05,fisk:0.7,"fågel":0.8,uggla:0.8,drake:1.35,groda:0.85,"häst":1.5};
+const ACC=["krona","glasögon","hatt","rosett","halsduk","ryggsäck","mantel","horn"];
+const FARG=[null,"#5e35b1","#ffc107"]; const KEN=new Set(["kanin","katt","hund","fisk"]);
+const L=new GLTFLoader(); const res=[];
+function delar(root){ const ut=[]; root.traverse(o=>{ if(o.name&&o.name.startsWith("tillbehor-")){ o.updateWorldMatrix(true,false); const org=new THREE.Vector3().setFromMatrixPosition(o.matrixWorld); const d=[[org.toArray(),[1,1,1]]]; o.children.forEach(ch=>{ch.updateWorldMatrix(true,false); const p=new THREE.Vector3().setFromMatrixPosition(ch.matrixWorld); const sc=new THREE.Vector3().setFromMatrixScale(ch.matrixWorld); d.push([p.toArray(),sc.toArray()]);}); ut.push({namn:o.name,d}); } }); return ut; }
+const CG={}; async function klon(k){ const g=(CG[k]??=await L.loadAsync("/models/"+FIL[k]+".glb")); const c=SU.clone(g.scene); c.updateMatrixWorld(true);
+ const box=new THREE.Box3().setFromObject(c); const h=Math.max(.001,box.max.y-box.min.y); const s=MAL[k]/h; c.scale.setScalar(s); c.position.y=-box.min.y*s; c.updateMatrixWorld(true); return {c,s}; }
+const PROC=["gris","dinosaurie","ekorre","bäver","haj","standard"];
+for(const k of (new URLSearchParams(location.search).get("k")||[...Object.keys(FIL),...PROC].join(",")).split(",")) for(const id of ACC) for(const farg of (id==="hatt"||id==="krona")?FARG:[null]){
+  const spec=[{id,farg,glans:false}];
+  let a,b,bz=null;
+  if(FIL[k]){ const A=await klon(k); const B=await klon(k);
+    if(KEN.has(k)){ let n=null; B.c.traverse(o=>{if(o.name==="body")n=o}); const bb=new THREE.Box3().setFromObject(n??B.c); bz=bb.min.z+bb.max.z; }
+    old.faestTillbehor(A.c,old.ankareFor(A.c,k,A.s),{tillbehor:spec,kropp:k}); ny.faestTillbehor(B.c,k,spec,"modell");
+    a=delar(A.c); b=delar(B.c);
+  }
+  else { const A=new THREE.Group(), B=new THREE.Group(); old.faestTillbehor(A,old.procAnkare(k),{tillbehor:spec,kropp:k}); ny.faestTillbehor(B,k,spec); a=delar(A); b=delar(B); }
+  let maxd=0, fel="";
+  if(a.length!==b.length||a.length!==1) fel="antal "+a.length+"/"+b.length; else {
+    if(a[0].d.length!==b[0].d.length) fel="delar "+a[0].d.length+"/"+b[0].d.length; else for(let i=0;i<a[0].d.length;i++){
+      const pa=a[0].d[i][0].slice(); const oa=a[0].d[0][0], ob=b[0].d[0][0]; const pb=b[0].d[i][0];
+      const sym=(id==='ryggsäck'||id==='mantel');
+      for(let j=0;j<3;j++){
+        let ra=pa[j]-oa[j]; // relativt gruppens origo
+        if(sym) { if(j===2&&bz!==null) ra=-ra; if(j===0&&bz===null) ra=-ra; }
+        let oo=oa[j]; if(bz!==null&&j===2) oo=bz-oa[j];
+        const exp=oo+ra; maxd=Math.max(maxd,Math.abs(exp-pb[j]),Math.abs(a[0].d[i][1][j]-b[0].d[i][1][j]));
+      } } }
+  const AVSIKT=new Set(['kanin/horn','katt/horn','hund/horn','fågel/horn','uggla/horn','kanin/mantel','katt/mantel','fågel/ryggsäck','uggla/ryggsäck']);
+  res.push({k,id,farg,maxd,fel,avsikt:AVSIKT.has(k+'/'+id)});
+}
+window.RES=res; window.klar=true;
+</script></body>

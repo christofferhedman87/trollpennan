@@ -1,0 +1,100 @@
+{
+ "version": 1,
+ "kalla": "Transkriberat ur src/spel/tillbehorFaste.ts (byggKrona … byggGlas, skalaFor, platsFor, pannaPlats, mantelPlats) av Arkitekten. Se rundor/R2-tillbehor-som-data/RITNING.md avsnitt 3.",
+ "enheter": "Delarna ritas i tillbehörets eget rum: origo = fästpunkten, +z = framåt (mot djurets nos), +y = upp. pos/skala är samma tal som i del() i gamla koden. Ryggsäck och mantel är speglade i z (gamla koden ritade dem med +z bakåt och vände dem med rotateY(π)). form: cyl, kon, ring, kub, sfar, mantel (geometrier i bygg.ts). kant = kontursskala. farg.karta byter en lexikonfärg mot tillbehörets egen. skala: värde = max(min, minBredd·bredd, min(bredd·kBredd, hojd·kHojd)) · faktor, där bredd/hojd är djurets huvudmått ur fastpunkter. plats: startar i ankaret; mot = dra mot ett annat ankare (t = alla axlar, y = bara höjden); ut/upp/fram = förskjutning (-x, +y, +z) i enheten tecken·max(min, bredd·b + hojd·h + abs).",
+ "tillbehor": {
+  "krona": {
+   "farg": { "standard": "#F2B632", "karta": { "#ffc107": "#F2B632" } },
+   "delar": [
+    { "form": "cyl", "pos": [0, 0.1, 0], "skala": [0.46, 0.7, 0.4], "kant": 1.28 },
+    { "form": "kon", "pos": [0, 0.24, 0.12], "skala": [1, 1, 1], "kant": 1.28 },
+    { "form": "kon", "pos": [-0.14, 0.2, 0.06], "skala": [0.78, 0.78, 0.78], "kant": 1.28 },
+    { "form": "kon", "pos": [0.14, 0.2, 0.06], "skala": [0.78, 0.78, 0.78], "kant": 1.28 },
+    { "form": "kon", "pos": [-0.1, 0.18, -0.08], "skala": [0.78, 0.78, 0.78], "kant": 1.28 },
+    { "form": "kon", "pos": [0.1, 0.18, -0.08], "skala": [0.78, 0.78, 0.78], "kant": 1.28 }
+   ],
+   "plats": { "ankare": "huvudTopp" },
+   "skala": { "min": 0.28, "kBredd": 1.15, "kHojd": 0.55, "faktor": 1.6 }
+  },
+  "glasögon": {
+   "farg": { "standard": "#6D4C41" },
+   "delar": [
+    { "form": "ring", "pos": [-0.28, 0, 0], "skala": [1, 1, 1], "kant": 1.26 },
+    { "form": "ring", "pos": [0.28, 0, 0], "skala": [1, 1, 1], "kant": 1.26 },
+    { "form": "kub", "pos": [0, 0.02, 0], "skala": [0.22, 0.07, 0.07], "kant": 1.26 },
+    { "form": "kub", "pos": [-0.5, 0.02, -0.12], "skala": [0.055, 0.055, 0.24], "kant": 1.26 },
+    { "form": "kub", "pos": [0.5, 0.02, -0.12], "skala": [0.055, 0.055, 0.24], "kant": 1.26 }
+   ],
+   "plats": { "ankare": "ansikte" },
+   "skala": { "minBredd": 0.34, "kBredd": 1.35, "kHojd": 0.72, "faktor": 0.8 }
+  },
+  "hatt": {
+   "farg": { "standard": "#8D6E63" },
+   "delar": [
+    { "form": "cyl", "pos": [0, 0.016, 0], "skala": [1.2, 0.12, 1.2], "kant": 1.22 },
+    { "form": "cyl", "pos": [0, 0.15, 0], "skala": [0.62, 0.78, 0.62], "kant": 1.18 }
+   ],
+   "varianter": [
+    {
+     "farg": "#5e35b1",
+     "namn": "trollkarlshatt",
+     "delar": [
+      { "form": "cyl", "pos": [0, 0.02, 0], "skala": [0.95, 0.14, 0.95], "kant": 1.22 },
+      { "form": "kon", "pos": [0, 0.59, 0], "skala": [0.85, 2.4, 0.85], "kant": 1.18 }
+     ]
+    }
+   ],
+   "plats": { "ankare": "huvudTopp" },
+   "skala": { "min": 0.34, "kBredd": 1.05, "kHojd": 0.5, "faktor": 1 }
+  },
+  "halsduk": {
+   "farg": { "standard": "#E57373" },
+   "delar": [
+    { "form": "ring", "pos": [0, 0, 0], "skala": [1.35, 1.35, 1.35], "rot": [1.5707963267948966, 0, 0], "kant": 1.2 },
+    { "form": "kub", "pos": [0, -0.28, 0.2], "skala": [0.12, 0.36, 0.06], "kant": 1.16 }
+   ],
+   "plats": { "ankare": "hals" },
+   "skala": { "min": 0.55, "kBredd": 1.45, "kHojd": 0.7, "faktor": 1 }
+  },
+  "rosett": {
+   "farg": { "standard": "#F48FB1" },
+   "delar": [
+    { "form": "kub", "pos": [-0.16, 0, 0], "skala": [0.22, 0.14, 0.06], "rot": [0, 0, 0.55], "kant": 1.22 },
+    { "form": "kub", "pos": [0.16, 0, 0], "skala": [0.22, 0.14, 0.06], "rot": [0, 0, -0.55], "kant": 1.22 },
+    { "form": "kub", "pos": [0, 0, 0.02], "skala": [0.09, 0.09, 0.08], "kant": 1.16 }
+   ],
+   "plats": { "ankare": "ansikte", "ut": { "bredd": 0.46, "min": 0.04 }, "upp": { "hojd": 0.05, "min": 0.02 } },
+   "platsMesh": { "ankare": "ogonL", "ut": { "bredd": 0.2 }, "upp": { "abs": 0.05 } },
+   "skala": { "min": 0.22, "kBredd": 0.85, "kHojd": 0.4, "faktor": 1 }
+  },
+  "ryggsäck": {
+   "farg": { "standard": "#1E88E5" },
+   "delar": [
+    { "form": "sfar", "pos": [0, 0.32, -0.16], "skala": [0.82, 0.72, 0.52], "kant": 1.16 },
+    { "form": "kub", "pos": [-0.16, 0.14, 0.2], "skala": [0.07, 0.07, 0.46], "kant": 1.14 },
+    { "form": "kub", "pos": [0.16, 0.14, 0.2], "skala": [0.07, 0.07, 0.46], "kant": 1.14 },
+    { "form": "kub", "pos": [0, 0.34, -0.34], "skala": [0.4, 0.22, 0.06], "kant": 1.12 }
+   ],
+   "plats": { "ankare": "rygg" },
+   "skala": { "min": 0.34, "kBredd": 1.05, "kHojd": 0.5, "faktor": 1 }
+  },
+  "mantel": {
+   "farg": { "standard": "#6A1B9A" },
+   "delar": [
+    { "form": "mantel", "pos": [0, 0, 0], "skala": [1, 1, 1], "kant": 1.05 },
+    { "form": "kub", "pos": [0, 0.02, 0], "skala": [0.72, 0.08, 0.1], "kant": 1.12 },
+    { "form": "sfar", "pos": [0, 0.04, 0.06], "skala": [0.2, 0.2, 0.2], "kant": 1.18 }
+   ],
+   "plats": { "ankare": "hals", "mot": { "ankare": "huvudTopp", "t": 0.28 }, "fram": { "bredd": 0.14, "min": 0.04, "tecken": -1 } },
+   "skala": { "min": 0.34, "kBredd": 1.05, "kHojd": 0.5, "faktor": 1.25 }
+  },
+  "horn": {
+   "farg": { "standard": "#F2B632" },
+   "delar": [
+    { "form": "kon", "pos": [0, 0.3335, 0], "skala": [1.2, 1.45, 1.2], "kant": 1.24 }
+   ],
+   "plats": { "ankare": "ansikte", "mot": { "ankare": "huvudTopp", "y": 0.62 }, "fram": { "bredd": 0.16, "min": 0.05 } },
+   "skala": { "min": 0.28, "kBredd": 1.15, "kHojd": 0.55, "faktor": 1.248 }
+  }
+ }
+}

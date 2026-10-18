@@ -1,0 +1,615 @@
+{
+ "version": 1,
+ "kalla": "Härledd ur src/spel/tillbehorFaste.ts (ankareFor, PROC_ANKARE, skalaFor, platsFor) av rundor/R2-tillbehor-som-data/r2-skapa-fastpunkter.mjs. Se RITNING.md avsnitt 3.",
+ "enheter": "mesh = absoluta vektorer i djurets meshrum (generiska former och effekter). modell.ref=bbox: [fx,fy,fz] = bråkdel av nodens Box3 (x 0,5 = mitten), valfri d = tillägg i enheter. modell.ref=ben: d = offset från benets världsposition. Alla z-värden har djurets framsida mot +z.",
+ "kroppar": {
+  "standard": {
+   "mesh": {
+    "bredd": 0.72,
+    "hojd": 1.2,
+    "huvudTopp": [0, 1.2, 0.12],
+    "ansikte": [0, 0.92, 0.36],
+    "ogonL": [-0.12, 0.92, 0.36],
+    "ogonR": [0.12, 0.92, 0.36],
+    "mun": [0, 0.82, 0.48],
+    "hals": [0, 0.64, 0.162],
+    "rygg": [0, 0.74, -0.16]
+   }
+  },
+  "gris": {
+   "mesh": {
+    "bredd": 0.9,
+    "hojd": 1.2,
+    "huvudTopp": [0, 1.2, 0.12],
+    "ansikte": [0, 0.92, 0.52],
+    "ogonL": [-0.12, 0.92, 0.52],
+    "ogonR": [0.12, 0.92, 0.52],
+    "mun": [0, 0.82, 0.48],
+    "hals": [0, 0.64, 0.234],
+    "rygg": [0, 0.74, -0.16]
+   }
+  },
+  "dinosaurie": {
+   "mesh": {
+    "bredd": 0.72,
+    "hojd": 1.2,
+    "huvudTopp": [0, 1.2, 0.12],
+    "ansikte": [0, 0.92, 0.52],
+    "ogonL": [-0.12, 0.92, 0.52],
+    "ogonR": [0.12, 0.92, 0.52],
+    "mun": [0, 0.82, 0.48],
+    "hals": [0, 0.64, 0.234],
+    "rygg": [0, 0.74, -0.16]
+   }
+  },
+  "bäver": {
+   "mesh": {
+    "bredd": 0.72,
+    "hojd": 1.2,
+    "huvudTopp": [0, 1.2, 0.12],
+    "ansikte": [0, 0.92, 0.36],
+    "ogonL": [-0.12, 0.92, 0.36],
+    "ogonR": [0.12, 0.92, 0.36],
+    "mun": [0, 0.82, 0.48],
+    "hals": [0, 0.64, 0.162],
+    "rygg": [0, 0.74, -0.16]
+   }
+  },
+  "ekorre": {
+   "mesh": {
+    "bredd": 0.72,
+    "hojd": 1.2,
+    "huvudTopp": [0, 1.2, 0.12],
+    "ansikte": [0, 0.92, 0.52],
+    "ogonL": [-0.12, 0.92, 0.52],
+    "ogonR": [0.12, 0.92, 0.52],
+    "mun": [0, 0.82, 0.48],
+    "hals": [0, 0.64, 0.234],
+    "rygg": [0, 0.7, -0.14]
+   },
+   "overstyr": {
+    "krona": {
+     "faktor": 1.12
+    },
+    "horn": {
+     "faktor": 0.8736
+    }
+   }
+  },
+  "haj": {
+   "mesh": {
+    "bredd": 0.42,
+    "hojd": 0.46,
+    "huvudTopp": [0, 0.4, 0.16],
+    "ansikte": [0, 0.28, 0.4],
+    "ogonL": [-0.1, 0.28, 0.4],
+    "ogonR": [0.1, 0.28, 0.4],
+    "mun": [0, 0.24, 0.42],
+    "hals": [0, 0, 0.18],
+    "rygg": [0, 0.42, -0.06]
+   },
+   "overstyr": {
+    "horn": {
+     "faktor": 1.52,
+     "plats": {
+      "ankare": "huvudTopp",
+      "upp": {
+       "hojd": 0.1,
+       "min": 0.04
+      },
+      "fram": {
+       "bredd": 0.22,
+       "min": 0.05
+      }
+     }
+    }
+   }
+  },
+  "kanin": {
+   "mesh": {
+    "bredd": 0.72,
+    "hojd": 1.2,
+    "huvudTopp": [0, 1.2, 0.12],
+    "ansikte": [0, 0.92, 0.36],
+    "ogonL": [-0.12, 0.92, 0.36],
+    "ogonR": [0.12, 0.92, 0.36],
+    "mun": [0, 0.82, 0.48],
+    "hals": [0, 0.64, 0.162],
+    "rygg": [0, 0.7, -0.14]
+   },
+   "modell": {
+    "nod": "body",
+    "ref": "bbox",
+    "matt": {
+     "bredd": {
+      "hojd": 0.9
+     }
+    },
+    "ankare": {
+     "huvudTopp": [0.5, 0.72, 0.58],
+     "ansikte": [0.5, 0.78, 1],
+     "ogonL": [0.34, 0.78, 1],
+     "mun": [0.5, 0.5, 1],
+     "hals": [0.5, 0.46, 0.54],
+     "rygg": [0.5, 0.56, 0.34],
+     "ogonR": [0.66, 0.78, 1]
+    }
+   },
+   "overstyr": {
+    "horn": {
+     "plats": {
+      "ankare": "huvudTopp",
+      "mot": {
+       "ankare": "ansikte",
+       "t": 0.4
+      }
+     }
+    },
+    "mantel": {
+     "faktor": 0.85,
+     "plats": {
+      "ankare": "hals",
+      "mot": {
+       "ankare": "huvudTopp",
+       "t": 0.1
+      },
+      "fram": {
+       "bredd": 0.14,
+       "min": 0.04,
+       "tecken": -1
+      }
+     }
+    }
+   }
+  },
+  "katt": {
+   "mesh": {
+    "bredd": 0.72,
+    "hojd": 1.2,
+    "huvudTopp": [0, 1.2, 0.12],
+    "ansikte": [0, 0.92, 0.36],
+    "ogonL": [-0.12, 0.92, 0.36],
+    "ogonR": [0.12, 0.92, 0.36],
+    "mun": [0, 0.82, 0.48],
+    "hals": [0, 0.64, 0.162],
+    "rygg": [0, 0.72, -0.14]
+   },
+   "modell": {
+    "nod": "body",
+    "ref": "bbox",
+    "matt": {
+     "bredd": {
+      "hojd": 0.9
+     }
+    },
+    "ankare": {
+     "huvudTopp": [0.5, 0.93, 0.78],
+     "ansikte": [0.5, 0.78, 1],
+     "ogonL": [0.34, 0.78, 1],
+     "mun": [0.5, 0.5, 1],
+     "hals": [0.5, 0.5, 0.4],
+     "rygg": [0.5, 0.58, 0.36],
+     "ogonR": [0.66, 0.78, 1]
+    }
+   },
+   "overstyr": {
+    "horn": {
+     "plats": {
+      "ankare": "huvudTopp",
+      "mot": {
+       "ankare": "ansikte",
+       "t": 0.4
+      }
+     }
+    },
+    "mantel": {
+     "faktor": 0.85,
+     "plats": {
+      "ankare": "hals",
+      "mot": {
+       "ankare": "huvudTopp",
+       "t": 0.1
+      },
+      "fram": {
+       "bredd": 0.14,
+       "min": 0.04,
+       "tecken": -1
+      }
+     }
+    },
+    "rosett": {
+     "plats": {
+      "ankare": "ansikte",
+      "ut": {
+       "bredd": 0.24,
+       "abs": -0.03,
+       "min": 0.04
+      },
+      "upp": {
+       "hojd": 0.05,
+       "min": 0.02
+      }
+     }
+    }
+   }
+  },
+  "hund": {
+   "mesh": {
+    "bredd": 0.9,
+    "hojd": 1.2,
+    "huvudTopp": [0, 1.2, 0.12],
+    "ansikte": [0, 0.92, 0.36],
+    "ogonL": [-0.12, 0.92, 0.36],
+    "ogonR": [0.12, 0.92, 0.36],
+    "mun": [0, 0.78, 0.75],
+    "hals": [0, 0.64, 0.162],
+    "rygg": [0, 0.7, -0.16]
+   },
+   "modell": {
+    "nod": "body",
+    "ref": "bbox",
+    "matt": {
+     "bredd": {
+      "hojd": 0.9
+     }
+    },
+    "ankare": {
+     "huvudTopp": [0.5, 0.92, 0.72],
+     "ansikte": [0.5, 0.78, 1],
+     "ogonL": [0.34, 0.78, 1],
+     "mun": [0.5, 0.5, 1],
+     "hals": [0.5, 0.62, 0.64],
+     "rygg": [0.5, 0.6, 0.38],
+     "ogonR": [0.66, 0.78, 1]
+    }
+   },
+   "overstyr": {
+    "horn": {
+     "plats": {
+      "ankare": "huvudTopp",
+      "mot": {
+       "ankare": "ansikte",
+       "t": 0.4
+      }
+     }
+    }
+   }
+  },
+  "fågel": {
+   "mesh": {
+    "bredd": 0.5,
+    "hojd": 1.14,
+    "huvudTopp": [0, 1.14, 0.08],
+    "ansikte": [0, 0.94, 0.26],
+    "ogonL": [-0.1, 0.94, 0.26],
+    "ogonR": [0.1, 0.94, 0.26],
+    "mun": [0, 0.82, 0.4],
+    "hals": [0, 0.66, 0.117],
+    "rygg": [0, 0.82, -0.14]
+   },
+   "modell": {
+    "nod": "body",
+    "ref": "bbox",
+    "matt": {
+     "bredd": {
+      "hojd": 0.55
+     }
+    },
+    "ankare": {
+     "huvudTopp": {
+      "f": [0.5, 1, 0.28],
+      "d": [0, 0.02, 0]
+     },
+     "ansikte": [0.5, 0.56, 1.08],
+     "ogonL": [0.34, 0.56, 1.08],
+     "mun": [0.5, 0.5, 1],
+     "hals": [0.5, 0.5, 0.6],
+     "rygg": [0.5, 0.55, 0.3],
+     "ogonR": [0.66, 0.56, 1.08]
+    }
+   },
+   "overstyr": {
+    "ryggsäck": {
+     "faktor": 1.25
+    },
+    "horn": {
+     "faktor": 1.52,
+     "plats": {
+      "ankare": "huvudTopp",
+      "mot": {
+       "ankare": "ansikte",
+       "t": 0.4
+      }
+     }
+    }
+   }
+  },
+  "uggla": {
+   "mesh": {
+    "bredd": 0.5,
+    "hojd": 1.14,
+    "huvudTopp": [0, 1.14, 0.08],
+    "ansikte": [0, 0.94, 0.26],
+    "ogonL": [-0.1, 0.94, 0.26],
+    "ogonR": [0.1, 0.94, 0.26],
+    "mun": [0, 0.82, 0.4],
+    "hals": [0, 0.66, 0.117],
+    "rygg": [0, 0.82, -0.14]
+   },
+   "modell": {
+    "nod": "body",
+    "ref": "bbox",
+    "matt": {
+     "bredd": {
+      "hojd": 0.55
+     }
+    },
+    "ankare": {
+     "huvudTopp": {
+      "f": [0.5, 1, 0.28],
+      "d": [0, 0.02, 0]
+     },
+     "ansikte": [0.5, 0.56, 1.08],
+     "ogonL": [0.34, 0.56, 1.08],
+     "mun": [0.5, 0.5, 1],
+     "hals": [0.5, 0.5, 0.6],
+     "rygg": [0.5, 0.55, 0.3],
+     "ogonR": [0.66, 0.56, 1.08]
+    }
+   },
+   "overstyr": {
+    "ryggsäck": {
+     "faktor": 1.25
+    },
+    "horn": {
+     "faktor": 1.52,
+     "plats": {
+      "ankare": "huvudTopp",
+      "mot": {
+       "ankare": "ansikte",
+       "t": 0.4
+      }
+     }
+    }
+   }
+  },
+  "fisk": {
+   "mesh": {
+    "bredd": 0.4,
+    "hojd": 0.44,
+    "huvudTopp": [0, 0.4, 0.16],
+    "ansikte": [0, 0.28, 0.3],
+    "ogonL": [-0.1, 0.28, 0.3],
+    "ogonR": [0.1, 0.28, 0.3],
+    "mun": [0, 0.24, 0.42],
+    "hals": [0, 0, 0.135],
+    "rygg": [0, 0.42, -0.06]
+   },
+   "modell": {
+    "nod": "body",
+    "ref": "bbox",
+    "matt": {
+     "bredd": {
+      "hojd": 0.9
+     }
+    },
+    "ankare": {
+     "huvudTopp": [0.5, 0.68, 0.74],
+     "ansikte": [0.5, 0.62, 1],
+     "ogonL": [0.34, 0.62, 1],
+     "mun": [0.5, 0.5, 1],
+     "hals": [0.5, 0.5, 0.66],
+     "rygg": [0.5, 0.8, 0.42],
+     "ogonR": [0.66, 0.62, 1]
+    }
+   },
+   "overstyr": {
+    "rosett": {
+     "faktor": 1.4
+    },
+    "ryggsäck": {
+     "faktor": 1.25
+    },
+    "mantel": {
+     "faktor": 1.45
+    },
+    "horn": {
+     "faktor": 1.52,
+     "plats": {
+      "ankare": "huvudTopp",
+      "upp": {
+       "hojd": 0.1,
+       "min": 0.04
+      },
+      "fram": {
+       "bredd": 0.22,
+       "min": 0.05
+      }
+     }
+    }
+   }
+  },
+  "groda": {
+   "mesh": {
+    "bredd": 0.7,
+    "hojd": 0.85,
+    "huvudTopp": [0, 0.78, 0.06],
+    "ansikte": [0, 0.68, 0.36],
+    "ogonL": [-0.16, 0.68, 0.36],
+    "ogonR": [0.16, 0.68, 0.36],
+    "mun": [0, 0.55, 0.4],
+    "hals": [0, 0.4, 0.162],
+    "rygg": [0, 0.58, -0.18]
+   },
+   "modell": {
+    "nod": "body",
+    "ref": "bbox",
+    "matt": {
+     "bredd": {
+      "hojd": 0.9
+     }
+    },
+    "ankare": {
+     "huvudTopp": [0.5, 1, 0.5],
+     "ansikte": [0.5, 0.72, 1],
+     "ogonL": [0.34, 0.72, 1],
+     "mun": [0.5, 0.5, 1],
+     "hals": [0.5, 0.5, 0.6],
+     "rygg": [0.5, 0.9, 0.34],
+     "ogonR": [0.66, 0.72, 1]
+    }
+   },
+   "overstyr": {
+    "rosett": {
+     "faktor": 1.4
+    },
+    "ryggsäck": {
+     "faktor": 1.25
+    },
+    "mantel": {
+     "faktor": 1.45
+    },
+    "horn": {
+     "faktor": 1.52
+    }
+   }
+  },
+  "drake": {
+   "mesh": {
+    "bredd": 0.7,
+    "hojd": 1.4,
+    "huvudTopp": [0, 1.34, 0.42],
+    "ansikte": [0, 1.05, 0.82],
+    "ogonL": [-0.14, 1.05, 0.82],
+    "ogonR": [0.14, 1.05, 0.82],
+    "mun": [0, 0.9, 1.06],
+    "hals": [0, 0.77, 0.369],
+    "rygg": [0, 0.86, -0.08]
+   },
+   "modell": {
+    "nod": "rot",
+    "ref": "ben",
+    "ben": "Head",
+    "matt": {
+     "bredd": {
+      "hojd": 0.95,
+      "tak": 0.85
+     }
+    },
+    "ankare": {
+     "huvudTopp": {
+      "d": [0, 0.42, 0.1]
+     },
+     "ansikte": {
+      "d": [0, 0.16, 0.28]
+     },
+     "ogonL": {
+      "d": [-0.12, 0.16, 0.28]
+     },
+     "ogonR": {
+      "d": [0.12, 0.16, 0.28]
+     },
+     "mun": {
+      "d": [0, 0.02, 0.42]
+     },
+     "hals": {
+      "d": [0, -0.06, 0.1]
+     },
+     "rygg": {
+      "d": [0, -0.12, -0.5]
+     }
+    }
+   },
+   "overstyr": {
+    "krona": {
+     "faktor": 1.12
+    },
+    "ryggsäck": {
+     "faktor": 0.9
+    },
+    "mantel": {
+     "faktor": 1.2,
+     "plats": {
+      "ankare": "hals",
+      "mot": {
+       "ankare": "rygg",
+       "t": 0.4
+      }
+     }
+    },
+    "horn": {
+     "faktor": 0.8736,
+     "plats": {
+      "ankare": "ansikte",
+      "mot": {
+       "ankare": "huvudTopp",
+       "y": 0.38
+      },
+      "fram": {
+       "bredd": 0.28,
+       "min": 0.1
+      }
+     }
+    }
+   }
+  },
+  "häst": {
+   "mesh": {
+    "bredd": 0.42,
+    "hojd": 1.35,
+    "huvudTopp": [0, 1.24, 0.42],
+    "ansikte": [0, 1.02, 0.66],
+    "ogonL": [-0.08, 1.02, 0.66],
+    "ogonR": [0.08, 1.02, 0.66],
+    "mun": [0, 0.88, 0.78],
+    "hals": [0, 0.74, 0.297],
+    "rygg": [0, 0.9, -0.22]
+   },
+   "modell": {
+    "nod": "rot",
+    "ref": "ben",
+    "ben": "Head",
+    "matt": {
+     "bredd": {
+      "hojd": 0.95,
+      "tak": 0.55
+     }
+    },
+    "ankare": {
+     "huvudTopp": {
+      "d": [0, 0.48, 0.02]
+     },
+     "ansikte": {
+      "d": [0, 0.22, 0.22]
+     },
+     "ogonL": {
+      "d": [-0.08, 0.22, 0.22]
+     },
+     "ogonR": {
+      "d": [0.08, 0.22, 0.22]
+     },
+     "mun": {
+      "d": [0, 0.08, 0.34]
+     },
+     "hals": {
+      "d": [0, -0.06, 0.1]
+     },
+     "rygg": {
+      "d": [0, -0.02, -0.4]
+     }
+    }
+   },
+   "overstyr": {
+    "mantel": {
+     "plats": {
+      "ankare": "hals",
+      "mot": {
+       "ankare": "rygg",
+       "t": 0.4
+      }
+     }
+    }
+   }
+  }
+ }
+}

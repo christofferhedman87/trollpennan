@@ -22,7 +22,7 @@ const use = new Map([...decl.keys()].map((k) => [k, new Set()]));
   if (ts.isIdentifier(n)) {
     const ln = line(n);
     if (decl.has(n.text) && !(ln >= decl.get(n.text)[0] && ln <= decl.get(n.text)[1]) ) {
-      const p = n.parent; if ((ts.isPropertyAccessExpression(p) && p.name === n) || (ts.isPropertyAssignment(p) && p.name === n)) {} else {
+      const p = n.parent; if ((ts.isPropertyAccessExpression(p) && p.name === n) || (ts.isPropertyAssignment(p) && p.name === n)) { /* redan en prop */ } else {
         for (const [r, a, b] of regions) if (ln >= a && ln <= b) use.get(n.text).add(r);
         if (ln > 3088) use.get(n.text).add("efter-Spel(" + ln + ")");
         if (ln < 466 && ln>=83) use.get(n.text).add("hjälp/data(" + ln + ")");

@@ -1,0 +1,42 @@
+<!doctype html><html><body style="margin:0;background:#bfe;"><canvas id=c></canvas><script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import * as SU from "three/examples/jsm/utils/SkeletonUtils.js";
+import { faestTillbehor } from "/src/spel/tillbehor/index.ts";
+import { byggPack, forma } from "/src/spel/djurmesh.ts";
+const q=new URLSearchParams(location.search);
+const ACC=(q.get("acc")||"").split(",").filter(Boolean); const KROPPAR=(q.get("k")||"kanin,katt,hund,fisk,fågel,uggla,groda,drake,häst,gris,dinosaurie,ekorre,bäver,haj").split(",");
+const YAW=parseFloat(q.get("yaw")||"0"); const TS=+(q.get("ts")||200);
+const FIL={kanin:"animal-bunny",katt:"animal-cat",hund:"animal-dog",fisk:"animal-fish","fågel":"animal-chick",uggla:"animal-chick",drake:"drake",groda:"groda","häst":"hast"};
+const MAL={kanin:1,katt:1,hund:1.05,fisk:0.7,"fågel":0.8,uggla:0.8,drake:1.35,groda:0.85,"häst":1.5};
+const IDLE={drake:"Flying_Idle","häst":"Idle"};
+const cols=+(q.get("cols")||5), rows=Math.ceil(KROPPAR.length/cols)*Math.max(1,ACC.length);
+const cv=document.getElementById("c"); cv.width=cols*TS; cv.height=rows*TS; cv.style.width=(cols*TS)+"px";
+const r=new THREE.WebGLRenderer({canvas:cv,antialias:true,preserveDrawingBuffer:true}); r.setSize(cols*TS,rows*TS,false); r.setScissorTest(true); r.setClearColor("#cfeedd");
+const L=new GLTFLoader(); const cache={};
+async function glb(k){return await L.loadAsync("/models/"+FIL[k]+".glb");}
+const sc=new THREE.Scene(); sc.add(new THREE.AmbientLight(0xffffff,2.2)); const dl=new THREE.DirectionalLight(0xffffff,2.2); dl.position.set(2,5,6); sc.add(dl);
+const cam=new THREE.PerspectiveCamera(30,1,0.1,50); cam.position.set(0,0.95,5.2); cam.lookAt(0,0.62,0);
+const KM=new THREE.MeshToonMaterial({vertexColors:true}); 
+async function djur(k,acc){
+  const root=new THREE.Group(); const spec=acc.map(id=>({id,farg:null,glans:false}));
+  if(FIL[k]){ const g=await glb(k); const c=(k==='drake'||k==='häst')?g.scene:SU.clone(g.scene);
+    const box=new THREE.Box3().setFromObject(c); const h=Math.max(.001,box.max.y-box.min.y); const s=MAL[k]/h; c.scale.setScalar(s); c.position.y=-box.min.y*s; c.updateMatrixWorld(true);
+    c.traverse(o=>{if(o.isMesh){o.material=o.material.clone();o.material.metalness=0;o.frustumCulled=false;}});
+    faestTillbehor(c,k,spec,"modell");
+    if(IDLE[k]){const m=new THREE.AnimationMixer(c); const cl=g.animations.find(a=>a.name.endsWith(IDLE[k])); if(cl){const tr=cl.tracks.filter(t=>{const n=t.name.toLowerCase(); return !n.endsWith('.position')||!(n.startsWith('root.')||n.startsWith('all.')||n.includes('|all.position'));}); m.clipAction(new THREE.AnimationClip(cl.name,cl.duration,tr)).play(); m.update(0.3); c.updateMatrixWorld(true);} }
+    root.add(c);
+  } else { const pack=byggPack({kropp:k,farg:"#E8A7B8",krona:false,horn:false,monster:false,monsterFarg:"#6D4C41"}); forma(pack,0,k);
+    root.add(new THREE.Mesh(pack.outline,new THREE.MeshBasicMaterial({color:"#3B2F2F",side:THREE.BackSide})),new THREE.Mesh(pack.geo,KM),new THREE.Mesh(pack.ogon,new THREE.MeshBasicMaterial({vertexColors:true})));
+    const ex=new THREE.Group(); faestTillbehor(ex,k,spec); root.add(ex); }
+  return root;
+}
+let n=0;
+for(const [ai,acc] of (ACC.length?ACC:[""]).entries()){
+ for(const [i,k] of KROPPAR.entries()){
+  const d=await djur(k,acc?acc.split("+"):[]); d.rotation.y=YAW; sc.add(d);
+  const col=i%cols, row=ai*Math.ceil(KROPPAR.length/cols)+Math.floor(i/cols);
+  r.setViewport(col*TS,(rows-1-row)*TS,TS,TS); r.setScissor(col*TS,(rows-1-row)*TS,TS,TS); r.render(sc,cam); sc.remove(d);
+ }}
+window.klar=true;
+</script></body></html>
