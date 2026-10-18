@@ -90,6 +90,7 @@ import { AngLager } from "./ui/AngLager.tsx";
 import { BokSkarm } from "./ui/BokSkarm.tsx";
 import { KopDialog, MossaPanel, SkyltDialog, ValjDjurDialog, VisKortBygg, VisKortDjur } from "./ui/Dialoger.tsx";
 import { ForalderDialog } from "./ui/ForalderDialog.tsx";
+import { nattvaken } from "./entiteter.ts";
 import { Hud, HudBot, MenyPanel } from "./ui/Hud.tsx";
 import { KartaLager, OmradeHud } from "./ui/KartaLager.tsx";
 import { OrdbokDialog } from "./ui/OrdbokDialog.tsx";
@@ -1169,7 +1170,7 @@ export function Spel() {
       const djur =
         useMinne.getState().ang.find((a) => a.uid === h.uid) ?? useMinne.getState().hemma.find((x) => x.spec.uid === h.uid)?.spec;
       const kvall = kvallStyrka(visningsTid()) > 0.7;
-      const sov = kvall && djur && djur.kropp !== "uggla";
+      const sov = kvall && djur && !nattvaken(djur.kropp);
       const ons = useMinne.getState().onskan;
       const harOnska = !!(ons && djur && ons.uid === djur.uid && !sov);
       if (harOnska && ons) {
@@ -1182,7 +1183,7 @@ export function Spel() {
       }
       let text = h.text;
       if (sov) text = vackRad();
-      else if (kvall && djur?.kropp === "uggla") text = ugglaRad();
+      else if (kvall && djur && nattvaken(djur.kropp)) text = ugglaRad();
       else if (djur && h.typ === "tryck" && h.klapp) {
         const rader = h.klapp >= 2 ? TEXTER.klapp.mer : TEXTER.klapp.en;
         text = rader[Math.floor(Math.random() * rader.length)] ?? text;

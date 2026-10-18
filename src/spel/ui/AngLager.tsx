@@ -7,6 +7,7 @@ import { ALBUM, HUMOR_IKON, poangAv, sovText, sparaFoto } from "../liv.ts";
 import type { mossaHand } from "../liv.ts";
 import { useMinne } from "../minne.ts";
 import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
+import { nattvaken } from "../entiteter.ts";
 import { dukStil } from "./hjalp.ts";
 import { FIR, TEXTER } from "./spelData.ts";
 import type { Banner, Bubbla, Varld } from "./typer.ts";
@@ -61,7 +62,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
             ? brygga.platser().map((p) => {
                 const djur = ang.find((a) => a.uid === p.uid) ?? hemma.find((h) => h.spec.uid === p.uid)?.spec;
                 if (!djur) return null;
-                const sov = natt > 0.7 && djur.kropp !== "uggla";
+                const sov = natt > 0.7 && !nattvaken(djur.kropp);
                 const ikon = HUMOR_IKON[liv[djur.uid]?.humor ?? "glad"] ?? "♥";
                 return (
                   <span

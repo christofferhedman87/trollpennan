@@ -13,6 +13,7 @@ import { ljud } from "./ljud.ts";
 import { sagaNatt, sagaNu } from "./saga.ts";
 import type { SparatBygge } from "./bygge.ts";
 import { GltfDjur, harModell, type DjurSignal } from "./gltfDjur.tsx";
+import { artFarg, flyger, hoppHojd, simmar, svavar, vikt } from "./entiteter.ts";
 import { faestTillbehor, procAnkare } from "./tillbehor/index.ts";
 import { DjurEffekter } from "./effekter.tsx";
 import { KenneyNatur } from "./kenneyNatur.tsx";
@@ -46,22 +47,6 @@ const BLOMMOR = [
   [0.55, 2.02, "#FFFFFF"],
   [-0.15, 2.42, "#CE93D8"],
 ] as const;
-
-const ART: Record<string, string> = {
-  kanin: "#F48FB1",
-  katt: "#64B5F6",
-  hund: "#FFD54F",
-  drake: "#66BB6A",
-  häst: "#8D6E63",
-  fisk: "#4FC3F7",
-  groda: "#8BC34A",
-  fågel: "#FFB74D",
-  uggla: "#BCAAA4",
-  ekorre: "#FF8A65",
-  gris: "#F8BBD0",
-  dinosaurie: "#80CBC4",
-  bäver: "#A1887F",
-};
 
 declare global {
   interface Window {
@@ -121,20 +106,15 @@ function normDuk(canvas: HTMLElement, v: THREE.Vector3): { x: number; y: number 
 
 function djurFarg(spec: Sparad) {
   if (spec.farg?.startsWith("#")) return spec.farg;
-  return ART[spec.kropp] ?? "#CE93D8";
+  return artFarg(spec.kropp);
 }
 
 function flygare(spec: Sparad) {
-  return spec.formagor.includes("vingar") || spec.kropp === "fågel" || spec.kropp === "uggla";
+  return flyger(spec.kropp, spec.formagor);
 }
 
 function simmare(spec: Sparad) {
-  return (
-    spec.formagor.includes("fenor") ||
-    spec.kropp === "fisk" ||
-    spec.kropp === "haj" ||
-    spec.kropp === "bäver"
-  );
+  return simmar(spec.kropp, spec.formagor);
 }
 
 const LAND_SLOT: [number, number][] = [
@@ -157,12 +137,12 @@ function djurPlats(spec: Sparad, alla: Sparad[]): [number, number, number] {
   }
   const land = alla.filter((d) => !simmare(d) && !flygare(d));
   const flyg = alla.filter((d) => flygare(d) && !simmare(d));
-  const vikt = (d: Sparad) => (d.kropp === "drake" ? 3 : d.kropp === "häst" ? 2 : 1);
+  const tyngd = (d: Sparad) => vikt(d.kropp);
   if (flygare(spec)) {
     const i = Math.max(0, flyg.findIndex((d) => d.uid === spec.uid));
     return [-1.4 + i * 1.5, 1.55, -0.85];
   }
-  const sorterad = land.slice().sort((a, b) => vikt(b) - vikt(a) || a.uid.localeCompare(b.uid));
+  const sorterad = land.slice().sort((a, b) => tyngd(b) - tyngd(a) || a.uid.localeCompare(b.uid));
   const i = Math.max(0, sorterad.findIndex((d) => d.uid === spec.uid));
   const slot = LAND_SLOT[i] ?? [((i % 2 === 0 ? -1 : 1) * (2.2 + Math.floor(i / 2) * 0.4)), -1.2];
   return [slot[0], 0, slot[1]];
@@ -761,9 +741,10 @@ function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
     if (kisa.current > 0) kisa.current = Math.max(0, kisa.current - d * 1.5);
     if (snurr.current > 0) snurr.current = Math.max(0, snurr.current - d * 0.55);
     vila.current -= d;
-    const kanHoppa = spec.kropp === "kanin" || spec.kropp === "fågel" || spec.kropp === "ekorre" || spec.kropp === "groda";
+    const hoppH = hoppHojd(spec.kropp);
+    const kanHoppa = hoppH !== null;
     if (vila.current <= 0 && hopp.current <= 0 && snurr.current <= 0) {
-      if (kanHoppa) hopp.current = spec.kropp === "fågel" ? 0.32 : 0.55;
+      if (hoppH !== null) hopp.current = hoppH;
       vila.current = kanHoppa ? 3.1 + (index % 3) * 0.7 : 5;
     }
     const lyft = Math.sin(hopp.current * Math.PI) * (snurr.current > 0 ? 0.85 : 0.45);
@@ -783,7 +764,7 @@ function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
       g.position.y = y + bob + lyft + Math.sin(loop * 2) * 0.1;
       g.rotation.z = Math.sin(loop) * 0.28;
       g.rotation.y = snurr.current > 0 ? t * 7 : Math.sin(t * 0.4 + index) * 0.14;
-    } else if (spec.kropp === "drake") {
+    } else if (svavar(spec.kropp)) {
       g.position.x = Math.sin(t * 0.35 + index) * 0.12;
       g.position.z = 0;
       g.position.y = y + 0.18 + Math.sin(t * 1.4 + index) * 0.06;

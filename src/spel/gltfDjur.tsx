@@ -4,46 +4,11 @@ import { useLayoutEffect, useMemo, useRef } from "react";
 import { SkeletonUtils } from "three-stdlib";
 import * as THREE from "three";
 import type { Sparad } from "./brygga.ts";
+import { entitet, framVinkel, malhojd, modellUrl as modellUrlAv, ENTITETER } from "./entiteter.ts";
 import { faestTillbehor } from "./tillbehor/index.ts";
 
 /** Kodbyggd reserv om en GLB saknas. Komponenten skickas in utifrån så den här filen inte drar in hela ängen. */
 export type DjurSignal = { klapp: number; ror: number };
-
-const FIL: Record<string, string> = {
-  kanin: "/models/animal-bunny.glb",
-  katt: "/models/animal-cat.glb",
-  hund: "/models/animal-dog.glb",
-  fisk: "/models/animal-fish.glb",
-  fågel: "/models/animal-chick.glb",
-  uggla: "/models/animal-chick.glb",
-  drake: "/models/drake.glb",
-  groda: "/models/groda.glb",
-  häst: "/models/hast.glb",
-};
-
-const MAL_HOJD: Record<string, number> = {
-  kanin: 1,
-  katt: 1,
-  hund: 1.05,
-  fisk: 0.7,
-  fågel: 0.8,
-  uggla: 0.8,
-  drake: 1.35,
-  groda: 0.85,
-  häst: 1.5,
-};
-
-type Palett = { from: number; range: number; bodyL: number };
-
-const PALETT: Record<string, Palett> = {
-  kanin: { from: 25, range: 22, bodyL: 0.55 },
-  hund: { from: 25, range: 22, bodyL: 0.55 },
-  fisk: { from: 25, range: 22, bodyL: 0.55 },
-  fågel: { from: 50, range: 12, bodyL: 0.55 },
-  uggla: { from: 50, range: 12, bodyL: 0.55 },
-  häst: { from: 30, range: 25, bodyL: 0.4 },
-  katt: { from: 0, range: -1, bodyL: 0.5 },
-};
 
 const texCache = new Map<string, THREE.CanvasTexture>();
 
@@ -105,8 +70,7 @@ function ljusare(hex: string) {
 
 function fargAv(spec: Sparad) {
   if (spec.farg?.startsWith("#")) return spec.farg;
-  if (spec.kropp === "drake") return "#ff8a3c";
-  return null;
+  return entitet(spec.kropp)?.standardfarg ?? null;
 }
 
 function klippNamn(actions: Record<string, THREE.AnimationAction | null>, suffix: string) {
@@ -151,7 +115,8 @@ function metallNoll(rot: THREE.Object3D) {
 
 function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
   const hex = fargAv(spec);
-  const pal = PALETT[spec.kropp];
+  const ent = entitet(spec.kropp);
+  const pal = ent?.palett;
   const glans = spec.glans;
   rot.traverse((o) => {
     const mesh = o as THREE.Mesh;
@@ -162,16 +127,15 @@ function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
       m.metalness = 0;
       m.roughness = Math.max(m.roughness ?? 1, 0.75);
       const namn = m.name || "";
-      if (spec.kropp === "drake") {
-        if (namn === "Dragon_Main" && hex) m.color.set(hex);
-        if (namn === "Dragon_Secondary") m.color.set(hex ? ljusare(hex) : "#ffd27a");
-      } else if (spec.kropp === "groda") {
-        if (namn === "4CAF50" && hex) m.color.set(hex);
+      const roll = ent?.material ? ent.material[namn] : undefined;
+      if (ent?.material) {
+        if (roll === "farg" && hex) m.color.set(hex);
+        if (roll === "ljus") m.color.set(hex ? ljusare(hex) : "#ffd27a");
       } else if (pal && hex && m.map) {
         m.map = paletteSwap(m.map, pal.from, pal.range, hex, pal.bodyL);
         m.color.set("#ffffff");
       }
-      if (glans && (namn === "Dragon_Main" || namn === "4CAF50" || pal)) {
+      if (glans && (roll === "farg" || (!ent?.material && pal))) {
         m.emissive = new THREE.Color("#FFE082");
         m.emissiveIntensity = 0.28;
       }
@@ -186,17 +150,17 @@ function fastAnkare(rot: THREE.Object3D, spec: Sparad) {
 }
 
 export function harModell(kropp: string) {
-  return Boolean(FIL[kropp]);
+  return Boolean(modellUrlAv(kropp));
 }
 
 export function modellUrl(kropp: string) {
-  return FIL[kropp] ?? null;
+  return modellUrlAv(kropp);
 }
 
-for (const url of new Set(Object.values(FIL))) useGLTF.preload(url);
+for (const url of new Set(Object.keys(ENTITETER).map(modellUrlAv).filter((u): u is string => Boolean(u)))) useGLTF.preload(url);
 
 export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: DjurSignal } }) {
-  const url = FIL[spec.kropp] ?? FIL.kanin!;
+  const url = modellUrlAv(spec.kropp) ?? modellUrlAv("kanin")!;
   const gltf = useGLTF(url);
   const rot = useRef<THREE.Group>(null);
   const inre = useRef<THREE.Group>(null);
@@ -211,7 +175,7 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
     c.updateMatrixWorld(true);
     const box = new THREE.Box3().setFromObject(c);
     const h = Math.max(0.001, box.max.y - box.min.y);
-    const mal = MAL_HOJD[spec.kropp] ?? 1;
+    const mal = malhojd(spec.kropp);
     const s = mal / h;
     c.scale.setScalar(s);
     c.position.y = -box.min.y * s;
@@ -221,6 +185,7 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
     // spec läses via sign så klonen inte byggs om varje render
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gltf.scene, sign]);
+  const fram = framVinkel(entitet(spec.kropp)?.framAxel);
   const klipp = useMemo(() => gltf.animations.map(tryggKlipp), [gltf.animations]);
   const { actions, mixer } = useAnimations(klipp, rot);
 
@@ -320,7 +285,9 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
   return (
     <group ref={rot}>
       <group ref={inre}>
-        <primitive object={klon} />
+        <group rotation={[0, fram, 0]}>
+          <primitive object={klon} />
+        </group>
       </group>
     </group>
   );

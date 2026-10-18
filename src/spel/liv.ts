@@ -12,6 +12,7 @@ import { arSparrat } from "../tolk/sparr.ts";
 import { GAVOR } from "../tolk/gavotolk.ts";
 import type { Sparad } from "./brygga.ts";
 import type { Varelse } from "../tolk/typer.ts";
+import { djurIds } from "./entiteter.ts";
 import { taggarAv } from "./taggar.ts";
 import { useMinne, type Data } from "./minne.ts";
 
@@ -20,7 +21,7 @@ export const HUMOR = humorJson;
 export const MOSSA = mossaJson;
 export const ALBUM = albumJson;
 
-export const KROPPAR = ["kanin", "katt", "hund", "drake", "häst", "fågel", "fisk", "groda", "gris", "dinosaurie", "uggla", "ekorre", "bäver", "haj"] as const;
+export const KROPPAR = djurIds();
 export const VILDA_ID = (vildaJson as unknown as { djur: { id: string; namn: string; omrade: string }[] }).djur;
 export const SKATTER = (skatterJson as { skatter: { id: string; namn: string; text: string }[] }).skatter;
 const BYGG_LISTA = (byggJson as { bygg_ord: { id: string; typ: string; sida?: string }[] }).bygg_ord;
