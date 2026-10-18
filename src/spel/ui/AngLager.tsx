@@ -1,0 +1,208 @@
+import type { Dispatch, RefObject, SetStateAction } from "react";
+import { Heart } from "lucide-react";
+import { brygga } from "../brygga.ts";
+import type { Sparad } from "../brygga.ts";
+import type { SparatBygge } from "../bygge.ts";
+import { ALBUM, HUMOR_IKON, poangAv, sovText, sparaFoto } from "../liv.ts";
+import type { mossaHand } from "../liv.ts";
+import { useMinne } from "../minne.ts";
+import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
+import { dukStil } from "./hjalp.ts";
+import { FIR, TEXTER } from "./spelData.ts";
+import type { Banner, Bubbla, Varld } from "./typer.ts";
+
+type AngLagerProps = {
+  natt: number;
+  varld: Varld;
+  omrade: string | null;
+  panel: "spel" | "byggbok" | "uppdrag";
+  ang: Sparad[];
+  hemma: Hemdjur[];
+  liv: Record<string, { humor: string; humorMs: number; humorLangd: number; favorit: string; favoritHittad: boolean; hjartan: number; }>;
+  fotoMal: { uid: string; x: number; y: number; } | null;
+  visaBanner: (texten: string, slag: Banner["slag"]) => void;
+  visaMossa: (h: Parameters<typeof mossaHand>[0]) => void;
+  setFotoMal: Dispatch<SetStateAction<{ uid: string; x: number; y: number; } | null>>;
+  banners: Banner[];
+  bubblor: Bubbla[];
+  onskan: OnskaSpar | null;
+  onskaOpp: boolean;
+  onskaSyns: boolean;
+  ank: { x: number; y: number; vanster: boolean; };
+  oppnaOnska: () => void;
+  meny: { uid: string; x: number; y: number; } | null;
+  setMeny: Dispatch<SetStateAction<{ uid: string; x: number; y: number; } | null>>;
+  omUidRef: RefObject<string | null>;
+  setLage: Dispatch<SetStateAction<Lage>>;
+  setBokOpp: Dispatch<SetStateAction<boolean>>;
+  setLadaOpp: Dispatch<SetStateAction<boolean>>;
+  menyHem: { kroppar: string[]; platser: number; } | null | undefined;
+  setBoUid: Dispatch<SetStateAction<string | null>>;
+  lada: SparatBygge[];
+  ladaOpp: boolean;
+  boUid: string | null;
+  boDjur: Sparad[];
+  flyttaInDjur: (djurUid: string) => void;
+};
+
+export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal, visaBanner, visaMossa, setFotoMal, banners, bubblor, onskan, onskaOpp, onskaSyns, ank, oppnaOnska, meny, setMeny, omUidRef, setLage, setBokOpp, setLadaOpp, menyHem, setBoUid, lada, ladaOpp, boUid, boDjur, flyttaInDjur }: AngLagerProps) {
+  return (
+        <div className="ang-lager">
+          <div className="natt" data-testid="natt" data-styrka={natt.toFixed(2)} />
+          {varld === "gard" && !omrade ? (
+            <div className="lykta" data-testid="lykta" aria-hidden>
+              <span className="lykta-stolpe" />
+              <span className="lykta-hus" />
+              <span className="lykta-ljus" style={{ opacity: natt }} />
+            </div>
+          ) : null}
+          {omrade === "on" ? <span className="fyr-ljus" data-testid="fyr-ljus" style={{ opacity: natt }} /> : null}
+          {panel === "spel" && !omrade
+            ? brygga.platser().map((p) => {
+                const djur = ang.find((a) => a.uid === p.uid) ?? hemma.find((h) => h.spec.uid === p.uid)?.spec;
+                if (!djur) return null;
+                const sov = natt > 0.7 && djur.kropp !== "uggla";
+                const ikon = HUMOR_IKON[liv[djur.uid]?.humor ?? "glad"] ?? "♥";
+                return (
+                  <span
+                    key={p.uid}
+                    className="humor-ikon"
+                    data-testid={sov ? "zzz" : `humor-${liv[djur.uid]?.humor ?? "glad"}`}
+                    style={{ ...dukStil(p.x, p.topp ?? p.y) }}
+                  >
+                    {sov ? sovText() : ikon}
+                  </span>
+                );
+              })
+            : null}
+          {fotoMal && panel === "spel" ? (
+            <button
+              type="button"
+              className="foto-knapp"
+              data-testid="ta-foto-scen"
+              style={{ ...dukStil(fotoMal.x, Math.max(0.08, fotoMal.y - 0.08)) }}
+              onClick={() => {
+                const djur =
+                  useMinne.getState().ang.find((a) => a.uid === fotoMal.uid) ??
+                  useMinne.getState().hemma.find((h) => h.spec.uid === fotoMal.uid)?.spec;
+                if (!djur) return;
+                const text = sparaFoto(djur);
+                visaBanner(text, "ovr");
+                if (text === ALBUM.texter.foto_klart) visaMossa({ foto: true, poang: poangAv(djur) });
+                setFotoMal(null);
+              }}
+            >
+              {ALBUM.texter.ta_foto}
+            </button>
+          ) : null}
+          <div className="banderoller" role="status" aria-live="polite" aria-atomic="true">
+            {banners.map((b) => (
+              <p key={b.id} className={`banner ${b.slag}`} data-testid="puff">
+                {b.text}
+              </p>
+            ))}
+          </div>
+          {bubblor.map((b) => (
+            <div key={b.id} className={b.ovan ? "bubbla ovan" : "bubbla"} style={dukStil(b.x, b.y)} data-testid="bubbla">
+              {b.hjarta ? <Heart className="hjarta" aria-hidden /> : null}
+              <p>{b.text}</p>
+            </div>
+          ))}
+          {onskan && !onskaOpp && onskaSyns ? (
+            <button
+              type="button"
+              className={ank.vanster ? "bubbla onska vanster" : "bubbla onska hoger"}
+              style={dukStil(ank.x, ank.y)}
+              data-testid="onska-bubbla"
+              onClick={oppnaOnska}
+            >
+              <p>★ {onskan.text}</p>
+              <p className="gor">{FIR.onskan.knapp}</p>
+            </button>
+          ) : null}
+          {meny ? (
+            <div className="bygg-meny" style={dukStil(meny.x, Math.min(meny.y, 0.62))} data-testid="bygg-meny">
+              <button
+                type="button"
+                onClick={() => {
+                  brygga.flyttaBygg(meny.uid);
+                  setMeny(null);
+                  visaBanner(TEXTER.flytta_hjalp, "ovr");
+                }}
+              >
+                {TEXTER.meny.flytta}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  omUidRef.current = meny.uid;
+                  setMeny(null);
+                  setLage("skriv");
+                  setBokOpp(true);
+                  visaBanner(TEXTER.bygg_om_hjalp, "ovr");
+                }}
+              >
+                {TEXTER.meny.bygg_om}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  useMinne.getState().tillLada(meny.uid);
+                  setMeny(null);
+                  setLadaOpp(true);
+                }}
+              >
+                {TEXTER.meny.lada}
+              </button>
+              {menyHem ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setBoUid(meny.uid);
+                    setMeny(null);
+                  }}
+                >
+                  {TEXTER.meny.bo}
+                </button>
+              ) : null}
+            </div>
+          ) : null}
+          {varld === "gard" && !omrade && lada.length > 0 ? (
+            <button type="button" className="lada-knapp" data-testid="lada" onClick={() => setLadaOpp((v) => !v)}>
+              {TEXTER.lada.rubrik}
+            </button>
+          ) : null}
+          {ladaOpp && lada.length > 0 ? (
+            <div className="lada-panel" data-testid="lada-panel">
+              <p>{TEXTER.lada.rubrik}</p>
+              {lada.length === 0 ? <p>{TEXTER.lada.tom}</p> : null}
+              {lada.map((b) => (
+                <button
+                  key={b.uid}
+                  type="button"
+                  onClick={() => {
+                    if (!useMinne.getState().franLada(b.uid)) visaBanner(TEXTER.lada.full, "ovr");
+                  }}
+                >
+                  {TEXTER.lada.ta_fram}: {b.formel}
+                </button>
+              ))}
+            </div>
+          ) : null}
+          {boUid ? (
+            <div className="lada-panel bo-panel" data-testid="bo-panel">
+              <p>{TEXTER.bo.valj}</p>
+              {boDjur.length === 0 ? <p>{TEXTER.bo.ingen}</p> : null}
+              {boDjur.map((d) => (
+                <button key={d.uid} type="button" onClick={() => flyttaInDjur(d.uid)}>
+                  {d.formel}
+                </button>
+              ))}
+              <button type="button" onClick={() => setBoUid(null)}>
+                {FIR.onskan.inte_nu}
+              </button>
+            </div>
+          ) : null}
+        </div>
+  );
+}

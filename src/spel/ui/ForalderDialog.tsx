@@ -1,0 +1,144 @@
+import type { Dispatch, RefObject, SetStateAction } from "react";
+import { ljud } from "../ljud.ts";
+import { useMinne } from "../minne.ts";
+import type { Lage } from "../minne.ts";
+import { ForalderLiv } from "../samling.tsx";
+import { LJUD_AV, LJUD_PA, TEXTER } from "./spelData.ts";
+
+type ForalderDialogProps = {
+  startLage: Lage;
+  setLage: Dispatch<SetStateAction<Lage>>;
+  ljudPa: boolean;
+  sparaKopia: () => void;
+  filRef: RefObject<HTMLInputElement | null>;
+  lasFil: (fil: File) => Promise<void>;
+  foralderRad: string | null;
+  kopia: unknown;
+  lasInKopia: () => void;
+  setKopia: Dispatch<unknown>;
+  onskelista: string[];
+  setSaker: Dispatch<SetStateAction<boolean>>;
+  saker: boolean;
+  borjaOm: () => void;
+  setForalder: Dispatch<SetStateAction<boolean>>;
+};
+
+export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef, lasFil, foralderRad, kopia, lasInKopia, setKopia, onskelista, setSaker, saker, borjaOm, setForalder }: ForalderDialogProps) {
+  return (
+        <div className="skarm" role="dialog" aria-label="För vuxna" data-testid="foralder">
+          <div className="ark sida">
+            <h2>För vuxna</h2>
+            <p className="kredit" data-testid="groda-kredit">Groda: "Frog" av jeremy (CC BY 3.0)</p>
+            <ForalderLiv />
+            <h3>Startläge</h3>
+            <p>Så här börjar pennan nästa gång den öppnas.</p>
+            <div className="valj-lage">
+              <button
+                type="button"
+                className={startLage === "kort" ? "pa" : ""}
+                onClick={() => {
+                  useMinne.getState().sattStart("kort");
+                  setLage("kort");
+                }}
+              >
+                Ordkort
+              </button>
+              <button
+                type="button"
+                className={startLage === "skriv" ? "pa" : ""}
+                onClick={() => {
+                  useMinne.getState().sattStart("skriv");
+                  setLage("skriv");
+                }}
+              >
+                Skriv själv
+              </button>
+            </div>
+            <h3>Ljud</h3>
+            <button
+              type="button"
+              className={ljudPa ? "pa ljud-knapp" : "ljud-knapp"}
+              data-testid="ljud-knapp"
+              aria-pressed={ljudPa}
+              onClick={() => {
+                const nasta = !useMinne.getState().ljudPa;
+                useMinne.getState().sattLjud(nasta);
+                ljud.satt(nasta);
+              }}
+            >
+              {ljudPa ? LJUD_PA : LJUD_AV}
+            </button>
+            <h3>{TEXTER.backup.rubrik}</h3>
+            <p>{TEXTER.backup.spara_hjalp}</p>
+            <button type="button" className="kort" data-testid="spara-kopia" onClick={sparaKopia}>
+              {TEXTER.backup.spara}
+            </button>
+            <button type="button" className="kort" data-testid="las-kopia" onClick={() => filRef.current?.click()}>
+              {TEXTER.backup.las_in}
+            </button>
+            <input
+              ref={filRef}
+              className="dold-fil"
+              type="file"
+              accept="application/json,.json"
+              data-testid="kopia-fil"
+              onChange={(e) => {
+                const fil = e.target.files?.[0];
+                e.target.value = "";
+                if (fil) void lasFil(fil);
+              }}
+            />
+            {foralderRad ? <p data-testid="backup-rad">{foralderRad}</p> : null}
+            {kopia ? (
+              <div data-testid="backup-fraga" role="dialog" aria-label="Bekräfta import">
+                <p>{TEXTER.backup.las_in_fraga}</p>
+                <div className="rad-kort">
+                  <button type="button" className="kort" data-testid="backup-ja" onClick={lasInKopia}>
+                    {TEXTER.backup.las_in_ja}
+                  </button>
+                  <button type="button" className="nej" data-dialog-close onClick={() => setKopia(null)}>
+                    {TEXTER.backup.las_in_nej}
+                  </button>
+                </div>
+              </div>
+            ) : null}
+            <h3>Önskelista</h3>
+            <p>Ord som Trollpennan inte kunde än.</p>
+            {onskelista.length === 0 ? <p>Inget nytt ord sparat än.</p> : null}
+            <ul className="onske-lista" data-testid="onskelista">
+              {onskelista.map((o) => (
+                <li key={o}>{o}</li>
+              ))}
+            </ul>
+            <h3>{TEXTER.borja_om.knapp}</h3>
+            <button type="button" className="farlig" data-testid="borja-om" style={{ width: "100%" }} onClick={() => setSaker(true)}>
+              {TEXTER.borja_om.knapp}
+            </button>
+            {saker ? (
+              <div data-testid="borja-fraga" role="dialog" aria-label="Bekräfta återställning">
+                <p>{TEXTER.borja_om.fraga}</p>
+                <div className="rad-kort">
+                  <button type="button" className="kort" data-testid="borja-ja" onClick={borjaOm}>
+                    {TEXTER.borja_om.ja}
+                  </button>
+                  <button type="button" className="nej" data-testid="borja-nej" data-dialog-close onClick={() => setSaker(false)}>
+                    {TEXTER.backup.las_in_nej}
+                  </button>
+                </div>
+              </div>
+            ) : null}
+            <p />
+            <button
+              type="button"
+              className="stang"
+              onClick={() => {
+                setSaker(false);
+                setForalder(false);
+              }}
+            >
+              Stäng
+            </button>
+          </div>
+        </div>
+  );
+}
