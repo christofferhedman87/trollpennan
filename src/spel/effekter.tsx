@@ -196,22 +196,37 @@ function Eld({ ankare }: { ankare: Ankare }) {
   );
 }
 
+const glodBlick = new THREE.Vector3();
+const glodKvat = new THREE.Quaternion();
+
 function Aura({ ankare }: { ankare: Ankare }) {
   const mat = useRef<THREE.SpriteMaterial>(null);
+  const sprite = useRef<THREE.Sprite>(null);
   const textur = useMemo(() => glodPunkt(), []);
-  const bredd = Math.max(0.25, ankare.bredd);
-  // Ca 2,2× kroppens bredd och minst kroppens höjd, så ringen sticker ut runt silhuetten.
-  const sx = bredd * 2.2;
-  const sy = Math.max(sx, Math.max(0.25, ankare.hojd) * 2.2);
+  // Rund gloria: 1,6× den större av bredd och höjd, ritad runt kroppens mitt.
+  const span = Math.max(0.25, ankare.bredd, ankare.hojd);
+  const storlek = span * 1.6;
   const mittY = ankare.hojd * 0.5;
+  // Bakom hela kroppen: halva djupet (större av bredd och höjd) plus marginal,
+  // längs kamerans blick så planet ligger bort från betraktaren.
+  const bakom = span * 0.5 + 0.12;
   useFrame((state) => {
     const m = mat.current;
-    if (!m) return;
-    const puls = 0.5 + 0.5 * Math.sin(state.clock.elapsedTime * 2.1);
-    m.opacity = 0.45 + puls * 0.25;
+    if (m) {
+      const puls = 0.5 + 0.5 * Math.sin(state.clock.elapsedTime * 2.1);
+      m.opacity = 0.45 + puls * 0.25;
+    }
+    const s = sprite.current;
+    const parent = s?.parent;
+    if (!s || !parent) return;
+    parent.updateWorldMatrix(true, false);
+    parent.getWorldQuaternion(glodKvat);
+    state.camera.getWorldDirection(glodBlick);
+    glodBlick.applyQuaternion(glodKvat.invert());
+    s.position.set(glodBlick.x * bakom, mittY + glodBlick.y * bakom, glodBlick.z * bakom);
   });
   return (
-    <sprite position={[0, mittY, 0]} scale={[sx, sy, 1]} renderOrder={-2}>
+    <sprite ref={sprite} position={[0, mittY, 0]} scale={[storlek, storlek, 1]} renderOrder={-2}>
       <spriteMaterial
         ref={mat}
         map={textur}
@@ -219,7 +234,7 @@ function Aura({ ankare }: { ankare: Ankare }) {
         transparent
         opacity={0.55}
         depthWrite={false}
-        depthTest={false}
+        depthTest
         blending={THREE.NormalBlending}
         toneMapped={false}
       />
