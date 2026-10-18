@@ -1,0 +1,159 @@
+{
+ "mat": {
+  "verb": {
+   "n": 1000,
+   "fore": {
+    "ingenting": 733,
+    "gissning": 252,
+    "spärrat": 7,
+    "egen form": 8
+   },
+   "efter": {
+    "kristall": 972,
+    "gissning": 16,
+    "egen form": 8,
+    "spärrat": 4
+   },
+   "kvarvarande_gissningar": [
+    "mena",
+    "vinna",
+    "hoppas",
+    "tvinga",
+    "lösa",
+    "toppa",
+    "fly",
+    "lyda",
+    "låsa",
+    "rena",
+    "vidga",
+    "flyta",
+    "hysa",
+    "viga",
+    "splittra",
+    "inge"
+   ]
+  },
+  "adjektiv": {
+   "n": 849,
+   "fore": {
+    "egen form": 16,
+    "ingenting": 787,
+    "spärrat": 4,
+    "gissning": 42
+   },
+   "efter": {
+    "egen form": 16,
+    "kristall": 824,
+    "spärrat": 4,
+    "ingenting": 5
+   },
+   "kvarvarande_gissningar": []
+  },
+  "substantiv": {
+   "n": 1000,
+   "fore": {
+    "ingenting": 898,
+    "gissning": 84,
+    "egen form": 9,
+    "spärrat": 9
+   },
+   "efter": {
+    "kristall": 976,
+    "egen form": 9,
+    "spärrat": 9,
+    "gissning": 4,
+    "ingenting": 2
+   },
+   "kvarvarande_gissningar": [
+    "natt",
+    "jul",
+    "visa",
+    "hat"
+   ]
+  },
+  "hallen_verb": {
+   "n": 500,
+   "fore": {
+    "ingenting": 425,
+    "gissning": 74,
+    "egen form": 1
+   },
+   "efter": {
+    "kristall": 497,
+    "gissning": 2,
+    "egen form": 1
+   },
+   "kvarvarande_gissningar": [
+    "shoppa",
+    "limma"
+   ]
+  },
+  "hallen_adjektiv": {
+   "n": 500,
+   "fore": {
+    "ingenting": 470,
+    "gissning": 21,
+    "egen form": 6,
+    "spärrat": 3
+   },
+   "efter": {
+    "kristall": 488,
+    "egen form": 6,
+    "gissning": 2,
+    "spärrat": 3,
+    "ingenting": 1
+   },
+   "kvarvarande_gissningar": [
+    "flytande",
+    "brant"
+   ]
+  },
+  "hallen_substantiv": {
+   "n": 500,
+   "fore": {
+    "gissning": 21,
+    "ingenting": 472,
+    "egen form": 2,
+    "spärrat": 5
+   },
+   "efter": {
+    "kristall": 487,
+    "ingenting": 1,
+    "egen form": 2,
+    "gissning": 5,
+    "spärrat": 5
+   },
+   "kvarvarande_gissningar": [
+    "hörn",
+    "tand",
+    "brand",
+    "gren",
+    "kant"
+   ]
+  }
+ },
+ "stavfel": {
+  "djurstavfel_med_gissning_fore": 211,
+  "fore": 211,
+  "efter": 195,
+  "andel_kvar": 92.4,
+  "tappade_exempel": [
+   "ktt→katt",
+   "hnd→hund",
+   "hud→hund",
+   "drae→drake",
+   "hst→häst",
+   "hät→häst",
+   "fsk→fisk",
+   "fik→fisk",
+   "fiks→fisk",
+   "vlp→valp",
+   "vap→valp",
+   "gis→gris",
+   "grs→gris",
+   "nff→nöff",
+   "dno→dino",
+   "dio→dino"
+  ]
+ }
+}

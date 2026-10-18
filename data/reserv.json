@@ -1,0 +1,229 @@
+{
+  "version": 1,
+  "_om": "Reservkedjan: vad som händer med ett ord som tolka() inte känner. Första träff vinner: kategori_ord → lemma → sammansatt → regel → plats → kristall. Steg 1 'exakt' är ord.json och sköts av tolka() före reservkedjan. Allt här är data: ett nytt ord, en ny regel eller en ny form kräver ingen kod. Texter som barnet ser granskas av innehållsteamet.",
+  "kedja": [
+    "kategori_ord",
+    "lemma",
+    "sammansatt",
+    "regel",
+    "plats",
+    "kristall"
+  ],
+  "andelar": {
+    "substantiv": [
+      "erna",
+      "arna",
+      "orna",
+      "ena",
+      "en",
+      "et",
+      "er",
+      "ar",
+      "or",
+      "na",
+      "n",
+      "s",
+      "t"
+    ],
+    "verb": [
+      "ade",
+      "ande",
+      "ende",
+      "ar",
+      "er",
+      "de",
+      "at",
+      "it",
+      "a",
+      "r"
+    ],
+    "adjektiv": [
+      "are",
+      "aste",
+      "a",
+      "t",
+      "e"
+    ]
+  },
+  "lemma_min_stam": 2,
+  "sammansatt_min_led": 4,
+  "regler": [
+    {
+      "suffix": "het",
+      "kategori": "kansla"
+    },
+    {
+      "suffix": "hus",
+      "kategori": "byggnad"
+    },
+    {
+      "suffix": "are",
+      "kategori": "person"
+    },
+    {
+      "suffix": "erska",
+      "kategori": "person"
+    },
+    {
+      "suffix": "ig",
+      "kategori": "egenskap"
+    },
+    {
+      "suffix": "lig",
+      "kategori": "egenskap"
+    },
+    {
+      "suffix": "isk",
+      "kategori": "egenskap"
+    }
+  ],
+  "plats": {
+    "som": "handling",
+    "med": "foremal",
+    "adj": "egenskap",
+    "djur": "okant"
+  },
+  "kategorier": {
+    "okant": {
+      "form": {
+        "kropp": "okta",
+        "hojd": 1
+      }
+    },
+    "djur": {
+      "form": {
+        "kropp": "okta",
+        "ben": 4,
+        "hojd": 0.9
+      }
+    },
+    "mat": {
+      "form": {
+        "kropp": "dodeka",
+        "sockel": "skiva",
+        "hojd": 0.8
+      }
+    },
+    "foremal": {
+      "form": {
+        "kropp": "okta",
+        "sockel": "ruta",
+        "hojd": 0.9
+      }
+    },
+    "vaxt": {
+      "form": {
+        "kropp": "okta",
+        "blad": 2,
+        "hojd": 0.9
+      }
+    },
+    "byggnad": {
+      "form": {
+        "kropp": "ruta",
+        "tak": true,
+        "hojd": 0.9
+      }
+    },
+    "person": {
+      "form": {
+        "kropp": "okta",
+        "huvud": true,
+        "hojd": 0.8
+      }
+    },
+    "kansla": {
+      "form": {
+        "kropp": "ikosa",
+        "ring": true,
+        "hojd": 0.9
+      }
+    },
+    "natur": {
+      "form": {
+        "kropp": "ikosa",
+        "sockel": "skiva",
+        "hojd": 0.9
+      }
+    },
+    "handling": {
+      "form": {
+        "kropp": "okta",
+        "ring": true,
+        "hojd": 0.8
+      }
+    },
+    "egenskap": {
+      "form": {
+        "kropp": "ikosa",
+        "hojd": 0.8
+      }
+    }
+  },
+  "kristall": {
+    "palett": [
+      "#F06292",
+      "#BA68C8",
+      "#7986CB",
+      "#4FC3F7",
+      "#4DB6AC",
+      "#81C784",
+      "#DCE775",
+      "#FFD54F",
+      "#FFB74D",
+      "#FF8A65",
+      "#A1887F",
+      "#90A4AE"
+    ],
+    "hash": "fnv1a32",
+    "etikett_max": 16,
+    "max_totalt": 4
+  },
+  "forslag": {
+    "_om": "När är en 'Menade du …?'-gissning trovärdig? Avstånd i fel (avstand.ts) högst 'max' för ordets längd, och gissningen måste vara av en ordklass som passar platsen. Annars blir ordet en kristall. ej_om_kand: ett ord som står i kategori-ord.json (även via lemma) är ett riktigt ord och gissas aldrig om.",
+    "max_fel": [
+      {
+        "upptill": 3,
+        "max": 0.5
+      },
+      {
+        "upptill": 8,
+        "max": 1
+      },
+      {
+        "upptill": 99,
+        "max": 2
+      }
+    ],
+    "klasser_per_plats": {
+      "som": [
+        "formaga",
+        "egenskap"
+      ],
+      "med": [
+        "tillbehor",
+        "monster",
+        "farg"
+      ],
+      "adj": [
+        "farg",
+        "storlek",
+        "monster",
+        "egenskap",
+        "formaga"
+      ],
+      "djur": [
+        "djur",
+        "tillbehor"
+      ]
+    },
+    "ej_om_kand": true
+  },
+  "texter": {
+    "ny": "Det här har jag aldrig sett! Jag ritade en gissning: {ord}.",
+    "formel": "en {ord}-kristall",
+    "beskrivning": "{ord}-kristall",
+    "sparr": "Det ordet kan Trollpennan inte.",
+    "ersatter": "Det ordet kan Trollpennan inte än"
+  }
+}

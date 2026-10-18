@@ -1,0 +1,764 @@
+diff --git a/package.json b/package.json
+index 19c8b61..b5b28ea 100644
+--- a/package.json
++++ b/package.json
+@@ -15,6 +15,7 @@
+     "preview:restart": "node scripts/preview.mjs restart",
+     "preview:stop": "node scripts/preview.mjs stop",
+     "typecheck": "tsc --noEmit",
++    "test:reserv": "node --experimental-strip-types --test src/tolk/reserv.test.ts",
+     "check:auth": "node scripts/check-auth-invariant.mjs",
+     "test": "node --test 'scripts/**/*.test.mjs' && node --experimental-strip-types --test src/lib/app-data/app-data.test.ts src/lib/app-data/readiness-schedule.test.ts src/lib/auth/gate-identity.test.ts src/lib/auth/sign-in-gate.test.ts src/lib/preview-path-prefix.test.ts src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/tillbehor/data.test.ts",
+     "lint": "eslint .",
+diff --git a/src/spel/Spel.tsx b/src/spel/Spel.tsx
+index 91e9ad0..61ce243 100644
+--- a/src/spel/Spel.tsx
++++ b/src/spel/Spel.tsx
+@@ -3,6 +3,7 @@ import upplevelse from "../../data/upplevelse.json";
+ import { LagringsInfo } from "./LagringsInfo";
+ import { useEffect, useLayoutEffect, useRef, useState } from "react";
+ import { hemligaKvar, ordLista, tolka } from "@/tolk/tolka.ts";
++import { tolkaMedReserv } from "@/tolk/reserv.ts";
+ import type { ForslagKort, Ord, Utfall } from "@/tolk/typer.ts";
+ import { BYGG, byggMedId, formelBygg, tolkaBygg } from "@/tolk/byggtolk.ts";
+ import { bestamdHem, franTolk, ledigPlats } from "./bygge.ts";
+@@ -738,7 +739,7 @@ export function Spel() {
+       return;
+     }
+ 
+-    const utfall: Utfall = tolka(raw, { kalla: opt.hand ? "skriv" : "kort", inteGuld: opt.inteGuld });
++    const utfall: Utfall = tolkaMedReserv(raw, { kalla: opt.hand ? "skriv" : "kort", inteGuld: opt.inteGuld });
+     if (utfall.typ === "sparr") {
+       rensaSkriv();
+       visaBanner(utfall.text, "sparr");
+@@ -758,6 +759,7 @@ export function Spel() {
+       setForslag(null);
+       return;
+     }
++    if (utfall.varelse.reserv?.length) useMinne.getState().sparaOkanda(utfall.okanda);
+     if (utfall.guld.length) utfall.varelse.glans = true;
+     const { nya, somnade } = useMinne.getState().laggPaAng(utfall.varelse, utfall.antal);
+     for (const s of somnade) brygga.taBort(s.uid);
+diff --git a/src/spel/angen3d.tsx b/src/spel/angen3d.tsx
+index ab9c753..b20a49f 100644
+--- a/src/spel/angen3d.tsx
++++ b/src/spel/angen3d.tsx
+@@ -16,6 +16,7 @@ import { GltfDjur, harModell, type DjurSignal } from "./gltfDjur.tsx";
+ import { faestTillbehor, procAnkare } from "./tillbehor/index.ts";
+ import { DjurEffekter } from "./effekter.tsx";
+ import { KenneyNatur } from "./kenneyNatur.tsx";
++import { KRISTALL_KROPP, OrdKristall, ReservKristaller } from "./ordkristall.tsx";
+ 
+ const HINT = (texterJson as { tred_hint: string }).tred_hint;
+ const SNART = (texterJson as { demo: { snart: string } }).demo.snart;
+@@ -898,9 +899,12 @@ function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
+               <GltfDjur spec={spec} signal={signal} />
+             </Suspense>
+           </ModellGren>
++        ) : spec.kropp === KRISTALL_KROPP ? (
++          <OrdKristall spec={spec} />
+         ) : (
+           <DjurForm spec={spec} />
+         )}
++        <ReservKristaller spec={spec} />
+         <DjurEffekter varelse={spec} ankare={ankare} />
+       </group>
+     </group>
+diff --git a/src/spel/liv.ts b/src/spel/liv.ts
+index e2a99d4..7309176 100644
+--- a/src/spel/liv.ts
++++ b/src/spel/liv.ts
+@@ -317,6 +317,7 @@ export function komIhagDjur(v: Varelse & { uid: string }): string | null {
+     ny = niva.form;
+   }
+   if (!s.liv[v.uid]) useMinne.setState({ liv: { ...s.liv, [v.uid]: liv } });
++  if (v.kropp === "kristall") return null; // ordkristallen har liv men är ingen albumkropp
+   useMinne.setState({
+     albumKropp: { ...useMinne.getState().albumKropp, [v.kropp]: bast },
+     seddaNiva: [...sedda],
+diff --git a/src/spel/ordkristall.tsx b/src/spel/ordkristall.tsx
+new file mode 100644
+index 0000000..bac6b45
+--- /dev/null
++++ b/src/spel/ordkristall.tsx
+@@ -0,0 +1,249 @@
++import { useFrame } from "@react-three/fiber";
++import { useMemo, useRef } from "react";
++import * as THREE from "three";
++import reservJson from "../../data/reserv.json" with { type: "json" };
++import type { ReservDel } from "../tolk/typer.ts";
++import type { Sparad } from "./brygga.ts";
++
++/**
++ * Ordkristallen: reservformen för ett ord som spelet inte känner (R3B).
++ * Formen är data: data/reserv.json kategorier[kategori].form beskriver kroppen, sockel, ben, blad, tak, huvud och ring.
++ * Ett nytt ord eller en ny kategori kräver ingen kod här. Etiketten är ordets egen text.
++ */
++
++export const KRISTALL_KROPP = "kristall";
++
++type Form = {
++  kropp: "okta" | "dodeka" | "ikosa" | "ruta";
++  hojd?: number;
++  sockel?: "skiva" | "ruta";
++  ben?: number;
++  blad?: number;
++  tak?: boolean;
++  huvud?: boolean;
++  ring?: boolean;
++};
++const KATEGORIER = (reservJson as unknown as { kategorier: Record<string, { form: Form }> }).kategorier;
++const ETIKETT_MAX = (reservJson as unknown as { kristall: { etikett_max: number } }).kristall.etikett_max;
++
++const TOON = (() => {
++  const t = new THREE.DataTexture(new Uint8Array([90, 170, 255]), 3, 1, THREE.RedFormat);
++  t.minFilter = THREE.NearestFilter;
++  t.magFilter = THREE.NearestFilter;
++  t.needsUpdate = true;
++  return t;
++})();
++
++const matCache = new Map<string, THREE.MeshToonMaterial>();
++function toon(farg: string, ljus = 0.12): THREE.MeshToonMaterial {
++  const nyckel = `${farg}|${ljus}`;
++  let m = matCache.get(nyckel);
++  if (!m) {
++    m = new THREE.MeshToonMaterial({ color: farg, gradientMap: TOON, emissive: farg, emissiveIntensity: ljus });
++    matCache.set(nyckel, m);
++  }
++  return m;
++}
++const KONTUR = new THREE.MeshBasicMaterial({ color: "#3B2F2F", side: THREE.BackSide });
++const OGON = new THREE.MeshBasicMaterial({ color: "#2B2020" });
++const GLANS = new THREE.MeshBasicMaterial({ color: "#FFFFFF" });
++
++const geoCache = new Map<string, THREE.BufferGeometry>();
++function geo(nyckel: string, gor: () => THREE.BufferGeometry): THREE.BufferGeometry {
++  let g = geoCache.get(nyckel);
++  if (!g) {
++    g = gor();
++    geoCache.set(nyckel, g);
++  }
++  return g;
++}
++function kroppGeo(typ: Form["kropp"]): THREE.BufferGeometry {
++  if (typ === "dodeka") return geo("dodeka", () => new THREE.DodecahedronGeometry(0.4, 0));
++  if (typ === "ikosa") return geo("ikosa", () => new THREE.IcosahedronGeometry(0.4, 0));
++  if (typ === "ruta") return geo("ruta", () => new THREE.BoxGeometry(0.62, 0.56, 0.62));
++  return geo("okta", () => new THREE.OctahedronGeometry(0.44, 0));
++}
++
++const etiketter = new Map<string, THREE.CanvasTexture>();
++function etikettTextur(text: string, farg: string): THREE.CanvasTexture {
++  const nyckel = `${text}|${farg}`;
++  const har = etiketter.get(nyckel);
++  if (har) return har;
++  const c = document.createElement("canvas");
++  const ctx = c.getContext("2d");
++  const px = 56;
++  const font = `700 ${px}px Fredoka, Nunito, "Segoe UI", sans-serif`;
++  let bredd = 256;
++  if (ctx) {
++    ctx.font = font;
++    bredd = Math.max(160, Math.ceil(ctx.measureText(text).width) + 56);
++  }
++  c.width = bredd;
++  c.height = 96;
++  const g = c.getContext("2d");
++  if (g) {
++    g.font = font;
++    g.fillStyle = "#FFFDF5";
++    g.strokeStyle = farg;
++    g.lineWidth = 8;
++    const r = 40;
++    g.beginPath();
++    g.roundRect(6, 6, bredd - 12, 84, r);
++    g.fill();
++    g.stroke();
++    g.fillStyle = "#3B2F2F";
++    g.textAlign = "center";
++    g.textBaseline = "middle";
++    g.fillText(text, bredd / 2, 52);
++  }
++  const tex = new THREE.CanvasTexture(c);
++  tex.colorSpace = THREE.SRGBColorSpace;
++  tex.needsUpdate = true;
++  etiketter.set(nyckel, tex);
++  return tex;
++}
++
++function Etikett({ text, farg, y, hojd }: { text: string; farg: string; y: number; hojd: number }) {
++  const tex = useMemo(() => etikettTextur(text.slice(0, ETIKETT_MAX), farg), [text, farg]);
++  const b = (tex.image as HTMLCanvasElement).width / 96;
++  return (
++    <sprite position={[0, y, 0]} scale={[hojd * b, hojd, 1]} renderOrder={20}>
++      <spriteMaterial map={tex} transparent depthTest={false} depthWrite={false} />
++    </sprite>
++  );
++}
++
++function formAv(kategori: string): Form {
++  return (KATEGORIER[kategori] ?? KATEGORIER["okant"]!).form;
++}
++
++/** Mitten av kroppen och toppen av formen (för etikettens höjd), i kristallens egna enheter. */
++function matt(form: Form): { mitt: number; topp: number } {
++  const h = form.hojd ?? 1;
++  const mitt = (form.kropp === "ruta" ? 0.3 : 0.5) * h + (form.sockel ? 0.1 : 0) + (form.ben ? 0.16 : 0);
++  const halv = form.kropp === "okta" ? 0.44 * 1.35 * h : form.kropp === "ruta" ? 0.28 * h : 0.4 * h;
++  const extra = (form.tak ? 0.4 : 0) + (form.huvud ? 0.3 : 0) + (form.blad ? 0.25 : 0);
++  return { mitt, topp: mitt + halv + extra };
++}
++
++function Kristall({ del, ogon, vagg }: { del: ReservDel; ogon: boolean; vagg: number }) {
++  const form = formAv(del.kategori);
++  const h = form.hojd ?? 1;
++  const kropp = useRef<THREE.Group>(null);
++  const ring = useRef<THREE.Mesh>(null);
++  const { mitt } = matt(form);
++  const hog = form.kropp === "okta" ? 1.35 : 1;
++  useFrame((state) => {
++    const t = state.clock.elapsedTime;
++    const g = kropp.current;
++    if (g) {
++      g.rotation.y = Math.sin(t * 0.7 + vagg) * 0.35;
++      g.position.y = mitt + Math.sin(t * 1.6 + vagg) * 0.05;
++    }
++    if (ring.current) ring.current.rotation.z = t * 1.2;
++  });
++  const g = kroppGeo(form.kropp);
++  const farg = del.farg;
++  const ljus = toon("#FFFFFF", 0.0);
++  return (
++    <group>
++      {form.sockel === "skiva" ? (
++        <mesh position={[0, 0.04, 0]} geometry={geo("skiva", () => new THREE.CylinderGeometry(0.52, 0.52, 0.07, 18))} material={toon("#F6E7C8", 0.1)} />
++      ) : null}
++      {form.sockel === "ruta" ? (
++        <mesh position={[0, 0.06, 0]} geometry={geo("sockelruta", () => new THREE.BoxGeometry(0.62, 0.12, 0.62))} material={toon("#A1887F", 0.05)} />
++      ) : null}
++      {form.ben
++        ? Array.from({ length: form.ben }, (_, i) => {
++            const a = Math.PI / 4 + (i / form.ben!) * Math.PI * 2;
++            return (
++              <mesh
++                key={i}
++                position={[Math.cos(a) * 0.24, 0.08, Math.sin(a) * 0.24]}
++                geometry={geo("ben", () => new THREE.CylinderGeometry(0.06, 0.07, 0.18, 8))}
++                material={toon(farg, 0.05)}
++              />
++            );
++          })
++        : null}
++      <group ref={kropp} position={[0, mitt, 0]}>
++        <group scale={[1, hog * h, 1]}>
++          <mesh geometry={g} material={toon(farg)} />
++          <mesh geometry={g} material={KONTUR} scale={1.08} />
++        </group>
++        {form.tak ? (
++          <group position={[0, 0.28 * h + 0.14, 0]}>
++            <mesh rotation={[0, Math.PI / 4, 0]} geometry={geo("tak", () => new THREE.ConeGeometry(0.5, 0.36, 4))} material={toon("#8D6E63", 0.05)} />
++          </group>
++        ) : null}
++        {form.huvud ? (
++          <mesh position={[0, 0.5 * h * hog * 0.88, 0]} geometry={geo("huvud", () => new THREE.SphereGeometry(0.2, 12, 10))} material={toon("#FFE0B2", 0.15)} />
++        ) : null}
++        {form.blad
++          ? Array.from({ length: form.blad }, (_, i) => (
++              <mesh
++                key={i}
++                position={[i % 2 ? 0.2 : -0.2, 0.5 * h * hog + 0.02, 0]}
++                rotation={[0, 0, i % 2 ? -0.7 : 0.7]}
++                geometry={geo("blad", () => new THREE.ConeGeometry(0.1, 0.38, 6))}
++                material={toon("#66BB6A", 0.1)}
++              />
++            ))
++          : null}
++        {ogon ? (
++          <group position={[0, 0.1 * hog * h, form.kropp === "ruta" ? 0.32 : 0.3]}>
++            {[-0.1, 0.1].map((x) => (
++              <group key={x} position={[x, 0, 0]}>
++                <mesh geometry={geo("ogon", () => new THREE.SphereGeometry(0.052, 10, 8))} material={OGON} />
++                <mesh position={[0.016, 0.02, 0.036]} geometry={geo("glans", () => new THREE.SphereGeometry(0.016, 6, 5))} material={GLANS} />
++              </group>
++            ))}
++          </group>
++        ) : null}
++        {form.ring ? (
++          <mesh ref={ring} rotation={[Math.PI / 2.4, 0, 0]} geometry={geo("ring", () => new THREE.TorusGeometry(0.58, 0.03, 6, 28))} material={ljus} />
++        ) : null}
++      </group>
++    </group>
++  );
++}
++
++const KROPPSSKALA = 1.3;
++const SVAV_SKALA = 0.75;
++
++/** Själva kroppen för ett djur med kropp "kristall": första posten i spec.reserv. */
++export function OrdKristall({ spec }: { spec: Sparad }) {
++  const del = spec.reserv?.[0];
++  if (!del) return null;
++  const { topp } = matt(formAv(del.kategori));
++  return (
++    <group>
++      <group scale={KROPPSSKALA}>
++        <Kristall del={del} ogon vagg={0} />
++      </group>
++      <Etikett text={del.ord} farg={del.farg} y={topp * KROPPSSKALA + 0.3} hojd={0.46} />
++    </group>
++  );
++}
++
++/** Ord som svävar som små kristaller ovanför djuret (alla poster utom kroppens). */
++export function ReservKristaller({ spec }: { spec: Sparad }) {
++  const lista = (spec.reserv ?? []).slice(spec.kropp === KRISTALL_KROPP ? 1 : 0);
++  if (!lista.length) return null;
++  const bas = spec.kropp === KRISTALL_KROPP ? 2.2 : 1.55;
++  return (
++    <group>
++      {lista.map((del, i) => {
++        const { topp } = matt(formAv(del.kategori));
++        return (
++          <group key={del.ord} position={[(i - (lista.length - 1) / 2) * 1.05, bas, 0]}>
++            <group scale={SVAV_SKALA}>
++              <Kristall del={del} ogon={false} vagg={i + 1} />
++            </group>
++            <Etikett text={del.ord} farg={del.farg} y={topp * SVAV_SKALA + 0.26} hojd={0.4} />
++          </group>
++        );
++      })}
++    </group>
++  );
++}
+diff --git a/src/tolk/reserv.test.ts b/src/tolk/reserv.test.ts
+new file mode 100644
+index 0000000..0129da4
+--- /dev/null
++++ b/src/tolk/reserv.test.ts
+@@ -0,0 +1,173 @@
++import assert from "node:assert/strict";
++import test from "node:test";
++import reserv from "../../data/reserv.json" with { type: "json" };
++import katord from "../../data/kategori-ord.json" with { type: "json" };
++import fraserJson from "../../data/test-fraser-reserv.json" with { type: "json" };
++import gamla from "../../data/test-fraser.json" with { type: "json" };
++import { arDjur } from "../spel/lagring.ts";
++import { ordFranForm } from "./lexikon.ts";
++import { fnv1a32, kategoriFor, kristallFarg, platsAv, tokensAv, tolkaMedReserv } from "./reserv.ts";
++import { tolka } from "./tolka.ts";
++
++type Fras = {
++  fras: string;
++  forvantat: "kristall" | "djur_med_kristall" | "forslag" | "sparr" | "oforandrat";
++  kropp?: string;
++  ord?: string;
++  kategori?: string;
++  steg?: string;
++  delar?: string[];
++  forslag?: string;
++};
++const FRASER = (fraserJson as unknown as { fraser: Fras[] }).fraser;
++
++test("minst 40 fraser i data/test-fraser-reserv.json och alla utfall stämmer", () => {
++  assert.ok(FRASER.length >= 40, `bara ${FRASER.length}`);
++  for (const f of FRASER) {
++    const u = tolkaMedReserv(f.fras);
++    const namn = JSON.stringify(f.fras);
++    if (f.forvantat === "oforandrat") {
++      assert.deepEqual(u, tolka(f.fras), namn);
++    } else if (f.forvantat === "sparr") {
++      assert.equal(u.typ, "sparr", namn);
++      assert.equal(JSON.stringify(u).toLowerCase().includes("fitta"), false, namn);
++    } else if (f.forvantat === "forslag") {
++      assert.equal(u.typ, "forslag", namn);
++      if (u.typ === "forslag") assert.equal(u.forslag[0]?.id, f.forslag, namn);
++    } else {
++      assert.equal(u.typ, "skapad", namn);
++      if (u.typ !== "skapad") continue;
++      const r = u.varelse.reserv ?? [];
++      assert.ok(r.length >= 1, namn);
++      assert.equal(u.varelse.kropp, f.forvantat === "kristall" ? "kristall" : f.kropp, namn);
++      const post = r.find((d) => d.ord === f.ord);
++      assert.ok(post, `${namn}: ${f.ord} saknas i ${JSON.stringify(r.map((d) => d.ord))}`);
++      assert.equal(post.kategori, f.kategori, namn);
++      if (f.steg) assert.equal(post.steg, f.steg, namn);
++      if (f.delar) assert.deepEqual(r.map((d) => d.ord), f.delar, namn);
++      if (f.forvantat === "kristall") assert.equal(r[0]?.ord, f.ord, `${namn}: kroppen är första posten`);
++    }
++  }
++});
++
++test("de 28 befintliga testfraserna ger exakt samma utfall som tolka()", () => {
++  const lista = (gamla as unknown as { fraser: { fras: string }[] }).fraser;
++  assert.ok(lista.length >= 28);
++  for (const f of lista) assert.deepEqual(tolkaMedReserv(f.fras), tolka(f.fras), f.fras);
++});
++
++test("tolka() är oförändrad: okänt ord utan djur ger fortfarande behover_djur där", () => {
++  const u = tolka("blobbo");
++  assert.equal(u.typ, "behover_djur");
++  assert.equal(tolkaMedReserv("blobbo").typ, "skapad");
++});
++
++test("gissningen: går, dansar och liknande ger ingen 'Menade du' (grå, dino, nasse)", () => {
++  for (const f of ["en kanin som går", "en kanin som dansar", "en kanin som kan dansa", "går", "dansar", "en kanin som läser", "en kanin som kommer"]) {
++    const u = tolkaMedReserv(f);
++    assert.notEqual(u.typ, "forslag", f);
++  }
++  assert.equal(tolka("en kanin som går").typ, "forslag", "före: gissningen fanns (grå)");
++  const ds = tolkaMedReserv("en kanin som dansar");
++  assert.ok(!JSON.stringify(ds).includes("dino") && !JSON.stringify(ds).includes("nasse"));
++});
++
++test("riktiga stavfel ger fortfarande rätt gissning", () => {
++  for (const [fel, id] of [
++    ["kanim", "kanin"],
++    ["kannin", "kanin"],
++    ["hunnd", "hund"],
++    ["kattt", "katt"],
++    ["draken", "drake"],
++  ] as const) {
++    const u = tolkaMedReserv(fel);
++    if (id === "drake" && u.typ !== "forslag") continue; // "draken" är en böjning och inget stavfel
++    assert.equal(u.typ, "forslag", fel);
++    if (u.typ === "forslag") assert.equal(u.forslag[0]?.id, id, fel);
++  }
++});
++
++test("kedjan: varje steg är data och första träff vinner", () => {
++  assert.deepEqual(reserv.kedja, ["kategori_ord", "lemma", "sammansatt", "regel", "plats", "kristall"]);
++  assert.deepEqual(kategoriFor("pizza", "djur"), { kategori: "mat", steg: "kategori_ord" });
++  assert.deepEqual(kategoriFor("pizzorna", "djur"), { kategori: "mat", steg: "lemma" });
++  assert.deepEqual(kategoriFor("dansade", "som"), { kategori: "handling", steg: "lemma" });
++  assert.deepEqual(kategoriFor("chokladtårta", "djur"), { kategori: "mat", steg: "sammansatt" });
++  assert.deepEqual(kategoriFor("vänlighet", "djur"), { kategori: "kansla", steg: "regel" });
++  assert.deepEqual(kategoriFor("qwerty", "med"), { kategori: "foremal", steg: "plats" });
++  assert.deepEqual(kategoriFor("qwerty", "djur"), { kategori: "okant", steg: "kristall" });
++});
++
++test("platsen i meningen: som/kan, med, före djur, djuret självt", () => {
++  const t = tokensAv("en glad kanin med paraply som dansar");
++  assert.equal(platsAv(t, t.indexOf("glad")), "adj");
++  assert.equal(platsAv(t, t.indexOf("paraply")), "med");
++  assert.equal(platsAv(t, t.indexOf("dansar")), "som");
++  assert.equal(platsAv(["elefant"], 0), "djur");
++});
++
++test("samma ord ger samma färg ur paletten, och färgen är en av 12", () => {
++  assert.equal(reserv.kristall.palett.length, 12);
++  for (const w of ["elefant", "pizza", "hmmmx", "å"]) {
++    assert.equal(kristallFarg(w), kristallFarg(w));
++    assert.ok(reserv.kristall.palett.includes(kristallFarg(w)));
++  }
++  assert.equal(fnv1a32("a"), 0xe40c292c);
++  const farger = new Set(["elefant", "pizza", "hmmmx", "giraff", "zebra", "pojke", "tårta", "sol"].map(kristallFarg));
++  assert.ok(farger.size >= 4, "ord får olika färger");
++});
++
++test("tak: högst fyra kristaller totalt och etiketten är högst 16 tecken", () => {
++  const max = reserv.kristall.max_totalt;
++  const a = tolkaMedReserv("elefant giraff zebra lejon tiger apa");
++  assert.equal(a.typ, "skapad");
++  if (a.typ === "skapad") assert.ok((a.varelse.reserv?.length ?? 0) <= max);
++  const b = tolkaMedReserv("en kanin med paraply och ballong och cykel och bok och lampa");
++  assert.equal(b.typ, "skapad");
++  if (b.typ === "skapad") assert.ok((b.varelse.reserv?.length ?? 0) <= max - 1);
++  const c = tolkaMedReserv("a".repeat(70));
++  assert.equal(c.typ, "skapad");
++  if (c.typ === "skapad") for (const d of c.varelse.reserv ?? []) assert.ok(d.ord.length <= reserv.kristall.etikett_max);
++});
++
++test("spärrade ord ger aldrig en kristall, även mitt i en mening", () => {
++  for (const f of ["fitta", "en kanin med fitta", "elefant fy fan", "f1tta", "negerkanin"]) {
++    const u = tolkaMedReserv(f);
++    assert.equal(u.typ, "sparr", f);
++  }
++  const text = tolkaMedReserv("kanin fitta");
++  assert.equal(text.typ === "sparr" && text.text, "Det ordet kan Trollpennan inte.");
++});
++
++test("reservdjuret är ett giltigt sparat djur och okända ord sparas i okanda", () => {
++  const u = tolkaMedReserv("elefant");
++  assert.equal(u.typ, "skapad");
++  if (u.typ !== "skapad") return;
++  assert.ok(arDjur({ ...u.varelse, uid: "x", skapad: 1 }));
++  assert.deepEqual(u.okanda, ["elefant"]);
++  assert.equal(u.varelse.formel, "en elefant-kristall");
++  assert.equal(u.meddelanden[0], "Det här har jag aldrig sett! Jag ritade en gissning: elefant.");
++  assert.deepEqual(u.guld, []);
++  const g = tolkaMedReserv("en kanin som går");
++  assert.equal(g.typ === "skapad" && g.okanda.includes("går"), true);
++});
++
++test("datakontroll: alla kategorier finns, inga dubbletter, inga ord som ord.json redan känner", () => {
++  const kat = Object.keys(reserv.kategorier);
++  for (const k of Object.keys(katord.kategorier)) assert.ok(kat.includes(k), `kategori ${k} saknar form i reserv.json`);
++  for (const r of reserv.regler) assert.ok(kat.includes(r.kategori), r.suffix);
++  for (const k of Object.values(reserv.plats)) assert.ok(kat.includes(k), k);
++  const sedda = new Map<string, string>();
++  for (const [k, lista] of Object.entries(katord.kategorier as Record<string, string[]>)) {
++    for (const w of lista) {
++      assert.equal(sedda.get(w), undefined, `${w} står i både ${sedda.get(w)} och ${k}`);
++      sedda.set(w, k);
++      assert.equal(ordFranForm(w), undefined, `${w} finns redan i ord.json`);
++      assert.equal(w, w.toLocaleLowerCase("sv"));
++    }
++  }
++  for (const f of Object.values(reserv.forslag.klasser_per_plats).flat()) {
++    assert.ok(["djur", "farg", "storlek", "monster", "formaga", "tillbehor", "egenskap"].includes(f), f);
++  }
++  for (const p of reserv.kristall.palett) assert.match(p, /^#[0-9A-F]{6}$/);
++});
+diff --git a/src/tolk/reserv.ts b/src/tolk/reserv.ts
+new file mode 100644
+index 0000000..59bd9b8
+--- /dev/null
++++ b/src/tolk/reserv.ts
+@@ -0,0 +1,217 @@
++import RESERV from "../../data/reserv.json" with { type: "json" };
++import KATEGORI_ORD from "../../data/kategori-ord.json" with { type: "json" };
++import { avstand } from "./avstand.ts";
++import { langstaSuffix, lasToken, ordMedId } from "./lexikon.ts";
++import { arSparrat } from "./sparr.ts";
++import { tolka } from "./tolka.ts";
++import type { ReservDel, TolkaOpts, Utfall } from "./typer.ts";
++
++/**
++ * Reservkedjan: ett ord som tolka() inte känner blir en synlig ordkristall i stället för ingenting,
++ * och en "Menade du …?"-gissning som inte är trovärdig blir också en kristall.
++ * Allt som styr kedjan står i data/reserv.json och data/kategori-ord.json. Ren funktion, ingen three-import.
++ */
++
++type Plats = ReservDel["plats"];
++type Steg = ReservDel["steg"];
++
++type Regel = { suffix: string; kategori: string };
++type ReservData = {
++  andelar: Record<string, string[]>;
++  lemma_min_stam: number;
++  sammansatt_min_led: number;
++  regler: Regel[];
++  plats: Record<Plats, string>;
++  kristall: { palett: string[]; etikett_max: number; max_totalt: number };
++  forslag: { ej_om_kand: boolean; max_fel: { upptill: number; max: number }[]; klasser_per_plats: Record<Plats, string[]> };
++  texter: { ny: string; formel: string; beskrivning: string; sparr: string; ersatter: string };
++};
++const R = RESERV as unknown as ReservData;
++
++/** Samma uppdelning i ord som tokensAv() i tolka.ts. */
++export function tokensAv(raw: string): string[] {
++  return raw
++    .toLocaleLowerCase("sv")
++    .replace(/[^a-zåäö\s]/g, " ")
++    .replace(/\s+/g, " ")
++    .trim()
++    .slice(0, 60)
++    .split(" ")
++    .filter(Boolean);
++}
++
++const ORDLISTA = new Map<string, string>();
++for (const [kategori, lista] of Object.entries(
++  (KATEGORI_ORD as unknown as { kategorier: Record<string, string[]> }).kategorier,
++)) {
++  for (const ord of lista) if (!ORDLISTA.has(ord)) ORDLISTA.set(ord, kategori);
++}
++const SAMMANSATT = [...ORDLISTA.keys()]
++  .filter((o) => o.length >= R.sammansatt_min_led)
++  .sort((a, b) => b.length - a.length);
++const ANDELAR = [...new Set(Object.values(R.andelar).flat())].sort((a, b) => b.length - a.length);
++
++export function fnv1a32(s: string): number {
++  let h = 0x811c9dc5;
++  for (let i = 0; i < s.length; i++) {
++    h ^= s.charCodeAt(i);
++    h = Math.imul(h, 0x01000193) >>> 0;
++  }
++  return h >>> 0;
++}
++
++export function kristallFarg(ord: string): string {
++  const p = R.kristall.palett;
++  return p[fnv1a32(ord) % p.length]!;
++}
++
++function arDjurToken(t: string): boolean {
++  const x = lasToken(t);
++  if (x?.t === "ord" && x.o.klass === "djur") return true;
++  return langstaSuffix(t)?.kind === "djur";
++}
++
++/** Var i meningen står ordet: efter "som"/"kan", efter "med", före ett djur (adjektiv) eller annars som djuret självt. */
++export function platsAv(tokens: string[], i: number): Plats {
++  let lage: "fore" | "med" | "som" = "fore";
++  for (let j = 0; j < i; j++) {
++    const f = lasToken(tokens[j] ?? "");
++    if (f?.t !== "funk") continue;
++    if (f.v === "med") lage = "med";
++    else if (f.v === "som" || f.v === "kan") lage = "som";
++  }
++  if (lage !== "fore") return lage;
++  for (let j = i + 1; j < tokens.length; j++) if (arDjurToken(tokens[j] ?? "")) return "adj";
++  return "djur";
++}
++
++function lemmaKategori(ord: string): string | null {
++  for (const e of ANDELAR) {
++    if (!ord.endsWith(e)) continue;
++    const stam = ord.slice(0, ord.length - e.length);
++    if (stam.length < R.lemma_min_stam) continue;
++    for (const kand of [stam, stam + "a", stam + "e"]) {
++      const k = ORDLISTA.get(kand);
++      if (k) return k;
++    }
++  }
++  return null;
++}
++
++export function kategoriFor(ord: string, plats: Plats): { kategori: string; steg: Steg } {
++  const exakt = ORDLISTA.get(ord);
++  if (exakt) return { kategori: exakt, steg: "kategori_ord" };
++  const lemma = lemmaKategori(ord);
++  if (lemma) return { kategori: lemma, steg: "lemma" };
++  for (const led of SAMMANSATT) {
++    if (ord.length > led.length && ord.endsWith(led)) return { kategori: ORDLISTA.get(led)!, steg: "sammansatt" };
++  }
++  for (const r of R.regler) {
++    if (ord.length > r.suffix.length + 1 && ord.endsWith(r.suffix)) return { kategori: r.kategori, steg: "regel" };
++  }
++  const p = R.plats[plats];
++  if (p && p !== "okant") return { kategori: p, steg: "plats" };
++  return { kategori: "okant", steg: "kristall" };
++}
++
++export function reservFor(ord: string, plats: Plats): ReservDel {
++  const k = kategoriFor(ord, plats);
++  return { ord, kategori: k.kategori, steg: k.steg, plats, farg: kristallFarg(ord) };
++}
++
++function maxFel(langd: number): number {
++  for (const s of R.forslag.max_fel) if (langd <= s.upptill) return s.max;
++  return 0;
++}
++
++/** Behåller bara de gissningar som är trovärdiga för ordet och platsen. Tom lista = ingen gissning. */
++function trovardiga(token: string, plats: Plats, forslag: { id: string; visa: string }[]) {
++  const klasser = R.forslag.klasser_per_plats[plats];
++  const grans = maxFel(token.length);
++  return forslag.filter((f) => {
++    const ord = ordMedId(f.id);
++    if (!klasser.includes(ord?.klass ?? "djur")) return false;
++    const former = [f.visa, ...(ord?.former ?? [])];
++    return Math.min(...former.map((x) => avstand(token, x))) <= grans + 1e-9;
++  });
++}
++
++function fyllText(mall: string, ord: string): string {
++  return mall.replace(/\{ord\}/g, ord);
++}
++
++/** tolka() + reservkedjan. tolka() är oförändrad; det här lägger kristaller där den ger "ingenting". */
++export function tolkaMedReserv(raw: string, opts: TolkaOpts = {}): Utfall {
++  let u = tolka(raw, opts);
++  if (u.typ === "sparr") return u;
++  const tokens = tokensAv(raw);
++  if (tokens.some((t) => arSparrat(t))) return { typ: "sparr", text: R.texter.sparr };
++
++  let kvar = tokens;
++  const bort: string[] = [];
++  for (let n = 0; n < 4 && u.typ === "forslag"; n++) {
++    const i = kvar.indexOf(u.token);
++    const plats = platsAv(kvar, i < 0 ? 0 : i);
++    const kand = R.forslag.ej_om_kand && ["kategori_ord", "lemma"].includes(kategoriFor(u.token, plats).steg);
++    const bra = kand ? [] : trovardiga(u.token, plats, u.forslag);
++    if (bra.length) {
++      return {
++        typ: "forslag",
++        token: u.token,
++        text: bra.length === 1 ? `Menade du ${bra[0]!.visa}?` : "Menade du …?",
++        forslag: bra.map((f) => ({ id: f.id, visa: f.visa })),
++      };
++    }
++    bort.push(u.token);
++    kvar = kvar.filter((_, j) => j !== i);
++    u = tolka(kvar.join(" "), opts);
++  }
++  if (u.typ === "forslag" || u.typ === "sparr") return u;
++
++  const heltOkanda = u.typ === "skapad" || u.typ === "behover_djur" ? u.okanda.filter((o) => tokens.includes(o)) : [];
++  const ord = tokens.filter((t, i) => (heltOkanda.includes(t) || bort.includes(t)) && tokens.indexOf(t) === i);
++  if (!ord.length) return u;
++  const max = R.kristall.max_totalt;
++  const delar = ord.map((t) => reservFor(t.slice(0, R.kristall.etikett_max), platsAv(tokens, tokens.indexOf(t))));
++
++  const okanda = [...new Set([...u.okanda, ...bort])];
++  if (u.typ === "skapad") {
++    const meddelanden = [
++      fyllText(R.texter.ny, delar[0]!.ord),
++      ...u.meddelanden.filter((m) => !m.startsWith(R.texter.ersatter)),
++    ];
++    return { ...u, okanda, meddelanden, varelse: { ...u.varelse, reserv: delar.slice(0, max - 1) } };
++  }
++  if (u.typ !== "behover_djur") return u;
++  const andra = (d: ReservDel) => d.kategori === "handling" || d.kategori === "egenskap";
++  const huvud =
++    [...delar].reverse().find((d) => d.plats === "djur" && !andra(d)) ??
++    [...delar].reverse().find((d) => !andra(d)) ??
++    delar[delar.length - 1]!;
++  const resten = delar.filter((d) => d !== huvud).slice(0, max - 1);
++  const formel = fyllText(R.texter.formel, huvud.ord);
++  return {
++    typ: "skapad",
++    varelse: {
++      kropp: "kristall",
++      farg: huvud.farg,
++      monster: null,
++      monsterfarg: null,
++      formagor: [],
++      tillbehor: [],
++      skala: 1,
++      alpha: 1,
++      kontur: false,
++      glans: false,
++      formel,
++      beskrivning: fyllText(R.texter.beskrivning, huvud.ord),
++      overraskningar: [],
++      reserv: [huvud, ...resten],
++    },
++    antal: 1,
++    funna: [],
++    guld: [],
++    okanda,
++    meddelanden: [fyllText(R.texter.ny, huvud.ord)],
++  };
++}
+diff --git a/src/tolk/typer.ts b/src/tolk/typer.ts
+index ffa1a9d..3211fa6 100644
+--- a/src/tolk/typer.ts
++++ b/src/tolk/typer.ts
+@@ -82,6 +82,15 @@ export type BlockData = {
+ 
+ export type TillbehorSpec = { id: string; farg: string | null; glans: boolean };
+ 
++/** Ett ord som tolka() inte känner, ritat som en ordkristall (data/reserv.json, src/tolk/reserv.ts). */
++export type ReservDel = {
++  ord: string;
++  kategori: string;
++  steg: "kategori_ord" | "lemma" | "sammansatt" | "regel" | "plats" | "kristall";
++  plats: "djur" | "med" | "som" | "adj";
++  farg: string;
++};
++
+ export type Varelse = {
+   kropp: string;
+   farg: string | null;
+@@ -96,6 +105,8 @@ export type Varelse = {
+   formel: string;
+   beskrivning: string;
+   overraskningar: { effekt: string; text: string }[];
++  /** Okända ord som kristaller. Vid kropp "kristall" är första posten själva kroppen, övriga svävar ovanför. */
++  reserv?: ReservDel[];
+ };
+ 
+ export type ForslagKort = { id: string; visa: string };
