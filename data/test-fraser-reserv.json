@@ -1,0 +1,313 @@
+{
+ "_om": "Förväntade utfall för R3B (reservkedjan). 'forvantat': kristall = ett djur av kropp kristall (första reserv-posten är kroppen); djur_med_kristall = ett vanligt djur med svävande ordkristaller; forslag = en trovärdig 'Menade du …?'; sparr = aldrig en form; oforandrat = exakt samma utfall som tolka(). 'delar' = alla ord i reserv i ordning (huvudet först vid kristall).",
+ "fraser": [
+  {
+   "fras": "elefant",
+   "forvantat": "kristall",
+   "ord": "elefant",
+   "kategori": "okant",
+   "steg": "kristall"
+  },
+  {
+   "fras": "en elefant",
+   "forvantat": "kristall",
+   "ord": "elefant",
+   "kategori": "okant"
+  },
+  {
+   "fras": "pizza",
+   "forvantat": "kristall",
+   "ord": "pizza",
+   "kategori": "mat",
+   "steg": "kategori_ord"
+  },
+  {
+   "fras": "en pizza",
+   "forvantat": "kristall",
+   "ord": "pizza",
+   "kategori": "mat"
+  },
+  {
+   "fras": "tårta",
+   "forvantat": "kristall",
+   "ord": "tårta",
+   "kategori": "mat"
+  },
+  {
+   "fras": "blå hmmmx",
+   "forvantat": "kristall",
+   "ord": "hmmmx",
+   "kategori": "okant"
+  },
+  {
+   "fras": "hmmmx",
+   "forvantat": "kristall",
+   "ord": "hmmmx",
+   "kategori": "okant"
+  },
+  {
+   "fras": "pojke",
+   "forvantat": "kristall",
+   "ord": "pojke",
+   "kategori": "person"
+  },
+  {
+   "fras": "flicka",
+   "forvantat": "kristall",
+   "ord": "flicka",
+   "kategori": "person"
+  },
+  {
+   "fras": "gubbe",
+   "forvantat": "kristall",
+   "ord": "gubbe",
+   "kategori": "okant"
+  },
+  {
+   "fras": "sol",
+   "forvantat": "kristall",
+   "ord": "sol",
+   "kategori": "natur"
+  },
+  {
+   "fras": "chokladtårta",
+   "forvantat": "kristall",
+   "ord": "chokladtårta",
+   "kategori": "mat",
+   "steg": "sammansatt"
+  },
+  {
+   "fras": "vänlighet",
+   "forvantat": "kristall",
+   "ord": "vänlighet",
+   "kategori": "kansla",
+   "steg": "regel"
+  },
+  {
+   "fras": "blobbo",
+   "forvantat": "kristall",
+   "ord": "blobbo",
+   "kategori": "okant"
+  },
+  {
+   "fras": "qwerty",
+   "forvantat": "kristall",
+   "ord": "qwerty",
+   "kategori": "okant"
+  },
+  {
+   "fras": "åäö",
+   "forvantat": "kristall",
+   "ord": "åäö",
+   "kategori": "okant"
+  },
+  {
+   "fras": "tre elefanter",
+   "forvantat": "kristall",
+   "ord": "elefanter",
+   "kategori": "okant"
+  },
+  {
+   "fras": "dansar",
+   "forvantat": "kristall",
+   "ord": "dansar",
+   "kategori": "handling",
+   "steg": "lemma"
+  },
+  {
+   "fras": "går",
+   "forvantat": "kristall",
+   "ord": "går",
+   "kategori": "handling",
+   "steg": "lemma"
+  },
+  {
+   "fras": "elefant som dansar",
+   "forvantat": "kristall",
+   "ord": "elefant",
+   "kategori": "okant",
+   "delar": [
+    "elefant",
+    "dansar"
+   ]
+  },
+  {
+   "fras": "pizza med ost",
+   "forvantat": "kristall",
+   "ord": "pizza",
+   "kategori": "mat",
+   "delar": [
+    "pizza",
+    "ost"
+   ]
+  },
+  {
+   "fras": "en kanin med paraply",
+   "forvantat": "djur_med_kristall",
+   "kropp": "kanin",
+   "ord": "paraply",
+   "kategori": "foremal",
+   "steg": "kategori_ord"
+  },
+  {
+   "fras": "en kanin med ballong",
+   "forvantat": "djur_med_kristall",
+   "kropp": "kanin",
+   "ord": "ballong",
+   "kategori": "foremal"
+  },
+  {
+   "fras": "en glad kanin",
+   "forvantat": "djur_med_kristall",
+   "kropp": "kanin",
+   "ord": "glad",
+   "kategori": "egenskap"
+  },
+  {
+   "fras": "en ledsen hund",
+   "forvantat": "djur_med_kristall",
+   "kropp": "hund",
+   "ord": "ledsen",
+   "kategori": "egenskap"
+  },
+  {
+   "fras": "en kanin som dansar",
+   "forvantat": "djur_med_kristall",
+   "kropp": "kanin",
+   "ord": "dansar",
+   "kategori": "handling",
+   "steg": "lemma"
+  },
+  {
+   "fras": "en kanin som går",
+   "forvantat": "djur_med_kristall",
+   "kropp": "kanin",
+   "ord": "går",
+   "kategori": "handling",
+   "steg": "lemma"
+  },
+  {
+   "fras": "en katt som sjunger",
+   "forvantat": "djur_med_kristall",
+   "kropp": "katt",
+   "ord": "sjunger",
+   "kategori": "handling",
+   "steg": "lemma"
+  },
+  {
+   "fras": "en kanin som qwerty",
+   "forvantat": "djur_med_kristall",
+   "kropp": "kanin",
+   "ord": "qwerty",
+   "kategori": "handling",
+   "steg": "plats"
+  },
+  {
+   "fras": "en glad kanin som dansar",
+   "forvantat": "djur_med_kristall",
+   "kropp": "kanin",
+   "ord": "glad",
+   "kategori": "egenskap",
+   "delar": [
+    "glad",
+    "dansar"
+   ]
+  },
+  {
+   "fras": "en häst som äter tårta",
+   "forvantat": "djur_med_kristall",
+   "kropp": "häst",
+   "ord": "äter",
+   "kategori": "handling",
+   "delar": [
+    "äter",
+    "tårta"
+   ]
+  },
+  {
+   "fras": "en drake med slott",
+   "forvantat": "djur_med_kristall",
+   "kropp": "drake",
+   "ord": "slott",
+   "kategori": "byggnad"
+  },
+  {
+   "fras": "rosa kanin som flyger och dansar",
+   "forvantat": "djur_med_kristall",
+   "kropp": "kanin",
+   "ord": "dansar",
+   "kategori": "handling"
+  },
+  {
+   "fras": "kanim",
+   "forvantat": "forslag",
+   "forslag": "kanin"
+  },
+  {
+   "fras": "kannin",
+   "forvantat": "forslag",
+   "forslag": "kanin"
+  },
+  {
+   "fras": "hunnd",
+   "forvantat": "forslag",
+   "forslag": "hund"
+  },
+  {
+   "fras": "fitta",
+   "forvantat": "sparr"
+  },
+  {
+   "fras": "FITTA!!!",
+   "forvantat": "sparr"
+  },
+  {
+   "fras": "kanin fitta",
+   "forvantat": "sparr"
+  },
+  {
+   "fras": "f1tta",
+   "forvantat": "sparr"
+  },
+  {
+   "fras": "negerkanin",
+   "forvantat": "sparr"
+  },
+  {
+   "fras": "fy fan",
+   "forvantat": "sparr"
+  },
+  {
+   "fras": "en kanin",
+   "forvantat": "oforandrat"
+  },
+  {
+   "fras": "rosa kanin som flyger",
+   "forvantat": "oforandrat"
+  },
+  {
+   "fras": "blixtkatt",
+   "forvantat": "oforandrat"
+  },
+  {
+   "fras": "kisse",
+   "forvantat": "oforandrat"
+  },
+  {
+   "fras": "",
+   "forvantat": "oforandrat"
+  },
+  {
+   "fras": "   ",
+   "forvantat": "oforandrat"
+  },
+  {
+   "fras": "röd",
+   "forvantat": "oforandrat"
+  },
+  {
+   "fras": "kanin med röd hatt",
+   "forvantat": "oforandrat"
+  }
+ ]
+}
