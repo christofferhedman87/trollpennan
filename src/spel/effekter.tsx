@@ -5,7 +5,7 @@ import type { Varelse } from "../tolk/typer.ts";
 import type { Ankare } from "./tillbehorFaste.ts";
 
 const ELD_N = 24;
-const GLITTER_N = 20;
+const GLITTER_N = 32;
 
 const ROD = [0xe8 / 255, 0x34 / 255, 0x1c / 255] as const;
 const ORANGE = [1, 0x7a / 255, 0x1a / 255] as const;
@@ -196,20 +196,37 @@ function Eld({ ankare }: { ankare: Ankare }) {
   );
 }
 
+const glodBlick = new THREE.Vector3();
+const glodKvat = new THREE.Quaternion();
+
 function Aura({ ankare }: { ankare: Ankare }) {
   const mat = useRef<THREE.SpriteMaterial>(null);
+  const sprite = useRef<THREE.Sprite>(null);
   const textur = useMemo(() => glodPunkt(), []);
-  const bredd = Math.max(0.25, ankare.bredd);
-  const storlek = bredd * 1.8;
+  // Rund gloria: 1,6× den större av bredd och höjd, ritad runt kroppens mitt.
+  const span = Math.max(0.25, ankare.bredd, ankare.hojd);
+  const storlek = span * 1.6;
   const mittY = ankare.hojd * 0.5;
+  // Bakom hela kroppen: halva djupet (större av bredd och höjd) plus marginal,
+  // längs kamerans blick så planet ligger bort från betraktaren.
+  const bakom = span * 0.5 + 0.12;
   useFrame((state) => {
     const m = mat.current;
-    if (!m) return;
-    const puls = 0.5 + 0.5 * Math.sin(state.clock.elapsedTime * 2.1);
-    m.opacity = 0.45 + puls * 0.25;
+    if (m) {
+      const puls = 0.5 + 0.5 * Math.sin(state.clock.elapsedTime * 2.1);
+      m.opacity = 0.45 + puls * 0.25;
+    }
+    const s = sprite.current;
+    const parent = s?.parent;
+    if (!s || !parent) return;
+    parent.updateWorldMatrix(true, false);
+    parent.getWorldQuaternion(glodKvat);
+    state.camera.getWorldDirection(glodBlick);
+    glodBlick.applyQuaternion(glodKvat.invert());
+    s.position.set(glodBlick.x * bakom, mittY + glodBlick.y * bakom, glodBlick.z * bakom);
   });
   return (
-    <sprite position={[0, mittY, 0]} scale={[storlek, storlek, 1]} renderOrder={-1}>
+    <sprite ref={sprite} position={[0, mittY, 0]} scale={[storlek, storlek, 1]} renderOrder={-2}>
       <spriteMaterial
         ref={mat}
         map={textur}
@@ -233,20 +250,22 @@ function GlitterRing({ ankare }: { ankare: Ankare }) {
     const storlek = new Float32Array(GLITTER_N);
     const fas = new Float32Array(GLITTER_N);
     const full = new Float32Array(GLITTER_N);
-    const rad = Math.max(0.3, Math.min(ankare.bredd * 0.9, ankare.hojd * 0.46));
-    const yMitt = ankare.hojd * 0.52;
+    // Ellips utanför hela kroppen: sidor (bredd) och över/under (höjd), inte en liten ring uppe.
+    const rx = Math.max(0.28, ankare.bredd * 0.72);
+    const ry = Math.max(0.28, ankare.hojd * 0.62);
+    const yMitt = ankare.hojd * 0.5;
     for (let i = 0; i < GLITTER_N; i++) {
       const a = (i / GLITTER_N) * Math.PI * 2;
-      pos[i * 3] = Math.cos(a) * rad;
-      pos[i * 3 + 1] = yMitt + Math.sin(a) * rad;
+      pos[i * 3] = Math.cos(a) * rx;
+      pos[i * 3 + 1] = yMitt + Math.sin(a) * ry;
       pos[i * 3 + 2] = 0;
-      const vit = i % 5 === 0;
+      const vit = i % 2 === 0;
       col[i * 3] = 1;
       col[i * 3 + 1] = vit ? 1 : 0xc8 / 255;
       col[i * 3 + 2] = vit ? 1 : 0x3d / 255;
       fas[i] = a;
-      full[i] = 12 + (i % 5);
-      storlek[i] = full[i] ?? 14;
+      full[i] = 16 + (i % 7);
+      storlek[i] = full[i] ?? 18;
     }
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
@@ -265,8 +284,9 @@ function GlitterRing({ ankare }: { ankare: Ankare }) {
     const fas = pack.fas;
     const full = pack.full;
     for (let i = 0; i < GLITTER_N; i++) {
-      const blink = Math.max(0, Math.sin(t * 4.2 + (fas[i] ?? 0)));
-      arr[i] = (full[i] ?? 14) * blink;
+      const våg = 0.5 + 0.5 * Math.sin(t * 4.2 + (fas[i] ?? 0));
+      const bas = full[i] ?? 18;
+      arr[i] = 16 + (bas - 16) * våg;
     }
     stor.needsUpdate = true;
   });
