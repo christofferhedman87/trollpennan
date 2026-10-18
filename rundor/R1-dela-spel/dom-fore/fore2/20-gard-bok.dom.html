@@ -1,0 +1,143 @@
+<main class="spel">
+<section class="sr-only" aria-label="Dina skapelser" aria-live="polite" aria-atomic="true" inert="">
+<h2>Dina skapelser</h2>
+<p>Ängen väntar på din första skapelse.</p>
+</section>
+<section class="ang" aria-label="Gården" style="" inert="">
+<div class="natt-bak">
+</div>
+<div class="duk">
+<canvas>
+</canvas>
+</div>
+<div class="ang-lager">
+<div class="natt" data-testid="natt">
+</div>
+<div class="lykta" data-testid="lykta" aria-hidden="true">
+<span class="lykta-stolpe">
+</span>
+<span class="lykta-hus">
+</span>
+<span class="lykta-ljus">
+</span>
+</div>
+<div class="banderoller" role="status" aria-live="polite" aria-atomic="true">
+</div>
+</div>
+<div class="hud">
+<button type="button" class="foralder-knapp" aria-label="För vuxna, håll inne" data-testid="foralder-hall">
+<span class="ring">
+</span>
+<span class="prick">
+</span>
+</button>
+<span class="stjarna-hud" data-testid="stjarnor" aria-label="Du har N stjärnor">★ N</span>
+<span class="dold" data-testid="framsteg">0/97</span>
+<button type="button" class="meny-knapp" data-testid="meny" aria-expanded="false" aria-label="Meny">
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+</button>
+</div>
+<div class="hud-bot">
+<button type="button" class="bok-knapp bygg" data-testid="bygg-nagot">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil" aria-hidden="true">
+<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z">
+</path>
+<path d="m15 5 4 4">
+</path>
+</svg>Bygg något</button>
+</div>
+</section>
+<div class="bok-skarm" data-testid="bok-skarm">
+<section class="bok" data-andrar="nej" role="dialog" aria-label="Pennans bok">
+<header class="bok-huvud">
+<h2>Byggboken</h2>
+<button type="button" class="penna" aria-label="Skriv själv" data-testid="pennan">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil" aria-hidden="true">
+<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z">
+</path>
+<path d="m15 5 4 4">
+</path>
+</svg>
+</button>
+<button type="button" class="stang-x" data-testid="stang-bok" aria-label="Stäng">×</button>
+</header>
+<div class="byggbok-wrap" data-testid="byggbok">
+<div class="kort-yta byggbok">
+<h2>Startbygget</h2>
+<p class="bygg-beskriv">Allt du behöver för att börja: hus, stugor, träd och dammar.</p>
+<div class="rutnat">
+<button type="button" class="kort bygg-exempel" data-testid="bygg-exempel">ett rött hus med tre fönster</button>
+<button type="button" class="kort" data-testid="byggord-hus">ett hus</button>
+<button type="button" class="kort" data-testid="byggord-stuga">en stuga</button>
+<button type="button" class="kort" data-testid="byggord-koja">en koja</button>
+<button type="button" class="kort" data-testid="byggord-tält">ett tält</button>
+<button type="button" class="kort" data-testid="byggord-staket">ett staket</button>
+<button type="button" class="kort" data-testid="byggord-träd">ett träd</button>
+<button type="button" class="kort" data-testid="byggord-blomma">en blomma</button>
+<button type="button" class="kort" data-testid="byggord-buske">en buske</button>
+<button type="button" class="kort" data-testid="byggord-damm">en damm</button>
+<button type="button" class="kort" data-testid="byggord-bänk">en bänk</button>
+<button type="button" class="kort" data-testid="byggord-lykta">en lykta</button>
+</div>
+</div>
+<div class="last-rad" data-testid="bygg-last">
+<button type="button" class="last-ikon" data-testid="bygg-tradgard">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock" aria-hidden="true">
+<rect width="18" height="11" x="3" y="11" rx="2" ry="2">
+</rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4">
+</path>
+</svg>
+<span class="last-pris">★ N</span>
+<span>Trädgårdssidan</span>
+</button>
+<button type="button" class="last-ikon" data-testid="bygg-lekplats">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock" aria-hidden="true">
+<rect width="18" height="11" x="3" y="11" rx="2" ry="2">
+</rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4">
+</path>
+</svg>
+<span class="last-pris">★ N</span>
+<span>Lekplatssidan</span>
+</button>
+<button type="button" class="last-ikon" data-testid="bygg-djurhem">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock" aria-hidden="true">
+<rect width="18" height="11" x="3" y="11" rx="2" ry="2">
+</rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4">
+</path>
+</svg>
+<span class="last-pris">★ N</span>
+<span>Djurhemssidan</span>
+</button>
+<button type="button" class="last-ikon" data-testid="bygg-slott">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock" aria-hidden="true">
+<rect width="18" height="11" x="3" y="11" rx="2" ry="2">
+</rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4">
+</path>
+</svg>
+<span class="last-pris">★ N</span>
+<span>Slottssidan</span>
+</button>
+<button type="button" class="last-ikon" data-testid="bygg-saga">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock" aria-hidden="true">
+<rect width="18" height="11" x="3" y="11" rx="2" ry="2">
+</rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4">
+</path>
+</svg>
+<span class="last-pris">★ N</span>
+<span>Sagobyggen</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
