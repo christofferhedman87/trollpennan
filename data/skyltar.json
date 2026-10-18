@@ -13,14 +13,20 @@
    "omrade": "skogen",
    "typ": "lapp",
    "text": "Jag har tappat min fina silverkotte någonstans bland svamparna. Om du hittar den, lägg den vid stubben. /Ekorren",
-   "startar": "hitta-kotte"
+   "startar": "hitta-kotte",
+   "givare": "bengtsson",
+   "text_bengtsson": "Ekorren har tappat sin silverkotte bland svamparna. Kan du hitta den och lägga den vid stubben? /Doktor Bengtsson",
+   "granskad": false
   },
   {
    "id": "skogen-3",
    "omrade": "skogen",
    "typ": "lapp",
    "text": "Mossugglan sover hela dagen. Men om man lägger något blått vid hennes träd vaknar hon kanske.",
-   "startar": "mossugglan"
+   "startar": "mossugglan",
+   "givare": "bengtsson",
+   "text_bengtsson": "Mossugglan sover hela dagen. Jag tror att hon vaknar om man lägger något blått vid hennes träd. /Doktor Bengtsson",
+   "granskad": false
   },
   {
    "id": "skogen-4",
@@ -41,21 +47,30 @@
    "omrade": "sjon",
    "typ": "lapp",
    "text": "Gamla bävern bygger en ny damm på ön men har slut på pinnar. Kan någon hjälpa?",
-   "startar": "bavern"
+   "startar": "bavern",
+   "givare": "bengtsson",
+   "text_bengtsson": "Gamla bävern bygger en ny damm på ön men har slut på pinnar. Kan du hjälpa honom? /Doktor Bengtsson",
+   "granskad": false
   },
   {
    "id": "sjon-7",
    "omrade": "sjon",
    "typ": "lapp",
    "text": "Ibland syns något vitt och skimrande under vattnet nära bryggan. Det tycker om sådant som glänser.",
-   "startar": "parlhajen"
+   "startar": "parlhajen",
+   "givare": "bengtsson",
+   "text_bengtsson": "Jag har sett något vitt och skimrande under vattnet vid bryggan. Det tycker nog om sådant som glänser. /Doktor Bengtsson",
+   "granskad": false
   },
   {
    "id": "sjon-8",
    "omrade": "sjon",
    "typ": "skylt",
    "text": "Fyren på ön har slocknat. Vem kan tända den igen?",
-   "startar": "fyren"
+   "startar": "fyren",
+   "givare": "bengtsson",
+   "text_bengtsson": "Fyren på ön har slocknat! Vem kan tända den igen? /Doktor Bengtsson",
+   "granskad": false
   },
   {
    "id": "grottan-9",
@@ -69,21 +84,31 @@
    "omrade": "grottan",
    "typ": "lapp",
    "text": "Längst in i grottan sover en drake. Den blir glad av allt som är sött.",
-   "startar": "nattdraken"
+   "startar": "nattdraken",
+   "givare": "bengtsson",
+   "text_bengtsson": "Längst in i grottan sover en drake. Den blir glad av allt som är sött. /Doktor Bengtsson",
+   "granskad": false
   },
   {
    "id": "grottan-11",
    "omrade": "grottan",
    "typ": "lapp",
    "text": "Kristallgrodan sjunger när den får något som glänser. Har du hört den?",
-   "startar": "kristallgrodan"
+   "startar": "kristallgrodan",
+   "givare": "bengtsson",
+   "text_bengtsson": "Kristallgrodan sjunger när den får något som glänser. Har du hört den? /Doktor Bengtsson",
+   "granskad": false
   },
   {
    "id": "grottan-12",
    "omrade": "grottan",
    "typ": "lapp",
    "text": "Här har någon gömt en skattkista. Ledtråd: den står där kristallerna är lila.",
-   "startar": "skatten"
+   "startar": "skatten",
+   "givare": "bengtsson",
+   "text_bengtsson": "Någon har gömt en skattkista här. Ledtråd: den står där kristallerna är lila. /Doktor Bengtsson",
+   "granskad": false
   }
- ]
+ ],
+ "_bengtsson": "R6A-3: bara Doktor Bengtsson ger uppdrag. En lapp som startar ett uppdrag ('startar') visar 'text_bengtsson' (utkast i hans röst, granskad: false) i stället för 'text' (djurets ursprungliga, granskade text, rörs inte). Vanliga skyltar utan 'startar' är oförändrade. Phaser ritar fortfarande lappen som en pappersskylt; att ta bort själva skylten ur Phaser-scenen hör till Phaser-utredningen (R7), inte hit."
 }

@@ -49,6 +49,9 @@
   "led": "Prova till exempel",
   "onskar": "{djur} önskar:",
   "andra": "Ändra {djur}",
-  "kompis": "Väck en ny kompis"
+  "kompis": "Väck en ny kompis",
+  "fran_bengtsson": "Doktor Bengtsson: Ett djur säger ”{text}” Kan du hjälpa?",
+  "fran_bengtsson_djur": "Doktor Bengtsson: {djur} säger ”{text}” Kan du hjälpa?",
+  "knapp_bengtsson": "Hjälp till"
  }
 }

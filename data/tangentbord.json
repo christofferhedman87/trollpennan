@@ -1,0 +1,9 @@
+{
+ "_om": "Skärmtangentbordet i Pennans bok (R6A-3B). Standard svensk QWERTY: tre bokstavsrader och en rad med mellanslag. Specialtangenter står i klammer: {radera} (backsteg) och {mellanslag}. Alla tangenter i en rad delar raden lika (förutom {radera}, som är något bredare), så varje rad fyller bredden. Ändra layouten här, ingen kod.",
+ "rader": [
+  ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "å"],
+  ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ö", "ä"],
+  ["z", "x", "c", "v", "b", "n", "m", "{radera}"],
+  ["{mellanslag}"]
+ ]
+}

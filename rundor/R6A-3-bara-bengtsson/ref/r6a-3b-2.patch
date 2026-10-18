@@ -1,0 +1,110 @@
+diff --git a/rundor/R1-dela-spel/testid-baslinje.json b/rundor/R1-dela-spel/testid-baslinje.json
+index b5dbd45..ca8d55e 100644
+--- a/rundor/R1-dela-spel/testid-baslinje.json
++++ b/rundor/R1-dela-spel/testid-baslinje.json
+@@ -88,6 +88,7 @@
+   "\"pennan\"": 1,
+   "\"plats-garden\"": 1,
+   "\"puff\"": 1,
++  "\"radera\"": 1,
+   "\"remsa\"": 1,
+   "\"skapar-guide\"": 1,
+   "\"skylt\"": 1,
+diff --git a/src/spel/ui/BokSkarm.tsx b/src/spel/ui/BokSkarm.tsx
+index 30dcbbf..2b6bff1 100644
+--- a/src/spel/ui/BokSkarm.tsx
++++ b/src/spel/ui/BokSkarm.tsx
+@@ -10,7 +10,7 @@ import { fyll } from "../fyll.ts";
+ import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
+ import { OnskaAnsikte } from "./OnskaAnsikte.tsx";
+ import { bestamdAv, frasForByggOrd, kanEtikett, kortIkon } from "./hjalp.ts";
+-import { FIR, FLIKAR, RADER, TEXTER } from "./spelData.ts";
++import { FIR, FLIKAR, TANGENTBORD, TEXTER } from "./spelData.ts";
+ import type { Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
+ 
+ type BokSkarmProps = {
+@@ -252,30 +252,25 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
+             </button>
+             {lage === "skriv" && !forslag && !behover ? (
+               <div className="tangenter" data-testid="tangentbord">
+-                {RADER.slice(0, 2).map((rad) => (
+-                  <div className="rad" key={rad[0]}>
+-                    {rad.map((t) => (
+-                      <button key={t} type="button" className="tangent" onClick={() => skrivTecken(t)}>
+-                        {t}
+-                      </button>
+-                    ))}
++                {TANGENTBORD.rader.map((rad) => (
++                  <div className="rad" key={rad.join("")}>
++                    {rad.map((t) =>
++                      t === "{radera}" ? (
++                        <button key={t} type="button" className="tangent radera" data-testid="radera" aria-label="Sudda" onClick={sudda}>
++                          ⌫
++                        </button>
++                      ) : t === "{mellanslag}" ? (
++                        <button key={t} type="button" className="tangent mellanslag" data-testid="mellanslag" aria-label="Mellanslag" onClick={() => skrivTecken(" ")}>
++                          mellanslag
++                        </button>
++                      ) : (
++                        <button key={t} type="button" className="tangent" onClick={() => skrivTecken(t)}>
++                          {t}
++                        </button>
++                      ),
++                    )}
+                   </div>
+                 ))}
+-                <div className="rad">
+-                  <button type="button" className="tangent radera" aria-label="Sudda" onClick={sudda}>
+-                    ⌫
+-                  </button>
+-                  {RADER[2]!.map((t) => (
+-                    <button key={t} type="button" className="tangent" onClick={() => skrivTecken(t)}>
+-                      {t}
+-                    </button>
+-                  ))}
+-                </div>
+-                <div className="rad">
+-                  <button type="button" className="tangent mellanslag" data-testid="mellanslag" aria-label="Mellanslag" onClick={() => skrivTecken(" ")}>
+-                    mellanslag
+-                  </button>
+-                </div>
+               </div>
+             ) : null}
+           </>
+diff --git a/src/spel/ui/spelData.ts b/src/spel/ui/spelData.ts
+index d0fef1b..0e23a5d 100644
+--- a/src/spel/ui/spelData.ts
++++ b/src/spel/ui/spelData.ts
+@@ -1,4 +1,5 @@
+ import byggSidorJson from "../../../data/byggsidor.json" with { type: "json" };
++import tangentbordJson from "../../../data/tangentbord.json" with { type: "json" };
+ import firandeJson from "../../../data/firande.json" with { type: "json" };
+ import ledJson from "../../../data/ledtradar.json" with { type: "json" };
+ import ljudJson from "../../../data/ljud.json" with { type: "json" };
+@@ -64,8 +65,5 @@ export const FLIKAR: { id: Slot; namn: string }[] = [
+   { id: "tillbehor", namn: "Har" },
+ ];
+ 
+-export const RADER = [
+-  ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "å"],
+-  ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ö", "ä"],
+-  ["z", "x", "c", "v", "b", "n", "m"],
+-];
++// Skärmtangentbordets layout ligger i data/tangentbord.json (R6A-3B): rader av tangenter, specialtangenter i {klammer}.
++export const TANGENTBORD = tangentbordJson as { rader: string[][] };
+diff --git a/src/styles.css b/src/styles.css
+index d063e84..d35a1ce 100644
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -359,9 +359,9 @@ flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain}
+ .tangenter{
+ flex-direction:column;flex:0 0 auto;justify-content:flex-end;gap:4px;min-height:0;padding:0 6px 4px;display:flex}
+ .rad{
+-gap:4px;display:flex;flex-wrap:wrap}
++gap:4px;display:flex;flex-wrap:nowrap}
+ .tangent{
+-background:var(--color-cream);min-width:44px;min-height:44px;height:44px;color:var(--color-ink);box-shadow:0 3px 0 var(--color-paper-deep);border:0;border-radius:10px;flex:1 0 44px;font-size:1.25rem;font-weight:800}
++background:var(--color-cream);min-width:0;min-height:44px;height:48px;padding:0;color:var(--color-ink);box-shadow:0 3px 0 var(--color-paper-deep);border:0;border-radius:10px;flex:1 1 0;font-size:1.25rem;font-weight:800}
+ .tangent:active{
+ box-shadow:none;transform:translateY(2px)}
+ .tangent.bred{
