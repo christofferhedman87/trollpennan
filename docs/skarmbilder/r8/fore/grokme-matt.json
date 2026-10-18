@@ -1,0 +1,15 @@
+{
+ "url": "https://trollpennan.grok.me/",
+ "namn": "grokme",
+ "matt": {
+  "bildrutor": 48,
+  "medel_ms": 83.4,
+  "p95_ms": 133.3,
+  "draw_per_ruta": 123.1,
+  "tri_per_ruta": 20866,
+  "heap_mb": 36
+ },
+ "fel": [
+  "bengtsson: TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n  - waiting for getByTestId('npc-figur')\n"
+ ]
+}

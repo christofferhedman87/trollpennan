@@ -1,0 +1,13 @@
+{
+ "url": "http://127.0.0.1:43055/",
+ "namn": "main",
+ "matt": {
+  "bildrutor": 44,
+  "medel_ms": 91.2,
+  "p95_ms": 150,
+  "draw_per_ruta": 131,
+  "tri_per_ruta": 21902,
+  "heap_mb": 40
+ },
+ "fel": []
+}

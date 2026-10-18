@@ -1,0 +1,348 @@
+diff --git a/package.json b/package.json
+index c7d34c9..8c350f8 100644
+--- a/package.json
++++ b/package.json
+@@ -22,7 +22,7 @@
+     "format": "prettier --write .",
+     "build:pages": "vite build --config vite.pages.config.ts",
+     "preview:pages": "vite preview --config vite.pages.config.ts",
+-    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/uppdragsmotor.test.ts src/spel/dialogIsolering.test.mjs",
++    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/uppdragsmotor.test.ts src/spel/dialogIsolering.test.mjs",
+     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
+     "check:pages-output": "node scripts/check-pages-output.mjs",
+     "check:struktur": "node scripts/check-spel-struktur.mjs",
+diff --git a/src/spel/angen3d.tsx b/src/spel/angen3d.tsx
+index 24a94ff..b2ad174 100644
+--- a/src/spel/angen3d.tsx
++++ b/src/spel/angen3d.tsx
+@@ -17,6 +17,7 @@ import { artFarg, flyger, hoppHojd, simmar, svavar, vikt } from "./entiteter.ts"
+ import { faestTillbehor, procAnkare } from "./tillbehor/index.ts";
+ import { DjurEffekter } from "./effekter.tsx";
+ import { KenneyNatur } from "./kenneyNatur.tsx";
++import { KV, MILJO, markTextur } from "./miljo.ts";
+ import { AGG_KROPP, OrdAgg, ReservAgg } from "./ordagg.tsx";
+ 
+ const HINT = (texterJson as { tred_hint: string }).tred_hint;
+@@ -507,7 +508,7 @@ const TOON_MAP = (() => {
+   t.needsUpdate = true;
+   return t;
+ })();
+-const KONTUR_MAT = new THREE.MeshBasicMaterial({ color: "#3B2F2F", side: THREE.BackSide });
++const KONTUR_MAT = new THREE.MeshBasicMaterial({ color: MILJO.kontur.farg, side: THREE.BackSide });
+ const GEO = {
+   boll: new THREE.SphereGeometry(1, 8, 6),
+   kon: new THREE.ConeGeometry(0.5, 1, 5),
+@@ -1061,6 +1062,7 @@ const TUVOR: [number, number][] = [
+ 
+ const STENAR: [number, number, number][] = [[1.7, -0.05, 0.14]];
+ 
++const MARK_TEX = markTextur(THREE);
+ const MARK_GEO = (() => {
+   const g = new THREE.PlaneGeometry(160, 160, 28, 28);
+   const pos = g.attributes.position;
+@@ -1127,7 +1129,7 @@ function SvajMark({ color, natt }: { color: string; natt: number }) {
+   return (
+     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
+       <primitive object={MARK_GEO} attach="geometry" />
+-      <meshToonMaterial ref={mat} color={color} vertexColors gradientMap={TOON_MAP} onBeforeCompile={kompilera} />
++      <meshToonMaterial ref={mat} color={color} vertexColors map={MARK_TEX} gradientMap={TOON_MAP} onBeforeCompile={kompilera} />
+     </mesh>
+   );
+ }
+@@ -1769,16 +1771,16 @@ void main() {
+ 
+ function Himmel({ natt }: { natt: number }) {
+   const mesh = useRef<THREE.Mesh>(null);
+-  const dagTop = useMemo(() => new THREE.Color("#7EC8F2"), []);
+-  const dagHor = useMemo(() => new THREE.Color("#A9CDE6"), []);
++  const dagTop = useMemo(() => new THREE.Color(MILJO.himmel.dag_topp), []);
++  const dagHor = useMemo(() => new THREE.Color(MILJO.himmel.dag_horisont), []);
+   const nattTop = useMemo(() => new THREE.Color("#1A2344"), []);
+   const nattHor = useMemo(() => new THREE.Color("#3A4A72"), []);
+   const top = useRef(new THREE.Color("#7EC8F2"));
+   const hor = useRef(new THREE.Color("#A9CDE6"));
+   const uniforms = useMemo(
+     () => ({
+-      uTop: { value: new THREE.Color("#7EC8F2") },
+-      uHor: { value: new THREE.Color("#A9CDE6") },
++      uTop: { value: new THREE.Color(MILJO.himmel.dag_topp) },
++      uHor: { value: new THREE.Color(MILJO.himmel.dag_horisont) },
+     }),
+     [],
+   );
+@@ -1980,8 +1982,9 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
+   const djur = useMinne((s) => s.ang);
+   const garden = useMinne((s) => s.garden);
+   const vis = saga ? 0 : 0 * natt;
+-  const himmel = "#7EC8F2";
++  const himmel = MILJO.himmel.bakgrund;
+   const mark = "#ffffff";
++  const L = MILJO.ljus;
+   const amb = useRef<THREE.AmbientLight>(null);
+   const hem = useRef<THREE.HemisphereLight>(null);
+   const dir = useRef<THREE.DirectionalLight>(null);
+@@ -1992,18 +1995,18 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
+   return (
+     <>
+       <color attach="background" args={[himmel]} />
+-      <fog attach="fog" args={["#C5D5E0", 28, 55]} />
++      <fog attach="fog" args={[MILJO.dis.farg, MILJO.dis.nara, MILJO.dis.fjarran]} />
+       <Himmel natt={vis} />
+-      <ambientLight ref={amb} intensity={0.15} color="#fff6ea" />
+-      <hemisphereLight ref={hem} args={["#dff3ff", "#a8c97a", 2.4]} />
++      <ambientLight ref={amb} intensity={L.ambient.styrka} color={L.ambient.farg} />
++      <hemisphereLight ref={hem} args={[L.hemi.himmel, L.hemi.mark, L.hemi.styrka]} />
+       <directionalLight
+         ref={dir}
+-        color="#fff1dc"
+-        position={[3, 6, 5]}
+-        intensity={2.6}
++        color={L.nyckel.farg}
++        position={L.nyckel.position as [number, number, number]}
++        intensity={L.nyckel.styrka}
+         castShadow
+-        shadow-mapSize-width={1024}
+-        shadow-mapSize-height={1024}
++        shadow-mapSize-width={KV.skuggkarta}
++        shadow-mapSize-height={KV.skuggkarta}
+         shadow-camera-near={0.5}
+         shadow-camera-far={28}
+         shadow-camera-left={-8}
+@@ -2011,8 +2014,8 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
+         shadow-camera-top={8}
+         shadow-camera-bottom={-8}
+       />
+-      <directionalLight ref={fyll} color="#cfe6ff" position={[-6, 3, 4]} intensity={0.9} />
+-      <directionalLight ref={kantL} color="#ffffff" position={[-2, 4, -5]} intensity={1.2} />
++      <directionalLight ref={fyll} color={L.fyll.farg} position={[-6, 3, 4]} intensity={L.fyll.styrka} />
++      <directionalLight ref={kantL} color={L.kant.farg} position={[-2, 4, -5]} intensity={L.kant.styrka} />
+       <SagaLjus natt={vis} amb={amb} hem={hem} dir={dir} sol={sol} fyll={fyll} kant={kantL} />
+       <mesh position={[-1.5, 5.5, -6]}>
+         <sphereGeometry args={[0.42, 8, 6]} />
+@@ -2131,7 +2134,7 @@ export function Angen3D({ natt, saga = false }: { natt: number; saga?: boolean }
+     dolj.current = window.setTimeout(() => setPrat(false), 2400);
+   }, []);
+   return (
+-    <div ref={rot} className="angen-3d" data-testid="angen-3d" data-djur={djur.length} data-byggen={garden.length} data-saga={saga ? "ja" : "nej"}>
++    <div ref={rot} className="angen-3d" data-testid="angen-3d" style={{ "--grad-m": KV.farggrad ? MILJO.farggrad.mattnad : 1, "--grad-k": KV.farggrad ? MILJO.farggrad.kontrast : 1, "--vinjett": MILJO.vinjett.styrka } as React.CSSProperties} data-djur={djur.length} data-byggen={garden.length} data-saga={saga ? "ja" : "nej"}>
+       {!saga && !dragit ? (
+         <p className="tred-hint" data-testid="tred-hint">
+           {HINT}
+@@ -2149,7 +2152,7 @@ export function Angen3D({ natt, saga = false }: { natt: number; saga?: boolean }
+       <TredGren>
+         <Canvas
+           camera={{ position: [0, 4.15, 9.8], fov: 58, near: 0.1, far: 90 }}
+-          dpr={[1, 2]}
++          dpr={[1, KV.dpr_max]}
+           shadows
+           gl={{ antialias: true, toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1 }}
+           onCreated={({ gl }) => {
+@@ -2164,6 +2167,7 @@ export function Angen3D({ natt, saga = false }: { natt: number; saga?: boolean }
+           <Scen natt={natt} onSnart={onSnart} saga={saga} />
+         </Canvas>
+       </TredGren>
++      <div className="vinjett" aria-hidden />
+     </div>
+   );
+ }
+diff --git a/src/spel/gltfDjur.tsx b/src/spel/gltfDjur.tsx
+index 647e6de..905165d 100644
+--- a/src/spel/gltfDjur.tsx
++++ b/src/spel/gltfDjur.tsx
+@@ -12,6 +12,49 @@ export type DjurSignal = { klapp: number; ror: number };
+ 
+ const texCache = new Map<string, THREE.CanvasTexture>();
+ 
++/** R8 färgrundan: bulkmodeller delar en standardpalett (nyans 25), men Kenney-modeller är en gemensam färgatlas där isbjörnen är vit/gräddvit och inte alls brun, så ingen pixel träffas och färgen "tas inte". Därför mäter vi vilken färg just den här kroppen använder (texeln vid nätets UV, vanligaste färgen) och ställer in paletten efter den. */
++function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): { from: number; range: number; bodyL: number } | null {
++  const img = tex.image as CanvasImageSource | undefined;
++  const uv = mesh.geometry?.attributes?.uv;
++  if (!img || !uv) return null;
++  const w = (img as HTMLImageElement).width || (img as ImageBitmap).width;
++  const h = (img as HTMLImageElement).height || (img as ImageBitmap).height;
++  if (!w || !h) return null;
++  const c = document.createElement("canvas");
++  c.width = w;
++  c.height = h;
++  const x = c.getContext("2d", { willReadFrequently: true });
++  if (!x) return null;
++  x.drawImage(img, 0, 0);
++  const d = x.getImageData(0, 0, w, h).data;
++  const rakna = new Map<number, { n: number; r: number; g: number; b: number }>();
++  const steg = Math.max(1, Math.floor(uv.count / 1500));
++  for (let i = 0; i < uv.count; i += steg) {
++    const px = Math.min(w - 1, Math.max(0, Math.floor(uv.getX(i) * w)));
++    const py = Math.min(h - 1, Math.max(0, Math.floor((tex.flipY ? 1 - uv.getY(i) : uv.getY(i)) * h)));
++    const o = (py * w + px) * 4;
++    if ((d[o + 3] ?? 0) < 8) continue;
++    const r = d[o] ?? 0;
++    const g = d[o + 1] ?? 0;
++    const b = d[o + 2] ?? 0;
++    const k = (r >> 4) * 256 + (g >> 4) * 16 + (b >> 4);
++    const p = rakna.get(k) ?? { n: 0, r: 0, g: 0, b: 0 };
++    p.n++;
++    p.r += r;
++    p.g += g;
++    p.b += b;
++    rakna.set(k, p);
++  }
++  let bast: { n: number; r: number; g: number; b: number } | null = null;
++  for (const p of rakna.values()) if (!bast || p.n > bast.n) bast = p;
++  if (!bast) return null;
++  const col = new THREE.Color(bast.r / bast.n / 255, bast.g / bast.n / 255, bast.b / bast.n / 255);
++  const hsl = { h: 0, s: 0, l: 0 };
++  col.getHSL(hsl);
++  // låg färgmättnad (vit, grå, gräddvit): neutralt läge (range < 0), annars färgens egen nyans
++  return hsl.s < 0.35 ? { from: 0, range: -1, bodyL: hsl.l } : { from: Math.round(hsl.h * 360), range: 22, bodyL: hsl.l };
++}
++
+ function paletteSwap(tex: THREE.Texture, fromHue: number, range: number, toHex: string, bodyL: number) {
+   const nyckel = `${fromHue}|${range}|${bodyL}|${toHex}|${tex.uuid}`;
+   const finns = texCache.get(nyckel);
+@@ -40,7 +83,7 @@ function paletteSwap(tex: THREE.Texture, fromHue: number, range: number, toHex:
+     tmp.getHSL(hsl);
+     let dh = Math.abs(hsl.h * 360 - fromHue);
+     dh = Math.min(dh, 360 - dh);
+-    const hit = range < 0 ? hsl.s < 0.2 && hsl.l > 0.2 && hsl.l < 0.85 : dh <= range && hsl.s > 0.25;
++    const hit = range < 0 ? hsl.s < 0.35 && Math.abs(hsl.l - bodyL) < 0.12 : dh <= range && hsl.s > 0.25;
+     if (!hit) continue;
+     tmp.setHSL(th.h, th.s, THREE.MathUtils.clamp(th.l + (hsl.l - bodyL) * 0.6, 0.06, 0.95));
+     d.data[i] = tmp.r * 255;
+@@ -139,7 +182,8 @@ function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
+         if (roll === "farg" && hex) m.color.set(hex);
+         if (roll === "ljus") m.color.set(hex ? ljusare(hex) : "#ffd27a");
+       } else if (pal && hex && m.map) {
+-        m.map = paletteSwap(m.map, pal.from, pal.range, hex, pal.bodyL);
++        const egen = ent?.inlagd ? karnfarg(mesh, m.map) : null;
++        m.map = egen ? paletteSwap(m.map, egen.from, egen.range, hex, egen.bodyL) : paletteSwap(m.map, pal.from, pal.range, hex, pal.bodyL);
+         m.color.set("#ffffff");
+       }
+       if (glans && (roll === "farg" || (!ent?.material && pal))) {
+diff --git a/src/spel/miljo.test.ts b/src/spel/miljo.test.ts
+new file mode 100644
+index 0000000..c1ab7ea
+--- /dev/null
++++ b/src/spel/miljo.test.ts
+@@ -0,0 +1,29 @@
++// R8: data/miljo.json är giltig (hexfärger, dis nära < fjärran, kvalitetsnivåer, marktextur) så att en felskriven rad inte tömmer ängen.
++import assert from "node:assert/strict";
++import { test } from "node:test";
++import miljo from "../../data/miljo.json" with { type: "json" };
++
++const hex = /^#[0-9a-fA-F]{6}$/;
++const farger = (o: unknown, ut: string[] = []): string[] => {
++  if (typeof o === "string" && o.startsWith("#")) ut.push(o);
++  else if (o && typeof o === "object") for (const [k, v] of Object.entries(o)) if (!k.startsWith("_")) farger(v, ut);
++  return ut;
++};
++
++test("miljo.json: alla färger är hex och siffrorna rimliga", () => {
++  const alla = farger(miljo);
++  assert.ok(alla.length >= 15);
++  for (const f of alla) assert.match(f, hex);
++  assert.ok(miljo.dis.nara > 0 && miljo.dis.nara < miljo.dis.fjarran && miljo.dis.fjarran <= 90, "dis inom kamerans far (90)");
++  assert.ok(miljo.farggrad.mattnad >= 0.8 && miljo.farggrad.mattnad <= 1.4 && miljo.farggrad.kontrast >= 0.8 && miljo.farggrad.kontrast <= 1.3);
++  assert.ok(miljo.vinjett.styrka >= 0 && miljo.vinjett.styrka <= 0.5);
++  assert.deepEqual(miljo.ljus.nyckel.position.length, 3);
++});
++
++test("miljo.json: kvalitetsnivåerna hog och lag finns och lag är billigare", () => {
++  const { hog, lag } = miljo.kvalitet;
++  assert.ok(lag.skuggkarta <= hog.skuggkarta && lag.dpr_max <= hog.dpr_max);
++  for (const k of [hog, lag]) assert.ok([256, 512, 1024, 2048].includes(k.skuggkarta) && k.dpr_max >= 1 && k.dpr_max <= 3);
++  assert.ok(miljo.mark.storlek >= 32 && miljo.mark.storlek <= 256 && ["mjuk", "pixel"].includes(miljo.mark.filter));
++  assert.ok(miljo.mark.farger.length >= 2);
++});
+diff --git a/src/spel/miljo.ts b/src/spel/miljo.ts
+new file mode 100644
+index 0000000..0b6382d
+--- /dev/null
++++ b/src/spel/miljo.ts
+@@ -0,0 +1,74 @@
++// R8: utseendet på ängen läses ur data/miljo.json (ljus, himmel, dis, färggrad, mark, kvalitet). Ingen färg eller siffra ska hårdkodas i scenen.
++import miljoJson from "../../data/miljo.json" with { type: "json" };
++
++export type Miljo = typeof miljoJson;
++
++function slaIhop<T>(bas: T, over: unknown): T {
++  if (!over || typeof over !== "object" || Array.isArray(over) || !bas || typeof bas !== "object" || Array.isArray(bas)) return (over === undefined ? bas : (over as T)) ?? bas;
++  const ut: Record<string, unknown> = { ...(bas as Record<string, unknown>) };
++  for (const [k, v] of Object.entries(over as Record<string, unknown>)) ut[k] = slaIhop((bas as Record<string, unknown>)[k], v);
++  return ut as T;
++}
++
++function lasOver(): unknown {
++  try {
++    return typeof localStorage === "undefined" ? undefined : JSON.parse(localStorage.getItem("trollpennan-miljo") ?? "null");
++  } catch {
++    return undefined;
++  }
++}
++
++export const MILJO: Miljo = slaIhop(miljoJson, lasOver());
++
++export function kvalitetsniva(): "hog" | "lag" {
++  if (typeof location !== "undefined") {
++    const q = new URLSearchParams(location.search).get("kvalitet");
++    if (q === "lag" || q === "hog") return q;
++  }
++  if (typeof navigator === "undefined") return "hog";
++  const nav = navigator as Navigator & { deviceMemory?: number };
++  return (nav.hardwareConcurrency ?? 8) <= 4 || (nav.deviceMemory ?? 8) <= 3 ? "lag" : "hog";
++}
++
++export const KV = MILJO.kvalitet[kvalitetsniva()];
++
++/** Marktexturen ritas en gång på en liten canvas (fläckar och gräsprickar) och upprepas över marken. */
++export function markTextur(THREE: typeof import("three")): import("three").Texture | null {
++  if (typeof document === "undefined") return null;
++  const m = MILJO.mark;
++  const n = m.storlek;
++  const c = document.createElement("canvas");
++  c.width = n;
++  c.height = n;
++  const x = c.getContext("2d");
++  if (!x) return null;
++  let frö = 7;
++  const slump = () => ((frö = (frö * 16807) % 2147483647) - 1) / 2147483646;
++  x.fillStyle = m.farger[0] ?? "#ffffff";
++  x.fillRect(0, 0, n, n);
++  for (let i = 0; i < m.flackar; i++) {
++    x.fillStyle = m.farger[Math.floor(slump() * m.farger.length)] ?? "#ffffff";
++    const r = n * (0.03 + slump() * 0.06);
++    // ritas även vid kanterna så att texturen går att upprepa utan skarvar
++    const cx = slump() * n;
++    const cy = slump() * n;
++    for (const dx of [-n, 0, n]) for (const dy of [-n, 0, n]) x.fillRect(cx + dx, cy + dy, r, r);
++  }
++  x.fillStyle = m.tuvfarg;
++  for (let i = 0; i < m.tuvor; i++) {
++    const cx = slump() * n;
++    const cy = slump() * n;
++    for (const dx of [-n, 0, n]) for (const dy of [-n, 0, n]) x.fillRect(cx + dx, cy + dy, Math.max(1, n / 64), Math.max(2, n / 32));
++  }
++  const t = new THREE.CanvasTexture(c);
++  t.wrapS = THREE.RepeatWrapping;
++  t.wrapT = THREE.RepeatWrapping;
++  t.repeat.set(m.upprepa, m.upprepa);
++  t.colorSpace = THREE.SRGBColorSpace;
++  t.anisotropy = 4;
++  if (m.filter === "pixel") {
++    t.magFilter = THREE.NearestFilter;
++    t.minFilter = THREE.NearestMipmapLinearFilter;
++  }
++  return t;
++}
+diff --git a/src/styles.css b/src/styles.css
+index d35a1ce..f639e48 100644
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -69,6 +69,8 @@ content:"";width:18px;height:86px;border-radius:8px 8px 3px 3px;background:linea
+ @keyframes penna{50%{transform:rotate(18deg) translateY(8px)}}
+ .ang.tred{background:#7ec8f2}
+ .ang.tred::after{display:none}
++.angen-3d canvas{filter:saturate(var(--grad-m,1)) contrast(var(--grad-k,1))}
++.vinjett{position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at 50% 55%,transparent 58%,rgba(20,40,10,var(--vinjett,0)) 100%)}
+ .ladd-3d{
+ position:absolute;inset:0;z-index:4;display:grid;place-items:center;align-content:center;gap:16px;
+ background:linear-gradient(180deg,#7ec8f2 0 42%,#fff4dc 42% 58%,#8fd16a 58% 100%);color:var(--color-ink)}

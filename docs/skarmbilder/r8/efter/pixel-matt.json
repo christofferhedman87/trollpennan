@@ -1,0 +1,13 @@
+{
+ "url": "http://127.0.0.1:35475/?kvalitet=hog",
+ "namn": "pixel",
+ "matt": {
+  "bildrutor": 43,
+  "medel_ms": 93.4,
+  "p95_ms": 150.1,
+  "draw_per_ruta": 130.4,
+  "tri_per_ruta": 21896,
+  "heap_mb": 36
+ },
+ "fel": []
+}
