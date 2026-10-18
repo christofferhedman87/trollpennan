@@ -408,6 +408,15 @@ function byggMantel(farg: string | null) {
   return g;
 }
 
+function byggHorn(farg: string | null) {
+  const mat = toonMat(farg ?? "#F2B632");
+  const g = new THREE.Group();
+  g.name = "tillbehor-horn";
+  // Konens höjd är 0,46 och den är centrerad. y = halva höjden · sy lägger basen i origo.
+  g.add(del(GEO.kon, mat, 0, 0.23 * 1.45, 0, 1.2, 1.45, 1.2, 1.24));
+  return g;
+}
+
 function byggGlas(farg: string) {
   const mat = toonMat(farg);
   const g = new THREE.Group();
@@ -420,7 +429,7 @@ function byggGlas(farg: string) {
   return g;
 }
 
-/** Krona, glasögon, hatt, rosett, halsduk, ryggsäck och mantel. Andra id ger null. */
+/** Krona, glasögon, hatt, rosett, halsduk, ryggsäck, mantel och horn. Andra id ger null. */
 export function byggTillbehor(t: TillbehorSpec, _a: Ankare): THREE.Group | null {
   if (t.id === "krona") return byggKrona(kronFarg(t.farg));
   if (t.id === "glasögon") return byggGlas(glasFarg(t.farg));
@@ -429,6 +438,7 @@ export function byggTillbehor(t: TillbehorSpec, _a: Ankare): THREE.Group | null 
   if (t.id === "halsduk") return byggHalsduk(t.farg);
   if (t.id === "ryggsäck") return byggRyggsack(t.farg);
   if (t.id === "mantel") return byggMantel(t.farg);
+  if (t.id === "horn") return byggHorn(t.farg);
   return null;
 }
 
@@ -472,11 +482,51 @@ function skalaFor(id: string, a: Ankare, kropp: string) {
     if (kropp === "drake") return bas * 1.2;
     return bas * 1.25;
   }
+  if (id === "horn") {
+    // Samma tak som kronan. En ensam spets, lite lägre än hela kronan.
+    const bas = Math.max(0.28, Math.min(a.bredd * 1.15, a.hojd * 0.55));
+    const faktor = kropp === "ekorre" || kropp === "drake" ? 1.12 : 1.6;
+    const liten = kropp === "fisk" || kropp === "haj" || kropp === "fågel" || kropp === "uggla" || kropp === "groda";
+    return bas * faktor * (liten ? 0.95 : 0.78);
+  }
   return 1;
 }
 
 const _plats = new THREE.Vector3();
 const _sida = new THREE.Vector3();
+
+function framRiktning(a: Ankare, rot: THREE.Object3D, kropp: string) {
+  _sida.copy(a.ansikte).sub(a.huvudTopp);
+  _sida.y = 0;
+  if (_sida.lengthSq() > 1e-6) {
+    _sida.normalize();
+    return _sida;
+  }
+  const minus = a.varld && (kropp === "kanin" || kropp === "katt" || kropp === "hund" || kropp === "fisk");
+  if (a.varld) {
+    rot.getWorldQuaternion(_q);
+    _sida.set(0, 0, minus ? -1 : 1).applyQuaternion(_q);
+  } else {
+    _sida.set(0, 0, 1);
+  }
+  return _sida;
+}
+
+/** Basen ska ligga på pannan, utanför kroppen. Fisk får hornet uppe på huvudet, inte i fenan. */
+function pannaPlats(a: Ankare, rot: THREE.Object3D, kropp: string) {
+  if (kropp === "fisk" || kropp === "haj") {
+    _plats.copy(a.huvudTopp);
+    _plats.y += Math.max(0.04, a.hojd * 0.1);
+    _plats.addScaledVector(framRiktning(a, rot, kropp), Math.max(0.05, a.bredd * 0.22));
+    return _plats;
+  }
+  const lyft = kropp === "drake" ? 0.38 : kropp === "fågel" || kropp === "uggla" ? 0.5 : 0.62;
+  _plats.copy(a.ansikte);
+  _plats.y += (a.huvudTopp.y - a.ansikte.y) * lyft;
+  const steg = kropp === "drake" ? Math.max(0.1, a.bredd * 0.28) : Math.max(0.05, a.bredd * 0.16);
+  _plats.addScaledVector(framRiktning(a, rot, kropp), steg);
+  return _plats;
+}
 
 function mantelPlats(a: Ankare, rot: THREE.Object3D, kropp: string) {
   if (kropp === "drake" || kropp === "häst") {
@@ -500,6 +550,7 @@ function platsFor(id: string, a: Ankare, rot: THREE.Object3D, kropp: string) {
   if (id === "krona" || id === "hatt") return a.huvudTopp;
   if (id === "ryggsäck") return a.rygg;
   if (id === "mantel") return mantelPlats(a, rot, kropp);
+  if (id === "horn") return pannaPlats(a, rot, kropp);
   if (id === "halsduk") return a.hals;
   if (id === "rosett") {
     // Örats sida: ut från ansiktets mitt längs djurets vänster (−x i rotens rum).
