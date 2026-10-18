@@ -136,6 +136,22 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
 - **Mått mot grundtanken:** ingen täckningsändring (parsern rörs inte); värdet är att `Spel.tsx` inte längre blockerar R3.
 - **Grind: R1A genomförd; R1B JA** (alla sju punkter, RITNING.md avsnitt 0).
 
+### Åtgärdsmål: djuren ska stå vända mot kameran (standard utan data; `framAxel` bara valfri åsidosättning)
+**Prioritet (Christoffer, 2026-10-18):** enkelt kunna fylla spelet med enorma mängder djur och egenskaper. Därför: **standardläget är "vänd mot kameran" och kräver inget fält per djur**; en bulkmodell fungerar utan extra data. `framAxel` är en *valfri* åsidosättning, och bulkrutinens valideringsskript (R3C) mäter/gissar framriktningen automatiskt och flaggar avvikelser.
+- **Läge idag (mätt/kodläst, 2026-10-18, utgångsläge `main` före R2):** djuren visar ofta ryggen. Bild `docs/skarmbilder/framriktning/nulage-10-djur.png` (en ögonblicksbild per djur ur byggd `main`, 375×812 beskuren, djuren rör sig så detta är ett stickprov): **kanin, katt, hund och fisk visar ryggen eller sidan; drake, groda, gris och fågel visar framsidan; häst visar sidan; uggla syns inte tydligt i bilden (inte bedömd).** Orsak i `src/spel/angen3d.tsx` r.797–818 (`djurPlats`):
+  1. Kameran står på +z (`camera position [0, 4.15, 9.8]`, r.2184). Ett djur som ska vara vänt mot kameran ska ha sin framsida mot +z.
+  2. **Kenney-modellerna har sin framsida på +z redan i filen** (mätt ur GLB-JSON: `animal-cat.glb` svansnoden vid z = −0,55 och framben vid z = +0,25; `animal-bunny/dog.glb` framben vid +0,25, bakben vid −0,25). Ändå vrids `kanin`, `katt`, `hund`, `fisk` med `Math.PI` via en hårdkodad lista (`kenney`, r.815) → de vänds bort från kameran. (Min första hypotes, att Kenney-djuren pekar mot −z, var fel; mätningen visar att vridningen själv är felet.)
+  3. Flyggrenen (`flygare(spec)`: fågel, uggla, allt med förmågan `vingar`, r.797–803) får ingen vridning alls (vilket råkar stämma för `animal-chick.glb`), men den får det inte heller för andra flygare med annan modell.
+  4. Draken har fast `rotation.y = 0.35`; groda och häst får bara `yaw × 0,35` utan kontroll av GLB:ns framriktning (skinnade modeller `drake.glb`/`hast.glb`: framriktning ej uppmätt än, ben `Head`/`Neck` finns).
+  5. Gångriktningen vägs bara 35 % (`yaw * 0.35`), så ett djur som går åt sidan vänder sig knappt.
+- **Åtgärd (generell, ingen kod per djur):**
+  1. *Standard:* modellens framsida antas vara **+z** (konventionen i 9.2). Djuret **vänds mot kameran när det står stilla eller är valt** och **mot gångriktningen vid rörelse** (vikt 1, mjuk utjämning). Ingen lista över djur, ingen `Math.PI`-gren.
+  2. *Valfri åsidosättning:* fältet `framAxel` (`"+z" | "-z" | "+x" | "-x"`) på modellen i data (R2: `data/fastpunkter.json` → `kroppar.<kropp>.framAxel`; R3A: `data/entiteter.json` → entitetens `framAxel`). Saknas fältet gäller +z. Fältet får finnas bara där mätningen visar att modellen avviker.
+  3. *Automatisk mätning i bulkrutinen (R3C):* `scripts/inkorg/kontrollera.mjs` får kontrollen **Framriktning** (13.4): framsidan mäts ur modellen utan handinmatning, i ordning (a) noden `anchor_face` (dess z-komponent i förhållande till modellens mitt), (b) benet `Head` relativt `Body`/`Root` för skinnade modeller, (c) saknas båda: gissa ur bounding box (kroppsaxeln = längsta horisontella axeln; huvudänden = änden där de högsta hörnen finns). Avviker det uppmätta från det som gäller (standard +z eller satt `framAxel`) **skriver skriptet ut ett förslag på `framAxel` och flaggar raden**, och kräver ingen handinmatning för modeller som redan stämmer. Gissningar märks `(gissad)`.
+- **Bevisning:** (a) `framriktning.test.ts` (ren funktion `framVinkel(framAxel)` och `malYaw(...)`: alla fyra axlar ger framsida mot +z; stilla → mot kameran, rörelse → mot gångriktningen); (b) i R3C: `kontrollera.test.mjs` med en falsk modell vänd åt −z ska ge flaggan och förslaget `"framAxel": "-z"`; (c) i webbläsaren, mätbart utan ögonmått: ny testkrok `window.__troll.riktningar()` ger per djur vinkeln mellan modellens framsida i världen och vektorn mot kameran (stilla djur ≤ 20°); (d) bilder 375×812, en per djurtyp (9 GLB-djur + 5 procedurella = 14), där alla är vända mot kameran: tas med ett skript som ett kontaktark per sju djur (två ark; skälet är regeln i `projektregler.md` om högst åtta numrerade bilder per runda, de 14 enskilda filerna ligger kvar som underlag utanför repot).
+- **Grindpunkt:** *data/standard och mätning* ingår i R2 (fältet `framAxel` är valfritt i `fastpunkter.json` och läses av fästsystemet så att tillbehören följer samma riktning) och *systemet som vänder djuret ingår i R3A* (`djurPlats` i `angen3d.tsx` läser standard/`framAxel`; R4A flyttar den sedan oförändrad). Den enda rad som kan göras i förväg utan att vänta på R3A är att ta bort `kenney`-listans `Math.PI`: det är en ensidig, kontrollerbar rättning (bevis: bilden ovan före/efter) och föreslås som del av R2 om Christoffer vill ha effekten tidigt; annars R3A.
+- **Kamerakoppling:** riktningen "mot kameran" läses ur kameran (R4B: `data/kamera.json`, `yaw`), inte hårdkodat +z, så att den följer den fasta Hay Day-vinkeln.
+
 ### R2 – Tillbehör som data + ett generellt fästsystem (ersätter ca 450 rader per-sak-kod)
 - **Mål:** ett nytt tillbehör = en rad i `data/tillbehor.json` (+ ordrad i `ord.json` + glTF vid behov). Placering/skala/riktning kommer ur data per djur, aldrig ur `kropp ===`. De fem kända felen (5A) rättas genom att ändra *siffror i JSON*, och det är rundans bevis.
 - **Filer:** NYA `data/tillbehor.json`, `data/fastpunkter.json`, `src/spel/tillbehorData.ts` (typer, laddning, `kontrolleraTillbehor()`; **ingen three-import** så det går att testa med `node --experimental-strip-types`), `src/spel/tillbehorData.test.ts`; ÄNDRAS `src/spel/tillbehorFaste.ts` (faestTillbehor blir generisk), `src/spel/gltfDjur.tsx` (`fastAnkare`, r.184), `package.json` (lägg testfilen i `test:product` och `test`), `src/spel/djurmesh.ts` (ta bort r.308–330 krona/horn) och `angen3d.tsx` r.586–588.
@@ -169,7 +185,6 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
   "version": 1,
   "kroppar": {
     "katt": {
-      "fram": "-z",
       "ankare": {
         "anchor_head": [0, 0.92, -0.10], "anchor_brow": [0, 0.78, -0.40],
         "anchor_face": [0, 0.62, -0.55], "anchor_neck": [0, 0.5, -0.30],
@@ -185,6 +200,7 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
 - **Funktion (ny kärna):** `faestTillbehor(rot, kropp, tillbehor[])`: 1) slå upp rad i `TILLBEHOR[t.id]`; 2) hitta ankarpunkt: `rot.getObjectByName(rad.ankare)` om noden finns i GLB, annars `FASTPUNKTER[kropp].ankare[rad.ankare]`; 3) skala = `skala.faktor * <mått>` begränsad av `min`/`max_hojd_andel`, gånger `overstyr[t.id].skala`; 4) rikta med `fram`/`vrid`; 5) bygg ur `delar` eller ladda `modell`; 6) lägg under benet/noden så den följer idle. Allt tillbehör följer samma sju rader kod.
 - **Tas bort/ersätts:** `byggKrona`, `byggHatt`, `byggHalsduk`, `byggRosett`, `byggRyggsack`, `byggMantel`, `byggHorn`, `byggGlas`, `arTrollkarlshatt`, `skalaFor`, `platsFor`, `pannaPlats`, `mantelPlats`, `framRiktning`, `vandRygg`, `PROC_ANKARE`, `STANDARD`, `glbRygg`, `procRygg` (ca 450 av 619 rader). Behåll: `Ankare`-typ, `TOON`, `KONTUR`, `del()`, `toonMat()`, `fastVarld()`.
 - **Bevisning (Doodle):** (a) `tillbehorData.test.ts` – röd före (modulen saknas), grön efter: varje `del.tillbehor` i `ord.json` har en rad; varje rads `ankare` finns för alla 14 kroppar i `fastpunkter.json`; alla vektorer ändliga; inga okända `form`; (b) `scripts/ark-tillbehor.mjs` (Playwright, 375×812, `window.__troll`) tar ett ark per tillbehör med alla 10 kroppar (9 GLB + gris): `01-krona` … `08-mantel` (8 bilder = max); (c) före/efter: de som var bra i 5A får inte ändras; de fem felen (fågel ryggsäck, katt/kanin mantel, katt/häst horn) ska vara rättade **med en JSON-ändring per fel** (visa diff); (d) `rg "kropp ===" src/spel/tillbehorFaste.ts` ger 0 träffar.
+- **Framriktning (åtgärdsmålet ovan):** `data/fastpunkter.json` har valfritt `framAxel` per kropp (utkastets `fram` är ersatt; saknas fältet gäller +z, och inga Kenney-kroppar behöver det). Tillbehörsfästet läser samma fält. Bevis (R2): `tillbehorData.test.ts` kontrollerar att `framAxel`, **om det finns**, är ett av `+z|-z|+x|-x`; Arkitekten mäter framriktningen för drake, häst och groda ur GLB-filerna innan rundan (skinnade, ej uppmätta än) och lägger fältet bara där det avviker.
 - **Storlek:** medium, 25–30 turer, 2–3 USD; JSON-filerna förbereds utanför Build. **Risk:** att riktningen (`fram`/`vrid`) blir fel för skinnade djur (drake/häst) – ge dem `anchor_*` via ben i R3, tills dess `ben`-fältet i `fastpunkter`.
 - **Mått mot grundtanken:** kostnaden för ett nytt tillbehör: **idag ca 9 rundor / 11,9 USD för 8 tillbehör (≈1,5 USD och en runda per tillbehör)** → **efter: en datarad** (bevis: ett nytt testtillbehör, t.ex. `mössa`, läggs till som endast data i en temporär kopia och syns på alla 10 kroppar utan kodändring). Täckning oförändrad (inga nya ord i R2).
 - **Grind: JA, med villkor** (JSON bifogas; R1 mergad helst).
@@ -193,8 +209,9 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
 - **Mål:** `data/entiteter.json` blir sanningen om *vad som finns*; djurlistan (`FIL`, `MAL_HOJD`, `PALETT` i `gltfDjur.tsx`, `ART`/`flygare()`/`simmare()`/`vikt` i `angen3d.tsx`, 141 `kropp ===`-förekomster på 85 rader i 9 filer i `src/spel/` (mätt 2026-10-18: `rg -o "kropp ===" src/spel | wc -l`; tidigare siffra 116 gick inte att återskapa)) flyttas till data. Tillgångsmanifestet `data/tillgangar.json` och `LICENSES.md` införs (avsnitt 9.4, 13).
 - **Filer:** NYA `data/entiteter.json`, `data/tillgangar.json`, `LICENSES.md` (genereras), `src/spel/entiteter.ts` (typer, laddning, `entitet(id)`, **ingen three-import**), `src/spel/entiteter.test.ts`; ÄNDRAS `gltfDjur.tsx`, `angen3d.tsx` (`djurPlats` läser `rorelse`), `djurmesh.ts`, `tillbehorData.ts` (läser ankare ur entiteten), `package.json`.
 - **Dataform:** avsnitt 14.2. **Funktioner:** `entitet(id)`, `entitetFranOrd(ordId)`, `kontrolleraEntiteter()` (varje `modell` finns, varje `licens` finns i manifestet, varje ankare finns, varje `ord`-referens finns i `ord.json`).
-- **Bevisning:** (a) `entiteter.test.ts` röd→grön; (b) `rg -o "kropp ===" src/spel | wc -l` ≤ 10 (idag 141); (c) bilder 375×812, före/efter: `01-nio-djur-oforandrade`, `02-tillbehor-oforandrade` (pixlar lika; bildjämförelse, inte ögonmått).
+- **Bevisning:** (a) `entiteter.test.ts` röd→grön; (b) `rg -o "kropp ===" src/spel | wc -l` ≤ 10 (idag 141); (c) bilder 375×812, före/efter: `01-nio-djur-vanda-mot-kameran` (riktningen ändras avsiktligt, se åtgärdsmålet), `02-tillbehor-oforandrade` (tillbehörens placering relativt djuret oförändrad; bildjämförelse, inte ögonmått).
 - **Mått mot grundtanken:** inga nya ord; mäter *tid att lägga till en kropp*: nytt djur = en rad + en GLB (bevis: lägg `hund2` som kopia av hund i en temporär kopia, syns utan kodändring). Täckning oförändrad.
+- **Framriktning:** `djurPlats` (`angen3d.tsx`) får det generella systemet ur åtgärdsmålet ovan (standard vänd mot kameran, gångriktning vikt 1, valfri `framAxel` ur entiteten) och `kenney`-listan försvinner; bevis: `framriktning.test.ts`, `window.__troll.riktningar()` ≤ 20° för stilla djur, två kontaktark (14 djurtyper) – bilderna `01-nio-djur-…` ändras här **avsiktligt** (riktning), allt annat (tillbehörens placering relativt huvudet) ska vara oförändrat.
 - **Storlek:** medium–stor, 30–40 turer, 3–4 USD (gissning). **Risk:** 14 kroppar × tillbehör; skinnade drake/häst. **Grind: NEJ idag** (beror på R2).
 
 ### R3B – Reservform: ordens väg till synlig form (avsnitt 12)
@@ -207,7 +224,7 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
 ### R3C – Bulkrutin och första modellsatsen (avsnitt 13)
 - **Mål:** `assets/inkorg/` + manifest → validerade, optimerade modeller med entitetsrad **utan kod**. Första satsen: ca 50 modeller ur de licensverifierade paketen (9.5).
 - **Filer:** NYA `scripts/inkorg/kor.mjs`, `scripts/inkorg/kontrollera.mjs` (+ `.test.mjs`), `scripts/inkorg/ankare.mjs`, `assets/inkorg/LASMIG.md`, `assets/inkorg/manifest.json` (mall), `package.json` (devDependency `@gltf-transform/cli`/`core`, scripts `inkorg`, `kontrollera:tillgangar`); ÄNDRAS `data/entiteter.json`, `data/tillgangar.json`, `LICENSES.md` (genereras).
-- **Bevisning:** (a) `kontrollera.mjs` felmeddelandena i avsnitt 13.4 testas med falska filer (för stor, saknad licens, saknat ankare, för många trianglar, felaktigt namn); (b) en körning på 5 modeller ger 5 entitetsrader + 5 manifestrader + oförändrad `LICENSES.md`-struktur; (c) bilder: `01-nya-djur-i-anga`, `02-nya-foremal`, `03-tillbehor-som-modell`.
+- **Bevisning:** (a) `kontrollera.mjs` felmeddelandena i avsnitt 13.4 testas med falska filer (för stor, saknad licens, saknat ankare, för många trianglar, felaktigt namn); (b) en körning på 5 modeller ger 5 entitetsrader + 5 manifestrader + oförändrad `LICENSES.md`-struktur; (c) bilder: `01-nya-djur-i-anga`, `02-nya-foremal`, `03-tillbehor-som-modell`; (d) kontrollen **Framriktning** (13.4) ger ingen flagga för en korrekt fil och flaggan + förslaget `framAxel` för en falsk modell vänd åt −z.
 - **Mått mot grundtanken:** egen form för barnlistans substantiv **9/70 → minst 40/70** (kräver ord- och entitetsrader som Copilot granskar, utanför Builds ramar), modeller per runda 9 → ≥ 50, **tid per ny modell ≤ 10 minuter handpåläggning (gissning, mäts i rundan)**.
 - **Storlek:** medium, 30 turer, 3–4 USD (gissning) + Arkitektens manuella urval/licenskontroll. **Risk:** FBX→GLB-konvertering (Blender utanför repot), Quaternius levererar FBX; `optimize`-flaggorna (9.3). **Grind: NEJ idag** (beror på R3A; paketurvalet kräver Christoffers ja).
 
@@ -236,7 +253,7 @@ Stil i en rad (ur koden): **mjuk low-poly leksak, platt toon-skuggning (3-stegs 
 
 ### 9.2 Skala och orientering
 - Enhet: 1 = en meter i modellen; **koden normaliserar djur till `malhojd`** (`MAL_HOJD`, idag 0,7–1,5) så importen behöver inte skalas exakt, men filens egen höjd ska vara 0,3–3,0.
-- Y upp, **framåt = +z** i nya filer. Äldre Kenney-djur har ansiktet mot −z; det anges som `"fram":"-z"` i `djur.json` (idag fångas det med `kropp ===`-grenar).
+- Y upp, **framåt = +z** i nya filer. **Standard = vänd mot kameran, utan fält per djur** (se åtgärdsmålet "Djuren vända mot kameran" i avsnitt 8). Avviker en modells framsida från +z anges det som valfri åsidosättning `"framAxel": "-z"`; valideringsskriptet (13.4) mäter framriktningen och flaggar avvikelser i stället för att kräva handinmatning. **Kenney-djuren avviker inte** (mätt 2026-10-18 ur GLB-filerna: svans/bakben vid −z, framben vid +z, alltså framsida +z); den hårdkodade `Math.PI`-vridningen i `angen3d.tsx` r.815 är det som får dem att visa ryggen.
 - Origo i marken under djurets mitt (fötterna på y=0). Tillbehör: origo = fästpunkten (kronans bas, glasögonens mitt mellan ögonen), bredd mot huvudets bredd = 1,0 enhet.
 - Ankarnoder (tomma noder, +z ut från ytan, skala 1): `anchor_head` (huvudets topp), `anchor_brow` (pannan, för horn), `anchor_face` (mitt mellan ögonen, för glasögon), `anchor_ear_l`/`anchor_ear_r` (rosett), `anchor_neck` (halsduk), `anchor_back` (ryggsäck/mantel), `anchor_mouth` (eld). På skinnade modeller (drake, häst) är noderna barn till benet (`Head`, `Neck`, `Body`) så de följer animationen; på Kenney-djuren (inget huvudben) barn till `body`.
 
@@ -440,7 +457,7 @@ assets/inkorg/
   "filer": [
     { "fil": "djur/cow.glb", "id": "ko", "typ": "djur", "paket": "quaternius-farm-animals",
       "ord": ["ko", "kon", "kor", "korna", "kossa"], "genus": "u",
-      "malhojd": 1.2, "fram": "+z", "rorelse": "land", "kategori": "djur",
+      "malhojd": 1.2, "rorelse": "land", "kategori": "djur",
       "ankare": "auto", "storlek": "normal" }
   ]
 }
@@ -473,9 +490,10 @@ npx @gltf-transform/cli@4.5.1 prune tmp.glb ut.glb --keep-leaves true
 | **Triangelbudget** | djur ≤ 6 000, tillbehör ≤ 800, byggnad ≤ 4 000, natur/föremål ≤ 1 500 (startvärden, mäts om efter första satsen) | `FEL …: 12 480 trianglar (högst 6 000 för djur). Förenkla i Blender (Decimate) eller välj en annan modell.` |
 | **Filstorlek** | djur ≤ 300 KB, tillbehör ≤ 60 KB, byggnad ≤ 200 KB, natur/föremål ≤ 80 KB (efter `optimize`) | `FEL …: 1,8 MB (högst 300 KB för djur). Kontrollera texturen (högst 512 px).` |
 | **Struktur** | exakt en scen, inga kameror/ljus, högst 1 material per 2 000 trianglar, texturer inbäddade | `FEL …: filen innehåller 2 kameror. Ta bort dem.` |
+| **Framriktning** | framsidan mäts automatiskt (a) `anchor_face` relativt modellens mitt, (b) `Head` mot `Body`/`Root` för skinnade, (c) annars gissning ur bounding box (längsta horisontella axeln; huvudänden = änden med de högsta hörnen); jämförs med det som gäller (standard +z eller `framAxel`). Ingen handinmatning krävs; avvikelse flaggas med förslag | `FLAGGA …: framsidan verkar vara −z (mätt via anchor_face), standard är +z. Lägg till "framAxel": "-z" på entiteten (eller bekräfta).` / `… (gissad ur bounding box)` |
 | **Dubbletter/manifest** | varje GLB i `public/models/**` finns i `tillgangar.json` (och tvärtom) | `FEL public/models/djur/ko.glb: saknas i data/tillgangar.json.` |
 
-**Enhetstest** (`kontrollera.test.mjs`): sju falska filer i en temporär kopia, en per rad ovan, ska ge exakt respektive felmeddelande; en korrekt fil ger `OK`.
+**Enhetstest** (`kontrollera.test.mjs`): en falsk fil per rad ovan (nu nio rader), i en temporär kopia, en per rad ovan, ska ge exakt respektive felmeddelande; en korrekt fil ger `OK`.
 
 ### 13.5 Vad rutinen ger per modell
 En fil + en rad i manifestet → ordrad(er) (efter Copilots granskning), entitetsrad, manifestrad, licensrad, och modellen syns i spelet utan kodändring och får automatiskt tillbehörsplatser. Målet i R3C: ≤ 10 minuters handpåläggning per modell (gissning, mäts).
@@ -499,7 +517,7 @@ Tre scheman, tre kodvägar. Grundtanken ("hus, stall, hagar, allt") och arkitekt
       "typ": "djur", "kategori": "djur",
       "ord": ["hund", "hunden", "hundar", "hundarna", "vovve", "valp"],
       "modell": "/models/animal-dog.glb", "licens": "kenney-cube-pets",
-      "fram": "-z", "malhojd": 1.05, "storlek": "normal",
+      "malhojd": 1.05, "storlek": "normal",
       "attribut": { "farg": true, "monster": true, "skala": true, "formaga": ["springa","hoppa","flyga","lysa","simma"] },
       "ankare": { "anchor_head": [0, 0.92, -0.10], "anchor_back": [0, 0.58, 0.16] },
       "platser": [],
@@ -509,7 +527,7 @@ Tre scheman, tre kodvägar. Grundtanken ("hus, stall, hagar, allt") och arkitekt
       "typ": "byggnad", "kategori": "byggnad",
       "ord": ["stall", "stallet", "stall", "stallen"],
       "modell": "/models/bygg/stall.glb", "licens": "quaternius-farm",
-      "fram": "+z", "malhojd": 1.6, "storlek": "stor",
+      "malhojd": 1.6, "storlek": "stor",
       "attribut": { "farg": true, "material": true, "monster": false, "delar": ["fönster","dörr","tak","skorsten","flagga"] },
       "ankare": { "anchor_door": [0,0,0.6], "anchor_roof": [0,1.2,0] },
       "platser": [ { "id": "box-1", "pos": [-0.3,0,0.2], "for": ["häst","ko","får"] }, { "id": "box-2", "pos": [0.3,0,0.2], "for": ["häst","ko","får"] } ],
@@ -647,6 +665,7 @@ Status 2026-10-18 efter live-spelningen (avsnitt 17). **Viktigt: allt "live" gä
 | Menyn är låst (Gården, Byggboken, Albumet, Ut på äventyr, Uppdragsboken, Bok) | **Verifierat live** (bild 07, texten "Kommer senare …") |
 | Uppdragsvyn saknar ingång | **Verifierat live** (går inte att nå; bara via kod: ingen `setPanel("uppdrag")`) |
 | Gården (Phaser, 2D) fungerar med byggord | **Verifierat live** (hus byggs; kräver testkrok för att nå) |
+| Djuren är vända mot kameran | **Delvis:** kodläst + GLB-mätt + en ögonblicksbild per djur ur byggd `main` (`docs/skarmbilder/framriktning/nulage-10-djur.png`): kanin/katt/hund/fisk visar ryggen, drake/groda/gris/fågel framsidan, uggla ej bedömd; **inte** verifierat i publicerad version eller över tid (djuren rör sig) |
 | Krona och horn syns på djuren | **Delvis live:** krona på drake syns (bild 02); **horn syns inte** på enhörningen |
 | Hatt, halsduk, glasögon, rosett, mantel, ryggsäck syns | **Motbevisat live:** syns inte i den publicerade versionen (äldre kod) |
 | 3D-tillbehören syns inte i Gården/äventyret (två renderare) | **Kodläst; delvis live:** Gården är 2D och visar inga 3D-tillbehör |
