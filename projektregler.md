@@ -45,7 +45,7 @@ Historiska regler finns i `recovery/pre-cloudflare/projektregler.md` och gäller
 - Spelet heter **Trollpennan**.
 
 ## Säkerhet
-- Bara ord i `ord.json` skapar något. Spärrade ord (`blocklist.json`) visas, upprepas och sparas aldrig.
+- Varje icke-spärrat ord får en synlig reservform (ordägg); spärrade ord (`blocklist.json`) visas, upprepas och sparas aldrig, och får aldrig någon form. Orden som blir ägg noteras bara lokalt i spelaren (ingen automatisk överföring).
 - Resurser får laddas från appens egen origin. Ingen extern spårning, chatt, konton eller överföring av barnets text. Spara lokalt.
 - Föräldrasidan öppnas genom att hålla inne i 3 sekunder.
 
