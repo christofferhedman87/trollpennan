@@ -9,7 +9,7 @@
     "egen form": 8
    },
    "efter": {
-    "kristall": 972,
+    "agg": 972,
     "gissning": 16,
     "egen form": 8,
     "spärrat": 4
@@ -43,7 +43,7 @@
    },
    "efter": {
     "egen form": 16,
-    "kristall": 824,
+    "agg": 824,
     "spärrat": 4,
     "ingenting": 5
    },
@@ -58,7 +58,7 @@
     "spärrat": 9
    },
    "efter": {
-    "kristall": 976,
+    "agg": 976,
     "egen form": 9,
     "spärrat": 9,
     "gissning": 4,
@@ -79,7 +79,7 @@
     "egen form": 1
    },
    "efter": {
-    "kristall": 497,
+    "agg": 497,
     "gissning": 2,
     "egen form": 1
    },
@@ -97,7 +97,7 @@
     "spärrat": 3
    },
    "efter": {
-    "kristall": 488,
+    "agg": 488,
     "egen form": 6,
     "gissning": 2,
     "spärrat": 3,
@@ -117,7 +117,7 @@
     "spärrat": 5
    },
    "efter": {
-    "kristall": 487,
+    "agg": 487,
     "ingenting": 1,
     "egen form": 2,
     "gissning": 5,

@@ -1,129 +1,129 @@
 {
- "_om": "Förväntade utfall för R3B (reservkedjan). 'forvantat': kristall = ett djur av kropp kristall (första reserv-posten är kroppen); djur_med_kristall = ett vanligt djur med svävande ordkristaller; forslag = en trovärdig 'Menade du …?'; sparr = aldrig en form; oforandrat = exakt samma utfall som tolka(). 'delar' = alla ord i reserv i ordning (huvudet först vid kristall).",
+ "_om": "Förväntade utfall för R3B (reservkedjan). 'forvantat': agg = ett djur av kropp agg (ägget) (första reserv-posten är kroppen); djur_med_agg = ett vanligt djur med svävande ordägg; forslag = en trovärdig 'Menade du …?'; sparr = aldrig en form; oforandrat = exakt samma utfall som tolka(). 'delar' = alla ord i reserv i ordning (huvudet först vid ägg).",
  "fraser": [
   {
    "fras": "elefant",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "elefant",
    "kategori": "okant",
-   "steg": "kristall"
+   "steg": "agg"
   },
   {
    "fras": "en elefant",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "elefant",
    "kategori": "okant"
   },
   {
    "fras": "pizza",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "pizza",
    "kategori": "mat",
    "steg": "kategori_ord"
   },
   {
    "fras": "en pizza",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "pizza",
    "kategori": "mat"
   },
   {
    "fras": "tårta",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "tårta",
    "kategori": "mat"
   },
   {
    "fras": "blå hmmmx",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "hmmmx",
    "kategori": "okant"
   },
   {
    "fras": "hmmmx",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "hmmmx",
    "kategori": "okant"
   },
   {
    "fras": "pojke",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "pojke",
    "kategori": "person"
   },
   {
    "fras": "flicka",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "flicka",
    "kategori": "person"
   },
   {
    "fras": "gubbe",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "gubbe",
    "kategori": "okant"
   },
   {
    "fras": "sol",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "sol",
    "kategori": "natur"
   },
   {
    "fras": "chokladtårta",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "chokladtårta",
    "kategori": "mat",
    "steg": "sammansatt"
   },
   {
    "fras": "vänlighet",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "vänlighet",
    "kategori": "kansla",
    "steg": "regel"
   },
   {
    "fras": "blobbo",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "blobbo",
    "kategori": "okant"
   },
   {
    "fras": "qwerty",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "qwerty",
    "kategori": "okant"
   },
   {
    "fras": "åäö",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "åäö",
    "kategori": "okant"
   },
   {
    "fras": "tre elefanter",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "elefanter",
    "kategori": "okant"
   },
   {
    "fras": "dansar",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "dansar",
    "kategori": "handling",
    "steg": "lemma"
   },
   {
    "fras": "går",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "går",
    "kategori": "handling",
    "steg": "lemma"
   },
   {
    "fras": "elefant som dansar",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "elefant",
    "kategori": "okant",
    "delar": [
@@ -133,7 +133,7 @@
   },
   {
    "fras": "pizza med ost",
-   "forvantat": "kristall",
+   "forvantat": "agg",
    "ord": "pizza",
    "kategori": "mat",
    "delar": [
@@ -143,7 +143,7 @@
   },
   {
    "fras": "en kanin med paraply",
-   "forvantat": "djur_med_kristall",
+   "forvantat": "djur_med_agg",
    "kropp": "kanin",
    "ord": "paraply",
    "kategori": "foremal",
@@ -151,28 +151,28 @@
   },
   {
    "fras": "en kanin med ballong",
-   "forvantat": "djur_med_kristall",
+   "forvantat": "djur_med_agg",
    "kropp": "kanin",
    "ord": "ballong",
    "kategori": "foremal"
   },
   {
    "fras": "en glad kanin",
-   "forvantat": "djur_med_kristall",
+   "forvantat": "djur_med_agg",
    "kropp": "kanin",
    "ord": "glad",
    "kategori": "egenskap"
   },
   {
    "fras": "en ledsen hund",
-   "forvantat": "djur_med_kristall",
+   "forvantat": "djur_med_agg",
    "kropp": "hund",
    "ord": "ledsen",
    "kategori": "egenskap"
   },
   {
    "fras": "en kanin som dansar",
-   "forvantat": "djur_med_kristall",
+   "forvantat": "djur_med_agg",
    "kropp": "kanin",
    "ord": "dansar",
    "kategori": "handling",
@@ -180,7 +180,7 @@
   },
   {
    "fras": "en kanin som går",
-   "forvantat": "djur_med_kristall",
+   "forvantat": "djur_med_agg",
    "kropp": "kanin",
    "ord": "går",
    "kategori": "handling",
@@ -188,7 +188,7 @@
   },
   {
    "fras": "en katt som sjunger",
-   "forvantat": "djur_med_kristall",
+   "forvantat": "djur_med_agg",
    "kropp": "katt",
    "ord": "sjunger",
    "kategori": "handling",
@@ -196,7 +196,7 @@
   },
   {
    "fras": "en kanin som qwerty",
-   "forvantat": "djur_med_kristall",
+   "forvantat": "djur_med_agg",
    "kropp": "kanin",
    "ord": "qwerty",
    "kategori": "handling",
@@ -204,7 +204,7 @@
   },
   {
    "fras": "en glad kanin som dansar",
-   "forvantat": "djur_med_kristall",
+   "forvantat": "djur_med_agg",
    "kropp": "kanin",
    "ord": "glad",
    "kategori": "egenskap",
@@ -215,7 +215,7 @@
   },
   {
    "fras": "en häst som äter tårta",
-   "forvantat": "djur_med_kristall",
+   "forvantat": "djur_med_agg",
    "kropp": "häst",
    "ord": "äter",
    "kategori": "handling",
@@ -226,14 +226,14 @@
   },
   {
    "fras": "en drake med slott",
-   "forvantat": "djur_med_kristall",
+   "forvantat": "djur_med_agg",
    "kropp": "drake",
    "ord": "slott",
    "kategori": "byggnad"
   },
   {
    "fras": "rosa kanin som flyger och dansar",
-   "forvantat": "djur_med_kristall",
+   "forvantat": "djur_med_agg",
    "kropp": "kanin",
    "ord": "dansar",
    "kategori": "handling"

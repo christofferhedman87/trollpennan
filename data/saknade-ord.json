@@ -1,0 +1,5 @@
+{
+ "version": 1,
+ "_om": "Ord som blev ägg i spelet (saknar modell). Fylls för hand med `node scripts/saknade-ord.mjs lagg <export>`; inget lämnar spelet automatiskt. Bara ord, grundord, kategori, antal och datum; aldrig meningar eller något om barnet.",
+ "ord": []
+}

@@ -1,5 +1,5 @@
-// R3B: en ren stillbild (375×812, byggd sida) av vad ett okänt ord blir. Används som bevis; Christoffer godkänner utseendet på bilden.
-// Användning: node rundor/R3B-reservform/ord-kristall.mjs --ut docs/skarmbilder/r3b [--fras "elefant"] [--namn ordkristall-elefant] [--dist dist-pages] [--vp 375x812]
+// R3B: en ren stillbild (375×812, byggd sida) av vad ett okänt ord blir (ett ägg som väntar på att kläckas). Används som bevis; Christoffer godkänner utseendet på bilden.
+// Användning: node rundor/R3B-reservform/ord-agg.mjs --ut docs/skarmbilder/r3b [--fras "elefant"] [--namn ordagg-elefant] [--dist dist-pages] [--vp 375x812]
 //   --ark gör i stället ETT kontaktark (3 kolumner, utsnittet kring ängen) i ut/<namn>-ark.png.
 //   Flera bilder: --fras "elefant|en pizza|en kanin med paraply" (| skiljer fraserna; namn blir fras-1, fras-2 …). Förutsätter `npm run build:pages` och Playwright med Chromium.
 import fs from "node:fs";
@@ -14,7 +14,7 @@ const arg = (n, d) => {
 const ut = path.resolve(arg("ut", "docs/skarmbilder/r3b"));
 const dist = path.resolve(arg("dist", "dist-pages"));
 const fraser = arg("fras", "elefant").split("|");
-const namn = arg("namn", fraser.length === 1 ? "ordkristall" : "fras");
+const namn = arg("namn", fraser.length === 1 ? "ordagg" : "fras");
 const [bw, bh] = arg("vp", "375x812").split("x").map(Number);
 fs.mkdirSync(ut, { recursive: true });
 

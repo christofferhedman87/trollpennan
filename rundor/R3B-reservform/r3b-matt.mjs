@@ -1,8 +1,8 @@
 // R3B: mäter reservkedjan mot Kelly-listan (Språkbanken, hämtas utanför repot, se verification/tackning-2026-10-18.md).
 // Användning (Node >= 22.6):
 //   node --experimental-strip-types rundor/R3B-reservform/r3b-matt.mjs --kelly /sökväg/kelly.json [--rot .] [--ut resultat.json]
-// Mäter: (1) andel ord med en "Menade du …?"-gissning före/efter, (2) andel ord som blir synliga (egen form eller kristall),
-// (3) att riktiga stavfel mot kända ord fortfarande ger rätt gissning (recall), (4) spärrade ord ger aldrig kristall.
+// Mäter: (1) andel ord med en "Menade du …?"-gissning före/efter, (2) andel ord som blir synliga (egen form eller ägg),
+// (3) att riktiga stavfel mot kända ord fortfarande ger rätt gissning (recall), (4) spärrade ord ger aldrig ägg.
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -51,7 +51,7 @@ function klass(fn, ph) {
     if (u.typ === "skapad" && u.varelse.reserv?.length) reserv = true;
     if (u.typ === "skapad" && !u.okanda.length && sig(u) !== bas) synlig = true;
   }
-  return synlig ? "egen form" : forslag ? "gissning" : reserv ? "kristall" : sparr ? "spärrat" : "ingenting";
+  return synlig ? "egen form" : forslag ? "gissning" : reserv ? "agg" : sparr ? "spärrat" : "ingenting";
 }
 
 const ut = { mat: {}, stavfel: {} };
