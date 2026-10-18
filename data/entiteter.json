@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "_om": "Sanningen om vilka djur som finns i 3D-ängen: modell (nyckel i tillgangar.json), måttet, färger, rörelse. En rad per kropp. Saknas ett fält gäller standarden i src/spel/entiteter.ts (inga fält per djur krävs för att ett nytt djur ska stå vänt mot kameran).",
+  "entiteter": {
+    "kanin": {
+      "typ": "djur", "kategori": "djur", "modell": "animal-bunny", "malhojd": 1,
+      "palett": { "from": 25, "range": 22, "bodyL": 0.55 }, "art": "#F48FB1", "hopp": 0.55
+    },
+    "katt": {
+      "typ": "djur", "kategori": "djur", "modell": "animal-cat", "malhojd": 1,
+      "palett": { "from": 0, "range": -1, "bodyL": 0.5 }, "art": "#64B5F6"
+    },
+    "hund": {
+      "typ": "djur", "kategori": "djur", "modell": "animal-dog", "malhojd": 1.05,
+      "palett": { "from": 25, "range": 22, "bodyL": 0.55 }, "art": "#FFD54F"
+    },
+    "drake": {
+      "typ": "djur", "kategori": "djur", "modell": "drake", "malhojd": 1.35, "art": "#66BB6A",
+      "rorelse": "svavar", "vikt": 3, "standardfarg": "#ff8a3c",
+      "material": { "Dragon_Main": "farg", "Dragon_Secondary": "ljus" }
+    },
+    "häst": {
+      "typ": "djur", "kategori": "djur", "modell": "hast", "malhojd": 1.5,
+      "palett": { "from": 30, "range": 25, "bodyL": 0.4 }, "art": "#8D6E63", "vikt": 2
+    },
+    "fågel": {
+      "typ": "djur", "kategori": "djur", "modell": "animal-chick", "malhojd": 0.8,
+      "palett": { "from": 50, "range": 12, "bodyL": 0.55 }, "art": "#FFB74D", "rorelse": "flyg", "hopp": 0.32
+    },
+    "fisk": {
+      "typ": "djur", "kategori": "djur", "modell": "animal-fish", "malhojd": 0.7,
+      "palett": { "from": 25, "range": 22, "bodyL": 0.55 }, "art": "#4FC3F7", "rorelse": "sim"
+    },
+    "groda": {
+      "typ": "djur", "kategori": "djur", "modell": "groda", "malhojd": 0.85, "art": "#8BC34A",
+      "hopp": 0.55, "material": { "4CAF50": "farg" }
+    },
+    "gris": { "typ": "djur", "kategori": "djur", "modell": null, "art": "#F8BBD0" },
+    "dinosaurie": { "typ": "djur", "kategori": "djur", "modell": null, "art": "#80CBC4" },
+    "uggla": {
+      "typ": "djur", "kategori": "djur", "modell": "animal-chick", "malhojd": 0.8,
+      "palett": { "from": 50, "range": 12, "bodyL": 0.55 }, "art": "#BCAAA4", "rorelse": "flyg", "natt": "vaken"
+    },
+    "ekorre": { "typ": "djur", "kategori": "djur", "modell": null, "art": "#FF8A65", "hopp": 0.55 },
+    "bäver": { "typ": "djur", "kategori": "djur", "modell": null, "art": "#A1887F", "rorelse": "sim" },
+    "haj": { "typ": "djur", "kategori": "djur", "modell": null, "art": "#CE93D8", "rorelse": "sim" }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "_om": "Tillgångsmanifest: varje modellfil i public/models som spelet använder, med licens och källa. Entiteter pekar hit med nyckeln. Läggs en modell till utan rad här fångar entiteter.test.ts det.",
+  "licenser": {
+    "CC0-1.0": { "namn": "Creative Commons Zero 1.0", "namnangivelse": false },
+    "CC-BY-3.0": { "namn": "Creative Commons Attribution 3.0", "namnangivelse": true }
+  },
+  "tillgangar": {
+    "animal-bunny": { "fil": "/models/animal-bunny.glb", "licens": "CC0-1.0", "upphov": "Kenney – Cube Pets 2.0", "kalla": "https://kenney.nl/assets/cube-pets" },
+    "animal-cat": { "fil": "/models/animal-cat.glb", "licens": "CC0-1.0", "upphov": "Kenney – Cube Pets 2.0", "kalla": "https://kenney.nl/assets/cube-pets" },
+    "animal-chick": { "fil": "/models/animal-chick.glb", "licens": "CC0-1.0", "upphov": "Kenney – Cube Pets 2.0", "kalla": "https://kenney.nl/assets/cube-pets" },
+    "animal-dog": { "fil": "/models/animal-dog.glb", "licens": "CC0-1.0", "upphov": "Kenney – Cube Pets 2.0", "kalla": "https://kenney.nl/assets/cube-pets" },
+    "animal-fish": { "fil": "/models/animal-fish.glb", "licens": "CC0-1.0", "upphov": "Kenney – Cube Pets 2.0", "kalla": "https://kenney.nl/assets/cube-pets" },
+    "animal-parrot": { "fil": "/models/animal-parrot.glb", "licens": "CC0-1.0", "upphov": "Kenney – Cube Pets 2.0", "kalla": "https://kenney.nl/assets/cube-pets", "anvands": false },
+    "drake": { "fil": "/models/drake.glb", "licens": "CC0-1.0", "upphov": "Quaternius – Dragon (Ultimate Monsters)", "kalla": "https://poly.pizza/m/3rUm1cN3yp" },
+    "hast": { "fil": "/models/hast.glb", "licens": "CC0-1.0", "upphov": "Quaternius – Horse (Cube World Kit)", "kalla": "https://poly.pizza/m/D3hAeqeDBE" },
+    "groda": { "fil": "/models/groda.glb", "licens": "CC-BY-3.0", "upphov": "Frog av jeremy, via Poly Pizza", "kalla": "https://poly.pizza/m/07-wJ9bkzul" },
+    "natur": { "mapp": "/models/natur/", "licens": "CC0-1.0", "upphov": "Kenney – Nature Kit", "kalla": "https://kenney.nl/assets/nature-kit" }
+  }
+}
