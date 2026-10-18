@@ -12,12 +12,15 @@
   "klart": "Uppdrag klart!",
   "inga": "Inga uppdrag än. Läs skyltar och lappar ute på äventyret!",
   "flik_pagaende": "Pågår",
-  "flik_klara": "Klara"
+  "flik_klara": "Klara",
+  "nytt_bengtsson": "Nytt uppdrag från {namn}: {text}",
+  "nytt_bengtsson_granskad": false
  },
  "uppdrag": [
   {
    "id": "hitta-kotte",
    "omrade": "skogen",
+   "givare": "bengtsson",
    "typ": "hitta",
    "text": "Hitta Ekorrens silverkotte bland svamparna.",
    "mal": {
@@ -26,11 +29,15 @@
    },
    "klart": "Min kotte! Tack, nu kan jag sova gott i natt. /Ekorren",
    "stjarnor": 2,
-   "skatt": "silverkotte"
+   "skatt": "silverkotte",
+   "text_bengtsson": "Hoppsan! Ekorren har tappat sin silverkotte och är ledsen. Kan du leta efter den bland svamparna?",
+   "klart_bengtsson": "Där var den! Nu kan Ekorren sova gott i natt. Tack för hjälpen!",
+   "granskad": false
   },
   {
    "id": "mossugglan",
    "omrade": "skogen",
+   "givare": "bengtsson",
    "typ": "van",
    "text": "Väck Mossugglan med något blått och bli hennes vän.",
    "mal": {
@@ -38,11 +45,15 @@
    },
    "klart": "Hu-hu! Jag har aldrig haft en vän som dig.",
    "stjarnor": 3,
-   "skatt": null
+   "skatt": null,
+   "text_bengtsson": "Mossugglan sover och vill så gärna ha en vän. Väck henne med något blått, så blir ni vänner.",
+   "klart_bengtsson": "Hu-hu! Nu har Mossugglan en vän. Så snällt av dig.",
+   "granskad": false
   },
   {
    "id": "svampring",
    "omrade": "skogen",
+   "givare": "bengtsson",
    "typ": "skicka",
    "text": "Någon har lagt svampar i en ring. Det sägs att den som hoppar i ringen får tur. Skicka dit ett djur som kan hoppa!",
    "mal": {
@@ -51,11 +62,15 @@
    },
    "klart": "Boing, boing! Det känns som tur!",
    "stjarnor": 2,
-   "skatt": "fyrklöver"
+   "skatt": "fyrklöver",
+   "text_bengtsson": "Titta, svampar i en ring! Man säger att den som hoppar i ringen får tur. Skicka dit ett djur som kan hoppa.",
+   "klart_bengtsson": "Boing, boing! Nu har vi tur allihop. Fina hopp!",
+   "granskad": false
   },
   {
    "id": "bavern",
    "omrade": "sjon",
+   "givare": "bengtsson",
    "typ": "ge",
    "text": "Ge Gamla bävern pinnar eller löv till hans nya damm.",
    "mal": {
@@ -63,11 +78,15 @@
    },
    "klart": "Dammen är klar! Kom och bada när du vill.",
    "stjarnor": 3,
-   "skatt": null
+   "skatt": null,
+   "text_bengtsson": "Gamla bävern bygger en ny damm men har slut på material. Kan du ge honom pinnar eller löv?",
+   "klart_bengtsson": "Dammen är klar! Du får bada där när du vill.",
+   "granskad": false
   },
   {
    "id": "parlhajen",
    "omrade": "sjon",
+   "givare": "bengtsson",
    "typ": "van",
    "text": "Bli vän med Pärlhajen vid bryggan.",
    "mal": {
@@ -75,11 +94,15 @@
    },
    "klart": "Jag simmar runt och visar alla min nya vän!",
    "stjarnor": 3,
-   "skatt": "parla"
+   "skatt": "parla",
+   "text_bengtsson": "Pärlhajen är ensam nere vid bryggan. Kan du bli hennes vän?",
+   "klart_bengtsson": "Pärlhajen simmar runt och visar upp sin nya vän. Det är ju du!",
+   "granskad": false
   },
   {
    "id": "fyren",
    "omrade": "sjon",
+   "givare": "bengtsson",
    "typ": "skicka",
    "text": "Fyren på ön har slocknat. Ta med ett djur som lyser ut till ön.",
    "mal": {
@@ -88,11 +111,15 @@
    },
    "klart": "Fyren lyser igen! Nu hittar båtarna hem.",
    "stjarnor": 3,
-   "skatt": "fyrlampa"
+   "skatt": "fyrlampa",
+   "text_bengtsson": "Å nej, fyren på ön har slocknat! Ta med ett djur som kan lysa ut till ön.",
+   "klart_bengtsson": "Nu lyser fyren igen! Båtarna hittar hem tack vare dig.",
+   "granskad": false
   },
   {
    "id": "vindhasten",
    "omrade": "sjon",
+   "givare": "bengtsson",
    "typ": "van",
    "text": "Någon stor och vit har landat på ön. Vad tycker hästar om att äta?",
    "mal": {
@@ -100,11 +127,15 @@
    },
    "klart": "Vill du flyga en sväng någon gång? Säg bara till!",
    "stjarnor": 4,
-   "skatt": null
+   "skatt": null,
+   "text_bengtsson": "Något stort och vitt har landat på ön. Vad tror du att en häst gillar att äta?",
+   "klart_bengtsson": "Vindhästen gillar dig! Säg bara till, så flyger ni en sväng.",
+   "granskad": false
   },
   {
    "id": "kristallgrodan",
    "omrade": "grottan",
+   "givare": "bengtsson",
    "typ": "van",
    "text": "Få Kristallgrodan att sjunga.",
    "mal": {
@@ -112,11 +143,15 @@
    },
    "klart": "Kvack-la-la-la! Det ekar så fint i grottan.",
    "stjarnor": 3,
-   "skatt": "kristall"
+   "skatt": "kristall",
+   "text_bengtsson": "Kristallgrodan vill så gärna sjunga. Kan du få henne att börja?",
+   "klart_bengtsson": "Kvack-la-la! Hör hur fint det ekar i grottan.",
+   "granskad": false
   },
   {
    "id": "nattdraken",
    "omrade": "grottan",
+   "givare": "bengtsson",
    "typ": "van",
    "text": "Bli vän med Nattdraken längst in i grottan.",
    "mal": {
@@ -124,11 +159,15 @@
    },
    "klart": "Jag har väntat så länge på en vän. Tack för att du kom.",
    "stjarnor": 4,
-   "skatt": null
+   "skatt": null,
+   "text_bengtsson": "Längst in i grottan bor Nattdraken. Hen har väntat länge på en vän. Vågar du hälsa på?",
+   "klart_bengtsson": "Nattdraken är inte ensam längre. Tack för att du kom!",
+   "granskad": false
   },
   {
    "id": "skatten",
    "omrade": "grottan",
+   "givare": "bengtsson",
    "typ": "hitta",
    "text": "Hitta skattkistan där kristallerna är lila.",
    "mal": {
@@ -137,7 +176,11 @@
    },
    "klart": "Skattkistan är full av guldmynt och en gammal karta!",
    "stjarnor": 3,
-   "skatt": "skattkista"
+   "skatt": "skattkista",
+   "text_bengtsson": "I grottan finns en skattkista, gömd där kristallerna är lila. Kan du hitta den?",
+   "klart_bengtsson": "Skattkistan är full av guldmynt och en gammal karta! Bra jobbat!",
+   "granskad": false
   }
- ]
+ ],
+ "_bengtsson": "R6A: alla uppdrag ges av Doktor Bengtsson (givare). Målet och reglerna (typ, mal, stjarnor, skatt) är oförändrade. 'text' och 'klart' är de ursprungliga djur-texterna (granskade, rörs inte, bakgrund). 'text_bengtsson' och 'klart_bengtsson' är utkast i Bengtssons röst och visas i spelet; 'granskad: false' betyder att Copilot inte har granskat dem och Christoffer inte har godkänt tonen. När de är granskade sätts granskad: true (en datarad, ingen kod)."
 }

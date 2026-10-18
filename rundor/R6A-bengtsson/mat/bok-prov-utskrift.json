@@ -1,0 +1,13 @@
+{
+ "menyknapp_last": false,
+ "pagar": [
+  "Doktor Bengtsson: Mossugglan sover och vill så gärna ha en vän. Väck henne med något blått, så blir ni vänner.",
+  "Doktor Bengtsson: Titta, svampar i en ring! Man säger att den som hoppar i ringen får tur. Skicka dit ett djur som kan hoppa.",
+  "Doktor Bengtsson: Gamla bävern bygger en ny damm men har slut på material. Kan du ge honom pinnar eller löv?"
+ ],
+ "klara": [
+  "Doktor Bengtsson: Hoppsan! Ekorren har tappat sin silverkotte och är ledsen. Kan du leta efter den bland svamparna?"
+ ],
+ "sidfel": [],
+ "ok": true
+}

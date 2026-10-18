@@ -1,0 +1,13 @@
+{
+ "version": 1,
+ "_om": "Figurer som ger uppdrag. R6A: alla uppdrag i spelet ges av Doktor Bengtsson. Namnet och tonen kommer från Christoffer; 'granskad: false' = utkast, Copilot har inte granskat och Christoffer har inte godkänt tonen. Utseende (entitet) kommer med R5/R6B; tills dess syns bara namnet.",
+ "npc": {
+  "bengtsson": {
+   "namn": "Doktor Bengtsson",
+   "roll": "uppdragsgivare",
+   "ton": "språkdoktor, varm, lite virrig",
+   "entitet": null,
+   "granskad": false
+  }
+ }
+}
