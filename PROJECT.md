@@ -117,7 +117,7 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
 |---|---|---|
 | R0 Publicera `main` | **Christoffers ja** | Ingen kodrunda; ger spelbar verifiering. Rekommendation: ja |
 | R1 Dela `Spel.tsx` | **R1A klar (PR #14); R1B JA** | Alla 7 uppfyllda: ren flytt utan nytt beteende, ritning och prompt i `rundor/R1-dela-spel/`, bevis = strukturvakt + typkontroll + DOM-jämförelse + bilder. Delad i två körningar enligt `build-prompt` (mätt omfattning > 40 turer). Lägst risk, störst hävstång |
-| R2 Tillbehör som data | **JA, med villkor** | Villkor: JSON-filerna skrivs av Arkitekten (utan Build) och bifogas prompten; Build kopplar bara in. 5B och 5B-1 misslyckades för att Build skulle mäta/skriva dem. R1 mergad helst |
+| R2 Tillbehör som data | **JA** | JSON och kod skrivna och provkörda av Arkitekten (utan Build), bifogade som `git apply`-patch; Build kopplar bara in och kontrollerar. 5B och 5B-1 misslyckades för att Build skulle mäta/skriva dem. R1 är mergad |
 | R3A Entiteter + manifest | **NEJ (idag)** | Beror på R2:s dataform (delar ankarnamn) |
 | R3B Reservform | **NEJ (idag)** | Beror på R3A (entitetskategorier) och på Christoffers ja till produktregeln (10.2 punkt 2) |
 | R3C Bulkrutin + första 50 modellerna | **NEJ (idag)** | Beror på R3A; kräver Christoffers ja till vilka paket som hämtas (10.2 punkt 4) |
@@ -149,61 +149,17 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
   2. *Valfri åsidosättning:* fältet `framAxel` (`"+z" | "-z" | "+x" | "-x"`) på modellen i data (R2: `data/fastpunkter.json` → `kroppar.<kropp>.framAxel`; R3A: `data/entiteter.json` → entitetens `framAxel`). Saknas fältet gäller +z. Fältet får finnas bara där mätningen visar att modellen avviker.
   3. *Automatisk mätning i bulkrutinen (R3C):* `scripts/inkorg/kontrollera.mjs` får kontrollen **Framriktning** (13.4): framsidan mäts ur modellen utan handinmatning, i ordning (a) noden `anchor_face` (dess z-komponent i förhållande till modellens mitt), (b) benet `Head` relativt `Body`/`Root` för skinnade modeller, (c) saknas båda: gissa ur bounding box (kroppsaxeln = längsta horisontella axeln; huvudänden = änden där de högsta hörnen finns). Avviker det uppmätta från det som gäller (standard +z eller satt `framAxel`) **skriver skriptet ut ett förslag på `framAxel` och flaggar raden**, och kräver ingen handinmatning för modeller som redan stämmer. Gissningar märks `(gissad)`.
 - **Bevisning:** (a) `framriktning.test.ts` (ren funktion `framVinkel(framAxel)` och `malYaw(...)`: alla fyra axlar ger framsida mot +z; stilla → mot kameran, rörelse → mot gångriktningen); (b) i R3C: `kontrollera.test.mjs` med en falsk modell vänd åt −z ska ge flaggan och förslaget `"framAxel": "-z"`; (c) i webbläsaren, mätbart utan ögonmått: ny testkrok `window.__troll.riktningar()` ger per djur vinkeln mellan modellens framsida i världen och vektorn mot kameran (stilla djur ≤ 20°); (d) bilder 375×812, en per djurtyp (9 GLB-djur + 5 procedurella = 14), där alla är vända mot kameran: tas med ett skript som ett kontaktark per sju djur (två ark; skälet är regeln i `projektregler.md` om högst åtta numrerade bilder per runda, de 14 enskilda filerna ligger kvar som underlag utanför repot).
-- **Grindpunkt:** *data/standard och mätning* ingår i R2 (fältet `framAxel` är valfritt i `fastpunkter.json` och läses av fästsystemet så att tillbehören följer samma riktning) och *systemet som vänder djuret ingår i R3A* (`djurPlats` i `angen3d.tsx` läser standard/`framAxel`; R4A flyttar den sedan oförändrad). Den enda rad som kan göras i förväg utan att vänta på R3A är att ta bort `kenney`-listans `Math.PI`: det är en ensidig, kontrollerbar rättning (bevis: bilden ovan före/efter) och föreslås som del av R2 om Christoffer vill ha effekten tidigt; annars R3A.
+- **Grindpunkt:** *R2 tar bort `Math.PI`-listan och speglar tillbehörsankarna* (de nio GLB-djuren har framsidan +z, inget `framAxel` behövs i datan; bevis: ritningen R2 avsnitt 1 och 6, bilden ovan före, kontaktarken efter). *R3A* lägger den allmänna riktningsregeln i `djurPlats` (stilla → mot kameran, rörelse → gångriktning, valfritt `framAxel`), medan R3C mäter framriktningen för nya modeller.
 - **Kamerakoppling:** riktningen "mot kameran" läses ur kameran (R4B: `data/kamera.json`, `yaw`), inte hårdkodat +z, så att den följer den fasta Hay Day-vinkeln.
 
-### R2 – Tillbehör som data + ett generellt fästsystem (ersätter ca 450 rader per-sak-kod)
-- **Mål:** ett nytt tillbehör = en rad i `data/tillbehor.json` (+ ordrad i `ord.json` + glTF vid behov). Placering/skala/riktning kommer ur data per djur, aldrig ur `kropp ===`. De fem kända felen (5A) rättas genom att ändra *siffror i JSON*, och det är rundans bevis.
-- **Filer:** NYA `data/tillbehor.json`, `data/fastpunkter.json`, `src/spel/tillbehorData.ts` (typer, laddning, `kontrolleraTillbehor()`; **ingen three-import** så det går att testa med `node --experimental-strip-types`), `src/spel/tillbehorData.test.ts`; ÄNDRAS `src/spel/tillbehorFaste.ts` (faestTillbehor blir generisk), `src/spel/gltfDjur.tsx` (`fastAnkare`, r.184), `package.json` (lägg testfilen i `test:product` och `test`), `src/spel/djurmesh.ts` (ta bort r.308–330 krona/horn) och `angen3d.tsx` r.586–588.
-- **Dataform – `data/tillbehor.json`** (ersätter `byggKrona…byggGlas`, `skalaFor`, `platsFor`; samma idé som `kit.json`):
-```json
-{
-  "version": 1,
-  "tillbehor": {
-    "krona": {
-      "ankare": "anchor_head",
-      "delar": [
-        { "form": "cyl",  "pos": [0, 0, 0],    "skala": [1, 0.6, 1], "farg": "$tillbehor", "kant": true },
-        { "form": "kon",  "pos": [0.2, 0.3, 0], "skala": [0.5, 1, 0.5], "farg": "$tillbehor" }
-      ],
-      "modell": null,
-      "standardfarg": "#F2B632",
-      "skala": { "mot": "huvudbredd", "faktor": 1.6, "min": 0.28, "max_hojd_andel": 0.55 },
-      "framat": 0.0,
-      "lyft": 0.0,
-      "vrid": "fram"
-    },
-    "glasögon": { "ankare": "anchor_face", "…": "…" },
-    "mantel":   { "ankare": "anchor_back", "vrid": "bak", "…": "…" }
-  }
-}
-```
-`form` är en av `cyl|kon|ring|sack|box|torus|kil` (primitiverna som redan finns i `GEO`, r.33–44; `mantel` blir `kil` med parametrar). `modell` (sökväg till glTF i `public/models/tillbehor/`) ersätter `delar` när en riktig modell finns (R3). `skala.mot` ∈ `huvudbredd|kroppsbredd|hojd`. Färg: `$tillbehor` = färgen från `TillbehorSpec.farg` (idag ignoreras den i GLB-vägen, enligt ritning-tillbehor.md; testa).
-- **Dataform – `data/fastpunkter.json`** (ersätter `PROC_ANKARE`, `glbRygg`, `procRygg`, specialgrenarna i `ankareFor` och alla `kropp ===` i `skalaFor/platsFor/vandRygg`):
-```json
-{
-  "version": 1,
-  "kroppar": {
-    "katt": {
-      "ankare": {
-        "anchor_head": [0, 0.92, -0.10], "anchor_brow": [0, 0.78, -0.40],
-        "anchor_face": [0, 0.62, -0.55], "anchor_neck": [0, 0.5, -0.30],
-        "anchor_back": [0, 0.55, 0.20],  "anchor_ear_l": [-0.2, 0.9, -0.2]
-      },
-      "huvudbredd": 0.45,
-      "overstyr": { "mantel": { "skala": 0.9, "lyft": 0.05 }, "horn": { "framat": 0.1 } }
-    }
-  }
-}
-```
-(Siffrorna ovan är exempel på formen; riktiga värden transkriberas av Arkitekten ur `tillbehorFaste.ts` r.120–324 och `ankareFor`:s fraktioner innan rundan startar; de är normaliserade mot djurets `MAL_HOJD`.) Koordinater i djurets lokala rum, normaliserat; `fram` ∈ `+z|-z` ersätter `vandRygg`/`framRiktning`.
-- **Funktion (ny kärna):** `faestTillbehor(rot, kropp, tillbehor[])`: 1) slå upp rad i `TILLBEHOR[t.id]`; 2) hitta ankarpunkt: `rot.getObjectByName(rad.ankare)` om noden finns i GLB, annars `FASTPUNKTER[kropp].ankare[rad.ankare]`; 3) skala = `skala.faktor * <mått>` begränsad av `min`/`max_hojd_andel`, gånger `overstyr[t.id].skala`; 4) rikta med `fram`/`vrid`; 5) bygg ur `delar` eller ladda `modell`; 6) lägg under benet/noden så den följer idle. Allt tillbehör följer samma sju rader kod.
-- **Tas bort/ersätts:** `byggKrona`, `byggHatt`, `byggHalsduk`, `byggRosett`, `byggRyggsack`, `byggMantel`, `byggHorn`, `byggGlas`, `arTrollkarlshatt`, `skalaFor`, `platsFor`, `pannaPlats`, `mantelPlats`, `framRiktning`, `vandRygg`, `PROC_ANKARE`, `STANDARD`, `glbRygg`, `procRygg` (ca 450 av 619 rader). Behåll: `Ankare`-typ, `TOON`, `KONTUR`, `del()`, `toonMat()`, `fastVarld()`.
-- **Bevisning (Doodle):** (a) `tillbehorData.test.ts` – röd före (modulen saknas), grön efter: varje `del.tillbehor` i `ord.json` har en rad; varje rads `ankare` finns för alla 14 kroppar i `fastpunkter.json`; alla vektorer ändliga; inga okända `form`; (b) `scripts/ark-tillbehor.mjs` (Playwright, 375×812, `window.__troll`) tar ett ark per tillbehör med alla 10 kroppar (9 GLB + gris): `01-krona` … `08-mantel` (8 bilder = max); (c) före/efter: de som var bra i 5A får inte ändras; de fem felen (fågel ryggsäck, katt/kanin mantel, katt/häst horn) ska vara rättade **med en JSON-ändring per fel** (visa diff); (d) `rg "kropp ===" src/spel/tillbehorFaste.ts` ger 0 träffar.
-- **Framriktning (åtgärdsmålet ovan):** `data/fastpunkter.json` har valfritt `framAxel` per kropp (utkastets `fram` är ersatt; saknas fältet gäller +z, och inga Kenney-kroppar behöver det). Tillbehörsfästet läser samma fält. Bevis (R2): `tillbehorData.test.ts` kontrollerar att `framAxel`, **om det finns**, är ett av `+z|-z|+x|-x`; Arkitekten mäter framriktningen för drake, häst och groda ur GLB-filerna innan rundan (skinnade, ej uppmätta än) och lägger fältet bara där det avviker.
-- **Storlek:** medium, 25–30 turer, 2–3 USD; JSON-filerna förbereds utanför Build. **Risk:** att riktningen (`fram`/`vrid`) blir fel för skinnade djur (drake/häst) – ge dem `anchor_*` via ben i R3, tills dess `ben`-fältet i `fastpunkter`.
-- **Mått mot grundtanken:** kostnaden för ett nytt tillbehör: **idag ca 9 rundor / 11,9 USD för 8 tillbehör (≈1,5 USD och en runda per tillbehör)** → **efter: en datarad** (bevis: ett nytt testtillbehör, t.ex. `mössa`, läggs till som endast data i en temporär kopia och syns på alla 10 kroppar utan kodändring). Täckning oförändrad (inga nya ord i R2).
-- **Grind: JA, med villkor** (JSON bifogas; R1 mergad helst).
+### R2 – Tillbehör som data + ett generellt fästsystem (ritning och prompt färdiga: `rundor/R2-tillbehor-som-data/`)
+- **Mål:** ett nytt tillbehör = en rad i `data/tillbehor.json` (+ ordrad i `ord.json`), ett nytt djur = en rad i `data/fastpunkter.json`. Placering, skala och riktning ur data, aldrig ur `kropp ===` (0 träffar i `src/spel/tillbehor/`; totalt 141 → 36). De fem kända felen (5A) rättas genom *siffror i JSON* (horn på kanin/katt/hund/fågel/uggla: en `plats`-rad; fågel-ryggsäck och kanin-mantel förbättrade; katt-mantel och häst-horn är kvarstående, se ritningen avsnitt 5).
+- **Filer (Arkitekten har skrivit och provkört allt; Build kör `git apply`, skriver varken kod eller siffror):** `data/tillbehor.json` (8 tillbehör, 100 rader), `data/fastpunkter.json` (15 kroppar, 615 rader, härledd mekaniskt ur `tillbehorFaste.ts` med skript, ingen gissad siffra), `src/spel/tillbehor/{data,ankare,bygg,faest,index}.ts` + `data.test.ts` (ersätter `src/spel/tillbehorFaste.ts`, 619 rader, som tas bort), fem små ändringar i `gltfDjur.tsx`, `angen3d.tsx`, `effekter.tsx`, `package.json`. `data.ts` har ingen three-import. Signaturer och dataformer: ritningen avsnitt 2 (utkastet som stod här, med `fram`, `delar`/`mot: huvudbredd` och `modell: null`, är ersatt av de provkörda formerna).
+- **Framriktning (åtgärdsmålet i avsnitt 8, ändrat av två mätfynd):** alla nio GLB-djur har framsidan på +z (mätt med orörda renderingar mot kameran) – **inget `framAxel` behövs i någon rad**; fältet är fortsatt tillåtet som valfri åsidosättning men finns inte i datan. Kenney-djurens tillbehör satt på svansänden och tog ut ett annat fel (`Math.PI` i `djurPlats`); R2 speglar därför ankarna (fz′ = 1 − fz) **och tar bort `Math.PI`-listan** i samma runda, så att kanin, katt, hund och fisk tittar mot kameran och tillbehören sitter kvar på rätt ställe. R3A:s del av framriktningen blir alltså bara den allmänna riktningsregeln (stilla mot kameran, rörelse mot gångriktning, valfritt `framAxel` ur entiteten) och `window.__troll.riktningar()`.
+- **Bevis:** `data.test.ts` 8/8, `test:product` 83/83, `typecheck:pages` 0, 180-fallsjämförelse gammal/ny kod på de riktiga GLB-filerna (`r2-jamfor.mjs`: 0 oavsiktliga avvikelser, 9 avsiktliga), åtta kontaktark 375×812 (ett per tillbehör, 14 djur) tagna i det byggda spelet med `ark-tillbehor.mjs`.
+- **Mått mot grundtanken:** kostnaden för ett nytt tillbehör: **idag ca 9 rundor / 11,9 USD för 8 tillbehör (≈1,5 USD och en runda per tillbehör)** → **efter: en datarad**. Täckning oförändrad (inga nya ord i R2).
+- **Storlek:** liten–medium för Build, 14–22 turer, 1,0–1,8 USD (gissning; Arkitektens förarbete ligger utanför Build). **Risk:** `git apply` kan falla om `main` rört `gltfDjur.tsx`/`angen3d.tsx` (reservrecept i ritningen avsnitt 4); skinnade drake/häst är mätta med offsets men synas bara i spelet.
+- **Grind: JA** (JSON och kod bifogade, R1 mergad, Build skriver och mäter ingenting; prompten stoppar vid första avvikelse).
 
 ### R3A – Entiteter: en gemensam datamodell för djur, tillbehör, byggnader och föremål (avsnitt 14)
 - **Mål:** `data/entiteter.json` blir sanningen om *vad som finns*; djurlistan (`FIL`, `MAL_HOJD`, `PALETT` i `gltfDjur.tsx`, `ART`/`flygare()`/`simmare()`/`vikt` i `angen3d.tsx`, 141 `kropp ===`-förekomster på 85 rader i 9 filer i `src/spel/` (mätt 2026-10-18: `rg -o "kropp ===" src/spel | wc -l`; tidigare siffra 116 gick inte att återskapa)) flyttas till data. Tillgångsmanifestet `data/tillgangar.json` och `LICENSES.md` införs (avsnitt 9.4, 13).
@@ -211,8 +167,8 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
 - **Dataform:** avsnitt 14.2. **Funktioner:** `entitet(id)`, `entitetFranOrd(ordId)`, `kontrolleraEntiteter()` (varje `modell` finns, varje `licens` finns i manifestet, varje ankare finns, varje `ord`-referens finns i `ord.json`).
 - **Bevisning:** (a) `entiteter.test.ts` röd→grön; (b) `rg -o "kropp ===" src/spel | wc -l` ≤ 10 (idag 141); (c) bilder 375×812, före/efter: `01-nio-djur-vanda-mot-kameran` (riktningen ändras avsiktligt, se åtgärdsmålet), `02-tillbehor-oforandrade` (tillbehörens placering relativt djuret oförändrad; bildjämförelse, inte ögonmått).
 - **Mått mot grundtanken:** inga nya ord; mäter *tid att lägga till en kropp*: nytt djur = en rad + en GLB (bevis: lägg `hund2` som kopia av hund i en temporär kopia, syns utan kodändring). Täckning oförändrad.
-- **Framriktning:** `djurPlats` (`angen3d.tsx`) får det generella systemet ur åtgärdsmålet ovan (standard vänd mot kameran, gångriktning vikt 1, valfri `framAxel` ur entiteten) och `kenney`-listan försvinner; bevis: `framriktning.test.ts`, `window.__troll.riktningar()` ≤ 20° för stilla djur, två kontaktark (14 djurtyper) – bilderna `01-nio-djur-…` ändras här **avsiktligt** (riktning), allt annat (tillbehörens placering relativt huvudet) ska vara oförändrat.
-- **Storlek:** medium–stor, 30–40 turer, 3–4 USD (gissning). **Risk:** 14 kroppar × tillbehör; skinnade drake/häst. **Grind: NEJ idag** (beror på R2).
+- **Framriktning:** `djurPlats` (`angen3d.tsx`) får den allmänna regeln ur åtgärdsmålet ovan (stilla mot kameran, gångriktning vikt 1, valfri `framAxel` ur entiteten); `kenney`-listan är redan borta (R2); bevis: `framriktning.test.ts`, `window.__troll.riktningar()` ≤ 20° för stilla djur, två kontaktark (14 djurtyper) – bilderna `01-nio-djur-…` ändras här **avsiktligt** (riktning), allt annat (tillbehörens placering relativt huvudet) ska vara oförändrat.
+- **Storlek:** medium–stor, 30–40 turer, 3–4 USD (gissning). **Risk:** 14 kroppar × tillbehör; skinnade drake/häst. **Grind: NEJ idag** (beror på R2:s mergade dataform).
 
 ### R3B – Reservform: ordens väg till synlig form (avsnitt 12)
 - **Mål:** inget ord ger "ingenting". Okänt ord → kategori → generisk synlig form (ordkristallen) med ordets text; varje steg i kedjan i data. Ändrar `tolka()` additivt: `Utfall` får `reserv`.

@@ -1,0 +1,20 @@
+<!doctype html><html><body><script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import * as SU from "three/examples/jsm/utils/SkeletonUtils.js";
+import * as old from "/src/spel/_gammal.ts";
+const FIL={kanin:"animal-bunny",katt:"animal-cat",hund:"animal-dog",fisk:"animal-fish","fågel":"animal-chick",uggla:"animal-chick",drake:"drake",groda:"groda","häst":"hast"};
+const MAL={kanin:1,katt:1,hund:1.05,fisk:0.7,"fågel":0.8,uggla:0.8,drake:1.35,groda:0.85,"häst":1.5};
+const L=new GLTFLoader(); const out={modell:{},mesh:{}};
+const v=a=>a.toArray().map(x=>+x.toFixed(6));
+const ser=a=>({huvudTopp:v(a.huvudTopp),ansikte:v(a.ansikte),ogonL:v(a.ogonL),ogonR:v(a.ogonR),mun:v(a.mun),hals:v(a.hals),rygg:v(a.rygg),bredd:+a.bredd.toFixed(6),hojd:+a.hojd.toFixed(6)});
+for(const k of Object.keys(FIL)){
+  const g=await L.loadAsync("/models/"+FIL[k]+".glb"); const c=SU.clone(g.scene); c.updateMatrixWorld(true);
+  const box=new THREE.Box3().setFromObject(c); const h=Math.max(.001,box.max.y-box.min.y); const s=MAL[k]/h; c.scale.setScalar(s); c.position.y=-box.min.y*s; c.updateMatrixWorld(true);
+  const a=old.ankareFor(c,k,s); const body=(()=>{let b=null;c.traverse(o=>{if(o.name==="body")b=o});return b})();
+  const bb=new THREE.Box3().setFromObject(body??c); const rb=new THREE.Box3().setFromObject(c);
+  out.modell[k]={a:ser(a),ben:a.ben?a.ben.name:null,bbox:{min:v(bb.min),max:v(bb.max)},rotbbox:{min:v(rb.min),max:v(rb.max)}};
+}
+for(const k of ["standard","gris","dinosaurie","bäver","katt","kanin","ekorre","hund","fågel","uggla","fisk","haj","groda","drake","häst"]) out.mesh[k]=ser(old.procAnkare(k));
+window.RES=out; window.klar=true;
+</script></body></html>
