@@ -1,0 +1,20 @@
+fore top1000-noun 1000 {"okand":870,"forslag":117,"tillbehor/monster":5,"bygg":4,"djur/sammansatt":4} täckt 13 1.3% ordfrekvensandel 1.1% 
+fore A1A2-noun 1251 {"forslag":130,"okand":1103,"tillbehor/monster":6,"bygg":7,"djur/sammansatt":5} täckt 18 1.4% ordfrekvensandel 0% 
+fore top1000-adj 849 {"synlig":16,"okand":791,"forslag":42} täckt 16 1.9% ordfrekvensandel 21.1% 
+fore A1A2-adj 390 {"okand":357,"synlig":10,"forslag":23} täckt 10 2.6% ordfrekvensandel 0.6% 
+fore top1000-verb 1000 {"okand":740,"forslag":252,"synlig":8} täckt 8 0.8% ordfrekvensandel 0.2% 
+fore A1A2-verb 614 {"okand":434,"forslag":176,"synlig":4} täckt 4 0.7% ordfrekvensandel 0.1% 
+efter top1000-noun 1000 {"okand":858,"forslag":126,"djur/sammansatt":7,"tillbehor/monster":5,"bygg":4} täckt 16 1.6% ordfrekvensandel 1.3% 
+efter A1A2-noun 1251 {"forslag":141,"okand":1089,"djur/sammansatt":8,"tillbehor/monster":6,"bygg":7} täckt 21 1.7% ordfrekvensandel 0% 
+efter top1000-adj 849 {"synlig":16,"okand":789,"forslag":44} täckt 16 1.9% ordfrekvensandel 21.1% 
+efter A1A2-adj 390 {"okand":356,"synlig":10,"forslag":24} täckt 10 2.6% ordfrekvensandel 0.6% 
+efter top1000-verb 1000 {"okand":710,"forslag":282,"synlig":8} täckt 8 0.8% ordfrekvensandel 0.2% 
+efter A1A2-verb 614 {"okand":413,"forslag":197,"synlig":4} täckt 4 0.7% ordfrekvensandel 0.1% 
+== fore
+substantiv 70 {"nej":55,"ja":9,"forslag":6} ja: gris,blomma,regnbåge,tält,rutschkana,gunga,stall,bro,sjö | forslag: får,mus,stol,kanon,skatt,grotta
+adjektiv 30 {"nej":27,"forslag":2,"ja":1} ja: randig | forslag: ledsen,trött
+verb 30 {"forslag":12,"nej":13,"ja":5} ja: springa,hoppa,flyga,simma,lysa | forslag: dansa,gå,skratta,klättra,rida,gråta,ropa,krama,pussa,nysa,prata,tänka
+== efter
+substantiv 70 {"ja":15,"nej":49,"forslag":6} ja: elefant,lejon,gris,björn,räv,blomma,regnbåge,tält,robot,spöke,rutschkana,gunga,stall,bro,sjö | forslag: får,mus,stol,kanon,skatt,grotta
+adjektiv 30 {"nej":27,"forslag":2,"ja":1} ja: randig | forslag: ledsen,trött
+verb 30 {"forslag":12,"nej":13,"ja":5} ja: springa,hoppa,flyga,simma,lysa | forslag: dansa,gå,skratta,klättra,rida,gråta,ropa,krama,pussa,nysa,prata,tänka

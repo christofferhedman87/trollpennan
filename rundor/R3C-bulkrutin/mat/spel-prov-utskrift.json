@@ -1,0 +1,73 @@
+{
+ "bulk_glb_vid_start": 0,
+ "resultat": [
+  {
+   "fras": "en elefant",
+   "forvantad_kropp": "elefant",
+   "kroppar": [
+    "elefant"
+   ],
+   "hamtade": [
+    "/models/bulk/elefant.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "en pingvin",
+   "forvantad_kropp": "pingvin",
+   "kroppar": [
+    "pingvin"
+   ],
+   "hamtade": [
+    "/models/bulk/pingvin.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "en panda med hatt",
+   "forvantad_kropp": "panda",
+   "kroppar": [
+    "panda"
+   ],
+   "hamtade": [
+    "/models/bulk/panda.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "en robot",
+   "forvantad_kropp": "robot",
+   "kroppar": [
+    "robot"
+   ],
+   "hamtade": [
+    "/models/bulk/robot.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "en räv med krona",
+   "forvantad_kropp": "rav",
+   "kroppar": [
+    "rav"
+   ],
+   "hamtade": [
+    "/models/bulk/rav.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "en gul krabba",
+   "forvantad_kropp": "krabba",
+   "kroppar": [
+    "krabba"
+   ],
+   "hamtade": [
+    "/models/bulk/krabba.glb"
+   ],
+   "ok": true
+  }
+ ],
+ "glb_med_fel": [],
+ "sidfel": []
+}

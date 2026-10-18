@@ -1,0 +1,16 @@
+{
+  "name": "trollpennan-modell-verktyg",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Verktyg för scripts/modell-inlagg.mjs (R3C). Egen installation så att spelets npm ci inte drar in sharp/gltf-transform. Installera med: npm ci --prefix scripts/modell-verktyg",
+  "type": "commonjs",
+  "engines": { "node": ">=22" },
+  "dependencies": {
+    "@gltf-transform/cli": "4.5.1",
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
+    "meshoptimizer": "1.3.0",
+    "sharp": "0.35.5"
+  }
+}

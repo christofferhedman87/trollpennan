@@ -1,0 +1,50 @@
+# R3C, första omgången: 43 breda modeller över kategorierna (ett ord/en modell, bredd före varianter).
+# Format: paket/filnamn (ur _prioriterad-batch-1). Rader som börjar med # hoppas över.
+# djur (15)
+gobkit-cc0-djur-och-natur/elephant.glb
+gobkit-cc0-djur-och-natur/lion.glb
+gobkit-cc0-djur-och-natur/zebra.glb
+gobkit-cc0-djur-och-natur/penguin.glb
+gobkit-cc0-djur-och-natur/fox.glb
+gobkit-cc0-djur-och-natur/hippo.glb
+gobkit-cc0-djur-och-natur/duck.glb
+gobkit-cc0-djur-och-natur/eagle.glb
+gobkit-cc0-djur-och-natur/dino-trex.glb
+kenney-cube-pets/animal-giraffe.glb
+kenney-cube-pets/animal-panda.glb
+kenney-cube-pets/animal-crab.glb
+polypizza-cc0/dolphin-dolphin-3lzfgi.glb
+polypizza-cc0/snake-snake-x9x0vi.glb
+quaternius-cute-fish/clownfish.glb
+# sagoväsen och människor (5)
+kenney-graveyard-kit/character-ghost.glb
+polypizza-cc0/robot-animated-robot-qcm7qe.glb
+quaternius-cute-monsters/yeti.glb
+kenney-space-kit/astronauta.glb
+polypizza-cc0/farmer-farmer-7pn3r6.glb
+# fordon (4)
+kenney-car-kit/sedan.glb
+kenney-car-kit/firetruck.glb
+kenney-car-kit/tractor.glb
+polypizza-cc0/boat-sail-boat-bgszxw.glb
+# hus, stall, hagar (9)
+kaykit-city-builder-bits/building-c.glb
+kenney-city-kit-suburban/building-type-a.glb
+quaternius-farm-buildings/barn.glb
+quaternius-farm-buildings/windmill.glb
+kenney-pirate-kit/tower-complete-large.glb
+kaykit-holiday-bits/gingerbread-house.glb
+kenney-fantasy-town-kit/fence.glb
+kenney-fantasy-town-kit/fence-gate.glb
+quaternius-farm-buildings/fence.glb
+# växter, mat, föremål, möbel, landskap, väder (10)
+gobkit-cc0-djur-och-natur/treemed001.glb
+kenney-nature-kit/flower-purplea.glb
+kenney-food-kit/pizza.glb
+kenney-food-kit/apple.glb
+kenney-food-kit/cake-birthday.glb
+kenney-mini-dungeon/chest.glb
+kaykit-holiday-bits/basketball.glb
+kenney-furniture-kit/chair.glb
+gobkit-cc0-djur-och-natur/rock001.glb
+gobkit-cc0-djur-och-natur/cloud001.glb
