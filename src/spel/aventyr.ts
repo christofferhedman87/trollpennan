@@ -1,9 +1,11 @@
+import npcJson from "../../data/npc.json" with { type: "json" };
 import omradenJson from "../../data/omraden.json" with { type: "json" };
 import skatterJson from "../../data/skatter.json" with { type: "json" };
 import skyltarJson from "../../data/skyltar.json" with { type: "json" };
 import texterJson from "../../data/texter-aventyr.json" with { type: "json" };
 import uppdragJson from "../../data/uppdrag.json" with { type: "json" };
 import vildaJson from "../../data/vilda-djur.json" with { type: "json" };
+import { fyll } from "./fyll.ts";
 import type { GavaTolk } from "../tolk/gavotolk.ts";
 import type { TillbehorSpec, Varelse } from "../tolk/typer.ts";
 import type { Sparad } from "./brygga.ts";
@@ -50,13 +52,20 @@ export type Vild = {
   sallsynthet: string;
 };
 
-type Uppdrag = {
+export type Uppdrag = {
   id: string;
   omrade: string;
+  /** Vem som ger uppdraget (nyckel i npc.json). Saknas = den ursprungliga djurtexten gäller. */
+  givare?: string;
   typ: string;
   text: string;
   mal: { tryck?: string; gomd_vid?: string; van?: string; skicka_tagg?: string; plats?: string };
   klart: string;
+  /** Utkast i givarens röst (R6A). Visas i spelet när givare är satt; text/klart är de ursprungliga texterna. */
+  text_bengtsson?: string;
+  klart_bengtsson?: string;
+  /** false = Copilot har inte granskat texten. */
+  granskad?: boolean;
   stjarnor: number;
   skatt: string | null;
 };
@@ -98,9 +107,12 @@ export const UPP = uppdragJson as {
     inga: string;
     flik_pagaende: string;
     flik_klara: string;
+    nytt_bengtsson: string;
   };
   uppdrag: Uppdrag[];
 };
+
+export const NPC = npcJson.npc as Record<string, { namn: string; roll: string; ton: string; entitet: string | null; granskad: boolean }>;
 
 export const SKATTER = skatterJson as {
   texter: { fick: string };
@@ -180,4 +192,20 @@ export function uppdragFor(id: string): Uppdrag | undefined {
 export function omradeArKlart(omrade: string, status: Record<string, "pagar" | "klar">): boolean {
   const lista = UPP.uppdrag.filter((u) => u.omrade === omrade);
   return lista.length > 0 && lista.every((u) => status[u.id] === "klar");
+}
+
+/** Texten som visas för uppdraget: givarens (Bengtsson) när den finns, annars den ursprungliga. */
+export function uppdragText(u: Uppdrag): string {
+  return u.givare && u.text_bengtsson ? u.text_bengtsson : u.text;
+}
+
+export function uppdragKlart(u: Uppdrag): string {
+  return u.givare && u.klart_bengtsson ? u.klart_bengtsson : u.klart;
+}
+
+/** Raden "Nytt uppdrag …" med givarens namn när uppdraget har en givare. */
+export function nyttUppdragRad(u: Uppdrag): string {
+  const namn = u.givare ? NPC[u.givare]?.namn : undefined;
+  const mall = namn ? UPP.texter.nytt_bengtsson : UPP.texter.nytt;
+  return fyll(mall, { namn: namn ?? "", text: uppdragText(u) });
 }

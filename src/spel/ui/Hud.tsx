@@ -77,6 +77,7 @@ type MenyPanelProps = {
   varld: Varld;
   valjVarld: (id: "ang" | "gard" | "byggbok") => void;
   lasMeny: () => void;
+  oppnaUppdrag: () => void;
   setBokOpp: Dispatch<SetStateAction<boolean>>;
   oppnaKarta: () => void;
   setIntroNy: Dispatch<SetStateAction<number>>;
@@ -85,7 +86,7 @@ type MenyPanelProps = {
   borjaOm: () => void;
 };
 
-export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare, panel, varld, valjVarld, lasMeny, setBokOpp, oppnaKarta, setIntroNy, setIntro, menySaker, borjaOm }: MenyPanelProps) {
+export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare, panel, varld, valjVarld, lasMeny, oppnaUppdrag, setBokOpp, oppnaKarta, setIntroNy, setIntro, menySaker, borjaOm }: MenyPanelProps) {
   return (
 <>
         {menyOpp ? (
@@ -121,9 +122,8 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
             <button type="button" data-testid="ut-pa-aventyr" onClick={() => { setMenyOpp(false); setBokOpp(false); oppnaKarta(); }}>
               <span>{OMR.karta.knapp}</span>
             </button>
-            <button type="button" className="last" data-testid="uppdrag-knapp" data-last="ja" onClick={lasMeny}>
+            <button type="button" data-testid="uppdrag-knapp" onClick={oppnaUppdrag}>
               <span>{UPP.texter.rubrik}</span>
-              <Lock aria-hidden />
             </button>
             <button type="button" className="last" data-testid="ordbok" data-last="ja" onClick={lasMeny}>
               <span>Bok</span>

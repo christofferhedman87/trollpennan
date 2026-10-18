@@ -15,7 +15,9 @@ import {
   omradeArKlart,
   omradeMed,
   passarDjur,
+  nyttUppdragRad,
   uppdragFor,
+  uppdragKlart,
   varelseAv,
   vildMed,
   type Omrade,
@@ -75,7 +77,7 @@ export function klarUppdrag(id: string): FlodeSvar {
   if (!u || useMinne.getState().uppdrag[u.id] === "klar") return { texter: [], stj: 0 };
   if (!useMinne.getState().uppdrag[u.id]) useMinne.getState().sattUppdrag(u.id, "pagar");
   useMinne.getState().sattUppdrag(u.id, "klar");
-  const texter = [UPP.texter.klart, u.klart];
+  const texter = [UPP.texter.klart, uppdragKlart(u)];
   if (u.skatt) {
     const namn = SKATTER.skatter.find((s) => s.id === u.skatt)?.namn ?? u.skatt;
     useMinne.getState().laggSkatt(skattBygge(u.skatt));
@@ -96,7 +98,7 @@ export function startaForPlats(plats: string): string[] {
     if (SKYLTAR.skyltar.some((s) => s.startar === u.id)) continue;
     if (useMinne.getState().uppdrag[u.id]) continue;
     useMinne.getState().sattUppdrag(u.id, "pagar");
-    texter.push(fyll(UPP.texter.nytt, { text: u.text }));
+    texter.push(nyttUppdragRad(u));
   }
   return texter;
 }
@@ -107,7 +109,7 @@ export function lasSkylt(id: string): { text: string; nytt: string | null } {
   if (!s.startar || useMinne.getState().uppdrag[s.startar]) return { text: s.text, nytt: null };
   useMinne.getState().sattUppdrag(s.startar, "pagar");
   const u = uppdragFor(s.startar);
-  return { text: s.text, nytt: u ? fyll(UPP.texter.nytt, { text: u.text }) : null };
+  return { text: s.text, nytt: u ? nyttUppdragRad(u) : null };
 }
 
 export type HinderSvar =
