@@ -30,7 +30,7 @@ const MARK_GEO = (() => {
   return g;
 })();
 
-export function SvajMark({ color, natt }: { color: string; natt: number }) {
+export function SvajMark({ color, natt, utanTextur = false }: { color: string; natt: number; utanTextur?: boolean }) {
   const uTime = useMemo(() => ({ value: 0 }), []);
   const mat = useRef<THREE.MeshToonMaterial>(null);
   const ljus = useRef(new THREE.Color("#ffffff"));
@@ -72,7 +72,7 @@ export function SvajMark({ color, natt }: { color: string; natt: number }) {
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
       <primitive object={MARK_GEO} attach="geometry" />
-      <meshToonMaterial ref={mat} color={color} vertexColors map={MARK_TEX} gradientMap={TOON_MAP} onBeforeCompile={kompilera} />
+      <meshToonMaterial ref={mat} color={color} vertexColors map={utanTextur ? null : MARK_TEX} gradientMap={TOON_MAP} onBeforeCompile={kompilera} />
     </mesh>
   );
 }

@@ -1,6 +1,6 @@
 {
  "version": 1,
- "_om": "B1.3a: platserna som data. En plats = en rad. x,y 0–1 i platsens yta (x vänster→höger, y bak→fram) → världen via yta. miljo = överlagring på data/miljo.json. B1.3b: Skogen/Sjön/Grottan är inlagda ur rundor/BLOCK-platser/data-utkast/platser.json (miljö, zoner, startobjekt) så att scenen kan byta; datapaketen (kor-plats.sh) ersätter raden per id.",
+ "_om": "B1.3a/B1.3b/B1.4: platserna som data. B1.3b-fix: skalor och startobjekt justerade (inga jätteföremål i förgrunden), större vattenytor. x,y 0–1 → världen via yta. miljo = överlagring på data/miljo.json.",
  "yta": {
   "x": [
    -2.4,
@@ -90,10 +90,10 @@
      "id": "vattenyta",
      "typ": "vattenyta",
      "rekt": [
-      0.43,
-      0.45,
-      0.6,
-      0.72
+      0.38,
+      0.42,
+      0.68,
+      0.78
      ]
     },
     {
@@ -112,84 +112,112 @@
      "ord": "träd",
      "x": 0.12,
      "y": 0.36,
-     "skala": 2.4,
+     "skala": 1.15,
      "zon": "mark"
     },
     {
      "ord": "gran",
      "x": 0.86,
      "y": 0.3,
-     "skala": 2.6,
+     "skala": 1.25,
      "zon": "mark"
     },
     {
      "ord": "buske",
      "x": 0.78,
      "y": 0.65,
-     "skala": 1.0,
+     "skala": 0.7,
      "zon": "mark"
     },
     {
      "ord": "stubbe",
      "x": 0.22,
-     "y": 0.78,
-     "skala": 0.45,
+     "y": 0.66,
+     "skala": 0.35,
      "zon": "mark"
     },
     {
      "ord": "stock",
      "x": 0.14,
      "y": 0.68,
-     "skala": 0.6,
+     "skala": 0.4,
      "zon": "mark"
     },
     {
      "ord": "sten",
      "x": 0.69,
-     "y": 0.78,
-     "skala": 0.6,
+     "y": 0.66,
+     "skala": 0.4,
      "zon": "mark"
     },
     {
      "ord": "svamp",
      "x": 0.34,
-     "y": 0.72,
-     "skala": 0.35,
+     "y": 0.66,
+     "skala": 0.28,
      "zon": "mark"
     },
     {
      "ord": "blomma",
      "x": 0.62,
-     "y": 0.75,
-     "skala": 0.35,
+     "y": 0.66,
+     "skala": 0.28,
      "zon": "mark"
     },
     {
      "ord": "kulle",
      "x": 0.5,
      "y": 0.34,
-     "skala": 2.0,
+     "skala": 1.1,
      "zon": "mark"
     },
     {
      "ord": "bäck",
      "x": 0.52,
      "y": 0.57,
-     "skala": 1.0,
+     "skala": 0.7,
      "zon": "vattenyta"
     },
     {
      "ord": "stig",
      "x": 0.47,
-     "y": 0.77,
-     "skala": 1.0,
+     "y": 0.66,
+     "skala": 0.7,
      "zon": "mark"
     },
     {
      "ord": "vägskylt",
      "x": 0.89,
-     "y": 0.75,
-     "skala": 1.0,
+     "y": 0.66,
+     "skala": 0.55,
+     "zon": "mark"
+    },
+    {
+     "ord": "träd",
+     "x": 0.28,
+     "y": 0.32,
+     "skala": 1.05,
+     "zon": "mark"
+    },
+    {
+     "ord": "gran",
+     "x": 0.62,
+     "y": 0.28,
+     "skala": 1.15,
+     "zon": "mark"
+    },
+    {
+     "ord": "buske",
+     "x": 0.4,
+     "y": 0.55,
+     "skala": 0.65,
+     "zon": "mark"
+    },
+    {
+     "ord": "sten",
+     "x": 0.55,
+     "y": 0.62,
+     "skala": 0.35,
      "zon": "mark"
     }
    ],
@@ -319,10 +347,10 @@
      "id": "vattenyta",
      "typ": "vattenyta",
      "rekt": [
-      0.4,
-      0.3,
-      1,
-      0.9
+      0.32,
+      0.28,
+      0.98,
+      0.92
      ]
     },
     {
@@ -348,88 +376,102 @@
    ],
    "start": [
     {
-     "ord": "strand",
-     "x": 0.23,
-     "y": 0.74,
-     "skala": 1.0,
-     "zon": "strand"
-    },
-    {
      "ord": "brygga",
      "x": 0.46,
      "y": 0.54,
-     "skala": 1.2,
+     "skala": 0.45,
      "zon": "vattenyta"
     },
     {
      "ord": "sten",
      "x": 0.22,
      "y": 0.66,
-     "skala": 0.6,
+     "skala": 0.35,
      "zon": "strand"
     },
     {
      "ord": "stock",
      "x": 0.13,
-     "y": 0.78,
-     "skala": 0.6,
+     "y": 0.6799999999999999,
+     "skala": 0.4,
      "zon": "strand"
     },
     {
      "ord": "träd",
      "x": 0.08,
      "y": 0.34,
-     "skala": 2.4,
+     "skala": 1.1,
      "zon": "strand"
     },
     {
      "ord": "buske",
      "x": 0.15,
      "y": 0.57,
-     "skala": 1.0,
+     "skala": 0.65,
      "zon": "strand"
     },
     {
      "ord": "blomma",
      "x": 0.29,
-     "y": 0.77,
-     "skala": 0.35,
+     "y": 0.6799999999999999,
+     "skala": 0.28,
      "zon": "strand"
     },
     {
      "ord": "näckros",
      "x": 0.71,
      "y": 0.52,
-     "skala": 0.4,
+     "skala": 0.35,
      "zon": "vattenyta"
     },
     {
      "ord": "moln",
      "x": 0.75,
      "y": 0.12,
-     "skala": 1.5,
+     "skala": 1.0,
      "zon": "luft"
     },
     {
-     "ord": "vassrugge",
-     "x": 0.83,
-     "y": 0.57,
-     "skala": 1.0,
+     "ord": "sten",
+     "x": 0.18,
+     "y": 0.62,
+     "skala": 0.3,
+     "zon": "strand"
+    },
+    {
+     "ord": "sten",
+     "x": 0.32,
+     "y": 0.7,
+     "skala": 0.28,
+     "zon": "strand"
+    },
+    {
+     "ord": "buske",
+     "x": 0.1,
+     "y": 0.5,
+     "skala": 0.55,
+     "zon": "strand"
+    },
+    {
+     "ord": "blomma",
+     "x": 0.25,
+     "y": 0.68,
+     "skala": 0.25,
+     "zon": "strand"
+    },
+    {
+     "ord": "näckros",
+     "x": 0.55,
+     "y": 0.55,
+     "skala": 0.32,
      "zon": "vattenyta"
     },
     {
-     "ord": "sandbotten",
-     "x": 0.64,
-     "y": 0.76,
-     "skala": 1.0,
-     "zon": "undervatten"
-    },
-    {
-     "ord": "stig",
-     "x": 0.35,
-     "y": 0.88,
-     "skala": 1.0,
-     "zon": "strand"
+     "ord": "näckros",
+     "x": 0.78,
+     "y": 0.48,
+     "skala": 0.3,
+     "zon": "vattenyta"
     }
    ],
    "ljud": [
@@ -558,10 +600,10 @@
      "id": "vattenyta",
      "typ": "vattenyta",
      "rekt": [
-      0.31,
-      0.65,
-      0.47,
-      0.78
+      0.28,
+      0.62,
+      0.55,
+      0.82
      ]
     },
     {
@@ -590,64 +632,78 @@
      "ord": "grotta",
      "x": 0.5,
      "y": 0.42,
-     "skala": 3.0,
+     "skala": 1.35,
      "zon": "mark"
     },
     {
      "ord": "klippa",
      "x": 0.12,
      "y": 0.52,
-     "skala": 2.0,
+     "skala": 0.95,
      "zon": "mark"
     },
     {
      "ord": "sten",
      "x": 0.73,
-     "y": 0.75,
-     "skala": 0.6,
+     "y": 0.6799999999999999,
+     "skala": 0.35,
      "zon": "mark"
     },
     {
      "ord": "kristall",
      "x": 0.79,
      "y": 0.49,
-     "skala": 0.8,
+     "skala": 0.55,
      "zon": "mark"
     },
     {
      "ord": "svamp",
      "x": 0.24,
      "y": 0.69,
-     "skala": 0.35,
+     "skala": 0.28,
      "zon": "mark"
-    },
-    {
-     "ord": "sandhög",
-     "x": 0.58,
-     "y": 0.76,
-     "skala": 1.0,
-     "zon": "mark"
-    },
-    {
-     "ord": "vattenpöl",
-     "x": 0.39,
-     "y": 0.72,
-     "skala": 1.0,
-     "zon": "vattenyta"
     },
     {
      "ord": "droppsten",
      "x": 0.3,
      "y": 0.24,
-     "skala": 0.8,
+     "skala": 0.55,
      "zon": "tak"
     },
     {
-     "ord": "stig",
-     "x": 0.49,
-     "y": 0.88,
-     "skala": 1.0,
+     "ord": "klippa",
+     "x": 0.82,
+     "y": 0.4,
+     "skala": 0.9,
      "zon": "mark"
+    },
+    {
+     "ord": "sten",
+     "x": 0.4,
+     "y": 0.65,
+     "skala": 0.3,
+     "zon": "mark"
+    },
+    {
+     "ord": "kristall",
+     "x": 0.22,
+     "y": 0.45,
+     "skala": 0.45,
+     "zon": "mark"
+    },
+    {
+     "ord": "svamp",
+     "x": 0.6,
+     "y": 0.7,
+     "skala": 0.25,
+     "zon": "mark"
+    },
+    {
+     "ord": "droppsten",
+     "x": 0.55,
+     "y": 0.2,
+     "skala": 0.5,
+     "zon": "tak"
     }
    ],
    "ljud": [
