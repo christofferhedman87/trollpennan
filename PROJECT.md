@@ -106,7 +106,7 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 
 ## 8. Färdplan: rundor i ordning (följer grundtanken)
 
-**NÄSTA RUNDOR (2026-10-19): `rundor/BLOCK-platser/PLAN.md`.** B0 (Copilots 40 ängsuppdrag + 49 gåtor, skript, körklar) → B1 världsdelar + resan i R3F (B1.1 = R4A dela `angen3d.tsx`, B1.2 motorn per plats, B1.3a/b platser som data + scen, B1.4 resan; Build) → B2 Skogen, B3 Sjön, B4 Grottan (datapaket `kor-plats.sh`, ingen Build; B4.1 ljuskällor Build) → B5 modeller (skript, parallellt) → B6 kontroll, buggfix, Phaser-äventyret bort. Ersätter R4A och R6B nedan; R4B, R5, R7 kvar efter blocken. Copilots data: `rundor/BLOCK-platser/data-utkast/` + `KONTROLL.md`.
+**NÄSTA RUNDOR (2026-10-19): `rundor/BLOCK-platser/PLAN.md`.** B0 klar → **B1** världsdelar + resan (B1.1–B1.4, Build) → **R9G** gåta/uppdrag-UX + stall i menyn (`rundor/R9G-ux-stall/`, Build) → **R8-2** grafiklyft → **B2** Skogen, **B3** Sjön, **B4** Grottan (datapaket; B4.1 ljuskällor Build) → B5 modeller → B6 kontroll. Därefter TTS (gratis svensk röst). Ersätter R4A/R6B; R4B, R5, R7 kvar efter blocken. Copilots data: `rundor/BLOCK-platser/data-utkast/`.
 Alla rundor: Grok Build CLI, `--prompt-file`, gren per runda (`build/runda-N`), loggfil, commit efter varje delmål, `RUNDA<N>.md` först. Ingen mätning/utforskning i Build; Arkitekten lägger siffror och filrader i prompten. Kostnadsuppskattningar är min gissning utifrån `rounds.tsv` (low/medium, 11–30 turer = 0,5–3 USD), inte mätta.
 
 **Ordning och varför:** R1 delar `Spel.tsx` (annars krockar allt). R2 gör tillbehören till data (stoppar 10-rundors-läckan). **R3 är rundan som gör grundtanken sann: ordens väg till synlig form** – entitetsmodell, reservform (okänt ord blir ändå något synligt), bulkrutin för modeller. **Ordning ändrad 2026-10-18 (Christoffer): Doktor Bengtsson (uppdragsmotorn, tidigare R6) kommer direkt efter content-motorn (R3C), före byggnader, kamera och Phaser-borttagning.** Ordningen är nu: R3A → R3B → R3C → **R6A (Bengtsson, förd fram; R6A-1 och R6A-2 körda, R6A-3 djuren slutar ge uppdrag + guidande val väntar, R6A-4 de 24 utkasten väntar på Copilot), R3D (andra modellomgången, körklar)** → R4A (dela `angen3d.tsx`) → R4B (kamera) → R5 (byggnader) → R6B (platserna som R3F-scener) → R7 (Phaser bort). Rundornas namn behålls så att ritningar och länkar inte går sönder. Före allt: **R0 publicera `main`** (Christoffers ja, avsnitt 10.2), annars går inget att verifiera spelat.
@@ -215,7 +215,7 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
 - **R6A-1 (körklar, mycket liten): givaren byts för de 10 befintliga uppdragen.** Samma mål och regler (data), bara givare + text: `data/uppdrag.json` får `givare: "bengtsson"`, `text_bengtsson`, `klart_bengtsson`, `granskad: false` (mina utkast; Copilots originaltexter ligger kvar som `text`/`klart`), ny `data/npc.json`. Patch (`ref/r6a-1.patch`, 6 filer + test): hjälparna `uppdragText`/`uppdragKlart`/`nyttUppdragRad`, Uppdragsboken visar "Doktor Bengtsson: …", och menyvalet "Uppdragsboken" är olåst (enda ingången). Phaser rörs inte. **Mått:** uppdrag med Bengtsson som givare 0 → 10 av 10; uppdrag som går att nå i Uppdragsboken 0 → 10; `test:product` 92 → 97. **Storlek:** 6–9 turer, ca 0,3–0,6 USD. **Grind: JA.**
 - **R6A-2 (körklar, liten): klicka på Bengtsson (ritning och prompt: `rundor/R6A-2-klicka-bengtsson/`).** Christoffer ville att man klickar på Bengtsson för att få uppdraget, då öppnas Skapa-menyn och man löser det; han hittade också färdiga bilder (OneDrive `Troll/Bengtsson`, 16 PNG). **Bilderna:** hämtade, frilagda, WebP, 595 KB under `public/npc/` (Bengtsson åtta miner, Syntaxviruset fem, biljett/sjö/solros), beskrivna i `data/npc.json` (`bilder`, `miner`, `reserverade`); egna bilder, källa i `CREDITS.md`; flödet `mat/npc-bild.py`. **Designen:** Bengtsson är en 2D-bild över ängen (ingen 3D-modell, ingen Phaser-ändring); vilken mine som visas styrs av regler i `data/npc.json` (läge → bild: pågår = tänkande, klarat = glad, fel svar = automaten, bara äventyr kvar = karta, allt klart = solbränd, annars framsida), ingen kod per mine. Klicket startar ett **skriv-uppdrag** (nytt: `data/bengtsson.json`, tre utkast, ett med Christoffers egen formulering "din kanin fryser") och öppnar Pennans bok med uppdraget överst; efter skapandet jämför en ren motor (`uppdragsmotor.ts`) det barnet skrev med `krav.ord` (böjning och sammansättning räknas, ägg räknas). Skapandet sker alltid; fel svar ger ett skämt, inget straff. Uppdragsboken är kvar som lista. **Mått:** `test:product` 97 → 103; Spel.tsx 1794 → 1809 av 1850; provkörning i byggd sida exit 0. **Storlek:** 10–14 turer, ca 0,4–0,8 USD. **Grind: JA.**
 - **R6A-3 (klar att köra, Christoffer 2026-10-18):** (1) bara Bengtsson ger uppdrag: lappar (`data/skyltar.json`: `givare`, `text_bengtsson`) och önskebubblan (`data/firande.json`: `fran_bengtsson`-mallar) pekar på honom via data, Phaser rörs inte; (2) logiska förslag per uppdrag i `data/bengtsson.json` `val`, alla med modell (bevisskript), saknade modeller i `modellbehov.tsv`; (3) **R6A-3B** tangentbord ur `data/tangentbord.json`. Se `rundor/R6A-3-bara-bengtsson/RITNING.md`. **R6A-4:** de 24 utkasten i `/workspace/trollpennan-nulage/bengtsson-uppdrag.md`, väntar på Copilot och tonen (design i `rundor/R6A-bengtsson/RITNING.md` avsnitt 5). **Grind: GO.**
-- **R8 Grafik (ersätter 'Snyggare grafik'):** appen 'långt sämre än Minecraft'. Största bovarna: platt mark utan textur, hårt horisontband (dis och himmel olika färg), platt ljus utan färggrad, vit isbjörn (palett-bytet träffar inga pixlar på färgatlas-modeller). R8-1 löser mark, ljus, dis, färggrad, vinjett och färgrundan via `data/miljo.json` och ett generellt `karnfarg()`; R8-2 (väntar) tar horisont, träd, skuggor, kontur, vatten, FPS-vakt. Se `rundor/R8-grafik/RITNING.md`. **Grind: R8-1 GO, R8-2 NEJ.**
+- **R8 Grafik (ersätter 'Snyggare grafik'):** appen 'långt sämre än Minecraft'. Största bovarna: platt mark utan textur, hårt horisontband (dis och himmel olika färg), platt ljus utan färggrad, vit isbjörn (palett-bytet träffar inga pixlar på färgatlas-modeller). R8-1 löser mark, ljus, dis, färggrad, vinjett och färgrundan via `data/miljo.json` och ett generellt `karnfarg()`; R8-2 (väntar) tar horisont, träd, skuggor, kontur, vatten, FPS-vakt. Se `rundor/R8-grafik/RITNING.md`. **Grind: R8-1 GO; R8-2 JA efter R9G (före B2).**
 - **Öppet:** Mossa har 24 egna dagliga uppdrag (`data/mossa.json`) på den låsta Gården; de rörs inte i R6A (Christoffer avgör om Bengtsson ersätter dem; `RITNING.md` avsnitt 6).
 - **Kvot:** 25 USD extra men veckokvoten 91 %: R6A-1 är medvetet liten och har stoppregel (commit + rapport senast tur 24 av 30).
 
@@ -682,17 +682,21 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
 ## 19. Öppna fel (uppdaterad 2026-10-19, Arkitekten) – block som tar hand om felet
 | # | Fel | Block |
 |---|-----|-------|
-| 1 | Valfisken och snurran har fel modellfiler (valfisk ser ut som diadem, snurra som spade) – byt filerna | B5 |
+| 1 | Valfisken och snurran har fel modellfiler (valfisk = diadem, snurra = spade); gaffel/släde konstiga | B5 |
 | 2 | Färgord färgar inte föremål ("en röd bil" får bilens egen färg) | B6.2 |
-| 3 | Ett felstavat föremål ger inget "Menade du …?" (reservens `klasser_per_plats` tar bara djur) | B6.1 (data om möjligt), annars B6.2 |
-| 4 | Brandposten och julkransen är svåra att se på 375x812 (skala i entiteter.json) | B5 |
-| 5 | Röd blir orange och grön gulgrön på djur (ljuset på djurmodellerna) | R9C – **pausat av Christoffer** |
-| 6 | 21 fel i `npm run typecheck` (19 dialogIsolering.test.mjs, 2 bokSkrollning.test.mjs) | R9E (0 fel med @ts-nocheck, mergad) → **R9F** riktiga JSDoc-typer; eslint src 4 → 0 fel |
+| 3 | Ett felstavat föremål ger inget "Menade du …?" | B6.1 (data), annars B6.2 |
+| 4 | Brandposten och julkransen svåra att se på 375x812 | B5 |
+| 5 | Röd→orange, grön→gulgrön på djur | R9C – **pausat av Christoffer** |
+| 6 | typecheck/eslint i tester | **R9F** klar (0 fel) |
 | 7 | Kattens mantel sitter fel | B6.2 |
-| 8 | Hästens horn sitter ca 0,2 för högt | B6.2 |
+| 8 | Hästens horn ca 0,2 för högt | B6.2 |
 | 9 | Halsduken på kubdjuren sitter fel | B6.2 |
-| 10 | Bengtsson försvann en gång efter två snabba uppdrag i rad (sågs i R9D-provet, ej återskapat efter omladdning) | B6.1 bevakar, B6.2 om det återkommer |
-| 11 | "Inte riktigt än" under ERROR-automaten (Christoffers beslut) kräver en bildtext i `NpcFigur.tsx`, inte bara data | B1.4 |
-| 12 | Ny färg på ett djur med färg blev "en blå och lila katt" (önskan underkänd); "en hög låg hund"; "ett högt torn" på djuret | **R9F** (patch klar) |
-| 13 | Tackbubblan klipps i vänsterkanten på 375x812 | **R9F** (patch klar) |
-| 14 | `npm run test:reserv` 3 fel redan på main; `eslint .` söker igenom dist-pages/ | B6.1 |
+| 10 | Bengtsson försvann en gång efter två snabba uppdrag | B6.1 bevakar |
+| 11 | "Inte riktigt än" under ERROR-automaten (bildtext) | B1.4 |
+| 12 | Färgbyte / motsatser / "hög låg hund" | **R9F** klar |
+| 13 | Tackbubbla klippt / täcker Guldord-banner | **R9F** + B1.1-fix klar |
+| 14 | `test:reserv` 3 fel; eslint söker dist-pages/ | B6.1 |
+| 15 | Uppdrag och gåta visas samtidigt (opedagogiskt) | **R9G** |
+| 16 | Otydligt var gåtsvar skrivs; streck (K _ _) ser klickbara ut | **R9G** |
+| 17 | Ny gåta byts innan den löses / utan aktivt val | **R9G** |
+| 18 | Saknas sätt att dölja/ta bort djur utan omstart (stall i menyn) | **R9G** |
