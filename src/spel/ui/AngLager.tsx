@@ -110,7 +110,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
               <p>{b.text}</p>
             </div>
           ))}
-          {onskan && !onskaOpp && onskaSyns ? (
+          {onskan && !onskaOpp && onskaSyns && !bubblor.length ? (
             <button
               type="button"
               className={ank.vanster ? "bubbla onska vanster" : "bubbla onska hoger"}
