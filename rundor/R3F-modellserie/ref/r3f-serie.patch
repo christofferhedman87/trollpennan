@@ -1,0 +1,48 @@
+diff --git a/data/inlagg.json b/data/inlagg.json
+index 98b50bb..e420460 100644
+--- a/data/inlagg.json
++++ b/data/inlagg.json
+@@ -57,7 +57,7 @@
+     "bi": 0.35, "kolibri": 0.4, "marulk": 0.6, "fladdermus": 0.5, "ekorre": 0.7, "igelkott": 0.6, "hare": 0.8, "manet": 0.7, "larv": 0.5, "krabba": 0.6, "spindel": 0.5, "näbbdjur": 0.6, "murmeldjur": 0.7,
+     "jätte": 2.4, "cyklop": 1.8, "yeti": 1.6, "golem": 1.8, "drake": 1.6, "spöke": 1.2, "robot": 1.3
+   },
+-  "ett_ord": ["lamm", "får", "bi", "näbbdjur", "murmeldjur", "spöke", "skelett", "troll", "monster", "djur", "tåg", "skepp", "piratskepp", "vikingaskepp", "hus", "träd", "bord", "tält", "staket", "moln", "äpple", "ägg", "päron", "paket", "present", "bad", "lok", "ljus", "kors"],
++  "ett_ord": ["lamm", "får", "bi", "näbbdjur", "murmeldjur", "spöke", "skelett", "troll", "monster", "djur", "tåg", "skepp", "piratskepp", "vikingaskepp", "hus", "träd", "bord", "tält", "staket", "moln", "äpple", "ägg", "päron", "paket", "present", "bad", "lok", "ljus", "kors", "trädmonster", "jättebi"],
+   "plural_er": ["elefant", "giraff", "tiger", "papegoja", "zebra", "robot", "monster", "vampyr", "demon", "taxi", "fordon", "bil"],
+   "ordforandring": {
+     "_om": "Ord som aldrig blir djurord även om manifestet föreslår dem (krockar med vanliga småord).",
+diff --git a/src/spel/entiteter.test.ts b/src/spel/entiteter.test.ts
+index 0cc74ed..0596c66 100644
+--- a/src/spel/entiteter.test.ts
++++ b/src/spel/entiteter.test.ts
+@@ -57,11 +57,11 @@ test("djuren i entiteter.json är exakt de kroppar ord.json kan skapa, i albumet
+   assert.deepEqual([...new Set(ur)].sort(), [...djurIds()].sort());
+   // De 14 första är albumets ordning; djur som bulkrundorna lägger in (inlagd: "R3C", "R3D") kommer efter dem.
+   assert.deepEqual(djurIds().slice(0, 14), ["kanin", "katt", "hund", "drake", "häst", "fågel", "fisk", "groda", "gris", "dinosaurie", "uggla", "ekorre", "bäver", "haj"]);
+-  assert.ok(djurIds().slice(14).every((k) => arBulk(k)), "djur efter de 14 ska vara inlagda av en bulkrunda (R3C eller R3D)");
++  assert.ok(djurIds().slice(14).every((k) => arBulk(k)), "djur efter de 14 ska vara inlagda av en bulkrunda (R3C, R3D eller R3F-M1, M2 …)");
+ });
+ 
+ /** Bulkrundornas rader (data/inlagg.json, scripts/modell-inlagg.mjs): inlagd är rundans namn. */
+-const arBulk = (k: string) => /^R3[CD]$/.test(String(ENTITETER[k]?.inlagd ?? ""));
++const arBulk = (k: string) => /^(R3[CD]|R3F-M\d+)$/.test(String(ENTITETER[k]?.inlagd ?? ""));
+ 
+ test("R3D: andra bulkomgången är inne, bara CC0, och varje modellfil finns", () => {
+   const r3d = Object.keys(ENTITETER).filter((k) => ENTITETER[k]?.inlagd === "R3D");
+@@ -74,6 +74,16 @@ test("R3D: andra bulkomgången är inne, bara CC0, och varje modellfil finns", (
+   }
+ });
+ 
++test("R3F-modellserien (M1, M2 …): bara CC0 och varje modellfil finns", () => {
++  const r3f = Object.keys(ENTITETER).filter((k) => /^R3F-M\d+$/.test(String(ENTITETER[k]?.inlagd ?? "")));
++  for (const k of r3f) {
++    const t = TILLGANGAR[ENTITETER[k]!.modell as string];
++    assert.ok(t, `${k}: tillgång saknas`);
++    assert.equal(t.licens, "CC0-1.0", `${k}: bara CC0 i R3F (CC-BY väntar på kreditvisning, R3E)`);
++    assert.ok(t.fil && fs.existsSync(path.join("public", t.fil)), `${k}: ${t.fil} finns inte`);
++  }
++});
++
+ test("modeller från bulkrundorna hämtas när ordet används: forladda är false och startnedladdningen växer inte", () => {
+   const r3c = Object.keys(ENTITETER).filter((k) => arBulk(k));
+   assert.ok(r3c.every((k) => ENTITETER[k]?.forladda === false), "alla bulkrader ska ha forladda: false");
