@@ -8,7 +8,7 @@
 
 **Viktigaste fyndet i live-spelningen (avsnitt 17):** den publicerade versionen på https://trollpennan.grok.me/ är **äldre än `main`**: den saknar Runda 1 och alla tillbehörsrundor. Hatt, halsduk, glasögon, rosett, mantel och ryggsäck syns inte alls där. Ingen verifiering av `main` är gjord i spelad version förrän `main` är publicerad.
 
-Skriven av Arkitekten 2026-10-18 mot `main` = `697be95` ("Runda 5A: ryggsäck, mantel och horn (#11)", 2026-10-18 10:39 Stockholmstid). Allt som är "läst" kommer ur filer, git och `gh`; allt som är "mätt" är körda lässkript (parsern `tolka`/`tolkaBygg` buntad med esbuild utanför repot, ingen spelstart); allt som är "live" är spelat headless mot den publicerade adressen (Playwright, 375×812, touch). Där något är en slutsats eller gissning står det. Uppdatera filen efter varje sammanslagen runda (grindregel 1 i skillen `build-round-gate`).
+Skriven av Arkitekten 2026-10-18 mot `main` = `697be95` ("Runda 5A: ryggsäck, mantel och horn (#11)", 2026-10-18 10:39 Stockholmstid). Allt som är "läst" kommer ur filer, git och `gh`; allt som är "mätt" är körda lässkript (parsern `tolka`/`tolkaBygg` buntad med esbuild utanför repot, ingen spelstart); allt som är "live" är spelat headless mot den publicerade adressen (Playwright, 375×812, touch). Där något är en slutsats eller gissning står det. Uppdaterad 2026-10-19 (köordning). Uppdatera filen efter varje sammanslagen runda (grindregel 1 i skillen `build-round-gate`).
 
 Källor: `/workspace/trollpennan-nulage/` (copilot-inventering.md, ritning-tillbehor.md, motorjamforelse.md, analys-kod.md, plan-A-B.md, natt-rapport-runda*.md, rounds.tsv, assets-bengtsson/RAPPORT.md, bengtsson-uppdrag.md, spel/rapport.md), repots `HANDOFF.md`, `projektregler.md`, `CREDITS.md`, `data/*.json`, `src/`, samt `git` och `gh pr list`. Mätunderlag: `verification/tackning-2026-10-18.md`. Skärmbilder: `docs/skarmbilder/` (avsnitt 17).
 
@@ -106,10 +106,28 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 
 ## 8. Färdplan: rundor i ordning (följer grundtanken)
 
-**NÄSTA RUNDOR (2026-10-19): `rundor/BLOCK-platser/PLAN.md`.** B0–**B1.3a klar (PR #71, main 81cc682)** → **B1.3b** (pågår hos Doodle/Build) → **B1.4** resan (Build) → **R9G** gåta/uppdrag-UX + stall i menyn (`rundor/R9G-ux-stall/`, Build) → **R8-2** grafiklyft → **B2** Skogen, **B3** Sjön, **B4** Grottan (datapaket; B4.1 ljuskällor Build) → B5 modeller → B6 kontroll. Därefter TTS (gratis svensk röst). Ersätter R4A/R6B; R4B, R5, R7 kvar efter blocken. Copilots data: `rundor/BLOCK-platser/data-utkast/`.
-Alla rundor: Grok Build CLI, `--prompt-file`, gren per runda (`build/runda-N`), loggfil, commit efter varje delmål, `RUNDA<N>.md` först. Ingen mätning/utforskning i Build; Arkitekten lägger siffror och filrader i prompten. Kostnadsuppskattningar är min gissning utifrån `rounds.tsv` (low/medium, 11–30 turer = 0,5–3 USD), inte mätta.
+### KÖORDNING (gäller nu, 2026-10-19) – `rundor/BLOCK-platser/PLAN.md`
+**Skript** = `kor.sh`/patch, 0 Build-USD. **Build** = Grok Build. Doodle skriver aldrig spelkod utan kor.sh eller prompt. Arkitekten levererar → skickar körkommando samma stund.
 
-**Ordning och varför:** R1 delar `Spel.tsx` (annars krockar allt). R2 gör tillbehören till data (stoppar 10-rundors-läckan). **R3 är rundan som gör grundtanken sann: ordens väg till synlig form** – entitetsmodell, reservform (okänt ord blir ändå något synligt), bulkrutin för modeller. **Ordning ändrad 2026-10-18 (Christoffer): Doktor Bengtsson (uppdragsmotorn, tidigare R6) kommer direkt efter content-motorn (R3C), före byggnader, kamera och Phaser-borttagning.** Ordningen är nu: R3A → R3B → R3C → **R6A (Bengtsson, förd fram; R6A-1 och R6A-2 körda, R6A-3 djuren slutar ge uppdrag + guidande val väntar, R6A-4 de 24 utkasten väntar på Copilot), R3D (andra modellomgången, körklar)** → R4A (dela `angen3d.tsx`) → R4B (kamera) → R5 (byggnader) → R6B (platserna som R3F-scener) → R7 (Phaser bort). Rundornas namn behålls så att ritningar och länkar inte går sönder. Före allt: **R0 publicera `main`** (Christoffers ja, avsnitt 10.2), annars går inget att verifiera spelat.
+**Klart på main:** R3G föremål (#56) · R9D uppdragsfix (#60) · B0 40 ängsuppdrag (#61) · R9E typecheck (#62) · R9F färg/bubbla (#64) · B1.1 dela angen3d (#67) · B1.2 uppdragsmotor plats (#68) · B1.3a platser.json (#71). main ≈ `f668b27`.
+
+**Pågår:** **B1.3b** – scenen läser platsen. Build misslyckades (0 filer, 2,74 USD). Arkitekten gör **patch + kor.sh (skript)**; Doodle väntar på körkommando.
+
+**Nästa, i denna ordning (inga parallella steg utom B5):**
+1. **B1.3b** scen ↔ plats — **skript** (patch under arbete)
+2. **B1.4** resa/skylt/platsväljare + "Inte riktigt än" under ERROR — **Build**
+3. **R9G** gåta≠uppdrag, gåta byts ej för tidigt, "Skriv i Pennans bok", stall=meny — **Build** (`rundor/R9G-ux-stall/`)
+4. **R8-2** grafiklyft (skuggor, horisont, kontur …) — **Build** (`rundor/R8-grafik/`)
+5. **B2** Skogen — **skript** (`kor-plats.sh skogen`)
+6. **B3** Sjön — **skript**
+7. **B4** Grottan — **skript** + **B4.1** ljuskällor **Build**
+8. **B5** modeller (prio 1/2) — **skript**, får köras parallellt med B2–B4
+9. **B6** kontroll + buggfix — **skript** (B6.1) sedan **Build** (B6.2–3)
+10. **TTS** gratis svensk röst — efter B6; eget block
+
+**Christoffers låsta beslut:** stall = meny (ingen stallbyggnad än) · ERROR-automaten behålls + text "Inte riktigt än" under · R8-2 efter B1, före platserna · TTS efter områdena · röd/grön på djur (R9C) **pausad**.
+
+Efter blocken kvar: R4B kamera, R5 Gården, R7 Phaser bort. Copilot-data: `rundor/BLOCK-platser/data-utkast/`. Historik/grindtabell nedan är bakgrund; **följ bara köordningen ovan.**
 
 **Mått mot grundtanken** (varje runda anger före/efter; mätmetod i avsnitt 11): *täckning* = andel av orden i `verification/tackning-2026-10-18.md` (slumpurval 100, barnurval 70 + 30 + 30, topp-1000) som blir en egen synlig form; *synlig* = egen form **eller** reservform. Utgångsläge: egen form 1,2 % / 1,9 % / 0,5 % (topp-1000 substantiv/adjektiv/verb), barnlistans substantiv 9/70, synlig 0 % för okända ord.
 
@@ -679,16 +697,14 @@ Kör via riktiga UI-vägen (Pennans bok → pennan → skärmtangentbord → Vak
 | 12 | `en ko som kan sjunga` | Idag: tyst ignorerat + förslag; *efter R3B/R3C:* ko-modell, sjunga som animation | – |
 Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`, spärrat ord (ska ge puff, aldrig form).
 
-## 19. Öppna fel (uppdaterad 2026-10-19, efter B1.3a) – block som tar hand om felet
-| # | Fel | Block |
-|---|-----|-------|
-| 1 | Valfisk/snurra/gaffel/släde/jacka/planka fel eller konstiga modeller | B5 |
-| 2 | Färgord färgar inte föremål; röd/grön på djur (pausat) | B6.2 / R9C |
-| 3 | Felstavat föremål → inget "Menade du …?"; `test:reserv`/DOM 03–05 ostabila | B6.1 |
-| 4 | Brandpost/julkrans svåra att se på 375x812 | B5 |
-| 5 | Mantel/horn/halsduk sitter fel på vissa djur | B6.2 |
-| 6 | "Inte riktigt än" under ERROR-automaten | B1.4 |
-| 7 | Uppdrag+gåta samtidigt; gåta byts för tidigt; otydligt var man skriver; stall saknas | **R9G** |
-| 8 | Inget uppdrag med `djur: true` / `final: true` i datan | B2–B4, B6.1 |
-| 9 | Tackbubbla/Guldord: fix ej bildverifierad | R9G-bevis |
-| 10 | Platsbyte syns inte i scenen än | **B1.3b** (pågår) |
+## 19. Öppna fel (2026-10-19) – kort; blocket som tar hand om felet
+| # | Fel | När |
+|---|-----|-----|
+| 1 | Platsbyte syns inte i scenen | **B1.3b** (pågår, skript) |
+| 2 | Uppdrag+gåta samtidigt; gåta byts för tidigt; otydligt var man skriver; stall saknas | **R9G** |
+| 3 | "Inte riktigt än" under ERROR-automaten | **B1.4** |
+| 4 | Valfisk/snurra/gaffel/släde/jacka/planka/brandpost/julkrans konstiga eller svåra att se | **B5** |
+| 5 | Mantel/horn/halsduk sitter fel; färgord färgar inte föremål | **B6.2** |
+| 6 | Felstavat föremål → inget "Menade du …?"; DOM 03–05 ostabila; saknar `djur`/`final` i data | **B6.1** / B2–B4 |
+| 7 | Röd/grön på djurmodeller | **R9C pausad** (Christoffer) |
+| 8 | Tackbubbla vs Guldord: ej bildverifierad | R9G-bevis |
