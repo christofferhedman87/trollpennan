@@ -1,0 +1,877 @@
+{
+ "_om": "UTKAST: kända felstavningar → rätt ord. Hemliga ord: visa aldrig rättningen före upptäckt.",
+ "stavfel": {
+  "abore": {
+   "ratt": "abborre",
+   "hemlig": true
+  },
+  "aborre": {
+   "ratt": "abborre",
+   "hemlig": true
+  },
+  "abbore": {
+   "ratt": "abborre",
+   "hemlig": true
+  },
+  "annka": {
+   "ratt": "anka",
+   "hemlig": false
+  },
+  "ancka": {
+   "ratt": "anka",
+   "hemlig": false
+  },
+  "basketbol": {
+   "ratt": "basketboll",
+   "hemlig": false
+  },
+  "baskettboll": {
+   "ratt": "basketboll",
+   "hemlig": false
+  },
+  "berj": {
+   "ratt": "berg",
+   "hemlig": false
+  },
+  "bergg": {
+   "ratt": "berg",
+   "hemlig": false
+  },
+  "bergkristal": {
+   "ratt": "bergkristall",
+   "hemlig": false
+  },
+  "bergkristtall": {
+   "ratt": "bergkristall",
+   "hemlig": false
+  },
+  "bloma": {
+   "ratt": "blomma",
+   "hemlig": false
+  },
+  "blommae": {
+   "ratt": "blomma",
+   "hemlig": false
+  },
+  "bokk": {
+   "ratt": "bok",
+   "hemlig": false
+  },
+  "book": {
+   "ratt": "bok",
+   "hemlig": false
+  },
+  "bordd": {
+   "ratt": "bord",
+   "hemlig": false
+  },
+  "borrd": {
+   "ratt": "bord",
+   "hemlig": false
+  },
+  "bryga": {
+   "ratt": "brygga",
+   "hemlig": false
+  },
+  "bryggaa": {
+   "ratt": "brygga",
+   "hemlig": false
+  },
+  "busske": {
+   "ratt": "buske",
+   "hemlig": false
+  },
+  "buscke": {
+   "ratt": "buske",
+   "hemlig": false
+  },
+  "bäk": {
+   "ratt": "bäck",
+   "hemlig": false
+  },
+  "back": {
+   "ratt": "bäck",
+   "hemlig": false
+  },
+  "bävr": {
+   "ratt": "bäver",
+   "hemlig": true
+  },
+  "baver": {
+   "ratt": "bäver",
+   "hemlig": true
+  },
+  "bått": {
+   "ratt": "båt",
+   "hemlig": false
+  },
+  "bat": {
+   "ratt": "båt",
+   "hemlig": false
+  },
+  "syklop": {
+   "ratt": "cyklop",
+   "hemlig": true
+  },
+  "cykklop": {
+   "ratt": "cyklop",
+   "hemlig": true
+  },
+  "drakke": {
+   "ratt": "drake",
+   "hemlig": true
+  },
+  "drak": {
+   "ratt": "drake",
+   "hemlig": true
+  },
+  "dropsten": {
+   "ratt": "droppsten",
+   "hemlig": false
+  },
+  "droppstenn": {
+   "ratt": "droppsten",
+   "hemlig": false
+  },
+  "ekore": {
+   "ratt": "ekorre",
+   "hemlig": true
+  },
+  "ekkorre": {
+   "ratt": "ekorre",
+   "hemlig": true
+  },
+  "ekorrre": {
+   "ratt": "ekorre",
+   "hemlig": true
+  },
+  "fissk": {
+   "ratt": "fisk",
+   "hemlig": false
+  },
+  "fik": {
+   "ratt": "fisk",
+   "hemlig": false
+  },
+  "fladermus": {
+   "ratt": "fladdermus",
+   "hemlig": true
+  },
+  "fladdermuss": {
+   "ratt": "fladdermus",
+   "hemlig": true
+  },
+  "flyttväst": {
+   "ratt": "flytväst",
+   "hemlig": false
+  },
+  "flytvest": {
+   "ratt": "flytväst",
+   "hemlig": false
+  },
+  "fågelhålk": {
+   "ratt": "fågelholk",
+   "hemlig": false
+  },
+  "fogelholk": {
+   "ratt": "fågelholk",
+   "hemlig": false
+  },
+  "fåtöj": {
+   "ratt": "fåtölj",
+   "hemlig": false
+  },
+  "fåtöljj": {
+   "ratt": "fåtölj",
+   "hemlig": false
+  },
+  "förstoringsglass": {
+   "ratt": "förstoringsglas",
+   "hemlig": false
+  },
+  "förstoringsgals": {
+   "ratt": "förstoringsglas",
+   "hemlig": false
+  },
+  "golemm": {
+   "ratt": "golem",
+   "hemlig": true
+  },
+  "gollem": {
+   "ratt": "golem",
+   "hemlig": true
+  },
+  "golvlapa": {
+   "ratt": "golvlampa",
+   "hemlig": false
+  },
+  "golvlampaa": {
+   "ratt": "golvlampa",
+   "hemlig": false
+  },
+  "grann": {
+   "ratt": "gran",
+   "hemlig": false
+  },
+  "grannn": {
+   "ratt": "gran",
+   "hemlig": false
+  },
+  "grodda": {
+   "ratt": "groda",
+   "hemlig": false
+  },
+  "grodaa": {
+   "ratt": "groda",
+   "hemlig": false
+  },
+  "grota": {
+   "ratt": "grotta",
+   "hemlig": false
+  },
+  "grottha": {
+   "ratt": "grotta",
+   "hemlig": false
+  },
+  "gäda": {
+   "ratt": "gädda",
+   "hemlig": true
+  },
+  "gadda": {
+   "ratt": "gädda",
+   "hemlig": true
+  },
+  "gåss": {
+   "ratt": "gås",
+   "hemlig": false
+  },
+  "gas": {
+   "ratt": "gås",
+   "hemlig": false
+  },
+  "harre": {
+   "ratt": "hare",
+   "hemlig": true
+  },
+  "haree": {
+   "ratt": "hare",
+   "hemlig": true
+  },
+  "jort": {
+   "ratt": "hjort",
+   "hemlig": true
+  },
+  "hjårt": {
+   "ratt": "hjort",
+   "hemlig": true
+  },
+  "hunnd": {
+   "ratt": "hund",
+   "hemlig": false
+  },
+  "hundd": {
+   "ratt": "hund",
+   "hemlig": false
+  },
+  "huss": {
+   "ratt": "hus",
+   "hemlig": false
+  },
+  "huus": {
+   "ratt": "hus",
+   "hemlig": false
+  },
+  "håvv": {
+   "ratt": "håv",
+   "hemlig": false
+  },
+  "hav": {
+   "ratt": "håv",
+   "hemlig": false
+  },
+  "igelkot": {
+   "ratt": "igelkott",
+   "hemlig": false
+  },
+  "igellkott": {
+   "ratt": "igelkott",
+   "hemlig": false
+  },
+  "jäte": {
+   "ratt": "jätte",
+   "hemlig": true
+  },
+  "jette": {
+   "ratt": "jätte",
+   "hemlig": true
+  },
+  "kannin": {
+   "ratt": "kanin",
+   "hemlig": false
+  },
+  "kaninn": {
+   "ratt": "kanin",
+   "hemlig": false
+  },
+  "kannot": {
+   "ratt": "kanot",
+   "hemlig": false
+  },
+  "kanott": {
+   "ratt": "kanot",
+   "hemlig": false
+  },
+  "karpp": {
+   "ratt": "karp",
+   "hemlig": true
+  },
+  "karrp": {
+   "ratt": "karp",
+   "hemlig": true
+  },
+  "kartta": {
+   "ratt": "karta",
+   "hemlig": false
+  },
+  "kartaa": {
+   "ratt": "karta",
+   "hemlig": false
+  },
+  "kat": {
+   "ratt": "katt",
+   "hemlig": false
+  },
+  "katt t": {
+   "ratt": "katt",
+   "hemlig": false
+  },
+  "kickare": {
+   "ratt": "kikare",
+   "hemlig": false
+  },
+  "kikarre": {
+   "ratt": "kikare",
+   "hemlig": false
+  },
+  "klipa": {
+   "ratt": "klippa",
+   "hemlig": false
+  },
+  "klippaa": {
+   "ratt": "klippa",
+   "hemlig": false
+  },
+  "koij": {
+   "ratt": "koi",
+   "hemlig": true
+  },
+  "koii": {
+   "ratt": "koi",
+   "hemlig": true
+  },
+  "kojja": {
+   "ratt": "koja",
+   "hemlig": false
+  },
+  "koia": {
+   "ratt": "koja",
+   "hemlig": false
+  },
+  "kompas": {
+   "ratt": "kompass",
+   "hemlig": false
+  },
+  "kommpass": {
+   "ratt": "kompass",
+   "hemlig": false
+  },
+  "kote": {
+   "ratt": "kotte",
+   "hemlig": false
+  },
+  "kottte": {
+   "ratt": "kotte",
+   "hemlig": false
+  },
+  "kristal": {
+   "ratt": "kristall",
+   "hemlig": false
+  },
+  "kristtall": {
+   "ratt": "kristall",
+   "hemlig": false
+  },
+  "kronjort": {
+   "ratt": "kronhjort",
+   "hemlig": true
+  },
+  "kronhjårt": {
+   "ratt": "kronhjort",
+   "hemlig": true
+  },
+  "krefta": {
+   "ratt": "kräfta",
+   "hemlig": true
+  },
+  "kräftta": {
+   "ratt": "kräfta",
+   "hemlig": true
+  },
+  "kude": {
+   "ratt": "kudde",
+   "hemlig": false
+  },
+  "kuddde": {
+   "ratt": "kudde",
+   "hemlig": false
+  },
+  "kule": {
+   "ratt": "kulle",
+   "hemlig": false
+  },
+  "kullle": {
+   "ratt": "kulle",
+   "hemlig": false
+  },
+  "ladda": {
+   "ratt": "lada",
+   "hemlig": false
+  },
+  "ladaa": {
+   "ratt": "lada",
+   "hemlig": false
+  },
+  "lyckta": {
+   "ratt": "lykta",
+   "hemlig": false
+  },
+  "lycktta": {
+   "ratt": "lykta",
+   "hemlig": false
+  },
+  "måln": {
+   "ratt": "moln",
+   "hemlig": false
+  },
+  "molln": {
+   "ratt": "moln",
+   "hemlig": false
+  },
+  "morrot": {
+   "ratt": "morot",
+   "hemlig": false
+  },
+  "morott": {
+   "ratt": "morot",
+   "hemlig": false
+  },
+  "mosmatta": {
+   "ratt": "mossmatta",
+   "hemlig": false
+  },
+  "mossmata": {
+   "ratt": "mossmatta",
+   "hemlig": false
+  },
+  "murmeldur": {
+   "ratt": "murmeldjur",
+   "hemlig": true
+  },
+  "murmeljur": {
+   "ratt": "murmeldjur",
+   "hemlig": true
+  },
+  "muss": {
+   "ratt": "mus",
+   "hemlig": false
+  },
+  "muus": {
+   "ratt": "mus",
+   "hemlig": false
+  },
+  "nalebjörn": {
+   "ratt": "nallebjörn",
+   "hemlig": false
+  },
+  "nallebjön": {
+   "ratt": "nallebjörn",
+   "hemlig": false
+  },
+  "nykel": {
+   "ratt": "nyckel",
+   "hemlig": false
+  },
+  "nyckell": {
+   "ratt": "nyckel",
+   "hemlig": false
+  },
+  "näbdjur": {
+   "ratt": "näbbdjur",
+   "hemlig": true
+  },
+  "näbbjur": {
+   "ratt": "näbbdjur",
+   "hemlig": true
+  },
+  "näkros": {
+   "ratt": "näckros",
+   "hemlig": false
+  },
+  "näckross": {
+   "ratt": "näckros",
+   "hemlig": false
+  },
+  "ormbuncke": {
+   "ratt": "ormbunke",
+   "hemlig": false
+  },
+  "ormbunnke": {
+   "ratt": "ormbunke",
+   "hemlig": false
+  },
+  "pada": {
+   "ratt": "padda",
+   "hemlig": true
+  },
+  "paddda": {
+   "ratt": "padda",
+   "hemlig": true
+  },
+  "picknikfilt": {
+   "ratt": "picknickfilt",
+   "hemlig": false
+  },
+  "picknickfillt": {
+   "ratt": "picknickfilt",
+   "hemlig": false
+  },
+  "rodbåt": {
+   "ratt": "roddbåt",
+   "hemlig": false
+  },
+  "roddbott": {
+   "ratt": "roddbåt",
+   "hemlig": false
+  },
+  "rävv": {
+   "ratt": "räv",
+   "hemlig": false
+  },
+  "rev": {
+   "ratt": "räv",
+   "hemlig": false
+  },
+  "råjur": {
+   "ratt": "rådjur",
+   "hemlig": true
+  },
+  "råddjur": {
+   "ratt": "rådjur",
+   "hemlig": true
+  },
+  "sandboten": {
+   "ratt": "sandbotten",
+   "hemlig": false
+  },
+  "sandbottn": {
+   "ratt": "sandbotten",
+   "hemlig": false
+  },
+  "sandhögg": {
+   "ratt": "sandhög",
+   "hemlig": false
+  },
+  "sandhog": {
+   "ratt": "sandhög",
+   "hemlig": false
+  },
+  "sjödjur": {
+   "ratt": "sjöodjur",
+   "hemlig": true
+  },
+  "sjöodur": {
+   "ratt": "sjöodjur",
+   "hemlig": true
+  },
+  "skatkista": {
+   "ratt": "skattkista",
+   "hemlig": false
+  },
+  "skattkissta": {
+   "ratt": "skattkista",
+   "hemlig": false
+  },
+  "sjul": {
+   "ratt": "skjul",
+   "hemlig": false
+  },
+  "skjull": {
+   "ratt": "skjul",
+   "hemlig": false
+  },
+  "sofa": {
+   "ratt": "soffa",
+   "hemlig": false
+  },
+  "sofffa": {
+   "ratt": "soffa",
+   "hemlig": false
+  },
+  "spindl": {
+   "ratt": "spindel",
+   "hemlig": true
+  },
+  "spindell": {
+   "ratt": "spindel",
+   "hemlig": true
+  },
+  "stenn": {
+   "ratt": "sten",
+   "hemlig": false
+  },
+  "steen": {
+   "ratt": "sten",
+   "hemlig": false
+  },
+  "stigg": {
+   "ratt": "stig",
+   "hemlig": false
+  },
+  "stij": {
+   "ratt": "stig",
+   "hemlig": false
+  },
+  "stok": {
+   "ratt": "stock",
+   "hemlig": false
+  },
+  "stockk": {
+   "ratt": "stock",
+   "hemlig": false
+  },
+  "stoll": {
+   "ratt": "stol",
+   "hemlig": false
+  },
+  "stool": {
+   "ratt": "stol",
+   "hemlig": false
+  },
+  "strannd": {
+   "ratt": "strand",
+   "hemlig": false
+  },
+  "stran": {
+   "ratt": "strand",
+   "hemlig": false
+  },
+  "stube": {
+   "ratt": "stubbe",
+   "hemlig": false
+  },
+  "stubbbe": {
+   "ratt": "stubbe",
+   "hemlig": false
+  },
+  "svampp": {
+   "ratt": "svamp",
+   "hemlig": false
+  },
+  "svanp": {
+   "ratt": "svamp",
+   "hemlig": false
+  },
+  "svann": {
+   "ratt": "svan",
+   "hemlig": true
+  },
+  "svahn": {
+   "ratt": "svan",
+   "hemlig": true
+  },
+  "seng": {
+   "ratt": "säng",
+   "hemlig": false
+  },
+  "sängg": {
+   "ratt": "säng",
+   "hemlig": false
+  },
+  "trol": {
+   "ratt": "troll",
+   "hemlig": true
+  },
+  "trolll": {
+   "ratt": "troll",
+   "hemlig": true
+  },
+  "trolbok": {
+   "ratt": "trollbok",
+   "hemlig": false
+  },
+  "trollbokk": {
+   "ratt": "trollbok",
+   "hemlig": false
+  },
+  "trolkarl": {
+   "ratt": "trollkarl",
+   "hemlig": true
+  },
+  "trollkall": {
+   "ratt": "trollkarl",
+   "hemlig": true
+  },
+  "träb ro": {
+   "ratt": "träbro",
+   "hemlig": false
+  },
+  "tr äbro": {
+   "ratt": "träbro",
+   "hemlig": false
+  },
+  "träd d": {
+   "ratt": "träd",
+   "hemlig": false
+  },
+  "trad": {
+   "ratt": "träd",
+   "hemlig": false
+  },
+  "tvätbjörn": {
+   "ratt": "tvättbjörn",
+   "hemlig": true
+  },
+  "tvättbjön": {
+   "ratt": "tvättbjörn",
+   "hemlig": true
+  },
+  "tältt": {
+   "ratt": "tält",
+   "hemlig": false
+  },
+  "telt": {
+   "ratt": "tält",
+   "hemlig": false
+  },
+  "ugla": {
+   "ratt": "uggla",
+   "hemlig": false
+  },
+  "ugggla": {
+   "ratt": "uggla",
+   "hemlig": false
+  },
+  "underjordisk sjöö": {
+   "ratt": "underjordisk sjö",
+   "hemlig": false
+  },
+  "underjordisk sjo": {
+   "ratt": "underjordisk sjö",
+   "hemlig": false
+  },
+  "uter": {
+   "ratt": "utter",
+   "hemlig": true
+  },
+  "uttter": {
+   "ratt": "utter",
+   "hemlig": true
+  },
+  "varrg": {
+   "ratt": "varg",
+   "hemlig": false
+  },
+  "vargg": {
+   "ratt": "varg",
+   "hemlig": false
+  },
+  "vasrugge": {
+   "ratt": "vassrugge",
+   "hemlig": false
+  },
+  "vassruge": {
+   "ratt": "vassrugge",
+   "hemlig": false
+  },
+  "vatenfall": {
+   "ratt": "vattenfall",
+   "hemlig": false
+  },
+  "vattenfal": {
+   "ratt": "vattenfall",
+   "hemlig": false
+  },
+  "vatenmelon": {
+   "ratt": "vattenmelon",
+   "hemlig": false
+  },
+  "vattenmellon": {
+   "ratt": "vattenmelon",
+   "hemlig": false
+  },
+  "vatenpöl": {
+   "ratt": "vattenpöl",
+   "hemlig": false
+  },
+  "vattenpol": {
+   "ratt": "vattenpöl",
+   "hemlig": false
+  },
+  "vatensalamander": {
+   "ratt": "vattensalamander",
+   "hemlig": true
+  },
+  "vattensalammander": {
+   "ratt": "vattensalamander",
+   "hemlig": true
+  },
+  "vatenväxt": {
+   "ratt": "vattenväxt",
+   "hemlig": false
+  },
+  "vattenvext": {
+   "ratt": "vattenväxt",
+   "hemlig": false
+  },
+  "villsvin": {
+   "ratt": "vildsvin",
+   "hemlig": true
+  },
+  "vilds vin": {
+   "ratt": "vildsvin",
+   "hemlig": true
+  },
+  "vägskylt t": {
+   "ratt": "vägskylt",
+   "hemlig": false
+  },
+  "vägskyllt": {
+   "ratt": "vägskylt",
+   "hemlig": false
+  },
+  "jetti": {
+   "ratt": "yeti",
+   "hemlig": true
+  },
+  "yetti": {
+   "ratt": "yeti",
+   "hemlig": true
+  },
+  "älgg": {
+   "ratt": "älg",
+   "hemlig": true
+  },
+  "elg": {
+   "ratt": "älg",
+   "hemlig": true
+  },
+  "äple": {
+   "ratt": "äpple",
+   "hemlig": false
+  },
+  "äpppel": {
+   "ratt": "äpple",
+   "hemlig": false
+  }
+ }
+}

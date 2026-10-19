@@ -1,0 +1,263 @@
+{
+ "_om": "UTKAST: Bengtssons repliker per plats och mine (npc.json-format 'repliker_plats'). Visas när barnet klickar på honom, ger aldrig uppdrag.",
+ "repliker_plats": {
+  "skogen": {
+   "glad": [
+    "Hej igen! Skogen har plats för fler av dina idéer.",
+    "Det prasslar om dagen! Vad vill du skriva fram?",
+    "Här kan en liten idé växa sig riktigt stor.",
+    "Min mustasch pekar mot något roligt. Fast åt två håll!",
+    "En glänta, en penna och dina idéer. Vilken fin början!",
+    "Jag har hittat en bra plats för en helt ny tanke.",
+    "Skogen är redo. Du bestämmer vad som händer här.",
+    "Här får även de tokigaste idéerna plats.",
+    "Jag tänker ta en idépaus. Det betyder att jag hittar på mer!",
+    "Du kan skriva vidare eller bara titta en stund."
+   ],
+   "tankande": [
+    "Hm, vill du prova själv eller se en ledtråd?",
+    "Vi kan ta ett ord i taget. Skogen har inte bråttom.",
+    "Jag funderar så det nästan prasslar i huvudet.",
+    "Din idé får stanna här medan vi klurar vidare.",
+    "Vill du läsa uppdraget igen? Jag har sparat det.",
+    "Jag är inte säker på hur du menar. Vill du ändra orden?",
+    "Vi kan titta på vad uppdraget ber om en gång till.",
+    "En liten paus kan ge plats åt en ny tanke.",
+    "Vill du höra ledtråden eller läsa den själv?",
+    "Du bestämmer om vi ska klura vidare eller skapa fritt."
+   ],
+   "besegrat": [
+    "Min hatt fastnade i en gren. Jag får gå tillbaka och hämta den!",
+    "Jag satte mig på min egen matsäck. Nu är smörgåsen platt!",
+    "Min uppfinning räknade alla löv. Sedan började den om!",
+    "Jag försökte mäta skogen med en linjal. Den var lite kort.",
+    "Min mustasch fick ett löv i sig. Jag ser ut som en buske!",
+    "Jag packade tre vänstersockor. Det var inte så genomtänkt.",
+    "Min fikaklocka ringde mitt i fikat. Den är väldigt ivrig!",
+    "Jag följde mina egna fotspår och hamnade vid starten igen.",
+    "Min idéhatt blev för full. Jag får tänka en tanke i taget!",
+    "Jag glömde var jag lade min komihåglapp. Typiskt mig!"
+   ],
+   "solbrand": [
+    "En solstråle hittade min näsa mellan grenarna!",
+    "Jag väljer skuggan en stund. Min näsa har fått nog av sol.",
+    "Det är skönt under löven. Här tar jag min paus.",
+    "Min hatt gör nytta även när den inte gömmer idéer.",
+    "Solen lyser på gläntan. Jag flyttar mig lite åt sidan.",
+    "Nu får min näsa vila i skuggan medan jag tänker.",
+    "Jag hittade en sval plats. Den sparar jag till nästa paus.",
+    "Vilken varm dag! Jag tar det lugnt under grenarna.",
+    "Min solröda näsa syns visst även bakom mustaschen.",
+    "Jag tänker stanna i skuggan och lyssna på prasslet."
+   ],
+   "telefon": [
+    "Hallå? Nej, min telefon har inte vuxit på en gren.",
+    "Jag pratar med min egen komihåglapp. Den svarar väldigt tyst.",
+    "Pip! Min telefon påminner mig om att ta fikapaus.",
+    "Hallå, Bengtsson här! Ja, jag står mitt bland mina idéer.",
+    "Jag låtsas ringa framtiden. Den verkar ha lunchrast.",
+    "Min telefon vill uppdatera sig. Jag vill hellre hitta på något.",
+    "Jag försökte ringa min hatt. Den har visst inget nummer.",
+    "Nu lägger jag undan telefonen. Skogen är roligare att titta på.",
+    "Jag spelade in ett prassel. Nu har jag skogen i fickan!",
+    "Min telefon sa pling. Jag sa hej. Vi förstår inte alltid varandra."
+   ],
+   "karta": [
+    "På min karta finns en glänta som väntar på dina idéer.",
+    "Du kan resa tillbaka när du vill. Dina skapelser finns kvar.",
+    "Jag håller kartan rätt nu. Tror jag. Texten är åt rätt håll!",
+    "Vill du stanna här eller välja en annan öppen plats?",
+    "Kartan visar vägen. Du bestämmer när vi går.",
+    "Jag ritade en fikafläck på kartan. Den är större än jag tänkte.",
+    "Här är vi nu. Resten av dagen får du hitta på.",
+    "Vi behöver inte skynda vidare. Det finns mer att skapa här.",
+    "Jag viker kartan försiktigt. Sist blev det en pappershatt.",
+    "Alla öppna platser går att besöka igen. Det tycker jag är fint."
+   ],
+   "automat": [
+    "Min minnesmaskin minns bara potatismos. Vi får ge den fler idéer!",
+    "Maskinen hummar. Jag hoppas att den tänker och inte somnar.",
+    "Jag vred på idéknappen. Nu vill den ha fikapaus.",
+    "Minnesmaskinen är redo när du vill prova finalen.",
+    "Vi kan låta maskinen vänta medan du skapar något annat.",
+    "Jag satte dit en extra knapp. Den säger bara pling.",
+    "Maskinen blandade ihop ett minne med min matlista igen.",
+    "Det här är min uppfinning. Den är nästan lika tokig som jag.",
+    "Jag putsar glaset så att vi kan se minnena bättre.",
+    "En maskin kan vänta. Dina idéer får ta den tid de behöver."
+   ]
+  },
+  "sjon": {
+   "glad": [
+    "Hej! Här finns plats för både små plask och stora idéer.",
+    "Vattnet glittrar. Vad vill du skriva fram i dag?",
+    "En idé på stranden och en i vattnet. Du väljer!",
+    "Min mustasch speglar sig. Den ser extra klok ut i dag.",
+    "Här kan din fantasi få både fötter och fenor.",
+    "Jag har hittat en fin plats för en ny strandidé.",
+    "Sjön är redo. Du bestämmer vilka som kommer hit.",
+    "Du får hitta på något alldeles eget. Det är din värld.",
+    "Jag tar en titt på vågorna medan du funderar.",
+    "Vill du skapa mer eller bara njuta av glittret en stund?"
+   ],
+   "tankande": [
+    "Hm, var vill du att din skapelse ska vara?",
+    "Vi kan ta ett ord i taget. Vågorna väntar också.",
+    "Vill du se ledtråden en gång till?",
+    "Din idé får finnas kvar medan vi funderar vidare.",
+    "Jag är inte säker på platsen du menar. Vill du ändra orden?",
+    "Vill du höra uppdraget eller läsa det själv?",
+    "Vi kan börja med en vän och lägga till mer sedan.",
+    "Jag tänker så det nästan kluckar i huvudet.",
+    "Vill du prova själv eller titta på några idéer?",
+    "Du kan pausa uppdraget och skapa något helt annat."
+   ],
+   "besegrat": [
+    "Jag tappade min strumpa i strandkanten. Nu har den badat!",
+    "Min hatt flöt i väg en liten bit. Den ville visst åka på utflykt.",
+    "Jag ritade en våg på kartan och spillde sedan vatten på den.",
+    "Min uppfinning mätte glittret. Svaret blev alldeles för glittrigt!",
+    "Jag packade fika men glömde muggen. Så kan det gå!",
+    "Min mustasch droppar efter att jag tittade lite för nära ytan.",
+    "Jag satte mig bredvid min sittplats. Det var inte meningen.",
+    "Min badanka vann vår lilla tävling. Jag glömde att börja!",
+    "Jag försökte räkna vågorna. De flyttade sig hela tiden.",
+    "Min komihåglapp blev blöt. Nu minns den bara vatten."
+   ],
+   "solbrand": [
+    "Nu får min näsa vila i skuggan en stund.",
+    "Solen glittrar fint, men jag väljer en sval paus.",
+    "Min hatt skuggar näsan. Äntligen ett enkelt jobb för hatten!",
+    "Jag är lite solröd. Nu stannar jag där det är skuggigt.",
+    "Det är skönt att vila en stund från solskenet.",
+    "Jag flyttar min fikaplats bort från de starka strålarna.",
+    "Vågorna får glittra vidare. Jag tittar från skuggan.",
+    "Min näsa behöver inte vara lika röd som min fikamugg.",
+    "Här sitter jag svalt och funderar på nästa tokiga idé.",
+    "En lugn paus passar mig fint just nu."
+   ],
+   "telefon": [
+    "Hallå? Ja, det kluckar här. Nej, det är inte min mage.",
+    "Pip! Telefonen påminner mig om min bortglömda fikamugg.",
+    "Jag spelade in ett plask. Nu låter min ficka som stranden.",
+    "Hallå, Bengtsson här! Jag provar min bästa strandröst.",
+    "Min telefon vill veta var jag är. Vid mina idéer, förstås!",
+    "Jag låtsas ringa min badanka. Den svarar bara med tystnad.",
+    "Nu stoppar jag undan telefonen och tittar på glittret.",
+    "Min ringsignal låter som ett kluck. Jag blir lika förvånad varje gång.",
+    "Jag ringde för att minnas en idé och glömde vilken idé det var.",
+    "Telefonen får stanna torrt i fickan. Den har ingen baddräkt."
+   ],
+   "karta": [
+    "Här är sjön på kartan. I verkligheten kluckar den mer.",
+    "Vill du stanna vid vattnet eller resa till en annan öppen plats?",
+    "Dina skapelser väntar här när du kommer tillbaka.",
+    "Jag ritade en liten fikaplats. Den fick en väldigt stor mugg.",
+    "Kartan hjälper oss att hitta. Du väljer vart vi reser.",
+    "Vi kan stanna här så länge du vill.",
+    "Min karta är torr igen. Nu syns nästan alla mina krumelurer.",
+    "Här står vi nu. Jag markerar platsen med en liten prick.",
+    "Jag håller kartan åt rätt håll. Sjön är fortfarande blå!",
+    "En öppen plats går alltid att besöka igen."
+   ],
+   "automat": [
+    "Minnesmaskinen minns min blöta strumpa. Den behöver bättre minnen!",
+    "Maskinen försöker räkna glittret. Jag låter den fundera.",
+    "Jag tryckte på plaskknappen. Den sa pling i stället.",
+    "Vill du prova finalen? Maskinen är redo när du är det.",
+    "Vi kan låta uppfinningen vila medan du skapar vidare.",
+    "Maskinen har fått en torr plats. Där trivs den bättre.",
+    "Jag byggde en glittermätare. Den visar mest min mustasch.",
+    "Minnesmaskinen hummar som om den nynnar på en badsång.",
+    "Jag putsar fönstret på maskinen. Glittret ska få synas.",
+    "Ingen brådska! En bra idé får komma när den vill."
+   ]
+  },
+  "grottan": {
+   "glad": [
+    "Hej! Här finns plats för både små sagor och stora idéer.",
+    "Det glimmar i berget. Vad vill du skriva fram?",
+    "Min mustasch tycker att det här är en fin sagoplats.",
+    "Du bestämmer vad som ska finnas i din grotta.",
+    "Här kan en liten tanke få ett alldeles eget hörn.",
+    "Jag har hittat en bra plats att sitta och hitta på.",
+    "Vilken dag för en tokig idé! Fast det säger jag varje dag.",
+    "Du får skapa något som ingen av oss har tänkt på förut.",
+    "Jag lyssnar på dropparna medan du funderar.",
+    "Vill du skriva vidare eller titta på glittret en stund?"
+   ],
+   "tankande": [
+    "Hm, vi kan ta ett ord i taget. Berget står kvar.",
+    "Vill du se ledtråden eller prova en egen idé?",
+    "Jag funderar så det nästan ekar i huvudet.",
+    "Din skapelse får vara kvar medan vi klurar vidare.",
+    "Jag behöver hjälp att förstå din idé. Vill du prova andra ord?",
+    "Vill du läsa uppdraget igen? Det finns kvar i boken.",
+    "Vi kan börja enkelt och lägga till fler ord sedan.",
+    "Vill du höra ledtråden en gång till?",
+    "Det går fint att pausa och tänka på något annat.",
+    "Du väljer om vi ska fortsätta klura eller skapa fritt."
+   ],
+   "besegrat": [
+    "Jag sa hej till mitt eko och väntade på ett nytt svar.",
+    "Min hatt tog i en låg klippa. Jag får böja mig lite!",
+    "Jag försökte räkna dropparna men tappade bort mig vid fikat.",
+    "Min uppfinning mätte ekot. Svaret blev hej, hej, hej!",
+    "Jag satte mig på min karta. Nu är den lite mer skrynklig.",
+    "Min mustasch fick stendamm i sig. Nu ser den extra gammal ut.",
+    "Jag glömde min fikamugg utanför. Typiskt min fikaplanering!",
+    "Min komihåglapp gömde sig i min egen ficka igen.",
+    "Jag försökte viska till maskinen. Den hörde bara min hicka.",
+    "Min idéhatt halkade ner över ögonen. Jag tänkte visst för mycket!"
+   ],
+   "solbrand": [
+    "Här inne får min solröda näsa vila från solskenet.",
+    "Jag tog med min hatt in. Den får också ta paus.",
+    "Det är skönt att vila en stund från den starka solen där ute.",
+    "Min näsa lyser inte av magi. Den blev bara lite solröd.",
+    "Nu stannar jag i det mjuka ljuset och tar det lugnt.",
+    "Här behöver jag inte kisa mot solen.",
+    "Jag väljer en sval sittplats och en lugn stund.",
+    "Min hatt tycker att vi har hittat en bra pausplats.",
+    "Solen får stanna utanför medan jag funderar här inne.",
+    "Nu får näsan vila. Mustaschen tar hand om tänkandet."
+   ],
+   "telefon": [
+    "Hallå? Mitt eko svarade först. Det är väldigt snabbt!",
+    "Jag spelade in ett dropp. Nu har telefonen en egen liten grotta.",
+    "Pip! Telefonen påminner mig om muggen jag glömde utanför.",
+    "Hallå, Bengtsson här! Jag provar min allra mjukaste ekoröst.",
+    "Jag låtsas ringa mitt eko. Det upprepar allt jag säger.",
+    "Nu lägger jag undan telefonen och lyssnar på dropparna.",
+    "Min telefon sa pling. Berget sa ingenting. Ganska klokt!",
+    "Jag ringde mig själv av misstag. Det blev upptaget.",
+    "Telefonen får vila i fickan medan idéerna jobbar.",
+    "Jag skulle spela in en idé men fick med min hicka i stället."
+   ],
+   "karta": [
+    "Här är vi på kartan. Utgången finns alltid kvar.",
+    "Vill du skapa mer i grottan eller välja en annan öppen plats?",
+    "Dina skapelser väntar när du kommer tillbaka.",
+    "Jag ritade ett litet sagohörn. Nu vill jag nästan flytta in där.",
+    "Kartan visar platserna. Du bestämmer när vi reser.",
+    "Vi behöver inte gå vidare. Här finns plats för fler idéer.",
+    "Jag viker kartan försiktigt så att den inte blir en hatt igen.",
+    "Här markerar jag vår plats med en liten prick.",
+    "Alla öppna platser går att besöka igen, även den här.",
+    "Min karta har fått ett nytt veck. Det ser ut som ett leende."
+   ],
+   "automat": [
+    "Maskinen minns bara ekot av min hicka. Vi får hjälpa den vidare!",
+    "Minnesmaskinen hummar. Det låter extra fint här inne.",
+    "Jag tryckte på minnesknappen. Den svarade med ett litet pling.",
+    "Vill du prova finalen? Uppfinningen väntar på din idé.",
+    "Maskinen får vila om du hellre vill skapa något annat.",
+    "Jag putsar maskinens ruta. Nu syns glittret genom glaset.",
+    "Min uppfinning blandade ihop en berättelse med min inköpslista.",
+    "Jag gav maskinen en tankepaus. Nu tar jag en också.",
+    "Den här knappen gör inget ännu. Jag tycker om den ändå.",
+    "Vi har ingen brådska. Minnen kan växa fram i lugn och ro."
+   ]
+  }
+ }
+}

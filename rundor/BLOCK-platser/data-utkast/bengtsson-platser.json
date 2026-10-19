@@ -1,0 +1,2737 @@
+{
+ "_om": "UTKAST: 48 uppdrag i data/bengtsson.json-format, omrade = platsens id. krav.djur = ett djur måste skapas (B1.2). _villkor = Copilots strängare villkor, inte kontrollerat av motorn.",
+ "uppdrag": [
+  {
+   "id": "skog-rod-van",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett rött djur.",
+   "mal": {},
+   "klart": "Vilken fin färgklick bland allt det gröna!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "En vän vill låna samma färg som en mogen tomat!",
+   "klart_bengtsson": "Vilken fin färgklick bland allt det gröna!",
+   "krav": {
+    "ord": [
+     "röd"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små vänner",
+      "forslag": [
+       {
+        "ord": "kanin",
+        "fras": "en röd kanin"
+       },
+       {
+        "ord": "katt",
+        "fras": "en röd katt"
+       }
+      ]
+     },
+     {
+      "etikett": "Skogsvänner",
+      "forslag": [
+       {
+        "ord": "räv",
+        "fras": "en röd räv"
+       },
+       {
+        "ord": "uggla",
+        "fras": "en röd uggla"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har färgen röd. Rött och röda räknas som böjningar."
+  },
+  {
+   "id": "skog-liten-van",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett pyttelitet djur.",
+   "mal": {},
+   "klart": "Så liten vän, så stor glädje!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Vem kan få plats bredvid min allra minsta kaffekopp?",
+   "klart_bengtsson": "Så liten vän, så stor glädje!",
+   "krav": {
+    "ord": [
+     "liten",
+     "pytteliten",
+     "minimal"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "På marken",
+      "forslag": [
+       {
+        "ord": "kanin",
+        "fras": "en pytteliten kanin"
+       },
+       {
+        "ord": "igelkott",
+        "fras": "en pytteliten igelkott"
+       }
+      ]
+     },
+     {
+      "etikett": "Med fantasi",
+      "forslag": [
+       {
+        "ord": "varg",
+        "fras": "en pytteliten varg"
+       },
+       {
+        "ord": "uggla",
+        "fras": "en pytteliten uggla"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har liten eller pytteliten storlek."
+  },
+  {
+   "id": "skog-magen-kurrar",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med något som det kan äta.",
+   "mal": {},
+   "klart": "Nu kurrar magen av glädje i stället!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Kurr! Kan du ordna en matstund åt en hungrig skogsgäst?",
+   "klart_bengtsson": "Nu kurrar magen av glädje i stället!",
+   "krav": {
+    "ord": [
+     "morot",
+     "äpple",
+     "broccoli",
+     "banan",
+     "gräs",
+     "hö",
+     "foder",
+     "sallad",
+     "päron",
+     "mat"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Grönt och gott",
+      "forslag": [
+       {
+        "ord": "morot",
+        "fras": "en kanin med en morot"
+       },
+       {
+        "ord": "broccoli",
+        "fras": "en kanin med broccoli"
+       }
+      ]
+     },
+     {
+      "etikett": "Fruktstund",
+      "forslag": [
+       {
+        "ord": "äpple",
+        "fras": "en get med ett äpple"
+       },
+       {
+        "ord": "banan",
+        "fras": "en apa med en banan"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har något ätbart kopplat till sig; godkänn artpassande mat eller uttrycklig fantasimat."
+  },
+  {
+   "id": "skog-vila-benen",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med en plats att sitta på.",
+   "mal": {},
+   "klart": "Här sitter vi som två nöjda potatisar!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Puh, mina ben vill pausa! Kan en vän också få vila utan att stå?",
+   "klart_bengtsson": "Här sitter vi som två nöjda potatisar!",
+   "krav": {
+    "ord": [
+     "stubbe",
+     "stock",
+     "sten",
+     "stol",
+     "soffa",
+     "fåtölj",
+     "bänk",
+     "pall",
+     "sittplats",
+     "kudde"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Skogens möbler",
+      "forslag": [
+       {
+        "ord": "stubbe",
+        "fras": "en kanin på en stubbe"
+       },
+       {
+        "ord": "stock",
+        "fras": "en räv på en stock"
+       }
+      ]
+     },
+     {
+      "etikett": "Mjukt och bekvämt",
+      "forslag": [
+       {
+        "ord": "soffa",
+        "fras": "en hund på en soffa"
+       },
+       {
+        "ord": "fåtölj",
+        "fras": "en katt i en fåtölj"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur sitter på eller i en sittplats; sittplatsen är skapad eller uttryckligen refererad i den nya meningen."
+  },
+  {
+   "id": "skog-regnpaus",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur som har skydd mot regnet.",
+   "mal": {},
+   "klart": "Nu kan regnet spela trumma på taket!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Plipp på näsan! Kan du ordna en torr plats åt en vän?",
+   "klart_bengtsson": "Nu kan regnet spela trumma på taket!",
+   "krav": {
+    "ord": [
+     "tält",
+     "koja",
+     "hus",
+     "skjul",
+     "grotta",
+     "lada",
+     "paraply",
+     "tak",
+     "regnskydd",
+     "villa"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små krypin",
+      "forslag": [
+       {
+        "ord": "tält",
+        "fras": "en kanin i ett tält"
+       },
+       {
+        "ord": "koja",
+        "fras": "en räv i en koja"
+       }
+      ]
+     },
+     {
+      "etikett": "Under tak",
+      "forslag": [
+       {
+        "ord": "hus",
+        "fras": "en katt i ett hus"
+       },
+       {
+        "ord": "skjul",
+        "fras": "en hund i ett skjul"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är i ett regnskydd eller under ett regnskydd."
+  },
+  {
+   "id": "skog-varm-van",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med något som värmer.",
+   "mal": {},
+   "klart": "Nu är det varmt ända ut i öronen!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Brr, kvällsluften kittlar! Kan du hjälpa en vän att slippa huttra?",
+   "klart_bengtsson": "Nu är det varmt ända ut i öronen!",
+   "krav": {
+    "ord": [
+     "tröja",
+     "mössa",
+     "luva",
+     "filt",
+     "täcke",
+     "halsduk",
+     "jacka",
+     "vante",
+     "socka",
+     "varm"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Om kroppen",
+      "forslag": [
+       {
+        "ord": "tröja",
+        "fras": "en kanin med en tröja"
+       },
+       {
+        "ord": "tröja",
+        "fras": "en hund med en tröja"
+       }
+      ]
+     },
+     {
+      "etikett": "Om huvudet",
+      "forslag": [
+       {
+        "ord": "mössa",
+        "fras": "en katt med en mössa"
+       },
+       {
+        "ord": "luva",
+        "fras": "en räv med en luva"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur bär ett värmande plagg eller har en värmande sak kopplad till sig."
+  },
+  {
+   "id": "skog-kvallsljus",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med något som lyser.",
+   "mal": {},
+   "klart": "Där är ju näsan, precis där vi lämnade den!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Skymningen är här! Vad kan hjälpa en vän att se sin egen nos?",
+   "klart_bengtsson": "Där är ju näsan, precis där vi lämnade den!",
+   "krav": {
+    "ord": [
+     "lykta",
+     "golvlampa",
+     "lampa",
+     "ficklampa",
+     "nattlampa",
+     "ljusslinga",
+     "bordslampa",
+     "taklampa",
+     "ljus",
+     "sol"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Litet sken",
+      "forslag": [
+       {
+        "ord": "lykta",
+        "fras": "en kanin med en lykta"
+       },
+       {
+        "ord": "lykta",
+        "fras": "en räv vid en lykta"
+       }
+      ]
+     },
+     {
+      "etikett": "Ljust vid läsplatsen",
+      "forslag": [
+       {
+        "ord": "golvlampa",
+        "fras": "en katt vid en golvlampa"
+       },
+       {
+        "ord": "golvlampa",
+        "fras": "en hund vid en golvlampa"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har en ljuskälla eller är vid en ljuskälla."
+  },
+  {
+   "id": "skog-over-backen",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur som kan ta sig över bäcken utan att bli blött.",
+   "mal": {},
+   "klart": "Framme, och inte en blöt tå!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "På andra sidan väntar fikat! Hur kommer en vän dit med torra tassar?",
+   "klart_bengtsson": "Framme, och inte en blöt tå!",
+   "krav": {
+    "ord": [
+     "träbro",
+     "bro",
+     "båt",
+     "roddbåt",
+     "kanot",
+     "flotte",
+     "färja",
+     "gångbro",
+     "luftballong",
+     "flygplan"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Gå över",
+      "forslag": [
+       {
+        "ord": "träbro",
+        "fras": "en kanin på en träbro"
+       },
+       {
+        "ord": "träbro",
+        "fras": "en räv på en träbro"
+       }
+      ]
+     },
+     {
+      "etikett": "Flyta över",
+      "forslag": [
+       {
+        "ord": "roddbåt",
+        "fras": "en katt i en roddbåt"
+       },
+       {
+        "ord": "kanot",
+        "fras": "en hund i en kanot"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är på en bro eller i/på en farkost som kan ta sig över bäcken; även en uttrycklig flygande lösning räknas."
+  },
+  {
+   "id": "skog-spara-matsacken",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med en stängd förvaring för matsäcken.",
+   "mal": {},
+   "klart": "Där får fikat vänta på nästa fikapaus!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Jag vill spara fikat till senare! Var kan en vän lägga det och stänga om det?",
+   "klart_bengtsson": "Där får fikat vänta på nästa fikapaus!",
+   "krav": {
+    "ord": [
+     "skattkista",
+     "kylskåp",
+     "låda",
+     "matlåda",
+     "burk",
+     "skåp",
+     "väska",
+     "ryggsäck",
+     "förvaring"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Med lock",
+      "forslag": [
+       {
+        "ord": "skattkista",
+        "fras": "en kanin vid en stängd skattkista med matsäck"
+       },
+       {
+        "ord": "skattkista",
+        "fras": "en räv vid en stängd skattkista med matsäck"
+       }
+      ]
+     },
+     {
+      "etikett": "Bakom en dörr",
+      "forslag": [
+       {
+        "ord": "kylskåp",
+        "fras": "en katt vid ett stängt kylskåp med matsäck"
+       },
+       {
+        "ord": "kylskåp",
+        "fras": "en hund vid ett stängt kylskåp med matsäck"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är vid en stängd eller stängningsbar förvaring med matsäck. En korg kräver lock."
+  },
+  {
+   "id": "skog-under-tradet",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur under ett träd och använd ordet under.",
+   "mal": {},
+   "klart": "Där blev det ett grönt tak över huvudet!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "En vän vill ha grenar ovanför huvudet! Kan dina ord visa rätt plats?",
+   "klart_bengtsson": "Där blev det ett grönt tak över huvudet!",
+   "krav": {
+    "ord": [
+     "under",
+     "träd"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små skogsgäster",
+      "forslag": [
+       {
+        "ord": "träd",
+        "fras": "en kanin under ett träd"
+       },
+       {
+        "ord": "träd",
+        "fras": "en igelkott under ett träd"
+       }
+      ]
+     },
+     {
+      "etikett": "Andra vänner",
+      "forslag": [
+       {
+        "ord": "träd",
+        "fras": "en räv under ett träd"
+       },
+       {
+        "ord": "träd",
+        "fras": "en uggla under ett träd"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har relationen under till ett träd. Ordet under används som preposition."
+  },
+  {
+   "id": "skog-stor-och-liten",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett stort djur och ett litet djur med orden stor och liten.",
+   "mal": {},
+   "klart": "Olika storlek, lika välkomna på fikat!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Två vänner vill vara olika stora! Kan du låta orden visa skillnaden?",
+   "klart_bengtsson": "Olika storlek, lika välkomna på fikat!",
+   "krav": {
+    "ord": [
+     "stor",
+     "liten"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Skogens vänner",
+      "forslag": [
+       {
+        "ord": "räv",
+        "fras": "en stor räv och en liten kanin"
+       },
+       {
+        "ord": "varg",
+        "fras": "en stor varg och en liten igelkott"
+       }
+      ]
+     },
+     {
+      "etikett": "Byt storlek",
+      "forslag": [
+       {
+        "ord": "kanin",
+        "fras": "en stor kanin och en liten räv"
+       },
+       {
+        "ord": "uggla",
+        "fras": "en stor uggla och en liten hund"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Två olika skapade djurinstanser: ett med stor storlek, ett med liten. Båda storleksorden används."
+  },
+  {
+   "id": "skog-hitta-riktningen",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med både en karta och en kompass.",
+   "mal": {},
+   "klart": "Nu hittar vi mer än bara min lunch!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Min uppfinning visar bara vägen till mitt kylskåp! Vad hjälper en vän att hitta både väg och riktning?",
+   "klart_bengtsson": "Nu hittar vi mer än bara min lunch!",
+   "krav": {
+    "ord": [
+     "karta",
+     "kompass"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Redo att gå",
+      "forslag": [
+       {
+        "ord": "karta",
+        "fras": "en räv med en karta och en kompass"
+       },
+       {
+        "ord": "karta",
+        "fras": "en hund med en karta och en kompass"
+       }
+      ]
+     },
+     {
+      "etikett": "Redo att spana",
+      "forslag": [
+       {
+        "ord": "kompass",
+        "fras": "en uggla med en karta och en kompass"
+       },
+       {
+        "ord": "kompass",
+        "fras": "en kanin med en karta och en kompass"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har både en karta och en kompass kopplade till sig."
+  },
+  {
+   "id": "skog-tva-spanare",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram en uggla och en igelkott som kan spana tillsammans.",
+   "mal": {},
+   "klart": "Nu har vi spanare både högt och lågt!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "En vän hoar högt bland grenar, en annan prasslar med taggig rygg! Vilka två söker jag?",
+   "klart_bengtsson": "Nu har vi spanare både högt och lågt!",
+   "krav": {
+    "ord": [
+     "uggla",
+     "igelkott"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Nära varandra",
+      "forslag": [
+       {
+        "ord": "uggla",
+        "fras": "en uggla bredvid en igelkott"
+       },
+       {
+        "ord": "igelkott",
+        "fras": "en igelkott bredvid en uggla"
+       }
+      ]
+     },
+     {
+      "etikett": "Vid ett träd",
+      "forslag": [
+       {
+        "ord": "uggla",
+        "fras": "en uggla i ett träd och en igelkott under trädet"
+       },
+       {
+        "ord": "igelkott",
+        "fras": "en igelkott under ett träd och en uggla i trädet"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Två skapade djurinstanser: en uggla och en igelkott. Olika höjd är frivilligt enligt dokumenterad rättelse."
+  },
+  {
+   "id": "skog-mysig-lasplats",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med både en bok och en lykta.",
+   "mal": {},
+   "klart": "Nu lyser det om både orden och min mustasch!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "En vän vill läsa när kvällen kommer! Vad behövs för både berättelsen och skenet?",
+   "klart_bengtsson": "Nu lyser det om både orden och min mustasch!",
+   "krav": {
+    "ord": [
+     "bok",
+     "lykta"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Läsa ute",
+      "forslag": [
+       {
+        "ord": "bok",
+        "fras": "en kanin med en bok och en lykta"
+       },
+       {
+        "ord": "bok",
+        "fras": "en räv med en bok och en lykta"
+       }
+      ]
+     },
+     {
+      "etikett": "Läsa bekvämt",
+      "forslag": [
+       {
+        "ord": "lykta",
+        "fras": "en katt i en fåtölj med en bok och en lykta"
+       },
+       {
+        "ord": "lykta",
+        "fras": "en hund på en soffa med en bok och en lykta"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har både en bok och en lykta kopplade till sig."
+  },
+  {
+   "id": "skog-ljus-vid-krypin",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur i ett tält med en lykta utanför.",
+   "mal": {},
+   "klart": "Vilket mysigt krypin med välkomstsken!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "En vän vill vila inomhus och se ett sken utanför ingången! Kan du ordna båda platserna?",
+   "klart_bengtsson": "Vilket mysigt krypin med välkomstsken!",
+   "krav": {
+    "ord": [
+     "tält",
+     "lykta"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små gäster",
+      "forslag": [
+       {
+        "ord": "tält",
+        "fras": "en kanin i ett tält med en lykta utanför"
+       },
+       {
+        "ord": "tält",
+        "fras": "en igelkott i ett tält med en lykta utanför"
+       }
+      ]
+     },
+     {
+      "etikett": "Andra nattgäster",
+      "forslag": [
+       {
+        "ord": "lykta",
+        "fras": "en räv i ett tält med en lykta utanför"
+       },
+       {
+        "ord": "lykta",
+        "fras": "en hund i ett tält med en lykta utanför"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är i ett tält och en lykta är utanför samma tält."
+  },
+  {
+   "id": "skog-final-minnesljus",
+   "omrade": "skogen",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med en lykta och en blomma till Bengtssons minnesplats.",
+   "mal": {},
+   "klart": "Nu kan vi ta med skogens mys hem till ängen!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Min minnesmaskin behöver ett sken och något som blommar! Kan en vän ta med båda?",
+   "klart_bengtsson": "Nu kan vi ta med skogens mys hem till ängen!",
+   "krav": {
+    "ord": [
+     "lykta",
+     "blomma"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små budbärare",
+      "forslag": [
+       {
+        "ord": "lykta",
+        "fras": "en kanin med en lykta och en blomma"
+       },
+       {
+        "ord": "lykta",
+        "fras": "en igelkott med en lykta och en blomma"
+       }
+      ]
+     },
+     {
+      "etikett": "Andra hjälpredor",
+      "forslag": [
+       {
+        "ord": "blomma",
+        "fras": "en räv med en lykta och en blomma"
+       },
+       {
+        "ord": "blomma",
+        "fras": "en uggla med en lykta och en blomma"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har både en lykta och en blomma kopplade till sig.",
+   "final": true
+  },
+  {
+   "id": "sjo-bla-van",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett blått djur.",
+   "mal": {},
+   "klart": "Vilken fin färgkompis till vattnet!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "En vän vill låna färgen från en klar sommarhimmel!",
+   "klart_bengtsson": "Vilken fin färgkompis till vattnet!",
+   "krav": {
+    "ord": [
+     "blå"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Vid stranden",
+      "forslag": [
+       {
+        "ord": "anka",
+        "fras": "en blå anka"
+       },
+       {
+        "ord": "groda",
+        "fras": "en blå groda"
+       }
+      ]
+     },
+     {
+      "etikett": "Med fantasi",
+      "forslag": [
+       {
+        "ord": "fisk",
+        "fras": "en blå fisk"
+       },
+       {
+        "ord": "kanin",
+        "fras": "en blå kanin"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har färgen blå."
+  },
+  {
+   "id": "sjo-stor-simmare",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett stort djur som kan simma.",
+   "mal": {},
+   "klart": "Oj, nu blev det gott om vän i vattnet!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Jag vill se en simmande vän som tar riktigt mycket plats!",
+   "klart_bengtsson": "Oj, nu blev det gott om vän i vattnet!",
+   "krav": {
+    "ord": [
+     "stor",
+     "jättestor"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Med fenor",
+      "forslag": [
+       {
+        "ord": "fisk",
+        "fras": "en stor fisk"
+       },
+       {
+        "ord": "fisk",
+        "fras": "en jättestor fisk"
+       }
+      ]
+     },
+     {
+      "etikett": "Med simfötter",
+      "forslag": [
+       {
+        "ord": "anka",
+        "fras": "en stor anka"
+       },
+       {
+        "ord": "gås",
+        "fras": "en jättestor gås"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur med egenskapen kan_simma har stor eller jättestor storlek."
+  },
+  {
+   "id": "sjo-sitt-vid-vattnet",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med en sittplats vid sjön.",
+   "mal": {},
+   "klart": "Här sitter vi och låter vågorna göra jobbet!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Puh, benen vill pausa medan vi tittar på vågorna!",
+   "klart_bengtsson": "Här sitter vi och låter vågorna göra jobbet!",
+   "krav": {
+    "ord": [
+     "stol",
+     "stubbe",
+     "stock",
+     "sten",
+     "soffa",
+     "fåtölj",
+     "bänk",
+     "pall",
+     "kudde"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Strandens sittplatser",
+      "forslag": [
+       {
+        "ord": "stock",
+        "fras": "en hund på en stock vid sjön"
+       },
+       {
+        "ord": "sten",
+        "fras": "en groda på en sten vid sjön"
+       }
+      ]
+     },
+     {
+      "etikett": "Ta med en möbel",
+      "forslag": [
+       {
+        "ord": "stol",
+        "fras": "en katt på en stol vid sjön"
+       },
+       {
+        "ord": "fåtölj",
+        "fras": "en kanin i en fåtölj vid sjön"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur sitter på eller i en sittplats i sjömiljön."
+  },
+  {
+   "id": "sjo-fruktpaus",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med en frukt till strandfikat.",
+   "mal": {},
+   "klart": "Nu är strandfikat räddat!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Magen kurrar! Kan en vän få något saftigt från fruktfatet?",
+   "klart_bengtsson": "Nu är strandfikat räddat!",
+   "krav": {
+    "ord": [
+     "äpple",
+     "banan",
+     "apelsin",
+     "druvor",
+     "vattenmelon",
+     "ananas",
+     "päron",
+     "persika",
+     "melon"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små munsbitar",
+      "forslag": [
+       {
+        "ord": "äpple",
+        "fras": "en kanin med ett äpple"
+       },
+       {
+        "ord": "banan",
+        "fras": "en apa med en banan"
+       }
+      ]
+     },
+     {
+      "etikett": "Fika med fantasi",
+      "forslag": [
+       {
+        "ord": "vattenmelon",
+        "fras": "en anka med en vattenmelon"
+       },
+       {
+        "ord": "apelsin",
+        "fras": "en groda med en apelsin"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har en frukt kopplad till sig; uppdraget kräver inte att djuret äter frukten."
+  },
+  {
+   "id": "sjo-skugga-pa-stranden",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med en skuggig plats på stranden.",
+   "mal": {},
+   "klart": "Här får både nosen och öronen solpaus!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Solen kittlar min näsa! Kan en vän få vila där strålarna inte når?",
+   "klart_bengtsson": "Här får både nosen och öronen solpaus!",
+   "krav": {
+    "ord": [
+     "träd",
+     "palm",
+     "tält",
+     "koja",
+     "hus",
+     "skjul",
+     "parasoll",
+     "tak",
+     "solskydd"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Under grenar",
+      "forslag": [
+       {
+        "ord": "träd",
+        "fras": "en hund under ett träd på stranden"
+       },
+       {
+        "ord": "palm",
+        "fras": "en kanin under en palm på stranden"
+       }
+      ]
+     },
+     {
+      "etikett": "Ett eget krypin",
+      "forslag": [
+       {
+        "ord": "tält",
+        "fras": "en katt i ett tält på stranden"
+       },
+       {
+        "ord": "koja",
+        "fras": "en anka i en koja på stranden"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är på stranden och i skugga under ett skuggande objekt eller inne i ett skydd."
+  },
+  {
+   "id": "sjo-torr-overfart",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur i något som kan flyta över sjön.",
+   "mal": {},
+   "klart": "Nu kan vi åka till nästa fikaplats!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Fikat väntar på andra stranden! Hur kan en vän åka dit utan att simma?",
+   "klart_bengtsson": "Nu kan vi åka till nästa fikaplats!",
+   "krav": {
+    "ord": [
+     "roddbåt",
+     "kanot",
+     "båt",
+     "flotte",
+     "färja",
+     "segelbåt",
+     "motorbåt"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "En lugn tur",
+      "forslag": [
+       {
+        "ord": "roddbåt",
+        "fras": "en hund i en roddbåt"
+       },
+       {
+        "ord": "båt",
+        "fras": "en katt i en båt"
+       }
+      ]
+     },
+     {
+      "etikett": "En smal farkost",
+      "forslag": [
+       {
+        "ord": "kanot",
+        "fras": "en kanin i en kanot"
+       },
+       {
+        "ord": "kanot",
+        "fras": "en groda i en kanot"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är i en flytande farkost på sjön."
+  },
+  {
+   "id": "sjo-regn-vid-stranden",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med regnskydd vid sjön.",
+   "mal": {},
+   "klart": "Nu får dropparna bada utan oss!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Plipp, plopp! Kan en vän få ett torrt krypin tills skuren är över?",
+   "klart_bengtsson": "Nu får dropparna bada utan oss!",
+   "krav": {
+    "ord": [
+     "tält",
+     "koja",
+     "hus",
+     "skjul",
+     "grotta",
+     "paraply",
+     "regnskydd",
+     "tak"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små skydd",
+      "forslag": [
+       {
+        "ord": "tält",
+        "fras": "en kanin i ett tält vid sjön"
+       },
+       {
+        "ord": "koja",
+        "fras": "en anka i en koja vid sjön"
+       }
+      ]
+     },
+     {
+      "etikett": "Under tak",
+      "forslag": [
+       {
+        "ord": "hus",
+        "fras": "en katt i ett hus vid sjön"
+       },
+       {
+        "ord": "skjul",
+        "fras": "en hund i ett skjul vid sjön"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är i eller under regnskydd vid sjön."
+  },
+  {
+   "id": "sjo-lys-vid-vattnet",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med något som lyser vid sjön.",
+   "mal": {},
+   "klart": "Nu glittrar det både här och där!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Kvällen speglar sig i vattnet! Vad hjälper en vän att se sin matsäck?",
+   "klart_bengtsson": "Nu glittrar det både här och där!",
+   "krav": {
+    "ord": [
+     "lykta",
+     "golvlampa",
+     "lampa",
+     "ficklampa",
+     "nattlampa",
+     "ljusslinga",
+     "ljus"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Litet sken",
+      "forslag": [
+       {
+        "ord": "lykta",
+        "fras": "en kanin med en lykta vid sjön"
+       },
+       {
+        "ord": "lykta",
+        "fras": "en anka vid en lykta på stranden"
+       }
+      ]
+     },
+     {
+      "etikett": "Ljust vid sittplatsen",
+      "forslag": [
+       {
+        "ord": "golvlampa",
+        "fras": "en katt vid en golvlampa på stranden"
+       },
+       {
+        "ord": "golvlampa",
+        "fras": "en hund vid en golvlampa på bryggan"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är vid eller har en ljuskälla vid sjön."
+  },
+  {
+   "id": "sjo-i-baten",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur i en roddbåt och använd ordet i.",
+   "mal": {},
+   "klart": "Där sitter vår passagerare fint!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "En vän vill sitta innanför kanterna, inte bredvid farkosten! Kan orden visa var?",
+   "klart_bengtsson": "Där sitter vår passagerare fint!",
+   "krav": {
+    "ord": [
+     "i",
+     "roddbåt"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små passagerare",
+      "forslag": [
+       {
+        "ord": "roddbåt",
+        "fras": "en groda i en roddbåt"
+       },
+       {
+        "ord": "roddbåt",
+        "fras": "en kanin i en roddbåt"
+       }
+      ]
+     },
+     {
+      "etikett": "Andra resenärer",
+      "forslag": [
+       {
+        "ord": "roddbåt",
+        "fras": "en hund i en roddbåt"
+       },
+       {
+        "ord": "roddbåt",
+        "fras": "en katt i en roddbåt"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är i en roddbåt. Ordet i används som preposition."
+  },
+  {
+   "id": "sjo-pa-bryggan",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur på en brygga och använd ordet på.",
+   "mal": {},
+   "klart": "Perfekt utsikt över allt det blå!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Träplankorna blir en fin sittplats ovanför vattnet! Kan orden visa var en vän sitter?",
+   "klart_bengtsson": "Perfekt utsikt över allt det blå!",
+   "krav": {
+    "ord": [
+     "på",
+     "brygga"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Med simfötter",
+      "forslag": [
+       {
+        "ord": "brygga",
+        "fras": "en anka på en brygga"
+       },
+       {
+        "ord": "brygga",
+        "fras": "en gås på en brygga"
+       }
+      ]
+     },
+     {
+      "etikett": "Med tassar",
+      "forslag": [
+       {
+        "ord": "brygga",
+        "fras": "en katt på en brygga"
+       },
+       {
+        "ord": "brygga",
+        "fras": "en hund på en brygga"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är på en brygga. Ordet på används som preposition."
+  },
+  {
+   "id": "sjo-tva-storlekar",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett stort och ett litet vattendjur med orden stor och liten.",
+   "mal": {},
+   "klart": "Olika stora plask, samma glada bad!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Två simmande vänner vill vara olika stora! Kan dina ord visa skillnaden?",
+   "klart_bengtsson": "Olika stora plask, samma glada bad!",
+   "krav": {
+    "ord": [
+     "stor",
+     "liten"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Samma sorts djur",
+      "forslag": [
+       {
+        "ord": "fisk",
+        "fras": "en stor fisk och en liten fisk"
+       },
+       {
+        "ord": "anka",
+        "fras": "en stor anka och en liten anka"
+       }
+      ]
+     },
+     {
+      "etikett": "Olika vänner",
+      "forslag": [
+       {
+        "ord": "groda",
+        "fras": "en stor groda och en liten fisk"
+       },
+       {
+        "ord": "gås",
+        "fras": "en stor gås och en liten anka"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Två olika skapade djurinstanser med egenskapen kan_simma: ett stort och ett litet. Båda storleksorden används."
+  },
+  {
+   "id": "sjo-tva-farger",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett rött djur i vattnet och ett blått djur på stranden.",
+   "mal": {},
+   "klart": "Nu har både stranden och vattnet fått färg!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Två vänner lånar färg från en tomat och himlen! En vill bada, den andra stanna vid land.",
+   "klart_bengtsson": "Nu har både stranden och vattnet fått färg!",
+   "krav": {
+    "ord": [
+     "röd",
+     "blå"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Fenor och tassar",
+      "forslag": [
+       {
+        "ord": "fisk",
+        "fras": "en röd fisk i vattnet och en blå katt på stranden"
+       },
+       {
+        "ord": "hund",
+        "fras": "en röd fisk i vattnet och en blå hund på stranden"
+       }
+      ]
+     },
+     {
+      "etikett": "Fjädrar och hopp",
+      "forslag": [
+       {
+        "ord": "anka",
+        "fras": "en röd anka i vattnet och en blå kanin på stranden"
+       },
+       {
+        "ord": "groda",
+        "fras": "en röd groda i vattnet och en blå gås på stranden"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Två olika skapade djurinstanser: det röda är i vattnet och det blå är på stranden. Båda färgorden används."
+  },
+  {
+   "id": "sjo-las-och-lys",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur på bryggan med både en bok och en lykta.",
+   "mal": {},
+   "klart": "Nu får sagan sällskap av vågornas kluck!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "En vän vill läsa vid vattnet när det skymmer! Vad behövs för berättelsen och skenet?",
+   "klart_bengtsson": "Nu får sagan sällskap av vågornas kluck!",
+   "krav": {
+    "ord": [
+     "bok",
+     "lykta"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små läsare",
+      "forslag": [
+       {
+        "ord": "bok",
+        "fras": "en kanin på bryggan med en bok och en lykta"
+       },
+       {
+        "ord": "bok",
+        "fras": "en groda på bryggan med en bok och en lykta"
+       }
+      ]
+     },
+     {
+      "etikett": "Andra sagovänner",
+      "forslag": [
+       {
+        "ord": "lykta",
+        "fras": "en katt på bryggan med en bok och en lykta"
+       },
+       {
+        "ord": "lykta",
+        "fras": "en hund på bryggan med en bok och en lykta"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är på bryggan och har både bok och lykta kopplade till sig."
+  },
+  {
+   "id": "sjo-tva-satt-att-resa",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur i en roddbåt och ett annat på en träbro.",
+   "mal": {},
+   "klart": "Två vägar till samma fikapaus!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "En vän vill åka över vattnet och en annan gå över det! Kan du ordna båda sätten?",
+   "klart_bengtsson": "Två vägar till samma fikapaus!",
+   "krav": {
+    "ord": [
+     "roddbåt",
+     "träbro"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Tassar på resa",
+      "forslag": [
+       {
+        "ord": "roddbåt",
+        "fras": "en katt i en roddbåt och en hund på en träbro"
+       },
+       {
+        "ord": "träbro",
+        "fras": "en hund i en roddbåt och en kanin på en träbro"
+       }
+      ]
+     },
+     {
+      "etikett": "Fler reskamrater",
+      "forslag": [
+       {
+        "ord": "roddbåt",
+        "fras": "en groda i en roddbåt och en anka på en träbro"
+       },
+       {
+        "ord": "träbro",
+        "fras": "en kanin i en roddbåt och en gås på en träbro"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Två olika skapade djurinstanser: ett i en roddbåt, ett på en träbro."
+  },
+  {
+   "id": "sjo-ovantad-kapten",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram en fisk i ett badkar med vatten och låt badkaret stå i en båt.",
+   "mal": {},
+   "klart": "En simmare på båttur, vilken härlig idé!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Vem kan få skjuts trots att den redan kan simma? Låt en sådan vän bli passagerare!",
+   "klart_bengtsson": "En simmare på båttur, vilken härlig idé!",
+   "krav": {
+    "ord": [
+     "fisk",
+     "båt"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små passagerare",
+      "forslag": [
+       {
+        "ord": "fisk",
+        "fras": "en fisk i ett badkar med vatten i en båt"
+       },
+       {
+        "ord": "båt",
+        "fras": "en liten fisk i ett badkar med vatten i en båt"
+       }
+      ]
+     },
+     {
+      "etikett": "Färgglada resenärer",
+      "forslag": [
+       {
+        "ord": "fisk",
+        "fras": "en blå fisk i ett badkar med vatten i en båt"
+       },
+       {
+        "ord": "båt",
+        "fras": "en gul fisk i ett badkar med vatten i en båt"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "En skapad fisk är i ett vattenfyllt badkar; samma badkar är i en båt; båten är på sjön. Badkar och vatten är obligatoriska även om de saknas i den äldre kravlistan."
+  },
+  {
+   "id": "sjo-final-vattenglitter",
+   "omrade": "sjon",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med en kristall och en blomma till Bengtssons minnesplats.",
+   "mal": {},
+   "klart": "Nu kan sjöns glitter följa med hem till ängen!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Min minnesmaskin vill minnas både glittret och strandens färger! Vad kan en vän ta med?",
+   "klart_bengtsson": "Nu kan sjöns glitter följa med hem till ängen!",
+   "krav": {
+    "ord": [
+     "kristall",
+     "blomma"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Strandens budbärare",
+      "forslag": [
+       {
+        "ord": "kristall",
+        "fras": "en anka med en kristall och en blomma"
+       },
+       {
+        "ord": "kristall",
+        "fras": "en groda med en kristall och en blomma"
+       }
+      ]
+     },
+     {
+      "etikett": "Andra hjälpredor",
+      "forslag": [
+       {
+        "ord": "blomma",
+        "fras": "en kanin med en kristall och en blomma"
+       },
+       {
+        "ord": "blomma",
+        "fras": "en hund med en kristall och en blomma"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har både en kristall och en blomma kopplade till sig.",
+   "final": true
+  },
+  {
+   "id": "grotta-forsta-skenet",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med något som lyser.",
+   "mal": {},
+   "klart": "Nu ser jag både vägen och min mustasch!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Här inne är det skymning hela dagen! Vad hjälper en vän att se bättre?",
+   "klart_bengtsson": "Nu ser jag både vägen och min mustasch!",
+   "krav": {
+    "ord": [
+     "lykta",
+     "golvlampa",
+     "lampa",
+     "ficklampa",
+     "nattlampa",
+     "ljusslinga",
+     "ljus"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Ett litet sken",
+      "forslag": [
+       {
+        "ord": "lykta",
+        "fras": "en kanin med en lykta"
+       },
+       {
+        "ord": "lykta",
+        "fras": "en katt vid en lykta"
+       }
+      ]
+     },
+     {
+      "etikett": "Ljust i hörnet",
+      "forslag": [
+       {
+        "ord": "golvlampa",
+        "fras": "en hund vid en golvlampa"
+       },
+       {
+        "ord": "golvlampa",
+        "fras": "en groda vid en golvlampa"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har eller är vid en ljuskälla. Miljöns grundljus räknas inte som lösning."
+  },
+  {
+   "id": "grotta-gul-van",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett gult djur.",
+   "mal": {},
+   "klart": "Nu har vi en liten solstråle här inne!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "En vän vill låna färgen från solen där ute!",
+   "klart_bengtsson": "Nu har vi en liten solstråle här inne!",
+   "krav": {
+    "ord": [
+     "gul"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små solstrålar",
+      "forslag": [
+       {
+        "ord": "kanin",
+        "fras": "en gul kanin"
+       },
+       {
+        "ord": "mus",
+        "fras": "en gul mus"
+       }
+      ]
+     },
+     {
+      "etikett": "Fler färgvänner",
+      "forslag": [
+       {
+        "ord": "katt",
+        "fras": "en gul katt"
+       },
+       {
+        "ord": "groda",
+        "fras": "en gul groda"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har färgen gul."
+  },
+  {
+   "id": "grotta-liten-upptackare",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett pyttelitet djur.",
+   "mal": {},
+   "klart": "Vilken liten upptäckare med stora idéer!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Vem kan kika in i ett hål som är mindre än min kaffekopp?",
+   "klart_bengtsson": "Vilken liten upptäckare med stora idéer!",
+   "krav": {
+    "ord": [
+     "liten",
+     "pytteliten",
+     "minimal"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små tassar",
+      "forslag": [
+       {
+        "ord": "mus",
+        "fras": "en pytteliten mus"
+       },
+       {
+        "ord": "kanin",
+        "fras": "en pytteliten kanin"
+       }
+      ]
+     },
+     {
+      "etikett": "Med fantasi",
+      "forslag": [
+       {
+        "ord": "hund",
+        "fras": "en pytteliten hund"
+       },
+       {
+        "ord": "groda",
+        "fras": "en pytteliten groda"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har liten eller pytteliten storlek."
+  },
+  {
+   "id": "grotta-sittpaus",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med en sittplats.",
+   "mal": {},
+   "klart": "Här kan vi sitta och klura en stund!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Puh, benen vill vila medan vi tittar på allt som glimmar!",
+   "klart_bengtsson": "Här kan vi sitta och klura en stund!",
+   "krav": {
+    "ord": [
+     "stol",
+     "sten",
+     "stubbe",
+     "stock",
+     "soffa",
+     "fåtölj",
+     "bänk",
+     "pall",
+     "kudde"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Enkel sittplats",
+      "forslag": [
+       {
+        "ord": "sten",
+        "fras": "en groda på en sten"
+       },
+       {
+        "ord": "stol",
+        "fras": "en katt på en stol"
+       }
+      ]
+     },
+     {
+      "etikett": "Mjukt och skönt",
+      "forslag": [
+       {
+        "ord": "soffa",
+        "fras": "en hund på en soffa"
+       },
+       {
+        "ord": "fåtölj",
+        "fras": "en kanin i en fåtölj"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur sitter på eller i en sittplats."
+  },
+  {
+   "id": "grotta-varma-oron",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med något som värmer.",
+   "mal": {},
+   "klart": "Nu är det mysigt ända ut i öronen!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Brr, här kittlar luften kallt! Kan en vän slippa huttra?",
+   "klart_bengtsson": "Nu är det mysigt ända ut i öronen!",
+   "krav": {
+    "ord": [
+     "tröja",
+     "mössa",
+     "luva",
+     "filt",
+     "täcke",
+     "halsduk",
+     "jacka",
+     "vante",
+     "socka",
+     "varm"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Om kroppen",
+      "forslag": [
+       {
+        "ord": "tröja",
+        "fras": "en hund med en tröja"
+       },
+       {
+        "ord": "tröja",
+        "fras": "en katt med en tröja"
+       }
+      ]
+     },
+     {
+      "etikett": "Om huvudet",
+      "forslag": [
+       {
+        "ord": "mössa",
+        "fras": "en kanin med en mössa"
+       },
+       {
+        "ord": "luva",
+        "fras": "en mus med en luva"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur bär ett värmande plagg eller har en värmande sak kopplad till sig."
+  },
+  {
+   "id": "grotta-mjuk-vila",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med en mjuk sovplats.",
+   "mal": {},
+   "klart": "Nu tassar jag tyst förbi viloplatsen!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Gääsp! En vän vill vila utan att ligga direkt mot berget.",
+   "klart_bengtsson": "Nu tassar jag tyst förbi viloplatsen!",
+   "krav": {
+    "ord": [
+     "säng",
+     "soffa",
+     "fåtölj",
+     "kudde",
+     "madrass",
+     "filt",
+     "täcke",
+     "bädd",
+     "hängmatta"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Sträcka ut sig",
+      "forslag": [
+       {
+        "ord": "säng",
+        "fras": "en hund i en säng"
+       },
+       {
+        "ord": "soffa",
+        "fras": "en katt på en soffa"
+       }
+      ]
+     },
+     {
+      "etikett": "Krypa ihop",
+      "forslag": [
+       {
+        "ord": "fåtölj",
+        "fras": "en kanin i en fåtölj"
+       },
+       {
+        "ord": "säng",
+        "fras": "en mus i en liten säng"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är i eller på en mjuk sovplats."
+  },
+  {
+   "id": "grotta-eget-krypin",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur i ett eget krypin inne i grottan.",
+   "mal": {},
+   "klart": "Ett litet hem inne i ett stort berg!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "En vän vill ha en egen liten vrå här inne! Vad kan ge väggar runt viloplatsen?",
+   "klart_bengtsson": "Ett litet hem inne i ett stort berg!",
+   "krav": {
+    "ord": [
+     "tält",
+     "koja",
+     "hus",
+     "skjul",
+     "villa",
+     "stuga",
+     "krypin"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små hem",
+      "forslag": [
+       {
+        "ord": "tält",
+        "fras": "en kanin i ett tält i grottan"
+       },
+       {
+        "ord": "koja",
+        "fras": "en mus i en koja i grottan"
+       }
+      ]
+     },
+     {
+      "etikett": "Med fantasi",
+      "forslag": [
+       {
+        "ord": "hus",
+        "fras": "en hund i ett hus i grottan"
+       },
+       {
+        "ord": "skjul",
+        "fras": "en katt i ett skjul i grottan"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är i ett skapat krypin inne i grottmiljön."
+  },
+  {
+   "id": "grotta-ordna-lasning",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med något att läsa.",
+   "mal": {},
+   "klart": "Nu får fantasin gå på egen upptäcktsfärd!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "En vän vill bläddra bland ord och bilder utan att lämna sin sittplats!",
+   "klart_bengtsson": "Nu får fantasin gå på egen upptäcktsfärd!",
+   "krav": {
+    "ord": [
+     "bok",
+     "trollbok",
+     "sagobok",
+     "bilderbok",
+     "serietidning",
+     "tidning",
+     "berättelse",
+     "atlas"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Bläddra och läs",
+      "forslag": [
+       {
+        "ord": "bok",
+        "fras": "en kanin med en bok"
+       },
+       {
+        "ord": "bok",
+        "fras": "en katt med en bok"
+       }
+      ]
+     },
+     {
+      "etikett": "Magiska berättelser",
+      "forslag": [
+       {
+        "ord": "trollbok",
+        "fras": "en hund med en trollbok"
+       },
+       {
+        "ord": "trollbok",
+        "fras": "en mus med en trollbok"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har en bok, tidning eller annat läsbart föremål kopplat till sig."
+  },
+  {
+   "id": "grotta-under-bordet",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur under ett bord och använd ordet under.",
+   "mal": {},
+   "klart": "Där hittade vi en riktigt fin liten vrå!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "En vän vill ha möbelns skiva ovanför huvudet! Kan orden visa rätt plats?",
+   "klart_bengtsson": "Där hittade vi en riktigt fin liten vrå!",
+   "krav": {
+    "ord": [
+     "under",
+     "bord"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små gäster",
+      "forslag": [
+       {
+        "ord": "bord",
+        "fras": "en mus under ett bord"
+       },
+       {
+        "ord": "bord",
+        "fras": "en kanin under ett bord"
+       }
+      ]
+     },
+     {
+      "etikett": "Andra vänner",
+      "forslag": [
+       {
+        "ord": "bord",
+        "fras": "en katt under ett bord"
+       },
+       {
+        "ord": "bord",
+        "fras": "en hund under ett bord"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är under ett bord. Ordet under används som preposition."
+  },
+  {
+   "id": "grotta-stor-och-liten",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett stort djur och ett litet djur med orden stor och liten.",
+   "mal": {},
+   "klart": "Olika stora vänner får plats i samma saga!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Två vänner vill prova helt olika storlekar! Kan dina ord visa skillnaden?",
+   "klart_bengtsson": "Olika stora vänner får plats i samma saga!",
+   "krav": {
+    "ord": [
+     "stor",
+     "liten"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Tassar tillsammans",
+      "forslag": [
+       {
+        "ord": "hund",
+        "fras": "en stor hund och en liten katt"
+       },
+       {
+        "ord": "kanin",
+        "fras": "en stor kanin och en liten mus"
+       }
+      ]
+     },
+     {
+      "etikett": "Byt storlek",
+      "forslag": [
+       {
+        "ord": "mus",
+        "fras": "en stor mus och en liten hund"
+       },
+       {
+        "ord": "groda",
+        "fras": "en stor groda och en liten kanin"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Två olika skapade djurinstanser: ett stort och ett litet. Båda storleksorden används."
+  },
+  {
+   "id": "grotta-sken-och-saga",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med både en bok och en lykta.",
+   "mal": {},
+   "klart": "Nu lyser sagostunden upp hela min dag!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "En vän vill läsa här inne! Vad behövs för både berättelsen och skenet?",
+   "klart_bengtsson": "Nu lyser sagostunden upp hela min dag!",
+   "krav": {
+    "ord": [
+     "bok",
+     "lykta"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små läsare",
+      "forslag": [
+       {
+        "ord": "bok",
+        "fras": "en kanin med en bok och en lykta"
+       },
+       {
+        "ord": "bok",
+        "fras": "en mus med en bok och en lykta"
+       }
+      ]
+     },
+     {
+      "etikett": "Fler sagovänner",
+      "forslag": [
+       {
+        "ord": "lykta",
+        "fras": "en katt med en bok och en lykta"
+       },
+       {
+        "ord": "lykta",
+        "fras": "en hund med en bok och en lykta"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har både bok och lykta kopplade till sig."
+  },
+  {
+   "id": "grotta-tva-farger",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett grönt djur på en sten och ett gult djur bredvid stenen.",
+   "mal": {},
+   "klart": "Vilken färgglad liten samling!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Två vänner lånar färg från gräset och solen! En sitter högre, den andra intill.",
+   "klart_bengtsson": "Vilken färgglad liten samling!",
+   "krav": {
+    "ord": [
+     "grön",
+     "gul"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små vänner",
+      "forslag": [
+       {
+        "ord": "groda",
+        "fras": "en grön groda på en sten och en gul mus bredvid stenen"
+       },
+       {
+        "ord": "kanin",
+        "fras": "en grön kanin på en sten och en gul katt bredvid stenen"
+       }
+      ]
+     },
+     {
+      "etikett": "Fantasifärger",
+      "forslag": [
+       {
+        "ord": "hund",
+        "fras": "en grön hund på en sten och en gul kanin bredvid stenen"
+       },
+       {
+        "ord": "mus",
+        "fras": "en grön mus på en sten och en gul groda bredvid stenen"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Två olika skapade djurinstanser: ett grönt på en sten och ett gult bredvid samma sten."
+  },
+  {
+   "id": "grotta-ljus-utanfor",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur i en koja med en lykta utanför.",
+   "mal": {},
+   "klart": "Vilket mysigt hem med välkomstsken!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "En vän vill vila innanför väggarna och se ett sken utanför ingången! Kan du ordna båda?",
+   "klart_bengtsson": "Vilket mysigt hem med välkomstsken!",
+   "krav": {
+    "ord": [
+     "koja",
+     "lykta"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små nattgäster",
+      "forslag": [
+       {
+        "ord": "koja",
+        "fras": "en mus i en koja med en lykta utanför"
+       },
+       {
+        "ord": "koja",
+        "fras": "en kanin i en koja med en lykta utanför"
+       }
+      ]
+     },
+     {
+      "etikett": "Andra vilovänner",
+      "forslag": [
+       {
+        "ord": "lykta",
+        "fras": "en katt i en koja med en lykta utanför"
+       },
+       {
+        "ord": "lykta",
+        "fras": "en hund i en koja med en lykta utanför"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är i en koja och en lykta är utanför samma koja."
+  },
+  {
+   "id": "grotta-ben-som-vilar",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur bredvid något som har ben men inte kan gå.",
+   "mal": {},
+   "klart": "Du löste gåtan utan ett enda steg!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Min gåta har ben men tar aldrig en promenad! Vad kan en vän stå bredvid?",
+   "klart_bengtsson": "Du löste gåtan utan ett enda steg!",
+   "krav": {
+    "ord": [
+     "bord",
+     "stol",
+     "soffa",
+     "säng",
+     "fåtölj",
+     "pall",
+     "bänk",
+     "skrivbord",
+     "matbord",
+     "soffbord"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Vid bordet",
+      "forslag": [
+       {
+        "ord": "bord",
+        "fras": "en hund bredvid ett bord med fyra ben"
+       },
+       {
+        "ord": "stol",
+        "fras": "en katt bredvid en stol med fyra ben"
+       }
+      ]
+     },
+     {
+      "etikett": "Vid viloplatsen",
+      "forslag": [
+       {
+        "ord": "säng",
+        "fras": "en kanin bredvid en säng med fyra ben"
+       },
+       {
+        "ord": "soffa",
+        "fras": "en mus bredvid en soffa med fyra ben"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är bredvid ett föremål med möbelben som inte går av sig självt. Kreativa motsvarande föremål får godkännas via samma egenskap."
+  },
+  {
+   "id": "grotta-glitter-i-kistan",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur bredvid en skattkista med en kristall i.",
+   "mal": {},
+   "klart": "Där kan glittret vila till nästa titt!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "En vän vill spara något som glimmar bakom ett lock! Kan orden visa både vännen och innehållet?",
+   "klart_bengtsson": "Där kan glittret vila till nästa titt!",
+   "krav": {
+    "ord": [
+     "skattkista",
+     "kristall"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små samlare",
+      "forslag": [
+       {
+        "ord": "skattkista",
+        "fras": "en mus bredvid en skattkista med en kristall i"
+       },
+       {
+        "ord": "skattkista",
+        "fras": "en kanin bredvid en skattkista med en kristall i"
+       }
+      ]
+     },
+     {
+      "etikett": "Fler upptäckare",
+      "forslag": [
+       {
+        "ord": "kristall",
+        "fras": "en katt bredvid en skattkista med en kristall i"
+       },
+       {
+        "ord": "kristall",
+        "fras": "en hund bredvid en skattkista med en kristall i"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur är bredvid en skattkista och en kristall är i samma skattkista."
+  },
+  {
+   "id": "grotta-final-bergets-berattelse",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med en kristall och en bok till Bengtssons minnesplats.",
+   "mal": {},
+   "klart": "Nu kan grottans glans och sagor följa med hem!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Min minnesmaskin behöver bergets glitter och något fullt av berättelser! Kan en vän ta med båda?",
+   "klart_bengtsson": "Nu kan grottans glans och sagor följa med hem!",
+   "krav": {
+    "ord": [
+     "kristall",
+     "bok"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små budbärare",
+      "forslag": [
+       {
+        "ord": "kristall",
+        "fras": "en kanin med en kristall och en bok"
+       },
+       {
+        "ord": "kristall",
+        "fras": "en mus med en kristall och en bok"
+       }
+      ]
+     },
+     {
+      "etikett": "Andra hjälpredor",
+      "forslag": [
+       {
+        "ord": "bok",
+        "fras": "en katt med en kristall och en bok"
+       },
+       {
+        "ord": "bok",
+        "fras": "en hund med en kristall och en bok"
+       }
+      ]
+     }
+    ]
+   },
+   "_villkor": "Ett skapat djur har både en kristall och en bok kopplade till sig.",
+   "final": true
+  }
+ ]
+}

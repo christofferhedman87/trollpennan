@@ -1,0 +1,1205 @@
+{
+ "_om": "UTKAST: Copilots 150 testfraser, förväntat utfall. Används av platsprovet i B2–B4.",
+ "fraser": [
+  {
+   "id": "skog-test-001",
+   "omrade": "skogen",
+   "text": "en röd kanin",
+   "uppdrag": "skog-rod-van",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-002",
+   "omrade": "skogen",
+   "text": "en pytteliten kanin",
+   "uppdrag": "skog-liten-van",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-003",
+   "omrade": "skogen",
+   "text": "en kanin med en morot",
+   "uppdrag": "skog-magen-kurrar",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-004",
+   "omrade": "skogen",
+   "text": "en kanin på en stubbe",
+   "uppdrag": "skog-vila-benen",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-005",
+   "omrade": "skogen",
+   "text": "en kanin i ett tält",
+   "uppdrag": "skog-regnpaus",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-006",
+   "omrade": "skogen",
+   "text": "en kanin med en tröja",
+   "uppdrag": "skog-varm-van",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-007",
+   "omrade": "skogen",
+   "text": "en kanin med en lykta",
+   "uppdrag": "skog-kvallsljus",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-008",
+   "omrade": "skogen",
+   "text": "en kanin på en träbro",
+   "uppdrag": "skog-over-backen",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-009",
+   "omrade": "skogen",
+   "text": "en kanin vid en stängd skattkista med matsäck",
+   "uppdrag": "skog-spara-matsacken",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-010",
+   "omrade": "skogen",
+   "text": "en kanin under ett träd",
+   "uppdrag": "skog-under-tradet",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-011",
+   "omrade": "skogen",
+   "text": "en stor räv och en liten kanin",
+   "uppdrag": "skog-stor-och-liten",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-012",
+   "omrade": "skogen",
+   "text": "en räv med en karta och en kompass",
+   "uppdrag": "skog-hitta-riktningen",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-013",
+   "omrade": "skogen",
+   "text": "en uggla bredvid en igelkott",
+   "uppdrag": "skog-tva-spanare",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-014",
+   "omrade": "skogen",
+   "text": "en kanin med en bok och en lykta",
+   "uppdrag": "skog-mysig-lasplats",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-015",
+   "omrade": "skogen",
+   "text": "en kanin i ett tält med en lykta utanför",
+   "uppdrag": "skog-ljus-vid-krypin",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-016",
+   "omrade": "skogen",
+   "text": "en kanin med en lykta och en blomma",
+   "uppdrag": "skog-final-minnesljus",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "skog-test-017",
+   "omrade": "skogen",
+   "text": "en blå kanin",
+   "uppdrag": "skog-rod-van",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-018",
+   "omrade": "skogen",
+   "text": "en jättestor kanin",
+   "uppdrag": "skog-liten-van",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-019",
+   "omrade": "skogen",
+   "text": "en kanin med en karta",
+   "uppdrag": "skog-magen-kurrar",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-020",
+   "omrade": "skogen",
+   "text": "en hund bredvid en stol",
+   "uppdrag": "skog-vila-benen",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-021",
+   "omrade": "skogen",
+   "text": "en katt bredvid ett tält",
+   "uppdrag": "skog-regnpaus",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-022",
+   "omrade": "skogen",
+   "text": "en hund med en keps",
+   "uppdrag": "skog-varm-van",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-023",
+   "omrade": "skogen",
+   "text": "en kanin med en bok",
+   "uppdrag": "skog-kvallsljus",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-024",
+   "omrade": "skogen",
+   "text": "en katt bredvid en roddbåt",
+   "uppdrag": "skog-over-backen",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-025",
+   "omrade": "skogen",
+   "text": "en kanin vid en öppen korg med matsäck",
+   "uppdrag": "skog-spara-matsacken",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-026",
+   "omrade": "skogen",
+   "text": "en hund på ett träd",
+   "uppdrag": "skog-under-tradet",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-027",
+   "omrade": "skogen",
+   "text": "en stor kanin",
+   "uppdrag": "skog-stor-och-liten",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-028",
+   "omrade": "skogen",
+   "text": "en hund med en karta",
+   "uppdrag": "skog-hitta-riktningen",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-029",
+   "omrade": "skogen",
+   "text": "en uggla",
+   "uppdrag": "skog-tva-spanare",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-030",
+   "omrade": "skogen",
+   "text": "en katt med en bok",
+   "uppdrag": "skog-mysig-lasplats",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-031",
+   "omrade": "skogen",
+   "text": "en hund i ett tält med en lykta inne i tältet",
+   "uppdrag": "skog-ljus-vid-krypin",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-032",
+   "omrade": "skogen",
+   "text": "en kanin med en lykta vid en sten",
+   "uppdrag": "skog-final-minnesljus",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "skog-test-033",
+   "omrade": "skogen",
+   "text": "två rävar",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "skog-test-034",
+   "omrade": "skogen",
+   "text": "tre kaniner",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "skog-test-035",
+   "omrade": "skogen",
+   "text": "en uggla och två ugglor",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "skog-test-036",
+   "omrade": "skogen",
+   "text": "trädet",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "skog-test-037",
+   "omrade": "skogen",
+   "text": "två träd",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "skog-test-038",
+   "omrade": "skogen",
+   "text": "två böcker",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "skog-test-039",
+   "omrade": "skogen",
+   "text": "tre nycklar",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "skog-test-040",
+   "omrade": "skogen",
+   "text": "två äpplen",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "skog-test-041",
+   "omrade": "skogen",
+   "text": "en kannin",
+   "uppdrag": null,
+   "utfall": "menade_du",
+   "lost": null
+  },
+  {
+   "id": "skog-test-042",
+   "omrade": "skogen",
+   "text": "en ugla",
+   "uppdrag": null,
+   "utfall": "menade_du",
+   "lost": null
+  },
+  {
+   "id": "skog-test-043",
+   "omrade": "skogen",
+   "text": "en kompas",
+   "uppdrag": null,
+   "utfall": "menade_du",
+   "lost": null
+  },
+  {
+   "id": "skog-test-044",
+   "omrade": "skogen",
+   "text": "en ekore",
+   "uppdrag": null,
+   "utfall": "agg_och_ledtrad",
+   "lost": null
+  },
+  {
+   "id": "skog-test-045",
+   "omrade": "skogen",
+   "text": "en bävr",
+   "uppdrag": null,
+   "utfall": "agg_och_ledtrad",
+   "lost": null
+  },
+  {
+   "id": "skog-test-046",
+   "omrade": "skogen",
+   "text": "en äple",
+   "uppdrag": null,
+   "utfall": "menade_du",
+   "lost": null
+  },
+  {
+   "id": "skog-test-047",
+   "omrade": "skogen",
+   "text": "en mossfnutt",
+   "uppdrag": null,
+   "utfall": "agg",
+   "lost": null
+  },
+  {
+   "id": "skog-test-048",
+   "omrade": "skogen",
+   "text": "en lövplupp",
+   "uppdrag": null,
+   "utfall": "agg",
+   "lost": null
+  },
+  {
+   "id": "skog-test-049",
+   "omrade": "skogen",
+   "text": "en grenknorr",
+   "uppdrag": null,
+   "utfall": "agg",
+   "lost": null
+  },
+  {
+   "id": "skog-test-050",
+   "omrade": "skogen",
+   "text": "en kottefniss",
+   "uppdrag": null,
+   "utfall": "agg",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-001",
+   "omrade": "sjon",
+   "text": "en blå anka",
+   "uppdrag": "sjo-bla-van",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-002",
+   "omrade": "sjon",
+   "text": "en stor fisk",
+   "uppdrag": "sjo-stor-simmare",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-003",
+   "omrade": "sjon",
+   "text": "en hund på en stock vid sjön",
+   "uppdrag": "sjo-sitt-vid-vattnet",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-004",
+   "omrade": "sjon",
+   "text": "en kanin med ett äpple",
+   "uppdrag": "sjo-fruktpaus",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-005",
+   "omrade": "sjon",
+   "text": "en hund under ett träd på stranden",
+   "uppdrag": "sjo-skugga-pa-stranden",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-006",
+   "omrade": "sjon",
+   "text": "en hund i en roddbåt",
+   "uppdrag": "sjo-torr-overfart",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-007",
+   "omrade": "sjon",
+   "text": "en kanin i ett tält vid sjön",
+   "uppdrag": "sjo-regn-vid-stranden",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-008",
+   "omrade": "sjon",
+   "text": "en kanin med en lykta vid sjön",
+   "uppdrag": "sjo-lys-vid-vattnet",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-009",
+   "omrade": "sjon",
+   "text": "en groda i en roddbåt",
+   "uppdrag": "sjo-i-baten",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-010",
+   "omrade": "sjon",
+   "text": "en anka på en brygga",
+   "uppdrag": "sjo-pa-bryggan",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-011",
+   "omrade": "sjon",
+   "text": "en stor fisk och en liten fisk",
+   "uppdrag": "sjo-tva-storlekar",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-012",
+   "omrade": "sjon",
+   "text": "en röd fisk i vattnet och en blå katt på stranden",
+   "uppdrag": "sjo-tva-farger",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-013",
+   "omrade": "sjon",
+   "text": "en kanin på bryggan med en bok och en lykta",
+   "uppdrag": "sjo-las-och-lys",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-014",
+   "omrade": "sjon",
+   "text": "en katt i en roddbåt och en hund på en träbro",
+   "uppdrag": "sjo-tva-satt-att-resa",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-015",
+   "omrade": "sjon",
+   "text": "en fisk i ett badkar med vatten i en båt",
+   "uppdrag": "sjo-ovantad-kapten",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-016",
+   "omrade": "sjon",
+   "text": "en anka med en kristall och en blomma",
+   "uppdrag": "sjo-final-vattenglitter",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "sjo-test-017",
+   "omrade": "sjon",
+   "text": "en gul anka",
+   "uppdrag": "sjo-bla-van",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-018",
+   "omrade": "sjon",
+   "text": "en liten fisk",
+   "uppdrag": "sjo-stor-simmare",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-019",
+   "omrade": "sjon",
+   "text": "en hund bredvid en stol vid sjön",
+   "uppdrag": "sjo-sitt-vid-vattnet",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-020",
+   "omrade": "sjon",
+   "text": "en apa med en bok",
+   "uppdrag": "sjo-fruktpaus",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-021",
+   "omrade": "sjon",
+   "text": "en katt bredvid ett tält på stranden",
+   "uppdrag": "sjo-skugga-pa-stranden",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-022",
+   "omrade": "sjon",
+   "text": "en hund bredvid en roddbåt",
+   "uppdrag": "sjo-torr-overfart",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-023",
+   "omrade": "sjon",
+   "text": "en kanin bredvid ett tält vid sjön",
+   "uppdrag": "sjo-regn-vid-stranden",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-024",
+   "omrade": "sjon",
+   "text": "en kanin med en karta vid sjön",
+   "uppdrag": "sjo-lys-vid-vattnet",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-025",
+   "omrade": "sjon",
+   "text": "en katt bredvid en roddbåt",
+   "uppdrag": "sjo-i-baten",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-026",
+   "omrade": "sjon",
+   "text": "en hund under en brygga",
+   "uppdrag": "sjo-pa-bryggan",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-027",
+   "omrade": "sjon",
+   "text": "en stor fisk vid en sten",
+   "uppdrag": "sjo-tva-storlekar",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-028",
+   "omrade": "sjon",
+   "text": "en blå fisk i vattnet och en röd katt på stranden",
+   "uppdrag": "sjo-tva-farger",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-029",
+   "omrade": "sjon",
+   "text": "en katt på bryggan med en bok",
+   "uppdrag": "sjo-las-och-lys",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-030",
+   "omrade": "sjon",
+   "text": "en hund i en roddbåt vid en sten",
+   "uppdrag": "sjo-tva-satt-att-resa",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-031",
+   "omrade": "sjon",
+   "text": "en fisk i en båt",
+   "uppdrag": "sjo-ovantad-kapten",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-032",
+   "omrade": "sjon",
+   "text": "en groda med en blomma",
+   "uppdrag": "sjo-final-vattenglitter",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "sjo-test-033",
+   "omrade": "sjon",
+   "text": "två gäss",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-034",
+   "omrade": "sjon",
+   "text": "tre fiskar",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-035",
+   "omrade": "sjon",
+   "text": "två ankor",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-036",
+   "omrade": "sjon",
+   "text": "två stränder",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-037",
+   "omrade": "sjon",
+   "text": "två roddbåtar",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-038",
+   "omrade": "sjon",
+   "text": "två näckrosor",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-039",
+   "omrade": "sjon",
+   "text": "två kanoter",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-040",
+   "omrade": "sjon",
+   "text": "två vattenfall",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-041",
+   "omrade": "sjon",
+   "text": "en rodbåt",
+   "uppdrag": null,
+   "utfall": "menade_du",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-042",
+   "omrade": "sjon",
+   "text": "en annka",
+   "uppdrag": null,
+   "utfall": "menade_du",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-043",
+   "omrade": "sjon",
+   "text": "en näckross",
+   "uppdrag": null,
+   "utfall": "menade_du",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-044",
+   "omrade": "sjon",
+   "text": "en abore",
+   "uppdrag": null,
+   "utfall": "agg_och_ledtrad",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-045",
+   "omrade": "sjon",
+   "text": "en gäda",
+   "uppdrag": null,
+   "utfall": "agg_och_ledtrad",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-046",
+   "omrade": "sjon",
+   "text": "en vatenmelon",
+   "uppdrag": null,
+   "utfall": "menade_du",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-047",
+   "omrade": "sjon",
+   "text": "en plaskfnutt",
+   "uppdrag": null,
+   "utfall": "agg",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-048",
+   "omrade": "sjon",
+   "text": "en vågplupp",
+   "uppdrag": null,
+   "utfall": "agg",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-049",
+   "omrade": "sjon",
+   "text": "en glitterfena",
+   "uppdrag": null,
+   "utfall": "agg",
+   "lost": null
+  },
+  {
+   "id": "sjo-test-050",
+   "omrade": "sjon",
+   "text": "en kluckboll",
+   "uppdrag": null,
+   "utfall": "agg",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-001",
+   "omrade": "grottan",
+   "text": "en kanin med en lykta",
+   "uppdrag": "grotta-forsta-skenet",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-002",
+   "omrade": "grottan",
+   "text": "en gul kanin",
+   "uppdrag": "grotta-gul-van",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-003",
+   "omrade": "grottan",
+   "text": "en pytteliten mus",
+   "uppdrag": "grotta-liten-upptackare",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-004",
+   "omrade": "grottan",
+   "text": "en groda på en sten",
+   "uppdrag": "grotta-sittpaus",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-005",
+   "omrade": "grottan",
+   "text": "en hund med en tröja",
+   "uppdrag": "grotta-varma-oron",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-006",
+   "omrade": "grottan",
+   "text": "en hund i en säng",
+   "uppdrag": "grotta-mjuk-vila",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-007",
+   "omrade": "grottan",
+   "text": "en kanin i ett tält i grottan",
+   "uppdrag": "grotta-eget-krypin",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-008",
+   "omrade": "grottan",
+   "text": "en kanin med en bok",
+   "uppdrag": "grotta-ordna-lasning",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-009",
+   "omrade": "grottan",
+   "text": "en mus under ett bord",
+   "uppdrag": "grotta-under-bordet",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-010",
+   "omrade": "grottan",
+   "text": "en stor hund och en liten katt",
+   "uppdrag": "grotta-stor-och-liten",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-011",
+   "omrade": "grottan",
+   "text": "en kanin med en bok och en lykta",
+   "uppdrag": "grotta-sken-och-saga",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-012",
+   "omrade": "grottan",
+   "text": "en grön groda på en sten och en gul mus bredvid stenen",
+   "uppdrag": "grotta-tva-farger",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-013",
+   "omrade": "grottan",
+   "text": "en mus i en koja med en lykta utanför",
+   "uppdrag": "grotta-ljus-utanfor",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-014",
+   "omrade": "grottan",
+   "text": "en hund bredvid ett bord med fyra ben",
+   "uppdrag": "grotta-ben-som-vilar",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-015",
+   "omrade": "grottan",
+   "text": "en mus bredvid en skattkista med en kristall i",
+   "uppdrag": "grotta-glitter-i-kistan",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-016",
+   "omrade": "grottan",
+   "text": "en kanin med en kristall och en bok",
+   "uppdrag": "grotta-final-bergets-berattelse",
+   "utfall": "modell",
+   "lost": true
+  },
+  {
+   "id": "grotta-test-017",
+   "omrade": "grottan",
+   "text": "en kanin med en bok vid en sten",
+   "uppdrag": "grotta-forsta-skenet",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-018",
+   "omrade": "grottan",
+   "text": "en blå mus",
+   "uppdrag": "grotta-gul-van",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-019",
+   "omrade": "grottan",
+   "text": "en jättestor kanin",
+   "uppdrag": "grotta-liten-upptackare",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-020",
+   "omrade": "grottan",
+   "text": "en katt bredvid en stol",
+   "uppdrag": "grotta-sittpaus",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-021",
+   "omrade": "grottan",
+   "text": "en hund med en keps",
+   "uppdrag": "grotta-varma-oron",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-022",
+   "omrade": "grottan",
+   "text": "en katt bredvid en säng",
+   "uppdrag": "grotta-mjuk-vila",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-023",
+   "omrade": "grottan",
+   "text": "en mus bredvid en koja i grottan",
+   "uppdrag": "grotta-eget-krypin",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-024",
+   "omrade": "grottan",
+   "text": "en hund med en karta",
+   "uppdrag": "grotta-ordna-lasning",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-025",
+   "omrade": "grottan",
+   "text": "en mus på ett bord",
+   "uppdrag": "grotta-under-bordet",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-026",
+   "omrade": "grottan",
+   "text": "en stor mus",
+   "uppdrag": "grotta-stor-och-liten",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-027",
+   "omrade": "grottan",
+   "text": "en hund med en bok",
+   "uppdrag": "grotta-sken-och-saga",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-028",
+   "omrade": "grottan",
+   "text": "en gul groda på en sten och en grön mus bredvid stenen",
+   "uppdrag": "grotta-tva-farger",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-029",
+   "omrade": "grottan",
+   "text": "en hund i en koja med en lykta inne i kojan",
+   "uppdrag": "grotta-ljus-utanfor",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-030",
+   "omrade": "grottan",
+   "text": "en hund bredvid en kanin",
+   "uppdrag": "grotta-ben-som-vilar",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-031",
+   "omrade": "grottan",
+   "text": "en mus bredvid en skattkista med en kristall bredvid kistan",
+   "uppdrag": "grotta-glitter-i-kistan",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-032",
+   "omrade": "grottan",
+   "text": "en katt med en kristall",
+   "uppdrag": "grotta-final-bergets-berattelse",
+   "utfall": "modell",
+   "lost": false
+  },
+  {
+   "id": "grotta-test-033",
+   "omrade": "grottan",
+   "text": "två möss",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-034",
+   "omrade": "grottan",
+   "text": "tre katter",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-035",
+   "omrade": "grottan",
+   "text": "två hundar",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-036",
+   "omrade": "grottan",
+   "text": "två trollböcker",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-037",
+   "omrade": "grottan",
+   "text": "två förstoringsglas",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-038",
+   "omrade": "grottan",
+   "text": "två berg",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-039",
+   "omrade": "grottan",
+   "text": "två kristaller",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-040",
+   "omrade": "grottan",
+   "text": "den underjordiska sjön",
+   "uppdrag": null,
+   "utfall": "modell",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-041",
+   "omrade": "grottan",
+   "text": "en grota",
+   "uppdrag": null,
+   "utfall": "menade_du",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-042",
+   "omrade": "grottan",
+   "text": "en kristal",
+   "uppdrag": null,
+   "utfall": "menade_du",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-043",
+   "omrade": "grottan",
+   "text": "en skatkista",
+   "uppdrag": null,
+   "utfall": "menade_du",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-044",
+   "omrade": "grottan",
+   "text": "en fladermus",
+   "uppdrag": null,
+   "utfall": "agg_och_ledtrad",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-045",
+   "omrade": "grottan",
+   "text": "en spindell",
+   "uppdrag": null,
+   "utfall": "agg_och_ledtrad",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-046",
+   "omrade": "grottan",
+   "text": "en nykel",
+   "uppdrag": null,
+   "utfall": "menade_du",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-047",
+   "omrade": "grottan",
+   "text": "en bergfnutt",
+   "uppdrag": null,
+   "utfall": "agg",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-048",
+   "omrade": "grottan",
+   "text": "en ekoplopp",
+   "uppdrag": null,
+   "utfall": "agg",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-049",
+   "omrade": "grottan",
+   "text": "en kristallknorr",
+   "uppdrag": null,
+   "utfall": "agg",
+   "lost": null
+  },
+  {
+   "id": "grotta-test-050",
+   "omrade": "grottan",
+   "text": "en glimmerpuff",
+   "uppdrag": null,
+   "utfall": "agg",
+   "lost": null
+  }
+ ]
+}

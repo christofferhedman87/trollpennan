@@ -1,0 +1,32 @@
+prio	ord	genus	kategori	plats	anvands_i	kalla_forslag
+1	stig	en	natur	grottan,sjon,skogen	3	
+1	abborre	en	djur	sjon	2	
+1	gädda	en	djur	sjon	2	
+1	kräfta	en	djur	sjon	2	
+1	svan	en	djur	sjon	2	
+1	utter	en	djur	sjon	2	
+1	vattensalamander	en	djur	sjon	2	
+1	bäver	en	djur	skogen	0	
+1	ekorre	en	djur	skogen	0	
+2	bäck	en	natur	skogen	1	
+2	sandbotten	en	natur	sjon	1	
+2	sandhög	en	natur	grottan	1	
+2	vassrugge	en	natur	sjon	1	
+2	vattenpöl	en	natur	grottan	1	
+2	vägskylt	en	föremål	skogen	1	
+2	bäver		djur (kodritad idag, GLB snyggare)	hemligt	0	
+2	dinosaurie		djur (kodritad idag, GLB snyggare)	hemligt	0	
+2	ekorre		djur (kodritad idag, GLB snyggare)	hemligt	0	
+2	gris		djur (kodritad idag, GLB snyggare)	hemligt	0	
+2	haj		djur (kodritad idag, GLB snyggare)	hemligt	0	
+2	kulting		djur (kodritad idag, GLB snyggare)	hemligt	0	
+3	bergkristall	en	natur	grottan	0	
+3	flytväst	en	föremål	sjon	0	
+3	fågelholk	en	byggnad	skogen	0	
+3	håv	en	föremål	sjon	0	
+3	kikare	en	föremål	sjon,skogen	0	
+3	kotte	en	natur	skogen	0	
+3	mossmatta	en	natur	skogen	0	
+3	picknickfilt	en	föremål	sjon	0	
+3	underjordisk sjö	en	natur	grottan	0	
+3	vattenväxt	en	natur	sjon	0	

@@ -1,0 +1,2450 @@
+{
+ "_om": "UTKAST: Copilots 40 ängsuppdrag (uppdrag 1) i bengtsson-format, omrade ang.",
+ "uppdrag": [
+  {
+   "id": "solgul-van",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett gult djur.",
+   "mal": {},
+   "klart": "Vilken solstråle till kompis!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Jag längtar efter en vän som lyser som solen!",
+   "klart_bengtsson": "Vilken solstråle till kompis!",
+   "krav": {
+    "ord": [
+     "gul",
+     "kyckling",
+     "anka",
+     "kanariefågel",
+     "citron",
+     "sol",
+     "guld",
+     "guldfisk",
+     "lejon",
+     "bi"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små vänner",
+      "forslag": [
+       {
+        "ord": "kyckling",
+        "fras": "en gul kyckling"
+       },
+       {
+        "ord": "bi",
+        "fras": "ett gult bi"
+       }
+      ]
+     },
+     {
+      "etikett": "Större vänner",
+      "forslag": [
+       {
+        "ord": "anka",
+        "fras": "en gul anka"
+       },
+       {
+        "ord": "hund",
+        "fras": "en gul hund"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "vingar-i-luften",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur som kan flyga.",
+   "mal": {},
+   "klart": "Nu får molnen äntligen besök!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Vem kan hälsa på molnen utan att klättra?",
+   "klart_bengtsson": "Nu får molnen äntligen besök!",
+   "krav": {
+    "ord": [
+     "fågel",
+     "bi",
+     "ara",
+     "fladdermus",
+     "kolibri",
+     "papegoja",
+     "örn",
+     "uggla",
+     "tukan",
+     "pelikan",
+     "gås",
+     "drake"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små flygare",
+      "forslag": [
+       {
+        "ord": "bi",
+        "fras": "ett bi"
+       },
+       {
+        "ord": "kolibri",
+        "fras": "en kolibri"
+       }
+      ]
+     },
+     {
+      "etikett": "Stora vingar",
+      "forslag": [
+       {
+        "ord": "örn",
+        "fras": "en örn"
+       },
+       {
+        "ord": "pelikan",
+        "fras": "en pelikan"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "pytteliten-kompis",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett pyttelitet djur.",
+   "mal": {},
+   "klart": "Där är du ju, lilla kompis!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Min stora kikare söker en riktigt liten vän!",
+   "klart_bengtsson": "Där är du ju, lilla kompis!",
+   "krav": {
+    "ord": [
+     "liten",
+     "pytteliten",
+     "bi",
+     "larv",
+     "mus",
+     "spindel",
+     "myra",
+     "loppa",
+     "nyckelpiga",
+     "kolibri"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Nära marken",
+      "forslag": [
+       {
+        "ord": "larv",
+        "fras": "en pytteliten larv"
+       },
+       {
+        "ord": "spindel",
+        "fras": "en pytteliten spindel"
+       }
+      ]
+     },
+     {
+      "etikett": "Små kompisar",
+      "forslag": [
+       {
+        "ord": "mus",
+        "fras": "en liten mus"
+       },
+       {
+        "ord": "bi",
+        "fras": "ett litet bi"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "jattestor-van",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett jättestort djur.",
+   "mal": {},
+   "klart": "Oj, nu behöver jag en större kamera!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Här behövs en vän som knappt får plats på mitt foto!",
+   "klart_bengtsson": "Oj, nu behöver jag en större kamera!",
+   "krav": {
+    "ord": [
+     "stor",
+     "jättestor",
+     "elefant",
+     "giraff",
+     "flodhäst",
+     "noshörning",
+     "val",
+     "drake",
+     "triceratops",
+     "dinosaurie"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Stora kroppar",
+      "forslag": [
+       {
+        "ord": "elefant",
+        "fras": "en stor elefant"
+       },
+       {
+        "ord": "flodhäst",
+        "fras": "en stor flodhäst"
+       }
+      ]
+     },
+     {
+      "etikett": "Extra stora",
+      "forslag": [
+       {
+        "ord": "drake",
+        "fras": "en jättestor drake"
+       },
+       {
+        "ord": "triceratops",
+        "fras": "en jättestor triceratops"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "randig-kompis",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett randigt djur.",
+   "mal": {},
+   "klart": "Vilken stilig strecksamling!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Jag söker en vän med streck på kroppen!",
+   "klart_bengtsson": "Vilken stilig strecksamling!",
+   "krav": {
+    "ord": [
+     "randig",
+     "zebra",
+     "tiger",
+     "bi",
+     "katt",
+     "clownfisk",
+     "geting",
+     "humla",
+     "okapi",
+     "polkagris"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "På land",
+      "forslag": [
+       {
+        "ord": "zebra",
+        "fras": "en zebra"
+       },
+       {
+        "ord": "tiger",
+        "fras": "en tiger"
+       }
+      ]
+     },
+     {
+      "etikett": "Små ränder",
+      "forslag": [
+       {
+        "ord": "bi",
+        "fras": "ett bi"
+       },
+       {
+        "ord": "clownfisk",
+        "fras": "en clownfisk"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "vit-som-sno",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett vitt djur.",
+   "mal": {},
+   "klart": "Så fint, en liten vinterhälsning!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Kan en vän få samma färg som ett snöigt vinterland?",
+   "klart_bengtsson": "Så fint, en liten vinterhälsning!",
+   "krav": {
+    "ord": [
+     "vit",
+     "isbjörn",
+     "lamm",
+     "gås",
+     "kanin",
+     "katt",
+     "hund",
+     "svan",
+     "fjällräv",
+     "snö"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Mjuka vänner",
+      "forslag": [
+       {
+        "ord": "kanin",
+        "fras": "en vit kanin"
+       },
+       {
+        "ord": "lamm",
+        "fras": "ett vitt lamm"
+       }
+      ]
+     },
+     {
+      "etikett": "Stora och små",
+      "forslag": [
+       {
+        "ord": "isbjörn",
+        "fras": "en vit isbjörn"
+       },
+       {
+        "ord": "gås",
+        "fras": "en vit gås"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "lang-hals",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med lång hals.",
+   "mal": {},
+   "klart": "Där uppe måste utsikten vara fin!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Vem kan kika högt över buskarna utan en stege?",
+   "klart_bengtsson": "Där uppe måste utsikten vara fin!",
+   "krav": {
+    "ord": [
+     "giraff",
+     "flamingo",
+     "lama",
+     "alpacka",
+     "struts",
+     "svan",
+     "gås",
+     "dromedar",
+     "kamel",
+     "lång"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Höga spanare",
+      "forslag": [
+       {
+        "ord": "giraff",
+        "fras": "en giraff"
+       },
+       {
+        "ord": "lama",
+        "fras": "en lama"
+       }
+      ]
+     },
+     {
+      "etikett": "Fjädrar och päls",
+      "forslag": [
+       {
+        "ord": "flamingo",
+        "fras": "en flamingo"
+       },
+       {
+        "ord": "alpacka",
+        "fras": "en alpacka"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "rod-kompis",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett rött djur.",
+   "mal": {},
+   "klart": "Vilken härlig färgklick!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Jag önskar mig en vän i samma färg som en mogen tomat!",
+   "klart_bengtsson": "Vilken härlig färgklick!",
+   "krav": {
+    "ord": [
+     "röd",
+     "ara",
+     "papegoja",
+     "fågel",
+     "drake",
+     "fisk",
+     "krabba",
+     "nyckelpiga",
+     "räv",
+     "kardinal"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Med vingar",
+      "forslag": [
+       {
+        "ord": "ara",
+        "fras": "en röd ara"
+       },
+       {
+        "ord": "fågel",
+        "fras": "en röd fågel"
+       }
+      ]
+     },
+     {
+      "etikett": "Med fantasi",
+      "forslag": [
+       {
+        "ord": "drake",
+        "fras": "en röd drake"
+       },
+       {
+        "ord": "fisk",
+        "fras": "en röd fisk"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "gron-kompis",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett grönt djur.",
+   "mal": {},
+   "klart": "Nu får jag leta noga i gräset!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Vem kan få samma färg som gräset på ängen?",
+   "klart_bengtsson": "Nu får jag leta noga i gräset!",
+   "krav": {
+    "ord": [
+     "grön",
+     "groda",
+     "larv",
+     "papegoja",
+     "drake",
+     "ödla",
+     "gräshoppa",
+     "krokodil",
+     "kameleont",
+     "orm"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Nära gräset",
+      "forslag": [
+       {
+        "ord": "groda",
+        "fras": "en grön groda"
+       },
+       {
+        "ord": "larv",
+        "fras": "en grön larv"
+       }
+      ]
+     },
+     {
+      "etikett": "Med vingar",
+      "forslag": [
+       {
+        "ord": "papegoja",
+        "fras": "en grön papegoja"
+       },
+       {
+        "ord": "drake",
+        "fras": "en grön drake"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "mjuk-kompis",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med mjuk päls.",
+   "mal": {},
+   "klart": "Så fluffigt att min mustasch blir avundsjuk!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Jag söker en fluffig vän som ser ut som ett litet moln!",
+   "klart_bengtsson": "Så fluffigt att min mustasch blir avundsjuk!",
+   "krav": {
+    "ord": [
+     "mjuk",
+     "fluffig",
+     "kanin",
+     "katt",
+     "lamm",
+     "alpacka",
+     "lama",
+     "hund",
+     "koala",
+     "panda",
+     "chinchilla",
+     "päls"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små fluffisar",
+      "forslag": [
+       {
+        "ord": "kanin",
+        "fras": "en mjuk kanin"
+       },
+       {
+        "ord": "katt",
+        "fras": "en fluffig katt"
+       }
+      ]
+     },
+     {
+      "etikett": "Ulliga vänner",
+      "forslag": [
+       {
+        "ord": "lamm",
+        "fras": "ett mjukt lamm"
+       },
+       {
+        "ord": "alpacka",
+        "fras": "en fluffig alpacka"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "magen-kurrar",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram något att äta åt ett hungrigt djur.",
+   "mal": {},
+   "klart": "Nu låter magen glad i stället!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Kurr, kurr, säger magen på ditt djur! Vad kan få den nöjd?",
+   "klart_bengtsson": "Nu låter magen glad i stället!",
+   "krav": {
+    "ord": [
+     "morot",
+     "banan",
+     "äpple",
+     "bröd",
+     "broccoli",
+     "druvor",
+     "hö",
+     "gräs",
+     "foder",
+     "mat",
+     "sallad",
+     "päron"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Fruktstund",
+      "forslag": [
+       {
+        "ord": "banan",
+        "fras": "en apa med en banan"
+       },
+       {
+        "ord": "äpple",
+        "fras": "en häst med ett äpple"
+       }
+      ]
+     },
+     {
+      "etikett": "Grönt och gott",
+      "forslag": [
+       {
+        "ord": "morot",
+        "fras": "en kanin med en morot"
+       },
+       {
+        "ord": "broccoli",
+        "fras": "en kanin med broccoli"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "regn-pa-nosen",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett regnskydd åt ditt djur.",
+   "mal": {},
+   "klart": "Nu får regnet plaska utan oss!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Plipp, plopp på nosen! Var kan ditt djur hålla sig torrt?",
+   "klart_bengtsson": "Nu får regnet plaska utan oss!",
+   "krav": {
+    "ord": [
+     "tält",
+     "hus",
+     "koja",
+     "grotta",
+     "skjul",
+     "lada",
+     "villa",
+     "paraply",
+     "regnrock",
+     "tak",
+     "regnskydd",
+     "stuga"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Eget krypin",
+      "forslag": [
+       {
+        "ord": "tält",
+        "fras": "en hund i ett tält"
+       },
+       {
+        "ord": "koja",
+        "fras": "en katt i en koja"
+       }
+      ]
+     },
+     {
+      "etikett": "Under tak",
+      "forslag": [
+       {
+        "ord": "hus",
+        "fras": "en kanin i ett hus"
+       },
+       {
+        "ord": "skjul",
+        "fras": "en get i ett skjul"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "kalla-tassar",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram något som värmer ditt djur.",
+   "mal": {},
+   "klart": "Så skönt, nu slutar tänderna spela trumma!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Brr, ditt djur huttrar! Kan du hjälpa det att bli varmt?",
+   "klart_bengtsson": "Så skönt, nu slutar tänderna spela trumma!",
+   "krav": {
+    "ord": [
+     "tröja",
+     "mössa",
+     "luva",
+     "filt",
+     "täcke",
+     "halsduk",
+     "vante",
+     "jacka",
+     "socka",
+     "stuga",
+     "hus",
+     "varm"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "På kroppen",
+      "forslag": [
+       {
+        "ord": "tröja",
+        "fras": "en hund med en tröja"
+       },
+       {
+        "ord": "luva",
+        "fras": "en katt med en luva"
+       }
+      ]
+     },
+     {
+      "etikett": "Varmt om huvudet",
+      "forslag": [
+       {
+        "ord": "mössa",
+        "fras": "en kanin med en mössa"
+       },
+       {
+        "ord": "luva",
+        "fras": "en apa med en luva"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "trakig-eftermiddag",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram något roligt åt ditt uttråkade djur.",
+   "mal": {},
+   "klart": "Hurra, nu har tristessen gått hem!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur har räknat samma grässtrå sju gånger! Vad kan göra dagen roligare?",
+   "klart_bengtsson": "Hurra, nu har tristessen gått hem!",
+   "krav": {
+    "ord": [
+     "basketboll",
+     "bok",
+     "skateboard",
+     "nallebjörn",
+     "tv",
+     "boll",
+     "leksak",
+     "pussel",
+     "spel",
+     "gunga",
+     "krita",
+     "byggkloss"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Lek och rörelse",
+      "forslag": [
+       {
+        "ord": "basketboll",
+        "fras": "en apa med en basketboll"
+       },
+       {
+        "ord": "skateboard",
+        "fras": "en hund på en skateboard"
+       }
+      ]
+     },
+     {
+      "etikett": "Lugnare nöjen",
+      "forslag": [
+       {
+        "ord": "bok",
+        "fras": "en katt med en bok"
+       },
+       {
+        "ord": "nallebjörn",
+        "fras": "en kanin med en nallebjörn"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "ljus-i-kvallen",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram något som lyser åt ditt djur i mörkret.",
+   "mal": {},
+   "klart": "Nu ser vi ju våra egna näsor!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur vill se bättre i kvällsmörkret! Vad kan hjälpa?",
+   "klart_bengtsson": "Nu ser vi ju våra egna näsor!",
+   "krav": {
+    "ord": [
+     "lykta",
+     "golvlampa",
+     "lampa",
+     "ficklampa",
+     "nattlampa",
+     "ljusslinga",
+     "taklampa",
+     "bordslampa",
+     "sol",
+     "måne",
+     "stjärna",
+     "ljus"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Bärbart sken",
+      "forslag": [
+       {
+        "ord": "lykta",
+        "fras": "en hund med en lykta"
+       },
+       {
+        "ord": "lykta",
+        "fras": "en kanin vid en lykta"
+       }
+      ]
+     },
+     {
+      "etikett": "Ljust i rummet",
+      "forslag": [
+       {
+        "ord": "golvlampa",
+        "fras": "en katt vid en golvlampa"
+       },
+       {
+        "ord": "golvlampa",
+        "fras": "en apa under en golvlampa"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "redo-for-fest",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram något festligt som ditt djur kan ha på sig.",
+   "mal": {},
+   "klart": "Så stiligt att jag nästan tappar glasögonen!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur är bjudet på kalas! Vad kan göra det extra festfint?",
+   "klart_bengtsson": "Så stiligt att jag nästan tappar glasögonen!",
+   "krav": {
+    "ord": [
+     "cylinderhatt",
+     "klänning",
+     "keps",
+     "häxhatt",
+     "tröja",
+     "fluga",
+     "rosett",
+     "krona",
+     "festhatt",
+     "skjorta",
+     "väst",
+     "hatt"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Fina huvudbonader",
+      "forslag": [
+       {
+        "ord": "cylinderhatt",
+        "fras": "en katt med en cylinderhatt"
+       },
+       {
+        "ord": "häxhatt",
+        "fras": "en hund med en häxhatt"
+       }
+      ]
+     },
+     {
+      "etikett": "Festkläder",
+      "forslag": [
+       {
+        "ord": "klänning",
+        "fras": "en kanin med en klänning"
+       },
+       {
+        "ord": "tröja",
+        "fras": "en apa med en fin tröja"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "leriga-tassar",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram något som hjälper ditt djur att bli rent.",
+   "mal": {},
+   "klart": "Nu glänser till och med öronen!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Hoppsan, ditt djur har rullat i lera! Hur får vi bort kladdet?",
+   "klart_bengtsson": "Nu glänser till och med öronen!",
+   "krav": {
+    "ord": [
+     "badkar",
+     "dusch",
+     "tvål",
+     "vatten",
+     "balja",
+     "handduk",
+     "svamp",
+     "borste",
+     "schampo",
+     "tvättlapp",
+     "tvättbalja",
+     "bad"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Ett skönt bad",
+      "forslag": [
+       {
+        "ord": "badkar",
+        "fras": "en hund i ett badkar"
+       },
+       {
+        "ord": "badkar",
+        "fras": "en grisrosa flodhäst i ett badkar"
+       }
+      ]
+     },
+     {
+      "etikett": "Tvätta försiktigt",
+      "forslag": [
+       {
+        "ord": "svamp",
+        "fras": "en apa med en svamp"
+       },
+       {
+        "ord": "svamp",
+        "fras": "en hund med en svamp vid ett badkar"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "plats-for-en-van",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram två djur som kan hålla varandra sällskap.",
+   "mal": {},
+   "klart": "Nu blir det dubbelt så mycket fniss!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "På ängen finns plats för vänskap! Vilka två vill leka tillsammans?",
+   "klart_bengtsson": "Nu blir det dubbelt så mycket fniss!",
+   "krav": {
+    "ord": [
+     "hund",
+     "katt",
+     "kanin",
+     "lamm",
+     "get",
+     "häst",
+     "ko",
+     "apa",
+     "anka",
+     "gås",
+     "alpacka",
+     "lama"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Lekkompisar",
+      "forslag": [
+       {
+        "ord": "hund",
+        "fras": "en hund och en katt"
+       },
+       {
+        "ord": "kanin",
+        "fras": "en kanin och ett lamm"
+       }
+      ]
+     },
+     {
+      "etikett": "Vänner på ängen",
+      "forslag": [
+       {
+        "ord": "häst",
+        "fras": "en häst och en ko"
+       },
+       {
+        "ord": "alpacka",
+        "fras": "en alpacka och en lama"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "musik-pa-angen",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram något som kan ge ditt djur musik.",
+   "mal": {},
+   "klart": "Nu dansar till och med mina strumpor!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur vill dansa, men det är alldeles tyst! Vad kan få igång takten?",
+   "klart_bengtsson": "Nu dansar till och med mina strumpor!",
+   "krav": {
+    "ord": [
+     "fågel",
+     "papegoja",
+     "ara",
+     "tv",
+     "radio",
+     "högtalare",
+     "piano",
+     "gitarr",
+     "trumma",
+     "flöjt",
+     "musik",
+     "sång"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "En sjungande vän",
+      "forslag": [
+       {
+        "ord": "fågel",
+        "fras": "en katt med en sjungande fågel"
+       },
+       {
+        "ord": "papegoja",
+        "fras": "en hund med en sjungande papegoja"
+       }
+      ]
+     },
+     {
+      "etikett": "Musik på skärmen",
+      "forslag": [
+       {
+        "ord": "tv",
+        "fras": "en kanin vid en tv med musik"
+       },
+       {
+        "ord": "tv",
+        "fras": "en apa vid en tv med en konsert"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "dags-att-vila",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram en mjuk sovplats åt ditt djur.",
+   "mal": {},
+   "klart": "Sov gott, jag tassar på tå!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Gääsp, ditt djur nickar till! Var kan det vila riktigt skönt?",
+   "klart_bengtsson": "Sov gott, jag tassar på tå!",
+   "krav": {
+    "ord": [
+     "säng",
+     "soffa",
+     "fåtölj",
+     "kudde",
+     "madrass",
+     "filt",
+     "täcke",
+     "bädd",
+     "hängmatta",
+     "sovplats",
+     "hundbädd"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Sträcka ut sig",
+      "forslag": [
+       {
+        "ord": "säng",
+        "fras": "en hund i en säng"
+       },
+       {
+        "ord": "soffa",
+        "fras": "en katt på en soffa"
+       }
+      ]
+     },
+     {
+      "etikett": "Krypa ihop",
+      "forslag": [
+       {
+        "ord": "fåtölj",
+        "fras": "en kanin i en fåtölj"
+       },
+       {
+        "ord": "säng",
+        "fras": "ett lamm i en mjuk säng"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "badlangtan",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram en plats där ditt djur kan bada.",
+   "mal": {},
+   "klart": "Plask så trevligt det blev!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur längtar efter ett skönt plask! Var kan det doppa sig?",
+   "klart_bengtsson": "Plask så trevligt det blev!",
+   "krav": {
+    "ord": [
+     "badkar",
+     "strand",
+     "pool",
+     "bassäng",
+     "sjö",
+     "hav",
+     "damm",
+     "balja",
+     "badplats",
+     "plaskdamm",
+     "vatten",
+     "bad"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Bad inomhus",
+      "forslag": [
+       {
+        "ord": "badkar",
+        "fras": "en anka i ett badkar"
+       },
+       {
+        "ord": "badkar",
+        "fras": "en flodhäst i ett stort badkar"
+       }
+      ]
+     },
+     {
+      "etikett": "Bad vid stranden",
+      "forslag": [
+       {
+        "ord": "strand",
+        "fras": "en hund som badar vid en strand"
+       },
+       {
+        "ord": "strand",
+        "fras": "en säl som badar vid en strand"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "over-backen",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram något som tar ditt djur över bäcken utan att det blir blött.",
+   "mal": {},
+   "klart": "Framme, och inte en blöt tå!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur vill till andra sidan bäcken med torra tassar! Hur ordnar vi det?",
+   "klart_bengtsson": "Framme, och inte en blöt tå!",
+   "krav": {
+    "ord": [
+     "träbro",
+     "båt",
+     "roddbåt",
+     "kanot",
+     "bro",
+     "flotte",
+     "gångbro",
+     "färja",
+     "segelbåt",
+     "motorbåt",
+     "luftballong",
+     "flygplan"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Gå över",
+      "forslag": [
+       {
+        "ord": "träbro",
+        "fras": "en hund på en träbro"
+       },
+       {
+        "ord": "träbro",
+        "fras": "en kanin på en träbro"
+       }
+      ]
+     },
+     {
+      "etikett": "Åka över",
+      "forslag": [
+       {
+        "ord": "roddbåt",
+        "fras": "en katt i en roddbåt"
+       },
+       {
+        "ord": "båt",
+        "fras": "en get i en båt"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "skugga-at-djuret",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram en skuggig plats åt ditt djur.",
+   "mal": {},
+   "klart": "Här kan vi svalka både nos och tår!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Solen gassar och ditt djur vill vila svalare! Var finns en skön plats?",
+   "klart_bengtsson": "Här kan vi svalka både nos och tår!",
+   "krav": {
+    "ord": [
+     "träd",
+     "palm",
+     "tält",
+     "koja",
+     "hus",
+     "grotta",
+     "parasoll",
+     "tak",
+     "skjul",
+     "lada",
+     "solskydd",
+     "skugga"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Under grenar",
+      "forslag": [
+       {
+        "ord": "träd",
+        "fras": "en hund under ett träd"
+       },
+       {
+        "ord": "palm",
+        "fras": "en apa under en palm"
+       }
+      ]
+     },
+     {
+      "etikett": "Ett svalt krypin",
+      "forslag": [
+       {
+        "ord": "koja",
+        "fras": "en kanin i en koja"
+       },
+       {
+        "ord": "tält",
+        "fras": "en katt i ett tält"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "present-till-en-van",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram en present som ditt djur kan ge en vän.",
+   "mal": {},
+   "klart": "Vilken omtänksam överraskning!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur vill överraska en kompis med något fint! Vad kan det ge bort?",
+   "klart_bengtsson": "Vilken omtänksam överraskning!",
+   "krav": {
+    "ord": [
+     "blomma",
+     "bok",
+     "nallebjörn",
+     "julklapp",
+     "kaka",
+     "äpple",
+     "teckning",
+     "present",
+     "paket",
+     "leksak",
+     "pärlband",
+     "kort"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Något fint",
+      "forslag": [
+       {
+        "ord": "blomma",
+        "fras": "en kanin med en blomma till en vän"
+       },
+       {
+        "ord": "nallebjörn",
+        "fras": "en hund med en nallebjörn till en vän"
+       }
+      ]
+     },
+     {
+      "etikett": "Något att upptäcka",
+      "forslag": [
+       {
+        "ord": "bok",
+        "fras": "en katt med en bok till en vän"
+       },
+       {
+        "ord": "julklapp",
+        "fras": "en apa med en julklapp till en vän"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "hitta-till-picknicken",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram något som hjälper ditt djur att hitta till picknicken.",
+   "mal": {},
+   "klart": "Rätt väg, nu väntar picknicken!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur har glömt vägen till picknicken! Vad kan visa rätt håll?",
+   "klart_bengtsson": "Rätt väg, nu väntar picknicken!",
+   "krav": {
+    "ord": [
+     "karta",
+     "kompass",
+     "skylt",
+     "vägvisare",
+     "vägskylt",
+     "pil",
+     "gps",
+     "vägbeskrivning",
+     "guide",
+     "stig",
+     "spår",
+     "ledtråd"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Se vägen",
+      "forslag": [
+       {
+        "ord": "karta",
+        "fras": "en hund med en karta"
+       },
+       {
+        "ord": "karta",
+        "fras": "en kanin med en karta till picknicken"
+       }
+      ]
+     },
+     {
+      "etikett": "Hitta riktningen",
+      "forslag": [
+       {
+        "ord": "kompass",
+        "fras": "en katt med en kompass och en karta"
+       },
+       {
+        "ord": "kompass",
+        "fras": "en apa med en kompass och en karta"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "tva-farger",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett rött djur och ett blått djur.",
+   "mal": {},
+   "klart": "Vilket färgglatt kompispar!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Kan två vänner låna varsin färg från en tomat och en klar sommarhimmel?",
+   "klart_bengtsson": "Vilket färgglatt kompispar!",
+   "krav": {
+    "ord": [
+     "röd",
+     "blå",
+     "katt",
+     "hund",
+     "kanin",
+     "drake",
+     "fågel",
+     "fisk",
+     "apa",
+     "elefant"
+    ],
+    "min": 2
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Vänner på marken",
+      "forslag": [
+       {
+        "ord": "katt",
+        "fras": "en röd katt och en blå hund"
+       },
+       {
+        "ord": "kanin",
+        "fras": "en röd kanin och en blå elefant"
+       }
+      ]
+     },
+     {
+      "etikett": "Vingar och fenor",
+      "forslag": [
+       {
+        "ord": "drake",
+        "fras": "en röd drake och en blå fågel"
+       },
+       {
+        "ord": "fisk",
+        "fras": "en röd fisk och en blå fisk"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "sol-och-gras",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett gult djur och ett grönt djur.",
+   "mal": {},
+   "klart": "Nu ser hela ängen extra glad ut!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Låt två vänner låna färger från solen och gräset!",
+   "klart_bengtsson": "Nu ser hela ängen extra glad ut!",
+   "krav": {
+    "ord": [
+     "gul",
+     "grön",
+     "kyckling",
+     "groda",
+     "anka",
+     "larv",
+     "papegoja",
+     "drake",
+     "katt",
+     "hund"
+    ],
+    "min": 2
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små färgvänner",
+      "forslag": [
+       {
+        "ord": "kyckling",
+        "fras": "en gul kyckling och en grön groda"
+       },
+       {
+        "ord": "anka",
+        "fras": "en gul anka och en grön larv"
+       }
+      ]
+     },
+     {
+      "etikett": "Fantasifärger",
+      "forslag": [
+       {
+        "ord": "papegoja",
+        "fras": "en gul papegoja och en grön drake"
+       },
+       {
+        "ord": "katt",
+        "fras": "en gul katt och en grön hund"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "stor-och-liten",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett stort djur och ett litet djur.",
+   "mal": {},
+   "klart": "Vänskap finns visst i alla storlekar!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Jag vill se två vänner i helt olika storlekar!",
+   "klart_bengtsson": "Vänskap finns visst i alla storlekar!",
+   "krav": {
+    "ord": [
+     "stor",
+     "liten",
+     "elefant",
+     "mus",
+     "hund",
+     "katt",
+     "kanin",
+     "drake",
+     "bi",
+     "flodhäst"
+    ],
+    "min": 2
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Tydlig skillnad",
+      "forslag": [
+       {
+        "ord": "elefant",
+        "fras": "en stor elefant och en liten mus"
+       },
+       {
+        "ord": "flodhäst",
+        "fras": "en stor flodhäst och ett litet bi"
+       }
+      ]
+     },
+     {
+      "etikett": "Lek med storlek",
+      "forslag": [
+       {
+        "ord": "hund",
+        "fras": "en stor hund och en liten katt"
+       },
+       {
+        "ord": "drake",
+        "fras": "en stor drake och en liten kanin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "hogt-och-lagt",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur vid ett högt föremål och ett lågt föremål.",
+   "mal": {},
+   "klart": "Nu kan vi mäta med blicken!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur vill jämföra två saker som når olika långt upp!",
+   "klart_bengtsson": "Nu kan vi mäta med blicken!",
+   "krav": {
+    "ord": [
+     "hög",
+     "låg",
+     "torn",
+     "stubbe",
+     "träd",
+     "sten",
+     "bokhylla",
+     "bord",
+     "hus",
+     "buske"
+    ],
+    "min": 2
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Utomhus",
+      "forslag": [
+       {
+        "ord": "torn",
+        "fras": "en hund vid ett högt torn och en låg stubbe"
+       },
+       {
+        "ord": "träd",
+        "fras": "en kanin vid ett högt träd och en låg sten"
+       }
+      ]
+     },
+     {
+      "etikett": "Nära hemmet",
+      "forslag": [
+       {
+        "ord": "bokhylla",
+        "fras": "en katt vid en hög bokhylla och ett lågt bord"
+       },
+       {
+        "ord": "hus",
+        "fras": "en get vid ett högt hus och en låg buske"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "ordet-med",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv en fras med ordet med där ett djur har ett föremål.",
+   "mal": {},
+   "klart": "Nu hör de ihop som jag och min doktorsväska!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur vill ha något hos sig! Vilket litet ord binder ihop dem?",
+   "klart_bengtsson": "Nu hör de ihop som jag och min doktorsväska!",
+   "krav": {
+    "ord": [
+     "med",
+     "bok",
+     "keps",
+     "morot",
+     "banan",
+     "lykta",
+     "karta",
+     "nallebjörn",
+     "äpple",
+     "mössa"
+    ],
+    "min": 2
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Ta med något",
+      "forslag": [
+       {
+        "ord": "bok",
+        "fras": "en katt med en bok"
+       },
+       {
+        "ord": "karta",
+        "fras": "en hund med en karta"
+       }
+      ]
+     },
+     {
+      "etikett": "Kläder och mat",
+      "forslag": [
+       {
+        "ord": "keps",
+        "fras": "en apa med en keps"
+       },
+       {
+        "ord": "morot",
+        "fras": "en kanin med en morot"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "ordet-i",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv en fras med ordet i där ett djur är inuti något.",
+   "mal": {},
+   "klart": "Där inne blev det riktigt trivsamt!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur vill vara innanför, inte utanför! Vilket litet ord visar platsen?",
+   "klart_bengtsson": "Där inne blev det riktigt trivsamt!",
+   "krav": {
+    "ord": [
+     "i",
+     "tält",
+     "hus",
+     "koja",
+     "båt",
+     "badkar",
+     "grotta",
+     "lada",
+     "bil",
+     "villa"
+    ],
+    "min": 2
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Ett krypin",
+      "forslag": [
+       {
+        "ord": "tält",
+        "fras": "en hund i ett tält"
+       },
+       {
+        "ord": "koja",
+        "fras": "en katt i en koja"
+       }
+      ]
+     },
+     {
+      "etikett": "Andra platser",
+      "forslag": [
+       {
+        "ord": "båt",
+        "fras": "en kanin i en båt"
+       },
+       {
+        "ord": "badkar",
+        "fras": "en anka i ett badkar"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "ordet-under",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv en fras med ordet under där något finns ovanför ditt djur.",
+   "mal": {},
+   "klart": "Där hittade vi en fin plats!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur vill ha något över huvudet! Vilket ord visar var det står?",
+   "klart_bengtsson": "Där hittade vi en fin plats!",
+   "krav": {
+    "ord": [
+     "under",
+     "bord",
+     "träd",
+     "palm",
+     "träbro",
+     "stol",
+     "tak",
+     "parasoll",
+     "bro",
+     "buske"
+    ],
+    "min": 2
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Bland möbler",
+      "forslag": [
+       {
+        "ord": "bord",
+        "fras": "en katt under ett bord"
+       },
+       {
+        "ord": "stol",
+        "fras": "en mus under en stol"
+       }
+      ]
+     },
+     {
+      "etikett": "Under grenar",
+      "forslag": [
+       {
+        "ord": "träd",
+        "fras": "en hund under ett träd"
+       },
+       {
+        "ord": "palm",
+        "fras": "en apa under en palm"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "ordet-pa",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv en fras med ordet på där ditt djur sitter ovanpå något.",
+   "mal": {},
+   "klart": "Vilken fin sittplats du ordnade!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur vill sitta en bit ovanför marken! Vilket litet ord visar platsen?",
+   "klart_bengtsson": "Vilken fin sittplats du ordnade!",
+   "krav": {
+    "ord": [
+     "på",
+     "stol",
+     "soffa",
+     "stubbe",
+     "sten",
+     "stock",
+     "säng",
+     "fåtölj",
+     "kulle",
+     "klippa"
+    ],
+    "min": 2
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Sitta inne",
+      "forslag": [
+       {
+        "ord": "stol",
+        "fras": "en katt på en stol"
+       },
+       {
+        "ord": "soffa",
+        "fras": "en hund på en soffa"
+       }
+      ]
+     },
+     {
+      "etikett": "Sitta ute",
+      "forslag": [
+       {
+        "ord": "stubbe",
+        "fras": "en kanin på en stubbe"
+       },
+       {
+        "ord": "sten",
+        "fras": "en groda på en sten"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "varmt-och-kallt",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med något varmt och något kallt.",
+   "mal": {},
+   "klart": "Vilken fin motsatsblandning!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur vill jämföra två motsatser som känns olika mot tassen!",
+   "klart_bengtsson": "Vilken fin motsatsblandning!",
+   "krav": {
+    "ord": [
+     "varm",
+     "kall",
+     "tröja",
+     "mössa",
+     "luva",
+     "snöflinga",
+     "snöhög",
+     "glasstrut",
+     "is",
+     "filt",
+     "halsduk",
+     "snö"
+    ],
+    "min": 2
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Vintermöte",
+      "forslag": [
+       {
+        "ord": "tröja",
+        "fras": "en hund med en varm tröja vid en kall snöhög"
+       },
+       {
+        "ord": "mössa",
+        "fras": "en kanin med en varm mössa vid en kall snöflinga"
+       }
+      ]
+     },
+     {
+      "etikett": "Kläder och kyla",
+      "forslag": [
+       {
+        "ord": "luva",
+        "fras": "en katt med en varm luva vid en kall snöhög"
+       },
+       {
+        "ord": "glasstrut",
+        "fras": "en apa med en varm tröja och en kall glasstrut"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "snabb-och-langsam",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett snabbt djur och ett långsamt djur.",
+   "mal": {},
+   "klart": "Båda hinner fram till fikat!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Två vänner tar sig fram i olika takt, en susar och en tar god tid på sig!",
+   "klart_bengtsson": "Båda hinner fram till fikat!",
+   "krav": {
+    "ord": [
+     "snabb",
+     "långsam",
+     "hare",
+     "larv",
+     "häst",
+     "mus",
+     "hund",
+     "katt",
+     "groda",
+     "elefant"
+    ],
+    "min": 2
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Olika tempo",
+      "forslag": [
+       {
+        "ord": "hare",
+        "fras": "en snabb hare och en långsam larv"
+       },
+       {
+        "ord": "häst",
+        "fras": "en snabb häst och en långsam mus"
+       }
+      ]
+     },
+     {
+      "etikett": "Bestäm farten",
+      "forslag": [
+       {
+        "ord": "hund",
+        "fras": "en snabb hund och en långsam katt"
+       },
+       {
+        "ord": "groda",
+        "fras": "en snabb groda och en långsam elefant"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "ovantat-kompismote",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram två djur som brukar leva i helt olika miljöer.",
+   "mal": {},
+   "klart": "Vilket ovanligt och härligt möte!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Vilka två vänner skulle behöva resa riktigt långt från sina vanliga hem för att mötas?",
+   "klart_bengtsson": "Vilket ovanligt och härligt möte!",
+   "krav": {
+    "ord": [
+     "isbjörn",
+     "giraff",
+     "pingvin",
+     "apa",
+     "delfin",
+     "kanin",
+     "bläckfisk",
+     "häst",
+     "säl",
+     "lama",
+     "kamel",
+     "koala"
+    ],
+    "min": 2
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Olika klimat",
+      "forslag": [
+       {
+        "ord": "isbjörn",
+        "fras": "en isbjörn och en giraff"
+       },
+       {
+        "ord": "pingvin",
+        "fras": "en pingvin och en apa"
+       }
+      ]
+     },
+     {
+      "etikett": "Hav och land",
+      "forslag": [
+       {
+        "ord": "delfin",
+        "fras": "en delfin och en kanin"
+       },
+       {
+        "ord": "bläckfisk",
+        "fras": "en bläckfisk och en häst"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "ben-utan-promenad",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur bredvid något som har ben men inte kan gå.",
+   "mal": {},
+   "klart": "Du löste gåtan utan ett enda steg!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Min gåta har ben men tar aldrig en promenad! Vad kan ditt djur stå bredvid?",
+   "klart_bengtsson": "Du löste gåtan utan ett enda steg!",
+   "krav": {
+    "ord": [
+     "bord",
+     "stol",
+     "soffa",
+     "säng",
+     "fåtölj",
+     "pall",
+     "bänk",
+     "skrivbord",
+     "matbord",
+     "nattduksbord",
+     "soffbord",
+     "byrå"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Vid matplatsen",
+      "forslag": [
+       {
+        "ord": "bord",
+        "fras": "en hund bredvid ett bord med fyra ben"
+       },
+       {
+        "ord": "stol",
+        "fras": "en katt bredvid en stol med fyra ben"
+       }
+      ]
+     },
+     {
+      "etikett": "Där vi vilar",
+      "forslag": [
+       {
+        "ord": "säng",
+        "fras": "en kanin bredvid en säng med fyra ben"
+       },
+       {
+        "ord": "soffa",
+        "fras": "en apa bredvid en soffa med fyra ben"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "resa-fran-soffan",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram något som låter ditt djur upptäcka världen utan att lämna soffan.",
+   "mal": {},
+   "klart": "Vilken resa, och tofflorna är kvar!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur vill upptäcka fjärran platser men sitta kvar hemma! Hur går det till?",
+   "klart_bengtsson": "Vilken resa, och tofflorna är kvar!",
+   "krav": {
+    "ord": [
+     "bok",
+     "trollbok",
+     "karta",
+     "tv",
+     "atlas",
+     "bilderbok",
+     "sagobok",
+     "jordglob",
+     "film",
+     "resebok",
+     "dator",
+     "surfplatta"
+    ],
+    "min": 1
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Bläddra och dröm",
+      "forslag": [
+       {
+        "ord": "bok",
+        "fras": "en katt på en soffa med en bok om världen"
+       },
+       {
+        "ord": "trollbok",
+        "fras": "en kanin på en soffa med en trollbok om fjärran länder"
+       }
+      ]
+     },
+     {
+      "etikett": "Titta och upptäck",
+      "forslag": [
+       {
+        "ord": "karta",
+        "fras": "en hund på en soffa med en karta över världen"
+       },
+       {
+        "ord": "tv",
+        "fras": "en apa på en soffa vid en tv med en resefilm"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "omvanda-storlekar",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett pyttelitet djur som brukar vara stort och ett jättestort djur som brukar vara litet.",
+   "mal": {},
+   "klart": "Nu behöver den lilla vännen den stora stolen!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Min storleksmaskin har vänt på allt! Kan två vänner visa hur tokigt det blev?",
+   "klart_bengtsson": "Nu behöver den lilla vännen den stora stolen!",
+   "krav": {
+    "ord": [
+     "pytteliten",
+     "jättestor",
+     "liten",
+     "stor",
+     "elefant",
+     "mus",
+     "giraff",
+     "bi",
+     "flodhäst",
+     "larv",
+     "noshörning",
+     "spindel"
+    ],
+    "min": 2
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Päls och vingar",
+      "forslag": [
+       {
+        "ord": "elefant",
+        "fras": "en pytteliten elefant och en jättestor mus"
+       },
+       {
+        "ord": "giraff",
+        "fras": "en pytteliten giraff och ett jättestort bi"
+       }
+      ]
+     },
+     {
+      "etikett": "Fler storleksbyten",
+      "forslag": [
+       {
+        "ord": "flodhäst",
+        "fras": "en pytteliten flodhäst och en jättestor larv"
+       },
+       {
+        "ord": "noshörning",
+        "fras": "en pytteliten noshörning och en jättestor spindel"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "atbar-regnbage",
+   "omrade": "ang",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med tre ätbara saker som har olika färger.",
+   "mal": {},
+   "klart": "Vilken färgfest för både ögon och mage!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Ditt djur vill bjuda på en regnbågsfika med tre färger! Vad kan ligga på fatet?",
+   "klart_bengtsson": "Vilken färgfest för både ögon och mage!",
+   "krav": {
+    "ord": [
+     "äpple",
+     "banan",
+     "broccoli",
+     "tomat",
+     "citron",
+     "morot",
+     "druvor",
+     "apelsin",
+     "ananas",
+     "vattenmelon",
+     "jordgubbe",
+     "blåbär"
+    ],
+    "min": 2
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Rött, gult och grönt",
+      "forslag": [
+       {
+        "ord": "äpple",
+        "fras": "en apa med ett rött äpple, en gul banan och grön broccoli"
+       },
+       {
+        "ord": "tomat",
+        "fras": "en kanin med en röd tomat, en gul citron och grön broccoli"
+       }
+      ]
+     },
+     {
+      "etikett": "Fler färgblandningar",
+      "forslag": [
+       {
+        "ord": "morot",
+        "fras": "en häst med en orange morot, lila druvor och ett grönt äpple"
+       },
+       {
+        "ord": "apelsin",
+        "fras": "en apa med en orange apelsin, en gul banan och lila druvor"
+       }
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}
