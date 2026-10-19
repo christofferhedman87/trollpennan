@@ -119,6 +119,7 @@ test("B1.4-fix: markfärg per plats, större vatten, droppsten nära tak, ingen 
   assert.ok(vatten!.storlek[0] * vatten!.storlek[1] >= 20, `sjöns vattenyta ska fylla vyn (${vatten!.storlek})`);
   const dropp = dekorFor(platsMed("grottan")).saker.filter((s) => s.ord === "droppsten");
   assert.ok(dropp.length >= 1);
-  for (const d of dropp) assert.ok(d.pos[1] <= 2.2 && d.pos[1] >= 1.5, `droppsten y=${d.pos[1]} ska hänga nära grottaket`);
+  // R8-2b: inget tak ritas, så droppstenen står vänd på marken som stalagmit (svävade förut).
+  for (const d of dropp) assert.ok(d.pos[1] === 0 && d.vand, `droppsten y=${d.pos[1]} ska stå vänd på marken`);
   assert.ok(!dekorFor(platsMed("sjon")).saker.some((s) => s.ord === "moln"), "moln borttagen (såg ut som svävande sten)");
 });

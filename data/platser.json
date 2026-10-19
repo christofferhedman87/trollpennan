@@ -73,7 +73,12 @@
      "radie": 0.18,
      "intensitet": 0.22,
      "farg": "#FFD58A"
-    }
+    },
+    "horisont": [
+     "#7FA7B5",
+     "#5E8A6A",
+     "#2F5A30"
+    ]
    },
    "zoner": [
     {
@@ -104,6 +109,46 @@
       0,
       1,
       0.45
+     ]
+    },
+    {
+     "id": "fri",
+     "typ": "fri",
+     "rekt": [
+      0.3,
+      0.52,
+      0.7,
+      0.9
+     ]
+    },
+    {
+     "id": "bakkant",
+     "typ": "dekor",
+     "rekt": [
+      0.08,
+      -0.45,
+      0.92,
+      0.22
+     ]
+    },
+    {
+     "id": "vanster",
+     "typ": "dekor",
+     "rekt": [
+      0.1,
+      0.22,
+      0.32,
+      0.92
+     ]
+    },
+    {
+     "id": "hoger",
+     "typ": "dekor",
+     "rekt": [
+      0.68,
+      0.22,
+      0.9,
+      0.92
      ]
     }
    ],
@@ -145,21 +190,21 @@
     },
     {
      "ord": "sten",
-     "x": 0.69,
+     "x": 0.72,
      "y": 0.66,
      "skala": 0.4,
      "zon": "mark"
     },
     {
      "ord": "svamp",
-     "x": 0.34,
+     "x": 0.28,
      "y": 0.66,
      "skala": 0.28,
      "zon": "mark"
     },
     {
      "ord": "blomma",
-     "x": 0.62,
+     "x": 0.72,
      "y": 0.66,
      "skala": 0.28,
      "zon": "mark"
@@ -174,14 +219,14 @@
     {
      "ord": "bäck",
      "x": 0.46,
-     "y": 0.54,
+     "y": 0.5,
      "skala": 0.5,
      "zon": "vattenyta"
     },
     {
      "ord": "stig",
      "x": 0.47,
-     "y": 0.66,
+     "y": 0.5,
      "skala": 0.7,
      "zon": "mark"
     },
@@ -209,14 +254,14 @@
     {
      "ord": "buske",
      "x": 0.4,
-     "y": 0.55,
+     "y": 0.5,
      "skala": 0.65,
      "zon": "mark"
     },
     {
      "ord": "sten",
      "x": 0.55,
-     "y": 0.62,
+     "y": 0.5,
      "skala": 0.35,
      "zon": "mark"
     }
@@ -275,7 +320,171 @@
     "skog-ljus-vid-krypin",
     "skog-final-minnesljus"
    ],
-   "granskad": false
+   "granskad": false,
+   "dekor": [
+    {
+     "modell": "natur/tree_pineRoundA",
+     "antal": 8,
+     "hojd": [
+      2.6,
+      3.8
+     ],
+     "zon": "bakkant"
+    },
+    {
+     "modell": "natur/tree_default",
+     "antal": 4,
+     "hojd": [
+      2.2,
+      3
+     ],
+     "zon": "bakkant"
+    },
+    {
+     "modell": "natur/tree_oak",
+     "antal": 2,
+     "hojd": [
+      2.4,
+      3
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "natur/tree_fat",
+     "antal": 2,
+     "hojd": [
+      2.2,
+      2.8
+     ],
+     "zon": "hoger"
+    },
+    {
+     "modell": "natur/plant_bushLarge",
+     "antal": 2,
+     "hojd": [
+      0.7,
+      1
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "natur/plant_bushLarge",
+     "antal": 2,
+     "hojd": [
+      0.7,
+      1
+     ],
+     "zon": "hoger"
+    },
+    {
+     "modell": "natur/mushroom_redGroup",
+     "antal": 2,
+     "hojd": [
+      0.25,
+      0.35
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "natur/mushroom_redGroup",
+     "antal": 2,
+     "hojd": [
+      0.25,
+      0.35
+     ],
+     "zon": "hoger"
+    },
+    {
+     "modell": "natur/flower_yellowA",
+     "antal": 2,
+     "hojd": [
+      0.25,
+      0.35
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "natur/flower_yellowA",
+     "antal": 2,
+     "hojd": [
+      0.25,
+      0.35
+     ],
+     "zon": "hoger"
+    },
+    {
+     "modell": "natur/flower_purpleA",
+     "antal": 2,
+     "hojd": [
+      0.25,
+      0.35
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "natur/flower_purpleA",
+     "antal": 2,
+     "hojd": [
+      0.25,
+      0.35
+     ],
+     "zon": "hoger"
+    },
+    {
+     "modell": "natur/rock_smallA",
+     "antal": 1,
+     "hojd": [
+      0.3,
+      0.5
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "natur/rock_smallA",
+     "antal": 2,
+     "hojd": [
+      0.3,
+      0.5
+     ],
+     "zon": "hoger"
+    },
+    {
+     "modell": "natur/stump_round",
+     "antal": 1,
+     "hojd": [
+      0.3,
+      0.4
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "natur/stump_round",
+     "antal": 1,
+     "hojd": [
+      0.3,
+      0.4
+     ],
+     "zon": "hoger"
+    },
+    {
+     "modell": "natur/grass_large",
+     "antal": 5,
+     "hojd": [
+      0.25,
+      0.4
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "natur/grass_large",
+     "antal": 5,
+     "hojd": [
+      0.25,
+      0.4
+     ],
+     "zon": "hoger"
+    }
+   ]
   },
   {
    "id": "sjon",
@@ -330,7 +539,12 @@
      "radie": 0.18,
      "intensitet": 0.2,
      "farg": "#FFD58A"
-    }
+    },
+    "horisont": [
+     "#9CC3D6",
+     "#6F9C8A",
+     "#3C6B44"
+    ]
    },
    "zoner": [
     {
@@ -339,7 +553,7 @@
      "rekt": [
       0,
       0.22,
-      0.45,
+      1,
       1
      ]
     },
@@ -350,7 +564,7 @@
       0.22,
       0.22,
       0.98,
-      0.95
+      0.66
      ]
     },
     {
@@ -358,9 +572,9 @@
      "typ": "undervatten",
      "rekt": [
       0.43,
-      0.48,
+      0.4,
       0.98,
-      0.9
+      0.64
      ]
     },
     {
@@ -371,6 +585,46 @@
       0,
       1,
       0.3
+     ]
+    },
+    {
+     "id": "fri",
+     "typ": "fri",
+     "rekt": [
+      0.3,
+      0.52,
+      0.7,
+      0.9
+     ]
+    },
+    {
+     "id": "bakkant",
+     "typ": "dekor",
+     "rekt": [
+      0.08,
+      -0.45,
+      0.92,
+      0.22
+     ]
+    },
+    {
+     "id": "vanster",
+     "typ": "dekor",
+     "rekt": [
+      0.1,
+      0.22,
+      0.32,
+      0.92
+     ]
+    },
+    {
+     "id": "hoger",
+     "typ": "dekor",
+     "rekt": [
+      0.68,
+      0.22,
+      0.9,
+      0.92
      ]
     }
    ],
@@ -433,7 +687,7 @@
     },
     {
      "ord": "sten",
-     "x": 0.32,
+     "x": 0.28,
      "y": 0.7,
      "skala": 0.28,
      "zon": "strand"
@@ -455,7 +709,7 @@
     {
      "ord": "näckros",
      "x": 0.55,
-     "y": 0.55,
+     "y": 0.5,
      "skala": 0.4,
      "zon": "vattenyta"
     },
@@ -468,7 +722,7 @@
     },
     {
      "ord": "näckros",
-     "x": 0.62,
+     "x": 0.72,
      "y": 0.62,
      "skala": 0.38,
      "zon": "vattenyta"
@@ -528,7 +782,92 @@
     "sjo-ovantad-kapten",
     "sjo-final-vattenglitter"
    ],
-   "granskad": false
+   "granskad": false,
+   "dekor": [
+    {
+     "modell": "natur/tree_pineRoundA",
+     "antal": 8,
+     "hojd": [
+      2.4,
+      3.4
+     ],
+     "zon": "bakkant"
+    },
+    {
+     "modell": "natur/tree_default",
+     "antal": 4,
+     "hojd": [
+      2,
+      2.8
+     ],
+     "zon": "bakkant"
+    },
+    {
+     "modell": "natur/lily_large",
+     "antal": 5,
+     "hojd": [
+      0.25,
+      0.35
+     ],
+     "zon": "vattenyta",
+     "vatten": true
+    },
+    {
+     "modell": "natur/lily_small",
+     "antal": 5,
+     "hojd": [
+      0.25,
+      0.35
+     ],
+     "zon": "vattenyta",
+     "vatten": true
+    },
+    {
+     "modell": "vass",
+     "antal": 6,
+     "hojd": [
+      0.6,
+      0.9
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "natur/rock_largeA",
+     "antal": 3,
+     "hojd": [
+      0.6,
+      0.9
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "natur/rock_smallA",
+     "antal": 4,
+     "hojd": [
+      0.25,
+      0.4
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "natur/plant_bush",
+     "antal": 4,
+     "hojd": [
+      0.5,
+      0.8
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "natur/grass_large",
+     "antal": 8,
+     "hojd": [
+      0.25,
+      0.4
+     ],
+     "zon": "vanster"
+    }
+   ]
   },
   {
    "id": "grottan",
@@ -583,6 +922,14 @@
      "radie": 0.24,
      "intensitet": 0.35,
      "farg": "#FFD58A"
+    },
+    "horisont": {
+     "typ": "berg",
+     "farger": [
+      "#4A4458",
+      "#3A3546",
+      "#2A2633"
+     ]
     }
    },
    "zoner": [
@@ -611,7 +958,7 @@
      "typ": "tak",
      "rekt": [
       0.1,
-      0.0,
+      0,
       0.9,
       0.28
      ]
@@ -624,6 +971,46 @@
       0.2,
       1,
       0.6
+     ]
+    },
+    {
+     "id": "fri",
+     "typ": "fri",
+     "rekt": [
+      0.3,
+      0.52,
+      0.7,
+      0.9
+     ]
+    },
+    {
+     "id": "bakkant",
+     "typ": "dekor",
+     "rekt": [
+      0.08,
+      -0.45,
+      0.92,
+      0.22
+     ]
+    },
+    {
+     "id": "vanster",
+     "typ": "dekor",
+     "rekt": [
+      0.1,
+      0.22,
+      0.32,
+      0.92
+     ]
+    },
+    {
+     "id": "hoger",
+     "typ": "dekor",
+     "rekt": [
+      0.68,
+      0.22,
+      0.9,
+      0.92
      ]
     }
    ],
@@ -668,7 +1055,9 @@
      "x": 0.3,
      "y": 0.24,
      "skala": 0.42,
-     "zon": "tak"
+     "zon": "mark",
+     "ankare": "mark",
+     "vand": true
     },
     {
      "ord": "klippa",
@@ -679,7 +1068,7 @@
     },
     {
      "ord": "sten",
-     "x": 0.4,
+     "x": 0.28,
      "y": 0.65,
      "skala": 0.3,
      "zon": "mark"
@@ -693,7 +1082,7 @@
     },
     {
      "ord": "svamp",
-     "x": 0.6,
+     "x": 0.72,
      "y": 0.7,
      "skala": 0.25,
      "zon": "mark"
@@ -703,7 +1092,9 @@
      "x": 0.55,
      "y": 0.2,
      "skala": 0.42,
-     "zon": "tak"
+     "zon": "mark",
+     "ankare": "mark",
+     "vand": true
     }
    ],
    "ljud": [
@@ -760,7 +1151,128 @@
     "grotta-glitter-i-kistan",
     "grotta-final-bergets-berattelse"
    ],
-   "granskad": false
+   "granskad": false,
+   "dekor": [
+    {
+     "modell": "klippvagg",
+     "antal": 3,
+     "hojd": [
+      2.6,
+      3.6
+     ],
+     "zon": "bakkant"
+    },
+    {
+     "modell": "klippa",
+     "antal": 2,
+     "hojd": [
+      1.6,
+      2.4
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "klippa",
+     "antal": 2,
+     "hojd": [
+      1.6,
+      2.4
+     ],
+     "zon": "hoger"
+    },
+    {
+     "modell": "klippblock",
+     "antal": 2,
+     "hojd": [
+      0.6,
+      1
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "klippblock",
+     "antal": 2,
+     "hojd": [
+      0.6,
+      1
+     ],
+     "zon": "hoger"
+    },
+    {
+     "modell": "kristall",
+     "antal": 2,
+     "hojd": [
+      0.4,
+      0.7
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "kristall",
+     "antal": 3,
+     "hojd": [
+      0.4,
+      0.7
+     ],
+     "zon": "hoger"
+    },
+    {
+     "modell": "natur/mushroom_tanGroup",
+     "antal": 2,
+     "hojd": [
+      0.25,
+      0.35
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "natur/mushroom_tanGroup",
+     "antal": 2,
+     "hojd": [
+      0.25,
+      0.35
+     ],
+     "zon": "hoger"
+    },
+    {
+     "modell": "sten",
+     "antal": 3,
+     "hojd": [
+      0.25,
+      0.45
+     ],
+     "zon": "vanster"
+    },
+    {
+     "modell": "sten",
+     "antal": 3,
+     "hojd": [
+      0.25,
+      0.45
+     ],
+     "zon": "hoger"
+    },
+    {
+     "modell": "droppsten",
+     "antal": 2,
+     "hojd": [
+      0.6,
+      1
+     ],
+     "zon": "vanster",
+     "vand": true
+    },
+    {
+     "modell": "droppsten",
+     "antal": 2,
+     "hojd": [
+      0.6,
+      1
+     ],
+     "zon": "hoger",
+     "vand": true
+    }
+   ]
   }
  ],
  "beloningar": []

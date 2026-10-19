@@ -8,7 +8,10 @@ export type Villkor = { typ: "skapelser" | "uppdrag_klara"; omrade: string; min:
 export type Villkorsgrupp = { nagon: Villkor[] };
 export type Milstolpe = Villkorsgrupp & { final?: string | null; las_upp?: string | null };
 export type Zon = { id: string; typ: string; rekt: [number, number, number, number] };
-export type Startobjekt = { ord: string; x: number; y: number; skala?: number; zon?: string };
+/** R8-2b: `ankare` mark|vatten|luft (standard ur zonens typ, annars mark), `vand` = modellen vänds upp och ner (droppsten → stalagmit). */
+export type Startobjekt = { ord: string; x: number; y: number; skala?: number; zon?: string; ankare?: string; vand?: boolean };
+/** En rad i `dekor`: modell, antal och höjdspann, utspridd i zonen `zon` (typ `dekor` eller annan rektangel). `fri` är yta som lämnas tom. */
+export type DekorRad = { modell: string; antal: number; hojd: [number, number]; zon: string; fro?: number; vatten?: boolean; vand?: boolean };
 export type Plats = {
   id: string;
   namn: string;
@@ -19,6 +22,7 @@ export type Plats = {
   miljo: Record<string, unknown>;
   zoner: Zon[];
   start: Startobjekt[];
+  dekor?: DekorRad[];
   ljud?: unknown;
   intro?: unknown;
   final_fore?: unknown;

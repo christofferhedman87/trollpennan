@@ -72,7 +72,8 @@ function baka(scene: THREE.Object3D): Del[] {
 /** x, z, höjd, rotation, y-sänkning (andel av höjden som grävs ner) */
 type Plats = readonly [number, number, number, number, number];
 
-function Stall({ url, platser }: { url: string; platser: readonly Plats[] }) {
+/** `vand` (R8-2b): varje instans vänds upp och ner med botten kvar på marken. */
+export function InstansModell({ url, platser, vand = false }: { url: string; platser: readonly Plats[]; vand?: boolean }) {
   const gltf = useGLTF(url);
   const delar = useMemo(() => baka(gltf.scene), [gltf.scene]);
   const refs = useRef<(THREE.InstancedMesh | null)[]>([]);
@@ -86,8 +87,8 @@ function Stall({ url, platser }: { url: string; platser: readonly Plats[] }) {
       const mesh = refs.current[di];
       if (!mesh) continue;
       platser.forEach(([x, z, hojd, ry, ner], i) => {
-        p.set(x, -ner * hojd, z);
-        e.set(0, ry, 0);
+        p.set(x, -ner * hojd + (vand ? hojd : 0), z);
+        e.set(vand ? Math.PI : 0, ry, 0);
         q.setFromEuler(e);
         sv.set(hojd, hojd, hojd);
         m.compose(p, q, sv);
@@ -96,7 +97,7 @@ function Stall({ url, platser }: { url: string; platser: readonly Plats[] }) {
       mesh.count = platser.length;
       mesh.instanceMatrix.needsUpdate = true;
     }
-  }, [delar, platser]);
+  }, [delar, platser, vand]);
   return (
     <>
       {delar.map((d, i) => (
@@ -112,6 +113,9 @@ function Stall({ url, platser }: { url: string; platser: readonly Plats[] }) {
     </>
   );
 }
+
+/** Samma instansiering som ängens dekor. */
+export const Stall = InstansModell;
 
 const TRAD: Plats[] = [
   [-3.4, -1.6, 2.4, 0.4, 0],

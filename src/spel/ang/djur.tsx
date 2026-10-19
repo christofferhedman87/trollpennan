@@ -2,6 +2,7 @@ import { useFrame, type ThreeEvent } from "@react-three/fiber";
 import { Component, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
 import { brygga, type Sparad } from "../brygga.ts";
+import type { Plats } from "../platser.ts";
 import { byggPack, forma } from "../djurmesh.ts";
 import { replik } from "../replik.ts";
 import { ljud } from "../ljud.ts";
@@ -209,8 +210,8 @@ export function Hjartan({ puls }: { puls: number }) {
   );
 }
 
-export function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
-  const [x, y, z] = djurPlats(spec, alla);
+export function DjurIScen({ spec, alla, plats }: { spec: Sparad; alla: Sparad[]; plats?: Plats }) {
+  const [x, y, z] = djurPlats(spec, alla, plats);
   const grupp = useRef<THREE.Group>(null);
   const skal = useRef(0.2);
   const fod = useRef(-1);
