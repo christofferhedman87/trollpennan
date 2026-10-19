@@ -111,10 +111,10 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 
 **Klart på main:** R3G föremål (#56) · R9D uppdragsfix (#60) · B0 40 ängsuppdrag (#61) · R9E typecheck (#62) · R9F färg/bubbla (#64) · B1.1 dela angen3d (#67) · B1.2 uppdragsmotor plats (#68) · B1.3a platser.json (#71). main ≈ `f668b27`.
 
-**Pågår:** **B1.3b** – scenen läser platsen. Build misslyckades (0 filer, 2,74 USD). Arkitekten gör **patch + kor.sh (skript)**; Doodle väntar på körkommando.
+**Pågår:** **B1.3b** – scenen läser platsen. Build misslyckades (0 filer, 2,74 USD; ritningen saknade ord→entitet). **Patch + kor.sh klar** (`rundor/BLOCK-platser/B1.3b/`, Arkitekten provkört exit 0): Doodle kör `kor.sh`. Ord→entitet = `entitetForOrd` i `src/spel/platsDekor.ts` (samma uppslag som barnets ord: `ordFranForm`→`del.kropp`→`modellUrl`). Belöningar på ängen (B1.3b steg 4) flyttas till B1.4 (`beloningar` är tom).
 
 **Nästa, i denna ordning (inga parallella steg utom B5):**
-1. **B1.3b** scen ↔ plats — **skript** (patch under arbete)
+1. **B1.3b** scen ↔ plats — **skript** (`bash rundor/BLOCK-platser/B1.3b/kor.sh`, klar att köra)
 2. **B1.4** resa/skylt/platsväljare + "Inte riktigt än" under ERROR — **Build**
 3. **R9G** gåta≠uppdrag, gåta byts ej för tidigt, "Skriv i Pennans bok", stall=meny — **Build** (`rundor/R9G-ux-stall/`)
 4. **R8-2** grafiklyft (skuggor, horisont, kontur …) — **Build** (`rundor/R8-grafik/`)
