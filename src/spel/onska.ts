@@ -1,6 +1,6 @@
 import onskJson from "../../data/onskningar.json" with { type: "json" };
 import byggOnskJson from "../../data/onskningar-bygg.json" with { type: "json" };
-import { ordFranForm } from "../tolk/lexikon.ts";
+import { lasToken, ordFranForm } from "../tolk/lexikon.ts";
 import { tolka } from "../tolk/tolka.ts";
 import { byggMedId, tolkaBygg, type ByggeTolk } from "../tolk/byggtolk.ts";
 import type { Varelse } from "../tolk/typer.ts";
@@ -106,10 +106,47 @@ export function laggPa(bas: Varelse, tillagg: string): Varelse | null {
   return u.varelse;
 }
 
+/** R9F: färg och storlek finns bara en av på djuret. Säger barnet en ny ("lila" till "en blå katt") ersätter den den gamla. */
+const ERSATTS = new Set(["farg", "storlek"]);
+
+function klasserFore(ord: string[]): Set<string> {
+  const k = new Set<string>();
+  for (const w of ord) {
+    const t = lasToken(w);
+    if (t?.t === "funk" && t.v !== "och") break; // efter "med"/"som" hör orden till något annat
+    const kl = ordFranForm(w)?.klass;
+    if (kl && ERSATTS.has(kl)) k.add(kl);
+  }
+  return k;
+}
+
 export function tillaggFras(bas: Varelse, tillagg: string): string | null {
   const extra = utanDjur(tillagg);
   if (!extra.trim()) return null;
-  return `${bas.formel} ${extra}`.replace(/\s+/g, " ").trim();
+  const byt = klasserFore(extra.split(/\s+/).filter(Boolean));
+  const ut: string[] = [];
+  let fore = true;
+  for (const w of bas.formel.split(/\s+/).filter(Boolean)) {
+    const t = lasToken(w.toLocaleLowerCase("sv"));
+    if (t?.t === "funk" && t.v !== "och") fore = false;
+    const kl = ordFranForm(w.toLocaleLowerCase("sv"))?.klass;
+    if (fore && kl && byt.has(kl)) {
+      if (ut.at(-1) === "och") ut.pop();
+      continue;
+    }
+    ut.push(w);
+  }
+  // "en och katt" kan bli kvar när första färgen ströks: ta bort ett "och" direkt efter artikeln
+  const rensad = ut.filter((w, i) => !(w === "och" && i > 0 && ["en", "ett", "två", "tre"].includes(ut[i - 1]!)));
+  // adjektiven i början av tillägget ställs före djuret ("lila" → "en lila katt med hatt"), resten ("med halsduk", "som flyger") sist
+  const ex = extra.split(/\s+/).filter(Boolean);
+  let n = 0;
+  while (n < ex.length && !(lasToken(ex[n]!)?.t === "funk" && ex[n] !== "och")) n++;
+  const adj = ex.slice(0, n);
+  const rest = ex.slice(n);
+  const forstaArArtikel = rensad.length > 1 && ["artikel", "antal"].includes(lasToken(rensad[0]!.toLocaleLowerCase("sv"))?.t ?? "");
+  const ny = adj.length && forstaArArtikel ? [rensad[0]!, ...adj, ...rensad.slice(1), ...rest] : [...rensad, ...ex];
+  return ny.join(" ").replace(/\s+/g, " ").trim();
 }
 
 export function geTraff(fore: Varelse, efter: Varelse, o: DjurOnska): boolean {

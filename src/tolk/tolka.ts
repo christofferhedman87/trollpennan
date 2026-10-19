@@ -73,6 +73,8 @@ type Bygg = {
   vantande: Ord | null;
   boosts: { dir: string; skala: number }[];
   funna: Funnen[];
+  /** R9F: egenskapsord som hittades men inte hör till djuret (beskriver en sak, eller ersattes av sin motsats). */
+  inteDjur: string[];
   okanda: string[];
   meddelanden: string[];
 };
@@ -106,6 +108,7 @@ function tomBygg(): Bygg {
     vantande: null,
     boosts: [],
     funna: [],
+    inteDjur: [],
     okanda: [],
     meddelanden: [],
   };
@@ -434,6 +437,12 @@ function nastaArTillbehor(sem: Sem[], i: number): boolean {
   return false;
 }
 
+function nastaArSak(sem: Sem[], i: number): boolean {
+  if (nastaArTillbehor(sem, i)) return true;
+  const n = sem[i + 1];
+  return !!n && n.t === "ord" && n.o.klass === "foremal";
+}
+
 function sattDjur(b: Bygg, o: Ord, form: string) {
   b.djur = o;
   b.djurForm = form;
@@ -600,6 +609,17 @@ function byggFran(sem: Sem[]): Bygg | "sparr" {
       b.vantande = null;
       continue;
     }
+    // R9F: storlek/egenskap efter "med"/"vid"/"i" … eller direkt före en sak ("ett högt torn") beskriver saken, inte djuret
+    if ((o.klass === "egenskap" || o.klass === "storlek") && (mode === "med" || nastaArSak(sem, i))) {
+      markera(b, o.id, false);
+      if (o.klass === "egenskap" && !b.inteDjur.includes(o.id)) b.inteDjur.push(o.id);
+      continue;
+    }
+    if (o.klass === "egenskap") {
+      // R9F: det sista ordet gäller ("en hög låg hund" = en låg hund)
+      b.inteDjur = b.inteDjur.filter((x) => x !== o.id);
+      if (o.motsats && !b.inteDjur.includes(o.motsats)) b.inteDjur.push(o.motsats);
+    }
     markera(b, o.id, true);
     if (o.klass === "farg") {
       if (mode === "med" || nastaArTillbehor(sem, i)) b.vantande = o;
@@ -729,6 +749,7 @@ function formelAv(b: Bygg): string {
   for (const e of ORD.ord) {
     if (e.klass !== "egenskap") continue;
     if (!b.funna.some((f) => f.id === e.id)) continue;
+    if (b.inteDjur.includes(e.id)) continue;
     delar.push(boj(e, key));
   }
   for (const f of b.formagor) {

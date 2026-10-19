@@ -19,9 +19,9 @@ type HusOpt = {
   rundDorr?: boolean;
 };
 
-var KANT = 4073251;
-var TRUNK = 9268835;
-var GLAS = 11789820;
+const KANT = 4073251;
+const TRUNK = 9268835;
+const GLAS = 11789820;
 function mork(n: number, t = 0.72): number {
 	const r = Math.round((n >> 16 & 255) * t);
 	const g = Math.round((n >> 8 & 255) * t);

@@ -278,7 +278,9 @@ function tokenIdentityKey(token: string): string {
             .digest("base64url");
         }
       }
-    } catch {}
+    } catch {
+      // ingen läsbar JWT: hasha hela token nedan
+    }
   }
   return createHash("sha256").update(token).digest("base64url");
 }

@@ -5212,7 +5212,8 @@
    },
    "kalla": "SALDO",
    "del": {},
-   "not": "B0: beskrivande adjektiv utan bildeffekt (språkuppdrag); blir inget ägg"
+   "not": "B0: beskrivande adjektiv utan bildeffekt (språkuppdrag); blir inget ägg",
+   "motsats": "kall"
   },
   {
    "id": "kall",
@@ -5232,7 +5233,8 @@
    },
    "kalla": "SALDO",
    "del": {},
-   "not": "B0: beskrivande adjektiv utan bildeffekt (språkuppdrag); blir inget ägg"
+   "not": "B0: beskrivande adjektiv utan bildeffekt (språkuppdrag); blir inget ägg",
+   "motsats": "varm"
   },
   {
    "id": "hög",
@@ -5252,7 +5254,8 @@
    },
    "kalla": "SALDO",
    "del": {},
-   "not": "B0: beskrivande adjektiv utan bildeffekt (språkuppdrag); blir inget ägg"
+   "not": "B0: beskrivande adjektiv utan bildeffekt (språkuppdrag); blir inget ägg",
+   "motsats": "låg"
   },
   {
    "id": "låg",
@@ -5272,7 +5275,8 @@
    },
    "kalla": "SALDO",
    "del": {},
-   "not": "B0: beskrivande adjektiv utan bildeffekt (språkuppdrag); blir inget ägg"
+   "not": "B0: beskrivande adjektiv utan bildeffekt (språkuppdrag); blir inget ägg",
+   "motsats": "hög"
   },
   {
    "id": "långsam",

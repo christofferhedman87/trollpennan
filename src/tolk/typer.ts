@@ -43,6 +43,8 @@ export type Ord = {
   del?: Del;
   /** R3G (klass foremal): vilka former som är plural, eftersom genus inte är känt i förväg. */
   plural?: string[];
+  /** R9F (klass egenskap): motsatsen ("hög" ↔ "låg"); det sista av två motsatser gäller. */
+  motsats?: string;
 };
 
 export type Forled = {
