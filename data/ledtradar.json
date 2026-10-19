@@ -1503,6 +1503,42 @@
    "forsta": "M",
    "langd": 6,
    "granskad": false
+  },
+  "utter": {
+   "gata": "Med brun päls och lång svans simmar jag efter fisk och vilar gärna vid stranden.",
+   "forsta": "U",
+   "langd": 5,
+   "granskad": false
+  },
+  "abborre": {
+   "gata": "Mörka ränder på sidorna och röda fenor under kroppen har jag i svenska sjöar.",
+   "forsta": "A",
+   "langd": 7,
+   "granskad": false
+  },
+  "gädda": {
+   "gata": "Lång och grönfläckig simmar jag bland vattenväxter, med en bred, platt nos.",
+   "forsta": "G",
+   "langd": 5,
+   "granskad": false
+  },
+  "kräfta": {
+   "gata": "Baklänges kan jag simma med ett knyck, och framtill har jag två stora klor.",
+   "forsta": "K",
+   "langd": 6,
+   "granskad": false
+  },
+  "svan": {
+   "gata": "Med lång, böjd hals och vita fjädrar glider jag fram, större än en gås.",
+   "forsta": "S",
+   "langd": 4,
+   "granskad": false
+  },
+  "vattensalamander": {
+   "gata": "Med fyra små ben och lång svans simmar jag i dammen, men jag är ingen ödla.",
+   "forsta": "V",
+   "langd": 16,
+   "granskad": false
   }
  }
 }

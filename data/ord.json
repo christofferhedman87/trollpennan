@@ -5334,6 +5334,114 @@
    "kalla": "SALDO",
    "del": {},
    "not": "B0: beskrivande adjektiv utan bildeffekt (språkuppdrag); blir inget ägg"
+  },
+  {
+   "id": "utter",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "utter",
+   "genus": "u",
+   "former": [
+    "utter",
+    "utteren",
+    "utterar",
+    "utterarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M10 b5a-sjo-cc0",
+   "del": {
+    "kropp": "utter"
+   }
+  },
+  {
+   "id": "svan",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "svan",
+   "genus": "u",
+   "former": [
+    "svan",
+    "svanen",
+    "svanar",
+    "svanarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M10 b5a-sjo-cc0",
+   "del": {
+    "kropp": "svan"
+   }
+  },
+  {
+   "id": "abborre",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "abborre",
+   "genus": "u",
+   "former": [
+    "abborre",
+    "abborren",
+    "abborrar",
+    "abborrarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M10 b5a-sjo-cc0",
+   "del": {
+    "kropp": "abborre"
+   }
+  },
+  {
+   "id": "gädda",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "gädda",
+   "genus": "u",
+   "former": [
+    "gädda",
+    "gäddan",
+    "gäddor",
+    "gäddorna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M10 b5a-sjo-cc0",
+   "del": {
+    "kropp": "gadda"
+   }
+  },
+  {
+   "id": "kräfta",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kräfta",
+   "genus": "u",
+   "former": [
+    "kräfta",
+    "kräftan",
+    "kräftor",
+    "kräftorna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M10 b5a-sjo-cc0",
+   "del": {
+    "kropp": "krafta"
+   }
+  },
+  {
+   "id": "vattensalamander",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "vattensalamander",
+   "genus": "u",
+   "former": [
+    "vattensalamander",
+    "vattensalamanderen",
+    "vattensalamanderar",
+    "vattensalamanderarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M10 b5a-sjo-cc0",
+   "del": {
+    "kropp": "vattensalamander"
+   }
   }
  ],
  "kollisioner": {},

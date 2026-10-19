@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 576 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 585 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -18,6 +18,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | (för hand) Kenney – Nature Kit | Kenney – Nature Kit | CC0-1.0 | https://kenney.nl/assets/nature-kit | 1 |
 | (för hand) Quaternius – Dragon (Ultimate Monsters) | Quaternius – Dragon (Ultimate Monsters) | CC0-1.0 | https://poly.pizza/m/3rUm1cN3yp | 1 |
 | (för hand) Quaternius – Horse (Cube World Kit) | Quaternius – Horse (Cube World Kit) | CC0-1.0 | https://poly.pizza/m/D3hAeqeDBE | 1 |
+| b5a-sjo-cc0 | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 6 |
 | gobkit-cc0-djur-och-natur | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 59 |
 | kaykit-block-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/block-bits | 1 |
 | kaykit-city-builder-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/city-builder-bits | 6 |
@@ -40,7 +41,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-mini-dungeon | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-dungeon | 11 |
 | kenney-mini-forest | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-forest | 4 |
 | kenney-modular-cave-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/modular-cave-kit | 3 |
-| kenney-nature-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/nature-kit | 36 |
+| kenney-nature-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/nature-kit | 39 |
 | kenney-pirate-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/pirate-kit | 12 |
 | kenney-platformer-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/platformer-kit | 11 |
 | kenney-space-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/space-kit | 8 |
@@ -643,3 +644,12 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kugghjul | /models/bulk/kugghjul.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/resource-bits |
 | tra | /models/bulk/tra.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/survival-kit |
 | plankor | /models/bulk/plankor.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/survival-kit |
+| utter | /models/bulk/utter.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
+| svan | /models/bulk/svan.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
+| abborre | /models/bulk/abborre.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/BEcU9rjiAq |
+| gadda | /models/bulk/gadda.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/XWl86YFtpF |
+| krafta | /models/bulk/krafta.glb | CC0-1.0 | Trollpennan (egen modell, M10/bygg-inkorg.mjs) | https://github.com/christofferhedman87/trollpennan/tree/main/rundor/R3F-modellserie/M10 |
+| vattensalamander | /models/bulk/vattensalamander.glb | CC0-1.0 | Trollpennan (egen modell, M10/bygg-inkorg.mjs) | https://github.com/christofferhedman87/trollpennan/tree/main/rundor/R3F-modellserie/M10 |
+| back | /models/bulk/back.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/nature-kit |
+| stig | /models/bulk/stig.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/nature-kit |
+| vagskylt | /models/bulk/vagskylt.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/nature-kit |

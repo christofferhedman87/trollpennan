@@ -610,6 +610,15 @@
     "lastpall": { "typ": "foremal", "kategori": "föremål", "modell": "lastpall", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["lastpall"], "inlagd": "R3F-M9" },
     "kugghjul": { "typ": "foremal", "kategori": "föremål", "modell": "kugghjul", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["kugghjul", "tandhjul"], "inlagd": "R3F-M9" },
     "tra": { "typ": "foremal", "kategori": "föremål", "modell": "tra", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["trä", "ved"], "inlagd": "R3F-M9" },
-    "plankor": { "typ": "foremal", "kategori": "föremål", "modell": "plankor", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["plankor", "brädor"], "inlagd": "R3F-M9" }
+    "plankor": { "typ": "foremal", "kategori": "föremål", "modell": "plankor", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["plankor", "brädor"], "inlagd": "R3F-M9" },
+    "utter": { "typ": "djur", "kategori": "djur", "modell": "utter", "malhojd": 0.7, "palett": { "from": 25, "range": 22, "bodyL": 0.49 }, "art": "#C27138", "forladda": false, "ord": ["utter"], "inlagd": "R3F-M10" },
+    "svan": { "typ": "djur", "kategori": "djur", "modell": "svan", "malhojd": 1.1, "palett": { "from": 25, "range": 22, "bodyL": 0.49 }, "art": "#C27138", "rorelse": "flyg", "forladda": false, "ord": ["svan"], "inlagd": "R3F-M10" },
+    "abborre": { "typ": "djur", "kategori": "djur", "modell": "abborre", "malhojd": 0.55, "material": { "Body": "farg" }, "art": "#A1887F", "rorelse": "sim", "forladda": false, "ord": ["abborre"], "inlagd": "R3F-M10" },
+    "gadda": { "typ": "djur", "kategori": "djur", "modell": "gadda", "malhojd": 0.5, "material": { "Fins": "farg" }, "art": "#A1887F", "rorelse": "sim", "forladda": false, "ord": ["gädda"], "inlagd": "R3F-M10" },
+    "krafta": { "typ": "djur", "kategori": "djur", "modell": "krafta", "malhojd": 0.35, "material": { "Mork": "farg" }, "art": "#A1887F", "rorelse": "sim", "forladda": false, "ord": ["kräfta"], "inlagd": "R3F-M10" },
+    "vattensalamander": { "typ": "djur", "kategori": "djur", "modell": "vattensalamander", "malhojd": 0.28, "material": { "Rygg": "farg" }, "art": "#A1887F", "forladda": false, "ord": ["vattensalamander"], "inlagd": "R3F-M10" },
+    "back": { "typ": "natur", "kategori": "sten", "modell": "back", "malhojd": 0.1, "art": "#B0BEC5", "forladda": false, "ord": ["bäck"], "inlagd": "R3F-M10" },
+    "stig": { "typ": "natur", "kategori": "sten", "modell": "stig", "malhojd": 0.1, "art": "#B0BEC5", "forladda": false, "ord": ["stig"], "inlagd": "R3F-M10" },
+    "vagskylt": { "typ": "foremal", "kategori": "föremål", "modell": "vagskylt", "malhojd": 0.6, "art": "#FFD54F", "forladda": false, "ord": ["vägskylt"], "inlagd": "R3F-M10" }
   }
 }
