@@ -1,0 +1,4 @@
+# R9 (tydlighet)
+Patch r9-1 byte-lik (commit "R9: tydlighet (patch)"). testid-baslinjen uppdaterad med `check-spel-struktur.mjs --skriv` (10 nya testid från patchen). typecheck 0, test:product 115/115, check:struktur grön, build:pages grön, eslint 18 (1 ny varning react-refresh i Ledtradsyta.tsx, inga nya fel), r9-prov, val-prov, tangent-prov, forslag-prov exit 0. DOM-tur: stjärnknapp, Bengtsson-ikon, ledtrådsyta, förklaringstexter.
+Färg (farg-prov, nyans mätt/mål): blå isbjörn 246→219 (207) OK; gul OK; röd isbjörn 25→23 (1), röd koala 25→24, grön isbjörn 60→76 (123), grön lamm 45→44, blå elefant 98 (mäter gräs). Röd/grön ej lösta; Build använde alla 20 turer på felsökningen utan rättning.
+Ej gjort: (a) Bengtsson skärmrelativ höjd (176 px även på 1280×800), (b) "Prova en idé" skyms av tangentbordet i 375×812 när ledtrådsytan visas, (c) avklippt etikett i förslagsraden (syns på 1280-bredd).

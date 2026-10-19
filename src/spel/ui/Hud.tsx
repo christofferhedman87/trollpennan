@@ -13,6 +13,7 @@ type HudProps = {
   setHaller: Dispatch<SetStateAction<boolean>>;
   setForalder: Dispatch<SetStateAction<boolean>>;
   stjarnor: number;
+  oppnaStjarnor: () => void;
   hittatAntal: number;
   totalOrd: number;
   menyOpp: boolean;
@@ -21,7 +22,7 @@ type HudProps = {
   setSenare: Dispatch<SetStateAction<boolean>>;
 };
 
-export function Hud({ haller, setHaller, setForalder, stjarnor, hittatAntal, totalOrd, menyOpp, setMenyOpp, setMenySaker, setSenare }: HudProps) {
+export function Hud({ oppnaStjarnor, haller, setHaller, setForalder, stjarnor, hittatAntal, totalOrd, menyOpp, setMenyOpp, setMenySaker, setSenare }: HudProps) {
   return (
         <div className="hud">
           <button
@@ -41,9 +42,10 @@ export function Hud({ haller, setHaller, setForalder, stjarnor, hittatAntal, tot
             <span className="prick" />
           </button>
           <HoldOppnare haller={haller} oppna={() => setForalder(true)} />
-          <span className="stjarna-hud" data-testid="stjarnor" aria-label={fyll(FIR.stjarnor.har, { n: stjarnor })}>
+          <button type="button" className="stjarna-hud" data-testid="stjarnor" aria-label={fyll(FIR.stjarnor.har, { n: stjarnor })} onClick={oppnaStjarnor}>
             ★ {stjarnor}
-          </span>
+            <span className="stjarna-fraga" aria-hidden="true">?</span>
+          </button>
           <span className="dold" data-testid="framsteg">
             {fyll(FIR.framsteg.kort, { n: hittatAntal, total: totalOrd })}
           </span>
