@@ -86,7 +86,8 @@ for u in ang_raw:
             if fs["fras"] == "en kanin på en soffa med en trollbok om fjärran länder":
                 fs["ord"], fs["fras"] = "bok", "en kanin på en soffa med en bok"
 ARK_TB = {"pytteliten-kompis": "Min stora kikare söker en vän som är minst i hela världen!",
-          "mjuk-kompis": "Jag söker en vän som är skön att krama, som ett moln!"}
+          "mjuk-kompis": "Jag söker en vän som är skön att krama, som ett moln!",
+          "kalla-tassar": "Brr, ditt djur huttrar! Kan du hjälpa det så att det slutar frysa?"}
 for u in ang_raw:
     if u["id"] in ARK_TB: u["text_bengtsson"] = ARK_TB[u["id"]]
 ang_upp = [konv(u, "ang") for u in ang_raw]
