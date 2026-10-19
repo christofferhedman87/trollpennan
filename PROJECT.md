@@ -124,6 +124,7 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 6b. **R9J** humöret på alla platser — **skript** `git checkout main && git pull && git checkout -b runda-r9j-kod && bash rundor/R9J-humor/kor.sh` (efter R8-2b; före eller efter B2–B4)
 6. **B4** Grottan — **skript**, `runda-b-grottan` / `kor-plats.sh grottan` (torrkört: EXIT 0) + **B4.1** ljuskällor **Build**
 7. **B5** modeller (prio 1/2) — **skript**, får köras parallellt med B2–B4. **B5a = R3F-M10** (utter, svan, abborre, gädda, kräfta, vattensalamander + skogens bäck, stig, vägskylt; alla CC0, `rundor/R3F-modellserie/M10/B5A.md`): `git checkout main && git pull && git checkout -b runda-r3f-m10 && bash rundor/R3F-modellserie/kor.sh M10` → push, PR, merge. Efter B3 (eller om B3 redan körts): kör om `kor-plats.sh sjon` så att de sex djuren får område och repliker. Grottans `drake` behöver ingen modell (vanligt ordkort, nivå kort). B5b (kodritade: gris, kulting, ekorre, bäver, haj, dinosaurie) kvar
+7b. **Dubblingen av modellerna** (577 → ca 1 150, `rundor/R3F-modellserie/DUBBLING.md`): M11 småkryp och nya djur (37, CC0) — **skript** `git checkout main && git pull && git checkout -b runda-r3f-m11 && bash rundor/R3F-modellserie/kor.sh M11` (efter M10). M12–M25 planerade, kräver ny spaning först
 8. **B6** kontroll + buggfix — **skript** (B6.1) sedan **Build** (B6.2–3)
 9. **TTS** gratis svensk röst — efter B6; eget block
 
