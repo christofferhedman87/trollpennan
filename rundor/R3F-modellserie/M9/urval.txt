@@ -1,0 +1,17 @@
+# R3F-M9 (material och stad): 16 modeller, alla CC0. Format: paket/filnamn. Rader som börjar med # hoppas över.
+kaykit-city-builder-bits/dumpster.glb
+kaykit-city-builder-bits/firehydrant.glb
+kaykit-city-builder-bits/trafficlight-a.glb
+kaykit-resource-bits/gold-bar.glb
+kaykit-resource-bits/gold-nugget-large.glb
+kaykit-resource-bits/silver-bar.glb
+kaykit-resource-bits/iron-bar.glb
+kaykit-resource-bits/copper-bar.glb
+kaykit-resource-bits/stone-brick.glb
+kaykit-resource-bits/wood-plank-a.glb
+kaykit-resource-bits/wood-planks-stack-medium.glb
+kaykit-resource-bits/textiles-a.glb
+kaykit-resource-bits/pallet-wood.glb
+kaykit-resource-bits/parts-cog.glb
+kenney-survival-kit/resource-wood.glb
+kenney-survival-kit/resource-planks.glb

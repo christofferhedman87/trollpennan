@@ -1,0 +1,27 @@
+# R3F-M7 (kök, hushåll och teknik): 26 modeller, alla CC0. Format: paket/filnamn. Rader som börjar med # hoppas över.
+kaykit-restaurant-bits/bowl.glb
+kaykit-restaurant-bits/ketchup.glb
+kaykit-restaurant-bits/mustard.glb
+kaykit-restaurant-bits/cuttingboard.glb
+kaykit-restaurant-bits/jar-a-medium.glb
+kaykit-rpg-tools-bits/bucket-metal.glb
+kenney-food-kit/cooking-spoon.glb
+kenney-food-kit/utensil-fork.glb
+kenney-food-kit/rollingpin.glb
+kenney-food-kit/whisk.glb
+kenney-food-kit/bottle-oil.glb
+kenney-food-kit/bag.glb
+kenney-food-kit/pizza-box.glb
+kenney-furniture-kit/radio.glb
+kenney-furniture-kit/computerscreen.glb
+kenney-furniture-kit/laptop.glb
+kenney-furniture-kit/computerkeyboard.glb
+kenney-furniture-kit/computermouse.glb
+kenney-furniture-kit/speaker.glb
+kenney-furniture-kit/kitchencoffeemachine.glb
+kenney-furniture-kit/kitchenblender.glb
+kenney-furniture-kit/toaster.glb
+kenney-pirate-kit/crate.glb
+polypizza-cc0/kettle-kettle-xggurd.glb
+quaternius-fantasy-props-megakit/bag.glb
+quaternius-fantasy-props-megakit/bucket-wooden-1.glb
