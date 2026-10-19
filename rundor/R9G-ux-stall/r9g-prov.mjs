@@ -45,7 +45,7 @@ const bild = async (p, n) => bilder && p.screenshot({ path: path.join(bilder, n)
 async function oppnaBok(p) { await p.click("[data-testid=pennans-bok]"); await p.waitForSelector("[data-testid=skapar-guide]"); await p.waitForTimeout(400); }
 async function stangBok(p) { await p.click("[data-testid=stang-bok]"); await p.waitForTimeout(400); }
 
-// A: uppdrag pågår → bara uppdraget; gåtan finns inte i DOM förrän barnet öppnar den
+// A (uppdaterad i R8-2b efter R9I): uppdrag pågår → bara uppdraget; ingen gåtruta alls i DOM (ingen räknare, ingen "Visa gåtan")
 {
   const { ctx, p } = await sida({ uppdrag: { "kanin-fryser": "pagar" } });
   await oppnaBok(p);
@@ -53,13 +53,9 @@ async function stangBok(p) { await p.click("[data-testid=stang-bok]"); await p.w
   kolla("A uppdrag-remsa syns", await synlig(p, "[data-testid=uppdrag-remsa]"));
   kolla("A ingen ledtrad-gata i DOM", (await antal(p, "[data-testid=ledtrad-gata]")) === 0);
   kolla("A ingen hemligt-forklaring under uppdrag", (await antal(p, "[data-testid=hemligt-forklaring]")) === 0);
-  kolla("A hopfälld ledtråd finns", (await antal(p, "details[data-testid=ledtrad]")) === 1);
-  const fore = await p.getAttribute("[data-testid=ledtrad]", "data-hemligt");
-  await p.click("details[data-testid=ledtrad] summary");
-  await p.waitForTimeout(300);
-  kolla("A öppnad → gåtan syns", await synlig(p, "[data-testid=ledtrad-gata]"));
-  kolla("A samma gåta efter öppning", (await p.getAttribute("[data-testid=ledtrad]", "data-hemligt")) === fore, { fore });
-  await bild(p, "r9g-01b-uppdrag-oppnad.png");
+  kolla("A ingen gåtruta under uppdrag", (await antal(p, "[data-testid=ledtrad], .ledtrad-visa, .ledtrad-klar")) === 0);
+  const text = await p.locator("[data-testid=skapar-guide]").innerText().catch(() => "");
+  kolla("A ingen gåttext under uppdrag", !/Hemligt djur|hittade|Visa gåtan/.test(text));
   await ctx.close();
 }
 

@@ -1,0 +1,1516 @@
+diff --git a/data/platser.json b/data/platser.json
+index 3f28d62..e7ea2e8 100644
+--- a/data/platser.json
++++ b/data/platser.json
+@@ -73,7 +73,12 @@
+      "radie": 0.18,
+      "intensitet": 0.22,
+      "farg": "#FFD58A"
+-    }
++    },
++    "horisont": [
++     "#7FA7B5",
++     "#5E8A6A",
++     "#2F5A30"
++    ]
+    },
+    "zoner": [
+     {
+@@ -105,6 +110,46 @@
+       1,
+       0.45
+      ]
++    },
++    {
++     "id": "fri",
++     "typ": "fri",
++     "rekt": [
++      0.3,
++      0.52,
++      0.7,
++      0.9
++     ]
++    },
++    {
++     "id": "bakkant",
++     "typ": "dekor",
++     "rekt": [
++      0.08,
++      -0.45,
++      0.92,
++      0.22
++     ]
++    },
++    {
++     "id": "vanster",
++     "typ": "dekor",
++     "rekt": [
++      0.1,
++      0.22,
++      0.32,
++      0.92
++     ]
++    },
++    {
++     "id": "hoger",
++     "typ": "dekor",
++     "rekt": [
++      0.68,
++      0.22,
++      0.9,
++      0.92
++     ]
+     }
+    ],
+    "start": [
+@@ -145,21 +190,21 @@
+     },
+     {
+      "ord": "sten",
+-     "x": 0.69,
++     "x": 0.72,
+      "y": 0.66,
+      "skala": 0.4,
+      "zon": "mark"
+     },
+     {
+      "ord": "svamp",
+-     "x": 0.34,
++     "x": 0.28,
+      "y": 0.66,
+      "skala": 0.28,
+      "zon": "mark"
+     },
+     {
+      "ord": "blomma",
+-     "x": 0.62,
++     "x": 0.72,
+      "y": 0.66,
+      "skala": 0.28,
+      "zon": "mark"
+@@ -174,14 +219,14 @@
+     {
+      "ord": "bäck",
+      "x": 0.46,
+-     "y": 0.54,
++     "y": 0.5,
+      "skala": 0.5,
+      "zon": "vattenyta"
+     },
+     {
+      "ord": "stig",
+      "x": 0.47,
+-     "y": 0.66,
++     "y": 0.5,
+      "skala": 0.7,
+      "zon": "mark"
+     },
+@@ -209,14 +254,14 @@
+     {
+      "ord": "buske",
+      "x": 0.4,
+-     "y": 0.55,
++     "y": 0.5,
+      "skala": 0.65,
+      "zon": "mark"
+     },
+     {
+      "ord": "sten",
+      "x": 0.55,
+-     "y": 0.62,
++     "y": 0.5,
+      "skala": 0.35,
+      "zon": "mark"
+     }
+@@ -275,7 +320,171 @@
+     "skog-ljus-vid-krypin",
+     "skog-final-minnesljus"
+    ],
+-   "granskad": false
++   "granskad": false,
++   "dekor": [
++    {
++     "modell": "natur/tree_pineRoundA",
++     "antal": 8,
++     "hojd": [
++      2.6,
++      3.8
++     ],
++     "zon": "bakkant"
++    },
++    {
++     "modell": "natur/tree_default",
++     "antal": 4,
++     "hojd": [
++      2.2,
++      3
++     ],
++     "zon": "bakkant"
++    },
++    {
++     "modell": "natur/tree_oak",
++     "antal": 2,
++     "hojd": [
++      2.4,
++      3
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "natur/tree_fat",
++     "antal": 2,
++     "hojd": [
++      2.2,
++      2.8
++     ],
++     "zon": "hoger"
++    },
++    {
++     "modell": "natur/plant_bushLarge",
++     "antal": 2,
++     "hojd": [
++      0.7,
++      1
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "natur/plant_bushLarge",
++     "antal": 2,
++     "hojd": [
++      0.7,
++      1
++     ],
++     "zon": "hoger"
++    },
++    {
++     "modell": "natur/mushroom_redGroup",
++     "antal": 2,
++     "hojd": [
++      0.25,
++      0.35
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "natur/mushroom_redGroup",
++     "antal": 2,
++     "hojd": [
++      0.25,
++      0.35
++     ],
++     "zon": "hoger"
++    },
++    {
++     "modell": "natur/flower_yellowA",
++     "antal": 2,
++     "hojd": [
++      0.25,
++      0.35
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "natur/flower_yellowA",
++     "antal": 2,
++     "hojd": [
++      0.25,
++      0.35
++     ],
++     "zon": "hoger"
++    },
++    {
++     "modell": "natur/flower_purpleA",
++     "antal": 2,
++     "hojd": [
++      0.25,
++      0.35
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "natur/flower_purpleA",
++     "antal": 2,
++     "hojd": [
++      0.25,
++      0.35
++     ],
++     "zon": "hoger"
++    },
++    {
++     "modell": "natur/rock_smallA",
++     "antal": 1,
++     "hojd": [
++      0.3,
++      0.5
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "natur/rock_smallA",
++     "antal": 2,
++     "hojd": [
++      0.3,
++      0.5
++     ],
++     "zon": "hoger"
++    },
++    {
++     "modell": "natur/stump_round",
++     "antal": 1,
++     "hojd": [
++      0.3,
++      0.4
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "natur/stump_round",
++     "antal": 1,
++     "hojd": [
++      0.3,
++      0.4
++     ],
++     "zon": "hoger"
++    },
++    {
++     "modell": "natur/grass_large",
++     "antal": 5,
++     "hojd": [
++      0.25,
++      0.4
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "natur/grass_large",
++     "antal": 5,
++     "hojd": [
++      0.25,
++      0.4
++     ],
++     "zon": "hoger"
++    }
++   ]
+   },
+   {
+    "id": "sjon",
+@@ -330,7 +539,12 @@
+      "radie": 0.18,
+      "intensitet": 0.2,
+      "farg": "#FFD58A"
+-    }
++    },
++    "horisont": [
++     "#9CC3D6",
++     "#6F9C8A",
++     "#3C6B44"
++    ]
+    },
+    "zoner": [
+     {
+@@ -339,7 +553,7 @@
+      "rekt": [
+       0,
+       0.22,
+-      0.45,
++      1,
+       1
+      ]
+     },
+@@ -350,7 +564,7 @@
+       0.22,
+       0.22,
+       0.98,
+-      0.95
++      0.66
+      ]
+     },
+     {
+@@ -358,9 +572,9 @@
+      "typ": "undervatten",
+      "rekt": [
+       0.43,
+-      0.48,
++      0.4,
+       0.98,
+-      0.9
++      0.64
+      ]
+     },
+     {
+@@ -372,6 +586,46 @@
+       1,
+       0.3
+      ]
++    },
++    {
++     "id": "fri",
++     "typ": "fri",
++     "rekt": [
++      0.3,
++      0.52,
++      0.7,
++      0.9
++     ]
++    },
++    {
++     "id": "bakkant",
++     "typ": "dekor",
++     "rekt": [
++      0.08,
++      -0.45,
++      0.92,
++      0.22
++     ]
++    },
++    {
++     "id": "vanster",
++     "typ": "dekor",
++     "rekt": [
++      0.1,
++      0.22,
++      0.32,
++      0.92
++     ]
++    },
++    {
++     "id": "hoger",
++     "typ": "dekor",
++     "rekt": [
++      0.68,
++      0.22,
++      0.9,
++      0.92
++     ]
+     }
+    ],
+    "start": [
+@@ -433,7 +687,7 @@
+     },
+     {
+      "ord": "sten",
+-     "x": 0.32,
++     "x": 0.28,
+      "y": 0.7,
+      "skala": 0.28,
+      "zon": "strand"
+@@ -455,7 +709,7 @@
+     {
+      "ord": "näckros",
+      "x": 0.55,
+-     "y": 0.55,
++     "y": 0.5,
+      "skala": 0.4,
+      "zon": "vattenyta"
+     },
+@@ -468,7 +722,7 @@
+     },
+     {
+      "ord": "näckros",
+-     "x": 0.62,
++     "x": 0.72,
+      "y": 0.62,
+      "skala": 0.38,
+      "zon": "vattenyta"
+@@ -528,7 +782,92 @@
+     "sjo-ovantad-kapten",
+     "sjo-final-vattenglitter"
+    ],
+-   "granskad": false
++   "granskad": false,
++   "dekor": [
++    {
++     "modell": "natur/tree_pineRoundA",
++     "antal": 8,
++     "hojd": [
++      2.4,
++      3.4
++     ],
++     "zon": "bakkant"
++    },
++    {
++     "modell": "natur/tree_default",
++     "antal": 4,
++     "hojd": [
++      2,
++      2.8
++     ],
++     "zon": "bakkant"
++    },
++    {
++     "modell": "natur/lily_large",
++     "antal": 5,
++     "hojd": [
++      0.25,
++      0.35
++     ],
++     "zon": "vattenyta",
++     "vatten": true
++    },
++    {
++     "modell": "natur/lily_small",
++     "antal": 5,
++     "hojd": [
++      0.25,
++      0.35
++     ],
++     "zon": "vattenyta",
++     "vatten": true
++    },
++    {
++     "modell": "vass",
++     "antal": 6,
++     "hojd": [
++      0.6,
++      0.9
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "natur/rock_largeA",
++     "antal": 3,
++     "hojd": [
++      0.6,
++      0.9
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "natur/rock_smallA",
++     "antal": 4,
++     "hojd": [
++      0.25,
++      0.4
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "natur/plant_bush",
++     "antal": 4,
++     "hojd": [
++      0.5,
++      0.8
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "natur/grass_large",
++     "antal": 8,
++     "hojd": [
++      0.25,
++      0.4
++     ],
++     "zon": "vanster"
++    }
++   ]
+   },
+   {
+    "id": "grottan",
+@@ -583,6 +922,14 @@
+      "radie": 0.24,
+      "intensitet": 0.35,
+      "farg": "#FFD58A"
++    },
++    "horisont": {
++     "typ": "berg",
++     "farger": [
++      "#4A4458",
++      "#3A3546",
++      "#2A2633"
++     ]
+     }
+    },
+    "zoner": [
+@@ -611,7 +958,7 @@
+      "typ": "tak",
+      "rekt": [
+       0.1,
+-      0.0,
++      0,
+       0.9,
+       0.28
+      ]
+@@ -625,6 +972,46 @@
+       1,
+       0.6
+      ]
++    },
++    {
++     "id": "fri",
++     "typ": "fri",
++     "rekt": [
++      0.3,
++      0.52,
++      0.7,
++      0.9
++     ]
++    },
++    {
++     "id": "bakkant",
++     "typ": "dekor",
++     "rekt": [
++      0.08,
++      -0.45,
++      0.92,
++      0.22
++     ]
++    },
++    {
++     "id": "vanster",
++     "typ": "dekor",
++     "rekt": [
++      0.1,
++      0.22,
++      0.32,
++      0.92
++     ]
++    },
++    {
++     "id": "hoger",
++     "typ": "dekor",
++     "rekt": [
++      0.68,
++      0.22,
++      0.9,
++      0.92
++     ]
+     }
+    ],
+    "start": [
+@@ -668,7 +1055,9 @@
+      "x": 0.3,
+      "y": 0.24,
+      "skala": 0.42,
+-     "zon": "tak"
++     "zon": "mark",
++     "ankare": "mark",
++     "vand": true
+     },
+     {
+      "ord": "klippa",
+@@ -679,7 +1068,7 @@
+     },
+     {
+      "ord": "sten",
+-     "x": 0.4,
++     "x": 0.28,
+      "y": 0.65,
+      "skala": 0.3,
+      "zon": "mark"
+@@ -693,7 +1082,7 @@
+     },
+     {
+      "ord": "svamp",
+-     "x": 0.6,
++     "x": 0.72,
+      "y": 0.7,
+      "skala": 0.25,
+      "zon": "mark"
+@@ -703,7 +1092,9 @@
+      "x": 0.55,
+      "y": 0.2,
+      "skala": 0.42,
+-     "zon": "tak"
++     "zon": "mark",
++     "ankare": "mark",
++     "vand": true
+     }
+    ],
+    "ljud": [
+@@ -760,7 +1151,128 @@
+     "grotta-glitter-i-kistan",
+     "grotta-final-bergets-berattelse"
+    ],
+-   "granskad": false
++   "granskad": false,
++   "dekor": [
++    {
++     "modell": "klippvagg",
++     "antal": 3,
++     "hojd": [
++      2.6,
++      3.6
++     ],
++     "zon": "bakkant"
++    },
++    {
++     "modell": "klippa",
++     "antal": 2,
++     "hojd": [
++      1.6,
++      2.4
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "klippa",
++     "antal": 2,
++     "hojd": [
++      1.6,
++      2.4
++     ],
++     "zon": "hoger"
++    },
++    {
++     "modell": "klippblock",
++     "antal": 2,
++     "hojd": [
++      0.6,
++      1
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "klippblock",
++     "antal": 2,
++     "hojd": [
++      0.6,
++      1
++     ],
++     "zon": "hoger"
++    },
++    {
++     "modell": "kristall",
++     "antal": 2,
++     "hojd": [
++      0.4,
++      0.7
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "kristall",
++     "antal": 3,
++     "hojd": [
++      0.4,
++      0.7
++     ],
++     "zon": "hoger"
++    },
++    {
++     "modell": "natur/mushroom_tanGroup",
++     "antal": 2,
++     "hojd": [
++      0.25,
++      0.35
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "natur/mushroom_tanGroup",
++     "antal": 2,
++     "hojd": [
++      0.25,
++      0.35
++     ],
++     "zon": "hoger"
++    },
++    {
++     "modell": "sten",
++     "antal": 3,
++     "hojd": [
++      0.25,
++      0.45
++     ],
++     "zon": "vanster"
++    },
++    {
++     "modell": "sten",
++     "antal": 3,
++     "hojd": [
++      0.25,
++      0.45
++     ],
++     "zon": "hoger"
++    },
++    {
++     "modell": "droppsten",
++     "antal": 2,
++     "hojd": [
++      0.6,
++      1
++     ],
++     "zon": "vanster",
++     "vand": true
++    },
++    {
++     "modell": "droppsten",
++     "antal": 2,
++     "hojd": [
++      0.6,
++      1
++     ],
++     "zon": "hoger",
++     "vand": true
++    }
++   ]
+   }
+  ],
+  "beloningar": []
+diff --git a/package.json b/package.json
+index 59115ec..3031416 100644
+--- a/package.json
++++ b/package.json
+@@ -22,7 +22,7 @@
+     "format": "prettier --write .",
+     "build:pages": "vite build --config vite.pages.config.ts",
+     "preview:pages": "vite preview --config vite.pages.config.ts",
+-    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/dialogIsolering.test.mjs",
++    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/dialogIsolering.test.mjs",
+     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
+     "check:pages-output": "node scripts/check-pages-output.mjs",
+     "check:struktur": "node scripts/check-spel-struktur.mjs",
+diff --git a/src/spel/ang/PlatsDekor.tsx b/src/spel/ang/PlatsDekor.tsx
+index 0d2ba69..888e2ba 100644
+--- a/src/spel/ang/PlatsDekor.tsx
++++ b/src/spel/ang/PlatsDekor.tsx
+@@ -1,15 +1,17 @@
+ // B1.3b: scenen för andra platser än ängen (Skogen, Sjön, Grottan …), helt ur data/platser.json.
+ // Ängen ritas som förut i angen3d.tsx; här finns bara miljö (himmel, dis, ljus, mark), startobjekt och platsens skapelser.
+ import { OrbitControls } from "@react-three/drei";
+-import { Component, Suspense, useEffect, useMemo, useRef, type ReactNode } from "react";
++import { Component, Suspense, useEffect, useLayoutEffect, useMemo, useRef, type ReactNode } from "react";
+ import { useThree } from "@react-three/fiber";
+ import * as THREE from "three";
+ import { GltfSak } from "../gltfDjur.tsx";
++import { InstansModell } from "../kenneyNatur.tsx";
+ import { KV, miljoFor } from "../miljo.ts";
+ import { useMinne } from "../minne.ts";
+-import { dekorFor, vattenytor } from "../platsDekor.ts";
++import { DEKOR_SKALA, dekorFor, horisontFor, spridDekor, vattenytor, type SpriddDekor } from "../platsDekor.ts";
+ import { platsMed } from "../platser.ts";
+ import { DjurIScen } from "./djur.tsx";
++import { Horisont } from "./dekor.tsx";
+ import { SvajMark } from "./himmel.tsx";
+ import { SagaPenna } from "./saga.tsx";
+ import { KameraRam } from "./kamera.tsx";
+@@ -42,19 +44,54 @@ class SakGren extends Component<{ children: ReactNode }, { fel: boolean }> {
+   }
+ }
+ 
+-/** Startobjekten (ord → entitet via samma uppslag som barnets ord) och vattenytorna. */
++function loggaSaknas(plats: string, ord: string) {
++  const nyckel = `${plats}:${ord}`;
++  if (sagt.has(nyckel)) return;
++  sagt.add(nyckel);
++  console.info(`[plats] ${plats}: "${ord}" har ingen modell, hoppas över`);
++}
++
++/** En platt skugga per dekorsak. Radie ≈ 0,35 × höjd. En instancedMesh för hela raden av rader. */
++function DekorSkuggor({ rader }: { rader: SpriddDekor[] }) {
++  const ref = useRef<THREE.InstancedMesh>(null);
++  const alla = useMemo(() => rader.filter((r) => r.url && r.platser.length).flatMap((r) => r.platser), [rader]);
++  useLayoutEffect(() => {
++    const mesh = ref.current;
++    if (!mesh) return;
++    const m = new THREE.Matrix4();
++    const pos = new THREE.Vector3();
++    const q = new THREE.Quaternion();
++    const sv = new THREE.Vector3();
++    q.setFromEuler(new THREE.Euler(-Math.PI / 2, 0, 0));
++    alla.forEach(([x, z, hojd], i) => {
++      const radie = 0.35 * hojd;
++      pos.set(x, 0.02, z);
++      sv.set(radie, radie, radie);
++      m.compose(pos, q, sv);
++      mesh.setMatrixAt(i, m);
++    });
++    mesh.count = alla.length;
++    mesh.instanceMatrix.needsUpdate = true;
++  }, [alla]);
++  if (!alla.length) return null;
++  return (
++    <instancedMesh ref={ref} args={[undefined, undefined, alla.length]} frustumCulled={false}>
++      <circleGeometry args={[1, 12]} />
++      <meshBasicMaterial color="#000000" transparent opacity={0.16} depthWrite={false} />
++    </instancedMesh>
++  );
++}
++
++/** Startobjekten (ord → entitet via samma uppslag som barnets ord), dekor ur data och vattenytorna. */
+ export function PlatsDekor({ plats }: { plats: string }) {
+   const p = platsMed(plats);
+   const { saker, saknas } = useMemo(() => dekorFor(p), [p]);
+   const vatten = useMemo(() => vattenytor(p), [p]);
+-  for (const ord of saknas) {
+-    const nyckel = `${plats}:${ord}`;
+-    if (sagt.has(nyckel)) continue;
+-    sagt.add(nyckel);
+-    console.info(`[plats] ${plats}: "${ord}" har ingen modell, hoppas över`);
+-  }
++  const spridd = useMemo(() => spridDekor(p), [p]);
++  for (const ord of saknas) loggaSaknas(plats, ord);
++  for (const rad of spridd) if (rad.saknas) loggaSaknas(plats, rad.saknas);
+   return (
+-    <group name={`plats-${plats}`} scale={1.45}>
++    <group name={`plats-${plats}`} scale={DEKOR_SKALA}>
+       {vatten.map((v) => (
+         <mesh key={v.id} name="vattenyta" rotation={[-Math.PI / 2, 0, 0]} position={v.mitt}>
+           <planeGeometry args={v.storlek} />
+@@ -65,11 +102,21 @@ export function PlatsDekor({ plats }: { plats: string }) {
+         <group key={`${s.kropp}-${i}`} name={s.ord} position={s.pos} scale={s.skala}>
+           <SakGren>
+             <Suspense fallback={null}>
+-              <GltfSak id={s.kropp} />
++              <GltfSak id={s.kropp} vand={s.vand} />
+             </Suspense>
+           </SakGren>
+         </group>
+       ))}
++      <DekorSkuggor rader={spridd} />
++      {spridd.map((rad, i) =>
++        rad.url && rad.platser.length ? (
++          <SakGren key={`${rad.url}-${i}`}>
++            <Suspense fallback={null}>
++              <InstansModell url={rad.url} platser={rad.platser} vand={rad.vand} />
++            </Suspense>
++          </SakGren>
++        ) : null,
++      )}
+     </group>
+   );
+ }
+@@ -79,6 +126,8 @@ export function PlatsScen({ plats }: { plats: string }) {
+   const djur = useMinne((s) => s.platsSkapelser[plats] ?? INGA);
+   const styr = useRef<OrbitStyr>(null);
+   const { miljo, ljusSkala, mark } = useMemo(() => miljoFor(platsMed(plats)?.miljo), [plats]);
++  const platsData = platsMed(plats);
++  const horisont = useMemo(() => horisontFor(platsMed(plats)?.miljo), [plats]);
+   const L = miljo.ljus;
+   const k = ljusSkala;
+   return (
+@@ -104,10 +153,11 @@ export function PlatsScen({ plats }: { plats: string }) {
+       <directionalLight color={L.fyll.farg} position={[-6, 3, 4]} intensity={L.fyll.styrka * k} />
+       <directionalLight color={L.kant.farg} position={[-2, 4, -5]} intensity={L.kant.styrka * k} />
+       <SvajMark color={mark} natt={0} utanTextur={mark !== "#ffffff"} />
++      {horisont ? <Horisont farger={horisont.farger} typ={horisont.typ} /> : null}
+       <PlatsKamera />
+       <PlatsDekor plats={plats} />
+       {djur.map((spec) => (
+-        <DjurIScen key={spec.uid} spec={spec} alla={djur} />
++        <DjurIScen key={spec.uid} spec={spec} alla={djur} plats={platsData} />
+       ))}
+       <SagaPenna />
+       <OrbitControls
+diff --git a/src/spel/ang/dekor.tsx b/src/spel/ang/dekor.tsx
+index 31ce02f..35b5b27 100644
+--- a/src/spel/ang/dekor.tsx
++++ b/src/spel/ang/dekor.tsx
+@@ -571,7 +571,37 @@ export function Rok() {
+   );
+ }
+ 
+-export function Horisont() {
++const HORISONT_STANDARD = ["#8FB4C6", "#7E9E92", "#3F6E34"] as const;
++
++/** `typ` (R8-2b): "skog" = kullar med trädkoner (ängen, skogen, sjön), "berg" = kantiga mörka bergväggar längre bak, inga träd. */
++export function Horisont({ farger, typ = "skog" }: { farger?: [string, string, string]; typ?: "skog" | "berg" } = {}) {
++  const [himlen, kullen, skogen] = farger ?? HORISONT_STANDARD;
++  if (typ === "berg") return <BergHorisont farger={[himlen, kullen, skogen]} />;
++  return <SkogHorisont farger={[himlen, kullen, skogen]} />;
++}
++
++function BergHorisont({ farger }: { farger: [string, string, string] }) {
++  const [bak, mitt, fram] = farger;
++  return (
++    <group>
++      <mesh position={[0, 0, -13.5]} scale={[26, 5.2, 1]}>
++        <circleGeometry args={[1, 7, 0, Math.PI]} />
++        <meshBasicMaterial color={bak} />
++      </mesh>
++      <mesh position={[-3, 0, -12]} scale={[14, 4.1, 1]} rotation={[0, 0, 0.05]}>
++        <circleGeometry args={[1, 5, 0, Math.PI]} />
++        <meshBasicMaterial color={mitt} />
++      </mesh>
++      <mesh position={[5, 0, -11.2]} scale={[11, 3.3, 1]} rotation={[0, 0, -0.06]}>
++        <circleGeometry args={[1, 4, 0, Math.PI]} />
++        <meshBasicMaterial color={fram} />
++      </mesh>
++    </group>
++  );
++}
++
++function SkogHorisont({ farger }: { farger: [string, string, string] }) {
++  const [himlen, kullen, skogen] = farger;
+   const trad = useRef<THREE.InstancedMesh>(null);
+   useLayoutEffect(() => {
+     const mesh = trad.current;
+@@ -600,15 +630,15 @@ export function Horisont() {
+     <group>
+       <mesh position={[0, 0, -10.6]} scale={[24, 3.6, 1]}>
+         <circleGeometry args={[1, 14, 0, Math.PI]} />
+-        <meshBasicMaterial color="#8FB4C6" />
++        <meshBasicMaterial color={himlen} />
+       </mesh>
+       <mesh position={[0, 0, -8.3]} scale={[18, 2.7, 1]}>
+         <circleGeometry args={[1, 16, 0, Math.PI]} />
+-        <meshBasicMaterial color="#7E9E92" />
++        <meshBasicMaterial color={kullen} />
+       </mesh>
+       <mesh position={[0, 0, -6.35]} scale={[13, 2.15, 1]}>
+         <circleGeometry args={[1, 18, 0, Math.PI]} />
+-        <meshBasicMaterial color="#3F6E34" />
++        <meshBasicMaterial color={skogen} />
+       </mesh>
+       <instancedMesh ref={trad} args={[undefined, undefined, 6]}>
+         <coneGeometry args={[0.45, 1.3, 5]} />
+diff --git a/src/spel/ang/delat.ts b/src/spel/ang/delat.ts
+index 5b68640..80319ea 100644
+--- a/src/spel/ang/delat.ts
++++ b/src/spel/ang/delat.ts
+@@ -4,6 +4,8 @@ import * as THREE from "three";
+ import texterJson from "../../../data/texter-gard.json" with { type: "json" };
+ import type { Sparad } from "../brygga.ts";
+ import { artFarg, flyger, simmar, vikt } from "../entiteter.ts";
++import type { Plats } from "../platser.ts";
++import { placeraPaPlats } from "../platsYta.ts";
+ 
+ export const HINT = (texterJson as { tred_hint: string }).tred_hint;
+ export const SNART = (texterJson as { demo: { snart: string } }).demo.snart;
+@@ -115,7 +117,36 @@ const LAND_SLOT: [number, number][] = [
+   [1.55, 0.95],
+ ];
+ 
+-export function djurPlats(spec: Sparad, alla: Sparad[]): [number, number, number] {
++const platsCache = new Map<string, Map<string, [number, number]>>();
++
++/**
++ * R8-2b: på en plats med zoner flyttas varje landdjur/sak till land (land/fri, aldrig vattenyta)
++ * och simmare till vattenytan. Flygare rörs inte. Ängen (plats saknas) är som förut.
++ */
++export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number, number, number] {
++  const bas = djurPlatsBas(spec, alla);
++  if (!plats || flygare(spec)) return bas;
++  const nyckel = `${plats.id}|${alla.map((d) => d.uid).join(",")}`;
++  let karta = platsCache.get(nyckel);
++  if (!karta) {
++    const marka = alla.filter((d) => !flygare(d));
++    const ut = placeraPaPlats(
++      plats,
++      marka.map((d) => {
++        const [x, , z] = djurPlatsBas(d, alla);
++        return [x, z] as [number, number];
++      }),
++      marka.map((d) => simmare(d)),
++    );
++    karta = new Map(marka.map((d, i) => [d.uid, ut[i]!]));
++    if (platsCache.size > 30) platsCache.clear();
++    platsCache.set(nyckel, karta);
++  }
++  const p = karta.get(spec.uid);
++  return p ? [p[0], bas[1], p[1]] : bas;
++}
++
++function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
+   if (simmare(spec)) {
+     const sim = alla.filter((d) => simmare(d));
+     const i = Math.max(0, sim.findIndex((d) => d.uid === spec.uid));
+diff --git a/src/spel/ang/djur.tsx b/src/spel/ang/djur.tsx
+index 5346f08..db11171 100644
+--- a/src/spel/ang/djur.tsx
++++ b/src/spel/ang/djur.tsx
+@@ -2,6 +2,7 @@ import { useFrame, type ThreeEvent } from "@react-three/fiber";
+ import { Component, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+ import * as THREE from "three";
+ import { brygga, type Sparad } from "../brygga.ts";
++import type { Plats } from "../platser.ts";
+ import { byggPack, forma } from "../djurmesh.ts";
+ import { replik } from "../replik.ts";
+ import { ljud } from "../ljud.ts";
+@@ -209,8 +210,8 @@ export function Hjartan({ puls }: { puls: number }) {
+   );
+ }
+ 
+-export function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
+-  const [x, y, z] = djurPlats(spec, alla);
++export function DjurIScen({ spec, alla, plats }: { spec: Sparad; alla: Sparad[]; plats?: Plats }) {
++  const [x, y, z] = djurPlats(spec, alla, plats);
+   const grupp = useRef<THREE.Group>(null);
+   const skal = useRef(0.2);
+   const fod = useRef(-1);
+diff --git a/src/spel/gltfDjur.tsx b/src/spel/gltfDjur.tsx
+index 025c409..4c20ac2 100644
+--- a/src/spel/gltfDjur.tsx
++++ b/src/spel/gltfDjur.tsx
+@@ -383,7 +383,8 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
+ }
+ 
+ /** R3G: en sak (entitet med modell, inte djur) bredvid ett djur – "en kanin med en hink". Hämtas först när den används (lazyload). */
+-export function GltfSak({ id }: { id: string }) {
++/** `vand` (R8-2b): modellen vänds upp och ner med botten kvar på marken (droppsten → stalagmit). */
++export function GltfSak({ id, vand = false }: { id: string; vand?: boolean }) {
+   const gltf = useGLTF(modellUrlAv(id)!);
+   const klon = useMemo(() => {
+     const c = SkeletonUtils.clone(gltf.scene) as THREE.Object3D;
+@@ -392,8 +393,11 @@ export function GltfSak({ id }: { id: string }) {
+     const box = new THREE.Box3().setFromObject(c);
+     const s = skalaFor(id, box.max.y - box.min.y, box.max.x - box.min.x, box.max.z - box.min.z);
+     c.scale.setScalar(s);
+-    c.position.set(-((box.min.x + box.max.x) / 2) * s, -box.min.y * s, -((box.min.z + box.max.z) / 2) * s);
++    if (vand) {
++      c.rotation.x = Math.PI;
++      c.position.set(-((box.min.x + box.max.x) / 2) * s, box.max.y * s, ((box.min.z + box.max.z) / 2) * s);
++    } else c.position.set(-((box.min.x + box.max.x) / 2) * s, -box.min.y * s, -((box.min.z + box.max.z) / 2) * s);
+     return c;
+-  }, [gltf.scene, id]);
++  }, [gltf.scene, id, vand]);
+   return <primitive object={klon} />;
+ }
+diff --git a/src/spel/kenneyNatur.tsx b/src/spel/kenneyNatur.tsx
+index 78008f1..372c26b 100644
+--- a/src/spel/kenneyNatur.tsx
++++ b/src/spel/kenneyNatur.tsx
+@@ -72,7 +72,8 @@ function baka(scene: THREE.Object3D): Del[] {
+ /** x, z, höjd, rotation, y-sänkning (andel av höjden som grävs ner) */
+ type Plats = readonly [number, number, number, number, number];
+ 
+-function Stall({ url, platser }: { url: string; platser: readonly Plats[] }) {
++/** `vand` (R8-2b): varje instans vänds upp och ner med botten kvar på marken. */
++export function InstansModell({ url, platser, vand = false }: { url: string; platser: readonly Plats[]; vand?: boolean }) {
+   const gltf = useGLTF(url);
+   const delar = useMemo(() => baka(gltf.scene), [gltf.scene]);
+   const refs = useRef<(THREE.InstancedMesh | null)[]>([]);
+@@ -86,8 +87,8 @@ function Stall({ url, platser }: { url: string; platser: readonly Plats[] }) {
+       const mesh = refs.current[di];
+       if (!mesh) continue;
+       platser.forEach(([x, z, hojd, ry, ner], i) => {
+-        p.set(x, -ner * hojd, z);
+-        e.set(0, ry, 0);
++        p.set(x, -ner * hojd + (vand ? hojd : 0), z);
++        e.set(vand ? Math.PI : 0, ry, 0);
+         q.setFromEuler(e);
+         sv.set(hojd, hojd, hojd);
+         m.compose(p, q, sv);
+@@ -96,7 +97,7 @@ function Stall({ url, platser }: { url: string; platser: readonly Plats[] }) {
+       mesh.count = platser.length;
+       mesh.instanceMatrix.needsUpdate = true;
+     }
+-  }, [delar, platser]);
++  }, [delar, platser, vand]);
+   return (
+     <>
+       {delar.map((d, i) => (
+@@ -113,6 +114,9 @@ function Stall({ url, platser }: { url: string; platser: readonly Plats[] }) {
+   );
+ }
+ 
++/** Samma instansiering som ängens dekor. */
++export const Stall = InstansModell;
++
+ const TRAD: Plats[] = [
+   [-3.4, -1.6, 2.4, 0.4, 0],
+   [-4.1, -3.2, 2.8, 1.2, 0],
+diff --git a/src/spel/platsDekor.ts b/src/spel/platsDekor.ts
+index 46b7cd9..cffab47 100644
+--- a/src/spel/platsDekor.ts
++++ b/src/spel/platsDekor.ts
+@@ -3,7 +3,12 @@
+ // Ren logik utan three, testas i Node.
+ import { ordFranForm } from "../tolk/lexikon.ts";
+ import { modellUrl } from "./entiteter.ts";
+-import { tillVarld, type Plats, type Zon } from "./platser.ts";
++import { tillVarld, type DekorRad, type Plats, type Startobjekt, type Zon } from "./platser.ts";
++import { YTA_SKALA, iVatten, tillPlats } from "./platsYta.ts";
++
++/** Samma skala som gruppen i PlatsDekor. Världsmått delas med den så höjden i datan blir världshöjd. */
++export const DEKOR_SKALA = YTA_SKALA;
++const MIN_AVSTAND = 0.5;
+ 
+ /** "träd" → "trad", "björk" → "bjork". null om ordet är okänt eller saknar modell. */
+ export function entitetForOrd(ord: string): string | null {
+@@ -11,11 +16,42 @@ export function entitetForOrd(ord: string): string | null {
+   return kropp && modellUrl(kropp) ? kropp : null;
+ }
+ 
+-export type DekorSak = { ord: string; kropp: string; pos: [number, number, number]; skala: number };
++export type DekorSak = { ord: string; kropp: string; pos: [number, number, number]; skala: number; vand?: boolean };
+ export type Vattenyta = { id: string; mitt: [number, number, number]; storlek: [number, number] };
+ 
+-/** Höjd för zoner som inte står på marken. */
+-const ZON_HOJD: Record<string, number> = { luft: 2.55, tak: 2.05 };
++/**
++ * R8-2b: var en sak förankras. Botten på modellens bounding box ställs på ankarets höjd.
++ * `mark` (standard) = på marken, `vatten` = på vattenytan, `luft` = svävar med flit (bara i en luft-zon).
++ * Platserna har inget tak som ritas, så "tak" finns inte: droppstenar läggs på marken som stalagmiter (`vand`).
++ */
++export type Ankare = "mark" | "vatten" | "luft";
++export const ANKARE_HOJD: Record<Ankare, number> = { mark: 0, vatten: 0.03, luft: 2.55 };
++
++export function ankareFor(s: Startobjekt, zoner: Zon[] = []): Ankare {
++  if (s.ankare === "mark" || s.ankare === "vatten" || s.ankare === "luft") return s.ankare;
++  const typ = zoner.find((z) => z.id === s.zon)?.typ ?? s.zon;
++  if (typ === "luft") return "luft";
++  if (typ === "vattenyta") return "vatten";
++  return "mark";
++}
++
++export type HorisontVal = { typ: "skog" | "berg"; farger: [string, string, string] } | null;
++
++/**
++ * R8-2b: horisonten styrs per plats i `miljo.horisont`:
++ * `["#..","#..","#.."]` = skog (kullar + trädkoner), `{ "typ": "berg", "farger": [...] }` = mörka bergväggar utan träd,
++ * `"ingen"`, `null` eller utelämnad = ingen horisont.
++ */
++export function horisontFor(miljo: Record<string, unknown> | undefined): HorisontVal {
++  const h = miljo?.horisont as unknown;
++  const farger = (v: unknown): v is [string, string, string] => Array.isArray(v) && v.length === 3 && v.every((f) => typeof f === "string");
++  if (farger(h)) return { typ: "skog", farger: h };
++  if (h && typeof h === "object") {
++    const o = h as { typ?: unknown; farger?: unknown };
++    if ((o.typ === "skog" || o.typ === "berg") && farger(o.farger)) return { typ: o.typ, farger: o.farger };
++  }
++  return null;
++}
+ 
+ /** Platsens startobjekt som entiteter i världen. Ord utan modell kommer i `saknas`. */
+ export function dekorFor(p: Plats | undefined): { saker: DekorSak[]; saknas: string[] } {
+@@ -28,11 +64,90 @@ export function dekorFor(p: Plats | undefined): { saker: DekorSak[]; saknas: str
+       continue;
+     }
+     const [wx, wz] = tillVarld(s.x, s.y);
+-    saker.push({ ord: s.ord, kropp, pos: [wx, ZON_HOJD[s.zon ?? ""] ?? 0, wz], skala: s.skala ?? 1 });
++    const y = ANKARE_HOJD[ankareFor(s, p?.zoner)];
++    saker.push({ ord: s.ord, kropp, pos: [wx, y, wz], skala: s.skala ?? 1, ...(s.vand ? { vand: true } : {}) });
+   }
+   return { saker, saknas };
+ }
+ 
++function mulberry32(seed: number) {
++  let a = seed >>> 0;
++  return () => {
++    a = (a + 0x6d2b79f5) | 0;
++    let t = Math.imul(a ^ (a >>> 15), 1 | a);
++    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
++    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
++  };
++}
++
++function iRekt(x: number, y: number, r: [number, number, number, number]) {
++  const [x0, y0, x1, y1] = r;
++  const xa = Math.min(x0, x1);
++  const xb = Math.max(x0, x1);
++  const ya = Math.min(y0, y1);
++  const yb = Math.max(y0, y1);
++  return x >= xa && x <= xb && y >= ya && y <= yb;
++}
++
++function urlFor(modell: string): { url: string } | { saknas: string } {
++  if (modell.startsWith("natur/")) {
++    const fil = modell.slice("natur/".length);
++    return fil ? { url: `/models/natur/${fil}.glb` } : { saknas: modell };
++  }
++  const u = modellUrl(modell);
++  return u ? { url: u } : { saknas: modell };
++}
++
++export type SpriddDekor = { url: string; platser: [number, number, number, number, number][]; saknas?: string; vand?: boolean };
++
++/**
++ * Sprider `dekor` i zonens rektangel. Punkter i en `fri`-zon hoppas över.
++ * Minst 0,5 världsenheter mellan saker i samma rad. Resultatet är i gruppens
++ * lokala enheter (värld / DEKOR_SKALA). `vatten` lyfter y till 0,03.
++ * Rent och deterministiskt (mulberry32, frö = fro ?? radindex).
++ */
++export function spridDekor(p: Plats | undefined): SpriddDekor[] {
++  const rader = p?.dekor ?? [];
++  const zoner = p?.zoner ?? [];
++  const fria = zoner.filter((z) => z.typ === "fri");
++  return rader.map((rad, index) => spridRad(rad, index, zoner, fria, p));
++}
++
++function spridRad(rad: DekorRad, index: number, zoner: Zon[], fria: Zon[], p: Plats | undefined): SpriddDekor {
++  const traff = urlFor(rad.modell);
++  if ("saknas" in traff) return { url: "", platser: [], saknas: traff.saknas };
++  const zon = zoner.find((z) => z.id === rad.zon);
++  if (!zon) return { url: traff.url, platser: [], saknas: rad.zon };
++  const rnd = mulberry32(rad.fro ?? index);
++  const [x0, y0, x1, y1] = zon.rekt;
++  const platser: [number, number, number, number, number][] = [];
++  const varld: [number, number][] = [];
++  for (let i = 0; i < rad.antal; i++) {
++    let vald: [number, number, number, number, number] | null = null;
++    for (let forsok = 0; forsok < 80; forsok++) {
++      const x = x0 + rnd() * (x1 - x0);
++      const y = y0 + rnd() * (y1 - y0);
++      if (fria.some((z) => iRekt(x, y, z.rekt))) continue;
++      const [wx, wz] = tillVarld(x, y);
++      // R8-2b: vattenytan ritas i gruppens skala; land-dekor hamnar aldrig på den, vatten-dekor alltid.
++      if (p) {
++        const [vx, vy] = tillPlats(wx, wz);
++        if (iVatten(p, vx, vy) !== !!rad.vatten) continue;
++      }
++      if (varld.some((q) => Math.hypot(q[0] - wx, q[1] - wz) < MIN_AVSTAND)) continue;
++      const hojdV = rad.hojd[0] + rnd() * (rad.hojd[1] - rad.hojd[0]);
++      const hojd = hojdV / DEKOR_SKALA;
++      const rot = rnd() * Math.PI * 2;
++      const ner = rad.vatten ? -0.03 / hojd : 0;
++      vald = [wx / DEKOR_SKALA, wz / DEKOR_SKALA, hojd, rot, ner];
++      varld.push([wx, wz]);
++      break;
++    }
++    if (vald) platser.push(vald);
++  }
++  return { url: traff.url, platser, ...(rad.vand ? { vand: true } : {}) };
++}
++
+ /** Zoner med typ "vattenyta" som rektanglar i världen (rekt = [x0, y0, x1, y1] i 0–1). */
+ export function vattenytor(p: Plats | undefined): Vattenyta[] {
+   return (p?.zoner ?? [])
+diff --git a/src/spel/platsYta.ts b/src/spel/platsYta.ts
+new file mode 100644
+index 0000000..0cb4226
+--- /dev/null
++++ b/src/spel/platsYta.ts
+@@ -0,0 +1,84 @@
++// R8-2b: var skapelser får stå på en plats. Ren logik utan three, testas i Node.
++// Platsens zoner (rekt i 0–1) ritas i PlatsDekors grupp med skala DEKOR_SKALA, så en världspunkt
++// (wx, wz) motsvarar platspunkten tillPlats(wx / DEKOR_SKALA, wz / DEKOR_SKALA).
++// Landdjur och saker står bara i en zon av typ "land" eller "fri" och aldrig i en "vattenyta".
++// Simmare hålls i vattenytan om platsen har en. Ängen (inga zoner) rörs inte.
++import { PLATSDATA, type Plats, type Zon } from "./platser.ts";
++
++export const YTA_SKALA = 1.45;
++/** Minsta avstånd mellan två skapelser när en punkt måste flyttas (världsenheter). */
++const MIN_AVSTAND = 0.85;
++const STEG = 0.01;
++
++export function iRekt(x: number, y: number, r: Zon["rekt"]): boolean {
++  const [x0, y0, x1, y1] = r;
++  return x >= Math.min(x0, x1) && x <= Math.max(x0, x1) && y >= Math.min(y0, y1) && y <= Math.max(y0, y1);
++}
++
++/** Världspunkt → platspunkt (0–1). */
++export function tillPlats(wx: number, wz: number, yta = PLATSDATA.yta): [number, number] {
++  const [x0, x1] = yta.x;
++  const [z0, z1] = yta.z;
++  return [(wx / YTA_SKALA - x0) / (x1 - x0), (wz / YTA_SKALA - z0) / (z1 - z0)];
++}
++
++/** Platspunkt → världspunkt (samma skala som vattenytan och startobjekten ritas med). */
++export function franPlats(x: number, y: number, yta = PLATSDATA.yta): [number, number] {
++  const [x0, x1] = yta.x;
++  const [z0, z1] = yta.z;
++  return [(x0 + (x1 - x0) * x) * YTA_SKALA, (z0 + (z1 - z0) * y) * YTA_SKALA];
++}
++
++export function iVatten(p: Plats, x: number, y: number): boolean {
++  return p.zoner.some((z) => z.typ === "vattenyta" && iRekt(x, y, z.rekt));
++}
++
++/** Land = inuti en "land"- eller "fri"-zon och utanför varje "vattenyta". */
++export function paLand(p: Plats, x: number, y: number): boolean {
++  if (iVatten(p, x, y)) return false;
++  return p.zoner.some((z) => (z.typ === "land" || z.typ === "fri") && iRekt(x, y, z.rekt));
++}
++
++function harZoner(p: Plats | undefined): p is Plats {
++  return !!p && p.zoner.some((z) => z.typ === "land" || z.typ === "fri");
++}
++
++/** Närmaste tillåtna punkt (platsrutnät STEG) till `onskad`, minst `min` från `upptagna`. Deterministisk. */
++function narmast(p: Plats, onskad: [number, number], upptagna: [number, number][], ok: (x: number, y: number) => boolean): [number, number] {
++  for (const min of [MIN_AVSTAND, MIN_AVSTAND / 2, 0]) {
++    let bast: [number, number] | null = null;
++    let bastD = Infinity;
++    for (let x = STEG; x < 1; x += STEG) {
++      for (let y = 0.3; y <= 1; y += STEG) {
++        if (!ok(x, y)) continue;
++        const [wx, wz] = franPlats(x, y);
++        if (upptagna.some(([ux, uz]) => Math.hypot(ux - wx, uz - wz) < min)) continue;
++        const d = Math.hypot(wx - onskad[0], wz - onskad[1]);
++        if (d < bastD) {
++          bastD = d;
++          bast = [wx, wz];
++        }
++      }
++    }
++    if (bast) return bast;
++  }
++  return onskad;
++}
++
++/**
++ * Flytta de önskade världspunkterna (i ordning) så att landdjur står på land och simmare i vatten.
++ * Punkter som redan är tillåtna och fria behålls exakt. `sim[i]` = punkt i är en simmare.
++ */
++export function placeraPaPlats(p: Plats | undefined, onskade: [number, number][], sim: boolean[] = []): [number, number][] {
++  if (!harZoner(p)) return onskade;
++  const harVatten = p.zoner.some((z) => z.typ === "vattenyta");
++  const ut: [number, number][] = [];
++  onskade.forEach((o, i) => {
++    const simmare = !!sim[i] && harVatten;
++    const ok = simmare ? (x: number, y: number) => iVatten(p, x, y) : (x: number, y: number) => paLand(p, x, y);
++    const [px, py] = tillPlats(o[0], o[1]);
++    const fri = !ut.some(([ux, uz]) => Math.hypot(ux - o[0], uz - o[1]) < MIN_AVSTAND);
++    ut.push(ok(px, py) && fri ? o : narmast(p, o, ut, ok));
++  });
++  return ut;
++}
+diff --git a/src/spel/platser.ts b/src/spel/platser.ts
+index adcb1d9..47b3af5 100644
+--- a/src/spel/platser.ts
++++ b/src/spel/platser.ts
+@@ -8,7 +8,10 @@ export type Villkor = { typ: "skapelser" | "uppdrag_klara"; omrade: string; min:
+ export type Villkorsgrupp = { nagon: Villkor[] };
+ export type Milstolpe = Villkorsgrupp & { final?: string | null; las_upp?: string | null };
+ export type Zon = { id: string; typ: string; rekt: [number, number, number, number] };
+-export type Startobjekt = { ord: string; x: number; y: number; skala?: number; zon?: string };
++/** R8-2b: `ankare` mark|vatten|luft (standard ur zonens typ, annars mark), `vand` = modellen vänds upp och ner (droppsten → stalagmit). */
++export type Startobjekt = { ord: string; x: number; y: number; skala?: number; zon?: string; ankare?: string; vand?: boolean };
++/** En rad i `dekor`: modell, antal och höjdspann, utspridd i zonen `zon` (typ `dekor` eller annan rektangel). `fri` är yta som lämnas tom. */
++export type DekorRad = { modell: string; antal: number; hojd: [number, number]; zon: string; fro?: number; vatten?: boolean; vand?: boolean };
+ export type Plats = {
+   id: string;
+   namn: string;
+@@ -19,6 +22,7 @@ export type Plats = {
+   miljo: Record<string, unknown>;
+   zoner: Zon[];
+   start: Startobjekt[];
++  dekor?: DekorRad[];
+   ljud?: unknown;
+   intro?: unknown;
+   final_fore?: unknown;
+diff --git a/src/spel/r8-2.test.ts b/src/spel/r8-2.test.ts
+new file mode 100644
+index 0000000..9c4c176
+--- /dev/null
++++ b/src/spel/r8-2.test.ts
+@@ -0,0 +1,58 @@
++// R8-2a: dekor ur data sprids deterministiskt, utanför fri yta, och varje modell har fil och licens.
++import assert from "node:assert/strict";
++import fs from "node:fs";
++import path from "node:path";
++import { test } from "node:test";
++import tillgangar from "../../data/tillgangar.json" with { type: "json" };
++import { DEKOR_SKALA, spridDekor } from "./platsDekor.ts";
++import { PLATSDATA, PLATSER, type Plats } from "./platser.ts";
++
++const TILL = tillgangar.tillgangar as Record<string, { fil?: string; mapp?: string; licens?: string }>;
++const ROT = path.resolve(import.meta.dirname, "../..");
++
++function iFri(px: number, py: number, p: Plats) {
++  return p.zoner.some((z) => {
++    if (z.typ !== "fri") return false;
++    const [x0, y0, x1, y1] = z.rekt;
++    return px >= Math.min(x0, x1) && px <= Math.max(x0, x1) && py >= Math.min(y0, y1) && py <= Math.max(y0, y1);
++  });
++}
++
++function platsXy(wx: number, wz: number): [number, number] {
++  const [x0, x1] = PLATSDATA.yta.x;
++  const [z0, z1] = PLATSDATA.yta.z;
++  return [(wx - x0) / (x1 - x0), (wz - z0) / (z1 - z0)];
++}
++
++test("R8-2a: dekor-modeller finns på disk och har licens, zoner finns, spridningen är stabil och fri", () => {
++  const medDekor = PLATSER.filter((p) => (p.dekor?.length ?? 0) > 0);
++  assert.ok(medDekor.length >= 3);
++  for (const p of medDekor) {
++    const antal = p.dekor!.reduce((n, r) => n + r.antal, 0);
++    const modeller = new Set(p.dekor!.map((r) => r.modell));
++    assert.ok(antal <= 70, `${p.id} antal ${antal}`);
++    assert.ok(modeller.size <= 14, `${p.id} modeller ${modeller.size}`);
++    for (const rad of p.dekor!) {
++      assert.ok(p.zoner.some((z) => z.id === rad.zon), `${p.id} saknar zon ${rad.zon}`);
++      if (rad.modell.startsWith("natur/")) {
++        const fil = rad.modell.slice("natur/".length);
++        assert.ok(TILL.natur?.licens, "natur saknar licensrad");
++        assert.ok(fs.existsSync(path.join(ROT, "public/models/natur", `${fil}.glb`)), fil);
++      } else {
++        const post = TILL[rad.modell];
++        assert.ok(post?.licens && post.fil, `${rad.modell} saknar licensrad`);
++        assert.ok(fs.existsSync(path.join(ROT, "public", post.fil!)), post.fil);
++      }
++    }
++    const a = spridDekor(p);
++    const b = spridDekor(p);
++    assert.deepEqual(a, b, `${p.id} inte deterministisk`);
++    assert.equal(a.some((r) => r.saknas), false, `${p.id} saknar modell`);
++    for (const rad of a) {
++      for (const [lx, lz] of rad.platser) {
++        const [px, py] = platsXy(lx * DEKOR_SKALA, lz * DEKOR_SKALA);
++        assert.equal(iFri(px, py, p), false, `${p.id} punkt i fri ${px.toFixed(3)},${py.toFixed(3)}`);
++      }
++    }
++  }
++});
+diff --git a/src/spel/r8-2b.test.ts b/src/spel/r8-2b.test.ts
+new file mode 100644
+index 0000000..a91bf0b
+--- /dev/null
++++ b/src/spel/r8-2b.test.ts
+@@ -0,0 +1,73 @@
++// R8-2b: skapelser står bara på land (land/fri, aldrig vattenyta), simmare i vattnet; horisont per plats; inget svävar.
++import assert from "node:assert/strict";
++import { test } from "node:test";
++import type { Sparad } from "./brygga.ts";
++import { djurPlats } from "./ang/delat.ts";
++import { ANKARE_HOJD, ankareFor, dekorFor, horisontFor, spridDekor, DEKOR_SKALA } from "./platsDekor.ts";
++import { PLATSER, platsMed } from "./platser.ts";
++import { iVatten, paLand, placeraPaPlats, tillPlats } from "./platsYta.ts";
++
++const spec = (uid: string, kropp: string, formagor: string[] = []) => ({ uid, kropp, formagor, tillbehor: [], skapad: 0 }) as unknown as Sparad;
++const LAND = ["kanin", "gris", "katt", "hund", "ko", "rav", "mus", "hast"];
++
++for (const id of ["skogen", "sjon", "grottan"]) {
++  test(`R8-2b: ${id} – 8 landdjur står på land, aldrig i vatten, och inte ovanpå varandra`, () => {
++    const p = platsMed(id)!;
++    const alla = LAND.map((k, i) => spec(`d${i}`, k));
++    const pos = alla.map((d) => djurPlats(d, alla, p));
++    for (const [i, [x, , z]] of pos.entries()) {
++      const [px, py] = tillPlats(x, z);
++      assert.equal(iVatten(p, px, py), false, `${id} ${alla[i]!.kropp} i vatten ${px.toFixed(2)},${py.toFixed(2)}`);
++      assert.ok(paLand(p, px, py), `${id} ${alla[i]!.kropp} inte på land`);
++    }
++    for (let i = 0; i < pos.length; i++)
++      for (let j = i + 1; j < pos.length; j++) assert.ok(Math.hypot(pos[i]![0] - pos[j]![0], pos[i]![2] - pos[j]![2]) >= 0.4, `${id} ${i}/${j} krockar`);
++  });
++}
++
++test("R8-2b: en punkt mitt i sjön flyttas till land; simmare i vatten stannar i vatten", () => {
++  const p = platsMed("sjon")!;
++  const [land, sim] = placeraPaPlats(p, [[1, -3], [1, -3]], [false, true]);
++  assert.ok(paLand(p, ...tillPlats(land![0], land![1])));
++  assert.ok(iVatten(p, ...tillPlats(sim![0], sim![1])));
++});
++
++test("R8-2b: ängen (utan plats) är oförändrad", () => {
++  const alla = LAND.map((k, i) => spec(`a${i}`, k));
++  assert.deepEqual(alla.map((d) => djurPlats(d, alla)), alla.map((d) => djurPlats(d, alla, undefined)));
++  assert.deepEqual(placeraPaPlats(platsMed("ang"), [[0, 0]]), [[0, 0]]);
++});
++
++test("R8-2b: horisont ur data – grottan berg, skogen/sjön skog, okänt = ingen", () => {
++  assert.equal(horisontFor(platsMed("grottan")!.miljo)?.typ, "berg");
++  assert.equal(horisontFor(platsMed("skogen")!.miljo)?.typ, "skog");
++  assert.equal(horisontFor(platsMed("sjon")!.miljo)?.typ, "skog");
++  assert.equal(horisontFor({ horisont: "ingen" }), null);
++  assert.equal(horisontFor(undefined), null);
++});
++
++test("R8-2b: inget startobjekt svävar (bara ankare luft får lyfta), droppstenar står vända på marken", () => {
++  for (const p of PLATSER) {
++    for (const s of p.start) {
++      const a = ankareFor(s, p.zoner);
++      if (a === "luft") assert.equal(p.zoner.find((z) => z.id === s.zon)?.typ, "luft", `${p.id} ${s.ord} luft utan luft-zon`);
++    }
++    for (const sak of dekorFor(p).saker) assert.ok(sak.pos[1] <= ANKARE_HOJD.vatten || sak.ord === "moln", `${p.id} ${sak.ord} svävar y=${sak.pos[1]}`);
++  }
++  const g = platsMed("grottan")!;
++  const dropp = dekorFor(g).saker.filter((s) => s.kropp === "droppsten");
++  assert.ok(dropp.length >= 1 && dropp.every((s) => s.vand && s.pos[1] === 0));
++  assert.ok(spridDekor(g).filter((r) => r.url.includes("droppsten")).every((r) => r.vand));
++});
++
++test("R8-2b: land-dekor hamnar aldrig på vattenytan, vatten-dekor alltid på den", () => {
++  for (const p of PLATSER) {
++    const rader = p.dekor ?? [];
++    spridDekor(p).forEach((r, i) => {
++      for (const [lx, lz] of r.platser) {
++        const [px, py] = tillPlats(lx * DEKOR_SKALA, lz * DEKOR_SKALA);
++        assert.equal(iVatten(p, px, py), !!rader[i]!.vatten, `${p.id} ${rader[i]!.modell} ${px.toFixed(2)},${py.toFixed(2)}`);
++      }
++    });
++  }
++});
