@@ -312,22 +312,24 @@
    "granskad": false
   },
   "ekorre": {
-   "gata": "En yvig svans följer med när jag skuttar bland grenar och gömmer nötter.",
+   "gata": "Min yviga svans följer med när jag klättrar i träd och gömmer nötter.",
    "forsta": "E",
    "langd": 6,
    "gata_latt": "Jag är ofta rödbrun och klättrar snabbt uppför träd.",
-   "bengtsson_fore": "Någon har gömt en nöt i min hatt!",
-   "bengtsson_klart": "En ekorre! Nu förstår jag nöten i hatten!",
-   "granskad": false
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, ekorre! Vilken fin upptäckt du skrev fram!",
+   "granskad": false,
+   "omrade": "skogen"
   },
   "bäver": {
    "gata": "Med stora framtänder gnager jag på träd och bygger dammar av grenar.",
    "forsta": "B",
    "langd": 5,
    "gata_latt": "Jag simmar och har en bred, platt svans.",
-   "bengtsson_fore": "Vem har byggt så fint i bäcken?",
-   "bengtsson_klart": "En bäver! Vilken flitig liten byggmästare!",
-   "granskad": false
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, bäver! Vilken fin upptäckt du skrev fram!",
+   "granskad": false,
+   "omrade": "skogen"
   },
   "haj": {
    "gata": "I havet simmar jag med fenor, men mitt skelett är mjukt som din nästipp.",
@@ -573,22 +575,24 @@
    "bengtsson_klart": "En ko! Mu så trevligt att du hittade hit!"
   },
   "hjort": {
-   "gata": "I skogen går jag på klövar, och hanen har ofta horn som grenar.",
+   "gata": "På klövar går jag i skogen, och hanens horn grenar sig som små träd.",
    "forsta": "H",
    "langd": 5,
    "granskad": false,
    "gata_latt": "Jag är ett skogsdjur med klövar och greniga horn, och mitt namn har fem bokstäver.",
-   "bengtsson_fore": "Jag hittade spår efter klövar i skogen!",
-   "bengtsson_klart": "En hjort! Där stod svaret mellan träden!"
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, hjort! Vilken fin upptäckt du skrev fram!",
+   "omrade": "skogen"
   },
   "vildsvin": {
-   "gata": "I skogen bökar jag med trynet, och mina ungar har ljusa ränder.",
+   "gata": "Med trynet bökar jag i skogen, och mina ungar har ljusa ränder.",
    "forsta": "V",
    "langd": 8,
    "granskad": false,
    "gata_latt": "Jag liknar en gris men lever vilt och har grov, mörk päls.",
-   "bengtsson_fore": "Vem har vänt på jorden vid stigen?",
-   "bengtsson_klart": "Ett vildsvin! Nu vet vi vem som bökade!"
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, vildsvin! Vilken fin upptäckt du skrev fram!",
+   "omrade": "skogen"
   },
   "koala": {
    "gata": "I Australiens träd sitter jag med rund nos och äter blad som doftar starkt.",
@@ -828,16 +832,24 @@
    "granskad": false
   },
   "kronhjort": {
-   "gata": "Ett stort skogsdjur med jättehorn som ser ut som en kunglig huvudbonad.",
+   "gata": "Hanens stora horn liknar en kunglig huvudbonad, och min päls är rödbrun.",
    "forsta": "K",
    "langd": 9,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är större än ett rådjur och mitt namn börjar med något en kung bär.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, kronhjort! Vilken fin upptäckt du skrev fram!",
+   "omrade": "skogen"
   },
   "älg": {
-   "gata": "Skogens jätte med stora skovelhorn och långa ben. Sveriges största landdjur.",
+   "gata": "Med långa ben och bred mule går jag i skogen, och hanen kan ha platta horn.",
    "forsta": "Ä",
    "langd": 3,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Hanen kan ha breda, platta horn och jag kallas ibland skogens konung.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, älg! Vilken fin upptäckt du skrev fram!",
+   "omrade": "skogen"
   },
   "varg": {
    "gata": "Ett vilt hundlikt djur som ylar mot månen och bor i flock.",
@@ -978,10 +990,14 @@
    "granskad": false
   },
   "rådjur": {
-   "gata": "Ett litet gulbrunt djur i skogen med vit rumpa och stora ögon.",
+   "gata": "Liten och smidig går jag på klövar, med en vit fläck baktill.",
    "forsta": "R",
    "langd": 6,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är mindre än en hjort och hanen har små horn.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, rådjur! Vilken fin upptäckt du skrev fram!",
+   "omrade": "skogen"
   },
   "tjur": {
    "gata": "Ett stort muskulöst hanboskap som kan bli arg på röda flaggor.",
@@ -1032,10 +1048,14 @@
    "granskad": false
   },
   "hare": {
-   "gata": "Ett snabbt djur med långa öron och en liten puffig svans som springer i sicksack.",
+   "gata": "Längre öron och ben än en kanin har jag när jag skuttar över ängen.",
    "forsta": "H",
    "langd": 4,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag liknar en kanin men har oftast längre öron och ben.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, hare! Vilken fin upptäckt du skrev fram!",
+   "omrade": "skogen"
   },
   "igelkott": {
    "gata": "Ett litet taggigt djur som rullar ihop sig till en boll.",
@@ -1068,10 +1088,14 @@
    "granskad": false
   },
   "murmeldjur": {
-   "gata": "Ett litet gnagande bergsdjur som sover hela vintern och visslar när det är fara.",
+   "gata": "I bergen visslar jag till mina vänner, och på vintern sover jag länge.",
    "forsta": "M",
    "langd": 10,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en stor gnagare som bor i hålor och ofta står på bakbenen.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, murmeldjur! Vilken fin upptäckt du skrev fram!",
+   "omrade": "skogen"
   },
   "påfågel": {
    "gata": "Ett djur som breder ut en jättestor skimrande fjäderfläkt.",
@@ -1134,10 +1158,14 @@
    "granskad": false
   },
   "tvättbjörn": {
-   "gata": "Ett litet djur med svart ögonmask som doppar sin mat i vatten.",
+   "gata": "En mörk mask runt ögonen och ringar på svansen har jag, men ingen kostym.",
    "forsta": "T",
    "langd": 10,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag har grå päls och skickliga framtassar och lever bland annat i Nordamerika.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, tvättbjörn! Vilken fin upptäckt du skrev fram!",
+   "omrade": "skogen"
   },
   "spindel": {
    "gata": "Den har åtta ben, spinner nät och fångar flugor.",
