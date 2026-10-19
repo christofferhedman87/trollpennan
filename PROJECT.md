@@ -106,7 +106,7 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 
 ## 8. Färdplan: rundor i ordning (följer grundtanken)
 
-**NÄSTA RUNDOR (2026-10-19): `rundor/BLOCK-platser/PLAN.md`.** B0 klar → **B1** världsdelar + resan (B1.1–B1.4, Build) → **R9G** gåta/uppdrag-UX + stall i menyn (`rundor/R9G-ux-stall/`, Build) → **R8-2** grafiklyft → **B2** Skogen, **B3** Sjön, **B4** Grottan (datapaket; B4.1 ljuskällor Build) → B5 modeller → B6 kontroll. Därefter TTS (gratis svensk röst). Ersätter R4A/R6B; R4B, R5, R7 kvar efter blocken. Copilots data: `rundor/BLOCK-platser/data-utkast/`.
+**NÄSTA RUNDOR (2026-10-19): `rundor/BLOCK-platser/PLAN.md`.** B0 klar, **B1.1 klar (PR #67), B1.2 klar (PR #68, main 39bdef8)** → **B1.3a** (skript `rundor/BLOCK-platser/B1.3a/kor.sh`, 0 USD) → **B1.3b** (Build) → **B1.4** resan (Build) → **R9G** gåta/uppdrag-UX + stall i menyn (`rundor/R9G-ux-stall/`, Build) → **R8-2** grafiklyft → **B2** Skogen, **B3** Sjön, **B4** Grottan (datapaket; B4.1 ljuskällor Build) → B5 modeller → B6 kontroll. Därefter TTS (gratis svensk röst). Ersätter R4A/R6B; R4B, R5, R7 kvar efter blocken. Copilots data: `rundor/BLOCK-platser/data-utkast/`.
 Alla rundor: Grok Build CLI, `--prompt-file`, gren per runda (`build/runda-N`), loggfil, commit efter varje delmål, `RUNDA<N>.md` först. Ingen mätning/utforskning i Build; Arkitekten lägger siffror och filrader i prompten. Kostnadsuppskattningar är min gissning utifrån `rounds.tsv` (low/medium, 11–30 turer = 0,5–3 USD), inte mätta.
 
 **Ordning och varför:** R1 delar `Spel.tsx` (annars krockar allt). R2 gör tillbehören till data (stoppar 10-rundors-läckan). **R3 är rundan som gör grundtanken sann: ordens väg till synlig form** – entitetsmodell, reservform (okänt ord blir ändå något synligt), bulkrutin för modeller. **Ordning ändrad 2026-10-18 (Christoffer): Doktor Bengtsson (uppdragsmotorn, tidigare R6) kommer direkt efter content-motorn (R3C), före byggnader, kamera och Phaser-borttagning.** Ordningen är nu: R3A → R3B → R3C → **R6A (Bengtsson, förd fram; R6A-1 och R6A-2 körda, R6A-3 djuren slutar ge uppdrag + guidande val väntar, R6A-4 de 24 utkasten väntar på Copilot), R3D (andra modellomgången, körklar)** → R4A (dela `angen3d.tsx`) → R4B (kamera) → R5 (byggnader) → R6B (platserna som R3F-scener) → R7 (Phaser bort). Rundornas namn behålls så att ritningar och länkar inte går sönder. Före allt: **R0 publicera `main`** (Christoffers ja, avsnitt 10.2), annars går inget att verifiera spelat.
@@ -700,3 +700,10 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
 | 16 | Otydligt var gåtsvar skrivs; streck (K _ _) ser klickbara ut | **R9G** |
 | 17 | Ny gåta byts innan den löses / utan aktivt val | **R9G** |
 | 18 | Saknas sätt att dölja/ta bort djur utan omstart (stall i menyn) | **R9G** |
+| 19 | `minne.plats` saknas, ängen gäller alltid | **B1.3a** (kor.sh) |
+| 20 | Inget uppdrag i datan har `djur: true` eller `final: true` (motorn klarar det sedan B1.2) | B2–B4 datapaket (finaler), B6.1 |
+| 21 | Tackbubblan/"Guldord!"-banner: fixen inte verifierad på bild | R9G-bevis (bild med banner) |
+| 22 | DOM-lägena 03–05 (boken) ger olika resultat mellan körningar av samma kod | B6.1 (stabilisera väntan i DOM-turen) |
+| 23 | 10 eslint-varningar | B6.2 (om billigt) |
+| 24 | Jacka och planka ser konstiga ut (utöver gaffel/snurra/släde/valfisk i #1) | B5 |
+| 25 | Regel: runda utan `kor.sh` → Build eller Arkitektens patch, aldrig Doodles egen kod (B1.2-incidenten) | process |
