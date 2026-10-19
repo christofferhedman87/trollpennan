@@ -109,14 +109,15 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 ### KÖORDNING (gäller nu, 2026-10-19) – `rundor/BLOCK-platser/PLAN.md`
 **Skript** = `kor.sh`/patch, 0 Build-USD. **Build** = Grok Build. Doodle skriver aldrig spelkod utan kor.sh eller prompt. Arkitekten levererar → skickar körkommando samma stund.
 
-**Klart på main:** R3G (#56) · R9D–F (#60/#62/#64) · B0 (#61) · B1.1–B1.4-fix (#67/#68/#71/#75/#77/#78) · R9G (denna patch).
+**Klart på main:** R3G (#56) · R9D–F (#60/#62/#64) · B0 (#61) · B1.1–B1.4-fix (#67/#68/#71/#75/#77/#78) · R9G (#80, 37f2db9).
 
-**Pågår:** **R9G** gåta/uppdrag/skrivhint + stall i menyn + platsdata (vatten, brygga, grottvalv, karttext) — **skript** `bash rundor/R9G-ux-stall/kor.sh`. Phaser-äventyret förblir avstängt.
+**Pågår:** **R9H** fel 1–5 ur speltestet efter R9G (Phaser-genomslag från UI → "Till stallet"/gåvoruta av sig själv, stall-banner kvar, djuret bakom, klistrigt gåvoläge, läsbar stall-lista) — **skript** `git checkout main && git pull && git checkout -b runda-r9h-kod && bash rundor/R9H-fix/kor.sh` (`rundor/R9H-fix/PLAN.md`). Phaser-äventyret förblir avstängt.
 
 **Nästa, i denna ordning (inga parallella steg utom B5):**
 1. ~~B1.4-fix~~ klar (#78)
-2. **R9G** gåta≠uppdrag, låst gåta, skrivhint, stall=meny — **skript** (`rundor/R9G-ux-stall/kor.sh`, ingen Build)
-3. **R8-2** grafiklyft (skuggor, horisont, kontur …) — **Build** (`rundor/R8-grafik/`)
+2. ~~R9G~~ klar (#80)
+2b. **R9H** fel 1–5 efter R9G — **skript** (`rundor/R9H-fix/kor.sh`, ingen Build)
+3. **R8-2a** platserna fylls: dekor i rätt skala som data (`platser.json` `dekor`), horisont och blobbskuggor per plats — **Build** efter R9H (`rundor/R8-grafik/R8-2 PROMPT.md`, grind `GATE-R8-2.md`: JA). **R8-2b** (kontur på GLB, vatten, FPS-vakt) ritas efter R8-2a
 4. **B2** Skogen — **skript** (`kor-plats.sh skogen`)
 5. **B3** Sjön — **skript**
 6. **B4** Grottan — **skript** + **B4.1** ljuskällor **Build**
@@ -707,3 +708,9 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
 | 6 | Felstavat föremål → inget "Menade du …?"; DOM 03–05 ostabila; saknar `djur`/`final` i data | **B6.1** / B2–B4 |
 | 7 | Röd/grön på djurmodeller | **R9C pausad** (Christoffer) |
 | 8 | Tackbubbla vs Guldord: ej bildverifierad | R9G-bevis |
+| 9 | "Till stallet" vid ankomst utan tryck (Phaser räknade UI-tryck) · stall-banner kvar efter hämtning · tryck träffar djuret bakom · klistrigt "Vad vill du ge?" | **R9H** (`rundor/R9H-fix/`) |
+| 10 | "en röv" i stall-listan: **inget fel** – texten är "en räv" (test mot blocklist.json för alla djur); typsnitt/bildskärpa. Större namn i R9H | R9H |
+| 11 | Karttexten bara på kartan: **avsiktligt** (R9G punkt 7) | – |
+| 12 | Skogen/sjön/grottan nästan tomma: startdekoren ligger mest utanför synfältet (telefon ser bara plats-x ≈ 0,30–0,70) och i fel skala | **R8-2a** (Build) |
+| 13 | DOM-lägen 10–11 inaktuella, 03–05 ostabila · 10 eslint-varningar | **B6.1** |
+| 14 | `lagg-data.mjs --plats` ersätter hela platsraden ur `data-utkast/platser.json` → B2–B4 skulle skriva över R9G:s `start`/`zoner` (och R8-2a:s `dekor`) | **R8-2a** steg 0 (behåll scenfälten) |
