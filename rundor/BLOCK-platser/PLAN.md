@@ -1,8 +1,10 @@
 # BLOCK-platser – plan (Arkitekten 2026-10-19)
 Underlag: Copilots manus + data (`data-utkast/`, kontroll i `KONTROLL.md`). Doodle kör ett deluppdrag i taget; varje rad är klar och mergad för sig. **Build** = Grok Build med prompten i `prompter/`, **skript** = `kor.sh`, ingen Build. Bevis överallt: `test:product`, `typecheck:pages`, `build:pages`; Build-rundor dessutom Playwright 375x812 med numrerade bilder. Stoppregel för Build: första ändring inom 10 anrop, commit efter varje steg, `RUNDA-<id>.md` + commit + rapport senast tur (max−6); ingen omkörning. Stoppregel för skript: exit ≠ 0 → inget mergas, utdata till Arkitekten.
 
-## Ordning (2026-10-19, Christoffer)
-**B1 → R9G → R8-2 → B2 → B3 → B4 → B5 → B6.** R9G (gåta/uppdrag-UX + stall i menyn): `rundor/R9G-ux-stall/` (Build). R8-2 (grafiklyft): `rundor/R8-grafik/` efter R9G. TTS-röst (gratis svensk) efter platserna, eget block.
+## Ordning (gäller nu, 2026-10-19) – samma som PROJECT.md §8
+**Klart:** B0, B1.1, B1.2, B1.3a (+ R3G, R9D–F). **Pågår:** B1.3b som **skript** (Build misslyckades; Arkitekten levererar kor.sh).
+**Kö:** B1.3b (skript) → B1.4 (Build) → R9G (Build) → R8-2 (Build) → B2 Skogen (skript) → B3 Sjön (skript) → B4 Grottan (skript) + B4.1 (Build) → B5 modeller (skript, parallellt OK) → B6 kontroll → TTS.
+**Låst:** stall=meny · ERROR+"Inte riktigt än" · R8-2 efter B1 före platser · TTS efter områden · R9C färg pausad.
 
 ## Korrigeringar av Christoffers plan
 1. **B0 först (nytt, skript, 0 Build):** Copilots 40 ängsuppdrag + 49 bättre gåtor + 3 genusfel går in direkt; motorn klarar dem redan. Provad hos mig: exit 0.
@@ -17,11 +19,11 @@ Underlag: Copilots manus + data (`data-utkast/`, kontroll i `KONTROLL.md`). Dood
 - **B0.1** `bash rundor/BLOCK-platser/B0-angen/kor.sh` → data/bengtsson.json +40, ledtradar.json 49 nya texter (gata_latt, bengtsson_fore/klart), ord.json genus rådjur/vildsvin/sjöodjur = ett, testpatch (testet räknade exakt 3 uppdrag). Förutsätter R9D i main; adjektiven mjuk, fluffig, varm, kall, hög, låg, långsam, fin, sjungande som egenskaper (b0-ord.patch) och 17 omskrivna fraser → 0 ägg. Bevis: förslagsprov 174/174 (B0:s 160/160), 0 ger ägg, test:product, typecheck:pages, build:pages. Exit 2/3/4 = stopp.
 
 ## B1 – Världsdelar och resan (Build ×5, ca 6–8 USD)
-- **Status 2026-10-19:** B1.1 klar (PR #67, 8967cbb), B1.2 klar (PR #68, 39bdef8; Doodle skrev den själv utan kor.sh – godkänd i granskning, upprepas inte). **B1.3a = skript** `bash rundor/BLOCK-platser/B1.3a/kor.sh` (0 USD). B1.3b och B1.4 = Build. Regel: varje runda har antingen `kor.sh` eller en Build-prompt; Doodle skriver aldrig spelkod.
+- **Status 2026-10-19:** B1.1 klar (PR #67), B1.2 klar (PR #68), B1.3a klar (PR #71, skript). **B1.3b = skript** (Build misslyckades; patch under arbete hos Arkitekten). B1.4 = Build. Regel: varje runda har antingen `kor.sh` eller en Build-prompt; Doodle skriver aldrig spelkod.
 - **B1.1 Dela `angen3d.tsx` (=R4A).** Ren flytt till `src/spel/ang/*.tsx`, noll beteendeändring. Bevis: bilder 01–02 lika före/efter, ingen fil >800 rader, testid oförändrade. 25–30 turer, ca 1,5–2 USD. **Grind: JA.**
 - **B1.2 Uppdragsmotorn per plats.** `uppdragsmotor.ts`: `nastaSkrivUppdrag(status, plats)`, `sekTillRedo(…, plats)`, `krav.djur`, böjning via ord.json-former ("rött" löser "röd"), `final`-uppdrag bara när `finalOk`. Bara logik + test. 12–15 turer, ca 0,5 USD. **Grind: JA.**
 - **B1.3a Platser som data.** `data/platser.json` (form = `data-utkast/platser.json` + raden `ang`), `src/spel/platser.ts` (upplåst, milstolpe, skapelser per plats), `minne.ts` (`plats`, `platsSkapelser`, sparning bakåtkompatibel). Bara logik + test. **Nu skript: `B1.3a/kor.sh` + `b1-3a.patch`, 0 USD** (provad på 39bdef8: exit 0, 136/136). **Grind: JA.**
-- **B1.3b Scenen läser platsen.** R3F visar aktuell plats: miljö-överlagring (`miljo.ts` `slaIhop`), startobjekt via `GltfSak`, vattenzon, barnets skapelser för platsen, ängens egen dekor bara på ängen, belöningar på ängen. 25–30 turer, ca 1,5–2 USD. **Grind: JA efter B1.3a.**
+- **B1.3b Scenen läser platsen.** R3F visar aktuell plats: miljö-överlagring (`miljo.ts` `slaIhop`), startobjekt via `GltfSak`, vattenzon, barnets skapelser för platsen, ängens egen dekor bara på ängen, belöningar på ängen. **Build misslyckades (0 filer, 2,74 USD) — görs som skript (kor.sh + patch) av Arkitekten.** Grind: JA efter B1.3a.
 - **B1.4 Resan.** Vägskylt/grind per upplåst plats (återanvänd `Skogsstig`), platsväljare (återanvänd `KartaLager`), "Till ängen", kort övergång + Bengtssons intro (mine karta), uppdrag och "Uppdrag"-knappen följer platsen, `rundor/BLOCK-platser/plats-prov.mjs` (bevisskriptet B2–B4 använder). 25–30 turer, ca 1,5–2 USD. **Grind: JA efter B1.3b.**
 
 ## R9G – Gåta/uppdrag-UX + stall (Build, ca 1 USD) – Grind: JA efter B1, före R8-2
@@ -43,4 +45,4 @@ Horisont, blobbskuggor, kontur, vatten/gräs-rörelse (ritning i `rundor/R8-graf
 - **B6.2 (Build)** högst 6 fel ur B6.1, prompten är en mall som Arkitekten fyller med exakta filer. 20–25 turer, ca 1,5 USD. **Grind: NEJ tills listan finns.**
 - **B6.3 (Build)** Phaser-äventyret bort (`avscen.ts`, `avbro.ts`, äventyrsdelen av `KartaLager`, `omraden.json` ersatt av platser.json); Gården och Phaser i övrigt kvar till R5/R7. 20–25 turer, ca 1,5 USD. **Grind: JA efter B6.1 grön.**
 
-**Totalt ca 12–15 USD Build** (B1 6–8, R9G ~1, R8-2 ~1–2, B4.1 0,5, B6 3); B0, B2–B5 och B6.1 kostar ingen Build-kvot. Om kvoten tar slut: kör B0 och B5a (gratis) först. Ordning: B1 → R9G → R8-2 → B2…
+**Totalt ca 12–15 USD Build** (B1 6–8, R9G ~1, R8-2 ~1–2, B4.1 0,5, B6 3); B0, B2–B5 och B6.1 kostar ingen Build-kvot. Om kvoten tar slut: kör B5a (gratis) parallellt. Ordning: B1.3b → B1.4 → R9G → R8-2 → B2…
