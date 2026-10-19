@@ -20,9 +20,12 @@ for (const u of uppdrag) for (const g of u.val.grupper) for (const f of g.forsla
   const id = entPaOrd.get(f.ord); const m = id ? ent[id]?.modell : null; const fl = m ? till[m]?.fil : null;
   const modell = !!fl && fs.existsSync(path.join(rot, "public", fl));
   const kravOk = kravUppfyllt(u.krav, f.fras);
-  const t = tolkaMedReserv(f.fras); const skapar = t.typ === "skapad";
-  rader.push({ uppdrag: u.id, fras: f.fras, ord: f.ord, modell, kravOk, skapar, ok: (modell || !!f.agg) && kravOk && skapar });
+  const t = tolkaMedReserv(f.fras, { kalla: "kort" }); const skapar = t.typ === "skapad";
+  // B0/R9D: ett förslag får inte ge ägg (okänt ord i frasen) om det inte uttryckligen är tänkt (f.agg)
+  const aggOrd = t.typ === "skapad" ? [...(t.varelse.kropp === "agg" ? ["(kropp)"] : []), ...(t.varelse.reserv ?? []).map((r) => r.ord)] : [];
+  const agg = aggOrd.length > 0 && !f.agg;
+  rader.push({ uppdrag: u.id, fras: f.fras, ord: f.ord, modell, kravOk, skapar, agg: aggOrd, ok: (modell || !!f.agg) && kravOk && skapar && !agg });
 }
 const fela = rader.filter((r) => !r.ok);
-console.log(JSON.stringify({ uppdrag: uppdrag.length, forslag: rader.length, ok: rader.length - fela.length, utan_modell: fela.filter((r) => !r.modell).length, krav_nej: fela.filter((r) => !r.kravOk).length, skapar_inte: fela.filter((r) => !r.skapar).length, fel: fela }, null, 1));
+console.log(JSON.stringify({ uppdrag: uppdrag.length, forslag: rader.length, ok: rader.length - fela.length, utan_modell: fela.filter((r) => !r.modell).length, krav_nej: fela.filter((r) => !r.kravOk).length, skapar_inte: fela.filter((r) => !r.skapar).length, ger_agg: fela.filter((r) => r.agg.length).length, fel: fela }, null, 1));
 process.exit(fela.length ? 1 : 0);

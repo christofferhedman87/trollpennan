@@ -1019,7 +1019,7 @@
        },
        {
         "ord": "badkar",
-        "fras": "en grisrosa flodhäst i ett badkar"
+        "fras": "en rosa flodhäst i ett badkar"
        }
       ]
      },
@@ -1148,15 +1148,15 @@
       ]
      },
      {
-      "etikett": "Musik på skärmen",
+      "etikett": "Något som spelar musik",
       "forslag": [
        {
-        "ord": "tv",
-        "fras": "en kanin vid en tv med musik"
+        "ord": "radio",
+        "fras": "en kanin vid en radio"
        },
        {
-        "ord": "tv",
-        "fras": "en apa vid en tv med en konsert"
+        "ord": "högtalare",
+        "fras": "en apa vid en högtalare"
        }
       ]
      }
@@ -1275,11 +1275,11 @@
       "forslag": [
        {
         "ord": "strand",
-        "fras": "en hund som badar vid en strand"
+        "fras": "en hund vid en strand"
        },
        {
         "ord": "strand",
-        "fras": "en säl som badar vid en strand"
+        "fras": "en säl vid en strand"
        }
       ]
      }
@@ -1448,11 +1448,11 @@
       "forslag": [
        {
         "ord": "blomma",
-        "fras": "en kanin med en blomma till en vän"
+        "fras": "en kanin med en blomma"
        },
        {
         "ord": "nallebjörn",
-        "fras": "en hund med en nallebjörn till en vän"
+        "fras": "en hund med en nallebjörn"
        }
       ]
      },
@@ -1461,11 +1461,11 @@
       "forslag": [
        {
         "ord": "bok",
-        "fras": "en katt med en bok till en vän"
+        "fras": "en katt med en bok"
        },
        {
         "ord": "julklapp",
-        "fras": "en apa med en julklapp till en vän"
+        "fras": "en apa med en julklapp"
        }
       ]
      }
@@ -1514,7 +1514,7 @@
        },
        {
         "ord": "karta",
-        "fras": "en kanin med en karta till picknicken"
+        "fras": "en kanin med en karta"
        }
       ]
      },
@@ -2236,11 +2236,11 @@
       "forslag": [
        {
         "ord": "bord",
-        "fras": "en hund bredvid ett bord med fyra ben"
+        "fras": "en hund bredvid ett bord"
        },
        {
         "ord": "stol",
-        "fras": "en katt bredvid en stol med fyra ben"
+        "fras": "en katt bredvid en stol"
        }
       ]
      },
@@ -2249,11 +2249,11 @@
       "forslag": [
        {
         "ord": "säng",
-        "fras": "en kanin bredvid en säng med fyra ben"
+        "fras": "en kanin bredvid en säng"
        },
        {
         "ord": "soffa",
-        "fras": "en apa bredvid en soffa med fyra ben"
+        "fras": "en apa bredvid en soffa"
        }
       ]
      }
@@ -2298,7 +2298,7 @@
       "forslag": [
        {
         "ord": "bok",
-        "fras": "en katt på en soffa med en bok om världen"
+        "fras": "en katt på en soffa med en bok"
        },
        {
         "ord": "bok",
@@ -2311,11 +2311,11 @@
       "forslag": [
        {
         "ord": "karta",
-        "fras": "en hund på en soffa med en karta över världen"
+        "fras": "en hund på en soffa med en karta"
        },
        {
         "ord": "tv",
-        "fras": "en apa på en soffa vid en tv med en resefilm"
+        "fras": "en apa på en soffa vid en tv"
        }
       ]
      }
