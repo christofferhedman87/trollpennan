@@ -4453,9 +4453,9 @@
    "genus": "u",
    "former": [
     "oviraptor",
-    "oviraptoren",
-    "oviraptorar",
-    "oviraptorarna"
+    "oviraptorn",
+    "oviraptorer",
+    "oviraptorerna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
@@ -4543,7 +4543,9 @@
    "genus": "u",
    "former": [
     "mjölkko",
-    "mjölkkon"
+    "mjölkkon",
+    "mjölkkor",
+    "mjölkkorna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
@@ -4684,9 +4686,9 @@
    "genus": "u",
    "former": [
     "velociraptor",
-    "velociraptoren",
-    "velociraptorar",
-    "velociraptorarna"
+    "velociraptorn",
+    "velociraptorer",
+    "velociraptorerna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 quaternius-animated-dinosaurs",
@@ -4828,8 +4830,8 @@
    "genus": "n",
    "former": [
     "trädmonster",
-    "trädmonsteret",
-    "trädmonsteren"
+    "trädmonstret",
+    "trädmonstren"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 quaternius-cute-monsters",
@@ -4863,9 +4865,9 @@
    "genus": "u",
    "former": [
     "skimmel",
-    "skimmelen",
-    "skimmelar",
-    "skimmelarna"
+    "skimmeln",
+    "skimlar",
+    "skimlarna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 quaternius-ultimate-animated-animals",
@@ -4971,9 +4973,9 @@
    "genus": "n",
    "former": [
     "jättebi",
-    "jättebit",
+    "jättebiet",
     "jättebin",
-    "jättebinen"
+    "jättebina"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 quaternius-ultimate-monsters",
@@ -5008,8 +5010,8 @@
    "former": [
     "virvelvarelse",
     "virvelvarelsen",
-    "virvelvarelsar",
-    "virvelvarelsarna"
+    "virvelvarelser",
+    "virvelvarelserna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 quaternius-ultimate-monsters",
@@ -5114,10 +5116,7 @@
    "visa": "snapper",
    "genus": "u",
    "former": [
-    "snapper",
-    "snapperen",
-    "snapperar",
-    "snapperarna"
+    "snapper"
    ],
    "signatur": "fenor",
    "kalla": "R3F-M1 polypizza-cc0-2",
