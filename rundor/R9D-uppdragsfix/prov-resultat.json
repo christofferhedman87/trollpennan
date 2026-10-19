@@ -1,0 +1,189 @@
+{
+ "A": {
+  "onskor_efter_1_djur": 0,
+  "bengtsson_bjuder_in": true,
+  "onskor_efter_3_djur": 0,
+  "onskan_efter_uppdragsstart": null,
+  "bok_uppdrag": 1,
+  "bok_onskan": 0,
+  "max_onskebubblor": 1,
+  "overlapp": 0,
+  "ok": true
+ },
+ "B": {
+  "antal": 14,
+  "ok": 14,
+  "resultat": [
+   {
+    "uppdrag": "kanin-fryser",
+    "fras": "en kanin med mössa",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "alvmossa"
+    ],
+    "agg": false,
+    "ok": true
+   },
+   {
+    "uppdrag": "kanin-fryser",
+    "fras": "en kanin med tröja",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "troja"
+    ],
+    "agg": false,
+    "ok": true
+   },
+   {
+    "uppdrag": "kanin-fryser",
+    "fras": "en kanin med luva",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "luva"
+    ],
+    "agg": false,
+    "ok": true
+   },
+   {
+    "uppdrag": "kanin-fryser",
+    "fras": "en kanin vid en lägereld",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "lagereld"
+    ],
+    "agg": false,
+    "ok": true
+   },
+   {
+    "uppdrag": "kanin-fryser",
+    "fras": "en kanin i en stuga",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "koja"
+    ],
+    "agg": false,
+    "ok": true
+   },
+   {
+    "uppdrag": "regn-skydd",
+    "fras": "en kanin i ett tält",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "talt"
+    ],
+    "agg": false,
+    "ok": true
+   },
+   {
+    "uppdrag": "regn-skydd",
+    "fras": "en kanin i en grotta",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "grotta"
+    ],
+    "agg": false,
+    "ok": true
+   },
+   {
+    "uppdrag": "regn-skydd",
+    "fras": "en kanin under ett träd",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "trad"
+    ],
+    "agg": false,
+    "ok": true
+   },
+   {
+    "uppdrag": "regn-skydd",
+    "fras": "en kanin i en stuga",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "koja"
+    ],
+    "agg": false,
+    "ok": true
+   },
+   {
+    "uppdrag": "sol-skugga",
+    "fras": "en kanin med keps",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "keps"
+    ],
+    "agg": false,
+    "ok": true
+   },
+   {
+    "uppdrag": "sol-skugga",
+    "fras": "en kanin under ett träd",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "trad"
+    ],
+    "agg": false,
+    "ok": true
+   },
+   {
+    "uppdrag": "sol-skugga",
+    "fras": "en kanin under ett moln",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "moln"
+    ],
+    "agg": false,
+    "ok": true
+   },
+   {
+    "uppdrag": "sol-skugga",
+    "fras": "en kanin i ett tält",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "talt"
+    ],
+    "agg": false,
+    "ok": true
+   },
+   {
+    "uppdrag": "sol-skugga",
+    "fras": "en kanin i en grotta",
+    "klar": true,
+    "kropp": "kanin",
+    "med": [
+     "grotta"
+    ],
+    "agg": false,
+    "ok": true
+   }
+  ]
+ },
+ "C": {
+  "exempel": [
+   {
+    "ex": "lila",
+    "uppfylld": true,
+    "formel": "en lila kanin"
+   },
+   {
+    "ex": "mörkblå",
+    "uppfylld": true,
+    "formel": "en mörkblå kanin"
+   }
+  ],
+  "ok": true
+ },
+ "sidfel": []
+}
