@@ -5,6 +5,7 @@ import { byggMedId } from "../tolk/byggtolk.ts";
 import { brygga, type Sparad } from "./brygga.ts";
 import type { SparatBygge } from "./bygge.ts";
 import { BYGG } from "../tolk/byggtolk.ts";
+import { START_PLATS, laggMedTak, mattUr, upplast } from "./platser.ts";
 
 
 export type Lage = "kort" | "skriv";
@@ -62,6 +63,12 @@ export type Data = {
   byggda: string[];
   introSedd: boolean;
   dragit: boolean;
+  /** B1.3a: platsen barnet är på (data/platser.json). */
+  plats: string;
+  /** B1.3a: barnets skapelser på andra platser än ängen (ängen ligger kvar i `ang`). */
+  platsSkapelser: Record<string, Sparad[]>;
+  /** B1.3a: platser som en gång låsts upp förblir öppna. */
+  oppnadePlatser: string[];
 };
 
 type Minne = Data & {
@@ -102,6 +109,8 @@ type Minne = Data & {
   settKarta: () => void;
   markeraOmradeKlar: (id: string) => void;
   laggSkatt: (b: SparatBygge) => void;
+  /** B1.3a: gå till en plats; bara upplåsta. true om bytet skedde. */
+  bytPlats: (id: string) => boolean;
 };
 
 function tom(): Data {
@@ -150,13 +159,24 @@ function tom(): Data {
     byggda: [],
     introSedd: false,
     dragit: false,
+    plats: START_PLATS,
+    platsSkapelser: {},
+    oppnadePlatser: [],
   };
 }
 
 function las(): Data {
   if (typeof window === "undefined") return tom();
   try {
-    const raw = lasLokalt(() => window.localStorage);
+    return franSparning(lasLokalt(() => window.localStorage));
+  } catch {
+    return tom();
+  }
+}
+
+/** B1.3a: sparning → Data (ren, testbar). Saknade fält får standardvärden; sparversionen är oförändrad. */
+export function franSparning(raw: unknown): Data {
+  try {
     const bas = tom();
     const normalized = normalisera(raw, bas);
     if (!normalized || !arData({ ...normalized, version: 2 })) {
@@ -198,6 +218,9 @@ function las(): Data {
       byggda: Array.isArray(p.byggda) ? (p.byggda as string[]) : [],
       introSedd: p.introSedd === true,
       dragit: p.dragit === true,
+      plats: typeof p.plats === "string" && p.plats ? p.plats : START_PLATS,
+      platsSkapelser: objekt(p.platsSkapelser) ? (p.platsSkapelser as Data["platsSkapelser"]) : {},
+      oppnadePlatser: Array.isArray(p.oppnadePlatser) ? (p.oppnadePlatser as string[]).filter((x) => typeof x === "string") : [],
     };
   } catch {
     return tom();
@@ -244,6 +267,7 @@ function spara(d: Data) {
     laggSkatt: _ai,
     sattIntro: _aj,
     sattTittat: _ak,
+    bytPlats: _al,
     ...data
   } = d as Data & Record<string, unknown>;
   skrivLokalt(() => window.localStorage, { ...data, version: 2 });
@@ -255,6 +279,7 @@ function arData(v: unknown): v is Partial<Data> {
   for (const k of ["ang", "sovande"]) if (v[k] !== undefined && (!Array.isArray(v[k]) || !(v[k] as unknown[]).every(arDjur))) return false;
   for (const k of ["garden", "lada"]) if (v[k] !== undefined && (!Array.isArray(v[k]) || !(v[k] as unknown[]).every(arBygge))) return false;
   if (v.hemma !== undefined && (!Array.isArray(v.hemma) || !v.hemma.every(x => objekt(x) && arDjur(x.spec) && typeof x.hem === "string"))) return false;
+  if (v.platsSkapelser !== undefined && (!objekt(v.platsSkapelser) || !Object.values(v.platsSkapelser).every((l) => Array.isArray(l) && l.every(arDjur)))) return false;
   if (v.formler !== undefined && (!Array.isArray(v.formler) || !v.formler.every(x => objekt(x) && arDjur(x.spec) && typeof x.text === "string"))) return false;
   // Import måste ha verkligt sparinnehåll, inte bara ett versionsnummer.
   return Array.isArray(v.ang) && Array.isArray(v.garden) && typeof v.stjarnor === "number" && Number.isFinite(v.stjarnor);
@@ -280,6 +305,14 @@ export const useMinne = create<Minne>((set, get) => ({
     set({ onskelista: next.slice(-80) });
   },
   laggPaAng: (v, antal) => {
+    const plats = get().plats;
+    if (plats !== START_PLATS) {
+      // B1.3a: på andra platser sparas skapelsen per plats, samma tak; ängen (`ang`) rörs inte.
+      const nyaP: Sparad[] = Array.from({ length: antal }, (_, i) => ({ ...v, uid: crypto.randomUUID(), skapad: Date.now() + i }));
+      const r = laggMedTak(get().platsSkapelser[plats] ?? [], get().sovande, nyaP);
+      set({ platsSkapelser: { ...get().platsSkapelser, [plats]: r.lista }, sovande: r.sovande });
+      return { nya: nyaP, somnade: r.somnade };
+    }
     const nya: Sparad[] = [];
     const somnade: Sparad[] = [];
     let ang = [...get().ang];
@@ -467,6 +500,13 @@ export const useMinne = create<Minne>((set, get) => ({
     set({ van: [...get().van, id] });
   },
   sattUppdrag: (id, status) => set({ uppdrag: { ...get().uppdrag, [id]: status } }),
+  bytPlats: (id) => {
+    const d = get();
+    if (!upplast(id, mattUr(d))) return false;
+    const oppnadePlatser = id === START_PLATS || d.oppnadePlatser.includes(id) ? d.oppnadePlatser : [...d.oppnadePlatser, id];
+    set({ plats: id, oppnadePlatser });
+    return true;
+  },
   sattFyrPa: () => set({ fyr: true }),
   settKarta: () => set({ forstaKarta: false }),
   markeraOmradeKlar: (id) => {
