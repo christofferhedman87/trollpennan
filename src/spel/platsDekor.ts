@@ -15,7 +15,7 @@ export type DekorSak = { ord: string; kropp: string; pos: [number, number, numbe
 export type Vattenyta = { id: string; mitt: [number, number, number]; storlek: [number, number] };
 
 /** Höjd för zoner som inte står på marken. */
-const ZON_HOJD: Record<string, number> = { luft: 3.4, tak: 3.6 };
+const ZON_HOJD: Record<string, number> = { luft: 2.55, tak: 2.05 };
 
 /** Platsens startobjekt som entiteter i världen. Ord utan modell kommer i `saknas`. */
 export function dekorFor(p: Plats | undefined): { saker: DekorSak[]; saknas: string[] } {

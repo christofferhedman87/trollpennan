@@ -40,8 +40,8 @@ test("B1.3a: klaraPerPlats räknar per omrade utan finaler", () => {
 });
 
 test("B1.3a: tillVarld ger hörnen i ytan", () => {
-  assert.deepEqual(tillVarld(0, 0), [-2.4, -3.2]);
-  assert.deepEqual(tillVarld(1, 1), [2.4, 1.0]);
+  assert.deepEqual(tillVarld(0, 0), [-5.5, -6.5]);
+  assert.deepEqual(tillVarld(1, 1), [5.5, 2.5]);
 });
 
 const djur = { uid: "x", kropp: "kanin", formel: "en kanin", beskrivning: "en kanin", skapad: 1, skala: 1, alpha: 1, formagor: [], tillbehor: [], overraskningar: [] };
@@ -106,4 +106,19 @@ test("B1.3b: skogen, sjön och grottan har synlig dekor och egen miljö", async 
   assert.ok(dekorFor(platsMed("skogen")).saker.some((s) => s.kropp === "trad"));
   assert.ok(vattenytor(platsMed("sjon")).length >= 1, "sjön har en vattenyta");
   assert.equal(dekorFor(platsMed("ang")).saker.length, 0, "ängen har ingen datadekor (ritas som förut)");
+});
+
+test("B1.4-fix: markfärg per plats, större vatten, droppsten nära tak, ingen moln på sjön", async () => {
+  const { dekorFor, vattenytor } = await import("./platsDekor.ts");
+  const { miljoFor } = await import("./miljo.ts");
+  assert.equal(miljoFor(platsMed("skogen")?.miljo).mark, "#718957");
+  assert.equal(miljoFor(platsMed("sjon")?.miljo).mark, "#DCCB9B");
+  assert.equal(miljoFor(platsMed("grottan")?.miljo).mark, "#8A8595");
+  const vatten = vattenytor(platsMed("sjon"))[0];
+  assert.ok(vatten, "sjön har vatten");
+  assert.ok(vatten!.storlek[0] * vatten!.storlek[1] >= 20, `sjöns vattenyta ska fylla vyn (${vatten!.storlek})`);
+  const dropp = dekorFor(platsMed("grottan")).saker.filter((s) => s.ord === "droppsten");
+  assert.ok(dropp.length >= 1);
+  for (const d of dropp) assert.ok(d.pos[1] <= 2.2 && d.pos[1] >= 1.5, `droppsten y=${d.pos[1]} ska hänga nära grottaket`);
+  assert.ok(!dekorFor(platsMed("sjon")).saker.some((s) => s.ord === "moln"), "moln borttagen (såg ut som svävande sten)");
 });

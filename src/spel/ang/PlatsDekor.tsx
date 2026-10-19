@@ -1,7 +1,8 @@
 // B1.3b: scenen för andra platser än ängen (Skogen, Sjön, Grottan …), helt ur data/platser.json.
 // Ängen ritas som förut i angen3d.tsx; här finns bara miljö (himmel, dis, ljus, mark), startobjekt och platsens skapelser.
 import { OrbitControls } from "@react-three/drei";
-import { Component, Suspense, useMemo, useRef, type ReactNode } from "react";
+import { Component, Suspense, useEffect, useMemo, useRef, type ReactNode } from "react";
+import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { GltfSak } from "../gltfDjur.tsx";
 import { KV, miljoFor } from "../miljo.ts";
@@ -13,6 +14,19 @@ import { SvajMark } from "./himmel.tsx";
 import { SagaPenna } from "./saga.tsx";
 import { KameraRam } from "./kamera.tsx";
 import type { OrbitStyr } from "./saga.tsx";
+
+
+/** Kameran börjar närmare platsens dekor (ängen har egen start). */
+function PlatsKamera() {
+  const { camera } = useThree();
+  useEffect(() => {
+    camera.position.set(0, 3.05, 6.8);
+    camera.near = 0.1;
+    camera.far = 90;
+    camera.updateProjectionMatrix();
+  }, [camera]);
+  return null;
+}
 
 const INGA: never[] = [];
 const sagt = new Set<string>();
@@ -40,7 +54,7 @@ export function PlatsDekor({ plats }: { plats: string }) {
     console.info(`[plats] ${plats}: "${ord}" har ingen modell, hoppas över`);
   }
   return (
-    <group name={`plats-${plats}`}>
+    <group name={`plats-${plats}`} scale={1.45}>
       {vatten.map((v) => (
         <mesh key={v.id} name="vattenyta" rotation={[-Math.PI / 2, 0, 0]} position={v.mitt}>
           <planeGeometry args={v.storlek} />
@@ -90,6 +104,7 @@ export function PlatsScen({ plats }: { plats: string }) {
       <directionalLight color={L.fyll.farg} position={[-6, 3, 4]} intensity={L.fyll.styrka * k} />
       <directionalLight color={L.kant.farg} position={[-2, 4, -5]} intensity={L.kant.styrka * k} />
       <SvajMark color={mark} natt={0} utanTextur={mark !== "#ffffff"} />
+      <PlatsKamera />
       <PlatsDekor plats={plats} />
       {djur.map((spec) => (
         <DjurIScen key={spec.uid} spec={spec} alla={djur} />
@@ -104,9 +119,9 @@ export function PlatsScen({ plats }: { plats: string }) {
         minPolarAngle={1.1}
         minAzimuthAngle={-1.05}
         maxAzimuthAngle={1.05}
-        minDistance={6}
-        maxDistance={14}
-        target={[0, 1.05, -0.15]}
+        minDistance={3.6}
+        maxDistance={9.5}
+        target={[0, 0.7, 0.5]}
         rotateSpeed={0.7}
         zoomSpeed={0.75}
         touches={{ ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN }}

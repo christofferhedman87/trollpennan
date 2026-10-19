@@ -111,10 +111,10 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 
 **Klart på main:** R3G (#56) · R9D–F (#60/#62/#64) · B0 (#61) · B1.1–B1.3b (#67/#68/#71/#75). main ≈ `0124204`.
 
-**Pågår:** **B1.4** resa + B1.3b-fix (skalor/mark/Bengtsson). **Patch + kor.sh klar** (`rundor/BLOCK-platser/B1.4/`, ingen Build): Doodle kör `kor.sh`. Sex led ifyllda (resa.ts/usePlats/PlatsResa/KartaLager/NpcFigur/npc.repliker_plats/seddaIntro).
+**Pågår:** **B1.4-fix** (fel 1–6: Inte riktigt än, mark, skala, Bengtsson, Phaser-text, UI-overlap). Patch i `rundor/BLOCK-platser/B1.4-fix/`. Phaser-äventyret förblir avstängt.
 
 **Nästa, i denna ordning (inga parallella steg utom B5):**
-1. **B1.4** resa + B1.3b-fix — **skript** (`bash rundor/BLOCK-platser/B1.4/kor.sh`)
+1. **B1.4-fix** fel 1–6 — **skript** (`bash rundor/BLOCK-platser/B1.4-fix/kor.sh`) · sedan R9G
 2. **R9G** gåta≠uppdrag, gåta byts ej för tidigt, "Skriv i Pennans bok", stall=meny — **Build** (`rundor/R9G-ux-stall/`)
 3. **R8-2** grafiklyft (skuggor, horisont, kontur …) — **Build** (`rundor/R8-grafik/`)
 4. **B2** Skogen — **skript** (`kor-plats.sh skogen`)

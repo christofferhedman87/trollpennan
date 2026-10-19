@@ -1,0 +1,558 @@
+diff --git a/PROJECT.md b/PROJECT.md
+index fb09a97..cc1c22b 100644
+--- a/PROJECT.md
++++ b/PROJECT.md
+@@ -111,10 +111,10 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på
+ 
+ **Klart på main:** R3G (#56) · R9D–F (#60/#62/#64) · B0 (#61) · B1.1–B1.3b (#67/#68/#71/#75). main ≈ `0124204`.
+ 
+-**Pågår:** **B1.4** resa + B1.3b-fix (skalor/mark/Bengtsson). **Patch + kor.sh klar** (`rundor/BLOCK-platser/B1.4/`, ingen Build): Doodle kör `kor.sh`. Sex led ifyllda (resa.ts/usePlats/PlatsResa/KartaLager/NpcFigur/npc.repliker_plats/seddaIntro).
++**Pågår:** **B1.4-fix** (fel 1–6: Inte riktigt än, mark, skala, Bengtsson, Phaser-text, UI-overlap). Patch i `rundor/BLOCK-platser/B1.4-fix/`. Phaser-äventyret förblir avstängt.
+ 
+ **Nästa, i denna ordning (inga parallella steg utom B5):**
+-1. **B1.4** resa + B1.3b-fix — **skript** (`bash rundor/BLOCK-platser/B1.4/kor.sh`)
++1. **B1.4-fix** fel 1–6 — **skript** (`bash rundor/BLOCK-platser/B1.4-fix/kor.sh`) · sedan R9G
+ 2. **R9G** gåta≠uppdrag, gåta byts ej för tidigt, "Skriv i Pennans bok", stall=meny — **Build** (`rundor/R9G-ux-stall/`)
+ 3. **R8-2** grafiklyft (skuggor, horisont, kontur …) — **Build** (`rundor/R8-grafik/`)
+ 4. **B2** Skogen — **skript** (`kor-plats.sh skogen`)
+diff --git a/data/omraden.json b/data/omraden.json
+index 558e054..d07ad0c 100644
+--- a/data/omraden.json
++++ b/data/omraden.json
+@@ -3,7 +3,7 @@
+  "karta": {
+   "rubrik": "Kartan",
+   "knapp": "Ut på äventyr",
+-  "hjalp": "Tryck på en plats. Vissa platser behöver ett djur som kan något särskilt.",
++  "hjalp": "Tryck på en plats för att resa dit. Gråa platser är låsta än – då säger Bengtsson Inte riktigt än.",
+   "valj_djur": "Vem ska följa med? Välj ett djur som {kan}.",
+   "kan_text": {
+    "flyga": "kan flyga",
+@@ -79,4 +79,4 @@
+    "ritning_reserv": "Mörk bakgrund (#263238) med lila och turkosa kristaller (trianglar). Utan ljus: allt svart utom en liten cirkel runt pekaren. Med lysande djur: en stor ljuscirkel runt djuret."
+   }
+  ]
+-}
+\ No newline at end of file
++}
+diff --git a/data/platser.json b/data/platser.json
+index bcf4fa2..b16dc47 100644
+--- a/data/platser.json
++++ b/data/platser.json
+@@ -1,14 +1,14 @@
+ {
+  "version": 1,
+- "_om": "B1.3a/B1.3b/B1.4: platserna som data. B1.3b-fix: skalor och startobjekt justerade (inga jätteföremål i förgrunden), större vattenytor. x,y 0–1 → världen via yta. miljo = överlagring på data/miljo.json.",
++ "_om": "B1.3a/B1.3b/B1.4/B1.4-fix: platserna som data. B1.4-fix: större yta, markfärg syns, vatten/skala/placering, droppsten lägre.",
+  "yta": {
+   "x": [
+-   -2.4,
+-   2.4
++   -5.5,
++   5.5
+   ],
+   "z": [
+-   -3.2,
+-   1.0
++   -6.5,
++   2.5
+   ]
+  },
+  "platser": [
+@@ -90,10 +90,10 @@
+      "id": "vattenyta",
+      "typ": "vattenyta",
+      "rekt": [
++      0.28,
+       0.38,
+-      0.42,
+-      0.68,
+-      0.78
++      0.78,
++      0.82
+      ]
+     },
+     {
+@@ -112,14 +112,14 @@
+      "ord": "träd",
+      "x": 0.12,
+      "y": 0.36,
+-     "skala": 1.15,
++     "skala": 1.32,
+      "zon": "mark"
+     },
+     {
+      "ord": "gran",
+      "x": 0.86,
+      "y": 0.3,
+-     "skala": 1.25,
++     "skala": 1.44,
+      "zon": "mark"
+     },
+     {
+@@ -175,7 +175,7 @@
+      "ord": "bäck",
+      "x": 0.52,
+      "y": 0.57,
+-     "skala": 0.7,
++     "skala": 0.95,
+      "zon": "vattenyta"
+     },
+     {
+@@ -196,14 +196,14 @@
+      "ord": "träd",
+      "x": 0.28,
+      "y": 0.32,
+-     "skala": 1.05,
++     "skala": 1.21,
+      "zon": "mark"
+     },
+     {
+      "ord": "gran",
+      "x": 0.62,
+      "y": 0.28,
+-     "skala": 1.15,
++     "skala": 1.32,
+      "zon": "mark"
+     },
+     {
+@@ -338,8 +338,8 @@
+      "typ": "land",
+      "rekt": [
+       0,
+-      0.28,
+-      0.4,
++      0.22,
++      0.45,
+       1
+      ]
+     },
+@@ -347,10 +347,10 @@
+      "id": "vattenyta",
+      "typ": "vattenyta",
+      "rekt": [
+-      0.32,
+-      0.28,
++      0.22,
++      0.22,
+       0.98,
+-      0.92
++      0.95
+      ]
+     },
+     {
+@@ -377,16 +377,16 @@
+    "start": [
+     {
+      "ord": "brygga",
+-     "x": 0.46,
+-     "y": 0.54,
+-     "skala": 0.45,
++     "x": 0.48,
++     "y": 0.55,
++     "skala": 0.7,
+      "zon": "vattenyta"
+     },
+     {
+      "ord": "sten",
+      "x": 0.22,
+      "y": 0.66,
+-     "skala": 0.35,
++     "skala": 0.32,
+      "zon": "strand"
+     },
+     {
+@@ -421,16 +421,9 @@
+      "ord": "näckros",
+      "x": 0.71,
+      "y": 0.52,
+-     "skala": 0.35,
++     "skala": 0.4,
+      "zon": "vattenyta"
+     },
+-    {
+-     "ord": "moln",
+-     "x": 0.75,
+-     "y": 0.12,
+-     "skala": 1.0,
+-     "zon": "luft"
+-    },
+     {
+      "ord": "sten",
+      "x": 0.18,
+@@ -463,14 +456,21 @@
+      "ord": "näckros",
+      "x": 0.55,
+      "y": 0.55,
+-     "skala": 0.32,
++     "skala": 0.4,
+      "zon": "vattenyta"
+     },
+     {
+      "ord": "näckros",
+      "x": 0.78,
+      "y": 0.48,
+-     "skala": 0.3,
++     "skala": 0.4,
++     "zon": "vattenyta"
++    },
++    {
++     "ord": "näckros",
++     "x": 0.62,
++     "y": 0.62,
++     "skala": 0.38,
+      "zon": "vattenyta"
+     }
+    ],
+@@ -600,20 +600,20 @@
+      "id": "vattenyta",
+      "typ": "vattenyta",
+      "rekt": [
+-      0.28,
+-      0.62,
++      0.22,
+       0.55,
+-      0.82
++      0.62,
++      0.88
+      ]
+     },
+     {
+      "id": "tak",
+      "typ": "tak",
+      "rekt": [
+-      0,
+-      0,
+-      1,
+-      0.32
++      0.1,
++      0.0,
++      0.9,
++      0.28
+      ]
+     },
+     {
+@@ -631,15 +631,15 @@
+     {
+      "ord": "grotta",
+      "x": 0.5,
+-     "y": 0.42,
+-     "skala": 1.35,
++     "y": 0.48,
++     "skala": 1.85,
+      "zon": "mark"
+     },
+     {
+      "ord": "klippa",
+      "x": 0.12,
+      "y": 0.52,
+-     "skala": 0.95,
++     "skala": 1.15,
+      "zon": "mark"
+     },
+     {
+@@ -667,14 +667,14 @@
+      "ord": "droppsten",
+      "x": 0.3,
+      "y": 0.24,
+-     "skala": 0.55,
++     "skala": 0.42,
+      "zon": "tak"
+     },
+     {
+      "ord": "klippa",
+      "x": 0.82,
+      "y": 0.4,
+-     "skala": 0.9,
++     "skala": 1.15,
+      "zon": "mark"
+     },
+     {
+@@ -688,7 +688,7 @@
+      "ord": "kristall",
+      "x": 0.22,
+      "y": 0.45,
+-     "skala": 0.45,
++     "skala": 0.5,
+      "zon": "mark"
+     },
+     {
+@@ -702,7 +702,7 @@
+      "ord": "droppsten",
+      "x": 0.55,
+      "y": 0.2,
+-     "skala": 0.5,
++     "skala": 0.42,
+      "zon": "tak"
+     }
+    ],
+@@ -764,4 +764,4 @@
+   }
+  ],
+  "beloningar": []
+-}
+\ No newline at end of file
++}
+diff --git a/data/texter-aventyr.json b/data/texter-aventyr.json
+index 100d3df..588f7ae 100644
+--- a/data/texter-aventyr.json
++++ b/data/texter-aventyr.json
+@@ -6,8 +6,8 @@
+   "hem": "{djur} går hem till gården."
+  },
+  "forsta_gangen": [
+-  "Nu får du gå ut på äventyr! Tryck på kartan.",
+-  "Dina djur kan hjälpa dig. Den som flyger, simmar, lyser eller är jättestor kan ta dig till nya platser."
++  "Nu kan du resa till nya platser! Öppna kartan eller skriv ett platsnamn i boken.",
++  "Skogen öppnas när du har skapat tre djur. Sjön och Grottan kommer senare."
+  ],
+  "gavoruta": {
+   "placeholder": "Skriv en gåva …",
+@@ -16,4 +16,4 @@
+   "okant": "Det ordet kan Trollpennan inte som gåva. Prova till exempel ett äpple eller en kotte."
+  },
+  "omrade_klart": "Du har gjort allt i {omrade}! Bra jobbat, äventyrare."
+-}
+\ No newline at end of file
++}
+diff --git a/src/spel/Spel.tsx b/src/spel/Spel.tsx
+index 026a040..af2d174 100644
+--- a/src/spel/Spel.tsx
++++ b/src/spel/Spel.tsx
+@@ -98,6 +98,7 @@ import { Hud, HudBot, MenyPanel } from "./ui/Hud.tsx";
+ import { NpcFigur, NpcIkon } from "./ui/NpcFigur.tsx";
+ import { useBengtsson } from "./ui/useBengtsson.ts";
+ import { usePlats } from "./ui/usePlats.ts";
++import { START_PLATS } from "./platser.ts";
+ import { PlatsResa } from "./ui/PlatsResa.tsx";
+ import { KartaLager, OmradeHud } from "./ui/KartaLager.tsx";
+ import { OrdbokDialog } from "./ui/OrdbokDialog.tsx";
+@@ -1768,12 +1769,12 @@ export function Spel() {
+         {visa3d ? <Angen3D natt={natt} saga={intro} onGrind={platsUi.tryckGrind} /> : null}
+         {visa3d ? <PlatsResa plats={platsUi.plats} namn={platsUi.namn} ton={platsUi.ton} skylt={platsUi.skylt} intro={platsUi.intro} hem={platsUi.hem} /> : null}
+         <AngLager natt={natt} varld={varld} omrade={omrade} panel={panel} ang={ang} hemma={hemma} liv={liv} fotoMal={fotoMal} visaBanner={visaBanner} visaMossa={visaMossa} setFotoMal={setFotoMal} banners={banners} bubblor={bubblor} onskan={onskan} onskaOpp={onskaOpp} onskaSyns={onskaSyns} ank={ank} oppnaOnska={oppnaOnska} meny={meny} setMeny={setMeny} omUidRef={omUidRef} setLage={setLage} setBokOpp={setBokOpp} setLadaOpp={setLadaOpp} menyHem={menyHem} setBoUid={setBoUid} lada={lada} ladaOpp={ladaOpp} boUid={boUid} boDjur={boDjur} flyttaInDjur={flyttaInDjur} />
+-        {kartaOpp ? <KartaLager forstaRad={forstaRad} kartaText={kartaText} tryckPlats={(id) => { if (id === "garden") return tryckPlats(id); setKartaOpp(false); setKartaText(null); setBokOpp(false); platsUi.resTill(id); }} oppna={oppna} /> : null}
++        {kartaOpp ? <KartaLager forstaRad={forstaRad} kartaText={kartaText} tryckPlats={(id) => { if (id === "garden") return tryckPlats(id); setKartaOpp(false); setKartaText(null); setBokOpp(false); platsUi.resTill(id); }} onLast={() => { setKartaOpp(false); bengtsson.visaFel(); }} oppna={oppna} /> : null}
+         {omrade && !kartaOpp ? <OmradeHud tryckPlats={tryckPlats} bytFolje={bytFolje} /> : null}
+         <Hud oppnaStjarnor={() => setStjarnInfo(true)} haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} />
+         <MenyPanel menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} senare={senare} panel={panel} varld={varld} valjVarld={valjVarld} lasMeny={lasMeny} oppnaUppdrag={oppnaUppdrag} setBokOpp={setBokOpp} oppnaKarta={oppnaKarta} setIntroNy={setIntroNy} setIntro={setIntro} menySaker={menySaker} borjaOm={borjaOm} />
+         {varld === "ang" && !omrade && !bokOpp && !menyOpp && !intro && !overlayRef.current ? (
+-          bengtsson.synlig ? (
++          bengtsson.synlig || platsUi.plats !== START_PLATS ? (
+             <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
+           ) : (
+             <NpcIkon npc={bengtsson.npcId} nytt={false} text={bengtsson.ikonText} alt={bengtsson.ikonAlt} onClick={bengtsson.klicka} />
+diff --git a/src/spel/ang/PlatsDekor.tsx b/src/spel/ang/PlatsDekor.tsx
+index 1a5ad07..0d2ba69 100644
+--- a/src/spel/ang/PlatsDekor.tsx
++++ b/src/spel/ang/PlatsDekor.tsx
+@@ -1,7 +1,8 @@
+ // B1.3b: scenen för andra platser än ängen (Skogen, Sjön, Grottan …), helt ur data/platser.json.
+ // Ängen ritas som förut i angen3d.tsx; här finns bara miljö (himmel, dis, ljus, mark), startobjekt och platsens skapelser.
+ import { OrbitControls } from "@react-three/drei";
+-import { Component, Suspense, useMemo, useRef, type ReactNode } from "react";
++import { Component, Suspense, useEffect, useMemo, useRef, type ReactNode } from "react";
++import { useThree } from "@react-three/fiber";
+ import * as THREE from "three";
+ import { GltfSak } from "../gltfDjur.tsx";
+ import { KV, miljoFor } from "../miljo.ts";
+@@ -14,6 +15,19 @@ import { SagaPenna } from "./saga.tsx";
+ import { KameraRam } from "./kamera.tsx";
+ import type { OrbitStyr } from "./saga.tsx";
+ 
++
++/** Kameran börjar närmare platsens dekor (ängen har egen start). */
++function PlatsKamera() {
++  const { camera } = useThree();
++  useEffect(() => {
++    camera.position.set(0, 3.05, 6.8);
++    camera.near = 0.1;
++    camera.far = 90;
++    camera.updateProjectionMatrix();
++  }, [camera]);
++  return null;
++}
++
+ const INGA: never[] = [];
+ const sagt = new Set<string>();
+ 
+@@ -40,7 +54,7 @@ export function PlatsDekor({ plats }: { plats: string }) {
+     console.info(`[plats] ${plats}: "${ord}" har ingen modell, hoppas över`);
+   }
+   return (
+-    <group name={`plats-${plats}`}>
++    <group name={`plats-${plats}`} scale={1.45}>
+       {vatten.map((v) => (
+         <mesh key={v.id} name="vattenyta" rotation={[-Math.PI / 2, 0, 0]} position={v.mitt}>
+           <planeGeometry args={v.storlek} />
+@@ -90,6 +104,7 @@ export function PlatsScen({ plats }: { plats: string }) {
+       <directionalLight color={L.fyll.farg} position={[-6, 3, 4]} intensity={L.fyll.styrka * k} />
+       <directionalLight color={L.kant.farg} position={[-2, 4, -5]} intensity={L.kant.styrka * k} />
+       <SvajMark color={mark} natt={0} utanTextur={mark !== "#ffffff"} />
++      <PlatsKamera />
+       <PlatsDekor plats={plats} />
+       {djur.map((spec) => (
+         <DjurIScen key={spec.uid} spec={spec} alla={djur} />
+@@ -104,9 +119,9 @@ export function PlatsScen({ plats }: { plats: string }) {
+         minPolarAngle={1.1}
+         minAzimuthAngle={-1.05}
+         maxAzimuthAngle={1.05}
+-        minDistance={6}
+-        maxDistance={14}
+-        target={[0, 1.05, -0.15]}
++        minDistance={3.6}
++        maxDistance={9.5}
++        target={[0, 0.7, 0.5]}
+         rotateSpeed={0.7}
+         zoomSpeed={0.75}
+         touches={{ ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN }}
+diff --git a/src/spel/ang/himmel.tsx b/src/spel/ang/himmel.tsx
+index 1568fe1..947ec36 100644
+--- a/src/spel/ang/himmel.tsx
++++ b/src/spel/ang/himmel.tsx
+@@ -72,7 +72,7 @@ export function SvajMark({ color, natt, utanTextur = false }: { color: string; n
+   return (
+     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
+       <primitive object={MARK_GEO} attach="geometry" />
+-      <meshToonMaterial ref={mat} color={color} vertexColors map={utanTextur ? null : MARK_TEX} gradientMap={TOON_MAP} onBeforeCompile={kompilera} />
++      <meshToonMaterial ref={mat} color={color} vertexColors={!utanTextur} map={utanTextur ? null : MARK_TEX} gradientMap={TOON_MAP} onBeforeCompile={kompilera} />
+     </mesh>
+   );
+ }
+diff --git a/src/spel/platsDekor.ts b/src/spel/platsDekor.ts
+index 7eb2e28..46b7cd9 100644
+--- a/src/spel/platsDekor.ts
++++ b/src/spel/platsDekor.ts
+@@ -15,7 +15,7 @@ export type DekorSak = { ord: string; kropp: string; pos: [number, number, numbe
+ export type Vattenyta = { id: string; mitt: [number, number, number]; storlek: [number, number] };
+ 
+ /** Höjd för zoner som inte står på marken. */
+-const ZON_HOJD: Record<string, number> = { luft: 3.4, tak: 3.6 };
++const ZON_HOJD: Record<string, number> = { luft: 2.55, tak: 2.05 };
+ 
+ /** Platsens startobjekt som entiteter i världen. Ord utan modell kommer i `saknas`. */
+ export function dekorFor(p: Plats | undefined): { saker: DekorSak[]; saknas: string[] } {
+diff --git a/src/spel/platser.test.ts b/src/spel/platser.test.ts
+index 7d32628..a9339c4 100644
+--- a/src/spel/platser.test.ts
++++ b/src/spel/platser.test.ts
+@@ -40,8 +40,8 @@ test("B1.3a: klaraPerPlats räknar per omrade utan finaler", () => {
+ });
+ 
+ test("B1.3a: tillVarld ger hörnen i ytan", () => {
+-  assert.deepEqual(tillVarld(0, 0), [-2.4, -3.2]);
+-  assert.deepEqual(tillVarld(1, 1), [2.4, 1.0]);
++  assert.deepEqual(tillVarld(0, 0), [-5.5, -6.5]);
++  assert.deepEqual(tillVarld(1, 1), [5.5, 2.5]);
+ });
+ 
+ const djur = { uid: "x", kropp: "kanin", formel: "en kanin", beskrivning: "en kanin", skapad: 1, skala: 1, alpha: 1, formagor: [], tillbehor: [], overraskningar: [] };
+@@ -107,3 +107,18 @@ test("B1.3b: skogen, sjön och grottan har synlig dekor och egen miljö", async
+   assert.ok(vattenytor(platsMed("sjon")).length >= 1, "sjön har en vattenyta");
+   assert.equal(dekorFor(platsMed("ang")).saker.length, 0, "ängen har ingen datadekor (ritas som förut)");
+ });
++
++test("B1.4-fix: markfärg per plats, större vatten, droppsten nära tak, ingen moln på sjön", async () => {
++  const { dekorFor, vattenytor } = await import("./platsDekor.ts");
++  const { miljoFor } = await import("./miljo.ts");
++  assert.equal(miljoFor(platsMed("skogen")?.miljo).mark, "#718957");
++  assert.equal(miljoFor(platsMed("sjon")?.miljo).mark, "#DCCB9B");
++  assert.equal(miljoFor(platsMed("grottan")?.miljo).mark, "#8A8595");
++  const vatten = vattenytor(platsMed("sjon"))[0];
++  assert.ok(vatten, "sjön har vatten");
++  assert.ok(vatten!.storlek[0] * vatten!.storlek[1] >= 20, `sjöns vattenyta ska fylla vyn (${vatten!.storlek})`);
++  const dropp = dekorFor(platsMed("grottan")).saker.filter((s) => s.ord === "droppsten");
++  assert.ok(dropp.length >= 1);
++  for (const d of dropp) assert.ok(d.pos[1] <= 2.2 && d.pos[1] >= 1.5, `droppsten y=${d.pos[1]} ska hänga nära grottaket`);
++  assert.ok(!dekorFor(platsMed("sjon")).saker.some((s) => s.ord === "moln"), "moln borttagen (såg ut som svävande sten)");
++});
+diff --git a/src/spel/resa.test.ts b/src/spel/resa.test.ts
+index 5181294..6282041 100644
+--- a/src/spel/resa.test.ts
++++ b/src/spel/resa.test.ts
+@@ -33,3 +33,10 @@ test("B1.4: bytPlats till låst plats ger false; seddaIntro sparas", () => {
+   assert.deepEqual(useMinne.getState().seddaIntro, ["skogen"]);
+   useMinne.getState().aterstall();
+ });
++
++test("B1.4-fix: kartans första-gången-text nämner inte Phaser-djurkrav", async () => {
++  const { default: texter } = await import("../../data/texter-aventyr.json", { with: { type: "json" } });
++  const rad = (texter as { forsta_gangen: string[] }).forsta_gangen.join(" ");
++  assert.ok(!/flyger|simmar|lyser|jättestor/.test(rad), rad);
++  assert.ok(/karta|platsnamn|Skogen/i.test(rad), rad);
++});
+diff --git a/src/spel/ui/KartaLager.tsx b/src/spel/ui/KartaLager.tsx
+index 404d8db..e5cd1d5 100644
+--- a/src/spel/ui/KartaLager.tsx
++++ b/src/spel/ui/KartaLager.tsx
+@@ -6,14 +6,16 @@ import { TEXTER } from "./spelData.ts";
+ type KartaLagerProps = {
+   forstaRad: string[] | null;
+   kartaText: string | null;
+-  /** Resa till en världsplats (B1.4 PLATSER) eller "garden" (Phaser-gården, orörd). */
++  /** Resa till en världsplats (B1.4 PLATSER) eller "garden" (gården). */
+   tryckPlats: (id: string) => void;
+-  /** @deprecated B1.4: lås styrs av upplast()/oppnadePlatser; behålls för anropskompatibilitet. */
++  /** Låst plats: visa ERROR + "Inte riktigt än". */
++  onLast: () => void;
++  /** @deprecated B1.4: lås styrs av upplast(); behålls för anropskompatibilitet. */
+   oppna: string[];
+ };
+ 
+-/** B1.4: listar PLATSER (ängen/skogen/sjön/grottan) i stället för Phaser-OMR.omraden. Gården-knappen finns kvar. */
+-export function KartaLager({ forstaRad, kartaText, tryckPlats }: KartaLagerProps) {
++/** B1.4/B1.4-fix: listar PLATSER. Låsta knappar är klickbara och anropar onLast (Inte riktigt än). */
++export function KartaLager({ forstaRad, kartaText, tryckPlats, onLast }: KartaLagerProps) {
+   const m = mattUr(useMinne.getState());
+   return (
+     <div className="karta-lager" data-testid="karta">
+@@ -32,10 +34,10 @@ export function KartaLager({ forstaRad, kartaText, tryckPlats }: KartaLagerProps
+           <button
+             key={o.id}
+             type="button"
+-            className={`plats-knapp ${o.id}${oppen ? " oppen" : ""}`}
++            className={`plats-knapp ${o.id}${oppen ? " oppen" : " last"}`}
+             data-testid={`plats-${o.id}`}
+-            disabled={!oppen}
+-            onClick={() => tryckPlats(o.id)}
++            aria-disabled={!oppen}
++            onClick={() => (oppen ? tryckPlats(o.id) : onLast())}
+           >
+             {oppen ? o.namn : `${o.namn} (låst)`}
+           </button>
+diff --git a/src/styles.css b/src/styles.css
+index c911631..d38a8b1 100644
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -101,6 +101,7 @@ position:absolute;inset:0;z-index:1;touch-action:none}
+ touch-action:none;display:block}
+ .tred-hint{
+ position:absolute;top:62px;left:50%;transform:translateX(-50%);z-index:2;margin:0;pointer-events:none;background:var(--color-cream);color:var(--color-ink);font-size:1.125rem;font-weight:800;border-radius:999px;padding:6px 14px;box-shadow:0 3px 0 var(--color-paper-deep);white-space:nowrap}
++.angen-3d:not([data-plats="ang"]) .tred-hint{top:118px}
+ .teaser-bubbla{
+ position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);z-index:6;margin:0;pointer-events:none;
+ background:var(--color-cream);color:var(--color-ink);font-size:1.35rem;font-weight:800;line-height:1.2;
+@@ -205,7 +206,7 @@ background:#c8e6c9}
+ background:#b3e5fc}
+ .plats-knapp.grottan{
+ background:#d1c4e9}
+-.plats-knapp:disabled{
++.plats-knapp:disabled,.plats-knapp.last{
+ opacity:.45}
+ .omrade-hud{
+ z-index:4;pointer-events:auto;gap:8px;display:flex;position:absolute;bottom:76px;left:8px;right:8px}
+@@ -690,7 +691,7 @@ summary:focus-visible { outline: 3px solid #204e8a; outline-offset: 3px; }
+ 
+ /* R6A-2: Bengtsson som klickbar figur på ängen och uppdragsremsan i Skapa-menyn */
+ .npc-figur{
+-position:absolute;z-index:7;left:4px;bottom:74px;height:var(--npc-h,176px);width:calc(var(--npc-h,176px) * 0.671);padding:0;border:0;background:none;display:block;touch-action:manipulation;filter:drop-shadow(0 3px 4px #2c241659)}
++position:absolute;z-index:7;left:4px;bottom:74px;height:var(--npc-h,176px);width:calc(var(--npc-h,176px) * 0.671);padding:0;border:0;background:none;display:block;overflow:visible;touch-action:manipulation;filter:drop-shadow(0 3px 4px #2c241659)}
+ .npc-figur img{
+ display:block;width:100%;height:100%;object-fit:contain;object-position:bottom;pointer-events:none;user-select:none}
+ .npc-figur.nytt{
+@@ -746,4 +747,4 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
+ .plats-intro{position:absolute;z-index:9;left:8px;right:8px;bottom:200px;display:flex;gap:10px;align-items:flex-end;padding:10px 12px;border-radius:16px;background:var(--color-cream);box-shadow:0 4px 0 var(--color-paper-deep);pointer-events:none}
+ .plats-intro img{width:64px;height:64px;object-fit:contain;flex:none}
+ .plats-intro p{margin:0;font-weight:700;font-size:1.05rem;line-height:1.3}
+-.npc-fel-text{position:absolute;left:50%;bottom:-4px;transform:translate(-50%,100%);white-space:nowrap;padding:3px 10px;border-radius:999px;background:#2c2416;color:#FFE082;font-size:.95rem;font-weight:800;box-shadow:0 2px 0 #0006}
++.npc-fel-text{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:2;white-space:nowrap;padding:3px 10px;border-radius:999px;background:#2c2416;color:#FFE082;font-size:.95rem;font-weight:800;box-shadow:0 2px 0 #0006;pointer-events:none}

@@ -6,14 +6,16 @@ import { TEXTER } from "./spelData.ts";
 type KartaLagerProps = {
   forstaRad: string[] | null;
   kartaText: string | null;
-  /** Resa till en världsplats (B1.4 PLATSER) eller "garden" (Phaser-gården, orörd). */
+  /** Resa till en världsplats (B1.4 PLATSER) eller "garden" (gården). */
   tryckPlats: (id: string) => void;
-  /** @deprecated B1.4: lås styrs av upplast()/oppnadePlatser; behålls för anropskompatibilitet. */
+  /** Låst plats: visa ERROR + "Inte riktigt än". */
+  onLast: () => void;
+  /** @deprecated B1.4: lås styrs av upplast(); behålls för anropskompatibilitet. */
   oppna: string[];
 };
 
-/** B1.4: listar PLATSER (ängen/skogen/sjön/grottan) i stället för Phaser-OMR.omraden. Gården-knappen finns kvar. */
-export function KartaLager({ forstaRad, kartaText, tryckPlats }: KartaLagerProps) {
+/** B1.4/B1.4-fix: listar PLATSER. Låsta knappar är klickbara och anropar onLast (Inte riktigt än). */
+export function KartaLager({ forstaRad, kartaText, tryckPlats, onLast }: KartaLagerProps) {
   const m = mattUr(useMinne.getState());
   return (
     <div className="karta-lager" data-testid="karta">
@@ -32,10 +34,10 @@ export function KartaLager({ forstaRad, kartaText, tryckPlats }: KartaLagerProps
           <button
             key={o.id}
             type="button"
-            className={`plats-knapp ${o.id}${oppen ? " oppen" : ""}`}
+            className={`plats-knapp ${o.id}${oppen ? " oppen" : " last"}`}
             data-testid={`plats-${o.id}`}
-            disabled={!oppen}
-            onClick={() => tryckPlats(o.id)}
+            aria-disabled={!oppen}
+            onClick={() => (oppen ? tryckPlats(o.id) : onLast())}
           >
             {oppen ? o.namn : `${o.namn} (låst)`}
           </button>
