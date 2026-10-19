@@ -89,14 +89,14 @@
      "ord": "träd",
      "x": 0.12,
      "y": 0.36,
-     "skala": 1.0,
+     "skala": 2.4,
      "zon": "mark"
     },
     {
      "ord": "gran",
      "x": 0.86,
      "y": 0.3,
-     "skala": 1.0,
+     "skala": 2.6,
      "zon": "mark"
     },
     {
@@ -110,42 +110,42 @@
      "ord": "stubbe",
      "x": 0.22,
      "y": 0.78,
-     "skala": 1.0,
+     "skala": 0.45,
      "zon": "mark"
     },
     {
      "ord": "stock",
      "x": 0.14,
      "y": 0.68,
-     "skala": 1.0,
+     "skala": 0.6,
      "zon": "mark"
     },
     {
      "ord": "sten",
      "x": 0.69,
      "y": 0.78,
-     "skala": 1.0,
+     "skala": 0.6,
      "zon": "mark"
     },
     {
      "ord": "svamp",
      "x": 0.34,
      "y": 0.72,
-     "skala": 1.0,
+     "skala": 0.35,
      "zon": "mark"
     },
     {
      "ord": "blomma",
      "x": 0.62,
      "y": 0.75,
-     "skala": 1.0,
+     "skala": 0.35,
      "zon": "mark"
     },
     {
      "ord": "kulle",
      "x": 0.5,
      "y": 0.34,
-     "skala": 1.0,
+     "skala": 2.0,
      "zon": "mark"
     },
     {
@@ -335,28 +335,28 @@
      "ord": "brygga",
      "x": 0.46,
      "y": 0.54,
-     "skala": 1.0,
+     "skala": 1.2,
      "zon": "vattenyta"
     },
     {
      "ord": "sten",
      "x": 0.22,
      "y": 0.66,
-     "skala": 1.0,
+     "skala": 0.6,
      "zon": "strand"
     },
     {
      "ord": "stock",
      "x": 0.13,
      "y": 0.78,
-     "skala": 1.0,
+     "skala": 0.6,
      "zon": "strand"
     },
     {
      "ord": "träd",
      "x": 0.08,
      "y": 0.34,
-     "skala": 1.0,
+     "skala": 2.4,
      "zon": "strand"
     },
     {
@@ -370,21 +370,21 @@
      "ord": "blomma",
      "x": 0.29,
      "y": 0.77,
-     "skala": 1.0,
+     "skala": 0.35,
      "zon": "strand"
     },
     {
      "ord": "näckros",
      "x": 0.71,
      "y": 0.52,
-     "skala": 1.0,
+     "skala": 0.4,
      "zon": "vattenyta"
     },
     {
      "ord": "moln",
      "x": 0.75,
      "y": 0.12,
-     "skala": 1.0,
+     "skala": 1.5,
      "zon": "luft"
     },
     {
@@ -567,35 +567,35 @@
      "ord": "grotta",
      "x": 0.5,
      "y": 0.42,
-     "skala": 1.0,
+     "skala": 3.0,
      "zon": "mark"
     },
     {
      "ord": "klippa",
      "x": 0.12,
      "y": 0.52,
-     "skala": 1.0,
+     "skala": 2.0,
      "zon": "mark"
     },
     {
      "ord": "sten",
      "x": 0.73,
      "y": 0.75,
-     "skala": 1.0,
+     "skala": 0.6,
      "zon": "mark"
     },
     {
      "ord": "kristall",
      "x": 0.79,
      "y": 0.49,
-     "skala": 1.0,
+     "skala": 0.8,
      "zon": "mark"
     },
     {
      "ord": "svamp",
      "x": 0.24,
      "y": 0.69,
-     "skala": 1.0,
+     "skala": 0.35,
      "zon": "mark"
     },
     {
@@ -616,7 +616,7 @@
      "ord": "droppsten",
      "x": 0.3,
      "y": 0.24,
-     "skala": 1.0,
+     "skala": 0.8,
      "zon": "tak"
     },
     {

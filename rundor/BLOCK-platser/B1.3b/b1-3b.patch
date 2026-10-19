@@ -1,0 +1,1031 @@
+diff --git a/data/platser.json b/data/platser.json
+index c48e1f4..08cfc51 100644
+--- a/data/platser.json
++++ b/data/platser.json
+@@ -1,9 +1,711 @@
+ {
+-  "version": 1,
+-  "_om": "B1.3a: platserna som data. En plats = en rad. x,y 0–1 i platsens yta (x vänster→höger, y bak→fram) → världen via yta. miljo = överlagring på data/miljo.json. Skogen/Sjön/Grottan läggs in av datapaketen (kor-plats.sh), form i rundor/BLOCK-platser/data-utkast/platser.json.",
+-  "yta": { "x": [-2.4, 2.4], "z": [-3.2, 1.0] },
+-  "platser": [
+-    { "id": "ang", "namn": "Ängen", "ordning": 0, "upplasning": { "nagon": [] }, "milstolpe": null, "miljo": {}, "zoner": [], "start": [], "uppdrag": [] }
++ "version": 1,
++ "_om": "B1.3a: platserna som data. En plats = en rad. x,y 0–1 i platsens yta (x vänster→höger, y bak→fram) → världen via yta. miljo = överlagring på data/miljo.json. B1.3b: Skogen/Sjön/Grottan är inlagda ur rundor/BLOCK-platser/data-utkast/platser.json (miljö, zoner, startobjekt) så att scenen kan byta; datapaketen (kor-plats.sh) ersätter raden per id.",
++ "yta": {
++  "x": [
++   -2.4,
++   2.4
+   ],
+-  "beloningar": []
++  "z": [
++   -3.2,
++   1.0
++  ]
++ },
++ "platser": [
++  {
++   "id": "ang",
++   "namn": "Ängen",
++   "ordning": 0,
++   "upplasning": {
++    "nagon": []
++   },
++   "milstolpe": null,
++   "miljo": {},
++   "zoner": [],
++   "start": [],
++   "uppdrag": []
++  },
++  {
++   "id": "skogen",
++   "namn": "Skogen",
++   "ordning": 1,
++   "tema": "mys",
++   "upplasning": {
++    "nagon": [
++     {
++      "typ": "skapelser",
++      "omrade": "ang",
++      "min": 3
++     }
++    ]
++   },
++   "milstolpe": {
++    "nagon": [
++     {
++      "typ": "uppdrag_klara",
++      "omrade": "skogen",
++      "min": 5
++     },
++     {
++      "typ": "skapelser",
++      "omrade": "skogen",
++      "min": 8
++     }
++    ],
++    "final": "skog-final-minnesljus",
++    "las_upp": "sjon"
++   },
++   "miljo": {
++    "himmel": {
++     "bakgrund": "#E7EDDD"
++    },
++    "dis": {
++     "farg": "#E7EDDD"
++    },
++    "mark": {
++     "grundfarg": "#718957"
++    },
++    "ljus": {
++     "skala": 0.78,
++     "farg": "#FFF0CF"
++    },
++    "ljuskalla_skapad": {
++     "radie": 0.18,
++     "intensitet": 0.22,
++     "farg": "#FFD58A"
++    }
++   },
++   "zoner": [
++    {
++     "id": "mark",
++     "typ": "land",
++     "rekt": [
++      0,
++      0.3,
++      1,
++      1
++     ]
++    },
++    {
++     "id": "vattenyta",
++     "typ": "vattenyta",
++     "rekt": [
++      0.43,
++      0.45,
++      0.6,
++      0.72
++     ]
++    },
++    {
++     "id": "luft",
++     "typ": "luft",
++     "rekt": [
++      0,
++      0,
++      1,
++      0.45
++     ]
++    }
++   ],
++   "start": [
++    {
++     "ord": "träd",
++     "x": 0.12,
++     "y": 0.36,
++     "skala": 2.4,
++     "zon": "mark"
++    },
++    {
++     "ord": "gran",
++     "x": 0.86,
++     "y": 0.3,
++     "skala": 2.6,
++     "zon": "mark"
++    },
++    {
++     "ord": "buske",
++     "x": 0.78,
++     "y": 0.65,
++     "skala": 1.0,
++     "zon": "mark"
++    },
++    {
++     "ord": "stubbe",
++     "x": 0.22,
++     "y": 0.78,
++     "skala": 0.45,
++     "zon": "mark"
++    },
++    {
++     "ord": "stock",
++     "x": 0.14,
++     "y": 0.68,
++     "skala": 0.6,
++     "zon": "mark"
++    },
++    {
++     "ord": "sten",
++     "x": 0.69,
++     "y": 0.78,
++     "skala": 0.6,
++     "zon": "mark"
++    },
++    {
++     "ord": "svamp",
++     "x": 0.34,
++     "y": 0.72,
++     "skala": 0.35,
++     "zon": "mark"
++    },
++    {
++     "ord": "blomma",
++     "x": 0.62,
++     "y": 0.75,
++     "skala": 0.35,
++     "zon": "mark"
++    },
++    {
++     "ord": "kulle",
++     "x": 0.5,
++     "y": 0.34,
++     "skala": 2.0,
++     "zon": "mark"
++    },
++    {
++     "ord": "bäck",
++     "x": 0.52,
++     "y": 0.57,
++     "skala": 1.0,
++     "zon": "vattenyta"
++    },
++    {
++     "ord": "stig",
++     "x": 0.47,
++     "y": 0.77,
++     "skala": 1.0,
++     "zon": "mark"
++    },
++    {
++     "ord": "vägskylt",
++     "x": 0.89,
++     "y": 0.75,
++     "skala": 1.0,
++     "zon": "mark"
++    }
++   ],
++   "ljud": [
++    {
++     "typ": "fagelkvitter",
++     "volym": 0.18
++    },
++    {
++     "typ": "lovprassel",
++     "volym": 0.1
++    },
++    {
++     "typ": "backporl",
++     "volym": 0.1
++    }
++   ],
++   "intro": {
++    "text": "Här luktar det skog och nya idéer! Vad vill du skriva fram?",
++    "min": "karta",
++    "visning": "kort_icke_blockerande",
++    "visa_en_gang": true
++   },
++   "final_fore": {
++    "text": "Maskinen minns fortfarande min lunch! Nu provar vi med något riktigt skogsmysigt.",
++    "min": "automat"
++   },
++   "hemliga": [
++    "ekorre",
++    "bäver",
++    "hjort",
++    "kronhjort",
++    "rådjur",
++    "vildsvin",
++    "hare",
++    "murmeldjur",
++    "älg",
++    "tvättbjörn"
++   ],
++   "uppdrag": [
++    "skog-rod-van",
++    "skog-liten-van",
++    "skog-magen-kurrar",
++    "skog-vila-benen",
++    "skog-regnpaus",
++    "skog-varm-van",
++    "skog-kvallsljus",
++    "skog-over-backen",
++    "skog-spara-matsacken",
++    "skog-under-tradet",
++    "skog-stor-och-liten",
++    "skog-hitta-riktningen",
++    "skog-tva-spanare",
++    "skog-mysig-lasplats",
++    "skog-ljus-vid-krypin",
++    "skog-final-minnesljus"
++   ],
++   "granskad": false
++  },
++  {
++   "id": "sjon",
++   "namn": "Sjön",
++   "ordning": 2,
++   "tema": "glitter",
++   "upplasning": {
++    "nagon": [
++     {
++      "typ": "uppdrag_klara",
++      "omrade": "skogen",
++      "min": 5
++     },
++     {
++      "typ": "skapelser",
++      "omrade": "skogen",
++      "min": 8
++     }
++    ]
++   },
++   "milstolpe": {
++    "nagon": [
++     {
++      "typ": "uppdrag_klara",
++      "omrade": "sjon",
++      "min": 5
++     },
++     {
++      "typ": "skapelser",
++      "omrade": "sjon",
++      "min": 8
++     }
++    ],
++    "final": "sjo-final-vattenglitter",
++    "las_upp": "grottan"
++   },
++   "miljo": {
++    "himmel": {
++     "bakgrund": "#DFEEF0"
++    },
++    "dis": {
++     "farg": "#DFEEF0"
++    },
++    "mark": {
++     "grundfarg": "#DCCB9B"
++    },
++    "ljus": {
++     "skala": 0.85,
++     "farg": "#FFF1D5"
++    },
++    "ljuskalla_skapad": {
++     "radie": 0.18,
++     "intensitet": 0.2,
++     "farg": "#FFD58A"
++    }
++   },
++   "zoner": [
++    {
++     "id": "strand",
++     "typ": "land",
++     "rekt": [
++      0,
++      0.28,
++      0.4,
++      1
++     ]
++    },
++    {
++     "id": "vattenyta",
++     "typ": "vattenyta",
++     "rekt": [
++      0.4,
++      0.3,
++      1,
++      0.9
++     ]
++    },
++    {
++     "id": "undervatten",
++     "typ": "undervatten",
++     "rekt": [
++      0.43,
++      0.48,
++      0.98,
++      0.9
++     ]
++    },
++    {
++     "id": "luft",
++     "typ": "luft",
++     "rekt": [
++      0,
++      0,
++      1,
++      0.3
++     ]
++    }
++   ],
++   "start": [
++    {
++     "ord": "strand",
++     "x": 0.23,
++     "y": 0.74,
++     "skala": 1.0,
++     "zon": "strand"
++    },
++    {
++     "ord": "brygga",
++     "x": 0.46,
++     "y": 0.54,
++     "skala": 1.2,
++     "zon": "vattenyta"
++    },
++    {
++     "ord": "sten",
++     "x": 0.22,
++     "y": 0.66,
++     "skala": 0.6,
++     "zon": "strand"
++    },
++    {
++     "ord": "stock",
++     "x": 0.13,
++     "y": 0.78,
++     "skala": 0.6,
++     "zon": "strand"
++    },
++    {
++     "ord": "träd",
++     "x": 0.08,
++     "y": 0.34,
++     "skala": 2.4,
++     "zon": "strand"
++    },
++    {
++     "ord": "buske",
++     "x": 0.15,
++     "y": 0.57,
++     "skala": 1.0,
++     "zon": "strand"
++    },
++    {
++     "ord": "blomma",
++     "x": 0.29,
++     "y": 0.77,
++     "skala": 0.35,
++     "zon": "strand"
++    },
++    {
++     "ord": "näckros",
++     "x": 0.71,
++     "y": 0.52,
++     "skala": 0.4,
++     "zon": "vattenyta"
++    },
++    {
++     "ord": "moln",
++     "x": 0.75,
++     "y": 0.12,
++     "skala": 1.5,
++     "zon": "luft"
++    },
++    {
++     "ord": "vassrugge",
++     "x": 0.83,
++     "y": 0.57,
++     "skala": 1.0,
++     "zon": "vattenyta"
++    },
++    {
++     "ord": "sandbotten",
++     "x": 0.64,
++     "y": 0.76,
++     "skala": 1.0,
++     "zon": "undervatten"
++    },
++    {
++     "ord": "stig",
++     "x": 0.35,
++     "y": 0.88,
++     "skala": 1.0,
++     "zon": "strand"
++    }
++   ],
++   "ljud": [
++    {
++     "typ": "vattenkluck",
++     "volym": 0.18
++    },
++    {
++     "typ": "fagelkvitter",
++     "volym": 0.1
++    },
++    {
++     "typ": "enstaka_plask",
++     "volym": 0.1
++    }
++   ],
++   "intro": {
++    "text": "Här glittrar det ända in i glasögonen! Vad vill du skriva fram?",
++    "min": "karta",
++    "visning": "kort_icke_blockerande",
++    "visa_en_gang": true
++   },
++   "final_fore": {
++    "text": "Maskinen minns min blöta strumpa! Vi behöver ett finare sjöminne.",
++    "min": "automat"
++   },
++   "hemliga": [
++    "koi",
++    "karp",
++    "näbbdjur",
++    "padda",
++    "utter",
++    "abborre",
++    "gädda",
++    "kräfta",
++    "svan",
++    "vattensalamander"
++   ],
++   "uppdrag": [
++    "sjo-bla-van",
++    "sjo-stor-simmare",
++    "sjo-sitt-vid-vattnet",
++    "sjo-fruktpaus",
++    "sjo-skugga-pa-stranden",
++    "sjo-torr-overfart",
++    "sjo-regn-vid-stranden",
++    "sjo-lys-vid-vattnet",
++    "sjo-i-baten",
++    "sjo-pa-bryggan",
++    "sjo-tva-storlekar",
++    "sjo-tva-farger",
++    "sjo-las-och-lys",
++    "sjo-tva-satt-att-resa",
++    "sjo-ovantad-kapten",
++    "sjo-final-vattenglitter"
++   ],
++   "granskad": false
++  },
++  {
++   "id": "grottan",
++   "namn": "Grottan",
++   "ordning": 3,
++   "tema": "glans",
++   "upplasning": {
++    "nagon": [
++     {
++      "typ": "uppdrag_klara",
++      "omrade": "sjon",
++      "min": 5
++     },
++     {
++      "typ": "skapelser",
++      "omrade": "sjon",
++      "min": 8
++     }
++    ]
++   },
++   "milstolpe": {
++    "nagon": [
++     {
++      "typ": "uppdrag_klara",
++      "omrade": "grottan",
++      "min": 5
++     },
++     {
++      "typ": "skapelser",
++      "omrade": "grottan",
++      "min": 8
++     }
++    ],
++    "final": "grotta-final-bergets-berattelse",
++    "las_upp": null
++   },
++   "miljo": {
++    "himmel": {
++     "bakgrund": "#626579"
++    },
++    "dis": {
++     "farg": "#626579"
++    },
++    "mark": {
++     "grundfarg": "#8A8595"
++    },
++    "ljus": {
++     "skala": 0.52,
++     "farg": "#E9DFF2"
++    },
++    "ljuskalla_skapad": {
++     "radie": 0.24,
++     "intensitet": 0.35,
++     "farg": "#FFD58A"
++    }
++   },
++   "zoner": [
++    {
++     "id": "mark",
++     "typ": "land",
++     "rekt": [
++      0,
++      0.4,
++      1,
++      1
++     ]
++    },
++    {
++     "id": "vattenyta",
++     "typ": "vattenyta",
++     "rekt": [
++      0.31,
++      0.65,
++      0.47,
++      0.78
++     ]
++    },
++    {
++     "id": "tak",
++     "typ": "tak",
++     "rekt": [
++      0,
++      0,
++      1,
++      0.32
++     ]
++    },
++    {
++     "id": "luft",
++     "typ": "luft",
++     "rekt": [
++      0,
++      0.2,
++      1,
++      0.6
++     ]
++    }
++   ],
++   "start": [
++    {
++     "ord": "grotta",
++     "x": 0.5,
++     "y": 0.42,
++     "skala": 3.0,
++     "zon": "mark"
++    },
++    {
++     "ord": "klippa",
++     "x": 0.12,
++     "y": 0.52,
++     "skala": 2.0,
++     "zon": "mark"
++    },
++    {
++     "ord": "sten",
++     "x": 0.73,
++     "y": 0.75,
++     "skala": 0.6,
++     "zon": "mark"
++    },
++    {
++     "ord": "kristall",
++     "x": 0.79,
++     "y": 0.49,
++     "skala": 0.8,
++     "zon": "mark"
++    },
++    {
++     "ord": "svamp",
++     "x": 0.24,
++     "y": 0.69,
++     "skala": 0.35,
++     "zon": "mark"
++    },
++    {
++     "ord": "sandhög",
++     "x": 0.58,
++     "y": 0.76,
++     "skala": 1.0,
++     "zon": "mark"
++    },
++    {
++     "ord": "vattenpöl",
++     "x": 0.39,
++     "y": 0.72,
++     "skala": 1.0,
++     "zon": "vattenyta"
++    },
++    {
++     "ord": "droppsten",
++     "x": 0.3,
++     "y": 0.24,
++     "skala": 0.8,
++     "zon": "tak"
++    },
++    {
++     "ord": "stig",
++     "x": 0.49,
++     "y": 0.88,
++     "skala": 1.0,
++     "zon": "mark"
++    }
++   ],
++   "ljud": [
++    {
++     "typ": "mjuka_vattendropp",
++     "volym": 0.18
++    },
++    {
++     "typ": "mjukt_kristallklirr",
++     "volym": 0.1
++    },
++    {
++     "typ": "vanligt_eko",
++     "volym": 0.1
++    }
++   ],
++   "intro": {
++    "text": "Här inne glimmar idéerna! Vad vill du skriva fram?",
++    "min": "karta",
++    "visning": "kort_icke_blockerande",
++    "visa_en_gang": true
++   },
++   "final_fore": {
++    "text": "Maskinen minns bara ekot av min hicka! Nu ger vi den en bättre berättelse.",
++    "min": "automat"
++   },
++   "hemliga": [
++    "fladdermus",
++    "spindel",
++    "troll",
++    "golem",
++    "cyklop",
++    "jätte",
++    "trollkarl",
++    "drake",
++    "yeti",
++    "sjöodjur"
++   ],
++   "uppdrag": [
++    "grotta-forsta-skenet",
++    "grotta-gul-van",
++    "grotta-liten-upptackare",
++    "grotta-sittpaus",
++    "grotta-varma-oron",
++    "grotta-mjuk-vila",
++    "grotta-eget-krypin",
++    "grotta-ordna-lasning",
++    "grotta-under-bordet",
++    "grotta-stor-och-liten",
++    "grotta-sken-och-saga",
++    "grotta-tva-farger",
++    "grotta-ljus-utanfor",
++    "grotta-ben-som-vilar",
++    "grotta-glitter-i-kistan",
++    "grotta-final-bergets-berattelse"
++   ],
++   "granskad": false
++  }
++ ],
++ "beloningar": []
+ }
+diff --git a/src/spel/Spel.tsx b/src/spel/Spel.tsx
+index f92df55..38ef3ba 100644
+--- a/src/spel/Spel.tsx
++++ b/src/spel/Spel.tsx
+@@ -1605,6 +1605,8 @@ export function Spel() {
+         if (!hem) return false;
+         return useMinne.getState().flyttaIn(djur.uid, hem.uid) === "ok";
+       },
++      bytPlats: (id: string) => useMinne.getState().bytPlats(id),
++      platsAntal: () => Object.fromEntries(Object.entries(useMinne.getState().platsSkapelser).map(([k, v]) => [k, v.length])),
+     };
+     window.__troll = api;
+     return () => {
+@@ -1825,6 +1827,8 @@ declare global {
+       album: (oppna: boolean) => void;
+       fotoNu: () => string;
+       inHem: () => boolean;
++      bytPlats: (id: string) => boolean;
++      platsAntal: () => Record<string, number>;
+     };
+   }
+ }
+diff --git a/src/spel/ang/PlatsDekor.tsx b/src/spel/ang/PlatsDekor.tsx
+new file mode 100644
+index 0000000..390c10e
+--- /dev/null
++++ b/src/spel/ang/PlatsDekor.tsx
+@@ -0,0 +1,115 @@
++// B1.3b: scenen för andra platser än ängen (Skogen, Sjön, Grottan …), helt ur data/platser.json.
++// Ängen ritas som förut i angen3d.tsx; här finns bara miljö (himmel, dis, ljus, mark), startobjekt och platsens skapelser.
++import { OrbitControls } from "@react-three/drei";
++import { Component, Suspense, useMemo, useRef, type ReactNode } from "react";
++import * as THREE from "three";
++import { GltfSak } from "../gltfDjur.tsx";
++import { KV, miljoFor } from "../miljo.ts";
++import { useMinne } from "../minne.ts";
++import { dekorFor, vattenytor } from "../platsDekor.ts";
++import { platsMed } from "../platser.ts";
++import { DjurIScen } from "./djur.tsx";
++import { SvajMark } from "./himmel.tsx";
++import { KameraRam } from "./kamera.tsx";
++import type { OrbitStyr } from "./saga.tsx";
++
++const INGA: never[] = [];
++const sagt = new Set<string>();
++
++/** En modell som inte går att hämta ska inte släcka hela scenen: den saken hoppas över. */
++class SakGren extends Component<{ children: ReactNode }, { fel: boolean }> {
++  state = { fel: false };
++  static getDerivedStateFromError() {
++    return { fel: true };
++  }
++  render() {
++    return this.state.fel ? null : this.props.children;
++  }
++}
++
++/** Startobjekten (ord → entitet via samma uppslag som barnets ord) och vattenytorna. */
++export function PlatsDekor({ plats }: { plats: string }) {
++  const p = platsMed(plats);
++  const { saker, saknas } = useMemo(() => dekorFor(p), [p]);
++  const vatten = useMemo(() => vattenytor(p), [p]);
++  for (const ord of saknas) {
++    const nyckel = `${plats}:${ord}`;
++    if (sagt.has(nyckel)) continue;
++    sagt.add(nyckel);
++    console.info(`[plats] ${plats}: "${ord}" har ingen modell, hoppas över`);
++  }
++  return (
++    <group name={`plats-${plats}`}>
++      {vatten.map((v) => (
++        <mesh key={v.id} name="vattenyta" rotation={[-Math.PI / 2, 0, 0]} position={v.mitt}>
++          <planeGeometry args={v.storlek} />
++          <meshStandardMaterial color="#4FC3F7" transparent opacity={0.85} roughness={0.22} side={THREE.DoubleSide} />
++        </mesh>
++      ))}
++      {saker.map((s, i) => (
++        <group key={`${s.kropp}-${i}`} name={s.ord} position={s.pos} scale={s.skala}>
++          <SakGren>
++            <Suspense fallback={null}>
++              <GltfSak id={s.kropp} />
++            </Suspense>
++          </SakGren>
++        </group>
++      ))}
++    </group>
++  );
++}
++
++/** Hela scenen för en plats som inte är ängen. */
++export function PlatsScen({ plats }: { plats: string }) {
++  const djur = useMinne((s) => s.platsSkapelser[plats] ?? INGA);
++  const styr = useRef<OrbitStyr>(null);
++  const { miljo, ljusSkala, mark } = useMemo(() => miljoFor(platsMed(plats)?.miljo), [plats]);
++  const L = miljo.ljus;
++  const k = ljusSkala;
++  return (
++    <>
++      <color attach="background" args={[miljo.himmel.bakgrund]} />
++      <fog attach="fog" args={[miljo.dis.farg, miljo.dis.nara, miljo.dis.fjarran]} />
++      <ambientLight intensity={L.ambient.styrka * k} color={L.ambient.farg} />
++      <hemisphereLight args={[L.hemi.himmel, L.hemi.mark, L.hemi.styrka * k]} />
++      <directionalLight
++        color={L.nyckel.farg}
++        position={L.nyckel.position as [number, number, number]}
++        intensity={L.nyckel.styrka * k}
++        castShadow
++        shadow-mapSize-width={KV.skuggkarta}
++        shadow-mapSize-height={KV.skuggkarta}
++        shadow-camera-near={0.5}
++        shadow-camera-far={28}
++        shadow-camera-left={-8}
++        shadow-camera-right={8}
++        shadow-camera-top={8}
++        shadow-camera-bottom={-8}
++      />
++      <directionalLight color={L.fyll.farg} position={[-6, 3, 4]} intensity={L.fyll.styrka * k} />
++      <directionalLight color={L.kant.farg} position={[-2, 4, -5]} intensity={L.kant.styrka * k} />
++      <SvajMark color={mark} natt={0} />
++      <PlatsDekor plats={plats} />
++      {djur.map((spec) => (
++        <DjurIScen key={spec.uid} spec={spec} alla={djur} />
++      ))}
++      <OrbitControls
++        ref={styr as never}
++        enablePan={false}
++        enableDamping
++        dampingFactor={0.08}
++        maxPolarAngle={1.42}
++        minPolarAngle={1.1}
++        minAzimuthAngle={-1.05}
++        maxAzimuthAngle={1.05}
++        minDistance={6}
++        maxDistance={14}
++        target={[0, 1.05, -0.15]}
++        rotateSpeed={0.7}
++        zoomSpeed={0.75}
++        touches={{ ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN }}
++      />
++      <KameraRam styr={styr} />
++    </>
++  );
++}
+diff --git a/src/spel/angen3d.tsx b/src/spel/angen3d.tsx
+index 9ffd471..9c7d943 100644
+--- a/src/spel/angen3d.tsx
++++ b/src/spel/angen3d.tsx
+@@ -11,6 +11,8 @@ import { Byggnad, Skogsstig, SpokHus } from "./ang/byggnader.tsx";
+ import { DjurIScen } from "./ang/djur.tsx";
+ import { Himmel, SvajMark } from "./ang/himmel.tsx";
+ import { KameraRam } from "./ang/kamera.tsx";
++import { PlatsScen } from "./ang/PlatsDekor.tsx";
++import { START_PLATS } from "./platser.ts";
+ import { SagaBoll, SagaKamera, SagaKanin, SagaLjus, SagaPenna, type OrbitStyr } from "./ang/saga.tsx";
+ 
+ class NaturGren extends Component<{ children: ReactNode }, { fel: boolean }> {
+@@ -45,18 +47,6 @@ class TredGren extends Component<{ children: ReactNode }, { fel: boolean }> {
+ }
+ 
+ 
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga: boolean }) {
+   const djur = useMinne((s) => s.ang);
+   const garden = useMinne((s) => s.garden);
+@@ -71,6 +61,9 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
+   const fyll = useRef<THREE.DirectionalLight>(null);
+   const kantL = useRef<THREE.DirectionalLight>(null);
+   const styr = useRef<OrbitStyr>(null);
++  const plats = useMinne((s) => s.plats);
++  // B1.3b: andra platser ritas helt ur data/platser.json; ängen (och sagan) som förut.
++  if (plats !== START_PLATS && !saga) return <PlatsScen plats={plats} />;
+   return (
+     <>
+       <color attach="background" args={[himmel]} />
+@@ -165,6 +158,7 @@ export function Angen3D({ natt, saga = false }: { natt: number; saga?: boolean }
+   const djur = useMinne((s) => s.ang);
+   const garden = useMinne((s) => s.garden);
+   const dragit = useMinne((s) => s.dragit);
++  const plats = useMinne((s) => s.plats);
+   const [prat, setPrat] = useState(false);
+   const dolj = useRef<number | null>(null);
+   const rot = useRef<HTMLDivElement>(null);
+@@ -213,7 +207,7 @@ export function Angen3D({ natt, saga = false }: { natt: number; saga?: boolean }
+     dolj.current = window.setTimeout(() => setPrat(false), 2400);
+   }, []);
+   return (
+-    <div ref={rot} className="angen-3d" data-testid="angen-3d" style={{ "--grad-m": KV.farggrad ? MILJO.farggrad.mattnad : 1, "--grad-k": KV.farggrad ? MILJO.farggrad.kontrast : 1, "--vinjett": MILJO.vinjett.styrka } as React.CSSProperties} data-djur={djur.length} data-byggen={garden.length} data-saga={saga ? "ja" : "nej"}>
++    <div ref={rot} className="angen-3d" data-testid="angen-3d" style={{ "--grad-m": KV.farggrad ? MILJO.farggrad.mattnad : 1, "--grad-k": KV.farggrad ? MILJO.farggrad.kontrast : 1, "--vinjett": MILJO.vinjett.styrka } as React.CSSProperties} data-djur={djur.length} data-byggen={garden.length} data-saga={saga ? "ja" : "nej"} data-plats={plats}>
+       {!saga && !dragit ? (
+         <p className="tred-hint" data-testid="tred-hint">
+           {HINT}
+diff --git a/src/spel/miljo.ts b/src/spel/miljo.ts
+index 0b6382d..e0805f3 100644
+--- a/src/spel/miljo.ts
++++ b/src/spel/miljo.ts
+@@ -72,3 +72,16 @@ export function markTextur(THREE: typeof import("three")): import("three").Textu
+   }
+   return t;
+ }
++
++/** B1.3b: miljön för en plats = data/miljo.json överlagrad med platsens `miljo` (data/platser.json).
++ * `ljus.skala` multiplicerar alla ljusstyrkor; `mark.grundfarg` är markens färg (saknas = vit, som ängen). */
++export function miljoFor(over: Record<string, unknown> | undefined): { miljo: Miljo; ljusSkala: number; mark: string } {
++  const miljo = slaIhop(MILJO, over ?? {});
++  const l = (over?.ljus ?? {}) as { skala?: unknown };
++  const m = (over?.mark ?? {}) as { grundfarg?: unknown };
++  return {
++    miljo,
++    ljusSkala: typeof l.skala === "number" && l.skala > 0 ? l.skala : 1,
++    mark: typeof m.grundfarg === "string" ? m.grundfarg : "#ffffff",
++  };
++}
+diff --git a/src/spel/platsDekor.ts b/src/spel/platsDekor.ts
+new file mode 100644
+index 0000000..7eb2e28
+--- /dev/null
++++ b/src/spel/platsDekor.ts
+@@ -0,0 +1,46 @@
++// B1.3b: ord → entitet för platsens startobjekt. Samma uppslag som när barnet skriver ordet:
++// ordFranForm (ord.json + föremål härledda ur entiteter.json) → del.kropp → modell i tillgangar.json.
++// Ren logik utan three, testas i Node.
++import { ordFranForm } from "../tolk/lexikon.ts";
++import { modellUrl } from "./entiteter.ts";
++import { tillVarld, type Plats, type Zon } from "./platser.ts";
++
++/** "träd" → "trad", "björk" → "bjork". null om ordet är okänt eller saknar modell. */
++export function entitetForOrd(ord: string): string | null {
++  const kropp = ordFranForm(ord.trim().toLowerCase())?.del?.kropp;
++  return kropp && modellUrl(kropp) ? kropp : null;
++}
++
++export type DekorSak = { ord: string; kropp: string; pos: [number, number, number]; skala: number };
++export type Vattenyta = { id: string; mitt: [number, number, number]; storlek: [number, number] };
++
++/** Höjd för zoner som inte står på marken. */
++const ZON_HOJD: Record<string, number> = { luft: 3.4, tak: 3.6 };
++
++/** Platsens startobjekt som entiteter i världen. Ord utan modell kommer i `saknas`. */
++export function dekorFor(p: Plats | undefined): { saker: DekorSak[]; saknas: string[] } {
++  const saker: DekorSak[] = [];
++  const saknas: string[] = [];
++  for (const s of p?.start ?? []) {
++    const kropp = entitetForOrd(s.ord);
++    if (!kropp) {
++      saknas.push(s.ord);
++      continue;
++    }
++    const [wx, wz] = tillVarld(s.x, s.y);
++    saker.push({ ord: s.ord, kropp, pos: [wx, ZON_HOJD[s.zon ?? ""] ?? 0, wz], skala: s.skala ?? 1 });
++  }
++  return { saker, saknas };
++}
++
++/** Zoner med typ "vattenyta" som rektanglar i världen (rekt = [x0, y0, x1, y1] i 0–1). */
++export function vattenytor(p: Plats | undefined): Vattenyta[] {
++  return (p?.zoner ?? [])
++    .filter((z: Zon) => z.typ === "vattenyta")
++    .map((z) => {
++      const [x0, y0, x1, y1] = z.rekt;
++      const [ax, az] = tillVarld(x0, y0);
++      const [bx, bz] = tillVarld(x1, y1);
++      return { id: z.id, mitt: [(ax + bx) / 2, 0.03, (az + bz) / 2], storlek: [Math.abs(bx - ax), Math.abs(bz - az)] };
++    });
++}
+diff --git a/src/spel/platser.test.ts b/src/spel/platser.test.ts
+index 99404de..7d32628 100644
+--- a/src/spel/platser.test.ts
++++ b/src/spel/platser.test.ts
+@@ -81,3 +81,29 @@ test("B1.3a: bytPlats går bara till upplåsta platser", () => {
+   assert.equal(useMinne.getState().plats, "ang");
+   assert.equal(useMinne.getState().bytPlats("ang"), true);
+ });
++
++// B1.3b: scenen läser platsen. Ord → entitet går via samma uppslag som barnets ord.
++test("B1.3b: ord → entitet (träd→trad, björk→bjork, okänt → null)", async () => {
++  const { entitetForOrd } = await import("./platsDekor.ts");
++  assert.equal(entitetForOrd("träd"), "trad");
++  assert.equal(entitetForOrd("björk"), "bjork");
++  assert.equal(entitetForOrd("stubbe"), "stubbe");
++  assert.equal(entitetForOrd("vägskylt"), null);
++});
++
++test("B1.3b: skogen, sjön och grottan har synlig dekor och egen miljö", async () => {
++  const { dekorFor, vattenytor } = await import("./platsDekor.ts");
++  const { miljoFor, MILJO } = await import("./miljo.ts");
++  for (const id of ["skogen", "sjon", "grottan"]) {
++    const p = platsMed(id);
++    assert.ok(p, `${id} finns i data/platser.json`);
++    const { saker } = dekorFor(p);
++    assert.ok(saker.length >= 5, `${id}: minst 5 startobjekt med modell (${saker.length})`);
++    const m = miljoFor(p?.miljo);
++    assert.notEqual(m.miljo.himmel.bakgrund, MILJO.himmel.bakgrund, `${id}: annan himmel än ängen`);
++    assert.ok(m.ljusSkala > 0 && m.ljusSkala <= 1);
++  }
++  assert.ok(dekorFor(platsMed("skogen")).saker.some((s) => s.kropp === "trad"));
++  assert.ok(vattenytor(platsMed("sjon")).length >= 1, "sjön har en vattenyta");
++  assert.equal(dekorFor(platsMed("ang")).saker.length, 0, "ängen har ingen datadekor (ritas som förut)");
++});
