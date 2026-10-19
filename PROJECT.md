@@ -119,9 +119,9 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 2b. **R9H** fel 1–5 efter R9G — **skript** (`rundor/R9H-fix/kor.sh`, ingen Build)
 2c. **R9I** sugen djur bjuder in till gåva bara vid första trycket, "Till stallet" i gåvorutan, ingen gåta under uppdrag — **skript** (`git checkout main && git pull && git checkout -b runda-r9i-kod && bash rundor/R9I-fix/kor.sh`). Kräver R9H på main; körs efter R8-2a-merge, eller före om R8-2a inte startat
 3. ~~**R8-2a**~~ Build blev ofullständig (gren `runda-r8-2a`, mergas **inte**; `rundor/R8-grafik/RUNDA-R8-2a.md`) → **R8-2b** gör klart R8-2a + horisont per plats (grottan: berg), inget svävar (ankare, stalagmiter), skapelser bara på land, sjön får strand — **skript** `git checkout main && git pull && git checkout -b runda-r8-2b-kod && bash rundor/R8-2b/kor.sh` (`rundor/R8-2b/PLAN.md`). Kontur på GLB, vattenshader, FPS-vakt: senare
-4. **B2** Skogen — **skript** (`kor-plats.sh skogen`)
-5. **B3** Sjön — **skript**
-6. **B4** Grottan — **skript** + **B4.1** ljuskällor **Build**
+4. **B2** Skogen — **skript**, efter R8-2b: `git checkout main && git pull && git checkout -b runda-b-skogen && bash rundor/BLOCK-platser/kor-plats.sh skogen` → committa `data/`, `src/spel/uppdragsmotor.test.ts`, `rundor/BLOCK-platser/prov-skogen-375x812.png`, PR, merge (torrkört ovanpå R8-2b: EXIT 0)
+5. **B3** Sjön — **skript**, samma mönster med `runda-b-sjon` / `kor-plats.sh sjon` (torrkört: EXIT 0)
+6. **B4** Grottan — **skript**, `runda-b-grottan` / `kor-plats.sh grottan` (torrkört: EXIT 0) + **B4.1** ljuskällor **Build**
 7. **B5** modeller (prio 1/2) — **skript**, får köras parallellt med B2–B4
 8. **B6** kontroll + buggfix — **skript** (B6.1) sedan **Build** (B6.2–3)
 9. **TTS** gratis svensk röst — efter B6; eget block
@@ -719,4 +719,5 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
 | 16 | "Sugen" djur öppnade gåvorutan vid varje tryck och dolde "Till stallet" | **R9I** (Christoffer: bara första trycket) |
 | 18 | Grottan hade horisont med gröna trädkoner; droppstenar och "planka" (grottans `grotta`-modell bakom horisontbandet) svävade; djur ute på vattnet i sjön/skogen | **R8-2b** (`rundor/R8-2b/`) |
 | 19 | Djur på andra platser än ängen får aldrig humör (`tickLiv` går bara över `ang` + `hemma`) → "sugen" uppstår aldrig där. På ängen är "sugen" 1/6 vid varje byte (1–3 min), inte sällsynt | ej ändrat – beslut Christoffer |
+| 20 | B2–B4 hade stoppat: 33 förslagsfraser gav ägg (utanför, stängd, matsäck, sjön, vattnet, vatten, ben) · ängs-testerna antog att bara ängen har uppdrag · plats-provet kunde inte resa till sjön/grottan · fel platsbild | ~~rättat i underlaget~~ (frasfix i data-utkast, `B2-test/b2-test.patch` via kor-plats.sh, plats-prov lägger klara uppdrag i sparningen) |
 | 17 | Gåtrutan ("Hemligt djur att stava (0/181 hittade) Visa gåtan") syntes hopfälld under uppdrag | **R9I** (Christoffer: ingen gåta alls under uppdrag) |
