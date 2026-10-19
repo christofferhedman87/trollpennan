@@ -171,6 +171,22 @@ function tryggKlipp(clip: THREE.AnimationClip) {
   return ny;
 }
 
+/** R9K: byt färg på material med de namnen. Materialet klonas först så att originalet (delat via useGLTF) är orört. */
+function fargaOm(rot: THREE.Object3D, farger: Record<string, string>) {
+  rot.traverse((o) => {
+    const mesh = o as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    const byt = (m: THREE.Material) => {
+      const f = farger[m.name];
+      if (!f || !("color" in m)) return m;
+      const k = m.clone() as THREE.MeshStandardMaterial;
+      k.color.set(f);
+      return k;
+    };
+    mesh.material = Array.isArray(mesh.material) ? mesh.material.map(byt) : byt(mesh.material);
+  });
+}
+
 function metallNoll(rot: THREE.Object3D) {
   rot.traverse((o) => {
     const mesh = o as THREE.Mesh;
@@ -384,10 +400,13 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
 
 /** R3G: en sak (entitet med modell, inte djur) bredvid ett djur – "en kanin med en hink". Hämtas först när den används (lazyload). */
 /** `vand` (R8-2b): modellen vänds upp och ner med botten kvar på marken (droppsten → stalagmit). */
-export function GltfSak({ id, vand = false }: { id: string; vand?: boolean }) {
+/** R9K: `farger` = materialnamn → färg ur platsens data (klonat material, delas inte med andra kopior). */
+export function GltfSak({ id, vand = false, farger }: { id: string; vand?: boolean; farger?: Record<string, string> }) {
   const gltf = useGLTF(modellUrlAv(id)!);
+  const fargNyckel = farger ? JSON.stringify(farger) : "";
   const klon = useMemo(() => {
     const c = SkeletonUtils.clone(gltf.scene) as THREE.Object3D;
+    if (farger) fargaOm(c, farger);
     metallNoll(c);
     c.updateMatrixWorld(true);
     const box = new THREE.Box3().setFromObject(c);
@@ -398,6 +417,7 @@ export function GltfSak({ id, vand = false }: { id: string; vand?: boolean }) {
       c.position.set(-((box.min.x + box.max.x) / 2) * s, box.max.y * s, ((box.min.z + box.max.z) / 2) * s);
     } else c.position.set(-((box.min.x + box.max.x) / 2) * s, -box.min.y * s, -((box.min.z + box.max.z) / 2) * s);
     return c;
-  }, [gltf.scene, id, vand]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- fargNyckel bär innehållet i farger
+  }, [gltf.scene, id, vand, fargNyckel]);
   return <primitive object={klon} />;
 }

@@ -4,8 +4,10 @@ import type { ForslagKort, Ord } from "@/tolk/typer.ts";
 import upplevelse from "../../../data/upplevelse.json";
 import hemligt from "../../../data/hemligt.json" with { type: "json" };
 import { Ledtradsyta } from "./Ledtradsyta.tsx";
-import { ALLA_UPPDRAG, NPC, TEXTER_AV, VILDA, UPP, uppdragText } from "../aventyr.ts";
+import { ALLA_UPPDRAG, NPC, TEXTER_AV, UPP, uppdragText } from "../aventyr.ts";
 import { aktivtSkrivUppdrag } from "../uppdragsmotor.ts";
+import { exempelFor } from "../ideRad.ts";
+import { gavoRuta } from "./gavoRuta.ts";
 import { platsNu } from "./useBengtsson.ts";
 import { UppdragsRemsa } from "./UppdragsRemsa.tsx";
 import type { Sparad } from "../brygga.ts";
@@ -71,7 +73,7 @@ type BokSkarmProps = {
   forsokKop: (slag: "djur" | "bygg", id: string, titel: string, pris: number) => void;
 };
 
-export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, hemma, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop }: BokSkarmProps) {
+export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop }: BokSkarmProps) {
   return (
       <div className="bok-skarm" data-testid="bok-skarm" onClick={stangBok}>
       <section className={andrar ? "bok andrar" : "bok"} data-andrar={andrar ? "ja" : "nej"} role="dialog" aria-label="Pennans bok" onClick={(e) => e.stopPropagation()}>
@@ -140,13 +142,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
             {gavaTill ? (
               <div className="onska-remsa" data-testid="gava-remsa">
                 <p>
-                  {fyll(VILDA.regler.ruta, {
-                    namn: gavaTill.startsWith("egen:")
-                      ? (ang.find((a) => a.uid === gavaTill.slice(5))?.formel ??
-                        hemma.find((h) => h.spec.uid === gavaTill.slice(5))?.spec.formel ??
-                        "")
-                      : (VILDA.djur.find((d) => d.id === gavaTill)?.namn ?? ""),
-                  })}
+                  {gavoRuta(gavaTill)}
                 </p>
                 {gavaTill.startsWith("egen:") ? <GavaStallKnapp uid={gavaTill.slice(5)} visaBanner={visaBanner} klar={stangBok} /> : null}
               </div>
@@ -160,7 +156,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
                 <details>
                   <summary>{upplevelse.examplesTitle}</summary>
                   <div className="ideer">
-                    {(aktivtSkrivUppdrag(uppdragSpar, platsNu())?.val?.grupper.flatMap((g) => g.forslag.map((f) => f.fras)) ?? upplevelse.examples).map(ex => <button type="button" className="kort" key={ex} onClick={() => fyllExempel(ex)}>{ex}</button>)}
+                    {exempelFor(aktivtSkrivUppdrag(uppdragSpar, platsNu()), upplevelse.examples).map((ex) => <button type="button" className="kort" key={ex.visa} onClick={() => fyllExempel(ex.fyll)}>{ex.visa}</button>)}
                   </div>
                 </details>
               </div>

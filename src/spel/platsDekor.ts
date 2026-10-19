@@ -3,7 +3,7 @@
 // Ren logik utan three, testas i Node.
 import { ordFranForm } from "../tolk/lexikon.ts";
 import { modellUrl } from "./entiteter.ts";
-import { tillVarld, type DekorRad, type Plats, type Startobjekt, type Zon } from "./platser.ts";
+import { tillVarld, type DekorRad, type Materialfarger, type Plats, type Startobjekt, type Zon } from "./platser.ts";
 import { YTA_SKALA, iVatten, tillPlats } from "./platsYta.ts";
 
 /** Samma skala som gruppen i PlatsDekor. Världsmått delas med den så höjden i datan blir världshöjd. */
@@ -16,7 +16,13 @@ export function entitetForOrd(ord: string): string | null {
   return kropp && modellUrl(kropp) ? kropp : null;
 }
 
-export type DekorSak = { ord: string; kropp: string; pos: [number, number, number]; skala: number; vand?: boolean };
+export type DekorSak = { ord: string; kropp: string; pos: [number, number, number]; skala: number; vand?: boolean; farger?: Materialfarger };
+
+/** R9K: platsens `materialfarger` med radens egna `farger` ovanpå. undefined när inget ska färgas om. */
+export function fargerFor(p: Plats | undefined, egna?: Materialfarger): Materialfarger | undefined {
+  const f = { ...(p?.materialfarger ?? {}), ...(egna ?? {}) };
+  return Object.keys(f).length ? f : undefined;
+}
 export type Vattenyta = { id: string; mitt: [number, number, number]; storlek: [number, number] };
 
 /**
@@ -65,7 +71,8 @@ export function dekorFor(p: Plats | undefined): { saker: DekorSak[]; saknas: str
     }
     const [wx, wz] = tillVarld(s.x, s.y);
     const y = ANKARE_HOJD[ankareFor(s, p?.zoner)];
-    saker.push({ ord: s.ord, kropp, pos: [wx, y, wz], skala: s.skala ?? 1, ...(s.vand ? { vand: true } : {}) });
+    const farger = fargerFor(p, s.farger);
+    saker.push({ ord: s.ord, kropp, pos: [wx, y, wz], skala: s.skala ?? 1, ...(s.vand ? { vand: true } : {}), ...(farger ? { farger } : {}) });
   }
   return { saker, saknas };
 }
@@ -98,7 +105,7 @@ function urlFor(modell: string): { url: string } | { saknas: string } {
   return u ? { url: u } : { saknas: modell };
 }
 
-export type SpriddDekor = { url: string; platser: [number, number, number, number, number][]; saknas?: string; vand?: boolean };
+export type SpriddDekor = { url: string; platser: [number, number, number, number, number][]; saknas?: string; vand?: boolean; farger?: Materialfarger };
 
 /**
  * Sprider `dekor` i zonens rektangel. Punkter i en `fri`-zon hoppas över.
@@ -145,7 +152,8 @@ function spridRad(rad: DekorRad, index: number, zoner: Zon[], fria: Zon[], p: Pl
     }
     if (vald) platser.push(vald);
   }
-  return { url: traff.url, platser, ...(rad.vand ? { vand: true } : {}) };
+  const farger = fargerFor(p, rad.farger);
+  return { url: traff.url, platser, ...(rad.vand ? { vand: true } : {}), ...(farger ? { farger } : {}) };
 }
 
 /** Zoner med typ "vattenyta" som rektanglar i världen (rekt = [x0, y0, x1, y1] i 0–1). */

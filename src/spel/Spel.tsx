@@ -101,6 +101,7 @@ import { NpcFigur, NpcIkon } from "./ui/NpcFigur.tsx";
 import { useBengtsson } from "./ui/useBengtsson.ts";
 import { usePlats } from "./ui/usePlats.ts";
 import { START_PLATS } from "./platser.ts";
+import { platsText } from "./platsText.ts";
 import { PlatsResa } from "./ui/PlatsResa.tsx";
 import { useStallBanner } from "./ui/useStallBanner.ts";
 import { KartaLager, OmradeHud } from "./ui/KartaLager.tsx";
@@ -237,7 +238,7 @@ export function Spel() {
   function slackBanner(texten: string) { bannerKo.current = bannerKo.current.filter((b) => b.text !== texten); setBanners((l) => l.filter((b) => b.text !== texten)); }
   useStallBanner(slackBanner);
   function visaBanner(texten: string, slag: Banner["slag"]) {
-    bannerKo.current.push({ id: nyId(), text: texten, slag });
+    bannerKo.current.push({ id: nyId(), text: platsText(texten, varldRef.current), slag });
     if (bannerSyns.current) return;
     visaNastaBanner();
   }
@@ -250,7 +251,8 @@ export function Spel() {
     });
   }
 
-  function visaBubbla(texten: string, x: number, y: number, hjarta: boolean, ovan = false, ensam = false) {
+  function visaBubbla(rad: string, x: number, y: number, hjarta: boolean, ovan = false, ensam = false) {
+    const texten = platsText(rad, varldRef.current); // R9K: {platsen} → platsen barnet är på
     const id = nyId();
     setBubblor((prev) => {
       const start = ensam ? [] : prev;
@@ -1231,8 +1233,8 @@ export function Spel() {
       let text = h.text;
       if (sov) text = vackRad();
       else if (kvall && djur && nattvaken(djur.kropp)) text = ugglaRad();
-      else if (djur && h.typ === "tryck" && h.klapp) {
-        const rader = h.klapp >= 2 ? TEXTER.klapp.mer : TEXTER.klapp.en;
+      else if (djur && h.typ === "tryck" && h.klapp && h.klapp % 2 === 0) {
+        const rader = h.klapp >= 4 ? TEXTER.klapp.mer : TEXTER.klapp.en; // R9K: udda tryck ger humörets replik
         text = rader[Math.floor(Math.random() * rader.length)] ?? text;
       } else if (djur) text = replikHumor(useMinne.getState().liv[djur.uid]?.humor ?? "glad");
       visaBubbla(text, h.x, h.y, true, true, true);

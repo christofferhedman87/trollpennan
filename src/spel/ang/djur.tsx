@@ -13,6 +13,7 @@ import { DjurEffekter } from "../effekter.tsx";
 import { MILJO } from "../miljo.ts";
 import { synligKedja } from "../pekare.ts";
 import { AGG_KROPP, OrdAgg, ReservAgg } from "../ordagg.tsx";
+import { HumorIkon } from "./humorIkon.tsx";
 import { _mal, djurFarg, djurPlats, flygare, normDuk, simmare } from "./delat.ts";
 
 export class ModellGren extends Component<{ spec: Sparad; children: ReactNode }, { fel: boolean }> {
@@ -423,6 +424,7 @@ export function DjurIScen({ spec, alla, plats }: { spec: Sparad; alla: Sparad[];
         )}
         <ReservAgg spec={spec} />
         <DjurEffekter varelse={spec} ankare={ankare} />
+        {sak ? null : <HumorIkon uid={spec.uid} hojd={malhojd(spec.kropp) + 0.22} />}
       </group>
       {medSaker.map((id, i) => (
         <group key={id} position={[(0.45 + malhojd(spec.kropp) * 0.35) * (i % 2 === 0 ? 1 : -1) * (spec.skala || 1), 0, 0.2 + Math.floor(i / 2) * 0.3]}>

@@ -102,7 +102,7 @@ export function PlatsDekor({ plats }: { plats: string }) {
         <group key={`${s.kropp}-${i}`} name={s.ord} position={s.pos} scale={s.skala}>
           <SakGren>
             <Suspense fallback={null}>
-              <GltfSak id={s.kropp} vand={s.vand} />
+              <GltfSak id={s.kropp} vand={s.vand} farger={s.farger} />
             </Suspense>
           </SakGren>
         </group>
@@ -112,7 +112,7 @@ export function PlatsDekor({ plats }: { plats: string }) {
         rad.url && rad.platser.length ? (
           <SakGren key={`${rad.url}-${i}`}>
             <Suspense fallback={null}>
-              <InstansModell url={rad.url} platser={rad.platser} vand={rad.vand} />
+              <InstansModell url={rad.url} platser={rad.platser} vand={rad.vand} farger={rad.farger} />
             </Suspense>
           </SakGren>
         ) : null,

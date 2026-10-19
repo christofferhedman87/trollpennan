@@ -1272,7 +1272,10 @@
      "zon": "hoger",
      "vand": true
     }
-   ]
+   ],
+   "materialfarger": {
+    "grass": "#9C96A6"
+   }
   }
  ],
  "beloningar": [

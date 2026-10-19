@@ -36,14 +36,10 @@ const OVERGANG_MS = DYGN.overgang_sekunder * 1000;
 const GAVA_TAGGAR = [...new Set((gavorJson as { gavor: { taggar: string[] }[] }).gavor.flatMap((g) => g.taggar))];
 const FORLED = Object.keys((ordJson as { sammansattningar: { forled: Record<string, unknown> } }).sammansattningar.forled);
 
-export const HUMOR_IKON: Record<string, string> = {
-  glad: "♥",
-  lekfull: "●",
-  nyfiken: "?",
-  sugen: "✿",
-  pratsam: "…",
-  somnig: "z",
-};
+/** R9K: ikonen per humör står i data/humor.json (`ikon`). Ett humör utan ikon visar ingen. */
+export const HUMOR_IKON: Record<string, string> = Object.fromEntries(
+  (HUMOR.humor as { id: string; ikon?: string }[]).filter((h) => h.ikon).map((h) => [h.id, h.ikon!]),
+);
 
 export type Liv = {
   humor: string;

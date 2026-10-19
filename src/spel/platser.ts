@@ -9,9 +9,11 @@ export type Villkorsgrupp = { nagon: Villkor[] };
 export type Milstolpe = Villkorsgrupp & { final?: string | null; las_upp?: string | null };
 export type Zon = { id: string; typ: string; rekt: [number, number, number, number] };
 /** R8-2b: `ankare` mark|vatten|luft (standard ur zonens typ, annars mark), `vand` = modellen vänds upp och ner (droppsten → stalagmit). */
-export type Startobjekt = { ord: string; x: number; y: number; skala?: number; zon?: string; ankare?: string; vand?: boolean };
+/** R9K: `farger` = materialnamn i modellen → färg ("grass": "#9C96A6"), går före platsens `materialfarger`. */
+export type Materialfarger = Record<string, string>;
+export type Startobjekt = { ord: string; x: number; y: number; skala?: number; zon?: string; ankare?: string; vand?: boolean; farger?: Materialfarger };
 /** En rad i `dekor`: modell, antal och höjdspann, utspridd i zonen `zon` (typ `dekor` eller annan rektangel). `fri` är yta som lämnas tom. */
-export type DekorRad = { modell: string; antal: number; hojd: [number, number]; zon: string; fro?: number; vatten?: boolean; vand?: boolean };
+export type DekorRad = { modell: string; antal: number; hojd: [number, number]; zon: string; fro?: number; vatten?: boolean; vand?: boolean; farger?: Materialfarger };
 export type Plats = {
   id: string;
   namn: string;
@@ -23,6 +25,8 @@ export type Plats = {
   zoner: Zon[];
   start: Startobjekt[];
   dekor?: DekorRad[];
+  /** R9K: färg per materialnamn för all dekor och alla startobjekt på platsen (t.ex. grottans stenar utan gröna toppar). */
+  materialfarger?: Materialfarger;
   ljud?: unknown;
   intro?: unknown;
   final_fore?: unknown;

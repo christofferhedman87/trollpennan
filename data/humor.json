@@ -1,7 +1,7 @@
 {
  "_om": "Djurens humör. Bara snälla, positiva humör: ett djur blir aldrig ledset, hungrigt på riktigt eller argt, och inget går förlorat om man inte gör något. Humöret byts av sig självt efter 1-3 minuter.",
  "regler": {
-  "visning": "En liten ikon över djuret (ett tecken per humör, t.ex. hjärta, boll, frågetecken, äpple, pratbubbla, Zzz) och en replik när man trycker.",
+  "visning": "En liten ikon över djuret och en replik när man trycker. Ikonen per humör står i 'ikon' (R9K); ett humör utan ikon visar ingen.",
   "inbjudan": "Humör med 'inbjudan' föreslår något att göra: lek = bygg något från typen lek, aventyr = ta med djuret på äventyr, gava = ge en gåva (gåvorutan fungerar också på egna djur), hem = ge djuret ett hem. Gör barnet det: djuret blir glatt och får ett hjärta (ingen stjärna – det är vänskap, inte betalning).",
   "favoritgava": "Varje eget djur har en hemlig favoritgåva (slumpas bland gåvornas taggar när djuret vaknar). Ger barnet en gåva med den taggen: 'Det här är min favorit!' och favoriten skrivs in i albumet.",
   "hjartan": "Hjärtan visas i albumet (max 5). De minskar aldrig."
@@ -18,6 +18,7 @@
   {
    "id": "glad",
    "namn": "Glad",
+   "ikon": "😊",
    "repliker": [
     "Vilken fin dag!",
     "Jag är så glad att jag finns.",
@@ -28,6 +29,7 @@
   {
    "id": "lekfull",
    "namn": "Lekfull",
+   "ikon": "⚽",
    "repliker": [
     "Ska vi leka? Bygg något roligt åt mig!",
     "Jag vill gunga, studsa eller åka rutschkana!"
@@ -37,6 +39,7 @@
   {
    "id": "nyfiken",
    "namn": "Nyfiken",
+   "ikon": "❓",
    "repliker": [
     "Vad finns bakom floden, tror du?",
     "Jag vill följa med på äventyr!"
@@ -46,6 +49,7 @@
   {
    "id": "sugen",
    "namn": "Sugen",
+   "ikon": "🍎",
    "repliker": [
     "Jag är lite sugen på något gott …",
     "Mmm, jag drömmer om något att knapra på."
@@ -55,6 +59,7 @@
   {
    "id": "pratsam",
    "namn": "Pratsam",
+   "ikon": "💬",
    "repliker": [
     "Vet du vad jag gjorde i dag? Jag tittade på ett moln i en hel minut!",
     "Jag har ett hemligt favoritord. Gissa vilket!"
@@ -64,6 +69,7 @@
   {
    "id": "somnig",
    "namn": "Sömnig",
+   "ikon": "💤",
    "repliker": [
     "Gäsp … jag skulle vilja ha ett mysigt hem.",
     "Snart är det dags att sova."
