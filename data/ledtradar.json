@@ -1508,37 +1508,61 @@
    "gata": "Med brun päls och lång svans simmar jag efter fisk och vilar gärna vid stranden.",
    "forsta": "U",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är ett smidigt mårddjur med simhud mellan tårna och en lång, kraftig svans.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, utter! Vilken fin upptäckt du skrev fram!",
+   "omrade": "sjon"
   },
   "abborre": {
    "gata": "Mörka ränder på sidorna och röda fenor under kroppen har jag i svenska sjöar.",
    "forsta": "A",
    "langd": 7,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en randig sötvattensfisk med taggar i den främre ryggfenan.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, abborre! Vilken fin upptäckt du skrev fram!",
+   "omrade": "sjon"
   },
   "gädda": {
    "gata": "Lång och grönfläckig simmar jag bland vattenväxter, med en bred, platt nos.",
    "forsta": "G",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en lång sötvattensfisk med stor mun och gröna sidor med ljusa fläckar.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, gädda! Vilken fin upptäckt du skrev fram!",
+   "omrade": "sjon"
   },
   "kräfta": {
    "gata": "Baklänges kan jag simma med ett knyck, och framtill har jag två stora klor.",
    "forsta": "K",
    "langd": 6,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag liknar en liten hummer och lever i sötvatten.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, kräfta! Vilken fin upptäckt du skrev fram!",
+   "omrade": "sjon"
   },
   "svan": {
    "gata": "Med lång, böjd hals och vita fjädrar glider jag fram, större än en gås.",
    "forsta": "S",
    "langd": 4,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en stor vit vattenfågel med lång hals och ofta orange näbb.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, svan! Vilken fin upptäckt du skrev fram!",
+   "omrade": "sjon"
   },
   "vattensalamander": {
    "gata": "Med fyra små ben och lång svans simmar jag i dammen, men jag är ingen ödla.",
    "forsta": "V",
    "langd": 16,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är ett groddjur med lång svans, och mitt namn börjar med vatten.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, vattensalamander! Vilken fin upptäckt du skrev fram!",
+   "omrade": "sjon"
   }
  }
 }
