@@ -207,5 +207,15 @@
     ]
    }
   }
- ]
+ ],
+ "takt": {
+  "_om": "R9: när Bengtsson själv bjuder in (utropstecknet och figuren på ängen). Första uppdraget: när barnet har skapat 'efter_djur' djur ELLER spelat 'eller_sekunder' sekunder, det som kommer först. Därefter minst 'mellan_sekunder' sekunder efter att ett uppdrag blev klart. Knappen med Bengtssons huvud ger alltid ett uppdrag direkt, oavsett väntetid. Justera siffrorna här.",
+  "forsta": {
+   "efter_djur": 3,
+   "eller_sekunder": 150
+  },
+  "mellan_sekunder": 75,
+  "ikon_text": "Uppdrag",
+  "ikon_alt": "Fråga Doktor Bengtsson om ett uppdrag"
+ }
 }

@@ -1,0 +1,689 @@
+diff --git a/package.json b/package.json
+index 8c350f8..e6db995 100644
+--- a/package.json
++++ b/package.json
+@@ -22,7 +22,7 @@
+     "format": "prettier --write .",
+     "build:pages": "vite build --config vite.pages.config.ts",
+     "preview:pages": "vite preview --config vite.pages.config.ts",
+-    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/uppdragsmotor.test.ts src/spel/dialogIsolering.test.mjs",
++    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/dialogIsolering.test.mjs",
+     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
+     "check:pages-output": "node scripts/check-pages-output.mjs",
+     "check:struktur": "node scripts/check-spel-struktur.mjs",
+diff --git a/src/spel/Spel.tsx b/src/spel/Spel.tsx
+index 0a6770c..6d5e4fc 100644
+--- a/src/spel/Spel.tsx
++++ b/src/spel/Spel.tsx
+@@ -90,11 +90,11 @@ import {
+ } from "./ui/hjalp.ts";
+ import { AngLager } from "./ui/AngLager.tsx";
+ import { BokSkarm } from "./ui/BokSkarm.tsx";
+-import { KopDialog, MossaPanel, SkyltDialog, ValjDjurDialog, VisKortBygg, VisKortDjur } from "./ui/Dialoger.tsx";
++import { KopDialog, StjarnDialog, MossaPanel, SkyltDialog, ValjDjurDialog, VisKortBygg, VisKortDjur } from "./ui/Dialoger.tsx";
+ import { ForalderDialog } from "./ui/ForalderDialog.tsx";
+ import { nattvaken } from "./entiteter.ts";
+ import { Hud, HudBot, MenyPanel } from "./ui/Hud.tsx";
+-import { NpcFigur } from "./ui/NpcFigur.tsx";
++import { NpcFigur, NpcIkon } from "./ui/NpcFigur.tsx";
+ import { useBengtsson } from "./ui/useBengtsson.ts";
+ import { KartaLager, OmradeHud } from "./ui/KartaLager.tsx";
+ import { OrdbokDialog } from "./ui/OrdbokDialog.tsx";
+@@ -135,6 +135,7 @@ export function Spel() {
+   const [byggPuff, setByggPuff] = useState<string | null>(null);
+   const [sidOpp, setSidOpp] = useState<string | null>(null);
+   const [kop, setKop] = useState<KopFraga | null>(null);
++  const [stjarnInfo, setStjarnInfo] = useState(false);
+   const [kopRad, setKopRad] = useState<string | null>(null);
+   const [onskaOpp, setOnskaOpp] = useState(false);
+   const [onskaPos, setOnskaPos] = useState({ x: 0.5, y: 0.16 });
+@@ -181,7 +182,7 @@ export function Spel() {
+     };
+   }, []);
+   gavaRef.current = gavaTill;
+-  overlayRef.current = ordbok || foralder || !!visKort || !!kop || kopia != null || kartaOpp || !!omrade || !!valj || !!skylt || !!gavaTill || panel === "uppdrag" || albumOpp || mossaOpp;
++  overlayRef.current = ordbok || foralder || !!visKort || !!kop || stjarnInfo || kopia != null || kartaOpp || !!omrade || !!valj || !!skylt || !!gavaTill || panel === "uppdrag" || albumOpp || mossaOpp;
+ 
+   const funna = useMinne((s) => s.funna);
+   const kortGang = useMinne((s) => s.kortGang);
+@@ -1747,15 +1748,19 @@ export function Spel() {
+         <AngLager natt={natt} varld={varld} omrade={omrade} panel={panel} ang={ang} hemma={hemma} liv={liv} fotoMal={fotoMal} visaBanner={visaBanner} visaMossa={visaMossa} setFotoMal={setFotoMal} banners={banners} bubblor={bubblor} onskan={onskan} onskaOpp={onskaOpp} onskaSyns={onskaSyns} ank={ank} oppnaOnska={oppnaOnska} meny={meny} setMeny={setMeny} omUidRef={omUidRef} setLage={setLage} setBokOpp={setBokOpp} setLadaOpp={setLadaOpp} menyHem={menyHem} setBoUid={setBoUid} lada={lada} ladaOpp={ladaOpp} boUid={boUid} boDjur={boDjur} flyttaInDjur={flyttaInDjur} />
+         {kartaOpp ? <KartaLager forstaRad={forstaRad} kartaText={kartaText} tryckPlats={tryckPlats} oppna={oppna} /> : null}
+         {omrade && !kartaOpp ? <OmradeHud tryckPlats={tryckPlats} bytFolje={bytFolje} /> : null}
+-        <Hud haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} />
++        <Hud oppnaStjarnor={() => setStjarnInfo(true)} haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} />
+         <MenyPanel menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} senare={senare} panel={panel} varld={varld} valjVarld={valjVarld} lasMeny={lasMeny} oppnaUppdrag={oppnaUppdrag} setBokOpp={setBokOpp} oppnaKarta={oppnaKarta} setIntroNy={setIntroNy} setIntro={setIntro} menySaker={menySaker} borjaOm={borjaOm} />
+         {varld === "ang" && !omrade && !bokOpp && !menyOpp && !intro && !overlayRef.current ? (
+-          <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
++          bengtsson.synlig ? (
++            <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
++          ) : (
++            <NpcIkon npc={bengtsson.npcId} nytt={false} text={bengtsson.ikonText} alt={bengtsson.ikonAlt} onClick={bengtsson.klicka} />
++          )
+         ) : null}
+         <HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} />
+       </section>
+ 
+-      {bokOpp ? <BokSkarm stangBok={stangBok} andrar={andrar} panel={panel} lage={lage} setLage={setLage} setForslag={setForslag} byggPuff={byggPuff} onskaOpp={onskaOpp} onskan={onskan} onskaSyns={onskaSyns} onskaDjur={onskaDjur} onskaEx={onskaEx} fyllExempel={fyllExempel} gavaTill={gavaTill} ang={ang} hemma={hemma} varld={varld} forslag={forslag} valjForslag={valjForslag} nejForslag={nejForslag} behover={behover} utfor={utfor} flik={flik} onskaKort={onskaKort} setFlik={setFlik} kort={kort} val={val} onskaIds={onskaIds} kortGang={kortGang} valjKort={valjKort} oppnaSkrivMig={oppnaSkrivMig} text={text} omrade={omrade} visaOnskaHjalp={visaOnskaHjalp} vaknaNu={vaknaNu} vaknaText={vaknaText} skrivTecken={skrivTecken} sudda={sudda} uppFlik={uppFlik} setUppFlik={setUppFlik} uppdragSpar={uppdragSpar} byggSida={byggSida} agdaSidor={agdaSidor} setByggSidaId={setByggSidaId} setByggPuff={setByggPuff} byggFras={byggFras} kopRad={kopRad} lastaSidor={lastaSidor} forsokKop={forsokKop} /> : null}
++      {bokOpp ? <BokSkarm stangBok={stangBok} andrar={andrar} panel={panel} lage={lage} setLage={setLage} setForslag={setForslag} byggPuff={byggPuff} onskaOpp={onskaOpp} onskan={onskan} onskaSyns={onskaSyns} onskaDjur={onskaDjur} onskaEx={onskaEx} fyllExempel={fyllExempel} gavaTill={gavaTill} ang={ang} hemma={hemma} varld={varld} forslag={forslag} valjForslag={valjForslag} nejForslag={nejForslag} behover={behover} utfor={utfor} flik={flik} onskaKort={onskaKort} setFlik={setFlik} kort={kort} val={val} funna={funna} onskaIds={onskaIds} kortGang={kortGang} valjKort={valjKort} oppnaSkrivMig={oppnaSkrivMig} text={text} omrade={omrade} visaOnskaHjalp={visaOnskaHjalp} vaknaNu={vaknaNu} vaknaText={vaknaText} skrivTecken={skrivTecken} sudda={sudda} uppFlik={uppFlik} setUppFlik={setUppFlik} uppdragSpar={uppdragSpar} byggSida={byggSida} agdaSidor={agdaSidor} setByggSidaId={setByggSidaId} setByggPuff={setByggPuff} byggFras={byggFras} kopRad={kopRad} lastaSidor={lastaSidor} forsokKop={forsokKop} /> : null}
+ 
+       {skylt ? <SkyltDialog skylt={skylt} setSkylt={setSkylt} /> : null}
+ 
+@@ -1768,6 +1773,7 @@ export function Spel() {
+       {ordbok ? <OrdbokDialog hittatAntal={hittatAntal} totalOrd={totalOrd} stjarnor={stjarnor} kopRad={kopRad} koptaSidor={koptaSidor} funna={funna} sidOpp={sidOpp} forsokKop={forsokKop} setSidOpp={setSidOpp} textRef={textRef} setText={setText} setHand={setHand} setLage={setLage} setOrdbok={setOrdbok} kvar={kvar} hittade={hittade} hemliga={hemliga} formler={formler} setVisKort={setVisKort} sovande={sovande} visaBanner={visaBanner} /> : null}
+ 
+       {kop ? <KopDialog kop={kop} bekraftaKop={bekraftaKop} setKop={setKop} /> : null}
++      {stjarnInfo ? <StjarnDialog stjarnor={stjarnor} koptaAntal={koptaSidor.length} stang={() => setStjarnInfo(false)} ordbok={() => { setStjarnInfo(false); setOrdbok(true); }} /> : null}
+ 
+       {foralder ? <ForalderDialog startLage={startLage} setLage={setLage} ljudPa={ljudPa} sparaKopia={sparaKopia} filRef={filRef} lasFil={lasFil} foralderRad={foralderRad} kopia={kopia} lasInKopia={lasInKopia} setKopia={setKopia} onskelista={onskelista} setSaker={setSaker} saker={saker} borjaOm={borjaOm} setForalder={setForalder} /> : null}
+       {mossaOpp ? <MossaPanel halsning={halsning} mossaLista={mossaLista} mossaExtra={mossaExtra} setMossaOpp={setMossaOpp} /> : null}
+diff --git a/src/spel/gltfDjur.tsx b/src/spel/gltfDjur.tsx
+index 905165d..5f94807 100644
+--- a/src/spel/gltfDjur.tsx
++++ b/src/spel/gltfDjur.tsx
+@@ -3,6 +3,10 @@ import { useFrame } from "@react-three/fiber";
+ import { useLayoutEffect, useMemo, useRef } from "react";
+ import { SkeletonUtils } from "three-stdlib";
+ import * as THREE from "three";
++import { byttPixel, hexTillHsl, ljusTint, rgbTillHsl, traffarPalett } from "./palett.ts";
++import { MILJO } from "./miljo.ts";
++
++const LJUSTINT = ljusTint(MILJO.ljus, MILJO.farg.ljusforstark);
+ import type { Sparad } from "./brygga.ts";
+ import { entitet, forladdaUrls, framVinkel, malhojd, modellUrl as modellUrlAv } from "./entiteter.ts";
+ import { faestTillbehor } from "./tillbehor/index.ts";
+@@ -48,9 +52,8 @@ function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): { from: number; range:
+   let bast: { n: number; r: number; g: number; b: number } | null = null;
+   for (const p of rakna.values()) if (!bast || p.n > bast.n) bast = p;
+   if (!bast) return null;
+-  const col = new THREE.Color(bast.r / bast.n / 255, bast.g / bast.n / 255, bast.b / bast.n / 255);
+-  const hsl = { h: 0, s: 0, l: 0 };
+-  col.getHSL(hsl);
++  const [kh, ks, kl] = rgbTillHsl(bast.r / bast.n, bast.g / bast.n, bast.b / bast.n);
++  const hsl = { h: kh / 360, s: ks, l: kl };
+   // låg färgmättnad (vit, grå, gräddvit): neutralt läge (range < 0), annars färgens egen nyans
+   return hsl.s < 0.35 ? { from: 0, range: -1, bodyL: hsl.l } : { from: Math.round(hsl.h * 360), range: 22, bodyL: hsl.l };
+ }
+@@ -71,24 +74,17 @@ function paletteSwap(tex: THREE.Texture, fromHue: number, range: number, toHex:
+   if (!x) return tex;
+   x.drawImage(img, 0, 0);
+   const d = x.getImageData(0, 0, w, h);
+-  const to = new THREE.Color(toHex);
+-  const th = { h: 0, s: 0, l: 0 };
+-  to.getHSL(th);
+-  const tmp = new THREE.Color();
+-  const hsl = { h: 0, s: 0, l: 0 };
++  const mal = hexTillHsl(toHex);
++  const pal = { from: fromHue, range, bodyL };
+   for (let i = 0; i < d.data.length; i += 4) {
+     const a = d.data[i + 3] ?? 0;
+     if (a < 8) continue;
+-    tmp.setRGB((d.data[i] ?? 0) / 255, (d.data[i + 1] ?? 0) / 255, (d.data[i + 2] ?? 0) / 255);
+-    tmp.getHSL(hsl);
+-    let dh = Math.abs(hsl.h * 360 - fromHue);
+-    dh = Math.min(dh, 360 - dh);
+-    const hit = range < 0 ? hsl.s < 0.35 && Math.abs(hsl.l - bodyL) < 0.12 : dh <= range && hsl.s > 0.25;
+-    if (!hit) continue;
+-    tmp.setHSL(th.h, th.s, THREE.MathUtils.clamp(th.l + (hsl.l - bodyL) * 0.6, 0.06, 0.95));
+-    d.data[i] = tmp.r * 255;
+-    d.data[i + 1] = tmp.g * 255;
+-    d.data[i + 2] = tmp.b * 255;
++    const px = rgbTillHsl(d.data[i] ?? 0, d.data[i + 1] ?? 0, d.data[i + 2] ?? 0);
++    if (!traffarPalett(px, pal)) continue;
++    const [r, g, bl] = byttPixel(px, pal, mal, LJUSTINT);
++    d.data[i] = r;
++    d.data[i + 1] = g;
++    d.data[i + 2] = bl;
+   }
+   x.putImageData(d, 0, 0);
+   const t = new THREE.CanvasTexture(c);
+diff --git a/src/spel/palett.test.ts b/src/spel/palett.test.ts
+new file mode 100644
+index 0000000..a9fa43a
+--- /dev/null
++++ b/src/spel/palett.test.ts
+@@ -0,0 +1,54 @@
++// R9: det bytta färgfältet träffar den begärda nyansen (±3°) för vita, gräddvita, gråa och bruna kroppar, för blå, röd, grön och gul.
++import assert from "node:assert/strict";
++import { test } from "node:test";
++import miljo from "../../data/miljo.json" with { type: "json" };
++import { byttPixel, hexTillHsl, ljusTint, nyansAvstand, rgbTillHsl, traffarPalett, type Palett } from "./palett.ts";
++
++const MAL = { blå: "#1E88E5", röd: "#E53935", grön: "#43A047", gul: "#FDD835" };
++const KROPPAR: { namn: string; rgb: [number, number, number]; pal: Palett }[] = [
++  { namn: "vit", rgb: [250, 250, 250], pal: { from: 0, range: -1, bodyL: 0.98 } },
++  { namn: "gräddvit", rgb: [240, 228, 205], pal: { from: 40, range: 22, bodyL: 0.87 } },
++  { namn: "grå", rgb: [150, 150, 155], pal: { from: 0, range: -1, bodyL: 0.6 } },
++  { namn: "brun", rgb: [150, 100, 60], pal: { from: 28, range: 22, bodyL: 0.42 } },
++];
++
++test("byttPixel träffar målnyansen exakt för alla kroppar och färgord", () => {
++  for (const [ord, hex] of Object.entries(MAL)) {
++    const mal = hexTillHsl(hex);
++    for (const k of KROPPAR) {
++      const p = rgbTillHsl(...k.rgb);
++      assert.ok(traffarPalett(p, k.pal), `${k.namn} träffas av sin egen palett`);
++      const [r, g, b] = byttPixel(p, k.pal, mal);
++      const ut = rgbTillHsl(r, g, b);
++      assert.ok(nyansAvstand(ut[0], mal[0]) <= 3, `${ord} på ${k.namn}: nyans ${Math.round(ut[0])} mot ${Math.round(mal[0])}`);
++      assert.ok(ut[1] >= mal[1] - 0.03, `${ord} på ${k.namn}: tydlig färg, mättnad ${ut[1].toFixed(2)}`);
++    }
++  }
++});
++
++test("hsl-rundtur och skuggning bevaras", () => {
++  const [r, g, b] = [30, 136, 229];
++  const h = rgbTillHsl(r, g, b);
++  const t = byttPixel(h, { from: 207, range: 22, bodyL: h[2] }, h);
++  assert.ok(Math.abs(t[0] - r) <= 2 && Math.abs(t[1] - g) <= 2 && Math.abs(t[2] - b) <= 2);
++  const mal = hexTillHsl(MAL.blå);
++  const morkare = byttPixel([0, 0, 0.5], { from: 0, range: -1, bodyL: 0.7 }, mal);
++  const ljusare = byttPixel([0, 0, 0.9], { from: 0, range: -1, bodyL: 0.7 }, mal);
++  assert.ok(rgbTillHsl(...morkare)[2] < rgbTillHsl(...ljusare)[2]);
++});
++
++test("med ljusets färgton förkompenserad syns den begärda nyansen även under varmt ljus", () => {
++  const tint = ljusTint(miljo.ljus, miljo.farg.ljusforstark);
++  assert.ok(tint[0] > tint[2], "ljuset är varmt (mer rött än blått)");
++  for (const [ord, hex] of Object.entries(MAL)) {
++    const mal = hexTillHsl(hex);
++    for (const k of KROPPAR) {
++      const p = rgbTillHsl(...k.rgb);
++      const [r, g, b] = byttPixel(p, k.pal, mal, tint);
++      // simulerad visning: albedo (linjär) × ljusets ton, tillbaka till sRGB
++      const vis = [r, g, b].map((c, i) => Math.round(255 * Math.min(1, Math.pow(Math.pow(c / 255, 2.2) * tint[i]!, 1 / 2.2)))) as [number, number, number];
++      const ut = rgbTillHsl(...vis);
++      assert.ok(nyansAvstand(ut[0], mal[0]) <= 6, `${ord} på ${k.namn}: syns som ${Math.round(ut[0])}° mot ${Math.round(mal[0])}°`);
++    }
++  }
++});
+diff --git a/src/spel/palett.ts b/src/spel/palett.ts
+new file mode 100644
+index 0000000..d887b2f
+--- /dev/null
++++ b/src/spel/palett.ts
+@@ -0,0 +1,89 @@
++// R9: palettbyte i sRGB. Tidigare räknades byten i three.js arbetsfärgrymd (linjär) men skrevs som sRGB-byte på en canvas, så målnyansen
++// hamnade fel (blå 207° blev ca 245°, röd blev orange). All färgmatte här utgår från sRGB-byte, rent och testbart utan three.js.
++export type Hsl = [number, number, number]; // nyans 0-360, mättnad 0-1, ljushet 0-1
++export type Palett = { from: number; range: number; bodyL: number };
++
++export function rgbTillHsl(r: number, g: number, b: number): Hsl {
++  const R = r / 255;
++  const G = g / 255;
++  const B = b / 255;
++  const mx = Math.max(R, G, B);
++  const mn = Math.min(R, G, B);
++  const l = (mx + mn) / 2;
++  const d = mx - mn;
++  if (d === 0) return [0, 0, l];
++  const s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
++  const h = mx === R ? (G - B) / d + (G < B ? 6 : 0) : mx === G ? (B - R) / d + 2 : (R - G) / d + 4;
++  return [h * 60, s, l];
++}
++
++export function hslTillRgb(h: number, s: number, l: number): [number, number, number] {
++  const c = (1 - Math.abs(2 * l - 1)) * s;
++  const hp = (((h % 360) + 360) % 360) / 60;
++  const x = c * (1 - Math.abs((hp % 2) - 1));
++  const [r1, g1, b1] = hp < 1 ? [c, x, 0] : hp < 2 ? [x, c, 0] : hp < 3 ? [0, c, x] : hp < 4 ? [0, x, c] : hp < 5 ? [x, 0, c] : [c, 0, x];
++  const m = l - c / 2;
++  return [Math.round((r1 + m) * 255), Math.round((g1 + m) * 255), Math.round((b1 + m) * 255)];
++}
++
++export function hexTillHsl(hex: string): Hsl {
++  const n = parseInt(hex.replace("#", ""), 16);
++  return rgbTillHsl((n >> 16) & 255, (n >> 8) & 255, n & 255);
++}
++
++export function nyansAvstand(a: number, b: number): number {
++  const d = Math.abs(a - b) % 360;
++  return Math.min(d, 360 - d);
++}
++
++/** Träffar pixeln paletten? range < 0 = neutralt läge (vit, grå, gräddvit kropp): låg mättnad och ljushet nära kroppens. */
++export function traffarPalett(p: Hsl, pal: Palett): boolean {
++  return pal.range < 0 ? p[1] < 0.35 && Math.abs(p[2] - pal.bodyL) < 0.12 : nyansAvstand(p[0], pal.from) <= pal.range && p[1] > 0.25;
++}
++
++const lin = (b: number) => Math.pow(b / 255, 2.2);
++const sRgb = (v: number) => Math.round(255 * Math.min(1, Math.max(0, Math.pow(Math.max(0, v), 1 / 2.2))));
++export type Tint = [number, number, number];
++
++/** Ljusets verkliga förstärkning per färgkanal (linjärt), ur data/miljo.json. Scenen är starkt belyst (nyckel 3.0, hemisfär 1.9) så en färg på kroppen lyser upp, överexponeras och dras mot gult/vitt (röd blev orange, grön blev gulgrön, blå blev blekblå). Därför delar vi albedot med förstärkningen så att den visade färgen blir den begärda. `justering` (data: miljo.json farg.ljusforstark) kalibrerar mot bild. */
++export function ljusTint(
++  ljus: {
++    ambient: { farg: string; styrka: number };
++    hemi: { himmel: string; mark: string; styrka: number };
++    nyckel: { farg: string; styrka: number };
++    fyll: { farg: string; styrka: number };
++    kant: { farg: string; styrka: number };
++  },
++  justering = 1,
++): Tint {
++  const lv = (hex: string): Tint => {
++    const n = parseInt(hex.replace("#", ""), 16);
++    return [lin((n >> 16) & 255), lin((n >> 8) & 255), lin(n & 255)];
++  };
++  // vikt = styrka / pi, med en medelvinkel för hur stor del av ytan som vetter mot ljuset
++  const delar: [Tint, number][] = [
++    [lv(ljus.ambient.farg), ljus.ambient.styrka],
++    [lv(ljus.hemi.himmel), ljus.hemi.styrka * 0.6],
++    [lv(ljus.hemi.mark), ljus.hemi.styrka * 0.4],
++    [lv(ljus.nyckel.farg), ljus.nyckel.styrka * 0.75],
++    [lv(ljus.fyll.farg), ljus.fyll.styrka * 0.4],
++    [lv(ljus.kant.farg), ljus.kant.styrka * 0.3],
++  ];
++  const t: Tint = [0, 0, 0];
++  for (const [c, w] of delar) {
++    t[0] += (c[0] * w) / Math.PI;
++    t[1] += (c[1] * w) / Math.PI;
++    t[2] += (c[2] * w) / Math.PI;
++  }
++  return [t[0] * justering, t[1] * justering, t[2] * justering];
++}
++
++/** Ny pixel: exakt målets nyans och mättnad; ljusheten följer pixelns avvikelse från kroppens (skuggning och mönster bevaras). Med `tint` förkompenseras ljusets färgton så att färgen SYNS som begärd. */
++export function byttPixel(p: Hsl, pal: Palett, mal: Hsl, tint: Tint = [1, 1, 1]): [number, number, number] {
++  const l = Math.min(0.95, Math.max(0.06, mal[2] + (p[2] - pal.bodyL) * 0.6));
++  const [r, g, b] = hslTillRgb(mal[0], mal[1], l);
++  if (tint[0] === 1 && tint[1] === 1 && tint[2] === 1) return [r, g, b];
++  const c: Tint = [lin(r) / tint[0], lin(g) / tint[1], lin(b) / tint[2]];
++  const mx = Math.max(c[0], c[1], c[2], 1);
++  return [sRgb(c[0] / mx), sRgb(c[1] / mx), sRgb(c[2] / mx)];
++}
+diff --git a/src/spel/r9.test.ts b/src/spel/r9.test.ts
+new file mode 100644
+index 0000000..7b16bc1
+--- /dev/null
++++ b/src/spel/r9.test.ts
+@@ -0,0 +1,51 @@
++// R9: takten för Bengtssons inbjudan, gåtor för alla hemliga djur (utan att avslöja ordet) och stjärnförklaringens siffror.
++import assert from "node:assert/strict";
++import { test } from "node:test";
++import { ordLista } from "../tolk/tolka.ts";
++import bengtsson from "../../data/bengtsson.json" with { type: "json" };
++import led from "../../data/ledtradar.json" with { type: "json" };
++import stj from "../../data/stjarnor.json" with { type: "json" };
++import hem from "../../data/hemligt.json" with { type: "json" };
++import { TAKT, sekTillRedo } from "./uppdragsmotor.ts";
++import { SKRIV } from "./aventyr.ts";
++
++const L = led.ledtradar as Record<string, { gata: string; forsta: string; langd: number }>;
++
++test("takt: första uppdraget efter X djur eller Y sekunder, sedan minst 'mellan' sekunder", () => {
++  const T = TAKT;
++  assert.ok(T.forsta.efter_djur >= 2 && T.forsta.eller_sekunder >= 120 && T.forsta.eller_sekunder <= 240);
++  assert.ok(T.mellan_sekunder >= 60, "minst en minut mellan uppdragen");
++  const ingen = {};
++  assert.equal(sekTillRedo(ingen, { djur: 0, spelSek: 0, sekSedanKlart: null }), T.forsta.eller_sekunder);
++  assert.equal(sekTillRedo(ingen, { djur: T.forsta.efter_djur, spelSek: 1, sekSedanKlart: null }), 0, "efter X djur");
++  assert.equal(sekTillRedo(ingen, { djur: 0, spelSek: T.forsta.eller_sekunder, sekSedanKlart: null }), 0, "efter Y sekunder");
++  const a = SKRIV[0]!.id;
++  assert.equal(sekTillRedo({ [a]: "pagar" }, { djur: 9, spelSek: 999, sekSedanKlart: null }), null, "pågår: ingen ny inbjudan");
++  assert.equal(sekTillRedo({ [a]: "klar" }, { djur: 9, spelSek: 999, sekSedanKlart: 5 }), T.mellan_sekunder - 5, "väntar efter klart uppdrag");
++  assert.equal(sekTillRedo({ [a]: "klar" }, { djur: 9, spelSek: 999, sekSedanKlart: T.mellan_sekunder }), 0);
++  assert.equal(sekTillRedo({ [a]: "klar" }, { djur: 9, spelSek: 999, sekSedanKlart: null }), 0, "uppdrag klart i en tidigare session: redo");
++  assert.equal(sekTillRedo(Object.fromEntries(SKRIV.map((u) => [u.id, "klar" as const])), { djur: 9, spelSek: 999, sekSedanKlart: 999 }), null, "inga fler");
++  assert.ok(bengtsson.takt.ikon_text.length > 0 && bengtsson.takt.ikon_alt.length > 0);
++});
++
++test("alla hemliga djur har en gåta som inte avslöjar ordet", () => {
++  const hemliga = ordLista().filter((o) => o.klass === "djur" && o.niva === "fritt");
++  assert.ok(hemliga.length >= 100);
++  for (const o of hemliga) {
++    const l = L[o.id];
++    assert.ok(l, `gåta saknas för ${o.id}`);
++    assert.equal(l.forsta, o.id[0]!.toUpperCase(), `${o.id}: första bokstaven`);
++    assert.equal(l.langd, [...o.id].length, `${o.id}: längd`);
++    const g = l.gata.toLowerCase();
++    const fonster = o.id.length >= 6 ? Array.from({ length: o.id.length - 5 }, (_, i) => o.id.slice(i, i + 6)) : [o.id];
++    assert.ok(!g.includes(o.id) && !fonster.some((f) => g.includes(f)), `${o.id}: gåtan avslöjar ordet: ${l.gata}`);
++    assert.ok(l.gata.length >= 10 && l.gata.length <= 110, `${o.id}: gåtans längd`);
++  }
++});
++
++test("stjärnförklaringen: alla platshållare fylls och texten finns", () => {
++  const plats = new Set(stj.ger.flatMap((t) => [...t.matchAll(/\{(\w+)\}/g)].map((m) => m[1]!)));
++  assert.deepEqual([...plats].sort(), ["guld", "hemligt", "onskan", "sida", "uppdrag"]);
++  assert.ok(stj.gor.includes("Ordboken"));
++  for (const k of ["steg", "forklaring", "forslag_etikett", "ledtrad_rubrik", "ny_gata", "hittade"] as const) assert.ok(hem[k].length > 0, k);
++});
+diff --git a/src/spel/ui/BokSkarm.tsx b/src/spel/ui/BokSkarm.tsx
+index 2b6bff1..6f49f7c 100644
+--- a/src/spel/ui/BokSkarm.tsx
++++ b/src/spel/ui/BokSkarm.tsx
+@@ -2,6 +2,8 @@ import type { Dispatch, SetStateAction } from "react";
+ import { Lock, Pencil } from "lucide-react";
+ import type { ForslagKort, Ord } from "@/tolk/typer.ts";
+ import upplevelse from "../../../data/upplevelse.json";
++import hemligt from "../../../data/hemligt.json" with { type: "json" };
++import { Ledtradsyta } from "./Ledtradsyta.tsx";
+ import { ALLA_UPPDRAG, NPC, TEXTER_AV, VILDA, UPP, uppdragText } from "../aventyr.ts";
+ import { aktivtSkrivUppdrag } from "../uppdragsmotor.ts";
+ import { UppdragsRemsa } from "./UppdragsRemsa.tsx";
+@@ -42,6 +44,7 @@ type BokSkarmProps = {
+   kort: Ord[];
+   val: Partial<Record<Slot, Ord>>;
+   onskaIds: Set<string>;
++  funna: Record<string, unknown>;
+   kortGang: Record<string, number>;
+   valjKort: (ord: Ord) => void;
+   oppnaSkrivMig: (ord: Ord) => void;
+@@ -65,7 +68,7 @@ type BokSkarmProps = {
+   forsokKop: (slag: "djur" | "bygg", id: string, titel: string, pris: number) => void;
+ };
+ 
+-export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, hemma, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop }: BokSkarmProps) {
++export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, hemma, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop }: BokSkarmProps) {
+   return (
+       <div className="bok-skarm" data-testid="bok-skarm" onClick={stangBok}>
+       <section className={andrar ? "bok andrar" : "bok"} data-andrar={andrar ? "ja" : "nej"} role="dialog" aria-label="Pennans bok" onClick={(e) => e.stopPropagation()}>
+@@ -146,7 +149,9 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
+             ) : null}
+             {!gavaTill && !andrar && varld === "ang" ? (
+               <div className="skapar-guide" data-testid="skapar-guide">
+-                <p>{upplevelse.guide}</p>
++                <p>{hemligt.steg}</p>
++                <p className="hemligt-forklaring" data-testid="hemligt-forklaring">{hemligt.forklaring}</p>
++                <Ledtradsyta funna={funna} />
+                 <details>
+                   <summary>{upplevelse.examplesTitle}</summary>
+                   <div className="ideer">
+@@ -184,6 +189,7 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
+             ) : null}
+             {lage === "kort" && !forslag && !behover ? (
+               <>
++                <p className="forslag-etikett" data-testid="forslag-etikett">{hemligt.forslag_etikett}</p>
+                 <div className="flikar" role="tablist">
+                   {FLIKAR.map((f) => (
+                     <button
+diff --git a/src/spel/ui/Dialoger.tsx b/src/spel/ui/Dialoger.tsx
+index 2130f98..eb25ab3 100644
+--- a/src/spel/ui/Dialoger.tsx
++++ b/src/spel/ui/Dialoger.tsx
+@@ -4,7 +4,11 @@ import { FormelBild } from "../formel.tsx";
+ import { fyll } from "../fyll.ts";
+ import { ALBUM, MOSSA, poangAv, sparaFoto } from "../liv.ts";
+ import type { mossaHand } from "../liv.ts";
+-import { FIR } from "./spelData.ts";
++import { FIR, SIDOR } from "./spelData.ts";
++import stjarnorJson from "../../../data/stjarnor.json" with { type: "json" };
++import onskningarJson from "../../../data/onskningar.json" with { type: "json" };
++import { ALLA_UPPDRAG } from "../aventyr.ts";
++import { djurPris } from "./hjalp.ts";
+ import type { Banner, KopFraga, VisKort } from "./typer.ts";
+ 
+ type SkyltDialogProps = {
+@@ -169,3 +173,51 @@ export function MossaPanel({ halsning, mossaLista, mossaExtra, setMossaOpp }: Mo
+         </div>
+   );
+ }
++
++const STJ = stjarnorJson;
++
++function spann(tal: number[]): string {
++  const a = Math.min(...tal);
++  const b = Math.max(...tal);
++  return a === b ? String(a) : `${a}–${b}`;
++}
++
++/** R9: vad stjärnorna ger och gör, med siffror ur spelets egen data. */
++export function StjarnDialog({ stjarnor, koptaAntal, stang, ordbok }: { stjarnor: number; koptaAntal: number; stang: () => void; ordbok: () => void }) {
++  const tal = {
++    hemligt: String(FIR.hemligt_ord.stjarnor),
++    guld: String(FIR.guldord.stjarnor),
++    sida: String(FIR.sida_klar.stjarnor),
++    onskan: spann((onskningarJson as unknown as { onskningar?: { stjarnor: number }[] }).onskningar?.map((o) => o.stjarnor) ?? [1]),
++    uppdrag: spann(ALLA_UPPDRAG.map((u) => u.stjarnor)),
++  };
++  const kvar = SIDOR.sidor.length - koptaAntal;
++  const pris = djurPris(koptaAntal);
++  return (
++    <div className="skarm" role="dialog" aria-label={STJ.rubrik} data-testid="stjarn-info">
++      <div className="ark">
++        <h2>★ {fyll(STJ.har, { n: stjarnor })}</h2>
++        <h3>{STJ.ger_rubrik}</h3>
++        <ul>
++          {STJ.ger.map((t) => (
++            <li key={t}>{fyll(t, tal)}</li>
++          ))}
++        </ul>
++        <h3>{STJ.gor_rubrik}</h3>
++        <p>{STJ.gor}</p>
++        <p data-testid="stjarn-nasta">
++          {kvar <= 0 ? STJ.alla_sidor : `${fyll(STJ.nasta, { pris })} ${stjarnor >= pris ? STJ.nasta_ok : fyll(STJ.nasta_fattas, { n: pris - stjarnor })}`}
++        </p>
++        <p>{STJ.alltid}</p>
++        <div className="rad-kort">
++          <button type="button" className="kort" data-testid="stjarn-ordbok" onClick={ordbok}>
++            {STJ.knapp_ordbok}
++          </button>
++          <button type="button" className="nej" data-dialog-close onClick={stang}>
++            {STJ.knapp_stang}
++          </button>
++        </div>
++      </div>
++    </div>
++  );
++}
+diff --git a/src/spel/ui/Hud.tsx b/src/spel/ui/Hud.tsx
+index 7020203..73a7604 100644
+--- a/src/spel/ui/Hud.tsx
++++ b/src/spel/ui/Hud.tsx
+@@ -13,6 +13,7 @@ type HudProps = {
+   setHaller: Dispatch<SetStateAction<boolean>>;
+   setForalder: Dispatch<SetStateAction<boolean>>;
+   stjarnor: number;
++  oppnaStjarnor: () => void;
+   hittatAntal: number;
+   totalOrd: number;
+   menyOpp: boolean;
+@@ -21,7 +22,7 @@ type HudProps = {
+   setSenare: Dispatch<SetStateAction<boolean>>;
+ };
+ 
+-export function Hud({ haller, setHaller, setForalder, stjarnor, hittatAntal, totalOrd, menyOpp, setMenyOpp, setMenySaker, setSenare }: HudProps) {
++export function Hud({ oppnaStjarnor, haller, setHaller, setForalder, stjarnor, hittatAntal, totalOrd, menyOpp, setMenyOpp, setMenySaker, setSenare }: HudProps) {
+   return (
+         <div className="hud">
+           <button
+@@ -41,9 +42,10 @@ export function Hud({ haller, setHaller, setForalder, stjarnor, hittatAntal, tot
+             <span className="prick" />
+           </button>
+           <HoldOppnare haller={haller} oppna={() => setForalder(true)} />
+-          <span className="stjarna-hud" data-testid="stjarnor" aria-label={fyll(FIR.stjarnor.har, { n: stjarnor })}>
++          <button type="button" className="stjarna-hud" data-testid="stjarnor" aria-label={fyll(FIR.stjarnor.har, { n: stjarnor })} onClick={oppnaStjarnor}>
+             ★ {stjarnor}
+-          </span>
++            <span className="stjarna-fraga" aria-hidden="true">?</span>
++          </button>
+           <span className="dold" data-testid="framsteg">
+             {fyll(FIR.framsteg.kort, { n: hittatAntal, total: totalOrd })}
+           </span>
+diff --git a/src/spel/ui/Ledtradsyta.tsx b/src/spel/ui/Ledtradsyta.tsx
+new file mode 100644
+index 0000000..eb67c6b
+--- /dev/null
++++ b/src/spel/ui/Ledtradsyta.tsx
+@@ -0,0 +1,36 @@
++import { useMemo, useState } from "react";
++import { ordLista } from "@/tolk/tolka.ts";
++import hemligt from "../../../data/hemligt.json" with { type: "json" };
++import { fyll } from "../fyll.ts";
++import { LED } from "./spelData.ts";
++
++/** R9: hemliga djur = ord med nivå "fritt" och klass djur som har en gåta i data/ledtradar.json. */
++export function hemligaDjur() {
++  return ordLista().filter((o) => o.klass === "djur" && o.niva === "fritt" && LED[o.id]);
++}
++
++/** Synlig ledtrådsyta: en gåta om ett hemligt djur som inte är hittat, med första bokstaven och ett streck per bokstav. */
++export function Ledtradsyta({ funna }: { funna: Record<string, unknown> }) {
++  const alla = useMemo(() => hemligaDjur(), []);
++  const [nr, setNr] = useState(() => Math.floor(Math.random() * 1000));
++  const kvar = alla.filter((o) => !funna[o.id]);
++  const hittade = alla.length - kvar.length;
++  if (!kvar.length) return <p className="ledtrad-klar" data-testid="ledtrad">{hemligt.alla_hittade}</p>;
++  const o = kvar[nr % kvar.length]!;
++  const led = LED[o.id]!;
++  const streck = `${led.forsta} ${Array.from({ length: Math.max(0, led.langd - 1) }, () => "_").join(" ")}`.trim();
++  return (
++    <div className="ledtrad" data-testid="ledtrad" data-hemligt={o.id}>
++      <b>
++        {hemligt.ledtrad_rubrik} <small>{fyll(hemligt.hittade, { n: hittade, total: alla.length })}</small>
++      </b>
++      <p className="ledtrad-gata" data-testid="ledtrad-gata">{led.gata}</p>
++      <div className="ledtrad-rad">
++        <span className="ledtrad-streck" data-testid="ledtrad-streck" aria-label={`${led.langd} bokstäver, börjar på ${led.forsta}`}>{streck}</span>
++        <button type="button" className="nej" data-testid="ledtrad-ny" onClick={() => setNr((n) => n + 1)}>
++          {hemligt.ny_gata}
++        </button>
++      </div>
++    </div>
++  );
++}
+diff --git a/src/spel/ui/NpcFigur.tsx b/src/spel/ui/NpcFigur.tsx
+index 2e2ec26..98db830 100644
+--- a/src/spel/ui/NpcFigur.tsx
++++ b/src/spel/ui/NpcFigur.tsx
+@@ -20,3 +20,17 @@ export function NpcFigur({ npc, mine, nytt, onClick }: Props) {
+     </button>
+   );
+ }
++
++type IkonProps = { npc: string; nytt: boolean; text: string; alt: string; onClick: () => void };
++
++/** R9: liten knapp med Bengtssons huvud. Visas när figuren inte står på ängen och ger alltid ett uppdrag direkt. */
++export function NpcIkon({ npc, nytt, text, alt, onClick }: IkonProps) {
++  const f = NPC_DEL[npc];
++  if (!f) return null;
++  return (
++    <button type="button" className={nytt ? "npc-ikon nytt" : "npc-ikon"} data-testid="bengtsson-ikon" aria-label={alt} onClick={onClick}>
++      <img src={mineUrl(npc, f.standard)} alt="" draggable={false} width={52} height={52} />
++      <span>{text}</span>
++    </button>
++  );
++}
+diff --git a/src/spel/ui/useBengtsson.ts b/src/spel/ui/useBengtsson.ts
+index 8d61d60..31fab36 100644
+--- a/src/spel/ui/useBengtsson.ts
++++ b/src/spel/ui/useBengtsson.ts
+@@ -1,5 +1,5 @@
+ import { useCallback, useEffect, useRef, useState } from "react";
+-import { aventyrKvar, aktivtSkrivUppdrag, bengtssonLagen, kravUppfyllt, nastaSkrivUppdrag } from "../uppdragsmotor.ts";
++import { TAKT, aventyrKvar, aktivtSkrivUppdrag, bengtssonLagen, kravUppfyllt, nastaSkrivUppdrag, sekTillRedo } from "../uppdragsmotor.ts";
+ import { klarUppdrag, type FlodeSvar } from "../avflode.ts";
+ import { useMinne } from "../minne.ts";
+ import { NPC_DEL, mineVararMs, valjMine } from "../npc.ts";
+@@ -18,6 +18,10 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
+   const status = useMinne((s) => s.uppdrag);
+   const [tillfallig, setTillfallig] = useState<"fel" | "klar_nyss" | null>(null);
+   const timer = useRef<number | null>(null);
++  const djur = useMinne((s) => s.ang.length);
++  const start = useRef(Date.now());
++  const klartVid = useRef<number | null>(null);
++  const [, ritaOm] = useState(0);
+   const felNr = useRef(0);
+   useEffect(
+     () => () => {
+@@ -25,6 +29,17 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
+     },
+     [],
+   );
++  const sek = sekTillRedo(status, {
++    djur,
++    spelSek: (Date.now() - start.current) / 1000,
++    sekSedanKlart: klartVid.current === null ? null : (Date.now() - klartVid.current) / 1000,
++  });
++  // en enda timer som väcker komponenten när väntetiden är slut (ingen tick per sekund)
++  useEffect(() => {
++    if (sek === null || sek <= 0) return;
++    const t = window.setTimeout(() => ritaOm((n) => n + 1), sek * 1000 + 60);
++    return () => window.clearTimeout(t);
++  }, [sek]);
+   const blinka = useCallback((lage: "fel" | "klar_nyss") => {
+     setTillfallig(lage);
+     if (timer.current) window.clearTimeout(timer.current);
+@@ -33,7 +48,8 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
+ 
+   const lagen = [...(tillfallig ? [tillfallig] : []), ...bengtssonLagen(status)];
+   const mine = valjMine(NPC_ID, lagen);
+-  const nytt = !aktivtSkrivUppdrag(status) && !!nastaSkrivUppdrag(status);
++  const nytt = sek === 0;
++  const synlig = nytt || !!aktivtSkrivUppdrag(status) || tillfallig !== null;
+ 
+   function klicka() {
+     const s = useMinne.getState().uppdrag;
+@@ -57,6 +73,7 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
+     if (!u?.krav) return "ingen";
+     if (kravUppfyllt(u.krav, raw)) {
+       belonaFlode(klarUppdrag(u.id));
++      klartVid.current = Date.now();
+       blinka("klar_nyss");
+       return "klar";
+     }
+@@ -66,5 +83,5 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
+     return "fel";
+   }
+ 
+-  return { mine, nytt, klicka, prova, npcId: NPC_ID };
++  return { mine, nytt, synlig, klicka, prova, npcId: NPC_ID, ikonText: TAKT.ikon_text, ikonAlt: TAKT.ikon_alt };
+ }
+diff --git a/src/spel/uppdragsmotor.ts b/src/spel/uppdragsmotor.ts
+index bdb845e..392bbd1 100644
+--- a/src/spel/uppdragsmotor.ts
++++ b/src/spel/uppdragsmotor.ts
+@@ -1,7 +1,10 @@
+ // R6A-2: den generella kontrollen "räcker det barnet skrev för uppdraget?" (ren, ingen React, ingen Zustand).
+ // Kravet är data (data/bengtsson.json `krav`): ett nytt uppdrag är en datarad, ingen kod.
++import bengtssonJson from "../../data/bengtsson.json" with { type: "json" };
+ import { ALLA_UPPDRAG, SKRIV, type Uppdrag } from "./aventyr.ts";
+ 
++export const TAKT = bengtssonJson.takt;
++
+ export type Krav = { ord: string[]; min?: number };
+ export type Status = Record<string, "pagar" | "klar">;
+ 
+@@ -48,3 +51,17 @@ export function bengtssonLagen(status: Status): string[] {
+   else if (!nastaSkrivUppdrag(status)) lagen.push(aventyrKvar(status) ? "bara_aventyr" : "alla_klara");
+   return lagen;
+ }
++
++/** R9: takten för när Bengtsson själv bjuder in (data/bengtsson.json `takt`). Knappen med hans huvud ger alltid ett uppdrag direkt. */
++export type Takt = { forsta: { efter_djur: number; eller_sekunder: number }; mellan_sekunder: number };
++export type Matt = { djur: number; spelSek: number; sekSedanKlart: number | null };
++
++/** Sekunder tills Bengtsson bjuder in nästa uppdrag: 0 = redo nu, null = inget att bjuda in till (pågår eller slut). */
++export function sekTillRedo(status: Status, m: Matt, takt: Takt = TAKT): number | null {
++  if (aktivtSkrivUppdrag(status) || !nastaSkrivUppdrag(status)) return null;
++  if (!SKRIV.some((u) => status[u.id] === "klar")) {
++    if (m.djur >= takt.forsta.efter_djur) return 0;
++    return Math.max(0, Math.ceil(takt.forsta.eller_sekunder - m.spelSek));
++  }
++  return m.sekSedanKlart === null ? 0 : Math.max(0, Math.ceil(takt.mellan_sekunder - m.sekSedanKlart));
++}
+diff --git a/src/styles.css b/src/styles.css
+index f639e48..42a61d4 100644
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -710,3 +710,19 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
+ .uppdrag-val-rubrik{flex:none;font-size:1rem;font-weight:800;color:var(--color-moss)}
+ .uppdrag-val-etikett{flex:none;font-size:.875rem;font-weight:800;opacity:.75}
+ .uppdrag-val .onska-chip{flex:none;min-height:44px;padding:2px 12px;font-size:1.0625rem;scroll-snap-align:start}
++
++/* R9: stjärnräknaren är en knapp; Bengtsson-ikon; ledtrådsyta */
++.stjarna-hud{border:0;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:6px;touch-action:manipulation}
++.stjarna-fraga{width:22px;height:22px;border-radius:50%;background:var(--color-gold);color:var(--color-ink);font-size:.9rem;display:grid;place-items:center}
++.npc-ikon{position:absolute;z-index:7;left:8px;bottom:76px;min-height:56px;padding:3px 14px 3px 3px;border:3px solid var(--color-gold);border-radius:999px;background:var(--color-cream);color:var(--color-ink);font-family:inherit;font-size:1.0625rem;font-weight:800;display:flex;align-items:center;gap:8px;box-shadow:0 4px 0 var(--color-paper-deep);touch-action:manipulation}
++.npc-ikon img{width:46px;height:46px;border-radius:50%;object-fit:cover;object-position:50% 8%;background:var(--color-paper);pointer-events:none}
++.skapar-guide p{margin:0 0 4px}
++.hemligt-forklaring{font-size:1rem}
++.forslag-etikett{margin:2px 10px 0;font-weight:800;font-size:1rem}
++.ledtrad{margin:4px 0;padding:6px 10px;border-radius:14px;background:var(--color-cream);border:2px dashed var(--color-gold)}
++.ledtrad-gata{margin:0 0 2px;font-size:1rem;line-height:1.25}
++.ledtrad-streck{font-family:var(--font-display);font-size:1.3rem;letter-spacing:.1em;white-space:nowrap}
++.ledtrad .nej{white-space:nowrap;min-height:44px;padding:0 14px}
++.ledtrad small{font-weight:600}
++.ledtrad-rad{display:flex;align-items:center;justify-content:space-between;gap:10px}
++.ledtrad-klar{margin:6px 0;font-weight:800}

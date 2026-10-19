@@ -48,7 +48,7 @@ const skott = async (namn) => {
   await p.screenshot({ path: f });
   bilder.push(fs.readFileSync(f).toString("base64"));
 };
-const mine = () => p.getByTestId("npc-figur").getAttribute("data-mine");
+const mine = () => p.locator("[data-testid=npc-figur],[data-testid=bengtsson-ikon]").first().getAttribute("data-mine");
 const stj = async () => Number((await p.getByTestId("stjarnor").innerText()).replace(/\D/g, ""));
 // Skriver som barnet: å/ä/ö via skärmtangenten (Playwrights keyboard.type skickar dem som insertText utan keydown, som appen aldrig ser: "blå" blev "bl"),
 // övriga tecken via tangentbordet, mellanslag via skärmtangenten.
@@ -63,16 +63,16 @@ const skriv = async (t) => {
 };
 
 // 1. Ängen: Bengtsson syns med framsida och ett utropstecken (nytt uppdrag finns)
-await p.getByTestId("npc-figur").waitFor();
+await p.locator("[data-testid=npc-figur],[data-testid=bengtsson-ikon]").first().waitFor();
 m.mine_start = await mine();
 m.utrop_start = await p.locator(".npc-utrop").count();
-const box = await p.getByTestId("npc-figur").boundingBox();
+const box = await p.locator("[data-testid=npc-figur],[data-testid=bengtsson-ikon]").first().boundingBox();
 m.figur_ruta = box && { x: Math.round(box.x), y: Math.round(box.y), w: Math.round(box.width), h: Math.round(box.height) };
 m.malstorlek_ok = !!box && box.width >= 44 && box.height >= 44;
 await skott("1-anglig");
 
 // 2. Klick: uppdraget visas i Skapa-menyn
-await p.getByTestId("npc-figur").click();
+await p.locator("[data-testid=npc-figur],[data-testid=bengtsson-ikon]").first().click();
 await p.getByTestId("uppdrag-remsa").waitFor();
 m.remsa = (await p.getByTestId("uppdrag-remsa").innerText()).trim();
 m.skriver = (await p.getByTestId("tangentbord").count()) === 1;
@@ -86,7 +86,7 @@ m.status_efter_fel = await p.evaluate(() => JSON.parse(localStorage.getItem("tro
 await skott("3-fel");
 
 // 4. Klick igen (uppdraget pågår fortfarande), rätt ord: klart, glad mine, +2 stjärnor
-if ((await p.getByTestId("uppdrag-remsa").count()) === 0) await p.getByTestId("npc-figur").click();
+if ((await p.getByTestId("uppdrag-remsa").count()) === 0) await p.locator("[data-testid=npc-figur],[data-testid=bengtsson-ikon]").first().click();
 await p.getByTestId("uppdrag-remsa").waitFor();
 await p.waitForTimeout(10000); // bannerkön (en rad ca 2,5 s) töms som när ett barn tänker efter
 const stjFore = await stj(); // efter det felaktiga svaret, så bara uppdragets stjärnor räknas

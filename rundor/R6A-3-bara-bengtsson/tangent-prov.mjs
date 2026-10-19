@@ -36,7 +36,7 @@ await p.goto(`http://127.0.0.1:${server.address().port}/`, { waitUntil: "domcont
 await p.waitForFunction(() => !!window.__troll, null, { timeout: 20000 });
 await p.waitForTimeout(1500);
 const m = {};
-await p.getByTestId("npc-figur").click();
+await p.locator("[data-testid=npc-figur],[data-testid=bengtsson-ikon]").first().click();
 const tb = p.getByTestId("tangentbord");
 await tb.waitFor();
 await p.waitForTimeout(600);
