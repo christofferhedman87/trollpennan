@@ -4426,6 +4426,722 @@
    "del": {
     "kropp": "trollkarlsgnom"
    }
+  },
+  {
+   "id": "carnotaurus",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "carnotaurus",
+   "genus": "u",
+   "former": [
+    "carnotaurus",
+    "carnotaurusen",
+    "carnotaurusar",
+    "carnotaurusarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "carnotaurus"
+   }
+  },
+  {
+   "id": "oviraptor",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "oviraptor",
+   "genus": "u",
+   "former": [
+    "oviraptor",
+    "oviraptoren",
+    "oviraptorar",
+    "oviraptorarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "oviraptor"
+   }
+  },
+  {
+   "id": "pachycephalosaurus",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "pachycephalosaurus",
+   "genus": "u",
+   "former": [
+    "pachycephalosaurus",
+    "pachycephalosaurusen",
+    "pachycephalosaurusar",
+    "pachycephalosaurusarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "pachycephalosaurus"
+   }
+  },
+  {
+   "id": "spinosaurus",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "spinosaurus",
+   "genus": "u",
+   "former": [
+    "spinosaurus",
+    "spinosaurusen",
+    "spinosaurusar",
+    "spinosaurusarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "spinosaurus"
+   }
+  },
+  {
+   "id": "stegosaurus",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "stegosaurus",
+   "genus": "u",
+   "former": [
+    "stegosaurus",
+    "stegosaurusen",
+    "stegosaurusar",
+    "stegosaurusarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "stegosaurus"
+   }
+  },
+  {
+   "id": "kalv",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kalv",
+   "genus": "u",
+   "former": [
+    "kalv",
+    "kalven",
+    "kalvar",
+    "kalvarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "kalv"
+   }
+  },
+  {
+   "id": "mjölkko",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mjölkko",
+   "genus": "u",
+   "former": [
+    "mjölkko",
+    "mjölkkon"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "mjolkko"
+   }
+  },
+  {
+   "id": "får",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "får",
+   "genus": "n",
+   "former": [
+    "får",
+    "fåret",
+    "fåren"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
+   "del": {
+    "kropp": "far"
+   }
+  },
+  {
+   "id": "sköldpadda",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "sköldpadda",
+   "genus": "u",
+   "former": [
+    "sköldpadda",
+    "sköldpaddan",
+    "sköldpaddor",
+    "sköldpaddorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 polypizza-cc0",
+   "del": {
+    "kropp": "skoldpadda"
+   }
+  },
+  {
+   "id": "häxa",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "häxa",
+   "genus": "u",
+   "former": [
+    "häxa",
+    "häxan",
+    "häxor",
+    "häxorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 polypizza-cc0",
+   "del": {
+    "kropp": "haxa"
+   }
+  },
+  {
+   "id": "trollslända",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "trollslända",
+   "genus": "u",
+   "former": [
+    "trollslända",
+    "trollsländan",
+    "trollsländor",
+    "trollsländorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 polypizza-cc0",
+   "del": {
+    "kropp": "trollslanda"
+   }
+  },
+  {
+   "id": "apatosaurus",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "apatosaurus",
+   "genus": "u",
+   "former": [
+    "apatosaurus",
+    "apatosaurusen",
+    "apatosaurusar",
+    "apatosaurusarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-animated-dinosaurs",
+   "del": {
+    "kropp": "apatosaurus"
+   }
+  },
+  {
+   "id": "långhals",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "långhals",
+   "genus": "u",
+   "former": [
+    "långhals",
+    "långhalsen",
+    "långhalsar",
+    "långhalsarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-animated-dinosaurs",
+   "del": {
+    "kropp": "apatosaurus"
+   }
+  },
+  {
+   "id": "parasaurolophus",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "parasaurolophus",
+   "genus": "u",
+   "former": [
+    "parasaurolophus",
+    "parasaurolophusen",
+    "parasaurolophusar",
+    "parasaurolophusarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-animated-dinosaurs",
+   "del": {
+    "kropp": "parasaurolophus"
+   }
+  },
+  {
+   "id": "velociraptor",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "velociraptor",
+   "genus": "u",
+   "former": [
+    "velociraptor",
+    "velociraptoren",
+    "velociraptorar",
+    "velociraptorarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-animated-dinosaurs",
+   "del": {
+    "kropp": "velociraptor"
+   }
+  },
+  {
+   "id": "kampfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kampfisk",
+   "genus": "u",
+   "former": [
+    "kampfisk",
+    "kampfisken",
+    "kampfiskar",
+    "kampfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M1 quaternius-cute-fish",
+   "del": {
+    "kropp": "kampfisk"
+   }
+  },
+  {
+   "id": "klumpfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "klumpfisk",
+   "genus": "u",
+   "former": [
+    "klumpfisk",
+    "klumpfisken",
+    "klumpfiskar",
+    "klumpfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M1 quaternius-cute-fish",
+   "del": {
+    "kropp": "klumpfisk"
+   }
+  },
+  {
+   "id": "mandarinfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mandarinfisk",
+   "genus": "u",
+   "former": [
+    "mandarinfisk",
+    "mandarinfisken",
+    "mandarinfiskar",
+    "mandarinfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M1 quaternius-cute-fish",
+   "del": {
+    "kropp": "mandarinfisk"
+   }
+  },
+  {
+   "id": "papegojfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "papegojfisk",
+   "genus": "u",
+   "former": [
+    "papegojfisk",
+    "papegojfisken",
+    "papegojfiskar",
+    "papegojfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M1 quaternius-cute-fish",
+   "del": {
+    "kropp": "papegojfisk"
+   }
+  },
+  {
+   "id": "solfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "solfisk",
+   "genus": "u",
+   "former": [
+    "solfisk",
+    "solfisken",
+    "solfiskar",
+    "solfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M1 quaternius-cute-fish",
+   "del": {
+    "kropp": "solfisk"
+   }
+  },
+  {
+   "id": "napoleonfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "napoleonfisk",
+   "genus": "u",
+   "former": [
+    "napoleonfisk",
+    "napoleonfisken",
+    "napoleonfiskar",
+    "napoleonfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M1 quaternius-cute-fish",
+   "del": {
+    "kropp": "napoleonfisk"
+   }
+  },
+  {
+   "id": "kofisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kofisk",
+   "genus": "u",
+   "former": [
+    "kofisk",
+    "kofisken",
+    "kofiskar",
+    "kofiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M1 quaternius-cute-fish",
+   "del": {
+    "kropp": "kofisk"
+   }
+  },
+  {
+   "id": "trädmonster",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "trädmonster",
+   "genus": "n",
+   "former": [
+    "trädmonster",
+    "trädmonsteret",
+    "trädmonsteren"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-cute-monsters",
+   "del": {
+    "kropp": "tradmonster"
+   }
+  },
+  {
+   "id": "oxe",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "oxe",
+   "genus": "u",
+   "former": [
+    "oxe",
+    "oxen",
+    "oxar",
+    "oxarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-ultimate-animated-animals",
+   "del": {
+    "kropp": "oxe"
+   }
+  },
+  {
+   "id": "skimmel",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "skimmel",
+   "genus": "u",
+   "former": [
+    "skimmel",
+    "skimmelen",
+    "skimmelar",
+    "skimmelarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-ultimate-animated-animals",
+   "del": {
+    "kropp": "skimmel"
+   }
+  },
+  {
+   "id": "monstergroda",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "monstergroda",
+   "genus": "u",
+   "former": [
+    "monstergroda",
+    "monstergrodan",
+    "monstergrodor",
+    "monstergrodorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-ultimate-monsters",
+   "del": {
+    "kropp": "monstergroda"
+   }
+  },
+  {
+   "id": "monsterkatt",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "monsterkatt",
+   "genus": "u",
+   "former": [
+    "monsterkatt",
+    "monsterkatten",
+    "monsterkattar",
+    "monsterkattarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-ultimate-monsters",
+   "del": {
+    "kropp": "monsterkatt"
+   }
+  },
+  {
+   "id": "monsterhund",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "monsterhund",
+   "genus": "u",
+   "former": [
+    "monsterhund",
+    "monsterhunden",
+    "monsterhundar",
+    "monsterhundarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-ultimate-monsters",
+   "del": {
+    "kropp": "monsterhund"
+   }
+  },
+  {
+   "id": "monsterduva",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "monsterduva",
+   "genus": "u",
+   "former": [
+    "monsterduva",
+    "monsterduvan",
+    "monsterduvor",
+    "monsterduvorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-ultimate-monsters",
+   "del": {
+    "kropp": "monsterduva"
+   }
+  },
+  {
+   "id": "alpackakung",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "alpackakung",
+   "genus": "u",
+   "former": [
+    "alpackakung",
+    "alpackakungen",
+    "alpackakungar",
+    "alpackakungarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-ultimate-monsters",
+   "del": {
+    "kropp": "alpackakung"
+   }
+  },
+  {
+   "id": "jättebi",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "jättebi",
+   "genus": "n",
+   "former": [
+    "jättebi",
+    "jättebit",
+    "jättebin",
+    "jättebinen"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-ultimate-monsters",
+   "del": {
+    "kropp": "jattebi"
+   }
+  },
+  {
+   "id": "glubb",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "glubb",
+   "genus": "u",
+   "former": [
+    "glubb",
+    "glubben",
+    "glubbar",
+    "glubbarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-ultimate-monsters",
+   "del": {
+    "kropp": "glubb"
+   }
+  },
+  {
+   "id": "virvelvarelse",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "virvelvarelse",
+   "genus": "u",
+   "former": [
+    "virvelvarelse",
+    "virvelvarelsen",
+    "virvelvarelsar",
+    "virvelvarelsarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 quaternius-ultimate-monsters",
+   "del": {
+    "kropp": "virvelvarelse"
+   }
+  },
+  {
+   "id": "geting",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "geting",
+   "genus": "u",
+   "former": [
+    "geting",
+    "getingen",
+    "getingar",
+    "getingarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M1 polypizza-cc0-2",
+   "del": {
+    "kropp": "geting"
+   }
+  },
+  {
+   "id": "valfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "valfisk",
+   "genus": "u",
+   "former": [
+    "valfisk",
+    "valfisken",
+    "valfiskar",
+    "valfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M1 polypizza-cc0-2",
+   "del": {
+    "kropp": "valfisk"
+   }
+  },
+  {
+   "id": "sjöborre",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "sjöborre",
+   "genus": "u",
+   "former": [
+    "sjöborre",
+    "sjöborren",
+    "sjöborrar",
+    "sjöborrarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M1 polypizza-cc0-2",
+   "del": {
+    "kropp": "sjoborre"
+   }
+  },
+  {
+   "id": "fjärilsfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "fjärilsfisk",
+   "genus": "u",
+   "former": [
+    "fjärilsfisk",
+    "fjärilsfisken",
+    "fjärilsfiskar",
+    "fjärilsfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M1 polypizza-cc0-2",
+   "del": {
+    "kropp": "fjarilsfisk"
+   }
+  },
+  {
+   "id": "neontetra",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "neontetra",
+   "genus": "u",
+   "former": [
+    "neontetra",
+    "neontetran",
+    "neontetror",
+    "neontetrorna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M1 polypizza-cc0-2",
+   "del": {
+    "kropp": "neontetra"
+   }
+  },
+  {
+   "id": "snapper",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "snapper",
+   "genus": "u",
+   "former": [
+    "snapper",
+    "snapperen",
+    "snapperar",
+    "snapperarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M1 polypizza-cc0-2",
+   "del": {
+    "kropp": "snapper"
+   }
+  },
+  {
+   "id": "mussla",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mussla",
+   "genus": "u",
+   "former": [
+    "mussla",
+    "musslan",
+    "musslor",
+    "musslorna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M1 polypizza-cc0-2",
+   "del": {
+    "kropp": "mussla"
+   }
   }
  ],
  "kollisioner": {},

@@ -1032,6 +1032,246 @@
    "forsta": "T",
    "langd": 14,
    "granskad": false
+  },
+  "carnotaurus": {
+   "gata": "En köttätande dinosaurie med två små horn ovanför ögonen och pyttesmå armar.",
+   "forsta": "C",
+   "langd": 11,
+   "granskad": false
+  },
+  "oviraptor": {
+   "gata": "En liten dinosaurie med näbb och fjädrar som man förr trodde stal ägg.",
+   "forsta": "O",
+   "langd": 9,
+   "granskad": false
+  },
+  "pachycephalosaurus": {
+   "gata": "En dinosaurie med ett jättetjockt, runt huvud som en hjälm.",
+   "forsta": "P",
+   "langd": 18,
+   "granskad": false
+  },
+  "spinosaurus": {
+   "gata": "En jättestor urtidsödla med ett högt segel på ryggen som fiskade i floder.",
+   "forsta": "S",
+   "langd": 11,
+   "granskad": false
+  },
+  "stegosaurus": {
+   "gata": "En växtätande dinosaurie med stora plattor längs ryggen och taggar på svansen.",
+   "forsta": "S",
+   "langd": 11,
+   "granskad": false
+  },
+  "kalv": {
+   "gata": "Ett kobarn som dricker mjölk och står ostadigt på sina långa ben.",
+   "forsta": "K",
+   "langd": 4,
+   "granskad": false
+  },
+  "mjölkko": {
+   "gata": "Ett svartvitt djur på bondgården som ger oss mjölk varje dag.",
+   "forsta": "M",
+   "langd": 7,
+   "granskad": false
+  },
+  "får": {
+   "gata": "Ett ulligt djur som säger bä och ger oss garn till tröjor.",
+   "forsta": "F",
+   "langd": 3,
+   "granskad": false
+  },
+  "sköldpadda": {
+   "gata": "Ett långsamt djur som bär sitt hus som ett skal på ryggen.",
+   "forsta": "S",
+   "langd": 10,
+   "granskad": false
+  },
+  "häxa": {
+   "gata": "Hon flyger på en kvast och rör om i en bubblande gryta.",
+   "forsta": "H",
+   "langd": 4,
+   "granskad": false
+  },
+  "trollslända": {
+   "gata": "En insekt med fyra glittrande vingar som surrar över sjön.",
+   "forsta": "T",
+   "langd": 11,
+   "granskad": false
+  },
+  "apatosaurus": {
+   "gata": "En enorm växtätande dinosaurie med jättelång hals och lång svans.",
+   "forsta": "A",
+   "langd": 11,
+   "granskad": false
+  },
+  "långhals": {
+   "gata": "Ett annat namn på dinosaurien med den allra längsta nacken.",
+   "forsta": "L",
+   "langd": 8,
+   "granskad": false
+  },
+  "parasaurolophus": {
+   "gata": "En dinosaurie med ett långt rör på huvudet som den kunde tuta med.",
+   "forsta": "P",
+   "langd": 15,
+   "granskad": false
+  },
+  "velociraptor": {
+   "gata": "En snabb och klok dinosaurie med en stor böjd klo på foten.",
+   "forsta": "V",
+   "langd": 12,
+   "granskad": false
+  },
+  "kampfisk": {
+   "gata": "En liten färggrann akvariefisk med långa slöjfenor som bråkar med andra hanar.",
+   "forsta": "K",
+   "langd": 8,
+   "granskad": false
+  },
+  "klumpfisk": {
+   "gata": "En rosa, geléaktig fisk från djupet som ser lite ledsen ut.",
+   "forsta": "K",
+   "langd": 9,
+   "granskad": false
+  },
+  "mandarinfisk": {
+   "gata": "En liten fisk med orange och blå mönster, uppkallad efter en frukt.",
+   "forsta": "M",
+   "langd": 12,
+   "granskad": false
+  },
+  "papegojfisk": {
+   "gata": "En färgglad fisk med näbb som tuggar på korallerna.",
+   "forsta": "P",
+   "langd": 11,
+   "granskad": false
+  },
+  "solfisk": {
+   "gata": "En jättestor, platt och rund fisk som gillar att sola vid ytan.",
+   "forsta": "S",
+   "langd": 7,
+   "granskad": false
+  },
+  "napoleonfisk": {
+   "gata": "En stor fisk med en puckel på pannan, döpt efter en fransk kejsare.",
+   "forsta": "N",
+   "langd": 12,
+   "granskad": false
+  },
+  "kofisk": {
+   "gata": "En fyrkantig liten fisk med två små horn, som en ko i havet.",
+   "forsta": "K",
+   "langd": 6,
+   "granskad": false
+  },
+  "trädmonster": {
+   "gata": "Ett väsen som ser ut som en levande stubbe med grenar till armar.",
+   "forsta": "T",
+   "langd": 11,
+   "granskad": false
+  },
+  "oxe": {
+   "gata": "En stark tjur som förr i tiden drog plogen på åkern.",
+   "forsta": "O",
+   "langd": 3,
+   "granskad": false
+  },
+  "skimmel": {
+   "gata": "En häst med vit eller ljusgrå päls.",
+   "forsta": "S",
+   "langd": 7,
+   "granskad": false
+  },
+  "monstergroda": {
+   "gata": "En jättelik, rund grodliknande varelse som hoppar och kväker.",
+   "forsta": "M",
+   "langd": 12,
+   "granskad": false
+  },
+  "monsterkatt": {
+   "gata": "En rund och knubbig kattvarelse med stora ögon och spetsiga öron.",
+   "forsta": "M",
+   "langd": 11,
+   "granskad": false
+  },
+  "monsterhund": {
+   "gata": "En knubbig hundvarelse som skäller och viftar på sin lilla svans.",
+   "forsta": "M",
+   "langd": 11,
+   "granskad": false
+  },
+  "monsterduva": {
+   "gata": "En knubbig fågelvarelse som kuttrar på torget.",
+   "forsta": "M",
+   "langd": 11,
+   "granskad": false
+  },
+  "alpackakung": {
+   "gata": "En ullig djurkung med krona som flyger omkring.",
+   "forsta": "A",
+   "langd": 11,
+   "granskad": false
+  },
+  "jättebi": {
+   "gata": "Ett väldigt stort surrande väsen med randig kropp och vingar.",
+   "forsta": "J",
+   "langd": 7,
+   "granskad": false
+  },
+  "glubb": {
+   "gata": "En rund liten flygande varelse som bubblar och plaskar.",
+   "forsta": "G",
+   "langd": 5,
+   "granskad": false
+  },
+  "virvelvarelse": {
+   "gata": "Ett väsen som snurrar runt som en liten tromb i luften.",
+   "forsta": "V",
+   "langd": 13,
+   "granskad": false
+  },
+  "geting": {
+   "gata": "En gul och svart insekt som surrar runt saften och kan sticka.",
+   "forsta": "G",
+   "langd": 6,
+   "granskad": false
+  },
+  "valfisk": {
+   "gata": "Havets största djur, som sprutar vatten ur ett hål på huvudet.",
+   "forsta": "V",
+   "langd": 7,
+   "granskad": false
+  },
+  "sjöborre": {
+   "gata": "Ett taggigt, runt havsdjur som ligger på botten.",
+   "forsta": "S",
+   "langd": 8,
+   "granskad": false
+  },
+  "fjärilsfisk": {
+   "gata": "En platt och randig korallfisk, uppkallad efter en insekt med vingar.",
+   "forsta": "F",
+   "langd": 11,
+   "granskad": false
+  },
+  "neontetra": {
+   "gata": "En pytteliten akvariefisk med en lysande blå rand.",
+   "forsta": "N",
+   "langd": 9,
+   "granskad": false
+  },
+  "snapper": {
+   "gata": "En röd matfisk från varma hav med stora ögon.",
+   "forsta": "S",
+   "langd": 7,
+   "granskad": false
+  },
+  "mussla": {
+   "gata": "Ett havsdjur som bor mellan två skal och kan gömma en pärla.",
+   "forsta": "M",
+   "langd": 6,
+   "granskad": false
   }
  }
 }

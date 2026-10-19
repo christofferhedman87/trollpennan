@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 286 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 325 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -18,7 +18,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | (för hand) Kenney – Nature Kit | Kenney – Nature Kit | CC0-1.0 | https://kenney.nl/assets/nature-kit | 1 |
 | (för hand) Quaternius – Dragon (Ultimate Monsters) | Quaternius – Dragon (Ultimate Monsters) | CC0-1.0 | https://poly.pizza/m/3rUm1cN3yp | 1 |
 | (för hand) Quaternius – Horse (Cube World Kit) | Quaternius – Horse (Cube World Kit) | CC0-1.0 | https://poly.pizza/m/D3hAeqeDBE | 1 |
-| gobkit-cc0-djur-och-natur | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 49 |
+| gobkit-cc0-djur-och-natur | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 57 |
 | kaykit-city-builder-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/city-builder-bits | 1 |
 | kaykit-furniture-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/furniture-bits | 2 |
 | kaykit-holiday-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/holiday-bits | 3 |
@@ -45,14 +45,16 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-toy-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/toy-car-kit | 2 |
 | kenney-train-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/train-kit | 3 |
 | oga-cc0 | Teh_Bucket | CC0-1.0 | https://opengameart.org/content/hats-clothing-props | 7 |
-| polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 22 |
-| quaternius-cute-fish | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutefish.html | 6 |
-| quaternius-cute-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutemonsters.html | 5 |
+| polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 25 |
+| polypizza-cc0-2 | Quaternius | CC0-1.0 | https://poly.pizza/m/3aQgc75sUR | 7 |
+| quaternius-animated-dinosaurs | Quaternius | CC0-1.0 | https://quaternius.com/packs/animateddinosaurs.html | 3 |
+| quaternius-cute-fish | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutefish.html | 13 |
+| quaternius-cute-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutemonsters.html | 6 |
 | quaternius-farm-animals | Quaternius | CC0-1.0 | https://quaternius.com/packs/farmanimal.html | 2 |
 | quaternius-farm-buildings | Quaternius | CC0-1.0 | https://quaternius.com/packs/farmbuildings.html | 8 |
 | quaternius-ships | Quaternius | CC0-1.0 | https://quaternius.com/packs/ships.html | 1 |
-| quaternius-ultimate-animated-animals | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimateanimatedanimals.html | 5 |
-| quaternius-ultimate-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimatemonsters.html | 3 |
+| quaternius-ultimate-animated-animals | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimateanimatedanimals.html | 7 |
+| quaternius-ultimate-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimatemonsters.html | 11 |
 
 ## Alla modellfiler
 
@@ -345,3 +347,42 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | luva | /models/bulk/luva.glb | CC0-1.0 | Lucian Pavel | https://opengameart.org/content/santa-hat |
 | trollstav | /models/bulk/trollstav.glb | CC0-1.0 | Lucian Pavel | https://opengameart.org/content/magician-hat-stick |
 | troja | /models/bulk/troja.glb | CC0-1.0 | Teh_Bucket | https://opengameart.org/content/hats-clothing-props |
+| carnotaurus | /models/bulk/carnotaurus.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
+| oviraptor | /models/bulk/oviraptor.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
+| pachycephalosaurus | /models/bulk/pachycephalosaurus.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
+| spinosaurus | /models/bulk/spinosaurus.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
+| stegosaurus | /models/bulk/stegosaurus.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
+| kalv | /models/bulk/kalv.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
+| mjolkko | /models/bulk/mjolkko.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
+| far | /models/bulk/far.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
+| skoldpadda | /models/bulk/skoldpadda.glb | CC0-1.0 | Polygonal Mind | https://poly.pizza/m/xmwfRzGvPv |
+| haxa | /models/bulk/haxa.glb | CC0-1.0 | AliceCassie | https://poly.pizza/m/dKexfKQOOl |
+| trollslanda | /models/bulk/trollslanda.glb | CC0-1.0 | AssetQuest | https://poly.pizza/m/de6jep5Fq5 |
+| apatosaurus | /models/bulk/apatosaurus.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/animateddinosaurs.html |
+| parasaurolophus | /models/bulk/parasaurolophus.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/animateddinosaurs.html |
+| velociraptor | /models/bulk/velociraptor.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/animateddinosaurs.html |
+| kampfisk | /models/bulk/kampfisk.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/cutefish.html |
+| klumpfisk | /models/bulk/klumpfisk.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/cutefish.html |
+| mandarinfisk | /models/bulk/mandarinfisk.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/cutefish.html |
+| papegojfisk | /models/bulk/papegojfisk.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/cutefish.html |
+| solfisk | /models/bulk/solfisk.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/cutefish.html |
+| napoleonfisk | /models/bulk/napoleonfisk.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/cutefish.html |
+| kofisk | /models/bulk/kofisk.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/cutefish.html |
+| tradmonster | /models/bulk/tradmonster.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/cutemonsters.html |
+| oxe | /models/bulk/oxe.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/ultimateanimatedanimals.html |
+| skimmel | /models/bulk/skimmel.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/ultimateanimatedanimals.html |
+| monstergroda | /models/bulk/monstergroda.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/ultimatemonsters.html |
+| monsterkatt | /models/bulk/monsterkatt.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/ultimatemonsters.html |
+| monsterhund | /models/bulk/monsterhund.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/ultimatemonsters.html |
+| monsterduva | /models/bulk/monsterduva.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/ultimatemonsters.html |
+| alpackakung | /models/bulk/alpackakung.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/ultimatemonsters.html |
+| jattebi | /models/bulk/jattebi.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/ultimatemonsters.html |
+| glubb | /models/bulk/glubb.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/ultimatemonsters.html |
+| virvelvarelse | /models/bulk/virvelvarelse.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/ultimatemonsters.html |
+| geting | /models/bulk/geting.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/3aQgc75sUR |
+| valfisk | /models/bulk/valfisk.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/JGFwp6xWgk |
+| sjoborre | /models/bulk/sjoborre.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/LdYoJyw4pQ |
+| fjarilsfisk | /models/bulk/fjarilsfisk.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/s2MkBeSzGy |
+| neontetra | /models/bulk/neontetra.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/l6AhogdZHe |
+| snapper | /models/bulk/snapper.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/BRKfDKwPTv |
+| mussla | /models/bulk/mussla.glb | CC0-1.0 | Kenney | https://poly.pizza/m/eWHAc3Pq8z |
