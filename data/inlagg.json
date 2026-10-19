@@ -57,7 +57,7 @@
     "bi": 0.35, "kolibri": 0.4, "marulk": 0.6, "fladdermus": 0.5, "ekorre": 0.7, "igelkott": 0.6, "hare": 0.8, "manet": 0.7, "larv": 0.5, "krabba": 0.6, "spindel": 0.5, "näbbdjur": 0.6, "murmeldjur": 0.7,
     "jätte": 2.4, "cyklop": 1.8, "yeti": 1.6, "golem": 1.8, "drake": 1.6, "spöke": 1.2, "robot": 1.3
   },
-  "ett_ord": ["lamm", "får", "bi", "näbbdjur", "murmeldjur", "spöke", "skelett", "troll", "monster", "djur", "tåg", "skepp", "piratskepp", "vikingaskepp", "hus", "träd", "bord", "tält", "staket", "moln", "äpple", "ägg", "päron", "paket", "present", "bad", "lok", "ljus", "kors"],
+  "ett_ord": ["lamm", "får", "bi", "näbbdjur", "murmeldjur", "spöke", "skelett", "troll", "monster", "djur", "tåg", "skepp", "piratskepp", "vikingaskepp", "hus", "träd", "bord", "tält", "staket", "moln", "äpple", "ägg", "päron", "paket", "present", "bad", "lok", "ljus", "kors", "trädmonster", "jättebi"],
   "plural_er": ["elefant", "giraff", "tiger", "papegoja", "zebra", "robot", "monster", "vampyr", "demon", "taxi", "fordon", "bil"],
   "ordforandring": {
     "_om": "Ord som aldrig blir djurord även om manifestet föreslår dem (krockar med vanliga småord).",
