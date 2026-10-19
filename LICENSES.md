@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 622 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 641 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -29,7 +29,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kaykit-resource-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/resource-bits | 11 |
 | kaykit-restaurant-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/restaurant-bits | 17 |
 | kaykit-rpg-tools-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/rpg-tools-bits | 25 |
-| kenney-blocky-characters | Kenney | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 1 |
+| kenney-blocky-characters | Kenney | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 13 |
 | kenney-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/car-kit | 19 |
 | kenney-castle-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/castle-kit | 2 |
 | kenney-city-kit-suburban | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-suburban | 2 |
@@ -52,6 +52,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | oga-cc0 | Teh_Bucket | CC0-1.0 | https://opengameart.org/content/hats-clothing-props | 7 |
 | polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 38 |
 | polypizza-cc0-2 | Quaternius | CC0-1.0 | https://poly.pizza/m/3aQgc75sUR | 16 |
+| polypizza-cc0-3 | Quaternius | CC0-1.0 | https://poly.pizza/m/9kF7eTDbhO | 7 |
 | quaternius-animated-dinosaurs | Quaternius | CC0-1.0 | https://quaternius.com/packs/animateddinosaurs.html | 3 |
 | quaternius-cute-fish | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutefish.html | 13 |
 | quaternius-cute-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutemonsters.html | 6 |
@@ -691,3 +692,22 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | hornstrit | /models/bulk/hornstrit.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
 | skraddare | /models/bulk/skraddare.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
 | mask | /models/bulk/mask.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/KiNAaBa4cK |
+| mamma | /models/bulk/mamma.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/9kF7eTDbhO |
+| pappa | /models/bulk/pappa.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/66kQ4dBBC7 |
+| larare | /models/bulk/larare.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/zMyPlQXBzq |
+| pojke | /models/bulk/pojke.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/DgOCW9ZCRJ |
+| kung | /models/bulk/kung.glb | CC0-1.0 | Kenney; krona: Quaternius (https://poly.pizza/m/i0PZVuVlYv, CC0) | https://kenney.nl/assets/blocky-characters |
+| cowboy | /models/bulk/cowboy.glb | CC0-1.0 | mastjie | https://poly.pizza/m/S8hq7LEXTT |
+| byggarbetare | /models/bulk/byggarbetare.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/Yg2bQZO6Hj |
+| pirat | /models/bulk/pirat.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/sN18LyyHAU |
+| polis | /models/bulk/polis.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
+| farfar | /models/bulk/farfar.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
+| chef | /models/bulk/chef.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
+| bror | /models/bulk/bror.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
+| kille | /models/bulk/kille.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
+| syster | /models/bulk/syster.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
+| kompis | /models/bulk/kompis.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
+| sjorovare | /models/bulk/sjorovare.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
+| scout | /models/bulk/scout.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
+| farbror | /models/bulk/farbror.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
+| moster | /models/bulk/moster.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |

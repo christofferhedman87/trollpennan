@@ -1839,6 +1839,132 @@
    "forsta": "D",
    "langd": 8,
    "granskad": false
+  },
+  "mamma": {
+   "gata": "Hon tröstar dig när du gråter och läser sagor för dig på kvällen.",
+   "forsta": "M",
+   "langd": 5,
+   "granskad": false
+  },
+  "pappa": {
+   "gata": "Han bär dig på axlarna, lagar mat och nattar dig ibland.",
+   "forsta": "P",
+   "langd": 5,
+   "granskad": false
+  },
+  "lärare": {
+   "gata": "Hon står vid tavlan i skolan och hjälper alla att lära sig läsa.",
+   "forsta": "L",
+   "langd": 6,
+   "granskad": false
+  },
+  "pojke": {
+   "gata": "Ett barn som kan bli en man när han växer upp.",
+   "forsta": "P",
+   "langd": 5,
+   "granskad": false
+  },
+  "kung": {
+   "gata": "Han har krona och mantel och bestämmer i hela landet.",
+   "forsta": "K",
+   "langd": 4,
+   "granskad": false
+  },
+  "cowboy": {
+   "gata": "Han har stor hatt och stövlar och rider på hästar på prärien.",
+   "forsta": "C",
+   "langd": 6,
+   "granskad": false
+  },
+  "byggarbetare": {
+   "gata": "Med gul hjälm och verktyg bygger han hus och vägar.",
+   "forsta": "B",
+   "langd": 12,
+   "granskad": false
+  },
+  "pirat": {
+   "gata": "Han seglar på havet, letar efter guld och har ofta en papegoja.",
+   "forsta": "P",
+   "langd": 5,
+   "granskad": false
+  },
+  "polis": {
+   "gata": "Hon har blå uniform och ser till att alla följer lagen.",
+   "forsta": "P",
+   "langd": 5,
+   "granskad": false
+  },
+  "farfar": {
+   "gata": "Han har glasögon och mustasch och är din pappas eller mammas pappa.",
+   "forsta": "F",
+   "langd": 6,
+   "granskad": false
+  },
+  "chef": {
+   "gata": "Han har kostym och slips och bestämmer på jobbet.",
+   "forsta": "C",
+   "langd": 4,
+   "granskad": false
+  },
+  "bror": {
+   "gata": "En pojke som har samma mamma och pappa som du.",
+   "forsta": "B",
+   "langd": 4,
+   "granskad": false
+  },
+  "kille": {
+   "gata": "Ett annat ord för pojke som man ofta säger på skolgården.",
+   "forsta": "K",
+   "langd": 5,
+   "granskad": false
+  },
+  "syster": {
+   "gata": "En flicka som har samma mamma och pappa som du.",
+   "forsta": "S",
+   "langd": 6,
+   "granskad": false
+  },
+  "kompis": {
+   "gata": "Någon du leker med och tycker om att vara med.",
+   "forsta": "K",
+   "langd": 6,
+   "granskad": false
+  },
+  "sjörövare": {
+   "gata": "Han har lapp för ena ögat och seglar med svart flagga på skeppet.",
+   "forsta": "S",
+   "langd": 9,
+   "granskad": false
+  },
+  "scout": {
+   "gata": "Han kan göra upp eld, knyta knutar och sova i tält i skogen.",
+   "forsta": "S",
+   "langd": 5,
+   "granskad": false
+  },
+  "farbror": {
+   "gata": "Din pappas bror, ofta med mustasch och roliga skämt.",
+   "forsta": "F",
+   "langd": 7,
+   "granskad": false
+  },
+  "moster": {
+   "gata": "Din mammas syster, som kanske kommer på besök med present.",
+   "forsta": "M",
+   "langd": 6,
+   "granskad": false
+  },
+  "morfar": {
+   "gata": "Han har glasögon och mustasch och är din mammas pappa.",
+   "forsta": "M",
+   "langd": 6,
+   "granskad": false
+  },
+  "arbetare": {
+   "gata": "Med hjälm och verktyg jobbar han hårt hela dagen på bygget.",
+   "forsta": "A",
+   "langd": 8,
+   "granskad": false
   }
  }
 }

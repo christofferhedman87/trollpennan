@@ -656,6 +656,25 @@
     "skoldbagge": { "typ": "djur", "kategori": "djur", "modell": "skoldbagge", "malhojd": 0.3, "palett": { "from": 25, "range": 22, "bodyL": 0.49 }, "art": "#C27138", "forladda": false, "ord": ["sköldbagge"], "inlagd": "R3F-M11" },
     "hornstrit": { "typ": "djur", "kategori": "djur", "modell": "hornstrit", "malhojd": 0.3, "palett": { "from": 25, "range": 22, "bodyL": 0.49 }, "art": "#C27138", "forladda": false, "ord": ["hornstrit"], "inlagd": "R3F-M11" },
     "skraddare": { "typ": "djur", "kategori": "djur", "modell": "skraddare", "malhojd": 0.3, "palett": { "from": 25, "range": 22, "bodyL": 0.49 }, "art": "#C27138", "forladda": false, "ord": ["skräddare"], "inlagd": "R3F-M11" },
-    "mask": { "typ": "djur", "kategori": "djur", "modell": "mask", "malhojd": 0.3, "material": { "Worm": "farg" }, "art": "#A1887F", "forladda": false, "ord": ["mask", "daggmask"], "inlagd": "R3F-M11" }
+    "mask": { "typ": "djur", "kategori": "djur", "modell": "mask", "malhojd": 0.3, "material": { "Worm": "farg" }, "art": "#A1887F", "forladda": false, "ord": ["mask", "daggmask"], "inlagd": "R3F-M11" },
+    "mamma": { "typ": "djur", "kategori": "människa", "modell": "mamma", "malhojd": 1.25, "palett": { "from": 5, "range": 22, "bodyL": 0.61 }, "art": "#D26E65", "forladda": false, "ord": ["mamma"], "inlagd": "R3F-M12" },
+    "pappa": { "typ": "djur", "kategori": "människa", "modell": "pappa", "malhojd": 1.3, "palett": { "from": 0, "range": -1, "bodyL": 0.85 }, "art": "#BFBFBF", "framAxel": "+z", "forladda": false, "ord": ["pappa"], "inlagd": "R3F-M12" },
+    "larare": { "typ": "djur", "kategori": "människa", "modell": "larare", "malhojd": 1.25, "material": { "Skin": "farg" }, "art": "#FFAB91", "forladda": false, "ord": ["lärare"], "inlagd": "R3F-M12" },
+    "pojke": { "typ": "djur", "kategori": "människa", "modell": "pojke", "malhojd": 1.1, "material": { "Hair": "farg" }, "art": "#FFAB91", "forladda": false, "ord": ["pojke"], "inlagd": "R3F-M12" },
+    "kung": { "typ": "djur", "kategori": "människa", "modell": "kung", "malhojd": 1.3, "material": { "Gold": "farg" }, "art": "#FFAB91", "framAxel": "+z", "forladda": false, "ord": ["kung"], "inlagd": "R3F-M12" },
+    "cowboy": { "typ": "djur", "kategori": "människa", "modell": "cowboy", "malhojd": 1.3, "palett": { "from": 35, "range": 22, "bodyL": 0.54 }, "art": "#CA9449", "forladda": false, "ord": ["cowboy"], "inlagd": "R3F-M12" },
+    "byggarbetare": { "typ": "djur", "kategori": "människa", "modell": "byggarbetare", "malhojd": 1.3, "material": { "Skin": "farg" }, "art": "#FFAB91", "forladda": false, "ord": ["byggarbetare", "arbetare"], "inlagd": "R3F-M12" },
+    "pirat": { "typ": "djur", "kategori": "människa", "modell": "pirat", "malhojd": 1.1, "palett": { "from": 0, "range": -1, "bodyL": 0.95 }, "art": "#BFBFBF", "forladda": false, "ord": ["pirat"], "inlagd": "R3F-M12" },
+    "polis": { "typ": "djur", "kategori": "människa", "modell": "polis", "malhojd": 1.3, "palett": { "from": 225, "range": 22, "bodyL": 0.32 }, "art": "#2E4A9E", "forladda": false, "ord": ["polis"], "inlagd": "R3F-M12" },
+    "farfar": { "typ": "djur", "kategori": "människa", "modell": "farfar", "malhojd": 1.25, "palett": { "from": 35, "range": 22, "bodyL": 0.78 }, "art": "#DDBA88", "forladda": false, "ord": ["farfar", "morfar"], "inlagd": "R3F-M12" },
+    "chef": { "typ": "djur", "kategori": "människa", "modell": "chef", "malhojd": 1.3, "palett": { "from": 0, "range": -1, "bodyL": 0.21 }, "art": "#4D4D4D", "forladda": false, "ord": ["chef"], "inlagd": "R3F-M12" },
+    "bror": { "typ": "djur", "kategori": "människa", "modell": "bror", "malhojd": 1.2, "palett": { "from": 355, "range": 22, "bodyL": 0.49 }, "art": "#C23844", "forladda": false, "ord": ["bror"], "inlagd": "R3F-M12" },
+    "kille": { "typ": "djur", "kategori": "människa", "modell": "kille", "malhojd": 1.2, "palett": { "from": 155, "range": 22, "bodyL": 0.45 }, "art": "#34B27D", "forladda": false, "ord": ["kille"], "inlagd": "R3F-M12" },
+    "syster": { "typ": "djur", "kategori": "människa", "modell": "syster", "malhojd": 1.2, "palett": { "from": 15, "range": 22, "bodyL": 0.52 }, "art": "#C86341", "forladda": false, "ord": ["syster"], "inlagd": "R3F-M12" },
+    "kompis": { "typ": "djur", "kategori": "människa", "modell": "kompis", "malhojd": 1.2, "palett": { "from": 155, "range": 22, "bodyL": 0.53 }, "art": "#45C992", "forladda": false, "ord": ["kompis"], "inlagd": "R3F-M12" },
+    "sjorovare": { "typ": "djur", "kategori": "människa", "modell": "sjorovare", "malhojd": 1.25, "palett": { "from": 235, "range": 22, "bodyL": 0.53 }, "art": "#4550C9", "forladda": false, "ord": ["sjörövare"], "inlagd": "R3F-M12" },
+    "scout": { "typ": "djur", "kategori": "människa", "modell": "scout", "malhojd": 1.2, "palett": { "from": 25, "range": 22, "bodyL": 0.62 }, "art": "#D39569", "forladda": false, "ord": ["scout"], "inlagd": "R3F-M12" },
+    "farbror": { "typ": "djur", "kategori": "människa", "modell": "farbror", "malhojd": 1.3, "palett": { "from": 15, "range": 22, "bodyL": 0.43 }, "art": "#AA4F31", "forladda": false, "ord": ["farbror"], "inlagd": "R3F-M12" },
+    "moster": { "typ": "djur", "kategori": "människa", "modell": "moster", "malhojd": 1.25, "palett": { "from": 165, "range": 22, "bodyL": 0.41 }, "art": "#2FA285", "forladda": false, "ord": ["moster"], "inlagd": "R3F-M12" }
   }
 }

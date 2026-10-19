@@ -6250,6 +6250,382 @@
    "del": {
     "kropp": "mask"
    }
+  },
+  {
+   "id": "mamma",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mamma",
+   "genus": "u",
+   "former": [
+    "mamma",
+    "mamman",
+    "mammor",
+    "mammorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 polypizza-cc0-3",
+   "del": {
+    "kropp": "mamma"
+   }
+  },
+  {
+   "id": "pappa",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "pappa",
+   "genus": "u",
+   "former": [
+    "pappa",
+    "pappan",
+    "pappor",
+    "papporna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 polypizza-cc0-3",
+   "del": {
+    "kropp": "pappa"
+   }
+  },
+  {
+   "id": "lärare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "lärare",
+   "genus": "u",
+   "former": [
+    "lärare",
+    "läraren",
+    "lärarar",
+    "lärararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 polypizza-cc0-3",
+   "del": {
+    "kropp": "larare"
+   }
+  },
+  {
+   "id": "pojke",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "pojke",
+   "genus": "u",
+   "former": [
+    "pojke",
+    "pojken",
+    "pojkar",
+    "pojkarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 polypizza-cc0-3",
+   "del": {
+    "kropp": "pojke"
+   }
+  },
+  {
+   "id": "kung",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kung",
+   "genus": "u",
+   "former": [
+    "kung",
+    "kungen",
+    "kungar",
+    "kungarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 kenney-blocky-characters",
+   "del": {
+    "kropp": "kung"
+   }
+  },
+  {
+   "id": "cowboy",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "cowboy",
+   "genus": "u",
+   "former": [
+    "cowboy",
+    "cowboyn"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 polypizza-cc0-3",
+   "del": {
+    "kropp": "cowboy"
+   }
+  },
+  {
+   "id": "byggarbetare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "byggarbetare",
+   "genus": "u",
+   "former": [
+    "byggarbetare",
+    "byggarbetaren",
+    "byggarbetarar",
+    "byggarbetararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 polypizza-cc0-3",
+   "del": {
+    "kropp": "byggarbetare"
+   }
+  },
+  {
+   "id": "arbetare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "arbetare",
+   "genus": "u",
+   "former": [
+    "arbetare",
+    "arbetaren",
+    "arbetarar",
+    "arbetararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 polypizza-cc0-3",
+   "del": {
+    "kropp": "byggarbetare"
+   }
+  },
+  {
+   "id": "pirat",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "pirat",
+   "genus": "u",
+   "former": [
+    "pirat",
+    "piraten",
+    "piratar",
+    "piratarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 polypizza-cc0-3",
+   "del": {
+    "kropp": "pirat"
+   }
+  },
+  {
+   "id": "polis",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "polis",
+   "genus": "u",
+   "former": [
+    "polis",
+    "polisen",
+    "polisar",
+    "polisarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 kenney-blocky-characters",
+   "del": {
+    "kropp": "polis"
+   }
+  },
+  {
+   "id": "farfar",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "farfar",
+   "genus": "u",
+   "former": [
+    "farfar",
+    "farfaren",
+    "farfarar",
+    "farfararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 kenney-blocky-characters",
+   "del": {
+    "kropp": "farfar"
+   }
+  },
+  {
+   "id": "morfar",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "morfar",
+   "genus": "u",
+   "former": [
+    "morfar",
+    "morfaren",
+    "morfarar",
+    "morfararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 kenney-blocky-characters",
+   "del": {
+    "kropp": "farfar"
+   }
+  },
+  {
+   "id": "chef",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "chef",
+   "genus": "u",
+   "former": [
+    "chef",
+    "chefen",
+    "chefar",
+    "chefarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 kenney-blocky-characters",
+   "del": {
+    "kropp": "chef"
+   }
+  },
+  {
+   "id": "bror",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "bror",
+   "genus": "u",
+   "former": [
+    "bror",
+    "broren",
+    "brorar",
+    "brorarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 kenney-blocky-characters",
+   "del": {
+    "kropp": "bror"
+   }
+  },
+  {
+   "id": "kille",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kille",
+   "genus": "u",
+   "former": [
+    "kille",
+    "killen",
+    "killar",
+    "killarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 kenney-blocky-characters",
+   "del": {
+    "kropp": "kille"
+   }
+  },
+  {
+   "id": "syster",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "syster",
+   "genus": "u",
+   "former": [
+    "syster",
+    "systeren",
+    "systerar",
+    "systerarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 kenney-blocky-characters",
+   "del": {
+    "kropp": "syster"
+   }
+  },
+  {
+   "id": "kompis",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kompis",
+   "genus": "u",
+   "former": [
+    "kompis",
+    "kompisen",
+    "kompisar",
+    "kompisarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 kenney-blocky-characters",
+   "del": {
+    "kropp": "kompis"
+   }
+  },
+  {
+   "id": "sjörövare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "sjörövare",
+   "genus": "u",
+   "former": [
+    "sjörövare",
+    "sjörövaren",
+    "sjörövarar",
+    "sjörövararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 kenney-blocky-characters",
+   "del": {
+    "kropp": "sjorovare"
+   }
+  },
+  {
+   "id": "scout",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "scout",
+   "genus": "u",
+   "former": [
+    "scout",
+    "scouten",
+    "scoutar",
+    "scoutarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 kenney-blocky-characters",
+   "del": {
+    "kropp": "scout"
+   }
+  },
+  {
+   "id": "farbror",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "farbror",
+   "genus": "u",
+   "former": [
+    "farbror",
+    "farbroren",
+    "farbrorar",
+    "farbrorarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 kenney-blocky-characters",
+   "del": {
+    "kropp": "farbror"
+   }
+  },
+  {
+   "id": "moster",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "moster",
+   "genus": "u",
+   "former": [
+    "moster",
+    "mosteren",
+    "mosterar",
+    "mosterarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M12 kenney-blocky-characters",
+   "del": {
+    "kropp": "moster"
+   }
   }
  ],
  "kollisioner": {},
