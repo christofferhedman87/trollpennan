@@ -1306,35 +1306,6 @@
    ]
   },
   {
-   "id": "sjo-minne",
-   "namn": "Sjöns glitterfontän",
-   "final": "sjo-final-vattenglitter",
-   "omrade": "ang",
-   "stjarnor": 3,
-   "objekt": [
-    {
-     "ord": "sten",
-     "x": 0.5,
-     "y": 0.65
-    },
-    {
-     "ord": "vattenfall",
-     "x": 0.5,
-     "y": 0.5
-    },
-    {
-     "ord": "kristall",
-     "x": 0.57,
-     "y": 0.7
-    },
-    {
-     "ord": "blomma",
-     "x": 0.43,
-     "y": 0.7
-    }
-   ]
-  },
-  {
    "id": "grotta-minne",
    "namn": "Grottans kristallhörna",
    "final": "grotta-final-bergets-berattelse",
@@ -1370,6 +1341,35 @@
      "ord": "lykta",
      "x": 0.83,
      "y": 0.73
+    }
+   ]
+  },
+  {
+   "id": "sjo-minne",
+   "namn": "Sjöns glitterfontän",
+   "final": "sjo-final-vattenglitter",
+   "omrade": "ang",
+   "stjarnor": 3,
+   "objekt": [
+    {
+     "ord": "sten",
+     "x": 0.5,
+     "y": 0.65
+    },
+    {
+     "ord": "vattenfall",
+     "x": 0.5,
+     "y": 0.5
+    },
+    {
+     "ord": "kristall",
+     "x": 0.57,
+     "y": 0.7
+    },
+    {
+     "ord": "blomma",
+     "x": 0.43,
+     "y": 0.7
     }
    ]
   }
