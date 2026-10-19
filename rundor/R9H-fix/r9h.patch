@@ -1,0 +1,348 @@
+diff --git a/package.json b/package.json
+index 01078fb..29f230d 100644
+--- a/package.json
++++ b/package.json
+@@ -22,7 +22,7 @@
+     "format": "prettier --write .",
+     "build:pages": "vite build --config vite.pages.config.ts",
+     "preview:pages": "vite preview --config vite.pages.config.ts",
+-    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/dialogIsolering.test.mjs",
++    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/dialogIsolering.test.mjs",
+     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
+     "check:pages-output": "node scripts/check-pages-output.mjs",
+     "check:struktur": "node scripts/check-spel-struktur.mjs",
+diff --git a/rundor/R1-dela-spel/testid-baslinje.json b/rundor/R1-dela-spel/testid-baslinje.json
+index 26a3ddb..e3ae7b6 100644
+--- a/rundor/R1-dela-spel/testid-baslinje.json
++++ b/rundor/R1-dela-spel/testid-baslinje.json
+@@ -146,6 +146,7 @@
+   "{`sida-${sida.id}`}": 1,
+   "{`skatt-${sk.id}`}": 1,
+   "{`stall-hamta-${d.uid}`}": 1,
++  "{`stall-namn-${d.uid}`}": 1,
+   "{`stjarnor-${id}`}": 1,
+   "{`uppdrag-${u.id}`}": 1,
+   "{`valj-${d.uid}`}": 1,
+diff --git a/src/spel/Spel.tsx b/src/spel/Spel.tsx
+index 7e4bb61..64683d1 100644
+--- a/src/spel/Spel.tsx
++++ b/src/spel/Spel.tsx
+@@ -100,6 +100,7 @@ import { useBengtsson } from "./ui/useBengtsson.ts";
+ import { usePlats } from "./ui/usePlats.ts";
+ import { START_PLATS } from "./platser.ts";
+ import { PlatsResa } from "./ui/PlatsResa.tsx";
++import { useStallBanner } from "./ui/useStallBanner.ts";
+ import { KartaLager, OmradeHud } from "./ui/KartaLager.tsx";
+ import { OrdbokDialog } from "./ui/OrdbokDialog.tsx";
+ 
+@@ -231,6 +232,8 @@ export function Spel() {
+     }, 2400);
+   }
+ 
++  function slackBanner(texten: string) { bannerKo.current = bannerKo.current.filter((b) => b.text !== texten); setBanners((l) => l.filter((b) => b.text !== texten)); }
++  useStallBanner(slackBanner);
+   function visaBanner(texten: string, slag: Banner["slag"]) {
+     bannerKo.current.push({ id: nyId(), text: texten, slag });
+     if (bannerSyns.current) return;
+@@ -883,6 +886,7 @@ export function Spel() {
+       if (u.typ === "tom") return;
+       if (u.typ === "djur") {
+         visaBanner(TEXTER_AV.gavoruta.djur_i_rutan, "ovr");
++        setGavaTill(null); gavaRef.current = null;
+         rensaSkriv();
+         return;
+       }
+@@ -917,6 +921,7 @@ export function Spel() {
+         return;
+       }
+       belonaFlode(svar);
++      if (!svar.okant) { setGavaTill(null); gavaRef.current = null; }
+       rensaSkriv();
+       return;
+     }
+@@ -1377,6 +1382,7 @@ export function Spel() {
+   useEffect(() => {
+     if (forslag || behover || gavaTill || onskaOpp) setBokOpp(true);
+   }, [forslag, behover, gavaTill, onskaOpp]);
++  useEffect(() => { if (!bokOpp) { setGavaTill(null); gavaRef.current = null; } }, [bokOpp]); // R9H: gåvoläget är aldrig klistrigt
+ 
+   useEffect(() => {
+     const ned = (e: KeyboardEvent) => {
+diff --git a/src/spel/ang/djur.tsx b/src/spel/ang/djur.tsx
+index ca5375b..5346f08 100644
+--- a/src/spel/ang/djur.tsx
++++ b/src/spel/ang/djur.tsx
+@@ -10,6 +10,7 @@ import { arSak, hoppHojd, malhojd, svavar } from "../entiteter.ts";
+ import { faestTillbehor, procAnkare } from "../tillbehor/index.ts";
+ import { DjurEffekter } from "../effekter.tsx";
+ import { MILJO } from "../miljo.ts";
++import { synligKedja } from "../pekare.ts";
+ import { AGG_KROPP, OrdAgg, ReservAgg } from "../ordagg.tsx";
+ import { _mal, djurFarg, djurPlats, flygare, normDuk, simmare } from "./delat.ts";
+ 
+@@ -351,6 +352,8 @@ export function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
+     }
+   });
+   function ned(e: ThreeEvent<PointerEvent>) {
++    // R9H: osynlig träff (puff/plask) → låt nästa, närmaste synliga djur ta trycket
++    if (!synligKedja(e.object)) return;
+     e.stopPropagation();
+     if (upp.current) window.removeEventListener("pointerup", upp.current);
+     const sx = e.nativeEvent.clientX;
+diff --git a/src/spel/avscen.ts b/src/spel/avscen.ts
+index 65f17e8..9425312 100644
+--- a/src/spel/avscen.ts
++++ b/src/spel/avscen.ts
+@@ -1,5 +1,6 @@
+ import { laddaDeladeBilder } from "./deladeBilder.ts";
+ import * as PhaserNS from "phaser";
++import { paDuken } from "./pekare.ts";
+ import type PhaserLib from "phaser";
+ import { valjStil } from "./beteende.ts";
+ import type { Sparad } from "./brygga.ts";
+@@ -266,8 +267,8 @@ export class AvScen extends Phaser.Scene {
+       nod.add(g);
+       nod.setDepth(pos.y * VERLD.h);
+       nod.setInteractive(new Phaser.Geom.Rectangle(-40, -44, 80, 96), Phaser.Geom.Rectangle.Contains);
+-      nod.on("pointerup", () => {
+-        if (!this.syns(nod.x, nod.y)) return;
++      nod.on("pointerup", (p: PhaserLib.Input.Pointer) => {
++        if (!paDuken(p) || !this.syns(nod.x, nod.y)) return;
+         avBro.skicka({ typ: "skylt", id });
+       });
+       this.skyltar.push({ id, nod });
+@@ -314,8 +315,8 @@ export class AvScen extends Phaser.Scene {
+       nod.add(g);
+       nod.setDepth(sak.y * VERLD.h + 1);
+       nod.setInteractive(new Phaser.Geom.Rectangle(-48, -48, 96, 96), Phaser.Geom.Rectangle.Contains);
+-      nod.on("pointerup", () => {
+-        if (!this.syns(sak.x * VERLD.b, sak.y * VERLD.h)) return;
++      nod.on("pointerup", (p: PhaserLib.Input.Pointer) => {
++        if (!paDuken(p) || !this.syns(sak.x * VERLD.b, sak.y * VERLD.h)) return;
+         avBro.skicka({ typ: sak.slag, id: sak.id });
+       });
+       this.saker.push({ id: sak.id, nod, x: sak.x * VERLD.b, y: sak.y * VERLD.h });
+@@ -375,8 +376,8 @@ export class AvScen extends Phaser.Scene {
+       const nod = this.gorNod(spec, x, y);
+       if (!nod) return;
+       let sen = 0;
+-      nod.nod.on("pointerup", () => {
+-        if (!this.syns(nod.x, nod.y)) return;
++      nod.nod.on("pointerup", (p: PhaserLib.Input.Pointer) => {
++        if (!paDuken(p) || !this.syns(nod.x, nod.y)) return;
+         const nu = Date.now();
+         if (nu - sen < 450) {
+           nod.x += nod.vx > 0 ? 50 : -50;
+diff --git a/src/spel/gard.ts b/src/spel/gard.ts
+index df744fe..fb852a2 100644
+--- a/src/spel/gard.ts
++++ b/src/spel/gard.ts
+@@ -1,5 +1,6 @@
+ import { laddaDeladeBilder } from "./deladeBilder.ts";
+ import * as PhaserNS from "phaser";
++import { paDuken } from "./pekare.ts";
+ import type PhaserLib from "phaser";
+ import { valjStil } from "./beteende.ts";
+ import { brygga, type Sparad } from "./brygga.ts";
+@@ -297,7 +298,8 @@ export class GardScen extends Phaser.Scene {
+       nod.setScale(bas);
+       nod.setDepth(y + 30);
+       nod.setInteractive(new Phaser.Geom.Rectangle(-150, -220, 300, 420), Phaser.Geom.Rectangle.Contains);
+-      nod.on("pointerup", () => {
++      nod.on("pointerup", (p: PhaserLib.Input.Pointer) => {
++        if (!paDuken(p)) return;
+         brygga.skicka({ typ: "mossa", x: (x - 78) / VERLD.b, y: (y - 120) / VERLD.h });
+       });
+       this.mossaNod = nod;
+@@ -422,7 +424,7 @@ export class GardScen extends Phaser.Scene {
+       brygga.skicka({ typ, uid: spec.uid, x, y });
+     };
+     nod.on("pointerdown", (p: PhaserLib.Input.Pointer) => {
+-      if (this.flyttar) return;
++      if (this.flyttar || !paDuken(p)) return;
+       nere = true;
+       lang = false;
+       start = new Phaser.Math.Vector2(p.x, p.y);
+@@ -515,7 +517,8 @@ export class GardScen extends Phaser.Scene {
+         sov: false,
+       };
+       nod.setInteractive(new Phaser.Geom.Rectangle(-120, -180, 240, 320), Phaser.Geom.Rectangle.Contains);
+-      nod.on("pointerup", () => {
++      nod.on("pointerup", (p: PhaserLib.Input.Pointer) => {
++        if (!paDuken(p)) return;
+         const text = PRAT[Math.floor(Math.random() * PRAT.length)] ?? PRAT[0]!;
+         brygga.skicka({ typ: "hemTryck", uid: v.uid, text, x: djur.x / VERLD.b, y: (djur.y - 100) / VERLD.h });
+       });
+diff --git a/src/spel/pekare.ts b/src/spel/pekare.ts
+new file mode 100644
+index 0000000..0bd1833
+--- /dev/null
++++ b/src/spel/pekare.ts
+@@ -0,0 +1,21 @@
++// R9H: regler för vilket tryck som får nå ett djur. Ren logik, testas i Node (r9h.test.ts).
++//
++// 1) Phaser lyssnar på hela fönstret (windowEvents) och räknar då även tryck som började på en knapp, på kartan eller på
++//    3D-duken ovanpå 2D-duken. Sådana tryck får aldrig nå 2D-djur/saker – annars dyker "Till stallet" eller
++//    "Vad vill du ge?" upp utan att barnet tryckt på något djur. `paDuken` säger om trycket började på Phaser-duken.
++// 2) three.js-strålen träffar även osynliga delar (puff, plask-ring). Bara en synlig träff får ta trycket; annars går
++//    det vidare till nästa (närmaste synliga) djur i stället för att fastna på djuret bakom.
++
++type Pekare = { downElement?: unknown; manager?: { canvas?: unknown } | null };
++
++export function paDuken(p: Pekare): boolean {
++  const duk = p.manager?.canvas;
++  return !!duk && p.downElement === duk;
++}
++
++type Nod = { visible: boolean; parent: Nod | null };
++
++export function synligKedja(o: Nod | null | undefined): boolean {
++  for (let n = o; n; n = n.parent) if (!n.visible) return false;
++  return !!o;
++}
+diff --git a/src/spel/r9h.test.ts b/src/spel/r9h.test.ts
+new file mode 100644
+index 0000000..a907e75
+--- /dev/null
++++ b/src/spel/r9h.test.ts
+@@ -0,0 +1,49 @@
++// R9H: tryck som inte började på duken når inga 2D-djur, osynliga träffar tar inget tryck, stall-listan visar aldrig spärrade ord.
++import assert from "node:assert/strict";
++import { test } from "node:test";
++import block from "../../data/blocklist.json" with { type: "json" };
++import ord from "../../data/ord.json" with { type: "json" };
++import { tolka } from "../tolk/tolka.ts";
++import { paDuken, synligKedja } from "./pekare.ts";
++
++test("R9H: Phaser-tryck räknas bara när det började på Phaser-duken", () => {
++  const duk = {};
++  assert.equal(paDuken({ downElement: duk, manager: { canvas: duk } }), true);
++  assert.equal(paDuken({ downElement: { knapp: "plats-skogen" }, manager: { canvas: duk } }), false, "kartknapp");
++  assert.equal(paDuken({ downElement: { tred: true }, manager: { canvas: duk } }), false, "3D-duken ovanpå");
++  assert.equal(paDuken({ downElement: undefined, manager: { canvas: duk } }), false);
++  assert.equal(paDuken({ downElement: duk, manager: null }), false);
++});
++
++test("R9H: bara synliga träffar tar trycket (puff/plask är osynliga)", () => {
++  const rot = { visible: true, parent: null };
++  const grupp = { visible: true, parent: rot };
++  const puff = { visible: false, parent: grupp };
++  assert.equal(synligKedja({ visible: true, parent: grupp }), true);
++  assert.equal(synligKedja({ visible: true, parent: puff }), false, "barn till osynlig grupp");
++  assert.equal(synligKedja(puff), false);
++  assert.equal(synligKedja(null), false);
++});
++
++const norm = (t: string) => t.toLocaleLowerCase("sv").replace(/[^a-zåäö]/g, "");
++const SPARR = new Set((block.ord as string[]).map(norm));
++
++test("R9H: 'en räv' i stallet är 'en räv' (inte ett spärrat ord)", () => {
++  const u = tolka("en räv");
++  assert.equal(u.typ, "skapad");
++  if (u.typ !== "skapad") return;
++  assert.equal(u.varelse.formel, "en räv");
++  assert.ok(!SPARR.has("räv") && SPARR.has("röv"), "blocklistan har röv men inte räv");
++});
++
++test("R9H: stall-listan (formeln) för alla djur i ord.json innehåller aldrig ett ord ur blocklist.json", () => {
++  const djur = (ord.ord as { id: string; klass: string; visa: string; genus?: string }[]).filter((o) => o.klass === "djur");
++  assert.ok(djur.length > 20, `djur i ord.json: ${djur.length}`);
++  const fel: string[] = [];
++  for (const d of djur) {
++    const u = tolka(`${d.genus === "n" ? "ett" : "en"} ${d.visa}`);
++    if (u.typ !== "skapad") continue;
++    for (const w of u.varelse.formel.split(/\s+/)) if (SPARR.has(norm(w))) fel.push(`${d.id}: ${u.varelse.formel}`);
++  }
++  assert.deepEqual(fel, []);
++});
+diff --git a/src/spel/scen.ts b/src/spel/scen.ts
+index 0a4902b..3b9b282 100644
+--- a/src/spel/scen.ts
++++ b/src/spel/scen.ts
+@@ -1,5 +1,6 @@
+ import { laddaDeladeBilder } from "./deladeBilder.ts";
+ import * as PhaserNS from "phaser";
++import { paDuken } from "./pekare.ts";
+ import type PhaserLib from "phaser";
+ import { valjStil, zonLada, type Stil } from "./beteende.ts";
+ import { brygga, type Sparad } from "./brygga.ts";
+@@ -498,6 +499,7 @@ export class AngScen extends Phaser.Scene {
+     let start = new Phaser.Math.Vector2();
+     let timer: Phaser.Time.TimerEvent | null = null;
+     nod.on("pointerdown", (p: Phaser.Input.Pointer) => {
++      if (!paDuken(p)) return;
+       nere = true;
+       lang = false;
+       start = new Phaser.Math.Vector2(p.x, p.y);
+diff --git a/src/spel/ui/Stall.tsx b/src/spel/ui/Stall.tsx
+index 1562b01..2023309 100644
+--- a/src/spel/ui/Stall.tsx
++++ b/src/spel/ui/Stall.tsx
+@@ -25,6 +25,14 @@ export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: B
+       sluta();
+     };
+   }, []);
++  // R9H: byter barnet plats försvinner knappen direkt (den hör till ett djur på den gamla platsen)
++  useEffect(
++    () =>
++      useMinne.subscribe((s, f) => {
++        if (s.plats !== f.plats) setMal(null);
++      }),
++    [],
++  );
+   useEffect(() => {
+     if (!mal) return;
+     const t = window.setTimeout(() => setMal(null), CHIP_MS);
+@@ -36,6 +44,7 @@ export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: B
+       type="button"
+       className="stall-chip"
+       data-testid="djur-till-stall"
++      data-uid={mal.uid}
+       style={dukStil(mal.x, Math.min(0.86, mal.y + 0.24))}
+       onClick={() => {
+         if (useMinne.getState().tillStall(mal.uid)) visaBanner(TEXTER.stall.flytta, "ovr");
+@@ -65,7 +74,7 @@ export function StallMeny({ stang }: { stang: () => void }) {
+           {full ? <p className="meny-fraga" data-testid="stall-full">{TEXTER.stall.full}</p> : null}
+           {stall.map((d) => (
+             <div className="stall-rad" key={d.uid}>
+-              <span>{d.formel}</span>
++              <span className="stall-namn" data-testid={`stall-namn-${d.uid}`}>{d.formel}</span>
+               <button
+                 type="button"
+                 data-testid={`stall-hamta-${d.uid}`}
+diff --git a/src/spel/ui/useStallBanner.ts b/src/spel/ui/useStallBanner.ts
+new file mode 100644
+index 0000000..0c0e026
+--- /dev/null
++++ b/src/spel/ui/useStallBanner.ts
+@@ -0,0 +1,17 @@
++// R9H: håller stall-bannern i takt med vad som händer (se Stall.tsx).
++import { useEffect, useRef } from "react";
++import { useMinne } from "../minne.ts";
++import { TEXTER } from "./spelData.ts";
++
++/** R9H: bannern "Djuret är i stallet …" tas bort när ett djur hämtas ut eller barnet byter plats. Anropas en gång i Spel. */
++export function useStallBanner(slackBanner: (texten: string) => void) {
++  const slack = useRef(slackBanner);
++  slack.current = slackBanner;
++  useEffect(
++    () =>
++      useMinne.subscribe((s, f) => {
++        if (s.plats !== f.plats || s.stall.length < f.stall.length) slack.current(TEXTER.stall.flytta);
++      }),
++    [],
++  );
++}
+diff --git a/src/styles.css b/src/styles.css
+index 20c10b7..5a16527 100644
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -752,6 +752,8 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
+ .stall-chip{position:absolute;z-index:6;transform:translate(-50%,0);pointer-events:auto;min-height:44px;padding:8px 16px;border:2px solid var(--color-moss);border-radius:999px;background:var(--color-cream);color:var(--color-ink);font-size:1.0625rem;font-weight:800;box-shadow:0 3px 0 var(--color-paper-deep);white-space:nowrap}
+ .stall-lista{display:flex;flex-direction:column;gap:6px}
+ .stall-rad{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 6px 6px 14px;border-radius:16px;background:var(--color-cream);font-weight:700}
++/* R9H: större och fetare djurnamn i stall-listan så att ä/ö syns tydligt (räv ska aldrig kunna läsas som något annat) */
++.stall-namn{font-size:1.1875rem;font-weight:800;letter-spacing:.01em;line-height:1.3}
+ .meny-panel .stall-rad button{min-height:44px;padding:6px 14px;font-size:1.0625rem;background:var(--color-moss);color:var(--color-cream);box-shadow:none;text-align:center}
+ .ledtrad-streck{pointer-events:none;user-select:none;-webkit-user-select:none}
+ .ledtrad-hint{margin:2px 0 0;font-size:.95rem;font-weight:800;color:var(--color-moss)}
