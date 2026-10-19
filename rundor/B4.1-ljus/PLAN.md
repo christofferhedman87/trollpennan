@@ -14,16 +14,23 @@ Den gamla prompten (`rundor/BLOCK-platser/prompter/B4.1-ljuskallor.md`) skrevs f
 **Kvalitet `lag`:** inget `pointLight`; sakens material får `emissive` = ljusfärgen (inga nya objekt per bildruta).
 **Filer:** `miljo.ts`, `platsDekor.ts`, `ang/djur.tsx`, `ang/PlatsDekor.tsx`, `data/platser.json` (via datascript), test `b4-1.test.ts`, prov `b4-1-prov.mjs` (grottan utan/med "en katt med en lykta", ljusare pixlar runt lyktan; ängen på dagen oförändrad; 5 lyktor → 4 ljus).
 
-## Så blev det (patch `b41.patch` + `b41-data.mjs` + `kor.sh`)
-- Avvikelser från planen: de rena funktionerna ligger i en egen fil, `src/spel/ljuskalla.ts`, i stället för i `miljo.ts`/`platsDekor.ts`. Det ger färre krockar med R9K och M10–M13. `lyserVad(spec)` ger vad som lyser: kroppen ("en lykta") eller den första saken djuret har med sig ("en kanin med en lykta").
-- Med kvalitet `lag` blir det en ljuspöl utan `emissive`, eftersom GLB-materialen delas mellan alla kopior.
-- Skenet = `ang/ljusken.tsx`, som ritas inne i `DjurIScen`, vid kroppen eller vid saken. Det består av ett `pointLight` utan skugga (`intensitet×8`, `distance = radie × ytans bredd`, `decay 1.2`) och en additiv ljuspöl på marken med en delad gradienttextur. På `lag` blir det bara ljuspölen.
-- `PlatsScen` räknar `valjLjus` en gång per ändring. Högst 4 ljus, och de senast skapade (`skapad`) behålls.
-- Data läggs in per nyckel med `b41-data.mjs`: `grottan.miljo.ljuskalla_skapad.entiteter` = lykta, lampa, golvlampa, bordslampa, ljusslinga, ljus, fackla, lagereld, kristall. Ficklampa, nattlampa och taklampa finns inte som entiteter än. Skogen och sjön har `ljuskalla_skapad` men ingen lista, så där lyser inget. De slås på med en rad data.
-- Provhook: `window.__ljus = { ljus, pol }` räknar sken som visas.
+## Så blev det (patch `b41.patch` + `b41-data.mjs` + `kor.sh`), version 2: fast ljuspool
+- Rena funktioner i `src/spel/ljuskalla.ts` (inte i `miljo.ts`/`platsDekor.ts`, för färre krockar med R9K och M10–M13):
+  - `ljuskallaFor(plats)`: radie = andel av ytans bredd, intensitet × 8.
+  - `lyserVad(spec)`: kroppen ("en lykta") eller den första saken djuret har med sig ("en kanin med en lykta").
+  - `valjLjus(djur)`: högst 4, de senast skapade.
+- **Inga shader-ombyggen** (Arkitektens beslut): three.js bygger om shadrarna när antalet ljus ändras, och det hackar på mobil. Därför:
+  - `PlatsScen` monterar en **fast pool med 4 punktljus**, `LjusPool` i `ang/ljusken.tsx`, utan skugga och med decay 1.2. Den monteras bara på platser vars `ljuskalla_skapad` har en `entiteter`-lista, och inte på kvalitet låg. Ängen, skogen och sjön får alltså noll extra ljus.
+  - Lediga ljus har intensitet 0 och ligger på y = −60.
+  - `DjurIScen` ritar bara `Ljusken`: en markör (Object3D) där ljuset ska sitta, vid kroppen eller vid saken, och ljuspölen på marken.
+  - Markörerna registreras i en liten modul-Map (uid → Object3D). Poolen läser deras världsläge varje bildruta och sätter färg, styrka och läge enligt `valjLjus`. Antalet ljus i scenen ändras aldrig.
+- På kvalitet låg blir det ljuspöl utan punktljus. `emissive` används inte, eftersom GLB-materialen delas mellan kopior.
+- Data läggs in per nyckel med `b41-data.mjs`: `grottan.miljo.ljuskalla_skapad.entiteter` = lykta, lampa, golvlampa, bordslampa, ljusslinga, ljus, fackla, lagereld, kristall. Ficklampa, nattlampa och taklampa finns inte som entiteter än. Skogen och sjön slås på med en rad data.
+- Provhook `window.__ljus = { ljus, pol, aktiva, scen, program }`: poolens ljus, ljuspölar, tända ljus, punktljus i hela scenen och antal shaderprogram (`renderer.info.programs`).
 
 ## Mätt (swiftshader, 375x812, grottan)
-- Närområdet runt kaninen blir +15.8 i ljushet (0–255) med lykta, mot +1.4 med bok.
-- Draw calls med 5 kaniner: 102 med lyktor (4 sken), 96 med böcker. Det blir ungefär 1 per ljuspöl, plus lyktmodellen. Punktljuset ger inga draw calls.
-- fps (swiftshader, CPU, därför bara relativt): 4.6 med 4 ljus mot 5.6 utan, alltså ungefär −18 % på mjukvaru-GPU. På en riktig GPU väntas betydligt mindre, men det är inte mätt.
-- Risk: när antalet ljus ändras byggs shadrarna om. Längsta bildrutan när en lykta skapas är 530–780 ms, mot 130–400 ms när en bok skapas (swiftshader). Om det hackar på iPad kan man i nästa steg byta till 4 fasta punktljus i `PlatsScen` som flyttas och tänds. Då byggs inga shadrar om, men ljuset ligger inte i `DjurIScen`.
+- Närområdet blir +15.2 i ljushet (0–255) med lykta, mot +1.0 med bok.
+- Punktljus i scenen: 5 hela tiden, alltså poolens 4 plus SagaPennans eget, tom grotta → 5 lyktor. Shaderprogram 13, 13, 13, 13, 13 medan lyktorna 1–5 skapas.
+- Längsta bildrutan när ett djur skapas, för skapelse 2–5: median 150 ms för lykta och 175 ms för bok. I version 1, där ljuset satt i DjurIScen, var det 530–780 ms mot 130–400 ms.
+- Draw calls med 5 kaniner: 99.6 med lyktor, 95.8 med böcker. Det blir ungefär 1 per ljuspöl, och punktljusen ger inga draw calls.
+- fps med 5 kaniner: 11.5 med lyktor, 7.9 med böcker. Swiftshader på CPU brusar mellan körningar, så det är bara en grov jämförelse. Kostnaden för 4 punktljus i shadern finns nu alltid i grottan, även när inget lyser.
