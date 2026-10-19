@@ -1,0 +1,129 @@
+diff --git a/package.json b/package.json
+index 3031416..43330e2 100644
+--- a/package.json
++++ b/package.json
+@@ -22,7 +22,7 @@
+     "format": "prettier --write .",
+     "build:pages": "vite build --config vite.pages.config.ts",
+     "preview:pages": "vite preview --config vite.pages.config.ts",
+-    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/dialogIsolering.test.mjs",
++    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/r9j.test.ts src/spel/dialogIsolering.test.mjs",
+     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
+     "check:pages-output": "node scripts/check-pages-output.mjs",
+     "check:struktur": "node scripts/check-spel-struktur.mjs",
+diff --git a/src/spel/Spel.tsx b/src/spel/Spel.tsx
+index 595d932..fe594f9 100644
+--- a/src/spel/Spel.tsx
++++ b/src/spel/Spel.tsx
+@@ -32,6 +32,7 @@ import {
+   geHjarta,
+   hoppaDag,
+   hoppaKvall,
++  djurMedUid,
+   gavoInbjudanVidTryck,
+   inbjudanAv,
+   komIhagDjur,
+@@ -1214,8 +1215,7 @@ export function Spel() {
+     }
+     if (h.typ === "tryck" || h.typ === "hemTryck") {
+       ljud.boing();
+-      const djur =
+-        useMinne.getState().ang.find((a) => a.uid === h.uid) ?? useMinne.getState().hemma.find((x) => x.spec.uid === h.uid)?.spec;
++      const djur = djurMedUid(useMinne.getState(), h.uid);
+       const kvall = kvallStyrka(visningsTid()) > 0.7;
+       const sov = kvall && djur && !nattvaken(djur.kropp);
+       const ons = useMinne.getState().onskan;
+@@ -1254,8 +1254,7 @@ export function Spel() {
+       return;
+     }
+     if (h.typ === "lang") {
+-      const djur =
+-        useMinne.getState().ang.find((a) => a.uid === h.uid) ?? useMinne.getState().hemma.find((x) => x.spec.uid === h.uid)?.spec;
++      const djur = djurMedUid(useMinne.getState(), h.uid);
+       if (!djur) return;
+       useMinne.getState().sparaFormel(djur);
+       setVisKort({ slag: "djur", spec: djur });
+diff --git a/src/spel/liv.ts b/src/spel/liv.ts
+index f3168ea..094c777 100644
+--- a/src/spel/liv.ts
++++ b/src/spel/liv.ts
+@@ -235,10 +235,22 @@ export function fyllMossa(s: Data): MossaPost[] {
+   return ut.slice(0, 3);
+ }
+ 
++/** R9J: djuret med uid på ängen, gården eller någon plats (platsSkapelser). */
++export function djurMedUid(s: Pick<Data, "ang" | "hemma" | "platsSkapelser">, uid: string): Sparad | undefined {
++  return (
++    s.ang.find((a) => a.uid === uid) ??
++    s.hemma.find((h) => h.spec.uid === uid)?.spec ??
++    Object.values(s.platsSkapelser ?? {})
++      .flat()
++      .find((a) => a.uid === uid)
++  );
++}
++
+ export function tickLiv(s: Data, ms: number): Partial<Data> {
+   const dygnMs = s.dygnMs + ms;
+   const liv = { ...s.liv };
+-  const uids = [...s.ang.map((a) => a.uid), ...s.hemma.map((h) => h.spec.uid)];
++  // R9J: humöret lever på alla platser (ängen, gården och varje plats i platsSkapelser), inte bara ängen.
++  const uids = [...s.ang.map((a) => a.uid), ...s.hemma.map((h) => h.spec.uid), ...Object.values(s.platsSkapelser ?? {}).flatMap((l) => l.map((a) => a.uid))];
+   for (const uid of uids) {
+     const har = liv[uid] ?? nyttLiv(dygnMs);
+     if (dygnMs >= har.humorMs + har.humorLangd) {
+diff --git a/src/spel/r9j.test.ts b/src/spel/r9j.test.ts
+new file mode 100644
+index 0000000..257f171
+--- /dev/null
++++ b/src/spel/r9j.test.ts
+@@ -0,0 +1,50 @@
++// R9J: humöret uppdateras för djur på alla platser (skogen, sjön, grottan) precis som på ängen och gården.
++import assert from "node:assert/strict";
++import { test } from "node:test";
++import type { Sparad } from "./brygga.ts";
++import { dagIndex, djurMedUid, tickLiv } from "./liv.ts";
++import type { Data } from "./minne.ts";
++
++const djur = (uid: string) => ({ uid, kropp: "kanin", formagor: [], tillbehor: [], skapad: 0 }) as unknown as Sparad;
++
++function lager(platsSkapelser: Record<string, Sparad[]>): Data {
++  return {
++    dygnMs: 0,
++    liv: {},
++    ang: [djur("a1")],
++    hemma: [],
++    platsSkapelser,
++    mossaLista: [{ id: "x", klar: false }],
++    mossaDag: dagIndex(0),
++    mossaExtra: false,
++    mossaRakn: { onskan: 0, hemligt: 0, guld: 0 },
++  } as unknown as Data;
++}
++
++test("R9J: djur i skogen, sjön och grottan får liv och humör av tickLiv", () => {
++  const d = lager({ skogen: [djur("s1")], sjon: [djur("j1"), djur("j2")], grottan: [djur("g1")], ny_plats: [djur("n1")] });
++  const ut = tickLiv(d, 1000);
++  for (const uid of ["a1", "s1", "j1", "j2", "g1", "n1"]) assert.ok(ut.liv?.[uid]?.humor, `${uid} saknar humör`);
++});
++
++test("R9J: humöret byts på en plats när tiden gått, och 'sugen' kan uppstå där", () => {
++  let sugen = false;
++  let byten = 0;
++  for (let i = 0; i < 400 && !sugen; i++) {
++    const d = lager({ grottan: [djur("g1")] });
++    const forsta = tickLiv(d, 1000);
++    const har = forsta.liv!.g1!;
++    const andra = tickLiv({ ...d, ...forsta } as Data, har.humorLangd + 1000);
++    if (andra.liv!.g1!.humorMs !== har.humorMs) byten++;
++    if (andra.liv!.g1!.humor === "sugen" || har.humor === "sugen") sugen = true;
++  }
++  assert.ok(byten > 0, "humöret byts aldrig i grottan");
++  assert.ok(sugen, "sugen uppstod aldrig i grottan på 400 försök");
++});
++
++test("R9J: ett tryck på ett djur på en plats hittar djuret (humörreplik och gåvoinbjudan)", () => {
++  const d = lager({ grottan: [djur("g1")] });
++  assert.equal(djurMedUid(d, "g1")?.uid, "g1");
++  assert.equal(djurMedUid(d, "a1")?.uid, "a1");
++  assert.equal(djurMedUid(d, "finns-inte"), undefined);
++});
