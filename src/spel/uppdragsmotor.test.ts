@@ -6,7 +6,7 @@ import { test } from "node:test";
 import { tolkaMedReserv } from "../tolk/reserv.ts";
 import { ALLA_UPPDRAG, SKRIV, UPP } from "./aventyr.ts";
 import { NPC_DEL, mineUrl, valjMine } from "./npc.ts";
-import { aktivtSkrivUppdrag, aventyrKvar, bengtssonLagen, kravTraffar, kravUppfyllt, nastaSkrivUppdrag, ordIText, ordTraffar, type Status } from "./uppdragsmotor.ts";
+import { TAKT, aktivtSkrivUppdrag, aventyrKvar, bengtssonLagen, kravTraffar, kravUppfyllt, kravUppfylltTolkat, nastaSkrivUppdrag, ordIText, ordTraffar, sekTillRedo, type Status } from "./uppdragsmotor.ts";
 
 const krav = (id: string) => SKRIV.find((u) => u.id === id)!.krav!;
 const rot = path.resolve(import.meta.dirname, "../../public");
@@ -126,4 +126,27 @@ test("guidande val: varje skriv-uppdrag har förslag, och varje förslag uppfyll
     assert.equal(new Set(forslag.map((f) => f.fras)).size, forslag.length, `${u.id}: dubbletter`);
     assert.ok(u.krav!.ord.length >= 8, `${u.id}: fritext räknas fortfarande (kravlistan är kvar)`);
   }
+});
+
+// B1.2: uppdragsmotorn per plats, böjning via ord.json-former och krav på djur.
+test("B1.2: kravet godtar böjningar ur ord.json", () => {
+  assert.ok(kravUppfyllt({ ord: ["röd"] }, "ett rött äpple"), "rött löser röd");
+  assert.ok(kravUppfyllt({ ord: ["stor", "liten"], min: 2 }, "en stor katt och en liten mus"));
+  assert.ok(!kravUppfyllt({ ord: ["stor", "liten"], min: 2 }, "en stor katt och en stor hund"), "samma ord två gånger räknas en gång");
+});
+
+test("B1.2: krav.djur löses inte av ett föremål", () => {
+  assert.ok(!kravUppfylltTolkat({ ord: ["röd"], djur: true }, "en röd boll", false));
+  assert.ok(kravUppfylltTolkat({ ord: ["röd"], djur: true }, "en röd räv", true));
+  assert.ok(kravUppfylltTolkat({ ord: ["röd"] }, "en röd boll", false), "utan djur-krav räcker ordet");
+});
+
+test("B1.2: uppdragen följer platsen och final kräver finalOk", () => {
+  assert.equal(nastaSkrivUppdrag({}, "skogen"), undefined);
+  assert.equal(nastaSkrivUppdrag({})?.id, "kanin-fryser");
+  assert.equal(nastaSkrivUppdrag({}, "ang")?.id, "kanin-fryser");
+  const forst = nastaSkrivUppdrag({}, "ang")!;
+  assert.equal(aktivtSkrivUppdrag({ [forst.id]: "pagar" }, "skogen"), undefined, "ängens uppdrag syns inte i skogen");
+  assert.equal(aktivtSkrivUppdrag({ [forst.id]: "pagar" }, "ang")?.id, forst.id);
+  assert.equal(sekTillRedo({}, { djur: 99, spelSek: 999, sekSedanKlart: null }, TAKT, "skogen"), null, "inget att bjuda in till i skogen");
 });

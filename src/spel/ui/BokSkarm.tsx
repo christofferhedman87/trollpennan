@@ -6,6 +6,7 @@ import hemligt from "../../../data/hemligt.json" with { type: "json" };
 import { Ledtradsyta } from "./Ledtradsyta.tsx";
 import { ALLA_UPPDRAG, NPC, TEXTER_AV, VILDA, UPP, uppdragText } from "../aventyr.ts";
 import { aktivtSkrivUppdrag } from "../uppdragsmotor.ts";
+import { platsNu } from "./useBengtsson.ts";
 import { UppdragsRemsa } from "./UppdragsRemsa.tsx";
 import type { Sparad } from "../brygga.ts";
 import { fyll } from "../fyll.ts";
@@ -99,7 +100,7 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
         {panel === "spel" || (panel === "byggbok" && lage === "skriv") ? (
           <>
             <div className="bok-mitt">
-            {panel === "spel" ? <UppdragsRemsa uppdrag={aktivtSkrivUppdrag(uppdragSpar)} fyllForslag={fyllExempel} /> : null}
+            {panel === "spel" ? <UppdragsRemsa uppdrag={aktivtSkrivUppdrag(uppdragSpar, platsNu())} fyllForslag={fyllExempel} /> : null}
             {(onskaOpp || (onskan && !onskaSyns)) && onskan ? (
               <div className="onska-remsa" data-testid="onska-remsa">
                 {andrar && onskaDjur ? (
@@ -148,14 +149,14 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
               </div>
             ) : null}
             {!gavaTill && !andrar && varld === "ang" ? (
-              <div className={aktivtSkrivUppdrag(uppdragSpar) ? "skapar-guide kompakt" : "skapar-guide"} data-testid="skapar-guide">
-                {aktivtSkrivUppdrag(uppdragSpar) ? null : <p>{hemligt.steg}</p>}
+              <div className={aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? "skapar-guide kompakt" : "skapar-guide"} data-testid="skapar-guide">
+                {aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? null : <p>{hemligt.steg}</p>}
                 <p className="hemligt-forklaring" data-testid="hemligt-forklaring">{hemligt.forklaring}</p>
-                <Ledtradsyta funna={funna} kompakt={!!aktivtSkrivUppdrag(uppdragSpar)} />
+                <Ledtradsyta funna={funna} kompakt={!!aktivtSkrivUppdrag(uppdragSpar, platsNu())} />
                 <details>
                   <summary>{upplevelse.examplesTitle}</summary>
                   <div className="ideer">
-                    {(aktivtSkrivUppdrag(uppdragSpar)?.val?.grupper.flatMap((g) => g.forslag.map((f) => f.fras)) ?? upplevelse.examples).map(ex => <button type="button" className="kort" key={ex} onClick={() => fyllExempel(ex)}>{ex}</button>)}
+                    {(aktivtSkrivUppdrag(uppdragSpar, platsNu())?.val?.grupper.flatMap((g) => g.forslag.map((f) => f.fras)) ?? upplevelse.examples).map(ex => <button type="button" className="kort" key={ex} onClick={() => fyllExempel(ex)}>{ex}</button>)}
                   </div>
                 </details>
               </div>
