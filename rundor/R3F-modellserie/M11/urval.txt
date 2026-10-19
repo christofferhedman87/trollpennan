@@ -1,4 +1,4 @@
-# R3F-M11 (dubblingen, paket 1: småkryp och nya djur): 39 modeller, alla CC0. Format: paket/filnamn.
+# R3F-M11 (dubblingen, paket 1: småkryp och nya djur): 37 modeller, alla CC0. Format: paket/filnamn.
 gobkit-cc0-2/dingo.glb
 gobkit-cc0-2/mole.glb
 gobkit-cc0-2/narwhal.glb
@@ -28,7 +28,6 @@ gobkit-cc0-2/leafinsect.glb
 gobkit-cc0-2/mayfly.glb
 gobkit-cc0-2/molecricket.glb
 gobkit-cc0-2/orchidmantis.glb
-gobkit-cc0-2/silverfish.glb
 gobkit-cc0-2/soldiertermite.glb
 gobkit-cc0-2/stickinsect.glb
 gobkit-cc0-2/swallowtail.glb
@@ -36,5 +35,4 @@ gobkit-cc0-2/tigerbeetle.glb
 gobkit-cc0-2/tortoisebeetle.glb
 gobkit-cc0-2/treehopper.glb
 gobkit-cc0-2/waterstrider.glb
-polypizza-cc0/ladybug-ladybird-3tcnjc.glb
 polypizza-cc0/worm-worm-kinaab.glb

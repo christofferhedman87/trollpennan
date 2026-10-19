@@ -37,7 +37,6 @@
   "mullvadssyrsa": 0.35,
   "syrsa": 0.35,
   "bönsyrsa": 0.4,
-  "silverfisk": 0.25,
   "termit": 0.3,
   "pinnsyrsa": 0.35,
   "fjäril": 0.4,
@@ -46,7 +45,6 @@
   "sköldbagge": 0.3,
   "hornstrit": 0.3,
   "skräddare": 0.3,
-  "nyckelpiga": 0.3,
   "mask": 0.3,
   "daggmask": 0.3
  },
