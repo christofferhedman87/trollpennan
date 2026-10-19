@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { aventyrKvar, aktivtSkrivUppdrag, bengtssonLagen, kravUppfyllt, nastaSkrivUppdrag } from "../uppdragsmotor.ts";
+import { TAKT, aventyrKvar, aktivtSkrivUppdrag, bengtssonLagen, kravUppfyllt, nastaSkrivUppdrag, sekTillRedo } from "../uppdragsmotor.ts";
 import { klarUppdrag, type FlodeSvar } from "../avflode.ts";
 import { useMinne } from "../minne.ts";
 import { NPC_DEL, mineVararMs, valjMine } from "../npc.ts";
@@ -18,6 +18,10 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
   const status = useMinne((s) => s.uppdrag);
   const [tillfallig, setTillfallig] = useState<"fel" | "klar_nyss" | null>(null);
   const timer = useRef<number | null>(null);
+  const djur = useMinne((s) => s.ang.length);
+  const start = useRef(Date.now());
+  const klartVid = useRef<number | null>(null);
+  const [, ritaOm] = useState(0);
   const felNr = useRef(0);
   useEffect(
     () => () => {
@@ -25,6 +29,17 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
     },
     [],
   );
+  const sek = sekTillRedo(status, {
+    djur,
+    spelSek: (Date.now() - start.current) / 1000,
+    sekSedanKlart: klartVid.current === null ? null : (Date.now() - klartVid.current) / 1000,
+  });
+  // en enda timer som väcker komponenten när väntetiden är slut (ingen tick per sekund)
+  useEffect(() => {
+    if (sek === null || sek <= 0) return;
+    const t = window.setTimeout(() => ritaOm((n) => n + 1), sek * 1000 + 60);
+    return () => window.clearTimeout(t);
+  }, [sek]);
   const blinka = useCallback((lage: "fel" | "klar_nyss") => {
     setTillfallig(lage);
     if (timer.current) window.clearTimeout(timer.current);
@@ -33,7 +48,8 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
 
   const lagen = [...(tillfallig ? [tillfallig] : []), ...bengtssonLagen(status)];
   const mine = valjMine(NPC_ID, lagen);
-  const nytt = !aktivtSkrivUppdrag(status) && !!nastaSkrivUppdrag(status);
+  const nytt = sek === 0;
+  const synlig = nytt || !!aktivtSkrivUppdrag(status) || tillfallig !== null;
 
   function klicka() {
     const s = useMinne.getState().uppdrag;
@@ -57,6 +73,7 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
     if (!u?.krav) return "ingen";
     if (kravUppfyllt(u.krav, raw)) {
       belonaFlode(klarUppdrag(u.id));
+      klartVid.current = Date.now();
       blinka("klar_nyss");
       return "klar";
     }
@@ -66,5 +83,5 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
     return "fel";
   }
 
-  return { mine, nytt, klicka, prova, npcId: NPC_ID };
+  return { mine, nytt, synlig, klicka, prova, npcId: NPC_ID, ikonText: TAKT.ikon_text, ikonAlt: TAKT.ikon_alt };
 }

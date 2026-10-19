@@ -4,7 +4,11 @@ import { FormelBild } from "../formel.tsx";
 import { fyll } from "../fyll.ts";
 import { ALBUM, MOSSA, poangAv, sparaFoto } from "../liv.ts";
 import type { mossaHand } from "../liv.ts";
-import { FIR } from "./spelData.ts";
+import { FIR, SIDOR } from "./spelData.ts";
+import stjarnorJson from "../../../data/stjarnor.json" with { type: "json" };
+import onskningarJson from "../../../data/onskningar.json" with { type: "json" };
+import { ALLA_UPPDRAG } from "../aventyr.ts";
+import { djurPris } from "./hjalp.ts";
 import type { Banner, KopFraga, VisKort } from "./typer.ts";
 
 type SkyltDialogProps = {
@@ -167,5 +171,53 @@ export function MossaPanel({ halsning, mossaLista, mossaExtra, setMossaOpp }: Mo
             </button>
           </div>
         </div>
+  );
+}
+
+const STJ = stjarnorJson;
+
+function spann(tal: number[]): string {
+  const a = Math.min(...tal);
+  const b = Math.max(...tal);
+  return a === b ? String(a) : `${a}–${b}`;
+}
+
+/** R9: vad stjärnorna ger och gör, med siffror ur spelets egen data. */
+export function StjarnDialog({ stjarnor, koptaAntal, stang, ordbok }: { stjarnor: number; koptaAntal: number; stang: () => void; ordbok: () => void }) {
+  const tal = {
+    hemligt: String(FIR.hemligt_ord.stjarnor),
+    guld: String(FIR.guldord.stjarnor),
+    sida: String(FIR.sida_klar.stjarnor),
+    onskan: spann((onskningarJson as unknown as { onskningar?: { stjarnor: number }[] }).onskningar?.map((o) => o.stjarnor) ?? [1]),
+    uppdrag: spann(ALLA_UPPDRAG.map((u) => u.stjarnor)),
+  };
+  const kvar = SIDOR.sidor.length - koptaAntal;
+  const pris = djurPris(koptaAntal);
+  return (
+    <div className="skarm" role="dialog" aria-label={STJ.rubrik} data-testid="stjarn-info">
+      <div className="ark">
+        <h2>★ {fyll(STJ.har, { n: stjarnor })}</h2>
+        <h3>{STJ.ger_rubrik}</h3>
+        <ul>
+          {STJ.ger.map((t) => (
+            <li key={t}>{fyll(t, tal)}</li>
+          ))}
+        </ul>
+        <h3>{STJ.gor_rubrik}</h3>
+        <p>{STJ.gor}</p>
+        <p data-testid="stjarn-nasta">
+          {kvar <= 0 ? STJ.alla_sidor : `${fyll(STJ.nasta, { pris })} ${stjarnor >= pris ? STJ.nasta_ok : fyll(STJ.nasta_fattas, { n: pris - stjarnor })}`}
+        </p>
+        <p>{STJ.alltid}</p>
+        <div className="rad-kort">
+          <button type="button" className="kort" data-testid="stjarn-ordbok" onClick={ordbok}>
+            {STJ.knapp_ordbok}
+          </button>
+          <button type="button" className="nej" data-dialog-close onClick={stang}>
+            {STJ.knapp_stang}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

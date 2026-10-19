@@ -20,3 +20,17 @@ export function NpcFigur({ npc, mine, nytt, onClick }: Props) {
     </button>
   );
 }
+
+type IkonProps = { npc: string; nytt: boolean; text: string; alt: string; onClick: () => void };
+
+/** R9: liten knapp med Bengtssons huvud. Visas när figuren inte står på ängen och ger alltid ett uppdrag direkt. */
+export function NpcIkon({ npc, nytt, text, alt, onClick }: IkonProps) {
+  const f = NPC_DEL[npc];
+  if (!f) return null;
+  return (
+    <button type="button" className={nytt ? "npc-ikon nytt" : "npc-ikon"} data-testid="bengtsson-ikon" aria-label={alt} onClick={onClick}>
+      <img src={mineUrl(npc, f.standard)} alt="" draggable={false} width={52} height={52} />
+      <span>{text}</span>
+    </button>
+  );
+}

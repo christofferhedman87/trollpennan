@@ -2,6 +2,8 @@ import type { Dispatch, SetStateAction } from "react";
 import { Lock, Pencil } from "lucide-react";
 import type { ForslagKort, Ord } from "@/tolk/typer.ts";
 import upplevelse from "../../../data/upplevelse.json";
+import hemligt from "../../../data/hemligt.json" with { type: "json" };
+import { Ledtradsyta } from "./Ledtradsyta.tsx";
 import { ALLA_UPPDRAG, NPC, TEXTER_AV, VILDA, UPP, uppdragText } from "../aventyr.ts";
 import { aktivtSkrivUppdrag } from "../uppdragsmotor.ts";
 import { UppdragsRemsa } from "./UppdragsRemsa.tsx";
@@ -42,6 +44,7 @@ type BokSkarmProps = {
   kort: Ord[];
   val: Partial<Record<Slot, Ord>>;
   onskaIds: Set<string>;
+  funna: Record<string, unknown>;
   kortGang: Record<string, number>;
   valjKort: (ord: Ord) => void;
   oppnaSkrivMig: (ord: Ord) => void;
@@ -65,7 +68,7 @@ type BokSkarmProps = {
   forsokKop: (slag: "djur" | "bygg", id: string, titel: string, pris: number) => void;
 };
 
-export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, hemma, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop }: BokSkarmProps) {
+export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, hemma, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop }: BokSkarmProps) {
   return (
       <div className="bok-skarm" data-testid="bok-skarm" onClick={stangBok}>
       <section className={andrar ? "bok andrar" : "bok"} data-andrar={andrar ? "ja" : "nej"} role="dialog" aria-label="Pennans bok" onClick={(e) => e.stopPropagation()}>
@@ -146,7 +149,9 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
             ) : null}
             {!gavaTill && !andrar && varld === "ang" ? (
               <div className="skapar-guide" data-testid="skapar-guide">
-                <p>{upplevelse.guide}</p>
+                <p>{hemligt.steg}</p>
+                <p className="hemligt-forklaring" data-testid="hemligt-forklaring">{hemligt.forklaring}</p>
+                <Ledtradsyta funna={funna} />
                 <details>
                   <summary>{upplevelse.examplesTitle}</summary>
                   <div className="ideer">
@@ -184,6 +189,7 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
             ) : null}
             {lage === "kort" && !forslag && !behover ? (
               <>
+                <p className="forslag-etikett" data-testid="forslag-etikett">{hemligt.forslag_etikett}</p>
                 <div className="flikar" role="tablist">
                   {FLIKAR.map((f) => (
                     <button

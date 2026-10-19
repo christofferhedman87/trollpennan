@@ -90,11 +90,11 @@ import {
 } from "./ui/hjalp.ts";
 import { AngLager } from "./ui/AngLager.tsx";
 import { BokSkarm } from "./ui/BokSkarm.tsx";
-import { KopDialog, MossaPanel, SkyltDialog, ValjDjurDialog, VisKortBygg, VisKortDjur } from "./ui/Dialoger.tsx";
+import { KopDialog, StjarnDialog, MossaPanel, SkyltDialog, ValjDjurDialog, VisKortBygg, VisKortDjur } from "./ui/Dialoger.tsx";
 import { ForalderDialog } from "./ui/ForalderDialog.tsx";
 import { nattvaken } from "./entiteter.ts";
 import { Hud, HudBot, MenyPanel } from "./ui/Hud.tsx";
-import { NpcFigur } from "./ui/NpcFigur.tsx";
+import { NpcFigur, NpcIkon } from "./ui/NpcFigur.tsx";
 import { useBengtsson } from "./ui/useBengtsson.ts";
 import { KartaLager, OmradeHud } from "./ui/KartaLager.tsx";
 import { OrdbokDialog } from "./ui/OrdbokDialog.tsx";
@@ -135,6 +135,7 @@ export function Spel() {
   const [byggPuff, setByggPuff] = useState<string | null>(null);
   const [sidOpp, setSidOpp] = useState<string | null>(null);
   const [kop, setKop] = useState<KopFraga | null>(null);
+  const [stjarnInfo, setStjarnInfo] = useState(false);
   const [kopRad, setKopRad] = useState<string | null>(null);
   const [onskaOpp, setOnskaOpp] = useState(false);
   const [onskaPos, setOnskaPos] = useState({ x: 0.5, y: 0.16 });
@@ -181,7 +182,7 @@ export function Spel() {
     };
   }, []);
   gavaRef.current = gavaTill;
-  overlayRef.current = ordbok || foralder || !!visKort || !!kop || kopia != null || kartaOpp || !!omrade || !!valj || !!skylt || !!gavaTill || panel === "uppdrag" || albumOpp || mossaOpp;
+  overlayRef.current = ordbok || foralder || !!visKort || !!kop || stjarnInfo || kopia != null || kartaOpp || !!omrade || !!valj || !!skylt || !!gavaTill || panel === "uppdrag" || albumOpp || mossaOpp;
 
   const funna = useMinne((s) => s.funna);
   const kortGang = useMinne((s) => s.kortGang);
@@ -1747,15 +1748,19 @@ export function Spel() {
         <AngLager natt={natt} varld={varld} omrade={omrade} panel={panel} ang={ang} hemma={hemma} liv={liv} fotoMal={fotoMal} visaBanner={visaBanner} visaMossa={visaMossa} setFotoMal={setFotoMal} banners={banners} bubblor={bubblor} onskan={onskan} onskaOpp={onskaOpp} onskaSyns={onskaSyns} ank={ank} oppnaOnska={oppnaOnska} meny={meny} setMeny={setMeny} omUidRef={omUidRef} setLage={setLage} setBokOpp={setBokOpp} setLadaOpp={setLadaOpp} menyHem={menyHem} setBoUid={setBoUid} lada={lada} ladaOpp={ladaOpp} boUid={boUid} boDjur={boDjur} flyttaInDjur={flyttaInDjur} />
         {kartaOpp ? <KartaLager forstaRad={forstaRad} kartaText={kartaText} tryckPlats={tryckPlats} oppna={oppna} /> : null}
         {omrade && !kartaOpp ? <OmradeHud tryckPlats={tryckPlats} bytFolje={bytFolje} /> : null}
-        <Hud haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} />
+        <Hud oppnaStjarnor={() => setStjarnInfo(true)} haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} />
         <MenyPanel menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} senare={senare} panel={panel} varld={varld} valjVarld={valjVarld} lasMeny={lasMeny} oppnaUppdrag={oppnaUppdrag} setBokOpp={setBokOpp} oppnaKarta={oppnaKarta} setIntroNy={setIntroNy} setIntro={setIntro} menySaker={menySaker} borjaOm={borjaOm} />
         {varld === "ang" && !omrade && !bokOpp && !menyOpp && !intro && !overlayRef.current ? (
-          <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
+          bengtsson.synlig ? (
+            <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
+          ) : (
+            <NpcIkon npc={bengtsson.npcId} nytt={false} text={bengtsson.ikonText} alt={bengtsson.ikonAlt} onClick={bengtsson.klicka} />
+          )
         ) : null}
         <HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} />
       </section>
 
-      {bokOpp ? <BokSkarm stangBok={stangBok} andrar={andrar} panel={panel} lage={lage} setLage={setLage} setForslag={setForslag} byggPuff={byggPuff} onskaOpp={onskaOpp} onskan={onskan} onskaSyns={onskaSyns} onskaDjur={onskaDjur} onskaEx={onskaEx} fyllExempel={fyllExempel} gavaTill={gavaTill} ang={ang} hemma={hemma} varld={varld} forslag={forslag} valjForslag={valjForslag} nejForslag={nejForslag} behover={behover} utfor={utfor} flik={flik} onskaKort={onskaKort} setFlik={setFlik} kort={kort} val={val} onskaIds={onskaIds} kortGang={kortGang} valjKort={valjKort} oppnaSkrivMig={oppnaSkrivMig} text={text} omrade={omrade} visaOnskaHjalp={visaOnskaHjalp} vaknaNu={vaknaNu} vaknaText={vaknaText} skrivTecken={skrivTecken} sudda={sudda} uppFlik={uppFlik} setUppFlik={setUppFlik} uppdragSpar={uppdragSpar} byggSida={byggSida} agdaSidor={agdaSidor} setByggSidaId={setByggSidaId} setByggPuff={setByggPuff} byggFras={byggFras} kopRad={kopRad} lastaSidor={lastaSidor} forsokKop={forsokKop} /> : null}
+      {bokOpp ? <BokSkarm stangBok={stangBok} andrar={andrar} panel={panel} lage={lage} setLage={setLage} setForslag={setForslag} byggPuff={byggPuff} onskaOpp={onskaOpp} onskan={onskan} onskaSyns={onskaSyns} onskaDjur={onskaDjur} onskaEx={onskaEx} fyllExempel={fyllExempel} gavaTill={gavaTill} ang={ang} hemma={hemma} varld={varld} forslag={forslag} valjForslag={valjForslag} nejForslag={nejForslag} behover={behover} utfor={utfor} flik={flik} onskaKort={onskaKort} setFlik={setFlik} kort={kort} val={val} funna={funna} onskaIds={onskaIds} kortGang={kortGang} valjKort={valjKort} oppnaSkrivMig={oppnaSkrivMig} text={text} omrade={omrade} visaOnskaHjalp={visaOnskaHjalp} vaknaNu={vaknaNu} vaknaText={vaknaText} skrivTecken={skrivTecken} sudda={sudda} uppFlik={uppFlik} setUppFlik={setUppFlik} uppdragSpar={uppdragSpar} byggSida={byggSida} agdaSidor={agdaSidor} setByggSidaId={setByggSidaId} setByggPuff={setByggPuff} byggFras={byggFras} kopRad={kopRad} lastaSidor={lastaSidor} forsokKop={forsokKop} /> : null}
 
       {skylt ? <SkyltDialog skylt={skylt} setSkylt={setSkylt} /> : null}
 
@@ -1768,6 +1773,7 @@ export function Spel() {
       {ordbok ? <OrdbokDialog hittatAntal={hittatAntal} totalOrd={totalOrd} stjarnor={stjarnor} kopRad={kopRad} koptaSidor={koptaSidor} funna={funna} sidOpp={sidOpp} forsokKop={forsokKop} setSidOpp={setSidOpp} textRef={textRef} setText={setText} setHand={setHand} setLage={setLage} setOrdbok={setOrdbok} kvar={kvar} hittade={hittade} hemliga={hemliga} formler={formler} setVisKort={setVisKort} sovande={sovande} visaBanner={visaBanner} /> : null}
 
       {kop ? <KopDialog kop={kop} bekraftaKop={bekraftaKop} setKop={setKop} /> : null}
+      {stjarnInfo ? <StjarnDialog stjarnor={stjarnor} koptaAntal={koptaSidor.length} stang={() => setStjarnInfo(false)} ordbok={() => { setStjarnInfo(false); setOrdbok(true); }} /> : null}
 
       {foralder ? <ForalderDialog startLage={startLage} setLage={setLage} ljudPa={ljudPa} sparaKopia={sparaKopia} filRef={filRef} lasFil={lasFil} foralderRad={foralderRad} kopia={kopia} lasInKopia={lasInKopia} setKopia={setKopia} onskelista={onskelista} setSaker={setSaker} saker={saker} borjaOm={borjaOm} setForalder={setForalder} /> : null}
       {mossaOpp ? <MossaPanel halsning={halsning} mossaLista={mossaLista} mossaExtra={mossaExtra} setMossaOpp={setMossaOpp} /> : null}
