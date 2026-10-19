@@ -447,6 +447,15 @@ export function inbjudanAv(uid: string): string | null {
   return HUMOR.humor.find((h) => h.id === id)?.inbjudan ?? null;
 }
 
+const gavoFragat = new Set<string>();
+/** R9I (Christoffers beslut): ett djur som bjuder in till gåva ("sugen") öppnar gåvorutan bara vid FÖRSTA trycket
+ *  per djur och spelomgång. Senare tryck ger vanlig djurreplik och "Till stallet". */
+export function gavoInbjudanVidTryck(uid: string): boolean {
+  if (inbjudanAv(uid) !== "gava" || gavoFragat.has(uid)) return false;
+  gavoFragat.add(uid);
+  return true;
+}
+
 export function sparaFoto(v: Sparad): string {
   const s = useMinne.getState();
   if (s.foton.length >= 60) return ALBUM.texter.full;

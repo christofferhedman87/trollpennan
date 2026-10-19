@@ -29,7 +29,8 @@ export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: B
   useEffect(
     () =>
       useMinne.subscribe((s, f) => {
-        if (s.plats !== f.plats) setMal(null);
+        // R9I: djuret har just flyttats till stallet (t.ex. med knappen i gåvorutan) → knappen här är inaktuell
+        if (s.plats !== f.plats || s.stall.length > f.stall.length) setMal(null);
       }),
     [],
   );
@@ -49,6 +50,23 @@ export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: B
       onClick={() => {
         if (useMinne.getState().tillStall(mal.uid)) visaBanner(TEXTER.stall.flytta, "ovr");
         setMal(null);
+      }}
+    >
+      {TEXTER.stall.chip}
+    </button>
+  );
+}
+
+/** R9I: "Till stallet" inne i gåvorutan, så att knappen aldrig döljs när ett sugen djur öppnar boken. */
+export function GavaStallKnapp({ uid, visaBanner, klar }: { uid: string; visaBanner: (texten: string, slag: Banner["slag"]) => void; klar: () => void }) {
+  return (
+    <button
+      type="button"
+      className="stall-chip i-bok"
+      data-testid="gava-till-stall"
+      onClick={() => {
+        if (useMinne.getState().tillStall(uid)) visaBanner(TEXTER.stall.flytta, "ovr");
+        klar();
       }}
     >
       {TEXTER.stall.chip}

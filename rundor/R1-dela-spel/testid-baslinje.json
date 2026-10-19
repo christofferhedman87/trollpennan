@@ -147,6 +147,7 @@
   "{`skatt-${sk.id}`}": 1,
   "{`stall-hamta-${d.uid}`}": 1,
   "{`stall-namn-${d.uid}`}": 1,
+  "\"gava-till-stall\"": 1,
   "{`stjarnor-${id}`}": 1,
   "{`uppdrag-${u.id}`}": 1,
   "{`valj-${d.uid}`}": 1,

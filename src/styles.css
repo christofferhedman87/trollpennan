@@ -753,6 +753,7 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
 .stall-lista{display:flex;flex-direction:column;gap:6px}
 .stall-rad{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 6px 6px 14px;border-radius:16px;background:var(--color-cream);font-weight:700}
 /* R9H: större och fetare djurnamn i stall-listan så att ä/ö syns tydligt (räv ska aldrig kunna läsas som något annat) */
+.stall-chip.i-bok{position:static;transform:none;margin-top:8px}
 .stall-namn{font-size:1.1875rem;font-weight:800;letter-spacing:.01em;line-height:1.3}
 .meny-panel .stall-rad button{min-height:44px;padding:6px 14px;font-size:1.0625rem;background:var(--color-moss);color:var(--color-cream);box-shadow:none;text-align:center}
 .ledtrad-streck{pointer-events:none;user-select:none;-webkit-user-select:none}
