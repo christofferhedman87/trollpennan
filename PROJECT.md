@@ -132,7 +132,7 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
 | **R8 Grafik (ersätter 'Snyggare grafik' och Färgrunda)** | **R8-1: RITNING+PROMPT+patch klara, GO** (`rundor/R8-grafik/`); R8-2 ritas efter Christoffers smak | R8-1: `data/miljo.json` (ljus, himmel, dis, färggrad, vinjett, marktextur, kvalitet hög/låg), generell färgrunda (isbjörnen blir blå), före/efter-bilder och mobilmått. R8-2: horisont, träd, blobbskuggor, kontur på djur, vatten, FPS-vakt; filstorlekstaket höjs när R8-2 behöver texturer |
 | **R9 Tydlighet (färgord, hemliga djur + gåtor, Bengtssons takt + ikon, stjärnförklaring)** | **Körd av Doodle (PR #41); färgfelet för röd/grön kvar → R9C** (`rundor/R9-tydlighet/`) | Färg: sRGB-fix + gråskala/material för vita djur (blå och gul OK i bild; röd och grön gulsticka kvar, steg 0 för Doodle). 123 nya gåtor, ledtrådsyta, takt 3 djur/150 s/75 s i `data/bengtsson.json`, stjärnor öppnar Ordbokssidor (`data/stjarnor.json`) |
 | **R9B Layout-småfixar** (ledtrådsyta kompakt vid uppdrag, Bengtsson skärmrelativ via data/npc.json, förslagsraden avklippt) | **Klar, inlagd direkt** (`rundor/R9B-layout/`, `ref/r9b.patch`, bevis `r9b-prov.mjs`) |
-| **R9C Färgord röd/grön** | utredning: se `rundor/R9B-layout/R9C-farg.md` |
+| **R9C Färgord röd/grön** (röd isbjörn ~23° mot 1°, grön ~76° mot 123°; tulpaner rätt) | **Väntar** (pausad av Christoffer; ingen färgpatch) |
 | R6B Platserna (skog, sjö, grotta) som R3F-scener | **NEJ** | Beror på R5 (R3F-scener för byggnader/gård) och R4B (kamera) |
 | R7 Phaser bort | **NEJ** | Beror på R5 och R6B verifierade i bild |
 
