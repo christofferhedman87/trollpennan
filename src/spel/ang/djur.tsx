@@ -10,6 +10,7 @@ import { arSak, hoppHojd, malhojd, svavar } from "../entiteter.ts";
 import { faestTillbehor, procAnkare } from "../tillbehor/index.ts";
 import { DjurEffekter } from "../effekter.tsx";
 import { MILJO } from "../miljo.ts";
+import { synligKedja } from "../pekare.ts";
 import { AGG_KROPP, OrdAgg, ReservAgg } from "../ordagg.tsx";
 import { _mal, djurFarg, djurPlats, flygare, normDuk, simmare } from "./delat.ts";
 
@@ -351,6 +352,8 @@ export function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
     }
   });
   function ned(e: ThreeEvent<PointerEvent>) {
+    // R9H: osynlig träff (puff/plask) → låt nästa, närmaste synliga djur ta trycket
+    if (!synligKedja(e.object)) return;
     e.stopPropagation();
     if (upp.current) window.removeEventListener("pointerup", upp.current);
     const sx = e.nativeEvent.clientX;

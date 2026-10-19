@@ -1,5 +1,6 @@
 import { laddaDeladeBilder } from "./deladeBilder.ts";
 import * as PhaserNS from "phaser";
+import { paDuken } from "./pekare.ts";
 import type PhaserLib from "phaser";
 import { valjStil, zonLada, type Stil } from "./beteende.ts";
 import { brygga, type Sparad } from "./brygga.ts";
@@ -498,6 +499,7 @@ export class AngScen extends Phaser.Scene {
     let start = new Phaser.Math.Vector2();
     let timer: Phaser.Time.TimerEvent | null = null;
     nod.on("pointerdown", (p: Phaser.Input.Pointer) => {
+      if (!paDuken(p)) return;
       nere = true;
       lang = false;
       start = new Phaser.Math.Vector2(p.x, p.y);

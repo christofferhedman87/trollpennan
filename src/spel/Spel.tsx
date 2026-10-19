@@ -100,6 +100,7 @@ import { useBengtsson } from "./ui/useBengtsson.ts";
 import { usePlats } from "./ui/usePlats.ts";
 import { START_PLATS } from "./platser.ts";
 import { PlatsResa } from "./ui/PlatsResa.tsx";
+import { useStallBanner } from "./ui/useStallBanner.ts";
 import { KartaLager, OmradeHud } from "./ui/KartaLager.tsx";
 import { OrdbokDialog } from "./ui/OrdbokDialog.tsx";
 
@@ -231,6 +232,8 @@ export function Spel() {
     }, 2400);
   }
 
+  function slackBanner(texten: string) { bannerKo.current = bannerKo.current.filter((b) => b.text !== texten); setBanners((l) => l.filter((b) => b.text !== texten)); }
+  useStallBanner(slackBanner);
   function visaBanner(texten: string, slag: Banner["slag"]) {
     bannerKo.current.push({ id: nyId(), text: texten, slag });
     if (bannerSyns.current) return;
@@ -883,6 +886,7 @@ export function Spel() {
       if (u.typ === "tom") return;
       if (u.typ === "djur") {
         visaBanner(TEXTER_AV.gavoruta.djur_i_rutan, "ovr");
+        setGavaTill(null); gavaRef.current = null;
         rensaSkriv();
         return;
       }
@@ -917,6 +921,7 @@ export function Spel() {
         return;
       }
       belonaFlode(svar);
+      if (!svar.okant) { setGavaTill(null); gavaRef.current = null; }
       rensaSkriv();
       return;
     }
@@ -1377,6 +1382,7 @@ export function Spel() {
   useEffect(() => {
     if (forslag || behover || gavaTill || onskaOpp) setBokOpp(true);
   }, [forslag, behover, gavaTill, onskaOpp]);
+  useEffect(() => { if (!bokOpp) { setGavaTill(null); gavaRef.current = null; } }, [bokOpp]); // R9H: gåvoläget är aldrig klistrigt
 
   useEffect(() => {
     const ned = (e: KeyboardEvent) => {

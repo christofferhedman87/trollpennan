@@ -1,5 +1,6 @@
 import { laddaDeladeBilder } from "./deladeBilder.ts";
 import * as PhaserNS from "phaser";
+import { paDuken } from "./pekare.ts";
 import type PhaserLib from "phaser";
 import { valjStil } from "./beteende.ts";
 import type { Sparad } from "./brygga.ts";
@@ -266,8 +267,8 @@ export class AvScen extends Phaser.Scene {
       nod.add(g);
       nod.setDepth(pos.y * VERLD.h);
       nod.setInteractive(new Phaser.Geom.Rectangle(-40, -44, 80, 96), Phaser.Geom.Rectangle.Contains);
-      nod.on("pointerup", () => {
-        if (!this.syns(nod.x, nod.y)) return;
+      nod.on("pointerup", (p: PhaserLib.Input.Pointer) => {
+        if (!paDuken(p) || !this.syns(nod.x, nod.y)) return;
         avBro.skicka({ typ: "skylt", id });
       });
       this.skyltar.push({ id, nod });
@@ -314,8 +315,8 @@ export class AvScen extends Phaser.Scene {
       nod.add(g);
       nod.setDepth(sak.y * VERLD.h + 1);
       nod.setInteractive(new Phaser.Geom.Rectangle(-48, -48, 96, 96), Phaser.Geom.Rectangle.Contains);
-      nod.on("pointerup", () => {
-        if (!this.syns(sak.x * VERLD.b, sak.y * VERLD.h)) return;
+      nod.on("pointerup", (p: PhaserLib.Input.Pointer) => {
+        if (!paDuken(p) || !this.syns(sak.x * VERLD.b, sak.y * VERLD.h)) return;
         avBro.skicka({ typ: sak.slag, id: sak.id });
       });
       this.saker.push({ id: sak.id, nod, x: sak.x * VERLD.b, y: sak.y * VERLD.h });
@@ -375,8 +376,8 @@ export class AvScen extends Phaser.Scene {
       const nod = this.gorNod(spec, x, y);
       if (!nod) return;
       let sen = 0;
-      nod.nod.on("pointerup", () => {
-        if (!this.syns(nod.x, nod.y)) return;
+      nod.nod.on("pointerup", (p: PhaserLib.Input.Pointer) => {
+        if (!paDuken(p) || !this.syns(nod.x, nod.y)) return;
         const nu = Date.now();
         if (nu - sen < 450) {
           nod.x += nod.vx > 0 ? 50 : -50;

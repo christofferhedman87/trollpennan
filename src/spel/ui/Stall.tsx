@@ -25,6 +25,14 @@ export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: B
       sluta();
     };
   }, []);
+  // R9H: byter barnet plats försvinner knappen direkt (den hör till ett djur på den gamla platsen)
+  useEffect(
+    () =>
+      useMinne.subscribe((s, f) => {
+        if (s.plats !== f.plats) setMal(null);
+      }),
+    [],
+  );
   useEffect(() => {
     if (!mal) return;
     const t = window.setTimeout(() => setMal(null), CHIP_MS);
@@ -36,6 +44,7 @@ export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: B
       type="button"
       className="stall-chip"
       data-testid="djur-till-stall"
+      data-uid={mal.uid}
       style={dukStil(mal.x, Math.min(0.86, mal.y + 0.24))}
       onClick={() => {
         if (useMinne.getState().tillStall(mal.uid)) visaBanner(TEXTER.stall.flytta, "ovr");
@@ -65,7 +74,7 @@ export function StallMeny({ stang }: { stang: () => void }) {
           {full ? <p className="meny-fraga" data-testid="stall-full">{TEXTER.stall.full}</p> : null}
           {stall.map((d) => (
             <div className="stall-rad" key={d.uid}>
-              <span>{d.formel}</span>
+              <span className="stall-namn" data-testid={`stall-namn-${d.uid}`}>{d.formel}</span>
               <button
                 type="button"
                 data-testid={`stall-hamta-${d.uid}`}

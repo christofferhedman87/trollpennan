@@ -1,5 +1,6 @@
 import { laddaDeladeBilder } from "./deladeBilder.ts";
 import * as PhaserNS from "phaser";
+import { paDuken } from "./pekare.ts";
 import type PhaserLib from "phaser";
 import { valjStil } from "./beteende.ts";
 import { brygga, type Sparad } from "./brygga.ts";
@@ -297,7 +298,8 @@ export class GardScen extends Phaser.Scene {
       nod.setScale(bas);
       nod.setDepth(y + 30);
       nod.setInteractive(new Phaser.Geom.Rectangle(-150, -220, 300, 420), Phaser.Geom.Rectangle.Contains);
-      nod.on("pointerup", () => {
+      nod.on("pointerup", (p: PhaserLib.Input.Pointer) => {
+        if (!paDuken(p)) return;
         brygga.skicka({ typ: "mossa", x: (x - 78) / VERLD.b, y: (y - 120) / VERLD.h });
       });
       this.mossaNod = nod;
@@ -422,7 +424,7 @@ export class GardScen extends Phaser.Scene {
       brygga.skicka({ typ, uid: spec.uid, x, y });
     };
     nod.on("pointerdown", (p: PhaserLib.Input.Pointer) => {
-      if (this.flyttar) return;
+      if (this.flyttar || !paDuken(p)) return;
       nere = true;
       lang = false;
       start = new Phaser.Math.Vector2(p.x, p.y);
@@ -515,7 +517,8 @@ export class GardScen extends Phaser.Scene {
         sov: false,
       };
       nod.setInteractive(new Phaser.Geom.Rectangle(-120, -180, 240, 320), Phaser.Geom.Rectangle.Contains);
-      nod.on("pointerup", () => {
+      nod.on("pointerup", (p: PhaserLib.Input.Pointer) => {
+        if (!paDuken(p)) return;
         const text = PRAT[Math.floor(Math.random() * PRAT.length)] ?? PRAT[0]!;
         brygga.skicka({ typ: "hemTryck", uid: v.uid, text, x: djur.x / VERLD.b, y: (djur.y - 100) / VERLD.h });
       });
