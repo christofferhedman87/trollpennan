@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 500 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 526 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -24,35 +24,35 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kaykit-furniture-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/furniture-bits | 10 |
 | kaykit-halloween-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/halloween-bits | 2 |
 | kaykit-holiday-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/holiday-bits | 9 |
-| kaykit-restaurant-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/restaurant-bits | 12 |
-| kaykit-rpg-tools-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/rpg-tools-bits | 16 |
+| kaykit-restaurant-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/restaurant-bits | 17 |
+| kaykit-rpg-tools-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/rpg-tools-bits | 17 |
 | kenney-blocky-characters | Kenney | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 1 |
 | kenney-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/car-kit | 19 |
 | kenney-castle-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/castle-kit | 2 |
 | kenney-city-kit-suburban | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-suburban | 2 |
 | kenney-cube-pets | Kenney | CC0-1.0 | https://kenney.nl/assets/cube-pets | 13 |
 | kenney-fantasy-town-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/fantasy-town-kit | 10 |
-| kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 59 |
-| kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 37 |
+| kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 66 |
+| kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 46 |
 | kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 6 |
 | kenney-holiday-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/holiday-kit | 8 |
 | kenney-mini-dungeon | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-dungeon | 10 |
 | kenney-mini-forest | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-forest | 3 |
 | kenney-modular-cave-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/modular-cave-kit | 3 |
 | kenney-nature-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/nature-kit | 34 |
-| kenney-pirate-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/pirate-kit | 11 |
+| kenney-pirate-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/pirate-kit | 12 |
 | kenney-platformer-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/platformer-kit | 10 |
 | kenney-space-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/space-kit | 7 |
 | kenney-survival-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/survival-kit | 6 |
 | kenney-toy-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/toy-car-kit | 3 |
 | kenney-train-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/train-kit | 12 |
 | oga-cc0 | Teh_Bucket | CC0-1.0 | https://opengameart.org/content/hats-clothing-props | 7 |
-| polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 34 |
+| polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 35 |
 | polypizza-cc0-2 | Quaternius | CC0-1.0 | https://poly.pizza/m/3aQgc75sUR | 16 |
 | quaternius-animated-dinosaurs | Quaternius | CC0-1.0 | https://quaternius.com/packs/animateddinosaurs.html | 3 |
 | quaternius-cute-fish | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutefish.html | 13 |
 | quaternius-cute-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutemonsters.html | 6 |
-| quaternius-fantasy-props-megakit | Quaternius | CC0-1.0 | https://quaternius.itch.io/fantasy-props-megakit | 7 |
+| quaternius-fantasy-props-megakit | Quaternius | CC0-1.0 | https://quaternius.itch.io/fantasy-props-megakit | 9 |
 | quaternius-farm-animals | Quaternius | CC0-1.0 | https://quaternius.com/packs/farmanimal.html | 2 |
 | quaternius-farm-buildings | Quaternius | CC0-1.0 | https://quaternius.com/packs/farmbuildings.html | 10 |
 | quaternius-medieval-village-megakit | Quaternius | CC0-1.0 | https://quaternius.itch.io/medieval-village-megakit | 1 |
@@ -566,3 +566,29 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | tvattmaskin | /models/bulk/tvattmaskin.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
 | torktumlare | /models/bulk/torktumlare.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
 | arbetsbank | /models/bulk/arbetsbank.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/survival-kit |
+| skal | /models/bulk/skal.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| ketchupflaska | /models/bulk/ketchupflaska.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| senapsflaska | /models/bulk/senapsflaska.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| skarbrada | /models/bulk/skarbrada.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| burk | /models/bulk/burk.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| hink | /models/bulk/hink.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/rpg-tools-bits |
+| sked | /models/bulk/sked.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| gaffel | /models/bulk/gaffel.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| kavel | /models/bulk/kavel.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| visp | /models/bulk/visp.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| flaska | /models/bulk/flaska.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| pase | /models/bulk/pase.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| pizzakartong | /models/bulk/pizzakartong.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| radio | /models/bulk/radio.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| datorskarm | /models/bulk/datorskarm.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| laptop | /models/bulk/laptop.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| tangentbord | /models/bulk/tangentbord.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| datormus | /models/bulk/datormus.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| hogtalare | /models/bulk/hogtalare.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| kaffebryggare | /models/bulk/kaffebryggare.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| mixer | /models/bulk/mixer.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| brodrost | /models/bulk/brodrost.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| tralada | /models/bulk/tralada.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/pirate-kit |
+| vattenkokare | /models/bulk/vattenkokare.glb | CC0-1.0 | MilkAndBanana | https://poly.pizza/m/XggUrd5f03 |
+| sack | /models/bulk/sack.glb | CC0-1.0 | Quaternius | https://quaternius.itch.io/fantasy-props-megakit |
+| traspann | /models/bulk/traspann.glb | CC0-1.0 | Quaternius | https://quaternius.itch.io/fantasy-props-megakit |
