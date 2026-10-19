@@ -118,7 +118,7 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 2. ~~R9G~~ klar (#80)
 2b. **R9H** fel 1–5 efter R9G — **skript** (`rundor/R9H-fix/kor.sh`, ingen Build)
 2c. **R9I** sugen djur bjuder in till gåva bara vid första trycket, "Till stallet" i gåvorutan, ingen gåta under uppdrag — **skript** (`git checkout main && git pull && git checkout -b runda-r9i-kod && bash rundor/R9I-fix/kor.sh`). Kräver R9H på main; körs efter R8-2a-merge, eller före om R8-2a inte startat
-3. **R8-2a** platserna fylls: dekor i rätt skala som data (`platser.json` `dekor`), horisont och blobbskuggor per plats — **Build** efter R9H (`rundor/R8-grafik/R8-2 PROMPT.md`, grind `GATE-R8-2.md`: JA). **R8-2b** (kontur på GLB, vatten, FPS-vakt) ritas efter R8-2a
+3. ~~**R8-2a**~~ Build blev ofullständig (gren `runda-r8-2a`, mergas **inte**; `rundor/R8-grafik/RUNDA-R8-2a.md`) → **R8-2b** gör klart R8-2a + horisont per plats (grottan: berg), inget svävar (ankare, stalagmiter), skapelser bara på land, sjön får strand — **skript** `git checkout main && git pull && git checkout -b runda-r8-2b-kod && bash rundor/R8-2b/kor.sh` (`rundor/R8-2b/PLAN.md`). Kontur på GLB, vattenshader, FPS-vakt: senare
 4. **B2** Skogen — **skript** (`kor-plats.sh skogen`)
 5. **B3** Sjön — **skript**
 6. **B4** Grottan — **skript** + **B4.1** ljuskällor **Build**
@@ -717,4 +717,6 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
 | 14 | ~~`lagg-data.mjs --plats` ersätter hela platsraden~~ → slår nu ihop: `start`/`zoner`/`dekor`/`miljo` behålls från data/platser.json, övrigt från Copilot-utkastet (R8-2a steg 0 är därmed redan gjort) | **R9I** (underlag, klar) |
 | 15 | ~~`kor-plats.sh` hittade inte `plats-prov.mjs` (ligger i `B1.4/`)~~ – B2 hade stoppat med exit 2 | **R9I** (underlag, klar) |
 | 16 | "Sugen" djur öppnade gåvorutan vid varje tryck och dolde "Till stallet" | **R9I** (Christoffer: bara första trycket) |
+| 18 | Grottan hade horisont med gröna trädkoner; droppstenar och "planka" (grottans `grotta`-modell bakom horisontbandet) svävade; djur ute på vattnet i sjön/skogen | **R8-2b** (`rundor/R8-2b/`) |
+| 19 | Djur på andra platser än ängen får aldrig humör (`tickLiv` går bara över `ang` + `hemma`) → "sugen" uppstår aldrig där. På ängen är "sugen" 1/6 vid varje byte (1–3 min), inte sällsynt | ej ändrat – beslut Christoffer |
 | 17 | Gåtrutan ("Hemligt djur att stava (0/181 hittade) Visa gåtan") syntes hopfälld under uppdrag | **R9I** (Christoffer: ingen gåta alls under uppdrag) |
