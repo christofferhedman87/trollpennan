@@ -1,5 +1,6 @@
-// B4.1: det barnet skapar lyser i grottan ("en kanin med en lykta", även en ensam lykta), högst 4 ljus (de senaste),
-// inget ljus på ängen eller i skogen, ljuset finns kvar efter omladdning. Mäter draw calls och fps (rAF) före/efter.
+// B4.1: det barnet skapar lyser i grottan ("en kanin med en lykta", även en ensam lykta), högst 4 tända (de senaste),
+// fast pool med 4 punktljus (antalet ljus i scenen ändras aldrig → inga shader-ombyggen), inget ljus på ängen eller i skogen,
+// ljuset finns kvar efter omladdning. Mäter draw calls, fps och längsta bildrutan när en lykta resp. en bok skapas.
 //   node rundor/B4.1-ljus/b41-prov.mjs --bilder <mapp>   (exit 0 = alla steg gröna; kräver npm run build:pages)
 import fs from "node:fs";
 import http from "node:http";
@@ -48,7 +49,6 @@ async function sida(spar, fraga = "") {
 async function blok(id, fn) { try { await fn(); } catch (e) { kolla(`block ${id} kraschade`, false, { fel: String(e).split("\n")[0] }); } }
 const bild = async (p, n) => bilder && p.screenshot({ path: path.join(bilder, n), animations: "disabled" });
 const sparat = (p) => p.evaluate(() => JSON.parse(localStorage.getItem("trollpennan-v2") ?? "{}"));
-const synlig = (p, s) => p.locator(s).first().isVisible().catch(() => false);
 async function malAv(p, uid) {
   for (let i = 0; i < 10; i++) { const m = await p.evaluate((u) => window.__tredMal?.[u] ?? null, uid); if (m) return m; await p.waitForTimeout(400); }
   return null;
@@ -59,9 +59,9 @@ async function nyttDjur(p, plats, fras) {
   const s = await sparat(p);
   return plats === "ang" ? s.ang?.at(-1)?.uid : s.platsSkapelser?.[plats]?.at(-1)?.uid;
 }
-async function stangOmOppen(p) { if (await synlig(p, "[data-testid=stang-bok]")) { await p.click("[data-testid=stang-bok]"); await p.waitForTimeout(400); } }
 
-const ljus = (p) => p.evaluate(() => window.__ljus ?? { ljus: 0, pol: 0 });
+const ljus = async (p) => { await p.waitForTimeout(400); return p.evaluate(() => ({ ljus: 0, pol: 0, aktiva: 0, program: 0, scen: 0, ...window.__ljus })); };
+const median = (a) => { const b = [...a].sort((x, y) => x - y); return b.length % 2 ? b[(b.length - 1) / 2] : (b[b.length / 2 - 1] + b[b.length / 2]) / 2; };
 // Medel-draw calls per bildruta och fps (rAF) under 2 s, och längsta bildrutan.
 const mat = (p, ms = 2000) => p.evaluate((ms) => new Promise((res) => {
   const d0 = window.__gl.draw; let n = 0, max = 0; const t0 = performance.now(); let s = t0;
@@ -87,12 +87,15 @@ async function ljushet(p, buf, x, y, b, h) {
 }
 const skarm = (p) => p.screenshot({ animations: "disabled" });
 const matt = {};
+let SCEN = -1; // punktljus i grottans scen med poolen (poolens 4 + de som platsen redan har); ska aldrig ändras
 
 // A: grottan, "en kanin med en lykta" lyser upp närområdet; jämförs med "en kanin med en bok" (samma kanin, ingen ljuskälla)
 for (const [namn, fras] of [["lykta", "en kanin med en lykta"], ["bok", "en kanin med en bok"]]) {
   await blok(`A-${namn}`, async () => {
     const { ctx, p } = await sida({ plats: "grottan" });
-    kolla(`A ${namn}: tom grotta har inget ljus (dekoren lyser inte)`, (await ljus(p)).pol === 0);
+    const t = await ljus(p);
+    if (SCEN < 0) SCEN = t.scen;
+    kolla(`A ${namn}: tom grotta = 4 släckta punktljus i poolen, inget tänt (dekoren lyser inte)`, t.ljus === 4 && t.scen >= 4 && t.scen === SCEN && t.aktiva === 0 && t.pol === 0, t);
     const fore = await skarm(p);
     await bild(p, `b41-grottan-fore-${namn}.png`);
     const uid = await nyttDjur(p, "grottan", fras);
@@ -101,7 +104,8 @@ for (const [namn, fras] of [["lykta", "en kanin med en lykta"], ["bok", "en kani
     const efter = await skarm(p);
     await bild(p, `b41-grottan-${namn}.png`);
     const l = await ljus(p);
-    kolla(`A ${namn}: ${namn === "lykta" ? "1" : "0"} ljus`, l.pol === (namn === "lykta" ? 1 : 0) && l.ljus === l.pol, l);
+    const en = namn === "lykta" ? 1 : 0;
+    kolla(`A ${namn}: ${en} tänt ljus, lika många punktljus i scenen`, l.pol === en && l.aktiva === en && l.scen === SCEN, { ...l, SCEN });
     // Närområdet = en bred ruta runt och under djuret (marken), där djuret självt bara är en liten del.
     const omr = m ? [m.x, m.y, 240, 220] : [187, 380, 240, 220];
     matt[namn] = { mal: m, fore: await ljushet(p, fore, ...omr), efter: await ljushet(p, efter, ...omr) };
@@ -118,15 +122,18 @@ await blok("B", async () => {
   const { ctx, p } = await sida({ plats: "grottan" });
   await nyttDjur(p, "grottan", "en lykta");
   await p.waitForTimeout(800);
-  kolla("B: en ensam lykta lyser", (await ljus(p)).pol === 1, await ljus(p));
+  const b1 = await ljus(p);
+  kolla("B: en ensam lykta lyser", b1.pol === 1 && b1.aktiva === 1, b1);
   await bild(p, "b41-grottan-ensam-lykta.png");
   await nyttDjur(p, "grottan", "en räv med en fackla och en bok");
   await p.waitForTimeout(800);
-  kolla("B: räven med fackla och bok ger ett ljus till (2)", (await ljus(p)).pol === 2, await ljus(p));
+  const b2 = await ljus(p);
+  kolla("B: räven med fackla och bok ger ett ljus till (2)", b2.pol === 2 && b2.aktiva === 2, b2);
   await p.reload({ waitUntil: "domcontentloaded" });
   await p.waitForFunction(() => !!window.__troll, null, { timeout: 20000 });
   await p.waitForTimeout(3000);
-  kolla("B: ljusen finns kvar efter omladdning", (await ljus(p)).pol === 2, await ljus(p));
+  const b3 = await ljus(p);
+  kolla("B: ljusen finns kvar efter omladdning", b3.pol === 2 && b3.aktiva === 2 && b3.scen === b1.scen, b3);
   await ctx.close();
 });
 
@@ -139,16 +146,26 @@ for (const sak of ["bok", "lykta"]) {
     for (let i = 0; i < 5; i++) {
       const r = await skapaOchMat(p, "grottan", `en kanin med en ${sak}`);
       C[sak].skapa.push(r.langst);
-      C[sak].ljusEfter = [...(C[sak].ljusEfter ?? []), (await ljus(p)).pol];
+      const l = await ljus(p);
+      C[sak].ljusEfter = [...(C[sak].ljusEfter ?? []), l.aktiva];
+      C[sak].scen = [...(C[sak].scen ?? []), l.scen];
+      C[sak].program = [...(C[sak].program ?? []), l.program];
     }
     await p.waitForTimeout(1500);
     C[sak].fem = await mat(p);
     if (sak === "lykta") {
-      kolla("C: 1, 2, 3, 4, 4 ljus när fem lyktor skapas (högst 4)", C[sak].ljusEfter.join() === "1,2,3,4,4", { ljus: C[sak].ljusEfter });
+      kolla("C: 1, 2, 3, 4, 4 tända ljus när fem lyktor skapas (högst 4)", C[sak].ljusEfter.join() === "1,2,3,4,4", { aktiva: C[sak].ljusEfter });
+      kolla("C: antalet punktljus i scenen är konstant medan lyktorna skapas", C[sak].scen.every((n) => n === SCEN), { scen: C[sak].scen, SCEN });
       await bild(p, "b41-grottan-fem-lyktor.png");
     }
     await ctx.close();
   });
+}
+if (C.bok?.skapa?.length === 5 && C.lykta?.skapa?.length === 5) {
+  // Första gången laddas modellen (lykta resp. bok); lyktor 2–5 visar om det hackar när ett ljus tänds.
+  const ml = median(C.lykta.skapa.slice(1)), mb = median(C.bok.skapa.slice(1));
+  kolla("C: längsta bildrutan när en lykta skapas ≈ när en bok skapas (inget shaderbygge)", ml <= mb * 1.5 + 80, { lykta: C.lykta.skapa, bok: C.bok.skapa, medianLykta: ml, medianBok: mb });
+  kolla("C: inga nya shaderprogram när lyktor 2–5 tänds", C.lykta.program.slice(1).every((n) => n === C.lykta.program[0]), { program: C.lykta.program, programBok: C.bok.program });
 }
 if (C.bok?.fem && C.lykta?.fem) {
   const extra = +(C.lykta.fem.draw - C.bok.fem.draw).toFixed(1);
@@ -161,7 +178,7 @@ await blok("D", async () => {
   await nyttDjur(p, "grottan", "en kanin med en lykta");
   await p.waitForTimeout(800);
   const l = await ljus(p);
-  kolla("D: kvalitet låg = ljuspöl utan punktljus", l.pol === 1 && l.ljus === 0, l);
+  kolla("D: kvalitet låg = ljuspöl utan punktljus", l.pol === 1 && l.ljus === 0 && l.scen === 0, l);
   await bild(p, "b41-grottan-lag.png");
   await ctx.close();
 });
@@ -171,13 +188,15 @@ await blok("E", async () => {
   const { ctx, p } = await sida({});
   await nyttDjur(p, "ang", "en kanin med en lykta");
   await p.waitForTimeout(800);
-  kolla("E: ängen – ingen ljuskälla", (await ljus(p)).pol === 0, await ljus(p));
+  const e1 = await ljus(p);
+  kolla("E: ängen – ingen ljuspool, noll extra ljus", e1.pol === 0 && e1.ljus === 0, e1);
   await bild(p, "b41-ang.png");
   await ctx.close();
   const s = await sida({ plats: "skogen" });
   await nyttDjur(s.p, "skogen", "en kanin med en lykta");
   await s.p.waitForTimeout(800);
-  kolla("E: skogen – ingen ljuskälla (ingen entiteter-lista)", (await ljus(s.p)).pol === 0, await ljus(s.p));
+  const e2 = await ljus(s.p);
+  kolla("E: skogen – ingen ljuspool (ingen entiteter-lista)", e2.pol === 0 && e2.ljus === 0, e2);
   await s.ctx.close();
 });
 

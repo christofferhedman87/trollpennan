@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # B4.1 – ljuskällor: det barnet skapat lyser i grottan ("en kanin med en lykta", även en ensam lykta), UTAN Build.
-#   Ljuset sitter i DjurIScen (aldrig på dekoren), radie = andel av ytans bredd, högst 4 ljus (de senast skapade),
+#   Fast pool med 4 punktljus i platsscenen (antalet ljus ändras aldrig → inga shader-ombyggen); DjurIScen bestämmer läget
+#   (aldrig dekoren), radie = andel av ytans bredd, högst 4 ljus (de senast skapade),
 #   vilka saker som lyser står i data/platser.json (miljo.ljuskalla_skapad.entiteter). Kvalitet låg: bara ljuspöl.
 # Kod = b41.patch (git apply, annars --3way). Data = b41-data.mjs (per nyckel, tål modellpaketen M10–M13 före eller efter).
 # Kräver R9K (rundor/R9K-fix/kor.sh) mergad. Doodle kör från repots rot på main:
@@ -41,8 +42,8 @@ node "$D/b41-prov.mjs" --bilder "$BILD" > "$UT/prov.json" 2>"$UT/prov.err" || { 
 node rundor/R9K-fix/r9k-prov.mjs > "$UT/r9k.json" 2>"$UT/r9k.err" || { grep -B2 '"ok": false' "$UT/r9k.json" 2>/dev/null; tail -20 "$UT/r9k.err"; aterstall; echo "STOPP 4: Playwright r9k-prov (regression) föll"; exit 4; }
 node rundor/R9J-humor/r9j-prov.mjs > "$UT/r9j.json" 2>"$UT/r9j.err" || { grep -B2 '"ok": false' "$UT/r9j.json" 2>/dev/null; tail -20 "$UT/r9j.err"; aterstall; echo "STOPP 4: Playwright r9j-prov (regression) föll"; exit 4; }
 git add $ANDRADE $NYA $DATA
-git commit -qm "B4.1: det barnet skapar lyser i grottan (lykta m.fl. ur platser.json), högst 4 ljus, ljuspöl på låg kvalitet (Arkitektens patch)"
-MATT=$(node -e 'const d=require(process.argv[1]);const s=d.steg;const a=s.find(x=>x.okningLykta!==undefined),c=s.find(x=>x.extraDraw!==undefined);console.log(`ljushet +${a.okningLykta} (bok +${a.okningBok}), draw ${c.bok.fem.draw}→${c.lykta.fem.draw}, fps ${c.bok.fem.fps}→${c.lykta.fem.fps}`)' "$UT/prov.json" 2>/dev/null)
+git commit -qm "B4.1: det barnet skapar lyser i grottan (lykta m.fl. ur platser.json), fast pool med 4 punktljus (inga shader-ombyggen), högst 4 tända, ljuspöl på låg kvalitet (Arkitektens patch)"
+MATT=$(node -e 'const d=require(process.argv[1]);const s=d.steg;const a=s.find(x=>x.okningLykta!==undefined),c=s.find(x=>x.extraDraw!==undefined),m=s.find(x=>x.medianLykta!==undefined),k=s.find(x=>x.SCEN!==undefined&&Array.isArray(x.scen));console.log(`ljushet +${a.okningLykta} (bok +${a.okningBok}), punktljus i scenen ${k.scen.join(",")}, längsta bildrutan lykta ${m.medianLykta} ms / bok ${m.medianBok} ms, draw ${c.bok.fem.draw}→${c.lykta.fem.draw}, fps ${c.bok.fem.fps}→${c.lykta.fem.fps}`)' "$UT/prov.json" 2>/dev/null)
 echo "B4.1 OK: test:product $(grep -E '^# pass' "$UT/test.txt" | awk '{print $3}') gröna, typecheck/typecheck:pages 0, eslint 0 fel, $(tail -1 "$UT/struktur.txt"), build:pages ok, b41-prov exit 0 ($(grep -c '"ok": true' "$UT/prov.json") steg; $MATT), r9k-prov och r9j-prov exit 0."
 echo "Bilder: $BILD/b41-*.png"
 echo "Nu: git push -u origin runda-b41-kod, PR, squash-merge. Skicka utdata till Arkitekten."
