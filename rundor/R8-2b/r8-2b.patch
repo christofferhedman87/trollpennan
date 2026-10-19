@@ -1259,10 +1259,10 @@ index 46b7cd9..cffab47 100644
    return (p?.zoner ?? [])
 diff --git a/src/spel/platsYta.ts b/src/spel/platsYta.ts
 new file mode 100644
-index 0000000..0cb4226
+index 0000000..474b2aa
 --- /dev/null
 +++ b/src/spel/platsYta.ts
-@@ -0,0 +1,84 @@
+@@ -0,0 +1,93 @@
 +// R8-2b: var skapelser får stå på en plats. Ren logik utan three, testas i Node.
 +// Platsens zoner (rekt i 0–1) ritas i PlatsDekors grupp med skala DEKOR_SKALA, så en världspunkt
 +// (wx, wz) motsvarar platspunkten tillPlats(wx / DEKOR_SKALA, wz / DEKOR_SKALA).
@@ -1274,6 +1274,8 @@ index 0000000..0cb4226
 +/** Minsta avstånd mellan två skapelser när en punkt måste flyttas (världsenheter). */
 +const MIN_AVSTAND = 0.85;
 +const STEG = 0.01;
++/** Djurets kropp (≈0,4) + vickningen i djur.tsx (±0,22): så långt från vattenkanten ska mitten stå (världsenheter). */
++export const KANT_MARGINAL = 0.6;
 +
 +export function iRekt(x: number, y: number, r: Zon["rekt"]): boolean {
 +  const [x0, y0, x1, y1] = r;
@@ -1304,19 +1306,27 @@ index 0000000..0cb4226
 +  return p.zoner.some((z) => (z.typ === "land" || z.typ === "fri") && iRekt(x, y, z.rekt));
 +}
 +
++/** Land för en hel kropp: mitten på land och inget av kroppens kantprov (±marginal) i vatten. */
++export function torrKropp(p: Plats, wx: number, wz: number, m = KANT_MARGINAL): boolean {
++  if (!paLand(p, ...tillPlats(wx, wz))) return false;
++  for (const [dx, dz] of [[m, 0], [-m, 0], [0, m], [0, -m], [m * 0.7, m * 0.7], [-m * 0.7, m * 0.7], [m * 0.7, -m * 0.7], [-m * 0.7, -m * 0.7]] as const)
++    if (iVatten(p, ...tillPlats(wx + dx, wz + dz))) return false;
++  return true;
++}
++
 +function harZoner(p: Plats | undefined): p is Plats {
 +  return !!p && p.zoner.some((z) => z.typ === "land" || z.typ === "fri");
 +}
 +
 +/** Närmaste tillåtna punkt (platsrutnät STEG) till `onskad`, minst `min` från `upptagna`. Deterministisk. */
-+function narmast(p: Plats, onskad: [number, number], upptagna: [number, number][], ok: (x: number, y: number) => boolean): [number, number] {
++function narmast(p: Plats, onskad: [number, number], upptagna: [number, number][], ok: (wx: number, wz: number) => boolean): [number, number] {
 +  for (const min of [MIN_AVSTAND, MIN_AVSTAND / 2, 0]) {
 +    let bast: [number, number] | null = null;
 +    let bastD = Infinity;
 +    for (let x = STEG; x < 1; x += STEG) {
 +      for (let y = 0.3; y <= 1; y += STEG) {
-+        if (!ok(x, y)) continue;
 +        const [wx, wz] = franPlats(x, y);
++        if (!ok(wx, wz)) continue;
 +        if (upptagna.some(([ux, uz]) => Math.hypot(ux - wx, uz - wz) < min)) continue;
 +        const d = Math.hypot(wx - onskad[0], wz - onskad[1]);
 +        if (d < bastD) {
@@ -1340,10 +1350,9 @@ index 0000000..0cb4226
 +  const ut: [number, number][] = [];
 +  onskade.forEach((o, i) => {
 +    const simmare = !!sim[i] && harVatten;
-+    const ok = simmare ? (x: number, y: number) => iVatten(p, x, y) : (x: number, y: number) => paLand(p, x, y);
-+    const [px, py] = tillPlats(o[0], o[1]);
++    const ok = simmare ? (wx: number, wz: number) => iVatten(p, ...tillPlats(wx, wz)) : (wx: number, wz: number) => torrKropp(p, wx, wz);
 +    const fri = !ut.some(([ux, uz]) => Math.hypot(ux - o[0], uz - o[1]) < MIN_AVSTAND);
-+    ut.push(ok(px, py) && fri ? o : narmast(p, o, ut, ok));
++    ut.push(ok(o[0], o[1]) && fri ? o : narmast(p, o, ut, ok));
 +  });
 +  return ut;
 +}
@@ -1450,10 +1459,10 @@ index 0000000..9c4c176
 +});
 diff --git a/src/spel/r8-2b.test.ts b/src/spel/r8-2b.test.ts
 new file mode 100644
-index 0000000..a91bf0b
+index 0000000..e303366
 --- /dev/null
 +++ b/src/spel/r8-2b.test.ts
-@@ -0,0 +1,73 @@
+@@ -0,0 +1,74 @@
 +// R8-2b: skapelser står bara på land (land/fri, aldrig vattenyta), simmare i vattnet; horisont per plats; inget svävar.
 +import assert from "node:assert/strict";
 +import { test } from "node:test";
@@ -1461,7 +1470,7 @@ index 0000000..a91bf0b
 +import { djurPlats } from "./ang/delat.ts";
 +import { ANKARE_HOJD, ankareFor, dekorFor, horisontFor, spridDekor, DEKOR_SKALA } from "./platsDekor.ts";
 +import { PLATSER, platsMed } from "./platser.ts";
-+import { iVatten, paLand, placeraPaPlats, tillPlats } from "./platsYta.ts";
++import { iVatten, paLand, placeraPaPlats, tillPlats, torrKropp } from "./platsYta.ts";
 +
 +const spec = (uid: string, kropp: string, formagor: string[] = []) => ({ uid, kropp, formagor, tillbehor: [], skapad: 0 }) as unknown as Sparad;
 +const LAND = ["kanin", "gris", "katt", "hund", "ko", "rav", "mus", "hast"];
@@ -1475,6 +1484,7 @@ index 0000000..a91bf0b
 +      const [px, py] = tillPlats(x, z);
 +      assert.equal(iVatten(p, px, py), false, `${id} ${alla[i]!.kropp} i vatten ${px.toFixed(2)},${py.toFixed(2)}`);
 +      assert.ok(paLand(p, px, py), `${id} ${alla[i]!.kropp} inte på land`);
++      assert.ok(torrKropp(p, x, z), `${id} ${alla[i]!.kropp} för nära vattenkanten`);
 +    }
 +    for (let i = 0; i < pos.length; i++)
 +      for (let j = i + 1; j < pos.length; j++) assert.ok(Math.hypot(pos[i]![0] - pos[j]![0], pos[i]![2] - pos[j]![2]) >= 0.4, `${id} ${i}/${j} krockar`);
