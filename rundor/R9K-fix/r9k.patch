@@ -1,0 +1,704 @@
+diff --git a/package.json b/package.json
+index 43330e2..9aa46f3 100644
+--- a/package.json
++++ b/package.json
+@@ -22,7 +22,7 @@
+     "format": "prettier --write .",
+     "build:pages": "vite build --config vite.pages.config.ts",
+     "preview:pages": "vite preview --config vite.pages.config.ts",
+-    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/r9j.test.ts src/spel/dialogIsolering.test.mjs",
++    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/r9j.test.ts src/spel/r9k.test.ts src/spel/dialogIsolering.test.mjs",
+     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
+     "check:pages-output": "node scripts/check-pages-output.mjs",
+     "check:struktur": "node scripts/check-spel-struktur.mjs",
+diff --git a/rundor/R1-dela-spel/testid-baslinje.json b/rundor/R1-dela-spel/testid-baslinje.json
+index b761b46..982f25f 100644
+--- a/rundor/R1-dela-spel/testid-baslinje.json
++++ b/rundor/R1-dela-spel/testid-baslinje.json
+@@ -42,6 +42,7 @@
+   "\"framsteg\"": 1,
+   "\"fyr-ljus\"": 1,
+   "\"gava-remsa\"": 1,
++  "\"gava-till-stall\"": 1,
+   "\"groda-kredit\"": 1,
+   "\"hem-knapp\"": 1,
+   "\"hemligt-forklaring\"": 1,
+@@ -137,6 +138,7 @@
+   "{`byggord-${b.id}`}": 1,
+   "{`byggord-${id}`}": 1,
+   "{`forslag-${f.id}`}": 1,
++  "{`humor3d-${humor}`}": 1,
+   "{`kort-${ord.id}`}": 1,
+   "{`kropp-${id}`}": 1,
+   "{`mossa-${p.id}`}": 1,
+@@ -147,7 +149,6 @@
+   "{`skatt-${sk.id}`}": 1,
+   "{`stall-hamta-${d.uid}`}": 1,
+   "{`stall-namn-${d.uid}`}": 1,
+-  "\"gava-till-stall\"": 1,
+   "{`stjarnor-${id}`}": 1,
+   "{`uppdrag-${u.id}`}": 1,
+   "{`valj-${d.uid}`}": 1,
+diff --git a/src/spel/Spel.tsx b/src/spel/Spel.tsx
+index fe594f9..3d3541d 100644
+--- a/src/spel/Spel.tsx
++++ b/src/spel/Spel.tsx
+@@ -101,6 +101,7 @@ import { NpcFigur, NpcIkon } from "./ui/NpcFigur.tsx";
+ import { useBengtsson } from "./ui/useBengtsson.ts";
+ import { usePlats } from "./ui/usePlats.ts";
+ import { START_PLATS } from "./platser.ts";
++import { platsText } from "./platsText.ts";
+ import { PlatsResa } from "./ui/PlatsResa.tsx";
+ import { useStallBanner } from "./ui/useStallBanner.ts";
+ import { KartaLager, OmradeHud } from "./ui/KartaLager.tsx";
+@@ -237,7 +238,7 @@ export function Spel() {
+   function slackBanner(texten: string) { bannerKo.current = bannerKo.current.filter((b) => b.text !== texten); setBanners((l) => l.filter((b) => b.text !== texten)); }
+   useStallBanner(slackBanner);
+   function visaBanner(texten: string, slag: Banner["slag"]) {
+-    bannerKo.current.push({ id: nyId(), text: texten, slag });
++    bannerKo.current.push({ id: nyId(), text: platsText(texten, varldRef.current), slag });
+     if (bannerSyns.current) return;
+     visaNastaBanner();
+   }
+@@ -250,7 +251,8 @@ export function Spel() {
+     });
+   }
+ 
+-  function visaBubbla(texten: string, x: number, y: number, hjarta: boolean, ovan = false, ensam = false) {
++  function visaBubbla(rad: string, x: number, y: number, hjarta: boolean, ovan = false, ensam = false) {
++    const texten = platsText(rad, varldRef.current); // R9K: {platsen} → platsen barnet är på
+     const id = nyId();
+     setBubblor((prev) => {
+       const start = ensam ? [] : prev;
+@@ -1231,8 +1233,8 @@ export function Spel() {
+       let text = h.text;
+       if (sov) text = vackRad();
+       else if (kvall && djur && nattvaken(djur.kropp)) text = ugglaRad();
+-      else if (djur && h.typ === "tryck" && h.klapp) {
+-        const rader = h.klapp >= 2 ? TEXTER.klapp.mer : TEXTER.klapp.en;
++      else if (djur && h.typ === "tryck" && h.klapp && h.klapp % 2 === 0) {
++        const rader = h.klapp >= 4 ? TEXTER.klapp.mer : TEXTER.klapp.en; // R9K: udda tryck ger humörets replik
+         text = rader[Math.floor(Math.random() * rader.length)] ?? text;
+       } else if (djur) text = replikHumor(useMinne.getState().liv[djur.uid]?.humor ?? "glad");
+       visaBubbla(text, h.x, h.y, true, true, true);
+diff --git a/src/spel/ang/PlatsDekor.tsx b/src/spel/ang/PlatsDekor.tsx
+index 888e2ba..920c76c 100644
+--- a/src/spel/ang/PlatsDekor.tsx
++++ b/src/spel/ang/PlatsDekor.tsx
+@@ -102,7 +102,7 @@ export function PlatsDekor({ plats }: { plats: string }) {
+         <group key={`${s.kropp}-${i}`} name={s.ord} position={s.pos} scale={s.skala}>
+           <SakGren>
+             <Suspense fallback={null}>
+-              <GltfSak id={s.kropp} vand={s.vand} />
++              <GltfSak id={s.kropp} vand={s.vand} farger={s.farger} />
+             </Suspense>
+           </SakGren>
+         </group>
+@@ -112,7 +112,7 @@ export function PlatsDekor({ plats }: { plats: string }) {
+         rad.url && rad.platser.length ? (
+           <SakGren key={`${rad.url}-${i}`}>
+             <Suspense fallback={null}>
+-              <InstansModell url={rad.url} platser={rad.platser} vand={rad.vand} />
++              <InstansModell url={rad.url} platser={rad.platser} vand={rad.vand} farger={rad.farger} />
+             </Suspense>
+           </SakGren>
+         ) : null,
+diff --git a/src/spel/ang/djur.tsx b/src/spel/ang/djur.tsx
+index db11171..0292052 100644
+--- a/src/spel/ang/djur.tsx
++++ b/src/spel/ang/djur.tsx
+@@ -13,6 +13,7 @@ import { DjurEffekter } from "../effekter.tsx";
+ import { MILJO } from "../miljo.ts";
+ import { synligKedja } from "../pekare.ts";
+ import { AGG_KROPP, OrdAgg, ReservAgg } from "../ordagg.tsx";
++import { HumorIkon } from "./humorIkon.tsx";
+ import { _mal, djurFarg, djurPlats, flygare, normDuk, simmare } from "./delat.ts";
+ 
+ export class ModellGren extends Component<{ spec: Sparad; children: ReactNode }, { fel: boolean }> {
+@@ -423,6 +424,7 @@ export function DjurIScen({ spec, alla, plats }: { spec: Sparad; alla: Sparad[];
+         )}
+         <ReservAgg spec={spec} />
+         <DjurEffekter varelse={spec} ankare={ankare} />
++        {sak ? null : <HumorIkon uid={spec.uid} hojd={malhojd(spec.kropp) + 0.22} />}
+       </group>
+       {medSaker.map((id, i) => (
+         <group key={id} position={[(0.45 + malhojd(spec.kropp) * 0.35) * (i % 2 === 0 ? 1 : -1) * (spec.skala || 1), 0, 0.2 + Math.floor(i / 2) * 0.3]}>
+diff --git a/src/spel/ang/humorIkon.tsx b/src/spel/ang/humorIkon.tsx
+new file mode 100644
+index 0000000..97bd95b
+--- /dev/null
++++ b/src/spel/ang/humorIkon.tsx
+@@ -0,0 +1,18 @@
++// R9K: en liten humörikon ovanför varje djur i 3D (ängen och alla platser). Vilken ikon som visas står i data/humor.json
++// (`ikon` per humör); ingen kod per humör. Ikonen tar inga tryck, så trycket går till djuret som förut.
++import { Html } from "@react-three/drei";
++import { HUMOR_IKON } from "../liv.ts";
++import { useMinne } from "../minne.ts";
++
++export function HumorIkon({ uid, hojd }: { uid: string; hojd: number }) {
++  const humor = useMinne((s) => s.liv[uid]?.humor);
++  const ikon = humor ? HUMOR_IKON[humor] : undefined;
++  if (!humor || !ikon) return null;
++  return (
++    <Html position={[0, hojd, 0]} center zIndexRange={[3, 0]} style={{ pointerEvents: "none" }}>
++      <span className="humor-ikon-3d" data-testid={`humor3d-${humor}`} data-uid={uid} aria-hidden>
++        {ikon}
++      </span>
++    </Html>
++  );
++}
+diff --git a/src/spel/gltfDjur.tsx b/src/spel/gltfDjur.tsx
+index 4c20ac2..327f174 100644
+--- a/src/spel/gltfDjur.tsx
++++ b/src/spel/gltfDjur.tsx
+@@ -171,6 +171,22 @@ function tryggKlipp(clip: THREE.AnimationClip) {
+   return ny;
+ }
+ 
++/** R9K: byt färg på material med de namnen. Materialet klonas först så att originalet (delat via useGLTF) är orört. */
++function fargaOm(rot: THREE.Object3D, farger: Record<string, string>) {
++  rot.traverse((o) => {
++    const mesh = o as THREE.Mesh;
++    if (!mesh.isMesh) return;
++    const byt = (m: THREE.Material) => {
++      const f = farger[m.name];
++      if (!f || !("color" in m)) return m;
++      const k = m.clone() as THREE.MeshStandardMaterial;
++      k.color.set(f);
++      return k;
++    };
++    mesh.material = Array.isArray(mesh.material) ? mesh.material.map(byt) : byt(mesh.material);
++  });
++}
++
+ function metallNoll(rot: THREE.Object3D) {
+   rot.traverse((o) => {
+     const mesh = o as THREE.Mesh;
+@@ -384,10 +400,13 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
+ 
+ /** R3G: en sak (entitet med modell, inte djur) bredvid ett djur – "en kanin med en hink". Hämtas först när den används (lazyload). */
+ /** `vand` (R8-2b): modellen vänds upp och ner med botten kvar på marken (droppsten → stalagmit). */
+-export function GltfSak({ id, vand = false }: { id: string; vand?: boolean }) {
++/** R9K: `farger` = materialnamn → färg ur platsens data (klonat material, delas inte med andra kopior). */
++export function GltfSak({ id, vand = false, farger }: { id: string; vand?: boolean; farger?: Record<string, string> }) {
+   const gltf = useGLTF(modellUrlAv(id)!);
++  const fargNyckel = farger ? JSON.stringify(farger) : "";
+   const klon = useMemo(() => {
+     const c = SkeletonUtils.clone(gltf.scene) as THREE.Object3D;
++    if (farger) fargaOm(c, farger);
+     metallNoll(c);
+     c.updateMatrixWorld(true);
+     const box = new THREE.Box3().setFromObject(c);
+@@ -398,6 +417,7 @@ export function GltfSak({ id, vand = false }: { id: string; vand?: boolean }) {
+       c.position.set(-((box.min.x + box.max.x) / 2) * s, box.max.y * s, ((box.min.z + box.max.z) / 2) * s);
+     } else c.position.set(-((box.min.x + box.max.x) / 2) * s, -box.min.y * s, -((box.min.z + box.max.z) / 2) * s);
+     return c;
+-  }, [gltf.scene, id, vand]);
++  // eslint-disable-next-line react-hooks/exhaustive-deps -- fargNyckel bär innehållet i farger
++  }, [gltf.scene, id, vand, fargNyckel]);
+   return <primitive object={klon} />;
+ }
+diff --git a/src/spel/ideRad.ts b/src/spel/ideRad.ts
+new file mode 100644
+index 0000000..9febf03
+--- /dev/null
++++ b/src/spel/ideRad.ts
+@@ -0,0 +1,57 @@
++// R9K: idéraden under uppdraget får aldrig visa svaret. Knapparna börjar meningen ("en kanin med …") och barnet skriver
++// själv resten. Generellt för alla uppdrag på alla platser: kravorden (och deras böjningar, samma regel som kontrollen) tas
++// aldrig med, inte i knapparna, inte i etiketterna, och samma knapp visas bara en gång.
++import ordJson from "../../data/ord.json" with { type: "json" };
++import type { Uppdrag } from "./aventyr.ts";
++import { kravTraffar } from "./uppdragsmotor.ts";
++
++const F = (ordJson as { funktionsord: { artiklar: string[]; med: string[]; och: string[]; som: string[]; kan: string[]; antal: Record<string, number> } }).funktionsord;
++const ARTIKLAR = new Set(F.artiklar);
++/** Småord som inte räcker som början på en idé ("en …" säger ingenting). */
++const SMAORD = new Set([...F.artiklar, ...F.med, ...F.och, ...F.som, ...F.kan, ...Object.keys(F.antal)]);
++
++export type IdeKnapp = { visa: string; fyll: string };
++export type IdeGrupp = { etikett: string; knappar: IdeKnapp[] };
++export type IdeRad = { rubrik: string; grupper: IdeGrupp[] };
++
++/** Innehåller texten något kravord (exakt, böjt eller i ett sammansatt ord)? */
++export function visarKravord(krav: Uppdrag["krav"], text: string): boolean {
++  return !!krav && kravTraffar({ ord: krav.ord, min: 1 }, text).length > 0;
++}
++
++/** Början på en fras fram till första kravordet, utan artikel sist. null om det som är kvar bara är småord. */
++export function borjan(krav: Uppdrag["krav"], fras: string): string | null {
++  const fore: string[] = [];
++  for (const o of fras.trim().split(/\s+/)) {
++    if (visarKravord(krav, o)) break;
++    fore.push(o);
++  }
++  while (fore.length && ARTIKLAR.has(fore[fore.length - 1]!.toLocaleLowerCase("sv"))) fore.pop();
++  return fore.some((o) => !SMAORD.has(o.toLocaleLowerCase("sv"))) ? fore.join(" ") : null;
++}
++
++/** Idéraden för ett uppdrag, eller null när det inte finns någon idé som inte avslöjar svaret. */
++export function ideRad(u: Pick<Uppdrag, "krav" | "val"> | undefined): IdeRad | null {
++  if (!u?.val) return null;
++  const sedda = new Set<string>();
++  const grupper: IdeGrupp[] = [];
++  for (const g of u.val.grupper) {
++    const knappar: IdeKnapp[] = [];
++    for (const f of g.forslag) {
++      const b = borjan(u.krav, f.fras);
++      if (!b || sedda.has(b.toLocaleLowerCase("sv"))) continue;
++      sedda.add(b.toLocaleLowerCase("sv"));
++      knappar.push({ visa: `${b} …`, fyll: `${b} ` });
++    }
++    if (knappar.length) grupper.push({ etikett: visarKravord(u.krav, g.etikett) ? "" : g.etikett, knappar });
++  }
++  if (!grupper.length) return null;
++  return { rubrik: visarKravord(u.krav, u.val.rubrik) ? "" : u.val.rubrik, grupper };
++}
++
++/** Exempelraden i boken: uppdragets idéer, annars de allmänna exemplen utan dem som avslöjar svaret. */
++export function exempelFor(u: Pick<Uppdrag, "krav" | "val"> | undefined, allmanna: string[]): IdeKnapp[] {
++  const rad = ideRad(u);
++  if (rad) return rad.grupper.flatMap((g) => g.knappar);
++  return allmanna.filter((e) => !visarKravord(u?.krav, e)).map((e) => ({ visa: e, fyll: e }));
++}
+diff --git a/src/spel/kenneyNatur.tsx b/src/spel/kenneyNatur.tsx
+index 372c26b..2229703 100644
+--- a/src/spel/kenneyNatur.tsx
++++ b/src/spel/kenneyNatur.tsx
+@@ -36,7 +36,7 @@ function geoGrupp(geo: THREE.BufferGeometry, start: number, count: number) {
+   return g;
+ }
+ 
+-function baka(scene: THREE.Object3D): Del[] {
++function baka(scene: THREE.Object3D, farger?: Record<string, string>): Del[] {
+   scene.updateMatrixWorld(true);
+   const box = new THREE.Box3().setFromObject(scene);
+   const size = new THREE.Vector3();
+@@ -61,7 +61,7 @@ function baka(scene: THREE.Object3D): Del[] {
+       const mat = src.clone();
+       mat.metalness = 0;
+       mat.roughness = Math.max(mat.roughness ?? 1, 0.75);
+-      const ny = FARG[mat.name];
++      const ny = farger?.[mat.name] ?? FARG[mat.name];
+       if (ny) mat.color.set(ny);
+       delar.push({ geo, mat });
+     }
+@@ -73,9 +73,12 @@ function baka(scene: THREE.Object3D): Del[] {
+ type Plats = readonly [number, number, number, number, number];
+ 
+ /** `vand` (R8-2b): varje instans vänds upp och ner med botten kvar på marken. */
+-export function InstansModell({ url, platser, vand = false }: { url: string; platser: readonly Plats[]; vand?: boolean }) {
++/** R9K: `farger` (materialnamn → färg, ur data/platser.json) går före standardfärgerna i FARG. */
++export function InstansModell({ url, platser, vand = false, farger }: { url: string; platser: readonly Plats[]; vand?: boolean; farger?: Record<string, string> }) {
+   const gltf = useGLTF(url);
+-  const delar = useMemo(() => baka(gltf.scene), [gltf.scene]);
++  const fargNyckel = farger ? JSON.stringify(farger) : "";
++  // eslint-disable-next-line react-hooks/exhaustive-deps -- fargNyckel bär innehållet i farger
++  const delar = useMemo(() => baka(gltf.scene, farger), [gltf.scene, fargNyckel]);
+   const refs = useRef<(THREE.InstancedMesh | null)[]>([]);
+   useLayoutEffect(() => {
+     const m = new THREE.Matrix4();
+diff --git a/src/spel/liv.ts b/src/spel/liv.ts
+index 094c777..5e1e204 100644
+--- a/src/spel/liv.ts
++++ b/src/spel/liv.ts
+@@ -36,14 +36,10 @@ const OVERGANG_MS = DYGN.overgang_sekunder * 1000;
+ const GAVA_TAGGAR = [...new Set((gavorJson as { gavor: { taggar: string[] }[] }).gavor.flatMap((g) => g.taggar))];
+ const FORLED = Object.keys((ordJson as { sammansattningar: { forled: Record<string, unknown> } }).sammansattningar.forled);
+ 
+-export const HUMOR_IKON: Record<string, string> = {
+-  glad: "♥",
+-  lekfull: "●",
+-  nyfiken: "?",
+-  sugen: "✿",
+-  pratsam: "…",
+-  somnig: "z",
+-};
++/** R9K: ikonen per humör står i data/humor.json (`ikon`). Ett humör utan ikon visar ingen. */
++export const HUMOR_IKON: Record<string, string> = Object.fromEntries(
++  (HUMOR.humor as { id: string; ikon?: string }[]).filter((h) => h.ikon).map((h) => [h.id, h.ikon!]),
++);
+ 
+ export type Liv = {
+   humor: string;
+diff --git a/src/spel/platsDekor.ts b/src/spel/platsDekor.ts
+index cffab47..56dd16a 100644
+--- a/src/spel/platsDekor.ts
++++ b/src/spel/platsDekor.ts
+@@ -3,7 +3,7 @@
+ // Ren logik utan three, testas i Node.
+ import { ordFranForm } from "../tolk/lexikon.ts";
+ import { modellUrl } from "./entiteter.ts";
+-import { tillVarld, type DekorRad, type Plats, type Startobjekt, type Zon } from "./platser.ts";
++import { tillVarld, type DekorRad, type Materialfarger, type Plats, type Startobjekt, type Zon } from "./platser.ts";
+ import { YTA_SKALA, iVatten, tillPlats } from "./platsYta.ts";
+ 
+ /** Samma skala som gruppen i PlatsDekor. Världsmått delas med den så höjden i datan blir världshöjd. */
+@@ -16,7 +16,13 @@ export function entitetForOrd(ord: string): string | null {
+   return kropp && modellUrl(kropp) ? kropp : null;
+ }
+ 
+-export type DekorSak = { ord: string; kropp: string; pos: [number, number, number]; skala: number; vand?: boolean };
++export type DekorSak = { ord: string; kropp: string; pos: [number, number, number]; skala: number; vand?: boolean; farger?: Materialfarger };
++
++/** R9K: platsens `materialfarger` med radens egna `farger` ovanpå. undefined när inget ska färgas om. */
++export function fargerFor(p: Plats | undefined, egna?: Materialfarger): Materialfarger | undefined {
++  const f = { ...(p?.materialfarger ?? {}), ...(egna ?? {}) };
++  return Object.keys(f).length ? f : undefined;
++}
+ export type Vattenyta = { id: string; mitt: [number, number, number]; storlek: [number, number] };
+ 
+ /**
+@@ -65,7 +71,8 @@ export function dekorFor(p: Plats | undefined): { saker: DekorSak[]; saknas: str
+     }
+     const [wx, wz] = tillVarld(s.x, s.y);
+     const y = ANKARE_HOJD[ankareFor(s, p?.zoner)];
+-    saker.push({ ord: s.ord, kropp, pos: [wx, y, wz], skala: s.skala ?? 1, ...(s.vand ? { vand: true } : {}) });
++    const farger = fargerFor(p, s.farger);
++    saker.push({ ord: s.ord, kropp, pos: [wx, y, wz], skala: s.skala ?? 1, ...(s.vand ? { vand: true } : {}), ...(farger ? { farger } : {}) });
+   }
+   return { saker, saknas };
+ }
+@@ -98,7 +105,7 @@ function urlFor(modell: string): { url: string } | { saknas: string } {
+   return u ? { url: u } : { saknas: modell };
+ }
+ 
+-export type SpriddDekor = { url: string; platser: [number, number, number, number, number][]; saknas?: string; vand?: boolean };
++export type SpriddDekor = { url: string; platser: [number, number, number, number, number][]; saknas?: string; vand?: boolean; farger?: Materialfarger };
+ 
+ /**
+  * Sprider `dekor` i zonens rektangel. Punkter i en `fri`-zon hoppas över.
+@@ -145,7 +152,8 @@ function spridRad(rad: DekorRad, index: number, zoner: Zon[], fria: Zon[], p: Pl
+     }
+     if (vald) platser.push(vald);
+   }
+-  return { url: traff.url, platser, ...(rad.vand ? { vand: true } : {}) };
++  const farger = fargerFor(p, rad.farger);
++  return { url: traff.url, platser, ...(rad.vand ? { vand: true } : {}), ...(farger ? { farger } : {}) };
+ }
+ 
+ /** Zoner med typ "vattenyta" som rektanglar i världen (rekt = [x0, y0, x1, y1] i 0–1). */
+diff --git a/src/spel/platsText.ts b/src/spel/platsText.ts
+new file mode 100644
+index 0000000..e84b423
+--- /dev/null
++++ b/src/spel/platsText.ts
+@@ -0,0 +1,18 @@
++// R9K: repliker som nämner platsen skrivs med platshållare, "{Platsen} är finast när du är här." / "hela {platsen}",
++// och fylls här med platsen barnet är på (namnet i data/platser.json, Gården på gården). Fungerar för alla platser.
++import gardJson from "../../data/texter-gard.json" with { type: "json" };
++import { useMinne } from "./minne.ts";
++import { platsMed } from "./platser.ts";
++
++export function platsNamn(varld: string = "ang", plats?: string): string {
++  if (varld === "gard") return gardJson.flikar.garden;
++  const id = plats ?? useMinne.getState().plats ?? "ang";
++  return platsMed(id)?.namn ?? platsMed("ang")?.namn ?? "";
++}
++
++/** "{Platsen}" → "Grottan", "{platsen}" → "grottan". Text utan platshållare kommer tillbaka orörd. */
++export function platsText(text: string, varld: string = "ang", plats?: string): string {
++  if (!text.includes("{")) return text;
++  const namn = platsNamn(varld, plats);
++  return text.replaceAll("{Platsen}", namn).replaceAll("{platsen}", namn.toLocaleLowerCase("sv"));
++}
+diff --git a/src/spel/platser.ts b/src/spel/platser.ts
+index 47b3af5..4011fff 100644
+--- a/src/spel/platser.ts
++++ b/src/spel/platser.ts
+@@ -9,9 +9,11 @@ export type Villkorsgrupp = { nagon: Villkor[] };
+ export type Milstolpe = Villkorsgrupp & { final?: string | null; las_upp?: string | null };
+ export type Zon = { id: string; typ: string; rekt: [number, number, number, number] };
+ /** R8-2b: `ankare` mark|vatten|luft (standard ur zonens typ, annars mark), `vand` = modellen vänds upp och ner (droppsten → stalagmit). */
+-export type Startobjekt = { ord: string; x: number; y: number; skala?: number; zon?: string; ankare?: string; vand?: boolean };
++/** R9K: `farger` = materialnamn i modellen → färg ("grass": "#9C96A6"), går före platsens `materialfarger`. */
++export type Materialfarger = Record<string, string>;
++export type Startobjekt = { ord: string; x: number; y: number; skala?: number; zon?: string; ankare?: string; vand?: boolean; farger?: Materialfarger };
+ /** En rad i `dekor`: modell, antal och höjdspann, utspridd i zonen `zon` (typ `dekor` eller annan rektangel). `fri` är yta som lämnas tom. */
+-export type DekorRad = { modell: string; antal: number; hojd: [number, number]; zon: string; fro?: number; vatten?: boolean; vand?: boolean };
++export type DekorRad = { modell: string; antal: number; hojd: [number, number]; zon: string; fro?: number; vatten?: boolean; vand?: boolean; farger?: Materialfarger };
+ export type Plats = {
+   id: string;
+   namn: string;
+@@ -23,6 +25,8 @@ export type Plats = {
+   zoner: Zon[];
+   start: Startobjekt[];
+   dekor?: DekorRad[];
++  /** R9K: färg per materialnamn för all dekor och alla startobjekt på platsen (t.ex. grottans stenar utan gröna toppar). */
++  materialfarger?: Materialfarger;
+   ljud?: unknown;
+   intro?: unknown;
+   final_fore?: unknown;
+diff --git a/src/spel/r9k.test.ts b/src/spel/r9k.test.ts
+new file mode 100644
+index 0000000..ebcac7a
+--- /dev/null
++++ b/src/spel/r9k.test.ts
+@@ -0,0 +1,98 @@
++// R9K: idéraden visar aldrig svaret, enkla uppdragstexter, gåvorutan med djurets namn på alla platser,
++// humörikon ur data, grottans stenar utan gröna toppar, repliker utan "ängen" på andra platser.
++import assert from "node:assert/strict";
++import { test } from "node:test";
++import humor from "../../data/humor.json" with { type: "json" };
++import ord from "../../data/ord.json" with { type: "json" };
++import gard from "../../data/texter-gard.json" with { type: "json" };
++import upplevelse from "../../data/upplevelse.json" with { type: "json" };
++import { SKRIV } from "./aventyr.ts";
++import { exempelFor, ideRad, visarKravord } from "./ideRad.ts";
++import { HUMOR_IKON } from "./liv.ts";
++import { dekorFor, spridDekor } from "./platsDekor.ts";
++import { PLATSER, platsMed } from "./platser.ts";
++import { platsText } from "./platsText.ts";
++import { kravUppfyllt } from "./uppdragsmotor.ts";
++import { gavoRuta } from "./ui/gavoRuta.ts";
++
++test("R9K: idéraden innehåller aldrig kravorden (eller böjningar) i något uppdrag på någon plats, och inga dubbletter", () => {
++  const platser = new Set<string>();
++  for (const u of SKRIV) {
++    platser.add(u.omrade);
++    const rad = ideRad(u);
++    const synligt = [rad?.rubrik ?? "", ...(rad?.grupper ?? []).flatMap((g) => [g.etikett, ...g.knappar.flatMap((k) => [k.visa, k.fyll])])];
++    for (const t of synligt) assert.ok(!visarKravord(u.krav, t), `${u.id}: "${t}" visar ett kravord (${u.krav!.ord.join(", ")})`);
++    const knappar = (rad?.grupper ?? []).flatMap((g) => g.knappar.map((k) => k.visa.toLocaleLowerCase("sv")));
++    assert.equal(new Set(knappar).size, knappar.length, `${u.id}: dubbletter i idéraden`);
++    for (const k of (rad?.grupper ?? []).flatMap((g) => g.knappar)) {
++      assert.ok(!kravUppfyllt(u.krav!, k.fyll), `${u.id}: knappen "${k.visa}" löser uppdraget`);
++      assert.ok(k.fyll.endsWith(" ") && k.visa.endsWith("…"), `${u.id}: knappen börjar bara meningen`);
++    }
++    // Exempelraden i boken (samma källa) läcker inte heller
++    for (const e of exempelFor(u, upplevelse.examples)) assert.ok(!visarKravord(u.krav, e.visa) && !visarKravord(u.krav, e.fyll), `${u.id}: exemplet "${e.visa}"`);
++  }
++  for (const p of ["ang", "skogen", "sjon", "grottan"]) assert.ok(platser.has(p), `uppdrag på ${p} prövades`);
++});
++
++test("R9K: grottans 'en kanin med en lykta' blir 'en kanin med …', lykta syns inte och ingen knapp kommer två gånger", () => {
++  const u = SKRIV.find((x) => x.id === "grotta-forsta-skenet")!;
++  const knappar = ideRad(u)!.grupper.flatMap((g) => g.knappar);
++  assert.ok(knappar.some((k) => k.visa === "en kanin med …" && k.fyll === "en kanin med "));
++  assert.ok(knappar.every((k) => !/lykt/i.test(k.visa)));
++  assert.equal(new Set(knappar.map((k) => k.visa)).size, knappar.length);
++});
++
++test("R9K: uppdragstexterna säger det konkret – inga ord om 'orden', 'skillnaden', 'farkosten' eller 'intill'", () => {
++  const abstrakt = /dina ord|orden visa|låta orden|skillnaden|farkost|innanför kanterna|sitter högre|intill\b|möbelns|motsatser|binder ihop|innehållet/i;
++  for (const u of SKRIV) {
++    assert.doesNotMatch(u.text_bengtsson ?? "", abstrakt, `${u.id}: "${u.text_bengtsson}"`);
++    const meningar = (u.text_bengtsson ?? "").split(/[.!?]+/).filter((m) => m.trim());
++    for (const m of meningar) assert.ok(m.trim().split(/\s+/).length <= 17, `${u.id}: för lång mening "${m.trim()}"`);
++  }
++});
++
++test("R9K: gåvorutan heter 'Vad vill du ge kaninen?' på ängen, gården och alla platser, utan mellanslag före frågetecknet", () => {
++  const kanin = (uid: string) => ({ uid, kropp: "kanin", formel: "en kanin", beskrivning: "en kanin", skala: 1, alpha: 1, formagor: [], tillbehor: [], overraskningar: [], skapad: 1 }) as never;
++  const platsSkapelser: Record<string, never[]> = {};
++  for (const p of PLATSER) if (p.id !== "ang") platsSkapelser[p.id] = [kanin(`k-${p.id}`)];
++  const s = { ang: [kanin("k-ang")], hemma: [{ spec: kanin("k-gard") }] as never[], platsSkapelser };
++  assert.equal(gavoRuta("egen:k-ang", s), "Vad vill du ge kaninen?");
++  assert.equal(gavoRuta("egen:k-gard", s), "Vad vill du ge kaninen?");
++  for (const id of Object.keys(platsSkapelser)) assert.equal(gavoRuta(`egen:k-${id}`, s), "Vad vill du ge kaninen?", id);
++  assert.equal(gavoRuta("egen:finns-inte", s), "Vad vill du ge?");
++  const rav = { ...(kanin("r") as object), kropp: "rav", formel: "en orange räv" } as never;
++  assert.equal(gavoRuta("egen:r", { ang: [], hemma: [], platsSkapelser: { grottan: [rav] } }), "Vad vill du ge räven?", "räv har kroppen rav");
++  assert.ok(gavoRuta("mossugglan", s).startsWith("Vad vill du ge Mossugglan"));
++});
++
++test("R9K: humörikonen kommer ur data/humor.json, en per humör", () => {
++  for (const h of humor.humor as { id: string; ikon?: string }[]) {
++    assert.ok(h.ikon && h.ikon.length <= 4, `${h.id} saknar ikon i data`);
++    assert.equal(HUMOR_IKON[h.id], h.ikon);
++  }
++});
++
++test("R9K: grottans stenar har inga gröna toppar – materialfärg ur data/platser.json på dekor och startobjekt", () => {
++  const g = platsMed("grottan")!;
++  assert.ok(g.materialfarger?.grass, "grass har en färg");
++  const gron = (hex: string) => {
++    const [r, gg, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
++    return gg! > r! + 25 && gg! > b! + 25;
++  };
++  assert.ok(!gron(g.materialfarger!.grass!), "inte grönt");
++  const sten = spridDekor(g).filter((r) => /klipp|sten/.test(r.url));
++  assert.ok(sten.length >= 3 && sten.every((r) => r.farger?.grass === g.materialfarger!.grass), "dekorens stenar färgas");
++  const start = dekorFor(g).saker.filter((s) => /klipp|sten/.test(s.kropp));
++  assert.ok(start.length >= 2 && start.every((s) => s.farger?.grass === g.materialfarger!.grass), "startobjektens stenar färgas");
++  assert.equal(spridDekor(platsMed("skogen")).every((r) => !r.farger), true, "skogen är orörd");
++});
++
++test("R9K: inga repliker säger 'ängen' rakt ut – platshållaren fylls med platsen barnet är på", () => {
++  const repliker = [...Object.values(ord.repliker).flat(), ...gard.klapp.en, ...gard.klapp.mer, ...(humor.humor as { repliker: string[] }[]).flatMap((h) => h.repliker), ...humor.tack_text, ...humor.favorit_text];
++  for (const r of repliker) assert.doesNotMatch(r, /ängen/i, r);
++  assert.equal(platsText("{Platsen} är finast när du är här.", "ang", "grottan"), "Grottan är finast när du är här.");
++  assert.equal(platsText("Ingen på hela {platsen} springer fortare än jag!", "ang", "sjon"), "Ingen på hela sjön springer fortare än jag!");
++  assert.equal(platsText("{Platsen} är finast när du är här.", "ang", "ang"), "Ängen är finast när du är här.");
++  assert.equal(platsText("{Platsen} är finast när du är här.", "gard", "ang"), "Gården är finast när du är här.");
++  assert.equal(platsText("Hej!", "ang", "skogen"), "Hej!");
++});
+diff --git a/src/spel/ui/BokSkarm.tsx b/src/spel/ui/BokSkarm.tsx
+index 39d938c..bc36344 100644
+--- a/src/spel/ui/BokSkarm.tsx
++++ b/src/spel/ui/BokSkarm.tsx
+@@ -4,8 +4,10 @@ import type { ForslagKort, Ord } from "@/tolk/typer.ts";
+ import upplevelse from "../../../data/upplevelse.json";
+ import hemligt from "../../../data/hemligt.json" with { type: "json" };
+ import { Ledtradsyta } from "./Ledtradsyta.tsx";
+-import { ALLA_UPPDRAG, NPC, TEXTER_AV, VILDA, UPP, uppdragText } from "../aventyr.ts";
++import { ALLA_UPPDRAG, NPC, TEXTER_AV, UPP, uppdragText } from "../aventyr.ts";
+ import { aktivtSkrivUppdrag } from "../uppdragsmotor.ts";
++import { exempelFor } from "../ideRad.ts";
++import { gavoRuta } from "./gavoRuta.ts";
+ import { platsNu } from "./useBengtsson.ts";
+ import { UppdragsRemsa } from "./UppdragsRemsa.tsx";
+ import type { Sparad } from "../brygga.ts";
+@@ -71,7 +73,7 @@ type BokSkarmProps = {
+   forsokKop: (slag: "djur" | "bygg", id: string, titel: string, pris: number) => void;
+ };
+ 
+-export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, hemma, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop }: BokSkarmProps) {
++export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop }: BokSkarmProps) {
+   return (
+       <div className="bok-skarm" data-testid="bok-skarm" onClick={stangBok}>
+       <section className={andrar ? "bok andrar" : "bok"} data-andrar={andrar ? "ja" : "nej"} role="dialog" aria-label="Pennans bok" onClick={(e) => e.stopPropagation()}>
+@@ -140,13 +142,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
+             {gavaTill ? (
+               <div className="onska-remsa" data-testid="gava-remsa">
+                 <p>
+-                  {fyll(VILDA.regler.ruta, {
+-                    namn: gavaTill.startsWith("egen:")
+-                      ? (ang.find((a) => a.uid === gavaTill.slice(5))?.formel ??
+-                        hemma.find((h) => h.spec.uid === gavaTill.slice(5))?.spec.formel ??
+-                        "")
+-                      : (VILDA.djur.find((d) => d.id === gavaTill)?.namn ?? ""),
+-                  })}
++                  {gavoRuta(gavaTill)}
+                 </p>
+                 {gavaTill.startsWith("egen:") ? <GavaStallKnapp uid={gavaTill.slice(5)} visaBanner={visaBanner} klar={stangBok} /> : null}
+               </div>
+@@ -160,7 +156,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
+                 <details>
+                   <summary>{upplevelse.examplesTitle}</summary>
+                   <div className="ideer">
+-                    {(aktivtSkrivUppdrag(uppdragSpar, platsNu())?.val?.grupper.flatMap((g) => g.forslag.map((f) => f.fras)) ?? upplevelse.examples).map(ex => <button type="button" className="kort" key={ex} onClick={() => fyllExempel(ex)}>{ex}</button>)}
++                    {exempelFor(aktivtSkrivUppdrag(uppdragSpar, platsNu()), upplevelse.examples).map((ex) => <button type="button" className="kort" key={ex.visa} onClick={() => fyllExempel(ex.fyll)}>{ex.visa}</button>)}
+                   </div>
+                 </details>
+               </div>
+diff --git a/src/spel/ui/UppdragsRemsa.tsx b/src/spel/ui/UppdragsRemsa.tsx
+index 42fc325..7f002dc 100644
+--- a/src/spel/ui/UppdragsRemsa.tsx
++++ b/src/spel/ui/UppdragsRemsa.tsx
+@@ -1,24 +1,27 @@
+ import { NPC, uppdragText, type Uppdrag } from "../aventyr.ts";
++import { ideRad } from "../ideRad.ts";
+ 
+-/** Remsan överst i Skapa-menyn: uppdraget som pågår, med givarens namn och (R6A-3) guidande förslag. Fritext är kvar. */
++/** Remsan överst i Skapa-menyn: uppdraget som pågår, med givarens namn och (R6A-3) guidande förslag. Fritext är kvar.
++ *  R9K: knapparna börjar bara meningen ("en kanin med …"); svaret (kravorden) står aldrig i idéraden. */
+ export function UppdragsRemsa({ uppdrag, fyllForslag }: { uppdrag: Uppdrag | undefined; fyllForslag?: (fras: string) => void }) {
+   if (!uppdrag) return null;
+   const namn = uppdrag.givare ? NPC[uppdrag.givare]?.namn : undefined;
++  const rad = ideRad(uppdrag);
+   return (
+     <>
+       <p className="uppdrag-remsa" data-testid="uppdrag-remsa" data-uppdrag={uppdrag.id}>
+         {namn ? <b>{namn}: </b> : null}
+         {uppdragText(uppdrag)}
+       </p>
+-      {uppdrag.val && fyllForslag ? (
+-        <div className="uppdrag-val" data-testid="uppdrag-val" role="group" aria-label={uppdrag.val.rubrik}>
+-          <span className="uppdrag-val-rubrik">{uppdrag.val.rubrik}</span>
+-          {uppdrag.val.grupper.map((g) => (
+-            <span className="uppdrag-val-grupp" key={g.etikett} data-testid="uppdrag-val-grupp">
+-              <span className="uppdrag-val-etikett">{g.etikett}</span>
+-              {g.forslag.map((f) => (
+-                <button key={f.fras} type="button" className="onska-chip" data-testid="uppdrag-val-fras" onClick={() => fyllForslag(f.fras)}>
+-                  {f.ord}
++      {rad && fyllForslag ? (
++        <div className="uppdrag-val" data-testid="uppdrag-val" role="group" aria-label={rad.rubrik || undefined}>
++          {rad.rubrik ? <span className="uppdrag-val-rubrik">{rad.rubrik}</span> : null}
++          {rad.grupper.map((g, i) => (
++            <span className="uppdrag-val-grupp" key={`${g.etikett}-${i}`} data-testid="uppdrag-val-grupp">
++              {g.etikett ? <span className="uppdrag-val-etikett">{g.etikett}</span> : null}
++              {g.knappar.map((k) => (
++                <button key={k.visa} type="button" className="onska-chip" data-testid="uppdrag-val-fras" onClick={() => fyllForslag(k.fyll)}>
++                  {k.visa}
+                 </button>
+               ))}
+             </span>
+diff --git a/src/spel/ui/gavoRuta.ts b/src/spel/ui/gavoRuta.ts
+new file mode 100644
+index 0000000..b1f85b8
+--- /dev/null
++++ b/src/spel/ui/gavoRuta.ts
+@@ -0,0 +1,33 @@
++// R9K: rubriken i gåvorutan, "Vad vill du ge kaninen?", på ängen, gården och alla platser.
++// Eget djur: djurets bestämda form ur data/ord.json (former[1]), hittat på ängen, gården eller vilken plats som helst.
++// Vilt djur: dess namn i data/vilda-djur.json. Inget mellanslag före frågetecknet om namnet saknas.
++import { VILDA } from "../aventyr.ts";
++import { fyll } from "../fyll.ts";
++import { djurMedUid } from "../liv.ts";
++import { useMinne } from "../minne.ts";
++import ordJson from "../../../data/ord.json" with { type: "json" };
++
++/** Bestämd form (former[1]) per kropp ur data/ord.json, byggd en gång: ordets id först, annars ordet vars `del.kropp` det är
++ *  ("räv" har kroppen "rav"). Samma uppslag som bestamdAv i hjalp.ts. */
++type OrdRad = { id?: string; former?: string[]; del?: { kropp?: string } };
++const ORDEN = (ordJson as { ord: OrdRad[] }).ord;
++const BESTAMD = new Map<string, string>();
++for (const o of ORDEN) if (o.id && o.former?.[1] && !BESTAMD.has(o.id)) BESTAMD.set(o.id, o.former[1]);
++for (const o of ORDEN) if (o.del?.kropp && o.former?.[1] && !BESTAMD.has(o.del.kropp)) BESTAMD.set(o.del.kropp, o.former[1]);
++
++/** Namnet på den som får gåvan (`gavaTill` = "egen:<uid>" eller ett vilt djurs id). "" om det inte går att hitta. */
++export function gavoNamn(gavaTill: string, s: Parameters<typeof djurMedUid>[0] = useMinne.getState()): string {
++  if (gavaTill.startsWith("egen:")) {
++    const d = djurMedUid(s, gavaTill.slice(5));
++    return d ? (BESTAMD.get(d.kropp) ?? d.formel) : "";
++  }
++  return VILDA.djur.find((d) => d.id === gavaTill)?.namn ?? "";
++}
++
++/** Gåvorutans fråga med namnet ifyllt; tomt namn ger "Vad vill du ge?" utan mellanslag före tecknet. */
++export function gavoRuta(gavaTill: string, s?: Parameters<typeof djurMedUid>[0]): string {
++  return fyll(VILDA.regler.ruta, { namn: gavoNamn(gavaTill, s) })
++    .replace(/\s+([?!.,])/g, "$1")
++    .replace(/\s{2,}/g, " ")
++    .trim();
++}
+diff --git a/src/spel/ui/hjalp.ts b/src/spel/ui/hjalp.ts
+index 1a1d7c6..18da0ee 100644
+--- a/src/spel/ui/hjalp.ts
++++ b/src/spel/ui/hjalp.ts
+@@ -46,7 +46,8 @@ export function nyId() {
+ }
+ 
+ export function bestamdAv(kropp: string, stor: boolean): string {
+-  const ord = ordLista().find((o) => o.id === kropp);
++  // R9K: id först, annars ordet vars kropp det är ("räv" har kroppen "rav")
++  const ord = ordLista().find((o) => o.id === kropp) ?? ordLista().find((o) => o.del?.kropp === kropp);
+   const form = ord?.former?.[1] ?? kropp;
+   if (!stor) return form;
+   return form.charAt(0).toLocaleUpperCase("sv") + form.slice(1);
+diff --git a/src/styles.css b/src/styles.css
+index 9ce1f70..9c01f2e 100644
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -761,3 +761,20 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
+ .ledtrad-hint::after{content:"\00a0↓"}
+ .ledtrad-visa{margin-left:6px;font-weight:700;text-decoration:underline;white-space:nowrap}
+ .ledtrad.kompakt summary{flex-wrap:wrap;column-gap:4px}
++
++/* R9K: humörikonen ovanför djuret i 3D (ikon per humör i data/humor.json) */
++.humor-ikon-3d {
++  display: inline-block;
++  pointer-events: none;
++  user-select: none;
++  min-width: 30px;
++  padding: 1px 6px;
++  border-radius: 999px;
++  background: var(--color-cream);
++  color: var(--color-ink);
++  box-shadow: 0 2px 0 var(--color-paper-deep);
++  font-size: 1.05rem;
++  line-height: 1.35;
++  text-align: center;
++  white-space: nowrap;
++}
