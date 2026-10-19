@@ -5,7 +5,8 @@ import { byggMedId } from "../tolk/byggtolk.ts";
 import { brygga, type Sparad } from "./brygga.ts";
 import type { SparatBygge } from "./bygge.ts";
 import { BYGG } from "../tolk/byggtolk.ts";
-import { START_PLATS, laggMedTak, mattUr, upplast } from "./platser.ts";
+import { START_PLATS, TAK_PER_PLATS, laggMedTak, mattUr, upplast } from "./platser.ts";
+import { hamtaFranStall, flyttaTillStall, type StallUt } from "./stall.ts";
 
 
 export type Lage = "kort" | "skriv";
@@ -71,6 +72,10 @@ export type Data = {
   oppnadePlatser: string[];
   /** B1.4: platser vars intro-bubbla redan visats. */
   seddaIntro: string[];
+  /** R9G: djur barnet flyttat till stallet (lista i menyn). */
+  stall: Sparad[];
+  /** R9G: gåtan som visas; byts bara när ordet hittats eller barnet trycker "Ny gåta". */
+  gataId: string | null;
 };
 
 type Minne = Data & {
@@ -115,6 +120,11 @@ type Minne = Data & {
   bytPlats: (id: string) => boolean;
   /** B1.4: markera att platsens intro visats. */
   markeraIntro: (id: string) => void;
+  /** R9G: flytta ett djur från platsen/ängen/gården till stallet. */
+  tillStall: (uid: string) => boolean;
+  /** R9G: hämta ett djur ur stallet till platsen barnet är på (tak TAK_PER_PLATS). */
+  franStall: (uid: string) => StallUt;
+  sattGataId: (id: string | null) => void;
 };
 
 function tom(): Data {
@@ -167,6 +177,8 @@ function tom(): Data {
     platsSkapelser: {},
     oppnadePlatser: [],
     seddaIntro: [],
+    stall: [],
+    gataId: null,
   };
 }
 
@@ -227,6 +239,8 @@ export function franSparning(raw: unknown): Data {
       platsSkapelser: objekt(p.platsSkapelser) ? (p.platsSkapelser as Data["platsSkapelser"]) : {},
       oppnadePlatser: Array.isArray(p.oppnadePlatser) ? (p.oppnadePlatser as string[]).filter((x) => typeof x === "string") : [],
       seddaIntro: Array.isArray(p.seddaIntro) ? (p.seddaIntro as string[]).filter((x) => typeof x === "string") : [],
+      stall: Array.isArray(p.stall) ? (p.stall as Sparad[]).filter(arDjur) : [],
+      gataId: typeof p.gataId === "string" && p.gataId ? p.gataId : null,
     };
   } catch {
     return tom();
@@ -275,6 +289,9 @@ function spara(d: Data) {
     sattTittat: _ak,
     bytPlats: _al,
     markeraIntro: _am,
+    tillStall: _an,
+    franStall: _ao,
+    sattGataId: _ap,
     ...data
   } = d as Data & Record<string, unknown>;
   skrivLokalt(() => window.localStorage, { ...data, version: 2 });
@@ -283,7 +300,7 @@ function spara(d: Data) {
 function arData(v: unknown): v is Partial<Data> {
   if (!objekt(v) || !normalisera(v, tom())) return false;
   if (v.startLage !== undefined && v.startLage !== "kort" && v.startLage !== "skriv") return false;
-  for (const k of ["ang", "sovande"]) if (v[k] !== undefined && (!Array.isArray(v[k]) || !(v[k] as unknown[]).every(arDjur))) return false;
+  for (const k of ["ang", "sovande", "stall"]) if (v[k] !== undefined && (!Array.isArray(v[k]) || !(v[k] as unknown[]).every(arDjur))) return false;
   for (const k of ["garden", "lada"]) if (v[k] !== undefined && (!Array.isArray(v[k]) || !(v[k] as unknown[]).every(arBygge))) return false;
   if (v.hemma !== undefined && (!Array.isArray(v.hemma) || !v.hemma.every(x => objekt(x) && arDjur(x.spec) && typeof x.hem === "string"))) return false;
   if (v.platsSkapelser !== undefined && (!objekt(v.platsSkapelser) || !Object.values(v.platsSkapelser).every((l) => Array.isArray(l) && l.every(arDjur)))) return false;
@@ -325,7 +342,7 @@ export const useMinne = create<Minne>((set, get) => ({
     let ang = [...get().ang];
     let sovande = [...get().sovande];
     for (let i = 0; i < antal; i++) {
-      while (ang.length >= 10) {
+      while (ang.length >= TAK_PER_PLATS) {
         const old = ang.shift();
         if (!old) break;
         sovande = [...sovande, old].slice(-40);
@@ -344,7 +361,7 @@ export const useMinne = create<Minne>((set, get) => ({
     let ang = [...get().ang];
     let sovande = get().sovande.filter((s) => s.uid !== uid);
     let somnad: Sparad | null = null;
-    if (ang.length >= 10) {
+    if (ang.length >= TAK_PER_PLATS) {
       const old = ang.shift();
       if (old) {
         sovande = [...sovande, old];
@@ -417,7 +434,7 @@ export const useMinne = create<Minne>((set, get) => ({
       garden: get().garden.filter((x) => x.uid !== uid),
       lada: [...get().lada, { ...b, boende: [] }],
       hemma,
-      ang: [...get().ang, ...hemTillbaka].slice(-10),
+      ang: [...get().ang, ...hemTillbaka].slice(-TAK_PER_PLATS),
     });
     for (const d of hemTillbaka) brygga.skapa(d);
     brygga.synkaGard();
@@ -517,6 +534,25 @@ export const useMinne = create<Minne>((set, get) => ({
   markeraIntro: (id) => {
     if (get().seddaIntro.includes(id)) return;
     set({ seddaIntro: [...get().seddaIntro, id] });
+  },
+  tillStall: (uid) => {
+    const ut = flyttaTillStall(get(), uid);
+    if (!ut) return false;
+    set(ut);
+    brygga.taBort(uid);
+    brygga.synkaGard();
+    return true;
+  },
+  franStall: (uid) => {
+    const r = hamtaFranStall(get(), uid);
+    if (r.status !== "ok") return r.status;
+    set(r.andring);
+    if (get().plats === START_PLATS) brygga.skapa(r.djur, true);
+    return "ok";
+  },
+  sattGataId: (id) => {
+    if (get().gataId === id) return;
+    set({ gataId: id });
   },
   sattFyrPa: () => set({ fyr: true }),
   settKarta: () => set({ forstaKarta: false }),

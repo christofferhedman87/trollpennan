@@ -1,6 +1,6 @@
 {
  "version": 1,
- "_om": "B1.3a/B1.3b/B1.4/B1.4-fix: platserna som data. B1.4-fix: större yta, markfärg syns, vatten/skala/placering, droppsten lägre.",
+ "_om": "B1.3a/B1.3b/B1.4/B1.4-fix/R9G: platserna som data. R9G: litet vatten i skogen/grottan, mindre brygga, grottvalvet längre bak.",
  "yta": {
   "x": [
    -5.5,
@@ -90,10 +90,10 @@
      "id": "vattenyta",
      "typ": "vattenyta",
      "rekt": [
-      0.28,
       0.38,
-      0.78,
-      0.82
+      0.5,
+      0.54,
+      0.58
      ]
     },
     {
@@ -173,9 +173,9 @@
     },
     {
      "ord": "bäck",
-     "x": 0.52,
-     "y": 0.57,
-     "skala": 0.95,
+     "x": 0.46,
+     "y": 0.54,
+     "skala": 0.5,
      "zon": "vattenyta"
     },
     {
@@ -377,9 +377,9 @@
    "start": [
     {
      "ord": "brygga",
-     "x": 0.48,
-     "y": 0.55,
-     "skala": 0.7,
+     "x": 0.6,
+     "y": 0.36,
+     "skala": 0.32,
      "zon": "vattenyta"
     },
     {
@@ -600,10 +600,10 @@
      "id": "vattenyta",
      "typ": "vattenyta",
      "rekt": [
-      0.22,
-      0.55,
-      0.62,
-      0.88
+      0.4,
+      0.6,
+      0.56,
+      0.68
      ]
     },
     {
@@ -631,15 +631,15 @@
     {
      "ord": "grotta",
      "x": 0.5,
-     "y": 0.48,
-     "skala": 1.85,
+     "y": 0.14,
+     "skala": 0.95,
      "zon": "mark"
     },
     {
      "ord": "klippa",
-     "x": 0.12,
-     "y": 0.52,
-     "skala": 1.15,
+     "x": 0.06,
+     "y": 0.3,
+     "skala": 0.85,
      "zon": "mark"
     },
     {
@@ -672,9 +672,9 @@
     },
     {
      "ord": "klippa",
-     "x": 0.82,
-     "y": 0.4,
-     "skala": 1.15,
+     "x": 0.94,
+     "y": 0.26,
+     "skala": 0.85,
      "zon": "mark"
     },
     {

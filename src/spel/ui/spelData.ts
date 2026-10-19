@@ -40,6 +40,7 @@ export const TEXTER = texterJson as {
   borja_om: { knapp: string; fraga: string; ja: string };
   klapp: { en: string[]; mer: string[] };
   demo: { senare: string };
+  stall: { meny: string; chip: string; flytta: string; forklaring: string; tom: string; hamta: string; full: string };
 };
 export const FIR = firandeJson as {
   guldord: { text: string[]; stjarnor: number };

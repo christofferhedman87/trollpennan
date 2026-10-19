@@ -84,5 +84,14 @@
   "las_in_nej": "Avbryt",
   "klart": "Klart! Kopian är inläst.",
   "fel": "Den filen gick inte att läsa. Inget har ändrats."
+ },
+ "stall": {
+  "meny": "Stallet",
+  "chip": "Till stallet",
+  "flytta": "Djuret är i stallet. Du kan hämta ut det igen i menyn när du vill.",
+  "forklaring": "Flytta ett djur till stallet genom att trycka på det. Du kan hämta ut ditt djur igen när du vill.",
+  "tom": "Stallet är tomt.",
+  "hamta": "Hämta ut",
+  "full": "Det är fullt här. Flytta ett annat djur till stallet först."
  }
 }

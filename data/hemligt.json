@@ -7,5 +7,7 @@
  "ny_gata": "Ny gåta",
  "hittade": "({n}/{total} hittade)",
  "alla_hittade": "Du har hittat alla hemliga djur!",
- "stava_tips": "Skriv ordet bokstav för bokstav med tangentbordet."
+ "stava_tips": "Skriv ordet bokstav för bokstav med tangentbordet.",
+ "skriv_hint": "Skriv svaret i rutan under och tryck Vakna!",
+ "visa_gata": "Visa gåtan"
 }

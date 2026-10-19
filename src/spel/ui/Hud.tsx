@@ -5,6 +5,7 @@ import { OMR, UPP } from "../aventyr.ts";
 import { fyll } from "../fyll.ts";
 import { ALBUM } from "../liv.ts";
 import { HoldOppnare } from "./HoldOppnare.tsx";
+import { StallMeny } from "./Stall.tsx";
 import { FIR, TEXTER } from "./spelData.ts";
 import type { Varld } from "./typer.ts";
 
@@ -127,6 +128,7 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
             <button type="button" data-testid="uppdrag-knapp" onClick={oppnaUppdrag}>
               <span>{UPP.texter.rubrik}</span>
             </button>
+            <StallMeny stang={() => { setMenyOpp(false); setMenySaker(false); setSenare(false); }} />
             <button type="button" className="last" data-testid="ordbok" data-last="ja" onClick={lasMeny}>
               <span>Bok</span>
               <Lock aria-hidden />
