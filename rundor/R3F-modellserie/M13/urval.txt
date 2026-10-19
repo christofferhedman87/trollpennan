@@ -1,0 +1,22 @@
+# R3F-M13 (dubblingen, paket 3: mat och fika): 21 modeller, alla CC0 (Kenney Food Kit). Format: paket/filnamn.
+kenney-food-kit/fries.glb
+kenney-food-kit/onion.glb
+kenney-food-kit/cooking-knife.glb
+kenney-food-kit-2/cup-coffee.glb
+kenney-food-kit-2/cup-tea.glb
+kenney-food-kit-2/bottle-ketchup.glb
+kenney-food-kit-2/bottle-musterd.glb
+kenney-food-kit-2/bacon.glb
+kenney-food-kit-2/shaker-pepper.glb
+kenney-food-kit-2/shaker-salt.glb
+kenney-food-kit-2/bowl-cereal.glb
+kenney-food-kit-2/skewer-vegetables.glb
+kenney-food-kit-2/loaf.glb
+kenney-food-kit-2/whipped-cream.glb
+kenney-food-kit-2/frappe.glb
+kenney-food-kit-2/celery-stick.glb
+kenney-food-kit-2/peanut-butter.glb
+kenney-food-kit-2/rice-ball.glb
+kenney-food-kit-2/cooking-spatula.glb
+kenney-food-kit-2/chinese.glb
+kenney-food-kit-2/meat-raw.glb
