@@ -34,7 +34,7 @@ if ! grep -q 'R3F-M' src/spel/entiteter.test.ts; then
   git apply "$D/ref/r3f-serie.patch" && rad "patch: applicerad (första paketet i serien)"
 else rad "patch: fanns redan på main"; fi
 
-# 2b. Målhöjder för paketets ord (valfri $D/$M/inlagg-tillagg.json → data/inlagg.json malhojd_ord). Bara data.
+# 2b. Målhöjder och rörelse per undertyp för paketets ord (valfri $D/$M/inlagg-tillagg.json → data/inlagg.json malhojd_ord, undertyp_rorelse). Bara data.
 if [ -f "$D/$M/inlagg-tillagg.json" ]; then
   node -e '
     const fs = require("fs"); const [t, c] = process.argv.slice(1);
@@ -43,7 +43,12 @@ if [ -f "$D/$M/inlagg-tillagg.json" ]; then
       if (new RegExp(`"${ord}":`).test(s.split("\"malhojd_ord\"")[1].split("}")[0])) continue;
       s = s.replace(/("malhojd_ord": \{\n)/, `$1    "${ord}": ${h},\n`); n++;
     }
-    JSON.parse(s); fs.writeFileSync(c, s); console.log("malhojd_ord tillagda: " + n);
+    const ur = JSON.parse(fs.readFileSync(t, "utf8")).undertyp_rorelse ?? {}; let u = 0;
+    for (const [typ, r] of Object.entries(ur)) {
+      if (s.includes(`"${typ}":`)) continue;
+      s = s.replace(/("undertyp_rorelse": \{ )/, `$1"${typ}": "${r}", `); u++;
+    }
+    JSON.parse(s); fs.writeFileSync(c, s); console.log("malhojd_ord tillagda: " + n + (u ? ", undertyp_rorelse tillagda: " + u : ""));
   ' "$D/$M/inlagg-tillagg.json" data/inlagg.json | tee -a "$UT/bevis.txt" || stopp 2 "inlagg-tillagg.json kunde inte föras in"
 fi
 
