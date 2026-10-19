@@ -29,7 +29,8 @@ npm run -s test:product > $UT/test.txt 2>&1 || { grep -A8 '^not ok' $UT/test.txt
 npm run -s typecheck:pages > $UT/tc.txt 2>&1 || { tail -20 $UT/tc.txt; aterstall; echo "STOPP 3: typecheck:pages föll"; exit 3; }
 npm run -s build:pages > $UT/build.txt 2>&1 || { tail -20 $UT/build.txt; aterstall; echo "STOPP 3: build:pages föll"; exit 3; }
 node $PROV $P --bilder $UT/bilder > $UT/prov.json 2>&1 || { cat $UT/prov.json | head -60; aterstall; echo "STOPP 4: platsprovet föll"; exit 4; }
-SISTA=$(ls $UT/bilder/*.png 2>/dev/null | grep -i "$P" | tail -1); [ -n "$SISTA" ] || SISTA=$(ls $UT/bilder/*.png 2>/dev/null | tail -1)
+# Bilden på platsen är plats-provets b1-4-02-*-intro.png (heter "skogen" i namnet för alla platser)
+SISTA=$(ls $UT/bilder/b1-4-02-*.png 2>/dev/null | tail -1); [ -n "$SISTA" ] || SISTA=$(ls $UT/bilder/*.png 2>/dev/null | tail -1)
 [ -n "$SISTA" ] && cp "$SISTA" $D/prov-$P-375x812.png
 echo "B $P OK: $(grep -c ': inlagt' $UT/lagg.txt) uppdrag, $(grep -c '^gåta.*\(ny\|Copilot\)' $UT/lagg.txt) gåtor, $(grep -c 'HOPPAS' $UT/lagg.txt) gåtor väntar på modell (B5a). Bild: $D/prov-$P-375x812.png."
 echo "Committa data/, $T och $D/prov-$P-375x812.png på runda-b-$P, push, PR, merge. Skicka utdata + bilden till Arkitekten."
