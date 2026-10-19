@@ -78,21 +78,62 @@ index 0a6770c..6d5e4fc 100644
        {foralder ? <ForalderDialog startLage={startLage} setLage={setLage} ljudPa={ljudPa} sparaKopia={sparaKopia} filRef={filRef} lasFil={lasFil} foralderRad={foralderRad} kopia={kopia} lasInKopia={lasInKopia} setKopia={setKopia} onskelista={onskelista} setSaker={setSaker} saker={saker} borjaOm={borjaOm} setForalder={setForalder} /> : null}
        {mossaOpp ? <MossaPanel halsning={halsning} mossaLista={mossaLista} mossaExtra={mossaExtra} setMossaOpp={setMossaOpp} /> : null}
 diff --git a/src/spel/gltfDjur.tsx b/src/spel/gltfDjur.tsx
-index 905165d..5f94807 100644
+index 905165d..ccfa945 100644
 --- a/src/spel/gltfDjur.tsx
 +++ b/src/spel/gltfDjur.tsx
 @@ -3,6 +3,10 @@ import { useFrame } from "@react-three/fiber";
  import { useLayoutEffect, useMemo, useRef } from "react";
  import { SkeletonUtils } from "three-stdlib";
  import * as THREE from "three";
-+import { byttPixel, hexTillHsl, ljusTint, rgbTillHsl, traffarPalett } from "./palett.ts";
++import { byttPixel, graNiva, hexTillHsl, ljusTint, malAlbedo, rgbTillHsl, traffarPalett } from "./palett.ts";
 +import { MILJO } from "./miljo.ts";
 +
 +const LJUSTINT = ljusTint(MILJO.ljus, MILJO.farg.ljusforstark);
  import type { Sparad } from "./brygga.ts";
  import { entitet, forladdaUrls, framVinkel, malhojd, modellUrl as modellUrlAv } from "./entiteter.ts";
  import { faestTillbehor } from "./tillbehor/index.ts";
-@@ -48,9 +52,8 @@ function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): { from: number; range:
+@@ -12,6 +16,40 @@ export type DjurSignal = { klapp: number; ror: number };
+ 
+ const texCache = new Map<string, THREE.CanvasTexture>();
+ 
++function graTextur(tex: THREE.Texture, bodyL: number): THREE.Texture {
++  const nyckel = `gra|${bodyL.toFixed(3)}|${tex.uuid}`;
++  const finns = texCache.get(nyckel);
++  if (finns) return finns;
++  const img = tex.image as CanvasImageSource | undefined;
++  const w = (img as HTMLImageElement | undefined)?.width || (img as ImageBitmap | undefined)?.width;
++  const h = (img as HTMLImageElement | undefined)?.height || (img as ImageBitmap | undefined)?.height;
++  if (!img || !w || !h) return tex;
++  const c = document.createElement("canvas");
++  c.width = w;
++  c.height = h;
++  const x = c.getContext("2d", { willReadFrequently: true });
++  if (!x) return tex;
++  x.drawImage(img, 0, 0);
++  const d = x.getImageData(0, 0, w, h);
++  for (let i = 0; i < d.data.length; i += 4) {
++    const v = graNiva(d.data[i] ?? 0, d.data[i + 1] ?? 0, d.data[i + 2] ?? 0, bodyL);
++    d.data[i] = v;
++    d.data[i + 1] = v;
++    d.data[i + 2] = v;
++  }
++  x.putImageData(d, 0, 0);
++  const t = new THREE.CanvasTexture(c);
++  t.flipY = tex.flipY;
++  t.colorSpace = THREE.SRGBColorSpace;
++  t.magFilter = tex.magFilter;
++  t.minFilter = tex.minFilter;
++  t.wrapS = tex.wrapS;
++  t.wrapT = tex.wrapT;
++  t.needsUpdate = true;
++  texCache.set(nyckel, t);
++  return t;
++}
++
+ /** R8 färgrundan: bulkmodeller delar en standardpalett (nyans 25), men Kenney-modeller är en gemensam färgatlas där isbjörnen är vit/gräddvit och inte alls brun, så ingen pixel träffas och färgen "tas inte". Därför mäter vi vilken färg just den här kroppen använder (texeln vid nätets UV, vanligaste färgen) och ställer in paletten efter den. */
+ function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): { from: number; range: number; bodyL: number } | null {
+   const img = tex.image as CanvasImageSource | undefined;
+@@ -48,9 +86,8 @@ function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): { from: number; range:
    let bast: { n: number; r: number; g: number; b: number } | null = null;
    for (const p of rakna.values()) if (!bast || p.n > bast.n) bast = p;
    if (!bast) return null;
@@ -104,7 +145,7 @@ index 905165d..5f94807 100644
    // låg färgmättnad (vit, grå, gräddvit): neutralt läge (range < 0), annars färgens egen nyans
    return hsl.s < 0.35 ? { from: 0, range: -1, bodyL: hsl.l } : { from: Math.round(hsl.h * 360), range: 22, bodyL: hsl.l };
  }
-@@ -71,24 +74,17 @@ function paletteSwap(tex: THREE.Texture, fromHue: number, range: number, toHex:
+@@ -71,24 +108,17 @@ function paletteSwap(tex: THREE.Texture, fromHue: number, range: number, toHex:
    if (!x) return tex;
    x.drawImage(img, 0, 0);
    const d = x.getImageData(0, 0, w, h);
@@ -137,6 +178,25 @@ index 905165d..5f94807 100644
    }
    x.putImageData(d, 0, 0);
    const t = new THREE.CanvasTexture(c);
+@@ -183,8 +213,16 @@ function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
+         if (roll === "ljus") m.color.set(hex ? ljusare(hex) : "#ffd27a");
+       } else if (pal && hex && m.map) {
+         const egen = ent?.inlagd ? karnfarg(mesh, m.map) : null;
+-        m.map = egen ? paletteSwap(m.map, egen.from, egen.range, hex, egen.bodyL) : paletteSwap(m.map, pal.from, pal.range, hex, pal.bodyL);
+-        m.color.set("#ffffff");
++        if (egen && egen.range < 0) {
++          // R9: vit/grå kropp (isbjörn, elefant, lamm): texturen blir gråskala och färgen läggs i materialet. Då blandas inga kvarvarande
++          // gräddvita texlar in (det gjorde röd till orange och grön till gulgrön), och ljusets förstärkning är förkompenserad.
++          m.map = graTextur(m.map, egen.bodyL);
++          const [r, g, b] = malAlbedo(hex, LJUSTINT);
++          m.color.setRGB(r, g, b);
++        } else {
++          m.map = egen ? paletteSwap(m.map, egen.from, egen.range, hex, egen.bodyL) : paletteSwap(m.map, pal.from, pal.range, hex, pal.bodyL);
++          m.color.set("#ffffff");
++        }
+       }
+       if (glans && (roll === "farg" || (!ent?.material && pal))) {
+         m.emissive = new THREE.Color("#FFE082");
 diff --git a/src/spel/palett.test.ts b/src/spel/palett.test.ts
 new file mode 100644
 index 0000000..a9fa43a
@@ -199,10 +259,10 @@ index 0000000..a9fa43a
 +});
 diff --git a/src/spel/palett.ts b/src/spel/palett.ts
 new file mode 100644
-index 0000000..d887b2f
+index 0000000..aa34a5a
 --- /dev/null
 +++ b/src/spel/palett.ts
-@@ -0,0 +1,89 @@
+@@ -0,0 +1,103 @@
 +// R9: palettbyte i sRGB. Tidigare räknades byten i three.js arbetsfärgrymd (linjär) men skrevs som sRGB-byte på en canvas, så målnyansen
 +// hamnade fel (blå 207° blev ca 245°, röd blev orange). All färgmatte här utgår från sRGB-byte, rent och testbart utan three.js.
 +export type Hsl = [number, number, number]; // nyans 0-360, mättnad 0-1, ljushet 0-1
@@ -291,6 +351,20 @@ index 0000000..d887b2f
 +  const c: Tint = [lin(r) / tint[0], lin(g) / tint[1], lin(b) / tint[2]];
 +  const mx = Math.max(c[0], c[1], c[2], 1);
 +  return [sRgb(c[0] / mx), sRgb(c[1] / mx), sRgb(c[2] / mx)];
++}
++
++/** R9: målets albedo (linjärt, för material.color) så att färgen SYNS som begärd i scenens ljus. Används för vita/gråa kroppar. */
++export function malAlbedo(hex: string, tint: Tint): Tint {
++  const n = parseInt(hex.replace("#", ""), 16);
++  const c: Tint = [lin((n >> 16) & 255) / tint[0], lin((n >> 8) & 255) / tint[1], lin(n & 255) / tint[2]];
++  const mx = Math.max(c[0], c[1], c[2], 1);
++  return [c[0] / mx, c[1] / mx, c[2] / mx];
++}
++
++/** R9: gråskala av en texel, normerad så att kroppens ljushet blir vit (1). Mörka ögon och nos förblir mörka. */
++export function graNiva(r: number, g: number, b: number, bodyL: number): number {
++  const l = rgbTillHsl(r, g, b)[2];
++  return Math.round(255 * Math.min(1, Math.max(0, l / Math.max(0.05, bodyL))));
 +}
 diff --git a/src/spel/r9.test.ts b/src/spel/r9.test.ts
 new file mode 100644
