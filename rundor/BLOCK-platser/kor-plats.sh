@@ -14,7 +14,14 @@ D=rundor/BLOCK-platser; V=$D/verktyg; U=$D/data-utkast; UT=/tmp/b-$P; mkdir -p $
 PROV=$D/B1.4/plats-prov.mjs
 [ -f $PROV ] || { echo "STOPP 2: $PROV saknas – B1.4 är inte mergad"; exit 2; }
 grep -q 'repliker_plats' src/spel/*.ts src/spel/ui/*.ts* 2>/dev/null || { echo "STOPP 2: ingen kod läser repliker_plats – B1.4 är inte mergad"; exit 2; }
-aterstall() { git checkout -- data; }
+# R8-2b: ängs-testerna i uppdragsmotor.test.ts antog att bara ängen har uppdrag. Läggs på en gång (första platsen), committas med data/.
+T=src/spel/uppdragsmotor.test.ts
+TESTPATCH=0
+if ! grep -q "B2–B4: platsernas uppdrag" $T; then
+  git apply --check $D/B2-test/b2-test.patch 2>/dev/null || { echo "STOPP 2: $D/B2-test/b2-test.patch passar inte"; exit 2; }
+  git apply $D/B2-test/b2-test.patch; TESTPATCH=1
+fi
+aterstall() { git checkout -- data; [ $TESTPATCH -eq 1 ] && git checkout -- $T; }
 node $V/lagg-data.mjs --plats $P --uppdrag $U/bengtsson-platser.json --omrade $P --ledtradar $U/ledtradar-platser.json > $UT/lagg.txt || { cat $UT/lagg.txt; aterstall; echo "STOPP 2: lagg-data föll"; exit 2; }
 [ -d node_modules ] || npm ci --silent
 node --experimental-strip-types $V/uppdrag-prov.ts data/bengtsson.json --omrade $P > $UT/uppdrag.json 2>&1 || { head -60 $UT/uppdrag.json; aterstall; echo "STOPP 4: uppdragsprovet föll"; exit 4; }
@@ -25,4 +32,4 @@ node $PROV $P --bilder $UT/bilder > $UT/prov.json 2>&1 || { cat $UT/prov.json | 
 SISTA=$(ls $UT/bilder/*.png 2>/dev/null | grep -i "$P" | tail -1); [ -n "$SISTA" ] || SISTA=$(ls $UT/bilder/*.png 2>/dev/null | tail -1)
 [ -n "$SISTA" ] && cp "$SISTA" $D/prov-$P-375x812.png
 echo "B $P OK: $(grep -c ': inlagt' $UT/lagg.txt) uppdrag, $(grep -c '^gåta.*\(ny\|Copilot\)' $UT/lagg.txt) gåtor, $(grep -c 'HOPPAS' $UT/lagg.txt) gåtor väntar på modell (B5a). Bild: $D/prov-$P-375x812.png."
-echo "Committa data/ och $D/prov-$P-375x812.png på runda-b-$P, push, PR, merge. Skicka utdata + bilden till Arkitekten."
+echo "Committa data/, $T och $D/prov-$P-375x812.png på runda-b-$P, push, PR, merge. Skicka utdata + bilden till Arkitekten."
