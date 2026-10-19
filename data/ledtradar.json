@@ -515,8 +515,9 @@
    "langd": 4,
    "granskad": false,
    "gata_latt": "Jag är en lurvig sagofigur som också kallas snömannen.",
-   "bengtsson_fore": "Vem behöver så stora vinterstövlar?",
-   "bengtsson_klart": "En yeti! Vilken lurvig överraskning!"
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, yeti! Vilken fin upptäckt du skrev fram!",
+   "omrade": "grottan"
   },
   "snömänniska": {
    "gata": "Ett vitt bergväsen som ingen riktigt har sett.",
@@ -736,8 +737,9 @@
    "langd": 5,
    "granskad": false,
    "gata_latt": "Jag är en sagofigur som ofta har stor näsa och bor i skogen eller bergen.",
-   "bengtsson_fore": "Någon under bron vill bjuda på saft!",
-   "bengtsson_klart": "Ett troll! Då tackar vi ja till saften!"
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, troll! Vilken fin upptäckt du skrev fram!",
+   "omrade": "grottan"
   },
   "rymdvarelse": {
    "gata": "Från en annan planet kommer jag på besök. Vem är jag?",
@@ -873,16 +875,24 @@
    "granskad": false
   },
   "cyklop": {
-   "gata": "En jätte med bara ett enda stort öga mitt i pannan.",
+   "gata": "Mitt i pannan sitter mitt enda öga. I sagorna är jag ofta väldigt stor.",
    "forsta": "C",
    "langd": 6,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en enögd jätte ur gamla grekiska sagor.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, cyklop! Vilken fin upptäckt du skrev fram!",
+   "omrade": "grottan"
   },
   "jätte": {
-   "gata": "Ett enormt stort väsen som tar stora steg och får träden att skaka.",
+   "gata": "I sagan är jag så stor att ett vanligt hus kan se ut som en leksak.",
    "forsta": "J",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en sagofigur som liknar en människa men är mycket större.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, jätte! Vilken fin upptäckt du skrev fram!",
+   "omrade": "grottan"
   },
   "demon": {
    "gata": "Ett lurigt rött väsen med horn från undre världen.",
@@ -897,10 +907,14 @@
    "granskad": false
   },
   "golem": {
-   "gata": "En jätte av sten eller lera som väcks till liv.",
+   "gata": "Av lera formas jag och får liv med magi i en gammal saga.",
    "forsta": "G",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en magisk figur av lera som kan röra sig.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, golem! Vilken fin upptäckt du skrev fram!",
+   "omrade": "grottan"
   },
   "stenvarelse": {
    "gata": "Ett väsen som ser ut som en stor hård sten med armar.",
@@ -915,10 +929,14 @@
    "granskad": false
   },
   "trollkarl": {
-   "gata": "Han bär spetsig hatt, viftar med en stav och säger abrakadabra.",
+   "gata": "Ur min höga hatt kan något oväntat dyka upp när jag säger en magisk ramsa.",
    "forsta": "T",
    "langd": 9,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag gör magi och har ofta hög hatt, stav och mantel.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, trollkarl! Vilken fin upptäckt du skrev fram!",
+   "omrade": "grottan"
   },
   "magiker": {
    "gata": "Han drar kaniner ur hatten och försvinner i tomma luften på scen.",
@@ -933,10 +951,14 @@
    "granskad": false
   },
   "fladdermus": {
-   "gata": "Ett litet flygande djur som sover upp och ner och hör med ekon.",
+   "gata": "På natten flyger jag med tunna vingar, och när jag vilar hänger jag upp och ner.",
    "forsta": "F",
    "langd": 10,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är ett däggdjur som kan flyga och ofta hittar med hjälp av ekon.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, fladdermus! Vilken fin upptäckt du skrev fram!",
+   "omrade": "grottan"
   },
   "bi": {
    "gata": "Ett litet randigt flygande djur som surrar, samlar nektar och gör honung.",
@@ -969,10 +991,14 @@
    "granskad": false
   },
   "sjöodjur": {
-   "gata": "Ett jättelikt väsen som sägs simma i djupa insjöar.",
+   "gata": "I sagornas vatten gömmer jag mig, men ibland syns en lång hals över ytan.",
    "forsta": "S",
    "langd": 8,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en påhittad varelse som kan bo i en sjö, som den i Loch Ness.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, sjöodjur! Vilken fin upptäckt du skrev fram!",
+   "omrade": "grottan"
   },
   "pterodactylus": {
    "gata": "En flygande dinosaurie med läderhud på vingarna och långt spetsigt huvud.",
@@ -1181,10 +1207,14 @@
    "omrade": "skogen"
   },
   "spindel": {
-   "gata": "Den har åtta ben, spinner nät och fångar flugor.",
+   "gata": "Åtta ben bär mig fram, och ur kroppen kan jag göra tunna trådar.",
    "forsta": "S",
    "langd": 7,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är inte en insekt och kan spinna nät.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, spindel! Vilken fin upptäckt du skrev fram!",
+   "omrade": "grottan"
   },
   "kalkon": {
    "gata": "En stor fågel som säger kollra och som man äter på en stor högtid.",

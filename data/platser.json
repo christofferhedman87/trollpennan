@@ -1333,6 +1333,45 @@
      "y": 0.7
     }
    ]
+  },
+  {
+   "id": "grotta-minne",
+   "namn": "Grottans kristallhörna",
+   "final": "grotta-final-bergets-berattelse",
+   "omrade": "ang",
+   "stjarnor": 3,
+   "objekt": [
+    {
+     "ord": "sten",
+     "x": 0.75,
+     "y": 0.68
+    },
+    {
+     "ord": "kristall",
+     "x": 0.7,
+     "y": 0.55
+    },
+    {
+     "ord": "kristall",
+     "x": 0.76,
+     "y": 0.5
+    },
+    {
+     "ord": "kristall",
+     "x": 0.82,
+     "y": 0.56
+    },
+    {
+     "ord": "bok",
+     "x": 0.71,
+     "y": 0.75
+    },
+    {
+     "ord": "lykta",
+     "x": 0.83,
+     "y": 0.73
+    }
+   ]
   }
  ]
 }
