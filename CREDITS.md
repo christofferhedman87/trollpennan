@@ -27,6 +27,7 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | Paket | Upphov | Licens | Källa | Antal modeller |
 |---|---|---|---|---|
 | b5a-sjo-cc0 | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 6 |
+| gobkit-cc0-2 | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 36 |
 | gobkit-cc0-djur-och-natur | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 59 |
 | kaykit-block-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/block-bits | 1 |
 | kaykit-city-builder-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/city-builder-bits | 6 |
@@ -57,7 +58,7 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | kenney-toy-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/toy-car-kit | 4 |
 | kenney-train-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/train-kit | 12 |
 | oga-cc0 | Teh_Bucket | CC0-1.0 | https://opengameart.org/content/hats-clothing-props | 7 |
-| polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 37 |
+| polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 38 |
 | polypizza-cc0-2 | Quaternius | CC0-1.0 | https://poly.pizza/m/3aQgc75sUR | 16 |
 | quaternius-animated-dinosaurs | Quaternius | CC0-1.0 | https://quaternius.com/packs/animateddinosaurs.html | 3 |
 | quaternius-cute-fish | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutefish.html | 13 |
