@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 472 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 500 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -21,10 +21,10 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | gobkit-cc0-djur-och-natur | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 59 |
 | kaykit-block-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/block-bits | 1 |
 | kaykit-city-builder-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/city-builder-bits | 3 |
-| kaykit-furniture-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/furniture-bits | 6 |
+| kaykit-furniture-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/furniture-bits | 10 |
 | kaykit-halloween-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/halloween-bits | 2 |
 | kaykit-holiday-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/holiday-bits | 9 |
-| kaykit-restaurant-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/restaurant-bits | 9 |
+| kaykit-restaurant-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/restaurant-bits | 12 |
 | kaykit-rpg-tools-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/rpg-tools-bits | 16 |
 | kenney-blocky-characters | Kenney | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 1 |
 | kenney-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/car-kit | 19 |
@@ -33,7 +33,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-cube-pets | Kenney | CC0-1.0 | https://kenney.nl/assets/cube-pets | 13 |
 | kenney-fantasy-town-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/fantasy-town-kit | 10 |
 | kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 59 |
-| kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 17 |
+| kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 37 |
 | kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 6 |
 | kenney-holiday-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/holiday-kit | 8 |
 | kenney-mini-dungeon | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-dungeon | 10 |
@@ -43,7 +43,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-pirate-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/pirate-kit | 11 |
 | kenney-platformer-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/platformer-kit | 10 |
 | kenney-space-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/space-kit | 7 |
-| kenney-survival-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/survival-kit | 5 |
+| kenney-survival-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/survival-kit | 6 |
 | kenney-toy-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/toy-car-kit | 3 |
 | kenney-train-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/train-kit | 12 |
 | oga-cc0 | Teh_Bucket | CC0-1.0 | https://opengameart.org/content/hats-clothing-props | 7 |
@@ -538,3 +538,31 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | stall | /models/bulk/stall.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/farmbuildings.html |
 | silohus | /models/bulk/silohus.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/farmbuildings.html |
 | trastaket | /models/bulk/trastaket.glb | CC0-1.0 | Quaternius | https://quaternius.itch.io/medieval-village-megakit |
+| pall | /models/bulk/pall.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/furniture-bits |
+| bordslampa | /models/bulk/bordslampa.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/furniture-bits |
+| soffbord | /models/bulk/soffbord.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/furniture-bits |
+| skap | /models/bulk/skap.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/furniture-bits |
+| ugn | /models/bulk/ugn.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| diskbank | /models/bulk/diskbank.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| koksbord | /models/bulk/koksbord.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| skrivbordsstol | /models/bulk/skrivbordsstol.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| soffbank | /models/bulk/soffbank.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| barstol | /models/bulk/barstol.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| vaningssang | /models/bulk/vaningssang.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| hornsoffa | /models/bulk/hornsoffa.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| designfatolj | /models/bulk/designfatolj.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| nattduksbord | /models/bulk/nattduksbord.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| sidobord | /models/bulk/sidobord.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| vagglampa | /models/bulk/vagglampa.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| vaxt | /models/bulk/vaxt.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| papperskorg | /models/bulk/papperskorg.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| kartong | /models/bulk/kartong.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| diskho | /models/bulk/diskho.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| mikrovagsugn | /models/bulk/mikrovagsugn.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| koksskap | /models/bulk/koksskap.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| handfat | /models/bulk/handfat.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| dusch | /models/bulk/dusch.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| spegel | /models/bulk/spegel.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| tvattmaskin | /models/bulk/tvattmaskin.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| torktumlare | /models/bulk/torktumlare.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| arbetsbank | /models/bulk/arbetsbank.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/survival-kit |
