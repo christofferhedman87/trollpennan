@@ -6,6 +6,7 @@ export type NpcDel = {
   alt: string;
   bilder: Record<string, string>;
   standard: string;
+  storlek?: { hojd: string };
   miner: { lage: string; bild: string; varar_ms?: number }[];
   repliker?: { fel?: string[]; inga_fler?: string; bara_aventyr?: string };
 };

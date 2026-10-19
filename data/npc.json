@@ -63,6 +63,10 @@
     "inga_fler": "Nu har du hjälpt mig med allt jag kommer på just nu. Tack, du är en riktig språkdoktor!",
     "bara_aventyr": "Här på ängen har jag inga fler uppdrag just nu. Ute på äventyret väntar fler. Titta i Uppdragsboken!",
     "granskad": false
+   },
+   "storlek": {
+    "_om": "R9B: figurens höjd på ängen som CSS-längd (skärmrelativ). Bredden följer bildens proportion.",
+    "hojd": "clamp(176px, 30vh, 340px)"
    }
   },
   "syntaxviruset": {
