@@ -1605,6 +1605,8 @@ export function Spel() {
         if (!hem) return false;
         return useMinne.getState().flyttaIn(djur.uid, hem.uid) === "ok";
       },
+      bytPlats: (id: string) => useMinne.getState().bytPlats(id),
+      platsAntal: () => Object.fromEntries(Object.entries(useMinne.getState().platsSkapelser).map(([k, v]) => [k, v.length])),
     };
     window.__troll = api;
     return () => {
@@ -1825,6 +1827,8 @@ declare global {
       album: (oppna: boolean) => void;
       fotoNu: () => string;
       inHem: () => boolean;
+      bytPlats: (id: string) => boolean;
+      platsAntal: () => Record<string, number>;
     };
   }
 }

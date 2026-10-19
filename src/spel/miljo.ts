@@ -72,3 +72,16 @@ export function markTextur(THREE: typeof import("three")): import("three").Textu
   }
   return t;
 }
+
+/** B1.3b: miljön för en plats = data/miljo.json överlagrad med platsens `miljo` (data/platser.json).
+ * `ljus.skala` multiplicerar alla ljusstyrkor; `mark.grundfarg` är markens färg (saknas = vit, som ängen). */
+export function miljoFor(over: Record<string, unknown> | undefined): { miljo: Miljo; ljusSkala: number; mark: string } {
+  const miljo = slaIhop(MILJO, over ?? {});
+  const l = (over?.ljus ?? {}) as { skala?: unknown };
+  const m = (over?.mark ?? {}) as { grundfarg?: unknown };
+  return {
+    miljo,
+    ljusSkala: typeof l.skala === "number" && l.skala > 0 ? l.skala : 1,
+    mark: typeof m.grundfarg === "string" ? m.grundfarg : "#ffffff",
+  };
+}

@@ -11,6 +11,8 @@ import { Byggnad, Skogsstig, SpokHus } from "./ang/byggnader.tsx";
 import { DjurIScen } from "./ang/djur.tsx";
 import { Himmel, SvajMark } from "./ang/himmel.tsx";
 import { KameraRam } from "./ang/kamera.tsx";
+import { PlatsScen } from "./ang/PlatsDekor.tsx";
+import { START_PLATS } from "./platser.ts";
 import { SagaBoll, SagaKamera, SagaKanin, SagaLjus, SagaPenna, type OrbitStyr } from "./ang/saga.tsx";
 
 class NaturGren extends Component<{ children: ReactNode }, { fel: boolean }> {
@@ -45,18 +47,6 @@ class TredGren extends Component<{ children: ReactNode }, { fel: boolean }> {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga: boolean }) {
   const djur = useMinne((s) => s.ang);
   const garden = useMinne((s) => s.garden);
@@ -71,6 +61,9 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
   const fyll = useRef<THREE.DirectionalLight>(null);
   const kantL = useRef<THREE.DirectionalLight>(null);
   const styr = useRef<OrbitStyr>(null);
+  const plats = useMinne((s) => s.plats);
+  // B1.3b: andra platser ritas helt ur data/platser.json; ängen (och sagan) som förut.
+  if (plats !== START_PLATS && !saga) return <PlatsScen plats={plats} />;
   return (
     <>
       <color attach="background" args={[himmel]} />
@@ -165,6 +158,7 @@ export function Angen3D({ natt, saga = false }: { natt: number; saga?: boolean }
   const djur = useMinne((s) => s.ang);
   const garden = useMinne((s) => s.garden);
   const dragit = useMinne((s) => s.dragit);
+  const plats = useMinne((s) => s.plats);
   const [prat, setPrat] = useState(false);
   const dolj = useRef<number | null>(null);
   const rot = useRef<HTMLDivElement>(null);
@@ -213,7 +207,7 @@ export function Angen3D({ natt, saga = false }: { natt: number; saga?: boolean }
     dolj.current = window.setTimeout(() => setPrat(false), 2400);
   }, []);
   return (
-    <div ref={rot} className="angen-3d" data-testid="angen-3d" style={{ "--grad-m": KV.farggrad ? MILJO.farggrad.mattnad : 1, "--grad-k": KV.farggrad ? MILJO.farggrad.kontrast : 1, "--vinjett": MILJO.vinjett.styrka } as React.CSSProperties} data-djur={djur.length} data-byggen={garden.length} data-saga={saga ? "ja" : "nej"}>
+    <div ref={rot} className="angen-3d" data-testid="angen-3d" style={{ "--grad-m": KV.farggrad ? MILJO.farggrad.mattnad : 1, "--grad-k": KV.farggrad ? MILJO.farggrad.kontrast : 1, "--vinjett": MILJO.vinjett.styrka } as React.CSSProperties} data-djur={djur.length} data-byggen={garden.length} data-saga={saga ? "ja" : "nej"} data-plats={plats}>
       {!saga && !dragit ? (
         <p className="tred-hint" data-testid="tred-hint">
           {HINT}
