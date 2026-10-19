@@ -383,7 +383,8 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
 }
 
 /** R3G: en sak (entitet med modell, inte djur) bredvid ett djur – "en kanin med en hink". Hämtas först när den används (lazyload). */
-export function GltfSak({ id }: { id: string }) {
+/** `vand` (R8-2b): modellen vänds upp och ner med botten kvar på marken (droppsten → stalagmit). */
+export function GltfSak({ id, vand = false }: { id: string; vand?: boolean }) {
   const gltf = useGLTF(modellUrlAv(id)!);
   const klon = useMemo(() => {
     const c = SkeletonUtils.clone(gltf.scene) as THREE.Object3D;
@@ -392,8 +393,11 @@ export function GltfSak({ id }: { id: string }) {
     const box = new THREE.Box3().setFromObject(c);
     const s = skalaFor(id, box.max.y - box.min.y, box.max.x - box.min.x, box.max.z - box.min.z);
     c.scale.setScalar(s);
-    c.position.set(-((box.min.x + box.max.x) / 2) * s, -box.min.y * s, -((box.min.z + box.max.z) / 2) * s);
+    if (vand) {
+      c.rotation.x = Math.PI;
+      c.position.set(-((box.min.x + box.max.x) / 2) * s, box.max.y * s, ((box.min.z + box.max.z) / 2) * s);
+    } else c.position.set(-((box.min.x + box.max.x) / 2) * s, -box.min.y * s, -((box.min.z + box.max.z) / 2) * s);
     return c;
-  }, [gltf.scene, id]);
+  }, [gltf.scene, id, vand]);
   return <primitive object={klon} />;
 }

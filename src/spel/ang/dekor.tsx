@@ -571,7 +571,37 @@ export function Rok() {
   );
 }
 
-export function Horisont() {
+const HORISONT_STANDARD = ["#8FB4C6", "#7E9E92", "#3F6E34"] as const;
+
+/** `typ` (R8-2b): "skog" = kullar med trädkoner (ängen, skogen, sjön), "berg" = kantiga mörka bergväggar längre bak, inga träd. */
+export function Horisont({ farger, typ = "skog" }: { farger?: [string, string, string]; typ?: "skog" | "berg" } = {}) {
+  const [himlen, kullen, skogen] = farger ?? HORISONT_STANDARD;
+  if (typ === "berg") return <BergHorisont farger={[himlen, kullen, skogen]} />;
+  return <SkogHorisont farger={[himlen, kullen, skogen]} />;
+}
+
+function BergHorisont({ farger }: { farger: [string, string, string] }) {
+  const [bak, mitt, fram] = farger;
+  return (
+    <group>
+      <mesh position={[0, 0, -13.5]} scale={[26, 5.2, 1]}>
+        <circleGeometry args={[1, 7, 0, Math.PI]} />
+        <meshBasicMaterial color={bak} />
+      </mesh>
+      <mesh position={[-3, 0, -12]} scale={[14, 4.1, 1]} rotation={[0, 0, 0.05]}>
+        <circleGeometry args={[1, 5, 0, Math.PI]} />
+        <meshBasicMaterial color={mitt} />
+      </mesh>
+      <mesh position={[5, 0, -11.2]} scale={[11, 3.3, 1]} rotation={[0, 0, -0.06]}>
+        <circleGeometry args={[1, 4, 0, Math.PI]} />
+        <meshBasicMaterial color={fram} />
+      </mesh>
+    </group>
+  );
+}
+
+function SkogHorisont({ farger }: { farger: [string, string, string] }) {
+  const [himlen, kullen, skogen] = farger;
   const trad = useRef<THREE.InstancedMesh>(null);
   useLayoutEffect(() => {
     const mesh = trad.current;
@@ -600,15 +630,15 @@ export function Horisont() {
     <group>
       <mesh position={[0, 0, -10.6]} scale={[24, 3.6, 1]}>
         <circleGeometry args={[1, 14, 0, Math.PI]} />
-        <meshBasicMaterial color="#8FB4C6" />
+        <meshBasicMaterial color={himlen} />
       </mesh>
       <mesh position={[0, 0, -8.3]} scale={[18, 2.7, 1]}>
         <circleGeometry args={[1, 16, 0, Math.PI]} />
-        <meshBasicMaterial color="#7E9E92" />
+        <meshBasicMaterial color={kullen} />
       </mesh>
       <mesh position={[0, 0, -6.35]} scale={[13, 2.15, 1]}>
         <circleGeometry args={[1, 18, 0, Math.PI]} />
-        <meshBasicMaterial color="#3F6E34" />
+        <meshBasicMaterial color={skogen} />
       </mesh>
       <instancedMesh ref={trad} args={[undefined, undefined, 6]}>
         <coneGeometry args={[0.45, 1.3, 5]} />

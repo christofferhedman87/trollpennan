@@ -4,6 +4,8 @@ import * as THREE from "three";
 import texterJson from "../../../data/texter-gard.json" with { type: "json" };
 import type { Sparad } from "../brygga.ts";
 import { artFarg, flyger, simmar, vikt } from "../entiteter.ts";
+import type { Plats } from "../platser.ts";
+import { placeraPaPlats } from "../platsYta.ts";
 
 export const HINT = (texterJson as { tred_hint: string }).tred_hint;
 export const SNART = (texterJson as { demo: { snart: string } }).demo.snart;
@@ -115,7 +117,36 @@ const LAND_SLOT: [number, number][] = [
   [1.55, 0.95],
 ];
 
-export function djurPlats(spec: Sparad, alla: Sparad[]): [number, number, number] {
+const platsCache = new Map<string, Map<string, [number, number]>>();
+
+/**
+ * R8-2b: på en plats med zoner flyttas varje landdjur/sak till land (land/fri, aldrig vattenyta)
+ * och simmare till vattenytan. Flygare rörs inte. Ängen (plats saknas) är som förut.
+ */
+export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number, number, number] {
+  const bas = djurPlatsBas(spec, alla);
+  if (!plats || flygare(spec)) return bas;
+  const nyckel = `${plats.id}|${alla.map((d) => d.uid).join(",")}`;
+  let karta = platsCache.get(nyckel);
+  if (!karta) {
+    const marka = alla.filter((d) => !flygare(d));
+    const ut = placeraPaPlats(
+      plats,
+      marka.map((d) => {
+        const [x, , z] = djurPlatsBas(d, alla);
+        return [x, z] as [number, number];
+      }),
+      marka.map((d) => simmare(d)),
+    );
+    karta = new Map(marka.map((d, i) => [d.uid, ut[i]!]));
+    if (platsCache.size > 30) platsCache.clear();
+    platsCache.set(nyckel, karta);
+  }
+  const p = karta.get(spec.uid);
+  return p ? [p[0], bas[1], p[1]] : bas;
+}
+
+function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
   if (simmare(spec)) {
     const sim = alla.filter((d) => simmare(d));
     const i = Math.max(0, sim.findIndex((d) => d.uid === spec.uid));

@@ -1,15 +1,17 @@
 // B1.3b: scenen för andra platser än ängen (Skogen, Sjön, Grottan …), helt ur data/platser.json.
 // Ängen ritas som förut i angen3d.tsx; här finns bara miljö (himmel, dis, ljus, mark), startobjekt och platsens skapelser.
 import { OrbitControls } from "@react-three/drei";
-import { Component, Suspense, useEffect, useMemo, useRef, type ReactNode } from "react";
+import { Component, Suspense, useEffect, useLayoutEffect, useMemo, useRef, type ReactNode } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { GltfSak } from "../gltfDjur.tsx";
+import { InstansModell } from "../kenneyNatur.tsx";
 import { KV, miljoFor } from "../miljo.ts";
 import { useMinne } from "../minne.ts";
-import { dekorFor, vattenytor } from "../platsDekor.ts";
+import { DEKOR_SKALA, dekorFor, horisontFor, spridDekor, vattenytor, type SpriddDekor } from "../platsDekor.ts";
 import { platsMed } from "../platser.ts";
 import { DjurIScen } from "./djur.tsx";
+import { Horisont } from "./dekor.tsx";
 import { SvajMark } from "./himmel.tsx";
 import { SagaPenna } from "./saga.tsx";
 import { KameraRam } from "./kamera.tsx";
@@ -42,19 +44,54 @@ class SakGren extends Component<{ children: ReactNode }, { fel: boolean }> {
   }
 }
 
-/** Startobjekten (ord → entitet via samma uppslag som barnets ord) och vattenytorna. */
+function loggaSaknas(plats: string, ord: string) {
+  const nyckel = `${plats}:${ord}`;
+  if (sagt.has(nyckel)) return;
+  sagt.add(nyckel);
+  console.info(`[plats] ${plats}: "${ord}" har ingen modell, hoppas över`);
+}
+
+/** En platt skugga per dekorsak. Radie ≈ 0,35 × höjd. En instancedMesh för hela raden av rader. */
+function DekorSkuggor({ rader }: { rader: SpriddDekor[] }) {
+  const ref = useRef<THREE.InstancedMesh>(null);
+  const alla = useMemo(() => rader.filter((r) => r.url && r.platser.length).flatMap((r) => r.platser), [rader]);
+  useLayoutEffect(() => {
+    const mesh = ref.current;
+    if (!mesh) return;
+    const m = new THREE.Matrix4();
+    const pos = new THREE.Vector3();
+    const q = new THREE.Quaternion();
+    const sv = new THREE.Vector3();
+    q.setFromEuler(new THREE.Euler(-Math.PI / 2, 0, 0));
+    alla.forEach(([x, z, hojd], i) => {
+      const radie = 0.35 * hojd;
+      pos.set(x, 0.02, z);
+      sv.set(radie, radie, radie);
+      m.compose(pos, q, sv);
+      mesh.setMatrixAt(i, m);
+    });
+    mesh.count = alla.length;
+    mesh.instanceMatrix.needsUpdate = true;
+  }, [alla]);
+  if (!alla.length) return null;
+  return (
+    <instancedMesh ref={ref} args={[undefined, undefined, alla.length]} frustumCulled={false}>
+      <circleGeometry args={[1, 12]} />
+      <meshBasicMaterial color="#000000" transparent opacity={0.16} depthWrite={false} />
+    </instancedMesh>
+  );
+}
+
+/** Startobjekten (ord → entitet via samma uppslag som barnets ord), dekor ur data och vattenytorna. */
 export function PlatsDekor({ plats }: { plats: string }) {
   const p = platsMed(plats);
   const { saker, saknas } = useMemo(() => dekorFor(p), [p]);
   const vatten = useMemo(() => vattenytor(p), [p]);
-  for (const ord of saknas) {
-    const nyckel = `${plats}:${ord}`;
-    if (sagt.has(nyckel)) continue;
-    sagt.add(nyckel);
-    console.info(`[plats] ${plats}: "${ord}" har ingen modell, hoppas över`);
-  }
+  const spridd = useMemo(() => spridDekor(p), [p]);
+  for (const ord of saknas) loggaSaknas(plats, ord);
+  for (const rad of spridd) if (rad.saknas) loggaSaknas(plats, rad.saknas);
   return (
-    <group name={`plats-${plats}`} scale={1.45}>
+    <group name={`plats-${plats}`} scale={DEKOR_SKALA}>
       {vatten.map((v) => (
         <mesh key={v.id} name="vattenyta" rotation={[-Math.PI / 2, 0, 0]} position={v.mitt}>
           <planeGeometry args={v.storlek} />
@@ -65,11 +102,21 @@ export function PlatsDekor({ plats }: { plats: string }) {
         <group key={`${s.kropp}-${i}`} name={s.ord} position={s.pos} scale={s.skala}>
           <SakGren>
             <Suspense fallback={null}>
-              <GltfSak id={s.kropp} />
+              <GltfSak id={s.kropp} vand={s.vand} />
             </Suspense>
           </SakGren>
         </group>
       ))}
+      <DekorSkuggor rader={spridd} />
+      {spridd.map((rad, i) =>
+        rad.url && rad.platser.length ? (
+          <SakGren key={`${rad.url}-${i}`}>
+            <Suspense fallback={null}>
+              <InstansModell url={rad.url} platser={rad.platser} vand={rad.vand} />
+            </Suspense>
+          </SakGren>
+        ) : null,
+      )}
     </group>
   );
 }
@@ -79,6 +126,8 @@ export function PlatsScen({ plats }: { plats: string }) {
   const djur = useMinne((s) => s.platsSkapelser[plats] ?? INGA);
   const styr = useRef<OrbitStyr>(null);
   const { miljo, ljusSkala, mark } = useMemo(() => miljoFor(platsMed(plats)?.miljo), [plats]);
+  const platsData = platsMed(plats);
+  const horisont = useMemo(() => horisontFor(platsMed(plats)?.miljo), [plats]);
   const L = miljo.ljus;
   const k = ljusSkala;
   return (
@@ -104,10 +153,11 @@ export function PlatsScen({ plats }: { plats: string }) {
       <directionalLight color={L.fyll.farg} position={[-6, 3, 4]} intensity={L.fyll.styrka * k} />
       <directionalLight color={L.kant.farg} position={[-2, 4, -5]} intensity={L.kant.styrka * k} />
       <SvajMark color={mark} natt={0} utanTextur={mark !== "#ffffff"} />
+      {horisont ? <Horisont farger={horisont.farger} typ={horisont.typ} /> : null}
       <PlatsKamera />
       <PlatsDekor plats={plats} />
       {djur.map((spec) => (
-        <DjurIScen key={spec.uid} spec={spec} alla={djur} />
+        <DjurIScen key={spec.uid} spec={spec} alla={djur} plats={platsData} />
       ))}
       <SagaPenna />
       <OrbitControls
