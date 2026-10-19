@@ -1275,5 +1275,35 @@
    ]
   }
  ],
- "beloningar": []
+ "beloningar": [
+  {
+   "id": "skog-minne",
+   "namn": "Skogens minneslykta",
+   "final": "skog-final-minnesljus",
+   "omrade": "ang",
+   "stjarnor": 3,
+   "objekt": [
+    {
+     "ord": "stubbe",
+     "x": 0.25,
+     "y": 0.65
+    },
+    {
+     "ord": "lykta",
+     "x": 0.25,
+     "y": 0.5
+    },
+    {
+     "ord": "blomma",
+     "x": 0.18,
+     "y": 0.7
+    },
+    {
+     "ord": "blomma",
+     "x": 0.32,
+     "y": 0.7
+    }
+   ]
+  }
+ ]
 }
