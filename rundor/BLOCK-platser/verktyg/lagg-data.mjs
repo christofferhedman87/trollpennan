@@ -54,7 +54,15 @@ if (arg("--plats")) {
   if (!rad) fel.push(`plats ${id}: finns inte i utkastet`);
   else if (!fs.existsSync(pf)) fel.push("data/platser.json saknas (B1.3 är inte inlagd)");
   else {
-    const d = data("platser.json"); d.platser = d.platser.filter((p) => p.id !== rad.id); d.platser.push(rad);
+    // R9I: slå ihop i stället för att ersätta. Scenfälten (start, zoner, dekor, miljo – R9G/R8-2a) behålls från data/platser.json,
+    // övriga fält kommer från Copilot-utkastet, och fält som bara finns i data/platser.json ligger kvar.
+    const SCEN = ["start", "zoner", "dekor", "miljo"];
+    const d = data("platser.json"); const gammal = d.platser.find((p) => p.id === rad.id);
+    const ny = { ...(gammal ?? {}), ...rad };
+    const behallna = gammal ? SCEN.filter((k) => gammal[k] !== undefined) : [];
+    for (const k of behallna) ny[k] = gammal[k];
+    d.platser = gammal ? d.platser.map((p) => (p.id === rad.id ? ny : p)) : [...d.platser, ny];
+    if (behallna.length) logg(`plats ${id}: behåller ${behallna.join(", ")} från data/platser.json`);
     const bel = P.beloningar.find((b) => b.final === rad.milstolpe.final);
     if (bel) { d.beloningar = (d.beloningar ?? []).filter((b) => b.id !== bel.id); d.beloningar.push(bel); }
     logg(`plats ${id}: inlagd${bel ? " + belöning " + bel.id : ""}`);
