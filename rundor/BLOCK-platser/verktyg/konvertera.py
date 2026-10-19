@@ -85,6 +85,10 @@ for u in ang_raw:
         for fs in g["forslag"]:
             if fs["fras"] == "en kanin på en soffa med en trollbok om fjärran länder":
                 fs["ord"], fs["fras"] = "bok", "en kanin på en soffa med en bok"
+ARK_TB = {"pytteliten-kompis": "Min stora kikare söker en vän som är minst i hela världen!",
+          "mjuk-kompis": "Jag söker en vän som är skön att krama, som ett moln!"}
+for u in ang_raw:
+    if u["id"] in ARK_TB: u["text_bengtsson"] = ARK_TB[u["id"]]
 ang_upp = [konv(u, "ang") for u in ang_raw]
 ids2 = collections.Counter(u["id"] for u in ang_upp + plats_upp); [fel("id", f"{i}: dubblett ängen/platser") for i, n in ids2.items() if n > 1]
 # upprepade uppdrag (samma kravord) mellan platser

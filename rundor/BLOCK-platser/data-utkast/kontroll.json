@@ -1,6 +1,5 @@
 {
  "sammanfattning": {
-  "svar_i_replik": 2,
   "upprepning": 6,
   "hemligt_kodritat": 8,
   "hemligt_finns_redan": 23,
@@ -25,10 +24,6 @@
   "forslag_angen": 160
  },
  "fel": {
-  "svar_i_replik": [
-   "pytteliten-kompis: 'liten' står i repliken",
-   "mjuk-kompis: 'fluffig' står i repliken"
-  ],
   "upprepning": [
    "skog-liten-van, grotta-liten-upptackare har samma krav ['liten', 'minimal', 'pytteliten']",
    "skog-varm-van, grotta-varma-oron har samma krav ['filt', 'halsduk', 'jacka', 'luva']",
