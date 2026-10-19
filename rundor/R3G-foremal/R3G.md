@@ -1,0 +1,11 @@
+# R3G – föremål som egna entiteter (ren patch, ingen Build)
+
+**Vad:** Varje entitet med modell som inte är ett djur (föremål, natur, byggnad, mat, fordon, kläder; ~460 st) blir ett ord. "ett lok" ger loket på ängen, "en kanin med en hink" ger kaninen med hinken bredvid. Inget blir ägg längre för dessa ord.
+**Regel (ingen kod per ord):** `lexikon.ts` härleder ord ur `entiteter.json` (fältet `ord`, annars nyckeln), böjer dem för båda genus, ord.json och grammatikord (förled som "ljus", artiklar, funktionsord) vinner alltid, och ett ord går först till entiteten med samma nyckel. Genus i formeln tas från barnets artikel ("ett lok") eller bestämd form ("loket").
+**Filer (patch `ref/r3g.patch`):** `src/tolk/{typer,lexikon,tolka}.ts` (klass `foremal`), `src/spel/entiteter.ts` (`arSak`, `skalaFor`), `gltfDjur.tsx` (`GltfSak`, skala), `angen3d.tsx` (saker står still, med-saker bredvid djuret, lazyload via Suspense), `data/entiteter.json` (11 dinosaurier malhojd 1 → 1,7), `src/tolk/tolk.test.ts` (2 nya test).
+**Skala:** djur som förut (målhöjd = höjd). Saker: målhöjden gäller max(höjd, 0,6 × längsta sidan), så gaffeln (platt, 0,02 hög) inte blir ett jättestreck och lok/planka blir rimliga.
+**Bevis (Arkitekten, lokalt):** test:product 118/118 grönt; `npm test` samma 8 kända fel som main (og/share-card); typecheck 21 fel = exakt som main (bara .mjs-tester). `foremal-prov.mjs` (Playwright 375x812 mot dist-pages): 7/7 ok – en kanin med en hink, ett lok, en hink, en ek, ambulans, en röd bil, en katt med en gaffel; rätt modell hämtas, inget ägg, 0 bulkmodeller vid start, inga sidfel (`prov-resultat.json`, `prov-375x812.png`). Testid oförändrade.
+**Körning (Doodle):** `bash rundor/R3G-foremal/kor.sh` på ren main → exit 0 → committa src/ data/ på `runda-r3g`, PR, merge.
+**Stoppregel:** exit 2 (patch går inte på) → stopp, inget ändrat. Exit 3/4 → `git checkout -- src data`, rapportera utdata. Inga egna rättelser i spelkoden.
+**Kvar (ej i R3G):** valfisk som diadem och snurra som spade är fel modellfiler (byts i en modellrunda); stavfel på föremål ger inte "Menade du" (bara djur/ord.json); föremål ger inga guldord/hemliga ord; färgord på saker ("röd bil") byter inte färg ännu.
+**Grind: JA** – ren patch, provad end-to-end, inga Build-turer, djur/ägg/Bengtsson/hemliga orörda (tester gröna).
