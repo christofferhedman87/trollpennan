@@ -387,7 +387,6 @@ export function Spel() {
     if (useMinne.getState().forstaKarta) {
       useMinne.getState().settKarta();
       setForstaRad([...TEXTER_AV.forsta_gangen]);
-      for (const rad of TEXTER_AV.forsta_gangen) visaBanner(rad, "ovr");
     }
   }
 

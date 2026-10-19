@@ -11,6 +11,7 @@ import { nattvaken } from "../entiteter.ts";
 import { bubblaStil, dukStil } from "./hjalp.ts";
 import { fyll } from "../fyll.ts";
 import { FIR, TEXTER } from "./spelData.ts";
+import { StallChip } from "./Stall.tsx";
 import type { Banner, Bubbla, Varld } from "./typer.ts";
 
 type AngLagerProps = {
@@ -97,6 +98,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
               {ALBUM.texter.ta_foto}
             </button>
           ) : null}
+          {panel === "spel" ? <StallChip visaBanner={visaBanner} /> : null}
           <div className="banderoller" role="status" aria-live="polite" aria-atomic="true">
             {banners.map((b) => (
               <p key={b.id} className={`banner ${b.slag}`} data-testid="puff">

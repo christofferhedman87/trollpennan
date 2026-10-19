@@ -109,13 +109,13 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 ### KÖORDNING (gäller nu, 2026-10-19) – `rundor/BLOCK-platser/PLAN.md`
 **Skript** = `kor.sh`/patch, 0 Build-USD. **Build** = Grok Build. Doodle skriver aldrig spelkod utan kor.sh eller prompt. Arkitekten levererar → skickar körkommando samma stund.
 
-**Klart på main:** R3G (#56) · R9D–F (#60/#62/#64) · B0 (#61) · B1.1–B1.3b (#67/#68/#71/#75). main ≈ `0124204`.
+**Klart på main:** R3G (#56) · R9D–F (#60/#62/#64) · B0 (#61) · B1.1–B1.4-fix (#67/#68/#71/#75/#77/#78) · R9G (denna patch).
 
-**Pågår:** **B1.4-fix** (fel 1–6: Inte riktigt än, mark, skala, Bengtsson, Phaser-text, UI-overlap). Patch i `rundor/BLOCK-platser/B1.4-fix/`. Phaser-äventyret förblir avstängt.
+**Pågår:** **R9G** gåta/uppdrag/skrivhint + stall i menyn + platsdata (vatten, brygga, grottvalv, karttext) — **skript** `bash rundor/R9G-ux-stall/kor.sh`. Phaser-äventyret förblir avstängt.
 
 **Nästa, i denna ordning (inga parallella steg utom B5):**
-1. **B1.4-fix** fel 1–6 — **skript** (`bash rundor/BLOCK-platser/B1.4-fix/kor.sh`) · sedan R9G
-2. **R9G** gåta≠uppdrag, gåta byts ej för tidigt, "Skriv i Pennans bok", stall=meny — **Build** (`rundor/R9G-ux-stall/`)
+1. ~~B1.4-fix~~ klar (#78)
+2. **R9G** gåta≠uppdrag, låst gåta, skrivhint, stall=meny — **skript** (`rundor/R9G-ux-stall/kor.sh`, ingen Build)
 3. **R8-2** grafiklyft (skuggor, horisont, kontur …) — **Build** (`rundor/R8-grafik/`)
 4. **B2** Skogen — **skript** (`kor-plats.sh skogen`)
 5. **B3** Sjön — **skript**
@@ -699,8 +699,8 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
 ## 19. Öppna fel (2026-10-19) – kort; blocket som tar hand om felet
 | # | Fel | När |
 |---|-----|-----|
-| 1 | Platsbyte syns inte i scenen | **B1.3b** (pågår, skript) |
-| 2 | Uppdrag+gåta samtidigt; gåta byts för tidigt; otydligt var man skriver; stall saknas | **R9G** |
+| 1 | ~~Platsbyte syns inte i scenen~~ | B1.3b klar |
+| 2 | ~~Uppdrag+gåta samtidigt; gåta byts för tidigt; otydligt var man skriver; stall saknas~~ | **R9G** klar |
 | 3 | "Inte riktigt än" under ERROR-automaten | **B1.4** |
 | 4 | Valfisk/snurra/gaffel/släde/jacka/planka/brandpost/julkrans konstiga eller svåra att se | **B5** |
 | 5 | Mantel/horn/halsduk sitter fel; färgord färgar inte föremål | **B6.2** |

@@ -748,3 +748,13 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
 .plats-intro img{width:64px;height:64px;object-fit:contain;flex:none}
 .plats-intro p{margin:0;font-weight:700;font-size:1.05rem;line-height:1.3}
 .npc-fel-text{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:2;white-space:nowrap;padding:3px 10px;border-radius:999px;background:#2c2416;color:#FFE082;font-size:.95rem;font-weight:800;box-shadow:0 2px 0 #0006;pointer-events:none}
+/* R9G: stallet (knapp vid djuret + lista i menyn) och skrivhint under gåtans streck */
+.stall-chip{position:absolute;z-index:6;transform:translate(-50%,0);pointer-events:auto;min-height:44px;padding:8px 16px;border:2px solid var(--color-moss);border-radius:999px;background:var(--color-cream);color:var(--color-ink);font-size:1.0625rem;font-weight:800;box-shadow:0 3px 0 var(--color-paper-deep);white-space:nowrap}
+.stall-lista{display:flex;flex-direction:column;gap:6px}
+.stall-rad{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 6px 6px 14px;border-radius:16px;background:var(--color-cream);font-weight:700}
+.meny-panel .stall-rad button{min-height:44px;padding:6px 14px;font-size:1.0625rem;background:var(--color-moss);color:var(--color-cream);box-shadow:none;text-align:center}
+.ledtrad-streck{pointer-events:none;user-select:none;-webkit-user-select:none}
+.ledtrad-hint{margin:2px 0 0;font-size:.95rem;font-weight:800;color:var(--color-moss)}
+.ledtrad-hint::after{content:"\00a0↓"}
+.ledtrad-visa{margin-left:6px;font-weight:700;text-decoration:underline;white-space:nowrap}
+.ledtrad.kompakt summary{flex-wrap:wrap;column-gap:4px}
