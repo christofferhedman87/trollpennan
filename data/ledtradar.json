@@ -6,9 +6,13 @@
  },
  "ledtradar": {
   "kattunge": {
-   "gata": "En katt som är alldeles nyfödd och jätteliten.",
+   "gata": "Mjau! Jag är en liten bebis med morrhår och mjuka tassar.",
    "forsta": "K",
-   "langd": 8
+   "langd": 8,
+   "gata_latt": "Min mamma är en katt.",
+   "bengtsson_fore": "Psst, något litet jamade i korgen!",
+   "bengtsson_klart": "Ja, en kattunge! Vilken mjuk liten upptäckt!",
+   "granskad": false
   },
   "kisse": {
    "gata": "Ett gosigt smeknamn på en katt. Mjau!",
@@ -16,9 +20,13 @@
    "langd": 5
   },
   "valp": {
-   "gata": "En hund som fortfarande är ett litet barn.",
+   "gata": "Voff! Jag är liten och lär mig precis att vifta på svansen.",
    "forsta": "V",
-   "langd": 4
+   "langd": 4,
+   "gata_latt": "Jag är en hund som inte är vuxen än.",
+   "bengtsson_fore": "Vem har lånat min toffel nu då?",
+   "bengtsson_klart": "En valp! Nu får jag hålla reda på tofflorna!",
+   "granskad": false
   },
   "vovve": {
    "gata": "Ett gosigt smeknamn på en hund. Vov vov!",
@@ -26,19 +34,31 @@
    "langd": 5
   },
   "ponny": {
-   "gata": "En liten häst som barn ofta rider på.",
+   "gata": "En liten häst är jag, men jag kan vara vuxen ändå. Vem är jag?",
    "forsta": "P",
-   "langd": 5
+   "langd": 5,
+   "gata_latt": "Jag är en sorts häst som är liten även som vuxen.",
+   "bengtsson_fore": "Jag såg en häst i lagom kramhöjd!",
+   "bengtsson_klart": "En ponny! Liten häst, stor upptäckt!",
+   "granskad": false
   },
   "föl": {
-   "gata": "En häst som nyss har fötts.",
+   "gata": "På långa, vingliga ben går jag nära min mamma som gnäggar.",
    "forsta": "F",
-   "langd": 3
+   "langd": 3,
+   "gata_latt": "Jag är en häst som nyss har fötts.",
+   "bengtsson_fore": "Någon övar på sina allra första steg!",
+   "bengtsson_klart": "Ett föl! Välkommen på dina nya ben!",
+   "granskad": false
   },
   "padda": {
-   "gata": "Den liknar en groda men är brun och knottrig.",
+   "gata": "Min hud är knottrig och jag går ofta hellre än hoppar. Vem är jag?",
    "forsta": "P",
-   "langd": 5
+   "langd": 5,
+   "gata_latt": "Jag liknar en groda men har torrare, knottrig hud.",
+   "bengtsson_fore": "Vem promenerar så lugnt vid dammen?",
+   "bengtsson_klart": "En padda! Vilken trevlig liten promenadkompis!",
+   "granskad": false
   },
   "ljusblå": {
    "gata": "Färgen på himlen en solig sommardag.",
@@ -241,9 +261,13 @@
    "langd": 12
   },
   "gris": {
-   "gata": "Den säger nöff och gillar att rulla sig i lera.",
+   "gata": "Nöff! Med min runda nos bökar jag gärna i jorden.",
    "forsta": "G",
-   "langd": 4
+   "langd": 4,
+   "gata_latt": "Jag bor ofta på en gård och har knorr på svansen.",
+   "bengtsson_fore": "Det hördes ett nöjt nöff från leran!",
+   "bengtsson_klart": "En gris! Den knorren går inte av för hackor!",
+   "granskad": false
   },
   "nöff": {
    "gata": "Ett smeknamn på grisen, precis som ljudet den säger.",
@@ -256,14 +280,22 @@
    "langd": 5
   },
   "kulting": {
-   "gata": "En liten grisunge.",
+   "gata": "Liten och trynig springer jag efter min mamma som säger nöff.",
    "forsta": "K",
-   "langd": 7
+   "langd": 7,
+   "gata_latt": "Jag är en unge till en gris.",
+   "bengtsson_fore": "Små nöff hörs bakom ladan!",
+   "bengtsson_klart": "En kulting! Ett litet nöff till dig!",
+   "granskad": false
   },
   "dinosaurie": {
-   "gata": "Ett jättestort djur som levde för länge, länge sedan.",
+   "gata": "För länge sedan gick vi på jorden, med långa svansar och ibland väldiga kroppar.",
    "forsta": "D",
-   "langd": 10
+   "langd": 10,
+   "gata_latt": "Jag är ett urtida djur, som de stora skeletten på museum.",
+   "bengtsson_fore": "Min gamla stenbok gömmer en gåta!",
+   "bengtsson_klart": "En dinosaurie! Vilken stor upptäckt från förr!",
+   "granskad": false
   },
   "dino": {
    "gata": "Ett kort smeknamn på urtidsdjuret med de stora fötterna.",
@@ -271,119 +303,184 @@
    "langd": 4
   },
   "uggla": {
-   "gata": "Den är vaken på natten och säger hu-hu.",
+   "gata": "Ho, ho! Med stora ögon spanar jag i natten och flyger nästan utan ljud.",
    "forsta": "U",
-   "langd": 5
+   "langd": 5,
+   "gata_latt": "Jag är en fågel som ofta är vaken på natten och hoar.",
+   "bengtsson_fore": "Vem hoade när jag borstade tänderna?",
+   "bengtsson_klart": "En uggla! Ho, ho, så bra du klurade!",
+   "granskad": false
   },
   "ekorre": {
-   "gata": "Den har en yvig svans och samlar kottar och nötter.",
+   "gata": "En yvig svans följer med när jag skuttar bland grenar och gömmer nötter.",
    "forsta": "E",
-   "langd": 6
+   "langd": 6,
+   "gata_latt": "Jag är ofta rödbrun och klättrar snabbt uppför träd.",
+   "bengtsson_fore": "Någon har gömt en nöt i min hatt!",
+   "bengtsson_klart": "En ekorre! Nu förstår jag nöten i hatten!",
+   "granskad": false
   },
   "bäver": {
-   "gata": "Den har stora tänder och bygger dammar av pinnar.",
+   "gata": "Med stora framtänder gnager jag på träd och bygger dammar av grenar.",
    "forsta": "B",
-   "langd": 5
+   "langd": 5,
+   "gata_latt": "Jag simmar och har en bred, platt svans.",
+   "bengtsson_fore": "Vem har byggt så fint i bäcken?",
+   "bengtsson_klart": "En bäver! Vilken flitig liten byggmästare!",
+   "granskad": false
   },
   "haj": {
-   "gata": "Den simmar i havet och har en spetsig fena på ryggen.",
+   "gata": "I havet simmar jag med fenor, men mitt skelett är mjukt som din nästipp.",
    "forsta": "H",
-   "langd": 3
+   "langd": 3,
+   "gata_latt": "Jag är en fisk med brosk i stället för vanliga ben och ofta en tydlig ryggfena.",
+   "bengtsson_fore": "Min näsa hjälpte mig hitta en havsgåta!",
+   "bengtsson_klart": "En haj! Där simmade svaret fram!",
+   "granskad": false
   },
   "enhörning": {
-   "gata": "En sagohäst med ett enda horn i pannan.",
+   "gata": "En häst ur sagorna är jag, med ett enda horn i pannan.",
    "forsta": "E",
-   "langd": 9
+   "langd": 9,
+   "gata_latt": "Jag ser ut som en häst med ett långt horn mellan öronen.",
+   "bengtsson_fore": "Något glittrade mellan träden!",
+   "bengtsson_klart": "En enhörning! Nu blev ängen lite mer magisk!",
+   "granskad": false
   },
   "elefant": {
-   "gata": "Ett jättestort grått djur med lång snabel och stora öron.",
+   "gata": "Min näsa är så lång att jag kan duscha mig med den. Vem är jag?",
    "forsta": "E",
    "langd": 7,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är ett stort djur med snabel och stora öron.",
+   "bengtsson_fore": "Vem duschar utan duschslang?",
+   "bengtsson_klart": "En elefant! Vilken praktisk näsa!"
   },
   "lejon": {
-   "gata": "Kungen över savannen. Hanen har en stor man och ryter högt.",
+   "gata": "Hanens stora man ser ut som en lurvig krage. Vi lever ofta flera tillsammans.",
    "forsta": "L",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är ett stort kattdjur där hanen brukar ha man runt huvudet.",
+   "bengtsson_fore": "Jag såg en krage som inte gick att ta av!",
+   "bengtsson_klart": "Ett lejon! Den frisyren slår min mustasch!"
   },
   "zebra": {
-   "gata": "En häst i randig pyjamas, svart och vit.",
+   "gata": "Svarta och vita ränder täcker mig från huvud till svans. Jag liknar en häst.",
    "forsta": "Z",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är ett randigt djur med hovar som lever i Afrika.",
+   "bengtsson_fore": "Vem har pyjamas mitt på dagen?",
+   "bengtsson_klart": "En zebra! Vilken stilig randig vän!"
   },
   "pingvin": {
-   "gata": "En fågel som inte kan flyga men simmar fint och går som en liten herre i frack.",
+   "gata": "Mina vingar hjälper mig att simma, men inte att flyga. På land vaggar jag fram.",
    "forsta": "P",
    "langd": 7,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en fågel som ofta är svart och vit och simmar skickligt.",
+   "bengtsson_fore": "Någon vaggar fram till badet!",
+   "bengtsson_klart": "En pingvin! Nu vaggar vi en liten segerdans!"
   },
   "räv": {
-   "gata": "Ett rödorange djur med yvig svans som sägs vara listigt.",
+   "gata": "Röd päls, spetsiga öron och en yvig svans med ljus spets. Vem tassar här?",
    "forsta": "R",
    "langd": 3,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är ett vilt hunddjur med rödbrun päls och vit svansspets.",
+   "bengtsson_fore": "En fluffig svans försvann bakom busken!",
+   "bengtsson_klart": "En räv! Du hittade vår röda skogsvän!"
   },
   "flodhäst": {
-   "gata": "Ett tjockt djur som badar i floden och gäspar med jättestor mun.",
+   "gata": "Med en väldig kropp och små öron svalkar jag mig i Afrikas vatten.",
    "forsta": "F",
    "langd": 8,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag har korta ben, en mycket stor mun och tillbringar mycket tid i vatten.",
+   "bengtsson_fore": "Någon behöver ett badkar i jättestorlek!",
+   "bengtsson_klart": "En flodhäst! Mitt badkar får nog stanna hemma!"
   },
   "anka": {
-   "gata": "Den säger kvack och simmar i dammen med platta fötter.",
+   "gata": "Kvack! Min breda näbb och mina simfötter passar bra i dammen.",
    "forsta": "A",
    "langd": 4,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en fågel som kvackar och ofta finns vid vatten.",
+   "bengtsson_fore": "Vem kvackar åt mina stövlar?",
+   "bengtsson_klart": "En anka! Kvack så trevligt!"
   },
   "örn": {
-   "gata": "En stor kraftig rovfågel som svävar högt uppe och ser mycket långt.",
+   "gata": "Högt över bergen glider jag på breda vingar och spanar med skarpa ögon.",
    "forsta": "Ö",
    "langd": 3,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en stor rovfågel med kraftig, böjd näbb.",
+   "bengtsson_fore": "Någon ser nog min hatt ända där uppifrån!",
+   "bengtsson_klart": "En örn! Du siktade in dig på rätt ord!"
   },
   "tyrannosaurus": {
-   "gata": "Urtidens kung med små armar, stora tänder och hemskt hungrig.",
+   "gata": "Två stora ben, två pyttesmå armar och ett väldigt huvud bar jag för länge sedan.",
    "forsta": "T",
    "langd": 13,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en stor dinosaurie som också kallas T-rex.",
+   "bengtsson_fore": "Min måttstock räckte inte till huvudet!",
+   "bengtsson_klart": "En tyrannosaurus! Ett långt ord för en stor upptäckt!"
   },
   "giraff": {
-   "gata": "Det djur i världen som har längst hals och äter blad högst upp i träden.",
+   "gata": "Med min långa hals når jag blad som de flesta andra djur inte kommer åt.",
    "forsta": "G",
    "langd": 6,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag har fläckig päls, mycket lång hals och små horn på huvudet.",
+   "bengtsson_fore": "Vem åt bladen högst upp?",
+   "bengtsson_klart": "En giraff! Nu får vi vinka högt!"
   },
   "panda": {
-   "gata": "Ett svartvitt björndjur som mumsar bambu hela dagen.",
+   "gata": "Svarta fläckar runt ögonen och bambu till lunch. Vem är jag?",
    "forsta": "P",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en svartvit björn från Kina som äter mycket bambu.",
+   "bengtsson_fore": "Någon har beställt bambu till fikat!",
+   "bengtsson_klart": "En panda! Då dukar vi fram bambu!"
   },
   "krabba": {
-   "gata": "Den går sidledes på sandbotten och har två stora klor.",
+   "gata": "Åt sidan går jag gärna, med hårt skal och två klor framtill.",
    "forsta": "K",
    "langd": 6,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag bor vid vatten och har tio ben om man räknar med klorna.",
+   "bengtsson_fore": "Vem promenerar på tvären vid stranden?",
+   "bengtsson_klart": "En krabba! Nu tar vi ett glatt steg åt sidan!"
   },
   "delfin": {
-   "gata": "Ett lekfullt havsdjur som hoppar över vågorna och pratar med klickande ljud.",
+   "gata": "Genom ett hål på huvudet andas jag luft mellan mina simturer i havet.",
    "forsta": "D",
    "langd": 6,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är ett havsdäggdjur med fenor och ofta en lång, smal nos.",
+   "bengtsson_fore": "Någon dök upp för en nypa luft!",
+   "bengtsson_klart": "En delfin! Vilken fin havskompis du hittade!"
   },
   "orm": {
-   "gata": "Den har inga ben, glider på marken och väser.",
+   "gata": "Utan ben tar jag mig fram, och min tunga har två små spetsar.",
    "forsta": "O",
    "langd": 3,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Min kropp är lång och jag byter skinn när jag växer.",
+   "bengtsson_fore": "Vem tog sig fram utan ett enda fotspår?",
+   "bengtsson_klart": "En orm! Svaret slingrade sig fram!"
   },
   "clownfisk": {
-   "gata": "En liten orange och vit havsfisk som bor bland sjöanemoner.",
+   "gata": "Orange med vita band simmar jag bland mjuka armar i ett varmt hav.",
    "forsta": "C",
    "langd": 9,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en liten orange fisk med vita ränder som kan bo i en havsanemon.",
+   "bengtsson_fore": "Jag såg en randig liten simmare!",
+   "bengtsson_klart": "En clownfisk! Vilken färgglad upptäckt!"
   },
   "nemo": {
    "gata": "Den lilla orange fisken i filmen som blev borta och blev hittad.",
@@ -392,22 +489,31 @@
    "granskad": false
   },
   "spöke": {
-   "gata": "Vitt och genomskinligt. Det säger Bu! och svävar genom väggar.",
+   "gata": "I sagan svävar jag genom väggar, men här vill jag bara vinka och säga hej.",
    "forsta": "S",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en genomskinlig sagofigur som ibland liknar ett vitt lakan.",
+   "bengtsson_fore": "Någon vinkade rakt genom dörren!",
+   "bengtsson_klart": "Ett spöke! Vår nya vän behöver visst ingen dörr!"
   },
   "robot": {
-   "gata": "En maskin av metall som kan röra sig och prata. Bip bop!",
+   "gata": "Pip! Med knappar och delar kan jag hjälpa till, men jag är ingen människa.",
    "forsta": "R",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en maskin som kan röra sig och utföra uppgifter.",
+   "bengtsson_fore": "Min nya hjälpreda sa pip i stället för hej!",
+   "bengtsson_klart": "En robot! Pip, pip, välkommen hit!"
   },
   "yeti": {
-   "gata": "Ett stort lurvigt väsen som sägs lämna jättelika fotspår på bergen.",
+   "gata": "I sagorna lämnar jag stora fotspår i snön bland höga berg i Asien.",
    "forsta": "Y",
    "langd": 4,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en lurvig sagofigur som också kallas snömannen.",
+   "bengtsson_fore": "Vem behöver så stora vinterstövlar?",
+   "bengtsson_klart": "En yeti! Vilken lurvig överraskning!"
   },
   "snömänniska": {
    "gata": "Ett vitt bergväsen som ingen riktigt har sett.",
@@ -416,10 +522,13 @@
    "granskad": false
   },
   "astronaut": {
-   "gata": "Den åker raket upp bland stjärnorna och svävar i rymddräkt.",
+   "gata": "Med hjälm och särskild dräkt kan jag sväva där inga vanliga flygplan når.",
    "forsta": "A",
    "langd": 9,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en människa som reser i raket och arbetar i rymden.",
+   "bengtsson_fore": "Någon har packat för en ovanligt lång resa!",
+   "bengtsson_klart": "En astronaut! Din upptäckt nådde ända till rymden!"
   },
   "rymdfarare": {
    "gata": "Någon som reser mellan planeterna i en raket.",
@@ -428,70 +537,103 @@
    "granskad": false
   },
   "bonde": {
-   "gata": "Den bor på gården, tar hand om djuren och odlar mat.",
+   "gata": "På min gård odlar jag mat och tar kanske hand om djur. Vem är jag?",
    "forsta": "B",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag arbetar med jordbruk och kör ibland traktor.",
+   "bengtsson_fore": "Vem har både åker och fikapaus?",
+   "bengtsson_klart": "En bonde! Nu har gården fått sin hjälpreda!"
   },
   "larv": {
-   "gata": "Den är liten, mjuk och äter blad. Sedan blir den till en fjäril.",
+   "gata": "Liten och mjuk kryper jag på blad innan jag blir en vuxen insekt.",
    "forsta": "L",
    "langd": 4,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag kan så småningom bli en fjäril.",
+   "bengtsson_fore": "Någon har mumsat små hål i ett blad!",
+   "bengtsson_klart": "En larv! En liten vän med stor förändring framför sig!"
   },
   "kyckling": {
-   "gata": "Gul och pip-pip liten. Den har precis kommit ut ur ägget.",
+   "gata": "Pip, pip! Nyss kom jag ur ett ägg, och min mamma kacklar.",
    "forsta": "K",
    "langd": 8,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en liten unge till en höna, ofta med gult dun.",
+   "bengtsson_fore": "Jag hör små pip från hönshuset!",
+   "bengtsson_klart": "En kyckling! Vilken pipigt fin upptäckt!"
   },
   "ko": {
-   "gata": "Den säger mu, äter gräs och ger oss mjölk.",
+   "gata": "Mu! På gården tuggar jag gräs och ger mjölk när jag har fått en unge.",
    "forsta": "K",
    "langd": 2,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är mamman till en kalv.",
+   "bengtsson_fore": "Vem råmade bakom ladan?",
+   "bengtsson_klart": "En ko! Mu så trevligt att du hittade hit!"
   },
   "hjort": {
-   "gata": "Ett skogsdjur med fina horn som liknar grenar på huvudet.",
+   "gata": "I skogen går jag på klövar, och hanen har ofta horn som grenar.",
    "forsta": "H",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är ett skogsdjur med klövar och greniga horn, och mitt namn har fem bokstäver.",
+   "bengtsson_fore": "Jag hittade spår efter klövar i skogen!",
+   "bengtsson_klart": "En hjort! Där stod svaret mellan träden!"
   },
   "vildsvin": {
-   "gata": "En vild släkting till grisen med huggtänder som bor i skogen.",
+   "gata": "I skogen bökar jag med trynet, och mina ungar har ljusa ränder.",
    "forsta": "V",
    "langd": 8,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag liknar en gris men lever vilt och har grov, mörk päls.",
+   "bengtsson_fore": "Vem har vänt på jorden vid stigen?",
+   "bengtsson_klart": "Ett vildsvin! Nu vet vi vem som bökade!"
   },
   "koala": {
-   "gata": "Ett gulligt gråluddigt djur som kramar eukalyptusträd och sover nästan hela dagen.",
+   "gata": "I Australiens träd sitter jag med rund nos och äter blad som doftar starkt.",
    "forsta": "K",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag har grå päls och runda öron och äter eukalyptusblad.",
+   "bengtsson_fore": "Någon har gjort lunchställe av ett träd!",
+   "bengtsson_klart": "En koala! Vilken mysig vän bland bladen!"
   },
   "apa": {
-   "gata": "Den klättrar i träden, gillar bananer och skrattar mycket.",
+   "gata": "Med händer och fötter klättrar jag bland grenar och plockar frukt.",
    "forsta": "A",
    "langd": 3,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är ett djur som liknar människan och ofta lever i träd.",
+   "bengtsson_fore": "Vem klättrade förbi min kikare?",
+   "bengtsson_klart": "En apa! Du klättrade hela vägen till svaret!"
   },
   "papegoja": {
-   "gata": "En färgglad fågel som kan härma vad du säger.",
+   "gata": "Med böjd näbb och starka fötter klättrar jag, och ibland härmar jag ditt hej.",
    "forsta": "P",
    "langd": 8,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en fågel som kan lära sig härma ord och ofta har färgglada fjädrar.",
+   "bengtsson_fore": "Någon sa hej med nästan min röst!",
+   "bengtsson_klart": "En papegoja! Hej på dig, hej på dig!"
   },
   "isbjörn": {
-   "gata": "Ett vitt rovdjur som bor på isen vid Nordpolen.",
+   "gata": "Min ljusa päls passar bland is och snö, och jag simmar i havet långt i norr.",
    "forsta": "I",
    "langd": 7,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en stor vit björn som lever i Arktis.",
+   "bengtsson_fore": "Jag såg stora tasspår vid isen!",
+   "bengtsson_klart": "En isbjörn! En varm hälsning till vår vita vän!"
   },
   "tiger": {
-   "gata": "En stor orange katt med svarta ränder som smyger i djungeln.",
+   "gata": "Orange päls med svarta ränder har jag, och jag är ett riktigt stort kattdjur.",
    "forsta": "T",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Till skillnad från ett lejon har jag ränder över kroppen.",
+   "bengtsson_fore": "Vem har lånat solens färg och nattens ränder?",
+   "bengtsson_klart": "En tiger! Vilken randigt fin upptäckt!"
   },
   "människa": {
    "gata": "Hon går på två ben, pratar, skriver och läser. Det är du också!",
@@ -518,16 +660,22 @@
    "granskad": false
   },
   "riddare": {
-   "gata": "Han bär rustning, har svärd och sköld och bor på ett slott.",
+   "gata": "I sagorna rider jag ofta i kläder av metall och bär en hjälm.",
    "forsta": "R",
    "langd": 7,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag har rustning och hör hemma i berättelser om borgar.",
+   "bengtsson_fore": "Det klirrar när vår gäst sätter sig!",
+   "bengtsson_klart": "En riddare! Välkommen till vårt klirriga saftkalas!"
   },
   "bågskytt": {
-   "gata": "Hon siktar med pil och båge och träffar mitt i prick.",
+   "gata": "På en tavla med ringar siktar jag med pil och båge. Vem är jag?",
    "forsta": "B",
    "langd": 8,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag tränar på att träffa mitt i prick med en båge.",
+   "bengtsson_fore": "Vem räknar poäng vid tavlan med ringar?",
+   "bengtsson_klart": "En bågskytt! Du träffade rätt ord!"
   },
   "skelett": {
    "gata": "Alla ben i kroppen utan något kött på. Rassel rassel!",
@@ -548,10 +696,13 @@
    "granskad": false
   },
   "nötknäppare": {
-   "gata": "En leksak med stor mun som knäcker hårda nötter vid jul.",
+   "gata": "Med min starka käke öppnar jag hårda skal, och ibland ser jag ut som en liten soldat.",
    "forsta": "N",
    "langd": 11,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en figur eller ett redskap som öppnar nötter.",
+   "bengtsson_fore": "Vem hjälper till med de hårda skalen?",
+   "bengtsson_klart": "En nötknäppare! Du knäckte en riktig ordnöt!"
   },
   "rudolf": {
    "gata": "Renen med den röda lysande nosen som drar Tomtens släde.",
@@ -560,10 +711,13 @@
    "granskad": false
   },
   "snögubbe": {
-   "gata": "Tre stora vita bollar på varandra, en morot som näsa och kol som ögon.",
+   "gata": "Av kalla, vita bollar byggs jag, med en morot mitt i ansiktet.",
    "forsta": "S",
    "langd": 8,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Barn bygger mig av snö och ger mig ofta hatt och halsduk.",
+   "bengtsson_fore": "Vem står ute utan att frysa om näsan?",
+   "bengtsson_klart": "En snögubbe! Vilken fin morotsnäsa!"
   },
   "orch": {
    "gata": "Ett grönt starkt monster i fantasyspel med hugg i munnen.",
@@ -572,16 +726,22 @@
    "granskad": false
   },
   "troll": {
-   "gata": "Stort och trasigt väsen som bor under bro och i skogen och kan bli sten i solen.",
+   "gata": "Under bron i sagan bor jag med rufsigt hår och kanske en svans.",
    "forsta": "T",
    "langd": 5,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en sagofigur som ofta har stor näsa och bor i skogen eller bergen.",
+   "bengtsson_fore": "Någon under bron vill bjuda på saft!",
+   "bengtsson_klart": "Ett troll! Då tackar vi ja till saften!"
   },
   "rymdvarelse": {
-   "gata": "Någon från en annan planet. Den kanske har tre ögon!",
+   "gata": "Från en annan planet kommer jag på besök. Vem är jag?",
    "forsta": "R",
    "langd": 11,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Mitt namn börjar med platsen där stjärnor och planeter finns.",
+   "bengtsson_fore": "Någon har parkerat sitt tefat på ängen!",
+   "bengtsson_klart": "En rymdvarelse! Vilket stjärnklart besök!"
   },
   "utomjording": {
    "gata": "En gäst som kommer från en annan värld i en flygande tallrik.",
