@@ -4,6 +4,7 @@ import { LagringsInfo } from "./LagringsInfo";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { hemligaKvar, ordLista, tolka } from "@/tolk/tolka.ts";
 import { tolkaMedReserv } from "@/tolk/reserv.ts";
+import { aktivtSkrivUppdrag, onskaFarKomma } from "./uppdragsmotor.ts";
 import { noteraSaknade } from "@/tolk/saknade.ts";
 import type { ForslagKort, Ord, Utfall } from "@/tolk/typer.ts";
 import { BYGG, byggMedId, formelBygg, tolkaBygg } from "@/tolk/byggtolk.ts";
@@ -536,6 +537,17 @@ export function Spel() {
     setBokOpp(true);
   }
   const bengtsson = useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdragsbok: oppnaUppdrag });
+  // R9D: när Bengtssons uppdrag startar tas en djurönskan bort, så att boken bara visar ett uppdrag och förslagen hör till det
+  const pagarId = aktivtSkrivUppdrag(uppdragSpar)?.id;
+  useEffect(() => {
+    if (!pagarId) return;
+    const o = useMinne.getState().onskan;
+    if (!o || o.kalla !== "djur") return;
+    useMinne.getState().sattOnska(null);
+    onskaSkrivRef.current = false;
+    setOnskaOpp(false);
+    setOnskaSyns(false);
+  }, [pagarId]);
 
   function stangBok() {
     const paGard = varldRef.current === "gard";
@@ -1276,7 +1288,10 @@ export function Spel() {
       if (p) setOnskaPos({ x: p.x, y: p.topp ?? p.y });
       return;
     }
-    if (s.onskaVid && Date.now() - s.onskaVid < 20000) return;
+    // R9D: önskningar följer Bengtssons takt (data/bengtsson.json takt.onskan), så att barnet aldrig får två uppdrag på en gång
+    const bm = bengtsson.matt();
+    const sekSedanOnska = s.onskaVid ? (Date.now() - s.onskaVid) / 1000 : null;
+    if (!onskaFarKomma(s.uppdrag, { djur: s.ang.length, spelSek: bm.spelSek, sekSedanKlart: bm.sekSedanKlart, sekSedanOnska })) return;
     if (textRef.current.trim() || onskaSkrivRef.current || overlayRef.current) return;
     let forsta = s.ang[0];
     for (const a of s.ang) {

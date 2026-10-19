@@ -83,5 +83,11 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
     return "fel";
   }
 
-  return { mine, nytt, synlig, klicka, prova, npcId: NPC_ID, ikonText: TAKT.ikon_text, ikonAlt: TAKT.ikon_alt };
+  /** R9D: speltid och tid sedan klart uppdrag, för önskningarnas takt. */
+  const matt = () => ({
+    spelSek: (Date.now() - start.current) / 1000,
+    sekSedanKlart: klartVid.current === null ? null : (Date.now() - klartVid.current) / 1000,
+  });
+
+  return { mine, nytt, synlig, klicka, prova, matt, npcId: NPC_ID, ikonText: TAKT.ikon_text, ikonAlt: TAKT.ikon_alt };
 }

@@ -53,7 +53,8 @@ export function bengtssonLagen(status: Status): string[] {
 }
 
 /** R9: takten för när Bengtsson själv bjuder in (data/bengtsson.json `takt`). Knappen med hans huvud ger alltid ett uppdrag direkt. */
-export type Takt = { forsta: { efter_djur: number; eller_sekunder: number }; mellan_sekunder: number };
+export type OnskaTakt = { forst_efter_uppdrag: number; efter_klart_sekunder: number; mellan_sekunder: number };
+export type Takt = { forsta: { efter_djur: number; eller_sekunder: number }; mellan_sekunder: number; onskan?: OnskaTakt };
 export type Matt = { djur: number; spelSek: number; sekSedanKlart: number | null };
 
 /** Sekunder tills Bengtsson bjuder in nästa uppdrag: 0 = redo nu, null = inget att bjuda in till (pågår eller slut). */
@@ -64,4 +65,17 @@ export function sekTillRedo(status: Status, m: Matt, takt: Takt = TAKT): number 
     return Math.max(0, Math.ceil(takt.forsta.eller_sekunder - m.spelSek));
   }
   return m.sekSedanKlart === null ? 0 : Math.max(0, Math.ceil(takt.mellan_sekunder - m.sekSedanKlart));
+}
+
+/** R9D: får ett djur visa en ny önskan nu (data/bengtsson.json `takt.onskan`)? Ett uppdrag i taget: aldrig medan Bengtssons uppdrag pågår,
+ *  aldrig före hans första regel, först efter hans första uppdrag och med luft efter klart uppdrag och förra önskan. */
+export function onskaFarKomma(status: Status, m: Matt & { sekSedanOnska: number | null }, takt: Takt = TAKT): boolean {
+  if (aktivtSkrivUppdrag(status)) return false;
+  const o = takt.onskan ?? { forst_efter_uppdrag: 1, efter_klart_sekunder: takt.mellan_sekunder, mellan_sekunder: takt.mellan_sekunder };
+  if (m.djur < takt.forsta.efter_djur && m.spelSek < takt.forsta.eller_sekunder) return false;
+  const klara = SKRIV.filter((u) => status[u.id] === "klar").length;
+  if (nastaSkrivUppdrag(status) && klara < o.forst_efter_uppdrag) return false;
+  if (m.sekSedanKlart !== null && m.sekSedanKlart < o.efter_klart_sekunder) return false;
+  if (m.sekSedanOnska !== null && m.sekSedanOnska < o.mellan_sekunder) return false;
+  return true;
 }

@@ -216,6 +216,12 @@
   },
   "mellan_sekunder": 75,
   "ikon_text": "Uppdrag",
-  "ikon_alt": "Fråga Doktor Bengtsson om ett uppdrag"
+  "ikon_alt": "Fråga Doktor Bengtsson om ett uppdrag",
+  "onskan": {
+   "_om": "R9D: när djurens önskningar (data/onskningar.json) får visas, så att barnet aldrig får två uppdrag samtidigt. Aldrig medan ett Bengtsson-uppdrag pågår (en önskan som syns tas bort när ett uppdrag startar), aldrig innan 'forsta' ovan är uppfyllt, först när barnet har klarat 'forst_efter_uppdrag' av Bengtssons uppdrag (om det finns fler kvar), minst 'efter_klart_sekunder' efter ett klart uppdrag och minst 'mellan_sekunder' efter förra önskan. En önskan i taget, och pratbubblan väntar medan en annan bubbla syns.",
+   "forst_efter_uppdrag": 1,
+   "efter_klart_sekunder": 110,
+   "mellan_sekunder": 75
+  }
  }
 }
