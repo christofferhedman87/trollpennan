@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "_om": "B1.3a: platserna som data. En plats = en rad. x,y 0–1 i platsens yta (x vänster→höger, y bak→fram) → världen via yta. miljo = överlagring på data/miljo.json. Skogen/Sjön/Grottan läggs in av datapaketen (kor-plats.sh), form i rundor/BLOCK-platser/data-utkast/platser.json.",
+  "yta": { "x": [-2.4, 2.4], "z": [-3.2, 1.0] },
+  "platser": [
+    { "id": "ang", "namn": "Ängen", "ordning": 0, "upplasning": { "nagon": [] }, "milstolpe": null, "miljo": {}, "zoner": [], "start": [], "uppdrag": [] }
+  ],
+  "beloningar": []
+}
