@@ -1563,6 +1563,282 @@
    "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
    "bengtsson_klart": "Ja, vattensalamander! Vilken fin upptäckt du skrev fram!",
    "omrade": "sjon"
+  },
+  "dingo": {
+   "gata": "En vild hund med rödgul päls som springer fritt i Australien.",
+   "forsta": "D",
+   "langd": 5,
+   "granskad": false
+  },
+  "mullvad": {
+   "gata": "Jag gräver gångar under gräsmattan och lämnar små jordhögar efter mig.",
+   "forsta": "M",
+   "langd": 7,
+   "granskad": false
+  },
+  "narval": {
+   "gata": "En val i det kalla havet med en lång, spiralvriden tand som ett horn.",
+   "forsta": "N",
+   "langd": 6,
+   "granskad": false
+  },
+  "vaktel": {
+   "gata": "En liten rund fågel som springer i gräset och lägger prickiga ägg.",
+   "forsta": "V",
+   "langd": 6,
+   "granskad": false
+  },
+  "skorpion": {
+   "gata": "Jag har klor fram och en böjd svans med gadd, och bor i öknen.",
+   "forsta": "S",
+   "langd": 8,
+   "granskad": false
+  },
+  "mås": {
+   "gata": "En vit och grå fågel vid havet som skriker och gärna tar glass.",
+   "forsta": "M",
+   "langd": 3,
+   "granskad": false
+  },
+  "pungdjävul": {
+   "gata": "Ett svart, morrande djur från ön Tasmanien, med ungarna i en pung på magen.",
+   "forsta": "P",
+   "langd": 10,
+   "granskad": false
+  },
+  "rödpanda": {
+   "gata": "Rödbrun päls, randig svans och vita kinder; jag klättrar i bambuskogen.",
+   "forsta": "R",
+   "langd": 8,
+   "granskad": false
+  },
+  "myrlejon": {
+   "gata": "Jag gräver en grop i sanden och väntar på att en myra ska ramla ner.",
+   "forsta": "M",
+   "langd": 8,
+   "granskad": false
+  },
+  "bladlus": {
+   "gata": "En pytteliten grön insekt som suger saft ur rosornas blad.",
+   "forsta": "B",
+   "langd": 7,
+   "granskad": false
+  },
+  "knäppare": {
+   "gata": "Ligger jag på rygg kan jag hoppa upp med ett klick.",
+   "forsta": "K",
+   "langd": 8,
+   "granskad": false
+  },
+  "kackerlacka": {
+   "gata": "En platt brun insekt med långa antenner som springer fort i mörkret.",
+   "forsta": "K",
+   "langd": 11,
+   "granskad": false
+  },
+  "harkrank": {
+   "gata": "Jag har jättelånga tunna ben och flyger klumpigt mot lampan.",
+   "forsta": "H",
+   "langd": 8,
+   "granskad": false
+  },
+  "dykarbagge": {
+   "gata": "En skalbagge som simmar i dammen och tar med sig luft under vingarna.",
+   "forsta": "D",
+   "langd": 10,
+   "granskad": false
+  },
+  "skalbagge": {
+   "gata": "Ett hårt skal och sex ben har jag, och jag kan rulla små bollar.",
+   "forsta": "S",
+   "langd": 9,
+   "granskad": false
+  },
+  "tvestjärt": {
+   "gata": "En brun insekt med en tång längst bak på kroppen.",
+   "forsta": "T",
+   "langd": 9,
+   "granskad": false
+  },
+  "loppa": {
+   "gata": "Ett pyttelitet djur som hoppar jättehögt och gärna bor i pälsen på en hund.",
+   "forsta": "L",
+   "langd": 5,
+   "granskad": false
+  },
+  "vattenskinnbagge": {
+   "gata": "En stor platt insekt i dammen som simmar med breda ben.",
+   "forsta": "V",
+   "langd": 16,
+   "granskad": false
+  },
+  "giraffvivel": {
+   "gata": "En liten röd och svart insekt med en jättelång hals.",
+   "forsta": "G",
+   "langd": 11,
+   "granskad": false
+  },
+  "svärmare": {
+   "gata": "En tjock fjäril som flyger på kvällen och surrar som en kolibri.",
+   "forsta": "S",
+   "langd": 8,
+   "granskad": false
+  },
+  "noshörningsbagge": {
+   "gata": "En stor stark skalbagge med ett långt horn på huvudet.",
+   "forsta": "N",
+   "langd": 16,
+   "granskad": false
+  },
+  "blomfluga": {
+   "gata": "Jag ser ut som en geting men är snäll och står still i luften vid blommor.",
+   "forsta": "B",
+   "langd": 9,
+   "granskad": false
+  },
+  "gräshoppa": {
+   "gata": "Jag är grön, hoppar långt i gräset och spelar med mina ben.",
+   "forsta": "G",
+   "langd": 9,
+   "granskad": false
+  },
+  "guldögonslända": {
+   "gata": "En ljusgrön insekt med genomskinliga vingar och glänsande ögon.",
+   "forsta": "G",
+   "langd": 14,
+   "granskad": false
+  },
+  "myra": {
+   "gata": "Jag bär barr och blad till stacken och är mycket stark för min storlek.",
+   "forsta": "M",
+   "langd": 4,
+   "granskad": false
+  },
+  "bladskräcka": {
+   "gata": "Jag ser precis ut som ett grönt löv, så ingen hittar mig.",
+   "forsta": "B",
+   "langd": 11,
+   "granskad": false
+  },
+  "dagslända": {
+   "gata": "Jag dansar över sjön en sommarkväll och har långa trådar på stjärten.",
+   "forsta": "D",
+   "langd": 9,
+   "granskad": false
+  },
+  "mullvadssyrsa": {
+   "gata": "En insekt med grävtassar som spelar en sång nere i jorden.",
+   "forsta": "M",
+   "langd": 13,
+   "granskad": false
+  },
+  "bönsyrsa": {
+   "gata": "Jag håller ihop framfötterna som om jag bad, och är rosa som en blomma.",
+   "forsta": "B",
+   "langd": 8,
+   "granskad": false
+  },
+  "termit": {
+   "gata": "Jag bor med miljoner syskon i en hög lerstack och äter trä.",
+   "forsta": "T",
+   "langd": 6,
+   "granskad": false
+  },
+  "pinnsyrsa": {
+   "gata": "Jag är lång, smal och brun och ser ut som en liten kvist.",
+   "forsta": "P",
+   "langd": 9,
+   "granskad": false
+  },
+  "fjäril": {
+   "gata": "Jag var en larv förut, och nu fladdrar jag med stora färgglada vingar.",
+   "forsta": "F",
+   "langd": 6,
+   "granskad": false
+  },
+  "sandjägare": {
+   "gata": "En glänsande grön skalbagge som springer jättefort på sanden.",
+   "forsta": "S",
+   "langd": 10,
+   "granskad": false
+  },
+  "sköldbagge": {
+   "gata": "En liten insekt med ett runt genomskinligt skal som ett paraply.",
+   "forsta": "S",
+   "langd": 10,
+   "granskad": false
+  },
+  "hornstrit": {
+   "gata": "En liten hoppande insekt med en konstig hatt på ryggen.",
+   "forsta": "H",
+   "langd": 9,
+   "granskad": false
+  },
+  "skräddare": {
+   "gata": "Jag springer ovanpå vattnet på långa tunna ben utan att sjunka.",
+   "forsta": "S",
+   "langd": 9,
+   "granskad": false
+  },
+  "mask": {
+   "gata": "Lång, rosa och utan ben kryper jag upp ur jorden när det regnar.",
+   "forsta": "M",
+   "langd": 4,
+   "granskad": false
+  },
+  "fiskmås": {
+   "gata": "En vit och grå fågel som svävar över hamnen och skriker efter fiskrens.",
+   "forsta": "F",
+   "langd": 7,
+   "granskad": false
+  },
+  "kattbjörn": {
+   "gata": "Ett rödbrunt djur med randig svans som sover uppe i träden i bergen.",
+   "forsta": "K",
+   "langd": 9,
+   "granskad": false
+  },
+  "dyngbagge": {
+   "gata": "En svart skalbagge som rullar en boll av bajs framför sig.",
+   "forsta": "D",
+   "langd": 9,
+   "granskad": false
+  },
+  "nattfjäril": {
+   "gata": "Jag flyger mot lampan när det är mörkt ute, med dammiga vingar.",
+   "forsta": "N",
+   "langd": 10,
+   "granskad": false
+  },
+  "fluga": {
+   "gata": "En liten insekt som surrar runt maten och landar på fönstret.",
+   "forsta": "F",
+   "langd": 5,
+   "granskad": false
+  },
+  "vårtbitare": {
+   "gata": "En stor grön hoppare med långa antenner som spelar i sommargräset.",
+   "forsta": "V",
+   "langd": 10,
+   "granskad": false
+  },
+  "syrsa": {
+   "gata": "Jag gnider mina ben mot varandra och spelar en gnisslig sång på kvällen.",
+   "forsta": "S",
+   "langd": 5,
+   "granskad": false
+  },
+  "makaonfjäril": {
+   "gata": "Gula vingar med svarta ränder och små svansar längst bak har jag.",
+   "forsta": "M",
+   "langd": 12,
+   "granskad": false
+  },
+  "daggmask": {
+   "gata": "Lång, rosa och utan ben kryper jag i jorden och gör den lucker.",
+   "forsta": "D",
+   "langd": 8,
+   "granskad": false
   }
  }
 }

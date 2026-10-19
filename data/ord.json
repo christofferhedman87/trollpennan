@@ -5442,6 +5442,814 @@
    "del": {
     "kropp": "vattensalamander"
    }
+  },
+  {
+   "id": "dingo",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "dingo",
+   "genus": "u",
+   "former": [
+    "dingo",
+    "dingon"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "dingo"
+   }
+  },
+  {
+   "id": "mullvad",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mullvad",
+   "genus": "u",
+   "former": [
+    "mullvad",
+    "mullvaden",
+    "mullvadar",
+    "mullvadarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "mullvad"
+   }
+  },
+  {
+   "id": "narval",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "narval",
+   "genus": "u",
+   "former": [
+    "narval",
+    "narvalen",
+    "narvalar",
+    "narvalarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "narval"
+   }
+  },
+  {
+   "id": "vaktel",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "vaktel",
+   "genus": "u",
+   "former": [
+    "vaktel",
+    "vaktelen",
+    "vaktelar",
+    "vaktelarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "vaktel"
+   }
+  },
+  {
+   "id": "skorpion",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "skorpion",
+   "genus": "u",
+   "former": [
+    "skorpion",
+    "skorpionen",
+    "skorpionar",
+    "skorpionarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "skorpion"
+   }
+  },
+  {
+   "id": "mås",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mås",
+   "genus": "u",
+   "former": [
+    "mås",
+    "måsen",
+    "måsar",
+    "måsarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "mas"
+   }
+  },
+  {
+   "id": "fiskmås",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "fiskmås",
+   "genus": "u",
+   "former": [
+    "fiskmås",
+    "fiskmåsen",
+    "fiskmåsar",
+    "fiskmåsarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "mas"
+   }
+  },
+  {
+   "id": "pungdjävul",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "pungdjävul",
+   "genus": "u",
+   "former": [
+    "pungdjävul",
+    "pungdjävulen",
+    "pungdjävular",
+    "pungdjävularna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "pungdjavul"
+   }
+  },
+  {
+   "id": "kattbjörn",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kattbjörn",
+   "genus": "u",
+   "former": [
+    "kattbjörn",
+    "kattbjörnen",
+    "kattbjörnar",
+    "kattbjörnarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "rodpanda"
+   }
+  },
+  {
+   "id": "myrlejon",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "myrlejon",
+   "genus": "u",
+   "former": [
+    "myrlejon",
+    "myrlejonen",
+    "myrlejonar",
+    "myrlejonarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "myrlejon"
+   }
+  },
+  {
+   "id": "bladlus",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "bladlus",
+   "genus": "u",
+   "former": [
+    "bladlus",
+    "bladlusen",
+    "bladlusar",
+    "bladlusarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "bladlus"
+   }
+  },
+  {
+   "id": "knäppare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "knäppare",
+   "genus": "u",
+   "former": [
+    "knäppare",
+    "knäpparen",
+    "knäpparar",
+    "knäppararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "knappare"
+   }
+  },
+  {
+   "id": "kackerlacka",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kackerlacka",
+   "genus": "u",
+   "former": [
+    "kackerlacka",
+    "kackerlackan",
+    "kackerlackor",
+    "kackerlackorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "kackerlacka"
+   }
+  },
+  {
+   "id": "harkrank",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "harkrank",
+   "genus": "u",
+   "former": [
+    "harkrank",
+    "harkranken",
+    "harkrankar",
+    "harkrankarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "harkrank"
+   }
+  },
+  {
+   "id": "dykarbagge",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "dykarbagge",
+   "genus": "u",
+   "former": [
+    "dykarbagge",
+    "dykarbaggen",
+    "dykarbaggar",
+    "dykarbaggarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "dykarbagge"
+   }
+  },
+  {
+   "id": "skalbagge",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "skalbagge",
+   "genus": "u",
+   "former": [
+    "skalbagge",
+    "skalbaggen",
+    "skalbaggar",
+    "skalbaggarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "skalbagge"
+   }
+  },
+  {
+   "id": "dyngbagge",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "dyngbagge",
+   "genus": "u",
+   "former": [
+    "dyngbagge",
+    "dyngbaggen",
+    "dyngbaggar",
+    "dyngbaggarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "skalbagge"
+   }
+  },
+  {
+   "id": "tvestjärt",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "tvestjärt",
+   "genus": "u",
+   "former": [
+    "tvestjärt",
+    "tvestjärten",
+    "tvestjärtar",
+    "tvestjärtarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "tvestjart"
+   }
+  },
+  {
+   "id": "loppa",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "loppa",
+   "genus": "u",
+   "former": [
+    "loppa",
+    "loppan",
+    "loppor",
+    "lopporna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "loppa"
+   }
+  },
+  {
+   "id": "vattenskinnbagge",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "vattenskinnbagge",
+   "genus": "u",
+   "former": [
+    "vattenskinnbagge",
+    "vattenskinnbaggen",
+    "vattenskinnbaggar",
+    "vattenskinnbaggarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "vattenskinnbagge"
+   }
+  },
+  {
+   "id": "giraffvivel",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "giraffvivel",
+   "genus": "u",
+   "former": [
+    "giraffvivel",
+    "giraffvivelen",
+    "giraffvivelar",
+    "giraffvivelarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "giraffvivel"
+   }
+  },
+  {
+   "id": "svärmare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "svärmare",
+   "genus": "u",
+   "former": [
+    "svärmare",
+    "svärmaren",
+    "svärmarar",
+    "svärmararna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "svarmare"
+   }
+  },
+  {
+   "id": "nattfjäril",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "nattfjäril",
+   "genus": "u",
+   "former": [
+    "nattfjäril",
+    "nattfjärilen",
+    "nattfjärilar",
+    "nattfjärilarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "svarmare"
+   }
+  },
+  {
+   "id": "noshörningsbagge",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "noshörningsbagge",
+   "genus": "u",
+   "former": [
+    "noshörningsbagge",
+    "noshörningsbaggen",
+    "noshörningsbaggar",
+    "noshörningsbaggarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "noshorningsbagge"
+   }
+  },
+  {
+   "id": "blomfluga",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "blomfluga",
+   "genus": "u",
+   "former": [
+    "blomfluga",
+    "blomflugan",
+    "blomflugor",
+    "blomflugorna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "blomfluga"
+   }
+  },
+  {
+   "id": "fluga",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "fluga",
+   "genus": "u",
+   "former": [
+    "fluga",
+    "flugan",
+    "flugor",
+    "flugorna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "blomfluga"
+   }
+  },
+  {
+   "id": "gräshoppa",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "gräshoppa",
+   "genus": "u",
+   "former": [
+    "gräshoppa",
+    "gräshoppan",
+    "gräshoppor",
+    "gräshopporna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "grashoppa"
+   }
+  },
+  {
+   "id": "vårtbitare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "vårtbitare",
+   "genus": "u",
+   "former": [
+    "vårtbitare",
+    "vårtbitaren",
+    "vårtbitarar",
+    "vårtbitararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "grashoppa"
+   }
+  },
+  {
+   "id": "guldögonslända",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "guldögonslända",
+   "genus": "u",
+   "former": [
+    "guldögonslända",
+    "guldögonsländan",
+    "guldögonsländor",
+    "guldögonsländorna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "guldogonslanda"
+   }
+  },
+  {
+   "id": "myra",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "myra",
+   "genus": "u",
+   "former": [
+    "myra",
+    "myran",
+    "myror",
+    "myrorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "myra"
+   }
+  },
+  {
+   "id": "bladskräcka",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "bladskräcka",
+   "genus": "u",
+   "former": [
+    "bladskräcka",
+    "bladskräckan",
+    "bladskräckor",
+    "bladskräckorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "bladskracka"
+   }
+  },
+  {
+   "id": "dagslända",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "dagslända",
+   "genus": "u",
+   "former": [
+    "dagslända",
+    "dagsländan",
+    "dagsländor",
+    "dagsländorna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "dagslanda"
+   }
+  },
+  {
+   "id": "mullvadssyrsa",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mullvadssyrsa",
+   "genus": "u",
+   "former": [
+    "mullvadssyrsa",
+    "mullvadssyrsan",
+    "mullvadssyrsor",
+    "mullvadssyrsorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "mullvadssyrsa"
+   }
+  },
+  {
+   "id": "syrsa",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "syrsa",
+   "genus": "u",
+   "former": [
+    "syrsa",
+    "syrsan",
+    "syrsor",
+    "syrsorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "mullvadssyrsa"
+   }
+  },
+  {
+   "id": "bönsyrsa",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "bönsyrsa",
+   "genus": "u",
+   "former": [
+    "bönsyrsa",
+    "bönsyrsan",
+    "bönsyrsor",
+    "bönsyrsorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "bonsyrsa"
+   }
+  },
+  {
+   "id": "termit",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "termit",
+   "genus": "u",
+   "former": [
+    "termit",
+    "termiten",
+    "termitar",
+    "termitarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "termit"
+   }
+  },
+  {
+   "id": "pinnsyrsa",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "pinnsyrsa",
+   "genus": "u",
+   "former": [
+    "pinnsyrsa",
+    "pinnsyrsan",
+    "pinnsyrsor",
+    "pinnsyrsorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "pinnsyrsa"
+   }
+  },
+  {
+   "id": "fjäril",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "fjäril",
+   "genus": "u",
+   "former": [
+    "fjäril",
+    "fjärilen",
+    "fjärilar",
+    "fjärilarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "fjaril"
+   }
+  },
+  {
+   "id": "makaonfjäril",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "makaonfjäril",
+   "genus": "u",
+   "former": [
+    "makaonfjäril",
+    "makaonfjärilen",
+    "makaonfjärilar",
+    "makaonfjärilarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "fjaril"
+   }
+  },
+  {
+   "id": "sandjägare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "sandjägare",
+   "genus": "u",
+   "former": [
+    "sandjägare",
+    "sandjägaren",
+    "sandjägarar",
+    "sandjägararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "sandjagare"
+   }
+  },
+  {
+   "id": "sköldbagge",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "sköldbagge",
+   "genus": "u",
+   "former": [
+    "sköldbagge",
+    "sköldbaggen",
+    "sköldbaggar",
+    "sköldbaggarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "skoldbagge"
+   }
+  },
+  {
+   "id": "hornstrit",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "hornstrit",
+   "genus": "u",
+   "former": [
+    "hornstrit",
+    "hornstriten",
+    "hornstritar",
+    "hornstritarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "hornstrit"
+   }
+  },
+  {
+   "id": "skräddare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "skräddare",
+   "genus": "u",
+   "former": [
+    "skräddare",
+    "skräddaren",
+    "skräddarar",
+    "skräddararna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 gobkit-cc0-2",
+   "del": {
+    "kropp": "skraddare"
+   }
+  },
+  {
+   "id": "mask",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mask",
+   "genus": "u",
+   "former": [
+    "mask",
+    "masken",
+    "maskar",
+    "maskarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 polypizza-cc0",
+   "del": {
+    "kropp": "mask"
+   }
+  },
+  {
+   "id": "daggmask",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "daggmask",
+   "genus": "u",
+   "former": [
+    "daggmask",
+    "daggmasken",
+    "daggmaskar",
+    "daggmaskarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M11 polypizza-cc0",
+   "del": {
+    "kropp": "mask"
+   }
   }
  ],
  "kollisioner": {},
