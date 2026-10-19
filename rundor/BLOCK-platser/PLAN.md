@@ -1,6 +1,9 @@
 # BLOCK-platser – plan (Arkitekten 2026-10-19)
 Underlag: Copilots manus + data (`data-utkast/`, kontroll i `KONTROLL.md`). Doodle kör ett deluppdrag i taget; varje rad är klar och mergad för sig. **Build** = Grok Build med prompten i `prompter/`, **skript** = `kor.sh`, ingen Build. Bevis överallt: `test:product`, `typecheck:pages`, `build:pages`; Build-rundor dessutom Playwright 375x812 med numrerade bilder. Stoppregel för Build: första ändring inom 10 anrop, commit efter varje steg, `RUNDA-<id>.md` + commit + rapport senast tur (max−6); ingen omkörning. Stoppregel för skript: exit ≠ 0 → inget mergas, utdata till Arkitekten.
 
+## Ordning (2026-10-19, Christoffer)
+**B1 → R9G → R8-2 → B2 → B3 → B4 → B5 → B6.** R9G (gåta/uppdrag-UX + stall i menyn): `rundor/R9G-ux-stall/` (Build). R8-2 (grafiklyft): `rundor/R8-grafik/` efter R9G. TTS-röst (gratis svensk) efter platserna, eget block.
+
 ## Korrigeringar av Christoffers plan
 1. **B0 först (nytt, skript, 0 Build):** Copilots 40 ängsuppdrag + 49 bättre gåtor + 3 genusfel går in direkt; motorn klarar dem redan. Provad hos mig: exit 0.
 2. **Ordningen Skogen → Sjön → Grottan** (inte Grottan före Sjön): manusets resa, upplåsning och berättelse är skrivna så.
@@ -20,6 +23,13 @@ Underlag: Copilots manus + data (`data-utkast/`, kontroll i `KONTROLL.md`). Dood
 - **B1.3b Scenen läser platsen.** R3F visar aktuell plats: miljö-överlagring (`miljo.ts` `slaIhop`), startobjekt via `GltfSak`, vattenzon, barnets skapelser för platsen, ängens egen dekor bara på ängen, belöningar på ängen. 25–30 turer, ca 1,5–2 USD. **Grind: JA efter B1.3a.**
 - **B1.4 Resan.** Vägskylt/grind per upplåst plats (återanvänd `Skogsstig`), platsväljare (återanvänd `KartaLager`), "Till ängen", kort övergång + Bengtssons intro (mine karta), uppdrag och "Uppdrag"-knappen följer platsen, `rundor/BLOCK-platser/plats-prov.mjs` (bevisskriptet B2–B4 använder). 25–30 turer, ca 1,5–2 USD. **Grind: JA efter B1.3b.**
 
+## R9G – Gåta/uppdrag-UX + stall (Build, ca 1 USD) – Grind: JA efter B1, före R8-2
+Christoffer: uppdrag+gåta samtidigt opedagogiskt; streck ser klickbara ut; gåta byts för tidigt; behövs dölja djur utan omstart.
+- **R9G** `rundor/R9G-ux-stall/PROMPT.md` (22 turer, low). Gåta döljs under uppdrag (öppningsbar details), `gataId` i minne, "Skriv i Pennans bok", stall som meny-lista (`tillStall`/`franStall`). Ingen stallbyggnad. Se `R9G.md`.
+
+## R8-2 – Grafiklyft (Build, efter R9G) – Grind: JA efter R9G
+Horisont, blobbskuggor, kontur, vatten/gräs-rörelse (ritning i `rundor/R8-grafik/RITNING.md`; ritas om mot delade `ang/`-filer efter B1.1). Kör **före B2** så Skogen/Sjön/Grottan får samma lyft.
+
 ## B2 Skogen · B3 Sjön · B4 Grottan (skript, 0 USD; B4.1 Build)
 - **B2.1 / B3.1 / B4.2** `bash rundor/BLOCK-platser/kor-plats.sh skogen|sjon|grottan`: platsraden + belöning → data/platser.json, 15+1 uppdrag → bengtsson.json, hemliga djurs gåtor → ledtradar.json (ord utan ordrad hoppas över och listas), Bengtssons 70 repliker → npc.json `repliker_plats`. Bevis: uppdrag-prov (64/64 förslag per plats, provat mot dagens motor: 192/192), test:product, typecheck:pages, build:pages, `plats-prov.mjs <plats>` 375x812. **Grind: JA när B1 är mergad** (skriptet stannar med exit 2 annars).
 - **B4.1 Ljuskällor (Build, liten).** Entitet med `"lyser": true` i entiteter.json ger ett varmt punktljus; plats-miljön `ljus.skala` dämpar grundljuset (Grottan 0,52, aldrig kolsvart). 12–15 turer, ca 0,5 USD. **Grind: JA efter B1.3b.**
@@ -32,4 +42,4 @@ Underlag: Copilots manus + data (`data-utkast/`, kontroll i `KONTROLL.md`). Dood
 - **B6.2 (Build)** högst 6 fel ur B6.1, prompten är en mall som Arkitekten fyller med exakta filer. 20–25 turer, ca 1,5 USD. **Grind: NEJ tills listan finns.**
 - **B6.3 (Build)** Phaser-äventyret bort (`avscen.ts`, `avbro.ts`, äventyrsdelen av `KartaLager`, `omraden.json` ersatt av platser.json); Gården och Phaser i övrigt kvar till R5/R7. 20–25 turer, ca 1,5 USD. **Grind: JA efter B6.1 grön.**
 
-**Totalt ca 10–13 USD Build** (B1 6–8, B4.1 0,5, B6 3); B0, B2–B5 och B6.1 kostar ingen Build-kvot. Om kvoten tar slut: kör B0 och B5a (gratis) först.
+**Totalt ca 12–15 USD Build** (B1 6–8, R9G ~1, R8-2 ~1–2, B4.1 0,5, B6 3); B0, B2–B5 och B6.1 kostar ingen Build-kvot. Om kvoten tar slut: kör B0 och B5a (gratis) först. Ordning: B1 → R9G → R8-2 → B2…
