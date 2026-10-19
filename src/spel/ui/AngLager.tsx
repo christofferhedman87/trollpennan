@@ -8,7 +8,7 @@ import type { mossaHand } from "../liv.ts";
 import { useMinne } from "../minne.ts";
 import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
 import { nattvaken } from "../entiteter.ts";
-import { dukStil } from "./hjalp.ts";
+import { bubblaStil, dukStil } from "./hjalp.ts";
 import { fyll } from "../fyll.ts";
 import { FIR, TEXTER } from "./spelData.ts";
 import type { Banner, Bubbla, Varld } from "./typer.ts";
@@ -105,7 +105,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
             ))}
           </div>
           {bubblor.map((b) => (
-            <div key={b.id} className={b.ovan ? "bubbla ovan" : "bubbla"} style={dukStil(b.x, b.y)} data-testid="bubbla">
+            <div key={b.id} className={b.ovan ? "bubbla ovan" : "bubbla"} style={bubblaStil(b.x, b.y)} data-testid="bubbla">
               {b.hjarta ? <Heart className="hjarta" aria-hidden /> : null}
               <p>{b.text}</p>
             </div>

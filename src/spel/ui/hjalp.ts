@@ -1,4 +1,5 @@
 import { arSparrat } from "@/tolk/sparr.ts";
+import { bubblaVanster } from "./bubbla.ts";
 import { BYGG, materialMed, type ByggeTolk } from "@/tolk/byggtolk.ts";
 import { ordLista } from "@/tolk/tolka.ts";
 import type { Ord } from "@/tolk/typer.ts";
@@ -6,6 +7,12 @@ import { useMinne, type OnskaSpar } from "../minne.ts";
 import { ONSK, ONSK_BYGG } from "../onska.ts";
 import { BYGGSIDOR, FLIKAR, LED, SIDOR } from "./spelData.ts";
 import type { Slot, Val } from "./typer.ts";
+
+/** R9F: som dukStil, men pratbubblan hålls hel innanför skärmkanterna (bubbla.ts). */
+export function bubblaStil(x: number, y: number): { left: string; top: string } {
+  const s = dukStil(x, y);
+  return { ...s, left: bubblaVanster(s.left) };
+}
 
 export function dukStil(x: number, y: number): { left: string; top: string } {
   const nx = Number.isFinite(x) ? x : 0.5;
