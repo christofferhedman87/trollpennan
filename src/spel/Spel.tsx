@@ -32,6 +32,7 @@ import {
   geHjarta,
   hoppaDag,
   hoppaKvall,
+  djurMedUid,
   gavoInbjudanVidTryck,
   inbjudanAv,
   komIhagDjur,
@@ -1214,8 +1215,7 @@ export function Spel() {
     }
     if (h.typ === "tryck" || h.typ === "hemTryck") {
       ljud.boing();
-      const djur =
-        useMinne.getState().ang.find((a) => a.uid === h.uid) ?? useMinne.getState().hemma.find((x) => x.spec.uid === h.uid)?.spec;
+      const djur = djurMedUid(useMinne.getState(), h.uid);
       const kvall = kvallStyrka(visningsTid()) > 0.7;
       const sov = kvall && djur && !nattvaken(djur.kropp);
       const ons = useMinne.getState().onskan;
@@ -1254,8 +1254,7 @@ export function Spel() {
       return;
     }
     if (h.typ === "lang") {
-      const djur =
-        useMinne.getState().ang.find((a) => a.uid === h.uid) ?? useMinne.getState().hemma.find((x) => x.spec.uid === h.uid)?.spec;
+      const djur = djurMedUid(useMinne.getState(), h.uid);
       if (!djur) return;
       useMinne.getState().sparaFormel(djur);
       setVisKort({ slag: "djur", spec: djur });
