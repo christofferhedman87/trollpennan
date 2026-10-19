@@ -216,12 +216,12 @@
    "Jag lovar att aldrig bränna blommorna."
   ],
   "fartlinjer": [
-   "Ingen på hela ängen springer fortare än jag!",
+   "Ingen på hela {platsen} springer fortare än jag!",
    "Vill du tävla? Jag har redan vunnit."
   ],
   "studs": [
    "Boing, boing! Jag kan inte sluta hoppa.",
-   "Jag studsade så högt att jag såg hela ängen."
+   "Jag studsade så högt att jag såg hela {platsen}."
   ],
   "utan_formaga": [
    "Jag gillar att ligga i gräset och titta på molnen.",

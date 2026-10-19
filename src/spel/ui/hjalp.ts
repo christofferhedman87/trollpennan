@@ -46,7 +46,8 @@ export function nyId() {
 }
 
 export function bestamdAv(kropp: string, stor: boolean): string {
-  const ord = ordLista().find((o) => o.id === kropp);
+  // R9K: id först, annars ordet vars kropp det är ("räv" har kroppen "rav")
+  const ord = ordLista().find((o) => o.id === kropp) ?? ordLista().find((o) => o.del?.kropp === kropp);
   const form = ord?.former?.[1] ?? kropp;
   if (!stor) return form;
   return form.charAt(0).toLocaleUpperCase("sv") + form.slice(1);

@@ -761,3 +761,20 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
 .ledtrad-hint::after{content:"\00a0↓"}
 .ledtrad-visa{margin-left:6px;font-weight:700;text-decoration:underline;white-space:nowrap}
 .ledtrad.kompakt summary{flex-wrap:wrap;column-gap:4px}
+
+/* R9K: humörikonen ovanför djuret i 3D (ikon per humör i data/humor.json) */
+.humor-ikon-3d {
+  display: inline-block;
+  pointer-events: none;
+  user-select: none;
+  min-width: 30px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  box-shadow: 0 2px 0 var(--color-paper-deep);
+  font-size: 1.05rem;
+  line-height: 1.35;
+  text-align: center;
+  white-space: nowrap;
+}

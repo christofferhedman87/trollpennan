@@ -1930,7 +1930,7 @@
    "klart": "Nu kan vi mäta med blicken!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Ditt djur vill jämföra två saker som når olika långt upp!",
+   "text_bengtsson": "Ditt djur vill stå vid två saker. En når upp till molnen. En når bara till knät.",
    "klart_bengtsson": "Nu kan vi mäta med blicken!",
    "krav": {
     "ord": [
@@ -1990,7 +1990,7 @@
    "klart": "Nu hör de ihop som jag och min doktorsväska!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Ditt djur vill ha något hos sig! Vilket litet ord binder ihop dem?",
+   "text_bengtsson": "Ditt djur vill ha något med sig. Skriv det med ordet med!",
    "klart_bengtsson": "Nu hör de ihop som jag och min doktorsväska!",
    "krav": {
     "ord": [
@@ -2050,7 +2050,7 @@
    "klart": "Där inne blev det riktigt trivsamt!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Ditt djur vill vara innanför, inte utanför! Vilket litet ord visar platsen?",
+   "text_bengtsson": "Ditt djur vill sitta inne i något. Skriv det med ordet i!",
    "klart_bengtsson": "Där inne blev det riktigt trivsamt!",
    "krav": {
     "ord": [
@@ -2110,7 +2110,7 @@
    "klart": "Där hittade vi en fin plats!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Ditt djur vill ha något över huvudet! Vilket ord visar var det står?",
+   "text_bengtsson": "Ditt djur vill stå under något. Skriv det med ordet under!",
    "klart_bengtsson": "Där hittade vi en fin plats!",
    "krav": {
     "ord": [
@@ -2170,7 +2170,7 @@
    "klart": "Vilken fin sittplats du ordnade!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Ditt djur vill sitta en bit ovanför marken! Vilket litet ord visar platsen?",
+   "text_bengtsson": "Ditt djur vill sitta uppe på något. Skriv det med ordet på!",
    "klart_bengtsson": "Vilken fin sittplats du ordnade!",
    "krav": {
     "ord": [
@@ -2230,7 +2230,7 @@
    "klart": "Vilken fin motsatsblandning!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Ditt djur vill jämföra två motsatser som känns olika mot tassen!",
+   "text_bengtsson": "Ditt djur vill ha något som värmer och något som kyler, som is!",
    "klart_bengtsson": "Vilken fin motsatsblandning!",
    "krav": {
     "ord": [
@@ -2292,7 +2292,7 @@
    "klart": "Båda hinner fram till fikat!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Två vänner tar sig fram i olika takt, en susar och en tar god tid på sig!",
+   "text_bengtsson": "Två vänner ska tävla. En susar fram som vinden. En kryper fram som en snigel.",
    "klart_bengtsson": "Båda hinner fram till fikat!",
    "krav": {
     "ord": [
@@ -2352,7 +2352,7 @@
    "klart": "Vilket ovanligt och härligt möte!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "Vilka två vänner skulle behöva resa riktigt långt från sina vanliga hem för att mötas?",
+   "text_bengtsson": "Ett djur från den kalla isen vill träffa ett djur från den varma djungeln. Vilka två?",
    "klart_bengtsson": "Vilket ovanligt och härligt möte!",
    "krav": {
     "ord": [
@@ -2476,7 +2476,7 @@
    "klart": "Vilken resa, och tofflorna är kvar!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "Ditt djur vill upptäcka fjärran platser men sitta kvar hemma! Hur går det till?",
+   "text_bengtsson": "Ditt djur vill se hela världen, men sitta kvar i soffan. Vad kan hjälpa?",
    "klart_bengtsson": "Vilken resa, och tofflorna är kvar!",
    "krav": {
     "ord": [
@@ -2538,7 +2538,7 @@
    "klart": "Nu behöver den lilla vännen den stora stolen!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "Min storleksmaskin har vänt på allt! Kan två vänner visa hur tokigt det blev?",
+   "text_bengtsson": "Min maskin har blivit tokig! Ett jättedjur blev som en myra, och en myra blev som ett hus!",
    "klart_bengtsson": "Nu behöver den lilla vännen den stora stolen!",
    "krav": {
     "ord": [
@@ -3194,7 +3194,7 @@
    "klart": "Där blev det ett grönt tak över huvudet!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "En vän vill ha grenar ovanför huvudet! Kan dina ord visa rätt plats?",
+   "text_bengtsson": "En vän vill sitta i skuggan under grenarna. Var sitter den? Skriv det!",
    "klart_bengtsson": "Där blev det ett grönt tak över huvudet!",
    "krav": {
     "ord": [
@@ -3247,7 +3247,7 @@
    "klart": "Olika storlek, lika välkomna på fikat!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Två vänner vill vara olika stora! Kan du låta orden visa skillnaden?",
+   "text_bengtsson": "Jag vill se två vänner. En ska vara stor som ett hus. En ska vara pytte, som en myra!",
    "klart_bengtsson": "Olika storlek, lika välkomna på fikat!",
    "krav": {
     "ord": [
@@ -3300,7 +3300,7 @@
    "klart": "Nu hittar vi mer än bara min lunch!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "Min uppfinning visar bara vägen till mitt kylskåp! Vad hjälper en vän att hitta både väg och riktning?",
+   "text_bengtsson": "En vän har gått vilse i skogen. Vad kan visa vägen hem? Den behöver två saker.",
    "klart_bengtsson": "Nu hittar vi mer än bara min lunch!",
    "krav": {
     "ord": [
@@ -3406,7 +3406,7 @@
    "klart": "Nu lyser det om både orden och min mustasch!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "En vän vill läsa när kvällen kommer! Vad behövs för både berättelsen och skenet?",
+   "text_bengtsson": "En vän vill läsa en saga när det blir mörkt. Vad behöver den?",
    "klart_bengtsson": "Nu lyser det om både orden och min mustasch!",
    "krav": {
     "ord": [
@@ -3459,7 +3459,7 @@
    "klart": "Vilket mysigt krypin med välkomstsken!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "En vän vill vila inomhus och se ett sken utanför ingången! Kan du ordna båda platserna?",
+   "text_bengtsson": "En vän vill sova i ett tält. Utanför ska det lysa lite. Vad kan lysa?",
    "klart_bengtsson": "Vilket mysigt krypin med välkomstsken!",
    "krav": {
     "ord": [
@@ -3791,7 +3791,7 @@
    "klart": "Här får både nosen och öronen solpaus!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "Solen kittlar min näsa! Kan en vän få vila där strålarna inte når?",
+   "text_bengtsson": "Solen kittlar min näsa! Var kan en vän vila i skuggan på stranden?",
    "klart_bengtsson": "Här får både nosen och öronen solpaus!",
    "krav": {
     "ord": [
@@ -4026,7 +4026,7 @@
    "klart": "Där sitter vår passagerare fint!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "En vän vill sitta innanför kanterna, inte bredvid farkosten! Kan orden visa var?",
+   "text_bengtsson": "En vän vill sitta i en båt med åror. Kan du skriva det?",
    "klart_bengtsson": "Där sitter vår passagerare fint!",
    "krav": {
     "ord": [
@@ -4079,7 +4079,7 @@
    "klart": "Perfekt utsikt över allt det blå!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Träplankorna blir en fin sittplats ovanför vattnet! Kan orden visa var en vän sitter?",
+   "text_bengtsson": "En vän vill dingla med tassarna ovanför vattnet. Var kan den sitta?",
    "klart_bengtsson": "Perfekt utsikt över allt det blå!",
    "krav": {
     "ord": [
@@ -4132,7 +4132,7 @@
    "klart": "Olika stora plask, samma glada bad!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Två simmande vänner vill vara olika stora! Kan dina ord visa skillnaden?",
+   "text_bengtsson": "Två vänner vill simma. En är stor som en båt. En är pytte, som en myra!",
    "klart_bengtsson": "Olika stora plask, samma glada bad!",
    "krav": {
     "ord": [
@@ -4185,7 +4185,7 @@
    "klart": "Nu har både stranden och vattnet fått färg!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "Två vänner lånar färg från en tomat och himlen! En vill bada, den andra stanna vid land.",
+   "text_bengtsson": "Två vänner lånar färg från en tomat och från himlen. Den ena badar. Den andra sitter på stranden.",
    "klart_bengtsson": "Nu har både stranden och vattnet fått färg!",
    "krav": {
     "ord": [
@@ -4238,7 +4238,7 @@
    "klart": "Nu får sagan sällskap av vågornas kluck!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "En vän vill läsa vid vattnet när det skymmer! Vad behövs för berättelsen och skenet?",
+   "text_bengtsson": "En vän vill läsa en saga vid vattnet när det blir mörkt. Vad behöver den?",
    "klart_bengtsson": "Nu får sagan sällskap av vågornas kluck!",
    "krav": {
     "ord": [
@@ -4291,7 +4291,7 @@
    "klart": "Två vägar till samma fikapaus!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "En vän vill åka över vattnet och en annan gå över det! Kan du ordna båda sätten?",
+   "text_bengtsson": "En vän vill ro över vattnet. En annan vill gå över en bro. Kan du ordna det?",
    "klart_bengtsson": "Två vägar till samma fikapaus!",
    "krav": {
     "ord": [
@@ -4344,7 +4344,7 @@
    "klart": "En simmare på båttur, vilken härlig idé!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "Vem kan få skjuts trots att den redan kan simma? Låt en sådan vän bli passagerare!",
+   "text_bengtsson": "Ett djur som bor i vattnet vill åka båt! Kan du skriva det?",
    "klart_bengtsson": "En simmare på båttur, vilken härlig idé!",
    "krav": {
     "ord": [
@@ -4397,7 +4397,7 @@
    "klart": "Nu kan sjöns glitter följa med hem till ängen!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "Min minnesmaskin vill minnas både glittret och strandens färger! Vad kan en vän ta med?",
+   "text_bengtsson": "Min minnesmaskin vill ha något som glittrar och något som blommar. Kan en vän ta med det?",
    "klart_bengtsson": "Nu kan sjöns glitter följa med hem till ängen!",
    "krav": {
     "ord": [
@@ -4736,7 +4736,7 @@
    "klart": "Nu tassar jag tyst förbi viloplatsen!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Gääsp! En vän vill vila utan att ligga direkt mot berget.",
+   "text_bengtsson": "Gääsp! Berget är så hårt. Var kan en vän sova mjukt?",
    "klart_bengtsson": "Nu tassar jag tyst förbi viloplatsen!",
    "krav": {
     "ord": [
@@ -4796,7 +4796,7 @@
    "klart": "Ett litet hem inne i ett stort berg!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "En vän vill ha en egen liten vrå här inne! Vad kan ge väggar runt viloplatsen?",
+   "text_bengtsson": "En vän vill ha ett eget litet hem här inne. Vad kan den bo i?",
    "klart_bengtsson": "Ett litet hem inne i ett stort berg!",
    "krav": {
     "ord": [
@@ -4854,7 +4854,7 @@
    "klart": "Nu får fantasin gå på egen upptäcktsfärd!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "En vän vill bläddra bland ord och bilder utan att lämna sin sittplats!",
+   "text_bengtsson": "En vän vill sitta still och titta på bilder och ord. Vad kan den läsa?",
    "klart_bengtsson": "Nu får fantasin gå på egen upptäcktsfärd!",
    "krav": {
     "ord": [
@@ -4913,7 +4913,7 @@
    "klart": "Där hittade vi en riktigt fin liten vrå!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "En vän vill ha möbelns skiva ovanför huvudet! Kan orden visa rätt plats?",
+   "text_bengtsson": "En vän vill gömma sig under något som vi äter vid. Kan du skriva det?",
    "klart_bengtsson": "Där hittade vi en riktigt fin liten vrå!",
    "krav": {
     "ord": [
@@ -4966,7 +4966,7 @@
    "klart": "Olika stora vänner får plats i samma saga!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Två vänner vill prova helt olika storlekar! Kan dina ord visa skillnaden?",
+   "text_bengtsson": "Två vänner vill bo här inne. En är stor som en björn. En är pytte, som en myra!",
    "klart_bengtsson": "Olika stora vänner får plats i samma saga!",
    "krav": {
     "ord": [
@@ -5019,7 +5019,7 @@
    "klart": "Nu lyser sagostunden upp hela min dag!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "En vän vill läsa här inne! Vad behövs för både berättelsen och skenet?",
+   "text_bengtsson": "En vän vill läsa en saga här inne i mörkret. Vad behöver den?",
    "klart_bengtsson": "Nu lyser sagostunden upp hela min dag!",
    "krav": {
     "ord": [
@@ -5072,7 +5072,7 @@
    "klart": "Vilken färgglad liten samling!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "Två vänner lånar färg från gräset och solen! En sitter högre, den andra intill.",
+   "text_bengtsson": "Två vänner lånar färg från gräset och solen. Den ena sitter på en sten. Den andra står bredvid.",
    "klart_bengtsson": "Vilken färgglad liten samling!",
    "krav": {
     "ord": [
@@ -5125,7 +5125,7 @@
    "klart": "Vilket mysigt hem med välkomstsken!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "En vän vill vila innanför väggarna och se ett sken utanför ingången! Kan du ordna båda?",
+   "text_bengtsson": "En vän vill sova i en koja. Utanför ska det lysa lite. Vad kan lysa?",
    "klart_bengtsson": "Vilket mysigt hem med välkomstsken!",
    "krav": {
     "ord": [
@@ -5239,7 +5239,7 @@
    "klart": "Där kan glittret vila till nästa titt!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "En vän vill spara något som glimmar bakom ett lock! Kan orden visa både vännen och innehållet?",
+   "text_bengtsson": "En vän har en skattkista. Den vill gömma något som glittrar i den. Vad kan det vara?",
    "klart_bengtsson": "Där kan glittret vila till nästa titt!",
    "krav": {
     "ord": [
@@ -5292,7 +5292,7 @@
    "klart": "Nu kan grottans glans och sagor följa med hem!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "Min minnesmaskin behöver bergets glitter och något fullt av berättelser! Kan en vän ta med båda?",
+   "text_bengtsson": "Min minnesmaskin vill ha något som glittrar i berget och något med sagor i. Kan en vän ta med det?",
    "klart_bengtsson": "Nu kan grottans glans och sagor följa med hem!",
    "krav": {
     "ord": [

@@ -36,7 +36,7 @@ function geoGrupp(geo: THREE.BufferGeometry, start: number, count: number) {
   return g;
 }
 
-function baka(scene: THREE.Object3D): Del[] {
+function baka(scene: THREE.Object3D, farger?: Record<string, string>): Del[] {
   scene.updateMatrixWorld(true);
   const box = new THREE.Box3().setFromObject(scene);
   const size = new THREE.Vector3();
@@ -61,7 +61,7 @@ function baka(scene: THREE.Object3D): Del[] {
       const mat = src.clone();
       mat.metalness = 0;
       mat.roughness = Math.max(mat.roughness ?? 1, 0.75);
-      const ny = FARG[mat.name];
+      const ny = farger?.[mat.name] ?? FARG[mat.name];
       if (ny) mat.color.set(ny);
       delar.push({ geo, mat });
     }
@@ -73,9 +73,12 @@ function baka(scene: THREE.Object3D): Del[] {
 type Plats = readonly [number, number, number, number, number];
 
 /** `vand` (R8-2b): varje instans vänds upp och ner med botten kvar på marken. */
-export function InstansModell({ url, platser, vand = false }: { url: string; platser: readonly Plats[]; vand?: boolean }) {
+/** R9K: `farger` (materialnamn → färg, ur data/platser.json) går före standardfärgerna i FARG. */
+export function InstansModell({ url, platser, vand = false, farger }: { url: string; platser: readonly Plats[]; vand?: boolean; farger?: Record<string, string> }) {
   const gltf = useGLTF(url);
-  const delar = useMemo(() => baka(gltf.scene), [gltf.scene]);
+  const fargNyckel = farger ? JSON.stringify(farger) : "";
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- fargNyckel bär innehållet i farger
+  const delar = useMemo(() => baka(gltf.scene, farger), [gltf.scene, fargNyckel]);
   const refs = useRef<(THREE.InstancedMesh | null)[]>([]);
   useLayoutEffect(() => {
     const m = new THREE.Matrix4();
