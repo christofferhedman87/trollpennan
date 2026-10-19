@@ -34,6 +34,19 @@ if ! grep -q 'R3F-M' src/spel/entiteter.test.ts; then
   git apply "$D/ref/r3f-serie.patch" && rad "patch: applicerad (första paketet i serien)"
 else rad "patch: fanns redan på main"; fi
 
+# 2b. Målhöjder för paketets ord (valfri $D/$M/inlagg-tillagg.json → data/inlagg.json malhojd_ord). Bara data.
+if [ -f "$D/$M/inlagg-tillagg.json" ]; then
+  node -e '
+    const fs = require("fs"); const [t, c] = process.argv.slice(1);
+    const ny = JSON.parse(fs.readFileSync(t, "utf8")).malhojd_ord ?? {}; let s = fs.readFileSync(c, "utf8"); let n = 0;
+    for (const [ord, h] of Object.entries(ny)) {
+      if (new RegExp(`"${ord}":`).test(s.split("\"malhojd_ord\"")[1].split("}")[0])) continue;
+      s = s.replace(/("malhojd_ord": \{\n)/, `$1    "${ord}": ${h},\n`); n++;
+    }
+    JSON.parse(s); fs.writeFileSync(c, s); console.log("malhojd_ord tillagda: " + n);
+  ' "$D/$M/inlagg-tillagg.json" data/inlagg.json | tee -a "$UT/bevis.txt" || stopp 2 "inlagg-tillagg.json kunde inte föras in"
+fi
+
 # 3. Lagg, EN gång
 node scripts/modell-inlagg.mjs lagg --mapp "$INK" --manifest "$D/manifest-serie.tsv" --urval "$D/$M/urval.txt" \
   --tillval "$D/tillval-serie.tsv" --runda "R3F-$M" --repo . --ut "$UT/lagg.json" --parallellt 4 > "$UT/lagg.txt" 2>&1

@@ -1,0 +1,10 @@
+# R3F-M10 = B5a (sjöns sex hemliga djur + skogens dekor): 9 modeller, alla CC0. Format: paket/filnamn.
+b5a-sjo-cc0/utter-seaotter.glb
+b5a-sjo-cc0/svan-goose-vit.glb
+b5a-sjo-cc0/abborre-fish-omfargad.glb
+b5a-sjo-cc0/gadda-fish-omfargad.glb
+b5a-sjo-cc0/krafta-egen.glb
+b5a-sjo-cc0/vattensalamander-egen.glb
+kenney-nature-kit/ground-riverstraight.glb
+kenney-nature-kit/ground-pathstraight.glb
+kenney-nature-kit/sign.glb
