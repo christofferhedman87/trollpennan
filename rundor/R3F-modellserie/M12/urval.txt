@@ -3,7 +3,7 @@ polypizza-cc0-3/woman-a-9kf7et.glb
 polypizza-cc0-3/characters-matt-66kq4d-forenklad.glb
 polypizza-cc0-3/woman-dress-zmyplq.glb
 polypizza-cc0-3/character-animated-dgocw9-forenklad.glb
-polypizza-cc0-3/king-b-mzmcek-forenklad.glb
+kenney-blocky-characters/kung-krona.glb
 polypizza-cc0-3/cowboy-s8hq7l.glb
 polypizza-cc0-3/worker-yg2bqz.glb
 polypizza-cc0-3/pirate-pirate-captain-sn18ly-forenklad.glb
