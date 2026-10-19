@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 359 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 399 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -22,8 +22,8 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kaykit-block-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/block-bits | 1 |
 | kaykit-city-builder-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/city-builder-bits | 1 |
 | kaykit-furniture-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/furniture-bits | 6 |
-| kaykit-holiday-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/holiday-bits | 4 |
-| kaykit-restaurant-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/restaurant-bits | 3 |
+| kaykit-holiday-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/holiday-bits | 7 |
+| kaykit-restaurant-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/restaurant-bits | 9 |
 | kaykit-rpg-tools-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/rpg-tools-bits | 16 |
 | kenney-blocky-characters | Kenney | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 1 |
 | kenney-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/car-kit | 8 |
@@ -31,7 +31,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-city-kit-suburban | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-suburban | 1 |
 | kenney-cube-pets | Kenney | CC0-1.0 | https://kenney.nl/assets/cube-pets | 13 |
 | kenney-fantasy-town-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/fantasy-town-kit | 7 |
-| kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 29 |
+| kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 59 |
 | kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 17 |
 | kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 6 |
 | kenney-holiday-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/holiday-kit | 5 |
@@ -47,7 +47,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-train-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/train-kit | 3 |
 | oga-cc0 | Teh_Bucket | CC0-1.0 | https://opengameart.org/content/hats-clothing-props | 7 |
 | polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 32 |
-| polypizza-cc0-2 | Quaternius | CC0-1.0 | https://poly.pizza/m/3aQgc75sUR | 14 |
+| polypizza-cc0-2 | Quaternius | CC0-1.0 | https://poly.pizza/m/3aQgc75sUR | 15 |
 | quaternius-animated-dinosaurs | Quaternius | CC0-1.0 | https://quaternius.com/packs/animateddinosaurs.html | 3 |
 | quaternius-cute-fish | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutefish.html | 13 |
 | quaternius-cute-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutemonsters.html | 6 |
@@ -422,3 +422,43 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | tofflor | /models/bulk/tofflor.glb | CC0-1.0 | Isa Lousberg | https://poly.pizza/m/XV1WqNYen3 |
 | handduk | /models/bulk/handduk.glb | CC0-1.0 | Isa Lousberg | https://poly.pizza/m/HE7whBjUwQ |
 | kamin | /models/bulk/kamin.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/nzxZYIOCIr |
+| pepparkaksgubbe | /models/bulk/pepparkaksgubbe.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/holiday-bits |
+| polkagris | /models/bulk/polkagris.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/holiday-bits |
+| mjolk | /models/bulk/mjolk.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/holiday-bits |
+| middag | /models/bulk/middag.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| gryta | /models/bulk/gryta.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| sallad | /models/bulk/sallad.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| potatis | /models/bulk/potatis.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| skinka | /models/bulk/skinka.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| biff | /models/bulk/biff.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/restaurant-bits |
+| korsbar | /models/bulk/korsbar.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| paron | /models/bulk/paron.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| kokosnot | /models/bulk/kokosnot.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| avokado | /models/bulk/avokado.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| kal | /models/bulk/kal.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| majs | /models/bulk/majs.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| aubergine | /models/bulk/aubergine.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| paprika | /models/bulk/paprika.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| radisa | /models/bulk/radisa.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| blomkal | /models/bulk/blomkal.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| purjolok | /models/bulk/purjolok.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| rodbeta | /models/bulk/rodbeta.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| baguette | /models/bulk/baguette.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| tarta | /models/bulk/tarta.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| muffins | /models/bulk/muffins.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| muffin | /models/bulk/muffin.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| paj | /models/bulk/paj.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| vaffla | /models/bulk/vaffla.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| pepparkaka | /models/bulk/pepparkaka.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| pudding | /models/bulk/pudding.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| glass | /models/bulk/glass.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| isglass | /models/bulk/isglass.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| godis | /models/bulk/godis.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| choklad | /models/bulk/choklad.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| honung | /models/bulk/honung.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| smorgas | /models/bulk/smorgas.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| korv | /models/bulk/korv.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| stek | /models/bulk/stek.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| agg | /models/bulk/agg.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| lask | /models/bulk/lask.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| glassbagare | /models/bulk/glassbagare.glb | CC0-1.0 | Kenney | https://poly.pizza/m/Id1gSe86dG |
