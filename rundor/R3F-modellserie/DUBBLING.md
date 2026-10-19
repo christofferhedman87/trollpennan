@@ -17,7 +17,7 @@ Orden från M14 och framåt utöver kategori-ord är förslag. Kontrollera dem m
 | Paket | Innehåll (≈35–40) | Barnord utan modell som paketet täcker | Källa |
 |---|---|---|---|
 | **M11 ✔** | småkryp + nya djur (37) | fjäril, myra, gräshoppa, skalbagge, fluga, syrsa, loppa, mullvad, mås, skorpion, narval … | Gobkit (andra hämtningen), Quaternius |
-| M12 | människor och yrken | mamma, pappa, bebis, barn, flicka, pojke, kung, drottning, prins, prinsessa, pirat, polis, brandman, doktor, kock, clown, cowboy, lärare, bagare, älva, mormor/morfar/farmor/farfar, syster, bror, kompis | Quaternius Characters, KayKit Adventurers, Kenney Mini Characters (+ blocky-characters i inkorgen) |
+| **M12 ✔** | människor och familj (19, CC0) | mamma, pappa, lärare, pojke, kung, cowboy, byggarbetare/arbetare, pirat, polis, farfar/morfar, chef, bror, kille, syster, kompis, sjörövare, scout, farbror, moster. **Kvar till M12b:** flicka, tjej, äventyrare, tjuv, soldat, prins (deras Quaternius-modeller ligger över 6 000 trianglar och går inte att förenkla med `M12/forenkla.mjs`), drottning, prinsessa, bebis, doktor, kock, brandman, clown, älva, mormor, farmor | Quaternius och Polygonal Mind via Poly Pizza (CC0, `polypizza-cc0-3`), Kenney Blocky Characters |
 | M13 | mat och fika | bulle, kanelbulle, pannkaka, popcorn, pommes, glasspinne, saft, juice, kaffe, korvbröd, nudlar, pasta, spagetti, ris, sylt, smör, ketchup, gurka, lakrits, lök | Kenney Food Kit (27 oanvända), Quaternius Food |
 | M14 | saker och leksaker | ballong, boll, cykel, docka, dator, telefon, kamera, gitarr, fiol, piano, trumma, sko, strumpa, vante, byxor, väska, kam, ring, filt, flygplan | Kenney Toy/Furniture/Car, KayKit, Quaternius |
 | M15 | byggnader | skola, sjukhus, slott, borg, butik, cirkus, fabrik, garage, hotell, museum, bibliotek, biograf, ladugård, fyr | Kenney City/Fantasy Town, Quaternius Medieval Village (36 oanvända byggnader i inkorgen) |
@@ -38,4 +38,6 @@ Varje paket körs som M10 och M11: `bash rundor/R3F-modellserie/kor.sh M<n>` →
 - Taket är 6 000 trianglar per djur (Poly Pizzas nyckelpiga har 8 662). `gltf-transform simplify` räcker inte på den.
 - Låga eller platta modeller behöver `malhojd_ord` (annars blir de 1,0 höga). Flygande småkryp behöver `undertyp_rorelse`.
 - Ett paket som gör ett ord känt kan bryta ett test som använde ordet som "okänt" (M10: vägskylt). Lös det med `M<n>/test.patch`.
+- Riggade Quaternius-figurer över taket: `M12/forenkla.mjs` (weld + meshopt simplify) klarar vissa (kung 10 903 → 5 449), andra inte (sömmar i UV och normaler).
+- Kenney Blocky Characters använder `KHR_materials_unlit`; spelets material ger då sidfel (`reading 'value'`) i spelprovet. M12 tar härledda `character-*-belyst.glb` utan tillägget. Rättas i koden i en egen kodrunda.
 - CC-BY (Poly by Google m.fl.) först efter R3E (kreditvisning för alla CC-BY i föräldradialogen).
