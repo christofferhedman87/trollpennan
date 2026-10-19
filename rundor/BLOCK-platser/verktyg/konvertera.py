@@ -79,6 +79,12 @@ def konv(u, omr):
 plats_upp = [konv(u, u["omrade"]) for u in inn["uppdrag"]]
 ids = collections.Counter(u["id"] for u in plats_upp); [fel("id", f"{i}: dubblett") for i, n in ids.items() if n > 1]
 ang_raw = las(os.path.join(SRC, "Copilot/trollpennan_copilot.uppdrag1.json"))
+# Arkitektens rättelser (fras som tolken inte skapar något av)
+for u in ang_raw:
+    for g in (u["val"]["grupper"] if isinstance(u["val"], dict) else u["val"]):
+        for fs in g["forslag"]:
+            if fs["fras"] == "en kanin på en soffa med en trollbok om fjärran länder":
+                fs["ord"], fs["fras"] = "bok", "en kanin på en soffa med en bok"
 ang_upp = [konv(u, "ang") for u in ang_raw]
 ids2 = collections.Counter(u["id"] for u in ang_upp + plats_upp); [fel("id", f"{i}: dubblett ängen/platser") for i, n in ids2.items() if n > 1]
 # upprepade uppdrag (samma kravord) mellan platser
