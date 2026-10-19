@@ -2,8 +2,8 @@
 Underlag: Copilots manus + data (`data-utkast/`, kontroll i `KONTROLL.md`). Doodle kör ett deluppdrag i taget; varje rad är klar och mergad för sig. **Build** = Grok Build med prompten i `prompter/`, **skript** = `kor.sh`, ingen Build. Bevis överallt: `test:product`, `typecheck:pages`, `build:pages`; Build-rundor dessutom Playwright 375x812 med numrerade bilder. Stoppregel för Build: första ändring inom 10 anrop, commit efter varje steg, `RUNDA-<id>.md` + commit + rapport senast tur (max−6); ingen omkörning. Stoppregel för skript: exit ≠ 0 → inget mergas, utdata till Arkitekten.
 
 ## Ordning (gäller nu, 2026-10-19) – samma som PROJECT.md §8
-**Klart:** B0, B1.1, B1.2, B1.3a (+ R3G, R9D–F). **Pågår:** B1.3b som **skript**: `bash rundor/BLOCK-platser/B1.3b/kor.sh` (klar att köra).
-**Kö:** B1.3b (skript) → B1.4 (Build) → R9G (Build) → R8-2 (Build) → B2 Skogen (skript) → B3 Sjön (skript) → B4 Grottan (skript) + B4.1 (Build) → B5 modeller (skript, parallellt OK) → B6 kontroll → TTS.
+**Klart:** B0, B1.1–B1.3b (+ R3G, R9D–F). **Pågår:** B1.4 + B1.3b-fix som **skript**: `bash rundor/BLOCK-platser/B1.4/kor.sh`.
+**Kö:** B1.4 (skript) → R9G (Build) → R8-2 (Build) → B2 Skogen (skript) → B3 Sjön (skript) → B4 Grottan (skript) + B4.1 (Build) → B5 modeller (skript, parallellt OK) → B6 kontroll → TTS.
 **Låst:** stall=meny · ERROR+"Inte riktigt än" · R8-2 efter B1 före platser · TTS efter områden · R9C färg pausad.
 
 ## Korrigeringar av Christoffers plan

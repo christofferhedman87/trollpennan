@@ -109,21 +109,20 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 ### KÖORDNING (gäller nu, 2026-10-19) – `rundor/BLOCK-platser/PLAN.md`
 **Skript** = `kor.sh`/patch, 0 Build-USD. **Build** = Grok Build. Doodle skriver aldrig spelkod utan kor.sh eller prompt. Arkitekten levererar → skickar körkommando samma stund.
 
-**Klart på main:** R3G föremål (#56) · R9D uppdragsfix (#60) · B0 40 ängsuppdrag (#61) · R9E typecheck (#62) · R9F färg/bubbla (#64) · B1.1 dela angen3d (#67) · B1.2 uppdragsmotor plats (#68) · B1.3a platser.json (#71). main ≈ `f668b27`.
+**Klart på main:** R3G (#56) · R9D–F (#60/#62/#64) · B0 (#61) · B1.1–B1.3b (#67/#68/#71/#75). main ≈ `0124204`.
 
-**Pågår:** **B1.3b** – scenen läser platsen. Build misslyckades (0 filer, 2,74 USD; ritningen saknade ord→entitet). **Patch + kor.sh klar** (`rundor/BLOCK-platser/B1.3b/`, Arkitekten provkört exit 0): Doodle kör `kor.sh`. Ord→entitet = `entitetForOrd` i `src/spel/platsDekor.ts` (samma uppslag som barnets ord: `ordFranForm`→`del.kropp`→`modellUrl`). Belöningar på ängen (B1.3b steg 4) flyttas till B1.4 (`beloningar` är tom).
+**Pågår:** **B1.4** resa + B1.3b-fix (skalor/mark/Bengtsson). **Patch + kor.sh klar** (`rundor/BLOCK-platser/B1.4/`, ingen Build): Doodle kör `kor.sh`. Sex led ifyllda (resa.ts/usePlats/PlatsResa/KartaLager/NpcFigur/npc.repliker_plats/seddaIntro).
 
 **Nästa, i denna ordning (inga parallella steg utom B5):**
-1. **B1.3b** scen ↔ plats — **skript** (`bash rundor/BLOCK-platser/B1.3b/kor.sh`, klar att köra)
-2. **B1.4** resa/skylt/platsväljare + "Inte riktigt än" under ERROR — **Build**
-3. **R9G** gåta≠uppdrag, gåta byts ej för tidigt, "Skriv i Pennans bok", stall=meny — **Build** (`rundor/R9G-ux-stall/`)
-4. **R8-2** grafiklyft (skuggor, horisont, kontur …) — **Build** (`rundor/R8-grafik/`)
-5. **B2** Skogen — **skript** (`kor-plats.sh skogen`)
-6. **B3** Sjön — **skript**
-7. **B4** Grottan — **skript** + **B4.1** ljuskällor **Build**
-8. **B5** modeller (prio 1/2) — **skript**, får köras parallellt med B2–B4
-9. **B6** kontroll + buggfix — **skript** (B6.1) sedan **Build** (B6.2–3)
-10. **TTS** gratis svensk röst — efter B6; eget block
+1. **B1.4** resa + B1.3b-fix — **skript** (`bash rundor/BLOCK-platser/B1.4/kor.sh`)
+2. **R9G** gåta≠uppdrag, gåta byts ej för tidigt, "Skriv i Pennans bok", stall=meny — **Build** (`rundor/R9G-ux-stall/`)
+3. **R8-2** grafiklyft (skuggor, horisont, kontur …) — **Build** (`rundor/R8-grafik/`)
+4. **B2** Skogen — **skript** (`kor-plats.sh skogen`)
+5. **B3** Sjön — **skript**
+6. **B4** Grottan — **skript** + **B4.1** ljuskällor **Build**
+7. **B5** modeller (prio 1/2) — **skript**, får köras parallellt med B2–B4
+8. **B6** kontroll + buggfix — **skript** (B6.1) sedan **Build** (B6.2–3)
+9. **TTS** gratis svensk röst — efter B6; eget block
 
 **Christoffers låsta beslut:** stall = meny (ingen stallbyggnad än) · ERROR-automaten behålls + text "Inte riktigt än" under · R8-2 efter B1, före platserna · TTS efter områdena · röd/grön på djur (R9C) **pausad**.
 
