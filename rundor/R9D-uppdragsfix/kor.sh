@@ -15,4 +15,4 @@ npm run -s test:product > /tmp/r9d-test.txt 2>&1 || { tail -30 /tmp/r9d-test.txt
 npm run -s typecheck:pages > /tmp/r9d-tc.txt 2>&1 || { tail -20 /tmp/r9d-tc.txt; aterstall; echo "STOPP 3: typecheck:pages föll"; exit 3; }
 npm run -s build:pages > /tmp/r9d-build.txt 2>&1 || { tail -20 /tmp/r9d-build.txt; aterstall; echo "STOPP 3: build:pages föll"; exit 3; }
 node "$D/uppdrag-prov.mjs" --bild /tmp/r9d-prov.png > /tmp/r9d-prov.json 2>/tmp/r9d-prov.err || { cat /tmp/r9d-prov.json; tail -15 /tmp/r9d-prov.err; aterstall; echo "STOPP 4: provet avvek"; exit 4; }
-echo "R9D OK: test:product $(grep -o '^# pass [0-9]*' /tmp/r9d-test.txt), typecheck:pages grönt, prov A+B+C grönt ($(grep -o '"ok": [0-9]*' /tmp/r9d-prov.json | head -1) förslag). Committa src/ data/ package.json på runda-r9d, pusha, PR, merge."
+echo "R9D OK: test:product $(grep -o '^# pass [0-9]*' /tmp/r9d-test.txt), typecheck:pages grönt, prov A+B+C grönt ($(node -e "const d=require('/tmp/r9d-prov.json');console.log(d.B.ok+'/'+d.B.antal)") förslag). Committa src/ data/ package.json på runda-r9d, pusha, PR, merge."
