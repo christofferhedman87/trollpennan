@@ -1,32 +1,32 @@
 prio	ord	genus	kategori	plats	anvands_i	kalla_forslag
-1	stig	en	natur	grottan,sjon,skogen	3	
-1	abborre	en	djur	sjon	2	
-1	gädda	en	djur	sjon	2	
-1	kräfta	en	djur	sjon	2	
-1	svan	en	djur	sjon	2	
-1	utter	en	djur	sjon	2	
-1	vattensalamander	en	djur	sjon	2	
-1	bäver	en	djur	skogen	0	
-1	ekorre	en	djur	skogen	0	
-2	bäck	en	natur	skogen	1	
-2	sandbotten	en	natur	sjon	1	
-2	sandhög	en	natur	grottan	1	
-2	vassrugge	en	natur	sjon	1	
-2	vattenpöl	en	natur	grottan	1	
-2	vägskylt	en	föremål	skogen	1	
-2	bäver		djur (kodritad idag, GLB snyggare)	hemligt	0	
-2	dinosaurie		djur (kodritad idag, GLB snyggare)	hemligt	0	
-2	ekorre		djur (kodritad idag, GLB snyggare)	hemligt	0	
-2	gris		djur (kodritad idag, GLB snyggare)	hemligt	0	
-2	haj		djur (kodritad idag, GLB snyggare)	hemligt	0	
-2	kulting		djur (kodritad idag, GLB snyggare)	hemligt	0	
-3	bergkristall	en	natur	grottan	0	
-3	flytväst	en	föremål	sjon	0	
-3	fågelholk	en	byggnad	skogen	0	
-3	håv	en	föremål	sjon	0	
-3	kikare	en	föremål	sjon,skogen	0	
-3	kotte	en	natur	skogen	0	
-3	mossmatta	en	natur	skogen	0	
-3	picknickfilt	en	föremål	sjon	0	
-3	underjordisk sjö	en	natur	grottan	0	
-3	vattenväxt	en	natur	sjon	0	
+1	stig	en	natur	grottan,sjon,skogen	3	Kenney Nature Kit (CC0) path_* 
+1	abborre	en	djur	sjon	2	Quaternius Animated Fish Bundle (CC0, poly.pizza/bundle/Animated-Fish-Bundle-44zhHN1UbT) – sök abborre-lik, annars Red Snapper omfärgad
+1	gädda	en	djur	sjon	2	Quaternius Animated Fish Bundle (CC0) – kolla; reserv: Swordfish utan svärd ej OK, sök vidare
+1	kräfta	en	djur	sjon	2	Modellspanaren (CC0 saknas i snabbsök)
+1	svan	en	djur	sjon	2	Quaternius Ultimate Animated Animal Pack (CC0) – kolla; reserv: gås omfärgad vit = egen entitet med palett
+1	utter	en	djur	sjon	2	Quaternius Ultimate Animated Animal Pack (CC0) – kolla; annars Modellspanaren
+1	vattensalamander	en	djur	sjon	2	Modellspanaren (reserv: ödla/groda-kropp med palett)
+1	bäver	en	djur	skogen	0	Modellspanaren
+1	ekorre	en	djur	skogen	0	Modellspanaren
+2	bäck	en	natur	skogen	1	Kenney Nature Kit (CC0) river_* / ground_riverStraight
+2	sandbotten	en	natur	sjon	1	Modellspanaren
+2	sandhög	en	natur	grottan	1	Modellspanaren
+2	vassrugge	en	natur	sjon	1	Quaternius Ultimate Nature Pack (CC0) – gräs/vass
+2	vattenpöl	en	natur	grottan	1	Modellspanaren
+2	vägskylt	en	föremål	skogen	1	Kenney Nature Kit (CC0) sign
+2	bäver		djur (kodritad idag, GLB snyggare)	hemligt	0	Modellspanaren
+2	dinosaurie		djur (kodritad idag, GLB snyggare)	hemligt	0	Modellspanaren
+2	ekorre		djur (kodritad idag, GLB snyggare)	hemligt	0	Modellspanaren
+2	gris		djur (kodritad idag, GLB snyggare)	hemligt	0	Modellspanaren
+2	haj		djur (kodritad idag, GLB snyggare)	hemligt	0	Modellspanaren
+2	kulting		djur (kodritad idag, GLB snyggare)	hemligt	0	Modellspanaren
+3	bergkristall	en	natur	grottan	0	finns 'kristall' redan – gör alias i entiteter.json ord[], ingen ny modell
+3	flytväst	en	föremål	sjon	0	Modellspanaren
+3	fågelholk	en	byggnad	skogen	0	Modellspanaren
+3	håv	en	föremål	sjon	0	Quaternius Animated Fish Bundle (CC0) – fiskeprylar
+3	kikare	en	föremål	sjon,skogen	0	Quaternius Ultimate RPG/Survival Pack (CC0) – kolla
+3	kotte	en	natur	skogen	0	Quaternius Ultimate Nature Pack (CC0)
+3	mossmatta	en	natur	skogen	0	Modellspanaren
+3	picknickfilt	en	föremål	sjon	0	Modellspanaren
+3	underjordisk sjö	en	natur	grottan	0	Modellspanaren
+3	vattenväxt	en	natur	sjon	0	Modellspanaren

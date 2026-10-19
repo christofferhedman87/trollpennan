@@ -217,7 +217,9 @@ skriv("ord-platser.json", {"_om": "UTKAST: nya ordrader (ord.json-format) för d
 skriv("repliker-platser.json", {"_om": "UTKAST: Bengtssons repliker per plats och mine (npc.json-format 'repliker_plats'). Visas när barnet klickar på honom, ger aldrig uppdrag.", "repliker_plats": {k: dict(v) for k, v in REP.items()}})
 skriv("stavfel-platser.json", {"_om": "UTKAST: kända felstavningar → rätt ord. Hemliga ord: visa aldrig rättningen före upptäckt.", "stavfel": stavfel})
 skriv("testfraser-platser.json", {"_om": "UTKAST: Copilots 150 testfraser, förväntat utfall. Används av platsprovet i B2–B4.", "fraser": testfraser})
-with open(os.path.join(ROT, "rundor/BLOCK-platser/modellbehov-platser.tsv"), "w", encoding="utf-8") as f:
+_tsv = os.path.join(ROT, "rundor/BLOCK-platser/modellbehov-platser.tsv")
+KALLA = {r.split("\t")[1]: r.split("\t")[-1] for r in open(_tsv, encoding="utf-8").read().splitlines()[1:]} if os.path.exists(_tsv) else {}
+with open(_tsv, "w", encoding="utf-8") as f:
     f.write("prio\tord\tgenus\tkategori\tplats\tanvands_i\tkalla_forslag\n")
     anv = collections.Counter()
     for u in plats_upp + ang_upp:
@@ -239,7 +241,7 @@ with open(os.path.join(ROT, "rundor/BLOCK-platser/modellbehov-platser.tsv"), "w"
     for o in sorted(set(kodritade)):
         rows.append((2, 0, o, "", "djur (kodritad idag, GLB snyggare)", "hemligt", 0))
     for pr, _, o, g, k, pl, n in sorted(rows):
-        f.write(f"{pr}\t{o}\t{g}\t{k}\t{pl}\t{n}\t\n")
+        f.write(f"{pr}\t{o}\t{g}\t{k}\t{pl}\t{n}\t{KALLA.get(o, 'Modellspanaren')}\n")
 sammanf = {k: len(v) for k, v in K.items()}
 sammanf.update({"uppdrag_platser": len(plats_upp), "uppdrag_angen": len(ang_upp), "hemliga_platser": len(led_plats), "gator_angen": len(led_ang),
                 "ordregister": len(reg), "ordregister_med_modell": len(reg) - len(behov), "nya_ordrader": len(ordrader), "repliker": len(rep),
