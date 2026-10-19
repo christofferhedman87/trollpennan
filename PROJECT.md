@@ -687,9 +687,12 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
 | 3 | Ett felstavat föremål ger inget "Menade du …?" (reservens `klasser_per_plats` tar bara djur) | B6.1 (data om möjligt), annars B6.2 |
 | 4 | Brandposten och julkransen är svåra att se på 375x812 (skala i entiteter.json) | B5 |
 | 5 | Röd blir orange och grön gulgrön på djur (ljuset på djurmodellerna) | R9C – **pausat av Christoffer** |
-| 6 | 21 fel i `npm run typecheck` (19 dialogIsolering.test.mjs, 2 bokSkrollning.test.mjs) | **R9E** – patch klar (`rundor/R9E-typecheck/kor.sh`), ger 0 fel |
+| 6 | 21 fel i `npm run typecheck` (19 dialogIsolering.test.mjs, 2 bokSkrollning.test.mjs) | R9E (0 fel med @ts-nocheck, mergad) → **R9F** riktiga JSDoc-typer; eslint src 4 → 0 fel |
 | 7 | Kattens mantel sitter fel | B6.2 |
 | 8 | Hästens horn sitter ca 0,2 för högt | B6.2 |
 | 9 | Halsduken på kubdjuren sitter fel | B6.2 |
 | 10 | Bengtsson försvann en gång efter två snabba uppdrag i rad (sågs i R9D-provet, ej återskapat efter omladdning) | B6.1 bevakar, B6.2 om det återkommer |
+| 12 | Ny färg på ett djur med färg blev "en blå och lila katt" (önskan underkänd); "en hög låg hund"; "ett högt torn" på djuret | **R9F** (patch klar) |
+| 13 | Tackbubblan klipps i vänsterkanten på 375x812 | **R9F** (patch klar) |
+| 14 | `npm run test:reserv` 3 fel redan på main; `eslint .` söker igenom dist-pages/ | B6.1 |
 | 11 | "Inte riktigt än" under ERROR-automaten (Christoffers beslut) kräver en bildtext i `NpcFigur.tsx`, inte bara data | B1.4 |
