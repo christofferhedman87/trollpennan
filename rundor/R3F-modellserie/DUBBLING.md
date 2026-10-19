@@ -38,6 +38,7 @@ Varje paket körs som M10 och M11: `bash rundor/R3F-modellserie/kor.sh M<n>` →
 - Taket är 6 000 trianglar per djur (Poly Pizzas nyckelpiga har 8 662). `gltf-transform simplify` räcker inte på den.
 - Låga eller platta modeller behöver `malhojd_ord` (annars blir de 1,0 höga). Flygande småkryp behöver `undertyp_rorelse`.
 - Ett paket som gör ett ord känt kan bryta ett test som använde ordet som "okänt" (M10: vägskylt). Lös det med `M<n>/test.patch`.
-- Riggade Quaternius-figurer över taket: `M12/forenkla.mjs` (weld + meshopt simplify) klarar vissa (kung 10 903 → 5 449), andra inte (sömmar i UV och normaler).
+- Riggade Quaternius-figurer över taket: `M12/forenkla.mjs` (weld + meshopt simplify) klarar vissa (pappa, pojke, pirat), andra inte (sömmar i UV och normaler).
+- Orienteringsgissningen tar fel på stående figurer med ryggsäck/mantel (pappa gissades -z): sätt `fram` = `+z` i tillval-serie.tsv och titta på kontaktarket. Quaternius King var mörk av sig själv; M12 bygger kungen av Kenney character-a + Quaternius Crown (`M12/kung-krona.mjs`).
 - Kenney Blocky Characters använder `KHR_materials_unlit`; spelets material ger då sidfel (`reading 'value'`) i spelprovet. M12 tar härledda `character-*-belyst.glb` utan tillägget. Rättas i koden i en egen kodrunda.
 - CC-BY (Poly by Google m.fl.) först efter R3E (kreditvisning för alla CC-BY i föräldradialogen).
