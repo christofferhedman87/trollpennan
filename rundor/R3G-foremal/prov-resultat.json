@@ -1,0 +1,107 @@
+{
+ "bulk_glb_vid_start": 0,
+ "resultat": [
+  {
+   "fras": "en kanin med en hink",
+   "forvantat": "kanin+hink",
+   "kroppar": [
+    "kanin"
+   ],
+   "med": [
+    "hink"
+   ],
+   "agg": false,
+   "modell": "/models/bulk/hink.glb",
+   "hamtade": [
+    "/models/bulk/hink.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "ett lok",
+   "forvantat": "lok",
+   "kroppar": [
+    "lok"
+   ],
+   "med": [],
+   "agg": false,
+   "modell": "/models/bulk/lok.glb",
+   "hamtade": [
+    "/models/bulk/lok.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "en hink",
+   "forvantat": "hink",
+   "kroppar": [
+    "hink"
+   ],
+   "med": [],
+   "agg": false,
+   "modell": "/models/bulk/hink.glb",
+   "hamtade": [],
+   "ok": true
+  },
+  {
+   "fras": "en ek",
+   "forvantat": "ek",
+   "kroppar": [
+    "ek"
+   ],
+   "med": [],
+   "agg": false,
+   "modell": "/models/bulk/ek.glb",
+   "hamtade": [
+    "/models/bulk/ek.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "ambulans",
+   "forvantat": "ambulans",
+   "kroppar": [
+    "ambulans"
+   ],
+   "med": [],
+   "agg": false,
+   "modell": "/models/bulk/ambulans.glb",
+   "hamtade": [
+    "/models/bulk/ambulans.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "en röd bil",
+   "forvantat": "bil",
+   "kroppar": [
+    "bil"
+   ],
+   "med": [],
+   "agg": false,
+   "modell": "/models/bulk/bil.glb",
+   "hamtade": [
+    "/models/bulk/bil.glb"
+   ],
+   "ok": true
+  },
+  {
+   "fras": "en katt med en gaffel",
+   "forvantat": "katt+gaffel",
+   "kroppar": [
+    "katt"
+   ],
+   "med": [
+    "gaffel"
+   ],
+   "agg": false,
+   "modell": "/models/bulk/gaffel.glb",
+   "hamtade": [
+    "/models/bulk/gaffel.glb"
+   ],
+   "ok": true
+  }
+ ],
+ "glb_med_fel": [],
+ "sidfel": []
+}
