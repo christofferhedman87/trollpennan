@@ -14,7 +14,7 @@ export function NpcFigur({ npc, mine, nytt, onClick }: Props) {
   }, [f]);
   if (!f) return null;
   return (
-    <button type="button" className={nytt ? "npc-figur nytt" : "npc-figur"} data-testid="npc-figur" data-npc={npc} data-mine={mine} aria-label={f.alt} onClick={onClick}>
+    <button type="button" className={nytt ? "npc-figur nytt" : "npc-figur"} style={{ "--npc-h": f.storlek?.hojd ?? "176px" } as React.CSSProperties} data-testid="npc-figur" data-npc={npc} data-mine={mine} aria-label={f.alt} onClick={onClick}>
       <img src={mineUrl(npc, mine)} alt="" draggable={false} width={512} height={763} />
       {nytt ? <span className="npc-utrop" aria-hidden="true">!</span> : null}
     </button>

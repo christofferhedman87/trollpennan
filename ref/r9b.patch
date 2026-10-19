@@ -1,0 +1,163 @@
+diff --git a/data/npc.json b/data/npc.json
+index a867ba8..bc2a387 100644
+--- a/data/npc.json
++++ b/data/npc.json
+@@ -63,6 +63,10 @@
+     "inga_fler": "Nu har du hjälpt mig med allt jag kommer på just nu. Tack, du är en riktig språkdoktor!",
+     "bara_aventyr": "Här på ängen har jag inga fler uppdrag just nu. Ute på äventyret väntar fler. Titta i Uppdragsboken!",
+     "granskad": false
++   },
++   "storlek": {
++    "_om": "R9B: figurens höjd på ängen som CSS-längd (skärmrelativ). Bredden följer bildens proportion.",
++    "hojd": "clamp(176px, 30vh, 340px)"
+    }
+   },
+   "syntaxviruset": {
+diff --git a/src/spel/npc.ts b/src/spel/npc.ts
+index 3878ff5..5729902 100644
+--- a/src/spel/npc.ts
++++ b/src/spel/npc.ts
+@@ -6,6 +6,7 @@ export type NpcDel = {
+   alt: string;
+   bilder: Record<string, string>;
+   standard: string;
++  storlek?: { hojd: string };
+   miner: { lage: string; bild: string; varar_ms?: number }[];
+   repliker?: { fel?: string[]; inga_fler?: string; bara_aventyr?: string };
+ };
+diff --git a/src/spel/ui/BokSkarm.tsx b/src/spel/ui/BokSkarm.tsx
+index 6f49f7c..afcc63f 100644
+--- a/src/spel/ui/BokSkarm.tsx
++++ b/src/spel/ui/BokSkarm.tsx
+@@ -148,10 +148,10 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
+               </div>
+             ) : null}
+             {!gavaTill && !andrar && varld === "ang" ? (
+-              <div className="skapar-guide" data-testid="skapar-guide">
+-                <p>{hemligt.steg}</p>
++              <div className={aktivtSkrivUppdrag(uppdragSpar) ? "skapar-guide kompakt" : "skapar-guide"} data-testid="skapar-guide">
++                {aktivtSkrivUppdrag(uppdragSpar) ? null : <p>{hemligt.steg}</p>}
+                 <p className="hemligt-forklaring" data-testid="hemligt-forklaring">{hemligt.forklaring}</p>
+-                <Ledtradsyta funna={funna} />
++                <Ledtradsyta funna={funna} kompakt={!!aktivtSkrivUppdrag(uppdragSpar)} />
+                 <details>
+                   <summary>{upplevelse.examplesTitle}</summary>
+                   <div className="ideer">
+diff --git a/src/spel/ui/Ledtradsyta.tsx b/src/spel/ui/Ledtradsyta.tsx
+index eb67c6b..d9276ac 100644
+--- a/src/spel/ui/Ledtradsyta.tsx
++++ b/src/spel/ui/Ledtradsyta.tsx
+@@ -1,16 +1,11 @@
+ import { useMemo, useState } from "react";
+-import { ordLista } from "@/tolk/tolka.ts";
+ import hemligt from "../../../data/hemligt.json" with { type: "json" };
+ import { fyll } from "../fyll.ts";
+ import { LED } from "./spelData.ts";
+-
+-/** R9: hemliga djur = ord med nivå "fritt" och klass djur som har en gåta i data/ledtradar.json. */
+-export function hemligaDjur() {
+-  return ordLista().filter((o) => o.klass === "djur" && o.niva === "fritt" && LED[o.id]);
+-}
++import { hemligaDjur } from "./hemliga.ts";
+ 
+ /** Synlig ledtrådsyta: en gåta om ett hemligt djur som inte är hittat, med första bokstaven och ett streck per bokstav. */
+-export function Ledtradsyta({ funna }: { funna: Record<string, unknown> }) {
++export function Ledtradsyta({ funna, kompakt = false }: { funna: Record<string, unknown>; kompakt?: boolean }) {
+   const alla = useMemo(() => hemligaDjur(), []);
+   const [nr, setNr] = useState(() => Math.floor(Math.random() * 1000));
+   const kvar = alla.filter((o) => !funna[o.id]);
+@@ -19,11 +14,28 @@ export function Ledtradsyta({ funna }: { funna: Record<string, unknown> }) {
+   const o = kvar[nr % kvar.length]!;
+   const led = LED[o.id]!;
+   const streck = `${led.forsta} ${Array.from({ length: Math.max(0, led.langd - 1) }, () => "_").join(" ")}`.trim();
++  const rubrik = (
++    <b>
++      {hemligt.ledtrad_rubrik} <small>{fyll(hemligt.hittade, { n: hittade, total: alla.length })}</small>
++    </b>
++  );
++  // R9B: när ett uppdrag är igång är ytan hopfälld (en rad), annars trycker den ner "Prova en idé" under tangentbordet i 375x812
++  if (kompakt)
++    return (
++      <details className="ledtrad kompakt" data-testid="ledtrad" data-hemligt={o.id}>
++        <summary>{rubrik}</summary>
++      <p className="ledtrad-gata" data-testid="ledtrad-gata">{led.gata}</p>
++      <div className="ledtrad-rad">
++        <span className="ledtrad-streck" data-testid="ledtrad-streck" aria-label={`${led.langd} bokstäver, börjar på ${led.forsta}`}>{streck}</span>
++        <button type="button" className="nej" data-testid="ledtrad-ny" onClick={() => setNr((n) => n + 1)}>
++          {hemligt.ny_gata}
++        </button>
++      </div>
++      </details>
++    );
+   return (
+     <div className="ledtrad" data-testid="ledtrad" data-hemligt={o.id}>
+-      <b>
+-        {hemligt.ledtrad_rubrik} <small>{fyll(hemligt.hittade, { n: hittade, total: alla.length })}</small>
+-      </b>
++      {rubrik}
+       <p className="ledtrad-gata" data-testid="ledtrad-gata">{led.gata}</p>
+       <div className="ledtrad-rad">
+         <span className="ledtrad-streck" data-testid="ledtrad-streck" aria-label={`${led.langd} bokstäver, börjar på ${led.forsta}`}>{streck}</span>
+diff --git a/src/spel/ui/NpcFigur.tsx b/src/spel/ui/NpcFigur.tsx
+index 98db830..3c3e7ee 100644
+--- a/src/spel/ui/NpcFigur.tsx
++++ b/src/spel/ui/NpcFigur.tsx
+@@ -14,7 +14,7 @@ export function NpcFigur({ npc, mine, nytt, onClick }: Props) {
+   }, [f]);
+   if (!f) return null;
+   return (
+-    <button type="button" className={nytt ? "npc-figur nytt" : "npc-figur"} data-testid="npc-figur" data-npc={npc} data-mine={mine} aria-label={f.alt} onClick={onClick}>
++    <button type="button" className={nytt ? "npc-figur nytt" : "npc-figur"} style={{ "--npc-h": f.storlek?.hojd ?? "176px" } as React.CSSProperties} data-testid="npc-figur" data-npc={npc} data-mine={mine} aria-label={f.alt} onClick={onClick}>
+       <img src={mineUrl(npc, mine)} alt="" draggable={false} width={512} height={763} />
+       {nytt ? <span className="npc-utrop" aria-hidden="true">!</span> : null}
+     </button>
+diff --git a/src/spel/ui/hemliga.ts b/src/spel/ui/hemliga.ts
+new file mode 100644
+index 0000000..80a8445
+--- /dev/null
++++ b/src/spel/ui/hemliga.ts
+@@ -0,0 +1,7 @@
++import { ordLista } from "@/tolk/tolka.ts";
++import { LED } from "./spelData.ts";
++
++/** R9: hemliga djur = ord med nivå "fritt" och klass djur som har en gåta i data/ledtradar.json. */
++export function hemligaDjur() {
++  return ordLista().filter((o) => o.klass === "djur" && o.niva === "fritt" && LED[o.id]);
++}
+diff --git a/src/styles.css b/src/styles.css
+index 42a61d4..eb3d9fa 100644
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -690,7 +690,7 @@ summary:focus-visible { outline: 3px solid #204e8a; outline-offset: 3px; }
+ 
+ /* R6A-2: Bengtsson som klickbar figur på ängen och uppdragsremsan i Skapa-menyn */
+ .npc-figur{
+-position:absolute;z-index:7;left:4px;bottom:74px;height:176px;width:118px;padding:0;border:0;background:none;display:block;touch-action:manipulation;filter:drop-shadow(0 3px 4px #2c241659)}
++position:absolute;z-index:7;left:4px;bottom:74px;height:var(--npc-h,176px);width:calc(var(--npc-h,176px) * 0.671);padding:0;border:0;background:none;display:block;touch-action:manipulation;filter:drop-shadow(0 3px 4px #2c241659)}
+ .npc-figur img{
+ display:block;width:100%;height:100%;object-fit:contain;object-position:bottom;pointer-events:none;user-select:none}
+ .npc-figur.nytt{
+@@ -705,9 +705,9 @@ position:absolute;top:2px;right:0;width:30px;height:30px;border-radius:50%;backg
+ .uppdrag-remsa{
+ margin:0 0 8px;padding:10px 12px;border-radius:14px;background:#fff6d6;color:var(--color-ink);font-size:1.0625rem;font-weight:700;line-height:1.35;box-shadow:0 3px 0 var(--color-paper-deep)}
+ .uppdrag-val{
+-display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margin:0 0 6px;padding:0 4px 2px;scroll-snap-type:x proximity}
++display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margin:0 0 6px;padding:0 4px 2px;scroll-snap-type:x proximity;scroll-padding-left:4px}
+ .uppdrag-val-grupp{display:flex;align-items:center;gap:6px;flex:none}
+-.uppdrag-val-rubrik{flex:none;font-size:1rem;font-weight:800;color:var(--color-moss)}
++.uppdrag-val-rubrik{flex:none;scroll-snap-align:start;font-size:1rem;font-weight:800;color:var(--color-moss)}
+ .uppdrag-val-etikett{flex:none;font-size:.875rem;font-weight:800;opacity:.75}
+ .uppdrag-val .onska-chip{flex:none;min-height:44px;padding:2px 12px;font-size:1.0625rem;scroll-snap-align:start}
+ 
+@@ -726,3 +726,11 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
+ .ledtrad small{font-weight:600}
+ .ledtrad-rad{display:flex;align-items:center;justify-content:space-between;gap:10px}
+ .ledtrad-klar{margin:6px 0;font-weight:800}
++
++/* R9B: med uppdrag är guiden en rad: förklaring, hopfälld gåta och "Prova en idé" syns utan rullning i 375x812 */
++.skapar-guide.kompakt{padding:.35rem .6rem;display:flex;flex-wrap:wrap;align-items:flex-start;column-gap:8px}
++.skapar-guide.kompakt .hemligt-forklaring{flex:1 1 100%;margin:0;font-size:.9375rem}
++.skapar-guide.kompakt details{flex:1 1 140px;margin:0}
++.ledtrad.kompakt{padding:0 8px;border-width:2px}
++.ledtrad.kompakt summary{min-height:44px;display:flex;align-items:center;cursor:pointer;list-style:none}
++.ledtrad.kompakt[open]{flex-basis:100%}

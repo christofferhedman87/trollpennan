@@ -148,10 +148,10 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
               </div>
             ) : null}
             {!gavaTill && !andrar && varld === "ang" ? (
-              <div className="skapar-guide" data-testid="skapar-guide">
-                <p>{hemligt.steg}</p>
+              <div className={aktivtSkrivUppdrag(uppdragSpar) ? "skapar-guide kompakt" : "skapar-guide"} data-testid="skapar-guide">
+                {aktivtSkrivUppdrag(uppdragSpar) ? null : <p>{hemligt.steg}</p>}
                 <p className="hemligt-forklaring" data-testid="hemligt-forklaring">{hemligt.forklaring}</p>
-                <Ledtradsyta funna={funna} />
+                <Ledtradsyta funna={funna} kompakt={!!aktivtSkrivUppdrag(uppdragSpar)} />
                 <details>
                   <summary>{upplevelse.examplesTitle}</summary>
                   <div className="ideer">

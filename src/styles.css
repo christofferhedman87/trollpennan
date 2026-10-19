@@ -690,7 +690,7 @@ summary:focus-visible { outline: 3px solid #204e8a; outline-offset: 3px; }
 
 /* R6A-2: Bengtsson som klickbar figur på ängen och uppdragsremsan i Skapa-menyn */
 .npc-figur{
-position:absolute;z-index:7;left:4px;bottom:74px;height:176px;width:118px;padding:0;border:0;background:none;display:block;touch-action:manipulation;filter:drop-shadow(0 3px 4px #2c241659)}
+position:absolute;z-index:7;left:4px;bottom:74px;height:var(--npc-h,176px);width:calc(var(--npc-h,176px) * 0.671);padding:0;border:0;background:none;display:block;touch-action:manipulation;filter:drop-shadow(0 3px 4px #2c241659)}
 .npc-figur img{
 display:block;width:100%;height:100%;object-fit:contain;object-position:bottom;pointer-events:none;user-select:none}
 .npc-figur.nytt{
@@ -705,9 +705,9 @@ position:absolute;top:2px;right:0;width:30px;height:30px;border-radius:50%;backg
 .uppdrag-remsa{
 margin:0 0 8px;padding:10px 12px;border-radius:14px;background:#fff6d6;color:var(--color-ink);font-size:1.0625rem;font-weight:700;line-height:1.35;box-shadow:0 3px 0 var(--color-paper-deep)}
 .uppdrag-val{
-display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margin:0 0 6px;padding:0 4px 2px;scroll-snap-type:x proximity}
+display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margin:0 0 6px;padding:0 4px 2px;scroll-snap-type:x proximity;scroll-padding-left:4px}
 .uppdrag-val-grupp{display:flex;align-items:center;gap:6px;flex:none}
-.uppdrag-val-rubrik{flex:none;font-size:1rem;font-weight:800;color:var(--color-moss)}
+.uppdrag-val-rubrik{flex:none;scroll-snap-align:start;font-size:1rem;font-weight:800;color:var(--color-moss)}
 .uppdrag-val-etikett{flex:none;font-size:.875rem;font-weight:800;opacity:.75}
 .uppdrag-val .onska-chip{flex:none;min-height:44px;padding:2px 12px;font-size:1.0625rem;scroll-snap-align:start}
 
@@ -726,3 +726,11 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
 .ledtrad small{font-weight:600}
 .ledtrad-rad{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .ledtrad-klar{margin:6px 0;font-weight:800}
+
+/* R9B: med uppdrag är guiden en rad: förklaring, hopfälld gåta och "Prova en idé" syns utan rullning i 375x812 */
+.skapar-guide.kompakt{padding:.35rem .6rem;display:flex;flex-wrap:wrap;align-items:flex-start;column-gap:8px}
+.skapar-guide.kompakt .hemligt-forklaring{flex:1 1 100%;margin:0;font-size:.9375rem}
+.skapar-guide.kompakt details{flex:1 1 140px;margin:0}
+.ledtrad.kompakt{padding:0 8px;border-width:2px}
+.ledtrad.kompakt summary{min-height:44px;display:flex;align-items:center;cursor:pointer;list-style:none}
+.ledtrad.kompakt[open]{flex-basis:100%}
