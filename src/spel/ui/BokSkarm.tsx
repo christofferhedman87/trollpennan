@@ -14,10 +14,12 @@ import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
 import { OnskaAnsikte } from "./OnskaAnsikte.tsx";
 import { bestamdAv, frasForByggOrd, kanEtikett, kortIkon } from "./hjalp.ts";
 import { FIR, FLIKAR, TANGENTBORD, TEXTER } from "./spelData.ts";
-import type { Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
+import type { Banner, Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
+import { GavaStallKnapp } from "./Stall.tsx";
 
 type BokSkarmProps = {
   stangBok: () => void;
+  visaBanner: (texten: string, slag: Banner["slag"]) => void;
   andrar: boolean;
   panel: "spel" | "byggbok" | "uppdrag";
   lage: Lage;
@@ -69,7 +71,7 @@ type BokSkarmProps = {
   forsokKop: (slag: "djur" | "bygg", id: string, titel: string, pris: number) => void;
 };
 
-export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, hemma, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop }: BokSkarmProps) {
+export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, hemma, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop }: BokSkarmProps) {
   return (
       <div className="bok-skarm" data-testid="bok-skarm" onClick={stangBok}>
       <section className={andrar ? "bok andrar" : "bok"} data-andrar={andrar ? "ja" : "nej"} role="dialog" aria-label="Pennans bok" onClick={(e) => e.stopPropagation()}>
@@ -146,13 +148,15 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
                       : (VILDA.djur.find((d) => d.id === gavaTill)?.namn ?? ""),
                   })}
                 </p>
+                {gavaTill.startsWith("egen:") ? <GavaStallKnapp uid={gavaTill.slice(5)} visaBanner={visaBanner} klar={stangBok} /> : null}
               </div>
             ) : null}
             {!gavaTill && !andrar && varld === "ang" ? (
               <div className={aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? "skapar-guide kompakt" : "skapar-guide"} data-testid="skapar-guide">
                 {aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? null : <p>{hemligt.steg}</p>}
                 {aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? null : <p className="hemligt-forklaring" data-testid="hemligt-forklaring">{hemligt.forklaring}</p>}
-                <Ledtradsyta funna={funna} kompakt={!!aktivtSkrivUppdrag(uppdragSpar, platsNu())} />
+                {/* R9I (Christoffer): ingen gåta alls – inte heller räknare eller "Visa gåtan" – medan ett uppdrag pågår */}
+                {aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? null : <Ledtradsyta funna={funna} />}
                 <details>
                   <summary>{upplevelse.examplesTitle}</summary>
                   <div className="ideer">
