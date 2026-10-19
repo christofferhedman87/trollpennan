@@ -4440,6 +4440,901 @@
     ]
    },
    "final": true
+  },
+  {
+   "id": "grotta-forsta-skenet",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med något som lyser.",
+   "mal": {},
+   "klart": "Nu ser jag både vägen och min mustasch!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Här inne är det skymning hela dagen! Vad hjälper en vän att se bättre?",
+   "klart_bengtsson": "Nu ser jag både vägen och min mustasch!",
+   "krav": {
+    "ord": [
+     "lykta",
+     "golvlampa",
+     "lampa",
+     "ficklampa",
+     "nattlampa",
+     "ljusslinga",
+     "ljus"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Ett litet sken",
+      "forslag": [
+       {
+        "ord": "lykta",
+        "fras": "en kanin med en lykta"
+       },
+       {
+        "ord": "lykta",
+        "fras": "en katt vid en lykta"
+       }
+      ]
+     },
+     {
+      "etikett": "Ljust i hörnet",
+      "forslag": [
+       {
+        "ord": "golvlampa",
+        "fras": "en hund vid en golvlampa"
+       },
+       {
+        "ord": "golvlampa",
+        "fras": "en groda vid en golvlampa"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-gul-van",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett gult djur.",
+   "mal": {},
+   "klart": "Nu har vi en liten solstråle här inne!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "En vän vill låna färgen från solen där ute!",
+   "klart_bengtsson": "Nu har vi en liten solstråle här inne!",
+   "krav": {
+    "ord": [
+     "gul"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små solstrålar",
+      "forslag": [
+       {
+        "ord": "kanin",
+        "fras": "en gul kanin"
+       },
+       {
+        "ord": "mus",
+        "fras": "en gul mus"
+       }
+      ]
+     },
+     {
+      "etikett": "Fler färgvänner",
+      "forslag": [
+       {
+        "ord": "katt",
+        "fras": "en gul katt"
+       },
+       {
+        "ord": "groda",
+        "fras": "en gul groda"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-liten-upptackare",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett pyttelitet djur.",
+   "mal": {},
+   "klart": "Vilken liten upptäckare med stora idéer!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Vem kan kika in i ett hål som är mindre än min kaffekopp?",
+   "klart_bengtsson": "Vilken liten upptäckare med stora idéer!",
+   "krav": {
+    "ord": [
+     "liten",
+     "pytteliten",
+     "minimal"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små tassar",
+      "forslag": [
+       {
+        "ord": "mus",
+        "fras": "en pytteliten mus"
+       },
+       {
+        "ord": "kanin",
+        "fras": "en pytteliten kanin"
+       }
+      ]
+     },
+     {
+      "etikett": "Med fantasi",
+      "forslag": [
+       {
+        "ord": "hund",
+        "fras": "en pytteliten hund"
+       },
+       {
+        "ord": "groda",
+        "fras": "en pytteliten groda"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-sittpaus",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med en sittplats.",
+   "mal": {},
+   "klart": "Här kan vi sitta och klura en stund!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Puh, benen vill vila medan vi tittar på allt som glimmar!",
+   "klart_bengtsson": "Här kan vi sitta och klura en stund!",
+   "krav": {
+    "ord": [
+     "stol",
+     "sten",
+     "stubbe",
+     "stock",
+     "soffa",
+     "fåtölj",
+     "bänk",
+     "pall",
+     "kudde"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Enkel sittplats",
+      "forslag": [
+       {
+        "ord": "sten",
+        "fras": "en groda på en sten"
+       },
+       {
+        "ord": "stol",
+        "fras": "en katt på en stol"
+       }
+      ]
+     },
+     {
+      "etikett": "Mjukt och skönt",
+      "forslag": [
+       {
+        "ord": "soffa",
+        "fras": "en hund på en soffa"
+       },
+       {
+        "ord": "fåtölj",
+        "fras": "en kanin i en fåtölj"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-varma-oron",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med något som värmer.",
+   "mal": {},
+   "klart": "Nu är det mysigt ända ut i öronen!",
+   "stjarnor": 1,
+   "skatt": null,
+   "text_bengtsson": "Brr, här kittlar luften kallt! Kan en vän slippa huttra?",
+   "klart_bengtsson": "Nu är det mysigt ända ut i öronen!",
+   "krav": {
+    "ord": [
+     "tröja",
+     "mössa",
+     "luva",
+     "filt",
+     "täcke",
+     "halsduk",
+     "jacka",
+     "vante",
+     "socka",
+     "varm"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Om kroppen",
+      "forslag": [
+       {
+        "ord": "tröja",
+        "fras": "en hund med en tröja"
+       },
+       {
+        "ord": "tröja",
+        "fras": "en katt med en tröja"
+       }
+      ]
+     },
+     {
+      "etikett": "Om huvudet",
+      "forslag": [
+       {
+        "ord": "mössa",
+        "fras": "en kanin med en mössa"
+       },
+       {
+        "ord": "luva",
+        "fras": "en mus med en luva"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-mjuk-vila",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med en mjuk sovplats.",
+   "mal": {},
+   "klart": "Nu tassar jag tyst förbi viloplatsen!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Gääsp! En vän vill vila utan att ligga direkt mot berget.",
+   "klart_bengtsson": "Nu tassar jag tyst förbi viloplatsen!",
+   "krav": {
+    "ord": [
+     "säng",
+     "soffa",
+     "fåtölj",
+     "kudde",
+     "madrass",
+     "filt",
+     "täcke",
+     "bädd",
+     "hängmatta"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Sträcka ut sig",
+      "forslag": [
+       {
+        "ord": "säng",
+        "fras": "en hund i en säng"
+       },
+       {
+        "ord": "soffa",
+        "fras": "en katt på en soffa"
+       }
+      ]
+     },
+     {
+      "etikett": "Krypa ihop",
+      "forslag": [
+       {
+        "ord": "fåtölj",
+        "fras": "en kanin i en fåtölj"
+       },
+       {
+        "ord": "säng",
+        "fras": "en mus i en liten säng"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-eget-krypin",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur i ett eget krypin inne i grottan.",
+   "mal": {},
+   "klart": "Ett litet hem inne i ett stort berg!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "En vän vill ha en egen liten vrå här inne! Vad kan ge väggar runt viloplatsen?",
+   "klart_bengtsson": "Ett litet hem inne i ett stort berg!",
+   "krav": {
+    "ord": [
+     "tält",
+     "koja",
+     "hus",
+     "skjul",
+     "villa",
+     "stuga",
+     "krypin"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små hem",
+      "forslag": [
+       {
+        "ord": "tält",
+        "fras": "en kanin i ett tält i grottan"
+       },
+       {
+        "ord": "koja",
+        "fras": "en mus i en koja i grottan"
+       }
+      ]
+     },
+     {
+      "etikett": "Med fantasi",
+      "forslag": [
+       {
+        "ord": "hus",
+        "fras": "en hund i ett hus i grottan"
+       },
+       {
+        "ord": "skjul",
+        "fras": "en katt i ett skjul i grottan"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-ordna-lasning",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med något att läsa.",
+   "mal": {},
+   "klart": "Nu får fantasin gå på egen upptäcktsfärd!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "En vän vill bläddra bland ord och bilder utan att lämna sin sittplats!",
+   "klart_bengtsson": "Nu får fantasin gå på egen upptäcktsfärd!",
+   "krav": {
+    "ord": [
+     "bok",
+     "trollbok",
+     "sagobok",
+     "bilderbok",
+     "serietidning",
+     "tidning",
+     "berättelse",
+     "atlas"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Bläddra och läs",
+      "forslag": [
+       {
+        "ord": "bok",
+        "fras": "en kanin med en bok"
+       },
+       {
+        "ord": "bok",
+        "fras": "en katt med en bok"
+       }
+      ]
+     },
+     {
+      "etikett": "Magiska berättelser",
+      "forslag": [
+       {
+        "ord": "trollbok",
+        "fras": "en hund med en trollbok"
+       },
+       {
+        "ord": "trollbok",
+        "fras": "en mus med en trollbok"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-under-bordet",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur under ett bord och använd ordet under.",
+   "mal": {},
+   "klart": "Där hittade vi en riktigt fin liten vrå!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "En vän vill ha möbelns skiva ovanför huvudet! Kan orden visa rätt plats?",
+   "klart_bengtsson": "Där hittade vi en riktigt fin liten vrå!",
+   "krav": {
+    "ord": [
+     "under",
+     "bord"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små gäster",
+      "forslag": [
+       {
+        "ord": "bord",
+        "fras": "en mus under ett bord"
+       },
+       {
+        "ord": "bord",
+        "fras": "en kanin under ett bord"
+       }
+      ]
+     },
+     {
+      "etikett": "Andra vänner",
+      "forslag": [
+       {
+        "ord": "bord",
+        "fras": "en katt under ett bord"
+       },
+       {
+        "ord": "bord",
+        "fras": "en hund under ett bord"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-stor-och-liten",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett stort djur och ett litet djur med orden stor och liten.",
+   "mal": {},
+   "klart": "Olika stora vänner får plats i samma saga!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "Två vänner vill prova helt olika storlekar! Kan dina ord visa skillnaden?",
+   "klart_bengtsson": "Olika stora vänner får plats i samma saga!",
+   "krav": {
+    "ord": [
+     "stor",
+     "liten"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Tassar tillsammans",
+      "forslag": [
+       {
+        "ord": "hund",
+        "fras": "en stor hund och en liten katt"
+       },
+       {
+        "ord": "kanin",
+        "fras": "en stor kanin och en liten mus"
+       }
+      ]
+     },
+     {
+      "etikett": "Byt storlek",
+      "forslag": [
+       {
+        "ord": "mus",
+        "fras": "en stor mus och en liten hund"
+       },
+       {
+        "ord": "groda",
+        "fras": "en stor groda och en liten kanin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-sken-och-saga",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med både en bok och en lykta.",
+   "mal": {},
+   "klart": "Nu lyser sagostunden upp hela min dag!",
+   "stjarnor": 2,
+   "skatt": null,
+   "text_bengtsson": "En vän vill läsa här inne! Vad behövs för både berättelsen och skenet?",
+   "klart_bengtsson": "Nu lyser sagostunden upp hela min dag!",
+   "krav": {
+    "ord": [
+     "bok",
+     "lykta"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små läsare",
+      "forslag": [
+       {
+        "ord": "bok",
+        "fras": "en kanin med en bok och en lykta"
+       },
+       {
+        "ord": "bok",
+        "fras": "en mus med en bok och en lykta"
+       }
+      ]
+     },
+     {
+      "etikett": "Fler sagovänner",
+      "forslag": [
+       {
+        "ord": "lykta",
+        "fras": "en katt med en bok och en lykta"
+       },
+       {
+        "ord": "lykta",
+        "fras": "en hund med en bok och en lykta"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-tva-farger",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett grönt djur på en sten och ett gult djur bredvid stenen.",
+   "mal": {},
+   "klart": "Vilken färgglad liten samling!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Två vänner lånar färg från gräset och solen! En sitter högre, den andra intill.",
+   "klart_bengtsson": "Vilken färgglad liten samling!",
+   "krav": {
+    "ord": [
+     "grön",
+     "gul"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små vänner",
+      "forslag": [
+       {
+        "ord": "groda",
+        "fras": "en grön groda på en sten och en gul mus bredvid stenen"
+       },
+       {
+        "ord": "kanin",
+        "fras": "en grön kanin på en sten och en gul katt bredvid stenen"
+       }
+      ]
+     },
+     {
+      "etikett": "Fantasifärger",
+      "forslag": [
+       {
+        "ord": "hund",
+        "fras": "en grön hund på en sten och en gul kanin bredvid stenen"
+       },
+       {
+        "ord": "mus",
+        "fras": "en grön mus på en sten och en gul groda bredvid stenen"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-ljus-utanfor",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur i en koja med en lykta utanför.",
+   "mal": {},
+   "klart": "Vilket mysigt hem med välkomstsken!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "En vän vill vila innanför väggarna och se ett sken utanför ingången! Kan du ordna båda?",
+   "klart_bengtsson": "Vilket mysigt hem med välkomstsken!",
+   "krav": {
+    "ord": [
+     "koja",
+     "lykta"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små nattgäster",
+      "forslag": [
+       {
+        "ord": "koja",
+        "fras": "en mus i en koja med en lykta"
+       },
+       {
+        "ord": "koja",
+        "fras": "en kanin i en koja med en lykta"
+       }
+      ]
+     },
+     {
+      "etikett": "Andra vilovänner",
+      "forslag": [
+       {
+        "ord": "lykta",
+        "fras": "en katt i en koja med en lykta"
+       },
+       {
+        "ord": "lykta",
+        "fras": "en hund i en koja med en lykta"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-ben-som-vilar",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur bredvid något som har ben men inte kan gå.",
+   "mal": {},
+   "klart": "Du löste gåtan utan ett enda steg!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Min gåta har ben men tar aldrig en promenad! Vad kan en vän stå bredvid?",
+   "klart_bengtsson": "Du löste gåtan utan ett enda steg!",
+   "krav": {
+    "ord": [
+     "bord",
+     "stol",
+     "soffa",
+     "säng",
+     "fåtölj",
+     "pall",
+     "bänk",
+     "skrivbord",
+     "matbord",
+     "soffbord"
+    ],
+    "min": 1,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Vid bordet",
+      "forslag": [
+       {
+        "ord": "bord",
+        "fras": "en hund bredvid ett bord"
+       },
+       {
+        "ord": "stol",
+        "fras": "en katt bredvid en stol"
+       }
+      ]
+     },
+     {
+      "etikett": "Vid viloplatsen",
+      "forslag": [
+       {
+        "ord": "säng",
+        "fras": "en kanin bredvid en säng"
+       },
+       {
+        "ord": "soffa",
+        "fras": "en mus bredvid en soffa"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-glitter-i-kistan",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur bredvid en skattkista med en kristall i.",
+   "mal": {},
+   "klart": "Där kan glittret vila till nästa titt!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "En vän vill spara något som glimmar bakom ett lock! Kan orden visa både vännen och innehållet?",
+   "klart_bengtsson": "Där kan glittret vila till nästa titt!",
+   "krav": {
+    "ord": [
+     "skattkista",
+     "kristall"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små samlare",
+      "forslag": [
+       {
+        "ord": "skattkista",
+        "fras": "en mus bredvid en skattkista med en kristall i"
+       },
+       {
+        "ord": "skattkista",
+        "fras": "en kanin bredvid en skattkista med en kristall i"
+       }
+      ]
+     },
+     {
+      "etikett": "Fler upptäckare",
+      "forslag": [
+       {
+        "ord": "kristall",
+        "fras": "en katt bredvid en skattkista med en kristall i"
+       },
+       {
+        "ord": "kristall",
+        "fras": "en hund bredvid en skattkista med en kristall i"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grotta-final-bergets-berattelse",
+   "omrade": "grottan",
+   "givare": "bengtsson",
+   "typ": "skriv",
+   "text": "Skriv fram ett djur med en kristall och en bok till Bengtssons minnesplats.",
+   "mal": {},
+   "klart": "Nu kan grottans glans och sagor följa med hem!",
+   "stjarnor": 3,
+   "skatt": null,
+   "text_bengtsson": "Min minnesmaskin behöver bergets glitter och något fullt av berättelser! Kan en vän ta med båda?",
+   "klart_bengtsson": "Nu kan grottans glans och sagor följa med hem!",
+   "krav": {
+    "ord": [
+     "kristall",
+     "bok"
+    ],
+    "min": 2,
+    "djur": true
+   },
+   "granskad": false,
+   "val": {
+    "rubrik": "Idéer:",
+    "grupper": [
+     {
+      "etikett": "Små budbärare",
+      "forslag": [
+       {
+        "ord": "kristall",
+        "fras": "en kanin med en kristall och en bok"
+       },
+       {
+        "ord": "kristall",
+        "fras": "en mus med en kristall och en bok"
+       }
+      ]
+     },
+     {
+      "etikett": "Andra hjälpredor",
+      "forslag": [
+       {
+        "ord": "bok",
+        "fras": "en katt med en kristall och en bok"
+       },
+       {
+        "ord": "bok",
+        "fras": "en hund med en kristall och en bok"
+       }
+      ]
+     }
+    ]
+   },
+   "final": true
   }
  ],
  "takt": {
