@@ -13,14 +13,6 @@ index 0000000..c48e1f4
 +  ],
 +  "beloningar": []
 +}
-diff --git a/node_modules b/node_modules
-new file mode 120000
-index 0000000..3f72251
---- /dev/null
-+++ b/node_modules
-@@ -0,0 +1 @@
-+/workspace/trollpennan-build/node_modules
-\ No newline at end of file
 diff --git a/package.json b/package.json
 index 7c9871b..4327e65 100644
 --- a/package.json
