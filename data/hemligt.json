@@ -1,0 +1,11 @@
+{
+ "_om": "R9: förklaring och ledtrådsyta i Skapa/Väck-vyn (Pennans bok). Idén: korten är bara FÖRSLAG, men de HEMLIGA djuren måste stavas fram, och gåtorna (data/ledtradar.json) visar vilka. Hemliga djur = ord med nivå 'fritt' och klass djur. Utkast, Copilot granskar tonen.",
+ "steg": "Skriv eller välj ett djur och tryck Vakna!",
+ "forklaring": "Korten är förslag. Hemliga djur måste du stava själv. Gåtan hjälper!",
+ "forslag_etikett": "Förslag, tryck på ett kort:",
+ "ledtrad_rubrik": "Hemligt djur att stava",
+ "ny_gata": "Ny gåta",
+ "hittade": "({n}/{total} hittade)",
+ "alla_hittade": "Du har hittat alla hemliga djur!",
+ "stava_tips": "Skriv ordet bokstav för bokstav med tangentbordet."
+}

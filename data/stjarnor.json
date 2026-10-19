@@ -1,0 +1,22 @@
+{
+ "_om": "R9: stjärnförklaringen (tryck på stjärnräknaren). Siffrorna fylls i ur spelets egna data (firande.json, onskningar.json, uppdrag, sidor.json), så texten kan inte ljuga om vad stjärnor ger. Stjärnor används idag till att öppna nya sidor i Ordboken (gåtor om hemliga ord). Utkast, Copilot granskar tonen.",
+ "rubrik": "Dina stjärnor",
+ "har": "Du har {n} stjärnor",
+ "ger_rubrik": "Så får du stjärnor",
+ "ger": [
+  "Hitta ett hemligt ord första gången: +{hemligt}",
+  "Stava ett hemligt ord själv, bokstav för bokstav: +{guld}",
+  "Hitta alla ord på en sida i Ordboken: +{sida}",
+  "Hjälp ett djur med en önskan: +{onskan}",
+  "Klara ett uppdrag av Doktor Bengtsson: +{uppdrag}"
+ ],
+ "gor_rubrik": "Det här gör stjärnorna",
+ "gor": "Med stjärnor öppnar du nya sidor i Ordboken. Varje sida visar gåtor om hemliga djur och ord som du kan stava fram.",
+ "nasta": "Nästa sida kostar {pris} stjärnor.",
+ "nasta_ok": "Du har råd med en ny sida nu!",
+ "nasta_fattas": "Du saknar {n} stjärnor till nästa sida.",
+ "alla_sidor": "Du har öppnat alla sidor i Ordboken. Bra jobbat!",
+ "alltid": "Stjärnorna försvinner aldrig och kostar inga pengar.",
+ "knapp_ordbok": "Öppna Ordboken",
+ "knapp_stang": "Stäng"
+}

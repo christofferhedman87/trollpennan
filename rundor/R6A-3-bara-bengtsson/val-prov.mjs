@@ -58,7 +58,7 @@ const skriv = async (t) => {
 };
 
 // 1. Klick på Bengtsson: uppdraget med guidande förslag
-await p.getByTestId("npc-figur").click();
+await p.locator("[data-testid=npc-figur],[data-testid=bengtsson-ikon]").first().click();
 await p.getByTestId("uppdrag-remsa").waitFor();
 m.remsa = (await p.getByTestId("uppdrag-remsa").innerText()).trim();
 m.grupper = await p.getByTestId("uppdrag-val-grupp").count();
@@ -86,7 +86,7 @@ await skott("3-klar");
 // 3. Fritext som alternativ: nästa uppdrag (regn-skydd) löses med eget svar med å/ä/ö, utan att trycka på ett förslag
 await p.waitForTimeout(10000); // bannerkön töms som när ett barn tänker efter
 if ((await p.getByTestId("stang-bok").count()) > 0) await p.getByTestId("stang-bok").click(); // boken står öppen efter klart uppdrag
-await p.getByTestId("npc-figur").click();
+await p.locator("[data-testid=npc-figur],[data-testid=bengtsson-ikon]").first().click();
 await p.getByTestId("uppdrag-remsa").waitFor();
 m.remsa2 = (await p.getByTestId("uppdrag-remsa").innerText()).trim();
 m.knappar2 = await p.getByTestId("uppdrag-val-fras").allInnerTexts();

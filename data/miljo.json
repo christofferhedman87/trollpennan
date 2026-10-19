@@ -1,29 +1,83 @@
 {
  "_om": "Utseendet på ängen som data (R8). Färger som hex. Allt går att justera utan kod; en snabb provkörning går att göra i webbläsaren med localStorage 'trollpennan-miljo' (JSON som slås ihop med den här filen). Kvalitetsnivån 'lag' väljs automatiskt på svaga telefoner (hardwareConcurrency <= 4 eller deviceMemory <= 3) eller med ?kvalitet=lag.",
- "himmel": { "bakgrund": "#7EC8F2", "dag_topp": "#4FA9EC", "dag_horisont": "#D6EBF5" },
- "dis": { "farg": "#D6EBF5", "nara": 26, "fjarran": 62 },
- "ljus": {
-  "ambient": { "farg": "#fff6ea", "styrka": 0.15 },
-  "hemi": { "himmel": "#dff3ff", "mark": "#a8c97a", "styrka": 1.9 },
-  "nyckel": { "farg": "#ffe9c4", "styrka": 3.0, "position": [3, 6, 5] },
-  "fyll": { "farg": "#cfe6ff", "styrka": 0.7 },
-  "kant": { "farg": "#ffffff", "styrka": 1.2 }
+ "himmel": {
+  "bakgrund": "#7EC8F2",
+  "dag_topp": "#4FA9EC",
+  "dag_horisont": "#D6EBF5"
  },
- "farggrad": { "mattnad": 1.08, "kontrast": 1.05 },
- "vinjett": { "styrka": 0.22 },
+ "dis": {
+  "farg": "#D6EBF5",
+  "nara": 26,
+  "fjarran": 62
+ },
+ "ljus": {
+  "ambient": {
+   "farg": "#fff6ea",
+   "styrka": 0.15
+  },
+  "hemi": {
+   "himmel": "#dff3ff",
+   "mark": "#a8c97a",
+   "styrka": 1.9
+  },
+  "nyckel": {
+   "farg": "#ffe9c4",
+   "styrka": 3.0,
+   "position": [
+    3,
+    6,
+    5
+   ]
+  },
+  "fyll": {
+   "farg": "#cfe6ff",
+   "styrka": 0.7
+  },
+  "kant": {
+   "farg": "#ffffff",
+   "styrka": 1.2
+  }
+ },
+ "farggrad": {
+  "mattnad": 1.08,
+  "kontrast": 1.05
+ },
+ "vinjett": {
+  "styrka": 0.22
+ },
  "mark": {
   "_om": "Marktextur (ritas en gång som liten bild, ingen fil): färgerna multipliceras med markens grundfärg, så ljusa nyanser = lätt variation. filter: 'mjuk' eller 'pixel' (Minecraft-aktigt).",
   "filter": "mjuk",
   "storlek": 128,
   "upprepa": 40,
-  "farger": ["#ffffff", "#f3f9e2", "#e6f2cf", "#dcebc0", "#ffffe8"],
+  "farger": [
+   "#ffffff",
+   "#f3f9e2",
+   "#e6f2cf",
+   "#dcebc0",
+   "#ffffe8"
+  ],
   "flackar": 260,
   "tuvor": 90,
   "tuvfarg": "#c2d9a4"
  },
- "kontur": { "farg": "#3B2F2F" },
+ "kontur": {
+  "farg": "#3B2F2F"
+ },
  "kvalitet": {
-  "hog": { "dpr_max": 2, "skuggkarta": 1024, "farggrad": true },
-  "lag": { "dpr_max": 1.5, "skuggkarta": 512, "farggrad": false }
+  "hog": {
+   "dpr_max": 2,
+   "skuggkarta": 1024,
+   "farggrad": true
+  },
+  "lag": {
+   "dpr_max": 1.5,
+   "skuggkarta": 512,
+   "farggrad": false
+  }
+ },
+ "farg": {
+  "_om": "Djurens färgord (blå isbjörn m.fl.): ljusforstark = kalibrering av hur mycket scenens ljus förstärker en färg på kroppen (1 = beräknat ur ljuset; högre = mörkare albedo, lägre = ljusare). Justera mot bild med rundor/R9-tydlighet/farg-prov.mjs.",
+  "ljusforstark": 1.0
  }
 }

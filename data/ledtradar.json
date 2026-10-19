@@ -1,5 +1,5 @@
 {
- "_om": "En gåta per hemligt ord (alla ord med niva 'fritt'). Visas i boken först när ordets sida är köpt. Visa gåtan + första bokstaven + en streck per bokstav, t.ex. 'U _ _ _ _ _'. Gåtan innehåller aldrig själva ordet.",
+ "_om": "En gåta per hemligt ord (alla ord med niva 'fritt'). Visas i boken först när ordets sida är köpt. Visa gåtan + första bokstaven + en streck per bokstav, t.ex. 'U _ _ _ _ _'. Gåtan innehåller aldrig själva ordet. R9: gåtor för de hemliga djuren och väsendena ('granskad': false = Arkitektens utkast, Copilot granskar).",
  "visning": {
   "bokstav": "Första bokstaven stor, sedan '_' per återstående bokstav, mellanslag mellan.",
   "hittat": "När ordet är hittat: visa ordet, en liten bild av djuret som hittade det (om möjligt) och gåtan i grått."
@@ -294,6 +294,744 @@
    "gata": "En sagohäst med ett enda horn i pannan.",
    "forsta": "E",
    "langd": 9
+  },
+  "elefant": {
+   "gata": "Ett jättestort grått djur med lång snabel och stora öron.",
+   "forsta": "E",
+   "langd": 7,
+   "granskad": false
+  },
+  "lejon": {
+   "gata": "Kungen över savannen. Hanen har en stor man och ryter högt.",
+   "forsta": "L",
+   "langd": 5,
+   "granskad": false
+  },
+  "zebra": {
+   "gata": "En häst i randig pyjamas, svart och vit.",
+   "forsta": "Z",
+   "langd": 5,
+   "granskad": false
+  },
+  "pingvin": {
+   "gata": "En fågel som inte kan flyga men simmar fint och går som en liten herre i frack.",
+   "forsta": "P",
+   "langd": 7,
+   "granskad": false
+  },
+  "räv": {
+   "gata": "Ett rödorange djur med yvig svans som sägs vara listigt.",
+   "forsta": "R",
+   "langd": 3,
+   "granskad": false
+  },
+  "flodhäst": {
+   "gata": "Ett tjockt djur som badar i floden och gäspar med jättestor mun.",
+   "forsta": "F",
+   "langd": 8,
+   "granskad": false
+  },
+  "anka": {
+   "gata": "Den säger kvack och simmar i dammen med platta fötter.",
+   "forsta": "A",
+   "langd": 4,
+   "granskad": false
+  },
+  "örn": {
+   "gata": "En stor kraftig rovfågel som svävar högt uppe och ser mycket långt.",
+   "forsta": "Ö",
+   "langd": 3,
+   "granskad": false
+  },
+  "tyrannosaurus": {
+   "gata": "Urtidens kung med små armar, stora tänder och hemskt hungrig.",
+   "forsta": "T",
+   "langd": 13,
+   "granskad": false
+  },
+  "giraff": {
+   "gata": "Det djur i världen som har längst hals och äter blad högst upp i träden.",
+   "forsta": "G",
+   "langd": 6,
+   "granskad": false
+  },
+  "panda": {
+   "gata": "Ett svartvitt björndjur som mumsar bambu hela dagen.",
+   "forsta": "P",
+   "langd": 5,
+   "granskad": false
+  },
+  "krabba": {
+   "gata": "Den går sidledes på sandbotten och har två stora klor.",
+   "forsta": "K",
+   "langd": 6,
+   "granskad": false
+  },
+  "delfin": {
+   "gata": "Ett lekfullt havsdjur som hoppar över vågorna och pratar med klickande ljud.",
+   "forsta": "D",
+   "langd": 6,
+   "granskad": false
+  },
+  "orm": {
+   "gata": "Den har inga ben, glider på marken och väser.",
+   "forsta": "O",
+   "langd": 3,
+   "granskad": false
+  },
+  "clownfisk": {
+   "gata": "En liten orange och vit havsfisk som bor bland sjöanemoner.",
+   "forsta": "C",
+   "langd": 9,
+   "granskad": false
+  },
+  "nemo": {
+   "gata": "Den lilla orange fisken i filmen som blev borta och blev hittad.",
+   "forsta": "N",
+   "langd": 4,
+   "granskad": false
+  },
+  "spöke": {
+   "gata": "Vitt och genomskinligt. Det säger Bu! och svävar genom väggar.",
+   "forsta": "S",
+   "langd": 5,
+   "granskad": false
+  },
+  "robot": {
+   "gata": "En maskin av metall som kan röra sig och prata. Bip bop!",
+   "forsta": "R",
+   "langd": 5,
+   "granskad": false
+  },
+  "yeti": {
+   "gata": "Ett stort lurvigt väsen som sägs lämna jättelika fotspår på bergen.",
+   "forsta": "Y",
+   "langd": 4,
+   "granskad": false
+  },
+  "snömänniska": {
+   "gata": "Ett vitt bergväsen som ingen riktigt har sett.",
+   "forsta": "S",
+   "langd": 11,
+   "granskad": false
+  },
+  "astronaut": {
+   "gata": "Den åker raket upp bland stjärnorna och svävar i rymddräkt.",
+   "forsta": "A",
+   "langd": 9,
+   "granskad": false
+  },
+  "rymdfarare": {
+   "gata": "Någon som reser mellan planeterna i en raket.",
+   "forsta": "R",
+   "langd": 10,
+   "granskad": false
+  },
+  "bonde": {
+   "gata": "Den bor på gården, tar hand om djuren och odlar mat.",
+   "forsta": "B",
+   "langd": 5,
+   "granskad": false
+  },
+  "larv": {
+   "gata": "Den är liten, mjuk och äter blad. Sedan blir den till en fjäril.",
+   "forsta": "L",
+   "langd": 4,
+   "granskad": false
+  },
+  "kyckling": {
+   "gata": "Gul och pip-pip liten. Den har precis kommit ut ur ägget.",
+   "forsta": "K",
+   "langd": 8,
+   "granskad": false
+  },
+  "ko": {
+   "gata": "Den säger mu, äter gräs och ger oss mjölk.",
+   "forsta": "K",
+   "langd": 2,
+   "granskad": false
+  },
+  "hjort": {
+   "gata": "Ett skogsdjur med fina horn som liknar grenar på huvudet.",
+   "forsta": "H",
+   "langd": 5,
+   "granskad": false
+  },
+  "vildsvin": {
+   "gata": "En vild släkting till grisen med huggtänder som bor i skogen.",
+   "forsta": "V",
+   "langd": 8,
+   "granskad": false
+  },
+  "koala": {
+   "gata": "Ett gulligt gråluddigt djur som kramar eukalyptusträd och sover nästan hela dagen.",
+   "forsta": "K",
+   "langd": 5,
+   "granskad": false
+  },
+  "apa": {
+   "gata": "Den klättrar i träden, gillar bananer och skrattar mycket.",
+   "forsta": "A",
+   "langd": 3,
+   "granskad": false
+  },
+  "papegoja": {
+   "gata": "En färgglad fågel som kan härma vad du säger.",
+   "forsta": "P",
+   "langd": 8,
+   "granskad": false
+  },
+  "isbjörn": {
+   "gata": "Ett vitt rovdjur som bor på isen vid Nordpolen.",
+   "forsta": "I",
+   "langd": 7,
+   "granskad": false
+  },
+  "tiger": {
+   "gata": "En stor orange katt med svarta ränder som smyger i djungeln.",
+   "forsta": "T",
+   "langd": 5,
+   "granskad": false
+  },
+  "människa": {
+   "gata": "Hon går på två ben, pratar, skriver och läser. Det är du också!",
+   "forsta": "M",
+   "langd": 8,
+   "granskad": false
+  },
+  "kyrkogårdsvaktmästare": {
+   "gata": "Han passar en tyst och dimmig plats med gamla stenar.",
+   "forsta": "K",
+   "langd": 21,
+   "granskad": false
+  },
+  "gubbe": {
+   "gata": "En äldre man med skägg som går med käpp.",
+   "forsta": "G",
+   "langd": 5,
+   "granskad": false
+  },
+  "hjälte": {
+   "gata": "Någon modig som räddar de andra när det är fara.",
+   "forsta": "H",
+   "langd": 6,
+   "granskad": false
+  },
+  "riddare": {
+   "gata": "Han bär rustning, har svärd och sköld och bor på ett slott.",
+   "forsta": "R",
+   "langd": 7,
+   "granskad": false
+  },
+  "bågskytt": {
+   "gata": "Hon siktar med pil och båge och träffar mitt i prick.",
+   "forsta": "B",
+   "langd": 8,
+   "granskad": false
+  },
+  "skelett": {
+   "gata": "Alla ben i kroppen utan något kött på. Rassel rassel!",
+   "forsta": "S",
+   "langd": 7,
+   "granskad": false
+  },
+  "vampyr": {
+   "gata": "Ett blekt väsen i kappa som bara kommer ut på natten och har långa hörntänder.",
+   "forsta": "V",
+   "langd": 6,
+   "granskad": false
+  },
+  "zombie": {
+   "gata": "Ett vandrande väsen som går sakta med armarna framåt och säger bara Hjääärnor.",
+   "forsta": "Z",
+   "langd": 6,
+   "granskad": false
+  },
+  "nötknäppare": {
+   "gata": "En leksak med stor mun som knäcker hårda nötter vid jul.",
+   "forsta": "N",
+   "langd": 11,
+   "granskad": false
+  },
+  "rudolf": {
+   "gata": "Renen med den röda lysande nosen som drar Tomtens släde.",
+   "forsta": "R",
+   "langd": 6,
+   "granskad": false
+  },
+  "snögubbe": {
+   "gata": "Tre stora vita bollar på varandra, en morot som näsa och kol som ögon.",
+   "forsta": "S",
+   "langd": 8,
+   "granskad": false
+  },
+  "orch": {
+   "gata": "Ett grönt starkt monster i fantasyspel med hugg i munnen.",
+   "forsta": "O",
+   "langd": 4,
+   "granskad": false
+  },
+  "troll": {
+   "gata": "Stort och trasigt väsen som bor under bro och i skogen och kan bli sten i solen.",
+   "forsta": "T",
+   "langd": 5,
+   "granskad": false
+  },
+  "rymdvarelse": {
+   "gata": "Någon från en annan planet. Den kanske har tre ögon!",
+   "forsta": "R",
+   "langd": 11,
+   "granskad": false
+  },
+  "utomjording": {
+   "gata": "En gäst som kommer från en annan värld i en flygande tallrik.",
+   "forsta": "U",
+   "langd": 11,
+   "granskad": false
+  },
+  "flundra": {
+   "gata": "Ett platt havsdjur som ligger på botten med båda ögonen på samma sida.",
+   "forsta": "F",
+   "langd": 7,
+   "granskad": false
+  },
+  "plattfisk": {
+   "gata": "Ett havsdjur som är tunt som en pannkaka och ligger gömd i sanden.",
+   "forsta": "P",
+   "langd": 9,
+   "granskad": false
+  },
+  "koi": {
+   "gata": "En vacker orangevit karp som simmar i japanska trädgårdsdammar.",
+   "forsta": "K",
+   "langd": 3,
+   "granskad": false
+  },
+  "karp": {
+   "gata": "En stor sötvattensfisk med små morrhår vid munnen som bor i dammen.",
+   "forsta": "K",
+   "langd": 4,
+   "granskad": false
+  },
+  "piraya": {
+   "gata": "En liten farlig sötvattensfisk med vassa tänder i Sydamerika.",
+   "forsta": "P",
+   "langd": 6,
+   "granskad": false
+  },
+  "svärdfisk": {
+   "gata": "Ett havsdjur med en lång vass nos, som en riddares vapen.",
+   "forsta": "S",
+   "langd": 9,
+   "granskad": false
+  },
+  "tonfisk": {
+   "gata": "En stor stark havsfisk som simmar fort och ofta hamnar i burk.",
+   "forsta": "T",
+   "langd": 7,
+   "granskad": false
+  },
+  "lama": {
+   "gata": "Ett luddigt djur från Anderna som kan spotta och bära last.",
+   "forsta": "L",
+   "langd": 4,
+   "granskad": false
+  },
+  "mops": {
+   "gata": "En liten hund med rynkigt ansikte och snörvlande nos.",
+   "forsta": "M",
+   "langd": 4,
+   "granskad": false
+  },
+  "alpacka": {
+   "gata": "Ett mjukt ulligt djur från Sydamerika vars ull blir mysiga tröjor.",
+   "forsta": "A",
+   "langd": 7,
+   "granskad": false
+  },
+  "åsna": {
+   "gata": "Den ser ut som en liten häst med långa öron och säger i-aaa.",
+   "forsta": "Å",
+   "langd": 4,
+   "granskad": false
+  },
+  "husky": {
+   "gata": "En hund med blå ögon som drar släde i snön.",
+   "forsta": "H",
+   "langd": 5,
+   "granskad": false
+  },
+  "draghund": {
+   "gata": "En stark hund som drar släden över snön.",
+   "forsta": "D",
+   "langd": 8,
+   "granskad": false
+  },
+  "kronhjort": {
+   "gata": "Ett stort skogsdjur med jättehorn som ser ut som en kunglig huvudbonad.",
+   "forsta": "K",
+   "langd": 9,
+   "granskad": false
+  },
+  "älg": {
+   "gata": "Skogens jätte med stora skovelhorn och långa ben. Sveriges största landdjur.",
+   "forsta": "Ä",
+   "langd": 3,
+   "granskad": false
+  },
+  "varg": {
+   "gata": "Ett vilt hundlikt djur som ylar mot månen och bor i flock.",
+   "forsta": "V",
+   "langd": 4,
+   "granskad": false
+  },
+  "bläckfiskmonster": {
+   "gata": "Ett stort havsväsen med många armar från djuphavets mörker.",
+   "forsta": "B",
+   "langd": 16,
+   "granskad": false
+  },
+  "cyklop": {
+   "gata": "En jätte med bara ett enda stort öga mitt i pannan.",
+   "forsta": "C",
+   "langd": 6,
+   "granskad": false
+  },
+  "jätte": {
+   "gata": "Ett enormt stort väsen som tar stora steg och får träden att skaka.",
+   "forsta": "J",
+   "langd": 5,
+   "granskad": false
+  },
+  "demon": {
+   "gata": "Ett lurigt rött väsen med horn från undre världen.",
+   "forsta": "D",
+   "langd": 5,
+   "granskad": false
+  },
+  "svampmonster": {
+   "gata": "En skogsvarelse med stor rund hatt på huvudet som växer fast i marken.",
+   "forsta": "S",
+   "langd": 12,
+   "granskad": false
+  },
+  "golem": {
+   "gata": "En jätte av sten eller lera som väcks till liv.",
+   "forsta": "G",
+   "langd": 5,
+   "granskad": false
+  },
+  "stenvarelse": {
+   "gata": "Ett väsen som ser ut som en stor hård sten med armar.",
+   "forsta": "S",
+   "langd": 11,
+   "granskad": false
+  },
+  "bläckfisk": {
+   "gata": "Åtta armar, mjuk kropp och en mörk färg som den sprutar ut när den blir rädd.",
+   "forsta": "B",
+   "langd": 9,
+   "granskad": false
+  },
+  "trollkarl": {
+   "gata": "Han bär spetsig hatt, viftar med en stav och säger abrakadabra.",
+   "forsta": "T",
+   "langd": 9,
+   "granskad": false
+  },
+  "magiker": {
+   "gata": "Han drar kaniner ur hatten och försvinner i tomma luften på scen.",
+   "forsta": "M",
+   "langd": 7,
+   "granskad": false
+  },
+  "marulk": {
+   "gata": "Havsdjup-fisk med en lampa framför stor mun som lockar till sig bytet i mörkret.",
+   "forsta": "M",
+   "langd": 6,
+   "granskad": false
+  },
+  "fladdermus": {
+   "gata": "Ett litet flygande djur som sover upp och ner och hör med ekon.",
+   "forsta": "F",
+   "langd": 10,
+   "granskad": false
+  },
+  "bi": {
+   "gata": "Ett litet randigt flygande djur som surrar, samlar nektar och gör honung.",
+   "forsta": "B",
+   "langd": 2,
+   "granskad": false
+  },
+  "kirurgfisk": {
+   "gata": "Ett blått havsdjur med gul stjärt som bor på korallrev.",
+   "forsta": "K",
+   "langd": 10,
+   "granskad": false
+  },
+  "corgi": {
+   "gata": "En liten hund med korta ben, stora öron och rund bak.",
+   "forsta": "C",
+   "langd": 5,
+   "granskad": false
+  },
+  "ankylosaurus": {
+   "gata": "Ett pansarklätt urtidsdjur som äter växter och har en klubba på svansen.",
+   "forsta": "A",
+   "langd": 12,
+   "granskad": false
+  },
+  "plesiosaurie": {
+   "gata": "Ett urtidsdjur i havet med lång hals och fyra simfötter, som en jätteskölpadda.",
+   "forsta": "P",
+   "langd": 12,
+   "granskad": false
+  },
+  "sjöodjur": {
+   "gata": "Ett jättelikt väsen som sägs simma i djupa insjöar.",
+   "forsta": "S",
+   "langd": 8,
+   "granskad": false
+  },
+  "pterodactylus": {
+   "gata": "En flygande dinosaurie med läderhud på vingarna och långt spetsigt huvud.",
+   "forsta": "P",
+   "langd": 13,
+   "granskad": false
+  },
+  "flygödla": {
+   "gata": "En ödla från förr som kunde flyga med hudvingar.",
+   "forsta": "F",
+   "langd": 8,
+   "granskad": false
+  },
+  "triceratops": {
+   "gata": "Dinosaurien med tre horn i ansiktet och en stor krage.",
+   "forsta": "T",
+   "langd": 11,
+   "granskad": false
+  },
+  "hind": {
+   "gata": "Ett vackert hondjur av hjort, snabbt och skygg.",
+   "forsta": "H",
+   "langd": 4,
+   "granskad": false
+  },
+  "rådjur": {
+   "gata": "Ett litet gulbrunt djur i skogen med vit rumpa och stora ögon.",
+   "forsta": "R",
+   "langd": 6,
+   "granskad": false
+  },
+  "tjur": {
+   "gata": "Ett stort muskulöst hanboskap som kan bli arg på röda flaggor.",
+   "forsta": "T",
+   "langd": 4,
+   "granskad": false
+  },
+  "highlandsko": {
+   "gata": "Ett lurvigt boskap med långa horn och långt hår från Skottland.",
+   "forsta": "H",
+   "langd": 11,
+   "granskad": false
+  },
+  "lamm": {
+   "gata": "Den lilla ungen till fåret, vit och mjuk. Bää!",
+   "forsta": "L",
+   "langd": 4,
+   "granskad": false
+  },
+  "flamingo": {
+   "gata": "En rosa fågel med långa ben som vilar på ett ben.",
+   "forsta": "F",
+   "langd": 8,
+   "granskad": false
+  },
+  "blåsfisk": {
+   "gata": "Den blåser upp sig som en boll när den är rädd.",
+   "forsta": "B",
+   "langd": 8,
+   "granskad": false
+  },
+  "fugu": {
+   "gata": "En japansk fisk som blåser upp sig och som kockar måste laga med stor varsamhet.",
+   "forsta": "F",
+   "langd": 4,
+   "granskad": false
+  },
+  "get": {
+   "gata": "Ett djur med skägg och horn som klättrar på branta klippor och säger mää.",
+   "forsta": "G",
+   "langd": 3,
+   "granskad": false
+  },
+  "gås": {
+   "gata": "En stor vit fågel som kacklar och flyger i V-formation på hösten.",
+   "forsta": "G",
+   "langd": 3,
+   "granskad": false
+  },
+  "hare": {
+   "gata": "Ett snabbt djur med långa öron och en liten puffig svans som springer i sicksack.",
+   "forsta": "H",
+   "langd": 4,
+   "granskad": false
+  },
+  "igelkott": {
+   "gata": "Ett litet taggigt djur som rullar ihop sig till en boll.",
+   "forsta": "I",
+   "langd": 8,
+   "granskad": false
+  },
+  "kolibri": {
+   "gata": "En pytteliten fågel som svävar på stället och har tusen vingslag i sekunden.",
+   "forsta": "K",
+   "langd": 7,
+   "granskad": false
+  },
+  "manet": {
+   "gata": "Ett genomskinligt gelé-djur i havet som bränns med sina trådar.",
+   "forsta": "M",
+   "langd": 5,
+   "granskad": false
+  },
+  "kiwi": {
+   "gata": "En liten rund fågel från Nya Zeeland som inte kan flyga och har lång näbb.",
+   "forsta": "K",
+   "langd": 4,
+   "granskad": false
+  },
+  "ara": {
+   "gata": "En stor färgglad papegoja med lång svans från regnskogen.",
+   "forsta": "A",
+   "langd": 3,
+   "granskad": false
+  },
+  "murmeldjur": {
+   "gata": "Ett litet gnagande bergsdjur som sover hela vintern och visslar när det är fara.",
+   "forsta": "M",
+   "langd": 10,
+   "granskad": false
+  },
+  "påfågel": {
+   "gata": "Ett djur som breder ut en jättestor skimrande fjäderfläkt.",
+   "forsta": "P",
+   "langd": 7,
+   "granskad": false
+  },
+  "pelikan": {
+   "gata": "En stor havsfågel med en jättestor påse under näbben för att fånga fisk.",
+   "forsta": "P",
+   "langd": 7,
+   "granskad": false
+  },
+  "näbbdjur": {
+   "gata": "Ett konstigt djur från Australien med anknäbb, bäverstjärt och lägger ägg.",
+   "forsta": "N",
+   "langd": 8,
+   "granskad": false
+  },
+  "noshörning": {
+   "gata": "Ett tjockhudat djur med ett stort horn på nosen.",
+   "forsta": "N",
+   "langd": 10,
+   "granskad": false
+  },
+  "tupp": {
+   "gata": "Han gal på morgonen när solen går upp och har röd kam.",
+   "forsta": "T",
+   "langd": 4,
+   "granskad": false
+  },
+  "säl": {
+   "gata": "Ett havsdjur med fläckig päls som solar på stenar och klappar med fenorna.",
+   "forsta": "S",
+   "langd": 3,
+   "granskad": false
+  },
+  "tukan": {
+   "gata": "En fågel med jättestor färgglad näbb från regnskogen.",
+   "forsta": "T",
+   "langd": 5,
+   "granskad": false
+  },
+  "småvarelse": {
+   "gata": "Ett pytteliten sagoväsen som bor gömd under blommorna.",
+   "forsta": "S",
+   "langd": 10,
+   "granskad": false
+  },
+  "nisse": {
+   "gata": "Han bor på gården, har röd luva och vill ha gröt på julafton.",
+   "forsta": "N",
+   "langd": 5,
+   "granskad": false
+  },
+  "höna": {
+   "gata": "Hon säger pock pock, kacklar och lägger ägg i hönshuset.",
+   "forsta": "H",
+   "langd": 4,
+   "granskad": false
+  },
+  "tvättbjörn": {
+   "gata": "Ett litet djur med svart ögonmask som doppar sin mat i vatten.",
+   "forsta": "T",
+   "langd": 10,
+   "granskad": false
+  },
+  "spindel": {
+   "gata": "Den har åtta ben, spinner nät och fångar flugor.",
+   "forsta": "S",
+   "langd": 7,
+   "granskad": false
+  },
+  "kalkon": {
+   "gata": "En stor fågel som säger kollra och som man äter på en stor högtid.",
+   "forsta": "K",
+   "langd": 6,
+   "granskad": false
+  },
+  "ninja": {
+   "gata": "En tyst krigare helt i svart som gömmer sig i skuggorna.",
+   "forsta": "N",
+   "langd": 5,
+   "granskad": false
+  },
+  "kvinna": {
+   "gata": "En vuxen flicka som har vuxit upp.",
+   "forsta": "K",
+   "langd": 6,
+   "granskad": false
+  },
+  "mus": {
+   "gata": "Ett litet grått gnagande djur som älskar ost och piper.",
+   "forsta": "M",
+   "langd": 3,
+   "granskad": false
+  },
+  "råtta": {
+   "gata": "En större släkting till musen med lång naken svans.",
+   "forsta": "R",
+   "langd": 5,
+   "granskad": false
+  },
+  "tomte": {
+   "gata": "Han bor i skogen eller på gården och delar ut julklappar med stor säck.",
+   "forsta": "T",
+   "langd": 5,
+   "granskad": false
+  },
+  "gnom": {
+   "gata": "Ett litet väsen med spetsig röd mössa och långt skägg i trädgården.",
+   "forsta": "G",
+   "langd": 4,
+   "granskad": false
+  },
+  "trollkarlsgnom": {
+   "gata": "En liten skäggig figur med spetsig mössa och en magisk stav.",
+   "forsta": "T",
+   "langd": 14,
+   "granskad": false
   }
  }
 }

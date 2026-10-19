@@ -66,7 +66,7 @@ m.matt = await p.evaluate(() => new Promise((res) => {
   } };
   requestAnimationFrame(f);
 }));
-try { await p.getByTestId("npc-figur").click(); await p.getByTestId("uppdrag-remsa").waitFor({ timeout: 6000 }); await skott("2-bengtsson"); } catch (e) { fel.push(`bengtsson: ${e}`.slice(0, 120)); await skott("2-bengtsson"); }
+try { await p.locator("[data-testid=npc-figur],[data-testid=bengtsson-ikon]").first().click(); await p.getByTestId("uppdrag-remsa").waitFor({ timeout: 6000 }); await skott("2-bengtsson"); } catch (e) { fel.push(`bengtsson: ${e}`.slice(0, 120)); await skott("2-bengtsson"); }
 if ((await p.getByTestId("stang-bok").count()) > 0) await p.getByTestId("stang-bok").click().catch(() => {});
 m.fel = fel;
 fs.writeFileSync(path.join(ut, `${namn}-matt.json`), JSON.stringify(m, null, 1));
