@@ -106,7 +106,7 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 
 ## 8. Färdplan: rundor i ordning (följer grundtanken)
 
-**NÄSTA RUNDOR (2026-10-19): `rundor/BLOCK-platser/PLAN.md`.** B0 klar, **B1.1 klar (PR #67), B1.2 klar (PR #68, main 39bdef8)** → **B1.3a** (skript `rundor/BLOCK-platser/B1.3a/kor.sh`, 0 USD) → **B1.3b** (Build) → **B1.4** resan (Build) → **R9G** gåta/uppdrag-UX + stall i menyn (`rundor/R9G-ux-stall/`, Build) → **R8-2** grafiklyft → **B2** Skogen, **B3** Sjön, **B4** Grottan (datapaket; B4.1 ljuskällor Build) → B5 modeller → B6 kontroll. Därefter TTS (gratis svensk röst). Ersätter R4A/R6B; R4B, R5, R7 kvar efter blocken. Copilots data: `rundor/BLOCK-platser/data-utkast/`.
+**NÄSTA RUNDOR (2026-10-19): `rundor/BLOCK-platser/PLAN.md`.** B0–**B1.3a klar (PR #71, main 81cc682)** → **B1.3b** (pågår hos Doodle/Build) → **B1.4** resan (Build) → **R9G** gåta/uppdrag-UX + stall i menyn (`rundor/R9G-ux-stall/`, Build) → **R8-2** grafiklyft → **B2** Skogen, **B3** Sjön, **B4** Grottan (datapaket; B4.1 ljuskällor Build) → B5 modeller → B6 kontroll. Därefter TTS (gratis svensk röst). Ersätter R4A/R6B; R4B, R5, R7 kvar efter blocken. Copilots data: `rundor/BLOCK-platser/data-utkast/`.
 Alla rundor: Grok Build CLI, `--prompt-file`, gren per runda (`build/runda-N`), loggfil, commit efter varje delmål, `RUNDA<N>.md` först. Ingen mätning/utforskning i Build; Arkitekten lägger siffror och filrader i prompten. Kostnadsuppskattningar är min gissning utifrån `rounds.tsv` (low/medium, 11–30 turer = 0,5–3 USD), inte mätta.
 
 **Ordning och varför:** R1 delar `Spel.tsx` (annars krockar allt). R2 gör tillbehören till data (stoppar 10-rundors-läckan). **R3 är rundan som gör grundtanken sann: ordens väg till synlig form** – entitetsmodell, reservform (okänt ord blir ändå något synligt), bulkrutin för modeller. **Ordning ändrad 2026-10-18 (Christoffer): Doktor Bengtsson (uppdragsmotorn, tidigare R6) kommer direkt efter content-motorn (R3C), före byggnader, kamera och Phaser-borttagning.** Ordningen är nu: R3A → R3B → R3C → **R6A (Bengtsson, förd fram; R6A-1 och R6A-2 körda, R6A-3 djuren slutar ge uppdrag + guidande val väntar, R6A-4 de 24 utkasten väntar på Copilot), R3D (andra modellomgången, körklar)** → R4A (dela `angen3d.tsx`) → R4B (kamera) → R5 (byggnader) → R6B (platserna som R3F-scener) → R7 (Phaser bort). Rundornas namn behålls så att ritningar och länkar inte går sönder. Före allt: **R0 publicera `main`** (Christoffers ja, avsnitt 10.2), annars går inget att verifiera spelat.
@@ -679,31 +679,16 @@ Kör via riktiga UI-vägen (Pennans bok → pennan → skärmtangentbord → Vak
 | 12 | `en ko som kan sjunga` | Idag: tyst ignorerat + förslag; *efter R3B/R3C:* ko-modell, sjunga som animation | – |
 Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`, spärrat ord (ska ge puff, aldrig form).
 
-## 19. Öppna fel (uppdaterad 2026-10-19, Arkitekten) – block som tar hand om felet
+## 19. Öppna fel (uppdaterad 2026-10-19, efter B1.3a) – block som tar hand om felet
 | # | Fel | Block |
 |---|-----|-------|
-| 1 | Valfisken och snurran har fel modellfiler (valfisk = diadem, snurra = spade); gaffel/släde konstiga | B5 |
-| 2 | Färgord färgar inte föremål ("en röd bil" får bilens egen färg) | B6.2 |
-| 3 | Ett felstavat föremål ger inget "Menade du …?" | B6.1 (data), annars B6.2 |
-| 4 | Brandposten och julkransen svåra att se på 375x812 | B5 |
-| 5 | Röd→orange, grön→gulgrön på djur | R9C – **pausat av Christoffer** |
-| 6 | typecheck/eslint i tester | **R9F** klar (0 fel) |
-| 7 | Kattens mantel sitter fel | B6.2 |
-| 8 | Hästens horn ca 0,2 för högt | B6.2 |
-| 9 | Halsduken på kubdjuren sitter fel | B6.2 |
-| 10 | Bengtsson försvann en gång efter två snabba uppdrag | B6.1 bevakar |
-| 11 | "Inte riktigt än" under ERROR-automaten (bildtext) | B1.4 |
-| 12 | Färgbyte / motsatser / "hög låg hund" | **R9F** klar |
-| 13 | Tackbubbla klippt / täcker Guldord-banner | **R9F** + B1.1-fix klar |
-| 14 | `test:reserv` 3 fel; eslint söker dist-pages/ | B6.1 |
-| 15 | Uppdrag och gåta visas samtidigt (opedagogiskt) | **R9G** |
-| 16 | Otydligt var gåtsvar skrivs; streck (K _ _) ser klickbara ut | **R9G** |
-| 17 | Ny gåta byts innan den löses / utan aktivt val | **R9G** |
-| 18 | Saknas sätt att dölja/ta bort djur utan omstart (stall i menyn) | **R9G** |
-| 19 | `minne.plats` saknas, ängen gäller alltid | **B1.3a** (kor.sh) |
-| 20 | Inget uppdrag i datan har `djur: true` eller `final: true` (motorn klarar det sedan B1.2) | B2–B4 datapaket (finaler), B6.1 |
-| 21 | Tackbubblan/"Guldord!"-banner: fixen inte verifierad på bild | R9G-bevis (bild med banner) |
-| 22 | DOM-lägena 03–05 (boken) ger olika resultat mellan körningar av samma kod | B6.1 (stabilisera väntan i DOM-turen) |
-| 23 | 10 eslint-varningar | B6.2 (om billigt) |
-| 24 | Jacka och planka ser konstiga ut (utöver gaffel/snurra/släde/valfisk i #1) | B5 |
-| 25 | Regel: runda utan `kor.sh` → Build eller Arkitektens patch, aldrig Doodles egen kod (B1.2-incidenten) | process |
+| 1 | Valfisk/snurra/gaffel/släde/jacka/planka fel eller konstiga modeller | B5 |
+| 2 | Färgord färgar inte föremål; röd/grön på djur (pausat) | B6.2 / R9C |
+| 3 | Felstavat föremål → inget "Menade du …?"; `test:reserv`/DOM 03–05 ostabila | B6.1 |
+| 4 | Brandpost/julkrans svåra att se på 375x812 | B5 |
+| 5 | Mantel/horn/halsduk sitter fel på vissa djur | B6.2 |
+| 6 | "Inte riktigt än" under ERROR-automaten | B1.4 |
+| 7 | Uppdrag+gåta samtidigt; gåta byts för tidigt; otydligt var man skriver; stall saknas | **R9G** |
+| 8 | Inget uppdrag med `djur: true` / `final: true` i datan | B2–B4, B6.1 |
+| 9 | Tackbubbla/Guldord: fix ej bildverifierad | R9G-bevis |
+| 10 | Platsbyte syns inte i scenen än | **B1.3b** (pågår) |
