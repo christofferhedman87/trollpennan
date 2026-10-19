@@ -1,0 +1,90 @@
+[
+ {
+  "fall": "blå isbjörn",
+  "mal": 207,
+  "sparad_farg": "#1E88E5",
+  "diffpixlar": 4350,
+  "farg": 2226,
+  "andel_farg": 0.51,
+  "nyans": 246,
+  "avvikelse": 39,
+  "ok": false
+ },
+ {
+  "fall": "röd isbjörn",
+  "mal": 1,
+  "sparad_farg": "#E53935",
+  "diffpixlar": 4290,
+  "farg": 3666,
+  "andel_farg": 0.85,
+  "nyans": 25,
+  "avvikelse": 24,
+  "ok": false
+ },
+ {
+  "fall": "grön isbjörn",
+  "mal": 123,
+  "sparad_farg": "#43A047",
+  "diffpixlar": 4192,
+  "farg": 3529,
+  "andel_farg": 0.84,
+  "nyans": 60,
+  "avvikelse": 63,
+  "ok": false
+ },
+ {
+  "fall": "gul isbjörn",
+  "mal": 54,
+  "sparad_farg": "#FDD835",
+  "diffpixlar": 4271,
+  "farg": 3666,
+  "andel_farg": 0.86,
+  "nyans": 41,
+  "avvikelse": 13,
+  "ok": true
+ },
+ {
+  "fall": "blå elefant",
+  "mal": 207,
+  "sparad_farg": "#1E88E5",
+  "diffpixlar": 14322,
+  "farg": 7832,
+  "andel_farg": 0.55,
+  "nyans": 98,
+  "avvikelse": 109,
+  "ok": false
+ },
+ {
+  "fall": "röd koala",
+  "mal": 1,
+  "sparad_farg": "#E53935",
+  "diffpixlar": 4643,
+  "farg": 4442,
+  "andel_farg": 0.96,
+  "nyans": 25,
+  "avvikelse": 24,
+  "ok": false
+ },
+ {
+  "fall": "grön lamm",
+  "mal": 123,
+  "sparad_farg": "#43A047",
+  "diffpixlar": 3635,
+  "farg": 3488,
+  "andel_farg": 0.96,
+  "nyans": 45,
+  "avvikelse": 78,
+  "ok": false
+ },
+ {
+  "fall": "gul ko",
+  "mal": 54,
+  "sparad_farg": "#FDD835",
+  "diffpixlar": 6288,
+  "farg": 4475,
+  "andel_farg": 0.71,
+  "nyans": 48,
+  "avvikelse": 6,
+  "ok": true
+ }
+]
