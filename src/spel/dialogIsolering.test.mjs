@@ -1,3 +1,4 @@
+// @ts-nocheck – node:test-fil i ren JS (DOM-attrapper); typerna kontrolleras inte här (R9E).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { skapaDialogIsolering } from './dialogIsolering.ts';
