@@ -1,0 +1,810 @@
+diff --git a/PROJECT.md b/PROJECT.md
+index cc1c22b..4bce3d8 100644
+--- a/PROJECT.md
++++ b/PROJECT.md
+@@ -109,13 +109,13 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på
+ ### KÖORDNING (gäller nu, 2026-10-19) – `rundor/BLOCK-platser/PLAN.md`
+ **Skript** = `kor.sh`/patch, 0 Build-USD. **Build** = Grok Build. Doodle skriver aldrig spelkod utan kor.sh eller prompt. Arkitekten levererar → skickar körkommando samma stund.
+ 
+-**Klart på main:** R3G (#56) · R9D–F (#60/#62/#64) · B0 (#61) · B1.1–B1.3b (#67/#68/#71/#75). main ≈ `0124204`.
++**Klart på main:** R3G (#56) · R9D–F (#60/#62/#64) · B0 (#61) · B1.1–B1.4-fix (#67/#68/#71/#75/#77/#78) · R9G (denna patch).
+ 
+-**Pågår:** **B1.4-fix** (fel 1–6: Inte riktigt än, mark, skala, Bengtsson, Phaser-text, UI-overlap). Patch i `rundor/BLOCK-platser/B1.4-fix/`. Phaser-äventyret förblir avstängt.
++**Pågår:** **R9G** gåta/uppdrag/skrivhint + stall i menyn + platsdata (vatten, brygga, grottvalv, karttext) — **skript** `bash rundor/R9G-ux-stall/kor.sh`. Phaser-äventyret förblir avstängt.
+ 
+ **Nästa, i denna ordning (inga parallella steg utom B5):**
+-1. **B1.4-fix** fel 1–6 — **skript** (`bash rundor/BLOCK-platser/B1.4-fix/kor.sh`) · sedan R9G
+-2. **R9G** gåta≠uppdrag, gåta byts ej för tidigt, "Skriv i Pennans bok", stall=meny — **Build** (`rundor/R9G-ux-stall/`)
++1. ~~B1.4-fix~~ klar (#78)
++2. **R9G** gåta≠uppdrag, låst gåta, skrivhint, stall=meny — **skript** (`rundor/R9G-ux-stall/kor.sh`, ingen Build)
+ 3. **R8-2** grafiklyft (skuggor, horisont, kontur …) — **Build** (`rundor/R8-grafik/`)
+ 4. **B2** Skogen — **skript** (`kor-plats.sh skogen`)
+ 5. **B3** Sjön — **skript**
+@@ -699,8 +699,8 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
+ ## 19. Öppna fel (2026-10-19) – kort; blocket som tar hand om felet
+ | # | Fel | När |
+ |---|-----|-----|
+-| 1 | Platsbyte syns inte i scenen | **B1.3b** (pågår, skript) |
+-| 2 | Uppdrag+gåta samtidigt; gåta byts för tidigt; otydligt var man skriver; stall saknas | **R9G** |
++| 1 | ~~Platsbyte syns inte i scenen~~ | B1.3b klar |
++| 2 | ~~Uppdrag+gåta samtidigt; gåta byts för tidigt; otydligt var man skriver; stall saknas~~ | **R9G** klar |
+ | 3 | "Inte riktigt än" under ERROR-automaten | **B1.4** |
+ | 4 | Valfisk/snurra/gaffel/släde/jacka/planka/brandpost/julkrans konstiga eller svåra att se | **B5** |
+ | 5 | Mantel/horn/halsduk sitter fel; färgord färgar inte föremål | **B6.2** |
+diff --git a/data/hemligt.json b/data/hemligt.json
+index ffd27a1..72835f2 100644
+--- a/data/hemligt.json
++++ b/data/hemligt.json
+@@ -7,5 +7,7 @@
+  "ny_gata": "Ny gåta",
+  "hittade": "({n}/{total} hittade)",
+  "alla_hittade": "Du har hittat alla hemliga djur!",
+- "stava_tips": "Skriv ordet bokstav för bokstav med tangentbordet."
++ "stava_tips": "Skriv ordet bokstav för bokstav med tangentbordet.",
++ "skriv_hint": "Skriv svaret i rutan under och tryck Vakna!",
++ "visa_gata": "Visa gåtan"
+ }
+diff --git a/data/platser.json b/data/platser.json
+index b16dc47..3f28d62 100644
+--- a/data/platser.json
++++ b/data/platser.json
+@@ -1,6 +1,6 @@
+ {
+  "version": 1,
+- "_om": "B1.3a/B1.3b/B1.4/B1.4-fix: platserna som data. B1.4-fix: större yta, markfärg syns, vatten/skala/placering, droppsten lägre.",
++ "_om": "B1.3a/B1.3b/B1.4/B1.4-fix/R9G: platserna som data. R9G: litet vatten i skogen/grottan, mindre brygga, grottvalvet längre bak.",
+  "yta": {
+   "x": [
+    -5.5,
+@@ -90,10 +90,10 @@
+      "id": "vattenyta",
+      "typ": "vattenyta",
+      "rekt": [
+-      0.28,
+       0.38,
+-      0.78,
+-      0.82
++      0.5,
++      0.54,
++      0.58
+      ]
+     },
+     {
+@@ -173,9 +173,9 @@
+     },
+     {
+      "ord": "bäck",
+-     "x": 0.52,
+-     "y": 0.57,
+-     "skala": 0.95,
++     "x": 0.46,
++     "y": 0.54,
++     "skala": 0.5,
+      "zon": "vattenyta"
+     },
+     {
+@@ -377,9 +377,9 @@
+    "start": [
+     {
+      "ord": "brygga",
+-     "x": 0.48,
+-     "y": 0.55,
+-     "skala": 0.7,
++     "x": 0.6,
++     "y": 0.36,
++     "skala": 0.32,
+      "zon": "vattenyta"
+     },
+     {
+@@ -600,10 +600,10 @@
+      "id": "vattenyta",
+      "typ": "vattenyta",
+      "rekt": [
+-      0.22,
+-      0.55,
+-      0.62,
+-      0.88
++      0.4,
++      0.6,
++      0.56,
++      0.68
+      ]
+     },
+     {
+@@ -631,15 +631,15 @@
+     {
+      "ord": "grotta",
+      "x": 0.5,
+-     "y": 0.48,
+-     "skala": 1.85,
++     "y": 0.14,
++     "skala": 0.95,
+      "zon": "mark"
+     },
+     {
+      "ord": "klippa",
+-     "x": 0.12,
+-     "y": 0.52,
+-     "skala": 1.15,
++     "x": 0.06,
++     "y": 0.3,
++     "skala": 0.85,
+      "zon": "mark"
+     },
+     {
+@@ -672,9 +672,9 @@
+     },
+     {
+      "ord": "klippa",
+-     "x": 0.82,
+-     "y": 0.4,
+-     "skala": 1.15,
++     "x": 0.94,
++     "y": 0.26,
++     "skala": 0.85,
+      "zon": "mark"
+     },
+     {
+diff --git a/data/texter-gard.json b/data/texter-gard.json
+index 33203e6..f97ad2a 100644
+--- a/data/texter-gard.json
++++ b/data/texter-gard.json
+@@ -84,5 +84,14 @@
+   "las_in_nej": "Avbryt",
+   "klart": "Klart! Kopian är inläst.",
+   "fel": "Den filen gick inte att läsa. Inget har ändrats."
++ },
++ "stall": {
++  "meny": "Stallet",
++  "chip": "Till stallet",
++  "flytta": "Djuret är i stallet. Du kan hämta ut det igen i menyn när du vill.",
++  "forklaring": "Flytta ett djur till stallet genom att trycka på det. Du kan hämta ut ditt djur igen när du vill.",
++  "tom": "Stallet är tomt.",
++  "hamta": "Hämta ut",
++  "full": "Det är fullt här. Flytta ett annat djur till stallet först."
+  }
+-}
+\ No newline at end of file
++}
+diff --git a/package.json b/package.json
+index 2e3c2f3..01078fb 100644
+--- a/package.json
++++ b/package.json
+@@ -22,7 +22,7 @@
+     "format": "prettier --write .",
+     "build:pages": "vite build --config vite.pages.config.ts",
+     "preview:pages": "vite preview --config vite.pages.config.ts",
+-    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/dialogIsolering.test.mjs",
++    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/dialogIsolering.test.mjs",
+     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
+     "check:pages-output": "node scripts/check-pages-output.mjs",
+     "check:struktur": "node scripts/check-spel-struktur.mjs",
+diff --git a/rundor/R1-dela-spel/testid-baslinje.json b/rundor/R1-dela-spel/testid-baslinje.json
+index 169c41d..26a3ddb 100644
+--- a/rundor/R1-dela-spel/testid-baslinje.json
++++ b/rundor/R1-dela-spel/testid-baslinje.json
+@@ -22,6 +22,7 @@
+   "\"byggbok\"": 1,
+   "\"byt-folje\"": 1,
+   "\"demo-senare\"": 1,
++  "\"djur-till-stall\"": 1,
+   "\"flik-ang\"": 1,
+   "\"flik-byggbok\"": 1,
+   "\"flik-gard\"": 1,
+@@ -66,9 +67,10 @@
+   "\"ladda-ord\"": 1,
+   "\"las-kopia\"": 1,
+   "\"ledtrad\"": 3,
+-  "\"ledtrad-gata\"": 2,
+-  "\"ledtrad-ny\"": 2,
+-  "\"ledtrad-streck\"": 2,
++  "\"ledtrad-gata\"": 1,
++  "\"ledtrad-hint\"": 1,
++  "\"ledtrad-ny\"": 1,
++  "\"ledtrad-streck\"": 1,
+   "\"ljud-knapp\"": 1,
+   "\"lykta\"": 1,
+   "\"mellanslag\"": 1,
+@@ -78,6 +80,7 @@
+   "\"meny-borja-ja\"": 1,
+   "\"meny-borja-nej\"": 1,
+   "\"meny-panel\"": 1,
++  "\"meny-stall\"": 1,
+   "\"mossa-alla\"": 1,
+   "\"mossa-halsning\"": 1,
+   "\"mossa-panel\"": 1,
+@@ -108,6 +111,8 @@
+   "\"skylt\"": 1,
+   "\"skylt-text\"": 1,
+   "\"spara-kopia\"": 1,
++  "\"stall-full\"": 1,
++  "\"stall-lista\"": 1,
+   "\"stang-bok\"": 1,
+   "\"stjarn-info\"": 1,
+   "\"stjarn-nasta\"": 1,
+@@ -140,6 +145,7 @@
+   "{`prova-${d.id}`}": 1,
+   "{`sida-${sida.id}`}": 1,
+   "{`skatt-${sk.id}`}": 1,
++  "{`stall-hamta-${d.uid}`}": 1,
+   "{`stjarnor-${id}`}": 1,
+   "{`uppdrag-${u.id}`}": 1,
+   "{`valj-${d.uid}`}": 1,
+diff --git a/src/spel/Spel.tsx b/src/spel/Spel.tsx
+index af2d174..7e4bb61 100644
+--- a/src/spel/Spel.tsx
++++ b/src/spel/Spel.tsx
+@@ -387,7 +387,6 @@ export function Spel() {
+     if (useMinne.getState().forstaKarta) {
+       useMinne.getState().settKarta();
+       setForstaRad([...TEXTER_AV.forsta_gangen]);
+-      for (const rad of TEXTER_AV.forsta_gangen) visaBanner(rad, "ovr");
+     }
+   }
+ 
+diff --git a/src/spel/gata.ts b/src/spel/gata.ts
+new file mode 100644
+index 0000000..a73388b
+--- /dev/null
++++ b/src/spel/gata.ts
+@@ -0,0 +1,14 @@
++// R9G: vilken gåta som visas. Låst tills ordet hittats eller barnet väljer "Ny gåta" – aldrig slump vid render.
++
++/** Gåtan som gäller: den sparade om den fortfarande är ohittad, annars första ohittade. */
++export function aktivGata(kvar: string[], gataId: string | null): string | null {
++  if (!kvar.length) return null;
++  return gataId && kvar.includes(gataId) ? gataId : kvar[0]!;
++}
++
++/** Nästa gåta när barnet trycker "Ny gåta" (runt listan). */
++export function nastaGata(kvar: string[], gataId: string | null): string | null {
++  const nu = aktivGata(kvar, gataId);
++  if (!nu) return null;
++  return kvar[(kvar.indexOf(nu) + 1) % kvar.length]!;
++}
+diff --git a/src/spel/minne.ts b/src/spel/minne.ts
+index 6c6c735..652b4c5 100644
+--- a/src/spel/minne.ts
++++ b/src/spel/minne.ts
+@@ -5,7 +5,8 @@ import { byggMedId } from "../tolk/byggtolk.ts";
+ import { brygga, type Sparad } from "./brygga.ts";
+ import type { SparatBygge } from "./bygge.ts";
+ import { BYGG } from "../tolk/byggtolk.ts";
+-import { START_PLATS, laggMedTak, mattUr, upplast } from "./platser.ts";
++import { START_PLATS, TAK_PER_PLATS, laggMedTak, mattUr, upplast } from "./platser.ts";
++import { hamtaFranStall, flyttaTillStall, type StallUt } from "./stall.ts";
+ 
+ 
+ export type Lage = "kort" | "skriv";
+@@ -71,6 +72,10 @@ export type Data = {
+   oppnadePlatser: string[];
+   /** B1.4: platser vars intro-bubbla redan visats. */
+   seddaIntro: string[];
++  /** R9G: djur barnet flyttat till stallet (lista i menyn). */
++  stall: Sparad[];
++  /** R9G: gåtan som visas; byts bara när ordet hittats eller barnet trycker "Ny gåta". */
++  gataId: string | null;
+ };
+ 
+ type Minne = Data & {
+@@ -115,6 +120,11 @@ type Minne = Data & {
+   bytPlats: (id: string) => boolean;
+   /** B1.4: markera att platsens intro visats. */
+   markeraIntro: (id: string) => void;
++  /** R9G: flytta ett djur från platsen/ängen/gården till stallet. */
++  tillStall: (uid: string) => boolean;
++  /** R9G: hämta ett djur ur stallet till platsen barnet är på (tak TAK_PER_PLATS). */
++  franStall: (uid: string) => StallUt;
++  sattGataId: (id: string | null) => void;
+ };
+ 
+ function tom(): Data {
+@@ -167,6 +177,8 @@ function tom(): Data {
+     platsSkapelser: {},
+     oppnadePlatser: [],
+     seddaIntro: [],
++    stall: [],
++    gataId: null,
+   };
+ }
+ 
+@@ -227,6 +239,8 @@ export function franSparning(raw: unknown): Data {
+       platsSkapelser: objekt(p.platsSkapelser) ? (p.platsSkapelser as Data["platsSkapelser"]) : {},
+       oppnadePlatser: Array.isArray(p.oppnadePlatser) ? (p.oppnadePlatser as string[]).filter((x) => typeof x === "string") : [],
+       seddaIntro: Array.isArray(p.seddaIntro) ? (p.seddaIntro as string[]).filter((x) => typeof x === "string") : [],
++      stall: Array.isArray(p.stall) ? (p.stall as Sparad[]).filter(arDjur) : [],
++      gataId: typeof p.gataId === "string" && p.gataId ? p.gataId : null,
+     };
+   } catch {
+     return tom();
+@@ -275,6 +289,9 @@ function spara(d: Data) {
+     sattTittat: _ak,
+     bytPlats: _al,
+     markeraIntro: _am,
++    tillStall: _an,
++    franStall: _ao,
++    sattGataId: _ap,
+     ...data
+   } = d as Data & Record<string, unknown>;
+   skrivLokalt(() => window.localStorage, { ...data, version: 2 });
+@@ -283,7 +300,7 @@ function spara(d: Data) {
+ function arData(v: unknown): v is Partial<Data> {
+   if (!objekt(v) || !normalisera(v, tom())) return false;
+   if (v.startLage !== undefined && v.startLage !== "kort" && v.startLage !== "skriv") return false;
+-  for (const k of ["ang", "sovande"]) if (v[k] !== undefined && (!Array.isArray(v[k]) || !(v[k] as unknown[]).every(arDjur))) return false;
++  for (const k of ["ang", "sovande", "stall"]) if (v[k] !== undefined && (!Array.isArray(v[k]) || !(v[k] as unknown[]).every(arDjur))) return false;
+   for (const k of ["garden", "lada"]) if (v[k] !== undefined && (!Array.isArray(v[k]) || !(v[k] as unknown[]).every(arBygge))) return false;
+   if (v.hemma !== undefined && (!Array.isArray(v.hemma) || !v.hemma.every(x => objekt(x) && arDjur(x.spec) && typeof x.hem === "string"))) return false;
+   if (v.platsSkapelser !== undefined && (!objekt(v.platsSkapelser) || !Object.values(v.platsSkapelser).every((l) => Array.isArray(l) && l.every(arDjur)))) return false;
+@@ -325,7 +342,7 @@ export const useMinne = create<Minne>((set, get) => ({
+     let ang = [...get().ang];
+     let sovande = [...get().sovande];
+     for (let i = 0; i < antal; i++) {
+-      while (ang.length >= 10) {
++      while (ang.length >= TAK_PER_PLATS) {
+         const old = ang.shift();
+         if (!old) break;
+         sovande = [...sovande, old].slice(-40);
+@@ -344,7 +361,7 @@ export const useMinne = create<Minne>((set, get) => ({
+     let ang = [...get().ang];
+     let sovande = get().sovande.filter((s) => s.uid !== uid);
+     let somnad: Sparad | null = null;
+-    if (ang.length >= 10) {
++    if (ang.length >= TAK_PER_PLATS) {
+       const old = ang.shift();
+       if (old) {
+         sovande = [...sovande, old];
+@@ -417,7 +434,7 @@ export const useMinne = create<Minne>((set, get) => ({
+       garden: get().garden.filter((x) => x.uid !== uid),
+       lada: [...get().lada, { ...b, boende: [] }],
+       hemma,
+-      ang: [...get().ang, ...hemTillbaka].slice(-10),
++      ang: [...get().ang, ...hemTillbaka].slice(-TAK_PER_PLATS),
+     });
+     for (const d of hemTillbaka) brygga.skapa(d);
+     brygga.synkaGard();
+@@ -518,6 +535,25 @@ export const useMinne = create<Minne>((set, get) => ({
+     if (get().seddaIntro.includes(id)) return;
+     set({ seddaIntro: [...get().seddaIntro, id] });
+   },
++  tillStall: (uid) => {
++    const ut = flyttaTillStall(get(), uid);
++    if (!ut) return false;
++    set(ut);
++    brygga.taBort(uid);
++    brygga.synkaGard();
++    return true;
++  },
++  franStall: (uid) => {
++    const r = hamtaFranStall(get(), uid);
++    if (r.status !== "ok") return r.status;
++    set(r.andring);
++    if (get().plats === START_PLATS) brygga.skapa(r.djur, true);
++    return "ok";
++  },
++  sattGataId: (id) => {
++    if (get().gataId === id) return;
++    set({ gataId: id });
++  },
+   sattFyrPa: () => set({ fyr: true }),
+   settKarta: () => set({ forstaKarta: false }),
+   markeraOmradeKlar: (id) => {
+diff --git a/src/spel/r9g.test.ts b/src/spel/r9g.test.ts
+new file mode 100644
+index 0000000..18b4a38
+--- /dev/null
++++ b/src/spel/r9g.test.ts
+@@ -0,0 +1,88 @@
++// R9G: stall (till/från, alla platser, tak), låst gåta och skrivhint.
++import assert from "node:assert/strict";
++import { test } from "node:test";
++import hemligt from "../../data/hemligt.json" with { type: "json" };
++import texter from "../../data/texter-gard.json" with { type: "json" };
++import { aktivGata, nastaGata } from "./gata.ts";
++import { useMinne, franSparning } from "./minne.ts";
++import { TAK_PER_PLATS } from "./platser.ts";
++import { flyttaTillStall, hamtaFranStall } from "./stall.ts";
++
++const v = { kropp: "kanin", formel: "en kanin", beskrivning: "en kanin", skala: 1, alpha: 1, formagor: [], tillbehor: [], overraskningar: [] } as never;
++
++test("R9G: tillStall/franStall rundresa på ängen", () => {
++  const m = useMinne.getState();
++  m.aterstall();
++  const { nya } = useMinne.getState().laggPaAng(v, 2);
++  const uid = nya[0]!.uid;
++  assert.equal(useMinne.getState().tillStall(uid), true);
++  assert.ok(!useMinne.getState().ang.some((a) => a.uid === uid), "borta från ängen");
++  assert.deepEqual(useMinne.getState().stall.map((s) => s.uid), [uid]);
++  assert.equal(useMinne.getState().tillStall("finns-inte"), false);
++  assert.equal(useMinne.getState().franStall(uid), "ok");
++  assert.ok(useMinne.getState().ang.some((a) => a.uid === uid), "tillbaka på ängen");
++  assert.equal(useMinne.getState().stall.length, 0);
++  assert.equal(useMinne.getState().franStall(uid), "saknas");
++  useMinne.getState().aterstall();
++});
++
++test("R9G: stall gäller platsSkapelser och hämtning går till platsen barnet står på", () => {
++  const d = { plats: "skogen", ang: [], hemma: [], garden: [], stall: [], foljeUid: "x", platsSkapelser: { skogen: [{ ...(v as object), uid: "x", skapad: 1 }] } } as never;
++  const ut = flyttaTillStall(d, "x")!;
++  assert.ok(ut, "djuret i skogen hittas");
++  assert.deepEqual((ut as { platsSkapelser: Record<string, unknown[]> }).platsSkapelser.skogen, []);
++  assert.equal((ut as { foljeUid: string | null }).foljeUid, null, "följeslagaren släpps");
++  const efter = { ...(d as object), ...ut, plats: "sjon" } as never;
++  const r = hamtaFranStall(efter, "x");
++  assert.equal(r.status, "ok");
++  assert.equal((r as { andring: { platsSkapelser: Record<string, unknown[]> } }).andring.platsSkapelser.sjon!.length, 1);
++});
++
++test("R9G: franStall respekterar TAK_PER_PLATS (ingen hårdkodad 10)", () => {
++  const full = Array.from({ length: TAK_PER_PLATS }, (_, i) => ({ ...(v as object), uid: `a${i}`, skapad: i }));
++  const d = { plats: "ang", ang: full, hemma: [], garden: [], platsSkapelser: {}, foljeUid: null, stall: [{ ...(v as object), uid: "s", skapad: 1 }] } as never;
++  assert.equal(hamtaFranStall(d, "s").status, "full");
++  assert.equal(hamtaFranStall(d, "s", TAK_PER_PLATS + 1).status, "ok");
++});
++
++test("R9G: stall och gataId sparas bakåtkompatibelt", () => {
++  const gammal = franSparning({ version: 2, ang: [], garden: [], stjarnor: 0 });
++  assert.deepEqual(gammal.stall, []);
++  assert.equal(gammal.gataId, null);
++  const ny = franSparning({ version: 2, ang: [], garden: [], stjarnor: 0, gataId: "lodjur", stall: [{ ...(v as object), uid: "s", skapad: 1 }] });
++  assert.equal(ny.gataId, "lodjur");
++  assert.equal(ny.stall.length, 1);
++});
++
++test("R9G: gåtan är låst – byts bara när ordet hittats eller Ny gåta trycks", () => {
++  const kvar = ["a", "b", "c"];
++  assert.equal(aktivGata(kvar, null), "a");
++  assert.equal(aktivGata(kvar, "b"), "b", "sparad gåta gäller");
++  assert.equal(aktivGata(kvar, "b"), "b", "samma igen (ingen slump)");
++  assert.equal(aktivGata(["a", "c"], "b"), "a", "hittad → nästa ohittade");
++  assert.equal(nastaGata(kvar, "b"), "c");
++  assert.equal(nastaGata(kvar, "c"), "a");
++  assert.equal(aktivGata([], "a"), null);
++  useMinne.getState().aterstall();
++  useMinne.getState().sattGataId("b");
++  assert.equal(useMinne.getState().gataId, "b");
++  useMinne.getState().aterstall();
++});
++
++test("R9G: texter finns i data", () => {
++  assert.ok(hemligt.skriv_hint.length > 0 && hemligt.visa_gata.length > 0);
++  for (const k of ["meny", "chip", "flytta", "forklaring", "tom", "hamta", "full"] as const) assert.ok(texter.stall[k].length > 0, k);
++});
++
++test("R9G-data: litet vatten i skogen/grottan, sjön har kvar sitt, brygga mindre, grottvalvet bak", async () => {
++  const { dekorFor, vattenytor } = await import("./platsDekor.ts");
++  const { platsMed } = await import("./platser.ts");
++  const yta = (id: string) => vattenytor(platsMed(id)).reduce((n, v) => n + v.storlek[0] * v.storlek[1], 0);
++  assert.ok(yta("skogen") <= 2, `skogens vatten ska vara en liten tjärn (${yta("skogen")})`);
++  assert.ok(yta("grottan") <= 2, `grottans vatten ska vara en liten pöl (${yta("grottan")})`);
++  assert.ok(yta("sjon") >= 20, "sjön behåller sitt stora vatten");
++  const brygga = dekorFor(platsMed("sjon")).saker.find((s) => s.ord === "brygga")!;
++  assert.ok(brygga.skala <= 0.4, `brygga skala ${brygga.skala}`);
++  const valv = dekorFor(platsMed("grottan")).saker.find((s) => s.ord === "grotta")!;
++  assert.ok(valv.skala <= 1 && valv.pos[2] <= -5, `grottvalv skala ${valv.skala}, z ${valv.pos[2]}`);
++});
+diff --git a/src/spel/stall.ts b/src/spel/stall.ts
+new file mode 100644
+index 0000000..43e35a3
+--- /dev/null
++++ b/src/spel/stall.ts
+@@ -0,0 +1,58 @@
++// R9G: stallet – barnets djur som flyttats bort från en plats och kan hämtas igen. Ren logik (ingen React/Zustand), testas i Node.
++// Gäller ängen (`ang`), gården (`hemma`) och alla andra platser (`platsSkapelser`). Taket per plats är TAK_PER_PLATS (platser.ts).
++import type { Sparad } from "./brygga.ts";
++import type { SparatBygge } from "./bygge.ts";
++import { START_PLATS, TAK_PER_PLATS } from "./platser.ts";
++
++export const STALL_MAX = 40;
++export type StallUt = "ok" | "full" | "saknas";
++
++type Lager = {
++  plats: string;
++  ang: Sparad[];
++  hemma: { spec: Sparad; hem: string }[];
++  platsSkapelser: Record<string, Sparad[]>;
++  garden: SparatBygge[];
++  stall: Sparad[];
++  foljeUid: string | null;
++};
++
++/** Ny delmängd av sparningen när djuret `uid` flyttas till stallet, eller null om det inte finns någonstans. */
++export function flyttaTillStall(d: Lager, uid: string): Partial<Lager> | null {
++  const iAng = d.ang.find((a) => a.uid === uid);
++  const iHem = d.hemma.find((h) => h.spec.uid === uid)?.spec;
++  const platsId = Object.keys(d.platsSkapelser).find((k) => d.platsSkapelser[k]!.some((a) => a.uid === uid));
++  const iPlats = platsId ? d.platsSkapelser[platsId]!.find((a) => a.uid === uid) : undefined;
++  const djur = iAng ?? iHem ?? iPlats;
++  if (!djur) return null;
++  const ut: Partial<Lager> = {
++    stall: [...d.stall.filter((s) => s.uid !== uid), djur].slice(-STALL_MAX),
++    foljeUid: d.foljeUid === uid ? null : d.foljeUid,
++  };
++  if (iAng) ut.ang = d.ang.filter((a) => a.uid !== uid);
++  if (iHem) {
++    ut.hemma = d.hemma.filter((h) => h.spec.uid !== uid);
++    ut.garden = d.garden.map((b) => (b.boende.includes(uid) ? { ...b, boende: b.boende.filter((x) => x !== uid) } : b));
++  }
++  if (platsId) ut.platsSkapelser = { ...d.platsSkapelser, [platsId]: d.platsSkapelser[platsId]!.filter((a) => a.uid !== uid) };
++  return ut;
++}
++
++/** Hämta djuret till platsen barnet står på. "full" när platsen redan har TAK_PER_PLATS skapelser. */
++export function hamtaFranStall(
++  d: Lager,
++  uid: string,
++  tak = TAK_PER_PLATS,
++): { status: "ok"; andring: Partial<Lager>; djur: Sparad } | { status: "full" | "saknas" } {
++  const djur = d.stall.find((s) => s.uid === uid);
++  if (!djur) return { status: "saknas" };
++  const ut = { ...djur, skapad: Date.now() };
++  const stall = d.stall.filter((s) => s.uid !== uid);
++  if (d.plats === START_PLATS) {
++    if (d.ang.length >= tak) return { status: "full" };
++    return { status: "ok", andring: { stall, ang: [...d.ang, ut] }, djur: ut };
++  }
++  const lista = d.platsSkapelser[d.plats] ?? [];
++  if (lista.length >= tak) return { status: "full" };
++  return { status: "ok", andring: { stall, platsSkapelser: { ...d.platsSkapelser, [d.plats]: [...lista, ut] } }, djur: ut };
++}
+diff --git a/src/spel/ui/AngLager.tsx b/src/spel/ui/AngLager.tsx
+index c2a25d5..e9ef7ce 100644
+--- a/src/spel/ui/AngLager.tsx
++++ b/src/spel/ui/AngLager.tsx
+@@ -11,6 +11,7 @@ import { nattvaken } from "../entiteter.ts";
+ import { bubblaStil, dukStil } from "./hjalp.ts";
+ import { fyll } from "../fyll.ts";
+ import { FIR, TEXTER } from "./spelData.ts";
++import { StallChip } from "./Stall.tsx";
+ import type { Banner, Bubbla, Varld } from "./typer.ts";
+ 
+ type AngLagerProps = {
+@@ -97,6 +98,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
+               {ALBUM.texter.ta_foto}
+             </button>
+           ) : null}
++          {panel === "spel" ? <StallChip visaBanner={visaBanner} /> : null}
+           <div className="banderoller" role="status" aria-live="polite" aria-atomic="true">
+             {banners.map((b) => (
+               <p key={b.id} className={`banner ${b.slag}`} data-testid="puff">
+diff --git a/src/spel/ui/BokSkarm.tsx b/src/spel/ui/BokSkarm.tsx
+index daabea3..0b5d25d 100644
+--- a/src/spel/ui/BokSkarm.tsx
++++ b/src/spel/ui/BokSkarm.tsx
+@@ -151,7 +151,7 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
+             {!gavaTill && !andrar && varld === "ang" ? (
+               <div className={aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? "skapar-guide kompakt" : "skapar-guide"} data-testid="skapar-guide">
+                 {aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? null : <p>{hemligt.steg}</p>}
+-                <p className="hemligt-forklaring" data-testid="hemligt-forklaring">{hemligt.forklaring}</p>
++                {aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? null : <p className="hemligt-forklaring" data-testid="hemligt-forklaring">{hemligt.forklaring}</p>}
+                 <Ledtradsyta funna={funna} kompakt={!!aktivtSkrivUppdrag(uppdragSpar, platsNu())} />
+                 <details>
+                   <summary>{upplevelse.examplesTitle}</summary>
+diff --git a/src/spel/ui/Hud.tsx b/src/spel/ui/Hud.tsx
+index 73a7604..c93ee52 100644
+--- a/src/spel/ui/Hud.tsx
++++ b/src/spel/ui/Hud.tsx
+@@ -5,6 +5,7 @@ import { OMR, UPP } from "../aventyr.ts";
+ import { fyll } from "../fyll.ts";
+ import { ALBUM } from "../liv.ts";
+ import { HoldOppnare } from "./HoldOppnare.tsx";
++import { StallMeny } from "./Stall.tsx";
+ import { FIR, TEXTER } from "./spelData.ts";
+ import type { Varld } from "./typer.ts";
+ 
+@@ -127,6 +128,7 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
+             <button type="button" data-testid="uppdrag-knapp" onClick={oppnaUppdrag}>
+               <span>{UPP.texter.rubrik}</span>
+             </button>
++            <StallMeny stang={() => { setMenyOpp(false); setMenySaker(false); setSenare(false); }} />
+             <button type="button" className="last" data-testid="ordbok" data-last="ja" onClick={lasMeny}>
+               <span>Bok</span>
+               <Lock aria-hidden />
+diff --git a/src/spel/ui/Ledtradsyta.tsx b/src/spel/ui/Ledtradsyta.tsx
+index d9276ac..ea3fbd9 100644
+--- a/src/spel/ui/Ledtradsyta.tsx
++++ b/src/spel/ui/Ledtradsyta.tsx
+@@ -1,48 +1,61 @@
+-import { useMemo, useState } from "react";
++import { useEffect, useMemo, useState } from "react";
+ import hemligt from "../../../data/hemligt.json" with { type: "json" };
+ import { fyll } from "../fyll.ts";
++import { aktivGata, nastaGata } from "../gata.ts";
++import { useMinne } from "../minne.ts";
+ import { LED } from "./spelData.ts";
+ import { hemligaDjur } from "./hemliga.ts";
+ 
+-/** Synlig ledtrådsyta: en gåta om ett hemligt djur som inte är hittat, med första bokstaven och ett streck per bokstav. */
++/**
++ * Synlig ledtrådsyta: en gåta om ett hemligt djur som inte är hittat, med första bokstaven och ett streck per bokstav.
++ * R9G: gåtan är låst (minne.gataId) tills ordet hittats eller barnet trycker "Ny gåta". Under ett uppdrag (`kompakt`)
++ * syns bara en stängd rubrik; gåtan finns inte i DOM förrän barnet öppnar den.
++ */
+ export function Ledtradsyta({ funna, kompakt = false }: { funna: Record<string, unknown>; kompakt?: boolean }) {
+   const alla = useMemo(() => hemligaDjur(), []);
+-  const [nr, setNr] = useState(() => Math.floor(Math.random() * 1000));
++  const gataId = useMinne((s) => s.gataId);
++  const sattGataId = useMinne((s) => s.sattGataId);
++  const [oppen, setOppen] = useState(false);
+   const kvar = alla.filter((o) => !funna[o.id]);
++  const kvarIds = kvar.map((o) => o.id);
++  const id = aktivGata(kvarIds, gataId);
++  useEffect(() => {
++    if (id && id !== gataId) sattGataId(id);
++  }, [id, gataId, sattGataId]);
+   const hittade = alla.length - kvar.length;
+-  if (!kvar.length) return <p className="ledtrad-klar" data-testid="ledtrad">{hemligt.alla_hittade}</p>;
+-  const o = kvar[nr % kvar.length]!;
+-  const led = LED[o.id]!;
++  if (!id) return <p className="ledtrad-klar" data-testid="ledtrad">{hemligt.alla_hittade}</p>;
++  const led = LED[id]!;
+   const streck = `${led.forsta} ${Array.from({ length: Math.max(0, led.langd - 1) }, () => "_").join(" ")}`.trim();
+   const rubrik = (
+     <b>
+       {hemligt.ledtrad_rubrik} <small>{fyll(hemligt.hittade, { n: hittade, total: alla.length })}</small>
+     </b>
+   );
+-  // R9B: när ett uppdrag är igång är ytan hopfälld (en rad), annars trycker den ner "Prova en idé" under tangentbordet i 375x812
+-  if (kompakt)
+-    return (
+-      <details className="ledtrad kompakt" data-testid="ledtrad" data-hemligt={o.id}>
+-        <summary>{rubrik}</summary>
++  const kropp = (
++    <>
+       <p className="ledtrad-gata" data-testid="ledtrad-gata">{led.gata}</p>
+       <div className="ledtrad-rad">
+         <span className="ledtrad-streck" data-testid="ledtrad-streck" aria-label={`${led.langd} bokstäver, börjar på ${led.forsta}`}>{streck}</span>
+-        <button type="button" className="nej" data-testid="ledtrad-ny" onClick={() => setNr((n) => n + 1)}>
++        <button type="button" className="nej" data-testid="ledtrad-ny" onClick={() => sattGataId(nastaGata(kvarIds, id))}>
+           {hemligt.ny_gata}
+         </button>
+       </div>
++      <p className="ledtrad-hint" data-testid="ledtrad-hint">{hemligt.skriv_hint}</p>
++    </>
++  );
++  if (kompakt)
++    return (
++      <details className="ledtrad kompakt" data-testid="ledtrad" data-hemligt={id} open={oppen} onToggle={(e) => setOppen(e.currentTarget.open)}>
++        <summary>
++          {rubrik} {oppen ? null : <small className="ledtrad-visa">{hemligt.visa_gata}</small>}
++        </summary>
++        {oppen ? kropp : null}
+       </details>
+     );
+   return (
+-    <div className="ledtrad" data-testid="ledtrad" data-hemligt={o.id}>
++    <div className="ledtrad" data-testid="ledtrad" data-hemligt={id}>
+       {rubrik}
+-      <p className="ledtrad-gata" data-testid="ledtrad-gata">{led.gata}</p>
+-      <div className="ledtrad-rad">
+-        <span className="ledtrad-streck" data-testid="ledtrad-streck" aria-label={`${led.langd} bokstäver, börjar på ${led.forsta}`}>{streck}</span>
+-        <button type="button" className="nej" data-testid="ledtrad-ny" onClick={() => setNr((n) => n + 1)}>
+-          {hemligt.ny_gata}
+-        </button>
+-      </div>
++      {kropp}
+     </div>
+   );
+ }
+diff --git a/src/spel/ui/Stall.tsx b/src/spel/ui/Stall.tsx
+new file mode 100644
+index 0000000..1562b01
+--- /dev/null
++++ b/src/spel/ui/Stall.tsx
+@@ -0,0 +1,86 @@
++// R9G: stallet som lista i menyn + knappen "Till stallet" vid djuret man tryckt på. Läser minnet själv (useMinne),
++// så Spel.tsx behöver inga nya props. Ingen 3D-byggnad.
++import { useEffect, useState } from "react";
++import { brygga } from "../brygga.ts";
++import { useMinne } from "../minne.ts";
++import { dukStil } from "./hjalp.ts";
++import { TEXTER } from "./spelData.ts";
++import type { Banner } from "./typer.ts";
++
++const CHIP_MS = 6000;
++
++function finns(uid: string): boolean {
++  const s = useMinne.getState();
++  return s.ang.some((a) => a.uid === uid) || Object.values(s.platsSkapelser).some((l) => l.some((a) => a.uid === uid));
++}
++
++/** Efter tryck på ett djur (ängen eller annan plats): en knapp under djuret i ~6 s. */
++export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: Banner["slag"]) => void }) {
++  const [mal, setMal] = useState<{ uid: string; x: number; y: number } | null>(null);
++  useEffect(() => {
++    const sluta = brygga.lyssna((h) => {
++      if (h.typ === "tryck" && finns(h.uid)) setMal({ uid: h.uid, x: h.x, y: h.y });
++    });
++    return () => {
++      sluta();
++    };
++  }, []);
++  useEffect(() => {
++    if (!mal) return;
++    const t = window.setTimeout(() => setMal(null), CHIP_MS);
++    return () => window.clearTimeout(t);
++  }, [mal]);
++  if (!mal) return null;
++  return (
++    <button
++      type="button"
++      className="stall-chip"
++      data-testid="djur-till-stall"
++      style={dukStil(mal.x, Math.min(0.86, mal.y + 0.24))}
++      onClick={() => {
++        if (useMinne.getState().tillStall(mal.uid)) visaBanner(TEXTER.stall.flytta, "ovr");
++        setMal(null);
++      }}
++    >
++      {TEXTER.stall.chip}
++    </button>
++  );
++}
++
++/** Menyknappen "Stallet" och listan; "Hämta ut" lägger djuret på platsen barnet är på. */
++export function StallMeny({ stang }: { stang: () => void }) {
++  const stall = useMinne((s) => s.stall);
++  const [oppen, setOppen] = useState(false);
++  const [full, setFull] = useState(false);
++  return (
++    <>
++      <button type="button" data-testid="meny-stall" aria-expanded={oppen} onClick={() => { setOppen((v) => !v); setFull(false); }}>
++        <span>
++          {TEXTER.stall.meny} {stall.length ? `(${stall.length})` : ""}
++        </span>
++      </button>
++      {oppen ? (
++        <div className="stall-lista" data-testid="stall-lista">
++          <p className="meny-fraga">{stall.length ? TEXTER.stall.forklaring : TEXTER.stall.tom}</p>
++          {full ? <p className="meny-fraga" data-testid="stall-full">{TEXTER.stall.full}</p> : null}
++          {stall.map((d) => (
++            <div className="stall-rad" key={d.uid}>
++              <span>{d.formel}</span>
++              <button
++                type="button"
++                data-testid={`stall-hamta-${d.uid}`}
++                onClick={() => {
++                  const r = useMinne.getState().franStall(d.uid);
++                  if (r === "full") return setFull(true);
++                  if (r === "ok") stang();
++                }}
++              >
++                {TEXTER.stall.hamta}
++              </button>
++            </div>
++          ))}
++        </div>
++      ) : null}
++    </>
++  );
++}
+diff --git a/src/spel/ui/spelData.ts b/src/spel/ui/spelData.ts
+index 0e23a5d..ea86088 100644
+--- a/src/spel/ui/spelData.ts
++++ b/src/spel/ui/spelData.ts
+@@ -40,6 +40,7 @@ export const TEXTER = texterJson as {
+   borja_om: { knapp: string; fraga: string; ja: string };
+   klapp: { en: string[]; mer: string[] };
+   demo: { senare: string };
++  stall: { meny: string; chip: string; flytta: string; forklaring: string; tom: string; hamta: string; full: string };
+ };
+ export const FIR = firandeJson as {
+   guldord: { text: string[]; stjarnor: number };
+diff --git a/src/styles.css b/src/styles.css
+index d38a8b1..20c10b7 100644
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -748,3 +748,13 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
+ .plats-intro img{width:64px;height:64px;object-fit:contain;flex:none}
+ .plats-intro p{margin:0;font-weight:700;font-size:1.05rem;line-height:1.3}
+ .npc-fel-text{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:2;white-space:nowrap;padding:3px 10px;border-radius:999px;background:#2c2416;color:#FFE082;font-size:.95rem;font-weight:800;box-shadow:0 2px 0 #0006;pointer-events:none}
++/* R9G: stallet (knapp vid djuret + lista i menyn) och skrivhint under gåtans streck */
++.stall-chip{position:absolute;z-index:6;transform:translate(-50%,0);pointer-events:auto;min-height:44px;padding:8px 16px;border:2px solid var(--color-moss);border-radius:999px;background:var(--color-cream);color:var(--color-ink);font-size:1.0625rem;font-weight:800;box-shadow:0 3px 0 var(--color-paper-deep);white-space:nowrap}
++.stall-lista{display:flex;flex-direction:column;gap:6px}
++.stall-rad{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 6px 6px 14px;border-radius:16px;background:var(--color-cream);font-weight:700}
++.meny-panel .stall-rad button{min-height:44px;padding:6px 14px;font-size:1.0625rem;background:var(--color-moss);color:var(--color-cream);box-shadow:none;text-align:center}
++.ledtrad-streck{pointer-events:none;user-select:none;-webkit-user-select:none}
++.ledtrad-hint{margin:2px 0 0;font-size:.95rem;font-weight:800;color:var(--color-moss)}
++.ledtrad-hint::after{content:"\00a0↓"}
++.ledtrad-visa{margin-left:6px;font-weight:700;text-decoration:underline;white-space:nowrap}
++.ledtrad.kompakt summary{flex-wrap:wrap;column-gap:4px}

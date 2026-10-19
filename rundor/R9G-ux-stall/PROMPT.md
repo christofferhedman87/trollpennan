@@ -1,3 +1,4 @@
+<!-- ERSATT: R9G körs som patch utan Build, se kor.sh och RUNDA-R9G.md. Kör INTE denna prompt. -->
 <!-- Doodle: gren runda-r9g EFTER B1 (B1.1–B1.4) mergad, FÖRE R8-2. grok build --prompt-file rundor/R9G-ux-stall/PROMPT.md -m grok-4.7-build-fast --reasoning-effort low --max-turns 22, timeout 25 min, logg /tmp/r9g.log. Varför: Christoffer – uppdrag och gåta samtidigt är opedagogiskt; saknas sätt att dölja djur utan omstart. -->
 # R9G – Gåta under uppdrag + stall i menyn
 
