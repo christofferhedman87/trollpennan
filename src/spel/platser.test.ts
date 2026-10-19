@@ -81,3 +81,29 @@ test("B1.3a: bytPlats går bara till upplåsta platser", () => {
   assert.equal(useMinne.getState().plats, "ang");
   assert.equal(useMinne.getState().bytPlats("ang"), true);
 });
+
+// B1.3b: scenen läser platsen. Ord → entitet går via samma uppslag som barnets ord.
+test("B1.3b: ord → entitet (träd→trad, björk→bjork, okänt → null)", async () => {
+  const { entitetForOrd } = await import("./platsDekor.ts");
+  assert.equal(entitetForOrd("träd"), "trad");
+  assert.equal(entitetForOrd("björk"), "bjork");
+  assert.equal(entitetForOrd("stubbe"), "stubbe");
+  assert.equal(entitetForOrd("vägskylt"), null);
+});
+
+test("B1.3b: skogen, sjön och grottan har synlig dekor och egen miljö", async () => {
+  const { dekorFor, vattenytor } = await import("./platsDekor.ts");
+  const { miljoFor, MILJO } = await import("./miljo.ts");
+  for (const id of ["skogen", "sjon", "grottan"]) {
+    const p = platsMed(id);
+    assert.ok(p, `${id} finns i data/platser.json`);
+    const { saker } = dekorFor(p);
+    assert.ok(saker.length >= 5, `${id}: minst 5 startobjekt med modell (${saker.length})`);
+    const m = miljoFor(p?.miljo);
+    assert.notEqual(m.miljo.himmel.bakgrund, MILJO.himmel.bakgrund, `${id}: annan himmel än ängen`);
+    assert.ok(m.ljusSkala > 0 && m.ljusSkala <= 1);
+  }
+  assert.ok(dekorFor(platsMed("skogen")).saker.some((s) => s.kropp === "trad"));
+  assert.ok(vattenytor(platsMed("sjon")).length >= 1, "sjön har en vattenyta");
+  assert.equal(dekorFor(platsMed("ang")).saker.length, 0, "ängen har ingen datadekor (ritas som förut)");
+});

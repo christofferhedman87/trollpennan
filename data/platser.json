@@ -1,9 +1,711 @@
 {
-  "version": 1,
-  "_om": "B1.3a: platserna som data. En plats = en rad. x,y 0–1 i platsens yta (x vänster→höger, y bak→fram) → världen via yta. miljo = överlagring på data/miljo.json. Skogen/Sjön/Grottan läggs in av datapaketen (kor-plats.sh), form i rundor/BLOCK-platser/data-utkast/platser.json.",
-  "yta": { "x": [-2.4, 2.4], "z": [-3.2, 1.0] },
-  "platser": [
-    { "id": "ang", "namn": "Ängen", "ordning": 0, "upplasning": { "nagon": [] }, "milstolpe": null, "miljo": {}, "zoner": [], "start": [], "uppdrag": [] }
+ "version": 1,
+ "_om": "B1.3a: platserna som data. En plats = en rad. x,y 0–1 i platsens yta (x vänster→höger, y bak→fram) → världen via yta. miljo = överlagring på data/miljo.json. B1.3b: Skogen/Sjön/Grottan är inlagda ur rundor/BLOCK-platser/data-utkast/platser.json (miljö, zoner, startobjekt) så att scenen kan byta; datapaketen (kor-plats.sh) ersätter raden per id.",
+ "yta": {
+  "x": [
+   -2.4,
+   2.4
   ],
-  "beloningar": []
+  "z": [
+   -3.2,
+   1.0
+  ]
+ },
+ "platser": [
+  {
+   "id": "ang",
+   "namn": "Ängen",
+   "ordning": 0,
+   "upplasning": {
+    "nagon": []
+   },
+   "milstolpe": null,
+   "miljo": {},
+   "zoner": [],
+   "start": [],
+   "uppdrag": []
+  },
+  {
+   "id": "skogen",
+   "namn": "Skogen",
+   "ordning": 1,
+   "tema": "mys",
+   "upplasning": {
+    "nagon": [
+     {
+      "typ": "skapelser",
+      "omrade": "ang",
+      "min": 3
+     }
+    ]
+   },
+   "milstolpe": {
+    "nagon": [
+     {
+      "typ": "uppdrag_klara",
+      "omrade": "skogen",
+      "min": 5
+     },
+     {
+      "typ": "skapelser",
+      "omrade": "skogen",
+      "min": 8
+     }
+    ],
+    "final": "skog-final-minnesljus",
+    "las_upp": "sjon"
+   },
+   "miljo": {
+    "himmel": {
+     "bakgrund": "#E7EDDD"
+    },
+    "dis": {
+     "farg": "#E7EDDD"
+    },
+    "mark": {
+     "grundfarg": "#718957"
+    },
+    "ljus": {
+     "skala": 0.78,
+     "farg": "#FFF0CF"
+    },
+    "ljuskalla_skapad": {
+     "radie": 0.18,
+     "intensitet": 0.22,
+     "farg": "#FFD58A"
+    }
+   },
+   "zoner": [
+    {
+     "id": "mark",
+     "typ": "land",
+     "rekt": [
+      0,
+      0.3,
+      1,
+      1
+     ]
+    },
+    {
+     "id": "vattenyta",
+     "typ": "vattenyta",
+     "rekt": [
+      0.43,
+      0.45,
+      0.6,
+      0.72
+     ]
+    },
+    {
+     "id": "luft",
+     "typ": "luft",
+     "rekt": [
+      0,
+      0,
+      1,
+      0.45
+     ]
+    }
+   ],
+   "start": [
+    {
+     "ord": "träd",
+     "x": 0.12,
+     "y": 0.36,
+     "skala": 2.4,
+     "zon": "mark"
+    },
+    {
+     "ord": "gran",
+     "x": 0.86,
+     "y": 0.3,
+     "skala": 2.6,
+     "zon": "mark"
+    },
+    {
+     "ord": "buske",
+     "x": 0.78,
+     "y": 0.65,
+     "skala": 1.0,
+     "zon": "mark"
+    },
+    {
+     "ord": "stubbe",
+     "x": 0.22,
+     "y": 0.78,
+     "skala": 0.45,
+     "zon": "mark"
+    },
+    {
+     "ord": "stock",
+     "x": 0.14,
+     "y": 0.68,
+     "skala": 0.6,
+     "zon": "mark"
+    },
+    {
+     "ord": "sten",
+     "x": 0.69,
+     "y": 0.78,
+     "skala": 0.6,
+     "zon": "mark"
+    },
+    {
+     "ord": "svamp",
+     "x": 0.34,
+     "y": 0.72,
+     "skala": 0.35,
+     "zon": "mark"
+    },
+    {
+     "ord": "blomma",
+     "x": 0.62,
+     "y": 0.75,
+     "skala": 0.35,
+     "zon": "mark"
+    },
+    {
+     "ord": "kulle",
+     "x": 0.5,
+     "y": 0.34,
+     "skala": 2.0,
+     "zon": "mark"
+    },
+    {
+     "ord": "bäck",
+     "x": 0.52,
+     "y": 0.57,
+     "skala": 1.0,
+     "zon": "vattenyta"
+    },
+    {
+     "ord": "stig",
+     "x": 0.47,
+     "y": 0.77,
+     "skala": 1.0,
+     "zon": "mark"
+    },
+    {
+     "ord": "vägskylt",
+     "x": 0.89,
+     "y": 0.75,
+     "skala": 1.0,
+     "zon": "mark"
+    }
+   ],
+   "ljud": [
+    {
+     "typ": "fagelkvitter",
+     "volym": 0.18
+    },
+    {
+     "typ": "lovprassel",
+     "volym": 0.1
+    },
+    {
+     "typ": "backporl",
+     "volym": 0.1
+    }
+   ],
+   "intro": {
+    "text": "Här luktar det skog och nya idéer! Vad vill du skriva fram?",
+    "min": "karta",
+    "visning": "kort_icke_blockerande",
+    "visa_en_gang": true
+   },
+   "final_fore": {
+    "text": "Maskinen minns fortfarande min lunch! Nu provar vi med något riktigt skogsmysigt.",
+    "min": "automat"
+   },
+   "hemliga": [
+    "ekorre",
+    "bäver",
+    "hjort",
+    "kronhjort",
+    "rådjur",
+    "vildsvin",
+    "hare",
+    "murmeldjur",
+    "älg",
+    "tvättbjörn"
+   ],
+   "uppdrag": [
+    "skog-rod-van",
+    "skog-liten-van",
+    "skog-magen-kurrar",
+    "skog-vila-benen",
+    "skog-regnpaus",
+    "skog-varm-van",
+    "skog-kvallsljus",
+    "skog-over-backen",
+    "skog-spara-matsacken",
+    "skog-under-tradet",
+    "skog-stor-och-liten",
+    "skog-hitta-riktningen",
+    "skog-tva-spanare",
+    "skog-mysig-lasplats",
+    "skog-ljus-vid-krypin",
+    "skog-final-minnesljus"
+   ],
+   "granskad": false
+  },
+  {
+   "id": "sjon",
+   "namn": "Sjön",
+   "ordning": 2,
+   "tema": "glitter",
+   "upplasning": {
+    "nagon": [
+     {
+      "typ": "uppdrag_klara",
+      "omrade": "skogen",
+      "min": 5
+     },
+     {
+      "typ": "skapelser",
+      "omrade": "skogen",
+      "min": 8
+     }
+    ]
+   },
+   "milstolpe": {
+    "nagon": [
+     {
+      "typ": "uppdrag_klara",
+      "omrade": "sjon",
+      "min": 5
+     },
+     {
+      "typ": "skapelser",
+      "omrade": "sjon",
+      "min": 8
+     }
+    ],
+    "final": "sjo-final-vattenglitter",
+    "las_upp": "grottan"
+   },
+   "miljo": {
+    "himmel": {
+     "bakgrund": "#DFEEF0"
+    },
+    "dis": {
+     "farg": "#DFEEF0"
+    },
+    "mark": {
+     "grundfarg": "#DCCB9B"
+    },
+    "ljus": {
+     "skala": 0.85,
+     "farg": "#FFF1D5"
+    },
+    "ljuskalla_skapad": {
+     "radie": 0.18,
+     "intensitet": 0.2,
+     "farg": "#FFD58A"
+    }
+   },
+   "zoner": [
+    {
+     "id": "strand",
+     "typ": "land",
+     "rekt": [
+      0,
+      0.28,
+      0.4,
+      1
+     ]
+    },
+    {
+     "id": "vattenyta",
+     "typ": "vattenyta",
+     "rekt": [
+      0.4,
+      0.3,
+      1,
+      0.9
+     ]
+    },
+    {
+     "id": "undervatten",
+     "typ": "undervatten",
+     "rekt": [
+      0.43,
+      0.48,
+      0.98,
+      0.9
+     ]
+    },
+    {
+     "id": "luft",
+     "typ": "luft",
+     "rekt": [
+      0,
+      0,
+      1,
+      0.3
+     ]
+    }
+   ],
+   "start": [
+    {
+     "ord": "strand",
+     "x": 0.23,
+     "y": 0.74,
+     "skala": 1.0,
+     "zon": "strand"
+    },
+    {
+     "ord": "brygga",
+     "x": 0.46,
+     "y": 0.54,
+     "skala": 1.2,
+     "zon": "vattenyta"
+    },
+    {
+     "ord": "sten",
+     "x": 0.22,
+     "y": 0.66,
+     "skala": 0.6,
+     "zon": "strand"
+    },
+    {
+     "ord": "stock",
+     "x": 0.13,
+     "y": 0.78,
+     "skala": 0.6,
+     "zon": "strand"
+    },
+    {
+     "ord": "träd",
+     "x": 0.08,
+     "y": 0.34,
+     "skala": 2.4,
+     "zon": "strand"
+    },
+    {
+     "ord": "buske",
+     "x": 0.15,
+     "y": 0.57,
+     "skala": 1.0,
+     "zon": "strand"
+    },
+    {
+     "ord": "blomma",
+     "x": 0.29,
+     "y": 0.77,
+     "skala": 0.35,
+     "zon": "strand"
+    },
+    {
+     "ord": "näckros",
+     "x": 0.71,
+     "y": 0.52,
+     "skala": 0.4,
+     "zon": "vattenyta"
+    },
+    {
+     "ord": "moln",
+     "x": 0.75,
+     "y": 0.12,
+     "skala": 1.5,
+     "zon": "luft"
+    },
+    {
+     "ord": "vassrugge",
+     "x": 0.83,
+     "y": 0.57,
+     "skala": 1.0,
+     "zon": "vattenyta"
+    },
+    {
+     "ord": "sandbotten",
+     "x": 0.64,
+     "y": 0.76,
+     "skala": 1.0,
+     "zon": "undervatten"
+    },
+    {
+     "ord": "stig",
+     "x": 0.35,
+     "y": 0.88,
+     "skala": 1.0,
+     "zon": "strand"
+    }
+   ],
+   "ljud": [
+    {
+     "typ": "vattenkluck",
+     "volym": 0.18
+    },
+    {
+     "typ": "fagelkvitter",
+     "volym": 0.1
+    },
+    {
+     "typ": "enstaka_plask",
+     "volym": 0.1
+    }
+   ],
+   "intro": {
+    "text": "Här glittrar det ända in i glasögonen! Vad vill du skriva fram?",
+    "min": "karta",
+    "visning": "kort_icke_blockerande",
+    "visa_en_gang": true
+   },
+   "final_fore": {
+    "text": "Maskinen minns min blöta strumpa! Vi behöver ett finare sjöminne.",
+    "min": "automat"
+   },
+   "hemliga": [
+    "koi",
+    "karp",
+    "näbbdjur",
+    "padda",
+    "utter",
+    "abborre",
+    "gädda",
+    "kräfta",
+    "svan",
+    "vattensalamander"
+   ],
+   "uppdrag": [
+    "sjo-bla-van",
+    "sjo-stor-simmare",
+    "sjo-sitt-vid-vattnet",
+    "sjo-fruktpaus",
+    "sjo-skugga-pa-stranden",
+    "sjo-torr-overfart",
+    "sjo-regn-vid-stranden",
+    "sjo-lys-vid-vattnet",
+    "sjo-i-baten",
+    "sjo-pa-bryggan",
+    "sjo-tva-storlekar",
+    "sjo-tva-farger",
+    "sjo-las-och-lys",
+    "sjo-tva-satt-att-resa",
+    "sjo-ovantad-kapten",
+    "sjo-final-vattenglitter"
+   ],
+   "granskad": false
+  },
+  {
+   "id": "grottan",
+   "namn": "Grottan",
+   "ordning": 3,
+   "tema": "glans",
+   "upplasning": {
+    "nagon": [
+     {
+      "typ": "uppdrag_klara",
+      "omrade": "sjon",
+      "min": 5
+     },
+     {
+      "typ": "skapelser",
+      "omrade": "sjon",
+      "min": 8
+     }
+    ]
+   },
+   "milstolpe": {
+    "nagon": [
+     {
+      "typ": "uppdrag_klara",
+      "omrade": "grottan",
+      "min": 5
+     },
+     {
+      "typ": "skapelser",
+      "omrade": "grottan",
+      "min": 8
+     }
+    ],
+    "final": "grotta-final-bergets-berattelse",
+    "las_upp": null
+   },
+   "miljo": {
+    "himmel": {
+     "bakgrund": "#626579"
+    },
+    "dis": {
+     "farg": "#626579"
+    },
+    "mark": {
+     "grundfarg": "#8A8595"
+    },
+    "ljus": {
+     "skala": 0.52,
+     "farg": "#E9DFF2"
+    },
+    "ljuskalla_skapad": {
+     "radie": 0.24,
+     "intensitet": 0.35,
+     "farg": "#FFD58A"
+    }
+   },
+   "zoner": [
+    {
+     "id": "mark",
+     "typ": "land",
+     "rekt": [
+      0,
+      0.4,
+      1,
+      1
+     ]
+    },
+    {
+     "id": "vattenyta",
+     "typ": "vattenyta",
+     "rekt": [
+      0.31,
+      0.65,
+      0.47,
+      0.78
+     ]
+    },
+    {
+     "id": "tak",
+     "typ": "tak",
+     "rekt": [
+      0,
+      0,
+      1,
+      0.32
+     ]
+    },
+    {
+     "id": "luft",
+     "typ": "luft",
+     "rekt": [
+      0,
+      0.2,
+      1,
+      0.6
+     ]
+    }
+   ],
+   "start": [
+    {
+     "ord": "grotta",
+     "x": 0.5,
+     "y": 0.42,
+     "skala": 3.0,
+     "zon": "mark"
+    },
+    {
+     "ord": "klippa",
+     "x": 0.12,
+     "y": 0.52,
+     "skala": 2.0,
+     "zon": "mark"
+    },
+    {
+     "ord": "sten",
+     "x": 0.73,
+     "y": 0.75,
+     "skala": 0.6,
+     "zon": "mark"
+    },
+    {
+     "ord": "kristall",
+     "x": 0.79,
+     "y": 0.49,
+     "skala": 0.8,
+     "zon": "mark"
+    },
+    {
+     "ord": "svamp",
+     "x": 0.24,
+     "y": 0.69,
+     "skala": 0.35,
+     "zon": "mark"
+    },
+    {
+     "ord": "sandhög",
+     "x": 0.58,
+     "y": 0.76,
+     "skala": 1.0,
+     "zon": "mark"
+    },
+    {
+     "ord": "vattenpöl",
+     "x": 0.39,
+     "y": 0.72,
+     "skala": 1.0,
+     "zon": "vattenyta"
+    },
+    {
+     "ord": "droppsten",
+     "x": 0.3,
+     "y": 0.24,
+     "skala": 0.8,
+     "zon": "tak"
+    },
+    {
+     "ord": "stig",
+     "x": 0.49,
+     "y": 0.88,
+     "skala": 1.0,
+     "zon": "mark"
+    }
+   ],
+   "ljud": [
+    {
+     "typ": "mjuka_vattendropp",
+     "volym": 0.18
+    },
+    {
+     "typ": "mjukt_kristallklirr",
+     "volym": 0.1
+    },
+    {
+     "typ": "vanligt_eko",
+     "volym": 0.1
+    }
+   ],
+   "intro": {
+    "text": "Här inne glimmar idéerna! Vad vill du skriva fram?",
+    "min": "karta",
+    "visning": "kort_icke_blockerande",
+    "visa_en_gang": true
+   },
+   "final_fore": {
+    "text": "Maskinen minns bara ekot av min hicka! Nu ger vi den en bättre berättelse.",
+    "min": "automat"
+   },
+   "hemliga": [
+    "fladdermus",
+    "spindel",
+    "troll",
+    "golem",
+    "cyklop",
+    "jätte",
+    "trollkarl",
+    "drake",
+    "yeti",
+    "sjöodjur"
+   ],
+   "uppdrag": [
+    "grotta-forsta-skenet",
+    "grotta-gul-van",
+    "grotta-liten-upptackare",
+    "grotta-sittpaus",
+    "grotta-varma-oron",
+    "grotta-mjuk-vila",
+    "grotta-eget-krypin",
+    "grotta-ordna-lasning",
+    "grotta-under-bordet",
+    "grotta-stor-och-liten",
+    "grotta-sken-och-saga",
+    "grotta-tva-farger",
+    "grotta-ljus-utanfor",
+    "grotta-ben-som-vilar",
+    "grotta-glitter-i-kistan",
+    "grotta-final-bergets-berattelse"
+   ],
+   "granskad": false
+  }
+ ],
+ "beloningar": []
 }
