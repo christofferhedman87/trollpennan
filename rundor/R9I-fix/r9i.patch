@@ -1,0 +1,192 @@
+diff --git a/package.json b/package.json
+index 29f230d..59115ec 100644
+--- a/package.json
++++ b/package.json
+@@ -22,7 +22,7 @@
+     "format": "prettier --write .",
+     "build:pages": "vite build --config vite.pages.config.ts",
+     "preview:pages": "vite preview --config vite.pages.config.ts",
+-    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/dialogIsolering.test.mjs",
++    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/dialogIsolering.test.mjs",
+     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
+     "check:pages-output": "node scripts/check-pages-output.mjs",
+     "check:struktur": "node scripts/check-spel-struktur.mjs",
+diff --git a/rundor/R1-dela-spel/testid-baslinje.json b/rundor/R1-dela-spel/testid-baslinje.json
+index e3ae7b6..b761b46 100644
+--- a/rundor/R1-dela-spel/testid-baslinje.json
++++ b/rundor/R1-dela-spel/testid-baslinje.json
+@@ -147,6 +147,7 @@
+   "{`skatt-${sk.id}`}": 1,
+   "{`stall-hamta-${d.uid}`}": 1,
+   "{`stall-namn-${d.uid}`}": 1,
++  "\"gava-till-stall\"": 1,
+   "{`stjarnor-${id}`}": 1,
+   "{`uppdrag-${u.id}`}": 1,
+   "{`valj-${d.uid}`}": 1,
+diff --git a/src/spel/Spel.tsx b/src/spel/Spel.tsx
+index 64683d1..595d932 100644
+--- a/src/spel/Spel.tsx
++++ b/src/spel/Spel.tsx
+@@ -32,6 +32,7 @@ import {
+   geHjarta,
+   hoppaDag,
+   hoppaKvall,
++  gavoInbjudanVidTryck,
+   inbjudanAv,
+   komIhagDjur,
+   kvallStyrka,
+@@ -1235,7 +1236,7 @@ export function Spel() {
+         text = rader[Math.floor(Math.random() * rader.length)] ?? text;
+       } else if (djur) text = replikHumor(useMinne.getState().liv[djur.uid]?.humor ?? "glad");
+       visaBubbla(text, h.x, h.y, true, true, true);
+-      if (djur && inbjudanAv(djur.uid) === "gava") {
++      if (djur && gavoInbjudanVidTryck(djur.uid)) {
+         setGavaTill(`egen:${djur.uid}`);
+         gavaRef.current = `egen:${djur.uid}`;
+         setLage("skriv");
+@@ -1788,7 +1789,7 @@ export function Spel() {
+         <HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} />
+       </section>
+ 
+-      {bokOpp ? <BokSkarm stangBok={stangBok} andrar={andrar} panel={panel} lage={lage} setLage={setLage} setForslag={setForslag} byggPuff={byggPuff} onskaOpp={onskaOpp} onskan={onskan} onskaSyns={onskaSyns} onskaDjur={onskaDjur} onskaEx={onskaEx} fyllExempel={fyllExempel} gavaTill={gavaTill} ang={ang} hemma={hemma} varld={varld} forslag={forslag} valjForslag={valjForslag} nejForslag={nejForslag} behover={behover} utfor={utfor} flik={flik} onskaKort={onskaKort} setFlik={setFlik} kort={kort} val={val} funna={funna} onskaIds={onskaIds} kortGang={kortGang} valjKort={valjKort} oppnaSkrivMig={oppnaSkrivMig} text={text} omrade={omrade} visaOnskaHjalp={visaOnskaHjalp} vaknaNu={vaknaNu} vaknaText={vaknaText} skrivTecken={skrivTecken} sudda={sudda} uppFlik={uppFlik} setUppFlik={setUppFlik} uppdragSpar={uppdragSpar} byggSida={byggSida} agdaSidor={agdaSidor} setByggSidaId={setByggSidaId} setByggPuff={setByggPuff} byggFras={byggFras} kopRad={kopRad} lastaSidor={lastaSidor} forsokKop={forsokKop} /> : null}
++      {bokOpp ? <BokSkarm stangBok={stangBok} visaBanner={visaBanner} andrar={andrar} panel={panel} lage={lage} setLage={setLage} setForslag={setForslag} byggPuff={byggPuff} onskaOpp={onskaOpp} onskan={onskan} onskaSyns={onskaSyns} onskaDjur={onskaDjur} onskaEx={onskaEx} fyllExempel={fyllExempel} gavaTill={gavaTill} ang={ang} hemma={hemma} varld={varld} forslag={forslag} valjForslag={valjForslag} nejForslag={nejForslag} behover={behover} utfor={utfor} flik={flik} onskaKort={onskaKort} setFlik={setFlik} kort={kort} val={val} funna={funna} onskaIds={onskaIds} kortGang={kortGang} valjKort={valjKort} oppnaSkrivMig={oppnaSkrivMig} text={text} omrade={omrade} visaOnskaHjalp={visaOnskaHjalp} vaknaNu={vaknaNu} vaknaText={vaknaText} skrivTecken={skrivTecken} sudda={sudda} uppFlik={uppFlik} setUppFlik={setUppFlik} uppdragSpar={uppdragSpar} byggSida={byggSida} agdaSidor={agdaSidor} setByggSidaId={setByggSidaId} setByggPuff={setByggPuff} byggFras={byggFras} kopRad={kopRad} lastaSidor={lastaSidor} forsokKop={forsokKop} /> : null}
+ 
+       {skylt ? <SkyltDialog skylt={skylt} setSkylt={setSkylt} /> : null}
+ 
+diff --git a/src/spel/liv.ts b/src/spel/liv.ts
+index bfe2c2d..f3168ea 100644
+--- a/src/spel/liv.ts
++++ b/src/spel/liv.ts
+@@ -447,6 +447,15 @@ export function inbjudanAv(uid: string): string | null {
+   return HUMOR.humor.find((h) => h.id === id)?.inbjudan ?? null;
+ }
+ 
++const gavoFragat = new Set<string>();
++/** R9I (Christoffers beslut): ett djur som bjuder in till gåva ("sugen") öppnar gåvorutan bara vid FÖRSTA trycket
++ *  per djur och spelomgång. Senare tryck ger vanlig djurreplik och "Till stallet". */
++export function gavoInbjudanVidTryck(uid: string): boolean {
++  if (inbjudanAv(uid) !== "gava" || gavoFragat.has(uid)) return false;
++  gavoFragat.add(uid);
++  return true;
++}
++
+ export function sparaFoto(v: Sparad): string {
+   const s = useMinne.getState();
+   if (s.foton.length >= 60) return ALBUM.texter.full;
+diff --git a/src/spel/r9i.test.ts b/src/spel/r9i.test.ts
+new file mode 100644
+index 0000000..172b7ef
+--- /dev/null
++++ b/src/spel/r9i.test.ts
+@@ -0,0 +1,17 @@
++// R9I: ett "sugen" djur öppnar gåvorutan bara vid första trycket per djur.
++import assert from "node:assert/strict";
++import { test } from "node:test";
++import { gavoInbjudanVidTryck } from "./liv.ts";
++import { useMinne } from "./minne.ts";
++
++const liv = (humor: string) => ({ humor, humorMs: 0, humorLangd: 60_000, favorit: "", favoritHittad: false, hjartan: 0 });
++
++test("R9I: gåvoinbjudan bara vid första trycket per djur", () => {
++  useMinne.setState({ liv: { a: liv("sugen"), b: liv("sugen"), c: liv("glad") } });
++  assert.equal(gavoInbjudanVidTryck("a"), true, "första trycket på a");
++  assert.equal(gavoInbjudanVidTryck("a"), false, "andra trycket på a");
++  assert.equal(gavoInbjudanVidTryck("a"), false, "tredje trycket på a");
++  assert.equal(gavoInbjudanVidTryck("b"), true, "ett annat sugen djur får sin första inbjudan");
++  assert.equal(gavoInbjudanVidTryck("c"), false, "glad bjuder inte in");
++  assert.equal(gavoInbjudanVidTryck("saknas"), false);
++});
+diff --git a/src/spel/ui/BokSkarm.tsx b/src/spel/ui/BokSkarm.tsx
+index 0b5d25d..39d938c 100644
+--- a/src/spel/ui/BokSkarm.tsx
++++ b/src/spel/ui/BokSkarm.tsx
+@@ -14,10 +14,12 @@ import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
+ import { OnskaAnsikte } from "./OnskaAnsikte.tsx";
+ import { bestamdAv, frasForByggOrd, kanEtikett, kortIkon } from "./hjalp.ts";
+ import { FIR, FLIKAR, TANGENTBORD, TEXTER } from "./spelData.ts";
+-import type { Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
++import type { Banner, Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
++import { GavaStallKnapp } from "./Stall.tsx";
+ 
+ type BokSkarmProps = {
+   stangBok: () => void;
++  visaBanner: (texten: string, slag: Banner["slag"]) => void;
+   andrar: boolean;
+   panel: "spel" | "byggbok" | "uppdrag";
+   lage: Lage;
+@@ -69,7 +71,7 @@ type BokSkarmProps = {
+   forsokKop: (slag: "djur" | "bygg", id: string, titel: string, pris: number) => void;
+ };
+ 
+-export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, hemma, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop }: BokSkarmProps) {
++export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, hemma, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop }: BokSkarmProps) {
+   return (
+       <div className="bok-skarm" data-testid="bok-skarm" onClick={stangBok}>
+       <section className={andrar ? "bok andrar" : "bok"} data-andrar={andrar ? "ja" : "nej"} role="dialog" aria-label="Pennans bok" onClick={(e) => e.stopPropagation()}>
+@@ -146,13 +148,15 @@ export function BokSkarm({ stangBok, andrar, panel, lage, setLage, setForslag, b
+                       : (VILDA.djur.find((d) => d.id === gavaTill)?.namn ?? ""),
+                   })}
+                 </p>
++                {gavaTill.startsWith("egen:") ? <GavaStallKnapp uid={gavaTill.slice(5)} visaBanner={visaBanner} klar={stangBok} /> : null}
+               </div>
+             ) : null}
+             {!gavaTill && !andrar && varld === "ang" ? (
+               <div className={aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? "skapar-guide kompakt" : "skapar-guide"} data-testid="skapar-guide">
+                 {aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? null : <p>{hemligt.steg}</p>}
+                 {aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? null : <p className="hemligt-forklaring" data-testid="hemligt-forklaring">{hemligt.forklaring}</p>}
+-                <Ledtradsyta funna={funna} kompakt={!!aktivtSkrivUppdrag(uppdragSpar, platsNu())} />
++                {/* R9I (Christoffer): ingen gåta alls – inte heller räknare eller "Visa gåtan" – medan ett uppdrag pågår */}
++                {aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? null : <Ledtradsyta funna={funna} />}
+                 <details>
+                   <summary>{upplevelse.examplesTitle}</summary>
+                   <div className="ideer">
+diff --git a/src/spel/ui/Stall.tsx b/src/spel/ui/Stall.tsx
+index 2023309..bd42d9d 100644
+--- a/src/spel/ui/Stall.tsx
++++ b/src/spel/ui/Stall.tsx
+@@ -29,7 +29,8 @@ export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: B
+   useEffect(
+     () =>
+       useMinne.subscribe((s, f) => {
+-        if (s.plats !== f.plats) setMal(null);
++        // R9I: djuret har just flyttats till stallet (t.ex. med knappen i gåvorutan) → knappen här är inaktuell
++        if (s.plats !== f.plats || s.stall.length > f.stall.length) setMal(null);
+       }),
+     [],
+   );
+@@ -56,6 +57,23 @@ export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: B
+   );
+ }
+ 
++/** R9I: "Till stallet" inne i gåvorutan, så att knappen aldrig döljs när ett sugen djur öppnar boken. */
++export function GavaStallKnapp({ uid, visaBanner, klar }: { uid: string; visaBanner: (texten: string, slag: Banner["slag"]) => void; klar: () => void }) {
++  return (
++    <button
++      type="button"
++      className="stall-chip i-bok"
++      data-testid="gava-till-stall"
++      onClick={() => {
++        if (useMinne.getState().tillStall(uid)) visaBanner(TEXTER.stall.flytta, "ovr");
++        klar();
++      }}
++    >
++      {TEXTER.stall.chip}
++    </button>
++  );
++}
++
+ /** Menyknappen "Stallet" och listan; "Hämta ut" lägger djuret på platsen barnet är på. */
+ export function StallMeny({ stang }: { stang: () => void }) {
+   const stall = useMinne((s) => s.stall);
+diff --git a/src/styles.css b/src/styles.css
+index 5a16527..9ce1f70 100644
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -753,6 +753,7 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
+ .stall-lista{display:flex;flex-direction:column;gap:6px}
+ .stall-rad{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 6px 6px 14px;border-radius:16px;background:var(--color-cream);font-weight:700}
+ /* R9H: större och fetare djurnamn i stall-listan så att ä/ö syns tydligt (räv ska aldrig kunna läsas som något annat) */
++.stall-chip.i-bok{position:static;transform:none;margin-top:8px}
+ .stall-namn{font-size:1.1875rem;font-weight:800;letter-spacing:.01em;line-height:1.3}
+ .meny-panel .stall-rad button{min-height:44px;padding:6px 14px;font-size:1.0625rem;background:var(--color-moss);color:var(--color-cream);box-shadow:none;text-align:center}
+ .ledtrad-streck{pointer-events:none;user-select:none;-webkit-user-select:none}

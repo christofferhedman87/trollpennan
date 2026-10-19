@@ -117,6 +117,7 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 1. ~~B1.4-fix~~ klar (#78)
 2. ~~R9G~~ klar (#80)
 2b. **R9H** fel 1–5 efter R9G — **skript** (`rundor/R9H-fix/kor.sh`, ingen Build)
+2c. **R9I** sugen djur bjuder in till gåva bara vid första trycket, "Till stallet" i gåvorutan, ingen gåta under uppdrag — **skript** (`git checkout main && git pull && git checkout -b runda-r9i-kod && bash rundor/R9I-fix/kor.sh`). Kräver R9H på main; körs efter R8-2a-merge, eller före om R8-2a inte startat
 3. **R8-2a** platserna fylls: dekor i rätt skala som data (`platser.json` `dekor`), horisont och blobbskuggor per plats — **Build** efter R9H (`rundor/R8-grafik/R8-2 PROMPT.md`, grind `GATE-R8-2.md`: JA). **R8-2b** (kontur på GLB, vatten, FPS-vakt) ritas efter R8-2a
 4. **B2** Skogen — **skript** (`kor-plats.sh skogen`)
 5. **B3** Sjön — **skript**
@@ -713,4 +714,7 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
 | 11 | Karttexten bara på kartan: **avsiktligt** (R9G punkt 7) | – |
 | 12 | Skogen/sjön/grottan nästan tomma: startdekoren ligger mest utanför synfältet (telefon ser bara plats-x ≈ 0,30–0,70) och i fel skala | **R8-2a** (Build) |
 | 13 | DOM-lägen 10–11 inaktuella, 03–05 ostabila · 10 eslint-varningar | **B6.1** |
-| 14 | `lagg-data.mjs --plats` ersätter hela platsraden ur `data-utkast/platser.json` → B2–B4 skulle skriva över R9G:s `start`/`zoner` (och R8-2a:s `dekor`) | **R8-2a** steg 0 (behåll scenfälten) |
+| 14 | ~~`lagg-data.mjs --plats` ersätter hela platsraden~~ → slår nu ihop: `start`/`zoner`/`dekor`/`miljo` behålls från data/platser.json, övrigt från Copilot-utkastet (R8-2a steg 0 är därmed redan gjort) | **R9I** (underlag, klar) |
+| 15 | ~~`kor-plats.sh` hittade inte `plats-prov.mjs` (ligger i `B1.4/`)~~ – B2 hade stoppat med exit 2 | **R9I** (underlag, klar) |
+| 16 | "Sugen" djur öppnade gåvorutan vid varje tryck och dolde "Till stallet" | **R9I** (Christoffer: bara första trycket) |
+| 17 | Gåtrutan ("Hemligt djur att stava (0/181 hittade) Visa gåtan") syntes hopfälld under uppdrag | **R9I** (Christoffer: ingen gåta alls under uppdrag) |
