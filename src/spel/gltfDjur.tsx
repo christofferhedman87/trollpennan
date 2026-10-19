@@ -8,7 +8,7 @@ import { MILJO } from "./miljo.ts";
 
 const LJUSTINT = ljusTint(MILJO.ljus, MILJO.farg.ljusforstark);
 import type { Sparad } from "./brygga.ts";
-import { entitet, forladdaUrls, framVinkel, malhojd, modellUrl as modellUrlAv } from "./entiteter.ts";
+import { entitet, forladdaUrls, framVinkel, modellUrl as modellUrlAv, skalaFor } from "./entiteter.ts";
 import { faestTillbehor } from "./tillbehor/index.ts";
 
 /** Kodbyggd reserv om en GLB saknas. Komponenten skickas in utifrån så den här filen inte drar in hela ängen. */
@@ -265,8 +265,7 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
     c.updateMatrixWorld(true);
     const box = new THREE.Box3().setFromObject(c);
     const h = Math.max(0.001, box.max.y - box.min.y);
-    const mal = malhojd(spec.kropp);
-    const s = mal / h;
+    const s = skalaFor(spec.kropp, h, box.max.x - box.min.x, box.max.z - box.min.z);
     c.scale.setScalar(s);
     c.position.y = -box.min.y * s;
     c.updateMatrixWorld(true);
@@ -381,4 +380,20 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
       </group>
     </group>
   );
+}
+
+/** R3G: en sak (entitet med modell, inte djur) bredvid ett djur – "en kanin med en hink". Hämtas först när den används (lazyload). */
+export function GltfSak({ id }: { id: string }) {
+  const gltf = useGLTF(modellUrlAv(id)!);
+  const klon = useMemo(() => {
+    const c = SkeletonUtils.clone(gltf.scene) as THREE.Object3D;
+    metallNoll(c);
+    c.updateMatrixWorld(true);
+    const box = new THREE.Box3().setFromObject(c);
+    const s = skalaFor(id, box.max.y - box.min.y, box.max.x - box.min.x, box.max.z - box.min.z);
+    c.scale.setScalar(s);
+    c.position.set(-((box.min.x + box.max.x) / 2) * s, -box.min.y * s, -((box.min.z + box.max.z) / 2) * s);
+    return c;
+  }, [gltf.scene, id]);
+  return <primitive object={klon} />;
 }

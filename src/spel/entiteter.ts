@@ -75,6 +75,20 @@ export function malhojd(kropp: string): number {
   return ENTITETER[kropp]?.malhojd ?? 1;
 }
 
+/** R3G: allt med modell som inte är ett djur (föremål, natur, byggnad, mat, fordon, kläder) står still på ängen. */
+export function arSak(kropp: string): boolean {
+  const e = ENTITETER[kropp];
+  return !!e && e.typ !== "djur" && !!modellUrl(kropp);
+}
+
+/** R3G: skala för en modell. Djur: målhöjden är höjden. Saker: målhöjden gäller det största av höjden och 0,6 × längsta sidan,
+ * så platta och långa saker (gaffel, planka, lok) inte blir jättar eller streck. */
+export function skalaFor(kropp: string, h: number, b: number, d: number): number {
+  const mal = malhojd(kropp);
+  const matt = arSak(kropp) ? Math.max(h, 0.6 * Math.max(b, d)) : h;
+  return mal / Math.max(0.001, matt);
+}
+
 export function artFarg(kropp: string): string {
   return ENTITETER[kropp]?.art ?? STANDARD_ART;
 }

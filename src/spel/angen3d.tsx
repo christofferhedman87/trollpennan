@@ -12,8 +12,8 @@ import { replik } from "./replik.ts";
 import { ljud } from "./ljud.ts";
 import { sagaNatt, sagaNu } from "./saga.ts";
 import type { SparatBygge } from "./bygge.ts";
-import { GltfDjur, harModell, type DjurSignal } from "./gltfDjur.tsx";
-import { artFarg, flyger, hoppHojd, simmar, svavar, vikt } from "./entiteter.ts";
+import { GltfDjur, GltfSak, harModell, type DjurSignal } from "./gltfDjur.tsx";
+import { arSak, artFarg, flyger, hoppHojd, malhojd, simmar, svavar, vikt } from "./entiteter.ts";
 import { faestTillbehor, procAnkare } from "./tillbehor/index.ts";
 import { DjurEffekter } from "./effekter.tsx";
 import { KenneyNatur } from "./kenneyNatur.tsx";
@@ -707,6 +707,8 @@ function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
   const flyg = flygare(spec);
   const sim = simmare(spec);
   const ankare = useMemo(() => procAnkare(spec.kropp), [spec.kropp]);
+  const sak = arSak(spec.kropp);
+  const medSaker = spec.tillbehor.map((t) => t.id).filter((id) => id !== spec.kropp && arSak(id));
   useEffect(() => {
     return () => {
       if (upp.current) window.removeEventListener("pointerup", upp.current);
@@ -772,6 +774,14 @@ function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
       g.position.y = y + 0.18 + Math.sin(t * 1.4 + index) * 0.06;
       g.rotation.z = 0;
       g.rotation.y = snurr.current > 0 ? t * 7 : 0.35;
+      signal.current.ror = 0;
+    } else if (sak) {
+      // R3G: en sak står still (bara pop och hopp när barnet trycker).
+      g.position.x = 0;
+      g.position.z = 0;
+      g.position.y = y + lyft;
+      g.rotation.z = 0;
+      g.rotation.y = snurr.current > 0 ? t * 7 : 0;
       signal.current.ror = 0;
     } else {
       g.position.x = sim ? Math.cos(t * 0.7 + index) * 0.22 : wx;
@@ -877,7 +887,7 @@ function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
       <group ref={grupp} position={[0, y, 0]}>
         {harModell(spec.kropp) ? (
           <ModellGren spec={spec}>
-            <Suspense fallback={<DjurForm spec={spec} />}>
+            <Suspense fallback={sak ? null : <DjurForm spec={spec} />}>
               <GltfDjur spec={spec} signal={signal} />
             </Suspense>
           </ModellGren>
@@ -889,6 +899,15 @@ function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
         <ReservAgg spec={spec} />
         <DjurEffekter varelse={spec} ankare={ankare} />
       </group>
+      {medSaker.map((id, i) => (
+        <group key={id} position={[(0.45 + malhojd(spec.kropp) * 0.35) * (i % 2 === 0 ? 1 : -1) * (spec.skala || 1), 0, 0.2 + Math.floor(i / 2) * 0.3]}>
+          <ModellGren spec={{ ...spec, kropp: id }}>
+            <Suspense fallback={null}>
+              <GltfSak id={id} />
+            </Suspense>
+          </ModellGren>
+        </group>
+      ))}
     </group>
   );
 }
