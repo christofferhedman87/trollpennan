@@ -1,10 +1,22 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { TAKT, aventyrKvar, aktivtSkrivUppdrag, bengtssonLagen, kravUppfyllt, nastaSkrivUppdrag, sekTillRedo } from "../uppdragsmotor.ts";
+import entiteterJson from "../../../data/entiteter.json" with { type: "json" };
+import { tolkaMedReserv } from "../../tolk/reserv.ts";
+import { TAKT, aventyrKvar, aktivtSkrivUppdrag, bengtssonLagen, kravUppfylltTolkat, nastaSkrivUppdrag, sekTillRedo } from "../uppdragsmotor.ts";
 import { klarUppdrag, type FlodeSvar } from "../avflode.ts";
 import { useMinne } from "../minne.ts";
 import { NPC_DEL, mineVararMs, valjMine } from "../npc.ts";
 
 const NPC_ID = "bengtsson";
+const ENT = (entiteterJson as { entiteter: Record<string, { typ?: string }> }).entiteter;
+
+/** B1.2: platsen barnet är på (minne.plats när det finns, annars ängen). */
+export const platsNu = (): string => (useMinne.getState() as { plats?: string }).plats ?? "ang";
+
+/** B1.2: blev det barnet skrev ett djur (entitetens typ i data/entiteter.json)? */
+function blevDjur(raw: string): boolean {
+  const t = tolkaMedReserv(raw);
+  return t.typ === "skapad" && ENT[t.varelse.kropp]?.typ === "djur";
+}
 
 type Hjalp = {
   visaBanner: (text: string, slag: "ovr") => void;
@@ -29,11 +41,17 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
     },
     [],
   );
-  const sek = sekTillRedo(status, {
-    djur,
-    spelSek: (Date.now() - start.current) / 1000,
-    sekSedanKlart: klartVid.current === null ? null : (Date.now() - klartVid.current) / 1000,
-  });
+  const plats = platsNu();
+  const sek = sekTillRedo(
+    status,
+    {
+      djur,
+      spelSek: (Date.now() - start.current) / 1000,
+      sekSedanKlart: klartVid.current === null ? null : (Date.now() - klartVid.current) / 1000,
+    },
+    TAKT,
+    plats,
+  );
   // en enda timer som väcker komponenten när väntetiden är slut (ingen tick per sekund)
   useEffect(() => {
     if (sek === null || sek <= 0) return;
@@ -49,12 +67,12 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
   const lagen = [...(tillfallig ? [tillfallig] : []), ...bengtssonLagen(status)];
   const mine = valjMine(NPC_ID, lagen);
   const nytt = sek === 0;
-  const synlig = nytt || !!aktivtSkrivUppdrag(status) || tillfallig !== null;
+  const synlig = nytt || !!aktivtSkrivUppdrag(status, plats) || tillfallig !== null;
 
   function klicka() {
     const s = useMinne.getState().uppdrag;
-    if (aktivtSkrivUppdrag(s)) return oppnaSkapa();
-    const nasta = nastaSkrivUppdrag(s);
+    if (aktivtSkrivUppdrag(s, platsNu())) return oppnaSkapa();
+    const nasta = nastaSkrivUppdrag(s, platsNu());
     if (nasta) {
       useMinne.getState().sattUppdrag(nasta.id, "pagar");
       return oppnaSkapa();
@@ -69,9 +87,9 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
 
   /** Anropas när barnet har skrivit något som blev ett djur/ägg. Skapandet sker alltid; här bara uppdraget. */
   function prova(raw: string): "klar" | "fel" | "ingen" {
-    const u = aktivtSkrivUppdrag(useMinne.getState().uppdrag);
+    const u = aktivtSkrivUppdrag(useMinne.getState().uppdrag, platsNu());
     if (!u?.krav) return "ingen";
-    if (kravUppfyllt(u.krav, raw)) {
+    if (kravUppfylltTolkat(u.krav, raw, !u.krav.djur || blevDjur(raw))) {
       belonaFlode(klarUppdrag(u.id));
       klartVid.current = Date.now();
       blinka("klar_nyss");

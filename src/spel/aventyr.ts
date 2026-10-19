@@ -70,7 +70,9 @@ export type Uppdrag = {
   stjarnor: number;
   skatt: string | null;
   /** R6A-2: löses genom att barnet skriver. Minst `min` olika ord ur `ord` (data/bengtsson.json). */
-  krav?: { ord: string[]; min?: number };
+  krav?: { ord: string[]; min?: number; djur?: boolean };
+  /** B1.2: platsens sista uppdrag, ges bara när finalOk. */
+  final?: boolean;
   /** R6A-3: guidande förslag (knappar) under uppdraget. Varje fras ska uppfylla `krav`; fritext är kvar som alternativ. */
   val?: { rubrik: string; grupper: { etikett: string; forslag: { ord: string; fras: string; agg?: string }[] }[] };
 };
