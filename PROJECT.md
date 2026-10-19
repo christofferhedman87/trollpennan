@@ -105,6 +105,8 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 ---
 
 ## 8. Färdplan: rundor i ordning (följer grundtanken)
+
+**NÄSTA RUNDOR (2026-10-19): `rundor/BLOCK-platser/PLAN.md`.** B0 (Copilots 40 ängsuppdrag + 49 gåtor, skript, körklar) → B1 världsdelar + resan i R3F (B1.1 = R4A dela `angen3d.tsx`, B1.2 motorn per plats, B1.3a/b platser som data + scen, B1.4 resan; Build) → B2 Skogen, B3 Sjön, B4 Grottan (datapaket `kor-plats.sh`, ingen Build; B4.1 ljuskällor Build) → B5 modeller (skript, parallellt) → B6 kontroll, buggfix, Phaser-äventyret bort. Ersätter R4A och R6B nedan; R4B, R5, R7 kvar efter blocken. Copilots data: `rundor/BLOCK-platser/data-utkast/` + `KONTROLL.md`.
 Alla rundor: Grok Build CLI, `--prompt-file`, gren per runda (`build/runda-N`), loggfil, commit efter varje delmål, `RUNDA<N>.md` först. Ingen mätning/utforskning i Build; Arkitekten lägger siffror och filrader i prompten. Kostnadsuppskattningar är min gissning utifrån `rounds.tsv` (low/medium, 11–30 turer = 0,5–3 USD), inte mätta.
 
 **Ordning och varför:** R1 delar `Spel.tsx` (annars krockar allt). R2 gör tillbehören till data (stoppar 10-rundors-läckan). **R3 är rundan som gör grundtanken sann: ordens väg till synlig form** – entitetsmodell, reservform (okänt ord blir ändå något synligt), bulkrutin för modeller. **Ordning ändrad 2026-10-18 (Christoffer): Doktor Bengtsson (uppdragsmotorn, tidigare R6) kommer direkt efter content-motorn (R3C), före byggnader, kamera och Phaser-borttagning.** Ordningen är nu: R3A → R3B → R3C → **R6A (Bengtsson, förd fram; R6A-1 och R6A-2 körda, R6A-3 djuren slutar ge uppdrag + guidande val väntar, R6A-4 de 24 utkasten väntar på Copilot), R3D (andra modellomgången, körklar)** → R4A (dela `angen3d.tsx`) → R4B (kamera) → R5 (byggnader) → R6B (platserna som R3F-scener) → R7 (Phaser bort). Rundornas namn behålls så att ritningar och länkar inte går sönder. Före allt: **R0 publicera `main`** (Christoffers ja, avsnitt 10.2), annars går inget att verifiera spelat.
@@ -198,7 +200,7 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
 - **Storlek:** 8–12 turer, ca 0,4–0,9 USD (gissning). **Grind: JA.** **Osäkert:** 44 modeller utan mätt framsida (arket kontrollerar djuren, inte nio fordon), ord/genus är regler som Copilot ska granska, mobil är inte mätt på telefon. **R3E (Tack-ruta med krediter, inkl. Meshy-raden) och R4A-ritningen skrivs senare** (kvoten).
 
 
-### R4A – Dela `angen3d.tsx` (2202 rader, ren flytt)
+### R4A – Dela `angen3d.tsx` (2202 rader, ren flytt) (= BLOCK-platser B1.1)
 - **Mål:** ingen fil över 800 rader. **Filer (nya, `src/spel/ang/`):** `scen.tsx` (`Scen`, ljus, natt), `djur-i-scen.tsx` (`DjurIScen`, `djurPlats`, `ModellGren`), `natur.tsx` (`TradOchBlommor`, `GrasTuvor`, `Stenar`, `Nackrosor`, `Forgrund`, `NaturGren`), `saga.tsx` (`SagaKamera`, `SagaPenna`, `SagaBoll`, `SagaKanin`, `SagaLjus`), `kamera.tsx` (`KameraRam`, OrbitControls), `ang3d.tsx` (`Angen3D`, `TredGren`, sonden `window.__tred`). **Bevis:** `check-spel-struktur` utökas till `angen3d`; bilder oförändrade pixel för pixel. **Mått:** täckning oförändrad. **Storlek:** medium, 20–25 turer, 2 USD (gissning). **Grind: NEJ idag.**
 
 ### R4B – Kamera: fast Hay Day-liknande vy (avsnitt 16)
@@ -216,7 +218,7 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
 - **Öppet:** Mossa har 24 egna dagliga uppdrag (`data/mossa.json`) på den låsta Gården; de rörs inte i R6A (Christoffer avgör om Bengtsson ersätter dem; `RITNING.md` avsnitt 6).
 - **Kvot:** 25 USD extra men veckokvoten 91 %: R6A-1 är medvetet liten och har stoppregel (commit + rapport senast tur 24 av 30).
 
-### R6B – Platserna (skog, sjö, grotta) som R3F-scener
+### R6B – Platserna (skog, sjö, grotta) som R3F-scener (ERSATT av BLOCK-platser B1–B4)
 - **Mål:** platserna ur `data/platser.json` som R3F-scener med kamera och byggnader från R4B/R5; Bengtssons uppdrag får sina riktiga platser. **Grind: NEJ** (beror på R4B och R5). **Storlek:** stor, 2 rundor, 5–8 USD (gissning).
 
 ### R7 – Phaser bort och menyn upplåst

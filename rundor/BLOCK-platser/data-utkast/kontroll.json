@@ -1,0 +1,106 @@
+{
+ "sammanfattning": {
+  "upprepning": 6,
+  "hemligt_kodritat": 8,
+  "hemligt_finns_redan": 23,
+  "hemligt_blir_agg": 6,
+  "hemligt_saknar_ordrad": 6,
+  "hemligt_ar_kort": 1,
+  "en_ett": 3,
+  "start_utan_modell": 9,
+  "uppdrag_platser": 48,
+  "uppdrag_angen": 40,
+  "hemliga_platser": 30,
+  "gator_angen": 49,
+  "ordregister": 108,
+  "ordregister_med_modell": 83,
+  "nya_ordrader": 0,
+  "repliker": 210,
+  "repliker_besegrad": 0,
+  "stavfel": 218,
+  "stavfel_hemliga": 62,
+  "testfraser": 150,
+  "forslag_platser": 192,
+  "forslag_angen": 160
+ },
+ "fel": {
+  "upprepning": [
+   "skog-liten-van, grotta-liten-upptackare har samma krav ['liten', 'minimal', 'pytteliten']",
+   "skog-varm-van, grotta-varma-oron har samma krav ['filt', 'halsduk', 'jacka', 'luva']",
+   "skog-stor-och-liten, sjo-tva-storlekar, grotta-stor-och-liten har samma krav ['liten', 'stor']",
+   "skog-mysig-lasplats, sjo-las-och-lys, grotta-sken-och-saga har samma krav ['bok', 'lykta']",
+   "sjo-sitt-vid-vattnet, grotta-sittpaus har samma krav ['bänk', 'fåtölj', 'kudde', 'pall']",
+   "sjo-lys-vid-vattnet, grotta-forsta-skenet har samma krav ['ficklampa', 'golvlampa', 'lampa', 'ljus']"
+  ],
+  "hemligt_kodritat": [
+   "plats/skog ekorre: kodritad kropp, ingen GLB (syns, men fulare)",
+   "plats/skog bäver: kodritad kropp, ingen GLB (syns, men fulare)",
+   "ängen gris: kodritad kropp, ingen GLB (syns, men fulare)",
+   "ängen kulting: kodritad kropp, ingen GLB (syns, men fulare)",
+   "ängen dinosaurie: kodritad kropp, ingen GLB (syns, men fulare)",
+   "ängen ekorre: kodritad kropp, ingen GLB (syns, men fulare)",
+   "ängen bäver: kodritad kropp, ingen GLB (syns, men fulare)",
+   "ängen haj: kodritad kropp, ingen GLB (syns, men fulare)"
+  ],
+  "hemligt_finns_redan": [
+   "ekorre: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "bäver: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "hjort: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "kronhjort: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "rådjur: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "vildsvin: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "hare: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "murmeldjur: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "älg: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "tvättbjörn: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "koi: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "karp: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "näbbdjur: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "padda: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "fladdermus: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "spindel: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "troll: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "golem: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "cyklop: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "jätte: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "trollkarl: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "yeti: har redan gåta i ledtradar.json (Copilots version läggs som ny text)",
+   "sjöodjur: har redan gåta i ledtradar.json (Copilots version läggs som ny text)"
+  ],
+  "hemligt_blir_agg": [
+   "plats/sjo utter: ingen entitet, blir ägg (aktivera inte gåtan)",
+   "plats/sjo abborre: ingen entitet, blir ägg (aktivera inte gåtan)",
+   "plats/sjo gädda: ingen entitet, blir ägg (aktivera inte gåtan)",
+   "plats/sjo kräfta: ingen entitet, blir ägg (aktivera inte gåtan)",
+   "plats/sjo svan: ingen entitet, blir ägg (aktivera inte gåtan)",
+   "plats/sjo vattensalamander: ingen entitet, blir ägg (aktivera inte gåtan)"
+  ],
+  "hemligt_saknar_ordrad": [
+   "plats/sjo utter: ingen rad i ord.json (behöver niva 'fritt')",
+   "plats/sjo abborre: ingen rad i ord.json (behöver niva 'fritt')",
+   "plats/sjo gädda: ingen rad i ord.json (behöver niva 'fritt')",
+   "plats/sjo kräfta: ingen rad i ord.json (behöver niva 'fritt')",
+   "plats/sjo svan: ingen rad i ord.json (behöver niva 'fritt')",
+   "plats/sjo vattensalamander: ingen rad i ord.json (behöver niva 'fritt')"
+  ],
+  "hemligt_ar_kort": [
+   "plats/grotta drake: niva kort i ord.json (syns som förslag)"
+  ],
+  "en_ett": [
+   "ordregister rådjur: Copilot 'ett', ord.json 'u' (Copilot har rätt: ord.json rättas i B2)",
+   "ordregister sjöodjur: Copilot 'ett', ord.json 'u' (Copilot har rätt: ord.json rättas i B2)",
+   "ordregister vildsvin: Copilot 'ett', ord.json 'u' (Copilot har rätt: ord.json rättas i B2)"
+  ],
+  "start_utan_modell": [
+   "skogen: bäck (miljolager)",
+   "skogen: stig (miljolager)",
+   "skogen: vägskylt (miljolager)",
+   "sjon: vassrugge (objekt)",
+   "sjon: sandbotten (miljolager)",
+   "sjon: stig (miljolager)",
+   "grottan: sandhög (objekt)",
+   "grottan: vattenpöl (miljolager)",
+   "grottan: stig (miljolager)"
+  ]
+ }
+}
