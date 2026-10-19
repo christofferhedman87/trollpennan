@@ -6,8 +6,8 @@
   "hem": "{djur} går hem till gården."
  },
  "forsta_gangen": [
-  "Nu får du gå ut på äventyr! Tryck på kartan.",
-  "Dina djur kan hjälpa dig. Den som flyger, simmar, lyser eller är jättestor kan ta dig till nya platser."
+  "Nu kan du resa till nya platser! Öppna kartan eller skriv ett platsnamn i boken.",
+  "Skogen öppnas när du har skapat tre djur. Sjön och Grottan kommer senare."
  ],
  "gavoruta": {
   "placeholder": "Skriv en gåva …",

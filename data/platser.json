@@ -1,14 +1,14 @@
 {
  "version": 1,
- "_om": "B1.3a/B1.3b/B1.4: platserna som data. B1.3b-fix: skalor och startobjekt justerade (inga jätteföremål i förgrunden), större vattenytor. x,y 0–1 → världen via yta. miljo = överlagring på data/miljo.json.",
+ "_om": "B1.3a/B1.3b/B1.4/B1.4-fix: platserna som data. B1.4-fix: större yta, markfärg syns, vatten/skala/placering, droppsten lägre.",
  "yta": {
   "x": [
-   -2.4,
-   2.4
+   -5.5,
+   5.5
   ],
   "z": [
-   -3.2,
-   1.0
+   -6.5,
+   2.5
   ]
  },
  "platser": [
@@ -90,10 +90,10 @@
      "id": "vattenyta",
      "typ": "vattenyta",
      "rekt": [
+      0.28,
       0.38,
-      0.42,
-      0.68,
-      0.78
+      0.78,
+      0.82
      ]
     },
     {
@@ -112,14 +112,14 @@
      "ord": "träd",
      "x": 0.12,
      "y": 0.36,
-     "skala": 1.15,
+     "skala": 1.32,
      "zon": "mark"
     },
     {
      "ord": "gran",
      "x": 0.86,
      "y": 0.3,
-     "skala": 1.25,
+     "skala": 1.44,
      "zon": "mark"
     },
     {
@@ -175,7 +175,7 @@
      "ord": "bäck",
      "x": 0.52,
      "y": 0.57,
-     "skala": 0.7,
+     "skala": 0.95,
      "zon": "vattenyta"
     },
     {
@@ -196,14 +196,14 @@
      "ord": "träd",
      "x": 0.28,
      "y": 0.32,
-     "skala": 1.05,
+     "skala": 1.21,
      "zon": "mark"
     },
     {
      "ord": "gran",
      "x": 0.62,
      "y": 0.28,
-     "skala": 1.15,
+     "skala": 1.32,
      "zon": "mark"
     },
     {
@@ -338,8 +338,8 @@
      "typ": "land",
      "rekt": [
       0,
-      0.28,
-      0.4,
+      0.22,
+      0.45,
       1
      ]
     },
@@ -347,10 +347,10 @@
      "id": "vattenyta",
      "typ": "vattenyta",
      "rekt": [
-      0.32,
-      0.28,
+      0.22,
+      0.22,
       0.98,
-      0.92
+      0.95
      ]
     },
     {
@@ -377,16 +377,16 @@
    "start": [
     {
      "ord": "brygga",
-     "x": 0.46,
-     "y": 0.54,
-     "skala": 0.45,
+     "x": 0.48,
+     "y": 0.55,
+     "skala": 0.7,
      "zon": "vattenyta"
     },
     {
      "ord": "sten",
      "x": 0.22,
      "y": 0.66,
-     "skala": 0.35,
+     "skala": 0.32,
      "zon": "strand"
     },
     {
@@ -421,15 +421,8 @@
      "ord": "näckros",
      "x": 0.71,
      "y": 0.52,
-     "skala": 0.35,
+     "skala": 0.4,
      "zon": "vattenyta"
-    },
-    {
-     "ord": "moln",
-     "x": 0.75,
-     "y": 0.12,
-     "skala": 1.0,
-     "zon": "luft"
     },
     {
      "ord": "sten",
@@ -463,14 +456,21 @@
      "ord": "näckros",
      "x": 0.55,
      "y": 0.55,
-     "skala": 0.32,
+     "skala": 0.4,
      "zon": "vattenyta"
     },
     {
      "ord": "näckros",
      "x": 0.78,
      "y": 0.48,
-     "skala": 0.3,
+     "skala": 0.4,
+     "zon": "vattenyta"
+    },
+    {
+     "ord": "näckros",
+     "x": 0.62,
+     "y": 0.62,
+     "skala": 0.38,
      "zon": "vattenyta"
     }
    ],
@@ -600,20 +600,20 @@
      "id": "vattenyta",
      "typ": "vattenyta",
      "rekt": [
-      0.28,
-      0.62,
+      0.22,
       0.55,
-      0.82
+      0.62,
+      0.88
      ]
     },
     {
      "id": "tak",
      "typ": "tak",
      "rekt": [
-      0,
-      0,
-      1,
-      0.32
+      0.1,
+      0.0,
+      0.9,
+      0.28
      ]
     },
     {
@@ -631,15 +631,15 @@
     {
      "ord": "grotta",
      "x": 0.5,
-     "y": 0.42,
-     "skala": 1.35,
+     "y": 0.48,
+     "skala": 1.85,
      "zon": "mark"
     },
     {
      "ord": "klippa",
      "x": 0.12,
      "y": 0.52,
-     "skala": 0.95,
+     "skala": 1.15,
      "zon": "mark"
     },
     {
@@ -667,14 +667,14 @@
      "ord": "droppsten",
      "x": 0.3,
      "y": 0.24,
-     "skala": 0.55,
+     "skala": 0.42,
      "zon": "tak"
     },
     {
      "ord": "klippa",
      "x": 0.82,
      "y": 0.4,
-     "skala": 0.9,
+     "skala": 1.15,
      "zon": "mark"
     },
     {
@@ -688,7 +688,7 @@
      "ord": "kristall",
      "x": 0.22,
      "y": 0.45,
-     "skala": 0.45,
+     "skala": 0.5,
      "zon": "mark"
     },
     {
@@ -702,7 +702,7 @@
      "ord": "droppsten",
      "x": 0.55,
      "y": 0.2,
-     "skala": 0.5,
+     "skala": 0.42,
      "zon": "tak"
     }
    ],

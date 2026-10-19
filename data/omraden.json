@@ -3,7 +3,7 @@
  "karta": {
   "rubrik": "Kartan",
   "knapp": "Ut på äventyr",
-  "hjalp": "Tryck på en plats. Vissa platser behöver ett djur som kan något särskilt.",
+  "hjalp": "Tryck på en plats för att resa dit. Gråa platser är låsta än – då säger Bengtsson Inte riktigt än.",
   "valj_djur": "Vem ska följa med? Välj ett djur som {kan}.",
   "kan_text": {
    "flyga": "kan flyga",

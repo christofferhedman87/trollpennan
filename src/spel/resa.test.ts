@@ -33,3 +33,10 @@ test("B1.4: bytPlats till låst plats ger false; seddaIntro sparas", () => {
   assert.deepEqual(useMinne.getState().seddaIntro, ["skogen"]);
   useMinne.getState().aterstall();
 });
+
+test("B1.4-fix: kartans första-gången-text nämner inte Phaser-djurkrav", async () => {
+  const { default: texter } = await import("../../data/texter-aventyr.json", { with: { type: "json" } });
+  const rad = (texter as { forsta_gangen: string[] }).forsta_gangen.join(" ");
+  assert.ok(!/flyger|simmar|lyser|jättestor/.test(rad), rad);
+  assert.ok(/karta|platsnamn|Skogen/i.test(rad), rad);
+});

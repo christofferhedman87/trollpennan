@@ -101,6 +101,7 @@ position:absolute;inset:0;z-index:1;touch-action:none}
 touch-action:none;display:block}
 .tred-hint{
 position:absolute;top:62px;left:50%;transform:translateX(-50%);z-index:2;margin:0;pointer-events:none;background:var(--color-cream);color:var(--color-ink);font-size:1.125rem;font-weight:800;border-radius:999px;padding:6px 14px;box-shadow:0 3px 0 var(--color-paper-deep);white-space:nowrap}
+.angen-3d:not([data-plats="ang"]) .tred-hint{top:118px}
 .teaser-bubbla{
 position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);z-index:6;margin:0;pointer-events:none;
 background:var(--color-cream);color:var(--color-ink);font-size:1.35rem;font-weight:800;line-height:1.2;
@@ -205,7 +206,7 @@ background:#c8e6c9}
 background:#b3e5fc}
 .plats-knapp.grottan{
 background:#d1c4e9}
-.plats-knapp:disabled{
+.plats-knapp:disabled,.plats-knapp.last{
 opacity:.45}
 .omrade-hud{
 z-index:4;pointer-events:auto;gap:8px;display:flex;position:absolute;bottom:76px;left:8px;right:8px}
@@ -690,7 +691,7 @@ summary:focus-visible { outline: 3px solid #204e8a; outline-offset: 3px; }
 
 /* R6A-2: Bengtsson som klickbar figur på ängen och uppdragsremsan i Skapa-menyn */
 .npc-figur{
-position:absolute;z-index:7;left:4px;bottom:74px;height:var(--npc-h,176px);width:calc(var(--npc-h,176px) * 0.671);padding:0;border:0;background:none;display:block;touch-action:manipulation;filter:drop-shadow(0 3px 4px #2c241659)}
+position:absolute;z-index:7;left:4px;bottom:74px;height:var(--npc-h,176px);width:calc(var(--npc-h,176px) * 0.671);padding:0;border:0;background:none;display:block;overflow:visible;touch-action:manipulation;filter:drop-shadow(0 3px 4px #2c241659)}
 .npc-figur img{
 display:block;width:100%;height:100%;object-fit:contain;object-position:bottom;pointer-events:none;user-select:none}
 .npc-figur.nytt{
@@ -746,4 +747,4 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
 .plats-intro{position:absolute;z-index:9;left:8px;right:8px;bottom:200px;display:flex;gap:10px;align-items:flex-end;padding:10px 12px;border-radius:16px;background:var(--color-cream);box-shadow:0 4px 0 var(--color-paper-deep);pointer-events:none}
 .plats-intro img{width:64px;height:64px;object-fit:contain;flex:none}
 .plats-intro p{margin:0;font-weight:700;font-size:1.05rem;line-height:1.3}
-.npc-fel-text{position:absolute;left:50%;bottom:-4px;transform:translate(-50%,100%);white-space:nowrap;padding:3px 10px;border-radius:999px;background:#2c2416;color:#FFE082;font-size:.95rem;font-weight:800;box-shadow:0 2px 0 #0006}
+.npc-fel-text{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:2;white-space:nowrap;padding:3px 10px;border-radius:999px;background:#2c2416;color:#FFE082;font-size:.95rem;font-weight:800;box-shadow:0 2px 0 #0006;pointer-events:none}
