@@ -20,12 +20,21 @@ const server = http.createServer((req, res) => {
 await new Promise((r) => server.listen(0, "127.0.0.1", r));
 const browser = await chromium.launch({ headless: true, args: ["--no-sandbox", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"] });
 const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, hasTouch: true, deviceScaleFactor: 1, locale: "sv-SE" });
-await ctx.addInitScript(() => {
+// R8-2b/B3–B4: sjön kräver 5 klara uppdrag i skogen, grottan 5 i sjön. Provet lägger in dem som klara i sparningen
+// (ur data/bengtsson.json), annars går det bara att resa till skogen.
+const KEDJA = { sjon: ["skogen"], grottan: ["skogen", "sjon"] };
+const uppdrag = {};
+try {
+  const b = JSON.parse(fs.readFileSync("data/bengtsson.json", "utf8"));
+  const lista = Array.isArray(b) ? b : (b.uppdrag ?? []);
+  for (const omr of KEDJA[platsArg] ?? []) for (const u of lista.filter((x) => x.omrade === omr && !x.final).slice(0, 5)) uppdrag[u.id] = "klar";
+} catch { /* ingen bengtsson.json → bara skogen */ }
+await ctx.addInitScript((upp) => {
   if (!sessionStorage.getItem("f")) {
-    localStorage.setItem("trollpennan-v2", JSON.stringify({ version: 2, introSedd: true }));
+    localStorage.setItem("trollpennan-v2", JSON.stringify({ version: 2, introSedd: true, uppdrag: upp }));
     sessionStorage.setItem("f", "1");
   }
-});
+}, uppdrag);
 const p = await ctx.newPage();
 const fel = [];
 const glb = [];

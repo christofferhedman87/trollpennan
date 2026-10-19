@@ -517,11 +517,11 @@
       "forslag": [
        {
         "ord": "skattkista",
-        "fras": "en kanin vid en stängd skattkista med matsäck"
+        "fras": "en kanin vid en skattkista"
        },
        {
         "ord": "skattkista",
-        "fras": "en räv vid en stängd skattkista med matsäck"
+        "fras": "en räv vid en skattkista"
        }
       ]
      },
@@ -530,11 +530,11 @@
       "forslag": [
        {
         "ord": "kylskåp",
-        "fras": "en katt vid ett stängt kylskåp med matsäck"
+        "fras": "en katt vid ett kylskåp"
        },
        {
         "ord": "kylskåp",
-        "fras": "en hund vid ett stängt kylskåp med matsäck"
+        "fras": "en hund vid ett kylskåp"
        }
       ]
      }
@@ -841,11 +841,11 @@
       "forslag": [
        {
         "ord": "tält",
-        "fras": "en kanin i ett tält med en lykta utanför"
+        "fras": "en kanin i ett tält med en lykta"
        },
        {
         "ord": "tält",
-        "fras": "en igelkott i ett tält med en lykta utanför"
+        "fras": "en igelkott i ett tält med en lykta"
        }
       ]
      },
@@ -854,11 +854,11 @@
       "forslag": [
        {
         "ord": "lykta",
-        "fras": "en räv i ett tält med en lykta utanför"
+        "fras": "en räv i ett tält med en lykta"
        },
        {
         "ord": "lykta",
-        "fras": "en hund i ett tält med en lykta utanför"
+        "fras": "en hund i ett tält med en lykta"
        }
       ]
      }
@@ -1064,11 +1064,11 @@
       "forslag": [
        {
         "ord": "stock",
-        "fras": "en hund på en stock vid sjön"
+        "fras": "en hund på en stock vid stranden"
        },
        {
         "ord": "sten",
-        "fras": "en groda på en sten vid sjön"
+        "fras": "en groda på en sten vid stranden"
        }
       ]
      },
@@ -1077,11 +1077,11 @@
       "forslag": [
        {
         "ord": "stol",
-        "fras": "en katt på en stol vid sjön"
+        "fras": "en katt på en stol vid stranden"
        },
        {
         "ord": "fåtölj",
-        "fras": "en kanin i en fåtölj vid sjön"
+        "fras": "en kanin i en fåtölj vid stranden"
        }
       ]
      }
@@ -1305,11 +1305,11 @@
       "forslag": [
        {
         "ord": "tält",
-        "fras": "en kanin i ett tält vid sjön"
+        "fras": "en kanin i ett tält vid stranden"
        },
        {
         "ord": "koja",
-        "fras": "en anka i en koja vid sjön"
+        "fras": "en anka i en koja vid stranden"
        }
       ]
      },
@@ -1318,11 +1318,11 @@
       "forslag": [
        {
         "ord": "hus",
-        "fras": "en katt i ett hus vid sjön"
+        "fras": "en katt i ett hus vid stranden"
        },
        {
         "ord": "skjul",
-        "fras": "en hund i ett skjul vid sjön"
+        "fras": "en hund i ett skjul vid stranden"
        }
       ]
      }
@@ -1364,7 +1364,7 @@
       "forslag": [
        {
         "ord": "lykta",
-        "fras": "en kanin med en lykta vid sjön"
+        "fras": "en kanin med en lykta vid stranden"
        },
        {
         "ord": "lykta",
@@ -1580,11 +1580,11 @@
       "forslag": [
        {
         "ord": "fisk",
-        "fras": "en röd fisk i vattnet och en blå katt på stranden"
+        "fras": "en röd fisk och en blå katt på stranden"
        },
        {
         "ord": "hund",
-        "fras": "en röd fisk i vattnet och en blå hund på stranden"
+        "fras": "en röd fisk och en blå hund på stranden"
        }
       ]
      },
@@ -1593,11 +1593,11 @@
       "forslag": [
        {
         "ord": "anka",
-        "fras": "en röd anka i vattnet och en blå kanin på stranden"
+        "fras": "en röd anka och en blå kanin på stranden"
        },
        {
         "ord": "groda",
-        "fras": "en röd groda i vattnet och en blå gås på stranden"
+        "fras": "en röd groda och en blå gås på stranden"
        }
       ]
      }
@@ -1742,11 +1742,11 @@
       "forslag": [
        {
         "ord": "fisk",
-        "fras": "en fisk i ett badkar med vatten i en båt"
+        "fras": "en fisk i ett badkar i en båt"
        },
        {
         "ord": "båt",
-        "fras": "en liten fisk i ett badkar med vatten i en båt"
+        "fras": "en liten fisk i ett badkar i en båt"
        }
       ]
      },
@@ -1755,11 +1755,11 @@
       "forslag": [
        {
         "ord": "fisk",
-        "fras": "en blå fisk i ett badkar med vatten i en båt"
+        "fras": "en blå fisk i ett badkar i en båt"
        },
        {
         "ord": "båt",
-        "fras": "en gul fisk i ett badkar med vatten i en båt"
+        "fras": "en gul fisk i ett badkar i en båt"
        }
       ]
      }
@@ -2537,11 +2537,11 @@
       "forslag": [
        {
         "ord": "koja",
-        "fras": "en mus i en koja med en lykta utanför"
+        "fras": "en mus i en koja med en lykta"
        },
        {
         "ord": "koja",
-        "fras": "en kanin i en koja med en lykta utanför"
+        "fras": "en kanin i en koja med en lykta"
        }
       ]
      },
@@ -2550,11 +2550,11 @@
       "forslag": [
        {
         "ord": "lykta",
-        "fras": "en katt i en koja med en lykta utanför"
+        "fras": "en katt i en koja med en lykta"
        },
        {
         "ord": "lykta",
-        "fras": "en hund i en koja med en lykta utanför"
+        "fras": "en hund i en koja med en lykta"
        }
       ]
      }
@@ -2599,11 +2599,11 @@
       "forslag": [
        {
         "ord": "bord",
-        "fras": "en hund bredvid ett bord med fyra ben"
+        "fras": "en hund bredvid ett bord"
        },
        {
         "ord": "stol",
-        "fras": "en katt bredvid en stol med fyra ben"
+        "fras": "en katt bredvid en stol"
        }
       ]
      },
@@ -2612,11 +2612,11 @@
       "forslag": [
        {
         "ord": "säng",
-        "fras": "en kanin bredvid en säng med fyra ben"
+        "fras": "en kanin bredvid en säng"
        },
        {
         "ord": "soffa",
-        "fras": "en mus bredvid en soffa med fyra ben"
+        "fras": "en mus bredvid en soffa"
        }
       ]
      }

@@ -1,0 +1,41 @@
+diff --git a/src/spel/uppdragsmotor.test.ts b/src/spel/uppdragsmotor.test.ts
+index 3a42c8b..652798a 100644
+--- a/src/spel/uppdragsmotor.test.ts
++++ b/src/spel/uppdragsmotor.test.ts
+@@ -55,7 +55,8 @@ test("data: skriv-uppdragen följer reglerna och krockar inte med äventyrsuppdr
+   assert.equal(new Set(ALLA_UPPDRAG.map((u) => u.id)).size, ALLA_UPPDRAG.length, "id:n är unika");
+   for (const u of SKRIV) {
+     assert.equal(u.givare, "bengtsson");
+-    assert.equal(u.omrade, "ang");
++    // B2–B4: platsernas uppdrag ligger i samma lista (omrade = platsens id)
++    assert.ok(["ang", "skogen", "sjon", "grottan"].includes(u.omrade), `${u.id}: okänt område ${u.omrade}`);
+     assert.equal(u.typ, "skriv");
+     assert.equal(u.granskad, false, `${u.id}: utkast tills Copilot granskat`);
+     assert.ok(u.text_bengtsson!.length <= 130 && u.klart_bengtsson!.length <= 100, u.id);
+@@ -124,7 +125,8 @@ test("guidande val: varje skriv-uppdrag har förslag, och varje förslag uppfyll
+       assert.equal(tolkaMedReserv(f.fras).typ, "skapad", `${u.id}: "${f.fras}" ger inget djur, då körs kontrollen aldrig`);
+     }
+     assert.equal(new Set(forslag.map((f) => f.fras)).size, forslag.length, `${u.id}: dubbletter`);
+-    assert.ok(u.krav!.ord.length >= 8, `${u.id}: fritext räknas fortfarande (kravlistan är kvar)`);
++    // Ängens uppdrag har breda kravlistor (fritext). Platsernas (B2–B4, Copilot) får vara smalare men minst min.
++    if (u.omrade === "ang") assert.ok(u.krav!.ord.length >= 8, `${u.id}: fritext räknas fortfarande (kravlistan är kvar)`);
+   }
+ });
+ 
+@@ -142,11 +144,14 @@ test("B1.2: krav.djur löses inte av ett föremål", () => {
+ });
+ 
+ test("B1.2: uppdragen följer platsen och final kräver finalOk", () => {
+-  assert.equal(nastaSkrivUppdrag({}, "skogen"), undefined);
++  assert.equal(nastaSkrivUppdrag({}, "ingenstans"), undefined, "en plats utan uppdrag har inget nästa");
+   assert.equal(nastaSkrivUppdrag({})?.id, "kanin-fryser");
+   assert.equal(nastaSkrivUppdrag({}, "ang")?.id, "kanin-fryser");
+   const forst = nastaSkrivUppdrag({}, "ang")!;
+   assert.equal(aktivtSkrivUppdrag({ [forst.id]: "pagar" }, "skogen"), undefined, "ängens uppdrag syns inte i skogen");
++  // B2–B4: skogens uppdrag (om inlagda) hör bara till skogen
++  const skog = nastaSkrivUppdrag({}, "skogen");
++  if (skog) assert.equal(skog.omrade, "skogen");
+   assert.equal(aktivtSkrivUppdrag({ [forst.id]: "pagar" }, "ang")?.id, forst.id);
+-  assert.equal(sekTillRedo({}, { djur: 99, spelSek: 999, sekSedanKlart: null }, TAKT, "skogen"), null, "inget att bjuda in till i skogen");
++  assert.equal(sekTillRedo({}, { djur: 99, spelSek: 999, sekSedanKlart: null }, TAKT, "ingenstans"), null, "inget att bjuda in till på en plats utan uppdrag");
+ });
