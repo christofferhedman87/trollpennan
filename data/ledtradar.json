@@ -52,13 +52,14 @@
    "granskad": false
   },
   "padda": {
-   "gata": "Min hud är knottrig och jag går ofta hellre än hoppar. Vem är jag?",
+   "gata": "Med knottrig hud går jag ofta hellre än hoppar, men mina ägg lägger jag i vatten.",
    "forsta": "P",
    "langd": 5,
    "gata_latt": "Jag liknar en groda men har torrare, knottrig hud.",
-   "bengtsson_fore": "Vem promenerar så lugnt vid dammen?",
-   "bengtsson_klart": "En padda! Vilken trevlig liten promenadkompis!",
-   "granskad": false
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, padda! Vilken fin upptäckt du skrev fram!",
+   "granskad": false,
+   "omrade": "sjon"
   },
   "ljusblå": {
    "gata": "Färgen på himlen en solig sommardag.",
@@ -766,16 +767,24 @@
    "granskad": false
   },
   "koi": {
-   "gata": "En vacker orangevit karp som simmar i japanska trädgårdsdammar.",
+   "gata": "Som en färgglad målning simmar jag i en damm, ofta i vitt, rött och svart.",
    "forsta": "K",
    "langd": 3,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en japansk prydnadskarp med ett namn på tre bokstäver.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, koi! Vilken fin upptäckt du skrev fram!",
+   "omrade": "sjon"
   },
   "karp": {
-   "gata": "En stor sötvattensfisk med små morrhår vid munnen som bor i dammen.",
+   "gata": "Med stora fjäll och små skäggtrådar vid munnen söker jag mat på sjöns botten.",
    "forsta": "K",
    "langd": 4,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är en kraftig sötvattensfisk, ofta brun eller gulbrun, med skäggtrådar.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, karp! Vilken fin upptäckt du skrev fram!",
+   "omrade": "sjon"
   },
   "piraya": {
    "gata": "En liten farlig sötvattensfisk med vassa tänder i Sydamerika.",
@@ -1110,10 +1119,14 @@
    "granskad": false
   },
   "näbbdjur": {
-   "gata": "Ett konstigt djur från Australien med anknäbb, bäverstjärt och lägger ägg.",
+   "gata": "Med päls, bred näbb och platt svans simmar jag i Australien, och jag lägger ägg.",
    "forsta": "N",
    "langd": 8,
-   "granskad": false
+   "granskad": false,
+   "gata_latt": "Jag är ett däggdjur med en näbb som liknar en ankas.",
+   "bengtsson_fore": "Psst! Här finns en hemlig vän att skriva fram. Vill du höra min gåta?",
+   "bengtsson_klart": "Ja, näbbdjur! Vilken fin upptäckt du skrev fram!",
+   "omrade": "sjon"
   },
   "noshörning": {
    "gata": "Ett tjockhudat djur med ett stort horn på nosen.",
