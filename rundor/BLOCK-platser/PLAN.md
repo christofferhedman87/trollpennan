@@ -11,7 +11,7 @@ Underlag: Copilots manus + data (`data-utkast/`, kontroll i `KONTROLL.md`). Dood
 7. Copilots relationskrav ("i tältet med lyktan utanför") kontrolleras inte ordagrant: motorn godkänner när rätt ord finns (generöst, ingen skam). 16 av 150 testfall väntar sig strängare; de märks i B6.1. ERROR-automaten behålls (Christoffers ja), Copilots "Inte riktigt än" används som text under den.
 
 ## B0 – Ängens uppdragsbatteri (skript, 0 USD) – Grind: JA
-- **B0.1** `bash rundor/BLOCK-platser/B0-angen/kor.sh` → data/bengtsson.json +40, ledtradar.json 49 nya texter (gata_latt, bengtsson_fore/klart), ord.json genus rådjur/vildsvin/sjöodjur = ett, testpatch (testet räknade exakt 3 uppdrag). Bevis: förslagsprov 174/174, test:product, typecheck:pages, build:pages. Exit 2/3/4 = stopp.
+- **B0.1** `bash rundor/BLOCK-platser/B0-angen/kor.sh` → data/bengtsson.json +40, ledtradar.json 49 nya texter (gata_latt, bengtsson_fore/klart), ord.json genus rådjur/vildsvin/sjöodjur = ett, testpatch (testet räknade exakt 3 uppdrag). Förutsätter R9D i main; adjektiven mjuk, fluffig, varm, kall, hög, låg, långsam, fin, sjungande som egenskaper (b0-ord.patch) och 17 omskrivna fraser → 0 ägg. Bevis: förslagsprov 174/174 (B0:s 160/160), 0 ger ägg, test:product, typecheck:pages, build:pages. Exit 2/3/4 = stopp.
 
 ## B1 – Världsdelar och resan (Build ×5, ca 6–8 USD)
 - **B1.1 Dela `angen3d.tsx` (=R4A).** Ren flytt till `src/spel/ang/*.tsx`, noll beteendeändring. Bevis: bilder 01–02 lika före/efter, ingen fil >800 rader, testid oförändrade. 25–30 turer, ca 1,5–2 USD. **Grind: JA.**
