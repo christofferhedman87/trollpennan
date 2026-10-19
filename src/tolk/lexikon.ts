@@ -1,5 +1,6 @@
 import { avstand, felgrans } from "./avstand.ts";
 import { ORD } from "./data.ts";
+import entiteterJson from "../../data/entiteter.json" with { type: "json" };
 import type { Forled, Ord } from "./typer.ts";
 
 export const ALLA = ORD.ord;
@@ -13,6 +14,65 @@ for (const o of ALLA) {
     if (!prev) formMap.set(f, o);
     else if (prev.klass !== "djur" && o.klass === "djur") formMap.set(f, o);
   }
+}
+
+// R3G: varje entitet med modell som inte är ett djur (föremål, natur, byggnad, mat, fordon, kläder) blir ett ord av klass "foremal".
+// Härleds ur entiteter.json (fältet ord, annars nyckeln) och böjs med en regel för båda genus. Ett ord som redan finns i ord.json vinner alltid.
+const VOKAL = /[aeiouyåäö]$/;
+export function foremalsFormer(w: string): { singular: string[]; plural: string[] } {
+  const v = VOKAL.test(w);
+  const singular = [w, v ? w + "n" : w + "en", v ? w + "t" : w + "et"];
+  const plural = new Set<string>();
+  if (w.endsWith("a")) plural.add(w.slice(0, -1) + "or");
+  else if (w.endsWith("e")) plural.add(w.slice(0, -1) + "ar");
+  else if (!v) {
+    plural.add(w + "ar");
+    plural.add(w + "er");
+  }
+  if (v) plural.add(w + "na");
+  for (const p of [...plural]) if (!p.endsWith("na")) plural.add(p + "na");
+  return {
+    singular: [...new Set(singular)],
+    plural: [...plural].filter((p) => !singular.includes(p)),
+  };
+}
+
+type EntRad = { typ: string; modell: string | null; ord?: string[] };
+export const FOREMAL: Ord[] = [];
+// Ord som redan betyder något i grammatiken (förled som "ljus", förstärkning, funktionsord) tas aldrig.
+const reserverade = new Set<string>([
+  ...Object.keys(ORD.sammansattningar.forled),
+  ...Object.keys(ORD.funktionsord.forstarkning),
+  ...Object.keys(ORD.funktionsord.antal),
+  ...ORD.funktionsord.artiklar,
+  ...ORD.funktionsord.som,
+  ...ORD.funktionsord.med,
+  ...ORD.funktionsord.och,
+  ...ORD.funktionsord.kan,
+]);
+const sakRader = Object.entries(
+  (entiteterJson as { entiteter: Record<string, EntRad> }).entiteter,
+).filter(([, e]) => e.typ !== "djur" && !!e.modell);
+// Ett ord går först till entiteten med samma nyckel ("lok" → lok, inte ånglok), sedan i dataordning.
+const sakOrd: [string, string][] = [];
+for (const [id, e] of sakRader)
+  for (const w of e.ord?.length ? e.ord : [id]) if (w === id) sakOrd.push([id, w]);
+for (const [id, e] of sakRader)
+  for (const w of e.ord?.length ? e.ord : [id]) if (w !== id) sakOrd.push([id, w]);
+for (const [id, w] of sakOrd) {
+  if (!w || w.includes(" ") || formMap.has(w) || reserverade.has(w)) continue;
+  const { singular, plural } = foremalsFormer(w);
+  const o: Ord = {
+    id: w,
+    klass: "foremal",
+    niva: "fritt",
+    visa: w,
+    former: [...singular, ...plural],
+    plural,
+    del: { kropp: id },
+  };
+  FOREMAL.push(o);
+  for (const f of o.former) if (!formMap.has(f) && !reserverade.has(f)) formMap.set(f, o);
 }
 
 export type Fras = { ord: Ord; slots: string[][]; valfritt: boolean };
@@ -62,7 +122,9 @@ const funkKan = new Set(ORD.funktionsord.kan);
 
 export type Funk = "som" | "med" | "och" | "kan";
 
-export function lasToken(token: string):
+export function lasToken(
+  token: string,
+):
   | { t: "antal"; n: number }
   | { t: "artikel" }
   | { t: "boost"; dir: string; skala: number; raw: string }
@@ -96,7 +158,12 @@ export type Suffix = { ord: Ord; form: string; kind: "djur" | "tillbehor" };
 const suffixen: Suffix[] = [];
 for (const o of ALLA) {
   if (o.klass !== "djur" && o.klass !== "tillbehor") continue;
-  const former = new Set<string>([o.id, o.visa, ...(o.former ?? []), ...(o.sammansattningsled ?? [])]);
+  const former = new Set<string>([
+    o.id,
+    o.visa,
+    ...(o.former ?? []),
+    ...(o.sammansattningsled ?? []),
+  ]);
   for (const form of former) {
     if (form.length >= 3) suffixen.push({ ord: o, form, kind: o.klass });
   }
@@ -185,6 +252,7 @@ export function hemligaAntal(): number {
 }
 
 export function arPluralForm(o: Ord, form: string): boolean {
+  if (o.klass === "foremal") return !!o.plural?.includes(form);
   if (o.genus === "pl") return true;
   if (form === o.visa || form === o.id) return false;
   if (!o.former.includes(form) && form !== o.visa) {

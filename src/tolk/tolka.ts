@@ -405,6 +405,13 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
       continue;
     }
     if (en.t === "artikel") continue;
+    if (en.t === "ord" && en.o.klass === "foremal") {
+      // R3G: genus för ett härlett föremål tas från barnets egen artikel ("ett lok") eller bestämd form ("loket").
+      const fore = tokens[i - 1];
+      const n = fore === "ett" || fore === "mitt" || token === en.o.visa + "et" || token === en.o.visa + "t";
+      sem.push({ t: "ord", o: { ...en.o, genus: n ? "n" : "u" }, form: token });
+      continue;
+    }
     if (en.t === "antal") sem.push({ t: "antal", n: en.n });
     else if (en.t === "boost") sem.push({ t: "boost", dir: en.dir, skala: en.skala });
     else if (en.t === "funk") sem.push({ t: "funk", v: en.v });
@@ -518,6 +525,15 @@ function byggFran(sem: Sem[]): Bygg | "sparr" {
       if (s.t === "komp" && s.suffix.kind === "djur") sist = { o: s.suffix.ord, form: s.suffix.form, komp: s };
     }
   }
+  // R3G: inget djur alls → första föremålet blir det som står på ängen ("ett lok", "en ek").
+  let ensamSak: Ord | null = null;
+  if (!sist) {
+    const f = sem.find((s) => s.t === "ord" && s.o.klass === "foremal");
+    if (f && f.t === "ord") {
+      sattDjur(b, f.o, f.form);
+      ensamSak = f.o;
+    }
+  }
   if (sist?.komp) {
     const sparr = applyKomp(b, sist.komp, "fore", false);
     if (sparr === "sparr") return "sparr";
@@ -572,6 +588,16 @@ function byggFran(sem: Sem[]): Bygg | "sparr" {
         /* redan markerad */
       }
       if (o.signatur && (!sist || o.id !== sist.o.id)) laggFormaga(b, o.signatur, null);
+      continue;
+    }
+    if (o.klass === "foremal") {
+      // R3G: ett föremål bredvid djuret ("en kanin med en hink"). Bilden är entitetens nyckel; ängen ritar modellen.
+      if (o === ensamSak) continue;
+      const bild = o.del?.kropp ?? o.id;
+      if (bild === b.kropp || b.tillbehor.some((t) => t.bild === bild)) continue;
+      const fargOrd = b.vantande;
+      b.tillbehor.push({ ord: o, bild, fargOrd, fargHex: fargOrd?.del?.farg?.startsWith("#") ? fargOrd.del.farg : null, glans: false });
+      b.vantande = null;
       continue;
     }
     markera(b, o.id, true);

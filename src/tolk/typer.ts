@@ -5,7 +5,9 @@ export type Klass =
   | "monster"
   | "formaga"
   | "tillbehor"
-  | "egenskap";
+  | "egenskap"
+  /** R3G: härlett ur data/entiteter.json (föremål, natur, byggnad, mat, fordon med modell). Står inte i ord.json. */
+  | "foremal";
 
 export type Del = {
   kropp?: string;
@@ -39,6 +41,8 @@ export type Ord = {
   signatur?: string;
   ordklass?: string;
   del?: Del;
+  /** R3G (klass foremal): vilka former som är plural, eftersom genus inte är känt i förväg. */
+  plural?: string[];
 };
 
 export type Forled = {

@@ -342,3 +342,32 @@ test("test-fraser.json", () => {
   }
 });
 
+
+// R3G: föremål, natur, byggnad, mat och fordon med modell blir egna entiteter (härledda ur entiteter.json, ingen kod per ord).
+test("R3G: ett föremål ensamt blir kroppen, inte ett ägg", () => {
+  for (const [fras, kropp, formel] of [
+    ["ett lok", "lok", "ett lok"],
+    ["en hink", "hink", "en hink"],
+    ["en ek", "ek", "en ek"],
+    ["ambulans", "ambulans", "en ambulans"],
+  ] as const) {
+    const u = tolka(fras);
+    assert.equal(u.typ, "skapad", fras);
+    if (u.typ !== "skapad") continue;
+    assert.equal(u.varelse.kropp, kropp, fras);
+    assert.equal(u.varelse.formel, formel, fras);
+  }
+});
+
+test("R3G: föremål efter med står bredvid djuret; djuret är kvar som kropp", () => {
+  const u = tolka("en kanin med en hink");
+  assert.equal(u.typ, "skapad");
+  if (u.typ !== "skapad") return;
+  assert.equal(u.varelse.kropp, "kanin");
+  assert.deepEqual(u.varelse.tillbehor.map((t) => t.id), ["hink"]);
+  assert.equal(u.varelse.formel, "en kanin med hink");
+  const h = tolka("en hatt");
+  assert.notEqual(h.typ === "skapad" ? h.varelse.kropp : "", "hatt", "ord.json-tillbehör ändras inte");
+  const t = tolka("tre hinkar");
+  assert.equal(t.typ === "skapad" ? t.antal : 0, 3);
+});
