@@ -28,10 +28,11 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 |---|---|---|---|---|
 | gobkit-cc0-djur-och-natur | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 59 |
 | kaykit-block-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/block-bits | 1 |
-| kaykit-city-builder-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/city-builder-bits | 3 |
+| kaykit-city-builder-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/city-builder-bits | 6 |
 | kaykit-furniture-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/furniture-bits | 10 |
 | kaykit-halloween-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/halloween-bits | 5 |
 | kaykit-holiday-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/holiday-bits | 12 |
+| kaykit-resource-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/resource-bits | 11 |
 | kaykit-restaurant-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/restaurant-bits | 17 |
 | kaykit-rpg-tools-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/rpg-tools-bits | 25 |
 | kenney-blocky-characters | Kenney | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 1 |
@@ -51,7 +52,7 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | kenney-pirate-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/pirate-kit | 12 |
 | kenney-platformer-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/platformer-kit | 11 |
 | kenney-space-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/space-kit | 8 |
-| kenney-survival-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/survival-kit | 8 |
+| kenney-survival-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/survival-kit | 10 |
 | kenney-toy-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/toy-car-kit | 4 |
 | kenney-train-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/train-kit | 12 |
 | oga-cc0 | Teh_Bucket | CC0-1.0 | https://opengameart.org/content/hats-clothing-props | 7 |

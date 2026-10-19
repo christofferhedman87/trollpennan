@@ -594,6 +594,22 @@
     "sagblad": { "typ": "foremal", "kategori": "verktyg", "modell": "sagblad", "malhojd": 0.5, "art": "#90A4AE", "forladda": false, "ord": ["sågblad"], "inlagd": "R3F-M8" },
     "myntstapel": { "typ": "foremal", "kategori": "föremål", "modell": "myntstapel", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["myntstapel", "skatt", "guldhög"], "inlagd": "R3F-M8" },
     "bors": { "typ": "foremal", "kategori": "föremål", "modell": "bors", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["börs"], "inlagd": "R3F-M8" },
-    "pumpalykta": { "typ": "foremal", "kategori": "föremål", "modell": "pumpalykta", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["pumpalykta", "halloweenpumpa"], "inlagd": "R3F-M8" }
+    "pumpalykta": { "typ": "foremal", "kategori": "föremål", "modell": "pumpalykta", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["pumpalykta", "halloweenpumpa"], "inlagd": "R3F-M8" },
+    "container": { "typ": "foremal", "kategori": "föremål", "modell": "container", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["container", "sopcontainer"], "inlagd": "R3F-M9" },
+    "brandpost": { "typ": "foremal", "kategori": "föremål", "modell": "brandpost", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["brandpost"], "inlagd": "R3F-M9" },
+    "trafikljus": { "typ": "foremal", "kategori": "föremål", "modell": "trafikljus", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["trafikljus"], "inlagd": "R3F-M9" },
+    "guldtacka": { "typ": "foremal", "kategori": "föremål", "modell": "guldtacka", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["guldtacka"], "inlagd": "R3F-M9" },
+    "guldklimp": { "typ": "foremal", "kategori": "föremål", "modell": "guldklimp", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["guldklimp", "guldklump"], "inlagd": "R3F-M9" },
+    "silvertacka": { "typ": "foremal", "kategori": "föremål", "modell": "silvertacka", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["silvertacka"], "inlagd": "R3F-M9" },
+    "jarntacka": { "typ": "foremal", "kategori": "föremål", "modell": "jarntacka", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["järntacka", "järn"], "inlagd": "R3F-M9" },
+    "kopparstang": { "typ": "foremal", "kategori": "föremål", "modell": "kopparstang", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["kopparstång", "koppar"], "inlagd": "R3F-M9" },
+    "tegelsten": { "typ": "foremal", "kategori": "föremål", "modell": "tegelsten", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["tegelsten", "sten"], "inlagd": "R3F-M9" },
+    "planka": { "typ": "foremal", "kategori": "föremål", "modell": "planka", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["planka", "bräda"], "inlagd": "R3F-M9" },
+    "plankstapel": { "typ": "foremal", "kategori": "föremål", "modell": "plankstapel", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["plankstapel"], "inlagd": "R3F-M9" },
+    "tyg": { "typ": "foremal", "kategori": "föremål", "modell": "tyg", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["tyg", "tygrulle"], "inlagd": "R3F-M9" },
+    "lastpall": { "typ": "foremal", "kategori": "föremål", "modell": "lastpall", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["lastpall"], "inlagd": "R3F-M9" },
+    "kugghjul": { "typ": "foremal", "kategori": "föremål", "modell": "kugghjul", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["kugghjul", "tandhjul"], "inlagd": "R3F-M9" },
+    "tra": { "typ": "foremal", "kategori": "föremål", "modell": "tra", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["trä", "ved"], "inlagd": "R3F-M9" },
+    "plankor": { "typ": "foremal", "kategori": "föremål", "modell": "plankor", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["plankor", "brädor"], "inlagd": "R3F-M9" }
   }
 }
