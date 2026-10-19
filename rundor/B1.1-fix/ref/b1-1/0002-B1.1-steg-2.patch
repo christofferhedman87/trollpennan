@@ -1,0 +1,1487 @@
+From 28eb62e7fb409be9c146b968bfcc8d6c087e79cc Mon Sep 17 00:00:00 2001
+From: christofferhedman87 <christofferhedman87@gmail.com>
+Date: Mon, 19 Oct 2026 15:09:05 +0200
+Subject: [PATCH 2/5] B1.1: steg 2
+
+---
+ src/spel/ang/dekor.tsx | 713 +++++++++++++++++++++++++++++++++++++++++
+ src/spel/angen3d.tsx   | 706 +---------------------------------------
+ 2 files changed, 715 insertions(+), 704 deletions(-)
+ create mode 100644 src/spel/ang/dekor.tsx
+
+diff --git a/src/spel/ang/dekor.tsx b/src/spel/ang/dekor.tsx
+new file mode 100644
+index 0000000..b69a434
+--- /dev/null
++++ b/src/spel/ang/dekor.tsx
+@@ -0,0 +1,713 @@
++import { useFrame } from "@react-three/fiber";
++import { useLayoutEffect, useMemo, useRef } from "react";
++import * as THREE from "three";
++import { BLOMMOR, GRAN, TRAD, _blomE, _blomM, _blomP, _blomQ, _blomS, _dir } from "./delat.ts";
++import { TOON_MAP } from "../angen3d.tsx";
++
++export function Sond() {
++  const fps = useRef({ n: 0, t: 0 });
++  useFrame((state) => {
++    const p = state.camera.position;
++    const t = window.__tred ?? { x: 0, y: 0, z: 0, zoom: 0 };
++    t.x = Math.round(p.x * 100) / 100;
++    t.y = Math.round(p.y * 100) / 100;
++    t.z = Math.round(p.z * 100) / 100;
++    t.zoom = Math.round(p.length() * 100) / 100;
++    state.camera.getWorldDirection(_dir);
++    t.dx = Math.round(_dir.x * 100) / 100;
++    t.dy = Math.round(_dir.y * 100) / 100;
++    t.dz = Math.round(_dir.z * 100) / 100;
++    const cam = state.camera as THREE.PerspectiveCamera;
++    t.fov = cam.fov;
++    t.calls = state.gl.info.render.calls;
++    t.tris = state.gl.info.render.triangles;
++    const nu = state.clock.elapsedTime;
++    const r = fps.current;
++    r.n += 1;
++    if (nu - r.t >= 0.5) {
++      t.fps = Math.round(r.n / Math.max(0.001, nu - r.t));
++      r.n = 0;
++      r.t = nu;
++    }
++    window.__tred = t;
++  });
++  return null;
++}
++
++export function Moln({ position, fart }: { position: [number, number, number]; fart: number }) {
++  const ref = useRef<THREE.Group>(null);
++  const basY = position[1];
++  useFrame((state, delta) => {
++    const g = ref.current;
++    if (!g) return;
++    const d = Math.min(delta, 0.1);
++    g.position.x += d * fart;
++    if (g.position.x > 6) g.position.x = -6;
++    g.position.y = basY + Math.sin(state.clock.elapsedTime * 0.12 + position[0]) * 0.06;
++  });
++  return (
++      <group ref={ref} position={position} scale={0.48}>
++      <mesh position={[0, 0, 0]}>
++        <sphereGeometry args={[1.05, 7, 5]} />
++        <meshBasicMaterial color="#FFFFFF" />
++      </mesh>
++      <mesh position={[0.95, -0.12, 0.15]}>
++        <sphereGeometry args={[0.78, 6, 5]} />
++        <meshBasicMaterial color="#FFFFFF" />
++      </mesh>
++      <mesh position={[-0.9, -0.18, 0.05]}>
++        <sphereGeometry args={[0.62, 6, 5]} />
++        <meshBasicMaterial color="#E7F3FC" />
++      </mesh>
++    </group>
++  );
++}
++
++export function TradOchBlommor() {
++  const stam = useRef<THREE.InstancedMesh>(null);
++  const krona = useRef<THREE.InstancedMesh>(null);
++  const topp = useRef<THREE.InstancedMesh>(null);
++  const blom = useRef<THREE.InstancedMesh>(null);
++  const mitt = useRef<THREE.InstancedMesh>(null);
++  const stjalk = useRef<THREE.InstancedMesh>(null);
++  useLayoutEffect(() => {
++    const m = new THREE.Matrix4();
++    TRAD.forEach(([x, z, s], i) => {
++      _blomQ.identity();
++      _blomP.set(x, 0.55, z);
++      _blomS.set(s, s, s);
++      _blomM.compose(_blomP, _blomQ, _blomS);
++      stam.current?.setMatrixAt(i, _blomM);
++      _blomP.set(x, 1.45, z);
++      _blomS.set(1.05 * s, 0.9 * s, 1.05 * s);
++      _blomM.compose(_blomP, _blomQ, _blomS);
++      krona.current?.setMatrixAt(i, _blomM);
++      _blomP.set(x + 0.15 * s, 1.95, z);
++      _blomS.set(0.72 * s, 0.62 * s, 0.72 * s);
++      _blomM.compose(_blomP, _blomQ, _blomS);
++      topp.current?.setMatrixAt(i, _blomM);
++    });
++    if (stam.current) stam.current.instanceMatrix.needsUpdate = true;
++    if (krona.current) krona.current.instanceMatrix.needsUpdate = true;
++    if (topp.current) topp.current.instanceMatrix.needsUpdate = true;
++    const c = new THREE.Color();
++    BLOMMOR.forEach(([x, z, farg], i) => {
++      m.makeTranslation(x, 0.28, z);
++      blom.current?.setMatrixAt(i, m);
++      blom.current?.setColorAt(i, c.set(farg));
++      m.makeTranslation(x, 0.36, z);
++      mitt.current?.setMatrixAt(i, m);
++      m.makeTranslation(x, 0.14, z);
++      stjalk.current?.setMatrixAt(i, m);
++    });
++    if (blom.current) {
++      blom.current.instanceMatrix.needsUpdate = true;
++      if (blom.current.instanceColor) blom.current.instanceColor.needsUpdate = true;
++    }
++    if (mitt.current) mitt.current.instanceMatrix.needsUpdate = true;
++    if (stjalk.current) stjalk.current.instanceMatrix.needsUpdate = true;
++  }, []);
++  useFrame((state) => {
++    const mesh = blom.current;
++    const ben = stjalk.current;
++    const nav = mitt.current;
++    if (!mesh) return;
++    const t = state.clock.elapsedTime;
++    for (let i = 0; i < BLOMMOR.length; i++) {
++      const blomma = BLOMMOR[i];
++      if (!blomma) continue;
++      const [x, z] = blomma;
++      const svaj = Math.sin(t * 1.35 + i * 0.7) * 0.08;
++      _blomP.set(x + svaj, 0.3 + Math.sin(t * 2.1 + i) * 0.02, z);
++      _blomE.set(svaj * 0.4, t * 0.15 + i, svaj * 0.5);
++      _blomQ.setFromEuler(_blomE);
++      _blomS.set(0.16, 0.13, 0.16);
++      _blomM.compose(_blomP, _blomQ, _blomS);
++      mesh.setMatrixAt(i, _blomM);
++      if (nav) {
++        _blomP.set(x + svaj, 0.4, z);
++        _blomS.set(0.07, 0.07, 0.07);
++        _blomM.compose(_blomP, _blomQ, _blomS);
++        nav.setMatrixAt(i, _blomM);
++      }
++      if (ben) {
++        _blomP.set(x + svaj * 0.35, 0.14, z);
++        _blomE.set(svaj * 0.4, 0, svaj);
++        _blomQ.setFromEuler(_blomE);
++        _blomS.set(1, 1, 1);
++        _blomM.compose(_blomP, _blomQ, _blomS);
++        ben.setMatrixAt(i, _blomM);
++      }
++    }
++    mesh.instanceMatrix.needsUpdate = true;
++    if (nav) nav.instanceMatrix.needsUpdate = true;
++    if (ben) ben.instanceMatrix.needsUpdate = true;
++  });
++  return (
++    <>
++      <instancedMesh ref={stam} args={[undefined, undefined, TRAD.length]}>
++        <cylinderGeometry args={[0.11, 0.16, 1.15, 5]} />
++        <meshToonMaterial color="#8D6E63" gradientMap={TOON_MAP} />
++      </instancedMesh>
++      <instancedMesh ref={krona} args={[undefined, undefined, TRAD.length]}>
++        <sphereGeometry args={[0.85, 7, 6]} />
++        <meshToonMaterial color="#7CB342" gradientMap={TOON_MAP} />
++      </instancedMesh>
++      <instancedMesh ref={topp} args={[undefined, undefined, TRAD.length]}>
++        <sphereGeometry args={[0.7, 6, 5]} />
++        <meshToonMaterial color="#9CCC65" gradientMap={TOON_MAP} />
++      </instancedMesh>
++      <Granar />
++      <instancedMesh ref={stjalk} args={[undefined, undefined, BLOMMOR.length]}>
++        <cylinderGeometry args={[0.02, 0.035, 0.32, 4]} />
++        <meshToonMaterial color="#7CB342" gradientMap={TOON_MAP} />
++      </instancedMesh>
++      <instancedMesh ref={blom} args={[undefined, undefined, BLOMMOR.length]}>
++        <sphereGeometry args={[1, 7, 5]} />
++        <meshToonMaterial color="#ffffff" gradientMap={TOON_MAP} />
++      </instancedMesh>
++      <instancedMesh ref={mitt} args={[undefined, undefined, BLOMMOR.length]}>
++        <sphereGeometry args={[1, 6, 4]} />
++        <meshBasicMaterial color="#FFF59D" />
++      </instancedMesh>
++    </>
++  );
++}
++
++export function Granar() {
++  const ref = useRef<THREE.InstancedMesh>(null);
++  useLayoutEffect(() => {
++    const m = new THREE.Matrix4();
++    const q = new THREE.Quaternion();
++    const p = new THREE.Vector3();
++    const s = new THREE.Vector3();
++    GRAN.forEach(([x, z], i) => {
++      p.set(x, 1.35, z);
++      s.set(1, 1.6, 1);
++      m.compose(p, q, s);
++      ref.current?.setMatrixAt(i, m);
++    });
++    if (ref.current) ref.current.instanceMatrix.needsUpdate = true;
++  }, []);
++  return (
++    <instancedMesh ref={ref} args={[undefined, undefined, GRAN.length]}>
++      <coneGeometry args={[0.7, 2.2, 6]} />
++      <meshToonMaterial color="#3E7A32" gradientMap={TOON_MAP} />
++    </instancedMesh>
++  );
++}
++
++const FJARIL: { x: number; z: number; f: string; s: number }[] = [
++  { x: -1.2, z: -0.3, f: "#FFB74D", s: 0.7 },
++  { x: 1.5, z: 0.5, f: "#F48FB1", s: 0.8 },
++  { x: -1.6, z: -0.55, f: "#FFF59D", s: 0.6 },
++];
++
++export function Fjarilar() {
++  const ref = useRef<THREE.Group>(null);
++  useFrame((state) => {
++    const g = ref.current;
++    if (!g) return;
++    const t = state.clock.elapsedTime;
++    for (let i = 0; i < g.children.length; i++) {
++      const b = FJARIL[i];
++      const c = g.children[i];
++      if (!b || !c) continue;
++      c.position.set(
++        b.x + Math.sin(t * b.s + i) * 0.45,
++        2.15 + Math.sin(t * 2.1 + i * 2) * 0.22,
++        b.z + Math.cos(t * b.s * 0.75 + i) * 0.35,
++      );
++      c.rotation.y = Math.sin(t * b.s + i);
++      const ving = Math.sin(t * 14 + i) * 0.4;
++      const vanster = c.children[0];
++      const hoger = c.children[1];
++      if (vanster) vanster.rotation.z = 0.7 + ving;
++      if (hoger) hoger.rotation.z = -0.7 - ving;
++    }
++  });
++  return (
++    <group ref={ref}>
++      {FJARIL.map((b) => (
++        <group key={b.f}>
++          <mesh position={[-0.08, 0, 0]} rotation={[0.2, 0.2, 0.7]}>
++            <coneGeometry args={[0.08, 0.18, 3]} />
++            <meshBasicMaterial color={b.f} />
++          </mesh>
++          <mesh position={[0.08, 0, 0]} rotation={[0.2, -0.2, -0.7]}>
++            <coneGeometry args={[0.08, 0.18, 3]} />
++            <meshBasicMaterial color={b.f} />
++          </mesh>
++        </group>
++      ))}
++    </group>
++  );
++}
++
++export function Ringar() {
++  const ref = useRef<THREE.Group>(null);
++  useFrame((state) => {
++    const g = ref.current;
++    if (!g) return;
++    const t = state.clock.elapsedTime;
++    for (let i = 0; i < g.children.length; i++) {
++      const m = g.children[i] as THREE.Mesh | undefined;
++      if (!m) continue;
++      const u = (t * 0.33 + i * 0.33) % 1;
++      m.scale.set(0.35 + u * 0.9, 0.35 + u * 0.9, 1);
++      const mat = m.material as THREE.MeshBasicMaterial;
++      mat.opacity = (1 - u) * 0.5;
++    }
++  });
++  return (
++    <group ref={ref} position={[1.12, 0.055, -0.35]} rotation={[-Math.PI / 2, 0, 0]}>
++      {[0, 1, 2].map((i) => (
++        <mesh key={i}>
++          <ringGeometry args={[0.55, 0.64, 20]} />
++          <meshBasicMaterial color="#E1F5FE" transparent opacity={0.3} side={THREE.DoubleSide} depthWrite={false} />
++        </mesh>
++      ))}
++    </group>
++  );
++}
++
++export function Nackrosor() {
++  const ref = useRef<THREE.Group>(null);
++  useFrame((state) => {
++    const g = ref.current;
++    if (!g) return;
++    const t = state.clock.elapsedTime;
++    for (let i = 0; i < g.children.length; i++) {
++      const c = g.children[i];
++      if (c) c.position.y = Math.sin(t * 1.2 + i) * 0.012;
++    }
++  });
++  const pads: [number, number, string, boolean][] = [
++    [-0.28, 0.12, "#66BB6A", true],
++    [0.22, -0.1, "#7CB342", false],
++    [0.02, 0.26, "#66BB6A", false],
++    [-0.18, -0.2, "#7CB342", false],
++  ];
++  return (
++    <group ref={ref} position={[1.12, 0.075, -0.35]}>
++      {pads.map(([x, z, f, blomma]) => (
++        <group key={`${x}${z}`} position={[x, 0, z]}>
++          <mesh rotation={[-Math.PI / 2, 0, x]}>
++            <circleGeometry args={[0.16, 10]} />
++            <meshStandardMaterial color={f} roughness={0.85} />
++          </mesh>
++          {blomma ? (
++            <mesh position={[0, 0.05, 0]}>
++              <sphereGeometry args={[0.055, 6, 4]} />
++              <meshStandardMaterial color="#F48FB1" roughness={0.55} />
++            </mesh>
++          ) : null}
++        </group>
++      ))}
++    </group>
++  );
++}
++
++const FLUGOR: [number, number][] = [
++  [-1.8, 0.5],
++  [-0.3, -1.1],
++  [0.7, 1.5],
++  [2.0, -0.5],
++  [-2.1, -2.2],
++  [1.3, -3.0],
++];
++
++export function Eldflugor({ natt }: { natt: number }) {
++  const ref = useRef<THREE.Group>(null);
++  useFrame((state) => {
++    const g = ref.current;
++    if (!g) return;
++    const syns = natt > 0.35;
++    g.visible = syns;
++    if (!syns) return;
++    const t = state.clock.elapsedTime;
++    for (let i = 0; i < g.children.length; i++) {
++      const bas = FLUGOR[i];
++      const c = g.children[i] as THREE.Mesh | undefined;
++      if (!bas || !c) continue;
++      c.position.set(
++        bas[0] + Math.sin(t * 0.7 + i) * 0.4,
++        0.6 + (i % 3) * 0.22 + Math.sin(t * 1.4 + i * 1.7) * 0.3,
++        bas[1] + Math.cos(t * 0.55 + i) * 0.35,
++      );
++      const mat = c.material as THREE.MeshBasicMaterial;
++      mat.opacity = 0.4 + Math.sin(t * 3.2 + i) * 0.4;
++    }
++  });
++  return (
++    <group ref={ref} visible={false}>
++      {FLUGOR.map((_, i) => (
++        <mesh key={i}>
++          <sphereGeometry args={[0.05, 6, 5]} />
++          <meshBasicMaterial color="#FFF59D" transparent opacity={0.8} toneMapped={false} />
++        </mesh>
++      ))}
++    </group>
++  );
++}
++
++const TUVOR: [number, number][] = [
++  [-1.7, 0.95],
++  [-0.85, 1.15],
++  [-1.15, 1.85],
++  [-1.55, 1.7],
++  [0.75, 1.05],
++  [1.55, 1.2],
++  [1.05, 1.75],
++  [1.6, 1.7],
++  [-0.2, 2.15],
++  [0.4, 2.35],
++];
++
++const STENAR: [number, number, number][] = [[1.7, -0.05, 0.14]];
++
++export function GrasTuvor() {
++  const ref = useRef<THREE.InstancedMesh>(null);
++  useFrame((state) => {
++    const mesh = ref.current;
++    if (!mesh) return;
++    const t = state.clock.elapsedTime;
++    for (let i = 0; i < TUVOR.length; i++) {
++      const p = TUVOR[i];
++      if (!p) continue;
++      const svaj = Math.sin(t * 1.2 + i) * 0.18;
++      _blomP.set(p[0], 0.16, p[1]);
++      _blomE.set(svaj, 0, svaj * 0.65);
++      _blomQ.setFromEuler(_blomE);
++      const h = 0.85 + (i % 4) * 0.12;
++      _blomS.set(0.85, h, 0.85);
++      _blomM.compose(_blomP, _blomQ, _blomS);
++      mesh.setMatrixAt(i, _blomM);
++    }
++    mesh.instanceMatrix.needsUpdate = true;
++  });
++  return (
++    <instancedMesh ref={ref} args={[undefined, undefined, TUVOR.length]}>
++      <coneGeometry args={[0.16, 0.38, 6]} />
++      <meshToonMaterial color="#8BC34A" gradientMap={TOON_MAP} />
++    </instancedMesh>
++  );
++}
++
++export function Stenar() {
++  const ref = useRef<THREE.InstancedMesh>(null);
++  useLayoutEffect(() => {
++    const m = new THREE.Matrix4();
++    const q = new THREE.Quaternion();
++    const e = new THREE.Euler();
++    const p = new THREE.Vector3();
++    const s = new THREE.Vector3();
++    STENAR.forEach(([x, z, r], i) => {
++      p.set(x, r * 0.45, z);
++      e.set(0.2 * i, i * 0.7, 0.15 * i);
++      q.setFromEuler(e);
++      s.set(r, r * 0.72, r * 0.9);
++      m.compose(p, q, s);
++      ref.current?.setMatrixAt(i, m);
++    });
++    if (ref.current) ref.current.instanceMatrix.needsUpdate = true;
++  }, []);
++  return (
++    <instancedMesh ref={ref} args={[undefined, undefined, STENAR.length]} castShadow receiveShadow>
++      <dodecahedronGeometry args={[1, 0]} />
++      <meshStandardMaterial color="#B0BEC5" flatShading roughness={0.95} />
++    </instancedMesh>
++  );
++}
++
++export function Ljusflackar() {
++  const ref = useRef<THREE.InstancedMesh>(null);
++  const mat = useRef<THREE.MeshBasicMaterial>(null);
++  useLayoutEffect(() => {
++    const m = new THREE.Matrix4();
++    const q = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, 0));
++    const p = new THREE.Vector3();
++    const s = new THREE.Vector3();
++    TRAD.forEach(([x, z], i) => {
++      p.set(x, 0.045, z + 0.5);
++      const r = 0.7 + (i % 3) * 0.12;
++      s.set(r, r, 1);
++      m.compose(p, q, s);
++      ref.current?.setMatrixAt(i, m);
++    });
++    if (ref.current) ref.current.instanceMatrix.needsUpdate = true;
++  }, []);
++  useFrame((s) => {
++    if (mat.current) mat.current.opacity = 0.13 + Math.sin(s.clock.elapsedTime * 0.7) * 0.04;
++  });
++  return (
++    <instancedMesh ref={ref} args={[undefined, undefined, TRAD.length]}>
++      <circleGeometry args={[1, 10]} />
++      <meshBasicMaterial ref={mat} color="#FFF4C2" transparent opacity={0.16} depthWrite={false} />
++    </instancedMesh>
++  );
++}
++
++export function Glitter() {
++  const geo = useMemo(() => {
++    const n = 16;
++    const pos = new Float32Array(n * 3);
++    for (let i = 0; i < n; i++) {
++      const a = (i / n) * Math.PI * 2 + 0.2;
++      const rad = 0.22 + (i % 5) * 0.18;
++      pos[i * 3] = Math.cos(a) * rad;
++      pos[i * 3 + 1] = (i % 3) * 0.01;
++      pos[i * 3 + 2] = Math.sin(a) * rad * 0.75;
++    }
++    const g = new THREE.BufferGeometry();
++    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
++    return g;
++  }, []);
++  const ref = useRef<THREE.Points>(null);
++  useFrame((s) => {
++    const p = ref.current;
++    if (!p) return;
++    const mat = p.material as THREE.PointsMaterial;
++    mat.opacity = 0.25 + Math.abs(Math.sin(s.clock.elapsedTime * 3.2)) * 0.75;
++  });
++  return (
++    <points ref={ref} position={[1.12, 0.12, -0.35]} geometry={geo}>
++      <pointsMaterial color="#FFFFFF" size={0.045} transparent opacity={0.85} depthWrite={false} sizeAttenuation />
++    </points>
++  );
++}
++
++export function FagelFlyg() {
++  const ref = useRef<THREE.Group>(null);
++  const vL = useRef<THREE.Mesh>(null);
++  const vR = useRef<THREE.Mesh>(null);
++  useFrame((state) => {
++    const g = ref.current;
++    if (!g) return;
++    const t = state.clock.elapsedTime;
++    const cykel = 50;
++    const u = t % cykel;
++    const syns = u > 4 && u < 14;
++    g.visible = syns;
++    if (!syns) return;
++    const p = (u - 4) / 10;
++    g.position.set(-6 + p * 12, 3.7 + Math.sin(p * Math.PI) * 0.45, -3.2);
++    g.rotation.y = -Math.PI / 2;
++    const flap = Math.sin(t * 14) * 0.7;
++    if (vL.current) vL.current.rotation.z = flap;
++    if (vR.current) vR.current.rotation.z = -flap;
++  });
++  return (
++    <group ref={ref} visible={false}>
++      <mesh>
++        <sphereGeometry args={[0.16, 6, 4]} />
++        <meshStandardMaterial color="#FFB74D" flatShading />
++      </mesh>
++      <mesh ref={vL} position={[-0.18, 0, 0]}>
++        <boxGeometry args={[0.26, 0.035, 0.12]} />
++        <meshStandardMaterial color="#FFE0B2" flatShading />
++      </mesh>
++      <mesh ref={vR} position={[0.18, 0, 0]}>
++        <boxGeometry args={[0.26, 0.035, 0.12]} />
++        <meshStandardMaterial color="#FFE0B2" flatShading />
++      </mesh>
++    </group>
++  );
++}
++
++export function Hanglas({ gung }: { gung: { current: number } }) {
++  const ref = useRef<THREE.Group>(null);
++  useFrame((state, delta) => {
++    const g = ref.current;
++    const tid = gung.current;
++    if (!g || tid == null) return;
++    const d = Math.min(delta, 0.1);
++    if (tid > 0) gung.current = Math.max(0, tid - d);
++    const kvar = gung.current ?? 0;
++    g.rotation.z = Math.sin((1 - kvar) * Math.PI * 6) * kvar * 0.85;
++    const p = 1 + Math.sin(state.clock.elapsedTime * 2.3) * 0.08;
++    g.scale.setScalar(p);
++  });
++  return (
++    <group ref={ref}>
++      <mesh position={[0, 0.07, 0]}>
++        <torusGeometry args={[0.07, 0.02, 5, 8, Math.PI]} />
++        <meshStandardMaterial color="#F2B632" metalness={0.35} roughness={0.35} flatShading />
++      </mesh>
++      <mesh position={[0, -0.02, 0]}>
++        <boxGeometry args={[0.12, 0.11, 0.05]} />
++        <meshStandardMaterial color="#E6B325" roughness={0.4} flatShading />
++      </mesh>
++    </group>
++  );
++}
++
++export function Rok() {
++  const ref = useRef<THREE.Group>(null);
++  useFrame((state) => {
++    const g = ref.current;
++    if (!g) return;
++    const t = state.clock.elapsedTime;
++    for (let i = 0; i < g.children.length; i++) {
++      const m = g.children[i] as THREE.Mesh | undefined;
++      if (!m) continue;
++      const u = (t * 0.18 + i * 0.34) % 1;
++      m.position.set(0.15 + Math.sin(t * 0.55 + i) * u * 0.28, 1.7 + u * 2.1, 0.85);
++      const s = 0.16 + u * 0.55;
++      m.scale.setScalar(s);
++      const mat = m.material as THREE.MeshBasicMaterial;
++      mat.opacity = (1 - u) * 0.62;
++    }
++  });
++  return (
++    <group ref={ref} raycast={() => null}>
++      {[0, 1, 2].map((i) => (
++        <mesh key={i} scale={0.05} position={[0.38, 1.7, 0]}>
++          <sphereGeometry args={[1, 6, 4]} />
++          <meshBasicMaterial color="#F7FBFF" transparent opacity={0.2} depthWrite={false} />
++        </mesh>
++      ))}
++    </group>
++  );
++}
++
++export function Horisont() {
++  const trad = useRef<THREE.InstancedMesh>(null);
++  useLayoutEffect(() => {
++    const mesh = trad.current;
++    if (!mesh) return;
++    const m = new THREE.Matrix4();
++    const q = new THREE.Quaternion();
++    const p = new THREE.Vector3();
++    const s = new THREE.Vector3();
++    const platser: [number, number, number][] = [
++      [-4.2, 1.15, -6.15],
++      [-2.4, 1.45, -6.2],
++      [-0.6, 1.25, -6.1],
++      [1.6, 1.5, -6.25],
++      [3.4, 1.2, -6.15],
++      [5.1, 0.95, -6.3],
++    ];
++    platser.forEach(([x, y, z], i) => {
++      p.set(x, y, z);
++      s.set(0.55, 0.9 + (i % 3) * 0.15, 0.55);
++      m.compose(p, q, s);
++      mesh.setMatrixAt(i, m);
++    });
++    mesh.instanceMatrix.needsUpdate = true;
++  }, []);
++  return (
++    <group>
++      <mesh position={[0, 0, -10.6]} scale={[24, 3.6, 1]}>
++        <circleGeometry args={[1, 14, 0, Math.PI]} />
++        <meshBasicMaterial color="#8FB4C6" />
++      </mesh>
++      <mesh position={[0, 0, -8.3]} scale={[18, 2.7, 1]}>
++        <circleGeometry args={[1, 16, 0, Math.PI]} />
++        <meshBasicMaterial color="#7E9E92" />
++      </mesh>
++      <mesh position={[0, 0, -6.35]} scale={[13, 2.15, 1]}>
++        <circleGeometry args={[1, 18, 0, Math.PI]} />
++        <meshBasicMaterial color="#3F6E34" />
++      </mesh>
++      <instancedMesh ref={trad} args={[undefined, undefined, 6]}>
++        <coneGeometry args={[0.45, 1.3, 5]} />
++        <meshBasicMaterial color="#2C5228" />
++      </instancedMesh>
++    </group>
++  );
++}
++
++export function Forgrund() {
++  const buske = useRef<THREE.InstancedMesh>(null);
++  const svamp = useRef<THREE.InstancedMesh>(null);
++  const sten = useRef<THREE.InstancedMesh>(null);
++  const blom = useRef<THREE.InstancedMesh>(null);
++  useLayoutEffect(() => {
++    const m = new THREE.Matrix4();
++    const q = new THREE.Quaternion();
++    const p = new THREE.Vector3();
++    const s = new THREE.Vector3();
++    const buskar: [number, number, number, number][] = [
++      [-1.85, 0.22, 2.55, 0.42],
++      [-1.45, 0.16, 2.85, 0.3],
++      [1.75, 0.2, 2.7, 0.4],
++      [1.35, 0.14, 3.05, 0.26],
++      [-0.55, 0.12, 3.15, 0.22],
++    ];
++    buskar.forEach(([x, y, z, r], i) => {
++      p.set(x, y, z);
++      s.set(r * 1.3, r, r);
++      m.compose(p, q, s);
++      buske.current?.setMatrixAt(i, m);
++    });
++    if (buske.current) buske.current.instanceMatrix.needsUpdate = true;
++    const svampar: [number, number, number][] = [
++      [0.95, 0.08, 2.55],
++      [1.2, 0.07, 2.9],
++      [0.7, 0.06, 2.85],
++    ];
++    svampar.forEach(([x, y, z], i) => {
++      p.set(x, y, z);
++      s.set(0.16, 0.1, 0.16);
++      m.compose(p, q, s);
++      svamp.current?.setMatrixAt(i, m);
++    });
++    if (svamp.current) svamp.current.instanceMatrix.needsUpdate = true;
++    const stigar: [number, number][] = [
++      [0.05, 3.25],
++      [0.22, 2.85],
++      [0.4, 2.45],
++      [0.55, 2.05],
++      [0.7, 1.65],
++      [0.82, 1.25],
++      [0.95, 0.9],
++    ];
++    stigar.forEach(([x, z], i) => {
++      p.set(x, 0.04, z);
++      s.set(0.22, 0.06, 0.16);
++      m.compose(p, q, s);
++      sten.current?.setMatrixAt(i, m);
++    });
++    if (sten.current) sten.current.instanceMatrix.needsUpdate = true;
++    const rabatt: [number, number, string][] = [
++      [-0.95, 2.35, "#F48FB1"],
++      [-0.7, 2.55, "#FDD835"],
++      [-1.15, 2.6, "#CE93D8"],
++      [-0.85, 2.75, "#FFFFFF"],
++      [-0.5, 2.4, "#F48FB1"],
++    ];
++    const col = new THREE.Color();
++    rabatt.forEach(([x, z, f], i) => {
++      p.set(x, 0.1, z);
++      s.set(0.12, 0.1, 0.12);
++      m.compose(p, q, s);
++      blom.current?.setMatrixAt(i, m);
++      blom.current?.setColorAt(i, col.set(f));
++    });
++    if (blom.current) {
++      blom.current.instanceMatrix.needsUpdate = true;
++      if (blom.current.instanceColor) blom.current.instanceColor.needsUpdate = true;
++    }
++  }, []);
++  return (
++    <group>
++      <instancedMesh ref={buske} args={[undefined, undefined, 5]}>
++        <sphereGeometry args={[1, 7, 5]} />
++        <meshToonMaterial color="#43A047" gradientMap={TOON_MAP} />
++      </instancedMesh>
++      <instancedMesh ref={svamp} args={[undefined, undefined, 3]}>
++        <sphereGeometry args={[1, 7, 5]} />
++        <meshToonMaterial color="#E57373" gradientMap={TOON_MAP} />
++      </instancedMesh>
++      <instancedMesh ref={sten} args={[undefined, undefined, 7]}>
++        <sphereGeometry args={[1, 6, 4]} />
++        <meshToonMaterial color="#B0A090" gradientMap={TOON_MAP} />
++      </instancedMesh>
++      <instancedMesh ref={blom} args={[undefined, undefined, 5]}>
++        <sphereGeometry args={[1, 6, 5]} />
++        <meshToonMaterial vertexColors gradientMap={TOON_MAP} />
++      </instancedMesh>
++    </group>
++  );
++}
+diff --git a/src/spel/angen3d.tsx b/src/spel/angen3d.tsx
+index 0b55905..d138141 100644
+--- a/src/spel/angen3d.tsx
++++ b/src/spel/angen3d.tsx
+@@ -20,6 +20,7 @@ import { KenneyNatur } from "./kenneyNatur.tsx";
+ import { KV, MILJO, markTextur } from "./miljo.ts";
+ import { AGG_KROPP, OrdAgg, ReservAgg } from "./ordagg.tsx";
+ import { HINT, SNART, TRAD, GRAN, BLOMMOR, _mal, _blomM, _blomQ, _blomE, _blomP, _blomS, normDuk, djurFarg, flygare, simmare, djurPlats, slag, _dir, usePennTryck } from "./ang/delat.ts";
++import { Eldflugor, FagelFlyg, Fjarilar, Forgrund, Glitter, GrasTuvor, Hanglas, Horisont, Ljusflackar, Moln, Nackrosor, Ringar, Sond, Stenar, TradOchBlommor } from "./ang/dekor.tsx";
+ 
+ 
+ class ModellGren extends Component<{ spec: Sparad; children: ReactNode }, { fel: boolean }> {
+@@ -66,198 +67,6 @@ class TredGren extends Component<{ children: ReactNode }, { fel: boolean }> {
+   }
+ }
+ 
+-function Sond() {
+-  const fps = useRef({ n: 0, t: 0 });
+-  useFrame((state) => {
+-    const p = state.camera.position;
+-    const t = window.__tred ?? { x: 0, y: 0, z: 0, zoom: 0 };
+-    t.x = Math.round(p.x * 100) / 100;
+-    t.y = Math.round(p.y * 100) / 100;
+-    t.z = Math.round(p.z * 100) / 100;
+-    t.zoom = Math.round(p.length() * 100) / 100;
+-    state.camera.getWorldDirection(_dir);
+-    t.dx = Math.round(_dir.x * 100) / 100;
+-    t.dy = Math.round(_dir.y * 100) / 100;
+-    t.dz = Math.round(_dir.z * 100) / 100;
+-    const cam = state.camera as THREE.PerspectiveCamera;
+-    t.fov = cam.fov;
+-    t.calls = state.gl.info.render.calls;
+-    t.tris = state.gl.info.render.triangles;
+-    const nu = state.clock.elapsedTime;
+-    const r = fps.current;
+-    r.n += 1;
+-    if (nu - r.t >= 0.5) {
+-      t.fps = Math.round(r.n / Math.max(0.001, nu - r.t));
+-      r.n = 0;
+-      r.t = nu;
+-    }
+-    window.__tred = t;
+-  });
+-  return null;
+-}
+-
+-function Moln({ position, fart }: { position: [number, number, number]; fart: number }) {
+-  const ref = useRef<THREE.Group>(null);
+-  const basY = position[1];
+-  useFrame((state, delta) => {
+-    const g = ref.current;
+-    if (!g) return;
+-    const d = Math.min(delta, 0.1);
+-    g.position.x += d * fart;
+-    if (g.position.x > 6) g.position.x = -6;
+-    g.position.y = basY + Math.sin(state.clock.elapsedTime * 0.12 + position[0]) * 0.06;
+-  });
+-  return (
+-      <group ref={ref} position={position} scale={0.48}>
+-      <mesh position={[0, 0, 0]}>
+-        <sphereGeometry args={[1.05, 7, 5]} />
+-        <meshBasicMaterial color="#FFFFFF" />
+-      </mesh>
+-      <mesh position={[0.95, -0.12, 0.15]}>
+-        <sphereGeometry args={[0.78, 6, 5]} />
+-        <meshBasicMaterial color="#FFFFFF" />
+-      </mesh>
+-      <mesh position={[-0.9, -0.18, 0.05]}>
+-        <sphereGeometry args={[0.62, 6, 5]} />
+-        <meshBasicMaterial color="#E7F3FC" />
+-      </mesh>
+-    </group>
+-  );
+-}
+-
+-function TradOchBlommor() {
+-  const stam = useRef<THREE.InstancedMesh>(null);
+-  const krona = useRef<THREE.InstancedMesh>(null);
+-  const topp = useRef<THREE.InstancedMesh>(null);
+-  const blom = useRef<THREE.InstancedMesh>(null);
+-  const mitt = useRef<THREE.InstancedMesh>(null);
+-  const stjalk = useRef<THREE.InstancedMesh>(null);
+-  useLayoutEffect(() => {
+-    const m = new THREE.Matrix4();
+-    TRAD.forEach(([x, z, s], i) => {
+-      _blomQ.identity();
+-      _blomP.set(x, 0.55, z);
+-      _blomS.set(s, s, s);
+-      _blomM.compose(_blomP, _blomQ, _blomS);
+-      stam.current?.setMatrixAt(i, _blomM);
+-      _blomP.set(x, 1.45, z);
+-      _blomS.set(1.05 * s, 0.9 * s, 1.05 * s);
+-      _blomM.compose(_blomP, _blomQ, _blomS);
+-      krona.current?.setMatrixAt(i, _blomM);
+-      _blomP.set(x + 0.15 * s, 1.95, z);
+-      _blomS.set(0.72 * s, 0.62 * s, 0.72 * s);
+-      _blomM.compose(_blomP, _blomQ, _blomS);
+-      topp.current?.setMatrixAt(i, _blomM);
+-    });
+-    if (stam.current) stam.current.instanceMatrix.needsUpdate = true;
+-    if (krona.current) krona.current.instanceMatrix.needsUpdate = true;
+-    if (topp.current) topp.current.instanceMatrix.needsUpdate = true;
+-    const c = new THREE.Color();
+-    BLOMMOR.forEach(([x, z, farg], i) => {
+-      m.makeTranslation(x, 0.28, z);
+-      blom.current?.setMatrixAt(i, m);
+-      blom.current?.setColorAt(i, c.set(farg));
+-      m.makeTranslation(x, 0.36, z);
+-      mitt.current?.setMatrixAt(i, m);
+-      m.makeTranslation(x, 0.14, z);
+-      stjalk.current?.setMatrixAt(i, m);
+-    });
+-    if (blom.current) {
+-      blom.current.instanceMatrix.needsUpdate = true;
+-      if (blom.current.instanceColor) blom.current.instanceColor.needsUpdate = true;
+-    }
+-    if (mitt.current) mitt.current.instanceMatrix.needsUpdate = true;
+-    if (stjalk.current) stjalk.current.instanceMatrix.needsUpdate = true;
+-  }, []);
+-  useFrame((state) => {
+-    const mesh = blom.current;
+-    const ben = stjalk.current;
+-    const nav = mitt.current;
+-    if (!mesh) return;
+-    const t = state.clock.elapsedTime;
+-    for (let i = 0; i < BLOMMOR.length; i++) {
+-      const blomma = BLOMMOR[i];
+-      if (!blomma) continue;
+-      const [x, z] = blomma;
+-      const svaj = Math.sin(t * 1.35 + i * 0.7) * 0.08;
+-      _blomP.set(x + svaj, 0.3 + Math.sin(t * 2.1 + i) * 0.02, z);
+-      _blomE.set(svaj * 0.4, t * 0.15 + i, svaj * 0.5);
+-      _blomQ.setFromEuler(_blomE);
+-      _blomS.set(0.16, 0.13, 0.16);
+-      _blomM.compose(_blomP, _blomQ, _blomS);
+-      mesh.setMatrixAt(i, _blomM);
+-      if (nav) {
+-        _blomP.set(x + svaj, 0.4, z);
+-        _blomS.set(0.07, 0.07, 0.07);
+-        _blomM.compose(_blomP, _blomQ, _blomS);
+-        nav.setMatrixAt(i, _blomM);
+-      }
+-      if (ben) {
+-        _blomP.set(x + svaj * 0.35, 0.14, z);
+-        _blomE.set(svaj * 0.4, 0, svaj);
+-        _blomQ.setFromEuler(_blomE);
+-        _blomS.set(1, 1, 1);
+-        _blomM.compose(_blomP, _blomQ, _blomS);
+-        ben.setMatrixAt(i, _blomM);
+-      }
+-    }
+-    mesh.instanceMatrix.needsUpdate = true;
+-    if (nav) nav.instanceMatrix.needsUpdate = true;
+-    if (ben) ben.instanceMatrix.needsUpdate = true;
+-  });
+-  return (
+-    <>
+-      <instancedMesh ref={stam} args={[undefined, undefined, TRAD.length]}>
+-        <cylinderGeometry args={[0.11, 0.16, 1.15, 5]} />
+-        <meshToonMaterial color="#8D6E63" gradientMap={TOON_MAP} />
+-      </instancedMesh>
+-      <instancedMesh ref={krona} args={[undefined, undefined, TRAD.length]}>
+-        <sphereGeometry args={[0.85, 7, 6]} />
+-        <meshToonMaterial color="#7CB342" gradientMap={TOON_MAP} />
+-      </instancedMesh>
+-      <instancedMesh ref={topp} args={[undefined, undefined, TRAD.length]}>
+-        <sphereGeometry args={[0.7, 6, 5]} />
+-        <meshToonMaterial color="#9CCC65" gradientMap={TOON_MAP} />
+-      </instancedMesh>
+-      <Granar />
+-      <instancedMesh ref={stjalk} args={[undefined, undefined, BLOMMOR.length]}>
+-        <cylinderGeometry args={[0.02, 0.035, 0.32, 4]} />
+-        <meshToonMaterial color="#7CB342" gradientMap={TOON_MAP} />
+-      </instancedMesh>
+-      <instancedMesh ref={blom} args={[undefined, undefined, BLOMMOR.length]}>
+-        <sphereGeometry args={[1, 7, 5]} />
+-        <meshToonMaterial color="#ffffff" gradientMap={TOON_MAP} />
+-      </instancedMesh>
+-      <instancedMesh ref={mitt} args={[undefined, undefined, BLOMMOR.length]}>
+-        <sphereGeometry args={[1, 6, 4]} />
+-        <meshBasicMaterial color="#FFF59D" />
+-      </instancedMesh>
+-    </>
+-  );
+-}
+-
+-function Granar() {
+-  const ref = useRef<THREE.InstancedMesh>(null);
+-  useLayoutEffect(() => {
+-    const m = new THREE.Matrix4();
+-    const q = new THREE.Quaternion();
+-    const p = new THREE.Vector3();
+-    const s = new THREE.Vector3();
+-    GRAN.forEach(([x, z], i) => {
+-      p.set(x, 1.35, z);
+-      s.set(1, 1.6, 1);
+-      m.compose(p, q, s);
+-      ref.current?.setMatrixAt(i, m);
+-    });
+-    if (ref.current) ref.current.instanceMatrix.needsUpdate = true;
+-  }, []);
+-  return (
+-    <instancedMesh ref={ref} args={[undefined, undefined, GRAN.length]}>
+-      <coneGeometry args={[0.7, 2.2, 6]} />
+-      <meshToonMaterial color="#3E7A32" gradientMap={TOON_MAP} />
+-    </instancedMesh>
+-  );
+-}
+ 
+ function Hus({
+   position,
+@@ -361,7 +170,7 @@ function Byggnad({ b }: { b: SparatBygge }) {
+   return <Hus position={[x, 0, z]} farg={farg} fonster={fonster} />;
+ }
+ 
+-const TOON_MAP = (() => {
++export const TOON_MAP = (() => {
+   const data = new Uint8Array([72, 158, 255]);
+   const t = new THREE.DataTexture(data, 3, 1, THREE.RedFormat);
+   t.minFilter = THREE.NearestFilter;
+@@ -774,174 +583,6 @@ function DjurIScen({ spec, alla }: { spec: Sparad; alla: Sparad[] }) {
+   );
+ }
+ 
+-const FJARIL: { x: number; z: number; f: string; s: number }[] = [
+-  { x: -1.2, z: -0.3, f: "#FFB74D", s: 0.7 },
+-  { x: 1.5, z: 0.5, f: "#F48FB1", s: 0.8 },
+-  { x: -1.6, z: -0.55, f: "#FFF59D", s: 0.6 },
+-];
+-
+-function Fjarilar() {
+-  const ref = useRef<THREE.Group>(null);
+-  useFrame((state) => {
+-    const g = ref.current;
+-    if (!g) return;
+-    const t = state.clock.elapsedTime;
+-    for (let i = 0; i < g.children.length; i++) {
+-      const b = FJARIL[i];
+-      const c = g.children[i];
+-      if (!b || !c) continue;
+-      c.position.set(
+-        b.x + Math.sin(t * b.s + i) * 0.45,
+-        2.15 + Math.sin(t * 2.1 + i * 2) * 0.22,
+-        b.z + Math.cos(t * b.s * 0.75 + i) * 0.35,
+-      );
+-      c.rotation.y = Math.sin(t * b.s + i);
+-      const ving = Math.sin(t * 14 + i) * 0.4;
+-      const vanster = c.children[0];
+-      const hoger = c.children[1];
+-      if (vanster) vanster.rotation.z = 0.7 + ving;
+-      if (hoger) hoger.rotation.z = -0.7 - ving;
+-    }
+-  });
+-  return (
+-    <group ref={ref}>
+-      {FJARIL.map((b) => (
+-        <group key={b.f}>
+-          <mesh position={[-0.08, 0, 0]} rotation={[0.2, 0.2, 0.7]}>
+-            <coneGeometry args={[0.08, 0.18, 3]} />
+-            <meshBasicMaterial color={b.f} />
+-          </mesh>
+-          <mesh position={[0.08, 0, 0]} rotation={[0.2, -0.2, -0.7]}>
+-            <coneGeometry args={[0.08, 0.18, 3]} />
+-            <meshBasicMaterial color={b.f} />
+-          </mesh>
+-        </group>
+-      ))}
+-    </group>
+-  );
+-}
+-
+-function Ringar() {
+-  const ref = useRef<THREE.Group>(null);
+-  useFrame((state) => {
+-    const g = ref.current;
+-    if (!g) return;
+-    const t = state.clock.elapsedTime;
+-    for (let i = 0; i < g.children.length; i++) {
+-      const m = g.children[i] as THREE.Mesh | undefined;
+-      if (!m) continue;
+-      const u = (t * 0.33 + i * 0.33) % 1;
+-      m.scale.set(0.35 + u * 0.9, 0.35 + u * 0.9, 1);
+-      const mat = m.material as THREE.MeshBasicMaterial;
+-      mat.opacity = (1 - u) * 0.5;
+-    }
+-  });
+-  return (
+-    <group ref={ref} position={[1.12, 0.055, -0.35]} rotation={[-Math.PI / 2, 0, 0]}>
+-      {[0, 1, 2].map((i) => (
+-        <mesh key={i}>
+-          <ringGeometry args={[0.55, 0.64, 20]} />
+-          <meshBasicMaterial color="#E1F5FE" transparent opacity={0.3} side={THREE.DoubleSide} depthWrite={false} />
+-        </mesh>
+-      ))}
+-    </group>
+-  );
+-}
+-
+-function Nackrosor() {
+-  const ref = useRef<THREE.Group>(null);
+-  useFrame((state) => {
+-    const g = ref.current;
+-    if (!g) return;
+-    const t = state.clock.elapsedTime;
+-    for (let i = 0; i < g.children.length; i++) {
+-      const c = g.children[i];
+-      if (c) c.position.y = Math.sin(t * 1.2 + i) * 0.012;
+-    }
+-  });
+-  const pads: [number, number, string, boolean][] = [
+-    [-0.28, 0.12, "#66BB6A", true],
+-    [0.22, -0.1, "#7CB342", false],
+-    [0.02, 0.26, "#66BB6A", false],
+-    [-0.18, -0.2, "#7CB342", false],
+-  ];
+-  return (
+-    <group ref={ref} position={[1.12, 0.075, -0.35]}>
+-      {pads.map(([x, z, f, blomma]) => (
+-        <group key={`${x}${z}`} position={[x, 0, z]}>
+-          <mesh rotation={[-Math.PI / 2, 0, x]}>
+-            <circleGeometry args={[0.16, 10]} />
+-            <meshStandardMaterial color={f} roughness={0.85} />
+-          </mesh>
+-          {blomma ? (
+-            <mesh position={[0, 0.05, 0]}>
+-              <sphereGeometry args={[0.055, 6, 4]} />
+-              <meshStandardMaterial color="#F48FB1" roughness={0.55} />
+-            </mesh>
+-          ) : null}
+-        </group>
+-      ))}
+-    </group>
+-  );
+-}
+-
+-const FLUGOR: [number, number][] = [
+-  [-1.8, 0.5],
+-  [-0.3, -1.1],
+-  [0.7, 1.5],
+-  [2.0, -0.5],
+-  [-2.1, -2.2],
+-  [1.3, -3.0],
+-];
+-
+-function Eldflugor({ natt }: { natt: number }) {
+-  const ref = useRef<THREE.Group>(null);
+-  useFrame((state) => {
+-    const g = ref.current;
+-    if (!g) return;
+-    const syns = natt > 0.35;
+-    g.visible = syns;
+-    if (!syns) return;
+-    const t = state.clock.elapsedTime;
+-    for (let i = 0; i < g.children.length; i++) {
+-      const bas = FLUGOR[i];
+-      const c = g.children[i] as THREE.Mesh | undefined;
+-      if (!bas || !c) continue;
+-      c.position.set(
+-        bas[0] + Math.sin(t * 0.7 + i) * 0.4,
+-        0.6 + (i % 3) * 0.22 + Math.sin(t * 1.4 + i * 1.7) * 0.3,
+-        bas[1] + Math.cos(t * 0.55 + i) * 0.35,
+-      );
+-      const mat = c.material as THREE.MeshBasicMaterial;
+-      mat.opacity = 0.4 + Math.sin(t * 3.2 + i) * 0.4;
+-    }
+-  });
+-  return (
+-    <group ref={ref} visible={false}>
+-      {FLUGOR.map((_, i) => (
+-        <mesh key={i}>
+-          <sphereGeometry args={[0.05, 6, 5]} />
+-          <meshBasicMaterial color="#FFF59D" transparent opacity={0.8} toneMapped={false} />
+-        </mesh>
+-      ))}
+-    </group>
+-  );
+-}
+-
+-const TUVOR: [number, number][] = [
+-  [-1.7, 0.95],
+-  [-0.85, 1.15],
+-  [-1.15, 1.85],
+-  [-1.55, 1.7],
+-  [0.75, 1.05],
+-  [1.55, 1.2],
+-  [1.05, 1.75],
+-  [1.6, 1.7],
+-  [-0.2, 2.15],
+-  [0.4, 2.35],
+-];
+-
+-const STENAR: [number, number, number][] = [[1.7, -0.05, 0.14]];
+ 
+ const MARK_TEX = markTextur(THREE);
+ const MARK_GEO = (() => {
+@@ -1015,211 +656,8 @@ function SvajMark({ color, natt }: { color: string; natt: number }) {
+   );
+ }
+ 
+-function GrasTuvor() {
+-  const ref = useRef<THREE.InstancedMesh>(null);
+-  useFrame((state) => {
+-    const mesh = ref.current;
+-    if (!mesh) return;
+-    const t = state.clock.elapsedTime;
+-    for (let i = 0; i < TUVOR.length; i++) {
+-      const p = TUVOR[i];
+-      if (!p) continue;
+-      const svaj = Math.sin(t * 1.2 + i) * 0.18;
+-      _blomP.set(p[0], 0.16, p[1]);
+-      _blomE.set(svaj, 0, svaj * 0.65);
+-      _blomQ.setFromEuler(_blomE);
+-      const h = 0.85 + (i % 4) * 0.12;
+-      _blomS.set(0.85, h, 0.85);
+-      _blomM.compose(_blomP, _blomQ, _blomS);
+-      mesh.setMatrixAt(i, _blomM);
+-    }
+-    mesh.instanceMatrix.needsUpdate = true;
+-  });
+-  return (
+-    <instancedMesh ref={ref} args={[undefined, undefined, TUVOR.length]}>
+-      <coneGeometry args={[0.16, 0.38, 6]} />
+-      <meshToonMaterial color="#8BC34A" gradientMap={TOON_MAP} />
+-    </instancedMesh>
+-  );
+-}
+ 
+-function Stenar() {
+-  const ref = useRef<THREE.InstancedMesh>(null);
+-  useLayoutEffect(() => {
+-    const m = new THREE.Matrix4();
+-    const q = new THREE.Quaternion();
+-    const e = new THREE.Euler();
+-    const p = new THREE.Vector3();
+-    const s = new THREE.Vector3();
+-    STENAR.forEach(([x, z, r], i) => {
+-      p.set(x, r * 0.45, z);
+-      e.set(0.2 * i, i * 0.7, 0.15 * i);
+-      q.setFromEuler(e);
+-      s.set(r, r * 0.72, r * 0.9);
+-      m.compose(p, q, s);
+-      ref.current?.setMatrixAt(i, m);
+-    });
+-    if (ref.current) ref.current.instanceMatrix.needsUpdate = true;
+-  }, []);
+-  return (
+-    <instancedMesh ref={ref} args={[undefined, undefined, STENAR.length]} castShadow receiveShadow>
+-      <dodecahedronGeometry args={[1, 0]} />
+-      <meshStandardMaterial color="#B0BEC5" flatShading roughness={0.95} />
+-    </instancedMesh>
+-  );
+-}
+ 
+-function Ljusflackar() {
+-  const ref = useRef<THREE.InstancedMesh>(null);
+-  const mat = useRef<THREE.MeshBasicMaterial>(null);
+-  useLayoutEffect(() => {
+-    const m = new THREE.Matrix4();
+-    const q = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, 0));
+-    const p = new THREE.Vector3();
+-    const s = new THREE.Vector3();
+-    TRAD.forEach(([x, z], i) => {
+-      p.set(x, 0.045, z + 0.5);
+-      const r = 0.7 + (i % 3) * 0.12;
+-      s.set(r, r, 1);
+-      m.compose(p, q, s);
+-      ref.current?.setMatrixAt(i, m);
+-    });
+-    if (ref.current) ref.current.instanceMatrix.needsUpdate = true;
+-  }, []);
+-  useFrame((s) => {
+-    if (mat.current) mat.current.opacity = 0.13 + Math.sin(s.clock.elapsedTime * 0.7) * 0.04;
+-  });
+-  return (
+-    <instancedMesh ref={ref} args={[undefined, undefined, TRAD.length]}>
+-      <circleGeometry args={[1, 10]} />
+-      <meshBasicMaterial ref={mat} color="#FFF4C2" transparent opacity={0.16} depthWrite={false} />
+-    </instancedMesh>
+-  );
+-}
+-
+-function Glitter() {
+-  const geo = useMemo(() => {
+-    const n = 16;
+-    const pos = new Float32Array(n * 3);
+-    for (let i = 0; i < n; i++) {
+-      const a = (i / n) * Math.PI * 2 + 0.2;
+-      const rad = 0.22 + (i % 5) * 0.18;
+-      pos[i * 3] = Math.cos(a) * rad;
+-      pos[i * 3 + 1] = (i % 3) * 0.01;
+-      pos[i * 3 + 2] = Math.sin(a) * rad * 0.75;
+-    }
+-    const g = new THREE.BufferGeometry();
+-    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+-    return g;
+-  }, []);
+-  const ref = useRef<THREE.Points>(null);
+-  useFrame((s) => {
+-    const p = ref.current;
+-    if (!p) return;
+-    const mat = p.material as THREE.PointsMaterial;
+-    mat.opacity = 0.25 + Math.abs(Math.sin(s.clock.elapsedTime * 3.2)) * 0.75;
+-  });
+-  return (
+-    <points ref={ref} position={[1.12, 0.12, -0.35]} geometry={geo}>
+-      <pointsMaterial color="#FFFFFF" size={0.045} transparent opacity={0.85} depthWrite={false} sizeAttenuation />
+-    </points>
+-  );
+-}
+-
+-function FagelFlyg() {
+-  const ref = useRef<THREE.Group>(null);
+-  const vL = useRef<THREE.Mesh>(null);
+-  const vR = useRef<THREE.Mesh>(null);
+-  useFrame((state) => {
+-    const g = ref.current;
+-    if (!g) return;
+-    const t = state.clock.elapsedTime;
+-    const cykel = 50;
+-    const u = t % cykel;
+-    const syns = u > 4 && u < 14;
+-    g.visible = syns;
+-    if (!syns) return;
+-    const p = (u - 4) / 10;
+-    g.position.set(-6 + p * 12, 3.7 + Math.sin(p * Math.PI) * 0.45, -3.2);
+-    g.rotation.y = -Math.PI / 2;
+-    const flap = Math.sin(t * 14) * 0.7;
+-    if (vL.current) vL.current.rotation.z = flap;
+-    if (vR.current) vR.current.rotation.z = -flap;
+-  });
+-  return (
+-    <group ref={ref} visible={false}>
+-      <mesh>
+-        <sphereGeometry args={[0.16, 6, 4]} />
+-        <meshStandardMaterial color="#FFB74D" flatShading />
+-      </mesh>
+-      <mesh ref={vL} position={[-0.18, 0, 0]}>
+-        <boxGeometry args={[0.26, 0.035, 0.12]} />
+-        <meshStandardMaterial color="#FFE0B2" flatShading />
+-      </mesh>
+-      <mesh ref={vR} position={[0.18, 0, 0]}>
+-        <boxGeometry args={[0.26, 0.035, 0.12]} />
+-        <meshStandardMaterial color="#FFE0B2" flatShading />
+-      </mesh>
+-    </group>
+-  );
+-}
+-
+-
+-function Hanglas({ gung }: { gung: { current: number } }) {
+-  const ref = useRef<THREE.Group>(null);
+-  useFrame((state, delta) => {
+-    const g = ref.current;
+-    const tid = gung.current;
+-    if (!g || tid == null) return;
+-    const d = Math.min(delta, 0.1);
+-    if (tid > 0) gung.current = Math.max(0, tid - d);
+-    const kvar = gung.current ?? 0;
+-    g.rotation.z = Math.sin((1 - kvar) * Math.PI * 6) * kvar * 0.85;
+-    const p = 1 + Math.sin(state.clock.elapsedTime * 2.3) * 0.08;
+-    g.scale.setScalar(p);
+-  });
+-  return (
+-    <group ref={ref}>
+-      <mesh position={[0, 0.07, 0]}>
+-        <torusGeometry args={[0.07, 0.02, 5, 8, Math.PI]} />
+-        <meshStandardMaterial color="#F2B632" metalness={0.35} roughness={0.35} flatShading />
+-      </mesh>
+-      <mesh position={[0, -0.02, 0]}>
+-        <boxGeometry args={[0.12, 0.11, 0.05]} />
+-        <meshStandardMaterial color="#E6B325" roughness={0.4} flatShading />
+-      </mesh>
+-    </group>
+-  );
+-}
+-
+-function Rok() {
+-  const ref = useRef<THREE.Group>(null);
+-  useFrame((state) => {
+-    const g = ref.current;
+-    if (!g) return;
+-    const t = state.clock.elapsedTime;
+-    for (let i = 0; i < g.children.length; i++) {
+-      const m = g.children[i] as THREE.Mesh | undefined;
+-      if (!m) continue;
+-      const u = (t * 0.18 + i * 0.34) % 1;
+-      m.position.set(0.15 + Math.sin(t * 0.55 + i) * u * 0.28, 1.7 + u * 2.1, 0.85);
+-      const s = 0.16 + u * 0.55;
+-      m.scale.setScalar(s);
+-      const mat = m.material as THREE.MeshBasicMaterial;
+-      mat.opacity = (1 - u) * 0.62;
+-    }
+-  });
+-  return (
+-    <group ref={ref} raycast={() => null}>
+-      {[0, 1, 2].map((i) => (
+-        <mesh key={i} scale={0.05} position={[0.38, 1.7, 0]}>
+-          <sphereGeometry args={[1, 6, 4]} />
+-          <meshBasicMaterial color="#F7FBFF" transparent opacity={0.2} depthWrite={false} />
+-        </mesh>
+-      ))}
+-    </group>
+-  );
+-}
+ 
+ function SpokHus({ onSnart }: { onSnart: () => void }) {
+   const hus = useRef<THREE.Group>(null);
+@@ -1663,146 +1101,6 @@ function Himmel({ natt }: { natt: number }) {
+   );
+ }
+ 
+-function Horisont() {
+-  const trad = useRef<THREE.InstancedMesh>(null);
+-  useLayoutEffect(() => {
+-    const mesh = trad.current;
+-    if (!mesh) return;
+-    const m = new THREE.Matrix4();
+-    const q = new THREE.Quaternion();
+-    const p = new THREE.Vector3();
+-    const s = new THREE.Vector3();
+-    const platser: [number, number, number][] = [
+-      [-4.2, 1.15, -6.15],
+-      [-2.4, 1.45, -6.2],
+-      [-0.6, 1.25, -6.1],
+-      [1.6, 1.5, -6.25],
+-      [3.4, 1.2, -6.15],
+-      [5.1, 0.95, -6.3],
+-    ];
+-    platser.forEach(([x, y, z], i) => {
+-      p.set(x, y, z);
+-      s.set(0.55, 0.9 + (i % 3) * 0.15, 0.55);
+-      m.compose(p, q, s);
+-      mesh.setMatrixAt(i, m);
+-    });
+-    mesh.instanceMatrix.needsUpdate = true;
+-  }, []);
+-  return (
+-    <group>
+-      <mesh position={[0, 0, -10.6]} scale={[24, 3.6, 1]}>
+-        <circleGeometry args={[1, 14, 0, Math.PI]} />
+-        <meshBasicMaterial color="#8FB4C6" />
+-      </mesh>
+-      <mesh position={[0, 0, -8.3]} scale={[18, 2.7, 1]}>
+-        <circleGeometry args={[1, 16, 0, Math.PI]} />
+-        <meshBasicMaterial color="#7E9E92" />
+-      </mesh>
+-      <mesh position={[0, 0, -6.35]} scale={[13, 2.15, 1]}>
+-        <circleGeometry args={[1, 18, 0, Math.PI]} />
+-        <meshBasicMaterial color="#3F6E34" />
+-      </mesh>
+-      <instancedMesh ref={trad} args={[undefined, undefined, 6]}>
+-        <coneGeometry args={[0.45, 1.3, 5]} />
+-        <meshBasicMaterial color="#2C5228" />
+-      </instancedMesh>
+-    </group>
+-  );
+-}
+-
+-function Forgrund() {
+-  const buske = useRef<THREE.InstancedMesh>(null);
+-  const svamp = useRef<THREE.InstancedMesh>(null);
+-  const sten = useRef<THREE.InstancedMesh>(null);
+-  const blom = useRef<THREE.InstancedMesh>(null);
+-  useLayoutEffect(() => {
+-    const m = new THREE.Matrix4();
+-    const q = new THREE.Quaternion();
+-    const p = new THREE.Vector3();
+-    const s = new THREE.Vector3();
+-    const buskar: [number, number, number, number][] = [
+-      [-1.85, 0.22, 2.55, 0.42],
+-      [-1.45, 0.16, 2.85, 0.3],
+-      [1.75, 0.2, 2.7, 0.4],
+-      [1.35, 0.14, 3.05, 0.26],
+-      [-0.55, 0.12, 3.15, 0.22],
+-    ];
+-    buskar.forEach(([x, y, z, r], i) => {
+-      p.set(x, y, z);
+-      s.set(r * 1.3, r, r);
+-      m.compose(p, q, s);
+-      buske.current?.setMatrixAt(i, m);
+-    });
+-    if (buske.current) buske.current.instanceMatrix.needsUpdate = true;
+-    const svampar: [number, number, number][] = [
+-      [0.95, 0.08, 2.55],
+-      [1.2, 0.07, 2.9],
+-      [0.7, 0.06, 2.85],
+-    ];
+-    svampar.forEach(([x, y, z], i) => {
+-      p.set(x, y, z);
+-      s.set(0.16, 0.1, 0.16);
+-      m.compose(p, q, s);
+-      svamp.current?.setMatrixAt(i, m);
+-    });
+-    if (svamp.current) svamp.current.instanceMatrix.needsUpdate = true;
+-    const stigar: [number, number][] = [
+-      [0.05, 3.25],
+-      [0.22, 2.85],
+-      [0.4, 2.45],
+-      [0.55, 2.05],
+-      [0.7, 1.65],
+-      [0.82, 1.25],
+-      [0.95, 0.9],
+-    ];
+-    stigar.forEach(([x, z], i) => {
+-      p.set(x, 0.04, z);
+-      s.set(0.22, 0.06, 0.16);
+-      m.compose(p, q, s);
+-      sten.current?.setMatrixAt(i, m);
+-    });
+-    if (sten.current) sten.current.instanceMatrix.needsUpdate = true;
+-    const rabatt: [number, number, string][] = [
+-      [-0.95, 2.35, "#F48FB1"],
+-      [-0.7, 2.55, "#FDD835"],
+-      [-1.15, 2.6, "#CE93D8"],
+-      [-0.85, 2.75, "#FFFFFF"],
+-      [-0.5, 2.4, "#F48FB1"],
+-    ];
+-    const col = new THREE.Color();
+-    rabatt.forEach(([x, z, f], i) => {
+-      p.set(x, 0.1, z);
+-      s.set(0.12, 0.1, 0.12);
+-      m.compose(p, q, s);
+-      blom.current?.setMatrixAt(i, m);
+-      blom.current?.setColorAt(i, col.set(f));
+-    });
+-    if (blom.current) {
+-      blom.current.instanceMatrix.needsUpdate = true;
+-      if (blom.current.instanceColor) blom.current.instanceColor.needsUpdate = true;
+-    }
+-  }, []);
+-  return (
+-    <group>
+-      <instancedMesh ref={buske} args={[undefined, undefined, 5]}>
+-        <sphereGeometry args={[1, 7, 5]} />
+-        <meshToonMaterial color="#43A047" gradientMap={TOON_MAP} />
+-      </instancedMesh>
+-      <instancedMesh ref={svamp} args={[undefined, undefined, 3]}>
+-        <sphereGeometry args={[1, 7, 5]} />
+-        <meshToonMaterial color="#E57373" gradientMap={TOON_MAP} />
+-      </instancedMesh>
+-      <instancedMesh ref={sten} args={[undefined, undefined, 7]}>
+-        <sphereGeometry args={[1, 6, 4]} />
+-        <meshToonMaterial color="#B0A090" gradientMap={TOON_MAP} />
+-      </instancedMesh>
+-      <instancedMesh ref={blom} args={[undefined, undefined, 5]}>
+-        <sphereGeometry args={[1, 6, 5]} />
+-        <meshToonMaterial vertexColors gradientMap={TOON_MAP} />
+-      </instancedMesh>
+-    </group>
+-  );
+-}
+ 
+ function KameraRam({ styr }: { styr: { current: OrbitStyr | null } }) {
+   const lage = useRef("");
+-- 
+2.47.3
+

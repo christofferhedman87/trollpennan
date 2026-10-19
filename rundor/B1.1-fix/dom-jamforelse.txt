@@ -1,0 +1,31 @@
+lika      01-start
+lika      02-ang-djur
+ostabilt  03-bok-kort (två körningar av samma kod skiljer sig; räknas inte)
+ostabilt  04-bok-skriv (två körningar av samma kod skiljer sig; räknas inte)
+ostabilt  05-bok-forslag (två körningar av samma kod skiljer sig; räknas inte)
+lika      06-bok-behover
+lika      07-meny
+lika      08-meny-last
+lika      09-karta
+lika      10-skogen-valj
+lika      11-skogen
+lika      12-ordbok
+lika      13-foralder
+lika      14-album
+lika      15-formel
+lika      16-onska
+lika      17-onska-bok
+lika      18-gard
+lika      19-gard-bygger
+lika      20-gard-bok
+lika      21-foralder-borja
+lika      22-meny-borja
+lika      23-ordbok-for-fa
+lika      24-ordbok-kop
+lika      25-ordbok-kopt
+lika      26-bygg-for-fa
+lika      27-bygg-kop
+lika      28-kvall
+
+25 stabila lägen av 28, 0 skiljer sig före/efter.
+jamfor=0
