@@ -1,0 +1,11 @@
+{
+ "_om": "R3F-M10 (B5a): gåtor för sjöns sex hemliga djur, ur rundor/BLOCK-platser/data-utkast/ledtradar-platser.json (Copilots utkast, granskad: false). kor.sh lägger in dem i data/ledtradar.json; kor-plats.sh sjon lägger sedan till område och Bengtssons repliker.",
+ "gator": {
+  "utter": "Med brun päls och lång svans simmar jag efter fisk och vilar gärna vid stranden.",
+  "abborre": "Mörka ränder på sidorna och röda fenor under kroppen har jag i svenska sjöar.",
+  "gädda": "Lång och grönfläckig simmar jag bland vattenväxter, med en bred, platt nos.",
+  "kräfta": "Baklänges kan jag simma med ett knyck, och framtill har jag två stora klor.",
+  "svan": "Med lång, böjd hals och vita fjädrar glider jag fram, större än en gås.",
+  "vattensalamander": "Med fyra små ben och lång svans simmar jag i dammen, men jag är ingen ödla."
+ }
+}

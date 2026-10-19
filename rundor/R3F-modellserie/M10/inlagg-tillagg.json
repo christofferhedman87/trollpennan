@@ -1,0 +1,14 @@
+{
+ "_om": "R3F-M10 (B5a): målhöjder för låga/platta modeller (annars blir de kategorins 1,0 och för stora). kor.sh för in raderna i data/inlagg.json malhojd_ord före lagg.",
+ "malhojd_ord": {
+  "utter": 0.7,
+  "svan": 1.1,
+  "abborre": 0.55,
+  "gädda": 0.5,
+  "kräfta": 0.35,
+  "vattensalamander": 0.28,
+  "bäck": 0.1,
+  "stig": 0.1,
+  "vägskylt": 0.6
+ }
+}

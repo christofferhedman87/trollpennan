@@ -34,6 +34,28 @@ if ! grep -q 'R3F-M' src/spel/entiteter.test.ts; then
   git apply "$D/ref/r3f-serie.patch" && rad "patch: applicerad (första paketet i serien)"
 else rad "patch: fanns redan på main"; fi
 
+# 2b. Målhöjder för paketets ord (valfri $D/$M/inlagg-tillagg.json → data/inlagg.json malhojd_ord). Bara data.
+if [ -f "$D/$M/inlagg-tillagg.json" ]; then
+  node -e '
+    const fs = require("fs"); const [t, c] = process.argv.slice(1);
+    const ny = JSON.parse(fs.readFileSync(t, "utf8")).malhojd_ord ?? {}; let s = fs.readFileSync(c, "utf8"); let n = 0;
+    for (const [ord, h] of Object.entries(ny)) {
+      if (new RegExp(`"${ord}":`).test(s.split("\"malhojd_ord\"")[1].split("}")[0])) continue;
+      s = s.replace(/("malhojd_ord": \{\n)/, `$1    "${ord}": ${h},\n`); n++;
+    }
+    JSON.parse(s); fs.writeFileSync(c, s); console.log("malhojd_ord tillagda: " + n);
+  ' "$D/$M/inlagg-tillagg.json" data/inlagg.json | tee -a "$UT/bevis.txt" || stopp 2 "inlagg-tillagg.json kunde inte föras in"
+fi
+
+# 2c. Testjustering som paketet kräver (valfri $D/$M/test.patch, bara src/**/*.test.ts). Ex: M10 gör "vägskylt" känt.
+TESTFILER=""
+if [ -f "$D/$M/test.patch" ]; then
+  TESTFILER=$(git apply --numstat "$D/$M/test.patch" | awk '{print $3}')
+  for f in $TESTFILER; do case "$f" in src/*.test.ts) ;; *) stopp 2 "test.patch rör $f (bara src/**/*.test.ts tillåts)";; esac; done
+  git apply --check "$D/$M/test.patch" || stopp 2 "$D/$M/test.patch går inte att applicera"
+  git apply "$D/$M/test.patch" && rad "test.patch: $(echo $TESTFILER)"
+fi
+
 # 3. Lagg, EN gång
 node scripts/modell-inlagg.mjs lagg --mapp "$INK" --manifest "$D/manifest-serie.tsv" --urval "$D/$M/urval.txt" \
   --tillval "$D/tillval-serie.tsv" --runda "R3F-$M" --repo . --ut "$UT/lagg.json" --parallellt 4 > "$UT/lagg.txt" 2>&1
@@ -69,7 +91,7 @@ node scripts/modell-inlagg.mjs matt --repo . --ut "$UT/matt.json" > "$UT/matt.tx
 kolla "förladdat KB (hämtas före första ordet)" "$(node -e 'const m=require(process.argv[1]);console.log(m.forladdat?.kb ?? m.forladdat_kb ?? "?")' "$UT/matt.json")" "0"
 KB=$(du -sk public/models/bulk | cut -f1); rad "INFO public/models/bulk: $KB KB ($(ls public/models/bulk | wc -l) filer)"
 kolla "src/tolk orört" "$(git diff --name-only -- src/tolk | wc -l)" "0"
-kolla "andra src-filer än testet" "$(git diff --name-only -- src | grep -v 'src/spel/entiteter.test.ts' | wc -l)" "0"
+kolla "andra src-filer än testet" "$(git diff --name-only -- src | grep -v 'src/spel/entiteter.test.ts' | { if [ -n "$TESTFILER" ]; then grep -vxF "$TESTFILER"; else cat; fi; } | wc -l)" "0"
 
 # 5. Bild: kontaktark för paketet (+ för M1 ett spelprov med djur i ängen, 375x812)
 node $D/../R3D-bulk-2/lista.mjs --runda "R3F-$M" --ut "$UT/lista.json" >/dev/null
@@ -91,7 +113,7 @@ fi
   echo; echo "Ordgranskning (djurord, gissade former för Copilot): \`$D/$M/ordgranskning.tsv\`."
   [ $AVV -ne 0 ] && echo && echo "**AVVIKELSE: rader märkta AVV ovan. Ingen merge förrän Arkitekten tittat.**"
 } > "$LOGG"
-git add -A -- CREDITS.md LICENSES.md data public/models/bulk src/spel/entiteter.test.ts docs/skarmbilder/r3f "$D/$M"
+git add -A -- CREDITS.md LICENSES.md data public/models/bulk src/spel/entiteter.test.ts $TESTFILER docs/skarmbilder/r3f "$D/$M"
 git commit -q -m "Runda R3F-$M: modellserien, $FORV modeller (CC0, hämtas när ordet används)" || stopp 3 "commit misslyckades"
 echo; echo "KLART: $(git log --oneline -1). $( [ $AVV -eq 0 ] && echo 'Alla bevis OK: pusha, PR, merge.' || echo 'AVVIKELSE: pusha och öppna PR men MERGA INTE.')"
 exit $(( AVV ? 4 : 0 ))
