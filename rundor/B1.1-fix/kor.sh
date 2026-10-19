@@ -32,4 +32,4 @@ npm run -s build:pages > "$U/build-efter.txt" 2>&1 || { tail -20 "$U/build-efter
 # 3. DOM-turen efter: samma DOM som main i alla stabila lägen, inga sidfel
 node $T --dist dist-pages --ut "$U/efter" > "$U/efter.log" 2>&1 && grep -q " 0 sidfel" "$U/efter.log" || { tail -8 "$U/efter.log"; aterstall; echo "STOPP 4: DOM-turen efter föll eller gav sidfel"; exit 4; }
 node $T --jamfor "$U/fore1" "$U/fore2" "$U/efter" > "$U/jamfor.txt" 2>&1 || { tail -12 "$U/jamfor.txt"; aterstall; echo "STOPP 4: DOM skiljer mot main"; exit 4; }
-echo "B1.1 OK: angen3d.tsx $(wc -l < src/spel/angen3d.tsx) rader + $(ls src/spel/ang | wc -l) filer i src/spel/ang/, test:product $(grep -o '^# pass [0-9]*' "$U/test.txt"), typecheck 0, typecheck:pages 0, eslint src 0 fel/$W varningar, DOM: $(tail -2 "$U/jamfor.txt" | head -1). Committa src/ på runda-b1-1, PR, merge."
+echo "B1.1 OK: angen3d.tsx $(wc -l < src/spel/angen3d.tsx) rader + $(ls src/spel/ang | wc -l) filer i src/spel/ang/, test:product $(grep -o '^# pass [0-9]*' "$U/test.txt"), typecheck 0, typecheck:pages 0, eslint src 0 fel/$W varningar, DOM: $(grep "stabila lägen" "$U/jamfor.txt"). Committa src/ på runda-b1-1, PR, merge."
