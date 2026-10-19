@@ -1,0 +1,52 @@
+{
+ "runder": [
+  {
+   "exempel": "lila",
+   "djur": 1,
+   "formel": "en lila katt",
+   "onskan_kvar": null,
+   "tack": [
+    {
+     "left": 62,
+     "right": 271,
+     "bredd": 375,
+     "text": "Precis som kvällshimlen! Nu kan stjärnorna komma."
+    }
+   ],
+   "ok": true
+  },
+  {
+   "exempel": "lila",
+   "djur": 3,
+   "formel": "en lila katt",
+   "onskan_kvar": null,
+   "tack": [
+    {
+     "left": 110,
+     "right": 287,
+     "bredd": 375,
+     "text": "Precis som kvällshimlen! Nu kan stjärnorna komma."
+    }
+   ],
+   "ok": true
+  },
+  {
+   "exempel": "lila",
+   "djur": 4,
+   "formel": "en lila katt",
+   "onskan_kvar": null,
+   "tack": [
+    {
+     "left": 150,
+     "right": 300,
+     "bredd": 375,
+     "text": "Precis som kvällshimlen! Nu kan stjärnorna komma."
+    }
+   ],
+   "ok": true
+  }
+ ],
+ "bubblor_utanfor_skarmen": 0,
+ "exempel_utanfor": [],
+ "sidfel": []
+}
