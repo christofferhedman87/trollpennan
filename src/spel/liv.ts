@@ -235,10 +235,22 @@ export function fyllMossa(s: Data): MossaPost[] {
   return ut.slice(0, 3);
 }
 
+/** R9J: djuret med uid på ängen, gården eller någon plats (platsSkapelser). */
+export function djurMedUid(s: Pick<Data, "ang" | "hemma" | "platsSkapelser">, uid: string): Sparad | undefined {
+  return (
+    s.ang.find((a) => a.uid === uid) ??
+    s.hemma.find((h) => h.spec.uid === uid)?.spec ??
+    Object.values(s.platsSkapelser ?? {})
+      .flat()
+      .find((a) => a.uid === uid)
+  );
+}
+
 export function tickLiv(s: Data, ms: number): Partial<Data> {
   const dygnMs = s.dygnMs + ms;
   const liv = { ...s.liv };
-  const uids = [...s.ang.map((a) => a.uid), ...s.hemma.map((h) => h.spec.uid)];
+  // R9J: humöret lever på alla platser (ängen, gården och varje plats i platsSkapelser), inte bara ängen.
+  const uids = [...s.ang.map((a) => a.uid), ...s.hemma.map((h) => h.spec.uid), ...Object.values(s.platsSkapelser ?? {}).flatMap((l) => l.map((a) => a.uid))];
   for (const uid of uids) {
     const har = liv[uid] ?? nyttLiv(dygnMs);
     if (dygnMs >= har.humorMs + har.humorLangd) {
