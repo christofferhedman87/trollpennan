@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 641 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 662 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -35,7 +35,8 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-city-kit-suburban | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-suburban | 2 |
 | kenney-cube-pets | Kenney | CC0-1.0 | https://kenney.nl/assets/cube-pets | 13 |
 | kenney-fantasy-town-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/fantasy-town-kit | 10 |
-| kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 66 |
+| kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 69 |
+| kenney-food-kit-2 | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 18 |
 | kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 46 |
 | kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 6 |
 | kenney-holiday-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/holiday-kit | 15 |
@@ -711,3 +712,24 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | scout | /models/bulk/scout.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
 | farbror | /models/bulk/farbror.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
 | moster | /models/bulk/moster.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
+| pommes | /models/bulk/pommes.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| lokmat | /models/bulk/lokmat.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| kniv | /models/bulk/kniv.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| kaffe | /models/bulk/kaffe.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| te | /models/bulk/te.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| ketchup | /models/bulk/ketchup.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| senap | /models/bulk/senap.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| bacon | /models/bulk/bacon.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| salt | /models/bulk/salt.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| peppar | /models/bulk/peppar.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| flingor | /models/bulk/flingor.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| grillspett | /models/bulk/grillspett.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| limpa | /models/bulk/limpa.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| gradde | /models/bulk/gradde.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| milkshake | /models/bulk/milkshake.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| selleri | /models/bulk/selleri.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| jordnotssmor | /models/bulk/jordnotssmor.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| ris | /models/bulk/ris.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| spatel | /models/bulk/spatel.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| nudlar | /models/bulk/nudlar.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| kott | /models/bulk/kott.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
