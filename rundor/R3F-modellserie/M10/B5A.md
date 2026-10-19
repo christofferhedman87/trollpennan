@@ -22,3 +22,7 @@ Kräver inkorgspaketet `/workspace/modell-inkorg/b5a-sjo-cc0/` (finns på boxen;
 **Nytt i kor.sh (allmänt, alla paket):** steg 2b för in `M<n>/inlagg-tillagg.json` (målhöjder för låga/platta modeller) i `data/inlagg.json` före lagg. Utan den blir kräfta/salamander/stig kategorins höjd 1,0 och alldeles för stora.
 
 **Efteråt:** kör om `bash rundor/BLOCK-platser/kor-plats.sh sjon` efter B3 (idempotent). Då får de sex djuren område och Bengtssons repliker, och uppdragen blir tillgängliga.
+
+## Verifiering (Arkitekten, ren worktree på origin/runda-b5a = main 329473f + underlaget)
+`bash rundor/R3F-modellserie/kor.sh M10` → **EXIT=0**: Inlagt 9 (6 djurord, 3 kategoriord), 6 gåtor, test:product 0 fel, typecheck:pages 0, check:struktur 0, förladdat 0 KB, bulk 21 380 KB (576 filer), spelprov utter/kräfta/svan/gädda på ängen utan sidfel.
+Simulerat vidare ovanpå: `kor-plats.sh skogen` EXIT=0 (skogens dekor: `saknas` tom) och `kor-plats.sh sjon` EXIT=0 ("0 gåtor väntar på modell", före M10: 6). Bilder i `verifiering/`.
