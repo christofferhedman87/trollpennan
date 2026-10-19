@@ -2,11 +2,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import entiteterJson from "../../../data/entiteter.json" with { type: "json" };
 import { tolkaMedReserv } from "../../tolk/reserv.ts";
 import { TAKT, aventyrKvar, aktivtSkrivUppdrag, bengtssonLagen, kravUppfylltTolkat, nastaSkrivUppdrag, sekTillRedo } from "../uppdragsmotor.ts";
+import { mattUr, milstolpeNadd } from "../platser.ts";
+import npcJson from "../../../data/npc.json" with { type: "json" };
 import { klarUppdrag, type FlodeSvar } from "../avflode.ts";
 import { useMinne } from "../minne.ts";
 import { NPC_DEL, mineVararMs, valjMine } from "../npc.ts";
 
 const NPC_ID = "bengtsson";
+const REPLIKER_PLATS = (npcJson as { repliker_plats?: Record<string, { glad?: string[] }> }).repliker_plats ?? {};
 const ENT = (entiteterJson as { entiteter: Record<string, { typ?: string }> }).entiteter;
 
 /** B1.2: platsen barnet är på (minne.plats när det finns, annars ängen). */
@@ -42,6 +45,7 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
     [],
   );
   const plats = platsNu();
+  const finalOk = milstolpeNadd(plats, mattUr(useMinne.getState()));
   const sek = sekTillRedo(
     status,
     {
@@ -51,6 +55,7 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
     },
     TAKT,
     plats,
+    finalOk,
   );
   // en enda timer som väcker komponenten när väntetiden är slut (ingen tick per sekund)
   useEffect(() => {
@@ -71,11 +76,18 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
 
   function klicka() {
     const s = useMinne.getState().uppdrag;
-    if (aktivtSkrivUppdrag(s, platsNu())) return oppnaSkapa();
-    const nasta = nastaSkrivUppdrag(s, platsNu());
+    const pl = platsNu();
+    const fo = milstolpeNadd(pl, mattUr(useMinne.getState()));
+    if (aktivtSkrivUppdrag(s, pl)) return oppnaSkapa();
+    const nasta = nastaSkrivUppdrag(s, pl, fo);
     if (nasta) {
       useMinne.getState().sattUppdrag(nasta.id, "pagar");
       return oppnaSkapa();
+    }
+    const glad = REPLIKER_PLATS[pl]?.glad;
+    if (glad?.length) {
+      visaBanner(glad[Math.floor(Math.random() * glad.length)]!, "ovr");
+      return;
     }
     const rep = NPC_DEL[NPC_ID]?.repliker;
     if (aventyrKvar(s)) {
@@ -107,5 +119,6 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
     sekSedanKlart: klartVid.current === null ? null : (Date.now() - klartVid.current) / 1000,
   });
 
-  return { mine, nytt, synlig, klicka, prova, matt, npcId: NPC_ID, ikonText: TAKT.ikon_text, ikonAlt: TAKT.ikon_alt };
+  const visaFel = () => blinka("fel");
+  return { mine, nytt, synlig, klicka, prova, matt, visaFel, npcId: NPC_ID, ikonText: TAKT.ikon_text, ikonAlt: TAKT.ikon_alt };
 }

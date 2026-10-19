@@ -154,7 +154,7 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
   );
 }
 
-export function Angen3D({ natt, saga = false }: { natt: number; saga?: boolean }) {
+export function Angen3D({ natt, saga = false, onGrind }: { natt: number; saga?: boolean; onGrind?: () => boolean }) {
   const djur = useMinne((s) => s.ang);
   const garden = useMinne((s) => s.garden);
   const dragit = useMinne((s) => s.dragit);
@@ -202,10 +202,11 @@ export function Angen3D({ natt, saga = false }: { natt: number; saga?: boolean }
     };
   }, []);
   const onSnart = useCallback(() => {
+    if (onGrind && onGrind()) return;
     setPrat(true);
     if (dolj.current) window.clearTimeout(dolj.current);
     dolj.current = window.setTimeout(() => setPrat(false), 2400);
-  }, []);
+  }, [onGrind]);
   return (
     <div ref={rot} className="angen-3d" data-testid="angen-3d" style={{ "--grad-m": KV.farggrad ? MILJO.farggrad.mattnad : 1, "--grad-k": KV.farggrad ? MILJO.farggrad.kontrast : 1, "--vinjett": MILJO.vinjett.styrka } as React.CSSProperties} data-djur={djur.length} data-byggen={garden.length} data-saga={saga ? "ja" : "nej"} data-plats={plats}>
       {!saga && !dragit ? (

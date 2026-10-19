@@ -97,6 +97,8 @@ import { nattvaken } from "./entiteter.ts";
 import { Hud, HudBot, MenyPanel } from "./ui/Hud.tsx";
 import { NpcFigur, NpcIkon } from "./ui/NpcFigur.tsx";
 import { useBengtsson } from "./ui/useBengtsson.ts";
+import { usePlats } from "./ui/usePlats.ts";
+import { PlatsResa } from "./ui/PlatsResa.tsx";
 import { KartaLager, OmradeHud } from "./ui/KartaLager.tsx";
 import { OrdbokDialog } from "./ui/OrdbokDialog.tsx";
 
@@ -537,6 +539,7 @@ export function Spel() {
     setBokOpp(true);
   }
   const bengtsson = useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdragsbok: oppnaUppdrag });
+  const platsUi = usePlats({ visaFel: () => bengtsson.visaFel() });
   // R9D: när Bengtssons uppdrag startar tas en djurönskan bort, så att boken bara visar ett uppdrag och förslagen hör till det
   const pagarId = aktivtSkrivUppdrag(uppdragSpar)?.id;
   useEffect(() => {
@@ -872,6 +875,7 @@ export function Spel() {
     ljud.lasOpp();
     const trim = raw.trim();
     if (!trim) return;
+    if (platsUi.forsokSkriv(trim)) { rensaSkriv(); setBokOpp(false); return; }
     noteraSkriv(trim);
     if (gavaRef.current?.startsWith("egen:")) {
       const uid = gavaRef.current.slice(5);
@@ -1761,9 +1765,10 @@ export function Spel() {
       <section className={visa3d ? "ang tred" : "ang"} ref={angRef} aria-label={varld === "gard" ? TEXTER.flikar.garden : TEXTER.flikar.angen} inert={intro}>
         <div className="natt-bak" style={{ opacity: natt }} />
         <div className="duk" ref={host} />
-        {visa3d ? <Angen3D natt={natt} saga={intro} /> : null}
+        {visa3d ? <Angen3D natt={natt} saga={intro} onGrind={platsUi.tryckGrind} /> : null}
+        {visa3d ? <PlatsResa plats={platsUi.plats} namn={platsUi.namn} ton={platsUi.ton} skylt={platsUi.skylt} intro={platsUi.intro} hem={platsUi.hem} /> : null}
         <AngLager natt={natt} varld={varld} omrade={omrade} panel={panel} ang={ang} hemma={hemma} liv={liv} fotoMal={fotoMal} visaBanner={visaBanner} visaMossa={visaMossa} setFotoMal={setFotoMal} banners={banners} bubblor={bubblor} onskan={onskan} onskaOpp={onskaOpp} onskaSyns={onskaSyns} ank={ank} oppnaOnska={oppnaOnska} meny={meny} setMeny={setMeny} omUidRef={omUidRef} setLage={setLage} setBokOpp={setBokOpp} setLadaOpp={setLadaOpp} menyHem={menyHem} setBoUid={setBoUid} lada={lada} ladaOpp={ladaOpp} boUid={boUid} boDjur={boDjur} flyttaInDjur={flyttaInDjur} />
-        {kartaOpp ? <KartaLager forstaRad={forstaRad} kartaText={kartaText} tryckPlats={tryckPlats} oppna={oppna} /> : null}
+        {kartaOpp ? <KartaLager forstaRad={forstaRad} kartaText={kartaText} tryckPlats={(id) => { if (id === "garden") return tryckPlats(id); setKartaOpp(false); setKartaText(null); setBokOpp(false); platsUi.resTill(id); }} oppna={oppna} /> : null}
         {omrade && !kartaOpp ? <OmradeHud tryckPlats={tryckPlats} bytFolje={bytFolje} /> : null}
         <Hud oppnaStjarnor={() => setStjarnInfo(true)} haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} />
         <MenyPanel menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} senare={senare} panel={panel} varld={varld} valjVarld={valjVarld} lasMeny={lasMeny} oppnaUppdrag={oppnaUppdrag} setBokOpp={setBokOpp} oppnaKarta={oppnaKarta} setIntroNy={setIntroNy} setIntro={setIntro} menySaker={menySaker} borjaOm={borjaOm} />

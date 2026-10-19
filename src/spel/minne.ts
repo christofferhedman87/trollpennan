@@ -69,6 +69,8 @@ export type Data = {
   platsSkapelser: Record<string, Sparad[]>;
   /** B1.3a: platser som en gång låsts upp förblir öppna. */
   oppnadePlatser: string[];
+  /** B1.4: platser vars intro-bubbla redan visats. */
+  seddaIntro: string[];
 };
 
 type Minne = Data & {
@@ -111,6 +113,8 @@ type Minne = Data & {
   laggSkatt: (b: SparatBygge) => void;
   /** B1.3a: gå till en plats; bara upplåsta. true om bytet skedde. */
   bytPlats: (id: string) => boolean;
+  /** B1.4: markera att platsens intro visats. */
+  markeraIntro: (id: string) => void;
 };
 
 function tom(): Data {
@@ -162,6 +166,7 @@ function tom(): Data {
     plats: START_PLATS,
     platsSkapelser: {},
     oppnadePlatser: [],
+    seddaIntro: [],
   };
 }
 
@@ -221,6 +226,7 @@ export function franSparning(raw: unknown): Data {
       plats: typeof p.plats === "string" && p.plats ? p.plats : START_PLATS,
       platsSkapelser: objekt(p.platsSkapelser) ? (p.platsSkapelser as Data["platsSkapelser"]) : {},
       oppnadePlatser: Array.isArray(p.oppnadePlatser) ? (p.oppnadePlatser as string[]).filter((x) => typeof x === "string") : [],
+      seddaIntro: Array.isArray(p.seddaIntro) ? (p.seddaIntro as string[]).filter((x) => typeof x === "string") : [],
     };
   } catch {
     return tom();
@@ -268,6 +274,7 @@ function spara(d: Data) {
     sattIntro: _aj,
     sattTittat: _ak,
     bytPlats: _al,
+    markeraIntro: _am,
     ...data
   } = d as Data & Record<string, unknown>;
   skrivLokalt(() => window.localStorage, { ...data, version: 2 });
@@ -506,6 +513,10 @@ export const useMinne = create<Minne>((set, get) => ({
     const oppnadePlatser = id === START_PLATS || d.oppnadePlatser.includes(id) ? d.oppnadePlatser : [...d.oppnadePlatser, id];
     set({ plats: id, oppnadePlatser });
     return true;
+  },
+  markeraIntro: (id) => {
+    if (get().seddaIntro.includes(id)) return;
+    set({ seddaIntro: [...get().seddaIntro, id] });
   },
   sattFyrPa: () => set({ fyr: true }),
   settKarta: () => set({ forstaKarta: false }),

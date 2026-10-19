@@ -10,6 +10,7 @@ import { dekorFor, vattenytor } from "../platsDekor.ts";
 import { platsMed } from "../platser.ts";
 import { DjurIScen } from "./djur.tsx";
 import { SvajMark } from "./himmel.tsx";
+import { SagaPenna } from "./saga.tsx";
 import { KameraRam } from "./kamera.tsx";
 import type { OrbitStyr } from "./saga.tsx";
 
@@ -88,11 +89,12 @@ export function PlatsScen({ plats }: { plats: string }) {
       />
       <directionalLight color={L.fyll.farg} position={[-6, 3, 4]} intensity={L.fyll.styrka * k} />
       <directionalLight color={L.kant.farg} position={[-2, 4, -5]} intensity={L.kant.styrka * k} />
-      <SvajMark color={mark} natt={0} />
+      <SvajMark color={mark} natt={0} utanTextur={mark !== "#ffffff"} />
       <PlatsDekor plats={plats} />
       {djur.map((spec) => (
         <DjurIScen key={spec.uid} spec={spec} alla={djur} />
       ))}
+      <SagaPenna />
       <OrbitControls
         ref={styr as never}
         enablePan={false}
