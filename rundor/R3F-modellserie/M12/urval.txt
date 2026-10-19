@@ -1,0 +1,20 @@
+# R3F-M12 (dubblingen, paket 2: människor och familj): 19 modeller, alla CC0. Format: paket/filnamn.
+polypizza-cc0-3/woman-a-9kf7et.glb
+polypizza-cc0-3/characters-matt-66kq4d-forenklad.glb
+polypizza-cc0-3/woman-dress-zmyplq.glb
+polypizza-cc0-3/character-animated-dgocw9-forenklad.glb
+polypizza-cc0-3/king-b-mzmcek-forenklad.glb
+polypizza-cc0-3/cowboy-s8hq7l.glb
+polypizza-cc0-3/worker-yg2bqz.glb
+polypizza-cc0-3/pirate-pirate-captain-sn18ly-forenklad.glb
+kenney-blocky-characters/character-j.glb
+kenney-blocky-characters/character-i.glb
+kenney-blocky-characters/character-q.glb
+kenney-blocky-characters/character-b.glb
+kenney-blocky-characters/character-c.glb
+kenney-blocky-characters/character-e.glb
+kenney-blocky-characters/character-f.glb
+kenney-blocky-characters/character-p.glb
+kenney-blocky-characters/character-m.glb
+kenney-blocky-characters/character-k.glb
+kenney-blocky-characters/character-n.glb

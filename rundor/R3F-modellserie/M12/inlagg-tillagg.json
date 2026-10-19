@@ -1,0 +1,26 @@
+{
+ "_om": "R3F-M12: barn lägre än vuxna.",
+ "malhojd_ord": {
+  "mamma": 1.25,
+  "pappa": 1.3,
+  "lärare": 1.25,
+  "pojke": 1.1,
+  "kung": 1.3,
+  "cowboy": 1.3,
+  "byggarbetare": 1.3,
+  "arbetare": 1.3,
+  "pirat": 1.1,
+  "polis": 1.3,
+  "farfar": 1.25,
+  "morfar": 1.25,
+  "chef": 1.3,
+  "bror": 1.2,
+  "kille": 1.2,
+  "syster": 1.2,
+  "kompis": 1.2,
+  "sjörövare": 1.25,
+  "scout": 1.2,
+  "farbror": 1.3,
+  "moster": 1.25
+ }
+}
