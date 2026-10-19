@@ -18,7 +18,7 @@ grep -q "export function InstansModell" src/spel/kenneyNatur.tsx && { echo "STOP
 git apply --check "$D/r8-2b.patch" 2>"$UT/apply.txt" || { cat "$UT/apply.txt"; echo "STOPP 2: patchen passar inte"; exit 2; }
 git apply "$D/r8-2b.patch"
 NYA="src/spel/platsYta.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts"
-ANDRADE="data/platser.json package.json src/spel/ang/PlatsDekor.tsx src/spel/ang/dekor.tsx src/spel/ang/delat.ts src/spel/ang/djur.tsx src/spel/gltfDjur.tsx src/spel/kenneyNatur.tsx src/spel/platsDekor.ts src/spel/platser.ts"
+ANDRADE="data/platser.json package.json src/spel/ang/PlatsDekor.tsx src/spel/ang/dekor.tsx src/spel/ang/delat.ts src/spel/ang/djur.tsx src/spel/gltfDjur.tsx src/spel/kenneyNatur.tsx src/spel/platsDekor.ts src/spel/platser.ts src/spel/platser.test.ts"
 aterstall() { git checkout -q -- $ANDRADE; rm -f $NYA; }
 [ -d node_modules ] || npm ci --silent
 npm run -s test:product > "$UT/test.txt" 2>&1 || { grep -A8 '^not ok' "$UT/test.txt" | head -40; aterstall; echo "STOPP 3: test:product föll"; exit 3; }
