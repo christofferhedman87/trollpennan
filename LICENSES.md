@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 875 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 898 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -23,7 +23,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | gobkit-cc0-djur-och-natur | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 59 |
 | kaykit-block-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/block-bits | 1 |
 | kaykit-city-builder-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/city-builder-bits | 6 |
-| kaykit-furniture-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/furniture-bits | 10 |
+| kaykit-furniture-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/furniture-bits | 11 |
 | kaykit-halloween-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/halloween-bits | 5 |
 | kaykit-holiday-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/holiday-bits | 12 |
 | kaykit-resource-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/resource-bits | 11 |
@@ -87,6 +87,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | trollpennan-egna-m16 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 14 |
 | trollpennan-folk-m17 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 34 |
 | trollpennan-fordon-m18 | Kenney (watercraft-kit); tillägg: Trollpennan | CC0-1.0 | https://kenney.nl/assets/watercraft-kit | 31 |
+| trollpennan-kok-m20 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 22 |
 | trollpennan-mfix | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 21 |
 | trollpennan-mfix2 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 8 |
 | trollpennan-mfix3 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 11 |
@@ -973,3 +974,26 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | fenix | /models/bulk/fenix.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | sjoorm | /models/bulk/sjoorm.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | narval | /models/bulk/narval.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
+| tekanna | /models/bulk/tekanna.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kaffekanna | /models/bulk/kaffekanna.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| tekopp | /models/bulk/tekopp.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| termos | /models/bulk/termos.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| slev | /models/bulk/slev.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| durkslag | /models/bulk/durkslag.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| ugnsvante | /models/bulk/ugnsvante.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| forklade | /models/bulk/forklade.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| saltkar | /models/bulk/saltkar.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| pepparkvarn | /models/bulk/pepparkvarn.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| aggkopp | /models/bulk/aggkopp.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| brodkorg | /models/bulk/brodkorg.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kakburk | /models/bulk/kakburk.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| wok | /models/bulk/wok.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| mortel | /models/bulk/mortel.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| mjolkpaket | /models/bulk/mjolkpaket.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| fruktskal | /models/bulk/fruktskal.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| tartfat | /models/bulk/tartfat.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| sockerskal | /models/bulk/sockerskal.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| pizzaskarare | /models/bulk/pizzaskarare.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| glasskal | /models/bulk/glasskal.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| aggklocka | /models/bulk/aggklocka.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| matbord | /models/bulk/matbord.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/furniture-bits |
