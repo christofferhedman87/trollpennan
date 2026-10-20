@@ -135,6 +135,7 @@ const HUVUD = 0.1;
 // kapacitetskravet (Arkitekten 18:59), vakna av 8 på ängen och sjön
 const KRAV = { fro11: 3, "varst-stora": 3, "varst-katter": 8 }; // Arkitekten 21:40: jättar och monster ≥ 3, katter 8 av 8, övriga ≥ 6
 const kravFor = (namn) => KRAV[namn] ?? 6;
+const SYN_MAX = (() => { try { return JSON.parse(fs.readFileSync("data/storlek.json", "utf8")).syn?.max_forstoring ?? 1.6; } catch { return 1.6; } })();
 const SYN_MIN_PX = (() => { try { return JSON.parse(fs.readFileSync("data/storlek.json", "utf8")).syn?.min_px ?? 44; } catch { return 44; } })();
 function slump(fro) {
   let a = fro >>> 0;
@@ -226,7 +227,8 @@ async function platsProv(plats, namn, kroppar) {
   // minsta synliga storlek (P3, Doodle r83a: narvalen var väldigt liten): ett vaket djur i full storlek har sitt minsta
   // mått ≥ syn.min_px (storlek.json) på skärmen, 4 px mätmarginal; ett äldre som ritas mindre (perspektiv) räknas i sin storlek
   const MINPX = SYN_MIN_PX;
-  const smaDjur = saker.filter((s) => E[s.k]?.typ === "djur" && (pos[s.uid]?.k ?? 1) >= 1 && Math.min(s.r.w, s.r.h) < MINPX - 4);
+  // (ett djur som redan förstorats max_forstoring gånger, syn i __tredPos, får vara mindre – entiteter.ts synSkala)
+  const smaDjur = saker.filter((s) => E[s.k]?.typ === "djur" && (pos[s.uid]?.k ?? 1) >= 1 && (pos[s.uid]?.syn ?? 1) < SYN_MAX - 0.01 && Math.min(s.r.w, s.r.h) < MINPX - 4);
   kolla(`P ${plats} ${namn}: varje vaket djur i full storlek är minst ${MINPX} px (minsta måttet)`, smaDjur.length === 0, { sma: smaDjur.map((s) => ({ k: s.k, w: s.r.w, h: s.r.h })) });
   const halvUte = saker.filter((s) => tacktAv(s.r, [], true) > 0.5);
   kolla(`P ${plats} ${namn}: ingen står till största delen utanför bilden`, halvUte.length === 0, { ute: halvUte.map((s) => ({ k: s.k, r: s.r })) });

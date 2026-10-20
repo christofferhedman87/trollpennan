@@ -334,3 +334,33 @@ Kravet gäller ängen och sjön, och alla fall når det.
 | växthuset och glaslådan skymmer slottet | Nytt fall ängen/doodle-slott: slottet äldre, växthuset och akvariet (antaget vara "glaslådan") nyare. Slottet får inte skymmas mer än 45 %. Ryms det inte, somnar det (i regeln: slottet sover, 7 av 8 vakna). |
 
 Doodle-fallen räknas inte mot kapacitetskravet.
+
+### Torrkörning 4 (main 8f52375, 22:09, STOPP 4 i p3-prov) och vad som lagades efter
+
+13 fel i P och två orsaker. Ingen gräns är ändrad.
+
+1. **Skymningen räknades på fel yta.** Regeln delade den skymda ytan med rutan som kroppen *rör sig inom*: vandring
+   ±0,22/±0,16, vridningen och guppet. Provet mäter kroppen själv i ett ögonblick. Rutan är upp till 60 % bredare
+   än kroppen (katten: 0,59 mot 0,37 halv bredd vid fritt bete), så andelen blev för liten. Sjön blandad: hunden syns
+   44 % (regeln trodde ≥ 55 %). Sjön 8 katter: en katt 47 %, huvudet 28 %. Ängen fro11: monstergrodan 67 %.
+   Lagat i `placering.ts`: kroppMatt ger också kroppens egna mått (kärnan: smalaste vridningen, utan vandring och
+   gupp). Skymningen räknas på kärnan i **värsta läget** (`varst`), alltså när den och den framför har vandrat så nära
+   varandra det går. p3a.test mäter kropparna i vila (`Lage.kropp`).
+2. **Minsta synliga storleken räknades på fotavtrycket.** Fotavtrycket är den största halva utbredningen: fjällräven
+   0,62 mot sin halva bredd 0,165. Fjällräven blev därför 30–36 px bred och hästen 37 px. Lagat: `synSkala` använder
+   modellens egna mått (`modellmatt.json`), samma som regeln. Provet tillåter mindre bara när djuret redan förstorats
+   max_forstoring (`__tredPos.syn`). p3.test mäter med samma mått.
+
+Med lagning 1 räckte sjön inte till kravnivån: blandad 5, bara jättar 2, 8 katter 7. Där stod kropparna redan nästan
+stilla (vandring 0,15), men vridningen gjorde dem 22 % bredare. **Genomfört, Arkitektens beslut:** en sista nivå 0 i
+`vandra.steg` (`[1, 0.5, 0.15, 0]`). När det är som trångast står djuren still och vrider sig inte. Gränserna är
+oförändrade. Utan nivån når sjön inte kravet. Ta bort 0 om det inte godtas, och då gäller tabellen ovan.
+
+Kapacitet nu (vakna av 8, regeln med kärnan i värsta läget, C-lagningen, bak_lucka och nivå 0):
+
+| plats | fro11 (≥3) | fro2026 (≥6) | fro4242 (≥6) | blandad (≥6) | bara jättar (≥3) | 8 katter (8) |
+|---|---|---|---|---|---|---|
+| ängen | 7 | 8 | 7 | 7 | 4 | 8 |
+| sjön | 6 | 8 | 8 | 7 | 3 | 8 |
+| skogen | 8 | 7 | 8 | 8 | 6 | 8 |
+| grottan | 8 | 7 | 8 | 8 | 6 | 8 |
