@@ -35,7 +35,7 @@ fi
 FORE_FEL=$(grep -c '^FEL' "$UT/prov-fore.err" || true)
 if [ "${TREVAGS:-0}" = 1 ]; then git apply --3way "$D/r83a2.patch" || { echo "STOPP 2: trevägs-apply misslyckades"; exit 2; }; git reset -q; else git apply "$D/r83a2.patch"; fi
 NYA="src/spel/kroppsfarg.ts src/spel/r8-3a2.test.ts"
-ANDRADE="package.json data/attribut.json rundor/R8-3a-farg/r83a-prov.mjs src/spel/attribut.ts src/spel/effekter.tsx src/spel/fargning.ts src/spel/gltfDjur.tsx"
+ANDRADE="package.json data/attribut.json rundor/R8-3a-farg/r83a-prov.mjs rundor/B6.5-fix/b65-prov.mjs src/spel/attribut.ts src/spel/effekter.tsx src/spel/fargning.ts src/spel/gltfDjur.tsx"
 aterstall() { git checkout -q -- $ANDRADE; rm -f $NYA; }
 git diff --quiet -- src/spel/Spel.tsx || { aterstall; echo "STOPP 3: Spel.tsx ändrades"; exit 3; }
 # testet läggs i test:product med node (inte i patchen: listan ändras av varje runda)
