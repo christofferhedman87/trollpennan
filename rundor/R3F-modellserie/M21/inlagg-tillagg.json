@@ -1,5 +1,5 @@
 {
- "_om": "R3F-M21: målhöjder (saker skalas efter max(h, 0,6·största bredd)).",
+ "_om": "R3F-M21: målhöjder (saker skalas efter max(h, 0,6·största bredd)). Med MFIX5 (Doodles granskning av M20/M20b): toapapper (såg ut som en uppslagen bok, nu en rulle), sittsäck (platt röd skiva, nu hög päronform), väggklocka (liknade väckarklockan, nu på en bit vägg) och pizzaskärare (låg platt och syntes från sidan, nu hjulet mot kameran) byter bara fil via byt_fil, så M20/M20b:s ord och data står kvar.",
  "malhojd_ord": {
   "filt": 0.4,
   "pläd": 0.4,
@@ -40,5 +40,14 @@
   "barnvagn": 0.8,
   "vagga": 0.7,
   "nappflaska": 0.35
+ },
+ "malhojd_ord_ersatt": {
+  "väggklocka": 0.8
+ },
+ "byt_fil": {
+  "toapapper": "trollpennan-mfix5/toapapper-egen.glb",
+  "sittsack": "trollpennan-mfix5/sittsack-egen.glb",
+  "vaggklocka": "trollpennan-mfix5/vaggklocka-egen.glb",
+  "pizzaskarare": "trollpennan-mfix5/pizzaskarare-egen.glb"
  }
 }
