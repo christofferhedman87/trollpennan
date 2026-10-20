@@ -1,0 +1,9 @@
+ord	genus	former (granskade, ur data/ord.json)	entitet	fil
+fjällräv	u	fjällräv, fjällräven, fjällrävar, fjällrävarna	fjallrav	trollpennan-mfix4/fjallrav-egen.glb
+polarräv	u	polarräv, polarräven, polarrävar, polarrävarna	fjallrav	trollpennan-mfix4/fjallrav-egen.glb
+björn	u	björn, björnen, björnar, björnarna	bjorn	trollpennan-mfix4/bjorn-egen.glb
+hamster	u	hamster, hamstern, hamstrar, hamstrarna	hamster	trollpennan-mfix4/hamster-egen.glb
+marsvin	u	marsvin, marsvinet, marsvinen	marsvin	trollpennan-mfix4/marsvin-egen.glb
+fenix	u	fenix, fenixen	fenix	trollpennan-mfix4/fenix-egen.glb
+sjöorm	u	sjöorm, sjöormen, sjöormar, sjöormarna	sjoorm	trollpennan-mfix4/sjoorm-egen.glb
+narval	u	narval, narvalen, narvalar, narvalarna	narval	trollpennan-mfix3/narval-gobkit.glb
