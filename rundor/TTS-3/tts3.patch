@@ -28,7 +28,7 @@ index 6f14d23..9ccd703 100644
      {
        "id": "grinden",
 diff --git a/package.json b/package.json
-index d4f82e8..ec4eb0e 100644
+index d4f82e8..ad62694 100644
 --- a/package.json
 +++ b/package.json
 @@ -22,7 +22,7 @@
@@ -36,7 +36,7 @@ index d4f82e8..ec4eb0e 100644
      "build:pages": "vite build --config vite.pages.config.ts",
      "preview:pages": "vite preview --config vite.pages.config.ts",
 -    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/r9j.test.ts src/spel/r9k.test.ts src/spel/b4-1.test.ts src/spel/dialogIsolering.test.mjs src/spel/b6-1.test.ts src/spel/b6-2.test.ts src/spel/b6-4.test.ts src/spel/rost.test.ts src/spel/b6-3.test.ts src/spel/p1.test.ts src/spel/p2.test.ts src/spel/b6-5.test.ts src/spel/b6-6.test.ts src/spel/r8-3a.test.ts src/spel/p22.test.ts src/spel/r8-3a2.test.ts src/spel/rost2.test.ts",
-+    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/r9j.test.ts src/spel/r9k.test.ts src/spel/b4-1.test.ts src/spel/dialogIsolering.test.mjs src/spel/b6-1.test.ts src/spel/b6-2.test.ts src/spel/b6-4.test.ts src/spel/rost.test.ts src/spel/b6-3.test.ts src/spel/p1.test.ts src/spel/p2.test.ts src/spel/b6-5.test.ts src/spel/b6-6.test.ts src/spel/r8-3a.test.ts src/spel/p22.test.ts src/spel/r8-3a2.test.ts src/spel/rost2.test.ts src/spel/tts3.test.ts",
++    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/r9j.test.ts src/spel/r9k.test.ts src/spel/b4-1.test.ts src/spel/dialogIsolering.test.mjs src/spel/b6-1.test.ts src/spel/b6-2.test.ts src/spel/b6-4.test.ts src/spel/rost.test.ts src/spel/b6-3.test.ts src/spel/p1.test.ts src/spel/p2.test.ts src/spel/b6-5.test.ts src/spel/b6-6.test.ts src/spel/r8-3a.test.ts src/spel/p22.test.ts src/spel/r8-3a2.test.ts src/spel/rost2.test.ts src/spel/tts3.test.ts src/spel/tts3fix.test.ts",
      "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
      "check:pages-output": "node scripts/check-pages-output.mjs",
      "check:struktur": "node scripts/check-spel-struktur.mjs",
@@ -152,15 +152,16 @@ index 3e619b0..942b600 100644
      assert.ok(s.text.trim() && s.id, s.id);
      assert.ok(falt.has(s.klart_nar.falt), `${s.id}: okänt fält ${s.klart_nar.falt}`);
 diff --git a/src/spel/rost.ts b/src/spel/rost.ts
-index 43cdf4f..64613f1 100644
+index 43cdf4f..1de3f0b 100644
 --- a/src/spel/rost.ts
 +++ b/src/spel/rost.ts
-@@ -7,12 +7,14 @@ import { useMinne } from "./minne.ts";
+@@ -7,12 +7,20 @@ import { useMinne } from "./minne.ts";
  import { DYNAMISK, RESERV, normalisera, rostPlan, type RostDel } from "./rostManifest.ts";
  
  type Logg = { text: string; fil: string | null; satt: "fil" | "mall" | "reserv" | "tyst" | "saknas"; delar?: number; dynamisk?: boolean };
 -const ko: string[] = [];
-+/** TTS-3: kön. forst = bannerns röst – den går före pratbubblor och önskan (men avbryter inte det som redan läses). */
++/** TTS-3: kön. forst = bannerns röst – den går före allt annat i kön, och en guiderad/pratbubbla/önskan som redan läses
++ *  avbryts (tonas ut på TONA_MS) så att bannerns röst börjar direkt. Den avbrutna läses inte om (texten står kvar). */
 +const ko: { text: string; forst: boolean }[] = [];
  const engang = new Set<string>();
  let nu: HTMLAudioElement | null = null;
@@ -168,10 +169,15 @@ index 43cdf4f..64613f1 100644
  let lyssnar = false;
  let omgang = 0;
 +let nuText: string | null = null;
++let nuForst = false;
++/** element som tonas ut efter ett avbrott – ett tryck (tystna) eller ljudet av stoppar dem direkt */
++const tonar = new Set<HTMLAudioElement>();
++/** TTS-3-fix: uttoningen när en banner avbryter en guiderad eller pratbubbla (ms). */
++export const TONA_MS = 150;
  
  function logg(l: Logg) {
    const w = window as unknown as { __rost?: Logg[] };
-@@ -37,21 +39,29 @@ function telefon(text: string, sv: SpeechSynthesisVoice, klar: () => void) {
+@@ -37,21 +45,29 @@ function telefon(text: string, sv: SpeechSynthesisVoice, klar: () => void) {
    speechSynthesis.speak(u);
  }
  
@@ -206,20 +212,24 @@ index 43cdf4f..64613f1 100644
    };
    steg();
  }
-@@ -59,52 +69,67 @@ function spelaDelar(delar: RostDel[], sv: SpeechSynthesisVoice | null) {
+@@ -59,52 +75,106 @@ function spelaDelar(delar: RostDel[], sv: SpeechSynthesisVoice | null) {
  function nasta() {
    upptagen = false;
    nu = null;
 -  const text = ko.shift();
+-  if (text === undefined) return;
 +  nuText = null;
-+  const text = ko.shift()?.text;
-   if (text === undefined) return;
++  nuForst = false;
++  const rad = ko.shift();
++  if (rad === undefined) return;
++  const text = rad.text;
    if (!useMinne.getState().ljudPa) {
      ko.length = 0;
      return;
    }
    upptagen = true;
 +  nuText = text;
++  nuForst = rad.forst;
    const plan = rostPlan(text);
    if (plan) {
      const sv = plan.dynamisk && DYNAMISK === "webblasare" ? svenskRost() : null;
@@ -249,12 +259,47 @@ index 43cdf4f..64613f1 100644
  
 -/** Stoppar allt som läses och tömmer kön. */
 -export function tystna() {
++function tonaUt(a: HTMLAudioElement) {
++  tonar.add(a);
++  const v0 = a.volume;
++  const t0 = performance.now();
++  const steg = () => {
++    if (!tonar.has(a)) return;
++    const k = (performance.now() - t0) / TONA_MS;
++    if (k >= 1 || a.paused) {
++      tonar.delete(a);
++      a.pause();
++      return;
++    }
++    try {
++      a.volume = v0 * (1 - k); // iOS: volume är skrivskyddad – då pausas den efter TONA_MS
++    } catch {
++      // ignoreras
++    }
++    window.setTimeout(steg, 25);
++  };
++  steg();
++}
++
++/** TTS-3-fix: en banner kom medan en guiderad/pratbubbla/önskan läses – den tonas ut och bannerns röst börjar direkt. */
++function avbryt() {
++  omgang++; // spelaDelar för den avbrutna fortsätter inte (ingen nästa del, ingen omstart)
++  const a = nu;
++  nu = null;
++  if (a) tonaUt(a);
++  if (typeof speechSynthesis !== "undefined") speechSynthesis.cancel();
++  nasta();
++}
++
 +function stoppa() {
    ko.length = 0;
    omgang++;
++  for (const a of tonar) a.pause();
++  tonar.clear();
    nu?.pause();
    nu = null;
 +  nuText = null;
++  nuForst = false;
    upptagen = false;
    if (typeof speechSynthesis !== "undefined") speechSynthesis.cancel();
  }
@@ -268,7 +313,8 @@ index 43cdf4f..64613f1 100644
 +}
 +
 +/** Läs upp en text som visas. enGang = nyckel som bara läses en gång per spelomgång (t.ex. uppdragets id). Högst fyra i kö.
-+ *  forst (TTS-3) = bannerns röst: läggs före pratbubblor/önskan i kön. Blir kön för lång tas den äldsta som inte är forst bort. */
++ *  forst (TTS-3) = bannerns röst: läggs före pratbubblor/önskan i kön och avbryter en guiderad/pratbubbla som läses (TTS-3-fix).
++ *  Blir kön för lång tas den äldsta som inte är forst bort. */
 +export function sag(text: string, enGang?: string, forst = false) {
    if (typeof window === "undefined" || !text.trim()) return;
    if (!lyssnar) {
@@ -282,7 +328,7 @@ index 43cdf4f..64613f1 100644
      });
    }
    if (!useMinne.getState().ljudPa) return;
-@@ -112,8 +137,16 @@ export function sag(text: string, enGang?: string) {
+@@ -112,9 +182,18 @@ export function sag(text: string, enGang?: string) {
      if (engang.has(enGang)) return;
      engang.add(enGang);
    }
@@ -299,9 +345,11 @@ index 43cdf4f..64613f1 100644
 +    ko.splice(i < 0 ? 0 : i, 1);
 +  }
    if (!upptagen) nasta();
++  else if (forst && !nuForst) avbryt();
  }
  
-@@ -136,10 +169,83 @@ export function bannerTid(text: string, bas: number): number {
+ /** Hur länge en text tar att läsa (ms) när den har fil eller mall, annars 0. */
+@@ -136,10 +215,83 @@ export function bannerTid(text: string, bas: number): number {
    return ms > 0 ? Math.max(las, ms + 1500) : las;
  }
  
@@ -428,6 +476,113 @@ index 0000000..9654ea4
 +  const rader = s.split("\n").filter((r) => /window\.__troll\s*=/.test(r));
 +  assert.equal(rader.length, 1);
 +  assert.match(rader[0]!, /if \(import\.meta\.env\.DEV \|\| navigator\.webdriver === true\) window\.__troll = api/);
++});
+diff --git a/src/spel/tts3fix.test.ts b/src/spel/tts3fix.test.ts
+new file mode 100644
+index 0000000..5f712e3
+--- /dev/null
++++ b/src/spel/tts3fix.test.ts
+@@ -0,0 +1,101 @@
++// TTS-3-fix: kön med riktiga texter ur manifestet och ett låtsat Audio-element (node). En banner avbryter en guiderad som
++// läses (uttoning, bannerns röst börjar direkt, den avbrutna läses inte om). Ett tryck (tystna) stoppar rösten som spelar
++// och tar bort en bannerröst som ligger i kön innan den hunnit starta.
++import assert from "node:assert/strict";
++import { test } from "node:test";
++import manifest from "../../data/rost-manifest.json" with { type: "json" };
++
++type Spel = { f: string; start: number; paus: number | null; volym: number[] };
++const spelat: Spel[] = [];
++class FakeAudio {
++  src: string;
++  paused = true;
++  rec: Spel | null = null;
++  private l = new Map<string, (() => void)[]>();
++  _volume = 1;
++  constructor(src: string) {
++    this.src = src;
++  }
++  get volume() {
++    return this._volume;
++  }
++  set volume(v: number) {
++    this._volume = v;
++    this.rec?.volym.push(v);
++  }
++  addEventListener(t: string, f: () => void) {
++    this.l.set(t, [...(this.l.get(t) ?? []), f]);
++  }
++  play() {
++    this.paused = false;
++    this.rec = { f: this.src, start: performance.now(), paus: null, volym: [] };
++    spelat.push(this.rec);
++    return Promise.resolve();
++  }
++  pause() {
++    if (!this.paused && this.rec) this.rec.paus ??= performance.now();
++    this.paused = true;
++  }
++  slut() {
++    this.paused = true;
++    for (const f of this.l.get("ended") ?? []) f();
++  }
++}
++const g = globalThis as unknown as Record<string, unknown>;
++g.window = globalThis;
++g.Audio = FakeAudio;
++const { useMinne } = await import("./minne.ts");
++const rost = await import("./rost.ts");
++const { rostPlan } = await import("./rostManifest.ts");
++useMinne.setState({ ljudPa: true });
++
++const enkla = Object.values((manifest as unknown as { rader: Record<string, { t: string }> }).rader)
++  .map((r) => r.t)
++  .filter((t) => !t.includes(" /") && rostPlan(t)?.delar.length === 1);
++const [guide, bannerA, bannerB] = enkla.slice(0, 3) as [string, string, string];
++const fil = (t: string) => (rostPlan(t)!.delar[0] as { f: string }).f;
++const vanta = (ms: number) => new Promise((r) => setTimeout(r, ms));
++
++test("TTS-3-fix: en banner avbryter guideraden som läses – uttoning ≈ 150 ms, bannerns röst börjar direkt, guiden läses inte om", async () => {
++  spelat.length = 0;
++  rost.sag(guide, "g1");
++  await vanta(5);
++  assert.equal(spelat.length, 1);
++  assert.equal(spelat[0]!.f, fil(guide));
++  rost.sag(bannerA, "b1", true);
++  await vanta(5);
++  assert.equal(spelat.length, 2, "bannerns röst började direkt, utan att vänta på guiden");
++  assert.equal(spelat[1]!.f, fil(bannerA));
++  assert.equal(spelat[0]!.paus, null, "guiden tonas ut, inte klipps");
++  await vanta(rost.TONA_MS + 80);
++  assert.ok(spelat[0]!.paus !== null, "guiden är pausad efter uttoningen");
++  assert.ok(spelat[0]!.volym.length >= 2 && spelat[0]!.volym.at(-1)! < 0.6, "volymen sänktes stegvis");
++  assert.equal(spelat[1]!.paus, null, "bannerns röst spelar vidare");
++  rost.tystna();
++  await vanta(5);
++  assert.equal(spelat.filter((s) => s.f === fil(guide)).length, 1, "den avbrutna guideraden läses inte om");
++});
++
++test("TTS-3-fix: ett tryck stoppar rösten som spelar och tar bort en bannerröst som ligger i kön innan den startar", async () => {
++  spelat.length = 0;
++  rost.sag(bannerA, "b2", true);
++  await vanta(5);
++  rost.sag(bannerB, "b3", true); // en banner avbryter inte en annan – den ligger i kön
++  rost.sag(guide, "g2");
++  await vanta(5);
++  assert.deepEqual(spelat.map((s) => s.f), [fil(bannerA)], "B och guiden ligger i kön");
++  rost.tystna();
++  assert.ok(spelat[0]!.paus !== null, "rösten som spelade pausades");
++  await vanta(rost.TONA_MS + 50);
++  assert.deepEqual(spelat.map((s) => s.f), [fil(bannerA)], "inget ur kön startade efter trycket");
++});
++
++test("TTS-3-fix: ett tryck under uttoningen stoppar också den uttonade rösten direkt", async () => {
++  spelat.length = 0;
++  rost.sag(guide, "g3");
++  await vanta(5);
++  rost.sag(bannerB, "b4", true);
++  await vanta(5);
++  rost.tystna();
++  assert.ok(spelat.every((s) => s.paus !== null), "både den uttonade guiden och bannerns röst är pausade");
 +});
 diff --git a/src/spel/ui/hjalp.ts b/src/spel/ui/hjalp.ts
 index 18da0ee..eb7971d 100644

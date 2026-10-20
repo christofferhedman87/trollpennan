@@ -4,7 +4,8 @@
 #   Underlaget (data/rost.json uttal_stam + omtag, omgenererade ekorr-filer, manifest, scripts/rost-generera.mjs) ligger
 #   på main när grenen arkitekt/tts3 är mergad. Kod = tts3.patch: src/spel/rost.ts (bannerKlocka, kö med bannerröster
 #   först), Spel.tsx (tre radbyten, 0 nya rader), liv.ts/minne.ts/ui/hjalp.ts (egnaDjur), data/forsta-stunden.json
-#   (guidens villkor), p2.test.ts, tts3.test.ts. Doodle kör från repots rot på main:
+#   (guidens villkor), p2.test.ts, tts3.test.ts, tts3fix.test.ts (TTS-3-fix: en banner avbryter en guiderad/pratbubbla med
+#   150 ms uttoning; ett tryck stoppar även det som tonas ut och det som väntar). Doodle kör från repots rot på main:
 #   git checkout main && git pull && git checkout -b runda-tts3-kod && bash rundor/TTS-3/kor.sh
 # Exit 0 = commit finns → push, PR, squash-merge. 2 = förutsättning/patch. 3 = test/lint/bygge. 4 = Playwright.
 set -uo pipefail
@@ -26,13 +27,13 @@ if ! git apply --check "$D/tts3.patch" 2>"$UT/apply.txt"; then
   TREVAGS=1
 fi
 if [ "${TREVAGS:-0}" = 1 ]; then git apply --3way "$D/tts3.patch" || { echo "STOPP 2: trevägs-apply misslyckades"; exit 2; }; git reset -q; else git apply "$D/tts3.patch"; fi
-NYA="src/spel/tts3.test.ts"
+NYA="src/spel/tts3.test.ts src/spel/tts3fix.test.ts"
 ANDRADE="package.json data/forsta-stunden.json src/spel/Spel.tsx src/spel/liv.ts src/spel/minne.ts src/spel/p2.test.ts src/spel/rost.ts src/spel/ui/hjalp.ts"
 aterstall() { git checkout -q -- $ANDRADE; rm -f $NYA; }
 SPEL=$(wc -l < src/spel/Spel.tsx); [ "$SPEL" -le "$SPEL0" ] || { aterstall; echo "STOPP 3: Spel.tsx växte ($SPEL0 → $SPEL)"; exit 3; }
 [ -d node_modules ] || npm ci --silent
 npm run -s test:product > "$UT/test.txt" 2>&1 || { grep -A8 '^not ok' "$UT/test.txt" | head -40; aterstall; echo "STOPP 3: test:product föll"; exit 3; }
-grep -q "TTS-3" "$UT/test.txt" || { aterstall; echo "STOPP 3: tts3.test.ts kördes inte"; exit 3; }
+grep -q "TTS-3: efter introt" "$UT/test.txt" && grep -q "TTS-3-fix: en banner avbryter" "$UT/test.txt" || { aterstall; echo "STOPP 3: tts3.test.ts/tts3fix.test.ts kördes inte"; exit 3; }
 N=$(npm run -s typecheck 2>&1 | grep -c "error TS" || true); [ "$N" -eq 0 ] || { npm run -s typecheck 2>&1 | grep "error TS" | head; aterstall; echo "STOPP 3: typecheck $N fel"; exit 3; }
 npm run -s typecheck:pages > "$UT/tcp.txt" 2>&1 || { tail -20 "$UT/tcp.txt"; aterstall; echo "STOPP 3: typecheck:pages föll"; exit 3; }
 npx eslint . > "$UT/eslint.txt" 2>&1 || { tail -25 "$UT/eslint.txt"; aterstall; echo "STOPP 3: eslint . har fel"; exit 3; }
@@ -53,8 +54,9 @@ reg P2-start/p2-prov "--dist dist-pages" & reg P1-boken/p1-prov "--dist dist-pag
 if [ -s "$UT/regfel.txt" ]; then mv "$UT/regfel.txt" "$UT/regfel1.txt"; for f in $(cat "$UT/regfel1.txt"); do echo "kör om ensamt: $f"; case $f in R9-tydlighet/r9-prov) reg "$f" "--ut $UT/r9";; P2-2/p2-2-prov) reg "$f" "--dist dist-pages --bilder $UT/p22";; P2-start/*|P1-boken/*) reg "$f" "--dist dist-pages";; *) reg "$f" "";; esac; done; fi
 [ -s "$UT/regfel.txt" ] && { for f in $(cat "$UT/regfel.txt"); do echo "== $f"; grep -h '^FEL' "$UT/$(basename $f).err" | cut -c1-600 | head; tail -3 "$UT/$(basename $f).err"; done; aterstall; echo "STOPP 4: prov föll: $(cat "$UT/regfel.txt" | tr '\n' ' ')"; exit 4; }
 git add $ANDRADE $NYA
-git commit -qm "TTS-3: bannern står tills rösten är klar + 1,5 s (tiden från röstens start), bannerröster före pratbubblor, guiden börjar med 'skriv ett djur' (egnaDjur), window.__troll bara i dev/prov (Arkitektens patch)"
+git commit -qm "TTS-3: bannern står tills rösten är klar + 1,5 s (tiden från röstens start), bannerns röst avbryter guiderad/pratbubbla (150 ms uttoning), guiden börjar med 'skriv ett djur' (egnaDjur), window.__troll bara i dev/prov (Arkitektens patch)"
 echo "TTS-3 OK: test:product $(grep -E '^# pass' "$UT/test.txt" | awk '{print $3}') gröna, typecheck/typecheck:pages 0, eslint . 0 fel, $(tail -1 "$UT/struktur.txt"), Spel.tsx $SPEL0 → $SPEL rader, build:pages ok, __troll bakom webdriver ($GRIND/$TROLL), tts3-prov exit 0 ($(grep -c '"ok": true' "$UT/prov.json") steg), tts2/tts/p2-2/p2/p1/b63/b62/b61/b64/b65/r9-prov exit 0."
 echo "Tidslinje (varv 1): $(head -1 "$UT/prov.json" | cut -c1-600)"
+echo "Avbrott och tryck (C): $(grep '^{"C"' "$UT/prov.json" | cut -c1-600)"
 echo "Bilder: $BILD/tts3-*.png"
 echo "Nu: git push -u origin runda-tts3-kod, PR, squash-merge. Skicka utdata till Arkitekten."

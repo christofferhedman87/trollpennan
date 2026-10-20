@@ -104,3 +104,59 @@ regressionsprov som faller körs om ensamt en gång.
 - tts2-prov steg 1 fejkar nu filens verkliga längd, eftersom bannern räknas från rösten.
 - p2-2-prov sätter `egnaDjur` för grindsteget.
 - p2-prov väntar sig "forsta-ordet" när sparningen har `egnaDjur`, och annars "bengtsson" som förut.
+
+## TTS-3-fix (efter Doodles EXIT=4, grenen arkitekt/tts3-fix från main ee801d8)
+
+**Varför min torrkörning var grön och Doodles röd:** steg C mätte fel, koden tystnade rätt.
+- Provet tog tiden `tT` innan det anropade `locator.tap()`. Playwright väntar på att elementet står still, och bubblan
+  rör sig.
+- Under Doodles last kom själva trycket först cirka 0,4–0,5 s efter `tT`. Då hade Elins guiderad e6fd (4,26 s, start
+  2976) redan tagit slut naturligt, vid cirka 7236. Bannerns röst 1be8 startade 7300 och pausades vid 7476. Det var
+  trycket, som tystade den korrekt.
+- Med låg last landade trycket medan guideraden spelade, och då blev det grönt.
+- Provet fejkade alltså inget ljud, men dess tidsstämpel var inte trycket. Samma prov mot den gamla koden är grönt i C så
+  länge trycket landar i tid.
+
+**Beslutet (Christoffer via Doodle):**
+- En banner avbryter en guiderad, pratbubbla eller önskan som läses. Den tonas ut på 150 ms (`TONA_MS`), och bannerns röst
+  startar direkt.
+- Den avbrutna läses inte om, eftersom texten står kvar.
+- En banner avbryter inte en annan banners röst. Den ligger då först i kön.
+- Ett tryck (`tystna`) stoppar det som spelar, det som tonas ut och det som väntar, och tömmer kön.
+
+Med beslutet hamnar en bannerröst aldrig i kön bakom en guiderad. Därför finns Doodles fall 2 inte längre.
+
+**Steg C är nu deterministiskt:**
+- Trycket görs med `touchscreen.tap()` direkt på bubblans mitt, utan väntan.
+- Tiden stämplas i sidan vid touchstart/pointerdown.
+- Varje tryck görs först när läget är bevisat.
+- C1:
+  - En guiderad spelar (`playing` och currentTime > 0,25 s). Då utlöses bannern med `__troll.vakna("randig")`
+    (webdriver true).
+  - Krav: guiden pausas 80–700 ms efter att bannerns röst begärts (uppmätt 154 ms), och bannerns röst börjar inom
+    800 ms.
+  - Sedan trycker provet medan bannerns röst bevisligen spelar. Rösten ska vara pausad inom 300 ms (uppmätt 22 ms),
+    inget nytt ska spelas, och guiden ska inte läsas om.
+- C2:
+  - Bannerns röstfil är begärd men hålls i nätet, så att rösten bevisligen väntar och inte har startat.
+  - Provet trycker och släpper sedan filen. Rösten får aldrig starta.
+- Den äkta kön (bannerröst bakom bannerröst, tryck, inget startar) prövas i `tts3fix.test.ts` med en låtsad Audio i
+  node.
+
+**Silverkotte-repliken** (b496, whisper small: "H-koren"):
+- Fyra omtag med "Ehkorren" (5 anrop av taket 15, varav ett avvisades med 429 utan kostnad), 152 krediter.
+- Omtag 04 hörs som "Ekorren" av både whisper small och medium. Det ligger i spelet som omtag 4, fil 284cfbd99db4b105.
+- Inget omtag med kommatecken behövdes.
+- Fonemtaggar stöds inte av eleven_multilingual_v2 (ordet hoppas tyst över), så de används inte.
+- Alla omtag ligger i `/workspace/uttal-val/silverkotte/` (README.txt).
+
+**Mätfel i steg B under last (hittat i mina tre lastkörningar, inte ett kodfel):**
+- Vid lastsnitt 13–19 föll "ovanligt djur"-bannern två gånger på "rösten hittades inte". Bannerns visningstid var
+  densamma som i gröna körningar (8,8 s), så rösten spelade.
+- Felet låg i mätningen. Provets 40 ms-poll såg bubblan för sent, när huvudtråden var låst av 3D-bygget i swiftshader.
+  Röstens anrop kom då mer än 300 ms före bubblans registrerade start.
+- Nu registreras bubblorna med en MutationObserver, som körs direkt efter Reacts DOM-ändring och före effekten som köar
+  rösten. Fönstret för att para ihop banner och röst är 1 s.
+
+**Resultat:** tre fulla tts3-prov i rad under last (6 extra CPU-snurror plus P3:s körning, lastsnitt 13–20) var alla
+gröna, 10/10 steg vardera.
