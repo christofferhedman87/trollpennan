@@ -1,8 +1,18 @@
 # TTS – förarbete: en bättre svensk röst, gratis (Arkitekten, 2026-10-20)
 
-**Status: förarbete, inte inbyggt i spelet.** Rösterna är valda av Christoffer (se 0); hastigheten och lisas licens är inte klara. Provljuden finns på boxen i `/workspace/trollpennan-nulage/tts-prov/` och kan göras om med `bash rundor/TTS/prov-gen.sh`.
+**Status: förarbete, inte inbyggt i spelet.** Christoffer har valt **ElevenLabs** (se 0, ersätter Piper-valet). Uttalet av "Bengtsson" är inte klart. Provljuden finns på boxen i `/workspace/trollpennan-nulage/tts-prov/eleven/` (uttalsprov i `eleven/uttal/`). Piper-proven ligger kvar i `tts-prov/` som reserv.
 
-## 0. Christoffers val (2026-10-20)
+## 0. Christoffers val (2026-10-20, ElevenLabs)
+
+Ersätter Piper-valet nedan. Christoffer har ElevenLabs Starter (betald plan: kommersiell licens för ljud som skapas under abonnemanget, även efter att det upphört). Ljudet förgenereras med skript och lagras som mp3 i spelet. Biblioteksröster kan tas bort av ägaren, men redan skapat ljud får användas vidare.
+
+- **Modell: `eleven_multilingual_v2`**, `language_code: "sv"`, `voice_settings: {stability: 0.5, similarity_boost: 0.75}`, `output_format: mp3_44100_128`.
+- **Bengtsson: Bengt – "Calm and Soft"**, röst-id **`kkwvaJeTPw4KK0sBdyvD`** (svensk mansröst från röstbiblioteket).
+- **Trollpennan: Elin**, röst-id **`4Ct5uMEndw4cJ7q0Jx0l`** (ung svensk kvinnoröst från röstbiblioteket, varm och berättande).
+- **Uttal via ordlista i data.** Bengt säger "Bengtsson" som två ord ("Bengt-son"). Rättningen görs med en ordlista, `data/rost.json` → `"uttal": {"Bengtsson": "<vald stavning>"}`, som genereringsskriptet tillämpar på texten (hela ord, skiftlägeskänsligt) **före** anropet till API:t. Texten som visas i spelet ändras inte. Stavningen väljs efter proven i `tts-prov/eleven/uttal/`. SSML `<phoneme>` stöds inte av multilingual_v2 och används inte.
+- **API-nyckel:** miljövariabeln `ELEVENLABS_API_KEY` och aldrig i repot. Nyckeln saknar i dag läsbehörigheter (`user_read`, `voices_read`). Bara talsyntes fungerar.
+
+## 0b. Tidigare val (Piper, ersatt)
 
 - **Bengtsson: Piper `sv_SE-nst-medium`** (CC0). Valt efter `piper-nst-1-bengtsson`.
 - **Trollpennan: Piper `sv_SE-lisa-medium`**. Valt efter `piper-lisa-1-bengtsson`, före alma.
