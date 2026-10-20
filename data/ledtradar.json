@@ -2013,6 +2013,12 @@
    "forsta": "G",
    "langd": 5,
    "granskad": false
+  },
+  "spelare": {
+   "gata": "Han har hörlurar och handkontroll och tittar på tv-skärmen hela kvällen.",
+   "forsta": "S",
+   "langd": 7,
+   "granskad": false
   }
  }
 }
