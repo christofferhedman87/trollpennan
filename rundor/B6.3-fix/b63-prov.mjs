@@ -165,7 +165,7 @@ const FOT = JSON.parse(fs.readFileSync("data/fotavtryck.json", "utf8")).halvbred
 const ENT = JSON.parse(fs.readFileSync("data/entiteter.json", "utf8")).entiteter;
 const halv = (d) => (FOT[d.kropp] ?? 0.5 * (ENT[d.kropp]?.malhojd ?? 1)) * (d.skala || 1);
 const POOL = ["en ko", "en gris", "en bebis", "en katt", "en pojke", "ett slott", "en buss", "en kaffekanna", "en väggklocka", "ett mikroskop", "ett trumset",
-  "en jordglob", "ett ägg", "ett bowlingklot", "ett akvarium", "en spjälsäng", "ett påskägg", "en vattenpistol", "en filt", "en fiol", "en hund", "en traktor", "ett bord", "en elefant", "en kvast", "en gitarr", "en säng", "ett hus", "en lampa", "ett sjukhus", "en apatosaurus", "en triceratops", "en cirkus"];
+  "en jordglob", "ett ägg", "ett bowlingklot", "ett akvarium", "en spjälsäng", "ett påskägg", "en vattenpistol", "en filt", "en fiol", "en hund", "en traktor", "ett bord", "en elefant", "en kvast", "en gitarr", "en säng", "ett hus", "en lampa", "en lakrits", "ett frimärke", "ett sjukhus", "en apatosaurus", "en triceratops", "en cirkus"];
 const slump = (fro) => () => ((fro = (fro * 1664525 + 1013904223) >>> 0) / 2 ** 32);
 const fro0 = Number(arg("fro", String(Date.now() % 100000)));
 const varv = [
@@ -174,13 +174,15 @@ const varv = [
   { namn: "I2", ord: ["ett mikroskop", "ett trumset", "en jordglob", "ett ägg", "en väggklocka", "en ko", "en fisk", "en hund", "en buss", "en kaffekanna"] },
   // Doodle 08:26: alla saker, inte bara djur
   { namn: "I3", ord: DOODLE_0826 },
+  // Doodle 08:59: lakrits och frimärke vid dammkanten
+  { namn: "I4", ord: ["en lakrits", "ett frimärke", "ett bowlingklot", "ett påskägg", "en vattenpistol", "en fiol", "en kaffekanna", "en väggklocka", "en fisk", "en katt"] },
 ];
 for (let v = 0; v < Number(arg("varv", "2")); v++) {
   const r = slump(fro0 + v * 7919);
   const pool = [...POOL].sort(() => r() - 0.5);
   const ord = pool.slice(0, 9);
   ord.splice(Math.floor(r() * 10), 0, "en fisk");
-  varv.push({ namn: `I${4 + v}`, ord, fro: fro0 + v * 7919 });
+  varv.push({ namn: `I${5 + v}`, ord, fro: fro0 + v * 7919 });
 }
 // Ängen rymmer 10; fler och den äldsta går till stallet. Därför 10 per varv.
 for (const { namn, ord, fro } of varv) {
