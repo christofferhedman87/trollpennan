@@ -1,8 +1,8 @@
 diff --git a/PROJECT.md b/PROJECT.md
-index 1c3fae9..d2be077 100644
+index f719023..2651601 100644
 --- a/PROJECT.md
 +++ b/PROJECT.md
-@@ -737,3 +737,4 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
+@@ -740,3 +740,4 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
  | 25 | ~~Stora saker (skyskrapa, ufo, grävmaskin, slott) täckte ängen; en flicka försvann bakom skyskrapan~~ → `data/storlek.json`: klass per kategori ger tak för höjden och zon "bak" (längst bak, bakom alla djur) | **B6.1** klar |
  | 26 | ~~"en regnbåge" gav ingenting och boken stod kvar~~ → känt ord utan modell ger banderoll ("kan inte rita ensamt än") och boken stängs; test går igenom alla kända ord. Kvar: "ljus" tolkas som färgord, inte som sak | **B6.1** klar |
  | 27 | ~~r9b-/r9-prov inaktuella · "ljus" blev färgord · räven på sjön i vattenbrynet · `milstolpe.final`/`las_upp`/`final_fore` lästes inte~~ → proven följer nuvarande beteende, "ljus" är en sak (utom "en ljus katt"), 1,0 till vattnet, fälten kopplade in | **B6.2** klar |
@@ -68,10 +68,10 @@ index 7f4351b..893bfbf 100644
          <Hud oppnaStjarnor={() => setStjarnInfo(true)} haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} />
 diff --git a/src/spel/ang/damm.ts b/src/spel/ang/damm.ts
 new file mode 100644
-index 0000000..23ff8d6
+index 0000000..b8ccbd2
 --- /dev/null
 +++ b/src/spel/ang/damm.ts
-@@ -0,0 +1,12 @@
+@@ -0,0 +1,53 @@
 +// B6.3 (G, I): ängens damm på ett ställe. Vattnet, kanten, ringarna och näckrosorna ritas härifrån, och
 +// placeringen på ängen (platser.json, ängens zon "damm") ska täcka samma cirkel – b6-3.test.ts kontrollerar det.
 +//
@@ -84,6 +84,47 @@ index 0000000..23ff8d6
 +export const SVAJ_AMP = 0.06;
 +/** Dammens mitt (x, z), vattnets radie, kantens yttre radie och vattenytans höjd. */
 +export const DAMM = { x: 1.12, z: -0.35, r: 0.72, kant: 0.76, y: SVAJ_AMP + 0.035 } as const;
++
++/** B6.3 (Doodle 09:17): kamerans standardlägen på ängen (KameraRam: stående och liggande). */
++export const KAMEROR: readonly (readonly [number, number, number])[] = [
++  [0, 4.15, 9.8],
++  [0, 3.9, 8.6],
++];
++
++/** Punkter på vattnet som ska synas: mitten, en ring på halva radien och kanten (16 riktningar). */
++const SIKTPUNKTER: [number, number][] = [[DAMM.x, DAMM.z]];
++for (let i = 0; i < 16; i++) {
++  const v = (i * Math.PI) / 8;
++  for (const r of [DAMM.r * 0.5, DAMM.r * 0.97]) SIKTPUNKTER.push([DAMM.x + Math.cos(v) * r, DAMM.z + Math.sin(v) * r]);
++}
++
++/**
++ * B6.3 (Doodle 09:17): siktzonen mellan kameran och dammen. En kropp – en lodrät cylinder med radien `radie` (halva bredden
++ * ur bbox + vickning + marginal) och höjden `hojd` (överkanten, pratbubblan inräknad) – får inte stå i vägen för någon
++ * siktlinje från kameran (båda standardlägena) till någon punkt på vattnet. Ren geometri, ingen slump: linjen från punkten P
++ * (t = 0) till kameran C (t = 1) går genom cylinderns cirkel för t i [t1, t2]; den skymmer om linjen där är lägre än höjden.
++ */
++export function siktFri(wx: number, wz: number, radie: number, hojd: number): boolean {
++  for (const [cx, cy, cz] of KAMEROR)
++    for (const [px, pz] of SIKTPUNKTER) {
++      const dx = cx - px;
++      const dz = cz - pz;
++      const fx = px - wx;
++      const fz = pz - wz;
++      const a = dx * dx + dz * dz;
++      const b = 2 * (fx * dx + fz * dz);
++      const c = fx * fx + fz * fz - radie * radie;
++      const disk = b * b - 4 * a * c;
++      if (disk < 0) continue;
++      const rot = Math.sqrt(disk);
++      const t1 = Math.max(0, (-b - rot) / (2 * a));
++      const t2 = Math.min(1, (-b + rot) / (2 * a));
++      if (t1 > t2) continue;
++      // lägsta punkten på linjen inom cirkeln är där t är minst (linjen stiger mot kameran)
++      if (DAMM.y + t1 * (cy - DAMM.y) < hojd) return false;
++    }
++  return true;
++}
 diff --git a/src/spel/ang/dekor.tsx b/src/spel/ang/dekor.tsx
 index 35b5b27..42beebb 100644
 --- a/src/spel/ang/dekor.tsx
@@ -133,19 +174,22 @@ index 35b5b27..42beebb 100644
          <group key={`${x}${z}`} position={[x, 0, z]}>
            <mesh rotation={[-Math.PI / 2, 0, x]}>
 diff --git a/src/spel/ang/delat.ts b/src/spel/ang/delat.ts
-index 19fc160..1729d25 100644
+index 19fc160..11befa5 100644
 --- a/src/spel/ang/delat.ts
 +++ b/src/spel/ang/delat.ts
-@@ -3,7 +3,7 @@ import type { ThreeEvent } from "@react-three/fiber";
+@@ -3,8 +3,9 @@ import type { ThreeEvent } from "@react-three/fiber";
  import * as THREE from "three";
  import texterJson from "../../../data/texter-gard.json" with { type: "json" };
  import type { Sparad } from "../brygga.ts";
 -import { artFarg, BAK_PLATSER, flyger, simmar, storlekKlass, vikt } from "../entiteter.ts";
-+import { artFarg, bakPlatser, flyger, fotKant, simmar, storlekKlass, vikt } from "../entiteter.ts";
- import type { Plats } from "../platser.ts";
+-import type { Plats } from "../platser.ts";
++import { artFarg, bakPlatser, flyger, fotKant, siktHojd, siktRadie, simmar, storlekKlass, vikt } from "../entiteter.ts";
++import { siktFri } from "./damm.ts";
++import { START_PLATS, type Plats } from "../platser.ts";
  import { placeraPaPlats } from "../platsYta.ts";
  
-@@ -53,8 +53,14 @@ declare global {
+ export const HINT = (texterJson as { tred_hint: string }).tred_hint;
+@@ -53,8 +54,14 @@ declare global {
        fps?: number;
        husx?: number;
        husy?: number;
@@ -160,7 +204,7 @@ index 19fc160..1729d25 100644
      /** B4.1, för prov: ljus = punktljus i poolen (fast antal), pol = ljuspölar, aktiva = tända ljus, scen = punktljus i scenen, program = shaderprogram. */
      __ljus?: { ljus: number; pol: number; aktiva: number; program: number; scen?: number };
    }
-@@ -123,7 +129,7 @@ const platsCache = new Map<string, Map<string, [number, number]>>();
+@@ -123,7 +130,7 @@ const platsCache = new Map<string, Map<string, [number, number]>>();
  
  /**
   * R8-2b: på en plats med zoner flyttas varje landdjur/sak till land (land/fri, aldrig vattenyta)
@@ -169,15 +213,17 @@ index 19fc160..1729d25 100644
   */
  export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number, number, number] {
    const bas = djurPlatsBas(spec, alla);
-@@ -139,6 +145,7 @@ export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number,
+@@ -139,6 +146,9 @@ export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number,
          return [x, z] as [number, number];
        }),
        marka.map((d) => simmare(d)),
 +      marka.map((d) => fotKant(d.kropp, d.skala)), // B6.3: kroppen (halva bredden ur bbox + vickning + 0,15) hålls från vattnet
++      // B6.3 (Doodle 09:17): på ängen står ingen kropp mellan kameran och dammen (bredvid eller bakom i stället)
++      marka.map((d) => (plats.id === START_PLATS && !simmare(d) ? (x: number, z: number) => siktFri(x, z, siktRadie(d.kropp, d.skala), siktHojd(d.kropp, d.skala)) : undefined)),
      );
      karta = new Map(marka.map((d, i) => [d.uid, ut[i]!]));
      if (platsCache.size > 30) platsCache.clear();
-@@ -157,9 +164,10 @@ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
+@@ -157,9 +167,10 @@ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
    }
    // B6.1 (E): stora saker (data/storlek.json zon "bak") står längst bak, bakom alla djur
    if (storlekKlass(spec.kropp)?.zon === "bak") {
@@ -284,16 +330,16 @@ index 9c46f26..8eeeb4d 100644
        <SagaPenna />
 diff --git a/src/spel/b6-3.test.ts b/src/spel/b6-3.test.ts
 new file mode 100644
-index 0000000..9549359
+index 0000000..5dc96ac
 --- /dev/null
 +++ b/src/spel/b6-3.test.ts
-@@ -0,0 +1,109 @@
+@@ -0,0 +1,135 @@
 +// B6.3: dammens vatten över markens svaj (G), uppmaningens längd (H), ängens dammzon (I), stora saker spridda bak (J).
 +import assert from "node:assert/strict";
 +import { test } from "node:test";
-+import { DAMM, SVAJ_AMP } from "./ang/damm.ts";
++import { DAMM, siktFri, SVAJ_AMP } from "./ang/damm.ts";
 +import { djurPlats } from "./ang/delat.ts";
-+import { BAK_ZON, bakPlatser, flyger, FOT_MARGINAL, fotKant, simmar, storlekKlass, VICKNING } from "./entiteter.ts";
++import { BAK_ZON, bakPlatser, flyger, FOT_MARGINAL, fotKant, siktHojd, siktRadie, simmar, storlekKlass, VICKNING } from "./entiteter.ts";
 +import entJson from "../../data/entiteter.json" with { type: "json" };
 +import { platsMed, START_PLATS } from "./platser.ts";
 +import { iVatten, tillPlats } from "./platsYta.ts";
@@ -397,8 +443,34 @@ index 0000000..9549359
 +  assert.ok(ovriga.length > 500, `${ovriga.length} entiteter`);
 +  assert.deepEqual(fel, [], `kroppens kant närmare vattnet än 0,1 (vickning inräknad): ${fel.join(", ")}`);
 +});
++
++test("B6.3 (D, Doodle 09:17): siktzonen – ingen placering på ängen kan skymma dammen för kameran", () => {
++  // geometrin: kon rakt framför dammen skymmer, bredvid eller bakom gör den inte
++  assert.equal(siktFri(1.0, 0.9, siktRadie("ko"), siktHojd("ko")), false, "kon framför dammen");
++  assert.equal(siktFri(-1.2, 0.9, siktRadie("ko"), siktHojd("ko")), true, "kon till vänster");
++  assert.equal(siktFri(1.1, -2.3, siktRadie("ko"), siktHojd("ko")), true, "kon bakom");
++  assert.equal(siktFri(1.0, 2.9, 0.3, 0.1), true, "en låg sak långt fram");
++  // Doodles D2, de största/högsta skapelserna och alla entiteter i lag om 10: varje placerad kropp håller siktzonen fri
++  const ENT = (entJson as unknown as { entiteter: Record<string, { modell?: string; malhojd?: number }> }).entiteter;
++  const mark = Object.keys(ENT).filter((k) => ENT[k]!.modell && !flyger(k, []) && !simmar(k, [])).sort();
++  const hogst = mark.filter((k) => storlekKlass(k)?.zon !== "bak").sort((a, b) => siktHojd(b) * siktRadie(b) - siktHojd(a) * siktRadie(a) || a.localeCompare(b)).slice(0, 10);
++  const lag = [["bowlingklot", "akvarium", "spjalsang", "paskagg", "vattenpistol", "filt", "fiol", "mikroskop", "trumset", "ko"], hogst];
++  for (let i = 0; i < mark.length; i += 10) lag.push(mark.slice(i, i + 10));
++  const fel: string[] = [];
++  for (const fro of ["a", "b", "c"])
++    for (const [n, kroppar] of lag.entries()) {
++      if (fro !== "a" && n > 1) break; // tre frön för värsta fallen (D2, de största), ett för alla entiteter
++      const alla = kroppar.filter((k) => k in ENT).map((k, i) => spar(`${fro}${n}-${i}`, k));
++      for (const d of alla as { uid: string; kropp: string }[]) {
++        const [x, , z] = djurPlats(d as never, alla, ANG);
++        if (!siktFri(x, z, siktRadie(d.kropp), siktHojd(d.kropp))) fel.push(`${fro}/${n}: ${d.kropp} (${x.toFixed(2)}, ${z.toFixed(2)})`);
++      }
++    }
++  assert.ok(hogst.length === 10 && mark.length > 1000);
++  assert.deepEqual(fel, [], `i siktzonen: ${fel.slice(0, 12).join(", ")}`);
++});
 diff --git a/src/spel/entiteter.ts b/src/spel/entiteter.ts
-index eaadf6c..b31a541 100644
+index eaadf6c..63fc141 100644
 --- a/src/spel/entiteter.ts
 +++ b/src/spel/entiteter.ts
 @@ -3,6 +3,7 @@
@@ -462,7 +534,7 @@ index eaadf6c..b31a541 100644
  
  /** B6.1 (E): storleksklassen för en sak ur data/storlek.json (via kategorin). Djur har aldrig någon klass. */
  export function storlekKlass(kropp: string): StorlekKlass | null {
-@@ -104,6 +145,19 @@ export function takSkala(kropp: string, skala: number): number {
+@@ -104,6 +145,30 @@ export function takSkala(kropp: string, skala: number): number {
    return Math.min(skala, k.tak / Math.max(0.001, malhojd(kropp)));
  }
  
@@ -479,10 +551,21 @@ index eaadf6c..b31a541 100644
 +  return Math.max(halv, storlekKlass(kropp)?.kant ?? 0) + (arSak(kropp) ? 0 : VICKNING) + FOT_MARGINAL;
 +}
 +
++/** B6.3 (Doodle 09:17): kroppens radie för siktzonen: halva bredden (eller klassens kant), vickningen för djur, 0,1. */
++export function siktRadie(kropp: string, skala = 1): number {
++  return fotKant(kropp, skala) - FOT_MARGINAL + 0.1;
++}
++
++/** B6.3 (Doodle 09:17): kroppens överkant för siktzonen: målhöjden under taket, för djur även studs och pratbubblan
++ *  (HumorIkon, Html vid målhöjd + 0,22, ungefär 0,3 hög). */
++export function siktHojd(kropp: string, skala = 1): number {
++  return malhojd(kropp) * takSkala(kropp, skala || 1) + (arSak(kropp) ? 0.05 : 0.6);
++}
++
  /** R3G: allt med modell som inte är ett djur (föremål, natur, byggnad, mat, fordon, kläder) står still på ängen. */
  export function arSak(kropp: string): boolean {
    const e = ENTITETER[kropp];
-@@ -115,9 +169,15 @@ export function arSak(kropp: string): boolean {
+@@ -115,9 +180,15 @@ export function arSak(kropp: string): boolean {
  export function skalaFor(kropp: string, h: number, b: number, d: number): number {
    const mal = malhojd(kropp);
    const matt = arSak(kropp) ? Math.max(h, 0.6 * Math.max(b, d)) : h;
@@ -526,7 +609,7 @@ index 3a41291..a2fdfca 100644
        <Stall url={URL.staket} platser={STAKET} />
        <Stall url={URL.grind} platser={GRIND} />
 diff --git a/src/spel/platsYta.ts b/src/spel/platsYta.ts
-index 0be3b41..7183fa4 100644
+index 0be3b41..0213049 100644
 --- a/src/spel/platsYta.ts
 +++ b/src/spel/platsYta.ts
 @@ -2,7 +2,7 @@
@@ -555,13 +638,20 @@ index 0be3b41..7183fa4 100644
    return true;
  }
  
-@@ -80,13 +83,15 @@ function narmast(p: Plats, onskad: [number, number], upptagna: [number, number][
+@@ -80,13 +83,25 @@ function narmast(p: Plats, onskad: [number, number], upptagna: [number, number][
   * Flytta de önskade världspunkterna (i ordning) så att landdjur står på land och simmare i vatten.
   * Punkter som redan är tillåtna och fria behålls exakt. `sim[i]` = punkt i är en simmare.
   */
 -export function placeraPaPlats(p: Plats | undefined, onskade: [number, number][], sim: boolean[] = []): [number, number][] {
 +/** `kant` (B6.3): egen kantmarginal per skapelse (stora saker: halva bredden ur storlek.json), annars platsens. */
-+export function placeraPaPlats(p: Plats | undefined, onskade: [number, number][], sim: boolean[] = [], kant: (number | undefined)[] = []): [number, number][] {
++/** `sikt` (B6.3, Doodle 09:17): extra villkor per skapelse (ängen: siktzonen mellan kameran och dammen, damm.ts siktFri). */
++export function placeraPaPlats(
++  p: Plats | undefined,
++  onskade: [number, number][],
++  sim: boolean[] = [],
++  kant: (number | undefined)[] = [],
++  sikt: (((wx: number, wz: number) => boolean) | undefined)[] = [],
++): [number, number][] {
    if (!harZoner(p)) return onskade;
    const harVatten = p.zoner.some((z) => z.typ === "vattenyta");
    const ut: [number, number][] = [];
@@ -569,7 +659,10 @@ index 0be3b41..7183fa4 100644
      const simmare = !!sim[i] && harVatten;
 -    const ok = simmare ? (wx: number, wz: number) => iVatten(p, ...tillPlats(wx, wz)) : (wx: number, wz: number) => torrKropp(p, wx, wz);
 +    const m = Math.max(kant[i] ?? 0, p.kant_marginal ?? KANT_MARGINAL);
-+    const ok = simmare ? (wx: number, wz: number) => iVatten(p, ...tillPlats(wx, wz)) : (wx: number, wz: number) => torrKropp(p, wx, wz, m);
++    const villkor = sikt[i];
++    const ok = simmare
++      ? (wx: number, wz: number) => iVatten(p, ...tillPlats(wx, wz))
++      : (wx: number, wz: number) => torrKropp(p, wx, wz, m) && (!villkor || villkor(wx, wz));
      const fri = !ut.some(([ux, uz]) => Math.hypot(ux - o[0], uz - o[1]) < MIN_AVSTAND);
      ut.push(ok(o[0], o[1]) && fri ? o : narmast(p, o, ut, ok));
    });

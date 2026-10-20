@@ -105,22 +105,35 @@ await blok("D", async () => {
   await ctx.close();
 });
 
-// D2 (Doodle 08:26): spjälsängen fick vattnet att försvinna; bowlingklot, akvarium, påskägg, vattenpistol, filt och fiol stod i dammen.
-await blok("D2", async () => {
-  const { ctx, p } = await sida({});
-  for (const f of DOODLE_0826) {
-    await p.evaluate((x) => window.__troll.vakna(x), f);
-    await p.waitForTimeout(2300);
-  }
-  await stangBok(p);
-  await p.waitForTimeout(1500);
-  const full = await dammSerie(p);
-  const stabil = full.perPunkt.every((n) => n === 0 || n === 24);
-  kolla("D2 spjälsäng m.fl. (10 saker): ingen punkt på vattnet blinkar bort", full.serie.length === 24 && stabil, { per_punkt: full.perPunkt.join(","), per_bild: full.serie.map((s) => s.n).join("") });
-  kolla("D2 spjälsäng m.fl.: minst 3 av 5 punkter syns i varje bild", full.minst >= 3, { minst: full.minst });
-  await bild(p, "b63-D2-spjalsang.png");
-  await ctx.close();
-});
+// D2/D3 (Doodle 08:26, 09:17): dammvattnet syns med Doodles 10 saker (spjälsäng m.fl., kon) och med de 10 största/högsta
+// skapelserna på marken. Deterministiskt: skapelserna läggs in med fasta uid (tre frön), inte via slumpade uid,
+// så att varje körning prövar samma lägen. Placeringen håller siktzonen mellan kameran och dammen fri (damm.ts siktFri).
+{
+  const ENT = JSON.parse(fs.readFileSync("data/entiteter.json", "utf8")).entiteter;
+  const STOR = JSON.parse(fs.readFileSync("data/storlek.json", "utf8"));
+  const FOTD = JSON.parse(fs.readFileSync("data/fotavtryck.json", "utf8")).halvbredd;
+  const bakKlass = (k) => { const id = STOR.ids?.[k] ?? STOR.kategori?.[ENT[k].kategori]; return ENT[k].typ !== "djur" && STOR.klasser?.[id]?.zon === "bak"; };
+  const pamark = Object.keys(ENT).filter((k) => ENT[k].modell && FOTD[k] && !["flyg", "sim"].includes(ENT[k].rorelse) && !bakKlass(k));
+  const matt = (k) => ((ENT[k].malhojd ?? 1) + (ENT[k].typ === "djur" ? 0.6 : 0.05)) * (FOTD[k] + 0.37);
+  const STORST = pamark.sort((a, b) => matt(b) - matt(a) || a.localeCompare(b)).slice(0, 10);
+  const DOODLE_IDS = ["bowlingklot", "akvarium", "spjalsang", "paskagg", "vattenpistol", "filt", "fiol", "mikroskop", "trumset", "ko"];
+  const sparad = (kropp, uid, i) => ({ uid, kropp, formel: `en ${kropp}`, beskrivning: "", skala: 1, alpha: 1, formagor: [], tillbehor: [], overraskningar: [], skapad: 1000 + i });
+  for (const [namn, lista] of [["D2", DOODLE_IDS], ["D3", STORST]])
+    for (const fro of [1, 2, 3])
+      await blok(`${namn}`, async () => {
+        const { ctx, p } = await sida({ ang: lista.map((k, i) => sparad(k, `${namn.toLowerCase()}-${fro}-${i}-${k}`, i)) });
+        await stangBok(p);
+        await p.waitForLoadState("networkidle", { timeout: 20000 }).catch(() => undefined);
+        await p.waitForTimeout(2500);
+        const full = await dammSerie(p);
+        const stabil = full.perPunkt.every((n) => n === 0 || n === 24);
+        const etikett = namn === "D2" ? "Doodles 10 (spjälsäng, kon …)" : "de 10 största/högsta";
+        kolla(`${namn} frö ${fro} ${etikett}: ingen punkt på vattnet blinkar bort`, full.serie.length === 24 && stabil, { lista, per_punkt: full.perPunkt.join(","), per_bild: full.serie.map((x) => x.n).join("") });
+        kolla(`${namn} frö ${fro} ${etikett}: minst 3 av 5 punkter syns i varje bild`, full.minst >= 3, { minst: full.minst });
+        if (fro === 1) await bild(p, `b63-${namn}-${namn === "D2" ? "spjalsang" : "storst"}.png`);
+        await ctx.close();
+      });
+}
 
 // H: uppmaningen vid ord utan modell står ≥ 5 s, och ett tryck stänger den
 await blok("H", async () => {

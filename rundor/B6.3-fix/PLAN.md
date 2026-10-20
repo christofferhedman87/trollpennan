@@ -32,3 +32,13 @@ Påskägg och armband finns inte som entiteter; ägget (`agg`) är med i ställe
 - **Enhetstest över alla entiteter**: varje modell på marken (1 100+ på f078460, Doodles fall först: bowlingklot, akvarium, spjälsäng, påskägg, vattenpistol, filt, fiol, mikroskop, trumset, ko) placeras i lag om 10 via `djurPlats`; kroppens kant ska vara ≥ 0,1 från vattnet med vickningen inräknad.
 - Testet hittade 5 modeller utan torr plats (apatosaurus 7,2 breda, golem 5,1, velociraptor, trollslända, triceratops). **`MAX_HALVBREDD = 1,2`** i `skalaFor`: ingen skapelse ritas bredare än slottet (2,4). Det gör 30 modeller mindre i bredd, t.ex. dinosaurierna, golem, neontetra (2,9 bred!), fenix, bro, brygga, hangar, snöfort. Det är ett smakbeslut, så konstanten kan justeras; storlek per typ hör till B6.6.
 - Prov D2: dammvattnet med Doodles 10 saker (spjälsäng m.fl.) blinkar inte bort, minst 3 av 5 punkter syns. Prov I3: samma 10 saker, kroppen utanför dammen. Prov I4 (Doodle 08:59): lakrits, frimärke och 8 småsaker. Poolen för slumpvarven har 30 ord (med sjukhus, apatosaurus, triceratops och cirkus).
+
+## Rättning 2 (Doodle 09:17, main b1d2e79, exit 4): siktzonen mellan kameran och dammen
+
+Inget stod i dammen, men i D2 stod kon mellan kameran och dammen och skymde vattnet (1 av 5 punkter i 5 av 24 bilder). Kravet behålls; placeringen ändras:
+
+- **`siktFri(x, z, radie, höjd)`** (damm.ts): ren geometri. Kroppen är en lodrät cylinder. Radien är halva bredden ur bbox, plus vickningen för djur, plus 0,1. Höjden är målhöjden under taket; för djur läggs 0,6 till för studs och pratbubbla, för saker 0,05. Kroppen får inte skära någon siktlinje från kameran (stående och liggande standardläge) till någon av vattnets 33 punkter (mitten, halva radien, kanten, 16 riktningar).
+- **`placeraPaPlats`** tar ett extra villkor per skapelse. På ängen skickar `djurPlats` siktFri för allt på marken utom simmare. Saker hamnar bredvid eller bakom dammen.
+- **Enhetstest** (b6-3.test.ts): geometrin (kon framför skymmer, till vänster och bakom gör den inte). Ingen placering hamnar i siktzonen för Doodles D2-sats, för de 10 största/högsta skapelserna på marken (tre frön vardera) och för alla 1 100+ entiteter på marken i lag om 10.
+- **Prov D2/D3 är deterministiska**: skapelserna läggs in med fasta uid (tre frön), inte via slumpade uid. D2 = Doodles 10 (spjälsäng, kon …), D3 = de 10 största/högsta på marken (räknas ur data: cyklop, golem, dinosaurierna). Kravet är detsamma (ingen punkt blinkar, minst 3 av 5). Utfall på 3e8237b: 4 av 5 i alla bilder i alla sex scenerna. Den femte punkten, mitten, ligger under en näckros, precis som på tom äng.
+- Kvar: om barnet själv vrider eller zoomar kameran (OrbitControls) kan en skapelse förstås skymma. Siktzonen gäller standardlägena.
