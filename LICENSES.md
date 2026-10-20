@@ -99,7 +99,8 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | trollpennan-mfix4 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 7 |
 | trollpennan-mfix5 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 3 |
 | trollpennan-mfix6 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 10 |
-| trollpennan-mfix7 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 12 |
+| trollpennan-mfix7 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 11 |
+| trollpennan-mfix8 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 1 |
 | trollpennan-musik-m23 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 25 |
 | trollpennan-saga-m19 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 8 |
 | trollpennan-skola-m22 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 28 |
