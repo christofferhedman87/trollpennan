@@ -10,6 +10,7 @@ export default tseslint.config(
   {
     ignores: [
       "dist/**",
+      "dist-pages/**",
       ".output/**",
       ".vercel/**",
       ".nitro/**",
@@ -41,6 +42,12 @@ export default tseslint.config(
       ],
       "@typescript-eslint/no-explicit-any": "off",
     },
+  },
+  // B6.1: CommonJS-filer (.cjs) får använda require – det är så CommonJS importerar.
+  {
+    files: ["**/*.cjs"],
+    languageOptions: { sourceType: "commonjs" },
+    rules: { "@typescript-eslint/no-require-imports": "off" },
   },
   // Disable rules that conflict with Prettier formatting.
   prettier,

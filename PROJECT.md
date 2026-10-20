@@ -294,9 +294,9 @@ Spelet visar bara kredit för CC BY (idag groda, `Spel.tsx` r.2953). CC0 kräver
 | 3 | Animated Dinosaurs – https://quaternius.com/packs/animateddinosaurs.html | Quaternius | CC0 (paketsidan). 6 dinosaurier, FBX/OBJ/Blend (konvertera) | `dinosaurie` (idag procedurell form) |
 | 4 | Farm Animal Pack – https://quaternius.com/packs/farmanimal.html | Quaternius | CC0 (paketsidan). 7 gårdsdjur, FBX/OBJ/Blend | Gris och gårdsdjur till Gården |
 | 5 | Cute Fish – https://quaternius.com/packs/cutefish.html | Quaternius | CC0 (paketsidan). 50+ animerade fiskar | `haj`, fler fiskar i sjön |
-| 6 | Cute Monsters / Ultimate Monsters – https://quaternius.com/packs/cutemonsters.html, https://quaternius.com/packs/ultimatemonsters.html | Quaternius | CC0 (båda paketsidorna). 21 resp. 50 monster. Dragon: https://poly.pizza/m/3rUm1cN3yp (CC0 1.0, Poly Pizza-sidan) är redan `drake.glb` | Vilda djur i äventyret, nattdraken |
+| 6 | Felstavat föremål → inget "Menade du …?" · ~~DOM 03–05 ostabila~~ · ~~saknar `djur`/`final` i data~~ (finns och används, test i b6-1.test.ts) | **B6.1** (DOM, djur/final klart) / B2–B4 |
 | 7 | Nature Kit – https://kenney.nl/assets/nature-kit | Kenney | CC0 (paketsidan). Redan använd (22 filer) | Äventyrets skog/sjö/grotta (R5) |
-| 8 | Furniture Kit / Food Kit / Holiday Kit – https://kenney.nl/assets/furniture-kit, https://kenney.nl/assets/food-kit, https://kenney.nl/assets/holiday-kit | Kenney | CC0 (alla tre paketsidor) | Gårdens inredning, gåvor, lyktor, bänkar (se assets-bengtsson/RAPPORT.md för valda filer) |
+| 8 | ~~Tackbubbla vs Guldord: ej bildverifierad~~ → bubblorna skjuts förbi banderollen och varandra (krockade på gården: lek-inbjudan + bygge); bildbevis i b61-prov | **B6.1** klar |
 | 9 | Crown – https://poly.pizza/m/i0PZVuVlYv; Cupcake – https://poly.pizza/m/XL70IUDIrZ; Arrow Sign – https://poly.pizza/m/dwmvPHHCdq | Quaternius (via Poly Pizza) | CC0 1.0 (modellsidorna visar `Licence: CC0 1.0`) | Krona som riktig tillbehörsmodell i R3, gåva, skylt |
 | 10 | Hat (fedora, "hat-stylised") – https://poly.pizza/m/lNN3PlrjSa | hat_my_guy (Poly Pizza) | CC0 1.0 (modellsidan) | Hatt-kandidat; "vuxen" form enligt assets-bengtsson/RAPPORT.md, kitets hatt är sötare |
 | 11 | KayKit Halloween Bits – https://kaylousberg.itch.io/halloween-bits; KayKit Adventurers – https://kaylousberg.itch.io/kaykit-adventurers | Kay Lousberg | CC0 (itch-sidans "Asset license: Creative Commons Zero v1.0 Universal" och "no attribution required"). Adventurers har vapen: välj bort för barnspel | Hattar/rekvisita (innehåll ej inspekterat) |
@@ -715,12 +715,17 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
 | 10 | "en röv" i stall-listan: **inget fel** – texten är "en räv" (test mot blocklist.json för alla djur); typsnitt/bildskärpa. Större namn i R9H | R9H |
 | 11 | Karttexten bara på kartan: **avsiktligt** (R9G punkt 7) | – |
 | 12 | Skogen/sjön/grottan nästan tomma: startdekoren ligger mest utanför synfältet (telefon ser bara plats-x ≈ 0,30–0,70) och i fel skala | **R8-2a** (Build) |
-| 13 | DOM-lägen 10–11 inaktuella, 03–05 ostabila · 10 eslint-varningar | **B6.1** |
+| 13 | ~~DOM-lägen 10–11 inaktuella, 03–05 ostabila · 10 eslint-varningar~~ → 28/28 stabila lägen, `eslint .` 0 problem | **B6.1** klar |
 | 14 | ~~`lagg-data.mjs --plats` ersätter hela platsraden~~ → slår nu ihop: `start`/`zoner`/`dekor`/`miljo` behålls från data/platser.json, övrigt från Copilot-utkastet (R8-2a steg 0 är därmed redan gjort) | **R9I** (underlag, klar) |
 | 15 | ~~`kor-plats.sh` hittade inte `plats-prov.mjs` (ligger i `B1.4/`)~~ – B2 hade stoppat med exit 2 | **R9I** (underlag, klar) |
 | 16 | "Sugen" djur öppnade gåvorutan vid varje tryck och dolde "Till stallet" | **R9I** (Christoffer: bara första trycket) |
 | 18 | Grottan hade horisont med gröna trädkoner; droppstenar och "planka" (grottans `grotta`-modell bakom horisontbandet) svävade; djur ute på vattnet i sjön/skogen | **R8-2b** (`rundor/R8-2b/`) |
 | 19 | ~~Djur på andra platser än ängen får aldrig humör~~ → humöret lever på alla platser, tryck på djur på en plats hittar djuret | **R9J** (`rundor/R9J-humor/`, Arkitektens beslut) |
 | 20 | B2–B4 hade stoppat: 33 förslagsfraser gav ägg (utanför, stängd, matsäck, sjön, vattnet, vatten, ben) · ängs-testerna antog att bara ängen har uppdrag · plats-provet kunde inte resa till sjön/grottan · fel platsbild | ~~rättat i underlaget~~ (frasfix i data-utkast, `B2-test/b2-test.patch` via kor-plats.sh, plats-prov lägger klara uppdrag i sparningen) |
-| 21 | Kenney Blocky Characters (och andra GLB med `KHR_materials_unlit`) ger sidfel i spelet: `TypeError: Cannot read properties of undefined (reading 'value')` när modellen visas (spelets material/uniform förutsätter upplyst material). M12 går runt det med härledda `-belyst.glb` | **kodrunda** (rätta i modellinläsningen, sedan kan originalfilerna användas) |
+| 21 | ~~Kenney Blocky Characters (och andra GLB med `KHR_materials_unlit`) ger sidfel~~ → `src/spel/belys.ts` byter obelysta material mot upplysta vid inläsning; originalfilerna fungerar (M12:s `-belyst.glb` behövs inte för nya paket) | **B6.1** klar |
 | 17 | Gåtrutan ("Hemligt djur att stava (0/181 hittade) Visa gåtan") syntes hopfälld under uppdrag | **R9I** (Christoffer: ingen gåta alls under uppdrag) |
+| 22 | ~~"Till stallet" låg över djuret och humörikonen; ett nytt tryck på djuret kunde stalla det~~ → knappen ligger i nedersta UI-raden bredvid Pennans bok | **B6.1** klar |
+| 23 | ~~Bokens gåta tog inte platsens djur först (181 "Ny gåta" innan ett sjödjur)~~ → platsens `hemliga` först, andra när de är funna | **B6.1** klar |
+| 24 | ~~Ett djur som hämtats ut ur stallet på en plats gick inte att trycka på~~ (skinnad modell fick träffsfär 0 vid första träffprovet under inpoppningen) | **B6.1** klar |
+| 25 | ~~Stora saker (skyskrapa, ufo, grävmaskin, slott) täckte ängen; en flicka försvann bakom skyskrapan~~ → `data/storlek.json`: klass per kategori ger tak för höjden och zon "bak" (längst bak, bakom alla djur) | **B6.1** klar |
+| 26 | ~~"en regnbåge" gav ingenting och boken stod kvar~~ → känt ord utan modell ger banderoll ("kan inte rita ensamt än") och boken stängs; test går igenom alla kända ord. Kvar: "ljus" tolkas som färgord, inte som sak | **B6.1** klar |

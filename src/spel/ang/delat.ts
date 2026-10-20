@@ -3,7 +3,7 @@ import type { ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
 import texterJson from "../../../data/texter-gard.json" with { type: "json" };
 import type { Sparad } from "../brygga.ts";
-import { artFarg, flyger, simmar, vikt } from "../entiteter.ts";
+import { artFarg, BAK_PLATSER, flyger, simmar, storlekKlass, vikt } from "../entiteter.ts";
 import type { Plats } from "../platser.ts";
 import { placeraPaPlats } from "../platsYta.ts";
 
@@ -155,7 +155,14 @@ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
     const ang = (i / Math.max(1, sim.length)) * Math.PI * 2;
     return [1.15 + Math.cos(ang) * 0.35, 0.16, -0.45 + Math.sin(ang) * 0.22];
   }
-  const land = alla.filter((d) => !simmare(d) && !flygare(d));
+  // B6.1 (E): stora saker (data/storlek.json zon "bak") står längst bak, bakom alla djur
+  if (storlekKlass(spec.kropp)?.zon === "bak") {
+    const bak = alla.filter((d) => storlekKlass(d.kropp)?.zon === "bak" && !simmare(d) && !flygare(d));
+    const i = Math.max(0, bak.findIndex((d) => d.uid === spec.uid));
+    const p = BAK_PLATSER[i] ?? [(i % 2 === 0 ? -1 : 1) * (2.2 + Math.floor(i / 2) * 0.4), -1.1];
+    return [p[0], 0, p[1]];
+  }
+  const land = alla.filter((d) => !simmare(d) && !flygare(d) && storlekKlass(d.kropp)?.zon !== "bak");
   const flyg = alla.filter((d) => flygare(d) && !simmare(d));
   const tyngd = (d: Sparad) => vikt(d.kropp);
   if (flygare(spec)) {

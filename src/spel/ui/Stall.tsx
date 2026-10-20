@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { brygga } from "../brygga.ts";
 import { useMinne } from "../minne.ts";
-import { dukStil } from "./hjalp.ts";
 import { TEXTER } from "./spelData.ts";
 import type { Banner } from "./typer.ts";
 
@@ -14,12 +13,13 @@ function finns(uid: string): boolean {
   return s.ang.some((a) => a.uid === uid) || Object.values(s.platsSkapelser).some((l) => l.some((a) => a.uid === uid));
 }
 
-/** Efter tryck på ett djur (ängen eller annan plats): en knapp under djuret i ~6 s. */
+/** Efter tryck på ett djur (ängen eller annan plats): en knapp i ~6 s. B6.1: knappen ligger i UI-raden längst ner bredvid
+ *  "Pennans bok", aldrig över djuret, så att ett nytt tryck på djuret aldrig ställer in det i stallet av misstag. */
 export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: Banner["slag"]) => void }) {
-  const [mal, setMal] = useState<{ uid: string; x: number; y: number } | null>(null);
+  const [mal, setMal] = useState<{ uid: string } | null>(null);
   useEffect(() => {
     const sluta = brygga.lyssna((h) => {
-      if (h.typ === "tryck" && finns(h.uid)) setMal({ uid: h.uid, x: h.x, y: h.y });
+      if (h.typ === "tryck" && finns(h.uid)) setMal({ uid: h.uid });
     });
     return () => {
       sluta();
@@ -43,10 +43,9 @@ export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: B
   return (
     <button
       type="button"
-      className="stall-chip"
+      className="stall-chip panel"
       data-testid="djur-till-stall"
       data-uid={mal.uid}
-      style={dukStil(mal.x, Math.min(0.86, mal.y + 0.24))}
       onClick={() => {
         if (useMinne.getState().tillStall(mal.uid)) visaBanner(TEXTER.stall.flytta, "ovr");
         setMal(null);

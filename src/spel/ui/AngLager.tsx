@@ -1,4 +1,4 @@
-import type { Dispatch, RefObject, SetStateAction } from "react";
+import { useEffect, useLayoutEffect, useRef, type Dispatch, type RefObject, type SetStateAction } from "react";
 import { Heart } from "lucide-react";
 import { brygga } from "../brygga.ts";
 import type { Sparad } from "../brygga.ts";
@@ -9,6 +9,7 @@ import { useMinne } from "../minne.ts";
 import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
 import { nattvaken } from "../entiteter.ts";
 import { bubblaStil, dukStil } from "./hjalp.ts";
+import { undvikKrock } from "./bubbla.ts";
 import { fyll } from "../fyll.ts";
 import { FIR, TEXTER } from "./spelData.ts";
 import { StallChip } from "./Stall.tsx";
@@ -49,8 +50,19 @@ type AngLagerProps = {
 };
 
 export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal, visaBanner, visaMossa, setFotoMal, banners, bubblor, onskan, onskaOpp, onskaSyns, ank, oppnaOnska, meny, setMeny, omUidRef, setLage, setBokOpp, setLadaOpp, menyHem, setBoUid, lada, ladaOpp, boUid, boDjur, flyttaInDjur }: AngLagerProps) {
+  // B6.1: tackbubblan (och andra pratbubblor) får aldrig ligga över "Guldord!"-banderollen eller över varandra.
+  const lagerRef = useRef<HTMLDivElement>(null);
+  const harBubblor = bubblor.length > 0;
+  useLayoutEffect(() => {
+    if (lagerRef.current) undvikKrock(lagerRef.current);
+  }, [bubblor, banners]);
+  useEffect(() => {
+    if (!harBubblor) return;
+    const id = window.setInterval(() => lagerRef.current && undvikKrock(lagerRef.current), 200);
+    return () => window.clearInterval(id);
+  }, [harBubblor]);
   return (
-        <div className="ang-lager">
+        <div className="ang-lager" ref={lagerRef}>
           <div className="natt" data-testid="natt" data-styrka={natt.toFixed(2)} />
           {varld === "gard" && !omrade ? (
             <div className="lykta" data-testid="lykta" aria-hidden>

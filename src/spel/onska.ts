@@ -2,7 +2,7 @@ import onskJson from "../../data/onskningar.json" with { type: "json" };
 import byggOnskJson from "../../data/onskningar-bygg.json" with { type: "json" };
 import { lasToken, ordFranForm } from "../tolk/lexikon.ts";
 import { tolka } from "../tolk/tolka.ts";
-import { byggMedId, tolkaBygg, type ByggeTolk } from "../tolk/byggtolk.ts";
+import { byggMedId, type ByggeTolk } from "../tolk/byggtolk.ts";
 import type { Varelse } from "../tolk/typer.ts";
 import { nyaTaggar, taggarAv, uppfyller } from "./taggar.ts";
 

@@ -19,7 +19,6 @@ const server = http.createServer((req, res) => {
   res.end(fs.readFileSync(f));
 });
 await new Promise((r) => server.listen(0, "127.0.0.1", r));
-const server_ = 0;
 
 const ut = path.resolve(arg("ut", "farg"));
 const namn = arg("namn", "efter");

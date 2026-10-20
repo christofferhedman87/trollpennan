@@ -732,9 +732,6 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
 .skapar-guide.kompakt{padding:.35rem .6rem;display:flex;flex-wrap:wrap;align-items:flex-start;column-gap:8px}
 .skapar-guide.kompakt .hemligt-forklaring{flex:1 1 100%;margin:0;font-size:.9375rem}
 .skapar-guide.kompakt details{flex:1 1 140px;margin:0}
-.ledtrad.kompakt{padding:0 8px;border-width:2px}
-.ledtrad.kompakt summary{min-height:44px;display:flex;align-items:center;cursor:pointer;list-style:none}
-.ledtrad.kompakt[open]{flex-basis:100%}
 
 /* B1.4: resa mellan platser */
 .plats-resa{position:absolute;z-index:8;top:10px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
@@ -754,13 +751,14 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
 .stall-rad{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 6px 6px 14px;border-radius:16px;background:var(--color-cream);font-weight:700}
 /* R9H: större och fetare djurnamn i stall-listan så att ä/ö syns tydligt (räv ska aldrig kunna läsas som något annat) */
 .stall-chip.i-bok{position:static;transform:none;margin-top:8px}
+/* B6.1: "Till stallet" i UI-raden längst ner bredvid Pennans bok, aldrig över djuret (ett nytt tryck på djuret ska inte ställa in det) */
+.stall-chip.panel{left:auto;right:8px;bottom:8px;top:auto;transform:none;width:calc(42% - 14px);min-height:56px;padding:8px;z-index:9;white-space:normal;line-height:1.15}
+.ang:has(.stall-chip.panel) .hud-bot{right:42%}
 .stall-namn{font-size:1.1875rem;font-weight:800;letter-spacing:.01em;line-height:1.3}
 .meny-panel .stall-rad button{min-height:44px;padding:6px 14px;font-size:1.0625rem;background:var(--color-moss);color:var(--color-cream);box-shadow:none;text-align:center}
 .ledtrad-streck{pointer-events:none;user-select:none;-webkit-user-select:none}
 .ledtrad-hint{margin:2px 0 0;font-size:.95rem;font-weight:800;color:var(--color-moss)}
 .ledtrad-hint::after{content:"\00a0↓"}
-.ledtrad-visa{margin-left:6px;font-weight:700;text-decoration:underline;white-space:nowrap}
-.ledtrad.kompakt summary{flex-wrap:wrap;column-gap:4px}
 
 /* R9K: humörikonen ovanför djuret i 3D (ikon per humör i data/humor.json) */
 .humor-ikon-3d {

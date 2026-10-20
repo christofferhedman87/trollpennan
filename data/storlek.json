@@ -1,0 +1,16 @@
+{
+ "_om": "B6.1 (E): storleksklasser för saker (aldrig djur). En klass ger ett tak för höjden (målhöjd × barnets 'stor/jätte' blir aldrig högre än taket) och en placeringszon. Zon 'bak' = längst bak på ängen och platserna, bakom alla djur, så att en skyskrapa, ett slott, ett ufo eller en grävmaskin aldrig skymmer ett djur i förgrunden. Klassen väljs med kategori i data/entiteter.json; nya modellpaket med samma kategori följer regeln utan kod.",
+ "klasser": {
+  "stor": { "tak": 1.5, "zon": "bak" },
+  "fordon": { "tak": 1.1, "zon": "bak" }
+ },
+ "kategori": {
+  "hus": "stor",
+  "grotta": "stor",
+  "fordon": "fordon"
+ },
+ "bak": {
+  "_om": "Platser i zonen 'bak' (x, z i ängens koordinater; djurens platser har z ≥ -0.15). Fylls i ordning; fler saker än platser läggs ytterst.",
+  "platser": [[-1.6, -1.3], [1.6, -1.3], [-0.8, -1.4], [0.8, -1.4], [0, -1.45], [-2.2, -1.1], [2.2, -1.1]]
+ }
+}

@@ -50,10 +50,9 @@ function jsxAt(L) {
   return hit;
 }
 const out = [];
-function add(namn, node, extra = {}) {
+function _add(namn, node, extra = {}) {
   const m = namesIn(node);
   const props = [...m].map(([n, sym]) => {
-    const k = sym.declarations[0];
     return { n, t: tstr(sym, extra.nonNull?.includes(n)) };
   });
   out.push({ namn, fran: line(node.getStart()), till: line(node.getEnd()), props });
@@ -64,7 +63,7 @@ for (const s of specs) {
     const je = jsxAt(s.cond);
     const e = je.expression;
     const inner = e.whenTrue.expression ?? e.whenTrue; // paren
-    out.push({ namn: s.namn, cond: e.condition.getText(), ...(() => { const m = namesIn(inner); return {}; })() });
+    out.push({ namn: s.namn, cond: e.condition.getText(), ...(() => { namesIn(inner); return {}; })() });
     out.pop();
     const m = namesIn(inner);
     const props = [...m].map(([n, sym]) => ({ n, t: tstr(sym, s.nonNull?.includes(n)) }));

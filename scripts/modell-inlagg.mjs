@@ -299,7 +299,7 @@ export function axelFranVektor(dx, dz, minRatio = 1.4) {
 
 /** Läser en GLB och mäter det som reglerna kräver. */
 export async function matt(fil, { palett = false } = {}) {
-  const { core, fun, io, sharp } = await bibliotek();
+  const { io, sharp } = await bibliotek();
   const doc = await io.read(fil);
   const root = doc.getRoot();
   const scener = root.listScenes();
@@ -373,7 +373,7 @@ function varldsPos(nod) {
 }
 
 /** a) anchor_face/head  b) huvud-ben mot kropps-ben  c) högsta hörnen i bounding box. */
-export function gissaFram({ doc, scen, min, max, hornY, hornXZ }) {
+export function gissaFram({ scen, min, max, hornY, hornXZ }) {
   const mitt = [(min[0] + max[0]) / 2, (min[2] + max[2]) / 2];
   const storlek = Math.max(max[0] - min[0], max[1] - min[1], max[2] - min[2]) || 1;
   const noder = [];
@@ -428,7 +428,12 @@ export function gissaFram({ doc, scen, min, max, hornY, hornXZ }) {
 async function fargAnalys(matTri, sharp) {
   let primar = null;
   let bast = -1;
-  for (const [m, t] of matTri) if (t > bast) ((primar = m), (bast = t));
+  for (const [m, t] of matTri) {
+    if (t > bast) {
+      primar = m;
+      bast = t;
+    }
+  }
   if (!primar) return null;
   const faktor = primar.getBaseColorFactor();
   const tex = primar.getBaseColorTexture();

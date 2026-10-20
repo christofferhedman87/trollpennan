@@ -2,6 +2,7 @@
 // Ett nytt djur = en rad i entiteter.json + en rad i tillgangar.json + (efter granskning) en ordrad. Ingen kod per djur.
 import entiteterJson from "../../data/entiteter.json" with { type: "json" };
 import tillgangarJson from "../../data/tillgangar.json" with { type: "json" };
+import storlekJson from "../../data/storlek.json" with { type: "json" };
 
 export type Typ = "djur" | "tillbehor" | "byggnad" | "foremal" | "natur";
 export type Rorelse = "land" | "flyg" | "sim" | "svavar";
@@ -66,13 +67,41 @@ export function forladdaUrls(): string[] {
   return [...urls];
 }
 
+/** Har ordet en 3D-modell? (B6.1: flyttad hit från gltfDjur.tsx så att komponentfilen bara exporterar komponenter.) */
+export function harModell(kropp: string): boolean {
+  return Boolean(modellUrl(kropp));
+}
+
 export function modellUrl(kropp: string): string | null {
   const m = ENTITETER[kropp]?.modell;
   return (m && TILLGANGAR[m]?.fil) || null;
 }
 
+export type StorlekKlass = { id: string; tak: number; zon: "bak" };
+const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak" }>; kategori: Record<string, string>; bak: { platser: [number, number][] } };
+export const BAK_PLATSER = STORLEK.bak.platser;
+
+/** B6.1 (E): storleksklassen för en sak ur data/storlek.json (via kategorin). Djur har aldrig någon klass. */
+export function storlekKlass(kropp: string): StorlekKlass | null {
+  const e = ENTITETER[kropp];
+  if (!e || e.typ === "djur") return null;
+  const id = STORLEK.kategori[e.kategori];
+  const k = id ? STORLEK.klasser[id] : undefined;
+  return k && id ? { id, ...k } : null;
+}
+
+/** Målhöjden; för stora saker högst klassens tak (B6.1). */
 export function malhojd(kropp: string): number {
-  return ENTITETER[kropp]?.malhojd ?? 1;
+  const h = ENTITETER[kropp]?.malhojd ?? 1;
+  const k = storlekKlass(kropp);
+  return k ? Math.min(h, k.tak) : h;
+}
+
+/** B6.1 (E): barnets storleksord ("stor", "jätte") får inte lyfta en stor sak över taket. */
+export function takSkala(kropp: string, skala: number): number {
+  const k = storlekKlass(kropp);
+  if (!k) return skala;
+  return Math.min(skala, k.tak / Math.max(0.001, malhojd(kropp)));
 }
 
 /** R3G: allt med modell som inte är ett djur (föremål, natur, byggnad, mat, fordon, kläder) står still på ängen. */

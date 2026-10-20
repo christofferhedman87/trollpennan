@@ -1,23 +1,28 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import hemligt from "../../../data/hemligt.json" with { type: "json" };
 import { fyll } from "../fyll.ts";
-import { aktivGata, nastaGata } from "../gata.ts";
+import { aktivGata, gatUrval, nastaGata } from "../gata.ts";
+import { platsMed } from "../platser.ts";
 import { useMinne } from "../minne.ts";
 import { LED } from "./spelData.ts";
 import { hemligaDjur } from "./hemliga.ts";
 
 /**
  * Synlig ledtrådsyta: en gåta om ett hemligt djur som inte är hittat, med första bokstaven och ett streck per bokstav.
- * R9G: gåtan är låst (minne.gataId) tills ordet hittats eller barnet trycker "Ny gåta". Under ett uppdrag (`kompakt`)
- * syns bara en stängd rubrik; gåtan finns inte i DOM förrän barnet öppnar den.
+ * R9G: gåtan är låst (minne.gataId) tills ordet hittats eller barnet trycker "Ny gåta". Under ett uppdrag visas ingen gåta
+ * alls (R9I), så den gamla hopfällda (`kompakt`) varianten är borttagen (B6.1).
+ * B6.1: på en plats väljs platsens egna hemliga djur först (`hemliga` i data/platser.json), sedan alla andra.
  */
-export function Ledtradsyta({ funna, kompakt = false }: { funna: Record<string, unknown>; kompakt?: boolean }) {
+export function Ledtradsyta({ funna }: { funna: Record<string, unknown> }) {
   const alla = useMemo(() => hemligaDjur(), []);
   const gataId = useMinne((s) => s.gataId);
   const sattGataId = useMinne((s) => s.sattGataId);
-  const [oppen, setOppen] = useState(false);
+  const plats = useMinne((s) => s.plats);
   const kvar = alla.filter((o) => !funna[o.id]);
-  const kvarIds = kvar.map((o) => o.id);
+  const kvarIds = gatUrval(
+    kvar.map((o) => o.id),
+    platsMed(plats)?.hemliga,
+  );
   const id = aktivGata(kvarIds, gataId);
   useEffect(() => {
     if (id && id !== gataId) sattGataId(id);
@@ -43,15 +48,6 @@ export function Ledtradsyta({ funna, kompakt = false }: { funna: Record<string, 
       <p className="ledtrad-hint" data-testid="ledtrad-hint">{hemligt.skriv_hint}</p>
     </>
   );
-  if (kompakt)
-    return (
-      <details className="ledtrad kompakt" data-testid="ledtrad" data-hemligt={id} open={oppen} onToggle={(e) => setOppen(e.currentTarget.open)}>
-        <summary>
-          {rubrik} {oppen ? null : <small className="ledtrad-visa">{hemligt.visa_gata}</small>}
-        </summary>
-        {oppen ? kropp : null}
-      </details>
-    );
   return (
     <div className="ledtrad" data-testid="ledtrad" data-hemligt={id}>
       {rubrik}

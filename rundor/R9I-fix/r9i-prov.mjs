@@ -61,7 +61,7 @@ async function malAv(p, uid) {
   return null;
 }
 /** Tryck där djuret står; returnerar uid som "Till stallet"-knappen hör till (eller null). */
-async function tryck(p, uid, touch = false) {
+async function _tryck(p, uid, touch = false) {
   // humöret slumpas; "sugen" öppnar gåvorutan över knappen – här vill vi bara ha knappen
   await p.evaluate((u) => window.__troll.humor(u, "glad"), uid);
   for (const dy of [40, 55, 25, 70]) {
@@ -77,7 +77,7 @@ async function tillKartan(p) {
   await p.click("[data-testid=meny]"); await p.waitForTimeout(300);
   await p.click("[data-testid=ut-pa-aventyr]"); await p.waitForSelector("[data-testid=karta]"); await p.waitForTimeout(400);
 }
-async function resaTill(p, id, touch = false) {
+async function _resaTill(p, id, touch = false) {
   await tillKartan(p);
   const b = await p.locator(`[data-testid=plats-${id}]`).boundingBox();
   if (touch) await p.touchscreen.tap(b.x + b.width / 2, b.y + b.height / 2); else await p.mouse.click(b.x + b.width / 2, b.y + b.height / 2);
@@ -88,7 +88,7 @@ async function aldrigChip(p, ms) {
   return true;
 }
 const sparning = (p) => p.evaluate(() => JSON.parse(localStorage.getItem("trollpennan-v2")));
-const ANG5 = ["en kanin", "en gris", "en ko", "en get", "en häst"];
+const _ANG5 = ["en kanin", "en gris", "en ko", "en get", "en häst"];
 
 /** Trycker på djuret (utan att ändra humöret) tills något svarar: gåvorutan eller "Till stallet". */
 async function tryckSom(p, uid) {
