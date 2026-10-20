@@ -1,0 +1,30 @@
+{
+ "_om": "R3F-M18b: målhöjder per djur.",
+ "malhojd_ord": {
+  "björn": 1.1,
+  "hamster": 0.35,
+  "marsvin": 0.4,
+  "snigel": 0.35,
+  "nyckelpiga": 0.3,
+  "sjöstjärna": 0.5,
+  "humla": 0.35,
+  "krokodil": 0.4,
+  "ödla": 0.2,
+  "stork": 1.1,
+  "struts": 1.8,
+  "kamel": 1.9,
+  "känguru": 1.4,
+  "späckhuggare": 0.5,
+  "blåval": 0.6,
+  "valfisk": 0.6,
+  "beluga": 0.55,
+  "sjölejon": 0.6,
+  "duva": 0.4,
+  "kråka": 0.45,
+  "fjällräv": 0.6,
+  "polarräv": 0.6,
+  "snöuggla": 0.6,
+  "drakfisk": 0.45,
+  "makrill": 0.4
+ }
+}

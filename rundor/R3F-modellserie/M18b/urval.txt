@@ -1,0 +1,24 @@
+# R3F-M18b (dubblingen, djur 3): 23 djur, alla CC0. Egna lågpolydjur, omfärgade Quaternius/Gobkit och två Poly Pizza-fiskar. Format: paket/filnamn.
+trollpennan-djur-m18b/bjorn-egen.glb
+trollpennan-djur-m18b/hamster-egen.glb
+trollpennan-djur-m18b/marsvin-egen.glb
+trollpennan-djur-m18b/snigel-egen.glb
+trollpennan-djur-m18b/nyckelpiga-egen.glb
+trollpennan-djur-m18b/sjostjarna-egen.glb
+trollpennan-djur-m18b/humla-egen.glb
+trollpennan-djur-m18b/krokodil-egen.glb
+trollpennan-djur-m18b/odla-egen.glb
+trollpennan-djur-m18b/stork-egen.glb
+trollpennan-djur-m18b/struts-egen.glb
+trollpennan-djur-m18b/kamel-egen.glb
+trollpennan-djur-m18b/kanguru-egen.glb
+trollpennan-djur-m18b/spackhuggare-delfin.glb
+trollpennan-djur-m18b/blaval-val.glb
+trollpennan-djur-m18b/beluga-whale.glb
+trollpennan-djur-m18b/sjolejon-seal.glb
+trollpennan-djur-m18b/duva-pigeon.glb
+trollpennan-djur-m18b/kraka-pigeon.glb
+trollpennan-djur-m18b/fjallrav-fox.glb
+trollpennan-djur-m18b/snouggla-owl.glb
+polypizza-cc0-m18b/drakfisk-czsz9b.glb
+polypizza-cc0-m18b/makrill-uassut.glb
