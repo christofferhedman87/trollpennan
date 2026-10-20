@@ -1,0 +1,486 @@
+diff --git a/src/spel/b6-4.test.ts b/src/spel/b6-4.test.ts
+index a9de1e5..45fdae9 100644
+--- a/src/spel/b6-4.test.ts
++++ b/src/spel/b6-4.test.ts
+@@ -1,5 +1,5 @@
+ // B6.4: utan färgord visar GLB-kroppen modellens egna färger (ingen palett, inget farg-/ljus-material, ingen glans över kroppen).
+-// Med färgord gäller samma som före B6.4 (färgfrågan R9C är pausad).
++// Med färgord: R8-3a (r8-3a.test.ts).
+ import assert from "node:assert/strict";
+ import { test } from "node:test";
+ import { fargning } from "./fargning.ts";
+@@ -19,12 +19,4 @@ test("B6.4: utan färgord rörs inget material – inte heller med guldordets gl
+   }
+ });
+ 
+-test("B6.4: med färgord samma som förut (palettbyte, farg/ljus-material, glans)", () => {
+-  const hex = "#1E88E5";
+-  assert.deepEqual(fargning({ hex, harRoller: false, harPalett: true, harKarta: true, glans: true, ljusare }), { farg: null, palettByte: true, glans: true });
+-  assert.deepEqual(fargning({ hex, harRoller: false, harPalett: true, harKarta: false, glans: false, ljusare }), { farg: null, palettByte: false, glans: false });
+-  assert.deepEqual(fargning({ hex, harRoller: false, harPalett: false, harKarta: true, glans: true, ljusare }), ingen);
+-  assert.deepEqual(fargning({ hex, roll: "farg", harRoller: true, harPalett: false, harKarta: false, glans: true, ljusare }), { farg: hex, palettByte: false, glans: true });
+-  assert.deepEqual(fargning({ hex, roll: "ljus", harRoller: true, harPalett: false, harKarta: false, glans: true, ljusare }), { farg: `ljus(${hex})`, palettByte: false, glans: false });
+-  assert.deepEqual(fargning({ hex, roll: undefined, harRoller: true, harPalett: true, harKarta: true, glans: true, ljusare }), ingen);
+-});
++// R8-3a: "med färgord samma som förut" gällde medan R9C var pausad. Nu färgas hela kroppen; se r8-3a.test.ts.
+diff --git a/src/spel/entiteter.ts b/src/spel/entiteter.ts
+index aa67508..2153639 100644
+--- a/src/spel/entiteter.ts
++++ b/src/spel/entiteter.ts
+@@ -26,7 +26,7 @@ export type Entitet = {
+   /** Färg som gäller när barnet inte valt någon. */
+   standardfarg?: string;
+   /** Materialnamn i GLB → roll: "farg" tar djurets färg, "ljus" en ljusare nyans. Saknas = paletten byter färg. */
+-  material?: Record<string, "farg" | "ljus">;
++  material?: Record<string, "farg" | "ljus" | "behall">;
+   /** Valfri åsidosättning. Saknas = modellens framsida är +z och djuret står vänt mot kameran. */
+   framAxel?: FramAxel;
+   /** false = modellen hämtas först när ordet används (R3C). Saknas = hämtas direkt vid start, som de första djuren. */
+@@ -220,7 +220,7 @@ export function kontrolleraEntiteter(): string[] {
+       fel.push(`${id}: palett måste ha från, range och bodyL som tal`);
+     }
+     for (const [namn, roll] of Object.entries(e.material ?? {})) {
+-      if (roll !== "farg" && roll !== "ljus") fel.push(`${id}: material ${namn} har okänd roll ${String(roll)}`);
++      if (roll !== "farg" && roll !== "ljus" && roll !== "behall") fel.push(`${id}: material ${namn} har okänd roll ${String(roll)}`);
+     }
+     if (e.vikt !== undefined && !(e.vikt > 0)) fel.push(`${id}: vikt måste vara > 0`);
+     if (e.hopp !== undefined && !(e.hopp > 0)) fel.push(`${id}: hopp måste vara > 0`);
+diff --git a/src/spel/fargning.ts b/src/spel/fargning.ts
+index 3cc53f3..201ea7c 100644
+--- a/src/spel/fargning.ts
++++ b/src/spel/fargning.ts
+@@ -2,32 +2,127 @@
+ // krakens lila lavendel utan färgord: varje ny varelse med ett guldord (första gången ordet skrivs) får glans, och glansen
+ // lades som ett varmgult självlyse (#FFE082) över HELA kroppen på alla modeller med palett eller farg-material – också när
+ // barnet inte skrivit något färgord. Dessutom fick ett "ljus"-material en fast gul nyans (#ffd27a) utan färgord.
+-// Nu: utan färgord rörs modellens material inte alls (egna färger). Med färgord gäller samma som förut (R9C är pausad).
++// Utan färgord rörs modellens material inte alls (egna färger). Det gäller fortfarande (R8-3a).
++//
++// R8-3a (R9C): med färgord färgas HELA kroppen på alla modeller – textur, materialfärger eller båda – och ögon, hud och
++// detaljer behålls. Vilka material som är kropp avgörs generellt av `kroppsRoller()` (yta + färg), eller av entitetens
++// "material"-tabell i data när den finns. Ingen kod per djur.
++import { hexTillHsl, nyansAvstand, rgbTillHsl, type Hsl } from "./palett.ts";
++
+ export type Fargning = {
+-  /** Ny materialfärg, eller null = materialets egen. */
++  /** Ny materialfärg (målfärgen för materialet), eller null = materialets egen. */
+   farg: string | null;
+-  /** Byt texturens palett mot färgordets nyans. */
++  /** Byt texturens kroppsfärg mot färgordets nyans. */
+   palettByte: boolean;
+-  /** Lägg glansens självlyse på materialet. */
++  /** Lägg glansens självlyse (i färgordets egen nyans) på materialet. */
+   glans: boolean;
+ };
+ 
+-/** hex = färgordets hex (null = inget färgord). roll = materialets roll i entitetens "material" (undefined = ingen roll).
+- *  harRoller = entiteten har en "material"-tabell; harPalett = entiteten har lagg-palett; harKarta = materialet har en textur. */
+-export function fargning(o: { hex: string | null; roll?: string; harRoller: boolean; harPalett: boolean; harKarta: boolean; glans: boolean; ljusare: (hex: string) => string }): Fargning {
+-  const { hex, roll, harRoller, harPalett, harKarta } = o;
+-  if (!hex) return { farg: null, palettByte: false, glans: false };
+-  if (harRoller) {
+-    const farg = roll === "farg" ? hex : roll === "ljus" ? o.ljusare(hex) : null;
+-    return { farg, palettByte: false, glans: o.glans && roll === "farg" };
++/** Materialets roll när barnet skrivit ett färgord. Data ("material" i entiteter.json): "farg" = kropp, "ljus" = ljusare kropp, "behall" = detalj. */
++export type KroppRoll = "kropp" | "ljus" | "detalj";
++const INGEN: Fargning = { farg: null, palettByte: false, glans: false };
++
++/** hex = färgordets hex (null = inget färgord). roll = materialets roll (kroppsRoller eller datan; undefined = detalj).
++ *  harKarta = materialet har en textur (då byts texturens kroppsfärg i stället för materialfärgen). */
++export function fargning(o: { hex: string | null; roll?: string; harRoller?: boolean; harPalett?: boolean; harKarta: boolean; glans: boolean; ljusare: (hex: string) => string }): Fargning {
++  const { hex, harKarta } = o;
++  if (!hex) return INGEN;
++  const r = o.roll === "farg" || o.roll === "kropp" ? "kropp" : o.roll === "ljus" ? "ljus" : "detalj";
++  if (r === "detalj") return INGEN;
++  const mal = r === "ljus" ? o.ljusare(hex) : hex;
++  return { farg: harKarta ? null : mal, palettByte: harKarta, glans: o.glans && r === "kropp" };
++}
++
++export type MatInfo = {
++  /** Materialets namn (nyckel i datans "material"-tabell). */
++  namn: string;
++  /** Materialets kärnfärg i sRGB-HSL: materialfärgen, eller (med textur) vanligaste texelfärgen på nätets UV. */
++  hsl: Hsl;
++  /** Andel av modellens yta (0–1). */
++  yta: number;
++};
++
++/** Gränser för den automatiska indelningen (en plats, testade i r8-3a.test.ts). */
++export const KROPP = {
++  /** Mörkare än så: ögon, pupiller, nos, kontur – behålls (utom när det är hela kroppen). */
++  morkL: 0.15,
++  /** Mättnad under: neutral (vit, grå, svart). */
++  neutralS: 0.25,
++  /** Kulörta material med högst så här stort nyansavstånd från kroppen hör till kroppen (hudton mot röd dräkt är 23–33°). */
++  nyans: 22,
++  /** Neutrala material med högst så här stor skillnad i ljushet från en neutral kropp hör till kroppen. */
++  ljushet: 0.2,
++  /** Mindre yta än så räknas aldrig som kropp (utom huvudmaterialet). */
++  minYta: 0.03,
++} as const;
++
++function liknar(a: Hsl, b: Hsl): boolean {
++  const an = a[1] < KROPP.neutralS, bn = b[1] < KROPP.neutralS;
++  if (an !== bn) return false;
++  if (an) return Math.abs(a[2] - b[2]) <= KROPP.ljushet;
++  return nyansAvstand(a[0], b[0]) <= KROPP.nyans;
++}
++
++/** Roll per material. `roller` = entitetens "material"-tabell i data: ett namn som står där får datans roll
++ *  ("farg" kropp, "ljus" ljusare kropp, "behall" detalj). Övriga material automatiskt: huvudmaterialet = största ytan bland de icke-mörka (ögon, nos), och kropp = huvudmaterialet + varje
++ *  material med samma färgfamilj (samma nyans ±22°, eller neutral med liknande ljushet). Hud, vita kanter, svarta skor,
++ *  guldspännen och ögon blir detalj. Index i samma ordning som `mats`. */
++export function kroppsRoller(mats: MatInfo[], roller?: Record<string, string>): { roll: KroppRoll; huvud: number }[] {
++  const data = (m: MatInfo): KroppRoll | null => {
++    const r = roller?.[m.namn];
++    return r === "farg" ? "kropp" : r === "ljus" ? "ljus" : r === "behall" ? "detalj" : null;
++  };
++  // huvudmaterialet: datans "farg"-material, annars största ytan bland de icke-mörka (annars största ytan)
++  let huvud = mats.findIndex((m) => data(m) === "kropp");
++  const fri = (m: MatInfo) => data(m) !== "detalj";
++  if (huvud < 0) mats.forEach((m, i) => { if (fri(m) && m.hsl[2] >= KROPP.morkL && (huvud < 0 || m.yta > (mats[huvud]?.yta ?? 0))) huvud = i; });
++  if (huvud < 0) mats.forEach((m, i) => { if (fri(m) && (huvud < 0 || m.yta > (mats[huvud]?.yta ?? 0))) huvud = i; });
++  const H = mats[huvud];
++  return mats.map((m, i) => ({
++    roll: data(m) ?? (i === huvud || (!!H && m.yta >= KROPP.minYta && m.hsl[2] >= KROPP.morkL && liknar(m.hsl, H.hsl)) ? "kropp" : "detalj"),
++    huvud,
++  }));
++}
++
++/** En färgklump i en textur: vikt (yta) och medelfärg i sRGB 0–255. */
++export type Klump = { n: number; r: number; g: number; b: number };
++
++/** R8-3a: kroppens färg i en textur, ur ytviktade texelklumpar (texeln mitt i varje triangel, viktad med triangelns yta –
++ *  tidigare räknades hörn, och då vann tätt modellerade öron och ögon över den stora kroppen). Klumparna slås ihop till
++ *  färgfamiljer (kulört: nyans i steg om 20°; neutralt: ljushet i steg om 0,2), mörka (ögon) räknas inte. Största familjen
++ *  vinner, men är den neutral och en kulör familj täcker minst 30 % (jultomtens röda dräkt bredvid vitt skägg och hud) blir
++ *  den kulöra kroppen. Ger null utan klumpar. */
++export function valjKarna(klumpar: Klump[]): { hsl: Hsl; neutral: boolean } | null {
++  const fam = new Map<string, Klump>();
++  let total = 0;
++  for (const k of klumpar) {
++    if (k.n <= 0) continue;
++    const [h, sat, l] = rgbTillHsl(k.r / k.n, k.g / k.n, k.b / k.n);
++    total += k.n;
++    if (l < KROPP.morkL) continue;
++    const nyckel = sat < 0.35 ? `n${Math.round(l * 5)}` : `c${Math.round(h / 20) % 18}`;
++    const f = fam.get(nyckel) ?? { n: 0, r: 0, g: 0, b: 0 };
++    f.n += k.n; f.r += k.r; f.g += k.g; f.b += k.b;
++    fam.set(nyckel, f);
++  }
++  let bast: [string, Klump] | null = null, kulor: [string, Klump] | null = null;
++  for (const e of fam) {
++    if (!bast || e[1].n > bast[1].n) bast = e;
++    if (e[0].startsWith("c") && (!kulor || e[1].n > kulor[1].n)) kulor = e;
+   }
+-  return { farg: null, palettByte: harPalett && harKarta, glans: o.glans && harPalett };
++  if (!bast) return null;
++  const val = bast[0].startsWith("n") && kulor && kulor[1].n >= 0.3 * total ? kulor : bast;
++  const k = val[1];
++  return { hsl: rgbTillHsl(k.r / k.n, k.g / k.n, k.b / k.n), neutral: val[0].startsWith("n") };
+ }
+ 
+-export type FargRad = { kropp: string; mat: string; fore: string; efter: string; sjalvlyse: string; egenKarta: boolean };
++/** Kärnfärgen för ett material utan textur (sRGB-hex). */
++export const hslAv = (hex: string): Hsl => hexTillHsl(hex);
++
++export type FargRad = { kropp: string; mat: string; fore: string; efter: string; sjalvlyse: string; egenKarta: boolean; roll?: KroppRoll };
+ declare global {
+   interface Window {
+-    /** B6.4, för prov: en rad per material när en GLB-kropp klonas (färg före/efter, självlyse, egen textur kvar). */
++    /** B6.4/R8-3a, för prov: en rad per material när en GLB-kropp klonas (färg före/efter, självlyse, egen textur kvar, roll). */
+     __tredFarg?: FargRad[];
+   }
+ }
+diff --git a/src/spel/gltfDjur.tsx b/src/spel/gltfDjur.tsx
+index f496f19..e181a93 100644
+--- a/src/spel/gltfDjur.tsx
++++ b/src/spel/gltfDjur.tsx
+@@ -3,8 +3,8 @@ import { useFrame } from "@react-three/fiber";
+ import { useLayoutEffect, useMemo, useRef } from "react";
+ import { SkeletonUtils } from "three-stdlib";
+ import * as THREE from "three";
+-import { fargning } from "./fargning.ts";
+-import { byttPixel, graNiva, hexTillHsl, ljusTint, malAlbedo, rgbTillHsl, traffarPalett } from "./palett.ts";
++import { fargning, kroppsRoller, valjKarna, type Klump, type KroppRoll, type MatInfo } from "./fargning.ts";
++import { byttPixel, graNiva, hexTillHsl, ljusTint, malAlbedo, rgbTillHsl, traffarPalett, type Hsl, type Palett } from "./palett.ts";
+ import { MILJO } from "./miljo.ts";
+ import { belysScen } from "./belys.ts";
+ 
+@@ -53,7 +53,16 @@ function graTextur(tex: THREE.Texture, bodyL: number): THREE.Texture {
+ }
+ 
+ /** R8 färgrundan: bulkmodeller delar en standardpalett (nyans 25), men Kenney-modeller är en gemensam färgatlas där isbjörnen är vit/gräddvit och inte alls brun, så ingen pixel träffas och färgen "tas inte". Därför mäter vi vilken färg just den här kroppen använder (texeln vid nätets UV, vanligaste färgen) och ställer in paletten efter den. */
+-function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): { from: number; range: number; bodyL: number } | null {
++const KARN = new Map<string, (Palett & { hsl: Hsl }) | null>();
++function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): (Palett & { hsl: Hsl }) | null {
++  const nyckel = `${mesh.geometry?.uuid}|${tex.uuid}`;
++  if (KARN.has(nyckel)) return KARN.get(nyckel) ?? null;
++  const svar = karnfargMat(mesh, tex);
++  KARN.set(nyckel, svar);
++  return svar;
++}
++
++function karnfargMat(mesh: THREE.Mesh, tex: THREE.Texture): (Palett & { hsl: Hsl }) | null {
+   const img = tex.image as CanvasImageSource | undefined;
+   const uv = mesh.geometry?.attributes?.uv;
+   if (!img || !uv) return null;
+@@ -67,11 +76,21 @@ function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): { from: number; range:
+   if (!x) return null;
+   x.drawImage(img, 0, 0);
+   const d = x.getImageData(0, 0, w, h).data;
+-  const rakna = new Map<number, { n: number; r: number; g: number; b: number }>();
+-  const steg = Math.max(1, Math.floor(uv.count / 1500));
+-  for (let i = 0; i < uv.count; i += steg) {
+-    const px = Math.min(w - 1, Math.max(0, Math.floor(uv.getX(i) * w)));
+-    const py = Math.min(h - 1, Math.max(0, Math.floor((tex.flipY ? 1 - uv.getY(i) : uv.getY(i)) * h)));
++  const rakna = new Map<number, Klump>();
++  // R8-3a: texeln i varje triangels mitt, viktad med triangelns yta (se valjKarna i fargning.ts)
++  const pos = mesh.geometry.attributes.position;
++  const idx = mesh.geometry.index;
++  const n = idx ? idx.count : uv.count;
++  const steg = Math.max(1, Math.floor(n / 3 / 3000)) * 3;
++  const A = new THREE.Vector3(), B = new THREE.Vector3(), C = new THREE.Vector3();
++  for (let i = 0; i + 2 < n; i += steg) {
++    const i0 = idx ? idx.getX(i) : i, i1 = idx ? idx.getX(i + 1) : i + 1, i2 = idx ? idx.getX(i + 2) : i + 2;
++    const u = (uv.getX(i0) + uv.getX(i1) + uv.getX(i2)) / 3;
++    const v = (uv.getY(i0) + uv.getY(i1) + uv.getY(i2)) / 3;
++    const yta = pos ? B.fromBufferAttribute(pos, i1).sub(A.fromBufferAttribute(pos, i0)).cross(C.fromBufferAttribute(pos, i2).sub(A)).length() : 1;
++    if (!(yta > 0)) continue;
++    const px = Math.min(w - 1, Math.max(0, Math.floor((((u % 1) + 1) % 1) * w)));
++    const py = Math.min(h - 1, Math.max(0, Math.floor((((tex.flipY ? 1 - v : v) % 1 + 1) % 1) * h)));
+     const o = (py * w + px) * 4;
+     if ((d[o + 3] ?? 0) < 8) continue;
+     const r = d[o] ?? 0;
+@@ -79,19 +98,17 @@ function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): { from: number; range:
+     const b = d[o + 2] ?? 0;
+     const k = (r >> 4) * 256 + (g >> 4) * 16 + (b >> 4);
+     const p = rakna.get(k) ?? { n: 0, r: 0, g: 0, b: 0 };
+-    p.n++;
+-    p.r += r;
+-    p.g += g;
+-    p.b += b;
++    p.n += yta;
++    p.r += r * yta;
++    p.g += g * yta;
++    p.b += b * yta;
+     rakna.set(k, p);
+   }
+-  let bast: { n: number; r: number; g: number; b: number } | null = null;
+-  for (const p of rakna.values()) if (!bast || p.n > bast.n) bast = p;
+-  if (!bast) return null;
+-  const [kh, ks, kl] = rgbTillHsl(bast.r / bast.n, bast.g / bast.n, bast.b / bast.n);
+-  const hsl = { h: kh / 360, s: ks, l: kl };
+-  // låg färgmättnad (vit, grå, gräddvit): neutralt läge (range < 0), annars färgens egen nyans
+-  return hsl.s < 0.35 ? { from: 0, range: -1, bodyL: hsl.l } : { from: Math.round(hsl.h * 360), range: 22, bodyL: hsl.l };
++  const karna = valjKarna([...rakna.values()]);
++  if (!karna) return null;
++  const hsl = karna.hsl;
++  // neutral kropp (vit, grå, gräddvit): neutralt läge (range < 0), annars kroppens egen nyans
++  return karna.neutral ? { from: 0, range: -1, bodyL: hsl[2], hsl } : { from: Math.round(hsl[0]), range: 22, bodyL: hsl[2], hsl };
+ }
+ 
+ function paletteSwap(tex: THREE.Texture, fromHue: number, range: number, toHex: string, bodyL: number) {
+@@ -220,43 +237,112 @@ function ingenKulling(rot: THREE.Object3D) {
+   });
+ }
+ 
++/** R8-3a: ytan (världsenheter²) per materialindex i ett nät. */
++function ytaPerMaterial(mesh: THREE.Mesh, antal: number): number[] {
++  const ut = new Array<number>(antal).fill(0);
++  const pos = mesh.geometry?.attributes?.position;
++  if (!pos) return ut;
++  const idx = mesh.geometry.index;
++  const n = idx ? idx.count : pos.count;
++  const grupper = mesh.geometry.groups.length > 0 ? mesh.geometry.groups : [{ start: 0, count: n, materialIndex: 0 }];
++  const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3();
++  const steg = Math.max(1, Math.floor(n / 3 / 4000)) * 3;
++  for (const g of grupper) {
++    const mi = Math.min(antal - 1, g.materialIndex ?? 0);
++    for (let i = g.start; i + 2 < Math.min(n, g.start + g.count); i += steg) {
++      const i0 = idx ? idx.getX(i) : i, i1 = idx ? idx.getX(i + 1) : i + 1, i2 = idx ? idx.getX(i + 2) : i + 2;
++      a.fromBufferAttribute(pos, i0).applyMatrix4(mesh.matrixWorld);
++      b.fromBufferAttribute(pos, i1).applyMatrix4(mesh.matrixWorld);
++      c.fromBufferAttribute(pos, i2).applyMatrix4(mesh.matrixWorld);
++      ut[mi] = (ut[mi] ?? 0) + b.sub(a).cross(c.sub(a)).length() * 0.5 * (steg / 3);
++    }
++  }
++  return ut;
++}
++
++type Kalla = { src: THREE.MeshStandardMaterial; yta: number; karn: (Palett & { hsl: Hsl }) | null; mesh: THREE.Mesh };
++
++/** R8-3a: ett färgord färgar HELA kroppen på alla modeller (textur, materialfärger eller båda); ögon, hud och detaljer behålls.
++ *  1) Samla modellens material med yta och kärnfärg. 2) `kroppsRoller()` (fargning.ts) avgör kropp/ljus/detalj – ur datans
++ *  "material"-tabell om den finns, annars generellt. 3) Kroppsmaterial: textur → kroppens texlar byts till färgordets nyans
++ *  (vit/grå kropp: gråskala × färg); materialfärg → färgordets nyans med materialets ljushet relativt kroppens (skuggor och
++ *  ljusare mage bevaras), förkompenserad för scenens ljus. Glansen (guldord) lyser i färgordets egen nyans och bara på kroppen.
++ *  Utan färgord (hex null): ingenting ändras (B6.4). */
+ function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
+   const hex = fargAv(spec);
+   const ent = entitet(spec.kropp);
+-  const pal = ent?.palett;
+-  const glans = spec.glans;
++  const pal = ent?.palett && !ent.inlagd ? ent.palett : null; // de handjusterade första djuren (katt, hund …) behåller sin palett
++  rot.updateMatrixWorld(true);
++  const kallor = new Map<string, Kalla>();
++  if (hex) {
++    rot.traverse((o) => {
++      const mesh = o as THREE.Mesh;
++      if (!mesh.isMesh) return;
++      const lista = (Array.isArray(mesh.material) ? mesh.material : [mesh.material]) as THREE.MeshStandardMaterial[];
++      const ytor = ytaPerMaterial(mesh, lista.length);
++      lista.forEach((src, i) => {
++        const k = kallor.get(src.uuid) ?? { src, yta: 0, karn: null, mesh };
++        const y = ytor[i] ?? 0;
++        if (src.map && (!k.karn || y > k.yta)) k.karn = karnfarg(mesh, src.map) ?? k.karn;
++        k.yta += y;
++        kallor.set(src.uuid, k);
++      });
++    });
++  }
++  const lista0 = [...kallor.values()];
++  const total = lista0.reduce((s, k) => s + k.yta, 0) || 1;
++  const infos: MatInfo[] = lista0.map((k) => ({
++    namn: k.src.name || "",
++    yta: k.yta / total,
++    hsl: k.src.map ? (k.karn?.hsl ?? [0, 0, 0.5]) : hexTillHsl("#" + k.src.color.getHexString(THREE.SRGBColorSpace)),
++  }));
++  const roller = kroppsRoller(infos, ent?.material);
++  const rollAv = new Map<string, KroppRoll>();
++  lista0.forEach((k, i) => rollAv.set(k.src.uuid, roller[i]?.roll ?? "detalj"));
++  const huvud = infos[roller[0]?.huvud ?? -1];
++  const kroppL = huvud ? (lista0[roller[0]!.huvud]?.karn?.bodyL ?? huvud.hsl[2]) : 0.5;
++  const klonade = new Map<string, THREE.MeshStandardMaterial>();
+   rot.traverse((o) => {
+     const mesh = o as THREE.Mesh;
+     if (!mesh.isMesh) return;
+     const lista = (Array.isArray(mesh.material) ? mesh.material : [mesh.material]) as THREE.MeshStandardMaterial[];
+     const nya = lista.map((src) => {
++      const finns = klonade.get(src.uuid);
++      if (finns) return finns;
+       const m = src.clone();
+       m.metalness = 0;
+       m.roughness = Math.max(m.roughness ?? 1, 0.75);
+       const namn = m.name || "";
+-      const roll = ent?.material ? ent.material[namn] : undefined;
+-      // B6.4: utan färgord (hex null) blir allt false/null – modellens egna färger, ingen glans över kroppen (se fargning.ts).
+-      const f = fargning({ hex, roll, harRoller: !!ent?.material, harPalett: !!pal, harKarta: !!m.map, glans: !!glans, ljusare });
+-      if (f.farg) m.color.set(f.farg);
+-      if (f.palettByte && pal && hex && m.map) {
+-        const egen = ent?.inlagd ? karnfarg(mesh, m.map) : null;
++      const roll = hex ? rollAv.get(src.uuid) : undefined;
++      // B6.4: utan färgord (hex null) blir allt false/null – modellens egna färger, ingen glans (se fargning.ts).
++      const f = fargning({ hex, roll, harKarta: !!m.map, glans: !!spec.glans, ljusare });
++      const mal = hex ? (roll === "ljus" ? ljusare(hex) : hex) : null;
++      if (f.farg && mal) {
++        // materialfärg: målets nyans, materialets ljushet relativt kroppens, förkompenserad för ljuset
++        const [r, g, b] = byttPixel(hexTillHsl("#" + src.color.getHexString(THREE.SRGBColorSpace)), { from: 0, range: 22, bodyL: kroppL }, hexTillHsl(mal), LJUSTINT);
++        m.color.setRGB(r / 255, g / 255, b / 255, THREE.SRGBColorSpace);
++      }
++      if (f.palettByte && mal && m.map) {
++        const egen = pal ? null : (kallor.get(src.uuid)?.karn ?? null);
+         if (egen && egen.range < 0) {
+-          // R9: vit/grå kropp (isbjörn, elefant, lamm): texturen blir gråskala och färgen läggs i materialet. Då blandas inga kvarvarande
+-          // gräddvita texlar in (det gjorde röd till orange och grön till gulgrön), och ljusets förstärkning är förkompenserad.
++          // R9: vit/grå kropp (isbjörn, elefant, narval): texturen blir gråskala och färgen läggs i materialet.
+           m.map = graTextur(m.map, egen.bodyL);
+-          const [r, g, b] = malAlbedo(hex, LJUSTINT);
++          const [r, g, b] = malAlbedo(mal, LJUSTINT);
+           m.color.setRGB(r, g, b);
+-        } else {
+-          m.map = egen ? paletteSwap(m.map, egen.from, egen.range, hex, egen.bodyL) : paletteSwap(m.map, pal.from, pal.range, hex, pal.bodyL);
++        } else if (egen || pal) {
++          const p = egen ?? pal!;
++          m.map = paletteSwap(m.map, p.from, p.range, mal, p.bodyL);
+           m.color.set("#ffffff");
+         }
+       }
+-      if (f.glans && "emissive" in m) {
+-        m.emissive = new THREE.Color("#FFE082");
+-        m.emissiveIntensity = 0.28;
++      if (f.glans && mal && "emissive" in m) {
++        // R8-3a: glansen i färgordets egen nyans (det gula självlyset gjorde röd till orange och den blå jultomtens mössa orange)
++        m.emissive = new THREE.Color(ljusare(mal));
++        m.emissiveIntensity = 0.16;
+       }
+-      // B6.4: provräknare (bara när ett prov har lagt dit listan): materialets färg före och efter.
+-      if (typeof window !== "undefined") window.__tredFarg?.push({ kropp: spec.kropp, mat: namn, fore: "#" + src.color.getHexString(), efter: "#" + m.color.getHexString(), sjalvlyse: "#" + m.emissive.getHexString(), egenKarta: m.map === src.map });
++      // B6.4/R8-3a: provräknare (bara när ett prov har lagt dit listan): materialets färg före och efter, roll.
++      if (typeof window !== "undefined") window.__tredFarg?.push({ kropp: spec.kropp, mat: namn, fore: "#" + src.color.getHexString(), efter: "#" + m.color.getHexString(), sjalvlyse: "#" + m.emissive.getHexString(), egenKarta: m.map === src.map, roll });
++      klonade.set(src.uuid, m);
+       return m;
+     });
+     mesh.material = Array.isArray(mesh.material) ? nya : (nya[0] ?? mesh.material);
+diff --git a/src/spel/r8-3a.test.ts b/src/spel/r8-3a.test.ts
+new file mode 100644
+index 0000000..9c74a97
+--- /dev/null
++++ b/src/spel/r8-3a.test.ts
+@@ -0,0 +1,66 @@
++// R8-3a (R9C): färgordet färgar hela kroppen på alla modeller, ögon/hud/detaljer behålls. Utan färgord: ingenting (B6.4).
++import assert from "node:assert/strict";
++import { test } from "node:test";
++import { fargning, kroppsRoller, valjKarna, type MatInfo } from "./fargning.ts";
++import { hexTillHsl } from "./palett.ts";
++import entJson from "../../data/entiteter.json" with { type: "json" };
++
++const ljusare = (h: string) => `ljus(${h})`;
++const mat = (namn: string, hex: string, yta: number): MatInfo => ({ namn, hsl: hexTillHsl(hex), yta });
++const roller = (m: MatInfo[], r?: Record<string, string>) => kroppsRoller(m, r).map((x) => x.roll);
++
++test("R8-3a: jultomten – dräkt och mössa (två material i samma röda familj) är kropp, hud, skägg, skor och spänne behålls", () => {
++  const m = [mat("drakt", "#B71C1C", 0.4), mat("#8E1116", "#8E1116", 0.15), mat("hud", "#F1C27D", 0.1), mat("#FAFAFA", "#FAFAFA", 0.2), mat("#212121", "#212121", 0.1), mat("#FFC107", "#FFC107", 0.05)];
++  assert.deepEqual(roller(m), ["kropp", "kropp", "detalj", "detalj", "detalj", "detalj"]);
++});
++
++test("R8-3a: kraken – två lila material blir kropp, svarta och vita ögon behålls (datans farg-material vinner som huvud)", () => {
++  const m = [mat("#8E24AA", "#8E24AA", 0.6), mat("#CE93D8", "#CE93D8", 0.3), mat("#212121", "#212121", 0.05), mat("#FAFAFA", "#FAFAFA", 0.05)];
++  assert.deepEqual(roller(m), ["kropp", "kropp", "detalj", "detalj"]);
++  assert.deepEqual(roller(m, { "#8E24AA": "farg" }), ["kropp", "kropp", "detalj", "detalj"]);
++});
++
++test("R8-3a: datans roller gäller (farg, ljus, behall); övriga material automatiskt", () => {
++  const m = [mat("Main", "#864B22", 0.6), mat("Sec", "#533344", 0.2), mat("Horn", "#80838F", 0.1), mat("Eye", "#202123", 0.02)];
++  assert.deepEqual(roller(m, { Main: "farg", Sec: "ljus" }), ["kropp", "ljus", "detalj", "detalj"]);
++  assert.deepEqual(roller(m, { Main: "behall" }), ["detalj", "kropp", "detalj", "detalj"]);
++});
++
++test("R8-3a: mörka ögon är aldrig huvudmaterial; en helt svart modell färgas ändå", () => {
++  assert.deepEqual(roller([mat("ogon", "#111111", 0.7), mat("kropp", "#9E9E9E", 0.3)]), ["detalj", "kropp"]);
++  assert.deepEqual(roller([mat("svart", "#111111", 1)]), ["kropp"]);
++});
++
++test("R8-3a: vit/grå kropp – neutrala material med liknande ljushet hör ihop, kulörta (rosa öron) behålls", () => {
++  assert.deepEqual(roller([mat("kropp", "#E7E7E7", 0.7), mat("mage", "#FFFFFF", 0.15), mat("ora", "#F48FB1", 0.1), mat("nos", "#333333", 0.05)]), ["kropp", "kropp", "detalj", "detalj"]);
++});
++
++test("R8-3a: kärnfärgen i en textur är ytviktad – stor grå kropp vinner över tätt modellerade rosa öron", () => {
++  const k = valjKarna([{ n: 70, r: 0xe0 * 70, g: 0xe0 * 70, b: 0xe0 * 70 }, { n: 20, r: 0xf4 * 20, g: 0x8f * 20, b: 0xb1 * 20 }, { n: 10, r: 0x20 * 10, g: 0x20 * 10, b: 0x20 * 10 }]);
++  assert.equal(k?.neutral, true);
++});
++
++test("R8-3a: kärnfärgen – en kulör dräkt som täcker ≥ 30 % vinner över vitt skägg och hud", () => {
++  const k = valjKarna([{ n: 45, r: 0xfa * 45, g: 0xfa * 45, b: 0xfa * 45 }, { n: 35, r: 0xb7 * 35, g: 0x1c * 35, b: 0x1c * 35 }, { n: 20, r: 0xf1 * 20, g: 0xc2 * 20, b: 0x7d * 20 }]);
++  assert.equal(k?.neutral, false);
++  assert.ok(k && (k.hsl[0] < 15 || k.hsl[0] > 345), String(k?.hsl));
++});
++
++test("R8-3a: fargning – kropp med textur byter texturen, kropp utan textur får målfärgen, ljus får ljusare, detalj inget", () => {
++  const hex = "#1E88E5";
++  assert.deepEqual(fargning({ hex, roll: "kropp", harKarta: true, glans: true, ljusare }), { farg: null, palettByte: true, glans: true });
++  assert.deepEqual(fargning({ hex, roll: "kropp", harKarta: false, glans: false, ljusare }), { farg: hex, palettByte: false, glans: false });
++  assert.deepEqual(fargning({ hex, roll: "farg", harKarta: false, glans: true, ljusare }), { farg: hex, palettByte: false, glans: true });
++  assert.deepEqual(fargning({ hex, roll: "ljus", harKarta: false, glans: true, ljusare }), { farg: `ljus(${hex})`, palettByte: false, glans: false });
++  assert.deepEqual(fargning({ hex, roll: "detalj", harKarta: true, glans: true, ljusare }), { farg: null, palettByte: false, glans: false });
++});
++
++test("R8-3a: B6.4 gäller – utan färgord ingen färgning för någon roll", () => {
++  for (const roll of [undefined, "kropp", "ljus", "farg", "detalj"]) for (const harKarta of [false, true]) for (const glans of [false, true])
++    assert.deepEqual(fargning({ hex: null, roll, harKarta, glans, ljusare }), { farg: null, palettByte: false, glans: false });
++});
++
++test("R8-3a: datans materialroller är kända värden", () => {
++  const ent = (entJson as unknown as { entiteter: Record<string, { material?: Record<string, string> }> }).entiteter;
++  for (const [id, e] of Object.entries(ent)) for (const [n, r] of Object.entries(e.material ?? {})) assert.ok(["farg", "ljus", "behall"].includes(r), `${id}.${n}: ${r}`);
++});
