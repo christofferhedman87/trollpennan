@@ -50,7 +50,11 @@ Uppföljning av R8-3a (#175). Fyra fel som syns på riktiga modeller, lösta med
    - `ersatter: "regnbage"` gör att `effekterBredvid` hoppar över bågen när en GLB-kropp bär mönstret.
    - Procedurella kroppar utan modell behåller bågen.
    - Den andra färgen kommer ur ordet ("röd och blå randig"). Utan andra färg blir det en mörkare ton av kroppen.
-5. **B6.4 gäller oförändrat.** Utan färgord och utan mönster rörs inget material.
+5. **Kärnan över två nyansfack** (`fargning.ts` → `valjKarna`).
+   - En kulör familj räknas ihop med grannfack vars medelnyans ligger inom ±22°.
+   - Torrkörning 1 hittade felet. Bilens röda kaross ligger på 9° och 12°, alltså i två 20°-fack med 20 % och 14 %. Var för sig var de under 30 %, så de grå rutorna (40 %) blev kärna. Masken färgade då bara taket.
+   - På main doldes felet av att hela texturen färgades.
+6. **B6.4 gäller oförändrat.** Utan färgord och utan mönster rörs inget material.
 
 ## Filer
 | Fil | Ändring |
@@ -61,7 +65,9 @@ Uppföljning av R8-3a (#175). Fyra fel som syns på riktiga modeller, lösta med
 | `src/spel/attribut.ts` | `KroppsMonster`, `kroppsMonsterFor`, `effekterBredvid` |
 | `src/spel/effekter.tsx` | `DjurEffekter` använder `effekterBredvid(v, harModell(v.kropp))` |
 | `data/attribut.json` | Nytt avsnitt `kroppsmonster` (3 rader) och `i_kroppen._om`. **Inte granskad** (ingen `granskad:true` rörs). |
-| `src/spel/r8-3a2.test.ts` (ny) | 9 tester: ankans atlas, elefanten, en skarp kant, en vinggradient, materialkedjan (+ behall + jultomten), hörn, mönster ur tolken, datanycklar, B6.4 |
+| `rundor/R8-3a-farg/r83a-prov.mjs` | Bilen får egen täckningsgräns, 0,25 i stället för 0,35. Rutor, däck och lyktor behålls nu, och glasburen står framför: 0,32. Felet "bara taket blått" (0,13) faller fortfarande. |
+| `rundor/B6.5-fix/b65-prov.mjs` | Regnbågskatten: steget "effekten regnbage ritas" godkänns också av kroppsmönstret `band` (`__tredFarg`), eftersom effekten är ersatt med flit. Steget "minst 4 av 6 nyanser syns" är oförändrat. |
+| `src/spel/r8-3a2.test.ts` (ny) | 10 tester: ankans atlas, elefanten, en skarp kant, en vinggradient, materialkedjan (+ behall + jultomten), hörn, mönster ur tolken, datanycklar, B6.4, kärnan över två nyansfack |
 | `package.json` | Testet läggs i `test:product` av kor.sh (inte i patchen) |
 
 **Spel.tsx rörs inte.** kor.sh stoppar (exit 3) om den ändras.
@@ -83,14 +89,14 @@ Varje fras väcks på en tom äng. Provet tar en bild av ängen före och en eft
 kor.sh bygger main till en egen katalog före patchen. Provet **måste falla där** (STOPP 4 annars), och det ger förebilderna. Efter patchen ska provet vara grönt. Därefter körs regressionen: r83a-prov, r83a-alla (160 modeller), b64, b62, b65, b63 och r9k, var och en med ett omförsök.
 
 ## Parallella grenar
-`git apply --check` är provat mot origin/main 27e175d. Tsc och test är körda på det kombinerade trädet.
+`git apply --check` är provat mot origin/main a22bfbc (efter TTS-2-fixens rundmaterial #178). Tsc och test är körda på det kombinerade trädet.
 
 | Bas | R8-3a2 |
 |-----|--------|
 | main | ok |
-| main + TTS-2 (tts2-fix 6a6e7e0) | ok |
-| main + P3 (p3-skapelse ffc9c04) | ok |
-| main + TTS-2 + P3 | ok. typecheck:pages 0 fel. r8-3a2, r8-3a och p3 test: 33/33 |
+| main + TTS-2 (tts2-fix 23e0373) | ok |
+| main + P3 (p3-skapelse f39341f) | ok |
+| main + TTS-2 + P3 | ok. typecheck:pages 0 fel. r8-3a2, r8-3a, p3 och b6-5 test: 34/34 |
 | R8-3a2 först, sedan P3 / TTS-2 | båda ok |
 
 P3:s `Plagg.tsx` anropar `fargaKlon(c, {kropp, farg} as Sparad)`. Utan `monster` blir det `null` och bara färg, som förut.
