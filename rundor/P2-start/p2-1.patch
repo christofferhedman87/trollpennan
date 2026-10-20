@@ -1,0 +1,328 @@
+diff --git a/data/forsta-stunden.json b/data/forsta-stunden.json
+new file mode 100644
+index 0000000..92cea5a
+--- /dev/null
++++ b/data/forsta-stunden.json
+@@ -0,0 +1,39 @@
++{
++  "_om": "P2: den guidade starten. Stegen visas i ordning efter introt; ett steg är klart när villkoret i klart_nar är uppfyllt i sparningen (useMinne). Villkor: {falt, minst, varde?}. Fältet räknas som längden på en lista, antalet nycklar i ett objekt (eller antalet värden lika med varde), ett tal eller sant/falskt (1/0). pekar_pa: 'testid:a|testid:b' (första synliga) eller '3d:<namn>' (skärmpunkt i window.__tredMal). albumKropp = olika djursorter barnet väckt; introts kanin räknas, därför 2 för första egna djuret och 5 för tre till. Ändra här, ingen kod.",
++  "senast": {
++    "med_djur": "Senast väckte du {text}.",
++    "tom": "Ängen väntar på ditt första ord."
++  },
++  "steg": [
++    {
++      "id": "forsta-ordet",
++      "text": "Tryck på Pennans bok och skriv ett djur!",
++      "pekar_pa": "testid:pennans-bok",
++      "klart_nar": { "falt": "albumKropp", "minst": 2 }
++    },
++    {
++      "id": "bengtsson",
++      "text": "Bengtsson vill be dig om något. Tryck på honom!",
++      "pekar_pa": "testid:bengtsson-ikon|testid:npc-figur",
++      "klart_nar": { "falt": "uppdrag", "minst": 1 }
++    },
++    {
++      "id": "uppdraget",
++      "text": "Skriv det Bengtsson ber om i Pennans bok.",
++      "pekar_pa": "testid:pennans-bok",
++      "klart_nar": { "falt": "uppdrag", "varde": "klar", "minst": 1 }
++    },
++    {
++      "id": "tre-djur",
++      "text": "Väck tre djur till!",
++      "pekar_pa": "testid:pennans-bok",
++      "klart_nar": { "falt": "albumKropp", "minst": 5 }
++    },
++    {
++      "id": "grinden",
++      "text": "Grinden är öppen. Tryck på den och gå till Skogen!",
++      "pekar_pa": "3d:grind",
++      "klart_nar": { "falt": "seddaIntro", "minst": 1 }
++    }
++  ]
++}
+diff --git a/data/intro.json b/data/intro.json
+index 6bdb695..85f8286 100644
+--- a/data/intro.json
++++ b/data/intro.json
+@@ -6,6 +6,15 @@
+   "ljud": "/ljud/intro/saga.mp3",
+   "ord": ["K", "A", "N", "I", "N"],
+   "langd": 15.2,
++  "skriv": {
++    "_om": "P2: introts sista scen. Barnet skriver ordet själv (nästa bokstav lyser på tangentbordet, bara rätt bokstav skrivs in) och trycker Vakna!. Hjälp mig visar idéknapparna som förut. Ändra ordet här, ingen kod.",
++    "ord": "katt",
++    "fras": "en katt",
++    "uppmaning": "Skriv katt!",
++    "vakna": "Vakna!",
++    "hjalp": "Hjälp mig",
++    "tillbaka": "Jag vill skriva"
++  },
+   "scener": [
+     { "fas": 0, "text": "Hej! Jag är Trollpennan.", "fran": 0 },
+     { "fas": 1, "text": "Det jag skriver … vaknar.", "fran": 2.35 },
+diff --git a/src/spel/forstaStunden.ts b/src/spel/forstaStunden.ts
+new file mode 100644
+index 0000000..b4669d4
+--- /dev/null
++++ b/src/spel/forstaStunden.ts
+@@ -0,0 +1,48 @@
++// P2: den guidade starten som data (data/forsta-stunden.json). Ren logik utan React: vilket steg gäller,
++// och raden om vad som hände sist (titelskärmens "Fortsätt"). Inga per-steg-if – stegen är villkor på sparningen.
++import forstaJson from "../../data/forsta-stunden.json" with { type: "json" };
++
++export type Villkor = { falt: string; minst: number; varde?: string };
++export type CoachSteg = { id: string; text: string; pekar_pa: string; klart_nar: Villkor };
++type ForstaData = { senast: { med_djur: string; tom: string }; steg: CoachSteg[] };
++
++export const FORSTA = forstaJson as unknown as ForstaData;
++
++/** Hur många av fältet: lista → längd, objekt → nycklar (eller värden lika med `varde`), tal → värdet, sant/falskt → 1/0. */
++export function rakna(v: unknown, varde?: string): number {
++  if (Array.isArray(v)) return varde === undefined ? v.length : v.filter((x) => x === varde).length;
++  if (typeof v === "number") return Number.isFinite(v) ? v : 0;
++  if (typeof v === "boolean") return v ? 1 : 0;
++  if (v && typeof v === "object") {
++    const vals = Object.values(v as Record<string, unknown>);
++    return varde === undefined ? vals.length : vals.filter((x) => x === varde).length;
++  }
++  return 0;
++}
++
++export function uppfyllt(k: Villkor, d: Readonly<Record<string, unknown>>): boolean {
++  return rakna(d[k.falt], k.varde) >= k.minst;
++}
++
++/** Första steget som inte är klart, med nummer (1-baserat) och antal. null när allt är klart eller introt inte är sett. */
++export function aktivtSteg(
++  d: Readonly<Record<string, unknown>>,
++  steg: readonly CoachSteg[] = FORSTA.steg,
++): { steg: CoachSteg; nr: number; av: number } | null {
++  if (d.introSedd !== true) return null;
++  const i = steg.findIndex((s) => !uppfyllt(s.klart_nar, d));
++  return i < 0 ? null : { steg: steg[i]!, nr: i + 1, av: steg.length };
++}
++
++/** "pekar_pa" → mål att leta upp i UI:t: testid i ordning, eller ett namngivet 3D-ankare. */
++export function malFor(pekar: string): { testid: string[]; ankare: string | null } {
++  if (pekar.startsWith("3d:")) return { testid: [], ankare: pekar.slice(3) };
++  return { testid: pekar.split("|").map((x) => x.replace(/^testid:/, "").trim()).filter(Boolean), ankare: null };
++}
++
++/** Raden under "Fortsätt": senaste skapelsen på ängen (ang är i skapad ordning, formel = barnets fras). */
++export function senastRad(d: Readonly<Record<string, unknown>>): string {
++  const ang = Array.isArray(d.ang) ? (d.ang as { formel?: unknown }[]) : [];
++  const sista = [...ang].reverse().find((x) => typeof x?.formel === "string" && x.formel.trim());
++  return sista ? FORSTA.senast.med_djur.replace("{text}", String(sista.formel).trim()) : FORSTA.senast.tom;
++}
+diff --git a/src/spel/intro.tsx b/src/spel/intro.tsx
+index 0f8444f..e8c5b18 100644
+--- a/src/spel/intro.tsx
++++ b/src/spel/intro.tsx
+@@ -3,6 +3,7 @@ import introJson from "../../data/intro.json" with { type: "json" };
+ import upplevelseJson from "../../data/upplevelse.json" with { type: "json" };
+ import { sagaNu } from "./saga.ts";
+ import { rostIntro } from "./rostManifest.ts";
++import { IntroSkriv, type IntroSkrivData } from "./ui/IntroSkriv.tsx";
+ 
+ type Scen = { fas: number; text: string; fran: number; ord?: number; ordklar?: boolean };
+ 
+@@ -14,6 +15,8 @@ const INTRO = introJson as {
+   ord: string[];
+   langd: number;
+   scener: Scen[];
++  /** P2: finns den slutar introt med att barnet skriver ordet själv. */
++  skriv?: IntroSkrivData;
+ };
+ 
+ // TTS-1: Trollpennans förgenererade röst (data/rost-manifest.json) med egna scentider; annars saga.mp3 och tiderna i intro.json
+@@ -196,7 +199,9 @@ export function Intro({
+       <p className="intro-text" data-testid="intro-text">
+         {scen.text}
+       </p>
+-      {scen.fas >= 5 ? (
++      {scen.fas >= 5 && INTRO.skriv ? (
++        <IntroSkriv cfg={INTRO.skriv} ideer={FORSTA_IDEER} onVakna={onIde} onIde={onIde} />
++      ) : scen.fas >= 5 ? (
+         <div className="intro-ideer" data-testid="intro-ideer" role="group" aria-label={scen.text}>
+           {FORSTA_IDEER.map((ex) => (
+             <button key={ex} type="button" className="intro-ide" data-testid="intro-ide" onClick={() => onIde(ex)}>
+diff --git a/src/spel/p2.test.ts b/src/spel/p2.test.ts
+new file mode 100644
+index 0000000..3e619b0
+--- /dev/null
++++ b/src/spel/p2.test.ts
+@@ -0,0 +1,61 @@
++// P2: den guidade starten (data/forsta-stunden.json) och introts skrivscen (data/intro.json "skriv").
++import { test } from "node:test";
++import assert from "node:assert/strict";
++import { FORSTA, aktivtSteg, malFor, rakna, senastRad, uppfyllt } from "./forstaStunden.ts";
++import introJson from "../../data/intro.json" with { type: "json" };
++import tangentbordJson from "../../data/tangentbord.json" with { type: "json" };
++
++const album = (...k: string[]) => Object.fromEntries(k.map((x) => [x, { formel: `en ${x}`, poang: 1, niva: "vanlig", hjartan: 0 }]));
++
++test("P2: rakna – lista, objekt, värde, tal, sant/falskt", () => {
++  assert.equal(rakna([1, 2, 3]), 3);
++  assert.equal(rakna({ a: "pagar", b: "klar" }), 2);
++  assert.equal(rakna({ a: "pagar", b: "klar" }, "klar"), 1);
++  assert.equal(rakna(4), 4);
++  assert.equal(rakna(true), 1);
++  assert.equal(rakna(undefined), 0);
++});
++
++test("P2: ingen guide före introt, första steget direkt efter", () => {
++  assert.equal(aktivtSteg({ introSedd: false }), null);
++  assert.equal(aktivtSteg({ introSedd: true, albumKropp: {} })?.steg.id, "forsta-ordet");
++  // introts kanin räknas inte som barnets eget första djur
++  assert.equal(aktivtSteg({ introSedd: true, albumKropp: album("kanin") })?.steg.id, "forsta-ordet");
++});
++
++test("P2: stegen följer sparningen i ordning", () => {
++  const bas = { introSedd: true, albumKropp: album("kanin", "katt"), uppdrag: {}, seddaIntro: [] };
++  assert.equal(aktivtSteg(bas)?.steg.id, "bengtsson");
++  assert.equal(aktivtSteg({ ...bas, uppdrag: { u1: "pagar" } })?.steg.id, "uppdraget");
++  const klar = { ...bas, uppdrag: { u1: "klar" } };
++  assert.equal(aktivtSteg(klar)?.steg.id, "tre-djur");
++  const fyra = { ...klar, albumKropp: album("kanin", "katt", "gris", "hund", "fagel") };
++  const g = aktivtSteg(fyra);
++  assert.equal(g?.steg.id, "grinden");
++  assert.equal(g?.nr, FORSTA.steg.length);
++  assert.equal(aktivtSteg({ ...fyra, seddaIntro: ["skogen"] }), null);
++});
++
++test("P2: varje steg har text, mål och ett villkor på ett fält som finns i sparningen", () => {
++  const falt = new Set(["albumKropp", "uppdrag", "seddaIntro", "ang", "funna", "oppnadePlatser", "stjarnor", "dragit"]);
++  for (const s of FORSTA.steg) {
++    assert.ok(s.text.trim() && s.id, s.id);
++    assert.ok(falt.has(s.klart_nar.falt), `${s.id}: okänt fält ${s.klart_nar.falt}`);
++    const m = malFor(s.pekar_pa);
++    assert.ok(m.testid.length || m.ankare, s.id);
++    assert.equal(uppfyllt(s.klart_nar, {}), false, `${s.id} får inte vara klart i en tom sparning`);
++  }
++});
++
++test("P2: Fortsätt-raden visar senaste djuret", () => {
++  assert.equal(senastRad({ ang: [{ formel: "en katt" }, { formel: "en blå kanin med hatt" }] }), "Senast väckte du en blå kanin med hatt.");
++  assert.equal(senastRad({}), FORSTA.senast.tom);
++});
++
++test("P2: introts ord går att skriva på tangentbordet och frasen innehåller ordet", () => {
++  const s = (introJson as { skriv?: { ord: string; fras: string } }).skriv;
++  assert.ok(s, "intro.json saknar skriv");
++  const tangenter = new Set((tangentbordJson as { rader: string[][] }).rader.flat());
++  for (const b of s.ord) assert.ok(tangenter.has(b), `bokstaven ${b} saknas på tangentbordet`);
++  assert.ok(s.fras.split(" ").includes(s.ord));
++});
+diff --git a/src/spel/ui/IntroSkriv.tsx b/src/spel/ui/IntroSkriv.tsx
+new file mode 100644
+index 0000000..c5d7650
+--- /dev/null
++++ b/src/spel/ui/IntroSkriv.tsx
+@@ -0,0 +1,80 @@
++// P2: introts sista scen – barnet skriver ordet själv (data/intro.json "skriv"). Nästa bokstav lyser på tangentbordet,
++// bara rätt bokstav skrivs in (fel bokstav ger en mjuk skakning, aldrig ett fel-ljud). Hjälp mig visar idéknapparna.
++import { useState } from "react";
++import { TANGENTBORD } from "./spelData.ts";
++import { ljud } from "../ljud.ts";
++import "./intro-p2.css";
++
++export type IntroSkrivData = { ord: string; fras: string; uppmaning: string; vakna: string; hjalp: string; tillbaka: string };
++
++export function IntroSkriv({ cfg, ideer, onVakna, onIde }: { cfg: IntroSkrivData; ideer: string[]; onVakna: (fras: string) => void; onIde: (ex: string) => void }) {
++  const ord = [...cfg.ord.toLowerCase()];
++  const [n, setN] = useState(0);
++  const [skak, setSkak] = useState(0);
++  const [hjalp, setHjalp] = useState(false);
++  const klar = n >= ord.length;
++  const nasta = klar ? null : ord[n]!;
++  const tryck = (t: string) => {
++    ljud.lasOpp();
++    if (klar) return;
++    if (t === nasta) {
++      ljud.fil("klick");
++      setN(n + 1);
++    } else {
++      setSkak((x) => x + 1);
++    }
++  };
++  if (hjalp) {
++    return (
++      <div className="intro-ideer" data-testid="intro-ideer" role="group" aria-label={cfg.hjalp}>
++        {ideer.map((ex) => (
++          <button key={ex} type="button" className="intro-ide" data-testid="intro-ide" onClick={() => onIde(ex)}>
++            {ex}
++          </button>
++        ))}
++        <button type="button" className="intro-tillbaka" data-testid="intro-tillbaka" onClick={() => setHjalp(false)}>
++          {cfg.tillbaka}
++        </button>
++      </div>
++    );
++  }
++  return (
++    <div className="intro-skriv" data-testid="intro-skriv" role="group" aria-label={cfg.uppmaning}>
++      <p className="intro-uppmaning">{cfg.uppmaning}</p>
++      <div className={skak ? "intro-rutor skak" : "intro-rutor"} key={skak} aria-live="polite">
++        {ord.map((b, i) => (
++          <span key={`${b}${i}`} className={i < n ? "intro-ruta klar" : i === n ? "intro-ruta nu" : "intro-ruta"} data-testid="intro-ruta" data-klar={i < n ? "ja" : "nej"}>
++            {i < n ? b : ""}
++          </span>
++        ))}
++      </div>
++      <div className="intro-knappar">
++        <button type="button" className={klar ? "intro-vakna redo" : "intro-vakna"} data-testid="intro-vakna" aria-disabled={!klar} onClick={() => (klar ? onVakna(cfg.fras) : setSkak((x) => x + 1))}>
++          {cfg.vakna}
++        </button>
++        <button type="button" className="intro-hjalp" data-testid="intro-hjalp" onClick={() => setHjalp(true)}>
++          {cfg.hjalp}
++        </button>
++      </div>
++      <div className="tangenter intro-tangenter" data-testid="intro-tangentbord">
++        {TANGENTBORD.rader
++          .filter((rad) => !rad.includes("{mellanslag}"))
++          .map((rad) => (
++            <div className="rad" key={rad.join("")}>
++              {rad.map((t) =>
++                t === "{radera}" ? (
++                  <button key={t} type="button" className="tangent radera" aria-label="Sudda" onClick={() => setN(Math.max(0, n - 1))}>
++                    ⌫
++                  </button>
++                ) : (
++                  <button key={t} type="button" className={t === nasta ? "tangent nasta" : "tangent"} data-testid="intro-tangent" data-t={t} onClick={() => tryck(t)}>
++                    {t}
++                  </button>
++                ),
++              )}
++            </div>
++          ))}
++      </div>
++    </div>
++  );
++}
+diff --git a/src/spel/ui/intro-p2.css b/src/spel/ui/intro-p2.css
+new file mode 100644
+index 0000000..5392cf6
+--- /dev/null
++++ b/src/spel/ui/intro-p2.css
+@@ -0,0 +1,18 @@
++/* P2 – introts skrivscen (rundor/P2-start/RITNING.md). Egen fil: styles.css rörs inte. */
++.intro-skriv{position:absolute;z-index:4;left:0;right:0;bottom:0;pointer-events:auto;display:flex;flex-direction:column;gap:10px;
++  padding:14px 6px max(8px, env(safe-area-inset-bottom));background:var(--color-paper);border-radius:24px 24px 0 0;box-shadow:0 -6px 20px #0003}
++.intro-uppmaning{margin:0;text-align:center;font-family:var(--font-display);font-size:1.35rem;font-weight:700;color:var(--color-ink)}
++.intro-rutor{display:flex;justify-content:center;gap:8px}
++.intro-rutor.skak{animation:intro-skak .35s ease}
++.intro-ruta{width:56px;height:64px;border-radius:12px;background:#fff;border:3px solid var(--color-paper-deep);display:grid;place-items:center;
++  font-family:var(--font-display);font-size:2.3rem;font-weight:700;color:var(--color-moss-deep)}
++.intro-ruta.klar{border-color:var(--color-moss)}
++.intro-ruta.nu{border-color:var(--color-gold);box-shadow:0 0 0 4px #f2b63255}
++.intro-knappar{display:flex;gap:10px;padding:0 8px}
++.intro-vakna{flex:1;min-height:52px;border:0;border-radius:16px;background:#d9c7a3;color:#6b5a45;font-family:var(--font-display);font-size:1.4rem;font-weight:700}
++.intro-vakna.redo{background:var(--color-berry);color:var(--color-cream);box-shadow:0 4px 0 #8e2344;animation:intro-redo 1.2s ease-in-out infinite}
++.intro-hjalp,.intro-tillbaka{min-height:52px;padding:0 14px;border:3px solid var(--color-paper-deep);border-radius:16px;background:var(--color-cream);color:var(--color-ink);font-size:1rem;font-weight:800}
++.intro-tangenter .tangent.nasta{background:var(--color-gold);box-shadow:0 0 0 3px #fff8,0 0 16px 4px #f2b632cc;position:relative;z-index:1}
++@keyframes intro-skak{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
++@keyframes intro-redo{50%{transform:scale(1.03)}}
++@media (prefers-reduced-motion: reduce){.intro-rutor.skak,.intro-vakna.redo{animation:none}}
