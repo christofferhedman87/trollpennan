@@ -87,6 +87,21 @@ const lika = (a, b) => JSON.stringify(a) === JSON.stringify(b);
     andrat.push(`${f} klasser.${klass}.kant`);
   }
 }
+// package.json: b6-3.test.ts sist i test:product (textuellt, så att andra rundors tillägg står kvar)
+{
+  const f = "package.json";
+  let s = las(f);
+  if (!s.includes("src/spel/b6-3.test.ts")) {
+    const m = s.match(/("test:product": "[^"]*)"/);
+    if (!m) varningar.push(`${f}: test:product saknas, lämnas`);
+    else {
+      s = s.replace(m[0], `${m[1]} src/spel/b6-3.test.ts"`);
+      JSON.parse(s);
+      fs.writeFileSync(f, s);
+      andrat.push(`${f} test:product + b6-3.test.ts`);
+    }
+  }
+}
 for (const a of andrat) console.log(`ändrat: ${a}`);
 for (const v of varningar) console.log(`VARNING: ${v}`);
 console.log(`b63-data: ${andrat.length} ändrade, ${varningar.length} varningar`);

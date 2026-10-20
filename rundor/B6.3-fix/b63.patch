@@ -1,5 +1,5 @@
 diff --git a/PROJECT.md b/PROJECT.md
-index 6b434fe..e58ff1d 100644
+index 026cc12..724939e 100644
 --- a/PROJECT.md
 +++ b/PROJECT.md
 @@ -730,3 +730,4 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
@@ -7,19 +7,6 @@ index 6b434fe..e58ff1d 100644
  | 26 | ~~"en regnbåge" gav ingenting och boken stod kvar~~ → känt ord utan modell ger banderoll ("kan inte rita ensamt än") och boken stängs; test går igenom alla kända ord. Kvar: "ljus" tolkas som färgord, inte som sak | **B6.1** klar |
  | 27 | ~~r9b-/r9-prov inaktuella · "ljus" blev färgord · räven på sjön i vattenbrynet · `milstolpe.final`/`las_upp`/`final_fore` lästes inte~~ → proven följer nuvarande beteende, "ljus" är en sak (utom "en ljus katt"), 1,0 till vattnet, fälten kopplade in | **B6.2** klar |
 +| 28 | ~~dammens vatten försvann (marken svajade upp genom det) · uppmaningen vid ord utan modell gick på ~2 s · bebisen i dammen · fordonen en vägg framför staketet~~ → vattnet över svajet, uppmaningen ≥ 5 s eller tryck, ängen har dammzon (platser.json), stora saker spridda bak och grinden fri | **B6.3** klar |
-diff --git a/package.json b/package.json
-index 8e56bb5..90698f1 100644
---- a/package.json
-+++ b/package.json
-@@ -22,7 +22,7 @@
-     "format": "prettier --write .",
-     "build:pages": "vite build --config vite.pages.config.ts",
-     "preview:pages": "vite preview --config vite.pages.config.ts",
--    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/r9j.test.ts src/spel/r9k.test.ts src/spel/b4-1.test.ts src/spel/dialogIsolering.test.mjs src/spel/b6-1.test.ts src/spel/b6-2.test.ts",
-+    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/r9j.test.ts src/spel/r9k.test.ts src/spel/b4-1.test.ts src/spel/dialogIsolering.test.mjs src/spel/b6-1.test.ts src/spel/b6-2.test.ts src/spel/b6-3.test.ts",
-     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
-     "check:pages-output": "node scripts/check-pages-output.mjs",
-     "check:struktur": "node scripts/check-spel-struktur.mjs",
 diff --git a/src/spel/Spel.tsx b/src/spel/Spel.tsx
 index 7f4351b..893bfbf 100644
 --- a/src/spel/Spel.tsx
@@ -146,7 +133,7 @@ index 35b5b27..42beebb 100644
          <group key={`${x}${z}`} position={[x, 0, z]}>
            <mesh rotation={[-Math.PI / 2, 0, x]}>
 diff --git a/src/spel/ang/delat.ts b/src/spel/ang/delat.ts
-index 19fc160..d544abb 100644
+index 19fc160..1729d25 100644
 --- a/src/spel/ang/delat.ts
 +++ b/src/spel/ang/delat.ts
 @@ -3,7 +3,7 @@ import type { ThreeEvent } from "@react-three/fiber";
@@ -154,7 +141,7 @@ index 19fc160..d544abb 100644
  import texterJson from "../../../data/texter-gard.json" with { type: "json" };
  import type { Sparad } from "../brygga.ts";
 -import { artFarg, BAK_PLATSER, flyger, simmar, storlekKlass, vikt } from "../entiteter.ts";
-+import { artFarg, bakPlatser, flyger, simmar, storlekKlass, vikt } from "../entiteter.ts";
++import { artFarg, bakPlatser, flyger, fotKant, simmar, storlekKlass, vikt } from "../entiteter.ts";
  import type { Plats } from "../platser.ts";
  import { placeraPaPlats } from "../platsYta.ts";
  
@@ -186,7 +173,7 @@ index 19fc160..d544abb 100644
          return [x, z] as [number, number];
        }),
        marka.map((d) => simmare(d)),
-+      marka.map((d) => storlekKlass(d.kropp)?.kant), // B6.3: stora saker håller sin halva bredd från vattnet
++      marka.map((d) => fotKant(d.kropp, d.skala)), // B6.3: kroppen (halva bredden ur bbox + vickning + 0,15) hålls från vattnet
      );
      karta = new Map(marka.map((d, i) => [d.uid, ut[i]!]));
      if (platsCache.size > 30) platsCache.clear();
@@ -297,16 +284,16 @@ index 9c46f26..8eeeb4d 100644
        <SagaPenna />
 diff --git a/src/spel/b6-3.test.ts b/src/spel/b6-3.test.ts
 new file mode 100644
-index 0000000..b1cfe83
+index 0000000..6e61a9a
 --- /dev/null
 +++ b/src/spel/b6-3.test.ts
-@@ -0,0 +1,68 @@
+@@ -0,0 +1,88 @@
 +// B6.3: dammens vatten över markens svaj (G), uppmaningens längd (H), ängens dammzon (I), stora saker spridda bak (J).
 +import assert from "node:assert/strict";
 +import { test } from "node:test";
 +import { DAMM, SVAJ_AMP } from "./ang/damm.ts";
 +import { djurPlats } from "./ang/delat.ts";
-+import { BAK_ZON, bakPlatser, storlekKlass } from "./entiteter.ts";
++import { BAK_ZON, bakPlatser, FOT_MARGINAL, fotKant, storlekKlass, VICKNING } from "./entiteter.ts";
 +import { platsMed, START_PLATS } from "./platser.ts";
 +import { iVatten, tillPlats } from "./platsYta.ts";
 +import { KAN_INTE_RITA_MS } from "../tolk/aterkoppling.ts";
@@ -369,11 +356,39 @@ index 0000000..b1cfe83
 +  const alla = [...uids.map((u, i) => spar(u, ["bil", "buss", "traktor", "slott", "raket", "tag", "gravmaskin"][i]!)), spar("k", "katt"), spar("h", "hund")];
 +  for (const d of alla as { uid: string; kropp: string }[]) if (storlekKlass(d.kropp)) assert.ok(djurPlats(d as never, alla, ANG)[2] < djurPlats(alla[7]!, alla, ANG)[2] - 0.5);
 +});
++
++test("B6.3 (I, Doodle 07:33): kroppen – halva bredden ur bbox + vickning + 0,15 – hålls från dammen, inte bara mitten", () => {
++  assert.ok(fotKant("ko") >= 0.6 + VICKNING + FOT_MARGINAL - 1e-9, `ko ${fotKant("ko")}`);
++  assert.ok(fotKant("trumset") > fotKant("mikroskop"), "bredare sak, större marginal");
++  assert.ok(fotKant("ko", 2) > fotKant("ko"), "barnets storleksord räknas");
++  const lag = [
++    ["ko", "gris", "bebis", "katt", "pojke", "fisk", "slott", "buss", "kaffekanna", "vaggklocka"],
++    ["mikroskop", "trumset", "jordglob", "agg", "vaggklocka", "ko", "fisk", "hund", "buss", "kaffekanna"],
++    ["katt", "elefant", "ko", "trumset", "sang", "bord", "mikroskop", "jordglob", "traktor", "hus"],
++  ];
++  for (const [n, kroppar] of lag.entries()) {
++    const alla = kroppar.map((k, i) => spar(`f${n}-${i}`, k));
++    for (const d of alla as { uid: string; kropp: string }[]) {
++      if (d.kropp === "fisk") continue;
++      const [x, , z] = djurPlats(d as never, alla, ANG);
++      const kropp = Math.hypot(x - DAMM.x, z - DAMM.z) - DAMM.r - (fotKant(d.kropp) - FOT_MARGINAL);
++      assert.ok(kropp >= 0.1, `lag ${n}: ${d.kropp} kroppens kant ${kropp.toFixed(2)} från vattnet (vickning inräknad)`);
++    }
++  }
++});
 diff --git a/src/spel/entiteter.ts b/src/spel/entiteter.ts
-index eaadf6c..ebd2f82 100644
+index eaadf6c..7c01f00 100644
 --- a/src/spel/entiteter.ts
 +++ b/src/spel/entiteter.ts
-@@ -77,9 +77,49 @@ export function modellUrl(kropp: string): string | null {
+@@ -3,6 +3,7 @@
+ import entiteterJson from "../../data/entiteter.json" with { type: "json" };
+ import tillgangarJson from "../../data/tillgangar.json" with { type: "json" };
+ import storlekJson from "../../data/storlek.json" with { type: "json" };
++import fotJson from "../../data/fotavtryck.json" with { type: "json" };
+ 
+ export type Typ = "djur" | "tillbehor" | "byggnad" | "foremal" | "natur";
+ export type Rorelse = "land" | "flyg" | "sim" | "svavar";
+@@ -77,9 +78,49 @@ export function modellUrl(kropp: string): string | null {
    return (m && TILLGANGAR[m]?.fil) || null;
  }
  
@@ -426,6 +441,26 @@ index eaadf6c..ebd2f82 100644
  
  /** B6.1 (E): storleksklassen för en sak ur data/storlek.json (via kategorin). Djur har aldrig någon klass. */
  export function storlekKlass(kropp: string): StorlekKlass | null {
+@@ -104,6 +145,19 @@ export function takSkala(kropp: string, skala: number): number {
+   return Math.min(skala, k.tak / Math.max(0.001, malhojd(kropp)));
+ }
+ 
++const FOT = (fotJson as { halvbredd: Record<string, number> }).halvbredd;
++/** B6.3: djuren vickar så här långt från sin plats (djur.tsx: x ±0,22, z ±0,16, hypot ≈ 0,27), saker står still. */
++export const VICKNING = 0.27;
++/** B6.3: fri strand mellan kroppens kant och vattnet (Doodle: halva bredden + 0,15, inte bara mitten). */
++export const FOT_MARGINAL = 0.15;
++
++/** B6.3: hur långt från vattnet mitten måste stå: halva bredden ur modellens bbox (data/fotavtryck.json, barnets
++ *  storleksord inräknat; saknas raden 0,5 × målhöjden), minst klassens kant, plus vickningen för djur och marginalen. */
++export function fotKant(kropp: string, skala = 1): number {
++  const halv = (FOT[kropp] ?? 0.5 * malhojd(kropp)) * takSkala(kropp, skala || 1);
++  return Math.max(halv, storlekKlass(kropp)?.kant ?? 0) + (arSak(kropp) ? 0 : VICKNING) + FOT_MARGINAL;
++}
++
+ /** R3G: allt med modell som inte är ett djur (föremål, natur, byggnad, mat, fordon, kläder) står still på ängen. */
+ export function arSak(kropp: string): boolean {
+   const e = ENTITETER[kropp];
 diff --git a/src/spel/kenneyNatur.tsx b/src/spel/kenneyNatur.tsx
 index 3a41291..a2fdfca 100644
 --- a/src/spel/kenneyNatur.tsx
@@ -453,7 +488,7 @@ index 3a41291..a2fdfca 100644
        <Stall url={URL.staket} platser={STAKET} />
        <Stall url={URL.grind} platser={GRIND} />
 diff --git a/src/spel/platsYta.ts b/src/spel/platsYta.ts
-index 0be3b41..bb10950 100644
+index 0be3b41..7183fa4 100644
 --- a/src/spel/platsYta.ts
 +++ b/src/spel/platsYta.ts
 @@ -2,7 +2,7 @@
@@ -465,16 +500,24 @@ index 0be3b41..bb10950 100644
  import { PLATSDATA, type Plats, type Zon } from "./platser.ts";
  
  export const YTA_SKALA = 1.45;
-@@ -43,7 +43,7 @@ export function paLand(p: Plats, x: number, y: number): boolean {
+@@ -43,10 +43,13 @@ export function paLand(p: Plats, x: number, y: number): boolean {
  }
  
  /** Land för en hel kropp: mitten på land och inget av kroppens kantprov (±marginal) i vatten. */
 -export function torrKropp(p: Plats, wx: number, wz: number, m = KANT_MARGINAL): boolean {
 +export function torrKropp(p: Plats, wx: number, wz: number, m = p.kant_marginal ?? KANT_MARGINAL): boolean {
    if (!paLand(p, ...tillPlats(wx, wz))) return false;
-   for (const [dx, dz] of [[m, 0], [-m, 0], [0, m], [0, -m], [m * 0.7, m * 0.7], [-m * 0.7, m * 0.7], [m * 0.7, -m * 0.7], [-m * 0.7, -m * 0.7]] as const)
-     if (iVatten(p, ...tillPlats(wx + dx, wz + dz))) return false;
-@@ -80,13 +80,15 @@ function narmast(p: Plats, onskad: [number, number], upptagna: [number, number][
+-  for (const [dx, dz] of [[m, 0], [-m, 0], [0, m], [0, -m], [m * 0.7, m * 0.7], [-m * 0.7, m * 0.7], [m * 0.7, -m * 0.7], [-m * 0.7, -m * 0.7]] as const)
+-    if (iVatten(p, ...tillPlats(wx + dx, wz + dz))) return false;
++  // B6.3: 16 riktningar på avståndet m och en ring på m/2 (med 8 kom vattnet närmare än m mellan riktningarna)
++  for (let i = 0; i < 16; i++) {
++    const v = (i * Math.PI) / 8;
++    for (const r of [m, m / 2]) if (iVatten(p, ...tillPlats(wx + Math.cos(v) * r, wz + Math.sin(v) * r))) return false;
++  }
+   return true;
+ }
+ 
+@@ -80,13 +83,15 @@ function narmast(p: Plats, onskad: [number, number], upptagna: [number, number][
   * Flytta de önskade världspunkterna (i ordning) så att landdjur står på land och simmare i vatten.
   * Punkter som redan är tillåtna och fria behålls exakt. `sim[i]` = punkt i är en simmare.
   */
