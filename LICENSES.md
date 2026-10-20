@@ -87,23 +87,24 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | trollpennan-egna-m16 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 14 |
 | trollpennan-folk-m17 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 34 |
 | trollpennan-fordon-m18 | Kenney (watercraft-kit); tillägg: Trollpennan | CC0-1.0 | https://kenney.nl/assets/watercraft-kit | 31 |
-| trollpennan-hem-lek-m28 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 26 |
+| trollpennan-hem-lek-m28 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 24 |
 | trollpennan-hem-m20b | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 20 |
-| trollpennan-klader-hem-m27 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 29 |
+| trollpennan-klader-hem-m27 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 26 |
 | trollpennan-klader-m21 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 22 |
 | trollpennan-kok-m20 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 21 |
-| trollpennan-mat-hus-m26 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 28 |
+| trollpennan-mat-hus-m26 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 25 |
 | trollpennan-mfix | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 21 |
 | trollpennan-mfix2 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 8 |
 | trollpennan-mfix3 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 11 |
 | trollpennan-mfix4 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 7 |
 | trollpennan-mfix5 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 3 |
-| trollpennan-mfix6 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 11 |
+| trollpennan-mfix6 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 10 |
+| trollpennan-mfix7 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 12 |
 | trollpennan-musik-m23 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 25 |
 | trollpennan-saga-m19 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 8 |
 | trollpennan-skola-m22 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 28 |
-| trollpennan-sport-m24 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 33 |
-| trollpennan-tradgard-m25 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 30 |
+| trollpennan-sport-m24 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 32 |
+| trollpennan-tradgard-m25 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 28 |
 
 ## Alla modellfiler
 
