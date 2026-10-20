@@ -16,3 +16,6 @@ Doodle: `git checkout main && git pull && git checkout -b runda-b65-kod && bash 
 | F | eslint-varningar 82 → 123, alla i rundor/ | Rundornas prov- och dataskript lintades som produktkod. | eslint.config.mjs: `rundor/**` i ignores. kor.sh lintar src/scripts/verification med --max-warnings 0. | kor.sh: varningar i utskriften |
 
 Kvar (inte i B6.5): `i_kroppen` i attribut.json listar ränder, prickar, vingar, fenor, fartlinjer och studs. De ritas av procedurkroppen eller rörelsen; om de syns på GLB-modeller är inte kontrollerat. Kvasten som inte syns, med ett prov för alla tillgångar, är B6.6.
+
+## Verifierat
+I en ren kopia av main 544adcb med B6.3 och B6.4 inlagda (som Doodle kör dem i ordning): kor.sh EXIT=0. test:product 205, typecheck och typecheck:pages 0, eslint . 0 fel, check:struktur grön, build:pages ok. b65-prov 14 steg; regressionen b63/b64/b62/b61/r8-2/r9k gav exit 0 och 0 sidfel. Bilder: `b65-A-*.png`, `b65-B-sjon-simmare.png`, `b65-C-matbord-bak.png`, `b65-kontaktark.png`.
