@@ -18,6 +18,7 @@ import { bestamdAv, frasForByggOrd, kanEtikett, kortIkon } from "./hjalp.ts";
 import { FIR, FLIKAR, TANGENTBORD, TEXTER } from "./spelData.ts";
 import type { Banner, Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
 import { GavaStallKnapp } from "./Stall.tsx";
+import { BokSvar } from "./BokSvar.tsx";
 
 type BokSkarmProps = {
   stangBok: () => void;
@@ -161,33 +162,6 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
                 </details>
               </div>
             ) : null}
-            {forslag ? (
-              <div className="forslag" data-testid="forslag">
-                <p>{forslag.text}</p>
-                <div className="rad-kort">
-                  {forslag.forslag.map((f) => (
-                    <button key={f.id} type="button" className="kort" data-testid={`forslag-${f.id}`} onClick={() => valjForslag(f)}>
-                      {f.visa}
-                    </button>
-                  ))}
-                  <button type="button" className="nej" data-testid="nej" onClick={nejForslag}>
-                    Nej
-                  </button>
-                </div>
-              </div>
-            ) : null}
-            {behover && !forslag ? (
-              <div className="behover" data-testid="behover">
-                <p>{behover.text}</p>
-                <div className="rad-kort">
-                  {behover.djur.map((d) => (
-                    <button key={d.id} type="button" className="kort" data-testid={`prova-${d.id}`} onClick={() => utfor(d.id, { hand: false })}>
-                      {d.visa}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : null}
             {lage === "kort" && !forslag && !behover ? (
               <>
                 <p className="forslag-etikett" data-testid="forslag-etikett">{hemligt.forslag_etikett}</p>
@@ -240,7 +214,17 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
               </>
             ) : null}
             </div>
-            <div className="remsa" data-testid="remsa">
+            <BokSvar forslag={forslag} valjForslag={valjForslag} nejForslag={nejForslag} behover={behover} utfor={utfor} />
+            <div
+              className="remsa"
+              data-testid="remsa"
+              role="textbox"
+              aria-label="Skrivrutan"
+              onClick={() => {
+                // P1: ett tryck på rutan öppnar tangentbordet (förut hände ingenting)
+                if (lage !== "skriv") setLage("skriv");
+              }}
+            >
               {text ? (
                 text
               ) : (

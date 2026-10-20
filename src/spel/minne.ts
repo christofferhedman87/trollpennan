@@ -22,6 +22,8 @@ export type OnskaSpar = {
 export type Data = {
   version: 2;
   startLage: Lage;
+  /** P1: true när en vuxen har valt startläge i föräldravyn. Annars gäller skrivläget (äldre sparningar hade "kort" som standard). */
+  startLageVald: boolean;
   funna: Record<string, { guld: boolean }>;
   kortGang: Record<string, number>;
   onskelista: string[];
@@ -130,7 +132,8 @@ type Minne = Data & {
 function tom(): Data {
   return {
     version: 2,
-    startLage: "kort",
+    startLage: "skriv",
+    startLageVald: false,
     funna: {},
     kortGang: {},
     onskelista: [],
@@ -207,6 +210,7 @@ export function franSparning(raw: unknown): Data {
       ...(p as Partial<Data>),
       version: 2,
       byggSidor: byggSidor.length ? byggSidor : ["start"],
+      startLage: p.startLageVald === true && p.startLage === "kort" ? "kort" : "skriv",
       ljudPa: p.ljudPa !== false,
       stjarnor: typeof p.stjarnor === "number" ? p.stjarnor : 0,
       oppna: Array.isArray(p.oppna) ? (p.oppna as string[]) : [],
@@ -379,7 +383,7 @@ export const useMinne = create<Minne>((set, get) => ({
     set({ formler: [...get().formler, { text: spec.formel, spec }].slice(-30) });
   },
   anvandKort: (id) => set({ kortGang: { ...get().kortGang, [id]: (get().kortGang[id] ?? 0) + 1 } }),
-  sattStart: (lage) => set({ startLage: lage }),
+  sattStart: (lage) => set({ startLage: lage, startLageVald: true }),
   aterstall: () => {
     tillatSkrivning();
     brygga.tom();
