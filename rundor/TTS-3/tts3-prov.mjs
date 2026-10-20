@@ -65,11 +65,15 @@ async function sida(spar, { webdriver = false } = {}) {
     };
     for (const t of ["touchstart", "pointerdown"]) document.addEventListener(t, () => { const n = t0(); if (window.__tryck.at(-1) !== n) window.__tryck.push(n); }, { capture: true });
     const syns = new Map();
-    setInterval(() => {
+    // TTS-3-fix: bubblorna registreras med en MutationObserver (körs direkt efter Reacts DOM-ändring, före effekten som
+    // köar rösten) – en 40 ms-poll kom under last efter rösten, och då hittades inte bannerns röst (Doodles varv 2).
+    const scan = () => {
       const nu = new Set([...document.querySelectorAll("[data-testid=puff]")].map((e) => e.textContent?.trim() ?? ""));
       for (const t of nu) if (!syns.has(t)) syns.set(t, t0());
       for (const [t, s] of syns) if (!nu.has(t)) { window.__bann.push({ text: t, start: s, slut: t0() }); syns.delete(t); }
-    }, 40);
+    };
+    document.addEventListener("DOMContentLoaded", () => new MutationObserver(scan).observe(document.body, { childList: true, subtree: true, characterData: true }));
+    setInterval(scan, 40);
   }, webdriver);
   if (spar) await ctx.addInitScript((s) => { if (!sessionStorage.getItem("f")) { localStorage.setItem("trollpennan-v2", JSON.stringify(s)); sessionStorage.setItem("f", "1"); } }, spar);
   const p = await ctx.newPage();
@@ -100,7 +104,7 @@ function rostFor(b, ljud) {
   if (!plan) return null;
   const filer = plan.delar.filter((d) => "f" in d).map((d) => d.f);
   if (!filer.length) return null;
-  const i = ljud.findIndex((x) => x.f === filer[0] && x.anrop >= b.start - 300);
+  const i = ljud.findIndex((x) => x.f === filer[0] && x.anrop >= b.start - 1000);
   if (i < 0) return { filer, start: null, slut: null };
   const delar = [ljud[i]];
   for (let j = i + 1; j < ljud.length && delar.length < filer.length; j++) if (ljud[j].f === filer[delar.length]) delar.push(ljud[j]);
@@ -136,7 +140,9 @@ for (let v = 1; v <= VARV; v++) {
   const klipt = rad.filter((x) => x.rost_start_efter_banner_ms === null || x.marginal_efter_rost_ms === null || x.marginal_efter_rost_ms < 1500 - 250 || x.rost_start_efter_banner_ms > x.visad_ms);
   const klartRad = u?.klart_bengtsson ?? u?.klart ?? "";
   kolla(`varv ${v} (${id}, '${fras}'): bannrar med röst finns, bland dem 'Uppdrag klart!' och Bengtssons klart-replik`, par.some((x) => x.text === "Uppdrag klart!") && (!klartRad || par.some((x) => x.text === klartRad.trim())), { bannrar: L.bann.map((b) => b.text), klartRad });
-  kolla(`varv ${v}: varje banner står kvar tills dess röst är klar + 1,5 s och rösten börjar medan bannern syns`, par.length > 0 && klipt.length === 0, { klipt, alla: rad });
+  const kring = klipt.length ? par.filter((x) => klipt.some((k) => k.text === x.text.slice(0, 50))).map((x) => ({ text: x.text, b: [x.b.start, x.b.slut], filer: x.rost.filer, ljud: L.ljud.filter((l) => l.anrop >= x.b.start - 4000 && l.anrop <= x.b.slut) })) : [];
+  if (kring.length && bilder) fs.writeFileSync(path.join(bilder, `tts3-klipt-varv${v}.json`), JSON.stringify({ kring, ljud: L.ljud, bann: L.bann }, null, 1));
+  kolla(`varv ${v}: varje banner står kvar tills dess röst är klar + 1,5 s och rösten börjar medan bannern syns`, par.length > 0 && klipt.length === 0, { kring, klipt, alla: rad });
   if (v === 1) console.log(JSON.stringify({ tidslinje: rad }));
   await ctx.close();
 }
