@@ -132,7 +132,7 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 9. **TTS** gratis svensk röst — efter B6; eget block
 
 10. **R8-3 grafikblocket** (Christoffer 2026-10-20: nästa block, direkt efter modellerna; `rundor/R8-3/RITNING.md`). Ordning: B6.3 → B6.5 → MFIX6 → R8-3a → R8-3b → R8-3c → R8-3d → R8-3e, en gren och PR per steg:
-    - **R8-3a** färg från färgord på alla modeller (R9C): hela kroppen, ögon/hud/detaljer behålls, utan färgord egna färger (B6.4) — **skript** `git checkout main && git pull && git checkout -b runda-r83a-kod && bash rundor/R8-3a-farg/kor.sh` (`rundor/R8-3a-farg/PLAN.md`; patch + kor.sh i nästa underlags-PR)
+    - **R8-3a** färg från färgord på alla modeller (R9C): hela kroppen, ögon/hud/detaljer behålls, utan färgord egna färger (B6.4) — **skript** `git checkout main && git pull && git checkout -b runda-r83a-kod && bash rundor/R8-3a-farg/kor.sh` (`rundor/R8-3a-farg/PLAN.md`, verifierad EXIT=0 på b1d2e79 + B6.3 + B6.5)
     - **R8-3b** FPS-vakt `hog`→`lag` (p95 > 40 ms i 3 s) — skript, ritning klar, patch skrivs efter R8-3a
     - **R8-3c** kontur (inverterat skal) + enhetliga material på GLB — skript; Christoffer väljer tjocklek ur två bilder
     - **R8-3d** vind i träden, färgjitter, vatten med vågor — skript

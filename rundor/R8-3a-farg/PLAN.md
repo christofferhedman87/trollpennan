@@ -49,7 +49,7 @@ Exit 0 → push, PR, squash-merge. Ingen data, inga modeller, ingen LICENSES.md 
 ## Verifierat (2026-10-20)
 - **main d14ebd6 (M28, 1 154 modeller) + B6.3 + B6.5**, ren kopia: kor.sh med `R83_ALLA=1`. r83a-alla gav **1 106 av 1 106 modeller färgade och 0 sidfel**, och r83a-prov 11/11. b64/b62/b65/r9k gick grönt. b63-prov steg I föll en gång (kon 0,08 från dammkanten mot gränsen 0,1). Steget faller också utan R8-3a, 1 av 4 körningar i parallell last, så det är vandring och inte färg. Därför har regressionen nu ett omförsök.
 - **main 12284c9 (MFIX6–8) + B6.3 + B6.5**: kor.sh EXIT=0. test:product 214, typecheck 0, eslint 0, struktur grön, build ok, r83a-prov 11/11, r83a-alla 158/158 och regressionen grön.
-- **main b1d2e79 (ny B6.3: bbox-placering, fotavtryck) + B6.3 + B6.5**: se slutraden i PR:en.
+- **main b1d2e79 (ny B6.3: bbox-placering, fotavtryck) + B6.3 + B6.5**: kor.sh EXIT=0. test:product 216, typecheck 0, eslint 0, struktur grön, build ok, r83a-prov 11/11, r83a-alla 158/158, b64/b62/b63 (I1–I6)/b65/r9k gröna.
 - Patchen går att lägga på main både med och utan B6.3/B6.5 (`git apply --check` ok). package.json ändras med node, inte i patchen.
 
 ## Svagheter och kvar
