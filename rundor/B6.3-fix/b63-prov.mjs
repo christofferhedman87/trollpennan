@@ -26,8 +26,11 @@ const steg = [];
 const kolla = (namn, ok, info = {}) => { steg.push({ namn, ok: !!ok, ...info }); console.error(`${ok ? "ok  " : "FEL "} ${namn}`); };
 const fel = [];
 const PLATSER = ["skogen", "sjon", "grottan"];
+// TTS-3-fix2: varje sida stängs när blocket är klart, också när det kraschar (förut läckte en sida som fortsatte rendera)
+const oppna = new Set();
 async function sida(spar) {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, deviceScaleFactor: 1, locale: "sv-SE" });
+  oppna.add(ctx);
   await ctx.addInitScript((s) => {
     if (!sessionStorage.getItem("f")) { localStorage.setItem("trollpennan-v2", JSON.stringify(s)); sessionStorage.setItem("f", "1"); }
   }, { version: 2, introSedd: true, dragit: true, ang: [], garden: [], stjarnor: 0, oppnadePlatser: PLATSER, seddaIntro: [...PLATSER, "garden", "gard"], platsSkapelser: {}, ...spar });
@@ -40,7 +43,27 @@ async function sida(spar) {
   return { ctx, p };
 }
 const DOODLE_0826 = ["ett bowlingklot", "ett akvarium", "en spjälsäng", "ett påskägg", "en vattenpistol", "en filt", "en fiol", "ett mikroskop", "ett trumset", "en ko"];
-async function blok(id, fn) { if (!bara.includes(id[0])) return; try { await fn(); } catch (e) { kolla(`block ${id} kraschade`, false, { fel: String(e).split("\n")[0] }); } }
+async function blok(id, fn) {
+  if (!bara.includes(id[0])) return;
+  try { await fn(); } catch (e) { kolla(`block ${id} kraschade`, false, { fel: String(e).split("\n")[0], diagnos: e.diagnos }); }
+  finally { for (const c of oppna) await c.close().catch(() => undefined); oppna.clear(); }
+}
+/** TTS-3-fix2: skärmbild med 45 s (som bild()) och diagnos om den ändå inte kommer: svarar sidans huvudtråd, är den synlig,
+ *  hur många bildrutor (requestAnimationFrame) hinns på 1 s. Doodle 21:40/22:01: page.screenshot 20 s vid D2 frö 3. */
+async function skarm(p) {
+  const t0 = Date.now();
+  try {
+    return await p.screenshot({ timeout: 45000 });
+  } catch (e) {
+    const diag = await Promise.race([
+      p.evaluate(() => new Promise((r) => { let n = 0; const s = performance.now(); const f = () => (++n, performance.now() - s < 1000 ? requestAnimationFrame(f) : r({ svarar: true, synlig: document.visibilityState, raf_per_s: n, ljud: [...document.querySelectorAll("audio")].length })); requestAnimationFrame(f); setTimeout(() => r({ svarar: true, synlig: document.visibilityState, raf_per_s: n, raf_stannat: true }), 3000); })),
+      new Promise((r) => setTimeout(() => r({ svarar: false }), 8000)),
+    ]).catch((x) => ({ fel: String(x).slice(0, 120) }));
+    e.diagnos = { efter_ms: Date.now() - t0, ...diag };
+    console.error(`skärmbilden kom inte: ${JSON.stringify(e.diagnos)}`);
+    throw e;
+  }
+}
 const bild = async (p, n) => bilder && p.screenshot({ path: path.join(bilder, n), animations: "disabled", timeout: 45000 }).catch(() => undefined);
 const synlig = (p, s) => p.locator(s).first().isVisible().catch(() => false);
 async function stangBok(p) { if (await synlig(p, "[data-testid=stang-bok]")) { await p.click("[data-testid=stang-bok]"); await p.waitForTimeout(400); } }
@@ -49,7 +72,7 @@ async function stangBok(p) { if (await synlig(p, "[data-testid=stang-bok]")) { a
 /** Hur många av dammens fem provpunkter (window.__tred.damm) som är vattenblå i en skärmbild. */
 async function blaPunkter(p) {
   const pts = await p.evaluate(() => window.__tred?.damm ?? []);
-  const png = (await p.screenshot()).toString("base64");
+  const png = (await skarm(p)).toString("base64");
   return p.evaluate(async ({ png, pts }) => {
     const im = new Image();
     im.src = `data:image/png;base64,${png}`;
@@ -121,11 +144,25 @@ await blok("D", async () => {
   for (const [namn, lista] of [["D2", DOODLE_IDS], ["D3", STORST]])
     for (const fro of [1, 2, 3])
       await blok(`${namn}`, async () => {
-        const { ctx, p } = await sida({ ang: lista.map((k, i) => sparad(k, `${namn.toLowerCase()}-${fro}-${i}-${k}`, i)) });
+        // TTS-3-fix2: kommer en skärmbild inte inom 45 s körs fröet om en gång i en ny sida (diagnosen skrivs ut och sparas)
+        let { ctx, p } = await sida({ ang: lista.map((k, i) => sparad(k, `${namn.toLowerCase()}-${fro}-${i}-${k}`, i)) });
+        const kor = async () => {
         await stangBok(p);
         await p.waitForLoadState("networkidle", { timeout: 20000 }).catch(() => undefined);
         await p.waitForTimeout(2500);
-        const full = await dammSerie(p);
+        return dammSerie(p);
+        };
+        let full;
+        try {
+          full = await kor();
+        } catch (e) {
+          if (!e.diagnos) throw e;
+          kolla(`${namn} frö ${fro}: skärmbilden hängde – körs om en gång i en ny sida (info)`, true, { diagnos: e.diagnos });
+          await ctx.close().catch(() => undefined);
+          oppna.delete(ctx);
+          ({ ctx, p } = await sida({ ang: lista.map((k, i) => sparad(k, `${namn.toLowerCase()}-${fro}-${i}-${k}`, i)) }));
+          full = await kor();
+        }
         const stabil = full.perPunkt.every((n) => n === 0 || n === 24);
         const etikett = namn === "D2" ? "Doodles 10 (spjälsäng, kon …)" : "de 10 största/högsta";
         kolla(`${namn} frö ${fro} ${etikett}: ingen punkt på vattnet blinkar bort`, full.serie.length === 24 && stabil, { lista, per_punkt: full.perPunkt.join(","), per_bild: full.serie.map((x) => x.n).join("") });

@@ -160,3 +160,33 @@ Med beslutet hamnar en bannerröst aldrig i kön bakom en guiderad. Därför fin
 
 **Resultat:** tre fulla tts3-prov i rad under last (6 extra CPU-snurror plus P3:s körning, lastsnitt 13–20) var alla
 gröna, 10/10 steg vardera.
+
+## TTS-3-fix2 (Doodles försök 2, main 8f52375: b63-prov D2 frö 3 `page.screenshot: Timeout 20000ms`, två gånger)
+
+**Gick inte att återskapa.** b63-prov blev grönt i sex körningar på samma maskin:
+- `--bara D` ensamt mot main 8f52375 utan patch;
+- `--bara D` ensamt med tts3.patch;
+- med patchen under last 22, med 8 extra CPU-snurror och P3:s kor.sh samtidigt;
+- b63, b62 och b61 parallellt med patchen, som i kor.sh, medan P3 körde;
+- en mätning av skärmbildstiden för D2 frö 1 och 3, main mot patch. Medianen var 1,7–1,9 s och maxvärdet 2,2–2,7 s, utan
+  någon skillnad mellan dem och utan att frö 3 var tyngre.
+
+**Det som talar emot en hängning i patchen:**
+- D3 gick igenom direkt efter kraschen i samma webbläsare.
+- `speechSynthesis.cancel()` (som uttoningen anropar) tar 0,1 ms i headless.
+- Patchen innehåller ingen requestAnimationFrame-loop, och ingen WebAudio.
+- Uttoningen använder setTimeout och slutar efter 150 ms.
+
+**Ändå:** någon skärmbild som tagit slut på tiden finns inte i loggarna före Doodles försök 2. Orsaken är alltså inte
+fastställd.
+
+**Lagning i provet (main-material, inte patchen):**
+- Skärmbilden har 45 s, som `bild()`.
+- Kommer den inte, skrivs en diagnos ut och sparas: svarar huvudtråden, är sidan synlig, hur många requestAnimationFrame
+  per sekund. Fröet körs då om en gång i en ny sida.
+- Sidor stängs nu också när ett block kraschar. Förut läckte sidan och fortsatte rendera med swiftshader resten av
+  körningen.
+- Händer det igen visar diagnosen om sidan hängde (huvudtråden svarar inte) eller bara var långsam.
+
+**Uttal "ekorre":** inget byte, se `/workspace/uttal-val/ekorre/` (förslag). Röstgenereringen är stoppad tills Christoffer
+godkänner.
