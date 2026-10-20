@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 680 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 682 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -18,8 +18,8 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | (för hand) Kenney – Nature Kit | Kenney – Nature Kit | CC0-1.0 | https://kenney.nl/assets/nature-kit | 1 |
 | (för hand) Quaternius – Dragon (Ultimate Monsters) | Quaternius – Dragon (Ultimate Monsters) | CC0-1.0 | https://poly.pizza/m/3rUm1cN3yp | 1 |
 | (för hand) Quaternius – Horse (Cube World Kit) | Quaternius – Horse (Cube World Kit) | CC0-1.0 | https://poly.pizza/m/D3hAeqeDBE | 1 |
-| b5a-sjo-cc0 | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 6 |
-| gobkit-cc0-2 | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 36 |
+| b5a-sjo-cc0 | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 3 |
+| gobkit-cc0-2 | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 35 |
 | gobkit-cc0-djur-och-natur | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 59 |
 | kaykit-block-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/block-bits | 1 |
 | kaykit-city-builder-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/city-builder-bits | 6 |
@@ -35,9 +35,9 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-city-kit-suburban | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-suburban | 2 |
 | kenney-cube-pets | Kenney | CC0-1.0 | https://kenney.nl/assets/cube-pets | 13 |
 | kenney-fantasy-town-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/fantasy-town-kit | 10 |
-| kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 69 |
-| kenney-food-kit-2 | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 18 |
-| kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 46 |
+| kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 68 |
+| kenney-food-kit-2 | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 15 |
+| kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 45 |
 | kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 6 |
 | kenney-holiday-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/holiday-kit | 15 |
 | kenney-mini-dungeon | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-dungeon | 11 |
@@ -52,10 +52,9 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-toy-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/toy-car-kit | 4 |
 | kenney-train-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/train-kit | 12 |
 | oga-cc0 | Teh_Bucket | CC0-1.0 | https://opengameart.org/content/hats-clothing-props | 7 |
-| polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 38 |
+| polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 37 |
 | polypizza-cc0-2 | Quaternius | CC0-1.0 | https://poly.pizza/m/3aQgc75sUR | 16 |
-| polypizza-cc0-3 | Quaternius | CC0-1.0 | https://poly.pizza/m/9kF7eTDbhO | 7 |
-| polypizza-cc0-4 | CreativeTrio | CC0-1.0 | https://poly.pizza/m/oH3dEdlDpB | 13 |
+| polypizza-cc0-4 | CreativeTrio | CC0-1.0 | https://poly.pizza/m/oH3dEdlDpB | 12 |
 | quaternius-animated-dinosaurs | Quaternius | CC0-1.0 | https://quaternius.com/packs/animateddinosaurs.html | 3 |
 | quaternius-cute-fish | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutefish.html | 13 |
 | quaternius-cute-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutemonsters.html | 6 |
@@ -68,6 +67,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | quaternius-ultimate-animated-animals | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimateanimatedanimals.html | 7 |
 | quaternius-ultimate-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimatemonsters.html | 11 |
 | trollpennan-egna-m14 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 3 |
+| trollpennan-mfix | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 20 |
 
 ## Alla modellfiler
 
@@ -154,7 +154,6 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kopp | /models/bulk/kopp.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | glas | /models/bulk/glas.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | mugg | /models/bulk/mugg.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
-| nallebjorn | /models/bulk/nallebjorn.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
 | tunna | /models/bulk/tunna.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-dungeon |
 | mynt | /models/bulk/mynt.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-dungeon |
 | nyckel | /models/bulk/nyckel.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-dungeon |
@@ -651,9 +650,6 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | tra | /models/bulk/tra.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/survival-kit |
 | plankor | /models/bulk/plankor.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/survival-kit |
 | utter | /models/bulk/utter.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
-| svan | /models/bulk/svan.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
-| abborre | /models/bulk/abborre.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/BEcU9rjiAq |
-| gadda | /models/bulk/gadda.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/XWl86YFtpF |
 | krafta | /models/bulk/krafta.glb | CC0-1.0 | Trollpennan (egen modell, M10/bygg-inkorg.mjs) | https://github.com/christofferhedman87/trollpennan/tree/main/rundor/R3F-modellserie/M10 |
 | vattensalamander | /models/bulk/vattensalamander.glb | CC0-1.0 | Trollpennan (egen modell, M10/bygg-inkorg.mjs) | https://github.com/christofferhedman87/trollpennan/tree/main/rundor/R3F-modellserie/M10 |
 | back | /models/bulk/back.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/nature-kit |
@@ -661,7 +657,6 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | vagskylt | /models/bulk/vagskylt.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/nature-kit |
 | dingo | /models/bulk/dingo.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
 | mullvad | /models/bulk/mullvad.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
-| narval | /models/bulk/narval.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
 | vaktel | /models/bulk/vaktel.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
 | skorpion | /models/bulk/skorpion.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
 | mas | /models/bulk/mas.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
@@ -695,15 +690,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | skoldbagge | /models/bulk/skoldbagge.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
 | hornstrit | /models/bulk/hornstrit.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
 | skraddare | /models/bulk/skraddare.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
-| mask | /models/bulk/mask.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/KiNAaBa4cK |
-| mamma | /models/bulk/mamma.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/9kF7eTDbhO |
-| pappa | /models/bulk/pappa.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/66kQ4dBBC7 |
-| larare | /models/bulk/larare.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/zMyPlQXBzq |
-| pojke | /models/bulk/pojke.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/DgOCW9ZCRJ |
 | kung | /models/bulk/kung.glb | CC0-1.0 | Kenney; krona: Quaternius (https://poly.pizza/m/i0PZVuVlYv, CC0) | https://kenney.nl/assets/blocky-characters |
-| cowboy | /models/bulk/cowboy.glb | CC0-1.0 | mastjie | https://poly.pizza/m/S8hq7LEXTT |
-| byggarbetare | /models/bulk/byggarbetare.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/Yg2bQZO6Hj |
-| pirat | /models/bulk/pirat.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/sN18LyyHAU |
 | polis | /models/bulk/polis.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
 | farfar | /models/bulk/farfar.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
 | chef | /models/bulk/chef.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
@@ -717,12 +704,10 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | moster | /models/bulk/moster.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/blocky-characters |
 | pommes | /models/bulk/pommes.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | lokmat | /models/bulk/lokmat.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
-| kniv | /models/bulk/kniv.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | kaffe | /models/bulk/kaffe.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | te | /models/bulk/te.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | ketchup | /models/bulk/ketchup.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | senap | /models/bulk/senap.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
-| bacon | /models/bulk/bacon.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | salt | /models/bulk/salt.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | peppar | /models/bulk/peppar.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | flingor | /models/bulk/flingor.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
@@ -732,14 +717,11 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | milkshake | /models/bulk/milkshake.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | selleri | /models/bulk/selleri.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | jordnotssmor | /models/bulk/jordnotssmor.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
-| ris | /models/bulk/ris.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | spatel | /models/bulk/spatel.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | nudlar | /models/bulk/nudlar.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
-| kott | /models/bulk/kott.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | badanka | /models/bulk/badanka.glb | CC0-1.0 | CreativeTrio | https://poly.pizza/m/oH3dEdlDpB |
 | batteri | /models/bulk/batteri.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/MYa3uWdwPU |
 | brev | /models/bulk/brev.glb | CC0-1.0 | Isa Lousberg | https://poly.pizza/m/BJS8VvgPkQ |
-| gitarr | /models/bulk/gitarr.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/5Fp8gpomrb |
 | horlurar | /models/bulk/horlurar.glb | CC0-1.0 | CreativeTrio | https://poly.pizza/m/PSsWSIAYIL |
 | kuvert | /models/bulk/kuvert.glb | CC0-1.0 | reyshapes | https://poly.pizza/m/M9mVmRXHif |
 | mikrofon | /models/bulk/mikrofon.glb | CC0-1.0 | iPoly3D | https://poly.pizza/m/yqbacXdPsg |
@@ -754,3 +736,23 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | ballong | /models/bulk/ballong.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | kundvagn | /models/bulk/kundvagn.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-market |
 | korg | /models/bulk/korg.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-market |
+| svan | /models/bulk/svan.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| abborre | /models/bulk/abborre.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/BEcU9rjiAq |
+| gadda | /models/bulk/gadda.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/XWl86YFtpF |
+| narval | /models/bulk/narval.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
+| mask | /models/bulk/mask.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| mamma | /models/bulk/mamma.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgad tröja och klosshatt: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| pappa | /models/bulk/pappa.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgad tröja och klosshatt: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| larare | /models/bulk/larare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgad tröja och klosshatt: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| pojke | /models/bulk/pojke.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgad tröja och klosshatt: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| cowboy | /models/bulk/cowboy.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgad tröja och klosshatt: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| byggarbetare | /models/bulk/byggarbetare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgad tröja och klosshatt: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| pirat | /models/bulk/pirat.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgad tröja och klosshatt: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| drottning | /models/bulk/drottning.glb | CC0-1.0 | Kenney (Blocky Characters); krona: Quaternius (https://poly.pizza/m/i0PZVuVlYv, CC0) | https://kenney.nl/assets/blocky-characters |
+| bebis | /models/bulk/bebis.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgad tröja och klosshatt: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| ris | /models/bulk/ris.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kott | /models/bulk/kott.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| bacon | /models/bulk/bacon.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| gitarr | /models/bulk/gitarr.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kniv | /models/bulk/kniv.glb | CC0-1.0 | MilkAndBanana | https://poly.pizza/m/BKnBHbosy0 |
+| nallebjorn | /models/bulk/nallebjorn.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |

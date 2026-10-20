@@ -1965,6 +1965,18 @@
    "forsta": "A",
    "langd": 8,
    "granskad": false
+  },
+  "drottning": {
+   "gata": "Hon bär en krona och bor i slottet tillsammans med kungen.",
+   "forsta": "D",
+   "langd": 9,
+   "granskad": false
+  },
+  "bebis": {
+   "gata": "Den allra minsta i familjen sover mycket och har napp i munnen.",
+   "forsta": "B",
+   "langd": 5,
+   "granskad": false
   }
  }
 }

@@ -2275,12 +2275,11 @@
    "klass": "djur",
    "niva": "fritt",
    "visa": "lejon",
-   "genus": "u",
+   "genus": "n",
    "former": [
     "lejon",
-    "lejonen",
-    "lejonar",
-    "lejonarna"
+    "lejonet",
+    "lejonen"
    ],
    "signatur": "studs",
    "kalla": "R3C gobkit-cc0-djur-och-natur",
@@ -2315,8 +2314,8 @@
    "former": [
     "pingvin",
     "pingvinen",
-    "pingvinar",
-    "pingvinarna"
+    "pingviner",
+    "pingvinerna"
    ],
    "signatur": "studs",
    "kalla": "R3C gobkit-cc0-djur-och-natur",
@@ -2404,9 +2403,7 @@
    "genus": "u",
    "former": [
     "tyrannosaurus",
-    "tyrannosaurusen",
-    "tyrannosaurusar",
-    "tyrannosaurusarna"
+    "tyrannosaurusen"
    ],
    "signatur": "studs",
    "kalla": "R3C gobkit-cc0-djur-och-natur",
@@ -2477,8 +2474,8 @@
    "former": [
     "delfin",
     "delfinen",
-    "delfinar",
-    "delfinarna"
+    "delfiner",
+    "delfinerna"
    ],
    "signatur": "fenor",
    "kalla": "R3C polypizza-cc0",
@@ -2529,8 +2526,7 @@
    "visa": "nemo",
    "genus": "u",
    "former": [
-    "nemo",
-    "nemon"
+    "nemo"
    ],
    "signatur": "fenor",
    "kalla": "R3C quaternius-cute-fish",
@@ -2548,7 +2544,7 @@
     "spöke",
     "spöket",
     "spöken",
-    "spökenen"
+    "spökena"
    ],
    "signatur": "studs",
    "kalla": "R3C kenney-graveyard-kit",
@@ -2565,8 +2561,8 @@
    "former": [
     "robot",
     "roboten",
-    "roboter",
-    "roboterna"
+    "robotar",
+    "robotarna"
    ],
    "signatur": "studs",
    "kalla": "R3C polypizza-cc0",
@@ -2617,8 +2613,8 @@
    "former": [
     "astronaut",
     "astronauten",
-    "astronautar",
-    "astronautarna"
+    "astronauter",
+    "astronauterna"
    ],
    "signatur": "studs",
    "kalla": "R3C kenney-space-kit",
@@ -2635,8 +2631,7 @@
    "former": [
     "rymdfarare",
     "rymdfararen",
-    "rymdfararar",
-    "rymdfarararna"
+    "rymdfararna"
    ],
    "signatur": "studs",
    "kalla": "R3C kenney-space-kit",
@@ -2653,8 +2648,8 @@
    "former": [
     "bonde",
     "bonden",
-    "bondar",
-    "bondarna"
+    "bönder",
+    "bönderna"
    ],
    "signatur": "studs",
    "kalla": "R3C polypizza-cc0",
@@ -2671,8 +2666,8 @@
    "former": [
     "larv",
     "larven",
-    "larvar",
-    "larvarna"
+    "larver",
+    "larverna"
    ],
    "signatur": "studs",
    "kalla": "R3D kenney-cube-pets",
@@ -2706,7 +2701,9 @@
    "genus": "u",
    "former": [
     "ko",
-    "kon"
+    "kon",
+    "kor",
+    "korna"
    ],
    "signatur": "studs",
    "kalla": "R3D kenney-cube-pets",
@@ -2740,9 +2737,8 @@
    "genus": "n",
    "former": [
     "vildsvin",
-    "vildsvinen",
-    "vildsvinar",
-    "vildsvinarna"
+    "vildsvinet",
+    "vildsvinen"
    ],
    "signatur": "studs",
    "kalla": "R3D kenney-cube-pets",
@@ -2830,9 +2826,9 @@
    "genus": "u",
    "former": [
     "tiger",
-    "tigeren",
-    "tigerer",
-    "tigererna"
+    "tigern",
+    "tigrar",
+    "tigrarna"
    ],
    "signatur": "studs",
    "kalla": "R3D kenney-cube-pets",
@@ -2867,8 +2863,7 @@
    "former": [
     "kyrkogårdsvaktmästare",
     "kyrkogårdsvaktmästaren",
-    "kyrkogårdsvaktmästarar",
-    "kyrkogårdsvaktmästararna"
+    "kyrkogårdsvaktmästarna"
    ],
    "signatur": "studs",
    "kalla": "R3D kenney-graveyard-kit",
@@ -2921,8 +2916,7 @@
    "former": [
     "riddare",
     "riddaren",
-    "riddarar",
-    "riddararna"
+    "riddarna"
    ],
    "signatur": "studs",
    "kalla": "R3D kenney-mini-dungeon",
@@ -2992,8 +2986,8 @@
    "former": [
     "zombie",
     "zombien",
-    "zombiar",
-    "zombiarna"
+    "zombier",
+    "zombierna"
    ],
    "signatur": "studs",
    "kalla": "R3D kenney-graveyard-kit",
@@ -3010,8 +3004,7 @@
    "former": [
     "nötknäppare",
     "nötknäpparen",
-    "nötknäpparar",
-    "nötknäppararna"
+    "nötknäpparna"
    ],
    "signatur": "studs",
    "kalla": "R3D kenney-holiday-kit",
@@ -3026,10 +3019,7 @@
    "visa": "rudolf",
    "genus": "u",
    "former": [
-    "rudolf",
-    "rudolfen",
-    "rudolfar",
-    "rudolfarna"
+    "rudolf"
    ],
    "signatur": "studs",
    "kalla": "R3D kenney-holiday-kit",
@@ -3063,9 +3053,7 @@
    "genus": "u",
    "former": [
     "orch",
-    "orchen",
-    "orchar",
-    "orcharna"
+    "orchen"
    ],
    "signatur": "studs",
    "kalla": "R3D kenney-mini-dungeon",
@@ -3099,8 +3087,8 @@
    "former": [
     "rymdvarelse",
     "rymdvarelsen",
-    "rymdvarelsar",
-    "rymdvarelsarna"
+    "rymdvarelser",
+    "rymdvarelserna"
    ],
    "signatur": "studs",
    "kalla": "R3D kenney-space-kit",
@@ -3415,12 +3403,11 @@
    "klass": "djur",
    "niva": "fritt",
    "visa": "bläckfiskmonster",
-   "genus": "u",
+   "genus": "n",
    "former": [
     "bläckfiskmonster",
-    "bläckfiskmonsteren",
-    "bläckfiskmonsterar",
-    "bläckfiskmonsterarna"
+    "bläckfiskmonstret",
+    "bläckfiskmonstren"
    ],
    "signatur": "studs",
    "kalla": "R3D quaternius-cute-monsters",
@@ -3437,8 +3424,8 @@
    "former": [
     "cyklop",
     "cyklopen",
-    "cyklopar",
-    "cykloparna"
+    "cykloper",
+    "cykloperna"
    ],
    "signatur": "studs",
    "kalla": "R3D quaternius-cute-monsters",
@@ -3487,12 +3474,11 @@
    "klass": "djur",
    "niva": "fritt",
    "visa": "svampmonster",
-   "genus": "u",
+   "genus": "n",
    "former": [
     "svampmonster",
-    "svampmonsteren",
-    "svampmonsterar",
-    "svampmonsterarna"
+    "svampmonstret",
+    "svampmonstren"
    ],
    "signatur": "studs",
    "kalla": "R3D quaternius-cute-monsters",
@@ -3508,9 +3494,7 @@
    "genus": "u",
    "former": [
     "golem",
-    "golemen",
-    "golemar",
-    "golemarna"
+    "golemen"
    ],
    "signatur": "studs",
    "kalla": "R3D quaternius-ultimate-monsters",
@@ -3527,8 +3511,8 @@
    "former": [
     "stenvarelse",
     "stenvarelsen",
-    "stenvarelsar",
-    "stenvarelsarna"
+    "stenvarelser",
+    "stenvarelserna"
    ],
    "signatur": "studs",
    "kalla": "R3D quaternius-ultimate-monsters",
@@ -3580,9 +3564,8 @@
    "genus": "u",
    "former": [
     "magiker",
-    "magikeren",
-    "magikerar",
-    "magikerarna"
+    "magikern",
+    "magikerna"
    ],
    "signatur": "studs",
    "kalla": "R3D quaternius-ultimate-monsters",
@@ -3617,8 +3600,8 @@
    "former": [
     "fladdermus",
     "fladdermusen",
-    "fladdermusar",
-    "fladdermusarna"
+    "fladdermöss",
+    "fladdermössen"
    ],
    "signatur": "vingar",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -3634,9 +3617,9 @@
    "genus": "n",
    "former": [
     "bi",
-    "bit",
+    "biet",
     "bin",
-    "binen"
+    "bina"
    ],
    "signatur": "vingar",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -3686,9 +3669,7 @@
    "genus": "u",
    "former": [
     "ankylosaurus",
-    "ankylosaurusen",
-    "ankylosaurusar",
-    "ankylosaurusarna"
+    "ankylosaurusen"
    ],
    "signatur": "studs",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -3705,8 +3686,8 @@
    "former": [
     "plesiosaurie",
     "plesiosaurien",
-    "plesiosauriar",
-    "plesiosauriarna"
+    "plesiosaurier",
+    "plesiosaurierna"
    ],
    "signatur": "fenor",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -3722,9 +3703,8 @@
    "genus": "n",
    "former": [
     "sjöodjur",
-    "sjöodjuren",
-    "sjöodjurar",
-    "sjöodjurarna"
+    "sjöodjuret",
+    "sjöodjuren"
    ],
    "signatur": "fenor",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -3740,9 +3720,7 @@
    "genus": "u",
    "former": [
     "pterodactylus",
-    "pterodactylusen",
-    "pterodactylusar",
-    "pterodactylusarna"
+    "pterodactylusen"
    ],
    "signatur": "vingar",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -3776,9 +3754,7 @@
    "genus": "u",
    "former": [
     "triceratops",
-    "triceratopsen",
-    "triceratopsar",
-    "triceratopsarna"
+    "triceratopsen"
    ],
    "signatur": "studs",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -3812,9 +3788,8 @@
    "genus": "n",
    "former": [
     "rådjur",
-    "rådjuren",
-    "rådjurar",
-    "rådjurarna"
+    "rådjuret",
+    "rådjuren"
    ],
    "signatur": "studs",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -3848,7 +3823,9 @@
    "genus": "u",
    "former": [
     "highlandsko",
-    "highlandskon"
+    "highlandskon",
+    "highlandskor",
+    "highlandskorna"
    ],
    "signatur": "studs",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -3881,7 +3858,9 @@
    "genus": "u",
    "former": [
     "flamingo",
-    "flamingon"
+    "flamingon",
+    "flamingor",
+    "flamingorna"
    ],
    "signatur": "vingar",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -3932,8 +3911,8 @@
    "former": [
     "get",
     "geten",
-    "getar",
-    "getarna"
+    "getter",
+    "getterna"
    ],
    "signatur": "studs",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -3950,8 +3929,8 @@
    "former": [
     "gås",
     "gåsen",
-    "gåsar",
-    "gåsarna"
+    "gäss",
+    "gässen"
    ],
    "signatur": "vingar",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -4003,7 +3982,9 @@
    "genus": "u",
    "former": [
     "kolibri",
-    "kolibrin"
+    "kolibrin",
+    "kolibrier",
+    "kolibrierna"
    ],
    "signatur": "vingar",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -4020,8 +4001,8 @@
    "former": [
     "manet",
     "maneten",
-    "manetar",
-    "manetarna"
+    "maneter",
+    "maneterna"
    ],
    "signatur": "fenor",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -4088,9 +4069,9 @@
    "genus": "u",
    "former": [
     "påfågel",
-    "påfågelen",
-    "påfågelar",
-    "påfågelarna"
+    "påfågeln",
+    "påfåglar",
+    "påfåglarna"
    ],
    "signatur": "vingar",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -4107,8 +4088,8 @@
    "former": [
     "pelikan",
     "pelikanen",
-    "pelikanar",
-    "pelikanarna"
+    "pelikaner",
+    "pelikanerna"
    ],
    "signatur": "vingar",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -4196,8 +4177,8 @@
    "former": [
     "tukan",
     "tukanen",
-    "tukanar",
-    "tukanarna"
+    "tukaner",
+    "tukanerna"
    ],
    "signatur": "vingar",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -4214,8 +4195,8 @@
    "former": [
     "småvarelse",
     "småvarelsen",
-    "småvarelsar",
-    "småvarelsarna"
+    "småvarelser",
+    "småvarelserna"
    ],
    "signatur": "studs",
    "kalla": "R3D gobkit-cc0-djur-och-natur",
@@ -4285,9 +4266,9 @@
    "genus": "u",
    "former": [
     "spindel",
-    "spindelen",
-    "spindelar",
-    "spindelarna"
+    "spindeln",
+    "spindlar",
+    "spindlarna"
    ],
    "signatur": "studs",
    "kalla": "R3D polypizza-cc0",
@@ -4304,8 +4285,8 @@
    "former": [
     "kalkon",
     "kalkonen",
-    "kalkonar",
-    "kalkonarna"
+    "kalkoner",
+    "kalkonerna"
    ],
    "signatur": "studs",
    "kalla": "R3D polypizza-cc0",
@@ -4358,8 +4339,8 @@
    "former": [
     "mus",
     "musen",
-    "musar",
-    "musarna"
+    "möss",
+    "mössen"
    ],
    "signatur": "studs",
    "kalla": "R3D polypizza-cc0",
@@ -4412,8 +4393,8 @@
    "former": [
     "gnom",
     "gnomen",
-    "gnomar",
-    "gnomarna"
+    "gnomer",
+    "gnomerna"
    ],
    "signatur": "studs",
    "kalla": "R3D polypizza-cc0",
@@ -4430,8 +4411,8 @@
    "former": [
     "trollkarlsgnom",
     "trollkarlsgnomen",
-    "trollkarlsgnomar",
-    "trollkarlsgnomarna"
+    "trollkarlsgnomer",
+    "trollkarlsgnomerna"
    ],
    "signatur": "studs",
    "kalla": "R3D polypizza-cc0",
@@ -4447,9 +4428,7 @@
    "genus": "u",
    "former": [
     "carnotaurus",
-    "carnotaurusen",
-    "carnotaurusar",
-    "carnotaurusarna"
+    "carnotaurusen"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
@@ -4465,9 +4444,7 @@
    "genus": "u",
    "former": [
     "oviraptor",
-    "oviraptorn",
-    "oviraptorer",
-    "oviraptorerna"
+    "oviraptorn"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
@@ -4483,9 +4460,7 @@
    "genus": "u",
    "former": [
     "pachycephalosaurus",
-    "pachycephalosaurusen",
-    "pachycephalosaurusar",
-    "pachycephalosaurusarna"
+    "pachycephalosaurusen"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
@@ -4501,9 +4476,7 @@
    "genus": "u",
    "former": [
     "spinosaurus",
-    "spinosaurusen",
-    "spinosaurusar",
-    "spinosaurusarna"
+    "spinosaurusen"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
@@ -4519,9 +4492,7 @@
    "genus": "u",
    "former": [
     "stegosaurus",
-    "stegosaurusen",
-    "stegosaurusar",
-    "stegosaurusarna"
+    "stegosaurusen"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 gobkit-cc0-djur-och-natur",
@@ -4644,9 +4615,7 @@
    "genus": "u",
    "former": [
     "apatosaurus",
-    "apatosaurusen",
-    "apatosaurusar",
-    "apatosaurusarna"
+    "apatosaurusen"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 quaternius-animated-dinosaurs",
@@ -4680,9 +4649,7 @@
    "genus": "u",
    "former": [
     "parasaurolophus",
-    "parasaurolophusen",
-    "parasaurolophusar",
-    "parasaurolophusarna"
+    "parasaurolophusen"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 quaternius-animated-dinosaurs",
@@ -4698,9 +4665,7 @@
    "genus": "u",
    "former": [
     "velociraptor",
-    "velociraptorn",
-    "velociraptorer",
-    "velociraptorerna"
+    "velociraptorn"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 quaternius-animated-dinosaurs",
@@ -4914,8 +4879,8 @@
    "former": [
     "monsterkatt",
     "monsterkatten",
-    "monsterkattar",
-    "monsterkattarna"
+    "monsterkatter",
+    "monsterkatterna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M1 quaternius-ultimate-monsters",
@@ -5343,68 +5308,14 @@
    "genus": "u",
    "former": [
     "utter",
-    "utteren",
-    "utterar",
-    "utterarna"
+    "uttern",
+    "uttrar",
+    "uttrarna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M10 b5a-sjo-cc0",
    "del": {
     "kropp": "utter"
-   }
-  },
-  {
-   "id": "svan",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "svan",
-   "genus": "u",
-   "former": [
-    "svan",
-    "svanen",
-    "svanar",
-    "svanarna"
-   ],
-   "signatur": "vingar",
-   "kalla": "R3F-M10 b5a-sjo-cc0",
-   "del": {
-    "kropp": "svan"
-   }
-  },
-  {
-   "id": "abborre",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "abborre",
-   "genus": "u",
-   "former": [
-    "abborre",
-    "abborren",
-    "abborrar",
-    "abborrarna"
-   ],
-   "signatur": "fenor",
-   "kalla": "R3F-M10 b5a-sjo-cc0",
-   "del": {
-    "kropp": "abborre"
-   }
-  },
-  {
-   "id": "gädda",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "gädda",
-   "genus": "u",
-   "former": [
-    "gädda",
-    "gäddan",
-    "gäddor",
-    "gäddorna"
-   ],
-   "signatur": "fenor",
-   "kalla": "R3F-M10 b5a-sjo-cc0",
-   "del": {
-    "kropp": "gadda"
    }
   },
   {
@@ -5433,9 +5344,9 @@
    "genus": "u",
    "former": [
     "vattensalamander",
-    "vattensalamanderen",
-    "vattensalamanderar",
-    "vattensalamanderarna"
+    "vattensalamandern",
+    "vattensalamandrar",
+    "vattensalamandrarna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M10 b5a-sjo-cc0",
@@ -5451,7 +5362,9 @@
    "genus": "u",
    "former": [
     "dingo",
-    "dingon"
+    "dingon",
+    "dingor",
+    "dingorna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M11 gobkit-cc0-2",
@@ -5478,24 +5391,6 @@
    }
   },
   {
-   "id": "narval",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "narval",
-   "genus": "u",
-   "former": [
-    "narval",
-    "narvalen",
-    "narvalar",
-    "narvalarna"
-   ],
-   "signatur": "fenor",
-   "kalla": "R3F-M11 gobkit-cc0-2",
-   "del": {
-    "kropp": "narval"
-   }
-  },
-  {
    "id": "vaktel",
    "klass": "djur",
    "niva": "fritt",
@@ -5503,9 +5398,9 @@
    "genus": "u",
    "former": [
     "vaktel",
-    "vaktelen",
-    "vaktelar",
-    "vaktelarna"
+    "vakteln",
+    "vaktlar",
+    "vaktlarna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M11 gobkit-cc0-2",
@@ -5522,8 +5417,8 @@
    "former": [
     "skorpion",
     "skorpionen",
-    "skorpionar",
-    "skorpionarna"
+    "skorpioner",
+    "skorpionerna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M11 gobkit-cc0-2",
@@ -5576,8 +5471,8 @@
    "former": [
     "pungdjävul",
     "pungdjävulen",
-    "pungdjävular",
-    "pungdjävularna"
+    "pungdjävlar",
+    "pungdjävlarna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M11 gobkit-cc0-2",
@@ -5608,12 +5503,11 @@
    "klass": "djur",
    "niva": "fritt",
    "visa": "myrlejon",
-   "genus": "u",
+   "genus": "n",
    "former": [
     "myrlejon",
-    "myrlejonen",
-    "myrlejonar",
-    "myrlejonarna"
+    "myrlejonet",
+    "myrlejonen"
    ],
    "signatur": "studs",
    "kalla": "R3F-M11 gobkit-cc0-2",
@@ -5630,8 +5524,8 @@
    "former": [
     "bladlus",
     "bladlusen",
-    "bladlusar",
-    "bladlusarna"
+    "bladlöss",
+    "bladlössen"
    ],
    "signatur": "studs",
    "kalla": "R3F-M11 gobkit-cc0-2",
@@ -5648,8 +5542,7 @@
    "former": [
     "knäppare",
     "knäpparen",
-    "knäpparar",
-    "knäppararna"
+    "knäpparna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M11 gobkit-cc0-2",
@@ -5809,9 +5702,9 @@
    "genus": "u",
    "former": [
     "giraffvivel",
-    "giraffvivelen",
-    "giraffvivelar",
-    "giraffvivelarna"
+    "giraffviveln",
+    "giraffvivlar",
+    "giraffvivlarna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M11 gobkit-cc0-2",
@@ -5828,8 +5721,7 @@
    "former": [
     "svärmare",
     "svärmaren",
-    "svärmarar",
-    "svärmararna"
+    "svärmarna"
    ],
    "signatur": "vingar",
    "kalla": "R3F-M11 gobkit-cc0-2",
@@ -5846,6 +5738,7 @@
    "former": [
     "nattfjäril",
     "nattfjärilen",
+    "nattfjäriln",
     "nattfjärilar",
     "nattfjärilarna"
    ],
@@ -5936,8 +5829,7 @@
    "former": [
     "vårtbitare",
     "vårtbitaren",
-    "vårtbitarar",
-    "vårtbitararna"
+    "vårtbitarna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M11 gobkit-cc0-2",
@@ -6080,8 +5972,8 @@
    "former": [
     "termit",
     "termiten",
-    "termitar",
-    "termitarna"
+    "termiter",
+    "termiterna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M11 gobkit-cc0-2",
@@ -6116,6 +6008,7 @@
    "former": [
     "fjäril",
     "fjärilen",
+    "fjäriln",
     "fjärilar",
     "fjärilarna"
    ],
@@ -6134,6 +6027,7 @@
    "former": [
     "makaonfjäril",
     "makaonfjärilen",
+    "makaonfjäriln",
     "makaonfjärilar",
     "makaonfjärilarna"
    ],
@@ -6152,8 +6046,7 @@
    "former": [
     "sandjägare",
     "sandjägaren",
-    "sandjägarar",
-    "sandjägararna"
+    "sandjägarna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M11 gobkit-cc0-2",
@@ -6206,121 +6099,12 @@
    "former": [
     "skräddare",
     "skräddaren",
-    "skräddarar",
-    "skräddararna"
+    "skräddarna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M11 gobkit-cc0-2",
    "del": {
     "kropp": "skraddare"
-   }
-  },
-  {
-   "id": "mask",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "mask",
-   "genus": "u",
-   "former": [
-    "mask",
-    "masken",
-    "maskar",
-    "maskarna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3F-M11 polypizza-cc0",
-   "del": {
-    "kropp": "mask"
-   }
-  },
-  {
-   "id": "daggmask",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "daggmask",
-   "genus": "u",
-   "former": [
-    "daggmask",
-    "daggmasken",
-    "daggmaskar",
-    "daggmaskarna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3F-M11 polypizza-cc0",
-   "del": {
-    "kropp": "mask"
-   }
-  },
-  {
-   "id": "mamma",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "mamma",
-   "genus": "u",
-   "former": [
-    "mamma",
-    "mamman",
-    "mammor",
-    "mammorna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3F-M12 polypizza-cc0-3",
-   "del": {
-    "kropp": "mamma"
-   }
-  },
-  {
-   "id": "pappa",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "pappa",
-   "genus": "u",
-   "former": [
-    "pappa",
-    "pappan",
-    "pappor",
-    "papporna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3F-M12 polypizza-cc0-3",
-   "del": {
-    "kropp": "pappa"
-   }
-  },
-  {
-   "id": "lärare",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "lärare",
-   "genus": "u",
-   "former": [
-    "lärare",
-    "läraren",
-    "lärarar",
-    "lärararna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3F-M12 polypizza-cc0-3",
-   "del": {
-    "kropp": "larare"
-   }
-  },
-  {
-   "id": "pojke",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "pojke",
-   "genus": "u",
-   "former": [
-    "pojke",
-    "pojken",
-    "pojkar",
-    "pojkarna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3F-M12 polypizza-cc0-3",
-   "del": {
-    "kropp": "pojke"
    }
   },
   {
@@ -6342,76 +6126,6 @@
    }
   },
   {
-   "id": "cowboy",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "cowboy",
-   "genus": "u",
-   "former": [
-    "cowboy",
-    "cowboyn"
-   ],
-   "signatur": "studs",
-   "kalla": "R3F-M12 polypizza-cc0-3",
-   "del": {
-    "kropp": "cowboy"
-   }
-  },
-  {
-   "id": "byggarbetare",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "byggarbetare",
-   "genus": "u",
-   "former": [
-    "byggarbetare",
-    "byggarbetaren",
-    "byggarbetarar",
-    "byggarbetararna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3F-M12 polypizza-cc0-3",
-   "del": {
-    "kropp": "byggarbetare"
-   }
-  },
-  {
-   "id": "arbetare",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "arbetare",
-   "genus": "u",
-   "former": [
-    "arbetare",
-    "arbetaren",
-    "arbetarar",
-    "arbetararna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3F-M12 polypizza-cc0-3",
-   "del": {
-    "kropp": "byggarbetare"
-   }
-  },
-  {
-   "id": "pirat",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "pirat",
-   "genus": "u",
-   "former": [
-    "pirat",
-    "piraten",
-    "piratar",
-    "piratarna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3F-M12 polypizza-cc0-3",
-   "del": {
-    "kropp": "pirat"
-   }
-  },
-  {
    "id": "polis",
    "klass": "djur",
    "niva": "fritt",
@@ -6420,8 +6134,8 @@
    "former": [
     "polis",
     "polisen",
-    "polisar",
-    "polisarna"
+    "poliser",
+    "poliserna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
@@ -6437,9 +6151,9 @@
    "genus": "u",
    "former": [
     "farfar",
-    "farfaren",
-    "farfarar",
-    "farfararna"
+    "farfadern",
+    "farfäder",
+    "farfäderna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
@@ -6455,9 +6169,9 @@
    "genus": "u",
    "former": [
     "morfar",
-    "morfaren",
-    "morfarar",
-    "morfararna"
+    "morfadern",
+    "morfäder",
+    "morfäderna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
@@ -6474,8 +6188,8 @@
    "former": [
     "chef",
     "chefen",
-    "chefar",
-    "chefarna"
+    "chefer",
+    "cheferna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
@@ -6491,9 +6205,10 @@
    "genus": "u",
    "former": [
     "bror",
-    "broren",
-    "brorar",
-    "brorarna"
+    "brodern",
+    "brorn",
+    "bröder",
+    "bröderna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
@@ -6527,9 +6242,9 @@
    "genus": "u",
    "former": [
     "syster",
-    "systeren",
-    "systerar",
-    "systerarna"
+    "systern",
+    "systrar",
+    "systrarna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
@@ -6564,8 +6279,7 @@
    "former": [
     "sjörövare",
     "sjörövaren",
-    "sjörövarar",
-    "sjörövararna"
+    "sjörövarna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
@@ -6582,8 +6296,8 @@
    "former": [
     "scout",
     "scouten",
-    "scoutar",
-    "scoutarna"
+    "scouter",
+    "scouterna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
@@ -6599,9 +6313,10 @@
    "genus": "u",
    "former": [
     "farbror",
-    "farbroren",
-    "farbrorar",
-    "farbrorarna"
+    "farbrodern",
+    "farbrorn",
+    "farbröder",
+    "farbröderna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
@@ -6617,14 +6332,299 @@
    "genus": "u",
    "former": [
     "moster",
-    "mosteren",
-    "mosterar",
-    "mosterarna"
+    "mostern",
+    "mostrar",
+    "mostrarna"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
    "del": {
     "kropp": "moster"
+   }
+  },
+  {
+   "id": "svan",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "svan",
+   "genus": "u",
+   "former": [
+    "svan",
+    "svanen",
+    "svanar",
+    "svanarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "svan"
+   }
+  },
+  {
+   "id": "abborre",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "abborre",
+   "genus": "u",
+   "former": [
+    "abborre",
+    "abborren",
+    "abborrar",
+    "abborrarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "abborre"
+   }
+  },
+  {
+   "id": "gädda",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "gädda",
+   "genus": "u",
+   "former": [
+    "gädda",
+    "gäddan",
+    "gäddor",
+    "gäddorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "gadda"
+   }
+  },
+  {
+   "id": "narval",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "narval",
+   "genus": "u",
+   "former": [
+    "narval",
+    "narvalen",
+    "narvalar",
+    "narvalarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "narval"
+   }
+  },
+  {
+   "id": "mask",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mask",
+   "genus": "u",
+   "former": [
+    "mask",
+    "masken",
+    "maskar",
+    "maskarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "mask"
+   }
+  },
+  {
+   "id": "daggmask",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "daggmask",
+   "genus": "u",
+   "former": [
+    "daggmask",
+    "daggmasken",
+    "daggmaskar",
+    "daggmaskarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "mask"
+   }
+  },
+  {
+   "id": "mamma",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mamma",
+   "genus": "u",
+   "former": [
+    "mamma",
+    "mamman",
+    "mammor",
+    "mammorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "mamma"
+   }
+  },
+  {
+   "id": "pappa",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "pappa",
+   "genus": "u",
+   "former": [
+    "pappa",
+    "pappan",
+    "pappor",
+    "papporna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "pappa"
+   }
+  },
+  {
+   "id": "lärare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "lärare",
+   "genus": "u",
+   "former": [
+    "lärare",
+    "läraren",
+    "lärarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "larare"
+   }
+  },
+  {
+   "id": "pojke",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "pojke",
+   "genus": "u",
+   "former": [
+    "pojke",
+    "pojken",
+    "pojkar",
+    "pojkarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "pojke"
+   }
+  },
+  {
+   "id": "cowboy",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "cowboy",
+   "genus": "u",
+   "former": [
+    "cowboy",
+    "cowboyen",
+    "cowboyer",
+    "cowboyerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "cowboy"
+   }
+  },
+  {
+   "id": "byggarbetare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "byggarbetare",
+   "genus": "u",
+   "former": [
+    "byggarbetare",
+    "byggarbetaren",
+    "byggarbetarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "byggarbetare"
+   }
+  },
+  {
+   "id": "arbetare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "arbetare",
+   "genus": "u",
+   "former": [
+    "arbetare",
+    "arbetaren",
+    "arbetarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "byggarbetare"
+   }
+  },
+  {
+   "id": "pirat",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "pirat",
+   "genus": "u",
+   "former": [
+    "pirat",
+    "piraten",
+    "pirater",
+    "piraterna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "pirat"
+   }
+  },
+  {
+   "id": "drottning",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "drottning",
+   "genus": "u",
+   "former": [
+    "drottning",
+    "drottningen",
+    "drottningar",
+    "drottningarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "drottning"
+   }
+  },
+  {
+   "id": "bebis",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "bebis",
+   "genus": "u",
+   "former": [
+    "bebis",
+    "bebisen",
+    "bebisar",
+    "bebisarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX trollpennan-mfix",
+   "del": {
+    "kropp": "bebis"
    }
   }
  ],
