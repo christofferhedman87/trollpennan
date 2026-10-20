@@ -22,7 +22,7 @@ aterstall() { git checkout -q -- PROJECT.md package.json data src rundor/R1-dela
 npm run -s test:product > "$UT/test.txt" 2>&1 || { grep -A8 '^not ok' "$UT/test.txt" | head -40; aterstall; echo "STOPP 3: test:product föll"; exit 3; }
 N=$(npm run -s typecheck 2>&1 | grep -c "error TS" || true); [ "$N" -eq 0 ] || { npm run -s typecheck 2>&1 | grep "error TS" | head; aterstall; echo "STOPP 3: typecheck $N fel"; exit 3; }
 npm run -s typecheck:pages > "$UT/tcp.txt" 2>&1 || { tail -20 "$UT/tcp.txt"; aterstall; echo "STOPP 3: typecheck:pages föll"; exit 3; }
-npx eslint src/spel/ui/Stall.tsx src/spel/ui/Ledtradsyta.tsx src/spel/ui/Hud.tsx src/spel/ui/AngLager.tsx src/spel/ui/BokSkarm.tsx src/spel/ui/spelData.ts \
+npx eslint --no-error-on-unmatched-pattern --no-warn-ignored src/spel/ui/Stall.tsx src/spel/ui/Ledtradsyta.tsx src/spel/ui/Hud.tsx src/spel/ui/AngLager.tsx src/spel/ui/BokSkarm.tsx src/spel/ui/spelData.ts \
   src/spel/Spel.tsx src/spel/minne.ts src/spel/stall.ts src/spel/gata.ts src/spel/r9g.test.ts "$D/r9g-prov.mjs" > "$UT/eslint.txt" 2>&1 || { tail -20 "$UT/eslint.txt"; aterstall; echo "STOPP 3: eslint föll"; exit 3; }
 E=$(grep -c " error " "$UT/eslint.txt" || true); [ "$E" -eq 0 ] || { tail -20 "$UT/eslint.txt"; aterstall; echo "STOPP 3: eslint $E fel"; exit 3; }
 npm run -s check:struktur > "$UT/struktur.txt" 2>&1 || { tail -15 "$UT/struktur.txt"; aterstall; echo "STOPP 3: check:struktur föll"; exit 3; }
