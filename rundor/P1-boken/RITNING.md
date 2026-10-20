@@ -97,4 +97,5 @@ Nya testid tillkommer inte, så `check:struktur`-baslinjen håller.
 **Utlåtande: JA.** Patchen applicerar rent på main 4762da9 och ovanpå B6.3, B6.5, R8-3a, TTS-2 och B6.6. Hela kor.sh är torrkörd grönt i en separat worktree. Den rör varken Spel.tsx, styles.css, src/tolk, data eller sparnyckeln.
 
 ## Ordning i kön
-P1 kan gå **direkt efter B6.3**, eller när som helst eftersom den inte har några filkonflikter. Om Christoffers ordning gäller strikt läggs den efter B6.6/MFIX9 enligt BLOCKSERIE. P2 (Pennan svarar) bygger på `BokSvar.tsx` och ska komma efter P1.
+P1 kan gå **direkt efter B6.3**, eller när som helst eftersom den inte har några filkonflikter. Om Christoffers ordning gäller strikt läggs den efter B6.6/MFIX9 enligt BLOCKSERIE. P2 (De första fem minuterna och vägvisningen) förutsätter skrivläget som standard och ska komma efter P1.
+Avvikelse från BLOCKSERIE:s bevislista: DOM-turens 28 lägen ingår i p1-prov (A/B-kontroll per läge) i stället för att köras som ett eget prov, och b61 ersätts av r9g/r9k/r9b/b62/b64. Det är de prov som rör boken.
