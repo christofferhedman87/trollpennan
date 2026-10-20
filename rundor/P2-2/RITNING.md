@@ -148,4 +148,6 @@ Bubblan viker undan medan en banderoll syns. Den lägger sig under "Dra för att
 | 8 Ett mål | Förslag A:s första minut, utan omvägar. |
 | 9 Vem skriver | Arkitektens patch. Doodle kör `kor.sh`. |
 
-**Utlåtande P2-2:** se rapporten och torrkörningen nedan.
+**Torrkörning 2026-10-20 14:38–14:59 (UTC+2):** ren kopia av main 5041c28 + grenen, `bash rundor/P2-2/kor.sh` → exit 0. test:product 224 gröna, typecheck/typecheck:pages 0, eslint . 0 fel (340 varningar, som förut), check:struktur GRÖN, Spel.tsx 1846 → 1842 rader, styles.css orörd, build:pages ok, p2-2-prov 37/37, regression p2-1/p1/r9g/r9k/b62/b63/b64 gröna (B6.5 inte mergad, så den kördes inte).
+
+**Utlåtande P2-2: GODKÄND för körning.** Inga förutsättningar utöver main (B6.3, P1, P2-1 ligger där). Bilder ur bygget: `premiumgranskning/p2-val/P2-2-byggd-*.png`.
