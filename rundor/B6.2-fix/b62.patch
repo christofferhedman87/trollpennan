@@ -1,5 +1,5 @@
 diff --git a/PROJECT.md b/PROJECT.md
-index fc9c8cb76df6b6b166dcb2a204f2938563ed52e0..97f5e54fb36cb0f4e2fc799be43534013088d1a2 100644
+index fc9c8cb..97f5e54 100644
 --- a/PROJECT.md
 +++ b/PROJECT.md
 @@ -729,3 +729,4 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
@@ -8,7 +8,7 @@ index fc9c8cb76df6b6b166dcb2a204f2938563ed52e0..97f5e54fb36cb0f4e2fc799be4353401
  | 26 | ~~"en regnbåge" gav ingenting och boken stod kvar~~ → känt ord utan modell ger banderoll ("kan inte rita ensamt än") och boken stängs; test går igenom alla kända ord. Kvar: "ljus" tolkas som färgord, inte som sak | **B6.1** klar |
 +| 27 | ~~r9b-/r9-prov inaktuella · "ljus" blev färgord · räven på sjön i vattenbrynet · `milstolpe.final`/`las_upp`/`final_fore` lästes inte~~ → proven följer nuvarande beteende, "ljus" är en sak (utom "en ljus katt"), 1,0 till vattnet, fälten kopplade in | **B6.2** klar |
 diff --git a/package.json b/package.json
-index 1ff2ca6733a6de8d428f63e413f88ef9e39dd7ea..8e56bb5255825b78b235b4123e8b4b1e8cb39641 100644
+index 1ff2ca6..8e56bb5 100644
 --- a/package.json
 +++ b/package.json
 @@ -22,7 +22,7 @@
@@ -20,8 +20,36 @@ index 1ff2ca6733a6de8d428f63e413f88ef9e39dd7ea..8e56bb5255825b78b235b4123e8b4b1e
      "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
      "check:pages-output": "node scripts/check-pages-output.mjs",
      "check:struktur": "node scripts/check-spel-struktur.mjs",
+diff --git a/rundor/B6.1-kontroll/b61-prov.mjs b/rundor/B6.1-kontroll/b61-prov.mjs
+index 22e9f83..2dcd8e2 100644
+--- a/rundor/B6.1-kontroll/b61-prov.mjs
++++ b/rundor/B6.1-kontroll/b61-prov.mjs
+@@ -4,7 +4,7 @@
+ //   G  bokens gåta tar platsens egna djur först, och "Ny gåta" stannar bland dem
+ //   K  tackbubblan krockar inte med banderollen ("Guldord!", "+1 stjärna!") eller en annan bubbla
+ //   E  stora saker (skyskrapa, slott, ufo, grävmaskin) står längst bak under ett tak och skymmer inget djur
+-//   F  "en regnbåge" (känt ord utan modell) ger en synlig banderoll och boken stängs
++//   F  "randig" (känt ord utan modell; "en regnbåge" är en sak sedan B6.2) ger en synlig banderoll och boken stängs
+ //   P  alla fyra platser: res dit på kartan, lös ett uppdrag, stall + hämta ut, gåva → tack
+ //   node rundor/B6.1-kontroll/b61-prov.mjs --bilder <mapp>   (exit 0 = alla steg gröna; kräver npm run build:pages)
+ import fs from "node:fs";
+@@ -259,11 +259,11 @@ await blok("F", async () => {
+   await p.waitForTimeout(400);
+   const banners = [];
+   const stopp = setInterval(() => p.locator(".banderoller").innerText().then((t) => t && banners.push(t)).catch(() => undefined), 150);
+-  await p.evaluate(() => window.__troll.vakna("en regnbåge"));
++  await p.evaluate(() => window.__troll.vakna("randig"));
+   await p.waitForTimeout(1500);
+   clearInterval(stopp);
+-  kolla("F en regnbåge: synlig banderoll", banners.some((b) => /kan jag inte rita/.test(b)), { banners: [...new Set(banners)] });
+-  kolla("F en regnbåge: boken stängs", !(await synlig(p, "[data-testid=bok-skarm]")));
++  kolla("F randig: synlig banderoll", banners.some((b) => /kan jag inte rita/.test(b)), { banners: [...new Set(banners)] });
++  kolla("F randig: boken stängs", !(await synlig(p, "[data-testid=bok-skarm]")));
+   await bild(p, "b61-F-regnbage.png");
+   await ctx.close();
+ });
 diff --git a/rundor/R9-tydlighet/r9-prov.mjs b/rundor/R9-tydlighet/r9-prov.mjs
-index 689655bd587cbffed3ec049b2424f0724486d03a..cee7e24eaae9695449b39fc9cebe2f725acf5a22 100644
+index 689655b..cee7e24 100644
 --- a/rundor/R9-tydlighet/r9-prov.mjs
 +++ b/rundor/R9-tydlighet/r9-prov.mjs
 @@ -1,4 +1,5 @@
@@ -99,7 +127,7 @@ index 689655bd587cbffed3ec049b2424f0724486d03a..cee7e24eaae9695449b39fc9cebe2f72
  await browser.close();
  server.close();
 diff --git a/rundor/R9B-layout/r9b-prov.mjs b/rundor/R9B-layout/r9b-prov.mjs
-index 338767ee746d4fd4b1bd43e7439d65ae27602a51..5a9c9ceb058f86b0a1f7a910b0e2e568147d2e16 100644
+index 338767e..5a9c9ce 100644
 --- a/rundor/R9B-layout/r9b-prov.mjs
 +++ b/rundor/R9B-layout/r9b-prov.mjs
 @@ -55,7 +55,7 @@ for (const [w, h] of [[375, 812], [1280, 800]]) {
@@ -120,17 +148,31 @@ index 338767ee746d4fd4b1bd43e7439d65ae27602a51..5a9c9ceb058f86b0a1f7a910b0e2e568
    res.push(m);
    await ctx.close();
  }
+diff --git a/src/spel/b6-1.test.ts b/src/spel/b6-1.test.ts
+index 4e16771..f68de9b 100644
+--- a/src/spel/b6-1.test.ts
++++ b/src/spel/b6-1.test.ts
+@@ -141,6 +141,7 @@ test("B6.1 (F): varje känt ord ger något synligt – ett djur/en sak, ett ägg
+   }
+   assert.deepEqual(tysta, [], `ord som inte ger något: ${tysta.slice(0, 20).join(", ")}`);
+   assert.ok(ord.size > 900);
+-  assert.ok(kanInteRita(tolkaMedReserv("en regnbåge"), "en regnbåge"), "en regnbåge");
++  // B6.2: "en regnbåge" är nu en sak (modellen kopplades in); ett mönster utan djur ger fortfarande banderollen
++  assert.ok(kanInteRita(tolkaMedReserv("randig"), "randig"), "randig");
+   assert.equal(kanInteRita(tolkaMedReserv("en katt"), "en katt"), null);
+ });
 diff --git a/src/spel/b6-2.test.ts b/src/spel/b6-2.test.ts
 new file mode 100644
-index 0000000000000000000000000000000000000000..1501178b4cc9b6b79bac7263cc01f95c642ae7cd
+index 0000000..081bb4c
 --- /dev/null
 +++ b/src/spel/b6-2.test.ts
-@@ -0,0 +1,79 @@
+@@ -0,0 +1,114 @@
 +// B6.2: "ljus" är en sak, räven håller avstånd till vattnet, platsernas milstolpe.final / las_upp / final_fore används.
 +import assert from "node:assert/strict";
 +import { test } from "node:test";
 +import { SKRIV } from "./aventyr.ts";
 +import { djurPlats } from "./ang/delat.ts";
++import { harModell } from "./entiteter.ts";
 +import { PLATSER, arFinal, klaraPerPlats, platsMed, upplast, type Matt, type Plats } from "./platser.ts";
 +import { KANT_MARGINAL, franPlats, iVatten, tillPlats, torrKropp } from "./platsYta.ts";
 +import { nastaSkrivUppdrag } from "./uppdragsmotor.ts";
@@ -205,8 +247,42 @@ index 0000000000000000000000000000000000000000..1501178b4cc9b6b79bac7263cc01f95c
 +test("B6.2: varje plats med final har en final_fore-replik (Bengtsson säger den när finalen öppnas)", () => {
 +  for (const p of PLATSER) if (p.milstolpe?.final) assert.ok((p.final_fore?.text ?? "").length > 10, `${p.id}: final_fore.text`);
 +});
++
++test("B6.2: mönster-/förmågeord med modell blir en sak när de står fristående (\"en regnbåge\", \"en eld\")", () => {
++  const sak = (f: string) => {
++    const t = tolkaMedReserv(f);
++    return t.typ === "skapad" ? t.varelse.kropp : `(${t.typ})`;
++  };
++  for (const f of ["en regnbåge", "regnbåge", "regnbågen", "två regnbågar"]) assert.equal(sak(f), "regnbage", f);
++  for (const f of ["en eld", "eld", "elden"]) assert.equal(sak(f), "eld", f);
++  assert.ok(harModell("regnbage") && harModell("eld"), "modellerna är inkopplade via data");
++  // med ett djur: saken följer med som tillbehör
++  const t = tolkaMedReserv("en katt och en regnbåge");
++  assert.ok(t.typ === "skapad" && t.varelse.kropp === "katt" && t.varelse.tillbehor.some((x) => x.id === "regnbage"));
++});
++
++test("B6.2: som attribut behåller regnbåge och eld sin gamla betydelse", () => {
++  const v = (f: string) => {
++    const t = tolkaMedReserv(f);
++    assert.equal(t.typ, "skapad", f);
++    return (t as Extract<typeof t, { typ: "skapad" }>).varelse;
++  };
++  for (const f of ["en regnbågsfärgad katt", "en katt med regnbåge", "en regnbågskatt"]) {
++    const x = v(f);
++    assert.equal(x.kropp, "katt", f);
++    assert.equal(x.monster, "regnbåge", f);
++    assert.ok(!x.tillbehor.some((y) => y.id === "regnbage"), `${f}: ingen regnbåge-sak`);
++  }
++  for (const f of ["en drake med eld", "en eldkanin", "en drake som sprutar eld"]) {
++    const x = v(f);
++    assert.ok(x.formagor.includes("flammor"), `${f}: flammor`);
++    assert.ok(!x.tillbehor.some((y) => y.id === "eld"), `${f}: ingen eld-sak`);
++  }
++  // "en eldig drake" var en drake utan förmåga före B6.2 och är det fortfarande
++  assert.equal(v("en eldig drake").kropp, "drake");
++});
 diff --git a/src/spel/platsYta.ts b/src/spel/platsYta.ts
-index 474b2aa6ad36df92adce688b9e61f2c29dea24c8..0be3b4149dc05678ceba9372a7f3b5b90aab9efb 100644
+index 474b2aa..0be3b41 100644
 --- a/src/spel/platsYta.ts
 +++ b/src/spel/platsYta.ts
 @@ -9,8 +9,9 @@ export const YTA_SKALA = 1.45;
@@ -222,7 +298,7 @@ index 474b2aa6ad36df92adce688b9e61f2c29dea24c8..0be3b4149dc05678ceba9372a7f3b5b9
  export function iRekt(x: number, y: number, r: Zon["rekt"]): boolean {
    const [x0, y0, x1, y1] = r;
 diff --git a/src/spel/platser.ts b/src/spel/platser.ts
-index 4011fff92e6ad1cc95778e600f3af17d4e3a29c4..e4acf05c7be7c4b9f042c9e16bc664a9a995e47c 100644
+index 4011fff..e4acf05 100644
 --- a/src/spel/platser.ts
 +++ b/src/spel/platser.ts
 @@ -29,7 +29,8 @@ export type Plats = {
@@ -268,7 +344,7 @@ index 4011fff92e6ad1cc95778e600f3af17d4e3a29c4..e4acf05c7be7c4b9f042c9e16bc664a9
  }
  
 diff --git a/src/spel/ui/useBengtsson.ts b/src/spel/ui/useBengtsson.ts
-index 361949feb6839f5af32e8ba4fc4926b4f405083b..7219cf9f33a8cfc83aa2462d986dc2b14c9053bc 100644
+index 361949f..7219cf9 100644
 --- a/src/spel/ui/useBengtsson.ts
 +++ b/src/spel/ui/useBengtsson.ts
 @@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
@@ -291,7 +367,7 @@ index 361949feb6839f5af32e8ba4fc4926b4f405083b..7219cf9f33a8cfc83aa2462d986dc2b1
        return oppnaSkapa();
      }
 diff --git a/src/spel/uppdragsmotor.ts b/src/spel/uppdragsmotor.ts
-index fb78b0fe0f7a0d6ae0636105d3ba1eceeb64190a..aebb57e5db242c26672b3293c6e2afd99cfd9800 100644
+index fb78b0f..aebb57e 100644
 --- a/src/spel/uppdragsmotor.ts
 +++ b/src/spel/uppdragsmotor.ts
 @@ -3,6 +3,7 @@
@@ -312,10 +388,10 @@ index fb78b0fe0f7a0d6ae0636105d3ba1eceeb64190a..aebb57e5db242c26672b3293c6e2afd9
  
  /** Uppdraget som är igång på platsen (status "pagar"), annars undefined. */
 diff --git a/src/tolk/lexikon.ts b/src/tolk/lexikon.ts
-index d557097568e61125ead229fda5bb0b0cd986198e..267a61512c2a3241bd0d0a4271b4be3f44d080f6 100644
+index d557097..ead9d10 100644
 --- a/src/tolk/lexikon.ts
 +++ b/src/tolk/lexikon.ts
-@@ -75,6 +75,21 @@ for (const [id, w] of sakOrd) {
+@@ -75,6 +75,34 @@ for (const [id, w] of sakOrd) {
    for (const f of o.former) if (!formMap.has(f) && !reserverade.has(f)) formMap.set(f, o);
  }
  
@@ -334,22 +410,36 @@ index d557097568e61125ead229fda5bb0b0cd986198e..267a61512c2a3241bd0d0a4271b4be3f
 +  return LED_SAK.get(token);
 +}
 +
++/** B6.2: ord som redan betyder något annat (mönster "regnbåge", förmåga "eld") men också har en modell som sak.
++ *  Nyckel = varje form av ordet ("regnbåge", "regnbågen", "elden" …). tolka.ts väljer saken bara när ordet står fristående. */
++const DUBBEL_SAK = new Map<string, Ord>();
++for (const [id, w] of sakOrd) {
++  const annan = formMap.get(w);
++  if (!annan || annan.klass === "foremal" || annan.klass === "djur" || DUBBEL_SAK.has(w)) continue;
++  const o: Ord = { id: w, klass: "foremal", niva: "fritt", visa: w, former: [...new Set([...annan.former, w])], plural: [], del: { kropp: id } };
++  for (const f of o.former) if (!DUBBEL_SAK.has(f)) DUBBEL_SAK.set(f, o);
++}
++export function dubbelSak(token: string): Ord | undefined {
++  return DUBBEL_SAK.get(token);
++}
++
  export type Fras = { ord: Ord; slots: string[][]; valfritt: boolean };
  
  const fraser: Fras[] = [];
 diff --git a/src/tolk/tolka.ts b/src/tolk/tolka.ts
-index 3449242860c61fdbf0c55fcb54fd20c0cae7315c..f5250267e52775d440a9dee9c21b443a20b1b5e6 100644
+index 3449242..a0d587c 100644
 --- a/src/tolk/tolka.ts
 +++ b/src/tolk/tolka.ts
-@@ -15,6 +15,7 @@ import {
+@@ -15,6 +15,8 @@ import {
    pluralOrd,
    forslagTill,
    type Suffix,
 +  ledSak,
++  dubbelSak,
  } from "./lexikon.ts";
  import { arSparrat } from "./sparr.ts";
  import type { Del, Forled, Ord, TolkaOpts, Utfall, Varelse } from "./typer.ts";
-@@ -366,6 +367,15 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
+@@ -366,6 +368,15 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
          continue;
        }
        const led = ORD.sammansattningar.forled[token];
@@ -365,3 +455,23 @@ index 3449242860c61fdbf0c55fcb54fd20c0cae7315c..f5250267e52775d440a9dee9c21b443a
        if (led) {
          sem.push({ t: "led", key: token, del: led });
          continue;
+@@ -408,6 +419,19 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
+       continue;
+     }
+     if (en.t === "artikel") continue;
++    // B6.2: "en regnbåge", "en eld", "regnbågen" – ett mönster-/förmågeord som står fristående (artikel, antal eller först,
++    // och inget innehållsord efter) och har en modell blir saken. "en drake med eld", "en eldig drake",
++    // "en katt med regnbåge" behåller sin gamla betydelse.
++    if (en.t === "ord" && en.o.klass !== "foremal" && en.o.klass !== "djur") {
++      const sak = dubbelSak(token);
++      const fore = i === 0 ? null : lasToken(tokens[i - 1] ?? "");
++      const efter = tokens[i + 1] === undefined ? null : lasToken(tokens[i + 1]!);
++      const fristaende = (i === 0 || fore?.t === "artikel" || fore?.t === "antal") && (tokens[i + 1] === undefined || efter?.t === "funk" || efter?.t === "artikel");
++      if (sak && fristaende) {
++        sem.push({ t: "ord", o: { ...sak, genus: tokens[i - 1] === "ett" ? "n" : "u" }, form: token });
++        continue;
++      }
++    }
+     if (en.t === "ord" && en.o.klass === "foremal") {
+       // R3G: genus för ett härlett föremål tas från barnets egen artikel ("ett lok") eller bestämd form ("loket").
+       const fore = tokens[i - 1];

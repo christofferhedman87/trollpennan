@@ -1,4 +1,4 @@
-// B6.2: "ljus" som sak, räven på sjön med avstånd till vattnet, final_fore när platsens final öppnas. Playwright 375x812.
+// B6.2: "ljus" som sak, "en regnbåge"/"en eld" som saker (G), räven på sjön med avstånd till vattnet, final_fore när platsens final öppnas. Playwright 375x812.
 //   node rundor/B6.2-fix/b62-prov.mjs --bilder <mapp>   (exit 0 = alla steg gröna; kräver npm run build:pages)
 import fs from "node:fs";
 import http from "node:http";
@@ -8,7 +8,7 @@ import { chromium } from "playwright";
 const arg = (n, d) => { const i = process.argv.indexOf(`--${n}`); return i >= 0 ? process.argv[i + 1] : d; };
 const dist = path.resolve(arg("dist", "dist-pages"));
 const bilder = arg("bilder", "");
-const bara = arg("bara", "L,R,F").split(",");
+const bara = arg("bara", "L,G,R,F").split(",");
 if (bilder) fs.mkdirSync(bilder, { recursive: true });
 const BENGT = JSON.parse(fs.readFileSync("data/bengtsson.json", "utf8"));
 const PLATSDATA = JSON.parse(fs.readFileSync("data/platser.json", "utf8"));
@@ -67,6 +67,30 @@ await blok("L", async () => {
   }
   await stangBok(p);
   await bild(p, "b62-L-ljus.png");
+  await ctx.close();
+});
+
+// G: "en regnbåge" och "en eld" blir saker med modell; som attribut behåller de sin gamla betydelse
+await blok("G", async () => {
+  const { ctx, p } = await sida({});
+  for (const [fras, kropp] of [["en regnbåge", "regnbage"], ["en eld", "eld"]]) {
+    await p.evaluate((f) => window.__troll.vakna(f), fras);
+    await p.waitForTimeout(2800);
+    const d = (await sparat(p)).ang?.at(-1);
+    kolla(`G "${fras}" blir saken ${kropp}`, d?.kropp === kropp, { kropp: d?.kropp });
+    kolla(`G "${fras}": boken stängs`, !(await synlig(p, "[data-testid=bok-skarm]")));
+    kolla(`G "${fras}": modellen syns (3D-mål)`, !!(d && (await malAv(p, d.uid))));
+  }
+  await stangBok(p);
+  await bild(p, "b62-G-regnbage-eld.png");
+  for (const [fras, prov] of [["en katt med regnbåge", (d) => d?.kropp === "katt" && d?.monster === "regnbåge"], ["en drake med eld", (d) => d?.kropp === "drake" && (d?.formagor ?? []).includes("flammor")]]) {
+    await p.evaluate((f) => window.__troll.vakna(f), fras);
+    await p.waitForTimeout(2800);
+    const d = (await sparat(p)).ang?.at(-1);
+    kolla(`G "${fras}" behåller attributet`, prov(d), { kropp: d?.kropp, monster: d?.monster, formagor: d?.formagor });
+  }
+  await stangBok(p);
+  await bild(p, "b62-G-attribut.png");
   await ctx.close();
 });
 
