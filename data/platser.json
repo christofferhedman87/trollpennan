@@ -21,9 +21,31 @@
    },
    "milstolpe": null,
    "miljo": {},
-   "zoner": [],
+   "zoner": [
+    {
+     "id": "angen",
+     "typ": "land",
+     "rekt": [
+      0,
+      0,
+      1,
+      1
+     ]
+    },
+    {
+     "id": "damm",
+     "typ": "vattenyta",
+     "rekt": [
+      0.5251,
+      0.6402,
+      0.6154,
+      0.7506
+     ]
+    }
+   ],
    "start": [],
-   "uppdrag": []
+   "uppdrag": [],
+   "kant_marginal": 0.28
   },
   {
    "id": "skogen",

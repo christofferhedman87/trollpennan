@@ -5,6 +5,8 @@ import ordJson from "../../data/ord.json" with { type: "json" };
 import type { Utfall } from "./typer.ts";
 
 export const KAN_INTE_RITA = aterkopplingJson.kan_inte_rita;
+/** B6.3 (H): uppmaningen står så här länge (ms) eller tills barnet trycker på den. Minst 5 s. */
+export const KAN_INTE_RITA_MS = Math.max(5000, (aterkopplingJson as { kan_inte_rita_ms?: number }).kan_inte_rita_ms ?? 6000);
 const KANDA = new Set<string>();
 for (const o of (ordJson as { ord: { id: string; visa?: string; former?: string[] }[] }).ord) {
   for (const f of [o.id, o.visa, ...(o.former ?? [])]) if (f) KANDA.add(f.toLowerCase());

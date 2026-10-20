@@ -3,7 +3,7 @@ import type { Sparad } from "../brygga.ts";
 
 export type Slot = "djur" | "farg" | "storlek" | "monster" | "formaga" | "tillbehor";
 export type Val = Partial<Record<Slot, Ord>>;
-export type Banner = { id: number; text: string; slag: "okand" | "sparr" | "ovr" | "sov" };
+export type Banner = { id: number; text: string; slag: "okand" | "sparr" | "ovr" | "sov"; ms?: number; tryck?: boolean };
 export type Bubbla = { id: number; text: string; x: number; y: number; hjarta: boolean; ovan?: boolean };
 export type Forslag = { token: string; text: string; forslag: ForslagKort[] };
 export type VisKort = { slag: "djur"; spec: Sparad } | { slag: "bygg"; formel: string } | null;

@@ -122,6 +122,8 @@ width:22px;height:22px;color:var(--color-berry);fill:var(--color-berry)}
 position:absolute;top:118px;left:8px;right:8px;bottom:auto;z-index:6;pointer-events:none;flex-direction:column;gap:6px;display:flex}
 .banner{
 font-size:var(--text-ui);background:var(--color-cream);color:var(--color-ink);border-radius:14px;margin:0;padding:8px 12px;box-shadow:0 4px #2c24161f}
+.banner.tryck{
+pointer-events:auto;text-align:left;border:0;font:inherit;font-size:var(--text-ui);width:100%;cursor:pointer}
 .banner.okand{
 background:var(--color-lilac-soft);color:var(--color-lilac)}
 .banner.ovr{

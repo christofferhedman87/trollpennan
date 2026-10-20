@@ -24,7 +24,8 @@ type AngLagerProps = {
   hemma: Hemdjur[];
   liv: Record<string, { humor: string; humorMs: number; humorLangd: number; favorit: string; favoritHittad: boolean; hjartan: number; }>;
   fotoMal: { uid: string; x: number; y: number; } | null;
-  visaBanner: (texten: string, slag: Banner["slag"]) => void;
+  visaBanner: (texten: string, slag: Banner["slag"], ms?: number) => void;
+  stangBanner: () => void;
   visaMossa: (h: Parameters<typeof mossaHand>[0]) => void;
   setFotoMal: Dispatch<SetStateAction<{ uid: string; x: number; y: number; } | null>>;
   banners: Banner[];
@@ -49,7 +50,7 @@ type AngLagerProps = {
   flyttaInDjur: (djurUid: string) => void;
 };
 
-export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal, visaBanner, visaMossa, setFotoMal, banners, bubblor, onskan, onskaOpp, onskaSyns, ank, oppnaOnska, meny, setMeny, omUidRef, setLage, setBokOpp, setLadaOpp, menyHem, setBoUid, lada, ladaOpp, boUid, boDjur, flyttaInDjur }: AngLagerProps) {
+export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal, visaBanner, stangBanner, visaMossa, setFotoMal, banners, bubblor, onskan, onskaOpp, onskaSyns, ank, oppnaOnska, meny, setMeny, omUidRef, setLage, setBokOpp, setLadaOpp, menyHem, setBoUid, lada, ladaOpp, boUid, boDjur, flyttaInDjur }: AngLagerProps) {
   // B6.1: tackbubblan (och andra pratbubblor) får aldrig ligga över "Guldord!"-banderollen eller över varandra.
   const lagerRef = useRef<HTMLDivElement>(null);
   const harBubblor = bubblor.length > 0;
@@ -112,11 +113,15 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
           ) : null}
           {panel === "spel" ? <StallChip visaBanner={visaBanner} /> : null}
           <div className="banderoller" role="status" aria-live="polite" aria-atomic="true">
-            {banners.map((b) => (
-              <p key={b.id} className={`banner ${b.slag}`} data-testid="puff">
-                {b.text}
-              </p>
-            ))}
+            {banners.map((b) => {
+              // B6.3 (H): en uppmaning barnet ska hinna läsa är en knapp – den står kvar tills tiden gått eller barnet trycker
+              const Tagg = b.tryck ? "button" : "p";
+              return (
+                <Tagg key={b.id} className={`banner ${b.slag}${b.tryck ? " tryck" : ""}`} data-testid="puff" {...(b.tryck ? { type: "button" as const, onClick: stangBanner } : {})}>
+                  {b.text}
+                </Tagg>
+              );
+            })}
           </div>
           {bubblor.map((b) => (
             <div key={b.id} className={b.ovan ? "bubbla ovan" : "bubbla"} style={bubblaStil(b.x, b.y)} data-testid="bubbla">

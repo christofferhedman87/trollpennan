@@ -3,6 +3,7 @@
 import entiteterJson from "../../data/entiteter.json" with { type: "json" };
 import tillgangarJson from "../../data/tillgangar.json" with { type: "json" };
 import storlekJson from "../../data/storlek.json" with { type: "json" };
+import fotJson from "../../data/fotavtryck.json" with { type: "json" };
 
 export type Typ = "djur" | "tillbehor" | "byggnad" | "foremal" | "natur";
 export type Rorelse = "land" | "flyg" | "sim" | "svavar";
@@ -77,9 +78,49 @@ export function modellUrl(kropp: string): string | null {
   return (m && TILLGANGAR[m]?.fil) || null;
 }
 
-export type StorlekKlass = { id: string; tak: number; zon: "bak" };
-const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak" }>; kategori: Record<string, string>; bak: { platser: [number, number][] } };
-export const BAK_PLATSER = STORLEK.bak.platser;
+export type StorlekKlass = { id: string; tak: number; zon: "bak"; kant?: number };
+export type BakZon = { zon: { x: [number, number]; z: [number, number] }; min_avstand: number; fri_x: [number, number][] };
+const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak"; kant?: number }>; kategori: Record<string, string>; bak: BakZon };
+/** B6.3 (J): den bakre zonen för stora saker (data/storlek.json). */
+export const BAK_ZON: BakZon = STORLEK.bak;
+
+/** Ett fast tal i [0, 1) per (text, n) – samma uid ger alltid samma läge (FNV-1a). */
+function hashTal(s: string, n: number): number {
+  let h = 0x811c9dc5 ^ n;
+  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 0x01000193);
+  h = Math.imul(h ^ (h >>> 15), 0x85ebca6b);
+  return ((h ^ (h >>> 13)) >>> 0) / 4294967296;
+}
+
+/** B6.3 (J): lägen i den bakre zonen för de stora sakerna, i ordning. Spridda i sidled och djupled (fast läge per uid,
+ *  ingen rad), minst min_avstand isär och aldrig i en fri_x-sträcka (grinden i staketet syns alltid). */
+export function bakPlatser(uids: string[], zon: BakZon = BAK_ZON): [number, number][] {
+  const ut: [number, number][] = [];
+  const [x0, x1] = zon.zon.x;
+  const [z0, z1] = zon.zon.z;
+  const ledig = (x: number) => !zon.fri_x.some(([a, b]) => x >= a && x <= b);
+  for (const [i, uid] of uids.entries()) {
+    let bast: [number, number] | null = null;
+    let bastD = -1;
+    for (let k = 0; k < 200; k++) {
+      const x = x0 + (x1 - x0) * hashTal(uid, 2 * k);
+      // djupled: gyllene snittet per ordning + jitter, så att två saker i följd aldrig hamnar på samma djup (ingen rad)
+      const z = z0 + (z1 - z0) * ((i * 0.618 + hashTal(uid, 2 * k + 1) * 0.3) % 1);
+      if (!ledig(x)) continue;
+      const d = Math.min(Infinity, ...ut.map(([ux, uz]) => Math.hypot(ux - x, uz - z)));
+      if (d >= zon.min_avstand) {
+        bast = [x, z];
+        break;
+      }
+      if (d > bastD) {
+        bastD = d;
+        bast = [x, z];
+      }
+    }
+    ut.push(bast ?? [x1, z0]);
+  }
+  return ut.map(([x, z]) => [Math.round(x * 100) / 100, Math.round(z * 100) / 100]);
+}
 
 /** B6.1 (E): storleksklassen för en sak ur data/storlek.json (via kategorin). Djur har aldrig någon klass. */
 export function storlekKlass(kropp: string): StorlekKlass | null {
@@ -104,6 +145,30 @@ export function takSkala(kropp: string, skala: number): number {
   return Math.min(skala, k.tak / Math.max(0.001, malhojd(kropp)));
 }
 
+const FOT = (fotJson as { halvbredd: Record<string, number> }).halvbredd;
+/** B6.3: djuren vickar så här långt från sin plats (djur.tsx: x ±0,22, z ±0,16, hypot ≈ 0,27), saker står still. */
+export const VICKNING = 0.27;
+/** B6.3: fri strand mellan kroppens kant och vattnet (Doodle: halva bredden + 0,15, inte bara mitten). */
+export const FOT_MARGINAL = 0.15;
+
+/** B6.3: hur långt från vattnet mitten måste stå: halva bredden ur modellens bbox (data/fotavtryck.json, barnets
+ *  storleksord inräknat; saknas raden 0,5 × målhöjden), minst klassens kant, plus vickningen för djur och marginalen. */
+export function fotKant(kropp: string, skala = 1): number {
+  const halv = (FOT[kropp] ?? 0.5 * malhojd(kropp)) * takSkala(kropp, skala || 1);
+  return Math.max(halv, storlekKlass(kropp)?.kant ?? 0) + (arSak(kropp) ? 0 : VICKNING) + FOT_MARGINAL;
+}
+
+/** B6.3 (Doodle 09:17): kroppens radie för siktzonen: halva bredden (eller klassens kant), vickningen för djur, 0,1. */
+export function siktRadie(kropp: string, skala = 1): number {
+  return fotKant(kropp, skala) - FOT_MARGINAL + 0.1;
+}
+
+/** B6.3 (Doodle 09:17): kroppens överkant för siktzonen: målhöjden under taket, för djur även studs och pratbubblan
+ *  (HumorIkon, Html vid målhöjd + 0,22, ungefär 0,3 hög). */
+export function siktHojd(kropp: string, skala = 1): number {
+  return malhojd(kropp) * takSkala(kropp, skala || 1) + (arSak(kropp) ? 0.05 : 0.6);
+}
+
 /** R3G: allt med modell som inte är ett djur (föremål, natur, byggnad, mat, fordon, kläder) står still på ängen. */
 export function arSak(kropp: string): boolean {
   const e = ENTITETER[kropp];
@@ -115,8 +180,14 @@ export function arSak(kropp: string): boolean {
 export function skalaFor(kropp: string, h: number, b: number, d: number): number {
   const mal = malhojd(kropp);
   const matt = arSak(kropp) ? Math.max(h, 0.6 * Math.max(b, d)) : h;
-  return mal / Math.max(0.001, matt);
+  const s = mal / Math.max(0.001, matt);
+  // B6.3: ingen skapelse bredare än slottet (2 × MAX_HALVBREDD) – långa modeller (apatosaurus 7,2, golem 5,1, neontetra
+  // 2,9 breda) täckte dammen och fick ingen torr plats. Mäts på halva största bredden, som fotavtryck.json.
+  return Math.min(s, MAX_HALVBREDD / Math.max(0.001, 0.5 * Math.max(b, d)));
 }
+
+/** B6.3: största halva bredden på marken (världsenheter) en skapelse får ritas med; slottet är 1,15. */
+export const MAX_HALVBREDD = 1.2;
 
 export function artFarg(kropp: string): string {
   return ENTITETER[kropp]?.art ?? STANDARD_ART;

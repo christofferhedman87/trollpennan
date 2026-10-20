@@ -1,4 +1,6 @@
 {
  "_om": "B6.1 (F): ett ord som pennan känner igen men inte kan rita ensamt (färg, storlek, mönster, förmåga …) ger alltid en synlig banderoll och boken stängs.",
- "kan_inte_rita": "Det där kan jag inte rita ensamt än. Skriv ett djur också – till exempel en katt!"
+ "kan_inte_rita": "Det där kan jag inte rita ensamt än. Skriv ett djur också – till exempel en katt!",
+ "_om_ms": "B6.3 (H): uppmaningen står minst så här länge (ms, aldrig under 5000) eller tills barnet trycker på den.",
+ "kan_inte_rita_ms": 6000
 }

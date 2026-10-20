@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { MILJO, markTextur } from "../miljo.ts";
 import { sagaNatt } from "../saga.ts";
 import { TOON_MAP } from "./djur.tsx";
+import { SVAJ_AMP } from "./damm.ts";
 
 const MARK_TEX = markTextur(THREE);
 const MARK_GEO = (() => {
@@ -47,7 +48,7 @@ export function SvajMark({ color, natt, utanTextur = false }: { color: string; n
           `#include <begin_vertex>
          float svaj = sin(transformed.x * 0.48 + uTime * 1.05) * cos(transformed.y * 0.4 + uTime * 0.75);
          float nara = 1.0 - clamp(length(transformed.xy) / 16.0, 0.0, 1.0);
-         transformed.z += svaj * 0.06 * nara;
+         transformed.z += svaj * ${SVAJ_AMP.toFixed(3)} * nara;
         `,
         );
     },
