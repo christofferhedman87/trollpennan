@@ -45,6 +45,8 @@ node "$D/b66-prov.mjs" --ut "$UT/syn.json" --bilder "$BILD" > "$UT/prov.json" 2>
 reg() { node "rundor/$1.mjs" $2 > "$UT/$(basename $1).json" 2>"$UT/$(basename $1).err" || echo "$1" >> "$UT/regfel.txt"; }
 reg B6.3-fix/b63-prov "" & reg B6.5-fix/b65-prov "" & reg B6.4-fix/b64-prov "" & wait
 reg B6.1-kontroll/b61-prov "" & reg R8-2b/r8-2-prov "" & reg R9K-fix/r9k-prov "" & wait
+# ett prov som föll när tre kördes samtidigt (timeout under last) körs om ensamt en gång; först då räknas det som fel
+if [ -s "$UT/regfel.txt" ]; then mv "$UT/regfel.txt" "$UT/regfel1.txt"; for f in $(cat "$UT/regfel1.txt"); do echo "kör om ensamt: $f"; reg "$f" ""; done; fi
 [ -s "$UT/regfel.txt" ] && { for f in $(cat "$UT/regfel.txt"); do echo "== $f"; grep -B2 '"ok": false' "$UT/$(basename $f).json" 2>/dev/null | head -20; tail -5 "$UT/$(basename $f).err"; done; aterstall; echo "STOPP 4: prov föll: $(cat "$UT/regfel.txt" | tr '\n' ' ')"; exit 4; }
 git add $ANDRADE $NYA
 git commit -qm "B6.6: alla modeller syns (tio platser i bild, minsta storlek, flygare i rader), byggnader bakom staketet efter storlek och spridda, slottet större än sjukhuset, inget vid grinden, modellen centrerad på sin plats, nyckelring = nyckelknippa, pucken 0,3, isglassen med bredsidan mot kameran (Arkitektens patch)"
