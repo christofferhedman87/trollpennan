@@ -1,6 +1,6 @@
 {
  "version": 1,
- "_om": "GENERERAD av scripts/rost-generera.mjs, ändra inte för hand. Nyckel = FNV-1a 32 av den normaliserade texten som visas (src/spel/rostManifest.ts). f = fil i public/, ms = längd, r = talare (data/rost.json), id = källa, t = texten. mallar = text med {x} (TTS-2): de fasta delarna är egna rader, {x} slås upp bland raderna (värden) och annars är det barnets eget ord.",
+ "_om": "GENERERAD av scripts/rost-generera.mjs, ändra inte för hand. Nyckel = FNV-1a 32 av den normaliserade texten som visas (src/spel/rostManifest.ts). f = fil i public/, ms = längd, r = talare (data/rost.json), id = källa, t = texten som visas, tal = det som lästes in när det skiljer sig (signaturen \" /Doktor Bengtsson\" bort). mallar = text med {x} (TTS-2): de fasta delarna är egna rader, {x} slås upp bland raderna (värden) och annars är det barnets eget ord.",
  "modell": "eleven_multilingual_v2",
  "intro": {
   "f": "/ljud/rost/d2ae27a14447d446.mp3",
@@ -658,11 +658,12 @@
    "n": -16
   },
   "0076858d": {
-   "f": "/ljud/rost/ba499c5a76dd32ec.mp3",
-   "ms": 7340,
+   "f": "/ljud/rost/5d82496c4b58f327.mp3",
+   "ms": 6348,
    "r": "bengtsson",
    "id": "skyltar.json:.skyltar[].text_bengtsson",
    "t": "Mossugglan sover hela dagen. Jag tror att hon vaknar om man lägger något blått vid hennes träd. /Doktor Bengtsson",
+   "tal": "Mossugglan sover hela dagen. Jag tror att hon vaknar om man lägger något blått vid hennes träd.",
    "n": -16
   },
   "0082bdd1": {
@@ -4186,11 +4187,12 @@
    "n": -16
   },
   "2b619514": {
-   "f": "/ljud/rost/072a0695fca775fb.mp3",
-   "ms": 4493,
+   "f": "/ljud/rost/64230e979f8c4439.mp3",
+   "ms": 3004,
    "r": "bengtsson",
    "id": "skyltar.json:.skyltar[].text_bengtsson",
    "t": "Fyren på ön har slocknat! Vem kan tända den igen? /Doktor Bengtsson",
+   "tal": "Fyren på ön har slocknat! Vem kan tända den igen?",
    "n": -16
   },
   "2b656d90": {
@@ -6282,11 +6284,12 @@
    "n": -16
   },
   "4113b1d6": {
-   "f": "/ljud/rost/57f79ae04e2e337b.mp3",
-   "ms": 7131,
+   "f": "/ljud/rost/074c7f1ae0ba1dd8.mp3",
+   "ms": 5512,
    "r": "bengtsson",
    "id": "skyltar.json:.skyltar[].text_bengtsson",
    "t": "Ekorren har tappat sin silverkotte bland svamparna. Kan du hitta den och lägga den vid stubben? /Doktor Bengtsson",
+   "tal": "Ekorren har tappat sin silverkotte bland svamparna. Kan du hitta den och lägga den vid stubben?",
    "n": -16
   },
   "4118d73d": {
@@ -7786,11 +7789,12 @@
    "n": -16
   },
   "514b29fb": {
-   "f": "/ljud/rost/d79d9ea4e2aec7ff.mp3",
-   "ms": 7288,
+   "f": "/ljud/rost/4cae60198dcb1326.mp3",
+   "ms": 4963,
    "r": "bengtsson",
    "id": "skyltar.json:.skyltar[].text_bengtsson",
    "t": "Någon har gömt en skattkista här. Ledtråd: den står där kristallerna är lila. /Doktor Bengtsson",
+   "tal": "Någon har gömt en skattkista här. Ledtråd: den står där kristallerna är lila.",
    "n": -16
   },
   "515e2eeb": {
@@ -8146,11 +8150,12 @@
    "n": -16
   },
   "55a743ed": {
-   "f": "/ljud/rost/9a16b439420a3e96.mp3",
-   "ms": 7053,
+   "f": "/ljud/rost/1f94b40ed91c2c23.mp3",
+   "ms": 4963,
    "r": "bengtsson",
    "id": "skyltar.json:.skyltar[].text_bengtsson",
    "t": "Gamla bävern bygger en ny damm på ön men har slut på pinnar. Kan du hjälpa honom? /Doktor Bengtsson",
+   "tal": "Gamla bävern bygger en ny damm på ön men har slut på pinnar. Kan du hjälpa honom?",
    "n": -16
   },
   "55d380c1": {
@@ -9194,11 +9199,12 @@
    "n": -16
   },
   "6294f8da": {
-   "f": "/ljud/rost/63889d3d7eae0d92.mp3",
-   "ms": 6296,
+   "f": "/ljud/rost/995cff67396b1367.mp3",
+   "ms": 3788,
    "r": "bengtsson",
    "id": "skyltar.json:.skyltar[].text_bengtsson",
    "t": "Kristallgrodan sjunger när den får något som glänser. Har du hört den? /Doktor Bengtsson",
+   "tal": "Kristallgrodan sjunger när den får något som glänser. Har du hört den?",
    "n": -16
   },
   "629c14a7": {
@@ -9799,6 +9805,14 @@
    "r": "pennan",
    "id": "varde:en morot",
    "t": "en morot",
+   "n": -16
+  },
+  "6aad3a34": {
+   "f": "/ljud/rost/d0a8a11a8d9a9bc3.mp3",
+   "ms": 1254,
+   "r": "pennan",
+   "id": "varde:brinnande",
+   "t": "brinnande",
    "n": -16
   },
   "6ad7f796": {
@@ -11226,11 +11240,12 @@
    "n": -16
   },
   "7b4b6c9e": {
-   "f": "/ljud/rost/d92990c5389a9dc0.mp3",
-   "ms": 5878,
+   "f": "/ljud/rost/0eac44c87ccbff22.mp3",
+   "ms": 4728,
    "r": "bengtsson",
    "id": "skyltar.json:.skyltar[].text_bengtsson",
    "t": "Längst in i grottan sover en drake. Den blir glad av allt som är sött. /Doktor Bengtsson",
+   "tal": "Längst in i grottan sover en drake. Den blir glad av allt som är sött.",
    "n": -16
   },
   "7b97b721": {
@@ -11479,6 +11494,14 @@
    "r": "bengtsson",
    "id": "bengtsson.json:grotta-mjuk-vila.klart",
    "t": "Nu tassar jag tyst förbi viloplatsen!",
+   "n": -16
+  },
+  "7f655950": {
+   "f": "/ljud/rost/194e722c2e4edbf3.mp3",
+   "ms": 1384,
+   "r": "pennan",
+   "id": "varde:glödande",
+   "t": "glödande",
    "n": -16
   },
   "7f89a403": {
@@ -15761,12 +15784,21 @@
    "t": "En riktig drake! Den är ju jättesnäll.",
    "n": -16
   },
+  "b4c63bfc": {
+   "f": "/ljud/rost/8217c78df55b475b.mp3",
+   "ms": 1437,
+   "r": "pennan",
+   "id": "varde:flammande",
+   "t": "flammande",
+   "n": -16
+  },
   "b4e552e2": {
-   "f": "/ljud/rost/87a6f9a67d57b7ce.mp3",
-   "ms": 7758,
+   "f": "/ljud/rost/1ebf1e609f38e363.mp3",
+   "ms": 6296,
    "r": "bengtsson",
    "id": "skyltar.json:.skyltar[].text_bengtsson",
    "t": "Jag har sett något vitt och skimrande under vattnet vid bryggan. Det tycker nog om sådant som glänser. /Doktor Bengtsson",
+   "tal": "Jag har sett något vitt och skimrande under vattnet vid bryggan. Det tycker nog om sådant som glänser.",
    "n": -16
   },
   "b554f920": {
@@ -18778,11 +18810,12 @@
    "n": -16
   },
   "d95dedfa": {
-   "f": "/ljud/rost/8b3afcaa05f6c304.mp3",
-   "ms": 12356,
+   "f": "/ljud/rost/df927fa25c1d59c3.mp3",
+   "ms": 9561,
    "r": "pennan",
    "id": "skyltar.json:.skyltar[].text",
    "t": "Jag har tappat min fina silverkotte någonstans bland svamparna. Om du hittar den, lägg den vid stubben. /Ekorren",
+   "tal": "Jag har tappat min fina silverkotte någonstans bland svamparna. Om du hittar den, lägg den vid stubben.",
    "n": -16
   },
   "d9643031": {

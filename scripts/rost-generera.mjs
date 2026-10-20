@@ -12,6 +12,7 @@ import { execFile, execFileSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { utanSignatur } from "../src/spel/rostText.ts";
 
 const arg = (n, d) => {
   const i = process.argv.indexOf(`--${n}`);
@@ -145,7 +146,9 @@ async function samlaKallor() {
       if (!traff(k.falt, p) || !/\p{L}/u.test(s)) continue;
       const t = normalisera(s);
       if (!t.includes("{")) {
-        rader.push({ id: `${k.fil}:${p}`, t, talare: k.talare });
+        // signaturen (" /Doktor Bengtsson") visas men läses inte: 'tal' = det som skickas till TTS och hashas; nyckeln är den visade texten
+        const tal = utanSignatur(t);
+        rader.push({ id: `${k.fil}:${p}`, t, talare: k.talare, ...(tal !== t ? { tal } : {}) });
         continue;
       }
       mallar.push({ m: t, r: k.talare, id: `${k.fil}:${p}` });
@@ -247,17 +250,17 @@ const texter = [];
 }
 const nya = [];
 for (const r of texter) {
-  const h = hash(r.t, r.talare);
+  const h = hash(r.tal ?? r.t, r.talare);
   const f = `/ljud/rost/${h}.mp3`;
   const fil = path.join(UT, `${h}.mp3`);
   const k = nyckel(r.t);
   if (fs.existsSync(fil)) {
     const g = gammal.rader?.[k]?.f === f ? gammal.rader[k] : null;
-    rader[k] = { f, ms: g ? g.ms : ms(fil), r: r.talare, id: r.id, t: r.t, ...(g?.n !== undefined ? { n: g.n } : {}) };
+    rader[k] = { f, ms: g ? g.ms : ms(fil), r: r.talare, id: r.id, t: r.t, ...(r.tal ? { tal: r.tal } : {}), ...(g?.n !== undefined ? { n: g.n } : {}) };
     continue;
   }
   if (TORR) {
-    behov.tecken += r.t.length;
+    behov.tecken += (r.tal ?? r.t).length;
     behov.rader++;
     continue;
   }
@@ -269,14 +272,14 @@ async function arbetare() {
   while (nasta < nya.length) {
     const r = nya[nasta++];
     if (stopp) continue;
-    if (anvant + r.t.length * 0.5 > TAK) {
+    if (anvant + (r.tal ?? r.t).length * 0.5 > TAK) {
       stopp = `taket ${TAK} krediter nått (${anvant} använda)`;
       continue;
     }
     const tmp = `${r.fil}.tmp.mp3`;
-    koda(await api(r.talare, r.t), tmp);
+    koda(await api(r.talare, r.tal ?? r.t), tmp);
     fs.renameSync(tmp, r.fil);
-    rader[r.k] = { f: r.f, ms: ms(r.fil), r: r.talare, id: r.id, t: r.t };
+    rader[r.k] = { f: r.f, ms: ms(r.fil), r: r.talare, id: r.id, t: r.t, ...(r.tal ? { tal: r.tal } : {}) };
     if (anrop % 50 === 0) console.error(`… ${anrop} anrop, ${anvant} krediter`);
   }
 }
@@ -332,7 +335,7 @@ for (const f of fs.readdirSync(UT)) {
 const sorterad = Object.fromEntries(Object.entries(rader).sort(([a], [b]) => a.localeCompare(b)));
 const manifest = {
   version: 1,
-  _om: "GENERERAD av scripts/rost-generera.mjs, ändra inte för hand. Nyckel = FNV-1a 32 av den normaliserade texten som visas (src/spel/rostManifest.ts). f = fil i public/, ms = längd, r = talare (data/rost.json), id = källa, t = texten. mallar = text med {x} (TTS-2): de fasta delarna är egna rader, {x} slås upp bland raderna (värden) och annars är det barnets eget ord.",
+  _om: "GENERERAD av scripts/rost-generera.mjs, ändra inte för hand. Nyckel = FNV-1a 32 av den normaliserade texten som visas (src/spel/rostManifest.ts). f = fil i public/, ms = längd, r = talare (data/rost.json), id = källa, t = texten som visas, tal = det som lästes in när det skiljer sig (signaturen \" /Doktor Bengtsson\" bort). mallar = text med {x} (TTS-2): de fasta delarna är egna rader, {x} slås upp bland raderna (värden) och annars är det barnets eget ord.",
   modell: CFG.modell,
   intro,
   mallar: K.mallar,
