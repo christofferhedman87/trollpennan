@@ -133,11 +133,12 @@ await blok("H", async () => {
   await ctx.close();
 });
 
-// I: djur och figurer runt dammen, fisken i den. Robust: lägena läses i världen (window.__tredPos, så som de ritas,
+// I: djur, figurer och småsaker (kaffekanna, väggklocka) runt dammen, fisken i den. Robust: lägena läses i världen (window.__tredPos, så som de ritas,
 // vickningen inräknad) och jämförs med dammen (window.__damm) – inte pixlar, som djur framför dammen skymmer.
 await blok("I", async () => {
   const { ctx, p } = await sida({});
-  const ord = ["en ko", "en gris", "en bebis", "en katt", "en hund", "en pojke", "en fisk", "ett slott", "en buss"];
+  // Doodle 06:14: kaffekannan, väggklockan och bebisen hamnade i dammen (M20/M20b-saker).
+  const ord = ["en ko", "en gris", "en bebis", "en katt", "en hund", "en pojke", "en fisk", "ett slott", "en buss", "en kaffekanna", "en väggklocka"];
   for (const f of ord) {
     await p.evaluate((x) => window.__troll.vakna(x), f);
     await p.waitForTimeout(2300);
@@ -156,8 +157,8 @@ await blok("I", async () => {
     await p.waitForTimeout(400);
   }
   const land = Object.entries(varst).filter(([k]) => k !== "fisk");
-  kolla("I alla 9 skapelser har ett läge", Object.keys(varst).length === spar.length && spar.length === ord.length, { varst });
-  kolla("I inget djur, ingen figur och ingen sak står i dammen (minst 0,1 utanför kanten i alla 12 mätningar)", land.length >= 8 && land.every(([, a]) => a >= 0.1), { varst });
+  kolla("I alla 11 skapelser har ett läge", Object.keys(varst).length === spar.length && spar.length === ord.length, { varst });
+  kolla("I inget djur, ingen figur och ingen sak står i dammen (minst 0,1 utanför kanten i alla 12 mätningar)", land.length >= 10 && land.every(([, a]) => a >= 0.1), { varst });
   kolla("I fisken simmar i dammen", (varst.fisk ?? 1) < 0, { fisk: varst.fisk });
   await bild(p, "b63-I-bebis.png");
   await ctx.close();
