@@ -2409,6 +2409,66 @@
    "forsta": "M",
    "langd": 7,
    "granskad": false
+  },
+  "sjöjungfru": {
+   "gata": "Hon har fiskstjärt i stället för ben och sjunger på en klippa i havet.",
+   "forsta": "S",
+   "langd": 10,
+   "granskad": false
+  },
+  "havsfru": {
+   "gata": "Hon har fiskstjärt i stället för ben och sjunger på en klippa i havet.",
+   "forsta": "H",
+   "langd": 7,
+   "granskad": false
+  },
+  "ängel": {
+   "gata": "Den har vita vingar och en gyllene ring som svävar över huvudet.",
+   "forsta": "Ä",
+   "langd": 5,
+   "granskad": false
+  },
+  "dvärg": {
+   "gata": "Han är kort, har långt skägg och gräver efter guld i berget.",
+   "forsta": "D",
+   "langd": 5,
+   "granskad": false
+  },
+  "ande": {
+   "gata": "Den bor i en gammal lampa och ger dig tre önskningar.",
+   "forsta": "A",
+   "langd": 4,
+   "granskad": false
+  },
+  "djinn": {
+   "gata": "Den bor i en gammal lampa och ger dig tre önskningar.",
+   "forsta": "D",
+   "langd": 5,
+   "granskad": false
+  },
+  "sjöorm": {
+   "gata": "En jättelång orm som slingrar sig fram genom vågorna.",
+   "forsta": "S",
+   "langd": 6,
+   "granskad": false
+  },
+  "kraken": {
+   "gata": "Ett jättestort bläckfiskodjur som drar ner skepp i havet.",
+   "forsta": "K",
+   "langd": 6,
+   "granskad": false
+  },
+  "fenix": {
+   "gata": "En fågel av eld som föds på nytt ur askan.",
+   "forsta": "F",
+   "langd": 5,
+   "granskad": false
+  },
+  "pegasus": {
+   "gata": "En vit häst med vingar som flyger bland molnen.",
+   "forsta": "P",
+   "langd": 7,
+   "granskad": false
   }
  }
 }

@@ -7871,6 +7871,176 @@
    "del": {
     "kropp": "makrill"
    }
+  },
+  {
+   "id": "sjöjungfru",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "sjöjungfru",
+   "genus": "u",
+   "former": [
+    "sjöjungfru",
+    "sjöjungfrun",
+    "sjöjungfrur",
+    "sjöjungfrurna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M19 trollpennan-saga-m19",
+   "del": {
+    "kropp": "sjojungfru"
+   }
+  },
+  {
+   "id": "havsfru",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "havsfru",
+   "genus": "u",
+   "former": [
+    "havsfru",
+    "havsfrun",
+    "havsfruar",
+    "havsfruarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M19 trollpennan-saga-m19",
+   "del": {
+    "kropp": "sjojungfru"
+   }
+  },
+  {
+   "id": "ängel",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "ängel",
+   "genus": "u",
+   "former": [
+    "ängel",
+    "ängeln",
+    "änglar",
+    "änglarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M19 trollpennan-saga-m19",
+   "del": {
+    "kropp": "angel"
+   }
+  },
+  {
+   "id": "dvärg",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "dvärg",
+   "genus": "u",
+   "former": [
+    "dvärg",
+    "dvärgen",
+    "dvärgar",
+    "dvärgarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M19 trollpennan-saga-m19",
+   "del": {
+    "kropp": "dvarg"
+   }
+  },
+  {
+   "id": "ande",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "ande",
+   "genus": "u",
+   "former": [
+    "ande",
+    "anden",
+    "andar",
+    "andarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M19 trollpennan-saga-m19",
+   "del": {
+    "kropp": "ande"
+   }
+  },
+  {
+   "id": "djinn",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "djinn",
+   "genus": "u",
+   "former": [
+    "djinn",
+    "djinnen"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M19 trollpennan-saga-m19",
+   "del": {
+    "kropp": "ande"
+   }
+  },
+  {
+   "id": "sjöorm",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "sjöorm",
+   "genus": "u",
+   "former": [
+    "sjöorm",
+    "sjöormen",
+    "sjöormar",
+    "sjöormarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M19 trollpennan-saga-m19",
+   "del": {
+    "kropp": "sjoorm"
+   }
+  },
+  {
+   "id": "kraken",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kraken",
+   "genus": "u",
+   "former": [
+    "kraken"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M19 trollpennan-saga-m19",
+   "del": {
+    "kropp": "kraken"
+   }
+  },
+  {
+   "id": "fenix",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "fenix",
+   "genus": "u",
+   "former": [
+    "fenix",
+    "fenixen"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M19 trollpennan-saga-m19",
+   "del": {
+    "kropp": "fenix"
+   }
+  },
+  {
+   "id": "pegasus",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "pegasus",
+   "genus": "u",
+   "former": [
+    "pegasus"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M19 trollpennan-saga-m19",
+   "del": {
+    "kropp": "pegasus"
+   }
   }
  ],
  "kollisioner": {},
