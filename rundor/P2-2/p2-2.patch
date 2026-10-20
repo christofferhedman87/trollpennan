@@ -1,0 +1,778 @@
+diff --git a/data/forsta-stunden.json b/data/forsta-stunden.json
+index 92cea5a..6f14d23 100644
+--- a/data/forsta-stunden.json
++++ b/data/forsta-stunden.json
+@@ -1,5 +1,18 @@
+ {
+   "_om": "P2: den guidade starten. Stegen visas i ordning efter introt; ett steg är klart när villkoret i klart_nar är uppfyllt i sparningen (useMinne). Villkor: {falt, minst, varde?}. Fältet räknas som längden på en lista, antalet nycklar i ett objekt (eller antalet värden lika med varde), ett tal eller sant/falskt (1/0). pekar_pa: 'testid:a|testid:b' (första synliga) eller '3d:<namn>' (skärmpunkt i window.__tredMal). albumKropp = olika djursorter barnet väckt; introts kanin räknas, därför 2 för första egna djuret och 5 för tre till. Ändra här, ingen kod.",
++  "titel": {
++    "logga": "Trollpennan",
++    "under": "Det du skriver vaknar.",
++    "fortsatt": "Fortsätt",
++    "borja": "Börja",
++    "borja_om": "Börja om med en ny värld",
++    "fraga": "Din värld med alla djur försvinner. Är du säker?",
++    "nej": "Nej, tillbaka",
++    "ja": "Ja, börja om",
++    "angra": "Ta tillbaka min gamla värld",
++    "uppdrag": "Uppdrag",
++    "skriv": "Skriv"
++  },
+   "senast": {
+     "med_djur": "Senast väckte du {text}.",
+     "tom": "Ängen väntar på ditt första ord."
+diff --git a/data/intro.json b/data/intro.json
+index 85f8286..f9a0730 100644
+--- a/data/intro.json
++++ b/data/intro.json
+@@ -11,6 +11,7 @@
+     "ord": "katt",
+     "fras": "en katt",
+     "uppmaning": "Skriv katt!",
++    "ljud": ["k", "a", "tt"],
+     "vakna": "Vakna!",
+     "hjalp": "Hjälp mig",
+     "tillbaka": "Jag vill skriva"
+diff --git a/src/pages-main.tsx b/src/pages-main.tsx
+index e1c9520..9d77d98 100644
+--- a/src/pages-main.tsx
++++ b/src/pages-main.tsx
+@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
+ import "./styles.css";
+ import texter from "../data/upplevelse.json";
+ const Spel = lazy(() => import("./spel/Spel").then(m => ({ default: m.Spel })));
++// P2-2: titelskärmen ligger över spelet (som laddar bakom), så att ängen lever bakom "Fortsätt".
++const Titel = lazy(() => import("./spel/ui/Titel.tsx").then(m => ({ default: m.Titel })));
+ class SpelGrans extends Component<{ children: ReactNode }, { fel: boolean }> {
+   state = { fel: false };
+   static getDerivedStateFromError() { return { fel: true }; }
+@@ -11,4 +13,4 @@ class SpelGrans extends Component<{ children: ReactNode }, { fel: boolean }> {
+     return this.props.children;
+   }
+ }
+-createRoot(document.getElementById("root")!).render(<SpelGrans><Suspense fallback={<main className="spel laddar"><h1>Trollpennan</h1><p role="status">{texter.load}</p></main>}><Spel /></Suspense></SpelGrans>);
++createRoot(document.getElementById("root")!).render(<SpelGrans><Suspense fallback={<main className="spel laddar"><h1>Trollpennan</h1><p role="status">{texter.load}</p></main>}><Spel /><Titel /></Suspense></SpelGrans>);
+diff --git a/src/spel/Spel.tsx b/src/spel/Spel.tsx
+index ea8f2ca..33b5a5c 100644
+--- a/src/spel/Spel.tsx
++++ b/src/spel/Spel.tsx
+@@ -99,7 +99,7 @@ import { KopDialog, StjarnDialog, MossaPanel, SkyltDialog, ValjDjurDialog, VisKo
+ import { ForalderDialog } from "./ui/ForalderDialog.tsx";
+ import { nattvaken } from "./entiteter.ts";
+ import { Hud, HudBot, MenyPanel } from "./ui/Hud.tsx";
+-import { NpcFigur, NpcIkon } from "./ui/NpcFigur.tsx";
++import { NpcFigur } from "./ui/NpcFigur.tsx";
+ import { useBengtsson } from "./ui/useBengtsson.ts";
+ import { usePlats } from "./ui/usePlats.ts";
+ import { START_PLATS } from "./platser.ts";
+@@ -1778,14 +1778,10 @@ export function Spel() {
+         {omrade && !kartaOpp ? <OmradeHud tryckPlats={tryckPlats} bytFolje={bytFolje} /> : null}
+         <Hud oppnaStjarnor={() => setStjarnInfo(true)} haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} />
+         <MenyPanel menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} senare={senare} panel={panel} varld={varld} valjVarld={valjVarld} lasMeny={lasMeny} oppnaUppdrag={oppnaUppdrag} setBokOpp={setBokOpp} oppnaKarta={oppnaKarta} setIntroNy={setIntroNy} setIntro={setIntro} menySaker={menySaker} borjaOm={borjaOm} />
+-        {varld === "ang" && !omrade && !bokOpp && !menyOpp && !intro && !overlayRef.current ? (
+-          bengtsson.synlig || platsUi.plats !== START_PLATS ? (
+-            <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
+-          ) : (
+-            <NpcIkon npc={bengtsson.npcId} nytt={false} text={bengtsson.ikonText} alt={bengtsson.ikonAlt} onClick={bengtsson.klicka} />
+-          )
++        {varld === "ang" && !omrade && !bokOpp && !menyOpp && !intro && !overlayRef.current && (bengtsson.synlig || platsUi.plats !== START_PLATS) ? (
++          <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
+         ) : null}
+-        <HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} />
++        <HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} npc={bengtsson} />
+       </section>
+ 
+       {bokOpp ? <BokSkarm stangBok={stangBok} visaBanner={visaBanner} andrar={andrar} panel={panel} lage={lage} setLage={setLage} setForslag={setForslag} byggPuff={byggPuff} onskaOpp={onskaOpp} onskan={onskan} onskaSyns={onskaSyns} onskaDjur={onskaDjur} onskaEx={onskaEx} fyllExempel={fyllExempel} gavaTill={gavaTill} ang={ang} hemma={hemma} varld={varld} forslag={forslag} valjForslag={valjForslag} nejForslag={nejForslag} behover={behover} utfor={utfor} flik={flik} onskaKort={onskaKort} setFlik={setFlik} kort={kort} val={val} funna={funna} onskaIds={onskaIds} kortGang={kortGang} valjKort={valjKort} oppnaSkrivMig={oppnaSkrivMig} text={text} omrade={omrade} visaOnskaHjalp={visaOnskaHjalp} vaknaNu={vaknaNu} vaknaText={vaknaText} skrivTecken={skrivTecken} sudda={sudda} uppFlik={uppFlik} setUppFlik={setUppFlik} uppdragSpar={uppdragSpar} byggSida={byggSida} agdaSidor={agdaSidor} setByggSidaId={setByggSidaId} setByggPuff={setByggPuff} byggFras={byggFras} kopRad={kopRad} lastaSidor={lastaSidor} forsokKop={forsokKop} /> : null}
+diff --git a/src/spel/ang/byggnader.tsx b/src/spel/ang/byggnader.tsx
+index 584d4a7..9fa5843 100644
+--- a/src/spel/ang/byggnader.tsx
++++ b/src/spel/ang/byggnader.tsx
+@@ -207,6 +207,22 @@ export function SpokHus({ onSnart }: { onSnart: () => void }) {
+ 
+ export function Skogsstig({ onSnart }: { onSnart: () => void }) {
+   const gung = useRef(0);
++  const grind = useRef<THREE.Group>(null);
++  // P2-2: guidens 3D-ankare "grind" (data/forsta-stunden.json pekar_pa "3d:grind"), samma mönster som spökhusets husx/husy
++  useFrame((state) => {
++    const g = grind.current;
++    if (!g || state.clock.elapsedTime % 0.25 > 0.05) return;
++    g.getWorldPosition(_mal);
++    _mal.y += 0.45;
++    _mal.project(state.camera);
++    const mal = (window.__tredMal ??= {});
++    if (_mal.z > 1) {
++      delete mal.grind;
++      return;
++    }
++    const rect = state.gl.domElement.getBoundingClientRect();
++    mal.grind = { x: Math.round(rect.left + ((_mal.x + 1) / 2) * rect.width), y: Math.round(rect.top + ((1 - _mal.y) / 2) * rect.height) };
++  });
+   const ned = usePennTryck(() => {
+     gung.current = 1;
+     onSnart();
+@@ -217,7 +233,7 @@ export function Skogsstig({ onSnart }: { onSnart: () => void }) {
+         <planeGeometry args={[0.42, 1.6]} />
+         <meshToonMaterial color="#E6CBA0" gradientMap={TOON_MAP} />
+       </mesh>
+-      <group name="grind" position={[-0.7, 0, -2.15]} scale={1.05} onPointerDown={ned}>
++      <group ref={grind} name="grind" position={[-0.7, 0, -2.15]} scale={1.05} onPointerDown={ned}>
+         <mesh position={[-0.38, 0.32, 0]}>
+           <boxGeometry args={[0.09, 0.64, 0.09]} />
+           <meshStandardMaterial color="#8D6E63" flatShading />
+diff --git a/src/spel/forstaStunden.ts b/src/spel/forstaStunden.ts
+index b4669d4..4b7bf75 100644
+--- a/src/spel/forstaStunden.ts
++++ b/src/spel/forstaStunden.ts
+@@ -4,7 +4,8 @@ import forstaJson from "../../data/forsta-stunden.json" with { type: "json" };
+ 
+ export type Villkor = { falt: string; minst: number; varde?: string };
+ export type CoachSteg = { id: string; text: string; pekar_pa: string; klart_nar: Villkor };
+-type ForstaData = { senast: { med_djur: string; tom: string }; steg: CoachSteg[] };
++export type TitelText = { logga: string; under: string; fortsatt: string; borja: string; borja_om: string; fraga: string; nej: string; ja: string; angra: string; uppdrag: string; skriv: string };
++type ForstaData = { titel: TitelText; senast: { med_djur: string; tom: string }; steg: CoachSteg[] };
+ 
+ export const FORSTA = forstaJson as unknown as ForstaData;
+ 
+diff --git a/src/spel/intro.tsx b/src/spel/intro.tsx
+index e8c5b18..6a803a7 100644
+--- a/src/spel/intro.tsx
++++ b/src/spel/intro.tsx
+@@ -4,6 +4,7 @@ import upplevelseJson from "../../data/upplevelse.json" with { type: "json" };
+ import { sagaNu } from "./saga.ts";
+ import { rostIntro } from "./rostManifest.ts";
+ import { IntroSkriv, type IntroSkrivData } from "./ui/IntroSkriv.tsx";
++import { useStart } from "./start.ts";
+ 
+ type Scen = { fas: number; text: string; fran: number; ord?: number; ordklar?: boolean };
+ 
+@@ -55,6 +56,8 @@ export function Intro({
+   klarRef.current = onKlar;
+   stegRef.current = onSteg;
+   const scen = SCENER[i] ?? SCENER[0]!;
++  // P2-2: introt (klocka och röst) startar först när titelskärmen är stängd – trycket på "Börja" låser också upp ljudet
++  const titelOppen = useStart((st) => st.titelOppen);
+ 
+   useLayoutEffect(() => {
+     sagaNu.aktiv = true;
+@@ -69,6 +72,7 @@ export function Intro({
+ 
+   useEffect(() => {
+     // TTS-1: filen sätts först efter en mikrotask, så att ett intro som stängs direkt (introt redan sett) inte laddar något
++    if (titelOppen) return;
+     const audio = new Audio();
+     audio.preload = "auto";
+     audioRef.current = audio;
+@@ -159,7 +163,7 @@ export function Intro({
+       audio.pause();
+       avslutaRef.current = () => undefined;
+     };
+-  }, [ljudPa]);
++  }, [ljudPa, titelOppen]);
+ 
+   const horPennan = () => {
+     const audio = audioRef.current;
+diff --git a/src/spel/p22.test.ts b/src/spel/p22.test.ts
+new file mode 100644
+index 0000000..0685172
+--- /dev/null
++++ b/src/spel/p22.test.ts
+@@ -0,0 +1,92 @@
++// P2-2: titelskärmen (förslag A) – när den visas, "Börja om med en ny värld" med ångra inom sessionen, texterna i data.
++import { test } from "node:test";
++import assert from "node:assert/strict";
++import { ANGRA_NYCKEL, PROV_NYCKEL, angraBorjaOm, borjaOmMedKopia, harKopia, spelNycklar, visaTitelVidStart } from "./start.ts";
++import { FORSTA } from "./forstaStunden.ts";
++import introJson from "../../data/intro.json" with { type: "json" };
++
++class Minne implements Pick<Storage, "getItem" | "setItem" | "removeItem" | "key" | "length"> {
++  m = new Map<string, string>();
++  tak = Infinity;
++  get length() {
++    return this.m.size;
++  }
++  key(i: number) {
++    return [...this.m.keys()][i] ?? null;
++  }
++  getItem(k: string) {
++    return this.m.get(k) ?? null;
++  }
++  setItem(k: string, v: string) {
++    if (v.length > this.tak) throw new Error("QuotaExceededError");
++    this.m.set(k, v);
++  }
++  removeItem(k: string) {
++    this.m.delete(k);
++  }
++}
++
++const varld = () => {
++  const l = new Minne();
++  l.setItem("trollpennan-spel", JSON.stringify({ introSedd: true, ang: [{ uid: "a1", formel: "en katt" }] }));
++  l.setItem("trollpennan-ljud", "på");
++  l.setItem("annat", "rör inte");
++  return l;
++};
++
++test("P2-2: titelskärmen visas alltid för barn, för prov bara när de ber om den", () => {
++  assert.equal(visaTitelVidStart(false, null), true);
++  assert.equal(visaTitelVidStart(true, null), false);
++  const s = new Minne();
++  assert.equal(visaTitelVidStart(true, s), false);
++  s.setItem(PROV_NYCKEL, "1");
++  assert.equal(visaTitelVidStart(true, s), true);
++});
++
++test("P2-2: börja om tömmer bara spelets nycklar och sparar en kopia i sessionen", () => {
++  const l = varld();
++  const s = new Minne();
++  assert.deepEqual(spelNycklar(l).sort(), ["trollpennan-ljud", "trollpennan-spel"]);
++  assert.equal(borjaOmMedKopia(l, s), true);
++  assert.deepEqual(spelNycklar(l), []);
++  assert.equal(l.getItem("annat"), "rör inte");
++  assert.equal(harKopia(s), true);
++});
++
++test("P2-2: ångra lägger tillbaka den gamla världen exakt och tar bort kopian", () => {
++  const l = varld();
++  const fore = l.getItem("trollpennan-spel");
++  const s = new Minne();
++  borjaOmMedKopia(l, s);
++  l.setItem("trollpennan-spel", JSON.stringify({ introSedd: true, ang: [] }));
++  assert.equal(angraBorjaOm(l, s), true);
++  assert.equal(l.getItem("trollpennan-spel"), fore);
++  assert.equal(l.getItem("trollpennan-ljud"), "på");
++  assert.equal(harKopia(s), false);
++  assert.equal(angraBorjaOm(l, s), false);
++});
++
++test("P2-2: får kopian inte plats börjar spelet ändå om (ingen ångra-knapp)", () => {
++  const l = varld();
++  const s = new Minne();
++  s.tak = 10;
++  assert.equal(borjaOmMedKopia(l, s), false);
++  assert.deepEqual(spelNycklar(l), []);
++  assert.equal(harKopia(s), false);
++  assert.equal(borjaOmMedKopia(varld(), null), false);
++});
++
++test("P2-2: titelns texter ligger i data och är som Christoffer bestämde", () => {
++  const t = FORSTA.titel;
++  assert.equal(t.borja_om, "Börja om med en ny värld");
++  assert.equal(t.fraga, "Din värld med alla djur försvinner. Är du säker?");
++  assert.equal(t.nej, "Nej, tillbaka");
++  assert.equal(t.ja, "Ja, börja om");
++  for (const [k, v] of Object.entries(t)) if (!k.startsWith("_")) assert.ok(typeof v === "string" && v.length > 0, k);
++  assert.equal(new Minne().getItem(ANGRA_NYCKEL), null);
++});
++
++test("P2-2: ljudraden k – a – tt stavar ordet", () => {
++  const s = introJson.skriv as { ord: string; ljud?: string[] };
++  assert.equal(s.ljud?.join(""), s.ord);
++});
+diff --git a/src/spel/start.ts b/src/spel/start.ts
+new file mode 100644
+index 0000000..a09ecc5
+--- /dev/null
++++ b/src/spel/start.ts
+@@ -0,0 +1,84 @@
++// P2-2: titelskärmens läge och "börja om" med ångra inom sessionen. Ren logik + en liten zustand-butik, ingen React-vy.
++import { create } from "zustand";
++
++type Lagring = Pick<Storage, "getItem" | "setItem" | "removeItem" | "key" | "length">;
++
++/** Nyckeln i sessionStorage där den gamla världen ligger efter "Börja om" (finns kvar tills fliken stängs). */
++export const ANGRA_NYCKEL = "trollpennan-angra";
++/** Prov (Playwright, navigator.webdriver) ser titelskärmen bara om de ber om den, så att äldre prov går som förut. */
++export const PROV_NYCKEL = "p2-titel-prov";
++
++export function visaTitelVidStart(webdriver: boolean, session: Pick<Storage, "getItem"> | null): boolean {
++  if (!webdriver) return true;
++  try {
++    return session?.getItem(PROV_NYCKEL) === "1";
++  } catch {
++    return false;
++  }
++}
++
++export const useStart = create<{ titelOppen: boolean; stang: () => void }>((set) => ({
++  titelOppen: typeof window !== "undefined" && visaTitelVidStart(navigator.webdriver === true, window.sessionStorage),
++  stang: () => set({ titelOppen: false }),
++}));
++
++/** Alla spelets nycklar i localStorage (samma urval som menyns "Börja om"). */
++export function spelNycklar(lokal: Lagring): string[] {
++  const ut: string[] = [];
++  for (let i = 0; i < lokal.length; i++) {
++    const k = lokal.key(i);
++    if (k?.startsWith("trollpennan")) ut.push(k);
++  }
++  return ut;
++}
++
++/** Sparar den gamla världen i sessionStorage och tömmer den lokala. Returnerar true om kopian gick att spara. */
++export function borjaOmMedKopia(lokal: Lagring, session: Lagring | null): boolean {
++  const nycklar = spelNycklar(lokal);
++  let kopia = false;
++  if (session) {
++    try {
++      const data: Record<string, string> = {};
++      for (const k of nycklar) data[k] = lokal.getItem(k) ?? "";
++      session.setItem(ANGRA_NYCKEL, JSON.stringify({ tid: Date.now(), data }));
++      kopia = true;
++    } catch {
++      kopia = false;
++    }
++  }
++  for (const k of nycklar) lokal.removeItem(k);
++  return kopia;
++}
++
++export function harKopia(session: Pick<Storage, "getItem"> | null): boolean {
++  try {
++    return !!session?.getItem(ANGRA_NYCKEL);
++  } catch {
++    return false;
++  }
++}
++
++/** Lägger tillbaka den gamla världen (ersätter det som finns nu) och tar bort kopian. */
++export function angraBorjaOm(lokal: Lagring, session: Lagring): boolean {
++  try {
++    const raw = session.getItem(ANGRA_NYCKEL);
++    if (!raw) return false;
++    const { data } = JSON.parse(raw) as { data: Record<string, string> };
++    for (const k of spelNycklar(lokal)) lokal.removeItem(k);
++    for (const [k, v] of Object.entries(data)) if (k.startsWith("trollpennan")) lokal.setItem(k, v);
++    session.removeItem(ANGRA_NYCKEL);
++    return true;
++  } catch {
++    return false;
++  }
++}
++
++/** Ladda om utan att spelet hinner spara tillbaka den gamla världen (samma skydd som menyns "Börja om"). */
++export function laddaOmRent(lokal: Lagring, behall?: Record<string, string>) {
++  const vakt = () => {
++    for (const k of spelNycklar(lokal)) if (!behall || !(k in behall)) lokal.removeItem(k);
++    if (behall) for (const [k, v] of Object.entries(behall)) lokal.setItem(k, v);
++  };
++  window.addEventListener("pagehide", vakt);
++  window.location.reload();
++}
+diff --git a/src/spel/ui/Coach.tsx b/src/spel/ui/Coach.tsx
+new file mode 100644
+index 0000000..f88dfae
+--- /dev/null
++++ b/src/spel/ui/Coach.tsx
+@@ -0,0 +1,74 @@
++// P2-2 (förslag A): guiden. Läser stegen ur data/forsta-stunden.json via aktivtSteg(sparningen) och pekar på målet:
++// ett testid i DOM:en eller ett 3D-ankare (window.__tredMal). Pratbubbla högst upp, pil + gyllene ring på målet.
++// Göms när något annat har fokus (bok, dialog, meny, titel, intro) eller när målet inte syns. Inga per-steg-if.
++import { useEffect, useState } from "react";
++import { createPortal } from "react-dom";
++import { FORSTA, aktivtSteg, malFor } from "../forstaStunden.ts";
++import { useMinne } from "../minne.ts";
++import { START_PLATS } from "../platser.ts";
++import { sag } from "../rost.ts";
++import { useStart } from "../start.ts";
++import "./coach-p2.css";
++
++type Ruta = { x: number; y: number; b: number; h: number };
++const UPPTAGEN = ".bok, .skarm, .titel, [data-testid=intro], [data-testid=meny-panel], [role=alertdialog]";
++
++function hittaMal(pekar: string): Ruta | null {
++  const m = malFor(pekar);
++  if (m.ankare) {
++    const p = window.__tredMal?.[m.ankare];
++    if (!p || p.x < 0 || p.y < 0 || p.x > innerWidth || p.y > innerHeight) return null;
++    return { x: p.x - 36, y: p.y - 36, b: 72, h: 72 };
++  }
++  for (const id of m.testid) {
++    const e = document.querySelector<HTMLElement>(`[data-testid="${id}"]`);
++    if (!e) continue;
++    const r = e.getBoundingClientRect();
++    if (r.width > 1 && r.height > 1 && r.bottom > 0 && r.top < innerHeight) return { x: r.left, y: r.top, b: r.width, h: r.height };
++  }
++  return null;
++}
++
++export function Coach({ aktiv }: { aktiv: boolean }) {
++  // väljaren ger ett tal (stegets index), inte ett nytt objekt per anrop – annars renderar zustand i en evig loop
++  const nr = useMinne((s) => aktivtSteg(s as unknown as Record<string, unknown>)?.nr ?? 0);
++  const steg = nr ? { steg: FORSTA.steg[nr - 1]! } : null;
++  const pahemma = useMinne((s) => s.plats === START_PLATS);
++  const titel = useStart((s) => s.titelOppen);
++  const [ruta, setRuta] = useState<Ruta | null>(null);
++  const pekar = aktiv && pahemma && !titel ? steg?.steg.pekar_pa : undefined;
++  useEffect(() => {
++    if (!pekar) {
++      setRuta(null);
++      return;
++    }
++    const kolla = () => {
++      const r = document.querySelector(UPPTAGEN) || document.querySelector("[data-testid=meny][aria-expanded=true]") ? null : hittaMal(pekar);
++      setRuta((f) => (f && r && Math.abs(f.x - r.x) < 2 && Math.abs(f.y - r.y) < 2 && f.b === r.b ? f : r));
++    };
++    kolla();
++    const t = window.setInterval(kolla, 250);
++    return () => window.clearInterval(t);
++  }, [pekar]);
++  const text = steg?.steg.text;
++  const id = steg?.steg.id;
++  const synlig = ruta !== null;
++  useEffect(() => {
++    if (synlig && text && id) sag(text, `coach-${id}`);
++  }, [synlig, text, id]);
++  if (!ruta || !steg) return null;
++  const pad = 6;
++  return createPortal(
++    <div className="coach" data-testid="coach" data-steg={steg.steg.id} aria-live="polite">
++      <p className="coach-bubbla">
++        <span className="coach-penna" aria-hidden />
++        <span>{steg.steg.text}</span>
++      </p>
++      <span className="coach-ring" style={{ left: ruta.x - pad, top: ruta.y - pad, width: ruta.b + pad * 2, height: ruta.h + pad * 2 }} aria-hidden />
++      <span className="coach-pil" style={{ left: ruta.x + ruta.b / 2 - 22, top: ruta.y - 58 }} aria-hidden>
++        👇
++      </span>
++    </div>,
++    document.body,
++  );
++}
+diff --git a/src/spel/ui/Hud.tsx b/src/spel/ui/Hud.tsx
+index c93ee52..332b01c 100644
+--- a/src/spel/ui/Hud.tsx
++++ b/src/spel/ui/Hud.tsx
+@@ -6,6 +6,10 @@ import { fyll } from "../fyll.ts";
+ import { ALBUM } from "../liv.ts";
+ import { HoldOppnare } from "./HoldOppnare.tsx";
+ import { StallMeny } from "./Stall.tsx";
++import { Coach } from "./Coach.tsx";
++import { NpcIkon } from "./NpcFigur.tsx";
++import { FORSTA } from "../forstaStunden.ts";
++import "./hud-p2.css";
+ import { FIR, TEXTER } from "./spelData.ts";
+ import type { Varld } from "./typer.ts";
+ 
+@@ -40,7 +44,7 @@ export function Hud({ oppnaStjarnor, haller, setHaller, setForalder, stjarnor, h
+             onPointerCancel={() => setHaller(false)}
+           >
+             <span className="ring" />
+-            <span className="prick" />
++            <Lock className="prick-las" aria-hidden />
+           </button>
+           <HoldOppnare haller={haller} oppna={() => setForalder(true)} />
+           <button type="button" className="stjarna-hud" data-testid="stjarnor" aria-label={fyll(FIR.stjarnor.har, { n: stjarnor })} onClick={oppnaStjarnor}>
+@@ -181,17 +185,23 @@ type HudBotProps = {
+   oppnaBygglage: () => void;
+   setPanel: Dispatch<SetStateAction<"spel" | "byggbok" | "uppdrag">>;
+   setBokOpp: Dispatch<SetStateAction<boolean>>;
++  /** P2-2: Bengtsson som primär knapp bredvid Skriv (förslag A). */
++  npc?: { npcId: string; ikonText: string; ikonAlt: string; klicka: () => void };
+ };
+ 
+-export function HudBot({ varld, omrade, kartaOpp, oppnaBygglage, setPanel, setBokOpp }: HudBotProps) {
++export function HudBot({ varld, omrade, kartaOpp, oppnaBygglage, setPanel, setBokOpp, npc }: HudBotProps) {
++  const gard = varld === "gard" && !omrade;
++  const pahemma = varld === "ang" && !omrade && !kartaOpp;
+   return (
+-        <div className="hud-bot">
++        <div className={pahemma && npc ? "hud-bot tva" : "hud-bot"}>
++          {pahemma && npc ? <NpcIkon npc={npc.npcId} nytt={false} text={npc.ikonText} alt={npc.ikonAlt} onClick={npc.klicka} /> : null}
+           <button
+             type="button"
+-            className={varld === "gard" && !omrade ? "bok-knapp bygg" : "bok-knapp"}
++            className={gard ? "bok-knapp bygg" : "bok-knapp"}
+             data-testid={varld === "gard" && !omrade ? "bygg-nagot" : "pennans-bok"}
++            aria-label={gard ? undefined : "Skriv i Pennans bok"}
+             onClick={() => {
+-              if (varld === "gard" && !omrade && !kartaOpp) {
++              if (gard && !kartaOpp) {
+                 oppnaBygglage();
+                 return;
+               }
+@@ -199,15 +209,10 @@ export function HudBot({ varld, omrade, kartaOpp, oppnaBygglage, setPanel, setBo
+               setBokOpp(true);
+             }}
+           >
+-            {varld === "gard" && !omrade ? (
+-              <>
+-                <Pencil aria-hidden />
+-                {TEXTER.bygg_nagot}
+-              </>
+-            ) : (
+-              "Pennans bok"
+-            )}
++            <Pencil aria-hidden />
++            {gard ? TEXTER.bygg_nagot : FORSTA.titel.skriv}
+           </button>
++          <Coach aktiv={pahemma} />
+         </div>
+   );
+ }
+diff --git a/src/spel/ui/IntroSkriv.tsx b/src/spel/ui/IntroSkriv.tsx
+index c5d7650..c9f9973 100644
+--- a/src/spel/ui/IntroSkriv.tsx
++++ b/src/spel/ui/IntroSkriv.tsx
+@@ -5,7 +5,7 @@ import { TANGENTBORD } from "./spelData.ts";
+ import { ljud } from "../ljud.ts";
+ import "./intro-p2.css";
+ 
+-export type IntroSkrivData = { ord: string; fras: string; uppmaning: string; vakna: string; hjalp: string; tillbaka: string };
++export type IntroSkrivData = { ord: string; fras: string; uppmaning: string; ljud?: string[]; vakna: string; hjalp: string; tillbaka: string };
+ 
+ export function IntroSkriv({ cfg, ideer, onVakna, onIde }: { cfg: IntroSkrivData; ideer: string[]; onVakna: (fras: string) => void; onIde: (ex: string) => void }) {
+   const ord = [...cfg.ord.toLowerCase()];
+@@ -41,6 +41,7 @@ export function IntroSkriv({ cfg, ideer, onVakna, onIde }: { cfg: IntroSkrivData
+   return (
+     <div className="intro-skriv" data-testid="intro-skriv" role="group" aria-label={cfg.uppmaning}>
+       <p className="intro-uppmaning">{cfg.uppmaning}</p>
++      {cfg.ljud ? <Ljudrad delar={cfg.ljud} n={n} /> : null}
+       <div className={skak ? "intro-rutor skak" : "intro-rutor"} key={skak} aria-live="polite">
+         {ord.map((b, i) => (
+           <span key={`${b}${i}`} className={i < n ? "intro-ruta klar" : i === n ? "intro-ruta nu" : "intro-ruta"} data-testid="intro-ruta" data-klar={i < n ? "ja" : "nej"}>
+@@ -78,3 +79,23 @@ export function IntroSkriv({ cfg, ideer, onVakna, onIde }: { cfg: IntroSkrivData
+     </div>
+   );
+ }
++
++/** P2-2 (lån från förslag C): ordet i ljud, "k – a – tt". Ljudet barnet håller på med lyser, de skrivna blir mörka. */
++function Ljudrad({ delar, n }: { delar: string[]; n: number }) {
++  let start = 0;
++  return (
++    <p className="intro-ljud" data-testid="intro-ljud" aria-hidden>
++      {delar.map((d, i) => {
++        const fran = start;
++        start += d.length;
++        const klass = n >= start ? "klar" : n >= fran ? "nu" : "";
++        return (
++          <span key={`${d}${i}`}>
++            {i > 0 ? <span className="intro-ljud-streck"> – </span> : null}
++            <span className={klass}>{d}</span>
++          </span>
++        );
++      })}
++    </p>
++  );
++}
+diff --git a/src/spel/ui/Titel.tsx b/src/spel/ui/Titel.tsx
+new file mode 100644
+index 0000000..2579afa
+--- /dev/null
++++ b/src/spel/ui/Titel.tsx
+@@ -0,0 +1,136 @@
++// P2-2 (förslag A, Christoffers val 2026-10-20): titelskärm över den levande ängen. Har barnet en värld: "Fortsätt" med
++// bild på senaste djuret och raden om vad som hände sist, och en diskret "Börja om med en ny värld" med bekräftelse.
++// Nytt barn: bara "Börja". Efter "Börja om" ligger den gamla världen kvar i sessionStorage och kan tas tillbaka så länge
++// den nya världen är tom (ångra skriver aldrig över en värld barnet hunnit börja på).
++import { useEffect, useRef, useState } from "react";
++import { FORSTA, senastRad } from "../forstaStunden.ts";
++import { useMinne } from "../minne.ts";
++import { ljud } from "../ljud.ts";
++import { angraBorjaOm, borjaOmMedKopia, harKopia, laddaOmRent, useStart, ANGRA_NYCKEL } from "../start.ts";
++import "./titel-p2.css";
++
++const T = FORSTA.titel;
++
++/** Kopierar ett utsnitt kring djuret ur 3D-duken. Måste ske i en animationsram direkt efter att scenen ritats. */
++function useDjurBild(uid: string | null) {
++  const ref = useRef<HTMLCanvasElement>(null);
++  const [klar, setKlar] = useState(false);
++  useEffect(() => {
++    if (!uid) return;
++    let stopp = false;
++    let raf = 0;
++    const start = performance.now();
++    const forsok = () => {
++      if (stopp) return;
++      const gl = document.querySelector<HTMLCanvasElement>(".angen-3d canvas");
++      const mal = window.__tredMal?.[uid];
++      const ut = ref.current;
++      if (gl && mal && ut) {
++        const r = gl.getBoundingClientRect();
++        const k = gl.width / Math.max(1, r.width);
++        const sida = 130;
++        const x = (mal.x - r.left - sida / 2) * k;
++        const y = (mal.y - r.top - sida * 0.25) * k;
++        const g = ut.getContext("2d");
++        if (g) {
++          g.clearRect(0, 0, ut.width, ut.height);
++          g.drawImage(gl, x, y, sida * k, sida * k, 0, 0, ut.width, ut.height);
++          const p = g.getImageData(ut.width / 2, ut.height / 2, 1, 1).data;
++          if (p[3]! > 0) {
++            setKlar(true);
++            return;
++          }
++        }
++      }
++      if (performance.now() - start < 8000) window.setTimeout(() => (raf = requestAnimationFrame(forsok)), 250);
++    };
++    raf = requestAnimationFrame(forsok);
++    return () => {
++      stopp = true;
++      cancelAnimationFrame(raf);
++    };
++  }, [uid]);
++  return { ref, klar };
++}
++
++export function Titel() {
++  const oppen = useStart((s) => s.titelOppen);
++  const stang = useStart((s) => s.stang);
++  const harVarld = useMinne((s) => s.introSedd || s.ang.length > 0);
++  const sista = useMinne((s) => s.ang.at(-1)?.uid ?? null);
++  const rad = useMinne((s) => senastRad(s as unknown as Record<string, unknown>));
++  const [fraga, setFraga] = useState(false);
++  const [kopia] = useState(() => harKopia(window.sessionStorage));
++  const bild = useDjurBild(oppen && harVarld ? sista : null);
++  const nejRef = useRef<HTMLButtonElement>(null);
++  useEffect(() => {
++    if (fraga) nejRef.current?.focus();
++  }, [fraga]);
++  if (!oppen) return null;
++
++  const borja = () => {
++    ljud.lasOpp();
++    stang();
++  };
++  const borjaOm = () => {
++    borjaOmMedKopia(window.localStorage, window.sessionStorage);
++    laddaOmRent(window.localStorage);
++  };
++  const angra = () => {
++    const raw = window.sessionStorage.getItem(ANGRA_NYCKEL);
++    if (!angraBorjaOm(window.localStorage, window.sessionStorage) || !raw) return;
++    laddaOmRent(window.localStorage, (JSON.parse(raw) as { data: Record<string, string> }).data);
++  };
++
++  return (
++    <div className="titel" data-testid="titel" role="dialog" aria-modal="true" aria-label={T.logga}>
++      <div className="titel-topp">
++        <h1 className="titel-logga">
++          <span className="titel-penna" aria-hidden />
++          {T.logga}
++        </h1>
++        <p className="titel-under">{T.under}</p>
++      </div>
++      <div className="titel-knappar">
++        {harVarld ? (
++          <>
++            <button type="button" className="titel-fortsatt" data-testid="titel-fortsatt" onClick={borja}>
++              <canvas ref={bild.ref} width={152} height={152} className={bild.klar ? "titel-bild klar" : "titel-bild"} aria-hidden />
++              <span className="titel-fortsatt-text">
++                <span className="titel-fortsatt-rubrik">{T.fortsatt} ▸</span>
++                <span className="titel-rad" data-testid="titel-rad">
++                  {rad}
++                </span>
++              </span>
++            </button>
++            <button type="button" className="titel-borja-om" data-testid="titel-borja-om" onClick={() => setFraga(true)}>
++              {T.borja_om}
++            </button>
++          </>
++        ) : (
++          <button type="button" className="titel-fortsatt titel-borja" data-testid="titel-borja" onClick={borja}>
++            <span className="titel-fortsatt-rubrik">{T.borja} ▸</span>
++          </button>
++        )}
++        {kopia && !harVarld ? (
++          <button type="button" className="titel-borja-om" data-testid="titel-angra" onClick={angra}>
++            {T.angra}
++          </button>
++        ) : null}
++      </div>
++      {fraga ? (
++        <div className="titel-fraga-bak" data-testid="titel-fraga" role="alertdialog" aria-modal="true" aria-label={T.fraga} onKeyDown={(e) => e.key === "Escape" && setFraga(false)}>
++          <div className="titel-fraga">
++            <p>{T.fraga}</p>
++            <button ref={nejRef} type="button" className="titel-nej" data-testid="titel-nej" onClick={() => setFraga(false)}>
++              {T.nej}
++            </button>
++            <button type="button" className="titel-ja" data-testid="titel-ja" onClick={borjaOm}>
++              {T.ja}
++            </button>
++          </div>
++        </div>
++      ) : null}
++    </div>
++  );
++}
+diff --git a/src/spel/ui/coach-p2.css b/src/spel/ui/coach-p2.css
+new file mode 100644
+index 0000000..340b73f
+--- /dev/null
++++ b/src/spel/ui/coach-p2.css
+@@ -0,0 +1,14 @@
++/* P2-2 guiden, förslag A. Inget i guiden tar emot tryck: barnet trycker på det riktiga målet under ringen. */
++.coach{position:fixed;inset:0;z-index:30;pointer-events:none}
++.coach-bubbla{position:absolute;left:12px;right:12px;top:max(66px, calc(env(safe-area-inset-top) + 58px));margin:0;display:flex;align-items:flex-start;gap:10px;
++  padding:10px 14px;border-radius:20px;background:var(--color-cream);color:var(--color-ink);box-shadow:0 4px 0 var(--color-paper-deep);
++  font-size:1.15rem;font-weight:800;line-height:1.3;transition:opacity .2s}
++.coach-penna{flex:none;width:12px;height:38px;margin-top:2px;border-radius:6px 6px 2px 2px;background:linear-gradient(#f48fb1 0 70%,var(--color-gold) 70%);transform:rotate(28deg)}
++.coach-ring{position:absolute;border:4px solid var(--color-gold);border-radius:26px;box-shadow:0 0 22px 8px #f2b63288;animation:coach-puls 1.4s ease-in-out infinite}
++.coach-pil{position:absolute;width:44px;font-size:44px;line-height:1;text-align:center;filter:drop-shadow(0 3px 0 #8a6b12);animation:coach-hopp 1s ease-in-out infinite}
++/* banderoller (stjärnor, repliker) går före: bubblan viker undan medan de syns. "Dra för att titta runt" står kvar, bubblan under den. */
++body:has(.banner) .coach-bubbla{opacity:0}
++body:has(.tred-hint) .coach-bubbla{top:max(112px, calc(env(safe-area-inset-top) + 104px))}
++@keyframes coach-puls{50%{transform:scale(1.04);box-shadow:0 0 30px 12px #f2b632aa}}
++@keyframes coach-hopp{50%{transform:translateY(8px)}}
++@media (prefers-reduced-motion: reduce){.coach-ring,.coach-pil{animation:none}}
+diff --git a/src/spel/ui/hud-p2.css b/src/spel/ui/hud-p2.css
+new file mode 100644
+index 0000000..1610d0b
+--- /dev/null
++++ b/src/spel/ui/hud-p2.css
+@@ -0,0 +1,6 @@
++/* P2-2 nedre knappraden (förslag A): Uppdrag (Bengtsson) och Skriv lika stora. Föräldraknappen får ett lås. */
++.hud-bot.tva{display:grid;grid-template-columns:1fr 1fr;gap:12px}
++.hud-bot.tva .npc-ikon{position:static;min-height:64px;border-radius:22px;justify-content:center;font-size:1.2rem;box-shadow:0 5px 0 var(--color-paper-deep)}
++.hud-bot.tva .bok-knapp{min-height:64px;border-radius:22px}
++.ang:has(.stall-chip.panel) .hud-bot.tva{grid-template-columns:1fr 1fr}
++.foralder-knapp .prick-las{width:20px;height:20px;padding:3px;border-radius:50%;background:#fff6e5d9;color:var(--color-ink);box-sizing:content-box}
+diff --git a/src/spel/ui/intro-p2.css b/src/spel/ui/intro-p2.css
+index 5392cf6..66bd17c 100644
+--- a/src/spel/ui/intro-p2.css
++++ b/src/spel/ui/intro-p2.css
+@@ -16,3 +16,8 @@
+ @keyframes intro-skak{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+ @keyframes intro-redo{50%{transform:scale(1.03)}}
+ @media (prefers-reduced-motion: reduce){.intro-rutor.skak,.intro-vakna.redo{animation:none}}
++/* P2-2: ljudraden under uppmaningen ("k – a – tt") */
++.intro-ljud{margin:-2px 0 0;text-align:center;font-family:var(--font-display);font-size:1.25rem;font-weight:700;letter-spacing:.04em;color:#8a7a68}
++.intro-ljud .nu{color:var(--color-berry);text-decoration:underline 3px;text-underline-offset:4px}
++.intro-ljud .klar{color:var(--color-ink)}
++.intro-ljud-streck{color:#b9a993}
+diff --git a/src/spel/ui/titel-p2.css b/src/spel/ui/titel-p2.css
+new file mode 100644
+index 0000000..e3503d8
+--- /dev/null
++++ b/src/spel/ui/titel-p2.css
+@@ -0,0 +1,28 @@
++/* P2-2 titelskärm, förslag A (rundor/P2-start/val/A-angen-lever.jpg). Egen fil: styles.css rörs inte. */
++.titel{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;justify-content:space-between;pointer-events:auto;
++  background:linear-gradient(180deg,rgba(255,246,229,0) 0,rgba(255,246,229,0) 40%,rgba(246,231,200,.92) 66%,var(--color-paper) 80%);
++  padding:max(84px, calc(env(safe-area-inset-top) + 74px)) 22px max(26px, env(safe-area-inset-bottom));color:var(--color-ink)}
++.titel-topp{display:grid;justify-items:center;gap:10px}
++.titel-logga{margin:0;display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:700;font-size:clamp(2.4rem,13vw,3.2rem);line-height:1;
++  color:var(--color-berry);-webkit-text-stroke:2px var(--color-cream);paint-order:stroke fill;text-shadow:0 5px 0 #8a2338,0 9px 14px rgba(0,0,0,.25)}
++.titel-penna{display:inline-block;flex:none;width:15px;height:50px;border-radius:7px 7px 2px 2px;background:linear-gradient(#f48fb1 0 70%,var(--color-gold) 70%);transform:rotate(28deg)}
++.titel-under{margin:0;padding:4px 14px;border-radius:999px;background:#fff6e5dd;font-size:1.2rem;font-weight:700}
++.titel-knappar{display:grid;gap:12px}
++.titel-fortsatt{min-height:96px;border:0;border-radius:24px;background:var(--color-berry);color:#fff;box-shadow:0 6px 0 #8a2338;
++  display:flex;align-items:center;gap:14px;padding:12px 16px;text-align:left;font-family:inherit;touch-action:manipulation}
++.titel-fortsatt:active{transform:translateY(2px);box-shadow:0 4px 0 #8a2338}
++.titel-borja{justify-content:center}
++.titel-bild{display:none;width:76px;height:76px;flex:none;border-radius:18px;border:3px solid var(--color-gold);background:#9fd77a}
++.titel-bild.klar{display:block}
++.titel-fortsatt-text{display:grid;gap:2px}
++.titel-fortsatt-rubrik{font-family:var(--font-display);font-size:1.9rem;font-weight:700}
++.titel-rad{font-size:1rem;font-weight:600;line-height:1.3}
++.titel-borja-om{justify-self:center;min-height:44px;padding:0 14px;border:0;background:none;color:var(--color-ink);opacity:.8;
++  font-family:inherit;font-size:1rem;font-weight:700;text-decoration:underline;text-underline-offset:3px}
++.titel-fraga-bak{position:absolute;inset:0;display:grid;place-items:center;padding:20px;background:rgba(40,30,30,.45)}
++.titel-fraga{width:100%;max-width:340px;display:grid;gap:12px;padding:22px 18px 18px;border-radius:24px;background:var(--color-cream);box-shadow:0 8px 0 var(--color-paper-deep)}
++.titel-fraga p{margin:0 0 4px;font-size:1.3rem;font-weight:700;line-height:1.35;text-align:center}
++.titel-nej{min-height:60px;border:0;border-radius:18px;background:var(--color-moss-deep);color:#fff;font-family:var(--font-display);font-size:1.35rem;font-weight:700;box-shadow:0 4px 0 #1e4a2d}
++.titel-ja{min-height:52px;border:3px solid var(--color-berry);border-radius:18px;background:var(--color-cream);color:var(--color-berry);font-family:inherit;font-size:1.1rem;font-weight:700}
++/* Titeln är ensam på skärmen: ängen lever bakom, men spelets knappar, introts text och tipsen väntar tills den stängs */
++body:has(.titel) :is(.hud, .hud-bot, .intro, .tred-hint, .banner, .npc-figur, .coach){visibility:hidden}
