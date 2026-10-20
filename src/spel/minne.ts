@@ -62,6 +62,8 @@ export type Data = {
   mossaRakn: { onskan: number; hemligt: number; guld: number };
   ordFrek: Record<string, number>;
   onskanAntal: number;
+  /** TTS-3/P2: djur barnet själv väckt efter introt (introts kanin och katt räknas inte) – guidens första steg. */
+  egnaDjur: number;
   skatterHitta: string[];
   byggda: string[];
   introSedd: boolean;
@@ -172,6 +174,7 @@ function tom(): Data {
     mossaRakn: { onskan: 0, hemligt: 0, guld: 0 },
     ordFrek: {},
     onskanAntal: 0,
+    egnaDjur: 0,
     skatterHitta: [],
     byggda: [],
     introSedd: false,
@@ -235,6 +238,8 @@ export function franSparning(raw: unknown): Data {
           : { onskan: 0, hemligt: 0, guld: 0 },
       ordFrek: p.ordFrek && typeof p.ordFrek === "object" ? (p.ordFrek as Record<string, number>) : {},
       onskanAntal: typeof p.onskanAntal === "number" ? p.onskanAntal : 0,
+      // äldre sparningar: introts två djur (kanin, katt) räknas bort ur albumet
+      egnaDjur: objekt(raw) && typeof raw.egnaDjur === "number" ? raw.egnaDjur : Math.max(0, Object.keys(p.albumKropp && typeof p.albumKropp === "object" ? p.albumKropp : {}).length - 2),
       skatterHitta: Array.isArray(p.skatterHitta) ? (p.skatterHitta as string[]) : [],
       byggda: Array.isArray(p.byggda) ? (p.byggda as string[]) : [],
       introSedd: p.introSedd === true,

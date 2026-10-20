@@ -19,7 +19,7 @@ import { ljud } from "./ljud.ts";
 import { useMinne, type Lage, type OnskaSpar } from "./minne.ts";
 import { byggTraff, geTraff, kompisTraff, nastanRad, ONSK, ONSK_BYGG, tillaggFras, valjDjurOnska } from "./onska.ts";
 import { replik } from "./replik.ts";
-import { bannerTid, tystna, useRostBannrar } from "./rost.ts";
+import { bannerKlocka, tystna, useRostBannrar } from "./rost.ts";
 import { avBro, type AvHandelse } from "./avbro.ts";
 import { AlbumVy } from "./samling.tsx";
 import {
@@ -228,7 +228,7 @@ export function Spel() {
     }
     bannerSyns.current = true;
     setBanners([next]);
-    bannerTimer.current = window.setTimeout(() => stangBanner(), bannerTid(next.text, next.ms ?? 2400));
+    bannerTimer.current = bannerKlocka(next.text, next.ms ?? 2400, () => stangBanner()); // TTS-3: tiden räknas från röstens start, slut + 1,5 s
   }
 
   /** B6.3 (H): banderollen går och nästa i kön visas efter 200 ms – när tiden gått eller barnet trycker. */
@@ -1619,7 +1619,7 @@ export function Spel() {
       bytPlats: (id: string) => useMinne.getState().bytPlats(id),
       platsAntal: () => Object.fromEntries(Object.entries(useMinne.getState().platsSkapelser).map(([k, v]) => [k, v.length])),
     };
-    window.__troll = api;
+    if (import.meta.env.DEV || navigator.webdriver === true) window.__troll = api; // TTS-3: bara i dev och när ett prov styr webbläsaren – aldrig för barn
     return () => {
       delete window.__troll;
     };
