@@ -1,0 +1,210 @@
+diff --git a/src/spel/minne.ts b/src/spel/minne.ts
+index 652b4c5..39ec6cb 100644
+--- a/src/spel/minne.ts
++++ b/src/spel/minne.ts
+@@ -22,6 +22,8 @@ export type OnskaSpar = {
+ export type Data = {
+   version: 2;
+   startLage: Lage;
++  /** P1: true när en vuxen har valt startläge i föräldravyn. Annars gäller skrivläget (äldre sparningar hade "kort" som standard). */
++  startLageVald: boolean;
+   funna: Record<string, { guld: boolean }>;
+   kortGang: Record<string, number>;
+   onskelista: string[];
+@@ -130,7 +132,8 @@ type Minne = Data & {
+ function tom(): Data {
+   return {
+     version: 2,
+-    startLage: "kort",
++    startLage: "skriv",
++    startLageVald: false,
+     funna: {},
+     kortGang: {},
+     onskelista: [],
+@@ -207,6 +210,7 @@ export function franSparning(raw: unknown): Data {
+       ...(p as Partial<Data>),
+       version: 2,
+       byggSidor: byggSidor.length ? byggSidor : ["start"],
++      startLage: p.startLageVald === true && p.startLage === "kort" ? "kort" : "skriv",
+       ljudPa: p.ljudPa !== false,
+       stjarnor: typeof p.stjarnor === "number" ? p.stjarnor : 0,
+       oppna: Array.isArray(p.oppna) ? (p.oppna as string[]) : [],
+@@ -379,7 +383,7 @@ export const useMinne = create<Minne>((set, get) => ({
+     set({ formler: [...get().formler, { text: spec.formel, spec }].slice(-30) });
+   },
+   anvandKort: (id) => set({ kortGang: { ...get().kortGang, [id]: (get().kortGang[id] ?? 0) + 1 } }),
+-  sattStart: (lage) => set({ startLage: lage }),
++  sattStart: (lage) => set({ startLage: lage, startLageVald: true }),
+   aterstall: () => {
+     tillatSkrivning();
+     brygga.tom();
+diff --git a/src/spel/p1.test.ts b/src/spel/p1.test.ts
+new file mode 100644
+index 0000000..1c8b268
+--- /dev/null
++++ b/src/spel/p1.test.ts
+@@ -0,0 +1,25 @@
++// P1: skrivläget är standard. Äldre sparningar (startLage "kort" som standard) flyttas till "skriv",
++// men ett aktivt val i föräldravyn (startLageVald) behålls.
++import { test } from "node:test";
++import assert from "node:assert/strict";
++import { franSparning } from "./minne.ts";
++
++test("P1: nytt barn börjar i skrivläget", () => {
++  const d = franSparning({});
++  assert.equal(d.startLage, "skriv");
++  assert.equal(d.startLageVald, false);
++});
++
++test("P1: gammal sparning med standard-\"kort\" migreras till skriv", () => {
++  assert.equal(franSparning({ version: 2, introSedd: true, startLage: "kort" }).startLage, "skriv");
++});
++
++test("P1: förälderns aktiva val av kortläget behålls", () => {
++  const d = franSparning({ version: 2, startLage: "kort", startLageVald: true });
++  assert.equal(d.startLage, "kort");
++  assert.equal(d.startLageVald, true);
++});
++
++test("P1: valt skrivläge behålls också", () => {
++  assert.equal(franSparning({ version: 2, startLage: "skriv", startLageVald: true }).startLage, "skriv");
++});
+diff --git a/src/spel/ui/BokSkarm.tsx b/src/spel/ui/BokSkarm.tsx
+index bc36344..96cd72d 100644
+--- a/src/spel/ui/BokSkarm.tsx
++++ b/src/spel/ui/BokSkarm.tsx
+@@ -18,6 +18,7 @@ import { bestamdAv, frasForByggOrd, kanEtikett, kortIkon } from "./hjalp.ts";
+ import { FIR, FLIKAR, TANGENTBORD, TEXTER } from "./spelData.ts";
+ import type { Banner, Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
+ import { GavaStallKnapp } from "./Stall.tsx";
++import { BokSvar } from "./BokSvar.tsx";
+ 
+ type BokSkarmProps = {
+   stangBok: () => void;
+@@ -161,33 +162,6 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
+                 </details>
+               </div>
+             ) : null}
+-            {forslag ? (
+-              <div className="forslag" data-testid="forslag">
+-                <p>{forslag.text}</p>
+-                <div className="rad-kort">
+-                  {forslag.forslag.map((f) => (
+-                    <button key={f.id} type="button" className="kort" data-testid={`forslag-${f.id}`} onClick={() => valjForslag(f)}>
+-                      {f.visa}
+-                    </button>
+-                  ))}
+-                  <button type="button" className="nej" data-testid="nej" onClick={nejForslag}>
+-                    Nej
+-                  </button>
+-                </div>
+-              </div>
+-            ) : null}
+-            {behover && !forslag ? (
+-              <div className="behover" data-testid="behover">
+-                <p>{behover.text}</p>
+-                <div className="rad-kort">
+-                  {behover.djur.map((d) => (
+-                    <button key={d.id} type="button" className="kort" data-testid={`prova-${d.id}`} onClick={() => utfor(d.id, { hand: false })}>
+-                      {d.visa}
+-                    </button>
+-                  ))}
+-                </div>
+-              </div>
+-            ) : null}
+             {lage === "kort" && !forslag && !behover ? (
+               <>
+                 <p className="forslag-etikett" data-testid="forslag-etikett">{hemligt.forslag_etikett}</p>
+@@ -240,7 +214,17 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
+               </>
+             ) : null}
+             </div>
+-            <div className="remsa" data-testid="remsa">
++            <BokSvar forslag={forslag} valjForslag={valjForslag} nejForslag={nejForslag} behover={behover} utfor={utfor} />
++            <div
++              className="remsa"
++              data-testid="remsa"
++              role="textbox"
++              aria-label="Skrivrutan"
++              onClick={() => {
++                // P1: ett tryck på rutan öppnar tangentbordet (förut hände ingenting)
++                if (lage !== "skriv") setLage("skriv");
++              }}
++            >
+               {text ? (
+                 text
+               ) : (
+diff --git a/src/spel/ui/BokSvar.tsx b/src/spel/ui/BokSvar.tsx
+new file mode 100644
+index 0000000..0db82fc
+--- /dev/null
++++ b/src/spel/ui/BokSvar.tsx
+@@ -0,0 +1,47 @@
++// P1: barnets svarsyta i boken – "Menade du …?" och "Pennan behöver …". Ligger UTANFÖR bokens skrollyta (bok-mitt),
++// direkt ovanför skrivrutan, så att knapparna alltid syns hela och aldrig hamnar under rutan (granskningen 1.2, K4).
++import type { ForslagKort } from "@/tolk/typer.ts";
++import type { Forslag } from "./typer.ts";
++import "./bok-p1.css";
++
++type Props = {
++  forslag: Forslag | null;
++  valjForslag: (kortet: ForslagKort) => void;
++  nejForslag: () => void;
++  behover: { text: string; djur: { id: string; visa: string }[] } | null;
++  utfor: (raw: string, opt: { hand: boolean; inteGuld?: string[] }) => void;
++};
++
++export function BokSvar({ forslag, valjForslag, nejForslag, behover, utfor }: Props) {
++  if (!forslag && !behover) return null;
++  return (
++    <div className="bok-svar" aria-live="polite">
++      {forslag ? (
++        <div className="forslag" data-testid="forslag">
++          <p>{forslag.text}</p>
++          <div className="rad-kort">
++            {forslag.forslag.map((f) => (
++              <button key={f.id} type="button" className="kort" data-testid={`forslag-${f.id}`} onClick={() => valjForslag(f)}>
++                {f.visa}
++              </button>
++            ))}
++            <button type="button" className="nej" data-testid="nej" onClick={nejForslag}>
++              Nej
++            </button>
++          </div>
++        </div>
++      ) : behover ? (
++        <div className="behover" data-testid="behover">
++          <p>{behover.text}</p>
++          <div className="rad-kort">
++            {behover.djur.map((d) => (
++              <button key={d.id} type="button" className="kort" data-testid={`prova-${d.id}`} onClick={() => utfor(d.id, { hand: false })}>
++                {d.visa}
++              </button>
++            ))}
++          </div>
++        </div>
++      ) : null}
++    </div>
++  );
++}
+diff --git a/src/spel/ui/bok-p1.css b/src/spel/ui/bok-p1.css
+new file mode 100644
+index 0000000..42240c8
+--- /dev/null
++++ b/src/spel/ui/bok-p1.css
+@@ -0,0 +1,15 @@
++/* P1 – boken utan hinder (rundor/P1-boken/RITNING.md). Egen fil så att styles.css (B6.3/B6.6) inte får konflikter. */
++/* Svarsytan ligger mellan skrollytan och skrivrutan och krymper aldrig bort. */
++.bok .bok-svar{flex:0 0 auto;max-height:42dvh;overflow:auto;overscroll-behavior:contain;padding:8px 10px 6px;border-top:2px solid var(--color-paper-deep);background:var(--color-paper)}
++.bok .bok-svar .forslag,.bok .bok-svar .behover{flex:none;min-height:0;padding:0;overflow:visible}
++.bok .bok-svar p{margin:0 0 8px;font-size:1.125rem;font-weight:800;line-height:1.3}
++.bok .bok-svar .rad-kort{display:flex;flex-wrap:wrap;gap:8px}
++.bok .bok-svar .kort,.bok .bok-svar .nej{min-height:52px;min-width:64px}
++/* Skrivrutan är tryckbar: den öppnar tangentbordet. */
++.bok .remsa{cursor:text;touch-action:manipulation}
++/* Kontrast ≥ 4,5:1 (granskningen: 3,75:1) */
++.bok .ledtrad-hint{color:var(--color-moss-deep);font-size:1rem}
++.bok .flik.pa{background:var(--color-moss-deep)}
++/* Platsnamn och "Till ängen" i en rad under HUD:en – låg över stjärnknappen (9×8 px) på 375 px. */
++body .plats-resa{top:66px;flex-direction:row;gap:8px}
++body .plats-namn,body .plats-hem{white-space:nowrap}
