@@ -1,4 +1,4 @@
 {
- "_om": "R3F-MFIX3: jultomten och narvalen får ingen palett. Med palett målas kroppen om i spelet: jultomtens röda dräkt blev orange/brun (palett från 355, mörk bodyL) och narvalen blek (paletten mättes på den gulvita beten). Provat i spelet: utan palett syns modellens egna färger. Färgord (en blå jultomte) slår då inte igenom på de två; det tas i kodrundan.",
- "utan_palett": ["jultomte", "narval"]
+ "_om": "R3F-MFIX3: de åtta rättade djuren/figurerna behåller sina egna färger (ingen palett, inget farg-material). Provat i spelet: med palett blev jultomten orange/brun och narvalen blek; med farg-material blev brandmannens hjälm laxrosa (art-färgen). Färgord (en blå jultomte) slår då inte igenom på dem; det tas i kodrundan.",
+ "egna_farger": ["jultomte", "brandman", "aventyrare", "detektiv", "sjoman", "rormokare", "mekaniker", "narval"]
 }
