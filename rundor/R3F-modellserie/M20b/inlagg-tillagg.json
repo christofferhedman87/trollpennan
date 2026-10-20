@@ -1,0 +1,30 @@
+{
+ "_om": "R3F-M20b: målhöjder (saker skalas efter max(h, 0,6·största bredd)).",
+ "malhojd_ord": {
+  "barnstol": 0.9,
+  "byrå": 0.8,
+  "dammsugare": 0.6,
+  "dockskåp": 0.9,
+  "ficklampa": 0.4,
+  "garderob": 1.4,
+  "glödlampa": 0.5,
+  "gökur": 0.9,
+  "gunghäst": 0.8,
+  "gungstol": 1.0,
+  "hängmatta": 0.9,
+  "hatthylla": 1.5,
+  "kontorsstol": 0.9,
+  "kvast": 1.2,
+  "leksakslåda": 0.5,
+  "ljuslykta": 0.5,
+  "pendelur": 1.6,
+  "sittsäck": 0.5,
+  "skrivbordslampa": 0.6,
+  "spargris": 0.4,
+  "tandborste": 0.5,
+  "toapapper": 0.35,
+  "toalettpapper": 0.35,
+  "väggklocka": 0.5,
+  "teve": 0.7
+ }
+}

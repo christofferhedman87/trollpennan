@@ -1,0 +1,25 @@
+# R3F-M20b (dubblingen, hemmet): 24 saker, alla CC0. 23 egna lågpolymodeller och Kenney Furniture Kit televisionvintage som teve. Format: paket/filnamn.
+trollpennan-hem-m20b/barnstol-egen.glb
+trollpennan-hem-m20b/byra-egen.glb
+trollpennan-hem-m20b/dammsugare-egen.glb
+trollpennan-hem-m20b/dockskap-egen.glb
+trollpennan-hem-m20b/ficklampa-egen.glb
+trollpennan-hem-m20b/garderob-egen.glb
+trollpennan-hem-m20b/glodlampa-egen.glb
+trollpennan-hem-m20b/gokur-egen.glb
+trollpennan-hem-m20b/gunghast-egen.glb
+trollpennan-hem-m20b/gungstol-egen.glb
+trollpennan-hem-m20b/hangmatta-egen.glb
+trollpennan-hem-m20b/hatthylla-egen.glb
+trollpennan-hem-m20b/kontorsstol-egen.glb
+trollpennan-hem-m20b/kvast-egen.glb
+trollpennan-hem-m20b/leksakslada-egen.glb
+trollpennan-hem-m20b/ljuslykta-egen.glb
+trollpennan-hem-m20b/pendelur-egen.glb
+trollpennan-hem-m20b/sittsack-egen.glb
+trollpennan-hem-m20b/skrivbordslampa-egen.glb
+trollpennan-hem-m20b/spargris-egen.glb
+trollpennan-hem-m20b/tandborste-egen.glb
+trollpennan-hem-m20b/toapapper-egen.glb
+trollpennan-hem-m20b/vaggklocka-egen.glb
+kenney-furniture-kit/televisionvintage.glb
