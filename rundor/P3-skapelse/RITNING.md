@@ -205,3 +205,68 @@ dinosaurie, häst, ko, elefant.)
    görs i full storlek. P har 13 fel: kapaciteten för bara jättar (ängen 3, sjön 4). Resten gäller regelns ruta mot den
    ritade modellen. Höga eller långa modeller (spinosaurus långt bak 43–44 %, ko, häst) och huvuden 13–23 % mot 10 %
    tillåtet. Rutan räknas ur målhöjd och fotavtryck, inte ur modellens verkliga form.
+
+## Arkitektens uppdrag 20:40 – premissen prövad: regelns ruta mot det som ritas
+
+**Mätt** (p3-matt.mjs, webbläsaren 375 × 812): de 13 fallen ur torrkörning 2 och två till, 6 mätningar per fall, varje
+vaken skapelse. Den ritade rutan är window.__tredSyn, alltså modellens Box3 projicerad med den riktiga kameran, plus
+världslådan och kameran. Regelns kropp räknades där skapelsen står. Fel = regel − ritad (px). Negativt i topp och
+positivt i fot är på säkra sidan.
+
+| | vänster | topp | höger | fot |
+|---|---|---|---|---|
+| förut, djur fram, sjön/skogen/grottan | −4 (−31…34) | −6 (−32…28) | −3 (−35…18) | **−18 (−59…10)** |
+| förut, djur fram, ängen | +2 (−20…17) | −2 (−7…15) | −3 (−14…23) | −8 (−21…−1) |
+| förut, saker, ängen | 0 | −21 (−28…−14) | 0 | +7 |
+| efter, djur fram, alla platser | −3 (−13…0) | −4 (−12…0)* | +3 (−1…12) | +4 (0…12)* |
+| efter, djur bak | −2 (−11…0) | −3 (−8…1) | +2 (0…9) | +3 (0…9) |
+| efter, saker | 0 (0…1) | 0 | 0 (−1…1) | 0 (0…2) |
+
+(*) Enstaka +25/+31 px är ett hopp (0,45 upp, en kort stund).
+
+**Orsaker:**
+1. **Fel kamera utanför ängen.** På sjön, i skogen och i grottan håller OrbitControls kameran högst 9,5 från målet
+   (PlatsDekor maxDistance). Den står alltså i (0, 3,876, 8,92), medan regeln räknade med ängens (0, 4,15, 9,8). Allt
+   ritas ca 10 % större än regeln trodde. Projektionsfelet ensamt var upp till 41 px i fot på sjön och 0 på ängen.
+2. **Data-mått i stället för modellens.** Höjden var målhöjden, och djupet var 0,6 × halva fotavtrycket. Ritat är
+   djupet 167 % av regelns (median, upp till 190 %; spinosaurus är 2,4 lång mot kameran). Därför sträcker sig foten
+   närmare kameran och längre ned i bild: −18 px median, −59 px värst. Höjden är 70–118 % av målhöjden (median 91 %).
+   Saker som en hage eller kniv är 13–30 % av sin målhöjd.
+3. **Vridningen** gissades med en faktor (vrid 1,35) i stället för att räknas på modellens bredd och längd.
+   Ankarpunkten stämmer (mitten ±3 cm, botten ±8 cm), och krympningen och skalan är lika i regel och rendering.
+
+**Lagat vid källan:**
+- `modellmatt.mjs` mäter alla modeller i bulk: samma GLTFLoader-Box3 och samma `skalaFor` som gltfDjur, med
+  framAxel-vridningen. Procedurkropparna (byggPack) mäts också, med botten. Det blir `data/modellmatt.json` (1 158
+  entiteter), och kor.sh räknar om den på main.
+- `kroppMatt` räknar lådan ur de måtten och den vridning djur.tsx faktiskt ger: 0,35·π·vandring för den som går,
+  ±0,14 och rull 0,28 för en flygare, 0,35 för en svävare, och 0 för en sak. Guppet räknas med (±0,04, ±0,08 eller
+  ±0,16).
+- `skarm.ts` har kameran som parameter. `KAMERA_PLATS` räknas ur `PLATS_MAX_AVSTAND`, som PlatsDekor nu själv
+  använder (maxDistance). `kameraFor(plats)` används i hela regeln.
+- Punktfixarna från 19:48 är borta: sakens nedre halva och `hojd_marginal`. `synlig_golv` är nu B6.6:s egna 24 px /
+  4 px / 200 px², eftersom rutan är modellens.
+- Test: `p3a-matt.test.ts`. Projektionen i skarm.ts är lika med three-kamerans (≤ 0,5 px) på ängen och de andra
+  platserna. Regelns ruta är lika med den ritade modellens Box3 genom kameran (≤ 3 px per kant) för 12 modeller
+  (katt, ko, spinosaurus, människa, fjällräv, monsterkatt, häst, hage, kniv, slott, valfisk, pepparkaka) på fyra
+  djup och tre platser.
+
+**Kapacitet med de riktiga rutorna** (vakna av 8, räknat i regeln; gränserna 20/35/0 % i regeln, 30/45/10 % i provet):
+
+| plats | fro11 | fro2026 | fro4242 | blandad | bara jättar | 8 katter |
+|---|---|---|---|---|---|---|
+| ängen | **4** | 8 | 6 | 6 | **2** | **7** |
+| sjön | **4** | 7 | 8 | **4** | **3** | 8 |
+| skogen | 8 | 7 | 8 | 8 | 5 | 8 |
+| grottan | 8 | 7 | 8 | 7 | 2 | 8 |
+
+De gamla siffrorna (5–8) byggde på rutor som var för små. **Kravet nås inte.** Minsta beslut som når det
+(räknat, `/tmp/p3kap.ts`):
+- **(a)** Regeln använder provets gränser, 30 % / 45 % / huvud 10 %, i stället för 20 / 35 / 0. Marginalen 0,1 behövdes
+  bara för att rutorna var fel; nu är de på säkra sidan med 2–5 px.
+- **(b)** Äldre får ritas ned till 40 % (`krymp_aldre_min`).
+- **(c)** Sjön, skogen och grottan använder ängens kameraavstånd (PlatsDekor maxDistance 9,5 → 10,5). Platserna ser
+  ca 10 % mindre ut.
+
+Med (a)+(b)+(c): ängen 6 8 7 7 5 8 och sjön 5 8 8 7 3 8. Allt nås utom bara jättar vid sjön (3). Med bara (a)+(b):
+ängen 6 8 7 7 5 8 och sjön 3 8 8 5 2 7. Med bara (c): sjön 6 8 8 6 3 7, men ängen är oförändrad (4 … 7).
