@@ -1,0 +1,17 @@
+{
+ "_om": "R3F-MFIX6 (Doodles granskning av M20–M25): byter bara modellfilen, ord och data står kvar. Pizzaskäraren var mycket liten och sågs från kanten (filen har nu framsidan +x som entitetens framAxel, står på en pizza, högre målhöjd). Tvättlappen var ett platt blått block (nu en frottélapp som hänger i ett hörn på en krok). Filten såg ut som ett paket (nu en vikt rutig pläd med fransar). Fiol, cello och kontrabas var nästan likadana (nu fiol liten och ljus med stråken i kryss, cello mellanbrun på pigg med en pall, kontrabas störst och mörk med sluttande axlar; målhöjd 0,45 / 1,1 / 1,75). Maracas var en boll på två pinnar (nu två äggformade randiga huvuden på handtag). Ur kontaktarken M21–M25 dessutom: täcke (litet platt block, nu vadderat täcke med stjärnor), borste (liknade en tårta, nu ryktborste med rem), håv (liten och liggande, nu ring med nät och skaft) och fjärrkontroll (svart torn, nu lutad med stora färgade knappar). Målhöjderna förs också till data/entiteter.json (byt-fil.mjs); därmed slår även MFIX5:s väggklocka 0,8 igenom.",
+ "malhojd_ord_ersatt": { "pizzaskärare": 0.65, "tvättlapp": 0.4, "filt": 0.45, "pläd": 0.45, "fiol": 0.45, "violin": 0.45, "cello": 1.1, "kontrabas": 1.75, "håv": 0.6, "fiskhåv": 0.6, "väggklocka": 0.8 },
+ "byt_fil": {
+  "pizzaskarare": "trollpennan-mfix6/pizzaskarare-egen.glb",
+  "tvattlapp": "trollpennan-mfix6/tvattlapp-egen.glb",
+  "filt": "trollpennan-mfix6/filt-egen.glb",
+  "fiol": "trollpennan-mfix6/fiol-egen.glb",
+  "cello": "trollpennan-mfix6/cello-egen.glb",
+  "kontrabas": "trollpennan-mfix6/kontrabas-egen.glb",
+  "maracas": "trollpennan-mfix6/maracas-egen.glb",
+  "tacke": "trollpennan-mfix6/tacke-egen.glb",
+  "borste": "trollpennan-mfix6/borste-egen.glb",
+  "fiskhav": "trollpennan-mfix6/fiskhav-egen.glb",
+  "fjarrkontroll": "trollpennan-mfix6/fjarrkontroll-egen.glb"
+ }
+}

@@ -1,0 +1,1 @@
+# MFIX6 lägger inte in några nya modeller; den byter bara filer (inlagg-tillagg.json "byt_fil").
