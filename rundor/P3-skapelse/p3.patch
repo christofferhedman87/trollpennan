@@ -1758,10 +1758,10 @@ index 0000000..cebf27b
 +});
 diff --git a/src/spel/placering.ts b/src/spel/placering.ts
 new file mode 100644
-index 0000000..8ff4cfc
+index 0000000..065bd71
 --- /dev/null
 +++ b/src/spel/placering.ts
-@@ -0,0 +1,170 @@
+@@ -0,0 +1,179 @@
 +// P3a: EN placeringsregel för alla platser. Ren logik (ingen three), testas i Node. Data: data/placering.json.
 +//  - Varje plats har band per roll (mark, vatten, luft, bak), delade i rutor. Rollen kommer ur saken: simmare på vattnet,
 +//    flygare i luften, stora saker (storlek.json zon "bak") i det bakre bandet, resten på marken.
@@ -1771,7 +1771,7 @@ index 0000000..8ff4cfc
 +//  - Den nyaste får den främsta lediga rutan; sedan de andra från nyast till äldst. Ingen ledig ruta = stallet.
 +import placeringJson from "../../data/placering.json" with { type: "json" };
 +import type { Sparad } from "./brygga.ts";
-+import { ENTITETER, flyger, halvBredd, malhojd, simmar, storlekKlass, synSkala, takSkala } from "./entiteter.ts";
++import { ENTITETER, flyger, FOT_MARGINAL, fotKant, halvBredd, malhojd, simmar, storlekKlass, synSkala, takSkala } from "./entiteter.ts";
 +import { START_PLATS, type Plats } from "./platser.ts";
 +import { iVatten, KANT_MARGINAL, tillPlats, torrKropp } from "./platsYta.ts";
 +import { tacker, type Ruta } from "./skarm.ts";
@@ -1859,20 +1859,21 @@ index 0000000..8ff4cfc
 +  for (const d of ordning) {
 +    const roll = rollFor(d, plats);
 +    const band = regel.band[roll] ?? regel.band.mark!;
-+    let bast: { lage: Lage; kost: number; m: ReturnType<typeof kroppMatt> } | null = null;
++    // bäst = en ledig ruta (först funnen, främst). Annars stall: den minst dåliga rutan som ändå står på rätt underlag
++    // (fel = 0: ingen kropp i vägen, 1: utanför bild – där syns den inte, 2: i en annan kropp; sedan minst skymning)
++    let bast: { lage: Lage; kost: number; fel: number; m: ReturnType<typeof kroppMatt> } | null = null;
 +    for (const [x, y, z] of rutor(band, roll)) {
 +      const m = kroppMatt(d, z, plats);
 +      const halv = m.halv + (vick[roll] ?? 0);
 +      const r = sakRuta(x, z, halv, m.hojd, m.djup, y);
-+      // hel på skärmen
-+      if (r.x0 < 0 || r.x1 > SKARM.w || r.y0 < 0 || r.y1 > SKARM.h) continue;
-+      // rätt underlag
-+      if (!underlag(roll, plats, x, z, m.halv, m.djup)) continue;
-+      // reserverade världsrutor (grinden)
++      // rätt underlag och inte i en reserverad världsruta (grinden)
++      if (!underlag(roll, plats, x, z, d, m)) continue;
 +      if (regel.varld_reserverat.some((v) => x + m.halv > v.x[0] && x - m.halv < v.x[1] && z + m.djup > v.z[0] && z - m.djup < v.z[1])) continue;
++      // hel på skärmen
++      const ute = r.x0 < 0 || r.x1 > SKARM.w || r.y0 < 0 || r.y1 > SKARM.h;
 +      // går inte in i en annan kropp
-+      // (en plan fast sak, dammen, är underlag: simmarna ligger i den och landdjuren står bredvid den – underlaget avgör)
-+      if (satta.some((s) => !s.plan && Math.abs(s.x - x) < s.halv + m.halv && Math.abs(s.z - z) < s.djup + m.djup)) continue;
++      // (en plan fast sak, dammen, är underlag för simmarna; ingen annan står i den eller svävar över den)
++      const krock = satta.some((s) => !(s.plan && roll === "vatten") && Math.abs(s.x - x) < s.halv + m.halv && Math.abs(s.z - z) < s.djup + m.djup);
 +      // skymning: den nya av dem framför och av de reserverade skärmrutorna, och var och en bakom av den nya
 +      let egen = SKARM_RESERVERAT.reduce((a, q) => a + tacker(q, r), 0);
 +      let varst = 0;
@@ -1881,22 +1882,28 @@ index 0000000..8ff4cfc
 +        else if (framfor({ z }, s) && !(s.plan && roll === "vatten")) varst = Math.max(varst, s.tackt + tacker(r, s.r));
 +      }
 +      const kost = Math.max(egen, varst);
-+      const lage: Lage = { x, y, z, roll, r, stall: kost > max + 1e-9 };
++      const fel = krock ? 2 : ute ? 1 : 0;
++      const lage: Lage = { x, y, z, roll, r, stall: fel > 0 || kost > max + 1e-9 };
 +      if (!lage.stall) {
-+        bast = { lage, kost, m };
++        bast = { lage, kost, fel, m };
 +        break;
 +      }
-+      if (!bast || kost < bast.kost - 1e-9) bast = { lage, kost, m };
++      if (!bast || fel < bast.fel || (fel === bast.fel && kost < bast.kost - 1e-9)) bast = { lage, kost, fel, m };
 +    }
 +    if (!bast) {
-+      const m = kroppMatt(d, 0, plats);
-+      const r = sakRuta(0, 0, m.halv, m.hojd, m.djup);
-+      ut.set(d.uid, { x: 0, y: 0, z: 0, roll, r, stall: true });
++      // inget läge alls på rätt underlag (bör inte hända): längst bak i mitten, i stallet
++      const z = band.z[0];
++      const m = kroppMatt(d, z, plats);
++      ut.set(d.uid, { x: 0, y: band.y?.[0] ?? 0, z, roll, r: sakRuta(0, z, m.halv, m.hojd, m.djup), stall: true });
 +      continue;
 +    }
 +    const { lage, m } = bast;
 +    ut.set(d.uid, lage);
-+    if (lage.stall) continue; // i stallet tar den ingen plats
++    if (lage.stall) {
++      // i stallet tar den ingen plats på skärmen, men ingen annan i stallet ställs ovanpå den
++      satta.push({ id: d.uid, x: lage.x, z: lage.z, halv: m.halv, djup: m.djup, r: { x0: 0, y0: 0, x1: 0, y1: 0 }, tackt: 0 });
++      continue;
++    }
 +    for (const s of satta) if (framfor({ z: lage.z }, s) && !(s.plan && roll === "vatten")) s.tackt += tacker(lage.r, s.r);
 +    const egen = SKARM_RESERVERAT.reduce((a, q) => a + tacker(q, lage.r), 0) + satta.filter((s) => framfor(s, lage)).reduce((a, s) => a + tacker(s.r, lage.r), 0);
 +    satta.push({ id: d.uid, x: lage.x, z: lage.z, halv: m.halv, djup: m.djup, r: lage.r, tackt: egen });
@@ -1904,14 +1911,16 @@ index 0000000..8ff4cfc
 +  return ut;
 +}
 +
-+function underlag(roll: Roll, plats: Plats | undefined, x: number, z: number, halv: number, djup: number): boolean {
++function underlag(roll: Roll, plats: Plats | undefined, x: number, z: number, d: Pick<Sparad, "kropp" | "skala">, m: { halv: number; djup: number; f: number }): boolean {
 +  if (!plats || !plats.zoner.length) return roll !== "vatten";
 +  if (roll === "luft") return true;
 +  if (roll === "vatten") {
-+    const pkt: [number, number][] = [[x, z], [x - halv * 0.7, z], [x + halv * 0.7, z], [x, z - djup * 0.7], [x, z + djup * 0.7]];
++    const pkt: [number, number][] = [[x, z], [x - m.halv * 0.7, z], [x + m.halv * 0.7, z], [x, z - m.djup * 0.7], [x, z + m.djup * 0.7]];
 +    return pkt.every(([a, b]) => iVatten(plats, ...tillPlats(a, b)));
 +  }
-+  return torrKropp(plats, x, z, Math.max(Math.max(halv, djup) + 0.15, plats.kant_marginal ?? KANT_MARGINAL));
++  // kroppens kant med vickning och marginal (B6.3: fotKant), i den storlek som ritas
++  const kant = Math.max(fotKant(d.kropp, (d.skala || 1) * m.f), Math.max(m.halv, m.djup) + FOT_MARGINAL);
++  return torrKropp(plats, x, z, Math.max(kant, plats.kant_marginal ?? KANT_MARGINAL));
 +}
 +
 +const cache = new Map<string, Map<string, Lage>>();
