@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1098 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1127 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -88,6 +88,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | trollpennan-folk-m17 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 34 |
 | trollpennan-fordon-m18 | Kenney (watercraft-kit); tillägg: Trollpennan | CC0-1.0 | https://kenney.nl/assets/watercraft-kit | 31 |
 | trollpennan-hem-m20b | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 20 |
+| trollpennan-klader-hem-m27 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 29 |
 | trollpennan-klader-m21 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 26 |
 | trollpennan-kok-m20 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 21 |
 | trollpennan-mat-hus-m26 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 28 |
@@ -1205,3 +1206,32 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | smor | /models/bulk/smor.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | spagetti | /models/bulk/spagetti.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | sylt | /models/bulk/sylt.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| adventsljus | /models/bulk/adventsljus.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| armband | /models/bulk/armband.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| armbandsur | /models/bulk/armbandsur.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| badmossa | /models/bulk/badmossa.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| diadem | /models/bulk/diadem.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| fotoalbum | /models/bulk/fotoalbum.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| halmhatt | /models/bulk/halmhatt.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| handvaska | /models/bulk/handvaska.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| hangslen | /models/bulk/hangslen.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| harborste | /models/bulk/harborste.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| harspanne | /models/bulk/harspanne.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kalender | /models/bulk/kalender.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kjol | /models/bulk/kjol.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| lappstift | /models/bulk/lappstift.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| morgonrock | /models/bulk/morgonrock.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| nagellack | /models/bulk/nagellack.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| napp | /models/bulk/napp.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| nattmossa | /models/bulk/nattmossa.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| overall | /models/bulk/overall.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| parfym | /models/bulk/parfym.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| planbok | /models/bulk/planbok.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| plaster | /models/bulk/plaster.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| sandal | /models/bulk/sandal.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| simglasogon | /models/bulk/simglasogon.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| slips | /models/bulk/slips.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| sovmask | /models/bulk/sovmask.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| spjalsang | /models/bulk/spjalsang.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| tandkram | /models/bulk/tandkram.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| termometer | /models/bulk/termometer.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
