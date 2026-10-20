@@ -1,0 +1,21 @@
+# B6.5 – attribut med synlig effekt, simmare spridda, möbler bak (Arkitekten, 2026-10-20)
+
+Patch + kor.sh, ingen Build. Kräver B6.3 och B6.4. Data via `b65-data.mjs`: idempotent, bara om det gamla värdet står kvar (annars VARNING). Inga modeller, inget manifest, ingen LICENSES.md. Ingen färg från färgord (R9C pausad).
+Doodle: `git checkout main && git pull && git checkout -b runda-b65-kod && bash rundor/B6.5-fix/kor.sh`
+
+| # | Fynd (Doodle) | Rotorsak | Åtgärd | Bevis |
+|---|---|---|---|---|
+| A1 | "en brinnande hund" gav hund + ägg | "brinnande" fanns inte. Sammansättningsdelningen tog det som "brinn" + **"ande"** (anden från M19): en extra skapelse (ägget medan anden laddar). Samma sak med "glödande". | Attributord i ord.json: brinnande och flammande (förmåga `lagor`), glödande (`aura`). **Generell regel** i `data/attribut.json` `particip`: ett okänt ord som slutar på -ande/-ende och har okänt förled är ett particip, inte en sammansättning. Det blir "Ordet … kan jag inte än", aldrig en extra skapelse. | b6-5.test.ts; b65-prov A: precis 1 skapelse |
+| A2 | "en regnbågsfärgad katt" blev en grå katt | Ordet gav redan mönstret `regnbåge`, men mönster ritas bara på procedurkroppar. GLB-katten visade ingenting. | **Attributrad + effekt**: `data/attribut.json` `effekter` kopplar varje egenskap (`formaga:<id>`, `monster:<id>`) till en effekt. `DjurEffekter` läser tabellen; ingen specialkod per ord. Ny effekt `regnbage`: en regnbåge över djuret, vänd mot kameran. Kroppen målas inte om, så den krockar inte med R9C-pausen. | b65-prov A: ≥ 4 av 6 regnbågsnyanser i bilden |
+| A3 | "en hund med eld" | Gav redan `flammor` (eld ur munnen). Nu i tabellen och provad i bild. Ny effekt `lagor` (lågor över ryggen) för brinnande. | | b65-prov A: eldpixlar (≥ 80 fler än före) |
+| A4 | – | Att ett nytt attributord bara blir ingenting ska inte kunna hända igen. | b6-5.test.ts: varje `formaga`/`monster` som ett ord eller förled kan ge har en rad i attribut.json (effekt, eller `i_kroppen`). Annars faller testet. | b6-5.test.ts |
+| B | Simmande djur klumpar sig vid bryggan | Alla simmare önskade samma lilla ring (ängens damm). På sjön flyttades de till närmaste vattenpunkt, alla på samma ställe. | `simPlatser()` (platsYta.ts): rutnät över platsens största vattenyta, i sidled inom platsens fri-zon (det kameran ramar in). Första punkten närmast mitten, därefter alltid den punkt som ligger längst från de redan valda. | b6-5.test.ts; b65-prov B: 5 simmare ≥ 0,7 isär, alla i bild |
+| C | Matbordet skymmer småsakerna | Kategorin `möbel` saknade storleksklass. Alla 70 möbler har målhöjd ~0,9 i datan, så kategorin räcker inte. | storlek.json `ids`: klass per entitet före kategorin. 35 stora möbler (bord, soffor, sängar, skåp, vitvaror, spelmaskiner …) får klassen `mobel` (bak, tak 1,1, kant 0,6). Kudde, tavla och matta står kvar bland djuren. | b6-5.test.ts; b65-prov C: matbordet bakom kopp, kaffekanna och tekopp |
+| D | Narvalen ligger på sanden | `rorelse: "sim"` saknades (MFIX4). | entiteter.json: narval och bläckfisk `rorelse: "sim"` | b6-5.test.ts |
+| E | "en teve" och "en tv" ger olika modeller | M20b lade in egen teve-modell. | entiteter.json: `teve` → `"modell": "tv"`, malhöjd 0,5. Tillgångsraden `teve` står kvar (antalet rader är oförändrat). | b6-5.test.ts |
+| F | eslint-varningar 82 → 123, alla i rundor/ | Rundornas prov- och dataskript lintades som produktkod. | eslint.config.mjs: `rundor/**` i ignores. kor.sh lintar src/scripts/verification med --max-warnings 0. | kor.sh: varningar i utskriften |
+
+Kvar (inte i B6.5): `i_kroppen` i attribut.json listar ränder, prickar, vingar, fenor, fartlinjer och studs. De ritas av procedurkroppen eller rörelsen; om de syns på GLB-modeller är inte kontrollerat. Kvasten som inte syns, med ett prov för alla tillgångar, är B6.6.
+
+## Verifierat
+I en ren kopia av main 544adcb med B6.3 och B6.4 inlagda (som Doodle kör dem i ordning): kor.sh EXIT=0. test:product 205, typecheck och typecheck:pages 0, eslint . 0 fel, check:struktur grön, build:pages ok. b65-prov 14 steg; regressionen b63/b64/b62/b61/r8-2/r9k gav exit 0 och 0 sidfel. Bilder: `b65-A-*.png`, `b65-B-sjon-simmare.png`, `b65-C-matbord-bak.png`, `b65-kontaktark.png`.
