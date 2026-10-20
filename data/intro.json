@@ -6,6 +6,15 @@
   "ljud": "/ljud/intro/saga.mp3",
   "ord": ["K", "A", "N", "I", "N"],
   "langd": 15.2,
+  "skriv": {
+    "_om": "P2: introts sista scen. Barnet skriver ordet själv (nästa bokstav lyser på tangentbordet, bara rätt bokstav skrivs in) och trycker Vakna!. Hjälp mig visar idéknapparna som förut. Ändra ordet här, ingen kod.",
+    "ord": "katt",
+    "fras": "en katt",
+    "uppmaning": "Skriv katt!",
+    "vakna": "Vakna!",
+    "hjalp": "Hjälp mig",
+    "tillbaka": "Jag vill skriva"
+  },
   "scener": [
     { "fas": 0, "text": "Hej! Jag är Trollpennan.", "fran": 0 },
     { "fas": 1, "text": "Det jag skriver … vaknar.", "fran": 2.35 },
