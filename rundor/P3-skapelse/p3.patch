@@ -38,12 +38,22 @@ index d2a158c..59575a2 100644
 +  "fokus": { "in_ms": 600, "stanna_ms": 900, "ut_ms": 800, "narmare": 0.3, "mot": 0.55 }
   }
  }
+diff --git a/data/modellmatt.json b/data/modellmatt.json
+new file mode 100644
+index 0000000..fd650f9
+--- /dev/null
++++ b/data/modellmatt.json
+@@ -0,0 +1,4 @@
++{
++ "_om": "P3a: modellens bredd (x), höjd (y) och djup (z) i världsenheter vid skala 1, i spelets skala, ur modellens Box3 som renderaren (gltfDjur). Genereras av rundor/P3-skapelse/modellmatt.mjs. Procedurkroppar (byggPack) har ett fjärde tal: lådans botten. Saknas en entitet räknar placeringen med målhöjden och fotavtrycket.",
++ "matt": { "abborre": [1.024,0.55,0.235], "adelsten": [0.495,0.5,0.495], "adventsljus": [0.425,0.23,0.097], "affar": [1.025,1.5,1.091], "agg": [0.299,0.425,0.345], "aggklocka": [0.355,0.425,0.355], "aggkopp": [0.259,0.4,0.249], "airhockey": [1.5,0.75,1.05], "akerrad": [2,0.1,1.24], "akvarium": [0.45,0.29,0.245], "alien": [0.57,1.1,0.285], "alpacka": [0.311,1.3,1.062], "alpackakung": [2.213,1.1,1.16], "alva": [0.533,0.9,0.267], "alvmossa": [0.5,0.481,0.487], "ambulans": [0.846,1.015,1.833], "ananas": [0.217,0.425,0.221], "ande": [0.733,1.3,0.412], "angel": [1.484,1.3,0.356], "anglok": [0.947,1.1,1.723], "anka": [0.834,1,1.074], "ankylosaurus": [1.108,1.056,2.4], "apa": [1.231,1,1.107], "apatosaurus": [0.271,0.563,2.4], "apelsin": [0.425,0.419,0.425], "apple": [0.425,0.413,0.425], "ara": [1.03,1,1.486], "arbetsbank": [1.023,0.9,0.928], "arkadspel": [0.497,0.9,0.667], "armband": [0.425,0.42,0.075], "armbandsur": [0.231,0.422,0.425], "asna": [0.383,1.3,1.548], "astronaut": [0.792,1.3,0.541], "aubergine": [0.214,0.425,0.226], "automat": [0.6,0.9,0.57], "aventyrare": [0.68,1.3,0.514], "avokado": [0.299,0.425,0.345], "back": [0.417,0.021,0.417], "bacon": [0.292,0.067,1.167], "badanka": [0.428,0.453,0.5], "baddrakt": [0.276,0.5,0.131], "badkar": [1.5,0.529,0.706], "badmintonracket": [0.211,0.55,0.038], "badmossa": [0.404,0.226,0.425], "bagare": [0.231,0.5,0.243], "bagskytt": [1.236,1.3,0.744], "baguette": [0.425,0.128,0.128], "bajamaja": [0.714,1,0.757], "balja": [0.917,0.298,0.511], "ballerina": [0.689,1.3,0.474], "ballong": [0.227,0.5,0.227], "bambu": [0.459,1.2,0.415], "banan": [0.093,0.132,0.425], "banjo": [0.281,0.8,0.068], "bank": [0.766,0.9,0.383], "bargningsbil": [0.861,1.1,1.706], "barn": [0.721,1,0.36], "barnstol": [0.438,0.9,0.455], "barnvagn": [0.91,0.8,0.448], "barstol": [0.549,0.9,0.476], "basketboll": [0.5,0.5,0.499], "basketkorg": [0.609,1.5,0.471], "bat": [0.519,1.1,1.273], "batteri": [0.201,0.5,0.201], "bebis": [0.504,0.55,0.261], "beluga": [1.006,0.55,0.748], "berg": [1.188,0.8,1.063], "bestick": [0.4,0.354,0.244], "betongbil": [0.868,0.918,1.833], "bi": [0.598,0.35,0.42], "bibliotek": [1.625,1.3,0.997], "biff": [0.446,0.12,0.383], "bil": [1.078,0.935,1.833], "bilderbok": [0.425,0.299,0.12], "biograf": [1.097,1.3,0.694], "bjallra": [0.368,0.5,0.368], "bjork": [0.548,1.2,0.496], "bjorn": [0.688,1.1,1.629], "blackfisk": [2.029,1.1,1.236], "blackfiskmonster": [2.254,1.1,1.047], "bladlus": [0.301,0.25,0.525], "bladskracka": [0.551,0.35,0.91], "blasfisk": [1.463,1,1.463], "blaval": [1.807,0.6,0.7], "blixt": [0.36,0.8,0.08], "blomfluga": [0.701,0.3,0.584], "blomkal": [0.4,0.324,0.425], "blomlada": [0.425,0.303,0.142], "blomma": [0.787,1.2,0.896], "blommor": [1.977,0.349,2], "bocker": [1.404,0.9,0.657], "bogserbat": [0.878,1.1,1.706], "boj": [0.252,0.5,0.252], "bok": [0.512,0.091,0.391], "bokhog": [0.5,0.14,0.116], "bokhylla": [0.424,0.9,0.265], "bokstapel": [0.5,0.375,0.397], "boll": [0.5,0.5,0.5], "bonde": [0.796,1.3,0.567], "bongotrumma": [0.425,0.276,0.243], "bonsyrsa": [0.387,0.4,0.585], "bord": [1.5,0.582,0.798], "bordslampa": [0.881,0.9,0.881], "borg": [1.516,1.4,1.27], "borr": [0.175,0.5,0.069], "borrmaskin": [0.4,0.3,0.092], "bors": [0.5,0.353,0.266], "borste": [0.425,0.292,0.219], "bowlingklot": [0.417,0.417,0.425], "boxningshandske": [0.4,0.275,0.171], "brandbat": [1.012,1.037,1.833], "brandbil": [0.809,0.917,1.833], "brandman": [0.662,1.3,0.546], "brandpost": [0.302,0.5,0.292], "brev": [0.5,0.35,0.15], "brevbarare": [0.738,1.3,0.535], "brevlada": [0.081,0.5,0.244], "bro": [2.4,1.09,1.847], "broccoli": [0.378,0.425,0.378], "brod": [0.464,0.042,0.384], "brodkorg": [0.425,0.158,0.322], "brodrost": [0.5,0.346,0.266], "bror": [0.711,1.2,0.356], "brunn": [0.595,1,0.693], "brygga": [2.388,1.254,2.4], "budbil": [0.846,0.931,1.833], "bulldozer": [1.082,1.1,1.724], "bulle": [0.414,0.16,0.425], "burk": [0.385,0.5,0.385], "buske": [1.944,1.2,1.944], "buss": [0.726,0.838,1.833], "byggarbetare": [0.73,1.3,0.452], "byggkloss": [0.425,0.368,0.311], "byggstallning": [0.5,0.5,0.5], "byra": [0.791,0.8,0.555], "byxor": [0.363,0.65,0.153], "carnotaurus": [0.598,1,1.999], "cello": [0.817,1.1,0.267], "champinjon": [1.492,1.2,1.723], "chef": [0.77,1.3,0.385], "choklad": [0.597,0.069,0.299], "cirkus": [1.322,1.3,1.32], "cistern": [2.196,1.4,2.4], "citron": [0.329,0.425,0.379], "clown": [0.703,1.3,0.408], "clownfisk": [1.45,1,1.733], "container": [0.5,0.28,0.312], "corgi": [0.857,1,1.091], "cowboy": [0.68,1.3,0.51], "croissant": [0.308,0.172,0.425], "cykel": [1.5,0.876,0.436], "cykelstall": [0.5,0.281,0.236], "cyklop": [2.341,2.4,2.107], "cylinderhatt": [0.465,0.332,0.5], "cymbal": [0.541,0.8,0.535], "dagbok": [0.242,0.5,0.36], "dagslanda": [0.303,0.3,0.509], "dammsugare": [0.903,0.6,0.475], "dansmaskin": [0.685,0.9,0.971], "darttavla": [0.46,0.85,0.319], "dator": [0.545,0.9,0.597], "datormus": [0.292,0.139,0.5], "datorskarm": [0.5,0.375,0.132], "delfin": [0.822,0.788,2.4], "demon": [1.328,1.1,0.952], "designfatolj": [1.5,0.822,0.843], "detektiv": [0.699,1.3,0.586], "diadem": [0.425,0.322,0.042], "diamant": [0.467,0.5,0.467], "diesellok": [0.827,1.1,1.653], "dingo": [1.068,0.9,1.232], "diskbank": [0.999,0.9,1.02], "diskho": [0.79,0.9,0.827], "diskmaskin": [0.571,0.8,0.948], "docka": [0.268,0.45,0.251], "dockskap": [0.75,0.9,0.367], "doktor": [0.77,1.3,0.385], "dorr": [0.45,0.9,0.09], "dorrmatta": [1.5,0.035,0.828], "dragspel": [0.5,0.348,0.182], "dragster": [0.805,0.831,1.833], "drakagg": [0.556,0.6,0.571], "drake": [1.99,1.35,1.136], "drakfisk": [0.545,0.45,0.328], "dronare": [0.4,0.124,0.353], "droppsten": [0.409,1.5,0.457], "drottning": [0.642,1.3,0.349], "druvor": [0.281,0.425,0.24], "dubbelsang": [1.275,0.5,1.5], "dumper": [0.885,1.1,1.633], "durkslag": [0.425,0.17,0.332], "dusch": [0.462,0.9,0.479], "duva": [0.514,0.4,0.44], "dvarg": [0.64,0.9,0.434], "dykarbagge": [0.492,0.35,0.868], "dykare": [0.759,1.3,0.474], "ek": [0.627,1.2,0.724], "eka": [1.833,0.565,1.582], "ekollon": [0.4,0.315,0.324], "eld": [0.948,0.7,0.924], "elefant": [2.309,1.7,2.131], "elgitarr": [0.317,0.9,0.222], "elstolpe": [0.5,0.453,0.185], "expedit": [0.77,1.3,0.385], "fabrik": [2.6,1.834,1.55], "fackla": [0.101,0.557,0.108], "fågel": [1.102,0.8,0.677], "fagelbad": [0.582,0.7,0.573], "fagelbo": [0.4,0.133,0.394], "fagelbur": [0.35,0.6,0.35], "fana": [0.929,1.6,0.184], "far": [1.043,1,1.298], "farbror": [0.77,1.3,0.385], "farfar": [0.741,1.25,0.37], "farmor": [0.689,1.3,0.344], "fartyg": [0.53,1.1,1.446], "fatolj": [1.324,0.9,1.176], "fenix": [2.4,0.953,2.015], "festhatt": [0.293,0.45,0.293], "ficklampa": [0.425,0.208,0.208], "filt": [0.45,0.208,0.259], "fiol": [0.45,0.443,0.066], "fisk": [0.81,0.7,0.542], "fiskare": [0.732,1.3,0.494], "fiskebat": [0.755,1.1,1.637], "fiskespo": [0.065,0.875,0.069], "fiskhav": [0.409,0.6,0.147], "fjader": [0.5,0.312,0.5], "fjallrav": [0.33,0.75,1.232], "fjaril": [1.282,0.4,0.889], "fjarilsfisk": [1.154,1,1.624], "fjarrkontroll": [0.141,0.4,0.226], "fladdermus": [0.664,0.5,0.347], "flagga": [0.123,1,0.499], "flaggstang": [0.476,1.5,0.153], "flakbil": [1.002,0.868,1.833], "flakvagn": [0.747,0.787,1.833], "flamingo": [0.992,1,1.216], "flaska": [0.116,0.516,0.116], "flingor": [0.336,0.281,0.425], "flipperspel": [0.607,0.9,0.91], "flod": [1.333,0.067,1.333], "flodhast": [1.109,1.2,1.361], "flojt": [0.416,0.114,0.071], "flotte": [0.928,0.333,1.833], "flundra": [0.517,1,1.171], "flygplan": [1.774,0.743,1.833], "flytvast": [0.393,0.6,0.177], "fodelsedagstarta": [0.425,0.242,0.425], "fonster": [0.74,0.9,0.118], "fontan": [2.4,0.336,2.4], "forklade": [0.627,0.7,0.057], "formelbil": [0.796,0.427,1.5], "forskare": [0.77,1.3,0.385], "forstoringsglas": [0.244,0.5,0.066], "fotboll": [0.493,0.5,0.491], "fotbollsmal": [1.333,0.781,0.524], "fotoalbum": [0.425,0.395,0.082], "framtidsbil": [0.827,0.574,1.833], "frimarke": [0.382,0.425,0.1], "frisbee": [0.4,0.207,0.348], "frisor": [0.77,1.3,0.433], "fruktskal": [0.45,0.247,0.445], "fyrhjuling": [1.187,1.1,1.415], "gadda": [1.514,0.5,0.218], "gaffel": [1.095,0.039,0.183], "gaffeltruck": [0.637,1.1,1.195], "galge": [0.425,0.194,0.037], "garage": [1.177,1,1.177], "garderob": [0.605,1.1,0.367], "gas": [0.971,1,1.166], "gatlykta": [0.281,1,0.072], "gatuskylt": [0.207,0.5,0.207], "generator": [0.5,0.286,0.375], "get": [1.004,1,1.096], "geting": [0.934,1,1.445], "giraff": [1.906,2.1,1.735], "giraffvivel": [0.33,0.35,0.517], "gitarr": [0.288,0.8,0.074], "glas": [0.28,0.5,0.323], "glass": [0.216,0.425,0.249], "glassbagare": [0.142,0.425,0.164], "glassbil": [0.676,1.1,1.24], "glasskal": [0.398,0.45,0.398], "glasspinne": [0.149,0.425,0.07], "glasstrut": [0.263,0.425,0.304], "glodlampa": [0.284,0.5,0.279], "glubb": [2.019,1.1,1.026], "godis": [0.49,0.109,0.125], "godsvagn": [0.815,0.881,1.833], "gokart": [0.806,1.1,1.182], "gokur": [0.434,0.9,0.233], "golem": [2.4,0.846,1.075], "golfboll": [0.5,0.498,0.5], "golfklubba": [0.038,0.548,0.11], "golvlampa": [0.159,0.9,0.184], "gondol": [1.333,0.618,0.341], "gradde": [0.368,0.261,0.425], "gradskiva": [0.4,0.202,0.012], "gran": [0.303,1.2,0.308], "gras": [0.351,1.2,0.079], "grashoppa": [0.363,0.4,0.616], "grasklippare": [0.727,0.7,0.37], "gravmaskin": [1.208,1.1,1.797], "gravtraktor": [1.208,1.1,1.797], "grep": [0.198,1.2,0.036], "griffeltavla": [0.556,0.6,0.321], "grill": [0.693,0.7,0.65], "grillspett": [0.545,0.098,0.099], "grillstativ": [0.5,0.35,0.321], "grind": [0.112,0.57,1.5], "groda": [0.788,0.85,1.152], "grotta": [1.5,1.5,0.253], "grottgang": [1.482,1.5,1.482], "grottoppning": [2.4,0.48,1.233], "grottport": [1.482,1.5,0.909], "gryta": [0.425,0.165,0.425], "grytlapp": [0.38,0.425,0.035], "guldklimp": [0.459,0.5,0.424], "guldmynt": [0.5,0.5,0.219], "guldnyckel": [0.308,0.065,0.649], "guldogonslanda": [0.32,0.3,0.783], "guldtacka": [0.25,0.156,0.5], "gummistovel": [0.406,0.45,0.38], "gungbrada": [1,0.383,0.216], "gunghast": [0.98,0.8,0.32], "gungstol": [0.538,1,0.853], "gurka": [0.547,0.098,0.095], "hack": [0.375,0.375,1.5], "hacka": [0.177,0.5,0.148], "hackgrind": [0.375,0.375,1.5], "haftapparat": [0.425,0.191,0.106], "hage": [1.5,0.279,0.042], "halfpipe": [0.5,0.4,0.5], "halmhatt": [0.425,0.2,0.387], "halsband": [0.453,0.455,0.5], "hamburgare": [0.425,0.305,0.425], "hammare": [0.33,0.5,0.198], "hamster": [0.253,0.4,0.265], "handduk": [0.5,0.159,0.5], "handfat": [0.546,0.9,0.466], "handkontroll": [0.425,0.236,0.087], "handske": [0.313,0.14,0.5], "handvaska": [0.425,0.385,0.131], "hangar": [2.6,1.192,2.252], "hanglas": [0.346,0.425,0.121], "hangmatta": [1.5,0.893,0.446], "hangslen": [0.274,0.5,0.013], "hantel": [0.425,0.179,0.407], "harborste": [0.172,0.45,0.069], "hare": [0.513,0.8,0.614], "harkrank": [1.114,0.45,1.012], "harpa": [0.563,0.95,0.175], "harspanne": [0.425,0.259,0.078], "hartork": [0.383,0.4,0.162], "häst": [0.529,1.5,1.706], "hatthylla": [0.526,1.5,0.384], "haxa": [0.741,1.1,0.59], "haxhatt": [0.489,0.387,0.5], "helikopter": [1.392,0.548,1.833], "highlandsko": [1.112,1,1.194], "hind": [1.251,1,1.183], "hink": [0.394,0.5,0.345], "hjalm": [0.339,0.181,0.425], "hjalte": [1.343,1.3,0.62], "hjarta": [0.5,0.466,0.144], "hjartstartare": [0.389,0.5,0.241], "hjort": [0.773,1,0.783], "hockeyklubba": [0.403,0.9,0.027], "hogtalare": [0.118,0.508,0.118], "hona": [0.994,1,0.89], "honshus": [1.301,1,1.164], "honung": [0.425,0.412,0.425], "hopprep": [0.4,0.266,0.193], "horlurar": [0.5,0.456,0.175], "hornsoffa": [1.5,0.704,1.5], "hornstrit": [0.245,0.3,0.424], "hostack": [0.846,0.9,0.854], "hostgran": [0.764,1.2,0.667], "hosttrad": [0.627,1.2,0.724], "hotell": [0.596,1.9,0.646], "humla": [0.394,0.35,0.415], "hund": [0.835,1.05,0.994], "hundbadd": [1,0.25,0.99], "hus": [1.008,1.5,1.008], "husbat": [1.057,0.858,1.833], "husbil": [0.985,1.1,1.806], "husky": [0.311,1,1.222], "hylla": [1.5,0.3,0.375], "hyvel": [0.188,0.162,0.5], "igelkott": [0.576,0.6,0.682], "innebandyklubba": [0.381,0.8,0.141], "isbjorn": [0.833,1,0.996], "isglass": [0.156,0.425,0.065], "istapp": [0.192,0.8,0.192], "jacka": [0.139,0.238,0.5], "jagare": [0.698,1.3,0.436], "jarntacka": [0.25,0.156,0.5], "jattebi": [2.4,1.054,1.156], "jeep": [1.018,0.883,1.833], "jetplan": [1.711,0.764,1.833], "jojo": [0.233,0.4,0.103], "jordglob": [0.419,0.55,0.425], "jordgubbe": [0.279,0.425,0.279], "jordnotssmor": [0.339,0.425,0.339], "juice": [0.36,0.425,0.286], "julgran": [0.624,1.2,0.624], "julklapp": [0.426,0.5,0.426], "julkrans": [0.44,0.5,0.17], "julstrumpa": [0.246,0.5,0.161], "jultomte": [0.644,1.3,0.382], "juvel": [0.449,0.5,0.389], "kackerlacka": [0.397,0.35,0.689], "kaffe": [0.321,0.208,0.425], "kaffebryggare": [0.395,0.37,0.5], "kaffekanna": [0.641,0.6,0.458], "kaffekopp": [0.425,0.335,0.419], "kagla": [0.45,0.439,0.292], "kajak": [1.5,0.765,0.325], "kaka": [0.454,0.103,0.393], "kakao": [0.297,0.425,0.204], "kakburk": [0.425,0.308,0.421], "kaktus": [0.769,1.2,0.669], "kal": [0.4,0.324,0.425], "kalender": [0.425,0.396,0.244], "kalke": [0.425,0.18,0.15], "kalkon": [1.743,0.968,2.4], "kalv": [1.325,1,1.24], "kam": [0.425,0.154,0.028], "kamel": [0.62,1.9,1.865], "kamera": [0.4,0.303,0.175], "kamin": [1.142,0.9,0.407], "kampfisk": [0.908,1,1.654], "kanguru": [0.536,1.4,1.066], "kanin": [0.622,1,0.662], "kaninbur": [0.956,0.6,0.556], "kanon": [0.364,0.274,0.5], "kanot": [0.478,0.291,1.833], "kapp": [0.152,0.5,0.365], "kapten": [0.72,1.3,0.49], "karra": [1.599,0.959,2.4], "karta": [0.564,0.103,0.354], "kartong": [0.681,0.9,0.681], "kassaapparat": [0.5,0.303,0.278], "kastrull": [0.5,0.179,0.357], "katamaran": [0.675,1.1,1.042], "katapult": [0.359,0.276,0.5], "katt": [0.731,1,1.056], "kavel": [0.59,0.102,0.117], "kejsare": [0.698,1.3,0.384], "keps": [0.389,0.268,0.5], "ketchup": [0.156,0.425,0.18], "ketchupflaska": [0.193,0.5,0.193], "keyboard": [0.983,0.8,0.569], "kikare": [0.326,0.4,0.218], "kille": [0.711,1.2,0.356], "kiosk": [0.675,1,0.777], "kirurgfisk": [1.096,1,1.228], "kista": [0.479,0.473,0.5], "kiwi": [1.089,1,1.547], "kjol": [0.425,0.315,0.42], "kladhangare": [0.319,0.9,0.319], "klanning": [0.15,0.5,0.131], "klarinett": [0.233,0.7,0.227], "klippa": [1.031,0.341,1.333], "klippblock": [1.333,0.402,1.272], "klippvagg": [0.712,0.8,0.591], "klocka": [0.324,0.5,0.165], "kloss": [0.5,0.5,0.5], "klover": [0.835,1.2,0.801], "klubba": [0.043,0.425,0.21], "klumpfisk": [1.452,1,1.918], "knappare": [0.383,0.3,0.823], "kniv": [0.078,0.764,0.006], "ko": [1.241,1.3,1.177], "koala": [1.328,1,0.95], "kock": [0.654,1.3,0.466], "kofisk": [1.446,0.958,2.4], "kofot": [0.098,0.613,0.03], "kofta": [0.919,0.6,0.218], "koi": [0.71,1,1.267], "koja": [1.137,1,1.534], "kokosnot": [0.425,0.425,0.425], "koksbord": [1.5,0.753,1.5], "koksskap": [0.86,0.9,0.9], "kolibri": [0.509,0.4,0.609], "kolvagn": [0.802,1.1,1.805], "kombi": [0.819,0.721,1.833], "komet": [1.333,0.514,0.423], "kompass": [0.412,0.191,0.5], "kompis": [0.711,1.2,0.356], "kompost": [0.5,0.32,0.466], "konstnar": [0.741,1.3,0.422], "kontor": [0.455,1.5,0.455], "kontorsstol": [0.523,0.9,0.548], "kontrabas": [0.81,1.75,0.309], "kopp": [0.394,0.342,0.5], "kopparstang": [0.25,0.156,0.5], "korg": [0.5,0.357,0.5], "korsbar": [0.219,0.425,0.403], "korv": [0.425,0.136,0.157], "korvbrod": [0.565,0.084,0.164], "kott": [0.917,0.103,0.656], "kottbullar": [0.45,0.075,0.445], "krabba": [0.979,0.6,0.565], "krafta": [0.738,0.35,2.051], "kraka": [0.579,0.45,0.495], "kraken": [1.441,1.2,1.441], "krater": [1.155,0.19,1.333], "kristall": [1.333,0.529,1.256], "kristallkula": [0.439,0.6,0.439], "krita": [0.415,0.425,0.127], "krokodil": [2.142,0.4,0.625], "kronhjort": [0.849,1.8,1.619], "kruka": [0.5,0.359,0.338], "krukvaxt": [0.292,0.9,0.332], "krycka": [0.316,0.5,0.302], "kryssningsfartyg": [0.406,0.67,1.833], "kub": [0.5,0.5,0.5], "kudde": [1.5,0.461,1.154], "kugghjul": [0.466,0.5,0.188], "kulle": [1.333,0.175,1.137], "kulor": [0.425,0.245,0.306], "kundvagn": [0.313,0.408,0.5], "kung": [0.642,1.3,0.349], "kuvert": [0.5,0.034,0.415], "kvast": [0.306,1.2,0.138], "kvinna": [0.77,1.3,0.385], "kyckling": [1.377,1,0.847], "kylskap": [0.421,0.9,0.286], "kyrka": [0.851,1.9,1.42], "kyrkogardsvaktmastare": [1.223,1.3,0.81], "lada": [1.929,1.5,2.053], "ladcykel": [1.5,0.751,0.461], "lagereld": [0.5,0.107,0.5], "lakrits": [0.45,0.415,0.232], "lama": [0.35,1.3,1.091], "lamm": [1.016,1,1.216], "lampa": [0.242,0.5,0.242], "lappstift": [0.38,0.425,0.259], "laptop": [0.5,0.306,0.455], "larare": [0.741,1.25,0.37], "larv": [0.414,0.5,0.381], "las": [0.428,0.5,0.231], "lask": [0.25,0.425,0.25], "lastbil": [0.932,0.808,1.833], "lastfartyg": [1.833,0.588,0.681], "lastpall": [0.5,0.097,0.484], "lejon": [1.053,1,1.11], "leksaksbil": [0.425,0.233,0.333], "leksakslada": [0.421,0.5,0.301], "lim": [0.189,0.4,0.191], "limousin": [1.833,0.515,0.592], "limpa": [0.425,0.324,0.268], "linjal": [0.487,0.097,0.018], "livbat": [1.066,0.344,1.833], "ljus": [0.191,0.5,0.189], "ljuslykta": [0.236,0.5,0.236], "ljusslinga": [0.5,0.157,0.031], "ljusstake": [0.287,0.5,0.223], "lok": [0.733,1.1,1.455], "lokmat": [0.362,0.425,0.418], "loppa": [0.297,0.25,0.392], "luftballong": [0.647,1.1,0.647], "lussekatt": [0.4,0.207,0.344], "luva": [0.361,0.343,0.5], "lyckohjul": [0.635,0.9,0.319], "lyftkran": [0.596,1.1,1.139], "lykta": [0.34,0.5,0.34], "lyxjeep": [0.965,0.836,1.833], "madrass": [0.791,0.232,1.333], "magnet": [0.398,0.5,0.398], "majs": [0.425,0.392,0.372], "makrill": [0.158,0.4,0.994], "malare": [0.738,1.3,0.535], "mamma": [0.741,1.25,0.37], "manbil": [0.857,1.1,0.999], "mandarinfisk": [1.357,1,2.278], "mane": [0.4,0.8,0.071], "manet": [0.773,0.7,0.626], "manniska": [0.77,1.3,0.385], "maracas": [0.45,0.348,0.176], "marknadsstand": [0.808,1,0.808], "marsvin": [0.422,0.4,0.769], "marulk": [0.957,0.6,0.993], "mas": [0.747,0.6,0.877], "mask": [0.57,0.3,1.593], "matbord": [1.5,0.75,1.5], "matta": [1.5,0.05,1], "mattband": [0.425,0.151,0.053], "medalj": [0.233,0.425,0.072], "mejsel": [0.092,0.654,0.092], "mekaniker": [0.738,1.3,0.553], "melon": [1.44,1.2,1.247], "menorah": [0.432,0.5,0.145], "meteor": [0.5,0.424,0.433], "metspo": [0.515,1,0.203], "middag": [0.425,0.372,0.389], "mikrofon": [0.087,0.565,0.106], "mikroskop": [0.262,0.5,0.314], "mikrovagsugn": [1.45,0.9,1.15], "milkshake": [0.216,0.425,0.216], "miniraknare": [0.283,0.4,0.175], "mistel": [0.5,0.467,0.16], "mixer": [0.298,0.5,0.24], "mjolk": [0.212,0.425,0.212], "mjolkko": [1.176,1,1.167], "mjolkpaket": [0.197,0.55,0.197], "moln": [1.333,0.791,0.935], "monsterduva": [1.446,1.1,1.252], "monstergroda": [1.413,1.1,0.732], "monsterhund": [1.295,1.1,1.046], "monsterkatt": [1.244,1.1,1.033], "monstertruck": [0.917,1.1,1.283], "mops": [0.547,1,1.32], "morgonrock": [0.659,0.6,0.154], "mormor": [0.689,1.3,0.344], "morot": [0.204,0.425,0.204], "mortel": [0.45,0.443,0.394], "moster": [0.741,1.25,0.37], "motorbat": [0.971,0.816,1.833], "motorcykel": [1.833,0.86,0.367], "muffin": [0.425,0.347,0.368], "muffins": [0.356,0.425,0.308], "mugg": [0.5,0.398,0.415], "mullvad": [0.76,0.5,0.707], "mullvadssyrsa": [0.437,0.35,0.87], "mumie": [0.652,1.1,0.326], "munk": [0.368,0.134,0.425], "munspel": [0.475,0.113,0.121], "mur": [0.687,0.9,0.687], "murmeldjur": [0.698,0.7,0.891], "murslev": [0.066,0.5,0.178], "mus": [1.248,1,1.749], "museum": [1.7,1.3,0.986], "mussla": [1.196,1,1.933], "mynt": [0.498,0.5,0.2], "myntstapel": [0.5,0.186,0.391], "myra": [0.272,0.3,0.515], "myrlejon": [0.432,0.3,0.776], "myrstack": [0.5,0.217,0.491], "nabbdjur": [0.614,0.6,1], "nackros": [1.732,0.624,2], "nagellack": [0.217,0.425,0.162], "nallebjorn": [0.337,0.5,0.274], "napoleonfisk": [1.265,1,1.804], "napp": [0.425,0.319,0.407], "nappflaska": [0.16,0.4,0.16], "narval": [1.415,0.7,1.178], "nattduksbord": [1.027,0.9,0.83], "nattlampa": [0.425,0.414,0.419], "nattmossa": [0.365,0.425,0.277], "neontetra": [1.348,0.826,2.4], "ninja": [0.77,1.3,0.626], "nisse": [1.648,1.1,1.199], "noshorning": [1.334,1.4,1.812], "noshorningsbagge": [0.501,0.4,0.873], "notknappare": [0.56,1.1,0.355], "notstall": [0.436,1.1,0.375], "nudlar": [0.34,0.425,0.418], "nyckel": [0.5,0.301,0.133], "nyckelknippa": [0.386,0.45,0.031], "nyckelpiga": [0.649,0.3,0.793], "o-holme": [1.171,0.8,1.171], "obelisk": [0.175,0.5,0.175], "odla": [1.435,0.2,0.359], "orch": [1.1,1.1,0.469], "orm": [0.331,1,0.858], "ormbunke": [2,0.595,1.876], "orn": [1.312,1,1.256], "ost": [0.425,0.137,0.425], "ostkupa": [0.4,0.332,0.4], "overall": [0.253,0.6,0.1], "oviraptor": [0.704,1.438,2.4], "oxe": [0.548,1,1.759], "pachycephalosaurus": [0.842,1.536,2.4], "paddel": [0.165,0.9,0.035], "pafagel": [0.993,1,0.937], "paj": [0.425,0.067,0.425], "paket": [0.5,0.25,0.4], "pall": [1.35,0.9,1.35], "palm": [0.741,1.2,0.802], "panda": [0.895,1,0.959], "panflojt": [0.383,0.45,0.059], "pannkaka": [0.45,0.202,0.445], "pannkakor": [0.393,0.11,0.454], "papegoja": [1.306,1,1.131], "papegojfisk": [1.281,1,1.904], "pappa": [0.77,1.3,0.385], "papperskorg": [0.437,0.9,0.492], "paprika": [0.358,0.425,0.358], "parabol": [0.5,0.448,0.411], "paraply": [0.223,0.5,0.223], "parasaurolophus": [0.375,1.15,2.4], "parasoll": [0.385,0.5,0.444], "parfym": [0.332,0.4,0.116], "paron": [0.308,0.425,0.308], "pase": [0.183,0.5,0.343], "paskagg": [0.332,0.4,0.329], "passare": [0.221,0.45,0.041], "pasta": [0.425,0.167,0.425], "pegasus": [1.658,1.6,1.883], "pelare": [0.098,0.612,0.098], "pelikan": [0.972,1,1.535], "pendeltag": [0.719,1.1,1.569], "pendelur": [0.296,1.1,0.219], "penna": [0.084,0.617,0.097], "pennfodral": [0.4,0.322,0.152], "pennvassare": [0.467,0.114,0.117], "pensel": [0.254,0.45,0.184], "peppar": [0.206,0.425,0.206], "pepparkaka": [0.444,0.051,0.402], "pepparkaksgubbe": [0.368,0.075,0.485], "pepparkaksgumma": [0.427,0.5,0.156], "pepparkakshus": [1.197,1.5,1.162], "pepparkvarn": [0.212,0.5,0.209], "persika": [0.347,0.425,0.368], "persontag": [0.796,1.1,1.734], "piano": [0.95,0.95,0.945], "picknickkorg": [0.4,0.34,0.281], "pickup": [0.818,0.654,1.833], "pilbage": [0.124,0.5,0.218], "pingisbord": [1.5,0.814,0.932], "pingisracket": [0.325,0.425,0.103], "pingvin": [1.059,1,1.078], "pinnsyrsa": [0.504,0.35,1.115], "pirat": [0.591,1.1,0.295], "piratskepp": [0.53,1.1,1.446], "piraya": [1.313,1,1.968], "pizza": [0.425,0.022,0.425], "pizzakartong": [0.495,0.463,0.5], "pizzaskarare": [0.853,0.65,0.74], "planbok": [0.425,0.385,0.088], "planet": [1.333,0.727,1.333], "planka": [0.207,0.077,0.775], "plankor": [0.345,0.087,0.579], "plankstaket": [1.5,0.518,0.144], "plankstapel": [0.5,0.187,0.485], "planteringslada": [2,0.886,1.5], "plaster": [0.425,0.219,0.018], "plesiosaurie": [1.012,1.103,2.4], "pojke": [0.624,1.1,0.452], "polis": [0.77,1.3,0.385], "polisbat": [0.858,0.717,1.833], "polisbil": [0.887,0.769,1.833], "polistraktor": [0.867,1.1,1.487], "polkagris": [0.233,0.425,0.084], "pommes": [0.196,0.425,0.283], "pool": [1.5,0.484,1.404], "popcorn": [0.398,0.45,0.418], "potatis": [0.327,0.425,0.371], "present": [0.5,0.482,0.485], "presentlada": [0.5,0.5,0.5], "prins": [0.717,1.3,0.394], "prinsessa": [0.717,1.3,0.359], "propellerbat": [0.899,1.1,1.445], "pterodactylus": [1.566,1,1.415], "puck": [0.375,0.131,0.369], "pudding": [0.368,0.294,0.425], "pumpa": [0.425,0.233,0.425], "pumpalykta": [0.5,0.433,0.467], "pungdjavul": [0.647,0.7,1.02], "purjolok": [0.137,0.425,0.137], "pussel": [0.426,0.45,0.365], "pyjamas": [0.654,0.8,0.153], "pyramid": [2.375,1.9,2.375], "racerbat": [1.277,0.932,1.833], "racerbil": [0.931,0.525,1.833], "racerfarkost": [1.086,0.679,1.833], "raddningsbat": [1.023,0.887,1.833], "radio": [0.5,0.362,0.155], "radisa": [0.253,0.425,0.253], "raket": [1.237,1.1,1.237], "ramp": [0.5,0.157,0.5], "ratta": [0.532,0.791,2.4], "rav": [0.775,1,1.324], "regnbage": [1.667,0.833,0], "regndroppe": [0.533,0.8,0.52], "regnjacka": [0.685,0.65,0.206], "rep": [0.576,0.104,0.218], "repstaket": [1.5,0.474,0.332], "ris": [0.425,0.329,0.425], "risboll": [0.45,0.304,0.443], "robot": [0.869,1.3,0.779], "robotarm": [0.156,0.5,0.156], "rodbeta": [0.157,0.425,0.157], "roddbat": [1.767,0.545,1.833], "rodpanda": [0.863,0.8,0.998], "rormokare": [0.738,1.3,0.544], "rova": [0.623,1.2,0.623], "rudolf": [0.613,1.1,1.05], "rullskridsko": [0.403,0.425,0.126], "rullstol": [0.429,0.425,0.5], "rymdskepp": [1.746,0.698,1.833], "rymdvarelse": [0.63,1.1,0.431], "sack": [0.41,0.5,0.341], "saft": [0.327,0.425,0.213], "sag": [0.5,0.212,0.048], "sagblad": [0.5,0.477,0.033], "sal": [1.22,1,1.745], "sallad": [0.414,0.308,0.425], "salt": [0.206,0.425,0.206], "saltkar": [0.253,0.425,0.253], "sandal": [0.425,0.32,0.35], "sandjagare": [0.45,0.3,0.732], "sandslott": [0.5,0.483,0.492], "sang": [0.761,0.5,1.5], "sangare": [0.689,1.3,0.344], "sapbubblor": [0.347,0.5,0.121], "sax": [0.189,0.5,0.031], "saxofon": [0.395,0.9,0.263], "schampo": [0.205,0.425,0.104], "scout": [0.711,1.2,0.356], "segelbat": [0.53,1.1,0.971], "segelflygplan": [1.667,0.464,1.053], "segelskepp": [0.484,1.1,1.822], "segelskjul": [1,1,1], "sekator": [0.21,0.425,0.044], "selleri": [0.049,0.572,0.093], "semla": [0.39,0.313,0.4], "senap": [0.156,0.425,0.18], "senapsflaska": [0.193,0.5,0.193], "servitor": [0.819,1.3,0.457], "sidobord": [1.251,0.9,0.515], "silo": [0.607,1.5,0.581], "silohus": [0.883,1.5,0.581], "silvermynt": [0.5,0.5,0.219], "silvertacka": [0.25,0.156,0.5], "simglasogon": [0.41,0.128,0.425], "simring": [0.5,0.498,0.157], "sittsack": [0.5,0.405,0.5], "sjoborre": [1.139,1,1.024], "sjoflygplan": [1.833,0.712,1.749], "sjojungfru": [0.655,1.2,0.426], "sjolejon": [1.047,0.6,0.732], "sjoman": [0.727,1.3,0.466], "sjoorm": [0.402,1,2.151], "sjorovare": [0.741,1.25,0.37], "sjostjarna": [0.488,0.5,0.099], "sjukhus": [1.289,1.4,0.746], "sjukskoterska": [0.735,1.3,0.367], "skal": [0.5,0.158,0.5], "skalbagge": [0.449,0.35,0.714], "skallra": [0.224,0.4,0.227], "skap": [0.9,0.9,0.901], "skapbil": [1,0.9,1.833], "skarbrada": [0.548,0.055,0.365], "skateboard": [0.786,0.358,1.833], "skattkista": [0.5,0.45,0.5], "sked": [0.878,0.032,0.228], "skejtare": [0.738,1.3,0.535], "skelett": [1.195,1.1,0.496], "skepp": [0.53,1.1,1.17], "skeppsvrak": [0.53,1.1,1.17], "skida": [0.409,1.2,0.109], "skimmel": [0.293,1,1.177], "skinka": [0.425,0.254,0.254], "skivspelare": [0.425,0.145,0.34], "skivstang": [1.167,0.628,0.359], "skjorta": [0.836,0.6,0.207], "skjul": [1.211,1,1.303], "sko": [0.375,0.171,0.4], "skogshuggare": [0.725,1.3,0.534], "skola": [2.05,1.4,0.9], "skolbank": [0.661,0.8,0.731], "skolbuss": [0.626,0.717,1.833], "skold": [0.5,0.5,0.14], "skoldbagge": [0.42,0.3,0.561], "skoldpadda": [0.413,1,1.008], "skolvaska": [0.394,0.5,0.196], "skordetroska": [1.174,1.1,1.749], "skorpion": [0.465,0.45,0.484], "skorsten": [0.635,1,0.635], "skottkarra": [0.512,0.413,1], "skraddare": [0.472,0.3,0.969], "skridsko": [0.425,0.387,0.124], "skriftrulle": [0.5,0.12,0.129], "skrivbord": [1.5,0.785,0.801], "skrivbordslampa": [0.325,0.6,0.445], "skrivbordsstol": [0.496,0.9,0.466], "skruv": [0.189,0.425,0.185], "skruvmejsel": [0.104,0.578,0.104], "skruvnyckel": [0.161,0.5,0.067], "skylt": [0.403,0.5,0.11], "skyskrapa": [0.897,1.9,0.897], "slade": [0.312,0.188,0.5], "slev": [0.304,0.6,0.218], "slips": [0.235,0.55,0.031], "slipsten": [0.426,0.341,0.5], "slott": [2.6,1.693,2.6], "slottstorn": [1.407,1.9,1.407], "smavarelse": [1.489,1.1,0.953], "smoothie": [0.172,0.425,0.149], "smor": [0.425,0.147,0.419], "smorgas": [0.423,0.165,0.425], "snabbtag": [0.865,1.073,1.833], "snapper": [1.175,1,1.927], "snickare": [0.738,1.3,0.535], "snigel": [0.461,0.35,0.165], "snoboll": [0.476,0.5,0.5], "snoflinga": [0.693,0.8,0.175], "snofort": [2.4,0.512,1.666], "snogran": [0.57,1.2,0.57], "snogubbe": [1.14,1.1,0.711], "snohog": [1.189,0.239,1.333], "snoskoter": [0.63,0.945,1.833], "snotrad": [0.677,1.2,0.689], "snouggla": [0.621,0.6,0.642], "snowboard": [0.494,1,0.46], "snurra": [0.223,0.5,0.223], "sockerskal": [0.4,0.174,0.25], "soffa": [1.5,0.704,0.628], "soffbank": [0.783,0.9,0.391], "soffbord": [1.5,0.312,0.937], "sol": [1.262,1.2,0.906], "soldat": [0.738,1.3,0.461], "solfisk": [0.559,1,0.654], "solhatt": [0.5,0.17,0.5], "solpanel": [0.342,0.05,0.584], "sombrero": [0.5,0.244,0.499], "sopbil": [0.85,0.85,1.833], "sopskyffel": [0.37,0.166,0.45], "sovmask": [0.425,0.186,0.392], "sovsack": [0.276,0.111,0.54], "spackhuggare": [1.522,0.5,0.522], "spade": [0.171,0.5,0.05], "spagetti": [0.425,0.093,0.421], "spak": [0.5,0.475,0.34], "spargris": [0.255,0.314,0.425], "sparkcykel": [0.911,0.9,0.525], "sparvagn": [0.546,1.1,1.141], "spatel": [0.712,0.075,0.198], "spegel": [0.624,0.9,0.299], "spelare": [0.74,1.3,0.37], "speldosa": [0.425,0.422,0.353], "spelkonsol": [0.45,0.342,0.39], "spetshacka": [0.5,0.478,0.072], "spik": [0.271,0.5,0.271], "spindel": [1.476,0.5,1.269], "spinosaurus": [0.695,1.317,2.4], "spis": [0.86,0.9,0.9], "spjalsang": [1.01,0.75,0.552], "spoke": [1.428,1.2,0.885], "spokskepp": [0.53,1.1,1.17], "sportbil": [0.836,0.708,1.833], "stad": [0.5,0.247,0.232], "staket": [0.112,0.57,1.5], "stall": [1.838,1.5,1.897], "standsten": [0.79,0.8,0.549], "staty": [0.363,0.5,0.277], "stearinljus": [0.356,0.5,0.409], "stege": [0.252,0.5,0.069], "stegosaurus": [0.863,1.073,2.4], "stek": [0.425,0.169,0.314], "stekpanna": [0.365,0.091,0.548], "sten": [1.154,0.607,1.333], "stenar": [1.333,0.667,1.333], "stenbro": [2.4,0.923,2.4], "stenmur": [1.241,0.9,0.248], "stentrappa": [1.53,1.5,0.75], "stig": [0.417,0.021,0.417], "stjarna": [0.5,0.497,0.327], "stock": [0.659,0.488,2], "stol": [0.383,0.9,0.383], "stoppskylt": [0.14,0.5,0.078], "stoppur": [0.325,0.4,0.088], "stork": [0.359,1.1,0.873], "stovlar": [0.5,0.309,0.373], "strand": [1.333,0.123,1.081], "strumpa": [0.133,0.45,0.351], "struts": [0.664,1.8,1.035], "strykbrada": [0.914,0.8,0.272], "strykjarn": [0.425,0.176,0.175], "stubbe": [1.732,1.113,2], "studsboll": [0.414,0.425,0.425], "suddgummi": [0.425,0.137,0.169], "sugror": [0.29,0.425,0.2], "superhjalte": [0.77,1.3,0.397], "surfbrada": [0.522,1.3,0.429], "surfplatta": [0.425,0.361,0.215], "sushi": [0.228,0.189,0.425], "suv": [1.018,0.883,1.833], "svamp": [1.029,1.2,1.189], "svampar": [1.292,1.2,1.218], "svampmonster": [1.016,1.1,1.018], "svan": [0.565,0.9,1.006], "svard": [0.26,0.5,0.121], "svardfisk": [0.94,1,1.687], "svarmare": [1.082,0.4,1.002], "sylt": [0.371,0.4,0.371], "syster": [0.711,1.2,0.356], "tacke": [0.923,0.254,1], "taco": [0.425,0.262,0.114], "tag": [1.719,1.1,0.681], "tagvagn": [0.805,1.025,1.833], "tall": [0.413,1.2,0.413], "tallrik": [0.5,0.053,0.5], "talt": [2.339,1.5,1.782], "tamburin": [0.425,0.425,0.064], "tandborste": [0.193,0.5,0.19], "tandem": [1.5,0.598,0.298], "tandkram": [0.186,0.425,0.103], "tandsticka": [0.37,0.425,0.183], "tang": [0.16,0.5,0.076], "tangentbord": [0.691,0.067,0.289], "tankbil": [1.002,0.988,1.833], "tankvagn": [0.87,1.1,1.695], "tarta": [0.425,0.182,0.425], "tartfat": [0.646,0.55,0.639], "tavla": [0.758,0.9,0.15], "taxi": [1,1,1.833], "te": [0.345,0.291,0.425], "teckning": [0.363,0.6,0.308], "tegelsten": [0.3,0.2,0.5], "tejp": [0.425,0.37,0.186], "tekanna": [0.5,0.275,0.356], "tekopp": [0.4,0.141,0.396], "telefon": [0.233,0.5,0.033], "teleskop": [0.609,1,0.533], "tender": [1.833,0.968,1.034], "tennisboll": [0.424,0.392,0.425], "tennisracket": [0.371,0.6,0.119], "termit": [0.372,0.3,0.878], "termometer": [0.194,0.5,0.097], "termos": [0.217,0.6,0.214], "teve": [0.5,0.329,0.329], "tidning": [0.425,0.327,0.367], "tiger": [0.789,1,1.111], "timmervagn": [0.747,0.787,1.833], "tivoli": [1.35,1.5,1.35], "tjej": [0.77,1.3,0.385], "tjur": [1.518,1.3,1.713], "tjuv": [0.732,1.3,0.403], "toalett": [0.624,0.9,0.952], "toapapper": [0.4,0.21,0.334], "tofflor": [0.5,0.14,0.401], "tomat": [0.425,0.357,0.425], "tomte": [0.377,1.1,0.896], "tonfisk": [1.109,1,1.6], "torktumlare": [0.747,0.9,0.728], "torn": [0.674,1.9,0.674], "tornado": [0.779,0.8,0.797], "tra": [0.5,0.152,0.212], "trabro": [1.333,0.513,1.333], "trad": [0.981,1.2,0.901], "tradgardstomte": [0.37,0.8,0.309], "tradmonster": [1.082,1.1,0.665], "tradstam": [0.92,1.2,0.92], "trafikkon": [0.4,0.5,0.4], "trafikljus": [0.12,0.501,0.103], "traktor": [0.922,1.1,1.512], "tralada": [0.412,0.294,0.5], "traspann": [0.5,0.337,0.442], "trastaket": [1.5,0.609,0.087], "tratrappa": [1.53,1.5,0.75], "tratt": [0.5,0.447,0.5], "triangel": [0.425,0.55,0.177], "triceratops": [0.902,1.192,2.4], "troja": [0.5,0.239,0.12], "trollbok": [0.194,0.5,0.416], "trolldryck": [0.408,0.5,0.408], "trollkarl": [0.991,1.1,0.964], "trollkarlsgnom": [0.746,1.1,0.774], "trollslanda": [2.4,0.616,1.468], "trollstav": [0.5,0.403,0.5], "trombon": [1,0.44,0.225], "trumma": [0.5,0.463,0.5], "trumpet": [0.45,0.138,0.135], "trumset": [1.252,0.9,0.476], "tuba": [0.446,0.8,0.439], "tukan": [1.033,1,1.604], "tumstock": [0.425,0.208,0.007], "tunna": [0.5,0.46,0.5], "tunnelbana": [0.945,1.1,1.82], "tupp": [0.812,1,1.132], "tuschpenna": [0.216,0.425,0.071], "tv": [0.5,0.329,0.329], "tval": [0.288,0.5,0.214], "tvattbjorn": [1.016,1,2.311], "tvattkorg": [0.387,0.45,0.381], "tvattlapp": [0.348,0.425,0.101], "tvattmaskin": [0.747,0.9,0.747], "tvestjart": [0.368,0.3,0.936], "tyg": [0.395,0.232,0.5], "tyrannosaurus": [0.787,1.651,2.4], "ubat": [1.809,1.1,0.654], "ufo": [1.623,1.1,1.623], "uggla": [1.102,0.8,0.677], "ugn": [0.891,0.9,1.046], "ugnsvante": [0.317,0.5,0.227], "ukulele": [0.214,0.5,0.1], "utter": [0.678,0.7,1.117], "vackarklocka": [0.324,0.5,0.165], "vaderkvarn": [0.872,1.5,0.254], "vaffeljarn": [0.255,0.283,0.425], "vaffla": [0.425,0.053,0.425], "vagga": [0.914,0.7,0.441], "vaggklocka": [0.592,0.8,0.108], "vagglampa": [1.5,0.614,0.995], "vagskylt": [0.44,0.6,0.103], "vagvisare": [0.233,0.5,0.047], "vakt": [0.64,1.3,0.352], "vaktel": [0.425,0.5,0.557], "valfisk": [0.929,0.797,2.4], "valt": [0.898,1.1,1.52], "valv": [0.86,0.9,0.157], "vampyr": [1.144,1.1,0.641], "vaningssang": [0.605,0.9,1.159], "vante": [0.425,0.298,0.087], "varg": [0.434,1.1,2.17], "varmkorv": [0.453,0.118,0.157], "varningsskylt": [0.148,0.5,0.078], "vas": [0.5,0.372,0.5], "vaska": [0.5,0.391,0.304], "vass": [0.275,1.2,0.275], "vattenfall": [0.8,0.8,0.135], "vattenfarg": [0.425,0.219,0.341], "vattenkanna": [0.5,0.283,0.261], "vattenkokare": [0.474,0.5,0.37], "vattenkvarn": [0.709,1.5,1.5], "vattenmelon": [0.406,0.425,0.406], "vattenpass": [0.567,0.094,0.046], "vattenpistol": [0.425,0.279,0.077], "vattensalamander": [0.7,0.28,2.08], "vattenskinnbagge": [0.495,0.35,0.777], "vattenskoter": [0.498,0.482,1.167], "vattenslang": [0.5,0.323,0.172], "vattenspridare": [0.4,0.133,0.152], "vattentorn": [0.571,1.9,0.561], "vaxt": [0.608,0.9,0.608], "vaxthus": [1.084,1.3,0.735], "vedstapel": [1.196,0.976,2], "velociraptor": [0.476,0.997,2.4], "verktygslada": [0.45,0.432,0.217], "vete": [1.21,1.2,1.002], "veteranbil": [1.152,0.681,1.833], "viking": [0.68,1.3,0.399], "vikingaskepp": [0.684,1.095,1.833], "vildsvin": [0.891,1,0.99], "villa": [2.339,1.5,1.85], "vindkraftverk": [0.497,1.9,0.925], "virvelvarelse": [1.19,1.1,0.902], "visp": [0.525,0.114,0.114], "visselpipa": [0.437,0.123,0.186], "vulkan": [1.333,0.667,1.333], "vykort": [0.425,0.299,0.139], "wok": [0.5,0.123,0.305], "xylofon": [0.443,0.084,0.402], "yeti": [1.607,1.6,1.375], "yxa": [0.295,0.5,0.106], "zebra": [1.069,1.3,1.362], "zeppelinare": [1.833,0.874,0.63], "zombie": [1.082,1.1,0.461], "bäver": [0.91,1.26,1.05,-0.005], "dinosaurie": [0.91,1.26,1.05,-0.005], "ekorre": [0.83,1.548,0.97,-0.005], "gris": [0.91,1.26,1.05,-0.005], "haj": [0.59,0.55,1.173,-0.055] }
++}
 diff --git a/data/placering.json b/data/placering.json
 new file mode 100644
-index 0000000..36ae52a
+index 0000000..b35097b
 --- /dev/null
 +++ b/data/placering.json
-@@ -0,0 +1,66 @@
+@@ -0,0 +1,64 @@
 +{
 + "_om": "P3a: EN placeringsregel för alla platser (ängen, sjön, skogen, grottan). Varje plats har band per roll (mark, vatten, luft, bak) i världskoordinater; banden delas i rutor (steg). Varje sak får en ledig ruta efter sin roll: simmare på vattenytan, flygare i luftbandet, stora saker (storlek.json zon bak) i det bakre bandet, övriga på marken (platsens land-zoner, platser.json). En ruta är ledig om kroppen ryms hel på skärmen (stående kamera 375 × 812, skarm.ts), inte står i en reserverad världsruta, inte går in i en annan kropp, och om ingen – varken den nya eller någon redan placerad – skyms mer än max_skymd av sin skärmruta (de framför, fasta saker och de reserverade skärmrutorna inräknade). Den nyaste får den främsta lediga rutan (störst z, sedan närmast mitten), sedan de andra från nyast till äldst; den äldsta hamnar därför längst bak. Finns ingen ledig ruta går den till stallet (somnar), aldrig över någon annan.",
 + "max_skymd": 0.2,
@@ -59,9 +69,7 @@ index 0000000..36ae52a
 + "vickning": { "_om": "hur långt en flygare rör sig från sin ruta i sidled (djur.tsx slingan ±0,4); djurens vandring räknas i vandra", "mark": 0, "vatten": 0, "luft": 0.4, "bak": 0 },
 + "vrid": { "_om": "djuren vrider sig när de går (djur.tsx yaw × 0,35, upp till ~60°): då syns längden, inte bara bredden. Ett djurs ruta räknas så här mycket bredare (prov C: elefanten 308 px ritad mot 221 px räknad)", "djur": 1.35 },
 + "djup": 0.6,
-+ "synlig_golv": { "_om": "P3a (b66, Arkitekten 18:59: ingen är osynlig): en sak står bara där dess ruta (regelns, målhöjd × bredd) är minst så här stor; annars längre fram, större, eller i stallet. Modellen ritas mindre än rutan (b66: hälften av största måttet för en nyckel, en tredjedel av ytan för en murslev), så golvet ger B6.6:s 24 px / 4 px / 200 px² på den ritade modellen. Största måttet 50 px (syn.min_px 44 + marginal: datormusen var 21 px ritad med en ruta på 44).", "storst_px": 50, "minst_px": 8, "yta_px": 1000 },
-+ "hojd_marginal": 1.1,
-+ "_om_hojd": "P3a (p3-prov P, b66): modellen ritas upp till 1,17 × målhöjden (vargen, öron och svans), så rutan räknas 10 % högre; huvudet (övre halvan) skyddas då där det ritas.",
++ "synlig_golv": { "_om": "P3a (b66, Arkitekten 18:59: ingen är osynlig): en sak står bara där dess ruta är minst så här stor (B6.6:s gränser), annars längre fram, större eller i stallet. Rutan räknas ur modellens egna mått (data/modellmatt.json), samma låda som provet mäter.", "storst_px": 24, "minst_px": 4, "yta_px": 200 },
 + "krymp_min": 0.6,
 + "_om_krymp": "den nya får alltid en ruta: ryms den inte i bild ens på en tom plats ritas den mindre, i steg om 0,1, högst ned till krymp_min",
 + "skarm_reserverat": [
@@ -239,6 +247,27 @@ index b0ad366..f0a02d2 100644
  if (ut) fs.writeFileSync(ut, JSON.stringify({ ...res, matt }, null, 1));
  console.log(JSON.stringify(res, null, 1));
  await browser.close();
+diff --git a/src/spel/ang/PlatsDekor.tsx b/src/spel/ang/PlatsDekor.tsx
+index bf10e70..6f4893a 100644
+--- a/src/spel/ang/PlatsDekor.tsx
++++ b/src/spel/ang/PlatsDekor.tsx
+@@ -10,6 +10,7 @@ import { KV, miljoFor } from "../miljo.ts";
+ import { useMinne } from "../minne.ts";
+ import { DEKOR_SKALA, dekorFor, horisontFor, spridDekor, vattenytor, type SpriddDekor } from "../platsDekor.ts";
+ import { platsMed } from "../platser.ts";
++import { PLATS_MAX_AVSTAND } from "../skarm.ts";
+ import { ljuskallaFor, valjLjus } from "../ljuskalla.ts";
+ import { LJUS_LAG, LjusPool } from "./ljusken.tsx";
+ import { DjurIScen } from "./djur.tsx";
+@@ -177,7 +178,7 @@ export function PlatsScen({ plats }: { plats: string }) {
+         minAzimuthAngle={-1.05}
+         maxAzimuthAngle={1.05}
+         minDistance={3.6}
+-        maxDistance={9.5}
++        maxDistance={PLATS_MAX_AVSTAND}
+         target={[0, 0.7, 0.5]}
+         rotateSpeed={0.7}
+         zoomSpeed={0.75}
 diff --git a/src/spel/ang/byggnader.tsx b/src/spel/ang/byggnader.tsx
 index 9fa5843..68d0500 100644
 --- a/src/spel/ang/byggnader.tsx
@@ -321,7 +350,7 @@ index b8ccbd2..d8b6550 100644
 -  return true;
 -}
 diff --git a/src/spel/ang/delat.ts b/src/spel/ang/delat.ts
-index a967002..90be673 100644
+index a967002..3f90db7 100644
 --- a/src/spel/ang/delat.ts
 +++ b/src/spel/ang/delat.ts
 @@ -3,10 +3,9 @@ import type { ThreeEvent } from "@react-three/fiber";
@@ -347,16 +376,19 @@ index a967002..90be673 100644
      /** B6.3, för prov: ängens damm (ang/damm.ts). */
      __damm?: { x: number; z: number; r: number };
      /** B4.1, för prov: ljus = punktljus i poolen (fast antal), pol = ljuspölar, aktiva = tända ljus, scen = punktljus i scenen, program = shaderprogram. */
-@@ -68,6 +67,8 @@ declare global {
+@@ -67,7 +66,10 @@ declare global {
+     /** B6.5, för prov: effekterna som ritas per skapelse (uid). Finns bara när ett prov har lagt dit objektet. */
      __tredEffekter?: Record<string, string[]>;
      /** B6.6, för prov: kroppens ruta på skärmen (CSS-px) och antal synliga meshar. Finns bara när ett prov har lagt dit objektet. */
-     __tredSyn?: Record<string, { x: number; y: number; w: number; h: number; mesh: number }>;
+-    __tredSyn?: Record<string, { x: number; y: number; w: number; h: number; mesh: number }>;
++    __tredSyn?: Record<string, { x: number; y: number; w: number; h: number; mesh: number; b?: number[] }>;
++    __tredKamera?: { p: number[]; fov: number };
 +    /** P3a: titelbildens djur (uid) – djur.tsx mäter dess ritade kropp (CSS-px) så att utsnittet visar bara det djuret. */
 +    __tredBild?: { uid: string; ruta?: { x: number; y: number; w: number; h: number; mesh: number } };
    }
  }
  
-@@ -111,185 +112,37 @@ export function djurFarg(spec: Sparad) {
+@@ -111,185 +113,37 @@ export function djurFarg(spec: Sparad) {
    return artFarg(spec.kropp);
  }
  
@@ -561,6 +593,26 @@ index a967002..90be673 100644
  }
  
  export function slag(id: string): "hus" | "trad" | "blomma" | "damm" | "talt" | "mur" {
+@@ -332,7 +186,7 @@ export function usePennTryck(onTap: () => void) {
+ const _synBox = new THREE.Box3();
+ const _synP = new THREE.Vector3();
+ /** B6.6: kroppens skärmruta (CSS-px) ur världsrutan (8 hörn projicerade) och antalet synliga meshar med synligt material. */
+-export function synMatt(kropp: THREE.Object3D, kamera: THREE.Camera, rect: DOMRect): { x: number; y: number; w: number; h: number; mesh: number } {
++export function synMatt(kropp: THREE.Object3D, kamera: THREE.Camera, rect: DOMRect): { x: number; y: number; w: number; h: number; mesh: number; b?: number[] } {
+   let mesh = 0;
+   _synBox.makeEmpty();
+   kropp.updateWorldMatrix(true, true);
+@@ -353,5 +207,9 @@ export function synMatt(kropp: THREE.Object3D, kamera: THREE.Camera, rect: DOMRe
+     x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy);
+   }
+   // x, y = rutans övre vänstra hörn i sidan (CSS-px)
+-  return { x: Math.round(rect.left + x0), y: Math.round(rect.top + y0), w: Math.round(x1 - x0), h: Math.round(y1 - y0), mesh };
++  // b = världslådan (min x, y, z, max x, y, z) – P3a: provet jämför den med placeringsregelns låda
++  const c = kamera as THREE.PerspectiveCamera;
++  window.__tredKamera = { p: [c.position.x, c.position.y, c.position.z].map((v) => Math.round(v * 1000) / 1000), fov: c.fov };
++  const b = [_synBox.min.x, _synBox.min.y, _synBox.min.z, _synBox.max.x, _synBox.max.y, _synBox.max.z].map((v) => Math.round(v * 1000) / 1000);
++  return { x: Math.round(rect.left + x0), y: Math.round(rect.top + y0), w: Math.round(x1 - x0), h: Math.round(y1 - y0), mesh, b };
+ }
 diff --git a/src/spel/ang/djur.tsx b/src/spel/ang/djur.tsx
 index c9085da..8423a00 100644
 --- a/src/spel/ang/djur.tsx
@@ -1305,6 +1357,114 @@ index 0000000..50b123c
 +  assert.ok(storst("puck") >= 0.3, `puck ${storst("puck")}`);
 +});
 +
+diff --git a/src/spel/p3a-matt.test.ts b/src/spel/p3a-matt.test.ts
+new file mode 100644
+index 0000000..8edb9de
+--- /dev/null
++++ b/src/spel/p3a-matt.test.ts
+@@ -0,0 +1,102 @@
++// P3a (Arkitekten 20:40): placeringsregelns förutsagda skärmruta stämmer med det som ritas. Modellen laddas som i spelet
++// (GLB, GLTFLoader, skalaFor, mitten på platsen och botten på marken, framAxel-vridningen, takSkala × ritSkala) och dess
++// Box3 projiceras med en riktig three-kamera i platsens läge – samma sätt som window.__tredSyn mäter i webbläsaren.
++// Regelns ruta (kroppMatt + sakRuta, utan vandring och vridning) ska ligga inom några px. Dessutom: regelns
++// projektion (skarm.ts) är samma som three-kamerans, för ängens kamera och de andra platsernas (PlatsDekor maxDistance).
++import assert from "node:assert/strict";
++import fs from "node:fs";
++import { test } from "node:test";
++import * as THREE from "three";
++import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
++import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
++import { ENTITETER, framVinkel, skalaFor, takSkala } from "./entiteter.ts";
++import { kameraFor, kroppMatt } from "./placering.ts";
++import { platsMed, START_PLATS } from "./platser.ts";
++import { KAMERA_ANG, KAMERA_PLATS, projicera, type Kamera } from "./skarm.ts";
++import { sakRuta } from "./skymning.ts";
++import tillgangar from "../../data/tillgangar.json" with { type: "json" };
++
++(globalThis as { self?: unknown }).self ??= globalThis;
++const TILL = (tillgangar as unknown as { tillgangar: Record<string, { fil?: string }> }).tillgangar;
++const PX = 3; // tillåtet fel per kant (px): avrundning och meshar som ligger snett i modellen
++
++function threeKamera(P: Kamera): THREE.PerspectiveCamera {
++  const c = new THREE.PerspectiveCamera(58, 375 / 812, 0.1, 90);
++  c.position.set(P[0], P[1], P[2]);
++  c.lookAt(0, 1.05, -0.15);
++  c.updateMatrixWorld(true);
++  return c;
++}
++function projBox(b: THREE.Box3, c: THREE.Camera) {
++  let [x0, y0, x1, y1] = [Infinity, Infinity, -Infinity, -Infinity];
++  const p = new THREE.Vector3();
++  for (let i = 0; i < 8; i++) {
++    p.set(i & 1 ? b.max.x : b.min.x, i & 2 ? b.max.y : b.min.y, i & 4 ? b.max.z : b.min.z).project(c);
++    const [sx, sy] = [((p.x + 1) / 2) * 375, ((1 - p.y) / 2) * 812];
++    [x0, y0, x1, y1] = [Math.min(x0, sx), Math.min(y0, sy), Math.max(x1, sx), Math.max(y1, sy)];
++  }
++  return { x0, y0, x1, y1 };
++}
++async function laddaModell(kropp: string): Promise<THREE.Object3D> {
++  const e = ENTITETER[kropp]!;
++  const fil = TILL[e.modell!]!.fil!;
++  const L = new GLTFLoader();
++  L.setMeshoptDecoder(MeshoptDecoder);
++  L.register(() => ({ name: "inga-bilder", loadTexture: () => Promise.resolve(null) }) as never);
++  const b = fs.readFileSync(`public${fil}`);
++  const g = await new Promise<{ scene: THREE.Object3D }>((res, rej) => L.parse(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength) as ArrayBuffer, "", res as never, rej));
++  return g.scene;
++}
++
++test("P3a: regelns projektion (skarm.ts) = three-kamerans, på ängen och på de andra platserna (≤ 0,5 px)", () => {
++  for (const P of [KAMERA_ANG, KAMERA_PLATS]) {
++    const c = threeKamera(P);
++    for (const [x, y, z] of [[0, 0, 0], [-2.5, 0, -5], [2, 1.5, 3], [1, 0, -1.95], [-1.5, 2.2, 4]] as const) {
++      const v = new THREE.Vector3(x, y, z).project(c);
++      const [sx, sy] = projicera(x, y, z, P);
++      assert.ok(Math.abs(((v.x + 1) / 2) * 375 - sx) < 0.5 && Math.abs(((1 - v.y) / 2) * 812 - sy) < 0.5, `${P} (${x}, ${y}, ${z})`);
++    }
++  }
++  assert.deepEqual(kameraFor(platsMed(START_PLATS)), KAMERA_ANG);
++  assert.deepEqual(kameraFor(platsMed("sjon")), KAMERA_PLATS);
++  // PlatsDekor håller kameran på samma avstånd som regeln räknar med
++  assert.match(fs.readFileSync("src/spel/ang/PlatsDekor.tsx", "utf8"), /maxDistance=\{PLATS_MAX_AVSTAND\}/);
++});
++
++test(`P3a: regelns ruta = den ritade modellens Box3 genom kameran, inom ${PX} px per kant (urval modeller, djup och platser)`, async () => {
++  const urval = ["katt", "ko", "spinosaurus", "manniska", "fjallrav", "monsterkatt", "hast", "häst", "hage", "kniv", "slott", "valfisk", "pepparkaka"].filter((k) => ENTITETER[k]?.modell && TILL[ENTITETER[k]!.modell!]?.fil);
++  assert.ok(urval.length >= 10, `urval ${urval.length}`);
++  const fel: string[] = [];
++  for (const kropp of urval) {
++    const scen = await laddaModell(kropp);
++    scen.updateMatrixWorld(true);
++    const box0 = new THREE.Box3().setFromObject(scen);
++    const s = skalaFor(kropp, box0.max.y - box0.min.y, box0.max.x - box0.min.x, box0.max.z - box0.min.z);
++    for (const [platsId, x, z] of [[START_PLATS, 0, 1.5], [START_PLATS, -1.2, -1.95], ["sjon", 1, 2.5], ["skogen", -1.5, -5]] as const) {
++      const plats = platsMed(platsId)!;
++      const d = { kropp, skala: 1 };
++      const m = kroppMatt(d, z, plats, "mark", 0);
++      const k = takSkala(kropp, 1) * m.f;
++      // som gltfDjur: skala s, mitten på platsen och botten på marken, framAxel-vridning; djur.tsx: takSkala × ritSkala
++      const klon = scen.clone(true);
++      klon.scale.setScalar(s);
++      klon.position.set(-((box0.min.x + box0.max.x) / 2) * s, -box0.min.y * s, -((box0.min.z + box0.max.z) / 2) * s);
++      const fram = new THREE.Group();
++      fram.rotation.y = framVinkel(ENTITETER[kropp]?.framAxel);
++      fram.add(klon);
++      const yttre = new THREE.Group();
++      yttre.position.set(x, 0, z);
++      yttre.scale.setScalar(k);
++      yttre.add(fram);
++      yttre.updateMatrixWorld(true);
++      const ritad = projBox(new THREE.Box3().setFromObject(yttre), threeKamera(kameraFor(plats)));
++      const regel = sakRuta(x, z, m.halv, m.hojd, m.djup, m.y0, kameraFor(plats));
++      // djur guppar ±0,04 (räknat i regeln): ta bort det ur regelns ruta innan jämförelsen
++      const bob = ENTITETER[kropp]?.typ === "djur" ? 0.04 : 0;
++      const regelUtanBob = sakRuta(x, z, m.halv, m.hojd - 2 * bob, m.djup, m.y0 + bob, kameraFor(plats));
++      const d4 = [regelUtanBob.x0 - ritad.x0, regelUtanBob.y0 - ritad.y0, regelUtanBob.x1 - ritad.x1, regelUtanBob.y1 - ritad.y1];
++      if (d4.some((v) => Math.abs(v) > PX)) fel.push(`${kropp} ${platsId} z ${z}: ${d4.map((v) => v.toFixed(1)).join(", ")} (regel ${[regel.x0, regel.y0, regel.x1, regel.y1].map(Math.round)})`);
++    }
++  }
++  assert.deepEqual(fel, []);
++});
 diff --git a/src/spel/p3a.test.ts b/src/spel/p3a.test.ts
 new file mode 100644
 index 0000000..9206ab7
@@ -1503,10 +1663,10 @@ index 0000000..9206ab7
 +});
 diff --git a/src/spel/placering.ts b/src/spel/placering.ts
 new file mode 100644
-index 0000000..9d5564f
+index 0000000..578ef52
 --- /dev/null
 +++ b/src/spel/placering.ts
-@@ -0,0 +1,361 @@
+@@ -0,0 +1,382 @@
 +// P3a: EN placeringsregel för alla platser. Ren logik (ingen three), testas i Node. Data: data/placering.json.
 +//  - Varje plats har band per roll (mark, vatten, luft, bak), delade i rutor. Rollen kommer ur saken: simmare på vattnet,
 +//    flygare i luften, stora saker (storlek.json zon "bak") i det bakre bandet, resten på marken.
@@ -1517,11 +1677,12 @@ index 0000000..9d5564f
 +//  - Den nyaste får den främsta lediga rutan i full storlek; sedan de andra från nyast till äldst. När det är trångt
 +//    vandrar de mindre (vandra.steg), sedan ritas äldre mindre (ned till krymp_aldre_min). Ingen ledig ruta = stallet.
 +import placeringJson from "../../data/placering.json" with { type: "json" };
++import modellmattJson from "../../data/modellmatt.json" with { type: "json" };
 +import type { Sparad } from "./brygga.ts";
-+import { arSak, ENTITETER, flyger, FOT_MARGINAL, fotKant, halvBredd, malhojd, simmar, storlekKlass, synSkala, takSkala } from "./entiteter.ts";
++import { arSak, ENTITETER, flyger, harModell, svavar, FOT_MARGINAL, fotKant, halvBredd, malhojd, simmar, storlekKlass, synSkala, takSkala } from "./entiteter.ts";
 +import { START_PLATS, type Plats } from "./platser.ts";
 +import { iVatten, KANT_MARGINAL, tillPlats, torrKropp } from "./platsYta.ts";
-+import { tacker, xSkala, type Ruta } from "./skarm.ts";
++import { KAMERA_ANG, KAMERA_PLATS, tacker, xSkala, type Kamera, type Ruta } from "./skarm.ts";
 +import { framfor, sakRuta } from "./skymning.ts";
 +
 +export type Roll = "mark" | "vatten" | "luft" | "bak";
@@ -1540,13 +1701,13 @@ index 0000000..9d5564f
 +  vickning: Record<Roll, number>;
 +  vrid?: { djur: number };
 +  krymp_min?: number;
-+  hojd_marginal?: number;
 +  synlig_golv?: { storst_px: number; minst_px: number; yta_px: number };
 +  djup: number;
 +  skarm_reserverat: (Ruta & { namn: string })[];
 +  platser: Record<string, PlatsRegel>;
 +};
 +export const PLACERING = placeringJson as unknown as Data;
++const MODELLMATT = (modellmattJson as unknown as { matt: Record<string, number[]> }).matt;
 +export const SKARM_RESERVERAT: readonly Ruta[] = PLACERING.skarm_reserverat.map(({ x0, y0, x1, y1 }) => ({ x0, y0, x1, y1 }));
 +const SKARM = { w: 375, h: 812 };
 +const GOLV = PLACERING.synlig_golv;
@@ -1571,21 +1732,43 @@ index 0000000..9d5564f
 +export type Lage = { x: number; y: number; z: number; roll: Roll; /** skärmrutan som regeln räknade med */ r: Ruta; stall: boolean; /** ritas så här mycket mindre (äldre när det är trångt; den nya bara om den inte ryms i bild alls) */ krymp?: number; /** del av full vandring (djur.tsx), 1 = fritt bete */ vand?: number };
 +
 +/** Kroppens mått på djupet z: halva bredden, höjden och djupet (barnets storleksord, taket och minsta synliga storlek). */
-+export function kroppMatt(d: Pick<Sparad, "kropp" | "skala">, z: number, plats?: Plats, roll?: Roll, vandDel = 1): { halv: number; hojd: number; djup: number; f: number; vand: [number, number] } {
++export function kroppMatt(d: Pick<Sparad, "kropp" | "skala">, z: number, plats?: Plats, roll?: Roll, vandDel = 1): { halv: number; hojd: number; djup: number; f: number; vand: [number, number]; /** lådans botten över foten */ y0: number } {
 +  const f = ritSkala(d, z, plats);
-+  // ett djur som vandrar vrider sig (djur.tsx): då syns längden, inte bara bredden – rutan räknas bredare (vrid) och lika
-+  // djup som bred (prov P: korna och elefanten var högre och bredare ritade än räknade). Vandringen (`vand`, den faktiska
-+  // radien) räknas bara in i skärmrutan, inte i kroppen – två djur får gärna vandra förbi varandra. Står djuret nästan
-+  // stilla vrider det sig lika lite (vandDel). Flygarna flyger sin slinga (vickning.luft).
 +  const djur = ENTITETER[d.kropp]?.typ === "djur";
 +  const ror = djur && roll !== "luft" ? vandDel : djur ? 1 : 0;
++  const V = PLACERING.vandra;
++  const vand: [number, number] = djur && roll !== "luft" && V ? [V.x * vandDel, V.z * vandDel] : [0, 0];
++  // P3a (Arkitekten 20:40): modellens egna mått (data/modellmatt.json, samma Box3 och skala som gltfDjur) och den
++  // vridning djur.tsx ger den: ett djur som vandrar vrider sig upp till 0,35·π·vandring, en flygare ±0,14 (och rullar
++  // 0,28), en svävare 0,35, en sak inte alls. Rutan är den axelparallella lådan runt den vridna kroppen.
++  const mm = MODELLMATT[d.kropp];
++  if (mm && (harModell(d.kropp) || mm.length > 3)) {
++    const k = takSkala(d.kropp, d.skala || 1) * f;
++    const [a, b] = [(mm[0] * k) / 2, (mm[2] * k) / 2];
++    const th = arSak(d.kropp) ? 0 : roll === "luft" ? 0.14 : svavar(d.kropp) ? 0.35 : djur ? 0.35 * Math.PI * ror : 0;
++    const halv = vriden(a, b, th);
++    const djup = vriden(b, a, th);
++    const rull = roll === "luft" ? Math.sin(0.28) * halv : 0; // flygaren rullar: lite högre
++    const bob = arSak(d.kropp) ? 0 : roll === "luft" ? 0.16 : roll === "vatten" ? 0.08 : 0.04; // djur.tsx: guppar upp och ned
++    return { halv, hojd: mm[1] * k + rull + 2 * bob, djup: Math.max(0.05, djup), f, vand, y0: (mm[3] ?? 0) * k - bob };
++  }
++  // procedurkropp (ingen modell): målhöjden och fotavtrycket, som förut
 +  const vrid = 1 + ((PLACERING.vrid?.djur ?? 1) - 1) * ror;
 +  const bas = halvBredd(d.kropp, d.skala || 1) * f;
 +  const halv = bas * vrid;
-+  const V = PLACERING.vandra;
-+  const vand: [number, number] = djur && roll !== "luft" && V ? [V.x * vandDel, V.z * vandDel] : [0, 0];
 +  const djup = djur ? bas * PLACERING.djup + (halv - bas * PLACERING.djup) * ror : halv * PLACERING.djup;
-+  return { halv, hojd: malhojd(d.kropp) * takSkala(d.kropp, d.skala || 1) * f * (PLACERING.hojd_marginal ?? 1), djup: Math.max(0.2, djup), f, vand };
++  return { halv, hojd: malhojd(d.kropp) * takSkala(d.kropp, d.skala || 1) * f, djup: Math.max(0.2, djup), f, vand, y0: 0 };
++}
++
++/** P3a (Arkitekten 20:40): kameran som platsen ritas med – ängens, eller närmare på samma linje (skarm.ts). */
++export function kameraFor(plats?: Plats): Kamera {
++  return !plats || plats.id === START_PLATS ? KAMERA_ANG : KAMERA_PLATS;
++}
++
++/** Största halva utbredningen a·|cos θ| + b·|sin θ| för en låda med halva måtten a (längs axeln) och b, vriden |θ| ≤ th. */
++function vriden(a: number, b: number, th: number): number {
++  const topp = Math.atan2(b, a);
++  return topp <= th ? Math.hypot(a, b) : a * Math.cos(th) + b * Math.sin(th);
 +}
 +
 +/** Hur mycket djur.tsx ritar kroppen större/mindre: platsens skala (data) × minsta synliga storlek på djupet z. */
@@ -1594,12 +1777,9 @@ index 0000000..9d5564f
 +  return k * synSkala(d.kropp, (d.skala || 1) * k, z);
 +}
 +
-+type Satt = { id: string; x: number; z: number; halv: number; djup: number; r: Ruta; /** rutan skymningen mäts på (sak: nedre halvan) */ rm?: Ruta; tackt: number; huvud: number; grans: number; plan?: boolean };
++type Satt = { id: string; x: number; z: number; halv: number; djup: number; r: Ruta; tackt: number; huvud: number; grans: number; plan?: boolean };
 +/** Övre halvan av rutan: där huvudet sitter (modellens huvud går inte att mäta i regeln). */
 +export const topp = (r: Ruta): Ruta => ({ ...r, y1: r.y0 + (r.y1 - r.y0) / 2 });
-+/** Nedre halvan av rutan: där en sak syns (b66-provet: en platt sak – hage, bok, sked – ligger i rutans nederkant,
-+ *  rutans höjd är målhöjden). Skymningen av en sak mäts där, så den platta inte göms bakom den framför. */
-+export const fot = (r: Ruta): Ruta => ({ ...r, y0: r.y0 + (r.y1 - r.y0) / 2 });
 +
 +/** Raderna i ett band (djup z och höjd y), främst först; varje rad har sina x närmast mitten först. Räknas en gång. */
 +type Rad = { z: number; y: number; xs: number[] };
@@ -1651,7 +1831,8 @@ index 0000000..9d5564f
 +  const P = PLACERING;
 +  const [nyGrans, aldreGrans, nyaAntal, huvudMax] = [P.max_skymd, P.max_skymd_aldre ?? P.max_skymd, P.nya_antal ?? 1, P.huvud_skymd ?? 1];
 +  const vick = P.vickning;
-+  const satta: Satt[] = regel.fasta.map((f) => ({ id: `fast:${f.namn}`, x: f.x, z: f.z, halv: f.halv, djup: f.djup, r: sakRuta(f.x, f.z, f.halv, f.hojd, f.djup), tackt: 0, huvud: 0, grans: nyGrans, plan: f.plan }));
++  const kam = kameraFor(plats);
++  const satta: Satt[] = regel.fasta.map((f) => ({ id: `fast:${f.namn}`, x: f.x, z: f.z, halv: f.halv, djup: f.djup, r: sakRuta(f.x, f.z, f.halv, f.hojd, f.djup, 0, kam), tackt: 0, huvud: 0, grans: nyGrans, plan: f.plan }));
 +  const plana = satta.filter((s) => s.plan);
 +  const ordning = [...alla].sort((a, b) => b.skapad - a.skapad || (a.uid < b.uid ? 1 : -1));
 +  const ut = new Map<string, Lage>();
@@ -1689,9 +1870,10 @@ index 0000000..9d5564f
 +        const bredd = m.halv + m.vand[0] + (vick[roll] ?? 0);
 +        const djup = m.djup + m.vand[1];
 +        // skärmens y beror inte på x, och skärmens x är linjär i x på varje djup och höjd: radens ruta räknas en gång
-+        const r0 = sakRuta(0, z, bredd, m.hojd, djup, y);
++        const r0 = sakRuta(0, z, bredd, m.hojd, djup, y + m.y0, kam);
 +        if (!medStall && (r0.y0 < 0 || r0.y1 > SKARM.h || r0.x1 - r0.x0 > SKARM.w)) continue;
-+        const sk = [xSkala(y, z + djup), xSkala(y + m.hojd, z + djup), xSkala(y, z - djup), xSkala(y + m.hojd, z - djup)];
++        const [ya, yb] = [y + m.y0, y + m.y0 + m.hojd];
++        const sk = [xSkala(ya, z + djup, kam), xSkala(yb, z + djup, kam), xSkala(ya, z - djup, kam), xSkala(yb, z - djup, kam)];
 +        const [sMin, sMax] = [Math.min(...sk), Math.max(...sk)];
 +        for (let xi = 0; xi < xs.length; xi++) {
 +          const x = xs[xi]!;
@@ -1730,13 +1912,12 @@ index 0000000..9d5564f
 +          // bakom av den nya – mot var och ens egen gräns
 +          // huvudet: övre halvan av rutan (räknas utan nytt objekt)
 +          const hy1 = r.y0 + (r.y1 - r.y0) / 2;
-+          const rm = sak ? fot(r) : r;
-+          const yta = Math.max(1e-6, (rm.x1 - rm.x0) * (rm.y1 - rm.y0));
++          const yta = Math.max(1e-6, (r.x1 - r.x0) * (r.y1 - r.y0));
 +          const hyta = Math.max(1e-6, (r.x1 - r.x0) * (hy1 - r.y0));
 +          let tackt = 0;
 +          let huvud = 0;
 +          for (const q of SKARM_RESERVERAT) {
-+            tackt += over(q, rm, rm.y1) / yta;
++            tackt += over(q, r, r.y1) / yta;
 +            huvud += over(q, r, hy1) / hyta;
 +          }
 +          let kost = Math.max(0, tackt - grans) + Math.max(0, huvud - huvudMax);
@@ -1746,13 +1927,13 @@ index 0000000..9d5564f
 +            if (s.z > z + 0.05) {
 +              // en plan fast sak (dammen) ligger på marken och skymmer ingen
 +              if (s.plan) continue;
-+              const a = over(s.r, rm, rm.y1) / yta;
++              const a = over(s.r, r, r.y1) / yta;
 +              const b = over(s.r, r, hy1) / hyta;
 +              kost += Math.max(0, tackt + a - grans) - Math.max(0, tackt - grans) + Math.max(0, huvud + b - huvudMax) - Math.max(0, huvud - huvudMax);
 +              tackt += a;
 +              huvud += b;
 +            } else if (z > s.z + 0.05 && !(s.plan && roll === "vatten")) {
-+              kost += Math.max(0, s.tackt + tacker(r, s.rm ?? s.r) - s.grans) + (s.plan ? 0 : Math.max(0, s.huvud + tacker(r, topp(s.r)) - huvudMax));
++              kost += Math.max(0, s.tackt + tacker(r, s.r) - s.grans) + (s.plan ? 0 : Math.max(0, s.huvud + tacker(r, topp(s.r)) - huvudMax));
 +            }
 +          }
 +          if (kost <= 1e-9) return { fri: { lage: { x, y, z, roll, r, stall: false, vand: vandDel }, m, huvud, tackt, fel: 0, kost }, stall };
@@ -1801,7 +1982,7 @@ index 0000000..9d5564f
 +        // inget läge alls på rätt underlag (bör inte hända): längst bak i mitten, i stallet
 +        const z = band.z[0];
 +        const m = kroppMatt(d0, z, plats, roll, vandDel);
-+        ut.set(d0.uid, { x: 0, y: band.y?.[0] ?? 0, z, roll, r: sakRuta(0, z, m.halv, m.hojd, m.djup), stall: true, vand: vandDel });
++        ut.set(d0.uid, { x: 0, y: band.y?.[0] ?? 0, z, roll, r: sakRuta(0, z, m.halv, m.hojd, m.djup, m.y0, kam), stall: true, vand: vandDel });
 +        return;
 +      }
 +      // i stallet tar den ingen plats på skärmen, men ingen annan ställs ovanpå den
@@ -1816,10 +1997,10 @@ index 0000000..9d5564f
 +    if (nr > 0) tak = Math.min(tak, krymp);
 +    for (const s of satta)
 +      if (s.r !== TOM && framfor({ z: lage.z }, s) && !(s.plan && roll === "vatten")) {
-+        s.tackt += tacker(lage.r, s.rm ?? s.r);
++        s.tackt += tacker(lage.r, s.r);
 +        s.huvud += tacker(lage.r, topp(s.r));
 +      }
-+    satta.push({ id: d0.uid, x: lage.x, z: lage.z, halv: fynd.m.halv, djup: fynd.m.djup, r: lage.r, rm: sak ? fot(lage.r) : undefined, tackt: fynd.tackt, huvud: fynd.huvud, grans });
++    satta.push({ id: d0.uid, x: lage.x, z: lage.z, halv: fynd.m.halv, djup: fynd.m.djup, r: lage.r, tackt: fynd.tackt, huvud: fynd.huvud, grans });
 +  });
 +  return ut;
 +}
@@ -2053,16 +2234,25 @@ index e303366..2037a41 100644
  test("R8-2b: horisont ur data – grottan berg, skogen/sjön skog, okänt = ingen", () => {
 diff --git a/src/spel/skarm.ts b/src/spel/skarm.ts
 new file mode 100644
-index 0000000..864f1df
+index 0000000..c914930
 --- /dev/null
 +++ b/src/spel/skarm.ts
-@@ -0,0 +1,56 @@
+@@ -0,0 +1,65 @@
 +// P3: var en punkt på ängen/platsen hamnar på skärmen i stående läge (KameraRam: kameran i (0, 4,15, 9,8) mot
-+// (0, 1,05, −0,15), fov 58, 375 × 812). Ren matematik utan three, för placeringen (vem skymmer vem) och för prov i Node.
++// (0, 1,05, −0,15), fov 58, 375 × 812; på de andra platserna närmare på samma linje, KAMERA_PLATS). Ren matematik utan three, för placeringen (vem skymmer vem) och för prov i Node.
 +export type Ruta = { x0: number; y0: number; x1: number; y1: number };
 +
-+const POS = [0, 4.15, 9.8] as const;
 +const MAL = [0, 1.05, -0.15] as const;
++export type Kamera = readonly [number, number, number];
++/** Ängens kamera (KameraRam). */
++export const KAMERA_ANG: Kamera = [0, 4.15, 9.8];
++/** P3a (Arkitekten 20:40): på de andra platserna håller OrbitControls kameran högst så här långt från målet
++ *  (PlatsDekor maxDistance), så den står närmare på samma linje: (0, 3,876, 8,92) i stället för (0, 4,15, 9,8). */
++export const PLATS_MAX_AVSTAND = 9.5;
++const ANG_AVSTAND = Math.hypot(KAMERA_ANG[0] - MAL[0], KAMERA_ANG[1] - MAL[1], KAMERA_ANG[2] - MAL[2]);
++const kl = Math.min(1, PLATS_MAX_AVSTAND / ANG_AVSTAND);
++export const KAMERA_PLATS: Kamera = [MAL[0] + (KAMERA_ANG[0] - MAL[0]) * kl, MAL[1] + (KAMERA_ANG[1] - MAL[1]) * kl, MAL[2] + (KAMERA_ANG[2] - MAL[2]) * kl];
++const POS = KAMERA_ANG;
 +const TAN = Math.tan((58 * Math.PI) / 360);
 +const ASPEKT = 375 / 812;
 +const norm = (v: number[]) => {
@@ -2074,8 +2264,8 @@ index 0000000..864f1df
 +const U = [R[1]! * F[2]! - R[2]! * F[1]!, R[2]! * F[0]! - R[0]! * F[2]!, R[0]! * F[1]! - R[1]! * F[0]!];
 +
 +/** Världspunkt → skärmpunkt i CSS-px (375 × 812, origo uppe till vänster). */
-+export function projicera(x: number, y: number, z: number): [number, number] {
-+  const d = [x - POS[0], y - POS[1], z - POS[2]];
++export function projicera(x: number, y: number, z: number, P: Kamera = POS): [number, number] {
++  const d = [x - P[0], y - P[1], z - P[2]];
 +  const xc = d[0]! * R[0]! + d[1]! * R[1]! + d[2]! * R[2]!;
 +  const yc = d[0]! * U[0]! + d[1]! * U[1]! + d[2]! * U[2]!;
 +  const zc = Math.max(0.01, d[0]! * F[0]! + d[1]! * F[1]! + d[2]! * F[2]!);
@@ -2084,9 +2274,9 @@ index 0000000..864f1df
 +
 +/** Skärmrutan för en kropp med fot i (x, y, z), halva bredden `halv` och höjden `hojd`. Utan mellanobjekt: placeringen
 + *  räknar tusentals rutor per ny skapelse (P3a, prestanda). Skärmens x beror på x och djupet, y bara på y och z. */
-+export function skarmRuta(x: number, y: number, z: number, halv: number, hojd: number): Ruta {
-+  const dz = z - POS[2];
-+  const [ya, yb] = [y - POS[1], y + hojd - POS[1]];
++export function skarmRuta(x: number, y: number, z: number, halv: number, hojd: number, P: Kamera = POS): Ruta {
++  const dz = z - P[2];
++  const [ya, yb] = [y - P[1], y + hojd - P[1]];
 +  const za = Math.max(0.01, ya * F[1]! + dz * F[2]!);
 +  const zb = Math.max(0.01, yb * F[1]! + dz * F[2]!);
 +  const pya = ((1 - (ya * U[1]! + dz * U[2]!) / (za * TAN)) / 2) * 812;
@@ -2102,8 +2292,8 @@ index 0000000..864f1df
 +}
 +
 +/** Hur många px skärmens x flyttar sig per världsenhet i x på höjden y och djupet z (placeringen räknar en rad i taget). */
-+export function xSkala(y: number, z: number): number {
-+  const zc = Math.max(0.01, (y - POS[1]) * F[1]! + (z - POS[2]) * F[2]!);
++export function xSkala(y: number, z: number, P: Kamera = POS): number {
++  const zc = Math.max(0.01, (y - P[1]) * F[1]! + (z - P[2]) * F[2]!);
 +  return (R[0]! * 375) / (2 * zc * TAN * ASPEKT);
 +}
 +
@@ -2115,19 +2305,19 @@ index 0000000..864f1df
 +}
 diff --git a/src/spel/skymning.ts b/src/spel/skymning.ts
 new file mode 100644
-index 0000000..4613fc0
+index 0000000..ceb749b
 --- /dev/null
 +++ b/src/spel/skymning.ts
 @@ -0,0 +1,25 @@
 +// P3a: hur saker får skymma varandra på skärmen. En regel för alla platser, inga specialfall per modell.
 +// Varje sak syns till minst (1 − max_skymd) av sin skärmruta (data/placering.json): summan av hur mycket de som står
 +// framför den täcker. Rutan räknas med den stående kameran (skarm.ts): en låda x ± halv, z ± djup, y … y + hojd.
-+import { skarmRuta, tacker, type Ruta } from "./skarm.ts";
++import { skarmRuta, tacker, type Kamera, type Ruta } from "./skarm.ts";
 +
 +/** Skärmrutan för en låda med botten på höjden y: x ± halv, z ± djup, y … y + hojd (unionen av fram- och baksidan). */
-+export function sakRuta(x: number, z: number, halv: number, hojd: number, djup = halv, y = 0): Ruta {
-+  const f = skarmRuta(x, y, z + djup, halv, hojd);
-+  const b = skarmRuta(x, y, z - djup, halv, hojd);
++export function sakRuta(x: number, z: number, halv: number, hojd: number, djup = halv, y = 0, P?: Kamera): Ruta {
++  const f = skarmRuta(x, y, z + djup, halv, hojd, P);
++  const b = skarmRuta(x, y, z - djup, halv, hojd, P);
 +  return { x0: Math.min(f.x0, b.x0), x1: Math.max(f.x1, b.x1), y0: Math.min(f.y0, b.y0), y1: Math.max(f.y1, b.y1) };
 +}
 +
