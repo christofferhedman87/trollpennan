@@ -75,7 +75,7 @@ index 99deb59..136e40a 100644
    const nyckel = lista.join(",");
    useEffect(() => {
 diff --git a/src/spel/fargning.ts b/src/spel/fargning.ts
-index 201ea7c..47ec731 100644
+index 201ea7c..6555b73 100644
 --- a/src/spel/fargning.ts
 +++ b/src/spel/fargning.ts
 @@ -78,12 +78,131 @@ export function kroppsRoller(mats: MatInfo[], roller?: Record<string, string>):
@@ -97,8 +97,8 @@ index 201ea7c..47ec731 100644
 +    });
 +  }
 +  return mats.map((m, i) => ({ roll: data(m) ?? (kropp[i] ? "kropp" : "detalj"), huvud }));
- }
- 
++}
++
 +/** R8-3a2: gränser för kroppsmasken i en textur och för hörnfärger (en plats, testade i r8-3a2.test.ts). */
 +export const MASK = {
 +  /** Största steget mellan två grannar (|ΔR|+|ΔG|+|ΔB|, 0–765) inom kroppen: en mjuk gradient (ankans gulgröna rygg som
@@ -188,8 +188,8 @@ index 201ea7c..47ec731 100644
 +    if (u.alla > 0 && u.karna / u.alla >= MASK.karnandel) for (let j = y.start; j < y.slut; j++) mask[ko[j]!] = 1;
 +  });
 +  return mask;
-+}
-+
+ }
+ 
 +/** R8-3a2: hörnfärger (sRGB 0–255, tre per hörn, materialfärgen redan inräknad) → kärnan och vilka hörn som är kropp.
 + *  Kärnan väljs som i en textur (valjKarna, en klump per hörn). Hörn i familjen är kropp; mörka (ögon, kanter) och andra kulörer
 + *  behålls (hörn har inga grannar att växa genom, så den mörka änden av en gradient räknas inte här). */
@@ -214,7 +214,30 @@ index 201ea7c..47ec731 100644
  /** En färgklump i en textur: vikt (yta) och medelfärg i sRGB 0–255. */
  export type Klump = { n: number; r: number; g: number; b: number };
  
-@@ -119,7 +238,7 @@ export function valjKarna(klumpar: Klump[]): { hsl: Hsl; neutral: boolean } | nu
+@@ -105,10 +224,20 @@ export function valjKarna(klumpar: Klump[]): { hsl: Hsl; neutral: boolean } | nu
+     f.n += k.n; f.r += k.r; f.g += k.g; f.b += k.b;
+     fam.set(nyckel, f);
+   }
++  // R8-3a2: en kulör familj räknas ihop med grannfacken vars medelnyans ligger inom KROPP.nyans (bilens röda 9° och 12° hamnar
++  // i olika 20°-fack; var för sig under 30 %, så de grå rutorna blev kärna och bara taket färgades).
++  const kulorFam = [...fam].filter(([k]) => k.startsWith("c"));
++  const nyansAv = (f: Klump) => rgbTillHsl(f.r / f.n, f.g / f.n, f.b / f.n)[0];
++  const sammanslagen = (f: Klump): Klump => {
++    const h = nyansAv(f), s: Klump = { n: 0, r: 0, g: 0, b: 0 };
++    for (const [, g] of kulorFam) if (nyansAvstand(nyansAv(g), h) <= KROPP.nyans) { s.n += g.n; s.r += g.r; s.g += g.g; s.b += g.b; }
++    return s;
++  };
+   let bast: [string, Klump] | null = null, kulor: [string, Klump] | null = null;
+-  for (const e of fam) {
++  for (const [nyckel, f] of fam) {
++    const e: [string, Klump] = [nyckel, nyckel.startsWith("c") ? sammanslagen(f) : f];
+     if (!bast || e[1].n > bast[1].n) bast = e;
+-    if (e[0].startsWith("c") && (!kulor || e[1].n > kulor[1].n)) kulor = e;
++    if (nyckel.startsWith("c") && (!kulor || e[1].n > kulor[1].n)) kulor = e;
+   }
+   if (!bast) return null;
+   const val = bast[0].startsWith("n") && kulor && kulor[1].n >= 0.3 * total ? kulor : bast;
+@@ -119,7 +248,7 @@ export function valjKarna(klumpar: Klump[]): { hsl: Hsl; neutral: boolean } | nu
  /** Kärnfärgen för ett material utan textur (sRGB-hex). */
  export const hslAv = (hex: string): Hsl => hexTillHsl(hex);
  
@@ -766,10 +789,10 @@ index 0000000..14c6e53
 +}
 diff --git a/src/spel/r8-3a2.test.ts b/src/spel/r8-3a2.test.ts
 new file mode 100644
-index 0000000..70cb1b4
+index 0000000..bc93ce1
 --- /dev/null
 +++ b/src/spel/r8-3a2.test.ts
-@@ -0,0 +1,140 @@
+@@ -0,0 +1,153 @@
 +// R8-3a2: kroppens färg följer hela kroppen (gradient i samma färgruta, kedja av material), detaljer i samma textur behålls
 +// (betar, ögon, näbb), hörnfärger bakas in, och mönster (regnbåge, ränder, prickar) målas på kroppen ur data.
 +import assert from "node:assert/strict";
@@ -909,4 +932,17 @@ index 0000000..70cb1b4
 +  const mask = kroppsMask(d, w, h, { hsl: hexTillHsl("#9AA62E"), neutral: false }, anvand(w, rw, [[0, 0, 14], [1, 0, 31]]));
 +  assert.equal(andelRuta(mask, w, h, rw, 0), 1, "kroppen");
 +  assert.equal(andelRuta(mask, w, h, rw, 1), 0, "vingen");
++});
++
++test("R8-3a2: en kulör kropp som delas av två nyansfack (bilens röda 9° och 12°) vinner över grå rutor", () => {
++  const klump = (hex: string, n: number) => {
++    const [r, g, b] = hslTillRgb(...hexTillHsl(hex));
++    return { n, r: r * n, g: g * n, b: b * n };
++  };
++  // bilens kaross: grå rutor 40 %, röd 20 % + 14 % (två fack), däck 15 %, ljus 7 %
++  const k = valjKarna([klump("#7A7C86", 0.4), klump("#EE5A3D", 0.2), klump("#F5602A", 0.14), klump("#3A3A40", 0.15), klump("#E6F6FF", 0.07)]);
++  assert.ok(k && !k.neutral && (k.hsl[0] < 20 || k.hsl[0] > 350), `kärnan ska vara röd, var ${JSON.stringify(k)}`);
++  // två fack långt isär slås inte ihop: grått vinner när ingen kulör familj når 30 %
++  const g = valjKarna([klump("#7A7C86", 0.4), klump("#EE5A3D", 0.2), klump("#3D8AEE", 0.2), klump("#3A3A40", 0.2)]);
++  assert.ok(g && g.neutral, "grå kärna när de kulöra är olika nyanser");
 +});
