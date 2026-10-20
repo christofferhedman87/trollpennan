@@ -1,5 +1,6 @@
 // R9: bevis (375x812) för Bengtssons takt och ikon, stjärnförklaringen, förklaringen och ledtrådsytan i Skapa/Väck.
 // B6.2: uppdaterad till nuvarande beteende (gåtan bara utan uppdrag, idéraden fyller inte i svaret).
+// TTS-2-fix: boken öppnar i skrivläge sedan P1 – ordkorten nås via pennan (forslag-etikett), sedan tillbaka till tangentbordet.
 // Kontrollerar: ingen figur först men en ikon; stjärnräknaren öppnar en ärlig förklaring; efter 3 djur bjuder Bengtsson in; ett klart uppdrag ger paus (ikonen kvar); ikonen ger uppdrag direkt; gåta + streck + förklaring syns i boken.
 // Användning: node rundor/R9-tydlighet/r9-prov.mjs --ut docs/skarmbilder/r9 [--dist dist-pages]  (kräver npm run build:pages). exit 0 = allt stämde.
 import fs from "node:fs";
@@ -66,10 +67,14 @@ await skott("3-bok-gata");
 await t("ledtrad-ny").click();
 m.gata2 = (await t("ledtrad-gata").innerText()).trim();
 m.ny_gata_byter = m.gata2 !== m.gata1;
-// B6.2: Pennans bok öppnar med ordkorten; pennan växlar till tangentbordet
+// B6.2/P1: pennan växlar mellan ordkorten och tangentbordet. Sedan P1 öppnar boken i skrivläge (pennan har klassen "pa"),
+// före P1 med ordkorten – provet läser läget i stället för att anta det, så det fungerar på båda.
+const skrivlage = async () => /\bpa\b/.test((await t("pennan").getAttribute("class")) ?? "");
+m.oppnade_i = (await skrivlage()) ? "skriv" : "kort";
+if (await skrivlage()) await t("pennan").click();
 m.etikett = (await t("forslag-etikett").innerText()).trim();
 await skott("3b-ordkort");
-await t("pennan").click();
+if (!(await skrivlage())) await t("pennan").click();
 // förklaringen får inte skymma tangentbordet eller Vakna
 m.vakna_synlig = !!(await t("vakna").boundingBox());
 m.tangentbord_synligt = (await t("tangentbord").boundingBox())?.y < 812;
