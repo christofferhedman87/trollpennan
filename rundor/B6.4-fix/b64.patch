@@ -27,7 +27,7 @@ index 8a618ce..51ebe4e 100644
 -console.log(`egna färger (ingen palett, inget farg-material): ${ids.join(", ")}`);
 +if (ids.length) console.log(`egna_farger utan verkan (B6.4: spelet visar alltid modellens egna färger utan färgord): ${ids.join(", ")}`);
 diff --git a/rundor/R3F-modellserie/kor.sh b/rundor/R3F-modellserie/kor.sh
-index aee41f6..bd16cbb 100755
+index 2b73289..a2d5b83 100755
 --- a/rundor/R3F-modellserie/kor.sh
 +++ b/rundor/R3F-modellserie/kor.sh
 @@ -89,8 +89,8 @@ if [ "$(tail -n +2 "$UT/lagg-ordgranskning.tsv" | grep -c .)" != "0" ] || [ -f "
@@ -39,8 +39,8 @@ index aee41f6..bd16cbb 100755
 +# 3a3. inlagg-tillagg.json "egna_farger" är utan verkan sedan B6.4 (spelet visar alltid modellens egna färger utan färgord;
 +# paletten och farg-materialet behövs för färgord). Skriptet skriver bara ut listan.
  [ -f "$D/$M/inlagg-tillagg.json" ] && { node $D/egna-farger.mjs "$D/$M/inlagg-tillagg.json" | tee -a "$UT/bevis.txt"; [ "${PIPESTATUS[0]}" = 0 ] || { git checkout -- data src CREDITS.md LICENSES.md public/models/bulk; git clean -fdq public/models/bulk; stopp 3 "egna_farger kunde inte föras in (allt återställt)"; }; }
- # 3b. Gåtor för nya hemliga djur (r9.test.ts kräver en gåta per djurord). Data ur $D/$M/gator.json, inget annat ändras.
- if [ -f "$D/$M/gator.json" ]; then
+ # 3a4. Valfritt: inlagg-tillagg.json "byt_fil": { id: "paket/fil.glb" } byter bara modellfilen för entiteter som redan finns
+ # (ord, gåtor och inlagg-data från rundan som lade in dem står kvar). Se byt-fil.mjs.
 diff --git a/src/spel/b6-4.test.ts b/src/spel/b6-4.test.ts
 new file mode 100644
 index 0000000..a9de1e5
