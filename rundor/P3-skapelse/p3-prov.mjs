@@ -224,7 +224,8 @@ await blok("D", async () => {
 // åttonde skrivs i spelet (då går de som inte ryms till stallet, som i spelet). Mäts på skärmen: den ritade kroppen
 // (window.__tredSyn), djupet (window.__tredPos), Bengtsson-figuren (mätt i DOM:en), de reserverade rutorna ur data och
 // ängens fasta saker (spökhuset, dammen) räknade ur data med den stående kameran.
-const PLAC = JSON.parse(fs.readFileSync("data/placering.json", "utf8"));
+// på main (före P3) finns ingen placering.json: samma tal som patchen, så att provet kan köras där och faller på riktigt
+const PLAC = fs.existsSync("data/placering.json") ? JSON.parse(fs.readFileSync("data/placering.json", "utf8")) : { max_skymd: 0.2, platser: {}, skarm_reserverat: [{ namn: "utgangar", x0: 0, y0: 0, x1: 375, y1: 112 }, { namn: "guiden", x0: 12, y0: 112, x1: 363, y1: 150 }, { namn: "bengtsson", x0: 30, y0: 494, x1: 140, y1: 738 }, { namn: "nedre-raden", x0: 0, y0: 744, x1: 375, y1: 812 }] };
 const GRANS = 1 - (PLAC.max_skymd + 0.1); // modellens verkliga form mot den räknade rutan: 0,1 marginal (som B6.6/P3)
 function slump(fro) {
   let a = fro >>> 0;
