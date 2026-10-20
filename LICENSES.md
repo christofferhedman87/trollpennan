@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 766 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 804 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -66,7 +66,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-train-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/train-kit | 12 |
 | kenney-watercraft-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/watercraft-kit | 7 |
 | oga-cc0 | Teh_Bucket | CC0-1.0 | https://opengameart.org/content/hats-clothing-props | 7 |
-| polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 37 |
+| polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 34 |
 | polypizza-cc0-2 | Quaternius | CC0-1.0 | https://poly.pizza/m/3aQgc75sUR | 16 |
 | polypizza-cc0-4 | CreativeTrio | CC0-1.0 | https://poly.pizza/m/oH3dEdlDpB | 12 |
 | quaternius-animated-dinosaurs | Quaternius | CC0-1.0 | https://quaternius.com/packs/animateddinosaurs.html | 3 |
@@ -82,6 +82,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | quaternius-ultimate-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimatemonsters.html | 11 |
 | trollpennan-egna-m14 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 3 |
 | trollpennan-egna-m16 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 13 |
+| trollpennan-folk-m17 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 41 |
 | trollpennan-mfix | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 21 |
 | trollpennan-mfix2 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 9 |
 
@@ -118,7 +119,6 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | robot | /models/bulk/robot.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/QCm7qe9uNJ |
 | yeti | /models/bulk/yeti.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/cutemonsters.html |
 | astronaut | /models/bulk/astronaut.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/space-kit |
-| bonde | /models/bulk/bonde.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/7pn3R6hPvE |
 | bil | /models/bulk/bil.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/car-kit |
 | brandbil | /models/bulk/brandbil.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/car-kit |
 | traktor | /models/bulk/traktor.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/car-kit |
@@ -362,8 +362,6 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | tv | /models/bulk/tv.glb | CC0-1.0 | Kenney | https://poly.pizza/m/aSmz6H8aeu |
 | koja | /models/bulk/koja.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/4MJWbyd6vw |
 | klanning | /models/bulk/klanning.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/zMyPlQXBzq |
-| ninja | /models/bulk/ninja.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/xGYmeDpfTu |
-| kvinna | /models/bulk/kvinna.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/9kF7eTDbhO |
 | mus | /models/bulk/mus.glb | CC0-1.0 | MiniPoly | https://poly.pizza/m/Oud9UeK39O |
 | ratta | /models/bulk/ratta.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/iltq5bVNaV |
 | tomte | /models/bulk/tomte.glb | CC0-1.0 | Polygonal Mind | https://poly.pizza/m/Yy3yuQ4l6r |
@@ -856,3 +854,44 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | tivoli | /models/bulk/tivoli.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | sol | /models/bulk/sol.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | spelare | /models/bulk/spelare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgad tröja och hörlurar: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| bonde | /models/bulk/bonde.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| ninja | /models/bulk/ninja.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| kvinna | /models/bulk/kvinna.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| brandman | /models/bulk/brandman.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| clown | /models/bulk/clown.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| doktor | /models/bulk/doktor.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| kock | /models/bulk/kock.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| mormor | /models/bulk/mormor.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| farmor | /models/bulk/farmor.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| prins | /models/bulk/prins.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| prinsessa | /models/bulk/prinsessa.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| barn | /models/bulk/barn.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| alva | /models/bulk/alva.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| frisor | /models/bulk/frisor.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| sjukskoterska | /models/bulk/sjukskoterska.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| dykare | /models/bulk/dykare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| brevbarare | /models/bulk/brevbarare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| malare | /models/bulk/malare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| snickare | /models/bulk/snickare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| kapten | /models/bulk/kapten.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| fiskare | /models/bulk/fiskare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| viking | /models/bulk/viking.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| superhjalte | /models/bulk/superhjalte.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| tjuv | /models/bulk/tjuv.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| aventyrare | /models/bulk/aventyrare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| detektiv | /models/bulk/detektiv.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| forskare | /models/bulk/forskare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| konstnar | /models/bulk/konstnar.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| ballerina | /models/bulk/ballerina.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| mekaniker | /models/bulk/mekaniker.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| jagare | /models/bulk/jagare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| skogshuggare | /models/bulk/skogshuggare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| vakt | /models/bulk/vakt.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| kejsare | /models/bulk/kejsare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| jultomte | /models/bulk/jultomte.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| mumie | /models/bulk/mumie.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| alien | /models/bulk/alien.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| sjoman | /models/bulk/sjoman.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| rormokare | /models/bulk/rormokare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| servitor | /models/bulk/servitor.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| sangare | /models/bulk/sangare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |

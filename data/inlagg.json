@@ -53,6 +53,9 @@
     "flyg": ["fladdermus", "bi", "kolibri", "pterodactylus", "örn", "uggla", "gås", "flamingo", "papegoja", "ara", "påfågel", "tukan", "pelikan", "anka"]
   },
   "malhojd_ord": {
+    "fe": 0.9,
+    "älva": 0.9,
+    "barn": 1,
     "sparkcykel": 0.9,
     "banderoll": 1.6,
     "fana": 1.6,

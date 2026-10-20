@@ -2019,6 +2019,252 @@
    "forsta": "S",
    "langd": 7,
    "granskad": false
+  },
+  "brandman": {
+   "gata": "Han har röd hjälm och släcker elden med vattenslangen.",
+   "forsta": "B",
+   "langd": 8,
+   "granskad": false
+  },
+  "clown": {
+   "gata": "Han har röd näsa och stora skor och får alla på cirkusen att skratta.",
+   "forsta": "C",
+   "langd": 5,
+   "granskad": false
+  },
+  "doktor": {
+   "gata": "Hon lyssnar på ditt hjärta och hjälper dig när du är sjuk.",
+   "forsta": "D",
+   "langd": 6,
+   "granskad": false
+  },
+  "läkare": {
+   "gata": "Hon lyssnar på ditt hjärta och hjälper dig när du är sjuk.",
+   "forsta": "L",
+   "langd": 6,
+   "granskad": false
+  },
+  "kock": {
+   "gata": "Han har hög vit mössa och lagar maten i köket.",
+   "forsta": "K",
+   "langd": 4,
+   "granskad": false
+  },
+  "mormor": {
+   "gata": "Hon är mammas mamma och bakar bullar till dig.",
+   "forsta": "M",
+   "langd": 6,
+   "granskad": false
+  },
+  "farmor": {
+   "gata": "Hon är pappas mamma och stickar varma vantar.",
+   "forsta": "F",
+   "langd": 6,
+   "granskad": false
+  },
+  "prins": {
+   "gata": "Han är kungens son och har en liten krona.",
+   "forsta": "P",
+   "langd": 5,
+   "granskad": false
+  },
+  "prinsessa": {
+   "gata": "Hon är kungens dotter och bär ett glittrigt diadem.",
+   "forsta": "P",
+   "langd": 9,
+   "granskad": false
+  },
+  "barn": {
+   "gata": "Den som är liten och inte vuxen än, precis som du.",
+   "forsta": "B",
+   "langd": 4,
+   "granskad": false
+  },
+  "älva": {
+   "gata": "Hon är pytteliten, har genomskinliga vingar och en trollstav.",
+   "forsta": "Ä",
+   "langd": 4,
+   "granskad": false
+  },
+  "fe": {
+   "gata": "Hon är pytteliten, har genomskinliga vingar och en trollstav.",
+   "forsta": "F",
+   "langd": 2,
+   "granskad": false
+  },
+  "frisör": {
+   "gata": "Hon klipper håret med saxen så att det blir fint.",
+   "forsta": "F",
+   "langd": 6,
+   "granskad": false
+  },
+  "sjuksköterska": {
+   "gata": "Hon jobbar på sjukhuset, sätter plåster och tar hand om de sjuka.",
+   "forsta": "S",
+   "langd": 13,
+   "granskad": false
+  },
+  "dykare": {
+   "gata": "Han har cyklop och tuber på ryggen och simmar djupt under vattnet.",
+   "forsta": "D",
+   "langd": 6,
+   "granskad": false
+  },
+  "brevbärare": {
+   "gata": "Han har en väska full av brev och kommer till din brevlåda.",
+   "forsta": "B",
+   "langd": 10,
+   "granskad": false
+  },
+  "målare": {
+   "gata": "Han har pensel och hink och gör väggen blå eller röd.",
+   "forsta": "M",
+   "langd": 6,
+   "granskad": false
+  },
+  "snickare": {
+   "gata": "Han har hammare och spikar ihop hus och bord av trä.",
+   "forsta": "S",
+   "langd": 8,
+   "granskad": false
+  },
+  "kapten": {
+   "gata": "Han har vit mössa och bestämmer på fartyget.",
+   "forsta": "K",
+   "langd": 6,
+   "granskad": false
+  },
+  "fiskare": {
+   "gata": "Han sitter i båten med sitt metspö och väntar på napp.",
+   "forsta": "F",
+   "langd": 7,
+   "granskad": false
+  },
+  "viking": {
+   "gata": "Han har hjälm med horn och seglar på ett långskepp.",
+   "forsta": "V",
+   "langd": 6,
+   "granskad": false
+  },
+  "superhjälte": {
+   "gata": "Hon har mantel och kan flyga för att rädda alla.",
+   "forsta": "S",
+   "langd": 11,
+   "granskad": false
+  },
+  "tjuv": {
+   "gata": "Han har mask för ögonen och smyger iväg med andras saker.",
+   "forsta": "T",
+   "langd": 4,
+   "granskad": false
+  },
+  "äventyrare": {
+   "gata": "Hon har hatt och karta och letar efter gömda skatter i djungeln.",
+   "forsta": "Ä",
+   "langd": 10,
+   "granskad": false
+  },
+  "detektiv": {
+   "gata": "Han har förstoringsglas och letar efter spår för att lösa gåtan.",
+   "forsta": "D",
+   "langd": 8,
+   "granskad": false
+  },
+  "forskare": {
+   "gata": "Hon har vit rock och blandar konstiga vätskor i provrör.",
+   "forsta": "F",
+   "langd": 8,
+   "granskad": false
+  },
+  "konstnär": {
+   "gata": "Han har en palett med färger och målar tavlor.",
+   "forsta": "K",
+   "langd": 8,
+   "granskad": false
+  },
+  "ballerina": {
+   "gata": "Hon står på tå i rosa tyllkjol och snurrar till musiken.",
+   "forsta": "B",
+   "langd": 9,
+   "granskad": false
+  },
+  "dansare": {
+   "gata": "Hon står på tå i rosa tyllkjol och snurrar till musiken.",
+   "forsta": "D",
+   "langd": 7,
+   "granskad": false
+  },
+  "mekaniker": {
+   "gata": "Han har skiftnyckel och lagar bilar som har gått sönder.",
+   "forsta": "M",
+   "langd": 9,
+   "granskad": false
+  },
+  "jägare": {
+   "gata": "Han går i skogen i grön hatt och letar efter älgen.",
+   "forsta": "J",
+   "langd": 6,
+   "granskad": false
+  },
+  "skogshuggare": {
+   "gata": "Han har yxa och rutig skjorta och fäller höga träd.",
+   "forsta": "S",
+   "langd": 12,
+   "granskad": false
+  },
+  "vakt": {
+   "gata": "Han står still med hög svart mössa utanför slottet.",
+   "forsta": "V",
+   "langd": 4,
+   "granskad": false
+  },
+  "kejsare": {
+   "gata": "Han har guldkrona och röd mantel och styr ett helt rike.",
+   "forsta": "K",
+   "langd": 7,
+   "granskad": false
+  },
+  "jultomte": {
+   "gata": "Han har röd luva och vitt skägg och kommer med klappar på julafton.",
+   "forsta": "J",
+   "langd": 8,
+   "granskad": false
+  },
+  "mumie": {
+   "gata": "Den är lindad i vita tygremsor och har vilat i pyramiden i tusen år.",
+   "forsta": "M",
+   "langd": 5,
+   "granskad": false
+  },
+  "alien": {
+   "gata": "Den har antenner på huvudet och kommer från en annan planet.",
+   "forsta": "A",
+   "langd": 5,
+   "granskad": false
+  },
+  "sjöman": {
+   "gata": "Han har vit mössa och seglar ut på havet.",
+   "forsta": "S",
+   "langd": 6,
+   "granskad": false
+  },
+  "rörmokare": {
+   "gata": "Han har skiftnyckel och lagar kranen när det läcker.",
+   "forsta": "R",
+   "langd": 9,
+   "granskad": false
+  },
+  "servitör": {
+   "gata": "Han bär en bricka och kommer med maten till ditt bord på restaurangen.",
+   "forsta": "S",
+   "langd": 8,
+   "granskad": false
+  },
+  "sångare": {
+   "gata": "Hon håller i mikrofonen och sjunger på scenen.",
+   "forsta": "S",
+   "langd": 7,
+   "granskad": false
   }
  }
 }
