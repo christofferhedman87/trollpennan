@@ -1,7 +1,7 @@
 # P3 – Skapelsen syns rätt (ritning, Arkitekten 2026-10-20)
 
-Källa: `rundor/PREMIUM/BLOCKSERIE.md` (P3) och `GRANSKNING.md`, Doodles sjöfynd och Doodles placeringsfynd 15:35
-(`/workspace/trollpennan-nulage/ko-20okt/b66/`).
+Källa: `rundor/PREMIUM/BLOCKSERIE.md` (P3) och `GRANSKNING.md`, Doodles sjöfynd, Doodles placeringsfynd 15:35
+(`/workspace/trollpennan-nulage/ko-20okt/b66/`) och 16:20 (`/workspace/trollpennan-nulage/ko-20okt/r83a/`).
 
 **Kvalitet går före kvot.**
 - **Väg:** patch + kor.sh (Arkitektens patch), inte Build-prompt. Allt är data plus några få allmänna regler (kroppsdel per
@@ -9,8 +9,10 @@ Källa: `rundor/PREMIUM/BLOCKSERIE.md` (P3) och `GRANSKNING.md`, Doodles sjöfyn
 - **Kvotåtgång:** **medel**.
 
 ## Ordning
-Main har B6.3, B6.5, B6.6 (#172, #174), P1 och P2-1. Kön före P3: **TTS-2 → R8-3a → P2-2 → P3**. `kor.sh` stoppar
-(exit 2) om någon saknas. Patchen är gjord ovanpå main 53f9bba + kön och går rent på den.
+Main har B6.3, B6.5, B6.6 (#172, #174), R8-3a (#175), P1 och P2-1 (main 27e175d). Kön före P3: **TTS-2 → P2-2 → P3**.
+`kor.sh` stoppar (exit 2) om någon saknas. Patchen är gjord ovanpå main 27e175d + TTS-2 + P2-2 och går rent på den.
+Röst: `kor.sh` gör två röstfiler ('en sportbil', 'en grottport', 23 tecken, kvot **liten**) med `scripts/rost-generera.mjs`
+och `ELEVENLABS_API_KEY` ur miljön (nyckeln skrivs aldrig ut). De orden spärrades förut och hade därför ingen fil.
 
     git checkout main && git pull && git checkout -b runda-p3-kod && bash rundor/P3-skapelse/kor.sh
 
@@ -44,7 +46,16 @@ Main har B6.3, B6.5, B6.6 (#172, #174), P1 och P2-1. Kön före P3: **TTS-2 → 
 - **Låsta tolktest ändrade** (`tolk.test.ts`): "blixtkatt sparar förleden" och "monsterkanin" blir att de frågar
   "Menade du katt?" respektive "Menade du kanin?". Skälet är att det gamla beteendet just är felet P3 rättar. En genomgång
   av 445 datafraser visar att bara "blixtkatt" ändras (test-fraser-reserv.json, märkt "oforandrat"), och den går fortfarande igenom.
-- `data/test-fraser.json` `p3_tolkning`: 12 fraser.
+- **'sportbil' blev biff, 'eld' ubåt** (Doodle r83a). Två allmänna fel:
+  - *Delordsmatchning mot korta stammar* (`sparr.ts`): spärrlistans stammar normaliseras med ihopslagna dubbelbokstäver,
+    så en stam på fyra bokstäver kunde bli tre ("…rr" → "…r") och hittas inne i vanliga ord ("en sportbil", "port",
+    "grottport" spärrades; barnet fick spärrbanderollen). Nu jämförs en stam som krymper under fyra bokstäver med
+    dubbelbokstaven kvar. Inget ord som har en modell spärras längre (test över alla entitetsord); spärrorden spärras som förut.
+  - *Fristående dubbelord* (`tolka.ts`, B6.2): "eld" och "regnbåge" blir saken bara när de står fristående. Med ett
+    beskrivande ord före ("en gul eld", "en stor eld") räknades de som förmåga/mönster och svaret blev "Pennan behöver ett
+    djur" med kort att välja. Nu får färg-, storleks- och egenskapsord stå före.
+- `data/test-fraser.json` `p3_tolkning`: 22 fraser (nytt: sportbil, port, grottport, eld, gul/stor eld, gul regnbåge,
+  drake med eld, och ett spärrord som ska spärras). Provet skriver "en röd sportbil", "en gul eld" och "en stor eld" i spelet.
 
 ## 4. Allt syns: sjön, byggnader, stora saker och småsaker
 - **Sjön** (Doodle): `simPlatser` håller varje simmare inom den synliga bredden för sitt djup (B6.6 `synligHalv`). Flygarna
@@ -57,10 +68,26 @@ Main har B6.3, B6.5, B6.6 (#172, #174), P1 och P2-1. Kön före P3: **TTS-2 → 
     staketet räknar in byggnaderna bakom. Det som inte får plats framför går bakom staketet, högst tre varv.
   - Packningen är bästa passning: den högsta står längst ut, de andra i den lucka där de lämnar minst över.
   - **Radens skala:** ryms raden inte i bild (synlig bredd minus grinden) krymper hela raden med samma faktor, i steg om
-    0,05, aldrig under `min_radskala` (0,5). Slottet förblir då lika mycket större än sjukhuset. Skalan ritas
+    0,05, aldrig under `min_radskala` (0,45). Slottet förblir då lika mycket större än sjukhuset. Skalan ritas
     (`bakSkala` i djur.tsx) och syns i `__tredPos[uid].k`.
+  - **Glaslådan är spökhuset** (fast dekor på (2,15, −1,7)). Det ligger nu som data (`storlek.json bak.fasta`, läge och mått)
+    och räknas som ett hinder i samma regel. `byggnader.tsx` läser läget därifrån.
+  - **Ängen full av stora saker:** ryms de inte så att alla syns (`bakRymms`) somnar den äldsta stora saken, aldrig den nya
+    och aldrig ett djur (`minne.ts`, som taket TAK_PER_PLATS).
   - B6.6:s test och prov mäter grinden med den **ritade** bredden. Detta är en ändring i `b6-6.test.ts` och
     `rundor/B6.6-fix/b66-prov.mjs` (två rader).
+- **Sjön och platserna** (Doodle r83a):
+  - *Ankan svävade vid trädkanten.* `entiteter.json` `vattenfagel` (anka, gås): på en plats med vattenyta (inte ängen)
+    simmar den i vattnet, som de andra simmarna. Med barnets vingar flyger den.
+  - *Landdjuren trängdes på sanden* (jultomten framför röda katten). Samma regel som för byggnaderna: varje djur syns till
+    minst 1 − `max_skymd`. Det räknas med kroppens skärmruta (`kroppRuta`) och med guiden (Bengtsson-figuren,
+    `storlek.json syn.skarm_hinder`) som står framför allt. På samma djup räknas det bara om kropparna går in i varandra.
+    Räcker inte platsen närmast de önskade platserna packas bilden uppifrån (de största först). Räcker inte det heller
+    krymper alla djur på platsen lika mycket i steg om 0,1 ned till `syn.min_trang` (0,5). Ryms de ändå inte somnar den
+    äldsta (aldrig den nya), som när ängen är full.
+  - *Narvalen var väldigt liten.* `storlek.json syn`: inget djur är mindre än `min_px` (44 px) i sitt minsta mått på
+    skärmen. Annars förstoras det, högst `max_forstoring` (1,6) gånger (`synSkala`, ritas i djur.tsx).
+  - Ängen behåller sina platser (`LAND_SLOT`). Packningen uppifrån skulle ställa djuren bakom husen där.
 - **Småsaker** (pucken 35 px mot kaffekoppen 20 px): `storlek.json` `smasak` (målhöjd 0,2–0,5) mäts med största måttet.
   Golvet `minsta` är mjukt för småsaker (storlek × (1 − lutning) + lutning × eget mått) och ytan räknas som kameran ser
   den. Ordningen följer då målhöjden: pucken (0,3) blir mindre än kaffekoppen (0,4). `fotavtryck.json` räknas om av kor.sh.
@@ -71,15 +98,15 @@ Main har B6.3, B6.5, B6.6 (#172, #174), P1 och P2-1. Kön före P3: **TTS-2 → 
 | A | Alla 38 plagg × kanin, häst, giraff och krokodil (fyra former, 152 fall). Plaggets världsruta (`__tredPlagg`) sitter på kroppen på rätt höjd för sin del. |
 | B | "en kanin med mössa" skrivet i spelet: mössan sitter på huvudet och inte i dammen. |
 | C | Katten efter fem djur, elefanten efter fyra och "en gul fisk" efter tre: syns minst 80 %, ingen står framför den, och kameran går in och tillbaka. |
-| D | "en dansande banan" blir aldrig "ande". "en blixtkatt" frågar "Menade du katt?" och skapar inget förrän barnet trycker. |
-| E | Sjön: bläckfisk, säl och anka, och sju vid sjön. Bläckfisken ryms i bild och sälen syns minst 80 %. |
+| D | "en dansande banan" blir aldrig "ande". "en blixtkatt" frågar "Menade du katt?" och skapar inget förrän barnet trycker. "en röd sportbil" blir en sportbil, "en gul eld" och "en stor eld" en eld. |
+| E | Sjön: bläckfisk, säl och anka, och sju vid sjön. Bläckfisken ryms i bild och sälen syns minst 80 %. Doodles kö (nio skapelser, r83a) skriven i spelet: ankorna simmar (`__tredPos.sim`, y på vattnet), var och en syns minst 75 % med guiden inräknad, och inget djur är mindre än 0,9 × `min_px` (narvalen). |
 | F | Doodles äng (slott, sjukhus, cirkus, växthus) åt båda hållen, och fordon/möbler: varje sak syns minst 75 % (max_skymd + 0,1). Slottet är minst 1,2 × sjukhusets höjd och överkanten minst 15 px högre. Pucken är mindre än kaffekoppen. |
 
 Regression i kor.sh: b63, b65, b66, p1, p2, p2-2, r9k, b64, b61 och r8-2.
 
 ## Följande rörs inte
-Spel.tsx (växer inte), styles.css, sparnyckeln, rösterna och granskad-data (bengtsson.json är orörd; entiteter.json
-har inget granskad-fält).
+Spel.tsx (växer inte), styles.css, sparnyckeln och granskad-data (bengtsson.json är orörd; entiteter.json har inget
+granskad-fält – där läggs bara `vattenfagel` till på anka och gås). Rösterna: bara två nya filer (se Ordning).
 
 ## Inte gjort här
 "Ordet flyger ur boken" (CSS-animation i ritningen) skjuts till P8 (ceremonin).
