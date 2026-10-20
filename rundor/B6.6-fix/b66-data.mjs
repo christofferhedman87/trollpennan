@@ -35,7 +35,7 @@ const LITEN = ["kiosk", "bajamaja", "koja", "skjul", "honshus", "marknadsstand",
   byt('  "fri_x": [[-1.4, 0.0]]\n }', '  "fri_x": [[-1.4, 0.0]],\n  "_om_bortom": "B6.6: byggnaderna (klass med rad bortom) står bakom staketet i det här djupet, högst längst bak; synlig_x = halva synliga bredden längst bak i stående läge, kroppen ska rymmas. Bakom staketet hålls bara själva grinden fri (bortom.fri_x), den syns framför byggnaderna.",\n  "bortom": { "z": [-3.3, -2.35], "fri_x": [[-1.2, -0.2]] },\n  "synlig_x": 2.9\n }', "bak.bortom, synlig_x");
   const rader = [...JATTE.map((k) => [k, "jatte"]), ...LITEN.map((k) => [k, "liten_byggnad"])].filter(([k]) => E[k] && !new RegExp(`\n  "${k}": "`).test(s));
   if (rader.length) {
-    const m = s.match(/\n "ids": \{\n  "_om": "[^"]*",\n/);
+    const m = s.match(/\n "ids": \{\n {2}"_om": "[^"]*",\n/);
     if (!m) logg("VARNING: storlek.json: ids-blocket saknas");
     else { s = s.replace(m[0], m[0] + rader.map(([k, c]) => `  "${k}": "${c}",\n`).join("")); logg(`storlek.json: ${rader.length} byggnader i jatte/liten_byggnad`); }
   }
