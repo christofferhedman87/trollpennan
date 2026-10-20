@@ -457,10 +457,10 @@ kenney-city-kit-roads/electricity-pole.glb	elstolpe	elstolpe
 kenney-city-kit-roads/construction-cone.glb	trafikkon	trafikkon,vägkon	
 kenney-retro-urban-kit/scaffolding-structure.glb	byggstallning	byggställning	
 kenney-mini-arena/banner.glb	fana	fana,banderoll	
-kenney-mini-characters/character-female-a.glb	tjej	tjej,flicka	
-kenney-mini-skate/character-skate-boy.glb	skejtare	skejtare	
-kenney-mini-arena/character-soldier.glb	soldat	soldat	
-kenney-mini-arcade/character-employee.glb	expedit	expedit	
+trollpennan-mfix/tjej-blocky.glb	tjej	tjej,flicka	
+trollpennan-mfix/skejtare-blocky.glb	skejtare	skejtare	
+trollpennan-mfix/soldat-blocky.glb	soldat	soldat	
+trollpennan-mfix/expedit-blocky.glb	expedit	expedit	
 kenney-minigolf-kit/castle.glb	slott	slott	
 kenney-coaster-kit/park-entrance.glb	tivoli	tivoli,nöjespark	
 kenney-tower-defense-kit/weapon-catapult.glb	katapult	katapult	
@@ -472,7 +472,7 @@ kenney-modular-buildings/door-brown.glb	dorr	dörr
 kenney-modular-buildings/window-white.glb	fonster	fönster	
 kenney-mini-skate/half-pipe.glb	halfpipe	halfpipe	
 kenney-mini-arcade/dance-machine.glb	dansmaskin	dansmaskin	
-kenney-mini-arcade/character-gamer.glb	gamer	gamer	
+trollpennan-mfix/gamer-blocky.glb	gamer	gamer	
 kenney-space-kit/hangar-rounda.glb	hangar	hangar	
 kenney-space-kit/machine-generator.glb	generator	generator	
 kenney-car-kit/suv.glb	suv	suv	

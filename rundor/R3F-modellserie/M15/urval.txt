@@ -43,7 +43,7 @@ kenney-city-kit-roads/electricity-pole.glb
 kenney-city-kit-roads/construction-cone.glb
 kenney-retro-urban-kit/scaffolding-structure.glb
 kenney-mini-arena/banner.glb
-kenney-mini-characters/character-female-a.glb
-kenney-mini-skate/character-skate-boy.glb
-kenney-mini-arena/character-soldier.glb
-kenney-mini-arcade/character-employee.glb
+trollpennan-mfix/tjej-blocky.glb
+trollpennan-mfix/skejtare-blocky.glb
+trollpennan-mfix/soldat-blocky.glb
+trollpennan-mfix/expedit-blocky.glb

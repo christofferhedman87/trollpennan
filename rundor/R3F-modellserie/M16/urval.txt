@@ -10,7 +10,7 @@ kenney-modular-buildings/door-brown.glb
 kenney-modular-buildings/window-white.glb
 kenney-mini-skate/half-pipe.glb
 kenney-mini-arcade/dance-machine.glb
-kenney-mini-arcade/character-gamer.glb
+trollpennan-mfix/gamer-blocky.glb
 kenney-space-kit/hangar-rounda.glb
 kenney-space-kit/machine-generator.glb
 kenney-car-kit/suv.glb
