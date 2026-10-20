@@ -43,7 +43,8 @@
   "omtag": {
     "_om": "TTS-3: nyckel (manifestets) → försök nr. Ett nytt försök för en rad vars uttal inte blev rätt (kontrolleras med faster-whisper). Bara den raden görs om.",
     "11adcf01": 2,
-    "45c0c436": 2
+    "45c0c436": 2,
+    "4113b1d6": 4
   },
   "reserv": "tyst",
   "ljudniva": {
