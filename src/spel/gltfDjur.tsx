@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useLayoutEffect, useMemo, useRef } from "react";
 import { SkeletonUtils } from "three-stdlib";
 import * as THREE from "three";
+import { fargning } from "./fargning.ts";
 import { byttPixel, graNiva, hexTillHsl, ljusTint, malAlbedo, rgbTillHsl, traffarPalett } from "./palett.ts";
 import { MILJO } from "./miljo.ts";
 import { belysScen } from "./belys.ts";
@@ -234,10 +235,10 @@ function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
       m.roughness = Math.max(m.roughness ?? 1, 0.75);
       const namn = m.name || "";
       const roll = ent?.material ? ent.material[namn] : undefined;
-      if (ent?.material) {
-        if (roll === "farg" && hex) m.color.set(hex);
-        if (roll === "ljus") m.color.set(hex ? ljusare(hex) : "#ffd27a");
-      } else if (pal && hex && m.map) {
+      // B6.4: utan färgord (hex null) blir allt false/null – modellens egna färger, ingen glans över kroppen (se fargning.ts).
+      const f = fargning({ hex, roll, harRoller: !!ent?.material, harPalett: !!pal, harKarta: !!m.map, glans: !!glans, ljusare });
+      if (f.farg) m.color.set(f.farg);
+      if (f.palettByte && pal && hex && m.map) {
         const egen = ent?.inlagd ? karnfarg(mesh, m.map) : null;
         if (egen && egen.range < 0) {
           // R9: vit/grå kropp (isbjörn, elefant, lamm): texturen blir gråskala och färgen läggs i materialet. Då blandas inga kvarvarande
@@ -250,10 +251,12 @@ function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
           m.color.set("#ffffff");
         }
       }
-      if (glans && "emissive" in m && (roll === "farg" || (!ent?.material && pal))) {
+      if (f.glans && "emissive" in m) {
         m.emissive = new THREE.Color("#FFE082");
         m.emissiveIntensity = 0.28;
       }
+      // B6.4: provräknare (bara när ett prov har lagt dit listan): materialets färg före och efter.
+      if (typeof window !== "undefined") window.__tredFarg?.push({ kropp: spec.kropp, mat: namn, fore: "#" + src.color.getHexString(), efter: "#" + m.color.getHexString(), sjalvlyse: "#" + m.emissive.getHexString(), egenKarta: m.map === src.map });
       return m;
     });
     mesh.material = Array.isArray(mesh.material) ? nya : (nya[0] ?? mesh.material);
