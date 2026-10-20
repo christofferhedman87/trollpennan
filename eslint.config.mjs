@@ -16,6 +16,8 @@ export default tseslint.config(
       ".nitro/**",
       "node_modules/**",
       "src/routeTree.gen.ts",
+      // B6.5: rundornas prov- och dataskript är inte produktkod (varningarna 82 → 123 låg alla här)
+      "rundor/**",
     ],
   },
   js.configs.recommended,

@@ -18,6 +18,7 @@ import {
   ledSak,
   dubbelSak,
 } from "./lexikon.ts";
+import attributJson from "../../data/attribut.json" with { type: "json" };
 import { arSparrat } from "./sparr.ts";
 import type { Del, Forled, Ord, TolkaOpts, Utfall, Varelse } from "./typer.ts";
 
@@ -242,12 +243,16 @@ function delaMod(token: string): { key: string; del: Forled; ord: Ord; rest: str
   return best;
 }
 
+const PARTICIP_SLUT: readonly string[] = attributJson.particip.slut;
+
 function delaOrd(token: string): Sem | null {
   const suffix = langstaSuffix(token);
   if (!suffix) return null;
   const prefix = token.slice(0, token.length - suffix.form.length);
   if (prefix.length < 2) return null;
   const las = lasPrefix(prefix);
+  // B6.5: "brinnande" är inte "brinn" + "ande" (anden). Okänt förled + particip-slut = okänt ord (data/attribut.json particip).
+  if (!las.mods.length && !las.djur.length && PARTICIP_SLUT.some((s) => token.endsWith(s))) return null;
   return { t: "komp", suffix, mods: las.mods, djur: las.djur, okanda: las.okanda, raw: token };
 }
 
