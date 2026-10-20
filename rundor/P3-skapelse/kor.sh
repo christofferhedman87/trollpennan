@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-# P3 – skapelsen syns rätt: alla 38 kläd-tillbehör sitter på djuret (data/plagg.json: kroppsdel per plagg, ankare ur
-#   modellens mätta form), den nya skapelsen landar framme och kameran visar den, tolkningen delar aldrig ett ord i tysthet
-#   ("Menade du katt?"), sjön håller alla simmare i bild och ankan skymmer ingen, byggnader och stora saker skymmer inte
-#   varandra (storlek.json max_skymd, radens skala) och småsaker har rimlig inbördes storlek; vid sjön simmar ankan, djuren
-#   skymmer inte varandra eller guiden (samma regel, trängsel krymper, annars somnar den äldsta), minsta synliga storlek
-#   (storlek.json syn), och 'sportbil'/'eld' blir rätt sak (sparr.ts, tolka.ts). Se rundor/P3-skapelse/RITNING.md.
-# Kod = p3.patch (git apply, annars --3way). Kräver B6.3, B6.5, B6.6, R8-3a, P1, P2-1 (main) och kön TTS-2, P2-2.
+# P3 – skapelsen syns rätt. P3a: EN placeringsregel för alla platser (data/placering.json, src/spel/placering.ts) ersätter
+#   de gamla punktfixarna (bak-zonen och radskalan i storlek.json, siktzonen vid dammen, trängselskalan, simplatserna,
+#   B6.6:s synliga bredd): varje plats har band per roll (mark, vatten, luft, bak), varje skapelse får en ledig ruta inom
+#   bilden, ingen skyms mer än max_skymd (de framför, platsens fasta saker, reserverade rutor för utgångarna, guiden,
+#   Bengtsson och nedre raden), den nya får den främsta lediga rutan och den som inte ryms går till stallet (somnar).
+#   Titelbilden visar bara det senaste djuret. P3b: 38 kläd-tillbehör sitter på kroppen (data/plagg.json), kameran visar
+#   den nya, tolkningen delar aldrig ett ord i tysthet ('sportbil'/'eld' blir rätt sak), minsta synliga storlek.
+#   Se rundor/P3-skapelse/RITNING.md.
+# Kod = p3.patch (git apply, annars --3way). Kräver B6.3, B6.5, B6.6, R8-3a, P1, P2-1, P2-2 (main) och TTS-2 före.
 # Röst: 'en sportbil' och 'en grottport' spärrades förut och har ingen röstfil. Steget nedan gör de två (23 tecken, kvot
 #   liten) med scripts/rost-generera.mjs och ELEVENLABS_API_KEY ur miljön (skrivs aldrig ut). P3_TORR_ROST=1 = bara räkna.
 # Spel.tsx får inte växa. Doodle kör från repots rot på main:
@@ -35,14 +37,14 @@ if ! git apply --check "$D/p3.patch" 2>"$UT/apply.txt"; then
   TREVAGS=1
 fi
 if [ "${TREVAGS:-0}" = 1 ]; then git apply --3way "$D/p3.patch" || { echo "STOPP 2: trevägs-apply misslyckades"; exit 2; }; git reset -q; else git apply "$D/p3.patch"; fi
-NYA="data/plagg.json src/spel/plagg/data.ts src/spel/plagg/Plagg.tsx src/spel/landning.ts src/spel/skarm.ts src/spel/skymning.ts src/spel/ang/fokus.tsx src/spel/p3.test.ts"
-ANDRADE="package.json data/miljo.json data/storlek.json data/fotavtryck.json data/test-fraser.json data/entiteter.json src/spel/entiteter.ts src/spel/minne.ts src/spel/ang/delat.ts src/spel/ang/djur.tsx src/spel/ang/byggnader.tsx src/spel/angen3d.tsx src/spel/gltfDjur.tsx src/spel/platsYta.ts src/spel/b6-6.test.ts rundor/B6.6-fix/b66-prov.mjs src/tolk/reserv.ts src/tolk/sparr.ts src/tolk/tolk.test.ts src/tolk/tolka.ts src/tolk/typer.ts"
+NYA="data/placering.json src/spel/placering.ts src/spel/p3a.test.ts data/plagg.json src/spel/plagg/data.ts src/spel/plagg/Plagg.tsx src/spel/landning.ts src/spel/skarm.ts src/spel/skymning.ts src/spel/ang/fokus.tsx src/spel/p3.test.ts"
+ANDRADE="package.json data/miljo.json data/storlek.json data/fotavtryck.json data/test-fraser.json data/entiteter.json src/spel/entiteter.ts src/spel/minne.ts src/spel/ang/delat.ts src/spel/ang/djur.tsx src/spel/ang/byggnader.tsx src/spel/ang/damm.ts src/spel/angen3d.tsx src/spel/gltfDjur.tsx src/spel/platsYta.ts src/spel/ui/Titel.tsx src/spel/b6-3.test.ts src/spel/b6-5.test.ts src/spel/b6-6.test.ts src/spel/r8-2b.test.ts rundor/B6.6-fix/b66-prov.mjs src/tolk/reserv.ts src/tolk/sparr.ts src/tolk/tolk.test.ts src/tolk/tolka.ts src/tolk/typer.ts"
 ROST="data/rost-manifest.json data/rost-klient.json public/ljud/rost"
 aterstall() { git checkout -q -- $ANDRADE $ROST; git clean -fq public/ljud/rost; rm -f $NYA; rmdir src/spel/plagg 2>/dev/null; }
 # småsakernas skala ändras (storlek.json smasak/minsta): fotavtrycken räknas om ur modellerna på main (inte i patchen)
 node --experimental-strip-types rundor/B6.3-fix/fotavtryck.mjs > "$UT/fot.txt" 2>&1 || { tail -5 "$UT/fot.txt"; aterstall; echo "STOPP 3: fotavtryck.mjs föll"; exit 3; }
-# testet läggs i test:product med node (inte i patchen: package.json ändras av varje runda)
-node -e 'const fs=require("fs"),f="package.json",p=JSON.parse(fs.readFileSync(f));const t="src/spel/p3.test.ts";if(!p.scripts["test:product"].includes(t))p.scripts["test:product"]+=" "+t;fs.writeFileSync(f,JSON.stringify(p,null,2)+"\n")'
+# testerna läggs i test:product med node (inte i patchen: package.json ändras av varje runda)
+node -e 'const fs=require("fs"),f="package.json",p=JSON.parse(fs.readFileSync(f));for(const t of ["src/spel/p3.test.ts","src/spel/p3a.test.ts"])if(!p.scripts["test:product"].includes(t))p.scripts["test:product"]+=" "+t;fs.writeFileSync(f,JSON.stringify(p,null,2)+"\n")'
 [ -d node_modules ] || npm ci --silent
 # röst för de ord som inte längre spärras (idempotent: finns filen görs inget anrop)
 if [ "${P3_TORR_ROST:-0}" = 1 ]; then
@@ -63,7 +65,7 @@ N=$(npm run -s typecheck 2>&1 | grep -c "error TS" || true); [ "$N" -eq 0 ] || {
 npm run -s typecheck:pages > "$UT/tcp.txt" 2>&1 || { tail -20 "$UT/tcp.txt"; aterstall; echo "STOPP 3: typecheck:pages föll"; exit 3; }
 npx eslint . > "$UT/eslint.txt" 2>&1 || { tail -25 "$UT/eslint.txt"; aterstall; echo "STOPP 3: eslint . har fel"; exit 3; }
 W=$(grep -cE "^\s+[0-9]+:[0-9]+\s+warning" "$UT/eslint.txt" || true)
-npx eslint --max-warnings 0 src/spel/plagg src/spel/landning.ts src/spel/skarm.ts src/spel/skymning.ts src/spel/ang/fokus.tsx src/spel/p3.test.ts > "$UT/eslint-p3.txt" 2>&1 || { tail -25 "$UT/eslint-p3.txt"; aterstall; echo "STOPP 3: eslint-varningar i P3:s nya filer"; exit 3; }
+npx eslint --max-warnings 0 src/spel/plagg src/spel/placering.ts src/spel/p3a.test.ts src/spel/landning.ts src/spel/skarm.ts src/spel/skymning.ts src/spel/ang/fokus.tsx src/spel/p3.test.ts > "$UT/eslint-p3.txt" 2>&1 || { tail -25 "$UT/eslint-p3.txt"; aterstall; echo "STOPP 3: eslint-varningar i P3:s nya filer"; exit 3; }
 npm run -s check:struktur > "$UT/struktur.txt" 2>&1 || { tail -15 "$UT/struktur.txt"; aterstall; echo "STOPP 3: check:struktur föll"; exit 3; }
 SPEL=$(wc -l < src/spel/Spel.tsx); [ "$SPEL" -le "$SPEL0" ] || { aterstall; echo "STOPP 3: Spel.tsx växte ($SPEL0 → $SPEL rader)"; exit 3; }
 npm run -s build:pages > "$UT/build.txt" 2>&1 || { tail -20 "$UT/build.txt"; aterstall; echo "STOPP 3: build:pages föll"; exit 3; }
