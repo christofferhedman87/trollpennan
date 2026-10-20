@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "_om": "TTS-1: rösterna i spelet (ElevenLabs, Christoffers val 2026-10-20, se rundor/TTS/PLAN.md avsnitt 0). Ljudet förgenereras av Arkitekten på boxen med scripts/rost-generera.mjs (kräver ELEVENLABS_API_KEY, aldrig i repot) och checkas in som public/ljud/rost/<hash>.mp3 plus data/rost-manifest.json. Spelet slår upp texten som visas i manifestet (src/spel/rostManifest.ts) och spelar filen; saknas den gäller 'reserv' ('webblasare' = webbläsarens röst bara om en svensk röst finns, annars tyst; 'tyst' = ingen uppläsning). 'uttal' byter hela ord i texten INNAN den skickas till röstmotorn, texten i spelet ändras inte (tom = ingen omstavning; Christoffer valde 'Bengtsson' som det står). 'talare': vem som läser vilken källa. Andra figurer (syntaxviruset) får ingen röst än: de ska ha en egen röst, och Elin skulle låta som Trollpennan. Ny text eller ändrad text = kör generatorn igen, den gör bara det som saknas (hash av text+röst+modell+inställningar).",
+  "modell": "eleven_multilingual_v2",
+  "sprak": "sv",
+  "installningar": {
+    "stability": 0.5,
+    "similarity_boost": 0.75
+  },
+  "format": {
+    "api": "mp3_44100_128",
+    "kbps": 64,
+    "kanaler": 1
+  },
+  "roster": {
+    "bengtsson": {
+      "namn": "Bengt – Calm and Soft",
+      "id": "kkwvaJeTPw4KK0sBdyvD"
+    },
+    "pennan": {
+      "namn": "Elin",
+      "id": "4Ct5uMEndw4cJ7q0Jx0l"
+    }
+  },
+  "talare": {
+    "bengtsson": "bengtsson",
+    "berattare": "pennan",
+    "intro": "pennan"
+  },
+  "uttal": {},
+  "reserv": "webblasare",
+  "intro": {
+    "_om": "Introt läses som en fil; 'ankare' = där varje scen i data/intro.json börjar (samma ordning, en per scen). Tidpunkterna räknas ur ElevenLabs tidsstämplar per tecken och sparas i manifestet.",
+    "tal": "Hej! Jag är Trollpennan. Det jag skriver … vaknar. Titta här: kå, a, en, i, en. Kanin! Där är den! Men jag kan inte välja själv. Jag behöver dig. Vad ska vi väcka först?",
+    "ankare": [
+      "Hej!",
+      "Det jag",
+      "Titta här",
+      "kå,",
+      "a,",
+      "en,",
+      "i,",
+      "en.",
+      "Kanin!",
+      "Där är",
+      "Men jag",
+      "Vad ska"
+    ],
+    "efter_s": 1.4
+  },
+  "licens": {
+    "_om": "TTS-1: raden i LICENSES.md (scripts/modell-inlagg.mjs licenser läser den här).",
+    "filer": "public/ljud/rost/*.mp3",
+    "upphov": "ElevenLabs, röstbiblioteket: Bengt – Calm and Soft (Doktor Bengtsson) och Elin (Trollpennan)",
+    "licens": "ElevenLabs betald plan (Starter): kommersiell licens för ljud som skapats under abonnemanget, även efter att det upphört; ingen namnangivelse krävs",
+    "kalla": "https://help.elevenlabs.io/hc/en-us/articles/13313564601361"
+  }
+}

@@ -1,6 +1,6 @@
 # TTS – förarbete: en bättre svensk röst, gratis (Arkitekten, 2026-10-20)
 
-**Status: förarbete, inte inbyggt i spelet.** Christoffer har valt **ElevenLabs** (se 0, ersätter Piper-valet). Uttalet av "Bengtsson" är inte klart. Provljuden finns på boxen i `/workspace/trollpennan-nulage/tts-prov/eleven/` (uttalsprov i `eleven/uttal/`). Piper-proven ligger kvar i `tts-prov/` som reserv.
+**Status: TTS-1 byggd (2026-10-20).** Christoffer har valt **ElevenLabs** (se 0). Uttalet: "Bengtsson" som det står (ordlistan `uttal` i data/rost.json är tom men finns kvar). Första omgången (intro + Bengtssons uppdrag och repliker) är genererad och ligger i `public/ljud/rost/` med `data/rost-manifest.json`; koden kopplas in med `rundor/TTS-1/kor.sh`. Generera mer: `node scripts/rost-generera.mjs --tak <krediter>` (bara på boxen, kräver ELEVENLABS_API_KEY). Piper-proven ligger kvar i `tts-prov/` som reserv.
 
 ## 0. Christoffers val (2026-10-20, ElevenLabs)
 
