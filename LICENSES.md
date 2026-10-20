@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1039 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1070 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -99,6 +99,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | trollpennan-saga-m19 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 8 |
 | trollpennan-skola-m22 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 28 |
 | trollpennan-sport-m24 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 34 |
+| trollpennan-tradgard-m25 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 31 |
 
 ## Alla modellfiler
 
@@ -1144,3 +1145,34 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | tennisracket | /models/bulk/tennisracket.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | visselpipa | /models/bulk/visselpipa.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | flytvast | /models/bulk/flytvast.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| akvarium | /models/bulk/akvarium.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| blomlada | /models/bulk/blomlada.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| borrmaskin | /models/bulk/borrmaskin.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| cykelstall | /models/bulk/cykelstall.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| dronare | /models/bulk/dronare.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| ekollon | /models/bulk/ekollon.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| fagelbad | /models/bulk/fagelbad.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| fagelbo | /models/bulk/fagelbo.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| fagelbur | /models/bulk/fagelbur.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| fjarrkontroll | /models/bulk/fjarrkontroll.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| flaggstang | /models/bulk/flaggstang.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| grasklippare | /models/bulk/grasklippare.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| grep | /models/bulk/grep.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| grill | /models/bulk/grill.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| handkontroll | /models/bulk/handkontroll.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kaninbur | /models/bulk/kaninbur.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kikare | /models/bulk/kikare.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kofot | /models/bulk/kofot.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kompost | /models/bulk/kompost.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| mattband | /models/bulk/mattband.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| myrstack | /models/bulk/myrstack.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| sekator | /models/bulk/sekator.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| skruv | /models/bulk/skruv.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| spelkonsol | /models/bulk/spelkonsol.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| teleskop | /models/bulk/teleskop.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| tradgardstomte | /models/bulk/tradgardstomte.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| vattenpass | /models/bulk/vattenpass.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| vattenslang | /models/bulk/vattenslang.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| vattenspridare | /models/bulk/vattenspridare.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| vaxthus | /models/bulk/vaxthus.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| verktygslada | /models/bulk/verktygslada.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
