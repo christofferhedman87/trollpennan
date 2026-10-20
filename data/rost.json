@@ -33,7 +33,7 @@
     "intro": "pennan",
     "syntaxviruset": "syntaxviruset"
   },
-  "uttal": { "Här på ängen": "Här, på ängen" },
+  "uttal": { "Här på ängen": "Här, på ängen", "Ekorren": "Ehkorren", "ekorren": "ehkorren" },
   "reserv": "tyst",
   "ljudniva": { "_om": "TTS-2: alla filer normaliseras till samma ljudnivå (ffmpeg loudnorm, två pass) – Bengt låg på ≈ −35 dB och Elin på ≈ −22 dB. Ingår inte i filnamnets hash.", "lufs": -16, "tp": -1.5, "lra": 11 },
   "intro": {
