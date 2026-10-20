@@ -198,6 +198,16 @@
    "m": "+{n} stjärnor från Mossa!",
    "r": "pennan",
    "id": "mossa.json:.beloning.text"
+  },
+  {
+   "m": "Det ordet finns i {sida}. Den kostar {n} stjärnor.",
+   "r": "pennan",
+   "id": "byggsidor.json:.last_ord.text[]"
+  },
+  {
+   "m": "Oj, {ord}! Det står i {sida}. Den kostar {n} stjärnor.",
+   "r": "pennan",
+   "id": "byggsidor.json:.last_ord.text[]"
   }
  ],
  "rader": {
@@ -247,6 +257,14 @@
    "r": "pennan",
    "id": "varde:en spak",
    "t": "en spak",
+   "n": -16
+  },
+  "12489277": {
+   "f": "/ljud/rost/892bc2d71b9229c9.mp3",
+   "ms": 1672,
+   "r": "pennan",
+   "id": "varde:Slottssidan",
+   "t": "Slottssidan",
    "n": -16
   },
   "13650518": {
@@ -655,6 +673,14 @@
    "r": "bengtsson",
    "id": "uppdrag.json:vindhasten.text",
    "t": "Något stort och vitt har landat på ön. Vad tror du att en häst gillar att äta?",
+   "n": -16
+  },
+  "00384016": {
+   "f": "/ljud/rost/d42831fea8cec8bc.mp3",
+   "ms": 1620,
+   "r": "pennan",
+   "id": "varde:Lekplatssidan",
+   "t": "Lekplatssidan",
    "n": -16
   },
   "0076858d": {
@@ -2914,6 +2940,14 @@
    "t": "en kung",
    "n": -16
   },
+  "1a3ced53": {
+   "f": "/ljud/rost/7741636da7c2a55b.mp3",
+   "ms": 2325,
+   "r": "pennan",
+   "id": "dygn.json:.texter.uggla_kvall[]",
+   "t": "Hu-hu! Nu är det min tid!",
+   "n": -16
+  },
   "1a47db07": {
    "f": "/ljud/rost/c1b2220c58c9c55b.mp3",
    "ms": 1149,
@@ -3216,6 +3250,14 @@
    "r": "pennan",
    "id": "varde:13",
    "t": "13",
+   "n": -16
+  },
+  "1f5807ee": {
+   "f": "/ljud/rost/00521140d3ff155f.mp3",
+   "ms": 1097,
+   "r": "pennan",
+   "id": "mall:byggsidor.json:.last_ord.text[]",
+   "t": "Den kostar",
    "n": -16
   },
   "1f70d6b0": {
@@ -5083,6 +5125,14 @@
    "t": "en släde",
    "n": -16
   },
+  "346e0541": {
+   "f": "/ljud/rost/1298e43957218367.mp3",
+   "ms": 1515,
+   "r": "pennan",
+   "id": "varde:Trädgårdssidan",
+   "t": "Trädgårdssidan",
+   "n": -16
+  },
   "3495f538": {
    "f": "/ljud/rost/248749faef16978d.mp3",
    "ms": 1280,
@@ -5185,6 +5235,14 @@
    "r": "pennan",
    "id": "varde:en garderob",
    "t": "en garderob",
+   "n": -16
+  },
+  "35c1e9c7": {
+   "f": "/ljud/rost/991a67f201e32714.mp3",
+   "ms": 3840,
+   "r": "pennan",
+   "id": "sidor.json:.sidor[].oppnas",
+   "t": "Plask! Havets ord simmar in i boken.",
    "n": -16
   },
   "35ee3515": {
@@ -6420,12 +6478,28 @@
    "t": "Alla ben i kroppen utan något kött på. Rassel rassel!",
    "n": -16
   },
+  "42d08c2a": {
+   "f": "/ljud/rost/0549f85b1951aff1.mp3",
+   "ms": 3579,
+   "r": "pennan",
+   "id": "dygn.json:.texter.morgon[]",
+   "t": "God morgon! En ny dag på gården.",
+   "n": -16
+  },
   "42e79f3c": {
    "f": "/ljud/rost/6d7e82ce8144fc37.mp3",
    "ms": 1280,
    "r": "pennan",
    "id": "varde:en grävtraktor",
    "t": "en grävtraktor",
+   "n": -16
+  },
+  "42e7dca1": {
+   "f": "/ljud/rost/c6392599cd6ef1b8.mp3",
+   "ms": 3840,
+   "r": "pennan",
+   "id": "dygn.json:.texter.kvall_borjar[]",
+   "t": "Solen går ner. Snart är det kväll på gården.",
    "n": -16
   },
   "42e8a91a": {
@@ -6948,6 +7022,14 @@
    "t": "Två vägar till samma fikapaus!",
    "n": -16
   },
+  "480b4b48": {
+   "f": "/ljud/rost/d88c640aa80fe93e.mp3",
+   "ms": 6296,
+   "r": "pennan",
+   "id": "dygn.json:.texter.vacks_pa_kvallen[]",
+   "t": "Gäsp! Är det redan morgon? Nähä. God natt igen.",
+   "n": -16
+  },
   "4816e424": {
    "f": "/ljud/rost/b203acd6b3d90b43.mp3",
    "ms": 3344,
@@ -7220,6 +7302,14 @@
    "t": "en mistel",
    "n": -16
   },
+  "4b3f0611": {
+   "f": "/ljud/rost/a2df787722d7ee4c.mp3",
+   "ms": 1384,
+   "r": "pennan",
+   "id": "varde:Startbygget",
+   "t": "Startbygget",
+   "n": -16
+  },
   "4b456e6c": {
    "f": "/ljud/rost/e4b99ae058b20042.mp3",
    "ms": 1202,
@@ -7266,6 +7356,14 @@
    "r": "pennan",
    "id": "varde:en barstol",
    "t": "en barstol",
+   "n": -16
+  },
+  "4be1eb20": {
+   "f": "/ljud/rost/457813d3e149c04f.mp3",
+   "ms": 4075,
+   "r": "pennan",
+   "id": "sidor.json:.sidor[].oppnas",
+   "t": "Det var en gång … en helt ny sida!",
    "n": -16
   },
   "4be3b9d3": {
@@ -7338,6 +7436,14 @@
    "r": "pennan",
    "id": "varde:varm",
    "t": "varm",
+   "n": -16
+  },
+  "4caca977": {
+   "f": "/ljud/rost/5322c416f7d584b8.mp3",
+   "ms": 2638,
+   "r": "pennan",
+   "id": "forsta-stunden.json:.steg[].text",
+   "t": "Väck tre djur till!",
    "n": -16
   },
   "4cbc7e4d": {
@@ -7923,6 +8029,14 @@
    "r": "pennan",
    "id": "varde:en äpple",
    "t": "en äpple",
+   "n": -16
+  },
+  "529bbe21": {
+   "f": "/ljud/rost/1dd7f551b3f83b5d.mp3",
+   "ms": 5016,
+   "r": "pennan",
+   "id": "forsta-stunden.json:.steg[].text",
+   "t": "Grinden är öppen. Tryck på den och gå till Skogen!",
    "n": -16
   },
   "529eedcf": {
@@ -8518,6 +8632,14 @@
    "t": "regnbåge",
    "n": -16
   },
+  "5aa12652": {
+   "f": "/ljud/rost/932129a3d6f91fdd.mp3",
+   "ms": 2351,
+   "r": "pennan",
+   "id": "sidor.json:.sidor[].oppnas",
+   "t": "Nu tänds stjärnorna i boken.",
+   "n": -16
+  },
   "5ab727f4": {
    "f": "/ljud/rost/cbf249deaa912b85.mp3",
    "ms": 1567,
@@ -8878,6 +9000,14 @@
    "t": "kackerlacka",
    "n": -16
   },
+  "5ee52e99": {
+   "f": "/ljud/rost/ba9716da913a3bbe.mp3",
+   "ms": 3004,
+   "r": "pennan",
+   "id": "dygn.json:.texter.kvall_borjar[]",
+   "t": "Titta, den första stjärnan!",
+   "n": -16
+  },
   "5eef291c": {
    "f": "/ljud/rost/822d4cf6d35273f2.mp3",
    "ms": 1149,
@@ -9116,6 +9246,14 @@
    "r": "bengtsson",
    "id": "uppdrag.json:parlhajen.text",
    "t": "Pärlhajen är ensam nere vid bryggan. Kan du bli hennes vän?",
+   "n": -16
+  },
+  "612eba75": {
+   "f": "/ljud/rost/885e0027f182d425.mp3",
+   "ms": 4728,
+   "r": "pennan",
+   "id": "sidor.json:.sidor[].oppnas",
+   "t": "Prassel i löven! Skogens ord har kommit.",
    "n": -16
   },
   "615b0ae6": {
@@ -10061,6 +10199,14 @@
    "r": "pennan",
    "id": "ledtradar.json:.ledtradar.krabba.gata",
    "t": "Åt sidan går jag gärna, med hårt skal och två klor framtill.",
+   "n": -16
+  },
+  "6e1eaaa5": {
+   "f": "/ljud/rost/c7e8d24d20367a09.mp3",
+   "ms": 1254,
+   "r": "pennan",
+   "id": "mall:byggsidor.json:.last_ord.text[]",
+   "t": "stjärnor.",
    "n": -16
   },
   "6e335e07": {
@@ -11320,6 +11466,14 @@
    "t": "en sekatör",
    "n": -16
   },
+  "7c9cf0d0": {
+   "f": "/ljud/rost/4729db4b30aaecc2.mp3",
+   "ms": 2691,
+   "r": "pennan",
+   "id": "forsta-stunden.json:.steg[].text",
+   "t": "Tryck på Pennans bok och skriv ett djur!",
+   "n": -16
+  },
   "7cc5689a": {
    "f": "/ljud/rost/391ce741bcabddde.mp3",
    "ms": 1489,
@@ -12152,6 +12306,14 @@
    "t": "Tänk att bo i ett hus man kan äta upp! Mums.",
    "n": -16
   },
+  "88276a2e": {
+   "f": "/ljud/rost/f7e484210681915f.mp3",
+   "ms": 1672,
+   "r": "pennan",
+   "id": "dygn.json:.texter.sover[]",
+   "t": "Snark …",
+   "n": -16
+  },
   "882ab7cc": {
    "f": "/ljud/rost/d4ba85a72dffe573.mp3",
    "ms": 1254,
@@ -12320,6 +12482,14 @@
    "t": "en trumset",
    "n": -16
   },
+  "8a2c931c": {
+   "f": "/ljud/rost/acbcd7f9eba032f7.mp3",
+   "ms": 5460,
+   "r": "pennan",
+   "id": "sidor.json:.sidor[].oppnas",
+   "t": "Dunk, dunk! Urtidens ord stampar in i boken.",
+   "n": -16
+  },
   "8a525d5a": {
    "f": "/ljud/rost/ecd5bea62c019e61.mp3",
    "ms": 1280,
@@ -12406,6 +12576,14 @@
    "r": "pennan",
    "id": "varde:en skogshuggare",
    "t": "en skogshuggare",
+   "n": -16
+  },
+  "8bdc5952": {
+   "f": "/ljud/rost/8a74f54f515eb4a6.mp3",
+   "ms": 4780,
+   "r": "pennan",
+   "id": "sidor.json:.sidor[].oppnas",
+   "t": "Mu! Nu vaknar bondgårdens djur i boken.",
    "n": -16
   },
   "8bf29659": {
@@ -13294,6 +13472,14 @@
    "r": "pennan",
    "id": "varde:och rullskridsko",
    "t": "och rullskridsko",
+   "n": -16
+  },
+  "9630f6a7": {
+   "f": "/ljud/rost/e6fd5454d3584d43.mp3",
+   "ms": 4258,
+   "r": "pennan",
+   "id": "forsta-stunden.json:.steg[].text",
+   "t": "Bengtsson vill be dig om något. Tryck på honom!",
    "n": -16
   },
   "963789a8": {
@@ -14288,6 +14474,14 @@
    "t": "en tornado",
    "n": -16
   },
+  "a4a1bb4c": {
+   "f": "/ljud/rost/6a2605f31b39a209.mp3",
+   "ms": 3239,
+   "r": "pennan",
+   "id": "dygn.json:.texter.vacks_pa_kvallen[]",
+   "t": "Jag var precis mitt i en dröm om kanelbullar.",
+   "n": -16
+  },
   "a4b79e1d": {
    "f": "/ljud/rost/4cd5392452c68faa.mp3",
    "ms": 967,
@@ -14872,6 +15066,14 @@
    "t": "en strumpa",
    "n": -16
   },
+  "aa657573": {
+   "f": "/ljud/rost/e055ed3a3b11ff38.mp3",
+   "ms": 1332,
+   "r": "pennan",
+   "id": "varde:Sagobyggen",
+   "t": "Sagobyggen",
+   "n": -16
+  },
   "aa8cd53e": {
    "f": "/ljud/rost/52403d43298be010.mp3",
    "ms": 1384,
@@ -14910,6 +15112,14 @@
    "r": "pennan",
    "id": "ledtradar.json:.ledtradar.clown.gata",
    "t": "Han har röd näsa och stora skor och får alla på cirkusen att skratta.",
+   "n": -16
+  },
+  "aafa6975": {
+   "f": "/ljud/rost/3b474ebd0d3f7fd8.mp3",
+   "ms": 1515,
+   "r": "pennan",
+   "id": "mall:byggsidor.json:.last_ord.text[]",
+   "t": "Det ordet finns i",
    "n": -16
   },
   "ab0ffddb": {
@@ -16273,6 +16483,14 @@
    "t": "En tyst krigare helt i svart som gömmer sig i skuggorna.",
    "n": -16
   },
+  "baa6f4c9": {
+   "f": "/ljud/rost/97e8a8fff61be583.mp3",
+   "ms": 2952,
+   "r": "pennan",
+   "id": "forsta-stunden.json:.steg[].text",
+   "t": "Skriv det Bengtsson ber om i Pennans bok.",
+   "n": -16
+  },
   "baecf3ca": {
    "f": "/ljud/rost/235fbb27cdc9d4d2.mp3",
    "ms": 1019,
@@ -16503,6 +16721,14 @@
    "r": "pennan",
    "id": "varde:en glassbil",
    "t": "en glassbil",
+   "n": -16
+  },
+  "bdb6e34d": {
+   "f": "/ljud/rost/eae9b862715e3148.mp3",
+   "ms": 3239,
+   "r": "pennan",
+   "id": "dygn.json:.texter.sover[]",
+   "t": "Mmm, jag drömmer om moln …",
    "n": -16
   },
   "bdc1bff8": {
@@ -18633,6 +18859,14 @@
    "t": "en termos",
    "n": -16
   },
+  "d7b36202": {
+   "f": "/ljud/rost/c9c3aea5e71130a9.mp3",
+   "ms": 1620,
+   "r": "pennan",
+   "id": "varde:Djurhemssidan",
+   "t": "Djurhemssidan",
+   "n": -16
+  },
   "d7b489da": {
    "f": "/ljud/rost/eb5bd073c3e90eda.mp3",
    "ms": 4598,
@@ -19634,6 +19868,14 @@
    "t": "Ett kort smeknamn på urtidsdjuret med de stora fötterna.",
    "n": -16
   },
+  "e3bbe530": {
+   "f": "/ljud/rost/487b2c41eaca1a40.mp3",
+   "ms": 601,
+   "r": "pennan",
+   "id": "mall:byggsidor.json:.last_ord.text[]",
+   "t": "Oj,",
+   "n": -16
+  },
   "e3c06c04": {
    "f": "/ljud/rost/a6f5ef52b304dca6.mp3",
    "ms": 1489,
@@ -19960,6 +20202,14 @@
    "r": "bengtsson",
    "id": "bengtsson.json:trakig-eftermiddag.klart",
    "t": "Hurra, nu har tristessen gått hem!",
+   "n": -16
+  },
+  "e86c9d13": {
+   "f": "/ljud/rost/fd0ba00bd294f59f.mp3",
+   "ms": 1280,
+   "r": "pennan",
+   "id": "dygn.json:.texter.sover[]",
+   "t": "Zzz …",
    "n": -16
   },
   "e86dbfde": {
@@ -20626,6 +20876,14 @@
    "t": "Färgen på himlen precis när natten kommer.",
    "n": -16
   },
+  "f1117031": {
+   "f": "/ljud/rost/1504f349ae1c7bad.mp3",
+   "ms": 3579,
+   "r": "pennan",
+   "id": "dygn.json:.texter.uggla_kvall[]",
+   "t": "Natten är det bästa som finns.",
+   "n": -16
+  },
   "f11d3166": {
    "f": "/ljud/rost/45bba9d4da59304b.mp3",
    "ms": 967,
@@ -20832,6 +21090,14 @@
    "r": "pennan",
    "id": "mossa.json:.uppdrag[].text",
    "t": "Jag vill se ett lila djur i dag.",
+   "n": -16
+  },
+  "f2d51f3c": {
+   "f": "/ljud/rost/da8c1792fe5a32a4.mp3",
+   "ms": 7471,
+   "r": "pennan",
+   "id": "dygn.json:.texter.morgon[]",
+   "t": "Tuppen gal! Nej förresten, vi har ingen tupp. God morgon ändå!",
    "n": -16
   },
   "f2d81cd0": {
@@ -21144,6 +21410,14 @@
    "r": "bengtsson",
    "id": "npc.json:repliker_plats.sjon.glad.9",
    "t": "Vill du skapa mer eller bara njuta av glittret en stund?",
+   "n": -16
+  },
+  "f65decc5": {
+   "f": "/ljud/rost/06e12d6917911605.mp3",
+   "ms": 1202,
+   "r": "pennan",
+   "id": "mall:byggsidor.json:.last_ord.text[]",
+   "t": "Det står i",
    "n": -16
   },
   "f66db244": {
