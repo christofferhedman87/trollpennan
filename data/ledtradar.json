@@ -2265,6 +2265,150 @@
    "forsta": "S",
    "langd": 7,
    "granskad": false
+  },
+  "björn": {
+   "gata": "Den är stor och brun, sover hela vintern i sitt ide och älskar honung.",
+   "forsta": "B",
+   "langd": 5,
+   "granskad": false
+  },
+  "hamster": {
+   "gata": "Den är liten och rund, springer i sitt hjul och stoppar mat i kinderna.",
+   "forsta": "H",
+   "langd": 7,
+   "granskad": false
+  },
+  "marsvin": {
+   "gata": "Ett litet gosigt husdjur utan svans som piper när det vill ha gurka.",
+   "forsta": "M",
+   "langd": 7,
+   "granskad": false
+  },
+  "snigel": {
+   "gata": "Den kryper långsamt och bär sitt hus på ryggen.",
+   "forsta": "S",
+   "langd": 6,
+   "granskad": false
+  },
+  "nyckelpiga": {
+   "gata": "En liten röd skalbagge med svarta prickar.",
+   "forsta": "N",
+   "langd": 10,
+   "granskad": false
+  },
+  "sjöstjärna": {
+   "gata": "Den bor på havets botten och har fem armar.",
+   "forsta": "S",
+   "langd": 10,
+   "granskad": false
+  },
+  "humla": {
+   "gata": "Den är rund och luden, randig i gult och svart, och surrar bland blommorna.",
+   "forsta": "H",
+   "langd": 5,
+   "granskad": false
+  },
+  "krokodil": {
+   "gata": "Den har en lång mun full av vassa tänder och ligger i floden och väntar.",
+   "forsta": "K",
+   "langd": 8,
+   "granskad": false
+  },
+  "ödla": {
+   "gata": "Den är liten och snabb, solar på en sten och kan tappa svansen.",
+   "forsta": "Ö",
+   "langd": 4,
+   "granskad": false
+  },
+  "stork": {
+   "gata": "En vit fågel med långa röda ben som enligt sagan kommer med bebisar.",
+   "forsta": "S",
+   "langd": 5,
+   "granskad": false
+  },
+  "struts": {
+   "gata": "Världens största fågel kan inte flyga men springer jättefort.",
+   "forsta": "S",
+   "langd": 6,
+   "granskad": false
+  },
+  "kamel": {
+   "gata": "Den har en puckel på ryggen och vandrar genom öknen utan att dricka.",
+   "forsta": "K",
+   "langd": 5,
+   "granskad": false
+  },
+  "känguru": {
+   "gata": "Den hoppar på sina långa bakben och bär ungen i en ficka på magen.",
+   "forsta": "K",
+   "langd": 7,
+   "granskad": false
+  },
+  "späckhuggare": {
+   "gata": "En svartvit jätte i havet som jagar i flock.",
+   "forsta": "S",
+   "langd": 12,
+   "granskad": false
+  },
+  "blåval": {
+   "gata": "Det största djuret på jorden simmar i havet och sjunger.",
+   "forsta": "B",
+   "langd": 6,
+   "granskad": false
+  },
+  "beluga": {
+   "gata": "En vit val med runt huvud som bor i det kalla havet.",
+   "forsta": "B",
+   "langd": 6,
+   "granskad": false
+  },
+  "sjölejon": {
+   "gata": "Den har fenor, skäller som en hund och balanserar bollar på nosen.",
+   "forsta": "S",
+   "langd": 8,
+   "granskad": false
+  },
+  "duva": {
+   "gata": "Den går och nickar med huvudet på torget och kuttrar.",
+   "forsta": "D",
+   "langd": 4,
+   "granskad": false
+  },
+  "kråka": {
+   "gata": "En svart och grå fågel som kraxar högt i träden.",
+   "forsta": "K",
+   "langd": 5,
+   "granskad": false
+  },
+  "fjällräv": {
+   "gata": "Den bor på fjället och blir vit som snön på vintern.",
+   "forsta": "F",
+   "langd": 8,
+   "granskad": false
+  },
+  "polarräv": {
+   "gata": "Den bor på fjället och blir vit som snön på vintern.",
+   "forsta": "P",
+   "langd": 8,
+   "granskad": false
+  },
+  "snöuggla": {
+   "gata": "En vit fågel med gula ögon som jagar på natten i den kalla norden.",
+   "forsta": "S",
+   "langd": 8,
+   "granskad": false
+  },
+  "drakfisk": {
+   "gata": "En randig fisk med långa taggiga fenor som ser ut som en drake.",
+   "forsta": "D",
+   "langd": 8,
+   "granskad": false
+  },
+  "makrill": {
+   "gata": "En randig blågrön fisk som simmar i stora stim och grillas på sommaren.",
+   "forsta": "M",
+   "langd": 7,
+   "granskad": false
   }
  }
 }

@@ -1,0 +1,25 @@
+ord	genus	former (granskade, ur data/ord.json)	entitet	fil
+björn	u	björn, björnen, björnar, björnarna	bjorn	trollpennan-djur-m18b/bjorn-egen.glb
+hamster	u	hamster, hamstern, hamstrar, hamstrarna	hamster	trollpennan-djur-m18b/hamster-egen.glb
+marsvin	u	marsvin, marsvinet, marsvinen	marsvin	trollpennan-djur-m18b/marsvin-egen.glb
+snigel	u	snigel, snigeln, sniglar, sniglarna	snigel	trollpennan-djur-m18b/snigel-egen.glb
+nyckelpiga	u	nyckelpiga, nyckelpigan, nyckelpigor, nyckelpigorna	nyckelpiga	trollpennan-djur-m18b/nyckelpiga-egen.glb
+sjöstjärna	u	sjöstjärna, sjöstjärnan, sjöstjärnor, sjöstjärnorna	sjostjarna	trollpennan-djur-m18b/sjostjarna-egen.glb
+humla	u	humla, humlan, humlor, humlorna	humla	trollpennan-djur-m18b/humla-egen.glb
+krokodil	u	krokodil, krokodilen, krokodiler, krokodilerna	krokodil	trollpennan-djur-m18b/krokodil-egen.glb
+ödla	u	ödla, ödlan, ödlor, ödlorna	odla	trollpennan-djur-m18b/odla-egen.glb
+stork	u	stork, storken, storkar, storkarna	stork	trollpennan-djur-m18b/stork-egen.glb
+struts	u	struts, strutsen, strutsar, strutsarna	struts	trollpennan-djur-m18b/struts-egen.glb
+kamel	u	kamel, kamelen, kameler, kamelerna	kamel	trollpennan-djur-m18b/kamel-egen.glb
+känguru	u	känguru, kängurun, kängurur, känguruer, kängururna, känguruerna	kanguru	trollpennan-djur-m18b/kanguru-egen.glb
+späckhuggare	u	späckhuggare, späckhuggaren, späckhuggarna	spackhuggare	trollpennan-djur-m18b/spackhuggare-delfin.glb
+blåval	u	blåval, blåvalen, blåvalar, blåvalarna	blaval	trollpennan-djur-m18b/blaval-val.glb
+beluga	u	beluga, belugan	beluga	trollpennan-djur-m18b/beluga-whale.glb
+sjölejon	u	sjölejon, sjölejonet, sjölejonen	sjolejon	trollpennan-djur-m18b/sjolejon-seal.glb
+duva	u	duva, duvan, duvor, duvorna	duva	trollpennan-djur-m18b/duva-pigeon.glb
+kråka	u	kråka, kråkan, kråkor, kråkorna	kraka	trollpennan-djur-m18b/kraka-pigeon.glb
+fjällräv	u	fjällräv, fjällräven, fjällrävar, fjällrävarna	fjallrav	trollpennan-djur-m18b/fjallrav-fox.glb
+polarräv	u	polarräv, polarräven, polarrävar, polarrävarna	fjallrav	trollpennan-djur-m18b/fjallrav-fox.glb
+snöuggla	u	snöuggla, snöugglan, snöugglor, snöugglorna	snouggla	trollpennan-djur-m18b/snouggla-owl.glb
+drakfisk	u	drakfisk, drakfisken, drakfiskar, drakfiskarna	drakfisk	polypizza-cc0-m18b/drakfisk-czsz9b.glb
+makrill	u	makrill, makrillen, makrillar, makrillarna	makrill	polypizza-cc0-m18b/makrill-uassut.glb
