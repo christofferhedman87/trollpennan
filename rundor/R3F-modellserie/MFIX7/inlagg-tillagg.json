@@ -1,0 +1,18 @@
+{
+ "_om": "R3F-MFIX7 (Doodles granskning av M24–M28): byter bara modellfilen, ord och data står kvar. Täcket stod upprätt som en vägg (ligger nu platt). Kajaken var liten och platt (högre skrov, sittbrunn, paddel snett över; målhöjd 0,6 → 0,9). Kikaren var två blå ringar med rött band (står nu upp med två tydliga tuber, okular och vridhjul). Spelkonsolen var platt (konsol med skärm och handkontroll; 0,3 → 0,45). Syltburken hade en sked som stack ut (borttagen). Hängslena hade byxor (bara hängslen nu). Nappen var konstig (bred sköld, ring och napp, vriden så att nappen syns). Studsbollen svävade ovanför en skugga (skuggan borta, bollen står på marken). Trädgårdstomten (0,5 → 0,8) och nyckelknippan (0,3 → 0,45) var små: bara målhöjd. Ur kontaktarken M26–M28 dessutom: risboll (såg ut som ett spöke, nu trekantig onigiri), sovmask (liknade hörlurar, resåren nu i en ögla bakåt), lakrits (två ögon på en planka, nu snäckor och rem på ett fat) och sopskyffel (otydlig, nu skopa med kant och skaft och en borste).",
+ "malhojd_ord_ersatt": { "kajak": 0.9, "spelkonsol": 0.45, "trädgårdstomte": 0.8, "nyckelknippa": 0.45, "kikare": 0.35 },
+ "byt_fil": {
+  "tacke": "trollpennan-mfix7/tacke-egen.glb",
+  "kajak": "trollpennan-mfix7/kajak-egen.glb",
+  "kikare": "trollpennan-mfix7/kikare-egen.glb",
+  "spelkonsol": "trollpennan-mfix7/spelkonsol-egen.glb",
+  "sylt": "trollpennan-mfix7/sylt-egen.glb",
+  "hangslen": "trollpennan-mfix7/hangslen-egen.glb",
+  "napp": "trollpennan-mfix7/napp-egen.glb",
+  "studsboll": "trollpennan-mfix7/studsboll-egen.glb",
+  "risboll": "trollpennan-mfix7/risboll-egen.glb",
+  "sovmask": "trollpennan-mfix7/sovmask-egen.glb",
+  "lakrits": "trollpennan-mfix7/lakrits-egen.glb",
+  "sopskyffel": "trollpennan-mfix7/sopskyffel-egen.glb"
+ }
+}
