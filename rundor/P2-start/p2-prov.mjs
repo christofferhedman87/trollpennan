@@ -91,7 +91,9 @@ const s1 = await spar();
 const harKatt = !!(s1.albumKropp ?? {}).katt && (s1.ang ?? []).some((a) => a.formel === "en katt");
 kolla("C introt stängt, katten väckt och sparad, introSedd", introBorta && harKatt && s1.introSedd === true, { introBorta, album: Object.keys(s1.albumKropp ?? {}), ang: (s1.ang ?? []).map((a) => a.formel), introSedd: s1.introSedd });
 const guide = aktivtSteg(s1);
-kolla("C guiden (data/forsta-stunden.json) står på Bengtsson efter katten", guide?.steg.id === "bengtsson", { steg: guide?.steg.id, album: Object.keys(s1.albumKropp ?? {}) });
+// TTS-3: sparningen har egnaDjur → introts djur räknas inte och guiden börjar med "skriv ett djur" (före TTS-3: Bengtsson)
+const vantatSteg = typeof s1.egnaDjur === "number" ? "forsta-ordet" : "bengtsson";
+kolla(`C guiden (data/forsta-stunden.json) står på ${vantatSteg} efter katten`, guide?.steg.id === vantatSteg, { steg: guide?.steg.id, album: Object.keys(s1.albumKropp ?? {}) });
 const katt3d = await p.evaluate(() => (window.__troll?.state?.().ang ?? []).some((a) => a.kropp === "katt"));
 kolla("C katten står på ängen", katt3d);
 await p.waitForTimeout(1500);

@@ -2213,7 +2213,7 @@
    "n": -16
   },
   "11adcf01": {
-   "f": "/ljud/rost/9f7ef0bd0e576d60.mp3",
+   "f": "/ljud/rost/57b9929e7d876003.mp3",
    "ms": 1071,
    "r": "pennan",
    "id": "varde:ekorre",
@@ -6166,8 +6166,8 @@
    "n": -16
   },
   "3f457e92": {
-   "f": "/ljud/rost/1e5498c22009b934.mp3",
-   "ms": 1097,
+   "f": "/ljud/rost/d4d05478c6d8f533.mp3",
+   "ms": 1202,
    "r": "pennan",
    "id": "varde:en ekorre",
    "t": "en ekorre",
@@ -6342,8 +6342,8 @@
    "n": -16
   },
   "4113b1d6": {
-   "f": "/ljud/rost/074c7f1ae0ba1dd8.mp3",
-   "ms": 5512,
+   "f": "/ljud/rost/b496811e75027792.mp3",
+   "ms": 5564,
    "r": "bengtsson",
    "id": "skyltar.json:.skyltar[].text_bengtsson",
    "t": "Ekorren har tappat sin silverkotte bland svamparna. Kan du hitta den och lägga den vid stubben? /Doktor Bengtsson",
@@ -6783,8 +6783,8 @@
    "n": -16
   },
   "45c0c436": {
-   "f": "/ljud/rost/9ed957146d58f6bf.mp3",
-   "ms": 6269,
+   "f": "/ljud/rost/e502d5f89f2a4b5a.mp3",
+   "ms": 6818,
    "r": "bengtsson",
    "id": "uppdrag.json:hitta-kotte.text",
    "t": "Hoppsan! Ekorren har tappat sin silverkotte och är ledsen. Kan du leta efter den bland svamparna?",
@@ -8176,8 +8176,8 @@
    "n": -16
   },
   "54d8229e": {
-   "f": "/ljud/rost/7cd27423eec5742d.mp3",
-   "ms": 1567,
+   "f": "/ljud/rost/58998c00c9dbc823.mp3",
+   "ms": 1907,
    "r": "pennan",
    "id": "varde:Silverekorren",
    "t": "Silverekorren",
@@ -15563,8 +15563,8 @@
    "n": -16
   },
   "b09621df": {
-   "f": "/ljud/rost/54021f97d82d2b9b.mp3",
-   "ms": 3892,
+   "f": "/ljud/rost/9a10bc65eee6d64f.mp3",
+   "ms": 4258,
    "r": "bengtsson",
    "id": "uppdrag.json:hitta-kotte.klart",
    "t": "Där var den! Nu kan Ekorren sova gott i natt. Tack för hjälpen!",

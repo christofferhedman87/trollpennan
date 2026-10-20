@@ -50,7 +50,8 @@ async function sida(spar, rost = "sv-SE", spelMs = 200) {
     HTMLMediaElement.prototype.play = function () {
       window.__spelat.push(new URL(this.src, location.href).pathname);
       this.__pausad = false;
-      setTimeout(() => this.__pausad || this.dispatchEvent(new Event("ended")), spelMs);
+      const ms = typeof spelMs === "number" ? spelMs : (spelMs[new URL(this.src, location.href).pathname] ?? 200);
+      setTimeout(() => this.__pausad || this.dispatchEvent(new Event("ended")), ms);
       return Promise.resolve();
     };
     HTMLMediaElement.prototype.pause = function () {
@@ -109,9 +110,11 @@ async function sida(spar, rost = "sv-SE", spelMs = 200) {
 const las = (p) => p.evaluate(() => ({ rost: window.__rost ?? [], talat: window.__talat, spelat: window.__spelat, bannrar: window.__bannrar }));
 const DUMP = process.env.TTS2_DUMP;
 
-// 1) uppdrag klart: filer, mallar, inga telefonröster, bannrarnas tid
+// 1) uppdrag klart: filer, mallar, inga telefonröster, bannrarnas tid. TTS-3: bannerns tid räknas från röstens start till
+//    slutet + 1,5 s, så den fejkade uppspelningen varar lika länge som filen (manifestets ms) – annars mäter steget fel sak.
+const MS_PER_FIL = Object.fromEntries(Object.values(JSON.parse(fs.readFileSync("data/rost-manifest.json", "utf8")).rader).map((r) => [r.f, r.ms]));
 {
-  const { ctx, p } = await sida({ ...BAS, ljudPa: true });
+  const { ctx, p } = await sida({ ...BAS, ljudPa: true }, "sv-SE", MS_PER_FIL);
   await p.click("[data-testid=bengtsson-ikon], [data-testid=npc-figur]");
   await p.waitForSelector("[data-testid=uppdrag-remsa]");
   const id = await p.getAttribute("[data-testid=uppdrag-remsa]", "data-uppdrag");
