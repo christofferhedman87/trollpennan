@@ -24,7 +24,7 @@ Ordning: B6.3 → B6.5 (fixar, väntar) och M23–M28 först; sedan R8-3a … R8
 ## 2. Delrundor
 Alla rör bara rendering. Phaser, spellogik, HUD, texter och Copilot-granskad data (`granskad: true`) rörs inte. Inga nya modellfiler, inga pengar. Varje delrunda: egen gren `runda-r83x-kod`, kor.sh med exit 2/3/4 som B6.x, bilder 375x812 i `/workspace/trollpennan-nulage/r83x-bilder/`.
 
-### R8-3a – färg från färgord (K1). **Patch + kor.sh, 0 USD** (klar i scratch, levereras i egen PR)
+### R8-3a – färg från färgord (K1). **Patch + kor.sh, 0 USD. KLAR** (`rundor/R8-3a-farg/`)
 Se `rundor/R8-3a-farg/PLAN.md`. Filer: `src/spel/fargning.ts` (`fargning`, `kroppsRoller`, `valjKarna`, `KROPP`), `src/spel/gltfDjur.tsx` (`fargaKlon`, `karnfarg`, `ytaPerMaterial`), `src/spel/entiteter.ts` (roll `behall`), test `src/spel/r8-3a.test.ts`. Data: valfri `material: {namn: "farg"|"ljus"|"behall"}` per entitet (finns redan för 76; behövs inte för nya). Bevis: `r83a-prov.mjs` (10 fall), `r83a-alla.mjs` (bredd över alla modeller).
 
 ### R8-3b – FPS-vakt (K7, K8). **Patch + kor.sh, 0 USD**
