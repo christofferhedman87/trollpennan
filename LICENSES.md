@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 976 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1005 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -95,6 +95,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | trollpennan-mfix3 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 11 |
 | trollpennan-mfix4 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 7 |
 | trollpennan-mfix5 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 4 |
+| trollpennan-musik-m23 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 29 |
 | trollpennan-saga-m19 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 8 |
 | trollpennan-skola-m22 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 28 |
 
@@ -1079,3 +1080,32 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | tumstock | /models/bulk/tumstock.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | tuschpenna | /models/bulk/tuschpenna.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | vattenfarg | /models/bulk/vattenfarg.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| banjo | /models/bulk/banjo.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| bongotrumma | /models/bulk/bongotrumma.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| cello | /models/bulk/cello.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| cymbal | /models/bulk/cymbal.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| dragspel | /models/bulk/dragspel.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| elgitarr | /models/bulk/elgitarr.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| fiol | /models/bulk/fiol.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| flojt | /models/bulk/flojt.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| harpa | /models/bulk/harpa.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| keyboard | /models/bulk/keyboard.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| klarinett | /models/bulk/klarinett.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kontrabas | /models/bulk/kontrabas.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| maracas | /models/bulk/maracas.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| munspel | /models/bulk/munspel.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| notstall | /models/bulk/notstall.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| panflojt | /models/bulk/panflojt.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| piano | /models/bulk/piano.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| saxofon | /models/bulk/saxofon.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| skallra | /models/bulk/skallra.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| skivspelare | /models/bulk/skivspelare.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| speldosa | /models/bulk/speldosa.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| tamburin | /models/bulk/tamburin.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| triangel | /models/bulk/triangel.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| trombon | /models/bulk/trombon.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| trumpet | /models/bulk/trumpet.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| trumset | /models/bulk/trumset.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| tuba | /models/bulk/tuba.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| ukulele | /models/bulk/ukulele.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| xylofon | /models/bulk/xylofon.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
