@@ -1,0 +1,8 @@
+/* P2-2 nedre knappraden (förslag A): Uppdrag (Bengtsson) och Skriv lika stora. Föräldraknappen får ett lås. */
+.hud-bot.tva{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hud-bot.tva .npc-ikon{position:static;min-height:64px;border-radius:22px;justify-content:center;font-size:1.2rem;box-shadow:0 5px 0 var(--color-paper-deep)}
+.hud-bot.tva .bok-knapp{min-height:64px;border-radius:22px}
+.ang:has(.stall-chip.panel) .hud-bot.tva{grid-template-columns:1fr 1fr}
+.foralder-knapp .prick-las{width:20px;height:20px;padding:3px;border-radius:50%;background:#fff6e5d9;color:var(--color-ink);box-sizing:content-box}
+/* Menyn är ett eget lager: nedre raden göms medan den är öppen (förut gömdes Bengtssons ikon på samma sätt). */
+.ang:has(.meny-panel) .hud-bot.tva{display:none}

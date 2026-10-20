@@ -4,6 +4,7 @@ import upplevelseJson from "../../data/upplevelse.json" with { type: "json" };
 import { sagaNu } from "./saga.ts";
 import { rostIntro } from "./rostManifest.ts";
 import { IntroSkriv, type IntroSkrivData } from "./ui/IntroSkriv.tsx";
+import { useStart } from "./start.ts";
 
 type Scen = { fas: number; text: string; fran: number; ord?: number; ordklar?: boolean };
 
@@ -55,6 +56,8 @@ export function Intro({
   klarRef.current = onKlar;
   stegRef.current = onSteg;
   const scen = SCENER[i] ?? SCENER[0]!;
+  // P2-2: introt (klocka och röst) startar först när titelskärmen är stängd – trycket på "Börja" låser också upp ljudet
+  const titelOppen = useStart((st) => st.titelOppen);
 
   useLayoutEffect(() => {
     sagaNu.aktiv = true;
@@ -69,6 +72,7 @@ export function Intro({
 
   useEffect(() => {
     // TTS-1: filen sätts först efter en mikrotask, så att ett intro som stängs direkt (introt redan sett) inte laddar något
+    if (titelOppen) return;
     const audio = new Audio();
     audio.preload = "auto";
     audioRef.current = audio;
@@ -159,7 +163,7 @@ export function Intro({
       audio.pause();
       avslutaRef.current = () => undefined;
     };
-  }, [ljudPa]);
+  }, [ljudPa, titelOppen]);
 
   const horPennan = () => {
     const audio = audioRef.current;

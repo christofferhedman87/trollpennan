@@ -207,6 +207,22 @@ export function SpokHus({ onSnart }: { onSnart: () => void }) {
 
 export function Skogsstig({ onSnart }: { onSnart: () => void }) {
   const gung = useRef(0);
+  const grind = useRef<THREE.Group>(null);
+  // P2-2: guidens 3D-ankare "grind" (data/forsta-stunden.json pekar_pa "3d:grind"), samma mönster som spökhusets husx/husy
+  useFrame((state) => {
+    const g = grind.current;
+    if (!g || state.clock.elapsedTime % 0.25 > 0.05) return;
+    g.getWorldPosition(_mal);
+    _mal.y += 0.45;
+    _mal.project(state.camera);
+    const mal = (window.__tredMal ??= {});
+    if (_mal.z > 1) {
+      delete mal.grind;
+      return;
+    }
+    const rect = state.gl.domElement.getBoundingClientRect();
+    mal.grind = { x: Math.round(rect.left + ((_mal.x + 1) / 2) * rect.width), y: Math.round(rect.top + ((1 - _mal.y) / 2) * rect.height) };
+  });
   const ned = usePennTryck(() => {
     gung.current = 1;
     onSnart();
@@ -217,7 +233,7 @@ export function Skogsstig({ onSnart }: { onSnart: () => void }) {
         <planeGeometry args={[0.42, 1.6]} />
         <meshToonMaterial color="#E6CBA0" gradientMap={TOON_MAP} />
       </mesh>
-      <group name="grind" position={[-0.7, 0, -2.15]} scale={1.05} onPointerDown={ned}>
+      <group ref={grind} name="grind" position={[-0.7, 0, -2.15]} scale={1.05} onPointerDown={ned}>
         <mesh position={[-0.38, 0.32, 0]}>
           <boxGeometry args={[0.09, 0.64, 0.09]} />
           <meshStandardMaterial color="#8D6E63" flatShading />

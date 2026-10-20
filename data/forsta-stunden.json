@@ -1,5 +1,18 @@
 {
   "_om": "P2: den guidade starten. Stegen visas i ordning efter introt; ett steg är klart när villkoret i klart_nar är uppfyllt i sparningen (useMinne). Villkor: {falt, minst, varde?}. Fältet räknas som längden på en lista, antalet nycklar i ett objekt (eller antalet värden lika med varde), ett tal eller sant/falskt (1/0). pekar_pa: 'testid:a|testid:b' (första synliga) eller '3d:<namn>' (skärmpunkt i window.__tredMal). albumKropp = olika djursorter barnet väckt; introts kanin räknas, därför 2 för första egna djuret och 5 för tre till. Ändra här, ingen kod.",
+  "titel": {
+    "logga": "Trollpennan",
+    "under": "Det du skriver vaknar.",
+    "fortsatt": "Fortsätt",
+    "borja": "Börja",
+    "borja_om": "Börja om med en ny värld",
+    "fraga": "Din värld med alla djur försvinner. Är du säker?",
+    "nej": "Nej, tillbaka",
+    "ja": "Ja, börja om",
+    "angra": "Ta tillbaka min gamla värld",
+    "uppdrag": "Uppdrag",
+    "skriv": "Skriv"
+  },
   "senast": {
     "med_djur": "Senast väckte du {text}.",
     "tom": "Ängen väntar på ditt första ord."

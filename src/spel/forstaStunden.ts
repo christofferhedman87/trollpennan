@@ -4,7 +4,8 @@ import forstaJson from "../../data/forsta-stunden.json" with { type: "json" };
 
 export type Villkor = { falt: string; minst: number; varde?: string };
 export type CoachSteg = { id: string; text: string; pekar_pa: string; klart_nar: Villkor };
-type ForstaData = { senast: { med_djur: string; tom: string }; steg: CoachSteg[] };
+export type TitelText = { logga: string; under: string; fortsatt: string; borja: string; borja_om: string; fraga: string; nej: string; ja: string; angra: string; uppdrag: string; skriv: string };
+type ForstaData = { titel: TitelText; senast: { med_djur: string; tom: string }; steg: CoachSteg[] };
 
 export const FORSTA = forstaJson as unknown as ForstaData;
 
