@@ -1,0 +1,479 @@
+diff --git a/src/spel/rost.ts b/src/spel/rost.ts
+index 1b5b18e..43cdf4f 100644
+--- a/src/spel/rost.ts
++++ b/src/spel/rost.ts
+@@ -1,16 +1,18 @@
+-// TTS-1: uppläsning av texter som visas. Förgenererad fil via manifestet när den finns (laddas först när den spelas),
+-// annars reserven i data/rost.json: webbläsarens svenska röst, aldrig en engelsk; utan svensk röst blir det tyst.
+-// Generellt: anroparen skickar texten, ingen kod per replik.
++// TTS-1/TTS-2: uppläsning av texter som visas. Förgenererade filer via manifestet (laddas först när de spelas): en hel text,
++// eller en mall där de fasta delarna och kända värden ("en kanin", tal, namn) är filer. Barnets egna ord (dynamisk text)
++// läses med telefonens svenska röst om den finns, annars läses den meningen inte. Fasta texter utan fil: 'reserv' i
++// data/rost.json ('tyst' = ingen telefonröst, de genereras i stället). Aldrig en engelsk röst. Ingen kod per replik.
+ import { useEffect } from "react";
+ import { useMinne } from "./minne.ts";
+-import { RESERV, normalisera, rostFor } from "./rostManifest.ts";
++import { DYNAMISK, RESERV, normalisera, rostPlan, type RostDel } from "./rostManifest.ts";
+ 
+-type Logg = { text: string; fil: string | null; satt: "fil" | "reserv" | "tyst" };
++type Logg = { text: string; fil: string | null; satt: "fil" | "mall" | "reserv" | "tyst" | "saknas"; delar?: number; dynamisk?: boolean };
+ const ko: string[] = [];
+ const engang = new Set<string>();
+ let nu: HTMLAudioElement | null = null;
+ let upptagen = false;
+ let lyssnar = false;
++let omgang = 0;
+ 
+ function logg(l: Logg) {
+   const w = window as unknown as { __rost?: Logg[] };
+@@ -22,6 +24,38 @@ function svenskRost(): SpeechSynthesisVoice | null {
+   return speechSynthesis.getVoices().find((v) => v.lang.toLowerCase().replace("_", "-").startsWith("sv")) ?? null;
+ }
+ 
++function telefon(text: string, sv: SpeechSynthesisVoice, klar: () => void) {
++  const u = new SpeechSynthesisUtterance(text);
++  u.lang = "sv-SE";
++  try {
++    u.voice = sv;
++  } catch {
++    // lang räcker om rösten inte går att sätta
++  }
++  u.onend = klar;
++  u.onerror = klar;
++  speechSynthesis.speak(u);
++}
++
++function spelaDelar(delar: RostDel[], sv: SpeechSynthesisVoice | null) {
++  const min = omgang;
++  let i = 0;
++  const steg = () => {
++    if (min !== omgang) return;
++    const d = delar[i++];
++    if (!d) return nasta();
++    if ("f" in d) {
++      const a = new Audio(d.f);
++      nu = a;
++      a.addEventListener("ended", steg);
++      a.addEventListener("error", steg);
++      a.play().catch(() => steg());
++    } else if (sv) telefon(d.dynamisk, sv, steg);
++    else steg();
++  };
++  steg();
++}
++
+ function nasta() {
+   upptagen = false;
+   nu = null;
+@@ -32,45 +66,39 @@ function nasta() {
+     return;
+   }
+   upptagen = true;
+-  const rad = rostFor(text);
+-  if (rad) {
+-    const a = new Audio(rad.f);
+-    nu = a;
+-    a.addEventListener("ended", nasta);
+-    a.addEventListener("error", nasta);
+-    logg({ text, fil: rad.f, satt: "fil" });
+-    a.play().catch(() => nasta());
++  const plan = rostPlan(text);
++  if (plan) {
++    const sv = plan.dynamisk && DYNAMISK === "webblasare" ? svenskRost() : null;
++    if (plan.dynamisk && !sv) {
++      logg({ text, fil: null, satt: "tyst", dynamisk: true });
++      return nasta();
++    }
++    const forsta = plan.delar.find((d): d is { f: string; ms: number } => "f" in d);
++    logg({ text, fil: forsta?.f ?? null, satt: plan.delar.length > 1 ? "mall" : "fil", delar: plan.delar.length, dynamisk: plan.dynamisk });
++    spelaDelar(plan.delar, sv);
+     return;
+   }
+   const sv = RESERV === "webblasare" ? svenskRost() : null;
+   if (sv) {
+-    const u = new SpeechSynthesisUtterance(text);
+-    u.lang = "sv-SE";
+-    try {
+-      u.voice = sv;
+-    } catch {
+-      // lang räcker om rösten inte går att sätta
+-    }
+-    u.onend = nasta;
+-    u.onerror = nasta;
+     logg({ text, fil: null, satt: "reserv" });
+-    speechSynthesis.speak(u);
++    telefon(text, sv, nasta);
+     return;
+   }
+-  logg({ text, fil: null, satt: "tyst" });
++  logg({ text, fil: null, satt: "saknas" });
+   nasta();
+ }
+ 
+ /** Stoppar allt som läses och tömmer kön. */
+ export function tystna() {
+   ko.length = 0;
++  omgang++;
+   nu?.pause();
+   nu = null;
+   upptagen = false;
+   if (typeof speechSynthesis !== "undefined") speechSynthesis.cancel();
+ }
+ 
+-/** Läs upp en text som visas. enGang = nyckel som bara läses en gång per spelomgång (t.ex. uppdragets id). Högst tre i kö. */
++/** Läs upp en text som visas. enGang = nyckel som bara läses en gång per spelomgång (t.ex. uppdragets id). Högst fyra i kö. */
+ export function sag(text: string, enGang?: string) {
+   if (typeof window === "undefined" || !text.trim()) return;
+   if (!lyssnar) {
+@@ -85,18 +113,42 @@ export function sag(text: string, enGang?: string) {
+     engang.add(enGang);
+   }
+   ko.push(normalisera(text));
+-  while (ko.length > 3) ko.shift();
++  while (ko.length > 4) ko.shift();
+   if (!upptagen) nasta();
+ }
+ 
+-/** Hur länge en text tar att läsa (ms) när det finns en fil, annars 0. */
++/** Hur länge en text tar att läsa (ms) när den har fil eller mall, annars 0. */
+ export function lasTid(text: string): number {
+-  return rostFor(text)?.ms ?? 0;
++  return rostPlan(text)?.ms ?? 0;
+ }
+ 
+-/** Läser upp bannrar av slaget "ovr" (Bengtssons repliker, nya och klara uppdrag) när de visas, en gång per banner. */
+-export function useRostBannrar(banners: { id: number; text: string; slag: string }[]) {
++/** TTS-2: hur länge ett barn behöver för att läsa texten själv (ms): 1,2 s + 60 ms per tecken, högst 12 s. */
++export function lasbarTid(text: string): number {
++  return Math.min(12_000, 1200 + 60 * normalisera(text).length);
++}
++
++/** TTS-2: bannerns tid – max(bas, lästid, replikens längd ur manifestet + 1,5 s när ljudet är på), så att barnet hinner
++ *  läsa medan rösten läser och bannern aldrig försvinner mitt i repliken. */
++export function bannerTid(text: string, bas: number): number {
++  const las = Math.max(bas, lasbarTid(text));
++  if (typeof window === "undefined" || !useMinne.getState().ljudPa) return las;
++  const ms = lasTid(text);
++  return ms > 0 ? Math.max(las, ms + 1500) : las;
++}
++
++/** Läser upp bannrar (alla slag) när de visas, en gång per banner. */
++export function useRostBannrar(banners: { id: number; text: string }[]) {
+   useEffect(() => {
+-    for (const b of banners) if (b.slag === "ovr") sag(b.text, `banner:${b.id}`);
++    for (const b of banners) sag(b.text, `banner:${b.id}`);
+   }, [banners]);
+ }
++
++/** TTS-2: djurens pratbubblor och önskan som syns, en gång per bubbla/önskan. */
++export function useRostBubblor(bubblor: { id: number; text: string }[], onskan: string | null) {
++  useEffect(() => {
++    for (const b of bubblor) sag(b.text, `bubbla:${b.id}`);
++  }, [bubblor]);
++  useEffect(() => {
++    if (onskan) sag(onskan, `onskan:${onskan}`);
++  }, [onskan]);
++}
+diff --git a/src/spel/rost2.test.ts b/src/spel/rost2.test.ts
+new file mode 100644
+index 0000000..08b8b90
+--- /dev/null
++++ b/src/spel/rost2.test.ts
+@@ -0,0 +1,130 @@
++// TTS-2: resterande fasta texter har förgenererad röst (kallor i data/rost.json), mallar spelas som delar, "en kanin" finns
++// för alla modeller, fasta texter utan fil läses inte av telefonen (reserv 'tyst') och syntaxviruset har en egen röst.
++import assert from "node:assert/strict";
++import fs from "node:fs";
++import { test } from "node:test";
++import entiteterJson from "../../data/entiteter.json" with { type: "json" };
++import rostJson from "../../data/rost.json" with { type: "json" };
++import { tolkaMedReserv } from "../tolk/reserv.ts";
++import { bannerTid, lasTid, lasbarTid } from "./rost.ts";
++import manifestJson from "../../data/rost-manifest.json" with { type: "json" };
++import klientJson from "../../data/rost-klient.json" with { type: "json" };
++import { ANTAL_RADER, DYNAMISK, RESERV, mallDel, normalisera, nyckel, rostFor, rostPlan } from "./rostManifest.ts";
++
++type Rad = { f: string; ms: number; r: string; t?: string; n?: number };
++const MANIFEST = manifestJson as unknown as { intro: { f: string; ms: number; n?: number } | null; mallar?: { m: string }[]; rader: Record<string, Rad> };
++
++type Kalla = { fil?: string; talare?: string; falt?: string[]; varden?: boolean };
++const R = rostJson as unknown as {
++  roster: Record<string, { id: string }>;
++  talare: Record<string, string>;
++  kallor: { lista: Kalla[] };
++};
++
++function strangar(fil: string): { p: string; s: string }[] {
++  const ut: { p: string; s: string }[] = [];
++  const ga = (x: unknown, p: string) => {
++    if (Array.isArray(x)) x.forEach((v) => ga(v, `${p}[]`));
++    else if (x && typeof x === "object") {
++      for (const [k, v] of Object.entries(x)) if (!k.startsWith("_")) ga(v, `${p}.${k}`);
++    } else if (typeof x === "string") ut.push({ p, s: x });
++  };
++  ga(JSON.parse(fs.readFileSync(`data/${fil}`, "utf8")), "");
++  return ut;
++}
++function texter(k: Kalla): string[] {
++  return strangar(k.fil!)
++    .filter(({ p, s }) => k.falt!.some((r) => new RegExp(r).test(p)) && /\p{L}/u.test(s))
++    .map(({ s }) => normalisera(s));
++}
++
++test("TTS-2: inställningarna – reserv tyst, telefonen bara för barnets ord, syntaxviruset har egen röst", () => {
++  assert.equal(RESERV, "tyst");
++  assert.equal(DYNAMISK, "webblasare");
++  assert.equal(R.roster.syntaxviruset?.id, "ZMs9a3j1SLzirC7aygJQ");
++  assert.equal(R.talare.syntaxviruset, "syntaxviruset");
++  const ider = Object.values(R.roster).map((r) => r.id);
++  assert.equal(new Set(ider).size, ider.length, "tre olika röster");
++});
++
++test("TTS-2: varje fast text i kallor har fil, och varje mall har filer för alla sina fasta delar", () => {
++  const saknas: string[] = [];
++  let n = 0;
++  for (const k of R.kallor.lista) {
++    if (k.varden) continue;
++    for (const t of texter(k)) {
++      n++;
++      if (!t.includes("{")) {
++        const r = rostFor(t) ? MANIFEST.rader[nyckel(t)] : null;
++        if (!r) saknas.push(`${k.fil}: ${t}`);
++        else assert.equal(r.r, k.talare === "bengtsson" ? "bengtsson" : r.r, `${k.fil}: ${t}`);
++        continue;
++      }
++      assert.ok(MANIFEST.mallar?.some((m) => m.m === t), `mallen saknas i manifestet: ${t}`);
++      for (const d of t.split(/\{\w+\}/)) if (mallDel(d) && !rostFor(mallDel(d))) saknas.push(`${k.fil} (mall): ${mallDel(d)}`);
++    }
++  }
++  assert.ok(n > 500, `bara ${n} texter`);
++  assert.deepEqual(saknas.slice(0, 20), [], `${saknas.length} saknas`);
++});
++
++test("TTS-2: 'en kanin' (spelets egen formel) har fil för alla modeller, och tal 1–30 finns", () => {
++  const E = (entiteterJson as { entiteter: Record<string, { ord?: string[] }> }).entiteter;
++  const saknas: string[] = [];
++  let n = 0;
++  for (const [k, v] of Object.entries(E)) {
++    const t = tolkaMedReserv(`en ${v.ord?.[0] ?? k}`) as { typ: string; varelse?: { formel?: string } };
++    if (t.typ !== "skapad" || !t.varelse?.formel) continue;
++    n++;
++    if (!rostFor(t.varelse.formel)) saknas.push(t.varelse.formel);
++  }
++  assert.ok(n > 20, `bara ${n} modeller`);
++  assert.deepEqual(saknas, []);
++  for (let i = 1; i <= 30; i++) assert.ok(rostFor(String(i)), `talet ${i}`);
++});
++
++test("TTS-2: mallar spelas som delar – kända värden är filer, barnets eget ord är dynamiskt", () => {
++  const fa = rostPlan("+3 stjärnor!");
++  assert.ok(fa, "+{n} stjärnor! har ingen plan");
++  assert.equal(fa.dynamisk, false);
++  assert.equal(fa.delar.length, 2);
++  assert.ok(fa.delar.every((d) => "f" in d));
++  assert.equal(fa.ms, fa.delar.reduce((s, d) => s + ("ms" in d ? d.ms : 0), 0));
++  const mall = MANIFEST.mallar!.find((m) => /^\{\w+\} /.test(m.m) && m.m.split(/\{\w+\}/).length === 2);
++  assert.ok(mall, "ingen mall som börjar med {x}");
++  const kanin = rostPlan(mall.m.replace(/\{\w+\}/, "en kanin"));
++  assert.ok(kanin && !kanin.dynamisk && kanin.delar.length >= 2, mall.m);
++  const eget = rostPlan(mall.m.replace(/\{\w+\}/, "en zorbleflax"));
++  assert.ok(eget && eget.dynamisk, "okänt ord ska vara dynamiskt");
++  assert.deepEqual(eget.delar[0], { dynamisk: "en zorbleflax" });
++  const med = rostPlan(mall.m.replace(/\{\w+\}/, "en kanin med mössa"));
++  assert.ok(med && !med.dynamisk && med.delar.length >= 3, "'en kanin med mössa' = 'en kanin' + 'med mössa' som filer");
++  const blandat = rostPlan(mall.m.replace(/\{\w+\}/, "en kanin med zorbleflax"));
++  assert.ok(blandat?.dynamisk && "dynamisk" in blandat.delar[0]!, "går värdet inte att dela helt läses hela värdet som barnets ord");
++  assert.equal(rostPlan("Det här står inte i någon data."), null, "okänd fast text har ingen plan (tyst)");
++  assert.ok(lasTid("+3 stjärnor!") > 500);
++});
++
++test("TTS-2: bannerTid – aldrig kortare än basen eller lästiden (utan fönster: ingen röst)", () => {
++  assert.equal(bannerTid("Ja!", 2400), 2400);
++  const lang = "Det här är en lång mening som ett barn behöver gott om tid för att hinna läsa själv.";
++  assert.equal(bannerTid(lang, 2400), lasbarTid(lang));
++  assert.ok(lasbarTid(lang) > 6000 && lasbarTid("x".repeat(1000)) === 12_000);
++});
++
++test("TTS-2: spelet bundlar bara klientfilen – samma filer och längder som manifestet, inga texter, inte data/rost.json", () => {
++  const K = klientJson as unknown as { rader: Record<string, [string, number]>; mallar: string[] };
++  assert.equal(ANTAL_RADER, Object.keys(MANIFEST.rader).length);
++  for (const [k, r] of Object.entries(MANIFEST.rader)) assert.deepEqual(K.rader[k], [r.f.slice("/ljud/rost/".length, -4), r.ms], k);
++  assert.deepEqual(K.mallar, (MANIFEST.mallar ?? []).map((m) => m.m));
++  const src = fs.readFileSync("src/spel/rostManifest.ts", "utf8") + fs.readFileSync("src/spel/rost.ts", "utf8");
++  assert.doesNotMatch(src, /rost\.json"|rost-manifest\.json"/, "spelkoden ska inte importera data/rost.json eller hela manifestet");
++  assert.ok(fs.statSync("data/rost-klient.json").size < 250_000);
++});
++
++test("TTS-2: alla filer har samma ljudnivå (loudnorm till data/rost.json ljudniva)", () => {
++  const mal = (rostJson as unknown as { ljudniva: { lufs: number } }).ljudniva.lufs;
++  const ojamna = Object.values(MANIFEST.rader).filter((r) => r.n !== mal);
++  assert.equal(MANIFEST.intro?.n, mal, "introt");
++  assert.deepEqual(ojamna.map((r) => r.f).slice(0, 5), [], `${ojamna.length} filer är inte normaliserade`);
++});
+diff --git a/src/spel/rostManifest.ts b/src/spel/rostManifest.ts
+index 8042514..ea03f3c 100644
+--- a/src/spel/rostManifest.ts
++++ b/src/spel/rostManifest.ts
+@@ -1,15 +1,24 @@
+-// TTS-1: uppslag i det förgenererade röstmanifestet (data/rost-manifest.json, skrivs av scripts/rost-generera.mjs).
++// TTS-1/TTS-2: uppslag i det förgenererade röstljudet. Spelet bundlar bara data/rost-klient.json (skrivs av
++// scripts/rost-generera.mjs: nyckel → [fil, ms], mallar, intro, reserv) – inte texterna, talarna eller data/rost.json.
+ // Rent och utan DOM, så att det går att testa i node. Uppspelningen finns i rost.ts.
+-import manifestJson from "../../data/rost-manifest.json" with { type: "json" };
+-import rostJson from "../../data/rost.json" with { type: "json" };
++import klientJson from "../../data/rost-klient.json" with { type: "json" };
+ 
+-export type RostRad = { f: string; ms: number; r: string; id?: string; t?: string };
+-export type RostIntro = { f: string; ms: number; fran: number[]; langd: number; t?: string };
+-type Manifest = { intro: RostIntro | null; rader: Record<string, RostRad> };
++export type RostRad = { f: string; ms: number };
++export type RostIntro = { f: string; ms: number; fran: number[]; langd: number };
++type Klient = { reserv: string; dynamisk: string; intro: RostIntro | null; mallar: string[]; rader: Record<string, [string, number]> };
+ 
+-export const MANIFEST = manifestJson as unknown as Manifest;
+-/** 'webblasare' = webbläsarens röst om en svensk finns (annars tyst), 'tyst' = bara förgenererade filer. */
+-export const RESERV: "webblasare" | "tyst" = (rostJson as { reserv?: string }).reserv === "tyst" ? "tyst" : "webblasare";
++const K = klientJson as unknown as Klient;
++/** Fasta texter utan fil: 'tyst' (TTS-2, de genereras i stället) eller 'webblasare' (telefonens svenska röst). */
++export const RESERV: "webblasare" | "tyst" = K.reserv === "tyst" ? "tyst" : "webblasare";
++/** Barnets egna ord i en mall: 'webblasare' = telefonens svenska röst för just det ordet, annars läses meningen inte. */
++export const DYNAMISK: "webblasare" | "tyst" = K.dynamisk === "tyst" ? "tyst" : "webblasare";
++/** Antal texter med fil (för prov och tester). */
++export const ANTAL_RADER = Object.keys(K.rader).length;
++
++function rad(k: string): RostRad | null {
++  const r = K.rader[k];
++  return r ? { f: `/ljud/rost/${r[0]}.mp3`, ms: r[1] } : null;
++}
+ 
+ /** Samma som scripts/rost-generera.mjs: NFC, ett mellanslag, trimmad. */
+ export function normalisera(t: string): string {
+@@ -29,15 +38,100 @@ export function nyckel(t: string): string {
+ 
+ /** Filen för en text som visas. Exakt träff, annars delen efter första ": " (t.ex. "Nytt uppdrag från Doktor Bengtsson: …"). */
+ export function rostFor(text: string): RostRad | null {
+-  const hel = MANIFEST.rader[nyckel(text)];
++  const hel = rad(nyckel(text));
+   if (hel) return hel;
+   const i = text.indexOf(": ");
+-  if (i > 0) return MANIFEST.rader[nyckel(text.slice(i + 2))] ?? null;
+-  return null;
++  return i > 0 ? rad(nyckel(text.slice(i + 2))) : null;
+ }
+ 
+ /** Introts röstfil med scenernas starttider, eller null (då gäller data/intro.json och saga.mp3). */
+ export function rostIntro(antalScener: number): RostIntro | null {
+-  const I = MANIFEST.intro;
++  const I = K.intro;
+   return I && I.fran.length === antalScener ? I : null;
+ }
++
++/** TTS-2: en del att spela – en fil, eller barnets eget ord (dynamisk text, telefonens röst). */
++export type RostDel = { f: string; ms: number } | { dynamisk: string };
++export type RostPlan = { delar: RostDel[]; ms: number; dynamisk: boolean };
++
++const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
++/** Mallens fasta del som den läses (samma som generatorns mallDel): ledande skiljetecken bort, bara skiljetecken = ingenting. */
++export function mallDel(t: string): string {
++  const s = normalisera(t.replace(/^[\s\p{P}\p{S}]+/u, ""));
++  return /\p{L}/u.test(s) ? s : "";
++}
++type Mall = { re: RegExp; delar: string[] };
++let MALLAR: Mall[] | null = null;
++function mallar(): Mall[] {
++  if (MALLAR) return MALLAR;
++  MALLAR = K.mallar.map((m) => {
++    const delar = m.split(/(\{\w+\})/);
++    const re = new RegExp(`^${delar.map((d) => (/^\{\w+\}$/.test(d) ? "(.+?)" : esc(d))).join("")}$`, "u");
++    return { re, delar };
++  });
++  return MALLAR;
++}
++/** Ett värde i en mall som filer: hela värdet, eller helt uppdelat i kända värden ("en kanin" + "med mössa"), annars null. */
++function vardeDelar(varde: string): { f: string; ms: number }[] | null {
++  const hel = rad(nyckel(varde));
++  if (hel) return [hel];
++  const ord = varde.split(" ");
++  const ut: { f: string; ms: number }[] = [];
++  for (let i = 0; i < ord.length; ) {
++    let j = ord.length;
++    for (; j > i; j--) {
++      const r = rad(nyckel(ord.slice(i, j).join(" ")));
++      if (r && !(i === 0 && j === ord.length)) {
++        ut.push(r);
++        break;
++      }
++    }
++    if (j === i) return null;
++    i = j;
++  }
++  return ut.length > 1 ? ut : null;
++}
++function ettPlan(text: string): RostPlan | null {
++  const hel = rad(nyckel(text));
++  if (hel) return { delar: [hel], ms: hel.ms, dynamisk: false };
++  const t = normalisera(text);
++  for (const mall of mallar()) {
++    const m = mall.re.exec(t);
++    if (!m) continue;
++    const delar: RostDel[] = [];
++    let ms = 0;
++    let dynamisk = false;
++    let n = 1;
++    for (const d of mall.delar) {
++      if (/^\{\w+\}$/.test(d)) {
++        const varde = normalisera(m[n++] ?? "");
++        const v = vardeDelar(varde);
++        if (v) {
++          delar.push(...v);
++          ms += v.reduce((s, d) => s + d.ms, 0);
++        } else if (varde) {
++          delar.push({ dynamisk: varde });
++          ms += 80 * varde.length;
++          dynamisk = true;
++        }
++        continue;
++      }
++      const fast = mallDel(d);
++      if (!fast) continue;
++      const r = rad(nyckel(fast));
++      if (!r) return null;
++      delar.push({ f: r.f, ms: r.ms });
++      ms += r.ms;
++    }
++    return { delar, ms, dynamisk };
++  }
++  return null;
++}
++
++/** TTS-2: hur en text som visas läses: en fil, en mall (fasta delar + värden/barnets ord), eller null (ingen fil). Delen efter första ": " prövas också. */
++export function rostPlan(text: string): RostPlan | null {
++  const hel = ettPlan(text);
++  if (hel) return hel;
++  const i = text.indexOf(": ");
++  return i > 0 ? ettPlan(text.slice(i + 2)) : null;
++}
+diff --git a/src/spel/ui/Ledtradsyta.tsx b/src/spel/ui/Ledtradsyta.tsx
+index 2199d14..515e3d2 100644
+--- a/src/spel/ui/Ledtradsyta.tsx
++++ b/src/spel/ui/Ledtradsyta.tsx
+@@ -4,6 +4,7 @@ import { fyll } from "../fyll.ts";
+ import { aktivGata, gatUrval, nastaGata } from "../gata.ts";
+ import { platsMed } from "../platser.ts";
+ import { useMinne } from "../minne.ts";
++import { sag } from "../rost.ts";
+ import { LED } from "./spelData.ts";
+ import { hemligaDjur } from "./hemliga.ts";
+ 
+@@ -27,6 +28,11 @@ export function Ledtradsyta({ funna }: { funna: Record<string, unknown> }) {
+   useEffect(() => {
+     if (id && id !== gataId) sattGataId(id);
+   }, [id, gataId, sattGataId]);
++  // TTS-2: gåtan läses upp en gång per gåta och spelomgång (Trollpennans röst)
++  const gataText = id ? LED[id]?.gata : undefined;
++  useEffect(() => {
++    if (id && gataText) sag(gataText, `gata:${id}`);
++  }, [id, gataText]);
+   const hittade = alla.length - kvar.length;
+   if (!id) return <p className="ledtrad-klar" data-testid="ledtrad">{hemligt.alla_hittade}</p>;
+   const led = LED[id]!;

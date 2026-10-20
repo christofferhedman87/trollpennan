@@ -18,6 +18,7 @@ const bilder = arg("bilder", "");
 if (bilder) fs.mkdirSync(bilder, { recursive: true });
 const M = JSON.parse(fs.readFileSync("data/rost-manifest.json", "utf8"));
 const B = JSON.parse(fs.readFileSync("data/bengtsson.json", "utf8")).uppdrag;
+const TYST = JSON.parse(fs.readFileSync("data/rost.json", "utf8")).reserv === "tyst"; // TTS-2: fasta texter har filer, ingen telefonreserv
 const nyckel = (t) => {
   const s = t.normalize("NFC").replace(/\s+/g, " ").trim();
   let h = 0x811c9dc5;
@@ -132,12 +133,16 @@ const vanta = (p) => p.waitForFunction(() => !!window.__troll, null, { timeout: 
   const fras = u?.val?.grupper?.[0]?.forslag?.[0]?.fras ?? `en kanin med ${u?.krav?.ord?.[0] ?? "mössa"}`;
   await p.evaluate((f) => window.__troll.vakna(f), fras);
   await p.waitForTimeout(6000);
+  // TTS-2: fler texter läses (bubblor, bannrar som står lästiden), så klart-repliken kan komma senare
+  const kf = (u?.klart_bengtsson ?? u?.klart) ? M.rader[nyckel(u?.klart_bengtsson ?? u?.klart)]?.f : null;
+  if (kf) await p.waitForFunction((f) => window.__spelat.includes(f), kf, { timeout: 30000 }).catch(() => {});
   spelat = await p.evaluate(() => window.__spelat);
   const talat = await p.evaluate(() => window.__talat);
   const klart = u?.klart_bengtsson ?? u?.klart;
   const kfil = klart ? M.rader[nyckel(klart)]?.f : null;
   kolla("klart-repliken läses från rätt fil", !!kfil && spelat.includes(kfil), { fras, kfil, spelat });
-  kolla("text utan fil går till reserven med svensk röst", talat.length > 0 && talat.every((t) => t.lang === "sv-SE" && t.rost === "sv-SE"), { talat });
+  if (TYST) kolla("TTS-2 reserv tyst: telefonen läser bara barnets ord, på svenska", talat.every((t) => t.lang === "sv-SE" && t.rost === "sv-SE" && !M.rader[nyckel(t.text)]), { talat });
+  else kolla("text utan fil går till reserven med svensk röst", talat.length > 0 && talat.every((t) => t.lang === "sv-SE" && t.rost === "sv-SE"), { talat });
   kolla("reserven läser inte en text som har fil", !talat.some((t) => M.rader[nyckel(t.text)]), { talat });
   await ctx.close();
 }
