@@ -34,7 +34,7 @@ grep -q "TTS-1" "$UT/test.txt" || { aterstall; echo "STOPP 3: rost.test.ts körd
 N=$(npm run -s typecheck 2>&1 | grep -c "error TS" || true); [ "$N" -eq 0 ] || { npm run -s typecheck 2>&1 | grep "error TS" | head; aterstall; echo "STOPP 3: typecheck $N fel"; exit 3; }
 npm run -s typecheck:pages > "$UT/tcp.txt" 2>&1 || { tail -20 "$UT/tcp.txt"; aterstall; echo "STOPP 3: typecheck:pages föll"; exit 3; }
 npx eslint . > "$UT/eslint.txt" 2>&1 || { tail -25 "$UT/eslint.txt"; aterstall; echo "STOPP 3: eslint . har fel"; exit 3; }
-npx eslint --max-warnings 0 src/spel/rost.ts src/spel/rostManifest.ts src/spel/rost.test.ts src/spel/intro.tsx src/spel/ui/UppdragsRemsa.tsx scripts/rost-generera.mjs "$D" > "$UT/eslint-src.txt" 2>&1 || { tail -25 "$UT/eslint-src.txt"; aterstall; echo "STOPP 3: eslint-varningar i TTS-1-filerna"; exit 3; }
+npx eslint --no-error-on-unmatched-pattern --no-warn-ignored --max-warnings 0 src/spel/rost.ts src/spel/rostManifest.ts src/spel/rost.test.ts src/spel/intro.tsx src/spel/ui/UppdragsRemsa.tsx scripts/rost-generera.mjs "$D" > "$UT/eslint-src.txt" 2>&1 || { tail -25 "$UT/eslint-src.txt"; aterstall; echo "STOPP 3: eslint-varningar i TTS-1-filerna"; exit 3; }
 npm run -s check:struktur > "$UT/struktur.txt" 2>&1 || { tail -15 "$UT/struktur.txt"; aterstall; echo "STOPP 3: check:struktur föll"; exit 3; }
 npm run -s build:pages > "$UT/build.txt" 2>&1 || { tail -20 "$UT/build.txt"; aterstall; echo "STOPP 3: build:pages föll"; exit 3; }
 node "$D/tts-prov.mjs" --bilder "$BILD" > "$UT/prov.json" 2>"$UT/prov.err" || { grep '^FEL' "$UT/prov.err"; tail -5 "$UT/prov.err"; aterstall; echo "STOPP 4: Playwright tts-prov föll"; exit 4; }

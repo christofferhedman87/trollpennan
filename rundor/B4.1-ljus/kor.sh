@@ -33,7 +33,7 @@ cat "$UT/data.txt"
 npm run -s test:product > "$UT/test.txt" 2>&1 || { grep -A8 '^not ok' "$UT/test.txt" | head -40; aterstall; echo "STOPP 3: test:product föll"; exit 3; }
 N=$(npm run -s typecheck 2>&1 | grep -c "error TS" || true); [ "$N" -eq 0 ] || { npm run -s typecheck 2>&1 | grep "error TS" | head; aterstall; echo "STOPP 3: typecheck $N fel"; exit 3; }
 npm run -s typecheck:pages > "$UT/tcp.txt" 2>&1 || { tail -20 "$UT/tcp.txt"; aterstall; echo "STOPP 3: typecheck:pages föll"; exit 3; }
-npx eslint $(echo $ANDRADE $NYA | tr ' ' '\n' | grep -E '\.(ts|tsx|mjs)$') "$D/b41-prov.mjs" "$D/b41-data.mjs" > "$UT/eslint.txt" 2>&1; E=$(grep -c " error " "$UT/eslint.txt" || true)
+npx eslint --no-error-on-unmatched-pattern --no-warn-ignored $(echo $ANDRADE $NYA | tr ' ' '\n' | grep -E '\.(ts|tsx|mjs)$') "$D/b41-prov.mjs" "$D/b41-data.mjs" > "$UT/eslint.txt" 2>&1; E=$(grep -c " error " "$UT/eslint.txt" || true)
 [ "$E" -eq 0 ] || { tail -20 "$UT/eslint.txt"; aterstall; echo "STOPP 3: eslint $E fel"; exit 3; }
 npm run -s check:struktur > "$UT/struktur.txt" 2>&1 || { tail -15 "$UT/struktur.txt"; aterstall; echo "STOPP 3: check:struktur föll"; exit 3; }
 npm run -s build:pages > "$UT/build.txt" 2>&1 || { tail -20 "$UT/build.txt"; aterstall; echo "STOPP 3: build:pages föll"; exit 3; }
