@@ -7,7 +7,12 @@ import bengtssonJson from "../../data/bengtsson.json" with { type: "json" };
 import introJson from "../../data/intro.json" with { type: "json" };
 import rostJson from "../../data/rost.json" with { type: "json" };
 import uppdragJson from "../../data/uppdrag.json" with { type: "json" };
-import { MANIFEST, normalisera, nyckel, rostFor, rostIntro } from "./rostManifest.ts";
+import manifestJson from "../../data/rost-manifest.json" with { type: "json" };
+import { normalisera, nyckel, rostFor, rostIntro } from "./rostManifest.ts";
+
+// TTS-2: hela manifestet (texter, talare) läses bara av testerna; spelet bundlar data/rost-klient.json.
+type Rad = { f: string; ms: number; r: string; id?: string; t?: string };
+const MANIFEST = manifestJson as unknown as { intro: { f: string } | null; rader: Record<string, Rad> };
 
 const PUB = path.resolve("public");
 const MAPP = path.join(PUB, "ljud/rost");
@@ -26,7 +31,7 @@ test("TTS-1: varje manifestrad har en fil, rätt nyckel och en talare med röst 
   }
 });
 
-test("TTS-1: ingen föräldralös fil, ingen fil över 1 MB och allt under 25 MB", () => {
+test("TTS-1: ingen föräldralös fil, ingen fil över 1 MB och allt under 70 MB (TTS-2: ≈2 700 filer)", () => {
   const anvanda = new Set([MANIFEST.intro?.f, ...Object.values(MANIFEST.rader).map((r) => r.f)].filter(Boolean).map((f) => path.basename(f!)));
   let summa = 0;
   for (const f of fs.readdirSync(MAPP)) {
@@ -36,7 +41,7 @@ test("TTS-1: ingen föräldralös fil, ingen fil över 1 MB och allt under 25 MB
     assert.ok(b < 1_000_000, `${f} är ${b} byte`);
     summa += b;
   }
-  assert.ok(summa < 25_000_000, `röstljudet är ${summa} byte`);
+  assert.ok(summa < 70_000_000, `röstljudet är ${summa} byte`);
 });
 
 test("TTS-1: alla Bengtssons uppdrag (start och klart) har röst", () => {
@@ -46,7 +51,7 @@ test("TTS-1: alla Bengtssons uppdrag (start och klart) har röst", () => {
     const klart = u.givare && u.klart_bengtsson ? u.klart_bengtsson : u.klart;
     for (const t of [start, klart]) {
       if (t.includes("{") || / \/\p{Lu}/u.test(t)) continue;
-      const r = rostFor(t);
+      const r = rostFor(t) ? MANIFEST.rader[nyckel(t)] : null;
       if (!r) saknas.push(`${u.id}: ${t}`);
       else assert.equal(r.r, u.givare === "bengtsson" ? "bengtsson" : "pennan", u.id);
     }

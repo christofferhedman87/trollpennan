@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "_om": "TTS-1: rösterna i spelet (ElevenLabs, Christoffers val 2026-10-20, se rundor/TTS/PLAN.md avsnitt 0). Ljudet förgenereras av Arkitekten på boxen med scripts/rost-generera.mjs (kräver ELEVENLABS_API_KEY, aldrig i repot) och checkas in som public/ljud/rost/<hash>.mp3 plus data/rost-manifest.json. Spelet slår upp texten som visas i manifestet (src/spel/rostManifest.ts) och spelar filen; saknas den gäller 'reserv' ('webblasare' = webbläsarens röst bara om en svensk röst finns, annars tyst; 'tyst' = ingen uppläsning). 'uttal' byter hela ord i texten INNAN den skickas till röstmotorn, texten i spelet ändras inte (tom = ingen omstavning; Christoffer valde 'Bengtsson' som det står). 'talare': vem som läser vilken källa. Andra figurer (syntaxviruset) får ingen röst än: de ska ha en egen röst, och Elin skulle låta som Trollpennan. Ny text eller ändrad text = kör generatorn igen, den gör bara det som saknas (hash av text+röst+modell+inställningar).",
+  "_om": "TTS-1: rösterna i spelet (ElevenLabs, Christoffers val 2026-10-20, se rundor/TTS/PLAN.md avsnitt 0). Ljudet förgenereras av Arkitekten på boxen med scripts/rost-generera.mjs (kräver ELEVENLABS_API_KEY, aldrig i repot) och checkas in som public/ljud/rost/<hash>.mp3 plus data/rost-manifest.json. Spelet slår upp texten som visas i manifestet (src/spel/rostManifest.ts) och spelar filen; saknas den gäller 'reserv' gäller fasta texter utan fil ('tyst' = generera i stället, TTS-2), 'dynamisk' gäller barnets egna ord i en mall ('webblasare' = telefonens svenska röst om den finns, annars läses hela meningen inte). 'uttal' byter hela ord i texten INNAN den skickas till röstmotorn, texten i spelet ändras inte (tom = ingen omstavning; Christoffer valde 'Bengtsson' som det står). 'talare': vem som läser vilken källa. TTS-2: syntaxviruset har en egen röst (Kim) men inga repliker än. Ny text eller ändrad text = kör generatorn igen, den gör bara det som saknas (hash av text+röst+modell+inställningar).",
   "modell": "eleven_multilingual_v2",
   "sprak": "sv",
   "installningar": {
@@ -20,15 +20,22 @@
     "pennan": {
       "namn": "Elin",
       "id": "4Ct5uMEndw4cJ7q0Jx0l"
+    },
+    "syntaxviruset": {
+      "namn": "Kim – Svenska",
+      "id": "ZMs9a3j1SLzirC7aygJQ",
+      "_val": "TTS-2: lekfull och snabb, medelhög (≈145 Hz) mellan Bengt (≈109 Hz) och Elin (≈219 Hz), mest tonhöjdsvariation av proven; Sanna Hartfield (Sassy) låg för nära Elin (≈225 Hz)."
     }
   },
   "talare": {
     "bengtsson": "bengtsson",
     "berattare": "pennan",
-    "intro": "pennan"
+    "intro": "pennan",
+    "syntaxviruset": "syntaxviruset"
   },
   "uttal": {},
-  "reserv": "webblasare",
+  "reserv": "tyst",
+  "ljudniva": { "_om": "TTS-2: alla filer normaliseras till samma ljudnivå (ffmpeg loudnorm, två pass) – Bengt låg på ≈ −35 dB och Elin på ≈ −22 dB. Ingår inte i filnamnets hash.", "lufs": -16, "tp": -1.5, "lra": 11 },
   "intro": {
     "_om": "Introt läses som en fil; 'ankare' = där varje scen i data/intro.json börjar (samma ordning, en per scen). Tidpunkterna räknas ur ElevenLabs tidsstämplar per tecken och sparas i manifestet.",
     "tal": "Hej! Jag är Trollpennan. Det jag skriver … vaknar. Titta här: kå, a, en, i, en. Kanin! Där är den! Men jag kan inte välja själv. Jag behöver dig. Vad ska vi väcka först?",
@@ -51,8 +58,248 @@
   "licens": {
     "_om": "TTS-1: raden i LICENSES.md (scripts/modell-inlagg.mjs licenser läser den här).",
     "filer": "public/ljud/rost/*.mp3",
-    "upphov": "ElevenLabs, röstbiblioteket: Bengt – Calm and Soft (Doktor Bengtsson) och Elin (Trollpennan)",
+    "upphov": "ElevenLabs, röstbiblioteket: Bengt – Calm and Soft (Doktor Bengtsson), Elin (Trollpennan) och Kim – Svenska (Syntaxviruset, TTS-2)",
     "licens": "ElevenLabs betald plan (Starter): kommersiell licens för ljud som skapats under abonnemanget, även efter att det upphört; ingen namnangivelse krävs",
     "kalla": "https://help.elevenlabs.io/hc/en-us/articles/13313564601361"
+  },
+  "dynamisk": "webblasare",
+  "kallor": {
+    "_om": "TTS-2: fasta texter som läses upp, i prioritetsordning (taket i generatorn tar de första först). 'falt' = reguljära uttryck för sökvägen i filen ('.a.b[]', listor som []). Text med {x} blir en mall: de fasta delarna får egna filer och {x} slås upp bland 'varden' (finns värdet inte är det barnets eget ord: 'dynamisk').",
+    "lista": [
+      {
+        "fil": "uppdrag.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.texter\\.(klart|inga)$"
+        ]
+      },
+      {
+        "fil": "firande.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.guldord\\.text\\[\\]$",
+          "^\\.hemligt_ord\\.text\\[\\]$",
+          "^\\.stjarnor\\.(fa|fa_en|for_fa)$",
+          "^\\.ny_sida\\.(text|fortsatt)$",
+          "^\\.sida_klar\\.text$",
+          "^\\.bok_klar\\.text$"
+        ]
+      },
+      {
+        "fil": "reserv.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.texter\\.(ny|sparr|ersatter)$"
+        ]
+      },
+      {
+        "fil": "aterkoppling.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.kan_inte_rita$"
+        ]
+      },
+      {
+        "fil": "texter-aventyr.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.foljeslagare\\.(foljer|hem)$",
+          "^\\.forsta_gangen\\[\\]$",
+          "^\\.gavoruta\\.(djur_i_rutan|okant)$",
+          "^\\.omrade_klart$"
+        ]
+      },
+      {
+        "fil": "texter-gard.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.forsta_besok\\[\\]$",
+          "^\\.klapp\\.(en|mer)\\[\\]$",
+          "^\\.byggt\\[\\]$",
+          "^\\.lada\\.full$",
+          "^\\.bo\\.(flyttar_in\\[\\]|full|passar_inte|ingen)$",
+          "^\\.djur_repliker_hemma\\[\\]$",
+          "^\\.stall\\.(flytta|full)$",
+          "^\\.backup\\.(klart|fel)$",
+          "^\\.demo\\.(senare|snart)$"
+        ]
+      },
+      {
+        "fil": "skatter.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.texter\\.fick$"
+        ]
+      },
+      {
+        "fil": "album.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.sallsynthet\\.ny_niva_text\\[\\]$",
+          "^\\.texter\\.(foto_klart|full)$"
+        ]
+      },
+      {
+        "fil": "omraden.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.karta\\.(valj_djur|inget_djur)$",
+          "^\\.omraden\\[\\]\\.hinder\\.(text|eller_text|klart)$",
+          "^\\.omraden\\[\\]\\.(del_omrade|inne)\\.(text|klart)$"
+        ]
+      },
+      {
+        "fil": "vilda-djur.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.regler\\.(inte_gillar\\[\\]|hjarta|ny_van)$",
+          "^\\.djur\\[\\]\\.(ledtrad|tack)$"
+        ]
+      },
+      {
+        "fil": "platser.json",
+        "talare": "bengtsson",
+        "falt": [
+          "^\\.platser\\[\\]\\.intro\\.text$"
+        ]
+      },
+      {
+        "fil": "skyltar.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.skyltar\\[\\]\\.text$"
+        ]
+      },
+      {
+        "fil": "skyltar.json",
+        "talare": "bengtsson",
+        "falt": [
+          "^\\.skyltar\\[\\]\\.text_bengtsson$"
+        ]
+      },
+      {
+        "fil": "ord.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.repliker\\.[a-z_]+\\[\\]$",
+          "^\\.overraskningar\\[\\]\\.text$"
+        ]
+      },
+      {
+        "fil": "humor.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.(favorit_text|tack_text)\\[\\]$",
+          "^\\.humor\\[\\]\\.repliker\\[\\]$"
+        ]
+      },
+      {
+        "fil": "onskningar.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.nastan\\[\\]$",
+          "^\\.onskningar\\[\\]\\.(text|tack)$"
+        ]
+      },
+      {
+        "fil": "onskningar-bygg.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.onskningar\\[\\]\\.(text|tack)$"
+        ]
+      },
+      {
+        "fil": "mossa.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.halsningar\\[\\]$",
+          "^\\.klart\\[\\]$",
+          "^\\.alla_klara$",
+          "^\\.beloning\\.text$",
+          "^\\.uppdrag\\[\\]\\.text$"
+        ]
+      },
+      {
+        "fil": "hemligt.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.alla_hittade$"
+        ]
+      },
+      {
+        "varden": true
+      },
+      {
+        "fil": "ledtradar.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.ledtradar\\.[^.]+\\.gata$"
+        ]
+      }
+    ]
+  },
+  "varden": {
+    "_om": "TTS-2: värden som fylls i mallarna och läses av 'talare'. 'tal' = talen fran..till, 'formler' = 'en kanin' för alla modellord (spelets egen tolk ger formen), 'tillbehor' = 'med mössa'/'och mössa' för alla tillbehör (så att 'en kanin med mössa' blir filer), 'ord' = orden i ord.json (visa), 'falt' = namn ur data.",
+    "talare": "pennan",
+    "tal": [
+      1,
+      30
+    ],
+    "formler": true,
+    "tillbehor": true,
+    "ord": true,
+    "falt": [
+      {
+        "fil": "platser.json",
+        "falt": [
+          "^\\.platser\\[\\]\\.namn$"
+        ],
+        "sma": true
+      },
+      {
+        "fil": "omraden.json",
+        "falt": [
+          "^\\.omraden\\[\\]\\.namn$",
+          "^\\.karta\\.kan_text\\.[a-z]+$"
+        ]
+      },
+      {
+        "fil": "vilda-djur.json",
+        "falt": [
+          "^\\.djur\\[\\]\\.namn$"
+        ]
+      },
+      {
+        "fil": "skatter.json",
+        "falt": [
+          "^\\.skatter\\[\\]\\.namn$"
+        ]
+      },
+      {
+        "fil": "sidor.json",
+        "falt": [
+          "^\\.sidor\\[\\]\\.titel$"
+        ]
+      },
+      {
+        "fil": "album.json",
+        "falt": [
+          "^\\.sallsynthet\\.nivaer\\[\\]\\.form$"
+        ]
+      },
+      {
+        "fil": "npc.json",
+        "falt": [
+          "^\\.npc\\.[a-z]+\\.namn$"
+        ]
+      },
+      {
+        "fil": "texter-gard.json",
+        "falt": [
+          "^\\.flikar\\.garden$"
+        ],
+        "sma": true
+      }
+    ]
   }
 }

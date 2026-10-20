@@ -1,6 +1,6 @@
 # TTS – förarbete: en bättre svensk röst, gratis (Arkitekten, 2026-10-20)
 
-**Status: TTS-1 byggd (2026-10-20).** Christoffer har valt **ElevenLabs** (se 0). Uttalet: "Bengtsson" som det står (ordlistan `uttal` i data/rost.json är tom men finns kvar). Första omgången (intro + Bengtssons uppdrag och repliker) är genererad och ligger i `public/ljud/rost/` med `data/rost-manifest.json`; koden kopplas in med `rundor/TTS-1/kor.sh`. Generera mer: `node scripts/rost-generera.mjs --tak <krediter>` (bara på boxen, kräver ELEVENLABS_API_KEY). Piper-proven ligger kvar i `tts-prov/` som reserv.
+**Status: TTS-1 inlagd (#160), TTS-2 byggd (2026-10-20).** Christoffer har valt **ElevenLabs** (se 0). TTS-2: alla fasta texter i spelet (UI-repliker, firande, gåtor, önskningar, humor, skyltar, platser m.m. – `kallor` i data/rost.json), mallar med `{x}` och värden ("en kanin" för alla modeller, tal, namn) är genererade: 2 734 filer, ≈55 MB, normaliserade till −16 LUFS. Telefonens svenska röst används bara för barnets egna ord; fasta texter utan fil är tysta. Syntaxviruset har egen röst (Kim – Svenska). Koden kopplas in med `rundor/TTS-2/kor.sh`, se rundor/TTS-2/PLAN.md. Uttal av "Ekorren" och "Här på ängen": prov väntar på Christoffers val. Generera mer: `node --experimental-strip-types scripts/rost-generera.mjs --tak <krediter>` (bara på boxen, kräver ELEVENLABS_API_KEY). Piper-proven ligger kvar i `tts-prov/` som reserv.
 
 ## 0. Christoffers val (2026-10-20, ElevenLabs)
 

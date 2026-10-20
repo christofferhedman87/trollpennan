@@ -1270,4 +1270,4 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Filer | Upphov | Licens | Källa |
 |---|---|---|---|
-| public/ljud/rost/*.mp3 | ElevenLabs, röstbiblioteket: Bengt – Calm and Soft (Doktor Bengtsson) och Elin (Trollpennan) | ElevenLabs betald plan (Starter): kommersiell licens för ljud som skapats under abonnemanget, även efter att det upphört; ingen namnangivelse krävs | https://help.elevenlabs.io/hc/en-us/articles/13313564601361 |
+| public/ljud/rost/*.mp3 | ElevenLabs, röstbiblioteket: Bengt – Calm and Soft (Doktor Bengtsson), Elin (Trollpennan) och Kim – Svenska (Syntaxviruset, TTS-2) | ElevenLabs betald plan (Starter): kommersiell licens för ljud som skapats under abonnemanget, även efter att det upphört; ingen namnangivelse krävs | https://help.elevenlabs.io/hc/en-us/articles/13313564601361 |
