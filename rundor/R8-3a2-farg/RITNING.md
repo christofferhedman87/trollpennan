@@ -77,13 +77,15 @@ Varje fras väcks på en tom äng. Provet tar en bild av ängen före och en eft
 
 | Steg | Krav | main (före) | patch (efter) |
 |------|------|-------------|---------------|
-| en blå anka | gröna pixlar i kroppens nedre halva (nya, inre, nära kroppen) ≤ 3 % av kroppens blå, och ≥ 300 blå | __ANKA__ |
-| en röd elefant | ≥ 25 gräddvita px (betarna), röd ≥ 60 %, kroppens mask < 100 % av texturen | __ELEFANT__ |
-| en blå vas (hörnfärg) | blå ≥ 60 % och ≥ 150 px, de blås medelljushet ≥ 0,33 (färgordets egen 0,51) | __VAS__ |
-| en regnbågsfärgad katt | ≥ 5 av 6 nyanser med ≥ 20 px, grått ≤ 35 %, ingen regnbåge-effekt, mönster "band" | __REGN__ |
-| en röd och blå randig katt | röd ≥ 25 %, blå ≥ 10 % | __RAND__ |
-| en gul och lila prickig hund | gul ≥ 25 %, lila ≥ 3 % | __PRICK__ |
+| en blå anka | gröna pixlar i kroppens nedre halva (nya, inre, nära kroppen) ≤ 3 % av kroppens blå, och ≥ 300 blå | FEL: 176 gröna / 1 197 blå = 0,147 | ok: 0 / 1 628 = 0 |
+| en röd elefant | ≥ 25 gräddvita px (betarna), röd ≥ 60 %, kroppens mask < 100 % av texturen | FEL: 28 gräddvita, röd 0,94, ingen mask (hela texturen) | ok: 158 gräddvita, röd 0,95, mask 7 % av texturen |
+| en blå vas (hörnfärg) | blå ≥ 60 % och ≥ 150 px, de blås medelljushet ≥ 0,33 (färgordets egen 0,51) | FEL: blå 0,65, ljushet 0,27, inga hörnfärger bakade | ok: blå 0,60, ljushet 0,48, hörn bakade |
+| en regnbågsfärgad katt | ≥ 5 av 6 nyanser med ≥ 20 px, grått ≤ 35 %, ingen regnbåge-effekt, mönster "band" | FEL: grått 0,42, effekten regnbage (bågen) | ok: 6/6 nyanser (351–1 009 px), grått 0,004, ingen båge, mönster band |
+| en röd och blå randig katt | röd ≥ 25 %, blå ≥ 10 % | FEL: röd 0,77, blå 0,025 | ok: röd 0,51, blå 0,25 |
+| en gul och lila prickig hund | gul ≥ 25 %, lila ≥ 3 % | FEL: gul 0,94, lila 0 | ok: gul 0,84, lila 0,048 |
 | en anka (B6.4) | inget material ändrat | ok | ok |
+
+Siffrorna kommer ur torrkörning 2 (kor.sh på main a22bfbc): `prov-fore.json` före patchen, `prov.json` efter.
 | inga sidfel | – | ok | ok |
 
 kor.sh bygger main till en egen katalog före patchen. Provet **måste falla där** (STOPP 4 annars), och det ger förebilderna. Efter patchen ska provet vara grönt. Därefter körs regressionen: r83a-prov, r83a-alla (160 modeller), b64, b62, b65, b63 och r9k, var och en med ett omförsök.
@@ -111,7 +113,7 @@ Det här är en patchrunda, inte en Build-runda. Grinden gäller fullt ut för B
 | 3 | Arkitekturregeln | **Ja.** Det finns ingen kod per modell. Mönstren är tre datarader (`kroppsmonster`). Undantag per modell går genom befintliga `kropp`/`behall` i datan. |
 | 4 | Ritning | **Ja.** Patchen är färdig. kor.sh tillämpar den och stoppar vid fel (2/3/4). |
 | 5 | Dataväg | **Spårad.** Fras → `tolka` (monster/färg) → `Sparad` → `kroppsMonsterFor` → `fargaKlon` (gltfDjur.tsx) → `kroppsTextur`/`fargaHorn`/`monsterPa` (kroppsfarg.ts) → shader. Effekten går `effekterBredvid` → `DjurEffekter`. Provet läser `__tredFarg` (mask/horn/monster) och `__tredEffekter` vid varje hopp. |
-| 6 | Bevis | **Ja.** `r83a2-prov.mjs` körs i 375×812 och täcker anka, elefant, vas (hörnfärg), regnbågskatt, ränder, prickar och B6.4. Det faller på main (kor.sh kräver det) och är grönt med patchen. Före- och efterbilder + kontaktark. Dessutom finns 9 enhetstester. |
+| 6 | Bevis | **Ja.** `r83a2-prov.mjs` körs i 375×812 och täcker anka, elefant, vas (hörnfärg), regnbågskatt, ränder, prickar och B6.4. Det faller på main (kor.sh kräver det) och är grönt med patchen. Före- och efterbilder + kontaktark. Dessutom finns 10 enhetstester. |
 | 7 | Inställningar | **Ej tillämpligt** (ingen Build). kor.sh med `nice -n 19`/nohup, egen gren `runda-r83a2-kod`, logg i fil. |
 | 8 | Ett mål | **Ja.** "Färgen följer kroppen", med fyra sammanhörande fel i samma kodväg (`fargaKlon`). |
 | 9 | Vem skriver koden | **Arkitekten (patch).** Doodle kör bara kor.sh. Granskande bot skriver ingen spelkod. |
