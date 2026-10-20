@@ -33,9 +33,18 @@
     "intro": "pennan",
     "syntaxviruset": "syntaxviruset"
   },
-  "uttal": { "Här på ängen": "Här, på ängen", "Ekorren": "Ehkorren", "ekorren": "ehkorren" },
+  "uttal": {
+    "Här på ängen": "Här, på ängen",
+    "Ekorren": "Ehkorren",
+    "ekorren": "ehkorren"
+  },
   "reserv": "tyst",
-  "ljudniva": { "_om": "TTS-2: alla filer normaliseras till samma ljudnivå (ffmpeg loudnorm, två pass) – Bengt låg på ≈ −35 dB och Elin på ≈ −22 dB. Ingår inte i filnamnets hash.", "lufs": -16, "tp": -1.5, "lra": 11 },
+  "ljudniva": {
+    "_om": "TTS-2: alla filer normaliseras till samma ljudnivå (ffmpeg loudnorm, två pass) – Bengt låg på ≈ −35 dB och Elin på ≈ −22 dB. Ingår inte i filnamnets hash.",
+    "lufs": -16,
+    "tp": -1.5,
+    "lra": 11
+  },
   "intro": {
     "_om": "Introt läses som en fil; 'ankare' = där varje scen i data/intro.json börjar (samma ordning, en per scen). Tidpunkterna räknas ur ElevenLabs tidsstämplar per tecken och sparas i manifestet.",
     "tal": "Hej! Jag är Trollpennan. Det jag skriver … vaknar. Titta här: kå, a, en, i, en. Kanin! Där är den! Men jag kan inte välja själv. Jag behöver dig. Vad ska vi väcka först?",
@@ -71,6 +80,14 @@
         "talare": "pennan",
         "falt": [
           "^\\.texter\\.(klart|inga)$"
+        ]
+      },
+      {
+        "_om": "P2: guidens steg (Coach.tsx läser upp steget när ringen syns) – pennan/Elin är guiden. Läses INTE och får ingen fil: 'titel.*' är knappar och etiketter på titelskärmen (Fortsätt, Börja om med en ny värld, Ja/Nej …), 'senast.*' är titelskärmens rad (mallen 'Senast väckte du {text}.') som visas men inte läses upp. Läggs de till i spelets uppläsning ska de in här (mallen delas då som andra mallar).",
+        "fil": "forsta-stunden.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.steg\\[\\]\\.text$"
         ]
       },
       {
