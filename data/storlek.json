@@ -1,10 +1,13 @@
 {
  "_om": "B6.1 (E): storleksklasser för saker (aldrig djur). En klass ger ett tak för höjden (målhöjd × barnets 'stor/jätte' blir aldrig högre än taket) och en placeringszon. Zon 'bak' = längst bak på ängen och platserna, bakom alla djur, så att en skyskrapa, ett slott, ett ufo eller en grävmaskin aldrig skymmer ett djur i förgrunden. Klassen väljs med kategori i data/entiteter.json; nya modellpaket med samma kategori följer regeln utan kod.",
  "klasser": {
-  "stor": { "tak": 1.5, "zon": "bak", "kant": 0.85 },
+  "stor": { "tak": 1.5, "zon": "bak", "kant": 0.85, "rad": "bortom" },
+  "jatte": { "tak": 1.9, "zon": "bak", "kant": 1.0, "rad": "bortom", "max_halv": 1.3 },
+  "liten_byggnad": { "tak": 1.0, "zon": "bak", "kant": 0.5, "rad": "bortom" },
   "fordon": { "tak": 1.1, "zon": "bak", "kant": 0.65 },
   "mobel": { "tak": 1.1, "zon": "bak", "kant": 0.6 }
  },
+ "minsta": { "_om": "B6.6: ingen sak försvinner i gräset. Skalan höjs (högst max_forstoring, aldrig över klassens tak) tills största måttet och ytan framifrån räcker.", "storlek": 0.45, "yta": 0.06, "max_forstoring": 2.5 },
  "kategori": {
   "hus": "stor",
   "grotta": "stor",
@@ -12,6 +15,30 @@
  },
  "ids": {
   "_om": "B6.5: klass per entitet (före kategorin). Stora möbler står bak så att de inte skymmer småsakerna.",
+  "slott": "jatte",
+  "borg": "jatte",
+  "kyrka": "jatte",
+  "skyskrapa": "jatte",
+  "pyramid": "jatte",
+  "fabrik": "jatte",
+  "hangar": "jatte",
+  "slottstorn": "jatte",
+  "torn": "jatte",
+  "vattentorn": "jatte",
+  "vindkraftverk": "jatte",
+  "hotell": "jatte",
+  "kiosk": "liten_byggnad",
+  "bajamaja": "liten_byggnad",
+  "koja": "liten_byggnad",
+  "skjul": "liten_byggnad",
+  "honshus": "liten_byggnad",
+  "marknadsstand": "liten_byggnad",
+  "brunn": "liten_byggnad",
+  "gatlykta": "liten_byggnad",
+  "flagga": "liten_byggnad",
+  "garage": "liten_byggnad",
+  "segelskjul": "liten_byggnad",
+  "skorsten": "liten_byggnad",
   "matbord": "mobel",
   "bord": "mobel",
   "koksbord": "mobel",
@@ -52,6 +79,9 @@
   "_om": "B6.3 (J): stora saker sprids i den bakre zonen (x, z i ängens koordinater; djurens platser har z ≥ -0.15), med slumpat men fast läge per skapelse (uid), ingen rad. min_avstand mellan två stora saker; kant (per klass) = sakens halva bredd, så långt från vattnet står den; fri_x = sträckor i x där ingen stor sak får ha sin mitt (grinden och mitten av staketet syns alltid, med sakens halva bredd inräknad). Saker på ängen hålls också borta från dammen (platser.json, ängens zon 'damm').",
   "zon": { "x": [-2.7, 2.7], "z": [-1.9, -1.15] },
   "min_avstand": 0.95,
-  "fri_x": [[-1.4, 0.0]]
+  "fri_x": [[-1.4, 0.0]],
+  "_om_bortom": "B6.6: byggnaderna (klass med rad bortom) står bakom staketet i det här djupet, högst längst bak; synlig_x = halva synliga bredden längst bak i stående läge, kroppen ska rymmas. Bakom staketet hålls bara själva grinden fri (bortom.fri_x), den syns framför byggnaderna.",
+  "bortom": { "z": [-3.3, -2.35], "fri_x": [[-1.2, -0.2]] },
+  "synlig_x": 2.9
  }
 }

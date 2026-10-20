@@ -8,10 +8,12 @@ import introJson from "../../data/intro.json" with { type: "json" };
 import rostJson from "../../data/rost.json" with { type: "json" };
 import uppdragJson from "../../data/uppdrag.json" with { type: "json" };
 import manifestJson from "../../data/rost-manifest.json" with { type: "json" };
+import skyltarJson from "../../data/skyltar.json" with { type: "json" };
 import { normalisera, nyckel, rostFor, rostIntro } from "./rostManifest.ts";
+import { utanSignatur } from "./rostText.ts";
 
 // TTS-2: hela manifestet (texter, talare) läses bara av testerna; spelet bundlar data/rost-klient.json.
-type Rad = { f: string; ms: number; r: string; id?: string; t?: string };
+type Rad = { f: string; ms: number; r: string; id?: string; t?: string; tal?: string };
 const MANIFEST = manifestJson as unknown as { intro: { f: string } | null; rader: Record<string, Rad> };
 
 const PUB = path.resolve("public");
@@ -89,4 +91,29 @@ test("TTS-1: rösterna är Christoffers val och licensen står i LICENSES.md", (
   const lic = fs.readFileSync("LICENSES.md", "utf8");
   assert.match(lic, /## Röster och tal/);
   assert.match(lic, /ElevenLabs betald plan/);
+});
+
+test("TTS-2: signaturen i slutet läses inte upp (utanSignatur)", () => {
+  assert.equal(utanSignatur("Kan du hjälpa honom? /Doktor Bengtsson"), "Kan du hjälpa honom?");
+  assert.equal(utanSignatur("lägg den vid stubben. /Ekorren"), "lägg den vid stubben.");
+  assert.equal(utanSignatur("Tack!  /Ekorren "), "Tack!");
+  // bara en signatur i slutet: ett snedstreck i texten, gemener efter / eller utan mellanslag före rörs inte
+  assert.equal(utanSignatur("katt/hund och sol /måne"), "katt/hund och sol /måne");
+  assert.equal(utanSignatur("Hej/Doktor Bengtsson"), "Hej/Doktor Bengtsson");
+  assert.equal(utanSignatur("Ingen signatur här."), "Ingen signatur här.");
+});
+
+test("TTS-2: skyltar med signatur har en fil inläst utan signaturen, och uppslaget på den visade texten hittar den", () => {
+  type S = { id: string; text: string; givare?: string; text_bengtsson?: string };
+  const med = (skyltarJson as { skyltar: S[] }).skyltar.flatMap((s) => [s.text, s.text_bengtsson ?? ""]).filter((t) => / \/\p{Lu}/u.test(t));
+  assert.ok(med.length >= 9, `bara ${med.length} skylttexter med signatur`);
+  for (const t of med) {
+    const r = MANIFEST.rader[nyckel(t)];
+    assert.ok(r, `ingen rad för den visade texten: ${t}`);
+    assert.equal(r.tal, utanSignatur(normalisera(t)), `inläst text för ${r.id}`);
+    assert.doesNotMatch(r.tal ?? "", / \/\p{Lu}/u);
+    assert.equal(rostFor(t)?.f, r.f, `rostFor hittar inte filen för ${r.id}`);
+    assert.ok(fs.existsSync(path.join(PUB, r.f)), `filen saknas: ${r.f}`);
+  }
+  for (const r of Object.values(MANIFEST.rader)) assert.doesNotMatch(r.tal ?? r.t ?? "", / \/\p{Lu}/u, `${r.id} läses med signatur`);
 });

@@ -196,7 +196,10 @@ async function ingenKrock(p, namn, ms = 3000) {
 }
 await blok("K-onska", async () => {
   // önskan uppfylls med ett handskrivet guldord: tackbubblan + "Guldord!"
-  const { ctx, p } = await sida({});
+  // Mossas tre uppdrag väljs annars slumpvis (liv.ts fyllMossa). Blev "onskan" eller "guldord" valt skrev Mossas
+  // banderoller ("Toppen! …", "+1 stjärnor från Mossa!") över "Guldord!" i samma ögonblick, så steget föll ibland.
+  // Fasta uppdrag som en katt med halsduk inte klarar gör steget deterministiskt (B6.6-körningen 11:45).
+  const { ctx, p } = await sida({ mossaLista: ["djur-flyga", "djur-simma", "djur-gris"].map((id) => ({ id, klar: false })), mossaDag: 0 });
   await nyttDjur(p, "ang", "en katt");
   await stangBok(p);
   await p.evaluate(() => window.__troll.onska("frusna-tassar", true));

@@ -3,8 +3,8 @@ import type { ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
 import texterJson from "../../../data/texter-gard.json" with { type: "json" };
 import type { Sparad } from "../brygga.ts";
-import { artFarg, bakPlatser, flyger, fotKant, siktHojd, siktRadie, simmar, storlekKlass, vikt } from "../entiteter.ts";
-import { siktFri } from "./damm.ts";
+import { artFarg, BAK_ZON, bakPlatser, flyger, fotKant, halvBredd, hashTal, malhojd, siktHojd, siktRadie, simmar, storlekKlass, takSkala, vikt } from "../entiteter.ts";
+import { DAMM, siktFri } from "./damm.ts";
 import { START_PLATS, type Plats } from "../platser.ts";
 import { placeraPaPlats, simPlatser } from "../platsYta.ts";
 
@@ -66,6 +66,8 @@ declare global {
     __ljus?: { ljus: number; pol: number; aktiva: number; program: number; scen?: number };
     /** B6.5, för prov: effekterna som ritas per skapelse (uid). Finns bara när ett prov har lagt dit objektet. */
     __tredEffekter?: Record<string, string[]>;
+    /** B6.6, för prov: kroppens ruta på skärmen (CSS-px) och antal synliga meshar. Finns bara när ett prov har lagt dit objektet. */
+    __tredSyn?: Record<string, { x: number; y: number; w: number; h: number; mesh: number }>;
   }
 }
 
@@ -126,6 +128,10 @@ const LAND_SLOT: [number, number][] = [
   [0.05, 1.05],
   [-1.55, 1.05],
   [1.55, 0.95],
+  // B6.6: ängen rymmer 10. Plats 9 och 10 låg förut utanför bilden (x ±2,2), så den nionde och tionde skapelsen
+  // (kvasten hos Doodle) syntes inte. Nu ligger alla tio inom |x| ≤ 1,55, där kameran ser dem.
+  [-0.75, -0.35],
+  [0.8, 1.6],
 ];
 
 const platsCache = new Map<string, Map<string, [number, number]>>();
@@ -136,7 +142,8 @@ const platsCache = new Map<string, Map<string, [number, number]>>();
  */
 export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number, number, number] {
   const bas = djurPlatsBas(spec, alla);
-  if (!plats || flygare(spec)) return bas;
+  // B6.6: stora saker har sitt läge ur bakLagen (dammen, grinden och bilden redan inräknade); flyttas inte igen
+  if (!plats || flygare(spec) || (plats.id === START_PLATS && storlekKlass(spec.kropp)?.zon === "bak")) return bas;
   const nyckel = `${plats.id}|${alla.map((d) => d.uid).join(",")}`;
   let karta = platsCache.get(nyckel);
   if (!karta) {
@@ -165,6 +172,87 @@ export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number,
   return p ? [p[0], bas[1], p[1]] : bas;
 }
 
+const bakCache = new Map<string, Map<string, [number, number, boolean]>>();
+
+/**
+ * B6.6: stora saker längst bak, efter sin verkliga storlek. Byggnaderna (storlek.json, klass med rad "bortom") står
+ * bakom staketet och fordon/möbler framför det. Kroppen ryms i bild (synlig_x), ingenting står framför grinden (fri_x
+ * med halva bredden), och dammen hålls fri (fotKant) och syns (siktFri). De högsta väljer först och står längst bak; varje sak tar en
+ * ledig sträcka i x (slumpad men fast per uid, så de sprids). Finns ingen ledig sträcka ställs den lägre framför den
+ * högre (vid samma höjd den smalare framför den bredare), så att den aldrig skyms. Ren funktion av listan; null-plats = gamla bakPlatser.
+ */
+export function bakLagen(rad: Sparad[], bortom: boolean, zon = BAK_ZON): Map<string, [number, number, boolean]> {
+  const nyckel = `${bortom}|${rad.map((d) => `${d.uid}:${d.kropp}:${d.skala}`).join(",")}`;
+  const gammal = bakCache.get(nyckel);
+  if (gammal) return gammal;
+  const [z0, z1] = bortom && zon.bortom ? zon.bortom.z : zon.zon.z;
+  const sx = zon.synlig_x ?? zon.zon.x[1];
+  const hojd = (d: Sparad) => malhojd(d.kropp) * takSkala(d.kropp, d.skala || 1);
+  // högst först, vid samma höjd den bredaste först: den smalare (växthuset) hamnar framför den bredare (cirkustältet)
+  const ordning = rad.slice().sort((a, b) => hojd(b) - hojd(a) || halvBredd(b.kropp, b.skala) - halvBredd(a.kropp, a.skala) || a.uid.localeCompare(b.uid));
+  const satta: { x: number; z: number; h: number }[] = [];
+  const ut = new Map<string, [number, number, boolean]>();
+  for (const d of ordning) {
+    const h = halvBredd(d.kropp, d.skala);
+    const zBas = z1 - (z1 - z0) * Math.min(1, Math.max(0, (hojd(d) - 0.8) / 1.2));
+    // B6.3: kroppen utanför dammen och utanför siktzonen mellan kameran och dammen
+    const [sr, sh] = [siktRadie(d.kropp, d.skala), siktHojd(d.kropp, d.skala)];
+    const torr = (x: number, z: number) => Math.hypot(x - DAMM.x, z - DAMM.z) >= DAMM.r + fotKant(d.kropp, d.skala) && siktFri(x, z, sr, sh);
+    const friX = (bortom && zon.bortom?.fri_x) || zon.fri_x;
+    const fri = (x: number) => !friX.some(([a, b]) => x + h > a && x - h < b);
+    const kand: number[] = [];
+    for (let vidd = Math.max(0.05, sx - h); kand.length === 0 && vidd <= sx + 1.2; vidd += 0.3)
+      for (let x = -vidd; x <= vidd + 1e-9; x += 0.05) if (fri(x) && (torr(x, zBas) || torr(x, z0))) kand.push(Math.round(x * 100) / 100);
+    if (kand.length === 0) continue;
+    const lucka = (x: number) => Math.min(Infinity, ...satta.map((o) => Math.abs(x - o.x) - h - o.h));
+    const bast = Math.max(...kand.map(lucka));
+    const lediga = kand.filter((x) => lucka(x) >= 0.08);
+    // djupet: närmast zBas där dammen är fri och där den står minst 0,3 framför varje sak den överlappar
+    // (den som väljer senare är aldrig högre, så den lägre står alltid framför den högre och skyms inte)
+    const djup = (x: number): number | null => {
+      let fram = -Infinity;
+      for (const o of satta) if (Math.abs(x - o.x) < h + o.h) fram = Math.max(fram, o.z + 0.3);
+      for (let k = 0; k <= 40; k++) {
+        const z = zBas + (k % 2 ? 1 : -1) * Math.ceil(k / 2) * 0.05;
+        if (z < z0 - 1e-9 || z > z1 + 1e-9 || z < fram - 1e-9) continue;
+        if (torr(x, z)) return z;
+      }
+      return null;
+    };
+    let x = Number.NaN;
+    let z = z0;
+    if (lediga.length) {
+      // slumpad men fast per uid bland de lediga sträckorna, så att de sprids
+      const start = Math.floor(hashTal(d.uid, 7) * lediga.length);
+      for (let k = 0; k < lediga.length && Number.isNaN(x); k++) {
+        const c = lediga[(start + k) % lediga.length]!;
+        const dz = djup(c);
+        if (dz !== null) [x, z] = [c, dz];
+      }
+    }
+    if (Number.isNaN(x))
+      for (const c of kand.slice().sort((a, b) => lucka(b) - lucka(a) || a - b)) {
+        const dz = djup(c);
+        if (dz !== null) {
+          [x, z] = [c, dz];
+          break;
+        }
+      }
+    let ok = true;
+    if (Number.isNaN(x)) {
+      // ingen sträcka och inget djup: längst fram där dammen är fri (då skymmer den inte), men rapportera
+      x = kand.find((k) => lucka(k) === bast)!;
+      z = [z1, (z0 + z1) / 2, z0].find((zz) => torr(x, zz)) ?? z0;
+      ok = false;
+    }
+    satta.push({ x, z, h });
+    ut.set(d.uid, [x, Math.round(z * 100) / 100, ok]);
+  }
+  if (bakCache.size > 30) bakCache.clear();
+  bakCache.set(nyckel, ut);
+  return ut;
+}
+
 function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
   if (simmare(spec)) {
     const sim = alla.filter((d) => simmare(d));
@@ -176,6 +264,13 @@ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
   if (storlekKlass(spec.kropp)?.zon === "bak") {
     // B6.3 (J): spridda i zonen, fast läge per uid, inte längre en rad framför staketet
     const bak = alla.filter((d) => storlekKlass(d.kropp)?.zon === "bak" && !simmare(d) && !flygare(d));
+    // B6.6: var rad för sig (byggnader bakom staketet, fordon och möbler framför), efter bredd och höjd
+    // fordon och möbler som inte får plats framför staketet (dammen och grinden tar mycket) går bakom det, till byggnaderna
+    const fram = bakLagen(bak.filter((d) => storlekKlass(d.kropp)?.rad !== "bortom"), false);
+    const lage = fram.get(spec.uid);
+    if (lage?.[2]) return [lage[0], 0, lage[1]];
+    const bort = bakLagen(bak.filter((d) => storlekKlass(d.kropp)?.rad === "bortom" || fram.get(d.uid)?.[2] === false), true).get(spec.uid);
+    if (bort) return [bort[0], 0, bort[1]];
     const i = Math.max(0, bak.findIndex((d) => d.uid === spec.uid));
     const p = bakPlatser(bak.map((d) => d.uid))[i] ?? [0, -1.4];
     return [p[0], 0, p[1]];
@@ -185,11 +280,15 @@ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
   const tyngd = (d: Sparad) => vikt(d.kropp);
   if (flygare(spec)) {
     const i = Math.max(0, flyg.findIndex((d) => d.uid === spec.uid));
-    return [-1.4 + i * 1.5, 1.55, -0.85];
+    // B6.6: tre i bredd (|x| ≤ 1,2), sedan nästa rad högre upp och förskjuten – förut x = −1,4 + 1,5·i, den fjärde och
+    // följande flög utanför bilden (pelikanen, ängeln)
+    const rad = Math.floor(i / 3);
+    return [[-1.2, 0, 1.2][i % 3]! + (rad % 2) * 0.6 - (rad % 2 ? 0.3 : 0), 1.55 + rad * 0.4, -0.85 - rad * 0.2];
   }
   const sorterad = land.slice().sort((a, b) => tyngd(b) - tyngd(a) || a.uid.localeCompare(b.uid));
   const i = Math.max(0, sorterad.findIndex((d) => d.uid === spec.uid));
-  const slot = LAND_SLOT[i] ?? [((i % 2 === 0 ? -1 : 1) * (2.2 + Math.floor(i / 2) * 0.4)), -1.2];
+  // fler än tio (platserna): spridda inom bilden med gyllene snittet, inte längre utanför kanten
+  const slot = LAND_SLOT[i] ?? [-1.5 + ((i * 0.618) % 1) * 3, -0.2 + ((i * 0.382) % 1) * 1.7];
   return [slot[0], 0, slot[1]];
 }
 
@@ -228,4 +327,31 @@ export function usePennTryck(onTap: () => void) {
     upp.current = klar;
     window.addEventListener("pointerup", klar, { once: true });
   };
+}
+
+const _synBox = new THREE.Box3();
+const _synP = new THREE.Vector3();
+/** B6.6: kroppens skärmruta (CSS-px) ur världsrutan (8 hörn projicerade) och antalet synliga meshar med synligt material. */
+export function synMatt(kropp: THREE.Object3D, kamera: THREE.Camera, rect: DOMRect): { x: number; y: number; w: number; h: number; mesh: number } {
+  let mesh = 0;
+  _synBox.makeEmpty();
+  kropp.updateWorldMatrix(true, true);
+  kropp.traverseVisible((o) => {
+    const m = o as THREE.Mesh;
+    if (!m.isMesh) return;
+    const mats = Array.isArray(m.material) ? m.material : [m.material];
+    if (!mats.some((q) => q && q.visible && q.opacity > 0.05)) return;
+    mesh++;
+    _synBox.expandByObject(m);
+  });
+  if (!mesh || _synBox.isEmpty()) return { x: 0, y: 0, w: 0, h: 0, mesh };
+  let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+  for (let i = 0; i < 8; i++) {
+    _synP.set(i & 1 ? _synBox.max.x : _synBox.min.x, i & 2 ? _synBox.max.y : _synBox.min.y, i & 4 ? _synBox.max.z : _synBox.min.z).project(kamera);
+    const sx = ((_synP.x + 1) / 2) * rect.width;
+    const sy = ((1 - _synP.y) / 2) * rect.height;
+    x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy);
+  }
+  // x, y = rutans övre vänstra hörn i sidan (CSS-px)
+  return { x: Math.round(rect.left + x0), y: Math.round(rect.top + y0), w: Math.round(x1 - x0), h: Math.round(y1 - y0), mesh };
 }

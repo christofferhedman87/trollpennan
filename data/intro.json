@@ -11,6 +11,7 @@
     "ord": "katt",
     "fras": "en katt",
     "uppmaning": "Skriv katt!",
+    "ljud": ["k", "a", "tt"],
     "vakna": "Vakna!",
     "hjalp": "Hjälp mig",
     "tillbaka": "Jag vill skriva"
