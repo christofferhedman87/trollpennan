@@ -176,10 +176,10 @@ dinosaurie, häst, ko, elefant.)
 
 | plats | fro11 | fro2026 | fro4242 | blandad | bara jättar | 8 katter |
 |---|---|---|---|---|---|---|
-| ängen | 5 | 8 | 7 | 7 | **3** | 8 |
-| sjön | 5 | 8 | 8 | 7 | **4** | 8 |
+| ängen | 5 | 8 | 7 | 6 | **3** | 8 |
+| sjön | 5 | 8 | 8 | 6 | **4** | 8 |
 | skogen | 8 | 7 | 8 | 8 | 6 | 8 |
-| grottan | 8 | 7 | 8 | 8 | 5 | 8 |
+| grottan | 8 | 7 | 8 | 8 | 4 | 8 |
 
    Kravet (≥ 6, och ≥ 5 för fro11 och bara jättar, 8/8 katter) nås utom **bara jättar på ängen (3) och sjön (4)**.
    Den nya jättens ruta (ca 220 × 170 px) täcker huvudena bakom. Spökhuset, grinden och dammen tar bakre raden, och
@@ -200,3 +200,8 @@ dinosaurie, häst, ko, elefant.)
    krympningen), och cirkustältet skymmer inte växthuset om båda är vakna. Slottet mot sjukhuset provas i p3-prov F.
 6. **Ankfallet (p3-prov K, Doodle 18:46):** ankan, ankan och en fisk, och en fisk på ängen. Simmaren simmar i dammen
    (sim, inte flyg, y ≤ 0,45, inom dammens radie) och svävar aldrig.
+7. **Mätt i webbläsaren (p3a-arb, 20:00, före torrkörningen):** b66 69 → 4 fel av 1 115 (golem 63 %, stegosaurus 65 %,
+   velociraptor 69 % mot 70 %; planka 16 × 20 px), BYGG grönt. p3-prov: C, K, T grönt, F slottet grönt efter att jämförelsen
+   görs i full storlek. P har 13 fel: kapaciteten för bara jättar (ängen 3, sjön 4). Resten gäller regelns ruta mot den
+   ritade modellen. Höga eller långa modeller (spinosaurus långt bak 43–44 %, ko, häst) och huvuden 13–23 % mot 10 %
+   tillåtet. Rutan räknas ur målhöjd och fotavtryck, inte ur modellens verkliga form.
