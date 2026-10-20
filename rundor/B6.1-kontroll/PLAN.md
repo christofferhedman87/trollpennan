@@ -17,6 +17,12 @@ Doodle: `git checkout main && git pull && git checkout -b runda-b61-kod && bash 
 | B | Bokens gåta tog alla 181 hemliga djur i ordning; på sjön kom ett sjödjur först efter 181 "Ny gåta". | `gatUrval`: platsens `hemliga` (data/platser.json) först, andra först när platsens är funna. | b61-prov G, b6-1.test.ts |
 | C | Sju färguppdrag (granskad:false) sa "lånar färg från en tomat/himlen/solen/gräset". | Nya Bengtsson-texter, t.ex. "Jag vill se två vänner: en i tomatens färg och en i himlens färg!" Färgordet självt får inte stå i repliken (R6A-regeln "ledtråden läcker inte svaret", alla böjningar). | b61-data.mjs, b6-1.test.ts |
 
+## Tillägg (E) och (F)
+| # | Fynd | Åtgärd | Bevis |
+|---|------|--------|-------|
+| E | Skyskrapa/slott (målhöjd 2,6) och ufo/grävmaskin stod bland djuren (tyngst först = mittplatsen) och skymde dem. | Ny `data/storlek.json`: klass per kategori (hus, grotta → "stor", tak 1,5; fordon → tak 1,1), zon "bak" = egna platser längst bak (z ≈ -1,3, djuren står på z ≥ -0,15). "jättestor" lyfter aldrig över taket (`takSkala`). Nya modellpaket med samma kategori följer regeln utan kod. | b61-prov E (flicka + katt framför fyra stora saker), b6-1.test.ts |
+| F | 82 kända ord (färger, storlekar, mönster, förmågor – t.ex. "en regnbåge") gav `behover_djur`: boken stod kvar öppen utan tydlig återkoppling. | `src/tolk/aterkoppling.ts` + `data/aterkoppling.json`: bara kända ord utan kropp → banderoll "Det där kan jag inte rita ensamt än. Skriv ett djur också – till exempel en katt!", boken stängs. Okända ord blir ägg som förut. | b61-prov F, b6-1.test.ts (alla 900+ kända ord ger något synligt; testet hittade också "ljus") |
+
 ## Spelkontroll 375x812 (alla fyra platser)
 Res ängen → skogen → sjön → grottan på kartan, ett uppdrag per plats (kanin-fryser, skog-rod-van, sjo-bla-van, grotta-forsta-skenet),
 stall + hämta ut + gåva på varje plats: allt fungerar efter fixarna ovan.
@@ -27,4 +33,5 @@ stall + hämta ut + gåva på varje plats: allt fungerar efter fixarna ovan.
 - Skärmbild av kartan mot grottan med många djur tog > 8 s i swiftshader (bara långsamt i provmiljön).
 - Gamla prov som redan faller på main: `R9B-layout/r9b-prov` (väntar sig den kompakta gåtan under uppdrag, borttagen i R9I) och `R9-tydlighet/r9-prov` (väntar på `bengtsson-ikon`).
 - `rundor/R3F-modellserie/MFIX/mfix-bygg.mjs` har 2 eslint-varningar (oanvända `vand`, `LJBLA`) – modellpaketets fil, lämnad orörd.
+- "ljus" (entiteter-ord) tolkas som färgordet ljus och skapar ingen sak; ger nu banderollen (B6.2: tolken).
 - data/platser.json `milstolpe.final`, `las_upp` och `final_fore` läses inte av koden (finalen kommer ur bengtsson.json `final:true`).

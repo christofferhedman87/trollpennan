@@ -1,5 +1,5 @@
 diff --git a/PROJECT.md b/PROJECT.md
-index 965d534151cd32d5f65a1b0b57f28093e20db772..02b7e99905e4334d9aa67753a55b4d02340042f2 100644
+index 965d534151cd32d5f65a1b0b57f28093e20db772..fc9c8cb76df6b6b166dcb2a204f2938563ed52e0 100644
 --- a/PROJECT.md
 +++ b/PROJECT.md
 @@ -294,9 +294,9 @@ Spelet visar bara kredit för CC BY (idag groda, `Spel.tsx` r.2953). CC0 kräver
@@ -14,7 +14,7 @@ index 965d534151cd32d5f65a1b0b57f28093e20db772..02b7e99905e4334d9aa67753a55b4d02
  | 9 | Crown – https://poly.pizza/m/i0PZVuVlYv; Cupcake – https://poly.pizza/m/XL70IUDIrZ; Arrow Sign – https://poly.pizza/m/dwmvPHHCdq | Quaternius (via Poly Pizza) | CC0 1.0 (modellsidorna visar `Licence: CC0 1.0`) | Krona som riktig tillbehörsmodell i R3, gåva, skylt |
  | 10 | Hat (fedora, "hat-stylised") – https://poly.pizza/m/lNN3PlrjSa | hat_my_guy (Poly Pizza) | CC0 1.0 (modellsidan) | Hatt-kandidat; "vuxen" form enligt assets-bengtsson/RAPPORT.md, kitets hatt är sötare |
  | 11 | KayKit Halloween Bits – https://kaylousberg.itch.io/halloween-bits; KayKit Adventurers – https://kaylousberg.itch.io/kaykit-adventurers | Kay Lousberg | CC0 (itch-sidans "Asset license: Creative Commons Zero v1.0 Universal" och "no attribution required"). Adventurers har vapen: välj bort för barnspel | Hattar/rekvisita (innehåll ej inspekterat) |
-@@ -715,12 +715,15 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
+@@ -715,12 +715,17 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
  | 10 | "en röv" i stall-listan: **inget fel** – texten är "en räv" (test mot blocklist.json för alla djur); typsnitt/bildskärpa. Större namn i R9H | R9H |
  | 11 | Karttexten bara på kartan: **avsiktligt** (R9G punkt 7) | – |
  | 12 | Skogen/sjön/grottan nästan tomma: startdekoren ligger mest utanför synfältet (telefon ser bara plats-x ≈ 0,30–0,70) och i fel skala | **R8-2a** (Build) |
@@ -32,6 +32,8 @@ index 965d534151cd32d5f65a1b0b57f28093e20db772..02b7e99905e4334d9aa67753a55b4d02
 +| 22 | ~~"Till stallet" låg över djuret och humörikonen; ett nytt tryck på djuret kunde stalla det~~ → knappen ligger i nedersta UI-raden bredvid Pennans bok | **B6.1** klar |
 +| 23 | ~~Bokens gåta tog inte platsens djur först (181 "Ny gåta" innan ett sjödjur)~~ → platsens `hemliga` först, andra när de är funna | **B6.1** klar |
 +| 24 | ~~Ett djur som hämtats ut ur stallet på en plats gick inte att trycka på~~ (skinnad modell fick träffsfär 0 vid första träffprovet under inpoppningen) | **B6.1** klar |
++| 25 | ~~Stora saker (skyskrapa, ufo, grävmaskin, slott) täckte ängen; en flicka försvann bakom skyskrapan~~ → `data/storlek.json`: klass per kategori ger tak för höjden och zon "bak" (längst bak, bakom alla djur) | **B6.1** klar |
++| 26 | ~~"en regnbåge" gav ingenting och boken stod kvar~~ → känt ord utan modell ger banderoll ("kan inte rita ensamt än") och boken stängs; test går igenom alla kända ord. Kvar: "ljus" tolkas som färgord, inte som sak | **B6.1** klar |
 diff --git a/eslint.config.mjs b/eslint.config.mjs
 index bfc3c2560b42997c103f92bb5b681ce46163eb0c..e38534522e2617ecd54ec6ff5a737399baec43f3 100644
 --- a/eslint.config.mjs
@@ -214,10 +216,16 @@ index daaffa2c3858ffe29410e1b8a72167782cb157fe..8f806940656096b91b66d9a57ca1f552
    const faktor = primar.getBaseColorFactor();
    const tex = primar.getBaseColorTexture();
 diff --git a/src/spel/Spel.tsx b/src/spel/Spel.tsx
-index 3d3541d1c05724a706f88fc34478802090fe4599..89808aea33904c31263733e8a3c1e64d8fec0a19 100644
+index 3d3541d1c05724a706f88fc34478802090fe4599..7f4351bf8839245ef4f4df03f7584296ef16c1f6 100644
 --- a/src/spel/Spel.tsx
 +++ b/src/spel/Spel.tsx
-@@ -158,7 +158,6 @@ export function Spel() {
+@@ -1,4 +1,5 @@
+ import { useDialogFokus } from "./dialogFokus";
++import { kanInteRita } from "@/tolk/aterkoppling.ts";
+ import upplevelse from "../../data/upplevelse.json";
+ import { LagringsInfo } from "./LagringsInfo";
+ import { useEffect, useLayoutEffect, useRef, useState } from "react";
+@@ -158,7 +159,6 @@ export function Spel() {
    const [skylt, setSkylt] = useState<{ text: string; nytt: string | null } | null>(null);
    const [valj, setValj] = useState<{ rubrik: string; eller?: string; djur: Sparad[]; nyckel: string } | null>(null);
    const [uppFlik, setUppFlik] = useState<"pagar" | "klar">("pagar");
@@ -225,7 +233,7 @@ index 3d3541d1c05724a706f88fc34478802090fe4599..89808aea33904c31263733e8a3c1e64d
    const host = useRef<HTMLDivElement>(null);
    const angRef = useRef<HTMLElement>(null);
    const filRef = useRef<HTMLInputElement>(null);
-@@ -368,7 +367,6 @@ export function Spel() {
+@@ -368,7 +368,6 @@ export function Spel() {
      setPanel("spel");
      setGavaTill(null);
      gavaRef.current = null;
@@ -233,7 +241,7 @@ index 3d3541d1c05724a706f88fc34478802090fe4599..89808aea33904c31263733e8a3c1e64d
      vantarRef.current = null;
      omradeRef.current = id;
      setOmrade(id);
-@@ -421,7 +419,6 @@ export function Spel() {
+@@ -421,7 +420,6 @@ export function Spel() {
        visaBanner(s.text, "ovr");
        setKartaText(s.text);
        vantarRef.current = { slag: "oppna", omrade: id, taggar: s.taggar };
@@ -241,7 +249,7 @@ index 3d3541d1c05724a706f88fc34478802090fe4599..89808aea33904c31263733e8a3c1e64d
        setLage("skriv");
        setHand(true);
        setKartaOpp(false);
-@@ -434,7 +431,6 @@ export function Spel() {
+@@ -434,7 +432,6 @@ export function Spel() {
      valjKor.current = (d) => {
        setValj(null);
        vantarRef.current = null;
@@ -249,7 +257,7 @@ index 3d3541d1c05724a706f88fc34478802090fe4599..89808aea33904c31263733e8a3c1e64d
        visaBanner(oppnaMed(id, d), "ovr");
        gaIn(id);
      };
-@@ -450,7 +446,6 @@ export function Spel() {
+@@ -450,7 +447,6 @@ export function Spel() {
      if (s.typ === "inga") {
        visaBanner(s.text, "ovr");
        vantarRef.current = { slag: "del", taggar: s.taggar };
@@ -257,7 +265,7 @@ index 3d3541d1c05724a706f88fc34478802090fe4599..89808aea33904c31263733e8a3c1e64d
        setLage("skriv");
        setHand(true);
        setKartaOpp(false);
-@@ -463,7 +458,6 @@ export function Spel() {
+@@ -463,7 +459,6 @@ export function Spel() {
      valjKor.current = (d) => {
        setValj(null);
        vantarRef.current = null;
@@ -265,7 +273,7 @@ index 3d3541d1c05724a706f88fc34478802090fe4599..89808aea33904c31263733e8a3c1e64d
        visaBanner(oppnaOn(d), "ovr");
        gaIn("on");
      };
-@@ -480,7 +474,6 @@ export function Spel() {
+@@ -480,7 +475,6 @@ export function Spel() {
        const text = fyll(OMR.karta.inget_djur, { kan });
        visaBanner(text, "ovr");
        vantarRef.current = { slag: "skicka", uppdrag: uppId, taggar: [tagg] };
@@ -273,7 +281,16 @@ index 3d3541d1c05724a706f88fc34478802090fe4599..89808aea33904c31263733e8a3c1e64d
        setLage("skriv");
        setHand(true);
        setKartaOpp(false);
-@@ -863,7 +856,6 @@ export function Spel() {
+@@ -794,6 +788,8 @@ export function Spel() {
+       return;
+     }
+     if (utfall.typ === "behover_djur") {
++      const kan = kanInteRita(utfall, raw); // B6.1 (F): känt ord utan modell → synlig banderoll, boken stängs
++      if (kan) { visaBanner(kan, "okand"); ljud.puff(); setBehover(null); setForslag(null); rensaSkriv(); setBokOpp(false); return; }
+       useMinne.getState().sparaOkanda(utfall.okanda);
+       for (const m of utfall.meddelanden) visaBanner(m, "okand");
+       if (utfall.meddelanden.length) ljud.puff();
+@@ -863,7 +859,6 @@ export function Spel() {
      const vant = vantarRef.current;
      if (vant && sista && passarDjur(sista, vant.taggar)) {
        vantarRef.current = null;
@@ -281,7 +298,7 @@ index 3d3541d1c05724a706f88fc34478802090fe4599..89808aea33904c31263733e8a3c1e64d
        if (vant.slag === "oppna") {
          visaBanner(oppnaMed(vant.omrade, sista), "ovr");
          gaIn(vant.omrade);
-@@ -1379,6 +1371,7 @@ export function Spel() {
+@@ -1379,6 +1374,7 @@ export function Spel() {
        }
      }, 200);
      return () => window.clearInterval(id);
@@ -289,7 +306,7 @@ index 3d3541d1c05724a706f88fc34478802090fe4599..89808aea33904c31263733e8a3c1e64d
    }, []);
  
    useEffect(() => {
-@@ -1423,6 +1416,7 @@ export function Spel() {
+@@ -1423,6 +1419,7 @@ export function Spel() {
      };
      window.addEventListener("keydown", ned);
      return () => window.removeEventListener("keydown", ned);
@@ -297,7 +314,7 @@ index 3d3541d1c05724a706f88fc34478802090fe4599..89808aea33904c31263733e8a3c1e64d
    }, []);
  
    useEffect(() => {
-@@ -1518,7 +1512,6 @@ export function Spel() {
+@@ -1518,7 +1515,6 @@ export function Spel() {
          setGavaTill(null);
          setSkylt(null);
          setValj(null);
@@ -305,8 +322,37 @@ index 3d3541d1c05724a706f88fc34478802090fe4599..89808aea33904c31263733e8a3c1e64d
          setKartaText(null);
          setPanel("spel");
          synkaAv(null);
+diff --git a/src/spel/ang/delat.ts b/src/spel/ang/delat.ts
+index 18616a03dda2c27ba4747b5a98e151d893014447..19fc160eaf1a03baa9368abf37757180c14e6b50 100644
+--- a/src/spel/ang/delat.ts
++++ b/src/spel/ang/delat.ts
+@@ -3,7 +3,7 @@ import type { ThreeEvent } from "@react-three/fiber";
+ import * as THREE from "three";
+ import texterJson from "../../../data/texter-gard.json" with { type: "json" };
+ import type { Sparad } from "../brygga.ts";
+-import { artFarg, flyger, simmar, vikt } from "../entiteter.ts";
++import { artFarg, BAK_PLATSER, flyger, simmar, storlekKlass, vikt } from "../entiteter.ts";
+ import type { Plats } from "../platser.ts";
+ import { placeraPaPlats } from "../platsYta.ts";
+ 
+@@ -155,7 +155,14 @@ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
+     const ang = (i / Math.max(1, sim.length)) * Math.PI * 2;
+     return [1.15 + Math.cos(ang) * 0.35, 0.16, -0.45 + Math.sin(ang) * 0.22];
+   }
+-  const land = alla.filter((d) => !simmare(d) && !flygare(d));
++  // B6.1 (E): stora saker (data/storlek.json zon "bak") står längst bak, bakom alla djur
++  if (storlekKlass(spec.kropp)?.zon === "bak") {
++    const bak = alla.filter((d) => storlekKlass(d.kropp)?.zon === "bak" && !simmare(d) && !flygare(d));
++    const i = Math.max(0, bak.findIndex((d) => d.uid === spec.uid));
++    const p = BAK_PLATSER[i] ?? [(i % 2 === 0 ? -1 : 1) * (2.2 + Math.floor(i / 2) * 0.4), -1.1];
++    return [p[0], 0, p[1]];
++  }
++  const land = alla.filter((d) => !simmare(d) && !flygare(d) && storlekKlass(d.kropp)?.zon !== "bak");
+   const flyg = alla.filter((d) => flygare(d) && !simmare(d));
+   const tyngd = (d: Sparad) => vikt(d.kropp);
+   if (flygare(spec)) {
 diff --git a/src/spel/ang/djur.tsx b/src/spel/ang/djur.tsx
-index 98d53619805dab607fb4a31b8747bae58b844947..7232674e4b42a2e067373ea2c7c38d6ea43ac6bd 100644
+index 98d53619805dab607fb4a31b8747bae58b844947..953e873b18fd39de810356d70bb3cc9c3f8b511b 100644
 --- a/src/spel/ang/djur.tsx
 +++ b/src/spel/ang/djur.tsx
 @@ -6,8 +6,8 @@ import type { Plats } from "../platser.ts";
@@ -316,7 +362,7 @@ index 98d53619805dab607fb4a31b8747bae58b844947..7232674e4b42a2e067373ea2c7c38d6e
 -import { GltfDjur, GltfSak, harModell, type DjurSignal } from "../gltfDjur.tsx";
 -import { arSak, hoppHojd, malhojd, svavar } from "../entiteter.ts";
 +import { GltfDjur, GltfSak, type DjurSignal } from "../gltfDjur.tsx";
-+import { arSak, harModell, hoppHojd, malhojd, svavar } from "../entiteter.ts";
++import { arSak, harModell, hoppHojd, malhojd, svavar, takSkala } from "../entiteter.ts";
  import { faestTillbehor, procAnkare } from "../tillbehor/index.ts";
  import { DjurEffekter } from "../effekter.tsx";
  import { MILJO } from "../miljo.ts";
@@ -334,12 +380,21 @@ index 98d53619805dab607fb4a31b8747bae58b844947..7232674e4b42a2e067373ea2c7c38d6e
    const mat = useMemo(() => {
      if (!spec.glans) return KROPP_MAT;
      return new THREE.MeshToonMaterial({
+@@ -280,7 +279,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
+     }
+     const lyft = Math.sin(hopp.current * Math.PI) * (snurr.current > 0 ? 0.85 : 0.45);
+     const bob = Math.sin(t * (flyg ? 2.4 : 1.6) + index) * (flyg ? 0.16 : sim ? 0.08 : 0.04);
+-    const s = skal.current * (spec.skala || 1);
++    const s = skal.current * takSkala(spec.kropp, spec.skala || 1); // B6.1 (E): stora saker under taket
+     const kram = 1 - Math.sin(Math.min(1, kisa.current) * Math.PI) * 0.14;
+     g.scale.set((s * bred) / Math.sqrt(kram), s * hojd * kram, (s * bred) / Math.sqrt(kram));
+     const wx = Math.cos(t * 0.25 + index) * 0.22;
 diff --git a/src/spel/b6-1.test.ts b/src/spel/b6-1.test.ts
 new file mode 100644
-index 0000000000000000000000000000000000000000..a3559ba945107e0d6f6942f4514766d0700f8d86
+index 0000000000000000000000000000000000000000..4e16771a704e3c996368e83dd76f29ed0e0d470b
 --- /dev/null
 +++ b/src/spel/b6-1.test.ts
-@@ -0,0 +1,105 @@
+@@ -0,0 +1,146 @@
 +// B6.1 kontroll och buggfix: obelysta GLB-material, gåtvalet per plats, tackbubblan mot banderollen,
 +// djur:true / final:true i platsernas uppdrag, och färguppdragen utan "låna färg".
 +import assert from "node:assert/strict";
@@ -353,6 +408,10 @@ index 0000000000000000000000000000000000000000..a3559ba945107e0d6f6942f4514766d0
 +import { kravUppfylltTolkat, nastaSkrivUppdrag } from "./uppdragsmotor.ts";
 +import { skjutForbi } from "./ui/bubbla.ts";
 +import { tolkaMedReserv } from "../tolk/reserv.ts";
++import { kanInteRita } from "../tolk/aterkoppling.ts";
++import { ENTITETER, malhojd, storlekKlass, takSkala } from "./entiteter.ts";
++import { djurPlats } from "./ang/delat.ts";
++import ordJson from "../../data/ord.json" with { type: "json" };
 +
 +test("B6.1 (1): KHR_materials_unlit-material blir upplysta, med samma textur, och glans (emissive) går att sätta", () => {
 +  const tex = new THREE.Texture();
@@ -445,6 +504,43 @@ index 0000000000000000000000000000000000000000..a3559ba945107e0d6f6942f4514766d0
 +    assert.match(u.text_bengtsson!, /en (vän )?i (tomatens|himlens|solens|gräsets) färg/i, id);
 +  }
 +});
++
++test("B6.1 (E): stora saker har ett tak och står längst bak, bakom alla djur – regeln kommer ur data/storlek.json", () => {
++  for (const k of ["skyskrapa", "slott", "ufo", "gravmaskin"]) {
++    const kl = storlekKlass(k);
++    assert.ok(kl, `${k} har en storleksklass`);
++    assert.ok(malhojd(k) <= kl!.tak, `${k}: målhöjden under taket`);
++    assert.ok(takSkala(k, 3) * malhojd(k) <= kl!.tak + 1e-9, `${k}: "jättestor" går inte över taket`);
++  }
++  for (const [k, e] of Object.entries(ENTITETER)) {
++    if (e.typ === "djur") assert.equal(storlekKlass(k), null, `${k}: djur har ingen klass`);
++    if (e.typ === "byggnad" && e.kategori === "hus") assert.ok(storlekKlass(k), `${k}: hus är stora`);
++  }
++  assert.equal(takSkala("katt", 3), 3, "djur påverkas inte");
++  const spar = (uid: string, kropp: string) => ({ uid, kropp, formel: `en ${kropp}`, beskrivning: "", skala: 1, alpha: 1, formagor: [], tillbehor: [], overraskningar: [], skapad: 1 }) as never;
++  const alla = [spar("a", "skyskrapa"), spar("b", "flicka"), spar("c", "katt"), spar("d", "slott"), spar("e", "ufo"), spar("f", "gravmaskin"), spar("g", "hund")];
++  const z = (uid: string) => djurPlats(alla.find((d: { uid: string }) => d.uid === uid)!, alla)[2];
++  const bakerst = Math.max(z("a"), z("d"), z("e"), z("f"));
++  for (const uid of ["b", "c", "g"]) assert.ok(z(uid) > bakerst + 0.5, `djuret ${uid} står framför alla stora saker`);
++});
++
++test("B6.1 (F): varje känt ord ger något synligt – ett djur/en sak, ett ägg, ett förslag eller 'kan inte rita än' (boken stängs)", () => {
++  const ord = new Set<string>();
++  for (const o of (ordJson as { ord: { id: string; visa?: string }[] }).ord) ord.add(o.visa ?? o.id);
++  for (const e of Object.values(ENTITETER)) for (const w of (e as { ord?: string[] }).ord ?? []) ord.add(w);
++  const tysta: string[] = [];
++  for (const w of ord) {
++    const u = tolkaMedReserv(w);
++    if (u.typ === "skapad" && (u.varelse.kropp === "agg" || ENTITETER[u.varelse.kropp])) continue;
++    if (u.typ === "forslag" || u.typ === "sparr") continue;
++    if (kanInteRita(u, w)) continue;
++    tysta.push(`${w} (${u.typ})`);
++  }
++  assert.deepEqual(tysta, [], `ord som inte ger något: ${tysta.slice(0, 20).join(", ")}`);
++  assert.ok(ord.size > 900);
++  assert.ok(kanInteRita(tolkaMedReserv("en regnbåge"), "en regnbåge"), "en regnbåge");
++  assert.equal(kanInteRita(tolkaMedReserv("en katt"), "en katt"), null);
++});
 diff --git a/src/spel/belys.ts b/src/spel/belys.ts
 new file mode 100644
 index 0000000000000000000000000000000000000000..7b67145a9ea4e3444160c824f4cca20d2b73a0a0
@@ -505,10 +601,18 @@ index 0000000000000000000000000000000000000000..7b67145a9ea4e3444160c824f4cca20d
 +  return n;
 +}
 diff --git a/src/spel/entiteter.ts b/src/spel/entiteter.ts
-index a67608aa57553da7a4ebf0fa6a1a94164d4fa0fb..b5a3170127f28415017a97996c4fd5415929da14 100644
+index a67608aa57553da7a4ebf0fa6a1a94164d4fa0fb..eaadf6cdd198cd4b59c3f15f9099db739f19d935 100644
 --- a/src/spel/entiteter.ts
 +++ b/src/spel/entiteter.ts
-@@ -66,6 +66,11 @@ export function forladdaUrls(): string[] {
+@@ -2,6 +2,7 @@
+ // Ett nytt djur = en rad i entiteter.json + en rad i tillgangar.json + (efter granskning) en ordrad. Ingen kod per djur.
+ import entiteterJson from "../../data/entiteter.json" with { type: "json" };
+ import tillgangarJson from "../../data/tillgangar.json" with { type: "json" };
++import storlekJson from "../../data/storlek.json" with { type: "json" };
+ 
+ export type Typ = "djur" | "tillbehor" | "byggnad" | "foremal" | "natur";
+ export type Rorelse = "land" | "flyg" | "sim" | "svavar";
+@@ -66,13 +67,41 @@ export function forladdaUrls(): string[] {
    return [...urls];
  }
  
@@ -520,6 +624,37 @@ index a67608aa57553da7a4ebf0fa6a1a94164d4fa0fb..b5a3170127f28415017a97996c4fd541
  export function modellUrl(kropp: string): string | null {
    const m = ENTITETER[kropp]?.modell;
    return (m && TILLGANGAR[m]?.fil) || null;
+ }
+ 
++export type StorlekKlass = { id: string; tak: number; zon: "bak" };
++const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak" }>; kategori: Record<string, string>; bak: { platser: [number, number][] } };
++export const BAK_PLATSER = STORLEK.bak.platser;
++
++/** B6.1 (E): storleksklassen för en sak ur data/storlek.json (via kategorin). Djur har aldrig någon klass. */
++export function storlekKlass(kropp: string): StorlekKlass | null {
++  const e = ENTITETER[kropp];
++  if (!e || e.typ === "djur") return null;
++  const id = STORLEK.kategori[e.kategori];
++  const k = id ? STORLEK.klasser[id] : undefined;
++  return k && id ? { id, ...k } : null;
++}
++
++/** Målhöjden; för stora saker högst klassens tak (B6.1). */
+ export function malhojd(kropp: string): number {
+-  return ENTITETER[kropp]?.malhojd ?? 1;
++  const h = ENTITETER[kropp]?.malhojd ?? 1;
++  const k = storlekKlass(kropp);
++  return k ? Math.min(h, k.tak) : h;
++}
++
++/** B6.1 (E): barnets storleksord ("stor", "jätte") får inte lyfta en stor sak över taket. */
++export function takSkala(kropp: string, skala: number): number {
++  const k = storlekKlass(kropp);
++  if (!k) return skala;
++  return Math.min(skala, k.tak / Math.max(0.001, malhojd(kropp)));
+ }
+ 
+ /** R3G: allt med modell som inte är ett djur (föremål, natur, byggnad, mat, fordon, kläder) står still på ängen. */
 diff --git a/src/spel/gata.ts b/src/spel/gata.ts
 index a73388b9a437089a4b65648d1ff472a54b159dd3..12636168d08b166425f40ebb17b5b74ea98c7e69 100644
 --- a/src/spel/gata.ts
@@ -874,6 +1009,31 @@ index 9c01f2e6453eac7f08f12c2c84433c02f4440c15..5f4a13ede77c4b34162c0ca5de854054
  
  /* R9K: humörikonen ovanför djuret i 3D (ikon per humör i data/humor.json) */
  .humor-ikon-3d {
+diff --git a/src/tolk/aterkoppling.ts b/src/tolk/aterkoppling.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..ef6a6dfd436b20728686082a0e1f793c8eeab0b5
+--- /dev/null
++++ b/src/tolk/aterkoppling.ts
+@@ -0,0 +1,19 @@
++// B6.1 (F): ord som känns igen men saknar modell ska alltid ge synlig återkoppling (aldrig en tyst, öppen bok).
++import aterkopplingJson from "../../data/aterkoppling.json" with { type: "json" };
++import entJson from "../../data/entiteter.json" with { type: "json" };
++import ordJson from "../../data/ord.json" with { type: "json" };
++import type { Utfall } from "./typer.ts";
++
++export const KAN_INTE_RITA = aterkopplingJson.kan_inte_rita;
++const KANDA = new Set<string>();
++for (const o of (ordJson as { ord: { id: string; visa?: string; former?: string[] }[] }).ord) {
++  for (const f of [o.id, o.visa, ...(o.former ?? [])]) if (f) KANDA.add(f.toLowerCase());
++}
++for (const e of Object.values((entJson as unknown as { entiteter: Record<string, { ord?: string[] }> }).entiteter)) for (const f of e.ord ?? []) KANDA.add(f.toLowerCase());
++
++/** Texten att visa när barnet bara skrev kända ord som inte blir något (t.ex. "en regnbåge", "röd"), annars null. */
++export function kanInteRita(u: Utfall, raw: string): string | null {
++  if (u.typ !== "behover_djur" || u.okanda.length || u.meddelanden.length) return null;
++  const ord = raw.toLowerCase().match(/[a-zåäöéü]+/g) ?? [];
++  return ord.some((t) => KANDA.has(t)) ? KAN_INTE_RITA : null;
++}
 diff --git a/verification/B02R-regression-browser-smoke-B01R.mjs b/verification/B02R-regression-browser-smoke-B01R.mjs
 index 637fb0bbbdd659b2db450678f56fed9979c432d8..42b15f37d7dc4f41f71a25ac3ede58b40296e866 100644
 --- a/verification/B02R-regression-browser-smoke-B01R.mjs
@@ -963,3 +1123,35 @@ index 2194ac5cf711517c80e8d4a29001c1a91d0c994e..85655b9d2d43b65d9be75892ff28ab59
  await lage("ordbok", inget, () => troll(() => window.__troll.ordbok(true)));
  await lage("foralder", inget, () => troll(() => window.__troll.foralder(true)));
  await lage("album", inget, () => troll(() => window.__troll.album(true)));
+diff --git a/data/aterkoppling.json b/data/aterkoppling.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..8067926bb39d2a521a0a878667715454f41ed4f0
+--- /dev/null
++++ b/data/aterkoppling.json
+@@ -0,0 +1,4 @@
++{
++ "_om": "B6.1 (F): ett ord som pennan känner igen men inte kan rita ensamt (färg, storlek, mönster, förmåga …) ger alltid en synlig banderoll och boken stängs.",
++ "kan_inte_rita": "Det där kan jag inte rita ensamt än. Skriv ett djur också – till exempel en katt!"
++}
+diff --git a/data/storlek.json b/data/storlek.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..ee07933f2d7edb553228b686106c187288060fbc
+--- /dev/null
++++ b/data/storlek.json
+@@ -0,0 +1,16 @@
++{
++ "_om": "B6.1 (E): storleksklasser för saker (aldrig djur). En klass ger ett tak för höjden (målhöjd × barnets 'stor/jätte' blir aldrig högre än taket) och en placeringszon. Zon 'bak' = längst bak på ängen och platserna, bakom alla djur, så att en skyskrapa, ett slott, ett ufo eller en grävmaskin aldrig skymmer ett djur i förgrunden. Klassen väljs med kategori i data/entiteter.json; nya modellpaket med samma kategori följer regeln utan kod.",
++ "klasser": {
++  "stor": { "tak": 1.5, "zon": "bak" },
++  "fordon": { "tak": 1.1, "zon": "bak" }
++ },
++ "kategori": {
++  "hus": "stor",
++  "grotta": "stor",
++  "fordon": "fordon"
++ },
++ "bak": {
++  "_om": "Platser i zonen 'bak' (x, z i ängens koordinater; djurens platser har z ≥ -0.15). Fylls i ordning; fler saker än platser läggs ytterst.",
++  "platser": [[-1.6, -1.3], [1.6, -1.3], [-0.8, -1.4], [0.8, -1.4], [0, -1.45], [-2.2, -1.1], [2.2, -1.1]]
++ }
++}

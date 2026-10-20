@@ -3,6 +3,8 @@
 //   S  "Till stallet" ligger i UI-raden, aldrig över djuret/humörikonen; ett nytt tryck på djuret stallar inte
 //   G  bokens gåta tar platsens egna djur först, och "Ny gåta" stannar bland dem
 //   K  tackbubblan krockar inte med banderollen ("Guldord!", "+1 stjärna!") eller en annan bubbla
+//   E  stora saker (skyskrapa, slott, ufo, grävmaskin) står längst bak under ett tak och skymmer inget djur
+//   F  "en regnbåge" (känt ord utan modell) ger en synlig banderoll och boken stängs
 //   P  alla fyra platser: res dit på kartan, lös ett uppdrag, stall + hämta ut, gåva → tack
 //   node rundor/B6.1-kontroll/b61-prov.mjs --bilder <mapp>   (exit 0 = alla steg gröna; kräver npm run build:pages)
 import fs from "node:fs";
@@ -13,7 +15,7 @@ import { chromium } from "playwright";
 const arg = (n, d) => { const i = process.argv.indexOf(`--${n}`); return i >= 0 ? process.argv[i + 1] : d; };
 const dist = path.resolve(arg("dist", "dist-pages"));
 const bilder = arg("bilder", "");
-const bara = arg("bara", "U,S,G,K,P").split(",");
+const bara = arg("bara", "U,S,G,K,E,F,P").split(",");
 if (bilder) fs.mkdirSync(bilder, { recursive: true });
 const BENGT = JSON.parse(fs.readFileSync("data/bengtsson.json", "utf8"));
 const PLATSDATA = JSON.parse(fs.readFileSync("data/platser.json", "utf8"));
@@ -222,6 +224,47 @@ await blok("K-gard", async () => {
   await p.waitForTimeout(200);
   await ingenKrock(p, "gården: lek-inbjudan");
   await bild(p, "b61-K-gard-tack.png");
+  await ctx.close();
+});
+
+// E: stora saker längst bak. Djurets skärmpunkt (huvudet) får inte ligga inom en stor saks skärmruta.
+await blok("E", async () => {
+  const { ctx, p } = await sida({});
+  const tjej = await nyttDjur(p, "ang", "en flicka");
+  const katt = await nyttDjur(p, "ang", "en katt");
+  const stora = [];
+  for (const f of ["en jättestor skyskrapa", "ett slott", "ett ufo", "en grävmaskin"]) stora.push(await nyttDjur(p, "ang", f));
+  await stangBok(p);
+  await p.waitForTimeout(2500);
+  const s = await sparat(p);
+  kolla("E sex saker/djur på ängen", s.ang?.length === 6, { kroppar: s.ang?.map((d) => d.kropp) });
+  for (const [namn, uid] of [["flickan", tjej], ["katten", katt]]) {
+    const m = await malAv(p, uid);
+    kolla(`E ${namn} syns (har ett skärmläge)`, !!m && m.x > 0 && m.x < 375 && m.y > 60 && m.y < 760, { m });
+    const traff = await p.evaluate(({ x, y }) => { const e = document.elementFromPoint(x, y); return e?.tagName ?? ""; }, m ?? { x: 0, y: 0 });
+    kolla(`E ${namn}: skärmpunkten ligger på 3D-ytan (inte under UI)`, traff === "CANVAS", { traff });
+  }
+  const djurY = await Promise.all([tjej, katt].map((u) => malAv(p, u)));
+  const sakY = await Promise.all(stora.map((u) => malAv(p, u)));
+  // stora saker längre bak = högre upp på skärmen (mindre y) än djurens fötter
+  kolla("E alla stora saker står bakom djuren (högre upp på skärmen)", sakY.every((m) => m) && djurY.every((m) => m) && Math.max(...sakY.map((m) => m.y)) < Math.min(...djurY.map((m) => m.y)), { sakY, djurY });
+  await bild(p, "b61-E-stora-saker.png");
+  await ctx.close();
+});
+
+// F: känt ord utan modell
+await blok("F", async () => {
+  const { ctx, p } = await sida({});
+  await p.click("[data-testid=pennans-bok]");
+  await p.waitForTimeout(400);
+  const banners = [];
+  const stopp = setInterval(() => p.locator(".banderoller").innerText().then((t) => t && banners.push(t)).catch(() => undefined), 150);
+  await p.evaluate(() => window.__troll.vakna("en regnbåge"));
+  await p.waitForTimeout(1500);
+  clearInterval(stopp);
+  kolla("F en regnbåge: synlig banderoll", banners.some((b) => /kan jag inte rita/.test(b)), { banners: [...new Set(banners)] });
+  kolla("F en regnbåge: boken stängs", !(await synlig(p, "[data-testid=bok-skarm]")));
+  await bild(p, "b61-F-regnbage.png");
   await ctx.close();
 });
 

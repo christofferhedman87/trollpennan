@@ -4,6 +4,7 @@
 #   (2) DOM-turens lägen 10–11 följer nya beteendet, alla 28 lägen stabila  (3)+(D) eslint . utan fel, src/scripts/verification utan varningar
 #   (4)+(A) tackbubblan/pratbubblor skjuts förbi banderollen ("Guldord!"); "Till stallet" ligger i UI-raden, aldrig över djuret
 #   (B) bokens gåta tar platsens egna djur först  (C) färguppdragen utan "lånar färg" (b61-data.mjs, bara granskad:false)
+#   (E) stora saker (data/storlek.json): tak + zon längst bak  (F) känt ord utan modell → banderoll, boken stängs
 #   (5) djur:true/final:true behålls (används) – låses i b6-1.test.ts  (6) hämtat djur på en plats går att trycka på igen
 # Kod = b61.patch (git apply, annars --3way). Data = b61-data.mjs (per nyckel, tål modellpaketen före eller efter).
 # Rör inte data/modeller, manifest eller LICENSES.md. Kräver B4.1 mergad. Doodle kör från repots rot på main:
@@ -25,8 +26,8 @@ if ! git apply --check "$D/b61.patch" 2>"$UT/apply.txt"; then
   TREVAGS=1
 fi
 if [ "${TREVAGS:-0}" = 1 ]; then git apply --3way "$D/b61.patch" || { echo "STOPP 2: trevägs-apply misslyckades"; exit 2; }; git reset -q; else git apply "$D/b61.patch"; fi
-NYA="src/spel/belys.ts src/spel/b6-1.test.ts"
-ANDRADE="PROJECT.md eslint.config.mjs package.json rundor/R1-dela-spel/mat/props.mjs rundor/R1-dela-spel/mat/r1b-plan-gen.mjs rundor/R1-dela-spel/testid-baslinje.json rundor/R3F-modellserie/M10/bygg-inkorg.mjs rundor/R9-tydlighet/farg-prov.mjs rundor/R9I-fix/r9i-prov.mjs scripts/modell-inlagg.mjs src/spel/Spel.tsx src/spel/ang/djur.tsx src/spel/entiteter.ts src/spel/gata.ts src/spel/gltfDjur.tsx src/spel/kenneyNatur.tsx src/spel/onska.ts src/spel/samling.tsx src/spel/ui/AngLager.tsx src/spel/ui/Ledtradsyta.tsx src/spel/ui/OnskaAnsikte.tsx src/spel/ui/Stall.tsx src/spel/ui/bubbla.ts src/styles.css verification/B02R-regression-browser-smoke-B01R.mjs verification/browser-smoke-B01R.mjs verification/r1-dom-tur.mjs"
+NYA="src/spel/belys.ts src/spel/b6-1.test.ts src/tolk/aterkoppling.ts data/storlek.json data/aterkoppling.json"
+ANDRADE="PROJECT.md eslint.config.mjs package.json rundor/R1-dela-spel/mat/props.mjs rundor/R1-dela-spel/mat/r1b-plan-gen.mjs rundor/R1-dela-spel/testid-baslinje.json rundor/R3F-modellserie/M10/bygg-inkorg.mjs rundor/R9-tydlighet/farg-prov.mjs rundor/R9I-fix/r9i-prov.mjs scripts/modell-inlagg.mjs src/spel/Spel.tsx src/spel/ang/delat.ts src/spel/ang/djur.tsx src/spel/entiteter.ts src/spel/gata.ts src/spel/gltfDjur.tsx src/spel/kenneyNatur.tsx src/spel/onska.ts src/spel/samling.tsx src/spel/ui/AngLager.tsx src/spel/ui/Ledtradsyta.tsx src/spel/ui/OnskaAnsikte.tsx src/spel/ui/Stall.tsx src/spel/ui/bubbla.ts src/styles.css verification/B02R-regression-browser-smoke-B01R.mjs verification/browser-smoke-B01R.mjs verification/r1-dom-tur.mjs"
 DATA="data/bengtsson.json"
 aterstall() { git checkout -q -- $ANDRADE $DATA; rm -f $NYA; }
 node "$D/b61-data.mjs" > "$UT/data.txt" 2>&1 || { cat "$UT/data.txt"; aterstall; echo "STOPP 2: b61-data föll"; exit 2; }
@@ -55,7 +56,7 @@ reg R9G-ux-stall/r9g-prov & reg R9H-fix/r9h-prov & reg R9I-fix/r9i-prov & wait
 reg R9K-fix/r9k-prov & reg R9J-humor/r9j-prov & reg B4.1-ljus/b41-prov & wait
 [ -s "$UT/regfel.txt" ] && { for f in $(cat "$UT/regfel.txt"); do echo "== $f"; grep -B2 '"ok": false' "$UT/$(basename $f).json" 2>/dev/null | head -20; tail -5 "$UT/$(basename $f).err"; done; aterstall; echo "STOPP 4: regression föll: $(cat "$UT/regfel.txt" | tr '\n' ' ')"; exit 4; }
 git add $ANDRADE $NYA $DATA
-git commit -qm "B6.1: obelysta GLB utan sidfel, Till stallet i UI-raden, gåtan tar platsens djur först, bubblor krockar inte med banderollen, hämtat djur går att trycka på, färguppdrag utan bildspråk, DOM-tur 10–11, eslint rent (Arkitektens patch)"
+git commit -qm "B6.1: stora saker längst bak under tak, känt ord utan modell ger återkoppling, obelysta GLB utan sidfel, Till stallet i UI-raden, gåtan tar platsens djur först, bubblor krockar inte med banderollen, hämtat djur går att trycka på, färguppdrag utan bildspråk, DOM-tur 10–11, eslint rent (Arkitektens patch)"
 echo "B6.1 OK: test:product $(grep -E '^# pass' "$UT/test.txt" | awk '{print $3}') gröna, typecheck/typecheck:pages 0, eslint . 0 fel (${EV:-0 warnings} utanför src/scripts/verification), $(tail -1 "$UT/struktur.txt"), build:pages ok, b61-prov exit 0 ($(grep -c '"ok": true' "$UT/prov.json") steg), DOM-tur $STAB/$ALLA stabila utan fel, r9g/r9h/r9i/r9k/r9j/b41-prov exit 0."
 echo "Bilder: $BILD/b61-*.png"
 echo "Nu: git push -u origin runda-b61-kod, PR, squash-merge. Skicka utdata till Arkitekten."
