@@ -3,8 +3,9 @@ import type { ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
 import texterJson from "../../../data/texter-gard.json" with { type: "json" };
 import type { Sparad } from "../brygga.ts";
-import { artFarg, BAK_PLATSER, flyger, simmar, storlekKlass, vikt } from "../entiteter.ts";
-import type { Plats } from "../platser.ts";
+import { artFarg, bakPlatser, flyger, fotKant, siktHojd, siktRadie, simmar, storlekKlass, vikt } from "../entiteter.ts";
+import { siktFri } from "./damm.ts";
+import { START_PLATS, type Plats } from "../platser.ts";
 import { placeraPaPlats } from "../platsYta.ts";
 
 export const HINT = (texterJson as { tred_hint: string }).tred_hint;
@@ -53,8 +54,14 @@ declare global {
       fps?: number;
       husx?: number;
       husy?: number;
+      /** B6.3 (G): dammens vatten på skärmen (CSS-px), för prov */
+      damm?: { x: number; y: number }[];
     };
     __tredMal?: Record<string, { x: number; y: number }>;
+    /** B6.3, för prov: skapelsens läge i världen (x, z) som det ritas, vickning inräknad. */
+    __tredPos?: Record<string, { x: number; z: number }>;
+    /** B6.3, för prov: ängens damm (ang/damm.ts). */
+    __damm?: { x: number; z: number; r: number };
     /** B4.1, för prov: ljus = punktljus i poolen (fast antal), pol = ljuspölar, aktiva = tända ljus, scen = punktljus i scenen, program = shaderprogram. */
     __ljus?: { ljus: number; pol: number; aktiva: number; program: number; scen?: number };
   }
@@ -123,7 +130,7 @@ const platsCache = new Map<string, Map<string, [number, number]>>();
 
 /**
  * R8-2b: på en plats med zoner flyttas varje landdjur/sak till land (land/fri, aldrig vattenyta)
- * och simmare till vattenytan. Flygare rörs inte. Ängen (plats saknas) är som förut.
+ * och simmare till vattenytan. Flygare rörs inte. B6.3 (I): ängen har också zoner (dammen), se angen3d.tsx.
  */
 export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number, number, number] {
   const bas = djurPlatsBas(spec, alla);
@@ -139,6 +146,9 @@ export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number,
         return [x, z] as [number, number];
       }),
       marka.map((d) => simmare(d)),
+      marka.map((d) => fotKant(d.kropp, d.skala)), // B6.3: kroppen (halva bredden ur bbox + vickning + 0,15) hålls från vattnet
+      // B6.3 (Doodle 09:17): på ängen står ingen kropp mellan kameran och dammen (bredvid eller bakom i stället)
+      marka.map((d) => (plats.id === START_PLATS && !simmare(d) ? (x: number, z: number) => siktFri(x, z, siktRadie(d.kropp, d.skala), siktHojd(d.kropp, d.skala)) : undefined)),
     );
     karta = new Map(marka.map((d, i) => [d.uid, ut[i]!]));
     if (platsCache.size > 30) platsCache.clear();
@@ -157,9 +167,10 @@ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
   }
   // B6.1 (E): stora saker (data/storlek.json zon "bak") står längst bak, bakom alla djur
   if (storlekKlass(spec.kropp)?.zon === "bak") {
+    // B6.3 (J): spridda i zonen, fast läge per uid, inte längre en rad framför staketet
     const bak = alla.filter((d) => storlekKlass(d.kropp)?.zon === "bak" && !simmare(d) && !flygare(d));
     const i = Math.max(0, bak.findIndex((d) => d.uid === spec.uid));
-    const p = BAK_PLATSER[i] ?? [(i % 2 === 0 ? -1 : 1) * (2.2 + Math.floor(i / 2) * 0.4), -1.1];
+    const p = bakPlatser(bak.map((d) => d.uid))[i] ?? [0, -1.4];
     return [p[0], 0, p[1]];
   }
   const land = alla.filter((d) => !simmare(d) && !flygare(d) && storlekKlass(d.kropp)?.zon !== "bak");

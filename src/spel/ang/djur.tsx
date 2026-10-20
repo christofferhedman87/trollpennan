@@ -239,6 +239,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
     return () => {
       if (upp.current) window.removeEventListener("pointerup", upp.current);
       if (window.__tredMal) delete window.__tredMal[spec.uid];
+      if (window.__tredPos) delete window.__tredPos[spec.uid];
     };
   }, [spec.uid]);
   useFrame((state, delta) => {
@@ -345,6 +346,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
     }
     if (t % 0.2 < d) {
       g.getWorldPosition(_mal);
+      (window.__tredPos ??= {})[spec.uid] = { x: Math.round(_mal.x * 100) / 100, z: Math.round(_mal.z * 100) / 100 }; // B6.3, för prov
       _mal.y += 1.2;
       _mal.project(state.camera);
       const rect = state.gl.domElement.getBoundingClientRect();

@@ -1,5 +1,5 @@
 import { useDialogFokus } from "./dialogFokus";
-import { kanInteRita } from "@/tolk/aterkoppling.ts";
+import { KAN_INTE_RITA_MS, kanInteRita } from "@/tolk/aterkoppling.ts";
 import upplevelse from "../../data/upplevelse.json";
 import { LagringsInfo } from "./LagringsInfo";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -228,19 +228,20 @@ export function Spel() {
     }
     bannerSyns.current = true;
     setBanners([next]);
-    bannerTimer.current = window.setTimeout(() => {
-      setBanners([]);
-      bannerTimer.current = window.setTimeout(() => {
-        bannerTimer.current = null;
-        visaNastaBanner();
-      }, 200);
-    }, 2400);
+    bannerTimer.current = window.setTimeout(() => stangBanner(), next.ms ?? 2400);
+  }
+
+  /** B6.3 (H): banderollen går och nästa i kön visas efter 200 ms – när tiden gått eller barnet trycker. */
+  function stangBanner() {
+    if (bannerTimer.current) window.clearTimeout(bannerTimer.current);
+    setBanners([]);
+    bannerTimer.current = window.setTimeout(() => ((bannerTimer.current = null), visaNastaBanner()), 200);
   }
 
   function slackBanner(texten: string) { bannerKo.current = bannerKo.current.filter((b) => b.text !== texten); setBanners((l) => l.filter((b) => b.text !== texten)); }
   useStallBanner(slackBanner);
-  function visaBanner(texten: string, slag: Banner["slag"]) {
-    bannerKo.current.push({ id: nyId(), text: platsText(texten, varldRef.current), slag });
+  function visaBanner(texten: string, slag: Banner["slag"], ms?: number) {
+    bannerKo.current.push({ id: nyId(), text: platsText(texten, varldRef.current), slag, ...(ms ? { ms, tryck: true } : {}) });
     if (bannerSyns.current) return;
     visaNastaBanner();
   }
@@ -791,7 +792,7 @@ export function Spel() {
     }
     if (utfall.typ === "behover_djur") {
       const kan = kanInteRita(utfall, raw); // B6.1 (F): känt ord utan modell → synlig banderoll, boken stängs
-      if (kan) { visaBanner(kan, "okand"); ljud.puff(); setBehover(null); setForslag(null); rensaSkriv(); setBokOpp(false); return; }
+      if (kan) { visaBanner(kan, "okand", KAN_INTE_RITA_MS); ljud.puff(); setBehover(null); setForslag(null); rensaSkriv(); setBokOpp(false); return; } // B6.3 (H): ≥ 5 s eller tryck
       useMinne.getState().sparaOkanda(utfall.okanda);
       for (const m of utfall.meddelanden) visaBanner(m, "okand");
       if (utfall.meddelanden.length) ljud.puff();
@@ -1773,7 +1774,7 @@ export function Spel() {
         <div className="duk" ref={host} />
         {visa3d ? <Angen3D natt={natt} saga={intro} onGrind={platsUi.tryckGrind} /> : null}
         {visa3d ? <PlatsResa plats={platsUi.plats} namn={platsUi.namn} ton={platsUi.ton} skylt={platsUi.skylt} intro={platsUi.intro} hem={platsUi.hem} /> : null}
-        <AngLager natt={natt} varld={varld} omrade={omrade} panel={panel} ang={ang} hemma={hemma} liv={liv} fotoMal={fotoMal} visaBanner={visaBanner} visaMossa={visaMossa} setFotoMal={setFotoMal} banners={banners} bubblor={bubblor} onskan={onskan} onskaOpp={onskaOpp} onskaSyns={onskaSyns} ank={ank} oppnaOnska={oppnaOnska} meny={meny} setMeny={setMeny} omUidRef={omUidRef} setLage={setLage} setBokOpp={setBokOpp} setLadaOpp={setLadaOpp} menyHem={menyHem} setBoUid={setBoUid} lada={lada} ladaOpp={ladaOpp} boUid={boUid} boDjur={boDjur} flyttaInDjur={flyttaInDjur} />
+        <AngLager natt={natt} varld={varld} omrade={omrade} panel={panel} ang={ang} hemma={hemma} liv={liv} fotoMal={fotoMal} visaBanner={visaBanner} stangBanner={stangBanner} visaMossa={visaMossa} setFotoMal={setFotoMal} banners={banners} bubblor={bubblor} onskan={onskan} onskaOpp={onskaOpp} onskaSyns={onskaSyns} ank={ank} oppnaOnska={oppnaOnska} meny={meny} setMeny={setMeny} omUidRef={omUidRef} setLage={setLage} setBokOpp={setBokOpp} setLadaOpp={setLadaOpp} menyHem={menyHem} setBoUid={setBoUid} lada={lada} ladaOpp={ladaOpp} boUid={boUid} boDjur={boDjur} flyttaInDjur={flyttaInDjur} />
         {kartaOpp ? <KartaLager forstaRad={forstaRad} kartaText={kartaText} tryckPlats={(id) => { if (id === "garden") return tryckPlats(id); setKartaOpp(false); setKartaText(null); setBokOpp(false); platsUi.resTill(id); }} onLast={() => { setKartaOpp(false); bengtsson.visaFel(); }} oppna={oppna} /> : null}
         {omrade && !kartaOpp ? <OmradeHud tryckPlats={tryckPlats} bytFolje={bytFolje} /> : null}
         <Hud oppnaStjarnor={() => setStjarnInfo(true)} haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} />

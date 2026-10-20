@@ -3,6 +3,9 @@ import { useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { BLOMMOR, GRAN, TRAD, _blomE, _blomM, _blomP, _blomQ, _blomS, _dir } from "./delat.ts";
 import { TOON_MAP } from "./djur.tsx";
+import { DAMM } from "./damm.ts";
+
+const _damm = new THREE.Vector3();
 
 export function Sond() {
   const fps = useRef({ n: 0, t: 0 });
@@ -19,6 +22,15 @@ export function Sond() {
     t.dz = Math.round(_dir.z * 100) / 100;
     const cam = state.camera as THREE.PerspectiveCamera;
     t.fov = cam.fov;
+    // B6.3 (G), för prov: skärmpunkter (CSS-px) på dammens vatten – mitten och fyra punkter halvvägs ut
+    window.__damm = { x: DAMM.x, z: DAMM.z, r: DAMM.r };
+    if (fps.current.n % 10 === 0) {
+      const rekt = state.gl.domElement.getBoundingClientRect();
+      t.damm = [[0, 0], [0.5, 0], [-0.5, 0], [0, 0.5], [0, -0.5]].map(([dx, dz]) => {
+        _damm.set(DAMM.x + (dx ?? 0) * DAMM.r, DAMM.y, DAMM.z + (dz ?? 0) * DAMM.r).project(cam);
+        return { x: Math.round(rekt.left + ((_damm.x + 1) / 2) * rekt.width), y: Math.round(rekt.top + ((1 - _damm.y) / 2) * rekt.height) };
+      });
+    }
     t.calls = state.gl.info.render.calls;
     t.tris = state.gl.info.render.triangles;
     const nu = state.clock.elapsedTime;
@@ -260,7 +272,7 @@ export function Ringar() {
     }
   });
   return (
-    <group ref={ref} position={[1.12, 0.055, -0.35]} rotation={[-Math.PI / 2, 0, 0]}>
+    <group ref={ref} position={[DAMM.x, DAMM.y + 0.02, DAMM.z]} rotation={[-Math.PI / 2, 0, 0]}>
       {[0, 1, 2].map((i) => (
         <mesh key={i}>
           <ringGeometry args={[0.55, 0.64, 20]} />
@@ -289,7 +301,7 @@ export function Nackrosor() {
     [-0.18, -0.2, "#7CB342", false],
   ];
   return (
-    <group ref={ref} position={[1.12, 0.075, -0.35]}>
+    <group ref={ref} position={[DAMM.x, DAMM.y + 0.04, DAMM.z]}>
       {pads.map(([x, z, f, blomma]) => (
         <group key={`${x}${z}`} position={[x, 0, z]}>
           <mesh rotation={[-Math.PI / 2, 0, x]}>

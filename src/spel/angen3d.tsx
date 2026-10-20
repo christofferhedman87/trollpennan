@@ -6,14 +6,18 @@ import { useMinne } from "./minne.ts";
 import { KenneyNatur } from "./kenneyNatur.tsx";
 import { KV, MILJO } from "./miljo.ts";
 import { HINT, SNART } from "./ang/delat.ts";
+import { DAMM } from "./ang/damm.ts";
 import { Eldflugor, FagelFlyg, Fjarilar, Forgrund, Glitter, GrasTuvor, Horisont, Ljusflackar, Moln, Nackrosor, Ringar, Sond, Stenar, TradOchBlommor } from "./ang/dekor.tsx";
 import { Byggnad, Skogsstig, SpokHus } from "./ang/byggnader.tsx";
 import { DjurIScen } from "./ang/djur.tsx";
 import { Himmel, SvajMark } from "./ang/himmel.tsx";
 import { KameraRam } from "./ang/kamera.tsx";
 import { PlatsScen } from "./ang/PlatsDekor.tsx";
-import { START_PLATS } from "./platser.ts";
+import { START_PLATS, platsMed } from "./platser.ts";
 import { SagaBoll, SagaKamera, SagaKanin, SagaLjus, SagaPenna, type OrbitStyr } from "./ang/saga.tsx";
+
+/** B6.3 (I): ängens zoner (dammen) ur data/platser.json – djur, figurer och saker hålls ur dammen, simmare i den. */
+const ANG_PLATS = platsMed(START_PLATS);
 
 class NaturGren extends Component<{ children: ReactNode }, { fel: boolean }> {
   state = { fel: false };
@@ -107,12 +111,13 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
         </Suspense>
       </NaturGren>
       <Ljusflackar />
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[1.12, 0.02, -0.35]}>
-        <circleGeometry args={[0.72, 20]} />
+      {/* B6.3 (G): vattnet över markens svaj (ang/damm.ts) */}
+      <mesh name="damm-vatten" rotation={[-Math.PI / 2, 0, 0]} position={[DAMM.x, DAMM.y, DAMM.z]}>
+        <circleGeometry args={[DAMM.r, 20]} />
         <meshStandardMaterial color="#4FC3E8" roughness={0.22} />
       </mesh>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[1.12, 0.03, -0.35]}>
-        <ringGeometry args={[0.64, 0.76, 20]} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[DAMM.x, DAMM.y + 0.01, DAMM.z]}>
+        <ringGeometry args={[0.64, DAMM.kant, 20]} />
         <meshBasicMaterial color="#B3E5FC" side={THREE.DoubleSide} />
       </mesh>
       <Ringar />
@@ -125,7 +130,7 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
         <Byggnad key={b.uid} b={b} />
       ))}
       {djur.map((spec) => (
-        <DjurIScen key={spec.uid} spec={spec} alla={djur} />
+        <DjurIScen key={spec.uid} spec={spec} alla={djur} plats={ANG_PLATS} />
       ))}
       <Sond />
       <SagaPenna />

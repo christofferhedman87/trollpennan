@@ -33,6 +33,8 @@ export type Plats = {
   final_fore?: { text: string; min?: string } | null;
   hemliga?: string[];
   uppdrag: string[];
+  /** B6.3 (I): avstånd från vattenkanten för landdjur och saker på just den här platsen (standard KANT_MARGINAL). */
+  kant_marginal?: number;
 };
 export type PlatsData = { version: number; yta: { x: [number, number]; z: [number, number] }; platser: Plats[]; beloningar: unknown[] };
 /** Det som villkoren mäts mot. */

@@ -2,6 +2,7 @@ import { useGLTF } from "@react-three/drei";
 import { useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { belysScen } from "./belys.ts";
+import { DAMM } from "./ang/damm.ts";
 
 const FARG: Record<string, string> = {
   grass: "#63c34a",
@@ -274,8 +275,11 @@ export function KenneyNatur() {
       <Stall url={URL.sten} platser={STEN_S} />
       <Stall url={URL.stenl} platser={STEN_L} />
       <Stall url={URL.gras} platser={GRAS} />
-      <Stall url={URL.lilja} platser={LILJA} />
-      <Stall url={URL.liljas} platser={LILJA_S} />
+      <group position={[0, DAMM.y, 0]}>
+        {/* B6.3 (G): näckrosorna ligger på vattnet, som nu ligger över markens svaj */}
+        <Stall url={URL.lilja} platser={LILJA} />
+        <Stall url={URL.liljas} platser={LILJA_S} />
+      </group>
       <Stall url={URL.stig} platser={STIG} />
       <Stall url={URL.staket} platser={STAKET} />
       <Stall url={URL.grind} platser={GRIND} />

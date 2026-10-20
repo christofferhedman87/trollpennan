@@ -2,7 +2,7 @@
 // Platsens zoner (rekt i 0–1) ritas i PlatsDekors grupp med skala DEKOR_SKALA, så en världspunkt
 // (wx, wz) motsvarar platspunkten tillPlats(wx / DEKOR_SKALA, wz / DEKOR_SKALA).
 // Landdjur och saker står bara i en zon av typ "land" eller "fri" och aldrig i en "vattenyta".
-// Simmare hålls i vattenytan om platsen har en. Ängen (inga zoner) rörs inte.
+// Simmare hålls i vattenytan om platsen har en. B6.3 (I): ängen har zoner för dammen (platser.json), med egen kant_marginal.
 import { PLATSDATA, type Plats, type Zon } from "./platser.ts";
 
 export const YTA_SKALA = 1.45;
@@ -43,10 +43,13 @@ export function paLand(p: Plats, x: number, y: number): boolean {
 }
 
 /** Land för en hel kropp: mitten på land och inget av kroppens kantprov (±marginal) i vatten. */
-export function torrKropp(p: Plats, wx: number, wz: number, m = KANT_MARGINAL): boolean {
+export function torrKropp(p: Plats, wx: number, wz: number, m = p.kant_marginal ?? KANT_MARGINAL): boolean {
   if (!paLand(p, ...tillPlats(wx, wz))) return false;
-  for (const [dx, dz] of [[m, 0], [-m, 0], [0, m], [0, -m], [m * 0.7, m * 0.7], [-m * 0.7, m * 0.7], [m * 0.7, -m * 0.7], [-m * 0.7, -m * 0.7]] as const)
-    if (iVatten(p, ...tillPlats(wx + dx, wz + dz))) return false;
+  // B6.3: 16 riktningar på avståndet m och en ring på m/2 (med 8 kom vattnet närmare än m mellan riktningarna)
+  for (let i = 0; i < 16; i++) {
+    const v = (i * Math.PI) / 8;
+    for (const r of [m, m / 2]) if (iVatten(p, ...tillPlats(wx + Math.cos(v) * r, wz + Math.sin(v) * r))) return false;
+  }
   return true;
 }
 
@@ -80,13 +83,25 @@ function narmast(p: Plats, onskad: [number, number], upptagna: [number, number][
  * Flytta de önskade världspunkterna (i ordning) så att landdjur står på land och simmare i vatten.
  * Punkter som redan är tillåtna och fria behålls exakt. `sim[i]` = punkt i är en simmare.
  */
-export function placeraPaPlats(p: Plats | undefined, onskade: [number, number][], sim: boolean[] = []): [number, number][] {
+/** `kant` (B6.3): egen kantmarginal per skapelse (stora saker: halva bredden ur storlek.json), annars platsens. */
+/** `sikt` (B6.3, Doodle 09:17): extra villkor per skapelse (ängen: siktzonen mellan kameran och dammen, damm.ts siktFri). */
+export function placeraPaPlats(
+  p: Plats | undefined,
+  onskade: [number, number][],
+  sim: boolean[] = [],
+  kant: (number | undefined)[] = [],
+  sikt: (((wx: number, wz: number) => boolean) | undefined)[] = [],
+): [number, number][] {
   if (!harZoner(p)) return onskade;
   const harVatten = p.zoner.some((z) => z.typ === "vattenyta");
   const ut: [number, number][] = [];
   onskade.forEach((o, i) => {
     const simmare = !!sim[i] && harVatten;
-    const ok = simmare ? (wx: number, wz: number) => iVatten(p, ...tillPlats(wx, wz)) : (wx: number, wz: number) => torrKropp(p, wx, wz);
+    const m = Math.max(kant[i] ?? 0, p.kant_marginal ?? KANT_MARGINAL);
+    const villkor = sikt[i];
+    const ok = simmare
+      ? (wx: number, wz: number) => iVatten(p, ...tillPlats(wx, wz))
+      : (wx: number, wz: number) => torrKropp(p, wx, wz, m) && (!villkor || villkor(wx, wz));
     const fri = !ut.some(([ux, uz]) => Math.hypot(ux - o[0], uz - o[1]) < MIN_AVSTAND);
     ut.push(ok(o[0], o[1]) && fri ? o : narmast(p, o, ut, ok));
   });
