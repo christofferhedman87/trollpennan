@@ -6,19 +6,20 @@
 - Efter **M10 (B5a, 9)** och **M11 (37)**: 623. **Mål ≈ 1 150** → ca **530 till**, alltså **M12–M25, 14 paket à 35–40**.
 - Storlek: bulk 21,4 MB. `budget.total_cc0_kb_mobil` (25 000 KB) kontrolleras inte av något skript och modellerna hämtas först när ordet används (förladdat 0 KB, ingen precache av GLB). Dubblingen ger ca 43 MB. **Förslag:** höj siffran till 50 000 i M12 (en rad i `data/inlagg.json`) och håll snittet ≤ 45 KB per modell (texturer 512 → 256 där det går).
 
-## Räkning mot målet (uppdaterad 2026-10-20 02:50, efter MFIX och M16-underlaget)
+## Räkning mot målet (uppdaterad 2026-10-20 03:40, efter MFIX2-, M17- och M18-underlaget)
 **En baslinje:** antalet rader i `data/tillgangar.json` (det spelet kan visa). Start i kväll 577, mål 2 × 577 = **1 154**.
 Doodles räkning (598 → 702) räknar alla `.glb`-filer i repot, även 21 filer som inte är tillgångar (gamla modeller, natur, tillbehör). Ökningen är densamma (+104); från och med nu gäller tillgangar.json.
 
 | Läge | Tillgångar (tillgangar.json) | Kvar till 1 154 |
 |---|---|---|
 | Start i kväll (main b679a3d) | 577 | 577 |
-| På main nu (M10–M14 körda av Doodle, f1f0880) | 681 | 473 |
-| När Doodle har kört MFIX (18 rättade + drottning, bebis) | 683 | 471 |
-| När Doodle har kört M15 (48) | 731 | 423 |
-| När Doodle har kört M16 (39) | **770** | **384** |
+| Efter M10–M14 (Doodle, f1f0880) | 681 | 473 |
+| Efter MFIX, M15, M16 (Doodle, main 3e99f42) | 770 | 384 |
+| När Doodle har kört MFIX2 (12 bort, 9 tillbaka: kors, krypta, gravsten borta) | 767 | 387 |
+| När Doodle har kört M17 (41, varav bonde, ninja, kvinna ersatta: +38) | 805 | 349 |
+| När Doodle har kört M18 (36) | **841** | **313** |
 
-Underlag klara: M10–M16 = 191 modeller, plus fixpaketet MFIX. Från M15 hämtas hela Kenney-kit direkt från kenney.nl (arkiv och License.txt ligger i varje inkorgsmapp, `_nedladdning/arkiv/`); det gav större paket (48 och 39).
+Underlag klara: M10–M18 = 268 modeller, plus fixpaketen MFIX och MFIX2. Från MFIX2 gäller **hellre färre men snygga modeller än många konstiga** (Doodle): M18 gallrades från 42 till 36. Från M15 hämtas hela Kenney-kit direkt från kenney.nl (arkiv och License.txt ligger i varje inkorgsmapp, `_nedladdning/arkiv/`); det gav större paket (48 och 39).
 Quaternius (quaternius.com) laddar sina paket via JavaScript och Google Drive och gick inte att hämta med skript; de Quaternius-paket som redan ligger i inkorgen används.
 
 ## Vad inkorgen räcker till
@@ -38,9 +39,11 @@ Orden från M14 och framåt utöver kategori-ord är förslag. Kontrollera dem m
 | **MFIX ✔** | rättelser efter Doodles granskning av M10–M14 (20, CC0) | **former:** 92 felaktiga böjningar rättade (alla bulkord från R3C, R3D och M1–M14, efter SALDO och SAOL-mönster, osäker plural utelämnad); **modeller:** svan (egen, lång hals, simmar), abborre/gädda/narval i profil, narval mindre, mask (egen rosa daggmask), mamma, pappa, lärare, pojke, cowboy, byggarbetare, pirat som Kenney-klossfigurer, ris (egen skål), kött (revben), bacon större, gitarr (egen akustisk), kniv = smörkniv (MilkAndBanana, CC0), nalle (nytt ord på nallebjörnen); **nya:** drottning (klossfigur med krona), bebis | egna (`trollpennan-mfix`, `MFIX/mfix-bygg.mjs`), Kenney Blocky Characters, Poly Pizza |
 | **M15 ✔** | stad, båtar, fabrik, arkad, skyltar (48, CC0) | grävmaskin, fiskebåt, motorbåt, racerbåt, bogserbåt, husbåt, lastfartyg, boj, ufo, parabol, krater, skyskrapa, kontor, hotell, affär, fabrik, skorsten, solpanel, kiosk, bajamaja, parasoll, rullstol, krycka, käpp, sparkcykel, ramp, flipperspel, arkadspel, automat, kassaapparat, lyckohjul, airhockey, golfboll, golfklubba, robotarm, spak, lyftkran, magnet, stoppskylt, varningsskylt, elstolpe, trafikkon, byggställning, fana, tjej/flicka, skejtare, soldat, expedit (klossfigurer som alla människor) | Kenney Watercraft, City Commercial/Industrial/Roads, Coaster, Mini Characters/Skate/Arcade/Arena, Minigolf, Factory, Retro Urban, Tower Defense, Car, Space (hela kit, texturen inbäddad) |
 | **M16 ✔** | kit + egna natur/rymd/väder (39, CC0) | slott, tivoli, katapult, propellerbåt, gatuskylt, vindkraftverk, cistern, dörr, fönster, halfpipe, dansmaskin, gamer, hangar, generator, suv, gravsten, kors, krypta, fjäder, julgran, pelare, mur, dator, tratt, hjärtstartare; egna: sol, måne, blixt, vulkan, istapp, ö, sandslott, diamant, pyramid, planet, komet, regndroppe, tornado, kub/kloss | Kenney (hela kit) + `trollpennan-egna-m16` (`M16/egna-m16.mjs`) |
-| M17 | fordon och båtar | brandbil, polisbil, ambulans, sopbil, grävmaskin, traktor-varianter, segelbåt, kanot, ubåt, helikopter | Kenney Car/Watercraft/Train (43 oanvända fordon i inkorgen) |
-| M18 | djur 3: däggdjur och fåglar | B5b-bytena (gris, kulting, ekorre, bäver, haj, dinosaurie: kodritade idag) + lodjur, järv, mink, hermelin, trana, stork, kråka, skata, nyckelpiga (egen modell, Poly Pizzas har 8 662 trianglar) | Gobkit, Quaternius, egna |
-| M19 | sagoväsen | enhörning-varianter, troll, tomte, älva, sjöjungfru, vampyr, häxa (72 oanvända i inkorgen) | Quaternius Monsters, KayKit |
+| **MFIX2 ✔** | rättelser efter Doodles granskning av MFIX–M16 (9, CC0) | nalle (egen sittande nalle i stället för Kenneys platta skiva), bebis (kortare och rundare, hårtofs och napp), narval mindre (0,35), fana (egen flagga på stång), lastfartyg i profil och större (2,6), sparkcykel (egen, i profil), tivoli (egen karusell i stället för parkporten), sol (klot med strålar åt alla håll; den platta skivan syntes inte från sidan), gamer → spelare; **borttagna:** kors, krypta, gravsten; **former:** fjäril, nattfjäril, makaonfjäril utan kortformen -iln (inga andra -iln/-eln-kortformer i ord.json) | `trollpennan-mfix2` (`MFIX2/mfix2-bygg.mjs`, `MFIX2/folk-m17.mjs`) |
+| **M17 ✔** | folk som klossfigurer (41, CC0) | **ersatta:** bonde, ninja, kvinna (Quaternius → Kenney Blocky, `bort.txt`); **nya:** brandman, clown, doktor/läkare, kock, mormor, farmor, prins, prinsessa, barn, älva/fe, frisör, sjuksköterska, dykare, brevbärare, målare, snickare, kapten, fiskare, viking, superhjälte, tjuv, äventyrare, detektiv, forskare, konstnär, ballerina/dansare, mekaniker, jägare, skogshuggare, vakt, kejsare, jultomte, mumie, alien, sjöman, rörmokare, servitör, sångare | Kenney Blocky Characters, omfärgade + egna tillbehör (`trollpennan-folk-m17`, `M17/folk-m17.mjs`) |
+| **M18 ✔** | fordon (36, CC0) | buss, skolbuss, limousin, formelbil, fyrhjuling, snöskoter, gaffeltruck, bulldozer, dumper, vält/vägvält, skördetröska, cykel, tandem, lådcykel, flygplan, jetplan, sjöflygplan, segelflygplan, luftballong, zeppelinare/luftskepp, ubåt, gondol, katamaran, vattenskoter, skottkärra, kälke (egna; cyklar, ubåt, gondol, kälke, zeppelinare och limousin i profil); tankbil, betongbil, bärgningsbil, glassbil, husbil, polisbåt, brandbåt, räddningsbåt (Kenney + egna tillägg); motorcykel, pickup (Poly Pizza) | `trollpennan-fordon-m18` (`M18/egna-m18.mjs`), Kenney Car/Watercraft, `polypizza-cc0-m18` |
+| M18b | djur 3: däggdjur och fåglar (flyttat från M18) | B5b-bytena (gris, kulting, ekorre, bäver, haj, dinosaurie: kodritade idag) + lodjur, järv, mink, hermelin, trana, stork, kråka, skata, nyckelpiga (egen modell, Poly Pizzas har 8 662 trianglar) | Gobkit, Quaternius, egna |
+| M19 | sagoväsen | enhörning-varianter, troll, tomte, sjöjungfru, vampyr, häxa (72 oanvända i inkorgen) | Quaternius Monsters, KayKit |
 | M20 | hem och kök | (variantord: säng, lampa, kastrull, tallrik, kopp, matta … de som saknas) | Kenney Furniture (27 oanvända) |
 | M21 | högtider | julgran, adventskrans, krans, snögubbe-varianter, pumpa, påskägg | Kenney/KayKit Holiday (23 oanvända), Halloween |
 | M22 | rymd och teknik | raket-varianter, astronaut, satellit, ufo, robot-varianter, teve | Kenney Space (12 oanvända) |
@@ -67,3 +70,6 @@ Varje paket körs som M10 och M11: `bash rundor/R3F-modellserie/kor.sh M<n>` →
 - **En stil för människor:** Kenney Blocky Characters. Nya personer görs med `MFIX/mfix-bygg.mjs` (omfärgad tröja + klosshatt eller krona). Inga Quaternius- eller Mini-figurer (T-pose, bleka, smala).
 - Fiskar och narval visas i profil (`fram` = `+x`), annars ser de ut att stå på stjärten när de vänder sig mot kameran.
 - Simmare på ängen hamnar vid dammens kant (koden placerar dem så); stora simmare behöver låg målhöjd (narval 0,5).
+
+## Regnbåge och eld (M17, 2026-10-20)
+Orden finns redan i `data/ord.json`, men inte som saker: *regnbåge* är ett monster-mönster ("med regnbåge", förled "regnbågs") och *eld* är en förmåga (eld → flammor, förled "eld"). Lagg-kontrollen gör rätt när den hoppar över dem: lade vi in en tillgång med samma ord skulle tolken antingen ignorera modellen eller ändra vad "en drake med eld" betyder. Att låta ordet både vara förmåga/mönster och fristående sak kräver en ändring i `src/tolk` (kod, inte underlag) och kommer därför som en egen kodrunda (B6.1, tillsammans med placeringen av stora föremål och återkopplingen när regnbåge inte ger någon modell). Modellerna finns redan: `trollpennan-egna-m16/regnbage-egen.glb` och `eld-egen.glb` (CC0).

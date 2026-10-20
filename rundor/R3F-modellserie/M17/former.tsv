@@ -1,0 +1,46 @@
+# R3F-M17: granskade former för paketets människoord (SALDO/SAOL-mönster, osäker plural utelämnad).
+ord	genus	former	# källa
+bonde	u	bonde, bonden, bönder, bönderna	# SALDO nn_4u_bonde
+ninja	u	ninja, ninjan, ninjor, ninjorna	# SALDO nn_1u_kamera
+kvinna	u	kvinna, kvinnan, kvinnor, kvinnorna	# SALDO nn_1u_kyrka
+brandman	u	brandman, brandmannen, brandmän, brandmännen	# SALDO nn_6u_vaktman
+clown	u	clown, clownen, clowner, clownerna	# SALDO nn_3u_tid
+doktor	u	doktor, doktorn, doktorer, doktorerna	# SALDO nn_3u_motor
+läkare	u	läkare, läkaren, läkarna	# SALDO nn_6u_kikare
+kock	u	kock, kocken, kockar, kockarna	# SALDO nn_2u_sten
+mormor	u	mormor	# hand: bara grundform (SALDO har mormodern/mormödrar, osäkert i barnspråk)
+farmor	u	farmor	# hand: bara grundform (SALDO har farmodern/farmödrar, osäkert i barnspråk)
+prins	u	prins, prinsen, prinsar, prinsarna	# SALDO nn_2u_sten
+prinsessa	u	prinsessa, prinsessan, prinsessor, prinsessorna	# SALDO nn_1u_flicka
+barn	n	barn, barnet, barnen	# SALDO nn_6n_bord
+älva	u	älva, älvan, älvor, älvorna	# SALDO nn_1u_flicka
+fe	u	fe, fen, feer, feerna	# SALDO nn_3u_akademi
+frisör	u	frisör, frisören, frisörer, frisörerna	# SALDO nn_3u_kavaljer
+sjuksköterska	u	sjuksköterska, sjuksköterskan, sjuksköterskor, sjuksköterskorna	# SALDO nn_1u_olja
+dykare	u	dykare, dykaren, dykarna	# SALDO nn_6u_kikare
+brevbärare	u	brevbärare, brevbäraren, brevbärarna	# SALDO nn_6u_kikare
+målare	u	målare, målaren, målarna	# SALDO nn_6u_kikare
+snickare	u	snickare, snickaren, snickarna	# SALDO nn_6u_kikare
+kapten	u	kapten, kaptenen, kaptener, kaptenerna	# SALDO nn_3u_tid
+fiskare	u	fiskare, fiskaren	# SALDO nn_6u_kikare (utan fiskarna: krockar med annat ord)
+viking	u	viking, vikingen, vikingar, vikingarna	# SALDO nn_2u_stol
+superhjälte	u	superhjälte, superhjälten, superhjältar, superhjältarna	# hand (SAOL-mönster som hjälte, nn_2u_hjälte)
+tjuv	u	tjuv, tjuven, tjuvar, tjuvarna	# SALDO nn_2u_sten
+äventyrare	u	äventyrare, äventyraren, äventyrarna	# SALDO nn_6u_kikare
+detektiv	u	detektiv, detektiven, detektiver, detektiverna	# SALDO nn_3u_karbid
+forskare	u	forskare, forskaren, forskarna	# SALDO nn_6u_kikare
+konstnär	u	konstnär, konstnären, konstnärer, konstnärerna	# SALDO nn_3u_salong
+ballerina	u	ballerina, ballerinan, ballerinor, ballerinorna	# SALDO nn_1u_aminosyra
+dansare	u	dansare, dansaren, dansarna	# SALDO nn_6u_kikare
+mekaniker	u	mekaniker, mekanikern, mekanikerna	# SALDO nn_6u_akademiker
+jägare	u	jägare, jägaren, jägarna	# SALDO nn_6u_kikare
+skogshuggare	u	skogshuggare, skogshuggaren, skogshuggarna	# SALDO nn_6u_kikare
+vakt	u	vakt, vakten, vakter, vakterna	# SALDO nn_3u_film
+kejsare	u	kejsare, kejsaren, kejsarna	# SALDO nn_6u_kikare
+jultomte	u	jultomte, jultomten, jultomtar, jultomtarna	# SALDO nn_2u_hjälte
+mumie	u	mumie, mumien, mumier, mumierna	# SALDO nn_4u_linje
+alien	u	alien, alienen	# hand (plural osäker, utelämnad)
+sjöman	u	sjöman, sjömannen, sjömän, sjömännen	# SALDO nn_6u_vaktman
+rörmokare	u	rörmokare, rörmokaren, rörmokarna	# SALDO nn_6u_kikare
+servitör	u	servitör, servitören, servitörer, servitörerna	# SALDO nn_3u_tid
+sångare	u	sångare, sångaren, sångarna	# SALDO nn_6u_kikare

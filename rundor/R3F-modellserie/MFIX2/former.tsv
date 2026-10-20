@@ -1,0 +1,8 @@
+# R3F-MFIX2: granskade former (SALDO/SAOL-mönster). fjäril-orden utan kortformen -iln (Doodle: "fjärilen", inte "fjäriln").
+ord	genus	former	# källa
+bebis	u	bebis, bebisen, bebisar, bebisarna	# SALDO nn_2u_sten
+narval	u	narval, narvalen, narvalar, narvalarna	# SALDO nn_2u_mening
+spelare	u	spelare, spelaren, spelarna	# SALDO nn_6u_kikare
+fjäril	u	fjäril, fjärilen, fjärilar, fjärilarna	# SALDO nn_2u_karl, utan kortformen fjäriln
+nattfjäril	u	nattfjäril, nattfjärilen, nattfjärilar, nattfjärilarna	# SALDO nn_2u_karl, utan kortformen nattfjäriln
+makaonfjäril	u	makaonfjäril, makaonfjärilen, makaonfjärilar, makaonfjärilarna	# som fjäril (nn_2u_karl), utan kortformen

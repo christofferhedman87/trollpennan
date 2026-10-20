@@ -1,0 +1,25 @@
+{
+ "_om": "R3F-M18: målhöjder för fordon som annars blir fel storlek mot standarden 1,2.",
+ "malhojd_ord": {
+  "buss": 1.6,
+  "skolbuss": 1.6,
+  "cykel": 0.9,
+  "tandem": 0.9,
+  "tandemcykel": 0.9,
+  "lådcykel": 0.9,
+  "skottkärra": 0.6,
+  "kälke": 0.4,
+  "luftballong": 2.2,
+  "zeppelinare": 1.6,
+  "luftskepp": 1.6,
+  "skördetröska": 1.8,
+  "bulldozer": 1.4,
+  "gaffeltruck": 1.4,
+  "dumper": 1.5,
+  "jetplan": 1.4,
+  "segelflygplan": 1.0,
+  "formelbil": 0.9,
+  "vattenskoter": 0.7,
+  "gondol": 0.8
+ }
+}
