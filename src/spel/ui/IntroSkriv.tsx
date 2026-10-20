@@ -5,7 +5,7 @@ import { TANGENTBORD } from "./spelData.ts";
 import { ljud } from "../ljud.ts";
 import "./intro-p2.css";
 
-export type IntroSkrivData = { ord: string; fras: string; uppmaning: string; vakna: string; hjalp: string; tillbaka: string };
+export type IntroSkrivData = { ord: string; fras: string; uppmaning: string; ljud?: string[]; vakna: string; hjalp: string; tillbaka: string };
 
 export function IntroSkriv({ cfg, ideer, onVakna, onIde }: { cfg: IntroSkrivData; ideer: string[]; onVakna: (fras: string) => void; onIde: (ex: string) => void }) {
   const ord = [...cfg.ord.toLowerCase()];
@@ -41,6 +41,7 @@ export function IntroSkriv({ cfg, ideer, onVakna, onIde }: { cfg: IntroSkrivData
   return (
     <div className="intro-skriv" data-testid="intro-skriv" role="group" aria-label={cfg.uppmaning}>
       <p className="intro-uppmaning">{cfg.uppmaning}</p>
+      {cfg.ljud ? <Ljudrad delar={cfg.ljud} n={n} /> : null}
       <div className={skak ? "intro-rutor skak" : "intro-rutor"} key={skak} aria-live="polite">
         {ord.map((b, i) => (
           <span key={`${b}${i}`} className={i < n ? "intro-ruta klar" : i === n ? "intro-ruta nu" : "intro-ruta"} data-testid="intro-ruta" data-klar={i < n ? "ja" : "nej"}>
@@ -76,5 +77,25 @@ export function IntroSkriv({ cfg, ideer, onVakna, onIde }: { cfg: IntroSkrivData
           ))}
       </div>
     </div>
+  );
+}
+
+/** P2-2 (lån från förslag C): ordet i ljud, "k – a – tt". Ljudet barnet håller på med lyser, de skrivna blir mörka. */
+function Ljudrad({ delar, n }: { delar: string[]; n: number }) {
+  let start = 0;
+  return (
+    <p className="intro-ljud" data-testid="intro-ljud" aria-hidden>
+      {delar.map((d, i) => {
+        const fran = start;
+        start += d.length;
+        const klass = n >= start ? "klar" : n >= fran ? "nu" : "";
+        return (
+          <span key={`${d}${i}`}>
+            {i > 0 ? <span className="intro-ljud-streck"> – </span> : null}
+            <span className={klass}>{d}</span>
+          </span>
+        );
+      })}
+    </p>
   );
 }

@@ -6,6 +6,10 @@ import { fyll } from "../fyll.ts";
 import { ALBUM } from "../liv.ts";
 import { HoldOppnare } from "./HoldOppnare.tsx";
 import { StallMeny } from "./Stall.tsx";
+import { Coach } from "./Coach.tsx";
+import { NpcIkon } from "./NpcFigur.tsx";
+import { FORSTA } from "../forstaStunden.ts";
+import "./hud-p2.css";
 import { FIR, TEXTER } from "./spelData.ts";
 import type { Varld } from "./typer.ts";
 
@@ -40,7 +44,7 @@ export function Hud({ oppnaStjarnor, haller, setHaller, setForalder, stjarnor, h
             onPointerCancel={() => setHaller(false)}
           >
             <span className="ring" />
-            <span className="prick" />
+            <Lock className="prick-las" aria-hidden />
           </button>
           <HoldOppnare haller={haller} oppna={() => setForalder(true)} />
           <button type="button" className="stjarna-hud" data-testid="stjarnor" aria-label={fyll(FIR.stjarnor.har, { n: stjarnor })} onClick={oppnaStjarnor}>
@@ -181,17 +185,23 @@ type HudBotProps = {
   oppnaBygglage: () => void;
   setPanel: Dispatch<SetStateAction<"spel" | "byggbok" | "uppdrag">>;
   setBokOpp: Dispatch<SetStateAction<boolean>>;
+  /** P2-2: Bengtsson som primär knapp bredvid Skriv (förslag A). */
+  npc?: { npcId: string; ikonText: string; ikonAlt: string; klicka: () => void };
 };
 
-export function HudBot({ varld, omrade, kartaOpp, oppnaBygglage, setPanel, setBokOpp }: HudBotProps) {
+export function HudBot({ varld, omrade, kartaOpp, oppnaBygglage, setPanel, setBokOpp, npc }: HudBotProps) {
+  const gard = varld === "gard" && !omrade;
+  const pahemma = varld === "ang" && !omrade && !kartaOpp;
   return (
-        <div className="hud-bot">
+        <div className={pahemma && npc ? "hud-bot tva" : "hud-bot"}>
+          {pahemma && npc ? <NpcIkon npc={npc.npcId} nytt={false} text={npc.ikonText} alt={npc.ikonAlt} onClick={npc.klicka} /> : null}
           <button
             type="button"
-            className={varld === "gard" && !omrade ? "bok-knapp bygg" : "bok-knapp"}
+            className={gard ? "bok-knapp bygg" : "bok-knapp"}
             data-testid={varld === "gard" && !omrade ? "bygg-nagot" : "pennans-bok"}
+            aria-label={gard ? undefined : "Skriv i Pennans bok"}
             onClick={() => {
-              if (varld === "gard" && !omrade && !kartaOpp) {
+              if (gard && !kartaOpp) {
                 oppnaBygglage();
                 return;
               }
@@ -199,15 +209,10 @@ export function HudBot({ varld, omrade, kartaOpp, oppnaBygglage, setPanel, setBo
               setBokOpp(true);
             }}
           >
-            {varld === "gard" && !omrade ? (
-              <>
-                <Pencil aria-hidden />
-                {TEXTER.bygg_nagot}
-              </>
-            ) : (
-              "Pennans bok"
-            )}
+            <Pencil aria-hidden />
+            {gard ? TEXTER.bygg_nagot : FORSTA.titel.skriv}
           </button>
+          <Coach aktiv={pahemma} />
         </div>
   );
 }
