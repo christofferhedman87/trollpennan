@@ -8,6 +8,8 @@ Status: **inte klar för körning**. Koden finns i den kombinerade P3-patchen (g
 - **D:** "en stor eld" skapar inget i spelet, men enhetstestet går igenom. "en gul eld" och "en röd sportbil" fungerar.
 - B ("en kanin med mössa" sitter på huvudet), "Menade du katt?" och "dansande banan" är gröna.
 Röst: när ordspärren inte längre spärrar 'sportbil'/'grottport' behövs två röstfiler (23 tecken, kvot liten).
+**Båda röstfilerna kräver Christoffers godkännande** (regel 20 okt 22:54: ingen TTS- eller ElevenLabs-generering utan
+hans ja). Ingen kor.sh i P3a/P3b anropar ElevenLabs; filerna görs först efter hans ja, i en egen runda.
 
 ## 1. Kläderna sitter på djuret (alla 38)
 - **`data/plagg.json` (ny)**: `delar` (huvud, hals, kropp, höft, fötter, hand: höjdband som andel av kroppen, fyllnad,

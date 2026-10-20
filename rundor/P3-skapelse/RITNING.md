@@ -6,7 +6,8 @@ Källa: `rundor/PREMIUM/BLOCKSERIE.md` (P3) och `GRANSKNING.md`, Doodles sjöfyn
 **Kvalitet går före kvot.**
 - **Väg:** patch + kor.sh (Arkitektens patch), inte Build-prompt. Placeringen är nu EN regel med data per plats, och
   varje del kan mätas i ett prov i 375×812. En Build-prompt skulle få bygga om samma regel utan proven.
-- **Kvotåtgång:** **medel**. Inga röstfiler i P3a.
+- **Kvotåtgång:** **medel**. Inga röstfiler i P3a. P3a genererar ingen röst och kor.sh anropar inte ElevenLabs
+  (Christoffers regel 20 okt 22:54: ingen TTS-generering utan hans ja). P3b:s två röstfiler kräver hans godkännande.
 - **Delning (styrning 16:46): P3 är delad.** P3a (den här rundan) innehåller placeringsregeln, landningen och kamerafokus,
   titelbilden, minsta synliga storlek, småsakernas storlek och att ankan simmar. **P3b** (kläderna på kroppen, tolkningen
   "Menade du …?", 'sportbil'/'eld', ordspärren, och de två röstfilerna) blir en egen runda efter P3a
@@ -351,16 +352,39 @@ Doodle-fallen räknas inte mot kapacitetskravet.
    modellens egna mått (`modellmatt.json`), samma som regeln. Provet tillåter mindre bara när djuret redan förstorats
    max_forstoring (`__tredPos.syn`). p3.test mäter med samma mått.
 
-Med lagning 1 räckte sjön inte till kravnivån: blandad 5, bara jättar 2, 8 katter 7. Där stod kropparna redan nästan
-stilla (vandring 0,15), men vridningen gjorde dem 22 % bredare. **Genomfört, Arkitektens beslut:** en sista nivå 0 i
-`vandra.steg` (`[1, 0.5, 0.15, 0]`). När det är som trångast står djuren still och vrider sig inte. Gränserna är
-oförändrade. Utan nivån når sjön inte kravet. Ta bort 0 om det inte godtas, och då gäller tabellen ovan.
+Med lagning 1 räcker sjön inte till kravnivån. Kropparna står redan nästan stilla (vandring 0,15), men vridningen gör
+dem 22 % bredare.
 
-Kapacitet nu (vakna av 8, regeln med kärnan i värsta läget, C-lagningen, bak_lucka och nivå 0):
+### Första torrkörning 5 (main 8f52375, 22:26, med 68810f3) och lagningarna efter
+
+68810f3 hade en vandra-nivå 0 som inte var beslutad. Den är **borttagen igen** och ligger nu som förslag (se nedan).
+Körningen gav två fel i p3-prov:
+
+- **T titelutsnittet:** kaninen klipptes vid 49 × 86 px, men den ritas 70 × 129 px. Orsaken är att "stilla" jämförde
+  två bildrutor i rad, och kaninen växte långsamt (under 4 % per ruta). Lagat i Titel.tsx: klipp först när kroppen
+  stått still i 300 ms.
+- **P sjön fro2026, pepparkakans huvud skymt 13 %:** regeln räknade 9 %. Pepparkakan är 15 px hög, så 1 px av
+  fjällräven är 3 %. Regelns ruta stämmer med modellen inom 3 px (p3a-matt.test.ts). Lagat: en kropp framför räknas
+  `matfel_px` = 3 px större, och testets tolerans läser samma tal. Gränsen är oförändrad.
+- I första provvarvet föll också sju fel på ängen. De kom inte igen i omkörningen (kor.sh kör p3-prov två gånger).
+  Troligen var det inläsningen (kall cache direkt efter bygget), men det är inte bevisat.
+
+**Kapacitet nu** (vakna av 8; regeln med kärnan i värsta läget, matfel_px, C-lagningen och bak_lucka; beslutade
+värden):
 
 | plats | fro11 (≥3) | fro2026 (≥6) | fro4242 (≥6) | blandad (≥6) | bara jättar (≥3) | 8 katter (8) |
 |---|---|---|---|---|---|---|
-| ängen | 7 | 8 | 7 | 7 | 4 | 8 |
-| sjön | 6 | 8 | 8 | 7 | 3 | 8 |
+| ängen | 5 | 8 | 7 | 6 | 6* | **7** |
+| sjön | 6 | 7 | 8 | **5** | **2** | **7** |
+| skogen | 8 | 7 | 8 | 8 | 5 | 8 |
+| grottan | 8 | 7 | 8 | 8 | 2 | 8 |
+
+**Minsta beslut (föreslås, inte genomfört):** en sista nivå 0 i `vandra.steg` (`[1, 0.5, 0.15, 0]`). När det är som
+trångast står djuren still och vrider sig inte. Gränserna ändras inte. Då blir det:
+
+| plats | fro11 | fro2026 | fro4242 | blandad | bara jättar | 8 katter |
+|---|---|---|---|---|---|---|
+| ängen | 6 | 8 | 7 | 7 | 4 | 8 |
+| sjön | 6 | 8 | 8 | 6 | 3 | 8 |
 | skogen | 8 | 7 | 8 | 8 | 6 | 8 |
-| grottan | 8 | 7 | 8 | 8 | 6 | 8 |
+| grottan | 8 | 7 | 8 | 8 | 5 | 8 |
