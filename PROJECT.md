@@ -1,5 +1,8 @@
 # PROJECT.md – Trollpennan (projektkarta)
 
+> **Granskningsadress (20 okt 2026):** den aktuella versionen byggs automatiskt från `main` via Cloudflare Workers till https://trollpennan.christofferhedman87.workers.dev/. Den adressen ska användas för all granskning (Playwright 375x812). https://trollpennan.grok.me/ är en gammal Vercel-version från Grok-appbyggaren, från före #29. Den avpubliceras och ska inte användas.
+
+
 ## Grundtanken (Christoffer, 2026-10-18) – allt i den här filen mäts mot den
 
 > Trollpennan är ett spel där yngre barn skapar en helt egen värld genom att använda svenska korrekt och kreativt. Det barnet skriver ska materialiseras/visualiseras på skärmen, nästan oavsett vad hen skriver. Därför behövs enorma mängder modeller och attribut, och att få in modeller enkelt och i bulk är helt centralt. Nu djur, men även hus, stall, hagar mm. Uppdrag på andra platser (skogen, sjön, grottan), främst från Doktor Bengtsson. Fast kameravinkel som i Hay Day är ok.
@@ -623,7 +626,7 @@ Perspektivkamera, `fov` 58 stående / 46 liggande (`KameraRam`, r.1984), startpo
 ```
 - **Bevis (R4B):** `kamera.test.ts` (rena funktioner `frustum(bredd, aspekt)`, `klammaPan(mal, mark, frustum)`: 5 testfall), bilder `01-ang-10-djur` (inga klippta), `02-gard-8-byggnader`, `03-zoom-in`, `04-pan-gransen`, `05-liggande`; `window.__tred` utökas med `typ:"ortho"` så att befintliga skript fortsätter fungera. `SagaKamera` behålls oförändrad som läge.
 
-## 17. Live-läge (publicerad version, https://trollpennan.grok.me/)
+## 17. Live-läge (historiskt: grok.me, numera https://trollpennan.christofferhedman87.workers.dev/)
 Spelad 2026-10-18 kl. ca 11:30–11:50 (Stockholmstid) med Playwright (Chromium headless 156, viewport 375×812, `hasTouch`, mobil-UA iPhone, SwiftShader/ANGLE), ett skript per test utanför repot (`/workspace/arkitekt-verk/`). Inga formulär skickades och ingen data lämnade webbläsaren utöver att läsa sidan och spela. Alla skärmbilder ligger i `docs/skarmbilder/` (8 st, 375×812 CSS-px i 2× upplösning; överst syns plattformens "Created with Grok / Remix"-list, den ligger inte i spelet).
 
 ### 17.1 Motsvarar publicerad version `main`? **Nej, den är äldre.**
