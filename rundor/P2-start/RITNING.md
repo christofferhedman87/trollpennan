@@ -81,7 +81,7 @@ Rörs inte: `Spel.tsx` (1 845 rader), `styles.css`, `src/tolk`, sparnyckeln och 
   - **C:** introt stängs, katten står på ängen och är sparad, och guiden står på "bengtsson".
   - **D:** Hjälp mig ger idéerna, och en idé väcker djuret.
   - **E:** Hoppa över fungerar som förut. Inga sidfel.
-- **Före/efter:** på main finns ingen skrivscen, så provet faller i steg A. Efter patchen är det grönt.
+- **Före/efter:** på main faller provet i steg A (ingen skrivscen efter 31 s, provkört). Efter patchen är det grönt. `p2-1.patch` applicerar också ovanpå P1 + B6.3, B6.5, R8-3a och TTS-2.
 - **Bilder** (kor.sh skriver dem till `$BILD`):
   - `p2-02-skriv-katt` (k lyser)
   - `p2-03-katt-skrivet`
