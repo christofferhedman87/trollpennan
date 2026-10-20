@@ -1,9 +1,17 @@
+import { useEffect } from "react";
 import { NPC, uppdragText, type Uppdrag } from "../aventyr.ts";
+import { sag } from "../rost.ts";
 import { ideRad } from "../ideRad.ts";
 
 /** Remsan överst i Skapa-menyn: uppdraget som pågår, med givarens namn och (R6A-3) guidande förslag. Fritext är kvar.
  *  R9K: knapparna börjar bara meningen ("en kanin med …"); svaret (kravorden) står aldrig i idéraden. */
 export function UppdragsRemsa({ uppdrag, fyllForslag }: { uppdrag: Uppdrag | undefined; fyllForslag?: (fras: string) => void }) {
+  const lasText = uppdrag ? uppdragText(uppdrag) : "";
+  const lasId = uppdrag?.id;
+  // TTS-1: uppdraget läses upp en gång per spelomgång när remsan visas
+  useEffect(() => {
+    if (lasId && lasText) sag(lasText, `uppdrag:${lasId}`);
+  }, [lasId, lasText]);
   if (!uppdrag) return null;
   const namn = uppdrag.givare ? NPC[uppdrag.givare]?.namn : undefined;
   const rad = ideRad(uppdrag);

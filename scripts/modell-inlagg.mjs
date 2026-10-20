@@ -1004,9 +1004,18 @@ export function kreditBlock(till) {
   return b;
 }
 
+/** TTS-1: röstljudet (data/rost.json `licens`) får ett eget avsnitt sist i LICENSES.md. Tomt om filen saknas. */
+export function rostLicens(repo) {
+  const p = path.join(repo, "data", "rost.json");
+  if (!fs.existsSync(p)) return "";
+  const l = lasJson(p).licens;
+  if (!l) return "";
+  return `\n## Röster och tal\n\n| Filer | Upphov | Licens | Källa |\n|---|---|---|---|\n| ${l.filer} | ${l.upphov} | ${l.licens} | ${l.kalla} |\n`;
+}
+
 export function licenser(repo) {
   const till = lasJson(path.join(repo, "data", "tillgangar.json"));
-  skrivFil(path.join(repo, "LICENSES.md"), licenstexter(till).md);
+  skrivFil(path.join(repo, "LICENSES.md"), licenstexter(till).md + rostLicens(repo));
   const cp = path.join(repo, "CREDITS.md");
   let c = fs.existsSync(cp) ? fs.readFileSync(cp, "utf8") : "# CREDITS – Trollpennan\n";
   const har = Object.values(till.tillgangar).some((x) => x.paket);

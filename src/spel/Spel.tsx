@@ -19,6 +19,7 @@ import { ljud } from "./ljud.ts";
 import { useMinne, type Lage, type OnskaSpar } from "./minne.ts";
 import { byggTraff, geTraff, kompisTraff, nastanRad, ONSK, ONSK_BYGG, tillaggFras, valjDjurOnska } from "./onska.ts";
 import { replik } from "./replik.ts";
+import { useRostBannrar } from "./rost.ts";
 import { avBro, type AvHandelse } from "./avbro.ts";
 import { AlbumVy } from "./samling.tsx";
 import {
@@ -181,6 +182,7 @@ export function Spel() {
   const bannerTimer = useRef<number | null>(null);
   textRef.current = text;
   handRef.current = hand;
+  useRostBannrar(banners); // TTS-1: bannrar av slaget ovr läses upp (förgenererad röst via manifestet, annars reserven)
   useLayoutEffect(() => {
     if (useMinne.getState().introSedd) setIntro(false);
   }, []);
