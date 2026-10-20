@@ -921,7 +921,18 @@
     "ljuskalla_skapad": {
      "radie": 0.24,
      "intensitet": 0.35,
-     "farg": "#FFD58A"
+     "farg": "#FFD58A",
+     "entiteter": [
+      "lykta",
+      "lampa",
+      "golvlampa",
+      "bordslampa",
+      "ljusslinga",
+      "ljus",
+      "fackla",
+      "lagereld",
+      "kristall"
+     ]
     },
     "horisont": {
      "typ": "berg",

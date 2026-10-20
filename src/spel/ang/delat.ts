@@ -55,6 +55,8 @@ declare global {
       husy?: number;
     };
     __tredMal?: Record<string, { x: number; y: number }>;
+    /** B4.1, för prov: ljus = punktljus i poolen (fast antal), pol = ljuspölar, aktiva = tända ljus, scen = punktljus i scenen, program = shaderprogram. */
+    __ljus?: { ljus: number; pol: number; aktiva: number; program: number; scen?: number };
   }
 }
 
