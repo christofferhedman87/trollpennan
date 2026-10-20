@@ -1,0 +1,13 @@
+{
+ "_om": "R3F-MFIX2: narvalen mindre, lastfartyget större, solen större, fanan på sin stång, sparkcykeln barnstor.",
+ "malhojd_ord_ersatt": {
+  "narval": 0.35,
+  "lastfartyg": 2.6,
+  "lastbåt": 2.6,
+  "sol": 1.2,
+  "fana": 1.6,
+  "banderoll": 1.6,
+  "sparkcykel": 0.9,
+  "bebis": 0.55
+ }
+}

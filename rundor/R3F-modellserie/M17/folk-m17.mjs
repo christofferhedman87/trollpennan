@@ -6,7 +6,7 @@ import { prune, unpartition, mergeDocuments } from "@gltf-transform/functions";
 import sharp from "sharp";
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
 const I = "/workspace/modell-inkorg";
-const UT = `${I}/trollpennan-folk-m17`;
+const UT = process.env.UT ?? `${I}/trollpennan-folk-m17`;
 const lin = (hex) => { const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255); return [...c.map((v) => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)), 1]; };
 
 // ---------- triangelsoppa
@@ -99,7 +99,7 @@ const mossa = (f) => [[f, [...L([0, 8.5, 0], [8.8, 2.4, 8.8]), ...L([0, 7.5, 0],
 const harKnut = (f) => [[f, [...L([0, 8.6, -1], [6, 1.4, 6]), ...L([0, 10, -1.5], [3.4, 2.4, 3.4])]]];
 const iHand = (delar) => delar; // i höger arms rum, handen kring (-0.2, -1, 0)
 const R = { LILA: [255, 300], GRON: [120, 175], BLA: [215, 255], ROD: [345, 8], LJBLA: [195, 215], MGRON: [70, 175], BRUN: [15, 45], GRA: null };
-async function figur2(namn, skin, farger, { huvud = [], bal = [], hand = [], barn = false, allt = null } = {}) {
+async function figur2(namn, skin, farger, { huvud = [], bal = [], hand = [], barn = false, allt = null, kropp = null } = {}) {
   const doc = await io.read(`${I}/kenney-blocky-characters/character-${skin}.glb`);
   const root = doc.getRoot();
   for (const t of root.listTextures()) {
@@ -111,6 +111,15 @@ async function figur2(namn, skin, farger, { huvud = [], bal = [], hand = [], bar
   const nod = (n) => root.listNodes().find((x) => x.getName() === n);
   const lagg = (n, delar, tag) => { if (delar.length) nod(n).addChild(doc.createNode(`${tag}-${namn}`).setMesh(delarTillMesh(doc, `${tag}-${namn}`, delar))); };
   lagg("head", huvud, "huvud"); lagg("torso", bal, "bal"); lagg("arm-right", hand, "hand");
+  if (kropp) { // bebis: kl = benlängd, kt = bålhöjd, kw = bålbredd, hk = huvudstorlek
+    const { kl, kt, kw, hk } = kropp;
+    for (const n of root.listNodes()) {
+      if (n.getName().startsWith("leg-")) { const t = n.getTranslation(); n.setTranslation([t[0] * kw, kl, t[2]]).setScale([kw, kl, kw]); }
+      if (n.getName() === "torso") n.setTranslation([0, kl - 0.3 * kt, 0]).setScale([kw, kt, kw]);
+      if (n.getName() === "head") n.setScale([(0.1 * hk) / kw, (0.1 * hk) / kt, (0.1 * hk) / kw]);
+    }
+    for (const a of root.listAnimations()) a.dispose();
+  }
   if (barn) {
     for (const n of root.listNodes()) {
       if (n.getName().startsWith("leg-")) { const t = n.getTranslation(); n.setTranslation([t[0], 0.7, t[2]]).setScale([1, 0.7, 1]); }
@@ -180,6 +189,7 @@ const F = [
   ["servitor", "f", [vit(R.GRON)], { bal: [["#212121", [...L([0.07, 1.12, 0.32], [0.12, 0.1, 0.03]), ...L([-0.07, 1.12, 0.32], [0.12, 0.1, 0.03])]]], hand: [["#B0BEC5", L([-0.2, -1.05, 0.35], [0.6, 0.04, 0.6])], ["#4FC3F7", L([-0.2, -0.92, 0.35], [0.12, 0.22, 0.12])]] }],
   ["sangare", "e", [{ fran: R.LILA, till: 48, s: 1.2, v: 1.2 }], { hand: [["#212121", L([-0.2, -0.9, 0.35], [0.06, 0.45, 0.06])], ["#90A4AE", L([-0.2, -0.6, 0.35], [0.16, 0.16, 0.16])]], huvud: harKnut("#5D4037") }],
 ];
+if (process.env.BEBIS) F.splice(0, F.length, ["bebis", "c", [{ fran: R.GRON, till: 195, s: 0.6, v: 1.15 }], { kropp: { kl: 0.45, kt: 0.62, kw: 1.25, hk: 1.15 }, huvud: [["#8D6E63", [...L([0, 8.3, 0], [7.4, 0.8, 7.4]), ...L([0, 9.0, 1.5], [1.2, 1.2, 1.2]), ...L([0.6, 9.7, 1.8], [1, 1, 1])]], ["#F48FB1", [...L([0, 2.4, 4.4], [2.6, 1.6, 0.6])]], ["#FAFAFA", L([0, 2.4, 4.8], [1, 1, 0.4])]] }]);
 const bara = process.argv.slice(2);
 for (const [namn, skin, farger, opt] of F) if (!bara.length || bara.includes(namn)) await figur2(namn, skin, farger, opt);
 console.log("klart", F.length);

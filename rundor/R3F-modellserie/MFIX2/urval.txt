@@ -1,0 +1,10 @@
+# R3F-MFIX2 (fixpaket före M17, Doodles granskning av MFIX–M16): 9 modeller. 12 entiteter tas bort (bort.txt); kors, krypta och gravsten läggs inte in igen. Format: paket/filnamn.
+trollpennan-mfix2/nalle-egen.glb
+trollpennan-mfix2/bebis-blocky.glb
+trollpennan-mfix2/narval-gobkit.glb
+trollpennan-mfix2/fana-egen.glb
+trollpennan-mfix2/lastfartyg-kenney.glb
+trollpennan-mfix2/sparkcykel-egen.glb
+trollpennan-mfix2/tivoli-egen.glb
+trollpennan-mfix2/sol-egen.glb
+trollpennan-mfix2/spelare-blocky.glb

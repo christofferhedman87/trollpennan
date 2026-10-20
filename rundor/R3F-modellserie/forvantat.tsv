@@ -16,5 +16,6 @@ M14	18	en boll=boll;en ballong=ballong;en gitarr=gitarr;en trumma=trumma
 MFIX	20	en svan=svan;en abborre=abborre;en narval=narval;en drottning=drottning;en bebis=bebis
 M15	48	en grävmaskin=gravmaskin;en motorbåt=motorbat;en skyskrapa=skyskrapa;en rullstol=rullstol
 M16	39	ett slott=slott;en sol=sol;en måne=mane;en vulkan=vulkan
+MFIX2	9	en sol=sol;en nalle=nallebjorn;ett tivoli=tivoli;en spelare=spelare
 M17	41	en brandman=brandman;en clown=clown;en prinsessa=prinsessa;en ninja=ninja
-M18	42	en buss=buss;en cykel=cykel;en ubåt=ubat;en luftballong=luftballong
+M18	36	en buss=buss;en cykel=cykel;en ubåt=ubat;en luftballong=luftballong

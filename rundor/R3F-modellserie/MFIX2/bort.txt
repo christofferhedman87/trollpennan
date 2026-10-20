@@ -1,0 +1,13 @@
+# R3F-MFIX2: tas bort; de nio första läggs in igen med ny modell, storlek eller ord. kors, krypta och gravsten tas bort helt (Arkitektens beslut), gamer blir spelare.
+nallebjorn
+bebis
+narval
+fana
+lastfartyg
+sparkcykel
+tivoli
+sol
+gamer
+kors
+krypta
+gravsten

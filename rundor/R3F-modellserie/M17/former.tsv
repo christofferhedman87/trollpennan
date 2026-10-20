@@ -22,7 +22,7 @@ brevbärare	u	brevbärare, brevbäraren, brevbärarna	# SALDO nn_6u_kikare
 målare	u	målare, målaren, målarna	# SALDO nn_6u_kikare
 snickare	u	snickare, snickaren, snickarna	# SALDO nn_6u_kikare
 kapten	u	kapten, kaptenen, kaptener, kaptenerna	# SALDO nn_3u_tid
-fiskare	u	fiskare, fiskaren, fiskarna	# SALDO nn_6u_kikare
+fiskare	u	fiskare, fiskaren	# SALDO nn_6u_kikare (utan fiskarna: krockar med annat ord)
 viking	u	viking, vikingen, vikingar, vikingarna	# SALDO nn_2u_stol
 superhjälte	u	superhjälte, superhjälten, superhjältar, superhjältarna	# hand (SAOL-mönster som hjälte, nn_2u_hjälte)
 tjuv	u	tjuv, tjuven, tjuvar, tjuvarna	# SALDO nn_2u_sten
