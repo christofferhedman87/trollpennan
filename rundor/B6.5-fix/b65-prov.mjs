@@ -28,6 +28,7 @@ async function sida(spar) {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, deviceScaleFactor: 1, locale: "sv-SE" });
   await ctx.addInitScript((s) => {
     window.__tredEffekter = {};
+    window.__tredFarg = [];
     if (!sessionStorage.getItem("f")) { localStorage.setItem("trollpennan-v2", JSON.stringify(s)); sessionStorage.setItem("f", "1"); }
   }, { version: 2, introSedd: true, dragit: true, ang: [], garden: [], stjarnor: 0, oppnadePlatser: PLATSER, seddaIntro: [...PLATSER, "garden", "gard"], platsSkapelser: {}, ...spar });
   const p = await ctx.newPage();
@@ -85,7 +86,10 @@ await blok("A", async () => {
     kolla(`A '${f.ord}': precis en skapelse, ${f.kropp} (inget ägg, ingen ande)`, spar.length === 1 && spar[0]?.kropp === f.kropp, { kroppar: spar.map((d) => d.kropp) });
     const eff = await p.evaluate(() => window.__tredEffekter ?? {});
     const uid = spar[0]?.uid;
-    kolla(`A '${f.ord}': effekten ${f.effekt} ritas`, !!uid && (eff[uid] ?? []).includes(f.effekt), { effekter: eff[uid] });
+    // R8-3a2: på en GLB-kropp ersätts regnbågen av kroppsmönstret "band" (attribut.json → kroppsmonster.ersatter); bilden nedan
+    // ska fortfarande visa regnbågens nyanser
+    const monster = f.effekt === "regnbage" ? await p.evaluate((k) => (window.__tredFarg ?? []).some((r) => r.kropp === k && r.monster === "band"), f.kropp) : false;
+    kolla(`A '${f.ord}': effekten ${f.effekt} ritas${f.effekt === "regnbage" ? " (eller kroppsmönstret band, R8-3a2)" : ""}`, !!uid && ((eff[uid] ?? []).includes(f.effekt) || monster), { effekter: eff[uid], monster });
     // pixlar: effekten syns (jämfört med ängen före)
     let bast = { eld: 0, regnbage: [0, 0, 0, 0, 0, 0] };
     for (let i = 0; i < 6; i++) { const m = await pixlar(p); if (m.eld > bast.eld) bast.eld = m.eld; bast.regnbage = bast.regnbage.map((v, k) => Math.max(v, m.regnbage[k])); await p.waitForTimeout(300); }

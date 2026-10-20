@@ -99,7 +99,7 @@ async function figur(fras, hMal) {
   await ctx.close();
   return { v, rader, ny, tack };
 }
-// [fras, kropp, målnyans (null = utan färgord), min andel, min antal pixlar]
+// [fras, kropp, målnyans (null = utan färgord), min andel, min antal pixlar, min täckning (standard TACK)]
 const TACK = 0.35;
 const FALL = [
   ["en blå katt", "katt", 210, 0.6, 250],
@@ -108,12 +108,14 @@ const FALL = [
   ["en blå jultomte", "jultomte", 210, 0.6, 250],
   ["en grön narval", "narval", 120, 0.5, 150],
   ["en röd elefant", "elefant", 2, 0.6, 250],
-  ["en blå bil", "bil", 210, 0.5, 150],
+  // R8-3a2: bilens rutor, däck, lyktor och stötfångare behålls (kroppsmasken), och glasburen står framför: 0,32 där.
+  // 0,25 skiljer fortfarande ut felet där bara taket blev blått (0,13).
+  ["en blå bil", "bil", 210, 0.5, 150, 0.25],
   ["en lila drake", "drake", 285, 0.5, 250],
   ["en jultomte", "jultomte", 2, 0.5, 200],
   ["en kraken", "kraken", 285, 0.5, 200],
 ];
-for (const [fras, kropp, h, andel, minN] of FALL) {
+for (const [fras, kropp, h, andel, minN, minTack = TACK] of FALL) {
   if (bara && !bara.includes(kropp)) continue;
   if (!ENT[kropp]) { kolla(`${fras}: ${kropp} finns inte i datan – hoppas över`, true, { hoppad: true }); continue; }
   try {
@@ -125,7 +127,7 @@ for (const [fras, kropp, h, andel, minN] of FALL) {
       kolla(`${fras} (utan färgord): egna färger, inget material ändrat, nyans ${h}° dominerar`, v?.kropp === kropp && rader.length > 0 && info.andrade === 0 && rader.every((r) => r.sjalvlyse === "#000000") && t >= minN && t / n >= andel, info);
     } else {
       const delvis = rader.filter((r) => r.efter !== r.fore || !r.egenKarta).length;
-      kolla(`${fras}: kroppen i målnyansen ${h}° (≥ ${andel * 100} % av de nya mättade pixlarna, ≥ ${minN} st, ≥ ${TACK * 100} % av figurens pixlar)`, v?.kropp === kropp && delvis > 0 && t >= minN && t / n >= andel && tack.andel >= TACK, info);
+      kolla(`${fras}: kroppen i målnyansen ${h}° (≥ ${andel * 100} % av de nya mättade pixlarna, ≥ ${minN} st, ≥ ${minTack * 100} % av figurens pixlar)`, v?.kropp === kropp && delvis > 0 && t >= minN && t / n >= andel && tack.andel >= minTack, info);
     }
   } catch (e) { kolla(`${fras} kraschade`, false, { fel: String(e).split("\n")[0] }); }
 }
