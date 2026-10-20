@@ -206,10 +206,14 @@ for (const rost of ["sv-SE", "en-US"]) {
   await p.waitForTimeout(600);
   const fore = await syns();
   const L0 = await las(p);
+  // det som spelar nu (gåtan i boken kan ligga före uppmaningen i kön – båda ska tystna av trycket)
   const fil = plan && "f" in plan.delar[0] ? plan.delar[0].f : null;
-  const spelar = !!fil && L0.spelat.includes(fil) && !(await p.evaluate(() => window.__pausat.length));
+  const nu = L0.spelat.at(-1) ?? null;
+  const pausatFore = await p.evaluate((f) => window.__pausat.some((x) => x.fil === f), nu);
+  const spelar = !!nu && !pausatFore;
   const nSpelat = L0.spelat.length;
   const tKlick = Date.now();
+  const tSida = await p.evaluate(() => performance.now());
   await p.locator(".banner.tryck").first().click();
   await p.waitForTimeout(300);
   const kvar300 = await syns();
@@ -217,9 +221,9 @@ for (const rost of ["sv-SE", "en-US"]) {
   const kvar1800 = await syns();
   const efter = await p.evaluate(() => ({ pausat: window.__pausat, avbrutet: window.__avbrutet, spelat: window.__spelat }));
   if (bilder) await p.screenshot({ path: path.join(bilder, "tts2-tryck.png") });
-  kolla("tryck: uppmaningen står kvar och rösten spelar före trycket", fore && spelar, { fore, spelar, fil, spelat: L0.spelat, ms: plan?.ms });
+  kolla("tryck: uppmaningen står kvar och en röst spelar före trycket", fore && spelar, { fore, spelar, nu, fil, spelat: L0.spelat, ms: plan?.ms });
   kolla("tryck: uppmaningen är borta 300 ms efter trycket och kommer inte tillbaka (samma text tas ur kön)", !kvar300 && !kvar1800, { kvar300, kvar1800, msEfterTryck: Date.now() - tKlick });
-  kolla("tryck: rösten tystnar (pausas/avbryts) och uppmaningen läses inte om", efter.pausat.some((x) => x.fil === fil) && efter.avbrutet > 0 && !efter.spelat.slice(nSpelat).includes(fil), { pausat: efter.pausat, avbrutet: efter.avbrutet, nya: efter.spelat.slice(nSpelat) });
+  kolla("tryck: rösten tystnar (det som spelar pausas, kön töms) och uppmaningen läses inte efteråt", efter.pausat.some((x) => x.fil === nu && x.t >= tSida) && efter.avbrutet > 0 && efter.spelat.slice(nSpelat).length === 0, { nu, fil, pausat: efter.pausat, avbrutet: efter.avbrutet, nya: efter.spelat.slice(nSpelat) });
   await ctx.close();
 }
 await browser.close();
