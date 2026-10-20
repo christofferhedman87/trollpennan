@@ -2007,6 +2007,12 @@
    "forsta": "E",
    "langd": 7,
    "granskad": false
+  },
+  "gamer": {
+   "gata": "Han sitter med handkontrollen och spelar tv-spel hela kvällen.",
+   "forsta": "G",
+   "langd": 5,
+   "granskad": false
   }
  }
 }
