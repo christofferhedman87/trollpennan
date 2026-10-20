@@ -1,4 +1,4 @@
-ord	genus	former (gissade)	entitet	fil
+ord	genus	former (granskade, ur data/ord.json)	entitet	fil
 svan	u	svan, svanen, svanar, svanarna	svan	trollpennan-mfix/svan-egen.glb
 abborre	u	abborre, abborren, abborrar, abborrarna	abborre	trollpennan-mfix/abborre-fish-quaternius.glb
 gädda	u	gädda, gäddan, gäddor, gäddorna	gadda	trollpennan-mfix/gadda-fish-quaternius.glb
@@ -7,11 +7,11 @@ mask	u	mask, masken, maskar, maskarna	mask	trollpennan-mfix/mask-egen.glb
 daggmask	u	daggmask, daggmasken, daggmaskar, daggmaskarna	mask	trollpennan-mfix/mask-egen.glb
 mamma	u	mamma, mamman, mammor, mammorna	mamma	trollpennan-mfix/mamma-blocky.glb
 pappa	u	pappa, pappan, pappor, papporna	pappa	trollpennan-mfix/pappa-blocky.glb
-lärare	u	lärare, läraren, lärarar, lärararna	larare	trollpennan-mfix/larare-blocky.glb
+lärare	u	lärare, läraren, lärarna	larare	trollpennan-mfix/larare-blocky.glb
 pojke	u	pojke, pojken, pojkar, pojkarna	pojke	trollpennan-mfix/pojke-blocky.glb
-cowboy	u	cowboy, cowboyn	cowboy	trollpennan-mfix/cowboy-blocky.glb
-byggarbetare	u	byggarbetare, byggarbetaren, byggarbetarar, byggarbetararna	byggarbetare	trollpennan-mfix/byggarbetare-blocky.glb
-arbetare	u	arbetare, arbetaren, arbetarar, arbetararna	byggarbetare	trollpennan-mfix/byggarbetare-blocky.glb
-pirat	u	pirat, piraten, piratar, piratarna	pirat	trollpennan-mfix/pirat-blocky.glb
+cowboy	u	cowboy, cowboyen, cowboyer, cowboyerna	cowboy	trollpennan-mfix/cowboy-blocky.glb
+byggarbetare	u	byggarbetare, byggarbetaren, byggarbetarna	byggarbetare	trollpennan-mfix/byggarbetare-blocky.glb
+arbetare	u	arbetare, arbetaren, arbetarna	byggarbetare	trollpennan-mfix/byggarbetare-blocky.glb
+pirat	u	pirat, piraten, pirater, piraterna	pirat	trollpennan-mfix/pirat-blocky.glb
 drottning	u	drottning, drottningen, drottningar, drottningarna	drottning	trollpennan-mfix/drottning-blocky.glb
 bebis	u	bebis, bebisen, bebisar, bebisarna	bebis	trollpennan-mfix/bebis-blocky.glb

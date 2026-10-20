@@ -87,6 +87,8 @@ if [ "$(tail -n +2 "$UT/lagg-ordgranskning.tsv" | grep -c .)" != "0" ] || [ -f "
     stopp 3 "granskade former saknas eller är fel ($D/$M/former.tsv). Allt återställt."
   fi
 fi
+# 3a2. Paketets ordgranskning.tsv visar de granskade formerna (ur data/ord.json), aldrig lagg-gissningar som "spelarar".
+node $D/ordgranskning-granskad.mjs "$D/$M/ordgranskning.tsv" | tee -a "$UT/bevis.txt"
 # 3b. Gåtor för nya hemliga djur (r9.test.ts kräver en gåta per djurord). Data ur $D/$M/gator.json, inget annat ändras.
 if [ -f "$D/$M/gator.json" ]; then
   node -e '
@@ -129,7 +131,7 @@ fi
   echo "Körd $(date '+%Y-%m-%d %H:%M %Z') på $(git rev-parse --short HEAD) ($(git branch --show-current))."; echo
   echo '```'; cat "$UT/bevis.txt"; echo '```'; echo
   echo "Sammanfattning ur lagg:"; echo '```'; sed -n '/^{/,/^}/p' "$UT/lagg.txt" | grep -E '"(rader|ok|ok_flaggad|hoppade|fel|unika_nya_ord)"'; echo '```'
-  echo; echo "Ordgranskning: lagg-gissningar i \`$D/$M/ordgranskning.tsv\`; de former som ligger i spelet är de granskade i \`$D/$M/former.tsv\`."
+  echo; echo "Ordgranskning: \`$D/$M/ordgranskning.tsv\` visar formerna som ligger i spelet (granskade i \`$D/$M/former.tsv\`)."
   [ $AVV -ne 0 ] && echo && echo "**AVVIKELSE: rader märkta AVV ovan. Ingen merge förrän Arkitekten tittat.**"
 } > "$LOGG"
 git add -A -- CREDITS.md LICENSES.md data public/models/bulk src/spel/entiteter.test.ts $TESTFILER docs/skarmbilder/r3f "$D/$M"

@@ -1,6 +1,6 @@
-ord	genus	former (gissade)	entitet	fil
-tjej	u	tjej, tjejen, tjejar, tjejarna	tjej	trollpennan-mfix/tjej-blocky.glb
+ord	genus	former (granskade, ur data/ord.json)	entitet	fil
+tjej	u	tjej, tjejen, tjejer, tjejerna	tjej	trollpennan-mfix/tjej-blocky.glb
 flicka	u	flicka, flickan, flickor, flickorna	tjej	trollpennan-mfix/tjej-blocky.glb
-skejtare	u	skejtare, skejtaren, skejtarar, skejtararna	skejtare	trollpennan-mfix/skejtare-blocky.glb
-soldat	u	soldat, soldaten, soldatar, soldatarna	soldat	trollpennan-mfix/soldat-blocky.glb
-expedit	u	expedit, expediten, expeditar, expeditarna	expedit	trollpennan-mfix/expedit-blocky.glb
+skejtare	u	skejtare, skejtaren, skejtarna	skejtare	trollpennan-mfix/skejtare-blocky.glb
+soldat	u	soldat, soldaten, soldater, soldaterna	soldat	trollpennan-mfix/soldat-blocky.glb
+expedit	u	expedit, expediten, expediter, expediterna	expedit	trollpennan-mfix/expedit-blocky.glb

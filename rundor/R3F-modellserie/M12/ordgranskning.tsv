@@ -1,22 +1,22 @@
-ord	genus	former (gissade)	entitet	fil
+ord	genus	former (granskade, ur data/ord.json)	entitet	fil
 mamma	u	mamma, mamman, mammor, mammorna	mamma	polypizza-cc0-3/woman-a-9kf7et.glb
 pappa	u	pappa, pappan, pappor, papporna	pappa	polypizza-cc0-3/characters-matt-66kq4d-forenklad.glb
-lärare	u	lärare, läraren, lärarar, lärararna	larare	polypizza-cc0-3/woman-dress-zmyplq.glb
+lärare	u	lärare, läraren, lärarna	larare	polypizza-cc0-3/woman-dress-zmyplq.glb
 pojke	u	pojke, pojken, pojkar, pojkarna	pojke	polypizza-cc0-3/character-animated-dgocw9-forenklad.glb
 kung	u	kung, kungen, kungar, kungarna	kung	kenney-blocky-characters/kung-krona.glb
-cowboy	u	cowboy, cowboyn	cowboy	polypizza-cc0-3/cowboy-s8hq7l.glb
-byggarbetare	u	byggarbetare, byggarbetaren, byggarbetarar, byggarbetararna	byggarbetare	polypizza-cc0-3/worker-yg2bqz.glb
-arbetare	u	arbetare, arbetaren, arbetarar, arbetararna	byggarbetare	polypizza-cc0-3/worker-yg2bqz.glb
-pirat	u	pirat, piraten, piratar, piratarna	pirat	polypizza-cc0-3/pirate-pirate-captain-sn18ly-forenklad.glb
-polis	u	polis, polisen, polisar, polisarna	polis	kenney-blocky-characters/character-j-belyst.glb
-farfar	u	farfar, farfaren, farfarar, farfararna	farfar	kenney-blocky-characters/character-i.glb
-morfar	u	morfar, morfaren, morfarar, morfararna	farfar	kenney-blocky-characters/character-i.glb
-chef	u	chef, chefen, chefar, chefarna	chef	kenney-blocky-characters/character-q-belyst.glb
-bror	u	bror, broren, brorar, brorarna	bror	kenney-blocky-characters/character-b-belyst.glb
+cowboy	u	cowboy, cowboyen, cowboyer, cowboyerna	cowboy	polypizza-cc0-3/cowboy-s8hq7l.glb
+byggarbetare	u	byggarbetare, byggarbetaren, byggarbetarna	byggarbetare	polypizza-cc0-3/worker-yg2bqz.glb
+arbetare	u	arbetare, arbetaren, arbetarna	byggarbetare	polypizza-cc0-3/worker-yg2bqz.glb
+pirat	u	pirat, piraten, pirater, piraterna	pirat	polypizza-cc0-3/pirate-pirate-captain-sn18ly-forenklad.glb
+polis	u	polis, polisen, poliser, poliserna	polis	kenney-blocky-characters/character-j-belyst.glb
+farfar	u	farfar, farfadern, farfäder, farfäderna	farfar	kenney-blocky-characters/character-i.glb
+morfar	u	morfar, morfadern, morfäder, morfäderna	farfar	kenney-blocky-characters/character-i.glb
+chef	u	chef, chefen, chefer, cheferna	chef	kenney-blocky-characters/character-q-belyst.glb
+bror	u	bror, brodern, brorn, bröder, bröderna	bror	kenney-blocky-characters/character-b-belyst.glb
 kille	u	kille, killen, killar, killarna	kille	kenney-blocky-characters/character-c-belyst.glb
-syster	u	syster, systeren, systerar, systerarna	syster	kenney-blocky-characters/character-e-belyst.glb
+syster	u	syster, systern, systrar, systrarna	syster	kenney-blocky-characters/character-e-belyst.glb
 kompis	u	kompis, kompisen, kompisar, kompisarna	kompis	kenney-blocky-characters/character-f-belyst.glb
-sjörövare	u	sjörövare, sjörövaren, sjörövarar, sjörövararna	sjorovare	kenney-blocky-characters/character-p-belyst.glb
-scout	u	scout, scouten, scoutar, scoutarna	scout	kenney-blocky-characters/character-m-belyst.glb
-farbror	u	farbror, farbroren, farbrorar, farbrorarna	farbror	kenney-blocky-characters/character-k-belyst.glb
-moster	u	moster, mosteren, mosterar, mosterarna	moster	kenney-blocky-characters/character-n-belyst.glb
+sjörövare	u	sjörövare, sjörövaren, sjörövarna	sjorovare	kenney-blocky-characters/character-p-belyst.glb
+scout	u	scout, scouten, scouter, scouterna	scout	kenney-blocky-characters/character-m-belyst.glb
+farbror	u	farbror, farbrodern, farbrorn, farbröder, farbröderna	farbror	kenney-blocky-characters/character-k-belyst.glb
+moster	u	moster, mostern, mostrar, mostrarna	moster	kenney-blocky-characters/character-n-belyst.glb
