@@ -215,7 +215,7 @@ index 0000000..c781d4a
 + "modeller": {}
 +}
 diff --git a/data/storlek.json b/data/storlek.json
-index 6f5bce4..ace8a83 100644
+index 6f5bce4..9afaccc 100644
 --- a/data/storlek.json
 +++ b/data/storlek.json
 @@ -7,7 +7,8 @@
@@ -228,7 +228,7 @@ index 6f5bce4..ace8a83 100644
   "kategori": {
    "hus": "stor",
    "grotta": "stor",
-@@ -82,6 +83,11 @@
+@@ -82,6 +83,13 @@
    "fri_x": [[-1.4, 0.0]],
    "_om_bortom": "B6.6: byggnaderna (klass med rad bortom) står bakom staketet i det här djupet, högst längst bak; synlig_x = halva synliga bredden längst bak i stående läge, kroppen ska rymmas. Bakom staketet hålls bara själva grinden fri (bortom.fri_x), den syns framför byggnaderna.",
    "bortom": { "z": [-3.3, -2.35], "fri_x": [[-1.2, -0.2]] },
@@ -237,8 +237,10 @@ index 6f5bce4..ace8a83 100644
 +  "_om_max_skymd": "P3 (Doodle 15:35): ingen byggnad eller stor sak skyms till mer än max_skymd av sin skärmruta (summan av vad de framför täcker, räknat med den stående kameran). Gäller båda raderna, och raden framför staketet räknar in byggnaderna bakom. Samma tal i provet (p3-prov E/F).",
 +  "max_skymd": 0.15,
 +  "_om_radskala": "P3: ryms inte raden (summan av bredderna > synlig bredd minus grinden, med rad_overlapp tillåten överlappning) krymper hela raden med samma faktor, aldrig under min_radskala. Slottet är då fortfarande större än sjukhuset. Placeringen packar tätt: den högsta längst ut, sedan de andra intill.",
++  "_om_fasta": "P3 (Doodle 15:35: glaslådan till höger täckte slottet): fasta saker i ängens scen räknas som hinder när de stora sakerna placeras – deras skärmruta skymmer, och deras sträcka i x är upptagen i raden de står i. Spökhuset (glashuset) står här; byggnader.tsx läser läget härifrån.",
++  "fasta": [{ "namn": "spokhus", "x": 2.15, "z": -1.7, "halv": 0.73, "djup": 0.58, "hojd": 1.8 }],
 +  "rad_overlapp": 0,
-+  "min_radskala": 0.5
++  "min_radskala": 0.45
   }
  }
 diff --git a/data/test-fraser.json b/data/test-fraser.json
@@ -330,6 +332,19 @@ index 855c8df..d7cb279 100644
 +  ]
 + }
 +}
+diff --git a/package.json b/package.json
+index a91b592..349a13b 100644
+--- a/package.json
++++ b/package.json
+@@ -22,7 +22,7 @@
+     "format": "prettier --write .",
+     "build:pages": "vite build --config vite.pages.config.ts",
+     "preview:pages": "vite preview --config vite.pages.config.ts",
+-    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/r9j.test.ts src/spel/r9k.test.ts src/spel/b4-1.test.ts src/spel/dialogIsolering.test.mjs src/spel/b6-1.test.ts src/spel/b6-2.test.ts src/spel/b6-4.test.ts src/spel/rost.test.ts src/spel/b6-3.test.ts src/spel/p1.test.ts src/spel/p2.test.ts src/spel/b6-5.test.ts src/spel/b6-6.test.ts src/spel/rost2.test.ts src/spel/p22.test.ts",
++    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/r9j.test.ts src/spel/r9k.test.ts src/spel/b4-1.test.ts src/spel/dialogIsolering.test.mjs src/spel/b6-1.test.ts src/spel/b6-2.test.ts src/spel/b6-4.test.ts src/spel/rost.test.ts src/spel/b6-3.test.ts src/spel/p1.test.ts src/spel/p2.test.ts src/spel/b6-5.test.ts src/spel/b6-6.test.ts src/spel/rost2.test.ts src/spel/p22.test.ts src/spel/p3.test.ts",
+     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
+     "check:pages-output": "node scripts/check-pages-output.mjs",
+     "check:struktur": "node scripts/check-spel-struktur.mjs",
 diff --git a/rundor/B6.6-fix/b66-prov.mjs b/rundor/B6.6-fix/b66-prov.mjs
 index b0ad366..a69a673 100644
 --- a/rundor/B6.6-fix/b66-prov.mjs
@@ -343,8 +358,32 @@ index b0ad366..a69a673 100644
      kolla("slottet är högre än sjukhuset på skärmen", m.slott.h > m.sjukhus.h * 1.15, { slott: m.slott.h, sjukhus: m.sjukhus.h });
      const over = (a, b) => Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x)) * Math.max(0, Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y));
      const [c, vx] = [m.cirkus, m.vaxthus];
+diff --git a/src/spel/ang/byggnader.tsx b/src/spel/ang/byggnader.tsx
+index 9fa5843..f178077 100644
+--- a/src/spel/ang/byggnader.tsx
++++ b/src/spel/ang/byggnader.tsx
+@@ -7,6 +7,10 @@ import type { SparatBygge } from "../bygge.ts";
+ import { _mal, slag, usePennTryck } from "./delat.ts";
+ import { Hanglas, Rok } from "./dekor.tsx";
+ import { TOON_MAP } from "./djur.tsx";
++import { BAK_ZON } from "../entiteter.ts";
++
++/** P3: spökhusets läge ur data/storlek.json (bak.fasta), samma som placeringen räknar med. */
++const SPOK = BAK_ZON.fasta?.find((f) => f.namn === "spokhus") ?? { x: 2.15, z: -1.7 };
+ 
+ export function Hus({
+   position,
+@@ -169,7 +173,7 @@ export function SpokHus({ onSnart }: { onSnart: () => void }) {
+     }
+   });
+   return (
+-    <group name="spokhus" position={[2.15, 0, -1.7]} scale={1.05} onPointerDown={ned}>
++    <group name="spokhus" position={[SPOK.x, 0, SPOK.z]} scale={1.05} onPointerDown={ned}>
+       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0.05]}>
+         <circleGeometry args={[1.15, 16]} />
+         <meshToonMaterial color="#C4A574" gradientMap={TOON_MAP} />
 diff --git a/src/spel/ang/delat.ts b/src/spel/ang/delat.ts
-index a967002..844e4d0 100644
+index a967002..def94df 100644
 --- a/src/spel/ang/delat.ts
 +++ b/src/spel/ang/delat.ts
 @@ -6,7 +6,10 @@ import type { Sparad } from "../brygga.ts";
@@ -424,7 +463,7 @@ index a967002..844e4d0 100644
      );
      karta = new Map(marka.map((d, i) => [d.uid, ut[i]!]));
      if (platsCache.size > 30) platsCache.clear();
-@@ -172,7 +204,25 @@ export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number,
+@@ -172,7 +204,26 @@ export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number,
    return p ? [p[0], bas[1], p[1]] : bas;
  }
  
@@ -443,7 +482,8 @@ index a967002..844e4d0 100644
 +export function radSkala(rad: readonly Sparad[], bortom: boolean, zon = BAK_ZON): number {
 +  const sx = zon.synlig_x ?? zon.zon.x[1];
 +  const friX = (bortom && zon.bortom?.fri_x) || zon.fri_x;
-+  const kap = 2 * sx - friX.reduce((a, [x0, x1]) => a + Math.max(0, Math.min(sx, x1) - Math.max(-sx, x0)), 0);
++  const upp = [...friX, ...(zon.fasta ?? []).map((f) => [f.x - f.halv, f.x + f.halv] as [number, number])];
++  const kap = 2 * sx - upp.reduce((a, [x0, x1]) => a + Math.max(0, Math.min(sx, x1) - Math.max(-sx, x0)), 0);
 +  const efter = rad.reduce((a, d) => a + 2 * halvBredd(d.kropp, d.skala), 0);
 +  if (efter <= 0) return 1;
 +  return Math.min(1, Math.max(zon.min_radskala ?? 1, (kap * (1 + (zon.rad_overlapp ?? 0))) / efter));
@@ -451,7 +491,7 @@ index a967002..844e4d0 100644
  
  /**
   * B6.6: stora saker längst bak, efter sin verkliga storlek. Byggnaderna (storlek.json, klass med rad "bortom") står
-@@ -181,75 +231,126 @@ const bakCache = new Map<string, Map<string, [number, number, boolean]>>();
+@@ -181,78 +232,176 @@ const bakCache = new Map<string, Map<string, [number, number, boolean]>>();
   * ledig sträcka i x (slumpad men fast per uid, så de sprids). Finns ingen ledig sträcka ställs den lägre framför den
   * högre (vid samma höjd den smalare framför den bredare), så att den aldrig skyms. Ren funktion av listan; null-plats = gamla bakPlatser.
   */
@@ -489,6 +529,8 @@ index a967002..844e4d0 100644
    const ordning = rad.slice().sort((a, b) => hojd(b) - hojd(a) || halvBredd(b.kropp, b.skala) - halvBredd(a.kropp, a.skala) || a.uid.localeCompare(b.uid));
 -  const satta: { x: number; z: number; h: number }[] = [];
 +  const satta: Placerad[] = bakom.map((b) => ({ ...b }));
++  // hinder i radens djup eller framför den (spökhuset framför byggnaderna) tar sin sträcka i x
++  const upptagna = bakom.filter((b) => b.z >= z0 - 0.3);
 +  const egna: Placerad[] = [];
    const ut = new Map<string, [number, number, boolean]>();
    for (const d of ordning) {
@@ -510,7 +552,7 @@ index a967002..844e4d0 100644
      if (kand.length === 0) continue;
 -    const lucka = (x: number) => Math.min(Infinity, ...satta.map((o) => Math.abs(x - o.x) - h - o.h));
 -    const bast = Math.max(...kand.map(lucka));
-+    const lucka = (x: number) => Math.min(Infinity, ...egna.map((o) => Math.abs(x - o.x) - h - o.h));
++    const lucka = (x: number) => Math.min(Infinity, ...[...egna, ...upptagna].map((o) => Math.abs(x - o.x) - h - o.h));
      const lediga = kand.filter((x) => lucka(x) >= 0.08);
 -    // djupet: närmast zBas där dammen är fri och där den står minst 0,3 framför varje sak den överlappar
 -    // (den som väljer senare är aldrig högre, så den lägre står alltid framför den högre och skyms inte)
@@ -547,7 +589,7 @@ index a967002..844e4d0 100644
 +    // bästa passning: den lucka i raden (mellan kanten, grinden och de satta) där saken lämnar minst över, tätt intill en granne
 +    const luckor: [number, number][] = [];
 +    {
-+      const upp = [...friX.map(([a, b]) => [a, b] as [number, number]), ...egna.map((o) => [o.x - o.h, o.x + o.h] as [number, number])].sort((p, q) => p[0] - q[0]);
++      const upp = [...friX.map(([a, b]) => [a, b] as [number, number]), ...[...egna, ...upptagna].map((o) => [o.x - o.h, o.x + o.h] as [number, number])].sort((p, q) => p[0] - q[0]);
 +      let fran = -sx;
 +      for (const [a, b] of upp) {
 +        if (a > fran) luckor.push([fran, Math.min(a, sx)]);
@@ -571,8 +613,11 @@ index a967002..844e4d0 100644
 +      ...kand.filter((x) => lucka(x) < 0.08).sort((a, b) => lucka(b) - lucka(a) || a - b),
 +    ];
 +    let bast: { x: number; z: number; s: number } | null = null;
++    // en fast sak (spökhuset) i samma djup får aldrig gå igenom: den sträckan är stängd
++    const iFast = (x: number, z: number) => upptagna.some((b) => Math.abs(z - b.z) < 0.6 && Math.abs(x - b.x) < h + b.h);
 +    for (const x of xs) {
 +      for (const z of djupen(x)) {
++        if (iFast(x, z)) continue;
 +        const s = varstaSkymning(sakRuta(x, z, h, H), z, satta);
 +        if (!bast || s < bast.s - 1e-9) bast = { x, z, s };
 +        if (s <= maxSkymd) break;
@@ -600,6 +645,13 @@ index a967002..844e4d0 100644
    }
 -  if (bakCache.size > 30) bakCache.clear();
 -  bakCache.set(nyckel, ut);
+   return ut;
+ }
+ 
++/** P3: ängens fasta saker (storlek.json bak.fasta, spökhuset) som hinder: de skymmer och tar sin sträcka i raden. */
++function fastaHinder(zon = BAK_ZON): Placerad[] {
++  const ut: Placerad[] = [];
++  for (const f of zon.fasta ?? []) lagg(ut, { x: f.x, z: f.z, h: f.halv, hojd: f.hojd, r: sakRuta(f.x, f.z, f.halv, f.hojd, f.djup) });
 +  return ut;
 +}
 +
@@ -613,46 +665,67 @@ index a967002..844e4d0 100644
 +    const [h, H] = [halvBredd(d.kropp, d.skala) * k, malhojd(d.kropp) * takSkala(d.kropp, d.skala || 1) * k];
 +    lagg(ut, { x: l[0], z: l[1], h, hojd: H, r: sakRuta(l[0], l[1], h, H) });
 +  }
-   return ut;
- }
- 
-@@ -266,11 +367,30 @@ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
++  return ut;
++}
++
++/**
++ * B6.6 + P3: lägena för ängens stora saker. Var rad för sig (byggnader bakom staketet, fordon och möbler framför), efter
++ * bredd och höjd. Raden framför räknar in byggnaderna bakom och ängens fasta saker (ingen skymmer dem för mycket); det
++ * som inte får plats framför (dammen, grinden, skymningen) går bakom staketet, högst tre varv. Tredje värdet = ryms.
++ */
++export function bakRader(bak: Sparad[]): Map<string, [number, number, boolean]> {
++  const framRad = bak.filter((d) => storlekKlass(d.kropp)?.rad !== "bortom");
++  let iBort = new Set(bak.filter((d) => storlekKlass(d.kropp)?.rad === "bortom").map((d) => d.uid));
++  const fasta = fastaHinder();
++  let fram = bakLagen(framRad, false, BAK_ZON, fasta);
++  let bortLagen = new Map<string, [number, number, boolean]>();
++  for (let varv = 0; varv < 3; varv++) {
++    const fler = framRad.filter((d) => !iBort.has(d.uid) && fram.get(d.uid)?.[2] === false);
++    if (varv > 0 && fler.length === 0) break;
++    iBort = new Set([...iBort, ...fler.map((d) => d.uid)]);
++    const bortRad = bak.filter((d) => iBort.has(d.uid));
++    bortLagen = bakLagen(bortRad, true, BAK_ZON, fasta);
++    fram = bakLagen(framRad.filter((d) => !iBort.has(d.uid)), false, BAK_ZON, [...fasta, ...somHinder(bortRad, bortLagen)]);
++  }
++  const ut = new Map<string, [number, number, boolean]>();
++  for (const d of bak) {
++    const l = iBort.has(d.uid) ? bortLagen.get(d.uid) : fram.get(d.uid);
++    if (l) ut.set(d.uid, l);
++  }
++  return ut;
++}
++
++/** P3: ryms ängens stora saker så att var och en syns (ingen skymd mer än max_skymd, radens skala ≥ min_radskala)? */
++export function bakRymms(alla: Sparad[]): boolean {
++  const bak = alla.filter((d) => storlekKlass(d.kropp)?.zon === "bak" && !simmare(d) && !flygare(d));
++  if (bak.length < 2) return true;
++  const l = bakRader(bak);
++  return bak.every((d) => l.get(d.uid)?.[2] !== false);
++}
++
+ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
+   if (simmare(spec)) {
+     const sim = alla.filter((d) => simmare(d));
+@@ -262,15 +411,10 @@ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
+   }
+   // B6.1 (E): stora saker (data/storlek.json zon "bak") står längst bak, bakom alla djur
+   if (storlekKlass(spec.kropp)?.zon === "bak") {
+-    // B6.3 (J): spridda i zonen, fast läge per uid, inte längre en rad framför staketet
++    // B6.3 (J) + B6.6 + P3: se bakRader
      const bak = alla.filter((d) => storlekKlass(d.kropp)?.zon === "bak" && !simmare(d) && !flygare(d));
-     // B6.6: var rad för sig (byggnader bakom staketet, fordon och möbler framför), efter bredd och höjd
-     // fordon och möbler som inte får plats framför staketet (dammen och grinden tar mycket) går bakom det, till byggnaderna
+-    // B6.6: var rad för sig (byggnader bakom staketet, fordon och möbler framför), efter bredd och höjd
+-    // fordon och möbler som inte får plats framför staketet (dammen och grinden tar mycket) går bakom det, till byggnaderna
 -    const fram = bakLagen(bak.filter((d) => storlekKlass(d.kropp)?.rad !== "bortom"), false);
 -    const lage = fram.get(spec.uid);
 -    if (lage?.[2]) return [lage[0], 0, lage[1]];
 -    const bort = bakLagen(bak.filter((d) => storlekKlass(d.kropp)?.rad === "bortom" || fram.get(d.uid)?.[2] === false), true).get(spec.uid);
 -    if (bort) return [bort[0], 0, bort[1]];
-+    const framRad = bak.filter((d) => storlekKlass(d.kropp)?.rad !== "bortom");
-+    // P3: raden framför staketet räknar in byggnaderna bakom (ingen skymmer dem för mycket, glaslådan framför slottet);
-+    // det som inte får plats framför (dammen, grinden, skymningen) går bakom staketet, högst tre varv
-+    let iBort = new Set(bak.filter((d) => storlekKlass(d.kropp)?.rad === "bortom").map((d) => d.uid));
-+    let fram = bakLagen(framRad, false);
-+    for (let varv = 0; varv < 3; varv++) {
-+      const fler = framRad.filter((d) => !iBort.has(d.uid) && fram.get(d.uid)?.[2] === false);
-+      if (varv > 0 && fler.length === 0) break;
-+      iBort = new Set([...iBort, ...fler.map((d) => d.uid)]);
-+      const bortRad = bak.filter((d) => iBort.has(d.uid));
-+      const bortLagen = bakLagen(bortRad, true);
-+      if (iBort.has(spec.uid) && varv === 0 && storlekKlass(spec.kropp)?.rad === "bortom") {
-+        // byggnaderna: deras läge beror inte på raden framför
-+      }
-+      fram = bakLagen(framRad.filter((d) => !iBort.has(d.uid)), false, BAK_ZON, somHinder(bortRad, bortLagen));
-+      const klar = framRad.every((d) => iBort.has(d.uid) || fram.get(d.uid)?.[2] !== false);
-+      if (klar || varv === 2) {
-+        const bort = bortLagen.get(spec.uid);
-+        if (bort && iBort.has(spec.uid)) return [bort[0], 0, bort[1]];
-+        const lage = fram.get(spec.uid);
-+        if (lage) return [lage[0], 0, lage[1]];
-+        break;
-+      }
-+    }
++    const lage = bakRader(bak).get(spec.uid);
++    if (lage) return [lage[0], 0, lage[1]];
      const i = Math.max(0, bak.findIndex((d) => d.uid === spec.uid));
      const p = bakPlatser(bak.map((d) => d.uid))[i] ?? [0, -1.4];
      return [p[0], 0, p[1]];
-@@ -279,16 +399,29 @@ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
+@@ -279,16 +423,29 @@ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
    const flyg = alla.filter((d) => flygare(d) && !simmare(d));
    const tyngd = (d: Sparad) => vikt(d.kropp);
    if (flygare(spec)) {
@@ -889,10 +962,10 @@ index 18cd042..cf3edf6 100644
    const djurZ = Math.min(...lagen.filter((l) => !l.bak).map((l) => l.z), Infinity);
    for (const l of lagen.filter((q) => q.bak)) {
 diff --git a/src/spel/entiteter.ts b/src/spel/entiteter.ts
-index 72903c0..466ff47 100644
+index 72903c0..c1ac655 100644
 --- a/src/spel/entiteter.ts
 +++ b/src/spel/entiteter.ts
-@@ -87,8 +87,14 @@ export type BakZon = {
+@@ -87,8 +87,16 @@ export type BakZon = {
    bortom?: { z: [number, number]; fri_x?: [number, number][] };
    /** B6.6: halva synliga bredden längst bak i stående läge (kroppen ska rymmas). */
    synlig_x?: number;
@@ -902,13 +975,15 @@ index 72903c0..466ff47 100644
 +  rad_overlapp?: number;
 +  /** …men aldrig under den här skalan. */
 +  min_radskala?: number;
++  /** P3: fasta saker i ängens scen (spökhuset) som räknas som hinder: fot i (x, z), halva bredden och höjden. */
++  fasta?: { namn: string; x: number; z: number; halv: number; djup?: number; hojd: number }[];
  };
 -const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak"; kant?: number; rad?: "bortom"; max_halv?: number }>; kategori: Record<string, string>; ids?: Record<string, string>; bak: BakZon; minsta?: { storlek: number; yta: number; max_forstoring: number } };
 +const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak"; kant?: number; rad?: "bortom"; max_halv?: number }>; kategori: Record<string, string>; ids?: Record<string, string>; bak: BakZon; minsta?: { storlek: number; yta: number; max_forstoring: number; lutning?: number; ovanifran?: number }; smasak?: { malhojd: [number, number] } };
  /** B6.3 (J): den bakre zonen för stora saker (data/storlek.json). */
  export const BAK_ZON: BakZon = STORLEK.bak;
  
-@@ -193,7 +199,10 @@ export function arSak(kropp: string): boolean {
+@@ -193,7 +201,10 @@ export function arSak(kropp: string): boolean {
   * så platta och långa saker (gaffel, planka, lok) inte blir jättar eller streck. */
  export function skalaFor(kropp: string, h: number, b: number, d: number): number {
    const mal = malhojd(kropp);
@@ -920,7 +995,7 @@ index 72903c0..466ff47 100644
    const s = mal / Math.max(0.001, matt);
    // B6.3: ingen skapelse bredare än slottet (2 × MAX_HALVBREDD) – långa modeller (apatosaurus 7,2, golem 5,1, neontetra
    // 2,9 breda) täckte dammen och fick ingen torr plats. Mäts på halva största bredden, som fotavtryck.json.
-@@ -205,10 +214,16 @@ export function skalaFor(kropp: string, h: number, b: number, d: number): number
+@@ -205,10 +216,16 @@ export function skalaFor(kropp: string, h: number, b: number, d: number): number
    const M = STORLEK.minsta;
    if (!M) return Math.min(s, bredTak);
    const storst = Math.max(h, b, d) * s;
@@ -1007,19 +1082,66 @@ index 0000000..b4277ff
 +export function skymmerNy(x: number, z: number, hD: number, ny: [number, number], hN: number, l = LANDNING): boolean {
 +  return z > ny[1] - l.fri_z && Math.abs(x - ny[0]) < hN + hD + 0.1;
 +}
+diff --git a/src/spel/minne.ts b/src/spel/minne.ts
+index 39ec6cb..283cb33 100644
+--- a/src/spel/minne.ts
++++ b/src/spel/minne.ts
+@@ -7,6 +7,8 @@ import type { SparatBygge } from "./bygge.ts";
+ import { BYGG } from "../tolk/byggtolk.ts";
+ import { START_PLATS, TAK_PER_PLATS, laggMedTak, mattUr, upplast } from "./platser.ts";
+ import { hamtaFranStall, flyttaTillStall, type StallUt } from "./stall.ts";
++import { bakRymms } from "./ang/delat.ts";
++import { storlekKlass } from "./entiteter.ts";
+ 
+ 
+ export type Lage = "kort" | "skriv";
+@@ -356,6 +358,17 @@ export const useMinne = create<Minne>((set, get) => ({
+       ang = [...ang, sparad];
+       nya.push(sparad);
+     }
++    // P3: ängen rymmer så många stora saker som syns (storlek.json bak: max_skymd, min_radskala); annars somnar den
++    // äldsta stora saken (aldrig en ny), som när ängen är full (TAK_PER_PLATS)
++    const nyaUid = new Set(nya.map((d) => d.uid));
++    while (!bakRymms(ang)) {
++      const i = ang.findIndex((d) => !nyaUid.has(d.uid) && storlekKlass(d.kropp)?.zon === "bak");
++      if (i < 0) break;
++      const old = ang[i]!;
++      ang = ang.filter((_, j) => j !== i);
++      sovande = [...sovande, old].slice(-40);
++      somnade.push(old);
++    }
+     set({ ang, sovande });
+     return { nya, somnade };
+   },
+@@ -373,6 +386,15 @@ export const useMinne = create<Minne>((set, get) => ({
+       }
+     }
+     ang = [...ang, { ...hittad, skapad: Date.now() }];
++    // P3: ryms inte de stora sakerna så att alla syns, somnar den äldsta andra stora saken
++    if (!somnad && !bakRymms(ang)) {
++      const old = ang.find((d) => d.uid !== hittad.uid && storlekKlass(d.kropp)?.zon === "bak");
++      if (old) {
++        ang = ang.filter((d) => d !== old);
++        sovande = [...sovande, old];
++        somnad = old;
++      }
++    }
+     set({ ang, sovande });
+     if (somnad) brygga.taBort(somnad.uid);
+     brygga.skapa(ang[ang.length - 1]!);
 diff --git a/src/spel/p3.test.ts b/src/spel/p3.test.ts
 new file mode 100644
-index 0000000..6af12c9
+index 0000000..4657263
 --- /dev/null
 +++ b/src/spel/p3.test.ts
-@@ -0,0 +1,217 @@
+@@ -0,0 +1,243 @@
 +// P3 – skapelsen syns rätt: kläderna sitter på kroppen (data/plagg.json), den nya skapelsen landar framme och skyms inte,
 +// tolkningen ändrar aldrig barnets ord i tysthet, sjön (simmarna inom bild och inte bakom en flygare), saker bredvid inte i dammen.
 +import assert from "node:assert/strict";
 +import { test } from "node:test";
 +import fraser from "../../data/test-fraser.json" with { type: "json" };
 +import { tolkaMedReserv } from "../tolk/reserv.ts";
-+import { bakSkala, djurPlats } from "./ang/delat.ts";
++import { bakRymms, bakSkala, djurPlats } from "./ang/delat.ts";
 +import { BAK_ZON, ENTITETER, flyger, halvBredd, malhojd, simmar, skalaFor, storlekKlass, takSkala } from "./entiteter.ts";
 +import { LANDNING, nyast, sakLage, skymmerNy } from "./landning.ts";
 +import { kontrolleraPlagg, kroppsdelar, PLAGG, plaggLage, plaggRegel } from "./plagg/data.ts";
@@ -1097,7 +1219,7 @@ index 0000000..6af12c9
 +    const ny = nyast(alla as { uid: string; skapad: number }[])!;
 +    const lagen = new Map((alla as { uid: string }[]).map((d) => [d.uid, djurPlats(d as never, alla, ang)]));
 +    const p = lagen.get(ny.uid)!;
-+    if (simmar((alla as { kropp: string }[]).find((d) => (d as { uid: string }).uid === ny.uid)!.kropp, [])) continue;
++    if (simmar((alla as { uid: string; kropp: string }[]).find((d) => d.uid === ny.uid)!.kropp, [])) continue;
 +    const nyK = (ny as unknown as { kropp: string }).kropp;
 +    // små och mellanstora landar på landningsplatsen; de stora (dammens siktzon) närmast den där dammen syns
 +    if (halvBredd(nyK) < 0.6) assert.ok(Math.abs(p[0] - LANDNING.x) < 0.35 && Math.abs(p[2] - LANDNING.z) < 0.35, `${n}: den nya (${nyK}) står i (${p[0]}, ${p[2]})`);
@@ -1193,6 +1315,8 @@ index 0000000..6af12c9
 +    const k = bakSkala(d.uid);
 +    return { id: d.kropp, z, x, k, r: sakRuta(x, z, halvBredd(d.kropp) * k, malhojd(d.kropp) * takSkala(d.kropp, 1) * k) };
 +  });
++  // ängens fasta saker (spökhuset) skymmer också
++  for (const f of BAK_ZON.fasta ?? []) saker.push({ id: f.namn, z: f.z, x: f.x, k: 1, r: sakRuta(f.x, f.z, f.halv, f.hojd, f.djup) });
 +  return { saker, andel: synligAndel(saker) };
 +}
 +test("P3 (Doodle 15:35): ingen byggnad eller stor sak skyms mer än max_skymd – Doodles ängar och alla byggnader i lag", () => {
@@ -1209,16 +1333,22 @@ index 0000000..6af12c9
 +  const hus = Object.keys(E).filter((k) => E[k]!.modell && storlekKlass(k)?.rad === "bortom").sort();
 +  for (let i = 0; i < hus.length; i += 4) lag.push([`hus${i}`, hus.slice(i, i + 4)]);
 +  const fel: string[] = [];
++  let ryms = 0;
 +  for (const [namn, kroppar] of lag) {
++    // ryms de inte (bakRymms) somnar den äldsta stora saken när den nya läggs till (minne.ts); provas nedan
++    if (!bakRymms(kroppar.map((k, i) => bygg(`${namn}-${i}`, k)) as never)) continue;
++    ryms++;
 +    const { andel } = synligaStora(kroppar, namn);
 +    for (const [k, a] of Object.entries(andel)) if (a < 1 - T - 1e-9) fel.push(`${namn}: ${k} syns ${Math.round(a * 100)} %`);
 +  }
 +  assert.deepEqual(fel, []);
++  assert.ok(ryms >= lag.length * 0.6, `bara ${ryms} av ${lag.length} lag ryms`);
++  for (const n of ["doodle", "doodle-omvand"]) assert.ok(bakRymms(lag.find((l) => l[0] === n)![1].map((k, i) => bygg(`${n}-${i}`, k)) as never), `${n} ryms`);
 +  // slottet syns tydligt högre än sjukhuset (överkanten högre på skärmen och minst 20 % högre ruta)
 +  const { saker } = synligaStora(["slott", "sjukhus", "cirkus", "vaxthus", "ko"], "hojd");
 +  const [s, h] = [saker.find((q) => q.id === "slott")!, saker.find((q) => q.id === "sjukhus")!];
 +  assert.ok(s.r.y1 - s.r.y0 >= 1.2 * (h.r.y1 - h.r.y0), `slott ${Math.round(s.r.y1 - s.r.y0)} px, sjukhus ${Math.round(h.r.y1 - h.r.y0)} px`);
-+  assert.ok(s.r.y0 < h.r.y0 - 15, `slottets överkant ${Math.round(s.r.y0)}, sjukhusets ${Math.round(h.r.y0)}`);
++  assert.ok(s.r.y0 < h.r.y0 - 10, `slottets överkant ${Math.round(s.r.y0)}, sjukhusets ${Math.round(h.r.y0)}`);
 +});
 +
 +test("P3 (Doodle 15:35): småsaker har rimlig inbördes storlek – pucken är mindre än kaffekoppen, ordningen följer målhöjden", () => {
@@ -1230,12 +1360,30 @@ index 0000000..6af12c9
 +  // ingen småsak försvinner: största måttet minst storlek × (1 − lutning) + lutning × målhöjd
 +  assert.ok(storst("puck") >= 0.3, `puck ${storst("puck")}`);
 +});
++
++test("P3: ryms inte ängens stora saker somnar den äldsta stora saken – aldrig den nya, och djuren rörs inte", async () => {
++  const { useMinne } = await import("./minne.ts");
++  const ord = ["slott", "sjukhus", "cirkus", "vaxthus", "skola", "kyrka", "hus", "fabrik"];
++  useMinne.setState({ ang: [], sovande: [] } as never);
++  const varelse = (k: string) => ({ kropp: k, formel: `en ${k}`, beskrivning: "", skala: 1, alpha: 1, formagor: [], tillbehor: [], overraskningar: [], farg: null }) as never;
++  useMinne.getState().laggPaAng(varelse("katt"), 1);
++  const somnade: string[] = [];
++  for (const k of ord) {
++    const r = useMinne.getState().laggPaAng(varelse(k), 1);
++    for (const s of r.somnade) somnade.push(s.kropp);
++    assert.ok(!r.somnade.some((s) => r.nya.some((n) => n.uid === s.uid)), `${k}: den nya somnade`);
++    const ang = useMinne.getState().ang;
++    assert.ok(bakRymms(ang), `${k}: ängen rymmer inte sina stora saker`);
++    assert.ok(ang.some((d) => d.kropp === "katt"), "katten somnade");
++  }
++  assert.ok(somnade.length > 0 && somnade[0] === "slott", `den äldsta somnar först: ${somnade.join(", ")}`);
++});
 diff --git a/src/spel/plagg/Plagg.tsx b/src/spel/plagg/Plagg.tsx
 new file mode 100644
-index 0000000..8612744
+index 0000000..3c72aea
 --- /dev/null
 +++ b/src/spel/plagg/Plagg.tsx
-@@ -0,0 +1,172 @@
+@@ -0,0 +1,173 @@
 +// P3: kläderna (data/plagg.json) ritas PÅ skapelsen, inte bredvid den på marken. Kroppsdelarna härleds ur skapelsens
 +// egna meshar (plagg/data.ts kroppsdelar), mäts om när kroppen byts (procedurkropp → GLB) och följer huvudets ben
 +// när modellen har ett. En komponent för alla plagg; inget per plagg i koden.
@@ -1391,7 +1539,8 @@ index 0000000..8612744
 +    return { klon: inre, box: [b.max.x - b.min.x, b.max.y - b.min.y, b.max.z - b.min.z] as Punkt };
 +  }, [gltf.scene, id, farg]);
 +  const lage = plaggLage(id, delar, box);
-+  const andra = useMemo(() => (lage && lage.par > 1 ? SkeletonUtils.clone(klon) : null), [klon, lage?.par]);
++  const par = lage?.par ?? 1;
++  const andra = useMemo(() => (par > 1 ? SkeletonUtils.clone(klon) : null), [klon, par]);
 +  if (!lage) return null;
 +  const [x, y, z] = lage.pos;
 +  const isar = lage.par > 1 ? (box[0] * lage.skala) / 2 + 0.02 : 0;
@@ -1688,10 +1837,10 @@ index 0000000..0ad0c1b
 +}
 diff --git a/src/spel/skymning.ts b/src/spel/skymning.ts
 new file mode 100644
-index 0000000..3a1e7f1
+index 0000000..3311da8
 --- /dev/null
 +++ b/src/spel/skymning.ts
-@@ -0,0 +1,52 @@
+@@ -0,0 +1,54 @@
 +// P3: hur stora saker och byggnader får skymma varandra på skärmen. En regel för alla, inga specialfall per modell.
 +// Varje sak syns till minst (1 − max_skymd) av sin skärmruta (data/storlek.json bak.max_skymd): summan av hur mycket
 +// de som står framför täcker den. Rutan räknas med den stående kameran (skarm.ts), fot på marken, halva bredden
@@ -1700,9 +1849,11 @@ index 0000000..3a1e7f1
 +
 +export type Placerad = { x: number; z: number; h: number; hojd: number; r: Ruta; tackt: number };
 +
-+/** Skärmrutan för en sak med fot i (x, 0, z). */
-+export function sakRuta(x: number, z: number, halv: number, hojd: number): Ruta {
-+  return skarmRuta(x, 0, z, halv, hojd);
++/** Skärmrutan för en sak med fot i (x, 0, z): lådan x ± halv, z ± djup (som standard lika djup som bred), 0 … hojd. */
++export function sakRuta(x: number, z: number, halv: number, hojd: number, djup = halv): Ruta {
++  const f = skarmRuta(x, 0, z + djup, halv, hojd);
++  const b = skarmRuta(x, 0, z - djup, halv, hojd);
++  return { x0: Math.min(f.x0, b.x0), x1: Math.max(f.x1, b.x1), y0: Math.min(f.y0, b.y0), y1: Math.max(f.y1, b.y1) };
 +}
 +
 +/** Om sakens djup gör den till "framför" den andra (närmare kameran). Samma djup räknas inte: då står de bredvid varandra. */

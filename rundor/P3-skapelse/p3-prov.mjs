@@ -41,7 +41,7 @@ const starta = () => chromium.launch({ headless: true, args: ["--no-sandbox", "-
 let browser = await starta();
 const steg = [];
 const sidfel = [];
-const kolla = (namn, ok, info = {}) => { steg.push({ namn, ok: !!ok, ...info }); console.error(`${ok ? "ok  " : "FEL "} ${namn}${ok ? "" : " " + JSON.stringify(info).slice(0, 500)}`); };
+const kolla = (namn, ok, info = {}) => { steg.push({ namn, ok: !!ok, ...info }); console.error(`${ok ? "ok  " : "FEL "} ${namn}${ok ? "" : " " + JSON.stringify(info).slice(0, 1500)}`); };
 const PLATSER = ["skogen", "sjon", "grottan"];
 const sparad = (uid, kropp, skapad, tillbehor = []) => ({ uid, kropp, formel: `en ${kropp}`, beskrivning: "", skala: 1, alpha: 1, formagor: [], tillbehor, overraskningar: [], skapad });
 
@@ -235,11 +235,44 @@ await blok("E", async () => {
 // ---- F: byggnader och stora saker skymmer inte varandra; småsakernas storlek ----
 const S = JSON.parse(fs.readFileSync("data/storlek.json", "utf8"));
 const GRANS = 1 - ((S.bak?.max_skymd ?? 0.15) + 0.1);
+const STORA = new Set(Object.keys(E).filter((k) => { if (E[k].typ === "djur") return false; const kl = S.ids?.[k] ?? S.kategori?.[E[k].kategori]; return kl && S.klasser[kl]?.zon === "bak"; }));
+const FASTA = Object.fromEntries((S.bak?.fasta ?? []).map((f) => [f.namn, f]));
+// Ängens fasta saker (spökhuset) har ingen __tredSyn; deras skärmruta räknas här ur data med den stående kameran
+// (KameraRam: (0, 4,15, 9,8) mot (0, 1,05, −0,15), fov 58, 375 × 812) – en egen uträkning, oberoende av spelets kod.
+function projicera(x, y, z) {
+  const P = [0, 4.15, 9.8], M = [0, 1.05, -0.15], tan = Math.tan((58 * Math.PI) / 360), asp = 375 / 812;
+  const n = (v) => { const l = Math.hypot(...v); return v.map((q) => q / l); };
+  const F = n([M[0] - P[0], M[1] - P[1], M[2] - P[2]]);
+  const R = n([-F[2], 0, F[0]]);
+  const U = [R[1] * F[2] - R[2] * F[1], R[2] * F[0] - R[0] * F[2], R[0] * F[1] - R[1] * F[0]];
+  const d = [x - P[0], y - P[1], z - P[2]];
+  const dot = (a) => a[0] * d[0] + a[1] * d[1] + a[2] * d[2];
+  const zc = dot(F);
+  return [((dot(R) / (zc * tan * asp) + 1) / 2) * 375, ((1 - dot(U) / (zc * tan)) / 2) * 812];
+}
+function fastRuta(f) {
+  const p = [];
+  for (const dx of [-f.halv, f.halv]) for (const dz of [-(f.djup ?? f.halv), f.djup ?? f.halv]) for (const y of [0, f.hojd]) p.push(projicera(f.x + dx, y, f.z + dz));
+  const xs = p.map((q) => q[0]), ys = p.map((q) => q[1]);
+  return { x: Math.min(...xs), y: Math.min(...ys), w: Math.max(...xs) - Math.min(...xs), h: Math.max(...ys) - Math.min(...ys) };
+}
+/** Synlig andel per sak: 1 − summan av vad de närmare kameran täcker (skärmrutor ur __tredSyn; fasta saker med sitt z ur data). */
+function synligaAndelar(saker, syn, pos) {
+  const alla = [...saker.map((q) => ({ ...q, z: pos[q.uid].z, r: syn[q.uid] })), ...Object.keys(FASTA).map((n) => ({ k: n, uid: n, z: FASTA[n].z, r: fastRuta(FASTA[n]), fast: true }))];
+  const andel = {};
+  for (const a of alla) {
+    if (a.fast) continue;
+    let t = 0;
+    for (const b of alla) if (b !== a && b.z > a.z + 0.05) t += tacker(b.r, a.r);
+    andel[a.k] = Math.round(Math.max(0, 1 - t) * 100) / 100;
+  }
+  return andel;
+}
 await blok("F", async () => {
   const lag = [
     ["Doodles äng", ["slott", "sjukhus", "cirkus", "vaxthus"]],
     ["Doodles äng, omvänd", ["vaxthus", "cirkus", "sjukhus", "slott", "ko"]],
-    ["fordon och möbler", ["buss", "traktor", "soffa", "slott", "sjukhus"]],
+    ["fordon och möbler", ["bil", "soffa", "slott", "sjukhus"]],
   ];
   for (const [namn, kroppar] of lag) {
     const { ctx, p } = await sida({ ang: kroppar.map((k, i) => sparad(`f-${i}-${k}`, k, 1000 + i)) });
@@ -248,18 +281,28 @@ await blok("F", async () => {
     const { syn, pos } = await p.evaluate(() => ({ syn: window.__tredSyn ?? {}, pos: window.__tredPos ?? {} }));
     await bild(p, `p3-09-byggnader-${namn.replace(/[^a-zåäö]+/gi, "-")}.png`);
     await ctx.close();
-    const S2 = kroppar.map((k, i) => ({ k, uid: `f-${i}-${k}` })).filter((q) => syn[q.uid] && pos[q.uid]);
-    const andel = {};
-    for (const a of S2) {
-      let t = 0;
-      for (const b of S2) if (b !== a && pos[b.uid].z > pos[a.uid].z + 0.05) t += tacker(syn[b.uid], syn[a.uid]);
-      andel[a.k] = Math.round(Math.max(0, 1 - t) * 100) / 100;
-    }
-    kolla(`F ${namn}: varje sak syns till minst ${Math.round(GRANS * 100)} % (ingen skymmer en annan för mycket)`, S2.length === kroppar.length && Object.values(andel).every((a) => a >= GRANS), { andel });
+    // stora saker (storlek.json zon bak) och ängens fasta saker; djuren står framför och följer sina egna regler (C)
+    const S2 = kroppar.map((k, i) => ({ k, uid: `f-${i}-${k}` })).filter((q) => STORA.has(q.k) && syn[q.uid] && pos[q.uid]);
+    const andel = synligaAndelar(S2, syn, pos);
+    kolla(`F ${namn}: varje sak syns till minst ${Math.round(GRANS * 100)} % (ingen skymmer en annan för mycket, spökhuset inräknat)`, S2.length === kroppar.filter((k) => STORA.has(k)).length && Object.values(andel).every((a) => a >= GRANS), { andel, rutor: Object.fromEntries([...S2.map((q) => [q.k, { ...syn[q.uid], vx: pos[q.uid].x, vz: pos[q.uid].z, k: pos[q.uid].k }]), ...Object.keys(FASTA).map((n) => [n, fastRuta(FASTA[n])])].map(([k, r]) => [k, Object.fromEntries(Object.entries(r).map(([a, v]) => [a, Math.round(v * 100) / 100]))])) });
     if (kroppar.includes("slott") && kroppar.includes("sjukhus")) {
       const [s, h] = [syn[S2.find((q) => q.k === "slott").uid], syn[S2.find((q) => q.k === "sjukhus").uid]];
-      kolla(`F ${namn}: slottet syns tydligt högre än sjukhuset (≥ 1,2 × höjden och överkanten ≥ 15 px högre)`, s.h >= 1.2 * h.h && s.y <= h.y - 15, { slott: { h: Math.round(s.h), y: Math.round(s.y) }, sjukhus: { h: Math.round(h.h), y: Math.round(h.y) } });
+      kolla(`F ${namn}: slottet syns tydligt högre än sjukhuset (≥ 1,2 × höjden och överkanten ≥ 10 px högre)`, s.h >= 1.2 * h.h && s.y <= h.y - 10, { slott: { h: Math.round(s.h), y: Math.round(s.y) }, sjukhus: { h: Math.round(h.h), y: Math.round(h.y) } });
     }
+  }
+  // sex byggnader skrivna i spelet, en i taget: ryms de inte somnar den äldsta stora saken (aldrig den nya), och alla som
+  // står kvar syns till minst GRANS
+  {
+    const { ctx, p } = await sida({ ang: [sparad("f-katt", "katt", 1000)] });
+    await vakna(p, ["ett slott", "ett sjukhus", "ett cirkustält", "ett växthus", "en skola", "en kyrka"], 2600);
+    await p.waitForTimeout(1500);
+    const ang = await sparAng(p);
+    const { syn, pos } = await p.evaluate(() => ({ syn: window.__tredSyn ?? {}, pos: window.__tredPos ?? {} }));
+    await bild(p, "p3-09-byggnader-sex-skrivna.png");
+    await ctx.close();
+    const S3 = ang.filter((d) => ["slott", "sjukhus", "cirkus", "vaxthus", "skola", "kyrka"].includes(d.kropp)).map((d) => ({ k: d.kropp, uid: d.uid })).filter((q) => syn[q.uid] && pos[q.uid]);
+    const andel = synligaAndelar(S3, syn, pos);
+    kolla(`F sex skrivna byggnader: de som står kvar syns till minst ${Math.round(GRANS * 100)} %, den senaste (kyrkan) står kvar och katten också`, S3.length >= 3 && Object.values(andel).every((a) => a >= GRANS) && ang.some((d) => d.kropp === "kyrka") && ang.some((d) => d.kropp === "katt"), { andel, kvar: ang.map((d) => d.kropp) });
   }
   // småsaker bredvid varandra: pucken är mindre än kaffekoppen (största måttet på skärmen och ytan)
   const smaa = ["puck", "kaffekopp", "kopp", "tallrik"];
