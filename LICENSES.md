@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 804 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 840 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -69,6 +69,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 34 |
 | polypizza-cc0-2 | Quaternius | CC0-1.0 | https://poly.pizza/m/3aQgc75sUR | 16 |
 | polypizza-cc0-4 | CreativeTrio | CC0-1.0 | https://poly.pizza/m/oH3dEdlDpB | 12 |
+| polypizza-cc0-m18 | AliceCassie | CC0-1.0 | https://poly.pizza/m/j20srJUjpB | 2 |
 | quaternius-animated-dinosaurs | Quaternius | CC0-1.0 | https://quaternius.com/packs/animateddinosaurs.html | 3 |
 | quaternius-cute-fish | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutefish.html | 13 |
 | quaternius-cute-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutemonsters.html | 6 |
@@ -83,6 +84,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | trollpennan-egna-m14 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 3 |
 | trollpennan-egna-m16 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 13 |
 | trollpennan-folk-m17 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 41 |
+| trollpennan-fordon-m18 | Kenney (car-kit); tillägg: Trollpennan | CC0-1.0 | https://kenney.nl/assets/car-kit | 34 |
 | trollpennan-mfix | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 21 |
 | trollpennan-mfix2 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 9 |
 
@@ -895,3 +897,39 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | rormokare | /models/bulk/rormokare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
 | servitor | /models/bulk/servitor.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
 | sangare | /models/bulk/sangare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| bargningsbil | /models/bulk/bargningsbil.glb | CC0-1.0 | Kenney (car-kit); tillägg: Trollpennan | https://kenney.nl/assets/car-kit |
+| betongbil | /models/bulk/betongbil.glb | CC0-1.0 | Kenney (car-kit); tillägg: Trollpennan | https://kenney.nl/assets/car-kit |
+| brandbat | /models/bulk/brandbat.glb | CC0-1.0 | Kenney (watercraft-kit); tillägg: Trollpennan | https://kenney.nl/assets/watercraft-kit |
+| bulldozer | /models/bulk/bulldozer.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| buss | /models/bulk/buss.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| cykel | /models/bulk/cykel.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| dumper | /models/bulk/dumper.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| flygplan | /models/bulk/flygplan.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| formelbil | /models/bulk/formelbil.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| fyrhjuling | /models/bulk/fyrhjuling.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| gaffeltruck | /models/bulk/gaffeltruck.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| glassbil | /models/bulk/glassbil.glb | CC0-1.0 | Kenney (car-kit); tillägg: Trollpennan | https://kenney.nl/assets/car-kit |
+| gondol | /models/bulk/gondol.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| husbil | /models/bulk/husbil.glb | CC0-1.0 | Kenney (car-kit); tillägg: Trollpennan | https://kenney.nl/assets/car-kit |
+| jetplan | /models/bulk/jetplan.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kalke | /models/bulk/kalke.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| katamaran | /models/bulk/katamaran.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| ladcykel | /models/bulk/ladcykel.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| limousin | /models/bulk/limousin.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| luftballong | /models/bulk/luftballong.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| polisbat | /models/bulk/polisbat.glb | CC0-1.0 | Kenney (watercraft-kit); tillägg: Trollpennan | https://kenney.nl/assets/watercraft-kit |
+| raddningsbat | /models/bulk/raddningsbat.glb | CC0-1.0 | Kenney (watercraft-kit); tillägg: Trollpennan | https://kenney.nl/assets/watercraft-kit |
+| segelflygplan | /models/bulk/segelflygplan.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| sjoflygplan | /models/bulk/sjoflygplan.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| skolbuss | /models/bulk/skolbuss.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| skordetroska | /models/bulk/skordetroska.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| skottkarra | /models/bulk/skottkarra.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| snoskoter | /models/bulk/snoskoter.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| tandem | /models/bulk/tandem.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| tankbil | /models/bulk/tankbil.glb | CC0-1.0 | Kenney (car-kit); tillägg: Trollpennan | https://kenney.nl/assets/car-kit |
+| ubat | /models/bulk/ubat.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| valt | /models/bulk/valt.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| vattenskoter | /models/bulk/vattenskoter.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| zeppelinare | /models/bulk/zeppelinare.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| motorcykel | /models/bulk/motorcykel.glb | CC0-1.0 | AliceCassie | https://poly.pizza/m/j20srJUjpB |
+| pickup | /models/bulk/pickup.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/qn4grQgHm8 |
