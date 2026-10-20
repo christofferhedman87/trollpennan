@@ -876,10 +876,6 @@
     "bargningsbil": { "typ": "foremal", "kategori": "fordon", "modell": "bargningsbil", "malhojd": 1.2, "art": "#EF5350", "framAxel": "+z", "forladda": false, "ord": ["bärgningsbil"], "inlagd": "R3F-MFIX3" },
     "betongbil": { "typ": "foremal", "kategori": "fordon", "modell": "betongbil", "malhojd": 1.2, "art": "#EF5350", "framAxel": "+z", "forladda": false, "ord": ["betongbil"], "inlagd": "R3F-MFIX3" },
     "tankbil": { "typ": "foremal", "kategori": "fordon", "modell": "tankbil", "malhojd": 1.2, "art": "#EF5350", "framAxel": "+z", "forladda": false, "ord": ["tankbil"], "inlagd": "R3F-MFIX3" },
-    "narval": { "typ": "djur", "kategori": "djur", "modell": "narval", "malhojd": 0.35, "art": "#D1B561", "framAxel": "+x", "forladda": false, "ord": ["narval"], "inlagd": "R3F-MFIX3" },
-    "bjorn": { "typ": "djur", "kategori": "djur", "modell": "bjorn", "malhojd": 1.1, "material": { "#7B5038": "farg" }, "art": "#A1887F", "framAxel": "+z", "forladda": false, "ord": ["björn"], "inlagd": "R3F-M18b" },
-    "hamster": { "typ": "djur", "kategori": "djur", "modell": "hamster", "malhojd": 0.35, "material": { "#E3A35E": "farg" }, "art": "#A1887F", "framAxel": "+z", "forladda": false, "ord": ["hamster"], "inlagd": "R3F-M18b" },
-    "marsvin": { "typ": "djur", "kategori": "djur", "modell": "marsvin", "malhojd": 0.4, "material": { "#FAFAFA": "farg" }, "art": "#A1887F", "framAxel": "+z", "forladda": false, "ord": ["marsvin"], "inlagd": "R3F-M18b" },
     "snigel": { "typ": "djur", "kategori": "djur", "modell": "snigel", "malhojd": 0.35, "material": { "#C66A2B": "farg" }, "art": "#A1887F", "framAxel": "+x", "forladda": false, "ord": ["snigel"], "inlagd": "R3F-M18b" },
     "nyckelpiga": { "typ": "djur", "kategori": "djur", "modell": "nyckelpiga", "malhojd": 0.3, "material": { "#212121": "farg" }, "art": "#A1887F", "framAxel": "+z", "forladda": false, "ord": ["nyckelpiga"], "inlagd": "R3F-M18b" },
     "sjostjarna": { "typ": "djur", "kategori": "djur", "modell": "sjostjarna", "malhojd": 0.5, "material": { "#FFCCBC": "farg" }, "art": "#A1887F", "framAxel": "+z", "forladda": false, "ord": ["sjöstjärna"], "inlagd": "R3F-M18b" },
@@ -896,7 +892,6 @@
     "sjolejon": { "typ": "djur", "kategori": "djur", "modell": "sjolejon", "malhojd": 0.6, "palett": { "from": 25, "range": 22, "bodyL": 0.4 }, "art": "#9E5D2E", "rorelse": "sim", "framAxel": "+x", "forladda": false, "ord": ["sjölejon"], "inlagd": "R3F-M18b" },
     "duva": { "typ": "djur", "kategori": "djur", "modell": "duva", "malhojd": 0.4, "material": { "Pigeon_Main": "farg" }, "art": "#A1887F", "rorelse": "flyg", "framAxel": "+z", "forladda": false, "ord": ["duva"], "inlagd": "R3F-M18b" },
     "kraka": { "typ": "djur", "kategori": "djur", "modell": "kraka", "malhojd": 0.45, "material": { "Pigeon_Main": "farg" }, "art": "#A1887F", "rorelse": "flyg", "framAxel": "+z", "forladda": false, "ord": ["kråka"], "inlagd": "R3F-M18b" },
-    "fjallrav": { "typ": "djur", "kategori": "djur", "modell": "fjallrav", "malhojd": 0.6, "material": { "Main": "farg" }, "art": "#A1887F", "framAxel": "+z", "forladda": false, "ord": ["fjällräv", "polarräv"], "inlagd": "R3F-M18b" },
     "snouggla": { "typ": "djur", "kategori": "djur", "modell": "snouggla", "malhojd": 0.6, "palett": { "from": 45, "range": 22, "bodyL": 0.64 }, "art": "#D6BC71", "rorelse": "flyg", "framAxel": "+z", "forladda": false, "ord": ["snöuggla"], "inlagd": "R3F-M18b" },
     "drakfisk": { "typ": "djur", "kategori": "djur", "modell": "drakfisk", "malhojd": 0.45, "material": { "Lionfish_Main": "farg" }, "art": "#A1887F", "rorelse": "sim", "framAxel": "+x", "forladda": false, "ord": ["drakfisk"], "inlagd": "R3F-M18b" },
     "makrill": { "typ": "djur", "kategori": "djur", "modell": "makrill", "malhojd": 0.4, "palett": { "from": 0, "range": -1, "bodyL": 0.95 }, "art": "#BFBFBF", "rorelse": "sim", "framAxel": "+x", "forladda": false, "ord": ["makrill"], "inlagd": "R3F-M18b" },
@@ -904,11 +899,16 @@
     "angel": { "typ": "djur", "kategori": "sagoväsen", "modell": "angel", "malhojd": 1.3, "material": { "#FFD54F": "farg" }, "art": "#B39DDB", "rorelse": "flyg", "framAxel": "+z", "forladda": false, "ord": ["ängel"], "inlagd": "R3F-M19" },
     "dvarg": { "typ": "djur", "kategori": "sagoväsen", "modell": "dvarg", "malhojd": 0.9, "palett": { "from": 15, "range": 22, "bodyL": 0.43 }, "art": "#AA4F31", "framAxel": "+z", "forladda": false, "ord": ["dvärg"], "inlagd": "R3F-M19" },
     "ande": { "typ": "djur", "kategori": "sagoväsen", "modell": "ande", "malhojd": 1.3, "material": { "#4FC3F7": "farg" }, "art": "#B39DDB", "framAxel": "+z", "forladda": false, "ord": ["ande", "djinn"], "inlagd": "R3F-M19" },
-    "sjoorm": { "typ": "djur", "kategori": "sagoväsen", "modell": "sjoorm", "malhojd": 0.5, "material": { "#2E7D6B": "farg" }, "art": "#B39DDB", "rorelse": "sim", "framAxel": "+x", "forladda": false, "ord": ["sjöorm"], "inlagd": "R3F-M19" },
     "kraken": { "typ": "djur", "kategori": "sagoväsen", "modell": "kraken", "malhojd": 1.2, "material": { "#8E24AA": "farg" }, "art": "#B39DDB", "rorelse": "sim", "framAxel": "+z", "forladda": false, "ord": ["kraken"], "inlagd": "R3F-M19" },
-    "fenix": { "typ": "djur", "kategori": "sagoväsen", "modell": "fenix", "malhojd": 0.8, "palett": { "from": 15, "range": 22, "bodyL": 0.45 }, "art": "#B25334", "rorelse": "flyg", "framAxel": "+z", "forladda": false, "ord": ["fenix"], "inlagd": "R3F-M19" },
     "pegasus": { "typ": "djur", "kategori": "sagoväsen", "modell": "pegasus", "malhojd": 1.6, "material": { "Main": "farg" }, "art": "#B39DDB", "framAxel": "+z", "forladda": false, "ord": ["pegasus"], "inlagd": "R3F-M19" },
     "drakagg": { "typ": "foremal", "kategori": "föremål", "modell": "drakagg", "malhojd": 0.6, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["drakägg"], "inlagd": "R3F-M19" },
-    "kristallkula": { "typ": "foremal", "kategori": "föremål", "modell": "kristallkula", "malhojd": 0.6, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["kristallkula"], "inlagd": "R3F-M19" }
+    "kristallkula": { "typ": "foremal", "kategori": "föremål", "modell": "kristallkula", "malhojd": 0.6, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["kristallkula"], "inlagd": "R3F-M19" },
+    "fjallrav": { "typ": "djur", "kategori": "djur", "modell": "fjallrav", "malhojd": 0.75, "art": "#A1887F", "framAxel": "+z", "forladda": false, "ord": ["fjällräv", "polarräv"], "inlagd": "R3F-MFIX4" },
+    "bjorn": { "typ": "djur", "kategori": "djur", "modell": "bjorn", "malhojd": 1.1, "art": "#A1887F", "framAxel": "+z", "forladda": false, "ord": ["björn"], "inlagd": "R3F-MFIX4" },
+    "hamster": { "typ": "djur", "kategori": "djur", "modell": "hamster", "malhojd": 0.4, "art": "#A1887F", "framAxel": "+z", "forladda": false, "ord": ["hamster"], "inlagd": "R3F-MFIX4" },
+    "marsvin": { "typ": "djur", "kategori": "djur", "modell": "marsvin", "malhojd": 0.4, "art": "#A1887F", "framAxel": "+z", "forladda": false, "ord": ["marsvin"], "inlagd": "R3F-MFIX4" },
+    "fenix": { "typ": "djur", "kategori": "sagoväsen", "modell": "fenix", "malhojd": 1, "art": "#B39DDB", "rorelse": "flyg", "framAxel": "+z", "forladda": false, "ord": ["fenix"], "inlagd": "R3F-MFIX4" },
+    "sjoorm": { "typ": "djur", "kategori": "sagoväsen", "modell": "sjoorm", "malhojd": 1, "art": "#B39DDB", "rorelse": "sim", "framAxel": "+z", "forladda": false, "ord": ["sjöorm"], "inlagd": "R3F-MFIX4" },
+    "narval": { "typ": "djur", "kategori": "djur", "modell": "narval", "malhojd": 0.7, "art": "#D1B561", "framAxel": "+x", "forladda": false, "ord": ["narval"], "inlagd": "R3F-MFIX4" }
   }
 }

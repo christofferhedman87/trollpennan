@@ -82,15 +82,16 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | quaternius-stylized-nature-megakit | Quaternius | CC0-1.0 | https://quaternius.itch.io/stylized-nature-megakit | 2 |
 | quaternius-ultimate-animated-animals | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimateanimatedanimals.html | 7 |
 | quaternius-ultimate-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimatemonsters.html | 11 |
-| trollpennan-djur-m18b | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 21 |
+| trollpennan-djur-m18b | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 17 |
 | trollpennan-egna-m14 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 3 |
-| trollpennan-egna-m16 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 15 |
+| trollpennan-egna-m16 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 14 |
 | trollpennan-folk-m17 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 34 |
 | trollpennan-fordon-m18 | Kenney (watercraft-kit); tillägg: Trollpennan | CC0-1.0 | https://kenney.nl/assets/watercraft-kit | 31 |
 | trollpennan-mfix | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 21 |
 | trollpennan-mfix2 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 8 |
 | trollpennan-mfix3 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 11 |
-| trollpennan-saga-m19 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 10 |
+| trollpennan-mfix4 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 7 |
+| trollpennan-saga-m19 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 8 |
 
 ## Alla modellfiler
 
@@ -938,10 +939,6 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | bargningsbil | /models/bulk/bargningsbil.glb | CC0-1.0 | Kenney (car-kit); tillägg: Trollpennan | https://kenney.nl/assets/car-kit |
 | betongbil | /models/bulk/betongbil.glb | CC0-1.0 | Kenney (car-kit); tillägg: Trollpennan | https://kenney.nl/assets/car-kit |
 | tankbil | /models/bulk/tankbil.glb | CC0-1.0 | Kenney (car-kit); tillägg: Trollpennan | https://kenney.nl/assets/car-kit |
-| narval | /models/bulk/narval.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
-| bjorn | /models/bulk/bjorn.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
-| hamster | /models/bulk/hamster.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
-| marsvin | /models/bulk/marsvin.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | snigel | /models/bulk/snigel.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | nyckelpiga | /models/bulk/nyckelpiga.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | sjostjarna | /models/bulk/sjostjarna.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
@@ -958,7 +955,6 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | sjolejon | /models/bulk/sjolejon.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.); omfärgad brun: Trollpennan | https://gobkit.com/freebies |
 | duva | /models/bulk/duva.glb | CC0-1.0 | Quaternius; omfärgad grå: Trollpennan | https://poly.pizza/m/9NGlBTpDEr |
 | kraka | /models/bulk/kraka.glb | CC0-1.0 | Quaternius; omfärgad svart: Trollpennan | https://poly.pizza/m/9NGlBTpDEr |
-| fjallrav | /models/bulk/fjallrav.glb | CC0-1.0 | Quaternius; omfärgad vit: Trollpennan | https://quaternius.com/packs/ultimateanimatedanimals.html |
 | snouggla | /models/bulk/snouggla.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.); omfärgad vit: Trollpennan | https://gobkit.com/freebies |
 | drakfisk | /models/bulk/drakfisk.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/czsz9Baw86 |
 | makrill | /models/bulk/makrill.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/uassUTYYae |
@@ -966,9 +962,14 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | angel | /models/bulk/angel.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
 | dvarg | /models/bulk/dvarg.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
 | ande | /models/bulk/ande.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
-| sjoorm | /models/bulk/sjoorm.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | kraken | /models/bulk/kraken.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
-| fenix | /models/bulk/fenix.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.); omfärgad i eldfärger: Trollpennan | https://gobkit.com/freebies |
 | pegasus | /models/bulk/pegasus.glb | CC0-1.0 | Quaternius; vingar: Trollpennan | https://quaternius.com/packs/ultimateanimatedanimals.html |
 | drakagg | /models/bulk/drakagg.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | kristallkula | /models/bulk/kristallkula.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| fjallrav | /models/bulk/fjallrav.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| bjorn | /models/bulk/bjorn.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| hamster | /models/bulk/hamster.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| marsvin | /models/bulk/marsvin.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| fenix | /models/bulk/fenix.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| sjoorm | /models/bulk/sjoorm.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| narval | /models/bulk/narval.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://gobkit.com/freebies |
