@@ -1284,10 +1284,10 @@ index 0000000..cebf27b
 +});
 diff --git a/src/spel/placering.ts b/src/spel/placering.ts
 new file mode 100644
-index 0000000..c4f08da
+index 0000000..fe51b7e
 --- /dev/null
 +++ b/src/spel/placering.ts
-@@ -0,0 +1,193 @@
+@@ -0,0 +1,195 @@
 +// P3a: EN placeringsregel för alla platser. Ren logik (ingen three), testas i Node. Data: data/placering.json.
 +//  - Varje plats har band per roll (mark, vatten, luft, bak), delade i rutor. Rollen kommer ur saken: simmare på vattnet,
 +//    flygare i luften, stora saker (storlek.json zon "bak") i det bakre bandet, resten på marken.
@@ -1342,9 +1342,11 @@ index 0000000..c4f08da
 +/** Kroppens mått på djupet z: halva bredden, höjden och djupet (barnets storleksord, taket och minsta synliga storlek). */
 +export function kroppMatt(d: Pick<Sparad, "kropp" | "skala">, z: number, plats?: Plats): { halv: number; hojd: number; djup: number; f: number } {
 +  const f = ritSkala(d, z, plats);
++  // ett djur som vrider sig visar längden åt alla håll: rutan räknas lika djup som bred (prov P: korna och elefanten var
++  // högre och bredare ritade än räknade)
 +  const vrid = ENTITETER[d.kropp]?.typ === "djur" ? (PLACERING.vrid?.djur ?? 1) : 1;
 +  const halv = halvBredd(d.kropp, d.skala || 1) * f * vrid;
-+  return { halv, hojd: malhojd(d.kropp) * takSkala(d.kropp, d.skala || 1) * f, djup: Math.max(0.2, (halv / vrid) * PLACERING.djup), f };
++  return { halv, hojd: malhojd(d.kropp) * takSkala(d.kropp, d.skala || 1) * f, djup: Math.max(0.2, vrid > 1 ? halv : halv * PLACERING.djup), f };
 +}
 +
 +/** Hur mycket djur.tsx ritar kroppen större/mindre: platsens skala (data) × minsta synliga storlek på djupet z. */

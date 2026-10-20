@@ -53,11 +53,11 @@ Alla punktfixar är ersatta av en regel:
 - **Titelbilden** (`ui/Titel.tsx`): utsnittet var en fast ruta på 130 px kring ankaret och fick med grannarna. Nu är det
   det senaste djurets **ritade kropp** (`window.__tredBild`, mätt i djur.tsx) med 6 % marginal, inlagd i bilden utan att
   töjas.
-- **Kapacitet** (smakval, se nedan): med regeln och 20 % ryms 2–4 av 8 blandade på ängen och vid sjön, och 4–8 i skogen
-  och grottan. Kameran ser marken flackt, så djur på olika djup täcker varandra nästan helt på skärmen; i praktiken blir
-  det en rad. Med max_skymd 0,3 blir det bara 0–1 fler, eftersom det är bredden som tar slut.
-  De största (elefant, giraff, slott) tar en stor del av bilden. Provet skriver ut kapaciteten per plats och lag
-  (`p3-kapacitet.json`).
+- **Kapacitet** (smakval, se nedan): ängen och sjön rymmer 2–3 av 8 blandade, skogen 5–7 och grottan 4–6. När den nya
+  är en av de största (elefant, slott, valfisk) blir det bara den nya. Kameran ser marken flackt, så djur på olika djup
+  täcker varandra nästan helt; i praktiken blir det en rad. På ängen och vid sjön är det markytan som tar slut, inte
+  20 %-gränsen: med max_skymd 0,35 eller 0,5 blir det bara 0–1 fler där. Fler kräver ett djupare markband i
+  `placering.json` (ängen: z −0,9 … 1,9) eller en brantare kamera.
 
 ## 2. Den nya skapelsen landar framme och kameran visar den
 - Var den nya står avgör placeringsregeln (§ 1: den främsta lediga rutan). `landning.ts` har bara `nyast` och `sakLage`
@@ -108,16 +108,16 @@ Spel.tsx (växer inte), styles.css, sparnyckeln och granskad-data. bengtsson.jso
 granskad-fält, och där läggs bara `vattenfagel` till på anka och gås. Inga röstfiler.
 
 ## Smakval för Christoffer
-1. **Kapacitet mot 20 %:** på ängen ryms 3–6 vanliga djur på en gång, resten somnar (kan väckas). Vill han ha fler kan
-   han välja ett av två: `max_skymd` 0,3, eller `platser.ang.skala` < 1 (mindre djur på ängen).
+1. **Kapacitet:** på ängen och vid sjön ryms 2–3 åt gången, resten somnar (kan väckas). Ska det bli fler måste markbandet
+   eller kameran ändras; att höja max_skymd hjälper knappt där. Alternativt `platser.ang.skala` < 1 (mindre djur).
 2. **Den äldsta somnar** när zonen är full, i stället för att krympa alla (den gamla trängselskalan är borttagen).
 3. **Ankan simmar** vid sjön men flyger på ängen (dammen är för liten för den).
 4. **Minsta storlek** 44 px.
 5. **Titelbilden** visar bara djurets kropp med smal kant (ingen omgivning).
 6. **En för stor ny skapelse** (elefant, slott, valfisk på en full plats) ritas mindre, högst ned till 60 %
    (`krymp_min`), så att den alltid får en ruta.
-7. **Djuren vrider sig när de går** (upp till ~60°). Därför räknas ett djurs ruta 1,35 gånger bredare (`vrid`), vilket
-   också sänker kapaciteten. Alternativet är att låta dem vrida sig mindre i djur.tsx.
+7. **Djuren vrider sig när de går** (upp till ~60°). Därför räknas ett djurs ruta 1,35 gånger bredare (`vrid`) och lika
+   djup som bred, vilket också sänker kapaciteten (torrkörning 18:18: korna och elefanten var större ritade än räknade). Alternativet är att låta dem vrida sig mindre i djur.tsx.
 8. **Gamla världar:** har barnet fler på ängen än som ryms står de utanför bild tills nästa skapelse, och då somnar de
    (och kan kallas hit). Att låta dem somna redan vid start är ett eget litet steg.
 

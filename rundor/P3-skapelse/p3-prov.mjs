@@ -189,7 +189,7 @@ async function platsProv(plats, namn, kroppar) {
     andel.push({ k: a.k, syns: runda(1 - tacktAv(a.r, fram, true)), z: runda(a.z) });
   }
   const daliga = andel.filter((a) => a.syns < GRANS);
-  kolla(`P ${plats} ${namn}: ${kvar.length} vakna av ${kroppar.length} – var och en (och platsens fasta saker) syns ≥ ${Math.round(GRANS * 100)} % (skymt eller utanför bilden räknas bort)`, daliga.length === 0 && kvar.length >= 2, { daliga, kvar: kvar.map((d) => d.kropp), sovande: kroppar.length - lista.length });
+  kolla(`P ${plats} ${namn}: ${kvar.length} vakna av ${kroppar.length} – var och en (och platsens fasta saker) syns ≥ ${Math.round(GRANS * 100)} % (skymt eller utanför bilden räknas bort)`, daliga.length === 0 && kvar.length >= 1, { daliga, kvar: kvar.map((d) => d.kropp), sovande: kroppar.length - lista.length });
   const nySyn = ny && saker.find((s) => s.uid === ny.uid);
   kolla(`P ${plats} ${namn}: den nya (${sista}) står kvar och syns`, !!nySyn && ny.kropp === sista, { ny: ny?.kropp, syns: andel.find((a) => a.k === ny?.kropp) });
   // utanför bilden räknas som skymt i andelen ovan; här: ingen står till största delen utanför
