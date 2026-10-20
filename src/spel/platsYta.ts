@@ -9,8 +9,9 @@ export const YTA_SKALA = 1.45;
 /** Minsta avstånd mellan två skapelser när en punkt måste flyttas (världsenheter). */
 const MIN_AVSTAND = 0.85;
 const STEG = 0.01;
-/** Djurets kropp (≈0,4) + vickningen i djur.tsx (±0,22): så långt från vattenkanten ska mitten stå (världsenheter). */
-export const KANT_MARGINAL = 0.6;
+/** Djurets kropp (≈0,4) + vickningen i djur.tsx (±0,22) + en synlig bit strand: så långt från vattenkanten ska mitten stå
+ *  (världsenheter). B6.2: 0,6 → 1,0, räven på sjön stod med tassarna i vattenbrynet (kameran ser vattnet bakom djuret). */
+export const KANT_MARGINAL = 1.0;
 
 export function iRekt(x: number, y: number, r: Zon["rekt"]): boolean {
   const [x0, y0, x1, y1] = r;

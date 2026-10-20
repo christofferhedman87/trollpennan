@@ -141,6 +141,7 @@ test("B6.1 (F): varje känt ord ger något synligt – ett djur/en sak, ett ägg
   }
   assert.deepEqual(tysta, [], `ord som inte ger något: ${tysta.slice(0, 20).join(", ")}`);
   assert.ok(ord.size > 900);
-  assert.ok(kanInteRita(tolkaMedReserv("en regnbåge"), "en regnbåge"), "en regnbåge");
+  // B6.2: "en regnbåge" är nu en sak (modellen kopplades in); ett mönster utan djur ger fortfarande banderollen
+  assert.ok(kanInteRita(tolkaMedReserv("randig"), "randig"), "randig");
   assert.equal(kanInteRita(tolkaMedReserv("en katt"), "en katt"), null);
 });

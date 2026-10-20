@@ -55,7 +55,7 @@ for (const [w, h] of [[375, 812], [1280, 800]]) {
       const f = r.firstElementChild.getBoundingClientRect(), b = r.getBoundingClientRect();
       return { scrollLeft: r.scrollLeft, forsta_x: Math.round(f.left), rad_x: Math.round(b.left) };
     });
-    m[`uppdrag${nr}`] = { prova_nederkant: Math.round(prova.y + prova.height), remsa_topp: Math.round(remsa.y), prova_syns: prova.y >= 0 && prova.y + prova.height <= remsa.y + 1, rad, etikett_hel: !!rad && rad.scrollLeft === 0 && rad.forsta_x >= rad.rad_x, ledtrad_kompakt: (await p.locator(".ledtrad.kompakt").count()) === 1 };
+    m[`uppdrag${nr}`] = { prova_nederkant: Math.round(prova.y + prova.height), remsa_topp: Math.round(remsa.y), prova_syns: prova.y >= 0 && prova.y + prova.height <= remsa.y + 1, rad, etikett_hel: !!rad && rad.scrollLeft === 0 && rad.forsta_x >= rad.rad_x, ingen_gata_under_uppdrag: (await p.locator("[data-testid=ledtrad]").count()) === 0 }; // B6.2: R9I/B6.1 – ingen gåta alls under uppdrag (den kompakta gåtan är borttagen)
     await p.screenshot({ path: path.join(ut, `${w}-uppdrag${nr}.png`) });
     if (nr === 1) {
       await t("uppdrag-val-fras").first().click();
@@ -65,7 +65,7 @@ for (const [w, h] of [[375, 812], [1280, 800]]) {
       await p.waitForTimeout(600);
     }
   }
-  m.ok = m.figur_hojd >= m.figur_mal - 2 && m.figur_hojd <= m.figur_mal + 2 && [m.uppdrag1, m.uppdrag2].every((u) => u.prova_syns && u.etikett_hel && u.ledtrad_kompakt) && fel.length === 0;
+  m.ok = m.figur_hojd >= m.figur_mal - 2 && m.figur_hojd <= m.figur_mal + 2 && [m.uppdrag1, m.uppdrag2].every((u) => u.prova_syns && u.etikett_hel && u.ingen_gata_under_uppdrag) && fel.length === 0;
   res.push(m);
   await ctx.close();
 }
