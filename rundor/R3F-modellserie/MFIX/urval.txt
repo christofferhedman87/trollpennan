@@ -1,0 +1,21 @@
+# R3F-MFIX (fixpaket före M15): 20 modeller. 18 befintliga tas bort (bort.txt) och läggs in igen rättade; drottning och bebis är nya. Format: paket/filnamn.
+trollpennan-mfix/svan-egen.glb
+trollpennan-mfix/abborre-fish-quaternius.glb
+trollpennan-mfix/gadda-fish-quaternius.glb
+trollpennan-mfix/narval-gobkit.glb
+trollpennan-mfix/mask-egen.glb
+trollpennan-mfix/mamma-blocky.glb
+trollpennan-mfix/pappa-blocky.glb
+trollpennan-mfix/larare-blocky.glb
+trollpennan-mfix/pojke-blocky.glb
+trollpennan-mfix/cowboy-blocky.glb
+trollpennan-mfix/byggarbetare-blocky.glb
+trollpennan-mfix/pirat-blocky.glb
+trollpennan-mfix/drottning-blocky.glb
+trollpennan-mfix/bebis-blocky.glb
+trollpennan-mfix/ris-egen.glb
+trollpennan-mfix/kott-ribs-kenney.glb
+trollpennan-mfix/bacon-kenney.glb
+trollpennan-mfix/gitarr-egen.glb
+trollpennan-mfix/smorkniv-bknbho.glb
+trollpennan-mfix/nalle-bear-kenney.glb

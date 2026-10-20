@@ -28,6 +28,12 @@ for f in $(grep -v '^#' "$D/$M/urval.txt"); do [ -f "$INK/$f" ] || stopp 2 "mode
 [ -d scripts/modell-verktyg/node_modules ] || npm ci --silent --prefix scripts/modell-verktyg || stopp 2 "verktygen kunde inte installeras"
 FORE=$(ls public/models/bulk | wc -l)
 
+# 1b. Fixpaket: entiteter i $D/$M/bort.txt tas bort ur datan (och modellfilen) och läggs in igen av lagg nedan. Bara data.
+if [ -f "$D/$M/bort.txt" ]; then
+  node $D/ta-bort.mjs "$D/$M/bort.txt" | tee -a "$UT/bevis.txt" || { git checkout -- data src CREDITS.md LICENSES.md public/models/bulk; git clean -fdq public/models/bulk; stopp 2 "bort.txt kunde inte föras in (allt återställt)"; }
+  FORE=$(ls public/models/bulk | wc -l)
+fi
+
 # 2. Patchen (testet känner igen R3F-M*, två ett-ord i data/inlagg.json). Bara om den inte redan finns på main.
 if ! grep -q 'R3F-M' src/spel/entiteter.test.ts; then
   git apply --check "$D/ref/r3f-serie.patch" || stopp 2 "patchen går inte att applicera"
@@ -50,6 +56,7 @@ if [ -f "$D/$M/inlagg-tillagg.json" ]; then
     }
     JSON.parse(s); fs.writeFileSync(c, s); console.log("malhojd_ord tillagda: " + n + (u ? ", undertyp_rorelse tillagda: " + u : ""));
   ' "$D/$M/inlagg-tillagg.json" data/inlagg.json | tee -a "$UT/bevis.txt" || stopp 2 "inlagg-tillagg.json kunde inte föras in"
+  node $D/inlagg-ersatt.mjs "$D/$M/inlagg-tillagg.json" | tee -a "$UT/bevis.txt" || { git checkout -- data public/models/bulk; stopp 2 "inlagg-tillagg.json (ersatt/rörelse/tak) kunde inte föras in (allt återställt)"; }
 fi
 
 # 2c. Testjustering som paketet kräver (valfri $D/$M/test.patch, bara src/**/*.test.ts). Ex: M10 gör "vägskylt" känt.
@@ -68,11 +75,18 @@ KOD=$?
 INLAGT=$(grep -oE '^Inlagt: [0-9]+' "$UT/lagg.txt" | grep -oE '[0-9]+')
 FEL=$(grep -cE '^(FEL|HOPPAR) ' "$UT/lagg.txt")
 if [ $KOD -ne 0 ] || [ "${INLAGT:-0}" != "$FORV" ] || [ "$FEL" != "0" ]; then
-  git checkout -- data src CREDITS.md LICENSES.md; git clean -fdq public/models/bulk
+  git checkout -- data src CREDITS.md LICENSES.md public/models/bulk; git clean -fdq public/models/bulk
   stopp 3 "lagg gav ${INLAGT:-?} inlagda (väntat $FORV), $FEL FEL/HOPPAR-rader, exit $KOD. Utskrift: $UT/lagg.txt. Allt återställt."
 fi
 grep -E '^Inlagt' "$UT/lagg.txt" | tee -a "$UT/bevis.txt"
 cp "$UT/lagg-ordgranskning.tsv" "$D/$M/ordgranskning.tsv"
+# 3a. Granskade böjningsformer: varje nytt djur-/människoord ska ha en rad i $D/$M/former.tsv (SAOL-mönster), annars STOPP.
+if [ "$(tail -n +2 "$UT/lagg-ordgranskning.tsv" | grep -c .)" != "0" ] || [ -f "$D/$M/former.tsv" ]; then
+  if ! node $D/former.mjs "$D/$M/former.tsv" "$UT/lagg-ordgranskning.tsv" | tee -a "$UT/bevis.txt" || ! grep -q "^former granskade" "$UT/bevis.txt"; then
+    git checkout -- data src CREDITS.md LICENSES.md public/models/bulk; git clean -fdq public/models/bulk; git checkout -- "$D/$M" 2>/dev/null
+    stopp 3 "granskade former saknas eller är fel ($D/$M/former.tsv). Allt återställt."
+  fi
+fi
 # 3b. Gåtor för nya hemliga djur (r9.test.ts kräver en gåta per djurord). Data ur $D/$M/gator.json, inget annat ändras.
 if [ -f "$D/$M/gator.json" ]; then
   node -e '
@@ -115,7 +129,7 @@ fi
   echo "Körd $(date '+%Y-%m-%d %H:%M %Z') på $(git rev-parse --short HEAD) ($(git branch --show-current))."; echo
   echo '```'; cat "$UT/bevis.txt"; echo '```'; echo
   echo "Sammanfattning ur lagg:"; echo '```'; sed -n '/^{/,/^}/p' "$UT/lagg.txt" | grep -E '"(rader|ok|ok_flaggad|hoppade|fel|unika_nya_ord)"'; echo '```'
-  echo; echo "Ordgranskning (djurord, gissade former för Copilot): \`$D/$M/ordgranskning.tsv\`."
+  echo; echo "Ordgranskning: lagg-gissningar i \`$D/$M/ordgranskning.tsv\`; de former som ligger i spelet är de granskade i \`$D/$M/former.tsv\`."
   [ $AVV -ne 0 ] && echo && echo "**AVVIKELSE: rader märkta AVV ovan. Ingen merge förrän Arkitekten tittat.**"
 } > "$LOGG"
 git add -A -- CREDITS.md LICENSES.md data public/models/bulk src/spel/entiteter.test.ts $TESTFILER docs/skarmbilder/r3f "$D/$M"
