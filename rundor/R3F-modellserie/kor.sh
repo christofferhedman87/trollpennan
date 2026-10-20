@@ -133,6 +133,8 @@ fi
   [ $AVV -ne 0 ] && echo && echo "**AVVIKELSE: rader märkta AVV ovan. Ingen merge förrän Arkitekten tittat.**"
 } > "$LOGG"
 git add -A -- CREDITS.md LICENSES.md data public/models/bulk src/spel/entiteter.test.ts $TESTFILER docs/skarmbilder/r3f "$D/$M"
+# Aldrig symlänkar i en commit (#116 checkade in node_modules-länkar; Doodle tog bort dem i #119).
+if git diff --cached --raw | awk '$2 == "120000"' | grep -q .; then git diff --cached --raw | awk '$2 == "120000"' | tee -a "$UT/bevis.txt"; git reset -q; stopp 3 "symlänk i commit (se ovan)"; fi
 git commit -q -m "Runda R3F-$M: modellserien, $FORV modeller (CC0, hämtas när ordet används)" || stopp 3 "commit misslyckades"
 echo; echo "KLART: $(git log --oneline -1). $( [ $AVV -eq 0 ] && echo 'Alla bevis OK: pusha, PR, merge.' || echo 'AVVIKELSE: pusha och öppna PR men MERGA INTE.')"
 exit $(( AVV ? 4 : 0 ))

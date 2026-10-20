@@ -1,13 +1,11 @@
-# R3F-M19 (dubblingen, sagoväsen): 12 modeller, alla CC0. Klossfigurer (Kenney Blocky), egna lågpolymodeller och omfärgade Gobkit/Quaternius. Format: paket/filnamn.
+# R3F-M19 (dubblingen, sagoväsen): 10 modeller, alla CC0. Klossfigurer (Kenney Blocky), egna lågpolymodeller och omfärgade Gobkit/Quaternius. Format: paket/filnamn.
 trollpennan-saga-m19/sjojungfru-blocky.glb
 trollpennan-saga-m19/angel-blocky.glb
 trollpennan-saga-m19/dvarg-blocky.glb
 trollpennan-saga-m19/ande-blocky.glb
-trollpennan-saga-m19/sjohast-egen.glb
 trollpennan-saga-m19/sjoorm-egen.glb
 trollpennan-saga-m19/kraken-egen.glb
 trollpennan-saga-m19/fenix-gobkit.glb
 trollpennan-saga-m19/pegasus-quaternius.glb
-trollpennan-saga-m19/drakunge-quaternius.glb
 trollpennan-saga-m19/drakagg-egen.glb
 trollpennan-saga-m19/kristallkula-egen.glb
