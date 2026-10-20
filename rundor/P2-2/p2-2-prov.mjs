@@ -168,6 +168,7 @@ await p.evaluate(() => {
   const s = JSON.parse(localStorage.getItem("trollpennan-v2"));
   const forsta = Object.values(s.albumKropp ?? {})[0] ?? { formel: "en katt", poang: 1, niva: "vanlig", hjartan: 0 };
   for (const k of ["hund", "gris", "ko", "hast", "anka"]) s.albumKropp[k] ??= { ...forsta, formel: `en ${k}` };
+  s.egnaDjur = Math.max(s.egnaDjur ?? 0, 5); // TTS-3: guiden räknar djur barnet själv väckt efter introt
   s.uppdrag = { ...(s.uppdrag ?? {}), prov: "klar" };
   localStorage.setItem("trollpennan-v2", JSON.stringify(s));
   sessionStorage.setItem("p2-titel-prov", "0");

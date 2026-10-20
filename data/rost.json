@@ -34,9 +34,16 @@
     "syntaxviruset": "syntaxviruset"
   },
   "uttal": {
-    "Här på ängen": "Här, på ängen",
-    "Ekorren": "Ehkorren",
-    "ekorren": "ehkorren"
+    "Här på ängen": "Här, på ängen"
+  },
+  "uttal_stam": {
+    "_om": "TTS-3: stammen byts i alla böjningar och sammansättningar innan texten skickas till röstmotorn (ekorre, ekorren, Ekorrens, ekorrarna, Silverekorren …), med versal när stammen börjar med versal. Christoffers val: prov 07 \"Ehkorren\". Ersätter de exakta orden \"Ekorren\"/\"ekorren\" i uttal (#165).",
+    "ekorr": "ehkorr"
+  },
+  "omtag": {
+    "_om": "TTS-3: nyckel (manifestets) → försök nr. Ett nytt försök för en rad vars uttal inte blev rätt (kontrolleras med faster-whisper). Bara den raden görs om.",
+    "11adcf01": 2,
+    "45c0c436": 2
   },
   "reserv": "tyst",
   "ljudniva": {
