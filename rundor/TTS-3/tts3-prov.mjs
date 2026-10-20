@@ -3,7 +3,7 @@
 // (ko-20okt/tts2/d). Fångar felet på main: pratbubblans röst låg före bannerns i kön, så "Uppdrag klart!" och
 // Bengtssons "Ahh, så skönt! …" klipptes (bannern gick 0,1–1,8 s före rösten).
 //   B) uppdraget klaras två gånger: varje banner med röst står kvar tills dess röst är klar + 1,5 s (−250 ms tolerans),
-//      och rösten startar medan bannern syns. C) ett tryck stänger uppmaningen direkt och tystar rösten.
+//      och rösten startar medan bannern syns. C) en banner avbryter en guiderad (uttoning) och ett tryck stänger uppmaningen direkt och tystar rösten – även en som väntar.
 //   D) window.__troll finns inte för ett barn (webdriver false), men finns när ett prov styr webbläsaren (webdriver true).
 //   node --experimental-strip-types rundor/TTS-3/tts3-prov.mjs [--dist dist-pages] [--bilder <mapp>] [--varv 2]
 import fs from "node:fs";
@@ -45,7 +45,9 @@ async function sida(spar, { webdriver = false } = {}) {
   await ctx.addInitScript((wd) => {
     Object.defineProperty(navigator, "webdriver", { get: () => wd });
     window.__ljud = [];
+    window.__el = [];
     window.__bann = [];
+    window.__tryck = [];
     const t0 = () => Math.round(performance.now());
     const play0 = HTMLMediaElement.prototype.play;
     HTMLMediaElement.prototype.play = function () {
@@ -54,12 +56,14 @@ async function sida(spar, { webdriver = false } = {}) {
       if (f.startsWith("/ljud/rost/")) {
         const rec = { f, anrop: t0(), start: null, slut: null, hur: null };
         window.__ljud.push(rec);
+        window.__el.push(el);
         el.addEventListener("playing", () => { rec.start ??= t0(); }, { once: true });
         el.addEventListener("ended", () => { if (!rec.slut) { rec.slut = t0(); rec.hur = "ended"; } }, { once: true });
         el.addEventListener("pause", () => { if (!rec.slut) { rec.slut = t0(); rec.hur = el.currentTime >= el.duration - 0.06 ? "ended" : "pause"; } }, { once: true });
       }
       return play0.call(el);
     };
+    for (const t of ["touchstart", "pointerdown"]) document.addEventListener(t, () => { const n = t0(); if (window.__tryck.at(-1) !== n) window.__tryck.push(n); }, { capture: true });
     const syns = new Map();
     setInterval(() => {
       const nu = new Set([...document.querySelectorAll("[data-testid=puff]")].map((e) => e.textContent?.trim() ?? ""));
@@ -136,26 +140,90 @@ for (let v = 1; v <= VARV; v++) {
   if (v === 1) console.log(JSON.stringify({ tidslinje: rad }));
   await ctx.close();
 }
-// C) tryck stänger uppmaningen direkt och tystar rösten (riktig uppspelning)
+// C) avbrott och tryck, deterministiskt (TTS-3-fix). Doodles röda körning: trycket gick via locator.tap(), som under last
+//    väntade på att bubblan stod still – trycket kom 0,4 s för sent, när guideraden redan var slut och bannerns röst
+//    precis börjat. Här: tryck med touchscreen.tap() (ingen väntan), trycket tidsstämplas i sidan, och varje tryck görs
+//    först när läget bevisligen råder (rösten spelar: 'playing' + currentTime > 0,25 s; rösten väntar: filen är begärd
+//    men hålls i nätet och har inte startat). Bannern utlöses med window.__troll.vakna() (webdriver true) i samma ögonblick
+//    som guideraden bevisligen spelar – kön, ljudet och trycket är riktiga.
+const spelarNu = (p) => p.evaluate(() => window.__ljud.map((r, i) => ({ ...r, i, ct: window.__el[i].currentTime })).filter((r) => r.start !== null && r.slut === null && r.ct > 0.25));
+async function tills(p, villkor, ms) {
+  const t = Date.now() + ms;
+  while (Date.now() < t) {
+    const v = await villkor();
+    if (v) return v;
+    await p.waitForTimeout(30);
+  }
+  return null;
+}
+async function knack(p, loc) {
+  const b = await loc.boundingBox();
+  if (!b) return null;
+  await p.touchscreen.tap(b.x + b.width / 2, b.y + b.height / 2);
+  return p.evaluate(() => window.__tryck.at(-1) ?? null);
+}
+const filerFor = (text) => (rostPlan(text)?.delar ?? []).filter((d) => "f" in d).map((d) => d.f);
+const C = {};
+// C1: en guiderad spelar → bannern kommer: guiden tonas ut, bannerns röst börjar direkt; tryck medan bannerns röst spelar
 {
-  const { ctx, p } = await sida(BAS);
-  await skriv(p, "randig");
+  const { ctx, p } = await sida(BAS, { webdriver: true });
+  const guide = await tills(p, async () => (await spelarNu(p))[0], 20000);
+  const tV = await p.evaluate(() => (window.__troll.vakna("randig"), Math.round(performance.now())));
   const puff = p.locator("[data-testid=puff].tryck").first();
-  await puff.waitFor({ state: "visible", timeout: 15000 }).catch(() => {});
-  await p.waitForTimeout(1500);
-  const fore = await las(p);
-  const spelar = fore.ljud.filter((x) => x.slut === null && x.start !== null);
-  const tT = await p.evaluate(() => Math.round(performance.now()));
-  await puff.tap().catch((e) => fel.push("tap " + e));
+  await puff.waitFor({ state: "visible", timeout: 5000 }).catch(() => {});
+  const btext = ((await puff.textContent().catch(() => "")) ?? "").trim();
+  const bf = filerFor(btext);
+  const bRost = await tills(p, async () => (await spelarNu(p)).find((r) => r.f === bf[0] && r.anrop >= tV), 5000);
+  const L1 = await las(p);
+  const g = guide ? L1.ljud[guide.i] : null;
+  const b = bRost ? L1.ljud[bRost.i] : null;
+  kolla("C1 en guiderad spelade när bannern kom (bevisat: playing + currentTime > 0,25 s)", !!guide && !!btext && bf.length > 0, { guide, btext });
+  const tona = g && b ? g.slut - b.anrop : null;
+  kolla("C1 bannern avbryter guideraden: guiden tonas ut (pausad 80–700 ms efter att bannerns röst begärts), bannerns röst börjar direkt (≤ 800 ms efter utlösningen)", !!g && !!b && g.hur === "pause" && tona >= 80 && tona <= 700 && b.anrop - tV <= 800, { guide: g, banner: b, tona_ms: tona, tV });
+  // tryck medan bannerns röst bevisligen spelar
+  const spelar = bRost ? await tills(p, async () => (await spelarNu(p)).find((r) => r.i === bRost.i), 3000) : null;
+  const tT = spelar ? await knack(p, puff) : null;
   await p.waitForTimeout(400);
   const kvar = await puff.isVisible().catch(() => false);
-  await p.waitForTimeout(1500);
-  const efter = await las(p);
-  const tystnade = spelar.every((s) => efter.ljud.some((x) => x.f === s.f && x.anrop === s.anrop && x.hur === "pause" && x.slut >= tT));
-  const nya = efter.ljud.filter((x) => x.anrop > tT);
-  kolla("tryck: uppmaningen borta 400 ms efter trycket, rösten som spelade pausades och inget nytt spelas", spelar.length > 0 && !kvar && tystnade && nya.length === 0, { spelar, kvar, tystnade, nya });
+  await p.waitForTimeout(1800);
+  const L2 = await las(p);
+  const bEfter = bRost ? L2.ljud[bRost.i] : null;
+  const nya = tT === null ? [] : L2.ljud.filter((x) => x.anrop > tT);
+  const guideIgen = guide ? L2.ljud.filter((x, i) => x.f === guide.f && i > guide.i) : [];
+  kolla("C1 tryck medan bannerns röst spelar: bubblan borta inom 400 ms, rösten pausad ≤ 300 ms efter trycket, inget nytt spelas, guiden läses inte om", !!spelar && tT !== null && !kvar && bEfter?.hur === "pause" && bEfter.slut - tT <= 300 && nya.length === 0 && guideIgen.length === 0, { spelar, tT, kvar, banner: bEfter, nya, guideIgen });
+  C.c1 = { guide_f: guide?.f, guide_start: g?.start, banner_utlost: tV, banner_rost_anrop: b?.anrop, banner_rost_start: b?.start, guide_pausad: g?.slut, tona_ms: tona, tryck: tT, banner_rost_pausad: bEfter?.slut };
   await ctx.close();
 }
+// C2: bannerns röst är begärd men har inte startat (filen hålls i nätet) → tryck → den startar aldrig
+{
+  const { ctx, p } = await sida(BAS, { webdriver: true });
+  let hall = false;
+  const hallna = [];
+  await p.route("**/ljud/rost/*.mp3", (r) => (hall ? hallna.push(r) : r.continue()));
+  await p.waitForTimeout(500);
+  hall = true;
+  const tV = await p.evaluate(() => (window.__troll.vakna("randig"), Math.round(performance.now())));
+  const puff = p.locator("[data-testid=puff].tryck").first();
+  await puff.waitFor({ state: "visible", timeout: 5000 }).catch(() => {});
+  const btext = ((await puff.textContent().catch(() => "")) ?? "").trim();
+  const bf = filerFor(btext);
+  const begard = await tills(p, async () => hallna.some((r) => new URL(r.request().url()).pathname === bf[0]), 5000);
+  const fore = await las(p);
+  const vantar = !!begard && fore.ljud.some((x) => x.f === bf[0] && x.anrop >= tV && x.start === null);
+  const tT = vantar ? await knack(p, puff) : null;
+  await p.waitForTimeout(300);
+  hall = false;
+  for (const r of hallna.splice(0)) await r.continue().catch(() => {});
+  await p.waitForTimeout(1800);
+  const kvar = await puff.isVisible().catch(() => false);
+  const efter = await las(p);
+  const startade = efter.ljud.filter((x) => x.f === bf[0] && x.anrop >= tV && x.start !== null);
+  const nya = tT === null ? [] : efter.ljud.filter((x) => x.anrop > tT);
+  kolla("C2 tryck medan bannerns röst väntar (begärd, inte startad): bubblan borta, rösten startar aldrig – inte heller när filen kommer – och inget nytt spelas", vantar && tT !== null && !kvar && startade.length === 0 && nya.length === 0, { btext, begard, vantar, tT, kvar, startade, nya });
+  C.c2 = { banner_utlost: tV, tryck: tT, vantade: vantar, startade: startade.length };
+  await ctx.close();
+}
+console.log(JSON.stringify({ C }));
 // D) styr-API:t
 {
   const barn = await sida(BAS, { webdriver: false });
