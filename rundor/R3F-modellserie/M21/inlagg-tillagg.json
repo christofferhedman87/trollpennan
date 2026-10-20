@@ -1,0 +1,53 @@
+{
+ "_om": "R3F-M21: målhöjder (saker skalas efter max(h, 0,6·största bredd)). Med MFIX5 (Doodles granskning av M20/M20b): toapapper (såg ut som en uppslagen bok, nu en rulle), sittsäck (platt röd skiva, nu hög päronform), väggklocka (liknade väckarklockan, nu på en bit vägg) och pizzaskärare (låg platt och syntes från sidan, nu hjulet mot kameran) byter bara fil via byt_fil, så M20/M20b:s ord och data står kvar.",
+ "malhojd_ord": {
+  "filt": 0.4,
+  "pläd": 0.4,
+  "täcke": 0.6,
+  "kofta": 0.6,
+  "regnjacka": 0.65,
+  "regnkappa": 0.65,
+  "regnrock": 0.65,
+  "gummistövel": 0.45,
+  "gummistövlar": 0.45,
+  "stövel": 0.45,
+  "vante": 0.4,
+  "tumvante": 0.4,
+  "strumpa": 0.45,
+  "socka": 0.45,
+  "skjorta": 0.6,
+  "byxor": 0.65,
+  "sko": 0.35,
+  "skor": 0.35,
+  "festhatt": 0.45,
+  "kalashatt": 0.45,
+  "madrass": 0.8,
+  "hundbädd": 0.6,
+  "balja": 0.55,
+  "tvättbalja": 0.55,
+  "borste": 0.3,
+  "ryktborste": 0.3,
+  "schampo": 0.4,
+  "tvättlapp": 0.25,
+  "kam": 0.3,
+  "pool": 0.9,
+  "bassäng": 0.9,
+  "höstack": 0.9,
+  "hö": 0.9,
+  "nattlampa": 0.4,
+  "pyjamas": 0.8,
+  "baddräkt": 0.5,
+  "barnvagn": 0.8,
+  "vagga": 0.7,
+  "nappflaska": 0.35
+ },
+ "malhojd_ord_ersatt": {
+  "väggklocka": 0.8
+ },
+ "byt_fil": {
+  "toapapper": "trollpennan-mfix5/toapapper-egen.glb",
+  "sittsack": "trollpennan-mfix5/sittsack-egen.glb",
+  "vaggklocka": "trollpennan-mfix5/vaggklocka-egen.glb",
+  "pizzaskarare": "trollpennan-mfix5/pizzaskarare-egen.glb"
+ }
+}

@@ -1,0 +1,27 @@
+# R3F-M21 (dubblingen, kläder, sovsaker och bad): 26 saker, alla CC0, egna lågpolymodeller (Trollpennan). Format: paket/filnamn.
+trollpennan-klader-m21/filt-egen.glb
+trollpennan-klader-m21/tacke-egen.glb
+trollpennan-klader-m21/kofta-egen.glb
+trollpennan-klader-m21/regnjacka-egen.glb
+trollpennan-klader-m21/gummistovel-egen.glb
+trollpennan-klader-m21/vante-egen.glb
+trollpennan-klader-m21/strumpa-egen.glb
+trollpennan-klader-m21/skjorta-egen.glb
+trollpennan-klader-m21/byxor-egen.glb
+trollpennan-klader-m21/sko-egen.glb
+trollpennan-klader-m21/festhatt-egen.glb
+trollpennan-klader-m21/madrass-egen.glb
+trollpennan-klader-m21/hundbadd-egen.glb
+trollpennan-klader-m21/balja-egen.glb
+trollpennan-klader-m21/borste-egen.glb
+trollpennan-klader-m21/schampo-egen.glb
+trollpennan-klader-m21/tvattlapp-egen.glb
+trollpennan-klader-m21/kam-egen.glb
+trollpennan-klader-m21/pool-egen.glb
+trollpennan-klader-m21/hostack-egen.glb
+trollpennan-klader-m21/nattlampa-egen.glb
+trollpennan-klader-m21/pyjamas-egen.glb
+trollpennan-klader-m21/baddrakt-egen.glb
+trollpennan-klader-m21/barnvagn-egen.glb
+trollpennan-klader-m21/vagga-egen.glb
+trollpennan-klader-m21/nappflaska-egen.glb
