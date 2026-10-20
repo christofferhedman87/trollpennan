@@ -11,3 +11,17 @@ Doodle: `git checkout main && git pull && git checkout -b runda-b63-kod && bash 
 | J | Fordonen bildar en vägg framför staketet. | Bakre platserna var en fast lista med sju punkter, nästan på samma djup, som fylldes i ordning. | storlek.json `bak`: `zon` (x −2,7…2,7, z −1,9…−1,15), `min_avstand` 0,95 och `fri_x` [[−1,4; 0]] (ingen stor sak har sin mitt framför grinden eller staketets mitt). `bakPlatser()`: läget slumpas men är fast per uid (hash). Djupet sprids med gyllene snittet plus jitter, så att två saker i följd aldrig hamnar på samma djup. Fortfarande bakom alla djur. | b6-3.test.ts J (spridning i x ≥ 3 och z ≥ 0,3, högst 2 per 0,1 i djup, de fyra första ≥ 0,95 isär, ingen framför grinden); b63-prov D-bild |
 
 B6.1-provets stora-saker-steg och B6.2-provet körs som regression i kor.sh.
+
+## Rättning efter Doodles körning på eaa80b3 (07:33): placering efter modellens bbox
+
+Kon stod 0,08 utanför dammkanten (kravet 0,1). Orsaken: ängens marginal var 0,28 från mitten, vickningen ±0,22, och kroppens bredd räknades inte alls.
+Kravet sänks inte; placeringen ändras:
+
+- **`data/fotavtryck.json`** (ny, genereras av `fotavtryck.mjs` i kor.sh på main, så att alla modellpaket kommer med): halva bredden på marken per entitet, ur modellens GLB-bbox (nodernas transformer inräknade) gånger spelets skala (`skalaFor`). 1005 entiteter på a96d864.
+- **`fotKant(kropp, skala)`** (entiteter.ts): halva bredden (barnets storleksord inräknat, under taket; saknas raden 0,5 × målhöjden) eller klassens kant om den är större, plus vickningen 0,27 för djur (x ±0,22, z ±0,16) och **0,15**. `djurPlats` skickar den som kant till `placeraPaPlats`.
+- **`torrKropp`** provar 16 riktningar på avståndet m och en ring på m/2 (med 8 kom vattnet närmare än m mellan riktningarna; bussen hamnade 0,06 från vattnet i enhetstestet).
+- Prov I mäter **kroppen**: avståndet till kanten minus halva bredden ≥ 0,1 i alla 12 mätningar. Kör två fasta varv (I1 = Doodles fall, I2 = mikroskop, trumset, jordglob, ägg, väggklocka, ko, hund, buss, kaffekanna, fisk) och slumpade varv ur en pool med 23 saker och djur (`--varv n`, `--fro tal`; fröet står i prov.json).
+- Prov H mäter trycket i stället för tiden sedan boken öppnades (vid load 26 tog skärmbilden över 3 s).
+- package.json läggs inte längre i patchen (den krockade med B6.4:s tillägg). `b63-data.mjs` lägger in `b6-3.test.ts` textuellt.
+
+Påskägg och armband finns inte som entiteter; ägget (`agg`) är med i stället. Prov D täcker att dammvattnet syns med många saker: 8 stora saker, alltså fler än de 5 i M21.

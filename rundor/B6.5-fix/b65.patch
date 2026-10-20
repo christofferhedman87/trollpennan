@@ -23,12 +23,12 @@ index 0000000..f262df1
 + }
 +}
 diff --git a/src/spel/ang/delat.ts b/src/spel/ang/delat.ts
-index d544abb..10f3715 100644
+index 1729d25..755297b 100644
 --- a/src/spel/ang/delat.ts
 +++ b/src/spel/ang/delat.ts
 @@ -5,7 +5,7 @@ import texterJson from "../../../data/texter-gard.json" with { type: "json" };
  import type { Sparad } from "../brygga.ts";
- import { artFarg, bakPlatser, flyger, simmar, storlekKlass, vikt } from "../entiteter.ts";
+ import { artFarg, bakPlatser, flyger, fotKant, simmar, storlekKlass, vikt } from "../entiteter.ts";
  import type { Plats } from "../platser.ts";
 -import { placeraPaPlats } from "../platsYta.ts";
 +import { placeraPaPlats, simPlatser } from "../platsYta.ts";
@@ -323,10 +323,10 @@ index 370e8b0..99deb59 100644
    );
  }
 diff --git a/src/spel/entiteter.ts b/src/spel/entiteter.ts
-index ebd2f82..aa67508 100644
+index 7c01f00..6108737 100644
 --- a/src/spel/entiteter.ts
 +++ b/src/spel/entiteter.ts
-@@ -79,7 +79,7 @@ export function modellUrl(kropp: string): string | null {
+@@ -80,7 +80,7 @@ export function modellUrl(kropp: string): string | null {
  
  export type StorlekKlass = { id: string; tak: number; zon: "bak"; kant?: number };
  export type BakZon = { zon: { x: [number, number]; z: [number, number] }; min_avstand: number; fri_x: [number, number][] };
@@ -335,7 +335,7 @@ index ebd2f82..aa67508 100644
  /** B6.3 (J): den bakre zonen för stora saker (data/storlek.json). */
  export const BAK_ZON: BakZon = STORLEK.bak;
  
-@@ -125,7 +125,8 @@ export function bakPlatser(uids: string[], zon: BakZon = BAK_ZON): [number, numb
+@@ -126,7 +126,8 @@ export function bakPlatser(uids: string[], zon: BakZon = BAK_ZON): [number, numb
  export function storlekKlass(kropp: string): StorlekKlass | null {
    const e = ENTITETER[kropp];
    if (!e || e.typ === "djur") return null;
@@ -346,10 +346,10 @@ index ebd2f82..aa67508 100644
    return k && id ? { id, ...k } : null;
  }
 diff --git a/src/spel/platsYta.ts b/src/spel/platsYta.ts
-index bb10950..aee53be 100644
+index 7183fa4..b237d8c 100644
 --- a/src/spel/platsYta.ts
 +++ b/src/spel/platsYta.ts
-@@ -94,3 +94,51 @@ export function placeraPaPlats(p: Plats | undefined, onskade: [number, number][]
+@@ -97,3 +97,51 @@ export function placeraPaPlats(p: Plats | undefined, onskade: [number, number][]
    });
    return ut;
  }
