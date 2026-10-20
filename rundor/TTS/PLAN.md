@@ -1,6 +1,13 @@
 # TTS – förarbete: en bättre svensk röst, gratis (Arkitekten, 2026-10-20)
 
-**Status: förarbete, inte inbyggt i spelet.** Valet av röst är Christoffers smakbeslut. Provljuden finns på boxen i `/workspace/trollpennan-nulage/tts-prov/` och kan göras om med `bash rundor/TTS/prov-gen.sh`.
+**Status: förarbete, inte inbyggt i spelet.** Rösterna är valda av Christoffer (se 0); hastigheten och lisas licens är inte klara. Provljuden finns på boxen i `/workspace/trollpennan-nulage/tts-prov/` och kan göras om med `bash rundor/TTS/prov-gen.sh`.
+
+## 0. Christoffers val (2026-10-20)
+
+- **Bengtsson: Piper `sv_SE-nst-medium`** (CC0). Valt efter `piper-nst-1-bengtsson`.
+- **Trollpennan: Piper `sv_SE-lisa-medium`**. Valt efter `piper-lisa-1-bengtsson`, före alma.
+- **Hastighet: TBD, 0,8 eller 0,9.** Båda pratade för fort i normaltempo. Piper `length_scale` = 1/hastighet: 0,8 → **1,25**, 0,9 → **1,11** (större värde = långsammare). Prov: `tts-prov/v2/<röst>-<0.8|0.9|1.0>-<replik>.mp3`, gjorda med `bash rundor/TTS/prov-gen-v2.sh` (1.0 som referens). Uppmätt längd (nst/lisa, replik 1): 3,8/3,6 s vid 1,0 → 4,2/4,3 s vid 0,9 → 4,7/4,5 s vid 0,8. Christoffer väljer hastighet efter v2-proven.
+- **Spärr för lisa: licensen är oklar** (se 2 och 4). Lisa byggs inte in förrän upphovspersonen har bekräftat datakällan och licensen skriftligt. Reserv för Trollpennan: **alma** (CC BY 4.0), som finns i samma tempon i `v2/alma-*`.
 
 ## 1. Så fungerar rösten i dag
 
@@ -14,7 +21,7 @@
 |---|---|---|---|---|
 | **Piper sv_SE-nst-medium** | Data: NST (Språkbanken/Nasjonalbiblioteket) **CC0**. Tränad av KBLab (KB). | **Ja**, utan krav | 63 MB onnx (19 MB int8) | Mansröst (median-F0 ≈ 81 Hz). Bra kandidat för **Bengtsson**. |
 | **Piper sv_SE-alma-medium** | **CC BY 4.0** (NST-data, yeagersthlm) | **Ja**, med erkännande i CREDITS.md/LICENSES.md | 63 MB (19 MB int8) | Kvinnoröst (≈ 190 Hz). Kandidat för **Trollpennan** (introt). |
-| Piper sv_SE-lisa-medium | **Oklar**: modellkortet anger ingen datalicens ("finetuned from Norwegian talesyntese"). Repot piper-voices är MIT, men det säger inget om datat. | **Inte innan det är utrett** | 63 MB | Kvinnoröst (≈ 184 Hz). Med för jämförelsen. |
+| Piper sv_SE-lisa-medium | **Oklar, ingen licens angiven.** Modellkortet säger bara "Finetuned from Norweigan talesyntese voice" (talesyntese = NST norska, CC0). Ingen svensk datakälla, inget talar-samtycke och ingen licens för vikterna anges, varken i piper-voices (PR #29, wezzmeister, 2025) eller i upphovspersonens eget repo `wezzmeister/piper-voices` (ingen license-tagg). Repots MIT-tagg gäller repot, inte röstdatat. | **Inte innan upphovspersonen bekräftat** | 63 MB | Kvinnoröst (≈ 184 Hz). **Christoffers val för Trollpennan.** |
 | Coqui XTTS-v2 | **CPML**: bara icke-kommersiell användning. Har **ingen svenska**. | **Nej** | ~1,8 GB | Inga provljud: det går inte att göra en svensk röst. |
 | Meta MMS-TTS swe | **CC BY-NC 4.0** | **Nej** (icke-kommersiell) | ~145 MB | Inte provad. |
 | espeak-ng (sv) | GPL-3 | Låter som det robotlika vi vill bort från | – | Inte provad. |
@@ -33,7 +40,7 @@ Uppskattning av mängden: Bengtssons repliker och uppdrag (bengtsson.json, ~180 
 
 ## 4. Rekommendation
 
-**Förgenererat Piper för alla fasta texter**, med **nst** som Bengtssons röst (CC0, mansröst) och **alma** som Trollpennans röst (CC BY 4.0, erkännande krävs). För fri text (barnets egna ord) används webbläsarens röst **bara om en svensk röst finns**, annars ingen uppläsning. Lisa används inte förrän datalicensen är utredd. Christoffer lyssnar och väljer. Tempot kan sänkas med `length_scale` 1,1–1,2 för små barn (provfilerna `*-5-bengtsson-lugn`).
+**Förgenererat Piper för alla fasta texter**, med **nst** som Bengtssons röst (CC0, mansröst) och **lisa** som Trollpennans röst (Christoffers val, men spärrad tills licensen är klarlagd; reserv: **alma**, CC BY 4.0 med erkännande). För fri text (barnets egna ord) används webbläsarens röst **bara om en svensk röst finns**, annars ingen uppläsning. Lisa byggs inte in förrän datalicensen är bekräftad. Tempot blir 0,8 eller 0,9 (`length_scale` 1,25 eller 1,11), se 0.
 
 ## 5. Provljuden (`/workspace/trollpennan-nulage/tts-prov/`)
 
@@ -53,7 +60,7 @@ Alla är mp3, 64 kbit/s mono, 14–94 KB.
 ## 6. Data-driven inkoppling (ritning, inte byggd)
 
 - **Text-id**: varje fast text har redan ett id: `bengtsson.json` (replik-/uppdrags-id plus fält, t.ex. `tva-farger.text_bengtsson`), `ledtradar.json` (gåtans id), `platser.json` (`<plats>.final_fore`, intro) och `intro.json` (scen-index). Id:t blir `<fil>:<id>[.<fält>]`.
-- **Ljudmanifest** `data/rost.json`: `{ version, roster: { bengtsson: { modell: "sv_SE-nst-medium", licens: "CC0-1.0", length_scale: 1.1 }, pennan: { modell: "sv_SE-alma-medium", licens: "CC-BY-4.0", upphov: "…" } }, talare: { "bengtsson.json": "bengtsson", "ledtradar.json": "pennan", … }, rader: { "<text-id>": { fil: "/ljud/rost/<röst>/<hash>.mp3", hash: "<sha1(text + röst + parametrar)>", ms: 3300 } } }`. Hashen gör att en ändrad text märks: raden räknas som inaktuell och genereras om.
+- **Ljudmanifest** `data/rost.json`: `{ version, roster: { bengtsson: { modell: "sv_SE-nst-medium", licens: "CC0-1.0", length_scale: "1.25|1.11 (TBD)" }, pennan: { modell: "sv_SE-lisa-medium", licens: "<bekräftas>", upphov: "wezzmeister" } }, talare: { "bengtsson.json": "bengtsson", "ledtradar.json": "pennan", … }, rader: { "<text-id>": { fil: "/ljud/rost/<röst>/<hash>.mp3", hash: "<sha1(text + röst + parametrar)>", ms: 3300 } } }`. Hashen gör att en ändrad text märks: raden räknas som inaktuell och genereras om.
 - **Bulkgenerering**: `scripts/rost-generera.mjs` samlar alla fasta texter med id ur data, räknar hash, kör Piper (python-venv) bara för nya och ändrade rader, kodar mp3 (ffmpeg, 48 kbit/s mono), skriver `public/ljud/rost/…` och manifestet och tar bort föräldralösa filer. Idempotent och lika per körning.
 - **Uppspelning**: `src/spel/rost.ts` med `spela(textId, text)`: (1) en manifestrad med samma hash som texten → `new Audio(fil)`; (2) annars, om en `speechSynthesis`-röst med `lang` som börjar på `sv` finns → läs upp med `lang: "sv-SE"`; (3) annars tyst. Det kopplas till samma ställen som visar texten: Bengtssons bubbla, uppdragsremsan, gåtan i boken och introt. Det går att stänga av (befintlig ljudknapp).
 - **Licens**: CREDITS.md/LICENSES.md får en rad per röst (alma: CC BY 4.0, upphov och länk; nst: CC0, KBLab/NST).
