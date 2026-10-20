@@ -42,7 +42,7 @@ npm run -s build:pages > "$UT/build.txt" 2>&1 || { tail -20 "$UT/build.txt"; ate
 prov() { node "$D/p2-prov.mjs" --dist dist-pages --bilder "$BILD" > "$UT/prov.json" 2>"$UT/prov.err"; }
 prov || prov || { grep '^FEL' "$UT/prov.err"; tail -5 "$UT/prov.err"; aterstall; echo "STOPP 4: Playwright p2-prov föll"; exit 4; }
 # regression: P1:s överlappsprov (28 + 9 boklägen), boken (R9G, R9K), B6.2, B6.4 och B6.3/B6.5 om de är mergade
-reg() { [ -f "rundor/$1.mjs" ] || return 0; local n; n=$(basename "$1"); node "rundor/$1.mjs" $2 > "$UT/$n.json" 2>"$UT/$n.err" || node "rundor/$1.mjs" $2 > "$UT/$n.json" 2>"$UT/$n.err" || echo "$1" >> "$UT/regfel.txt"; }
+reg() { [ -f "rundor/$1.mjs" ] || return 0; local n; n=$(basename "$1"); node "rundor/$1.mjs" ${2:-} > "$UT/$n.json" 2>"$UT/$n.err" || node "rundor/$1.mjs" ${2:-} > "$UT/$n.json" 2>"$UT/$n.err" || echo "$1" >> "$UT/regfel.txt"; }
 reg P1-boken/p1-prov "--dist dist-pages" & reg R9G-ux-stall/r9g-prov & reg R9K-fix/r9k-prov & wait
 reg B6.2-fix/b62-prov & reg B6.4-fix/b64-prov & wait
 if [ -f src/spel/b6-3.test.ts ]; then reg B6.3-fix/b63-prov; fi
