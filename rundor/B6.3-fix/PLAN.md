@@ -25,3 +25,10 @@ Kravet sänks inte; placeringen ändras:
 - package.json läggs inte längre i patchen (den krockade med B6.4:s tillägg). `b63-data.mjs` lägger in `b6-3.test.ts` textuellt.
 
 Påskägg och armband finns inte som entiteter; ägget (`agg`) är med i stället. Prov D täcker att dammvattnet syns med många saker: 8 stora saker, alltså fler än de 5 i M21.
+
+## Tillägg (Doodle 08:26, main f078460, 1 154 tillgångar): ALLA skapelser, inte bara djur
+
+- Regeln gäller allt på marken (djur och saker): `djurPlats` skickar `fotKant` för varje icke-flygare. Saker har ingen vickning, men har halva bredden + 0,15.
+- **Enhetstest över alla entiteter**: varje modell på marken (1 100+ på f078460, Doodles fall först: bowlingklot, akvarium, spjälsäng, påskägg, vattenpistol, filt, fiol, mikroskop, trumset, ko) placeras i lag om 10 via `djurPlats`; kroppens kant ska vara ≥ 0,1 från vattnet med vickningen inräknad.
+- Testet hittade 5 modeller utan torr plats (apatosaurus 7,2 breda, golem 5,1, velociraptor, trollslända, triceratops). **`MAX_HALVBREDD = 1,2`** i `skalaFor`: ingen skapelse ritas bredare än slottet (2,4). Det gör 30 modeller mindre i bredd, t.ex. dinosaurierna, golem, neontetra (2,9 bred!), fenix, bro, brygga, hangar, snöfort. Det är ett smakbeslut, så konstanten kan justeras; storlek per typ hör till B6.6.
+- Prov D2: dammvattnet med Doodles 10 saker (spjälsäng m.fl.) blinkar inte bort, minst 3 av 5 punkter syns. Prov I3: samma 10 saker, kroppen utanför dammen. Poolen för slumpvarven har 30 ord (med sjukhus, apatosaurus, triceratops och cirkus).

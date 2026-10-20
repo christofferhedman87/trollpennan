@@ -1,8 +1,8 @@
 diff --git a/PROJECT.md b/PROJECT.md
-index 026cc12..724939e 100644
+index 1c3fae9..d2be077 100644
 --- a/PROJECT.md
 +++ b/PROJECT.md
-@@ -730,3 +730,4 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
+@@ -737,3 +737,4 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
  | 25 | ~~Stora saker (skyskrapa, ufo, grävmaskin, slott) täckte ängen; en flicka försvann bakom skyskrapan~~ → `data/storlek.json`: klass per kategori ger tak för höjden och zon "bak" (längst bak, bakom alla djur) | **B6.1** klar |
  | 26 | ~~"en regnbåge" gav ingenting och boken stod kvar~~ → känt ord utan modell ger banderoll ("kan inte rita ensamt än") och boken stängs; test går igenom alla kända ord. Kvar: "ljus" tolkas som färgord, inte som sak | **B6.1** klar |
  | 27 | ~~r9b-/r9-prov inaktuella · "ljus" blev färgord · räven på sjön i vattenbrynet · `milstolpe.final`/`las_upp`/`final_fore` lästes inte~~ → proven följer nuvarande beteende, "ljus" är en sak (utom "en ljus katt"), 1,0 till vattnet, fälten kopplade in | **B6.2** klar |
@@ -284,16 +284,17 @@ index 9c46f26..8eeeb4d 100644
        <SagaPenna />
 diff --git a/src/spel/b6-3.test.ts b/src/spel/b6-3.test.ts
 new file mode 100644
-index 0000000..6e61a9a
+index 0000000..9549359
 --- /dev/null
 +++ b/src/spel/b6-3.test.ts
-@@ -0,0 +1,88 @@
+@@ -0,0 +1,109 @@
 +// B6.3: dammens vatten över markens svaj (G), uppmaningens längd (H), ängens dammzon (I), stora saker spridda bak (J).
 +import assert from "node:assert/strict";
 +import { test } from "node:test";
 +import { DAMM, SVAJ_AMP } from "./ang/damm.ts";
 +import { djurPlats } from "./ang/delat.ts";
-+import { BAK_ZON, bakPlatser, FOT_MARGINAL, fotKant, storlekKlass, VICKNING } from "./entiteter.ts";
++import { BAK_ZON, bakPlatser, flyger, FOT_MARGINAL, fotKant, simmar, storlekKlass, VICKNING } from "./entiteter.ts";
++import entJson from "../../data/entiteter.json" with { type: "json" };
 +import { platsMed, START_PLATS } from "./platser.ts";
 +import { iVatten, tillPlats } from "./platsYta.ts";
 +import { KAN_INTE_RITA_MS } from "../tolk/aterkoppling.ts";
@@ -376,8 +377,28 @@ index 0000000..6e61a9a
 +    }
 +  }
 +});
++
++test("B6.3 (I, Doodle 08:26): ALLA skapelser på marken – djur och saker – står med kroppen utanför dammen", () => {
++  // Doodles fall först (bowlingklot, akvarium, spjälsäng, påskägg, vattenpistol, filt, fiol), sedan varje entitet i lag om 10.
++  const ENT = (entJson as { entiteter: Record<string, { modell?: string }> }).entiteter;
++  const doodle = ["bowlingklot", "akvarium", "spjalsang", "paskagg", "vattenpistol", "filt", "fiol", "mikroskop", "trumset", "ko"].filter((k) => k in ENT);
++  const ovriga = Object.keys(ENT).filter((k) => ENT[k]!.modell && !flyger(k, []) && !simmar(k, []) && !doodle.includes(k)).sort();
++  const lag = [doodle];
++  for (let i = 0; i < ovriga.length; i += 10) lag.push(ovriga.slice(i, i + 10));
++  const fel: string[] = [];
++  for (const [n, kroppar] of lag.entries()) {
++    const alla = kroppar.map((k, i) => spar(`a${n}-${i}`, k));
++    for (const d of alla as { uid: string; kropp: string }[]) {
++      const [x, , z] = djurPlats(d as never, alla, ANG);
++      const kropp = Math.hypot(x - DAMM.x, z - DAMM.z) - DAMM.r - (fotKant(d.kropp) - FOT_MARGINAL);
++      if (kropp < 0.1) fel.push(`${d.kropp} ${kropp.toFixed(2)}`);
++    }
++  }
++  assert.ok(ovriga.length > 500, `${ovriga.length} entiteter`);
++  assert.deepEqual(fel, [], `kroppens kant närmare vattnet än 0,1 (vickning inräknad): ${fel.join(", ")}`);
++});
 diff --git a/src/spel/entiteter.ts b/src/spel/entiteter.ts
-index eaadf6c..7c01f00 100644
+index eaadf6c..b31a541 100644
 --- a/src/spel/entiteter.ts
 +++ b/src/spel/entiteter.ts
 @@ -3,6 +3,7 @@
@@ -461,6 +482,23 @@ index eaadf6c..7c01f00 100644
  /** R3G: allt med modell som inte är ett djur (föremål, natur, byggnad, mat, fordon, kläder) står still på ängen. */
  export function arSak(kropp: string): boolean {
    const e = ENTITETER[kropp];
+@@ -115,9 +169,15 @@ export function arSak(kropp: string): boolean {
+ export function skalaFor(kropp: string, h: number, b: number, d: number): number {
+   const mal = malhojd(kropp);
+   const matt = arSak(kropp) ? Math.max(h, 0.6 * Math.max(b, d)) : h;
+-  return mal / Math.max(0.001, matt);
++  const s = mal / Math.max(0.001, matt);
++  // B6.3: ingen skapelse bredare än slottet (2 × MAX_HALVBREDD) – långa modeller (apatosaurus 7,2, golem 5,1, neontetra
++  // 2,9 breda) täckte dammen och fick ingen torr plats. Mäts på halva största bredden, som fotavtryck.json.
++  return Math.min(s, MAX_HALVBREDD / Math.max(0.001, 0.5 * Math.max(b, d)));
+ }
+ 
++/** B6.3: största halva bredden på marken (världsenheter) en skapelse får ritas med; slottet är 1,15. */
++export const MAX_HALVBREDD = 1.2;
++
+ export function artFarg(kropp: string): string {
+   return ENTITETER[kropp]?.art ?? STANDARD_ART;
+ }
 diff --git a/src/spel/kenneyNatur.tsx b/src/spel/kenneyNatur.tsx
 index 3a41291..a2fdfca 100644
 --- a/src/spel/kenneyNatur.tsx
