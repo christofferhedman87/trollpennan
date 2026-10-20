@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import introJson from "../../data/intro.json" with { type: "json" };
 import upplevelseJson from "../../data/upplevelse.json" with { type: "json" };
 import { sagaNu } from "./saga.ts";
+import { rostIntro } from "./rostManifest.ts";
 
 type Scen = { fas: number; text: string; fran: number; ord?: number; ordklar?: boolean };
 
@@ -15,8 +16,11 @@ const INTRO = introJson as {
   scener: Scen[];
 };
 
-const SCENER = INTRO.scener;
-const LANGD = INTRO.langd;
+// TTS-1: Trollpennans förgenererade röst (data/rost-manifest.json) med egna scentider; annars saga.mp3 och tiderna i intro.json
+const ROST_INTRO = rostIntro(INTRO.scener.length);
+const SCENER: Scen[] = ROST_INTRO ? INTRO.scener.map((s, n) => ({ ...s, fran: ROST_INTRO.fran[n]! })) : INTRO.scener;
+const LANGD = ROST_INTRO ? ROST_INTRO.langd : INTRO.langd;
+const INTRO_LJUD = ROST_INTRO ? ROST_INTRO.f : INTRO.ljud;
 const FORSTA_IDEER = [0, 2, 3, 4]
   .map((i) => (upplevelseJson as { examples: string[] }).examples[i])
   .filter((ex): ex is string => Boolean(ex));
@@ -61,7 +65,8 @@ export function Intro({
   }, []);
 
   useEffect(() => {
-    const audio = new Audio(INTRO.ljud);
+    // TTS-1: filen sätts först efter en mikrotask, så att ett intro som stängs direkt (introt redan sett) inte laddar något
+    const audio = new Audio();
     audio.preload = "auto";
     audioRef.current = audio;
     t0.current = performance.now();
@@ -123,22 +128,26 @@ export function Intro({
       setHor(false);
     });
 
-    if (ljudPa) {
-      const lov = audio.play();
-      if (lov) {
-        lov
-          .then(() => {
-            const wall = (performance.now() - t0.current) / 1000;
-            if (wall > 0.4 && Number.isFinite(audio.duration) && wall < audio.duration) {
-              audio.currentTime = wall;
-            }
-            spelar.current = true;
-          })
-          .catch(() => {
-            if (!trasig.current && !audio.error) setHor(true);
-          });
+    queueMicrotask(() => {
+      if (stop) return;
+      audio.src = INTRO_LJUD;
+      if (ljudPa) {
+        const lov = audio.play();
+        if (lov) {
+          lov
+            .then(() => {
+              const wall = (performance.now() - t0.current) / 1000;
+              if (wall > 0.4 && Number.isFinite(audio.duration) && wall < audio.duration) {
+                audio.currentTime = wall;
+              }
+              spelar.current = true;
+            })
+            .catch(() => {
+              if (!trasig.current && !audio.error) setHor(true);
+            });
+        }
       }
-    }
+    });
 
     raf = requestAnimationFrame(tick);
     return () => {
