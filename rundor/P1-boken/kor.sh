@@ -42,7 +42,7 @@ npm run -s build:pages > "$UT/build.txt" 2>&1 || { tail -20 "$UT/build.txt"; ate
 prov() { node "$D/p1-prov.mjs" --dist dist-pages --bilder "$BILD" > "$UT/prov.json" 2>"$UT/prov.err"; }
 prov || prov || { grep '^FEL' "$UT/prov.err"; tail -5 "$UT/prov.err"; aterstall; echo "STOPP 4: Playwright p1-prov föll"; exit 4; }
 # regression: boken (R9G, R9K, R9B-layout), B6.2, B6.4 och B6.3/B6.5 om de är mergade.
-# R9D:s uppdrag-prov är INTE med: det faller redan på main (fras 'mössa' finns inte längre i uppdragsremsan, se RITNING.md).
+# R9D:s uppdrag-prov är INTE med: det faller redan på main utan P1 (väntar förgäves på frasknappen 'mössa', se RITNING.md).
 reg() { [ -f "rundor/$1.mjs" ] || return 0; local n; n=$(basename "$1"); node "rundor/$1.mjs" > "$UT/$n.json" 2>"$UT/$n.err" || node "rundor/$1.mjs" > "$UT/$n.json" 2>"$UT/$n.err" || echo "$1" >> "$UT/regfel.txt"; }
 reg R9G-ux-stall/r9g-prov & reg R9K-fix/r9k-prov & reg B6.2-fix/b62-prov & wait
 reg R9B-layout/r9b-prov & reg B6.4-fix/b64-prov & wait
