@@ -27,7 +27,7 @@ export type Entitet = {
   /** Färg som gäller när barnet inte valt någon. */
   standardfarg?: string;
   /** Materialnamn i GLB → roll: "farg" tar djurets färg, "ljus" en ljusare nyans. Saknas = paletten byter färg. */
-  material?: Record<string, "farg" | "ljus">;
+  material?: Record<string, "farg" | "ljus" | "behall">;
   /** Valfri åsidosättning. Saknas = modellens framsida är +z och djuret står vänt mot kameran. */
   framAxel?: FramAxel;
   /** false = modellen hämtas först när ordet används (R3C). Saknas = hämtas direkt vid start, som de första djuren. */
@@ -279,7 +279,7 @@ export function kontrolleraEntiteter(): string[] {
       fel.push(`${id}: palett måste ha från, range och bodyL som tal`);
     }
     for (const [namn, roll] of Object.entries(e.material ?? {})) {
-      if (roll !== "farg" && roll !== "ljus") fel.push(`${id}: material ${namn} har okänd roll ${String(roll)}`);
+      if (roll !== "farg" && roll !== "ljus" && roll !== "behall") fel.push(`${id}: material ${namn} har okänd roll ${String(roll)}`);
     }
     if (e.vikt !== undefined && !(e.vikt > 0)) fel.push(`${id}: vikt måste vara > 0`);
     if (e.hopp !== undefined && !(e.hopp > 0)) fel.push(`${id}: hopp måste vara > 0`);

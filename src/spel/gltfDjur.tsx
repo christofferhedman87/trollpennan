@@ -3,8 +3,8 @@ import { useFrame } from "@react-three/fiber";
 import { useLayoutEffect, useMemo, useRef } from "react";
 import { SkeletonUtils } from "three-stdlib";
 import * as THREE from "three";
-import { fargning } from "./fargning.ts";
-import { byttPixel, graNiva, hexTillHsl, ljusTint, malAlbedo, rgbTillHsl, traffarPalett } from "./palett.ts";
+import { fargning, kroppsRoller, valjKarna, type Klump, type KroppRoll, type MatInfo } from "./fargning.ts";
+import { byttPixel, graNiva, hexTillHsl, ljusTint, malAlbedo, rgbTillHsl, traffarPalett, type Hsl, type Palett } from "./palett.ts";
 import { MILJO } from "./miljo.ts";
 import { belysScen } from "./belys.ts";
 
@@ -53,7 +53,16 @@ function graTextur(tex: THREE.Texture, bodyL: number): THREE.Texture {
 }
 
 /** R8 färgrundan: bulkmodeller delar en standardpalett (nyans 25), men Kenney-modeller är en gemensam färgatlas där isbjörnen är vit/gräddvit och inte alls brun, så ingen pixel träffas och färgen "tas inte". Därför mäter vi vilken färg just den här kroppen använder (texeln vid nätets UV, vanligaste färgen) och ställer in paletten efter den. */
-function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): { from: number; range: number; bodyL: number } | null {
+const KARN = new Map<string, (Palett & { hsl: Hsl }) | null>();
+function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): (Palett & { hsl: Hsl }) | null {
+  const nyckel = `${mesh.geometry?.uuid}|${tex.uuid}`;
+  if (KARN.has(nyckel)) return KARN.get(nyckel) ?? null;
+  const svar = karnfargMat(mesh, tex);
+  KARN.set(nyckel, svar);
+  return svar;
+}
+
+function karnfargMat(mesh: THREE.Mesh, tex: THREE.Texture): (Palett & { hsl: Hsl }) | null {
   const img = tex.image as CanvasImageSource | undefined;
   const uv = mesh.geometry?.attributes?.uv;
   if (!img || !uv) return null;
@@ -67,11 +76,21 @@ function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): { from: number; range: 
   if (!x) return null;
   x.drawImage(img, 0, 0);
   const d = x.getImageData(0, 0, w, h).data;
-  const rakna = new Map<number, { n: number; r: number; g: number; b: number }>();
-  const steg = Math.max(1, Math.floor(uv.count / 1500));
-  for (let i = 0; i < uv.count; i += steg) {
-    const px = Math.min(w - 1, Math.max(0, Math.floor(uv.getX(i) * w)));
-    const py = Math.min(h - 1, Math.max(0, Math.floor((tex.flipY ? 1 - uv.getY(i) : uv.getY(i)) * h)));
+  const rakna = new Map<number, Klump>();
+  // R8-3a: texeln i varje triangels mitt, viktad med triangelns yta (se valjKarna i fargning.ts)
+  const pos = mesh.geometry.attributes.position;
+  const idx = mesh.geometry.index;
+  const n = idx ? idx.count : uv.count;
+  const steg = Math.max(1, Math.floor(n / 3 / 3000)) * 3;
+  const A = new THREE.Vector3(), B = new THREE.Vector3(), C = new THREE.Vector3();
+  for (let i = 0; i + 2 < n; i += steg) {
+    const i0 = idx ? idx.getX(i) : i, i1 = idx ? idx.getX(i + 1) : i + 1, i2 = idx ? idx.getX(i + 2) : i + 2;
+    const u = (uv.getX(i0) + uv.getX(i1) + uv.getX(i2)) / 3;
+    const v = (uv.getY(i0) + uv.getY(i1) + uv.getY(i2)) / 3;
+    const yta = pos ? B.fromBufferAttribute(pos, i1).sub(A.fromBufferAttribute(pos, i0)).cross(C.fromBufferAttribute(pos, i2).sub(A)).length() : 1;
+    if (!(yta > 0)) continue;
+    const px = Math.min(w - 1, Math.max(0, Math.floor((((u % 1) + 1) % 1) * w)));
+    const py = Math.min(h - 1, Math.max(0, Math.floor((((tex.flipY ? 1 - v : v) % 1 + 1) % 1) * h)));
     const o = (py * w + px) * 4;
     if ((d[o + 3] ?? 0) < 8) continue;
     const r = d[o] ?? 0;
@@ -79,19 +98,17 @@ function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): { from: number; range: 
     const b = d[o + 2] ?? 0;
     const k = (r >> 4) * 256 + (g >> 4) * 16 + (b >> 4);
     const p = rakna.get(k) ?? { n: 0, r: 0, g: 0, b: 0 };
-    p.n++;
-    p.r += r;
-    p.g += g;
-    p.b += b;
+    p.n += yta;
+    p.r += r * yta;
+    p.g += g * yta;
+    p.b += b * yta;
     rakna.set(k, p);
   }
-  let bast: { n: number; r: number; g: number; b: number } | null = null;
-  for (const p of rakna.values()) if (!bast || p.n > bast.n) bast = p;
-  if (!bast) return null;
-  const [kh, ks, kl] = rgbTillHsl(bast.r / bast.n, bast.g / bast.n, bast.b / bast.n);
-  const hsl = { h: kh / 360, s: ks, l: kl };
-  // låg färgmättnad (vit, grå, gräddvit): neutralt läge (range < 0), annars färgens egen nyans
-  return hsl.s < 0.35 ? { from: 0, range: -1, bodyL: hsl.l } : { from: Math.round(hsl.h * 360), range: 22, bodyL: hsl.l };
+  const karna = valjKarna([...rakna.values()]);
+  if (!karna) return null;
+  const hsl = karna.hsl;
+  // neutral kropp (vit, grå, gräddvit): neutralt läge (range < 0), annars kroppens egen nyans
+  return karna.neutral ? { from: 0, range: -1, bodyL: hsl[2], hsl } : { from: Math.round(hsl[0]), range: 22, bodyL: hsl[2], hsl };
 }
 
 function paletteSwap(tex: THREE.Texture, fromHue: number, range: number, toHex: string, bodyL: number) {
@@ -220,43 +237,112 @@ function ingenKulling(rot: THREE.Object3D) {
   });
 }
 
+/** R8-3a: ytan (världsenheter²) per materialindex i ett nät. */
+function ytaPerMaterial(mesh: THREE.Mesh, antal: number): number[] {
+  const ut = new Array<number>(antal).fill(0);
+  const pos = mesh.geometry?.attributes?.position;
+  if (!pos) return ut;
+  const idx = mesh.geometry.index;
+  const n = idx ? idx.count : pos.count;
+  const grupper = mesh.geometry.groups.length > 0 ? mesh.geometry.groups : [{ start: 0, count: n, materialIndex: 0 }];
+  const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3();
+  const steg = Math.max(1, Math.floor(n / 3 / 4000)) * 3;
+  for (const g of grupper) {
+    const mi = Math.min(antal - 1, g.materialIndex ?? 0);
+    for (let i = g.start; i + 2 < Math.min(n, g.start + g.count); i += steg) {
+      const i0 = idx ? idx.getX(i) : i, i1 = idx ? idx.getX(i + 1) : i + 1, i2 = idx ? idx.getX(i + 2) : i + 2;
+      a.fromBufferAttribute(pos, i0).applyMatrix4(mesh.matrixWorld);
+      b.fromBufferAttribute(pos, i1).applyMatrix4(mesh.matrixWorld);
+      c.fromBufferAttribute(pos, i2).applyMatrix4(mesh.matrixWorld);
+      ut[mi] = (ut[mi] ?? 0) + b.sub(a).cross(c.sub(a)).length() * 0.5 * (steg / 3);
+    }
+  }
+  return ut;
+}
+
+type Kalla = { src: THREE.MeshStandardMaterial; yta: number; karn: (Palett & { hsl: Hsl }) | null; mesh: THREE.Mesh };
+
+/** R8-3a: ett färgord färgar HELA kroppen på alla modeller (textur, materialfärger eller båda); ögon, hud och detaljer behålls.
+ *  1) Samla modellens material med yta och kärnfärg. 2) `kroppsRoller()` (fargning.ts) avgör kropp/ljus/detalj – ur datans
+ *  "material"-tabell om den finns, annars generellt. 3) Kroppsmaterial: textur → kroppens texlar byts till färgordets nyans
+ *  (vit/grå kropp: gråskala × färg); materialfärg → färgordets nyans med materialets ljushet relativt kroppens (skuggor och
+ *  ljusare mage bevaras), förkompenserad för scenens ljus. Glansen (guldord) lyser i färgordets egen nyans och bara på kroppen.
+ *  Utan färgord (hex null): ingenting ändras (B6.4). */
 function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
   const hex = fargAv(spec);
   const ent = entitet(spec.kropp);
-  const pal = ent?.palett;
-  const glans = spec.glans;
+  const pal = ent?.palett && !ent.inlagd ? ent.palett : null; // de handjusterade första djuren (katt, hund …) behåller sin palett
+  rot.updateMatrixWorld(true);
+  const kallor = new Map<string, Kalla>();
+  if (hex) {
+    rot.traverse((o) => {
+      const mesh = o as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      const lista = (Array.isArray(mesh.material) ? mesh.material : [mesh.material]) as THREE.MeshStandardMaterial[];
+      const ytor = ytaPerMaterial(mesh, lista.length);
+      lista.forEach((src, i) => {
+        const k = kallor.get(src.uuid) ?? { src, yta: 0, karn: null, mesh };
+        const y = ytor[i] ?? 0;
+        if (src.map && (!k.karn || y > k.yta)) k.karn = karnfarg(mesh, src.map) ?? k.karn;
+        k.yta += y;
+        kallor.set(src.uuid, k);
+      });
+    });
+  }
+  const lista0 = [...kallor.values()];
+  const total = lista0.reduce((s, k) => s + k.yta, 0) || 1;
+  const infos: MatInfo[] = lista0.map((k) => ({
+    namn: k.src.name || "",
+    yta: k.yta / total,
+    hsl: k.src.map ? (k.karn?.hsl ?? [0, 0, 0.5]) : hexTillHsl("#" + k.src.color.getHexString(THREE.SRGBColorSpace)),
+  }));
+  const roller = kroppsRoller(infos, ent?.material);
+  const rollAv = new Map<string, KroppRoll>();
+  lista0.forEach((k, i) => rollAv.set(k.src.uuid, roller[i]?.roll ?? "detalj"));
+  const huvud = infos[roller[0]?.huvud ?? -1];
+  const kroppL = huvud ? (lista0[roller[0]!.huvud]?.karn?.bodyL ?? huvud.hsl[2]) : 0.5;
+  const klonade = new Map<string, THREE.MeshStandardMaterial>();
   rot.traverse((o) => {
     const mesh = o as THREE.Mesh;
     if (!mesh.isMesh) return;
     const lista = (Array.isArray(mesh.material) ? mesh.material : [mesh.material]) as THREE.MeshStandardMaterial[];
     const nya = lista.map((src) => {
+      const finns = klonade.get(src.uuid);
+      if (finns) return finns;
       const m = src.clone();
       m.metalness = 0;
       m.roughness = Math.max(m.roughness ?? 1, 0.75);
       const namn = m.name || "";
-      const roll = ent?.material ? ent.material[namn] : undefined;
-      // B6.4: utan färgord (hex null) blir allt false/null – modellens egna färger, ingen glans över kroppen (se fargning.ts).
-      const f = fargning({ hex, roll, harRoller: !!ent?.material, harPalett: !!pal, harKarta: !!m.map, glans: !!glans, ljusare });
-      if (f.farg) m.color.set(f.farg);
-      if (f.palettByte && pal && hex && m.map) {
-        const egen = ent?.inlagd ? karnfarg(mesh, m.map) : null;
+      const roll = hex ? rollAv.get(src.uuid) : undefined;
+      // B6.4: utan färgord (hex null) blir allt false/null – modellens egna färger, ingen glans (se fargning.ts).
+      const f = fargning({ hex, roll, harKarta: !!m.map, glans: !!spec.glans, ljusare });
+      const mal = hex ? (roll === "ljus" ? ljusare(hex) : hex) : null;
+      if (f.farg && mal) {
+        // materialfärg: målets nyans, materialets ljushet relativt kroppens, förkompenserad för ljuset
+        const [r, g, b] = byttPixel(hexTillHsl("#" + src.color.getHexString(THREE.SRGBColorSpace)), { from: 0, range: 22, bodyL: kroppL }, hexTillHsl(mal), LJUSTINT);
+        m.color.setRGB(r / 255, g / 255, b / 255, THREE.SRGBColorSpace);
+      }
+      if (f.palettByte && mal && m.map) {
+        const egen = pal ? null : (kallor.get(src.uuid)?.karn ?? null);
         if (egen && egen.range < 0) {
-          // R9: vit/grå kropp (isbjörn, elefant, lamm): texturen blir gråskala och färgen läggs i materialet. Då blandas inga kvarvarande
-          // gräddvita texlar in (det gjorde röd till orange och grön till gulgrön), och ljusets förstärkning är förkompenserad.
+          // R9: vit/grå kropp (isbjörn, elefant, narval): texturen blir gråskala och färgen läggs i materialet.
           m.map = graTextur(m.map, egen.bodyL);
-          const [r, g, b] = malAlbedo(hex, LJUSTINT);
+          const [r, g, b] = malAlbedo(mal, LJUSTINT);
           m.color.setRGB(r, g, b);
-        } else {
-          m.map = egen ? paletteSwap(m.map, egen.from, egen.range, hex, egen.bodyL) : paletteSwap(m.map, pal.from, pal.range, hex, pal.bodyL);
+        } else if (egen || pal) {
+          const p = egen ?? pal!;
+          m.map = paletteSwap(m.map, p.from, p.range, mal, p.bodyL);
           m.color.set("#ffffff");
         }
       }
-      if (f.glans && "emissive" in m) {
-        m.emissive = new THREE.Color("#FFE082");
-        m.emissiveIntensity = 0.28;
+      if (f.glans && mal && "emissive" in m) {
+        // R8-3a: glansen i färgordets egen nyans (det gula självlyset gjorde röd till orange och den blå jultomtens mössa orange)
+        m.emissive = new THREE.Color(ljusare(mal));
+        m.emissiveIntensity = 0.16;
       }
-      // B6.4: provräknare (bara när ett prov har lagt dit listan): materialets färg före och efter.
-      if (typeof window !== "undefined") window.__tredFarg?.push({ kropp: spec.kropp, mat: namn, fore: "#" + src.color.getHexString(), efter: "#" + m.color.getHexString(), sjalvlyse: "#" + m.emissive.getHexString(), egenKarta: m.map === src.map });
+      // B6.4/R8-3a: provräknare (bara när ett prov har lagt dit listan): materialets färg före och efter, roll.
+      if (typeof window !== "undefined") window.__tredFarg?.push({ kropp: spec.kropp, mat: namn, fore: "#" + src.color.getHexString(), efter: "#" + m.color.getHexString(), sjalvlyse: "#" + m.emissive.getHexString(), egenKarta: m.map === src.map, roll });
+      klonade.set(src.uuid, m);
       return m;
     });
     mesh.material = Array.isArray(mesh.material) ? nya : (nya[0] ?? mesh.material);
