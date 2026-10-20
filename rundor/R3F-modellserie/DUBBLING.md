@@ -6,16 +6,18 @@
 - Efter **M10 (B5a, 9)** och **M11 (37)**: 623. **Mål ≈ 1 150** → ca **530 till**, alltså **M12–M25, 14 paket à 35–40**.
 - Storlek: bulk 21,4 MB. `budget.total_cc0_kb_mobil` (25 000 KB) kontrolleras inte av något skript och modellerna hämtas först när ordet används (förladdat 0 KB, ingen precache av GLB). Dubblingen ger ca 43 MB. **Förslag:** höj siffran till 50 000 i M12 (en rad i `data/inlagg.json`) och håll snittet ≤ 45 KB per modell (texturer 512 → 256 där det går).
 
-## Räkning mot målet (uppdaterad 2026-10-20, efter M14-underlaget)
+## Räkning mot målet (uppdaterad 2026-10-20, efter M16-underlaget)
 Målet är dubbelt så många som vid starten i kväll: 2 × 577 = **1 154 tillgångar**.
 
 | Läge | Tillgångar | Kvar till 1 154 |
 |---|---|---|
 | Start i kväll (main b679a3d) | 577 | 577 |
-| På main nu (M10 och M11 körda av Doodle, d0ab870) | 623 | 531 |
-| När Doodle har kört M12 (19), M13 (21) och M14 (18) | **681** | **473** |
+| På main nu (M10–M13 körda av Doodle, 91d774d) | 663 | 491 |
+| När Doodle har kört M14 (18) | 681 | 473 |
+| När Doodle har kört M15 (48) och M16 (39) | **768** | **386** |
 
-Underlag klara: M10–M14 = 104 modeller (18 % av vägen). Snittet har sjunkit från 37 till ca 20 per paket, eftersom inkorgen och Poly Pizzas sökning är tomma på många barnord. Resten kräver egna modeller (som boll, trumma och ballong i M14) eller nya CC0-källor.
+Underlag klara: M10–M16 = 191 modeller. Från M15 hämtas hela Kenney-kit direkt från kenney.nl (arkiv och License.txt ligger i varje inkorgsmapp, `_nedladdning/arkiv/`); det gav större paket (48 och 39).
+Quaternius (quaternius.com) laddar sina paket via JavaScript och Google Drive och gick inte att hämta med skript; de Quaternius-paket som redan ligger i inkorgen används.
 
 ## Vad inkorgen räcker till
 `/workspace/modell-inkorg` har 1 443 manifestrader, varav 899 oanvända (783 CC0). Men bara **164 ger ett nytt ord** (resten är varianter av ord som redan finns). Bland dem finns få barnord: mest katapulter, gravstenar och block. **Dubblingen kräver därför ny spaning** (Modellspanaren, 0 USD) före M12. Bästa källorna: Quaternius Ultimate Animated Character Pack och Ultimate Food Pack, KayKit Adventurers, Kenney Mini Characters, Watercraft och Retro Urban, Gobkit, samt egna lågpolymodeller med skriptet i `M10/bygg-inkorg.mjs` när ingen CC0 finns.
@@ -31,8 +33,8 @@ Orden från M14 och framåt utöver kategori-ord är förslag. Kontrollera dem m
 | **M12 ✔** | människor och familj (19, CC0) | mamma, pappa, lärare, pojke, kung, cowboy, byggarbetare/arbetare, pirat, polis, farfar/morfar, chef, bror, kille, syster, kompis, sjörövare, scout, farbror, moster. **Kvar till M12b:** flicka, tjej, äventyrare, tjuv, soldat, prins (deras Quaternius-modeller ligger över 6 000 trianglar och går inte att förenkla med `M12/forenkla.mjs`), drottning, prinsessa, bebis, doktor, kock, brandman, clown, älva, mormor, farmor | Quaternius och Polygonal Mind via Poly Pizza (CC0, `polypizza-cc0-3`), Kenney Blocky Characters |
 | **M13 ✔** | mat och fika (21, CC0) | pommes, lök, kniv, kaffe, te, ketchup, senap, bacon, salt, peppar, flingor, grillspett, limpa, grädde, milkshake, selleri, jordnötssmör, ris, spatel, nudlar, kött. **Kvar till M13b** (ingen CC0-modell i inkorgen): bulle, kanelbulle, popcorn, glasspinne, saft, juice, korvbröd, pasta, spagetti, sylt, smör, gurka, lakrits | Kenney Food Kit (`kenney-food-kit` + `kenney-food-kit-2`: fullständiga nedladdningen med texturen inbäddad, `M13/food2.mjs`) |
 | **M14 ✔** | saker och leksaker (18, CC0) | boll/badboll, ballong, trumma (egna modeller), gitarr, badanka, batteri, brev, kuvert, hörlurar, mikrofon, paket, tvål, telefon/mobil, väckarklocka, väska, vattenkanna, kundvagn, korg. **Kvar till M14b** (ingen CC0-modell hittad eller över taket): cykel, docka, dator, kamera, fiol, piano, sko, strumpa, byxor, kam, ring, filt, flygplan, nalle, pussel, tärning, kortlek, jojo, kritor, ficklampa, pengar, kikare, tandborste, flöjt, skridskor, skidor | Poly Pizza CC0 (`polypizza-cc0-4`, Quaternius, CreativeTrio, Isa Lousberg, MiniPoly, reyshapes, iPoly3D), Kenney Mini Market (`kenney-mini-market-2`, texturen inbäddad), egna (`trollpennan-egna-m14`, `M14/egna-m14.mjs`) |
-| M15 | byggnader | skola, sjukhus, slott, borg, butik, cirkus, fabrik, garage, hotell, museum, bibliotek, biograf, ladugård, fyr | Kenney City/Fantasy Town, Quaternius Medieval Village (36 oanvända byggnader i inkorgen) |
-| M16 | natur, väder, växter | sol, måne, regn, snö, blixt, vulkan, ö, is, ros, tulpan, solros, maskros, lönn, löv, bär | Kenney Nature, Quaternius Stylized Nature (119 oanvända växter), egna |
+| **M15 ✔** | stad, båtar, fabrik, arkad, skyltar (48, CC0) | grävmaskin, fiskebåt, motorbåt, racerbåt, bogserbåt, husbåt, lastfartyg, boj, ufo, parabol, krater, skyskrapa, kontor, hotell, affär, fabrik, skorsten, solpanel, kiosk, bajamaja, parasoll, rullstol, krycka, käpp, sparkcykel, ramp, flipperspel, arkadspel, automat, kassaapparat, lyckohjul, airhockey, golfboll, golfklubba, robotarm, spak, lyftkran, magnet, stoppskylt, varningsskylt, elstolpe, trafikkon, byggställning, fana, tjej/flicka, skejtare, soldat, expedit | Kenney Watercraft, City Commercial/Industrial/Roads, Coaster, Mini Characters/Skate/Arcade/Arena, Minigolf, Factory, Retro Urban, Tower Defense, Car, Space (hela kit, texturen inbäddad) |
+| **M16 ✔** | kit + egna natur/rymd/väder (39, CC0) | slott, tivoli, katapult, propellerbåt, gatuskylt, vindkraftverk, cistern, dörr, fönster, halfpipe, dansmaskin, gamer, hangar, generator, suv, gravsten, kors, krypta, fjäder, julgran, pelare, mur, dator, tratt, hjärtstartare; egna: sol, måne, blixt, vulkan, istapp, ö, sandslott, diamant, pyramid, planet, komet, regndroppe, tornado, kub/kloss | Kenney (hela kit) + `trollpennan-egna-m16` (`M16/egna-m16.mjs`) |
 | M17 | fordon och båtar | brandbil, polisbil, ambulans, sopbil, grävmaskin, traktor-varianter, segelbåt, kanot, ubåt, helikopter | Kenney Car/Watercraft/Train (43 oanvända fordon i inkorgen) |
 | M18 | djur 3: däggdjur och fåglar | B5b-bytena (gris, kulting, ekorre, bäver, haj, dinosaurie: kodritade idag) + lodjur, järv, mink, hermelin, trana, stork, kråka, skata, nyckelpiga (egen modell, Poly Pizzas har 8 662 trianglar) | Gobkit, Quaternius, egna |
 | M19 | sagoväsen | enhörning-varianter, troll, tomte, älva, sjöjungfru, vampyr, häxa (72 oanvända i inkorgen) | Quaternius Monsters, KayKit |
@@ -55,5 +57,7 @@ Varje paket körs som M10 och M11: `bash rundor/R3F-modellserie/kor.sh M<n>` →
 - Föremål har taket **1 500 trianglar** (djur och människor 6 000). `M12/forenkla.mjs <in> <ut> 1400` klarar många (gitarr 2 325 → 1 393).
 - Liggande modeller ställs upp med `M14/upprest.mjs` (rotation runt x). Kenney-GLB ur fullständiga nedladdningar har texturen i en separat fil; bädda in med `M14/kenney-inbadda.mjs`.
 - Poly Pizza söks med `M14/pp-sok.py` (bara CC0-träffar). Licensen läses på varje modellsida innan filen tas in.
+- Filnamn med versaler eller understreck (Kenney Space Kit: `hangar_roundA`) ger FEL i lagg; byt till `hangar-rounda.glb` i inkorgen.
+- Föremålstaket är fortfarande 1 500 trianglar (fordon och hus 4 000, djur och människor 6 000) i `data/inlagg.json`. Inget i M15–M16 gick över; höjs bara om ett paket kräver det.
 - Kenney Blocky Characters använder `KHR_materials_unlit`; spelets material ger då sidfel (`reading 'value'`) i spelprovet. M12 tar härledda `character-*-belyst.glb` utan tillägget. Rättas i koden i en egen kodrunda.
 - CC-BY (Poly by Google m.fl.) först efter R3E (kreditvisning för alla CC-BY i föräldradialogen).
