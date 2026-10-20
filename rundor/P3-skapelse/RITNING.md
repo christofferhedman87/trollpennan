@@ -88,8 +88,7 @@ fasta saker, underlag per roll, i bild, den nya får alltid en ruta och lika lag
 lediga rutan, roll ur data, stallet via minne.ts (aldrig den nya, ingen står kvar utan ruta) och slottet mot sjukhuset.
 `p3.test.ts` har minsta storlek, saken bredvid djuret och småsaker.
 
-Regression i kor.sh: b63, b65, p1, p2, p2-2, r9k, b64, b61 och r8-2. **b66 körs inte längre**: det lägger tio modeller åt
-gången på ängen och kräver att alla står i bild, vilket regeln inte tillåter (3–6 ryms, resten somnar). Filen är orörd.
+Regression i kor.sh: b63, b65, p1, p2, p2-2, r9k, b64, b61, r8-2 och **b66 (omskrivet, se Arkitektens beslut 18:59)**.
 
 ## Ändrade mergade test och prov (gamla placeringsfixar som P3a ersätter)
 - `b6-3.test.ts`: "(J) stora saker sprids …" (bakPlatser) och "(D) siktzonen" (siktFri) är borttagna. Dammen är en fast
@@ -101,17 +100,19 @@ gången på ängen och kräver att alla står i bild, vilket regeln inte tillåt
   och vattenkraven provas i p3a.
 - `platser.test.ts` (B1.3a): "samma tak på 10" blir "högst 10 och minst 5". Den som inte får en ledig ruta somnar,
   så 14 likadana djur i skogen ger 9 vakna, inte 10.
-- Inga mergade prov ändras (b66-prov körs inte, se ovan). `tolk.test.ts` och `b66-prov.mjs` rörs inte i P3a.
+- `b6-3.test.ts` test 24 (saken på torr mark): fotkanten räknas i den ritade storleken (`djurKrymp`), eftersom äldre
+  ritas mindre.
+- `b66-prov.mjs` är omskrivet (Arkitekten 18:59), se nedan. `tolk.test.ts` rörs inte i P3a.
 
 ## Följande rörs inte
 Spel.tsx (växer inte), styles.css, sparnyckeln och granskad-data. bengtsson.json är orörd. entiteter.json har inget
 granskad-fält, och där läggs bara `vattenfagel` till på anka och gås. Inga röstfiler.
 
 ## Smakval för Christoffer
-1. **Kapacitet:** på ängen och vid sjön ryms 1–4 åt gången, resten somnar (kan väckas). Ska det bli fler måste markbandet
-   eller kameran ändras; att höja max_skymd hjälper knappt där. Alternativt `platser.ang.skala` < 1 (mindre djur).
-2. **Den äldsta somnar** när zonen är full, i stället för att krympa alla (den gamla trängselskalan är borttagen).
-3. **Ankan simmar** vid sjön men flyger på ängen (dammen är för liten för den).
+1. **Kapacitet:** 5–8 av 8 ryms vakna på ängen och vid sjön (tabellen under 18:59), med bara jättar 3–4. Resten somnar
+   och kan väckas. Fler jättar kräver att kameran ändras eller `platser.ang.skala` < 1.
+2. **Perspektiv:** äldre ritas ned till 50 % i steg innan de somnar, och den äldsta somnar först.
+3. **Ankan simmar** vid sjön och i ängens damm (Doodle 18:46). Valfisken får inte plats i dammen.
 4. **Minsta storlek** 44 px.
 5. **Titelbilden** visar bara djurets kropp med smal kant (ingen omgivning).
 6. **En för stor ny skapelse** (elefant, slott, valfisk på en full plats) ritas mindre, högst ned till 60 %
@@ -134,7 +135,7 @@ granskad-fält, och där läggs bara `vattenfagel` till på anka och gås. Inga 
 - Titelbilden klipps först när kroppen stått still två mätningar i rad (djuret växer fram och hoppar när ängen startar;
   utsnittet var 52×73 px när kaninen var 83×111).
 
-## Arkitektens kapacitetsbeslut 18:41 – STATUS: kravet nås inte (stoppat, se rapporten)
+## Arkitektens kapacitetsbeslut 18:41 (ersatt av 18:59 nedan)
 
 Krav: minst 6 vakna av 8 på ängen och sjön i värsta fall med blandade storlekar, minst 5 med 8 katter. Kameran är fast.
 Gjort i data och regel:
@@ -161,3 +162,41 @@ Vakna av 8 (räknat i regeln, `/tmp/p3kap.ts`):
 (blandad = elefant, hund, katt, häst, kanin, giraff, gris, ko; stora = bara jättar: elefant, giraff, slott, valfisk,
 dinosaurie, häst, ko, elefant.)
 
+
+## Arkitektens beslut 18:59 – genomfört
+
+1. **Perspektiv:** äldre ritas mindre i steg om 0,1 (`krymp_steg`) ned till 50 % (`krymp_aldre_min`), efter ålder och
+   trängsel: en äldre ritas aldrig större än en nyare (taket följer åldern). Huvudet skyms 0 %. Den nyaste står främst i
+   full storlek. Bengtssons ruta är orörd. Underlaget (torr mark, vatten) räknas i den ritade storleken.
+2. **Golv för saker (b66: ingen är osynlig):** en sak står bara där regelns ruta är minst 44 × 8 px och 900 px²
+   (`synlig_golv`). Modellen ritas mindre än rutan, så det ger B6.6:s 24 px / 4 px / 200 px² på den ritade modellen. En sak
+   som är för liten längst bak får en ruta längre fram, en större storlek eller stallet. En sak skyms mätt på rutans
+   **nedre halva**, för en platt sak (hage, bok, sked) ligger där.
+3. **Kapacitet**, vakna av 8, räknat i regeln (`/tmp/p3kap.ts`); provet P mäter det ritade:
+
+| plats | fro11 | fro2026 | fro4242 | blandad | bara jättar | 8 katter |
+|---|---|---|---|---|---|---|
+| ängen | 5 | 8 | 7 | 7 | **3** | 8 |
+| sjön | 5 | 8 | 8 | 7 | **4** | 8 |
+| skogen | 8 | 7 | 8 | 8 | 6 | 8 |
+| grottan | 8 | 7 | 8 | 8 | 5 | 8 |
+
+   Kravet (≥ 6, och ≥ 5 för fro11 och bara jättar, 8/8 katter) nås utom **bara jättar på ängen (3) och sjön (4)**.
+   Den nya jättens ruta (ca 220 × 170 px) täcker huvudena bakom. Spökhuset, grinden och dammen tar bakre raden, och
+   valfisken får inte plats i ängens damm. En slumpsökning över ordningar och lägen gav som mest 4.
+   **Undantag:** bara i jättefallet står en äldre framför den nyaste (ängen: dinosaurien och kon framför elefanten på
+   z 1,05; sjön: dinosaurien), för den nya jätten ryms inte längre fram.
+4. **Prestanda** (orsak: fyra nivåer × alla storlekar × ~2 000 rutor räknades om från början, torrKropp per ruta,
+   skärmrutor som allokerade objekt, minnesnycklar som strängar). Rutorna per rad räknas en gång, underlaget och
+   torrkroppen cachas per (plats, kropp, skala, roll, band), och skärmrutan räknas utan allokering (lika med den gamla
+   inom 1e−13). Den täta nivån prövas först. En ny skapelse med 30: förut 1 000–1 470 ms, nu median 13–27 ms CPU
+   (ängen 18, sjön 13, skogen 27, grottan 17). Det provas i `p3a.test.ts` ("prestanda … under 50 ms"). B6.3 tar
+   1,9 s (main 10,8 s, grenen förut 24,5 s).
+5. **b66-prov omskrivet:** tio åt gången på ängen. Ingen modell är osynlig: varje modell har en synlig mesh och minst
+   24 px / 4 px / 200 px², vaken eller i stallet. De vakna (`window.__tredPos.stall` = false; djur.tsx sätter flaggan,
+   Spel.tsx rörs inte) syns till minst 80 % (de tre nyaste) eller 65 % (äldre), med 0,1 mätmarginal som P3: ≥ 70 %
+   resp. ≥ 55 % av den ritade rutan. Med räknas de framför, de reserverade rutorna och det som är utanför bilden. Resten
+   står i stallet. BYGG: vakna byggnader står i det bakre bandet, ingen står i grindens världsruta (halva bredden ×
+   krympningen), och cirkustältet skymmer inte växthuset om båda är vakna. Slottet mot sjukhuset provas i p3-prov F.
+6. **Ankfallet (p3-prov K, Doodle 18:46):** ankan, ankan och en fisk, och en fisk på ängen. Simmaren simmar i dammen
+   (sim, inte flyg, y ≤ 0,45, inom dammens radie) och svävar aldrig.
