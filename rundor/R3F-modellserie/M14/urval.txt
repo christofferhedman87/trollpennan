@@ -1,0 +1,19 @@
+# R3F-M14 (dubblingen, paket 4: saker och leksaker): 18 modeller, alla CC0. Format: paket/filnamn.
+polypizza-cc0-4/badanka-oh3ded.glb
+polypizza-cc0-4/batteri-mya3uw.glb
+polypizza-cc0-4/brev-bjs8vv.glb
+polypizza-cc0-4/gitarr-5fp8gp-upprest-forenklad.glb
+polypizza-cc0-4/horlurar-psswsi.glb
+polypizza-cc0-4/kuvert-m9mvmr.glb
+polypizza-cc0-4/mikrofon-yqbacx.glb
+polypizza-cc0-4/paket-hvj3hx.glb
+polypizza-cc0-4/taval-d4b5bt.glb
+polypizza-cc0-4/telefon-k2kgbe.glb
+polypizza-cc0-4/vackarklocka-y5f363.glb
+polypizza-cc0-4/vaska-wq1jpp.glb
+polypizza-cc0-4/vattenkanna-v8j1tc.glb
+trollpennan-egna-m14/boll-egen.glb
+trollpennan-egna-m14/trumma-egen.glb
+trollpennan-egna-m14/ballong-egen.glb
+kenney-mini-market-2/shopping-cart.glb
+kenney-mini-market-2/shopping-basket.glb
