@@ -1,0 +1,367 @@
+diff --git a/PROJECT.md b/PROJECT.md
+index fc9c8cb76df6b6b166dcb2a204f2938563ed52e0..97f5e54fb36cb0f4e2fc799be43534013088d1a2 100644
+--- a/PROJECT.md
++++ b/PROJECT.md
+@@ -729,3 +729,4 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
+ | 24 | ~~Ett djur som hämtats ut ur stallet på en plats gick inte att trycka på~~ (skinnad modell fick träffsfär 0 vid första träffprovet under inpoppningen) | **B6.1** klar |
+ | 25 | ~~Stora saker (skyskrapa, ufo, grävmaskin, slott) täckte ängen; en flicka försvann bakom skyskrapan~~ → `data/storlek.json`: klass per kategori ger tak för höjden och zon "bak" (längst bak, bakom alla djur) | **B6.1** klar |
+ | 26 | ~~"en regnbåge" gav ingenting och boken stod kvar~~ → känt ord utan modell ger banderoll ("kan inte rita ensamt än") och boken stängs; test går igenom alla kända ord. Kvar: "ljus" tolkas som färgord, inte som sak | **B6.1** klar |
++| 27 | ~~r9b-/r9-prov inaktuella · "ljus" blev färgord · räven på sjön i vattenbrynet · `milstolpe.final`/`las_upp`/`final_fore` lästes inte~~ → proven följer nuvarande beteende, "ljus" är en sak (utom "en ljus katt"), 1,0 till vattnet, fälten kopplade in | **B6.2** klar |
+diff --git a/package.json b/package.json
+index 1ff2ca6733a6de8d428f63e413f88ef9e39dd7ea..8e56bb5255825b78b235b4123e8b4b1e8cb39641 100644
+--- a/package.json
++++ b/package.json
+@@ -22,7 +22,7 @@
+     "format": "prettier --write .",
+     "build:pages": "vite build --config vite.pages.config.ts",
+     "preview:pages": "vite preview --config vite.pages.config.ts",
+-    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/r9j.test.ts src/spel/r9k.test.ts src/spel/b4-1.test.ts src/spel/dialogIsolering.test.mjs src/spel/b6-1.test.ts",
++    "test:product": "node --experimental-strip-types --test src/tolk/tolk.test.ts src/tolk/bygg.test.ts src/tolk/gavo.test.ts src/spel/onska.test.ts src/spel/lagring.test.ts src/spel/ideer.test.ts src/spel/texturKo.test.ts src/spel/tillbehor/data.test.ts src/spel/entiteter.test.ts src/spel/uppdrag.test.ts src/spel/miljo.test.ts src/spel/palett.test.ts src/spel/r9.test.ts src/spel/uppdragsmotor.test.ts src/spel/platser.test.ts src/spel/resa.test.ts src/spel/r9d.test.ts src/spel/r9f.test.ts src/spel/r9g.test.ts src/spel/r9h.test.ts src/spel/r9i.test.ts src/spel/r8-2.test.ts src/spel/r8-2b.test.ts src/spel/r9j.test.ts src/spel/r9k.test.ts src/spel/b4-1.test.ts src/spel/dialogIsolering.test.mjs src/spel/b6-1.test.ts src/spel/b6-2.test.ts",
+     "typecheck:pages": "tsc --noEmit -p tsconfig.pages.json",
+     "check:pages-output": "node scripts/check-pages-output.mjs",
+     "check:struktur": "node scripts/check-spel-struktur.mjs",
+diff --git a/rundor/R9-tydlighet/r9-prov.mjs b/rundor/R9-tydlighet/r9-prov.mjs
+index 689655bd587cbffed3ec049b2424f0724486d03a..cee7e24eaae9695449b39fc9cebe2f725acf5a22 100644
+--- a/rundor/R9-tydlighet/r9-prov.mjs
++++ b/rundor/R9-tydlighet/r9-prov.mjs
+@@ -1,4 +1,5 @@
+ // R9: bevis (375x812) för Bengtssons takt och ikon, stjärnförklaringen, förklaringen och ledtrådsytan i Skapa/Väck.
++// B6.2: uppdaterad till nuvarande beteende (gåtan bara utan uppdrag, idéraden fyller inte i svaret).
+ // Kontrollerar: ingen figur först men en ikon; stjärnräknaren öppnar en ärlig förklaring; efter 3 djur bjuder Bengtsson in; ett klart uppdrag ger paus (ikonen kvar); ikonen ger uppdrag direkt; gåta + streck + förklaring syns i boken.
+ // Användning: node rundor/R9-tydlighet/r9-prov.mjs --ut docs/skarmbilder/r9 [--dist dist-pages]  (kräver npm run build:pages). exit 0 = allt stämde.
+ import fs from "node:fs";
+@@ -54,6 +55,25 @@ await t("ordbok-sida").first().waitFor({ timeout: 5000 }).catch(() => {});
+ m.stjarnor.ordbok_oppnas = (await p.getByTestId("ordbok").count()) > 0 || (await t("ordbok-sida").count()) > 0;
+ await p.keyboard.press("Escape");
+ if ((await t("stjarn-info").count()) > 0) await p.locator("[data-dialog-close]").first().click().catch(() => {});
++// 3. (B6.2) boken utan uppdrag har förklaring + ledtråd (under uppdrag visas ingen gåta, R9I)
++await t("pennans-bok").click();
++await t("ledtrad-gata").waitFor();
++m.forklaring = (await t("hemligt-forklaring").innerText()).trim();
++m.gata1 = (await t("ledtrad-gata").innerText()).trim();
++m.streck = (await t("ledtrad-streck").innerText()).trim();
++m.streck_ok = /^[A-ZÅÄÖ]( _)+$/.test(m.streck) || /^[A-ZÅÄÖ]$/.test(m.streck);
++await skott("3-bok-gata");
++await t("ledtrad-ny").click();
++m.gata2 = (await t("ledtrad-gata").innerText()).trim();
++m.ny_gata_byter = m.gata2 !== m.gata1;
++// B6.2: Pennans bok öppnar med ordkorten; pennan växlar till tangentbordet
++m.etikett = (await t("forslag-etikett").innerText()).trim();
++await skott("3b-ordkort");
++await t("pennan").click();
++// förklaringen får inte skymma tangentbordet eller Vakna
++m.vakna_synlig = !!(await t("vakna").boundingBox());
++m.tangentbord_synligt = (await t("tangentbord").boundingBox())?.y < 812;
++await t("stang-bok").click();
+ // 4. efter tre djur bjuder Bengtsson in med figur och utropstecken
+ for (const d of ["en rosa kanin", "en blå katt", "en grön groda"]) { await p.evaluate((x) => window.__troll.vakna(x), d); await p.waitForTimeout(700); }
+ await p.waitForTimeout(800);
+@@ -62,8 +82,10 @@ await skott("4-inbjudan");
+ // 5. klara ett uppdrag: figuren går, ikonen är kvar (paus), ikonen ger nästa direkt
+ await figur.first().click();
+ await t("uppdrag-remsa").waitFor();
+-await t("uppdrag-val-fras").first().click();
+-await t("vakna").click();
++// B6.2: idéraden ger inte längre hela svaret (R9K, "en kanin med …"), så barnet skriver klart själv
++const forsta = (await t("uppdrag-remsa").innerText()).trim();
++m.forsta_uppdrag = forsta;
++await p.evaluate(() => window.__troll.vakna("en kanin med mössa"));
+ await p.waitForTimeout(800);
+ if ((await t("stang-bok").count()) > 0) await t("stang-bok").click();
+ await p.waitForTimeout(10500);
+@@ -72,26 +94,9 @@ await skott("5-paus-ikon");
+ await ikon.click();
+ await t("uppdrag-remsa").waitFor();
+ m.andra_direkt = (await t("uppdrag-remsa").innerText()).trim();
++m.ingen_gata_under_uppdrag = (await t("ledtrad").count()) === 0;
+ 
+-// 3. ikonen ger uppdrag direkt, och boken har förklaring + ledtråd
+-m.direkt_uppdrag = m.andra_direkt;
+-m.forklaring = (await t("hemligt-forklaring").innerText()).trim();
+-m.gata1 = (await t("ledtrad-gata").innerText()).trim();
+-m.streck = (await t("ledtrad-streck").innerText()).trim();
+-m.streck_ok = /^[A-ZÅÄÖ]( _)+$/.test(m.streck) || /^[A-ZÅÄÖ]$/.test(m.streck);
+-await skott("3-bok-gata");
+-await t("ledtrad-ny").click();
+-m.gata2 = (await t("ledtrad-gata").innerText()).trim();
+-m.ny_gata_byter = m.gata2 !== m.gata1;
+-// förklaringen får inte skymma tangentbordet eller Vakna
+-m.vakna_synlig = !!(await t("vakna").boundingBox());
+-m.tangentbord_synligt = (await t("tangentbord").boundingBox())?.y < 812;
+-await t("pennan").click();
+-m.etikett = (await t("forslag-etikett").innerText()).trim();
+-await skott("3b-ordkort");
+-await t("pennan").click();
+-await t("stang-bok").click();
+-m.ok = m.start.figur === 0 && m.start.ikon === 1 && m.start.ikon_hojd >= 44 && /Ordbok/.test(m.stjarnor.text) && m.stjarnor.ordbok_oppnas && m.streck_ok && m.ny_gata_byter && m.etikett.length > 5 && m.vakna_synlig && m.tangentbord_synligt && m.efter_3_djur.figur === 1 && m.efter_3_djur.utrop === 1 && m.efter_klart.figur === 0 && m.efter_klart.ikon === 1 && m.andra_direkt.length > 10 && fel.length === 0;
++m.ok = m.start.figur === 0 && m.start.ikon === 1 && m.start.ikon_hojd >= 44 && /Ordbok/.test(m.stjarnor.text) && m.stjarnor.ordbok_oppnas && m.streck_ok && m.ny_gata_byter && m.etikett.length > 5 && m.vakna_synlig && m.tangentbord_synligt && m.efter_3_djur.figur === 1 && m.efter_3_djur.utrop === 1 && m.efter_klart.figur === 0 && m.efter_klart.ikon === 1 && m.andra_direkt.length > 10 && m.andra_direkt !== m.forsta_uppdrag && m.ingen_gata_under_uppdrag && fel.length === 0;
+ console.log(JSON.stringify(m, null, 1));
+ await browser.close();
+ server.close();
+diff --git a/rundor/R9B-layout/r9b-prov.mjs b/rundor/R9B-layout/r9b-prov.mjs
+index 338767ee746d4fd4b1bd43e7439d65ae27602a51..5a9c9ceb058f86b0a1f7a910b0e2e568147d2e16 100644
+--- a/rundor/R9B-layout/r9b-prov.mjs
++++ b/rundor/R9B-layout/r9b-prov.mjs
+@@ -55,7 +55,7 @@ for (const [w, h] of [[375, 812], [1280, 800]]) {
+       const f = r.firstElementChild.getBoundingClientRect(), b = r.getBoundingClientRect();
+       return { scrollLeft: r.scrollLeft, forsta_x: Math.round(f.left), rad_x: Math.round(b.left) };
+     });
+-    m[`uppdrag${nr}`] = { prova_nederkant: Math.round(prova.y + prova.height), remsa_topp: Math.round(remsa.y), prova_syns: prova.y >= 0 && prova.y + prova.height <= remsa.y + 1, rad, etikett_hel: !!rad && rad.scrollLeft === 0 && rad.forsta_x >= rad.rad_x, ledtrad_kompakt: (await p.locator(".ledtrad.kompakt").count()) === 1 };
++    m[`uppdrag${nr}`] = { prova_nederkant: Math.round(prova.y + prova.height), remsa_topp: Math.round(remsa.y), prova_syns: prova.y >= 0 && prova.y + prova.height <= remsa.y + 1, rad, etikett_hel: !!rad && rad.scrollLeft === 0 && rad.forsta_x >= rad.rad_x, ingen_gata_under_uppdrag: (await p.locator("[data-testid=ledtrad]").count()) === 0 }; // B6.2: R9I/B6.1 – ingen gåta alls under uppdrag (den kompakta gåtan är borttagen)
+     await p.screenshot({ path: path.join(ut, `${w}-uppdrag${nr}.png`) });
+     if (nr === 1) {
+       await t("uppdrag-val-fras").first().click();
+@@ -65,7 +65,7 @@ for (const [w, h] of [[375, 812], [1280, 800]]) {
+       await p.waitForTimeout(600);
+     }
+   }
+-  m.ok = m.figur_hojd >= m.figur_mal - 2 && m.figur_hojd <= m.figur_mal + 2 && [m.uppdrag1, m.uppdrag2].every((u) => u.prova_syns && u.etikett_hel && u.ledtrad_kompakt) && fel.length === 0;
++  m.ok = m.figur_hojd >= m.figur_mal - 2 && m.figur_hojd <= m.figur_mal + 2 && [m.uppdrag1, m.uppdrag2].every((u) => u.prova_syns && u.etikett_hel && u.ingen_gata_under_uppdrag) && fel.length === 0;
+   res.push(m);
+   await ctx.close();
+ }
+diff --git a/src/spel/b6-2.test.ts b/src/spel/b6-2.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..1501178b4cc9b6b79bac7263cc01f95c642ae7cd
+--- /dev/null
++++ b/src/spel/b6-2.test.ts
+@@ -0,0 +1,79 @@
++// B6.2: "ljus" är en sak, räven håller avstånd till vattnet, platsernas milstolpe.final / las_upp / final_fore används.
++import assert from "node:assert/strict";
++import { test } from "node:test";
++import { SKRIV } from "./aventyr.ts";
++import { djurPlats } from "./ang/delat.ts";
++import { PLATSER, arFinal, klaraPerPlats, platsMed, upplast, type Matt, type Plats } from "./platser.ts";
++import { KANT_MARGINAL, franPlats, iVatten, tillPlats, torrKropp } from "./platsYta.ts";
++import { nastaSkrivUppdrag } from "./uppdragsmotor.ts";
++import { tolkaMedReserv } from "../tolk/reserv.ts";
++
++const skapad = (t: string) => {
++  const u = tolkaMedReserv(t);
++  assert.equal(u.typ, "skapad", t);
++  return u.typ === "skapad" ? u.varelse : null!;
++};
++
++test("B6.2: 'ljus' ensamt, med 'ett' eller efter 'med' är saken ljus; 'en ljus katt' är fortfarande en ljusare katt", () => {
++  assert.equal(skapad("ljus").kropp, "ljus");
++  assert.equal(skapad("ett ljus").kropp, "ljus");
++  assert.equal(skapad("ljuset").kropp, "ljus");
++  assert.equal(skapad("två ljus").kropp, "ljus");
++  assert.deepEqual(skapad("en kanin med ett ljus").tillbehor.map((t) => t.id), ["ljus"]);
++  assert.deepEqual(skapad("en kanin med ljus").tillbehor.map((t) => t.id), ["ljus"]);
++  assert.deepEqual(skapad("en katt och ett ljus").tillbehor.map((t) => t.id), ["ljus"]);
++  const ljusKatt = skapad("en ljus katt");
++  assert.equal(ljusKatt.kropp, "katt");
++  assert.deepEqual(ljusKatt.tillbehor, [], "förledet, ingen sak");
++  assert.equal(skapad("en ljusblå katt").farg, "#90CAF9", "ljusblå orörd");
++  assert.equal(skapad("en lampa").kropp, "lampa");
++});
++
++test("B6.2: land­djur på sjön står minst KANT_MARGINAL (1,0) från vattnet, också när de vickar", () => {
++  const sjon = platsMed("sjon")!;
++  assert.ok(KANT_MARGINAL >= 1);
++  const spar = (uid: string, kropp: string) => ({ uid, kropp, formel: `en ${kropp}`, beskrivning: "", skala: 1, alpha: 1, formagor: [], tillbehor: [], overraskningar: [], skapad: 1 }) as never;
++  const alla = ["räv", "katt", "hund", "kanin", "gris", "ko", "get", "häst"].map((k, i) => spar(`d${i}`, k));
++  for (const d of alla) {
++    const [x, , z] = djurPlats(d, alla, sjon);
++    assert.ok(torrKropp(sjon, x, z), `${(d as { kropp: string }).kropp} på land med marginal`);
++    // närmaste vatten, på ett fint rutnät
++    let min = Infinity;
++    for (let px = 0; px <= 1; px += 0.01) for (let py = 0; py <= 1; py += 0.01) if (iVatten(sjon, px, py)) { const [wx, wz] = franPlats(px, py); min = Math.min(min, Math.hypot(wx - x, wz - z)); }
++    assert.ok(min >= 0.95, `${(d as { kropp: string }).kropp}: ${min.toFixed(2)} till vattnet`);
++    assert.ok(!iVatten(sjon, ...tillPlats(x, z)));
++  }
++});
++
++test("B6.2: milstolpe.final pekar på platsens final och stämmer med final:true; finalen räknas inte som klart uppdrag", () => {
++  for (const p of PLATSER) {
++    if (!p.milstolpe?.final) continue;
++    const u = SKRIV.find((x) => x.id === p.milstolpe!.final);
++    assert.ok(u, `${p.id}: finalen ${p.milstolpe.final} finns`);
++    assert.equal(u!.omrade, p.id);
++    assert.equal(u!.final, true, `${p.id}: bengtsson.json och platser.json säger samma sak`);
++    assert.ok(arFinal(u!));
++  }
++  // ett uppdrag som bara platser.json kallar final behandlas som final
++  const u = { id: "x-final", omrade: "skogen" };
++  const lista: Plats[] = PLATSER.map((p) => (p.id === "skogen" ? { ...p, milstolpe: { ...p.milstolpe!, final: "x-final" } } : p));
++  assert.ok(arFinal(u, lista));
++  assert.ok(!arFinal({ id: "skog-kvallsljus", omrade: "skogen" }));
++  assert.equal(klaraPerPlats({ "skog-final-minnesljus": "klar" }).skogen ?? 0, 0);
++  const allaUtom = Object.fromEntries(SKRIV.filter((x) => x.omrade === "skogen" && !arFinal(x)).map((x) => [x.id, "klar" as const]));
++  assert.equal(nastaSkrivUppdrag(allaUtom, "skogen", false), undefined);
++  assert.equal(nastaSkrivUppdrag(allaUtom, "skogen", true)?.id, "skog-final-minnesljus");
++});
++
++test("B6.2: las_upp öppnar nästa plats när milstolpen nås, även utan eget upplåsningsvillkor", () => {
++  const lista: Plats[] = PLATSER.map((p) => (p.id === "sjon" ? { ...p, upplasning: { nagon: [] } } : p));
++  const m = (klara: number, skap: number): Matt => ({ skapelser: { ang: 3, skogen: skap }, klara: { skogen: klara }, oppnade: [] });
++  assert.ok(!upplast("sjon", m(4, 7), lista), "milstolpen inte nådd");
++  assert.ok(upplast("sjon", m(5, 0), lista), "5 klara i skogen → skogens las_upp öppnar sjön");
++  assert.ok(upplast("sjon", m(0, 8), lista), "8 skapelser i skogen");
++  for (const p of PLATSER) if (p.milstolpe?.las_upp) assert.ok(platsMed(p.milstolpe.las_upp), `${p.id}: las_upp finns`);
++});
++
++test("B6.2: varje plats med final har en final_fore-replik (Bengtsson säger den när finalen öppnas)", () => {
++  for (const p of PLATSER) if (p.milstolpe?.final) assert.ok((p.final_fore?.text ?? "").length > 10, `${p.id}: final_fore.text`);
++});
+diff --git a/src/spel/platsYta.ts b/src/spel/platsYta.ts
+index 474b2aa6ad36df92adce688b9e61f2c29dea24c8..0be3b4149dc05678ceba9372a7f3b5b90aab9efb 100644
+--- a/src/spel/platsYta.ts
++++ b/src/spel/platsYta.ts
+@@ -9,8 +9,9 @@ export const YTA_SKALA = 1.45;
+ /** Minsta avstånd mellan två skapelser när en punkt måste flyttas (världsenheter). */
+ const MIN_AVSTAND = 0.85;
+ const STEG = 0.01;
+-/** Djurets kropp (≈0,4) + vickningen i djur.tsx (±0,22): så långt från vattenkanten ska mitten stå (världsenheter). */
+-export const KANT_MARGINAL = 0.6;
++/** Djurets kropp (≈0,4) + vickningen i djur.tsx (±0,22) + en synlig bit strand: så långt från vattenkanten ska mitten stå
++ *  (världsenheter). B6.2: 0,6 → 1,0, räven på sjön stod med tassarna i vattenbrynet (kameran ser vattnet bakom djuret). */
++export const KANT_MARGINAL = 1.0;
+ 
+ export function iRekt(x: number, y: number, r: Zon["rekt"]): boolean {
+   const [x0, y0, x1, y1] = r;
+diff --git a/src/spel/platser.ts b/src/spel/platser.ts
+index 4011fff92e6ad1cc95778e600f3af17d4e3a29c4..e4acf05c7be7c4b9f042c9e16bc664a9a995e47c 100644
+--- a/src/spel/platser.ts
++++ b/src/spel/platser.ts
+@@ -29,7 +29,8 @@ export type Plats = {
+   materialfarger?: Materialfarger;
+   ljud?: unknown;
+   intro?: unknown;
+-  final_fore?: unknown;
++  /** B6.2: Bengtssons replik när platsens final blir tillgänglig (visas när barnet trycker på honom för finalen). */
++  final_fore?: { text: string; min?: string } | null;
+   hemliga?: string[];
+   uppdrag: string[];
+ };
+@@ -55,13 +56,20 @@ function nagonNadd(g: Villkorsgrupp | null | undefined, m: Matt): boolean {
+   return !!g && g.nagon.some((v) => villkorNatt(v, m));
+ }
+ 
+-/** Ängen är alltid öppen. En plats som en gång öppnats förblir öppen. Annars räcker ett villkor ur `nagon`. */
++/** Ängen är alltid öppen. En plats som en gång öppnats förblir öppen. Annars räcker ett villkor ur `nagon`,
++ *  eller (B6.2) att en annan plats milstolpe med `las_upp: id` är nådd. */
+ export function upplast(id: string, m: Matt, platser: Plats[] = PLATSER): boolean {
+   if (id === START_PLATS) return true;
+   const p = platsMed(id, platser);
+   if (!p) return false;
+   if (m.oppnade?.includes(id)) return true;
+-  return nagonNadd(p.upplasning, m);
++  if (nagonNadd(p.upplasning, m)) return true;
++  return platser.some((q) => q.milstolpe?.las_upp === id && nagonNadd(q.milstolpe, m));
++}
++
++/** B6.2: platsens final = uppdraget med `final: true` i bengtsson.json eller det som `milstolpe.final` pekar på. */
++export function arFinal(u: { id: string; omrade: string; final?: boolean }, platser: Plats[] = PLATSER): boolean {
++  return !!u.final || (!!u.id && platsMed(u.omrade, platser)?.milstolpe?.final === u.id);
+ }
+ 
+ /** Får platsens final erbjudas? */
+@@ -72,7 +80,7 @@ export function milstolpeNadd(id: string, m: Matt, platser: Plats[] = PLATSER):
+ /** Klara skriv-uppdrag per `omrade`, utan finaler. */
+ export function klaraPerPlats(status: Record<string, "pagar" | "klar">, uppdrag: { id: string; omrade: string; final?: boolean }[] = SKRIV): Record<string, number> {
+   const ut: Record<string, number> = {};
+-  for (const u of uppdrag) if (status[u.id] === "klar" && !u.final) ut[u.omrade] = (ut[u.omrade] ?? 0) + 1;
++  for (const u of uppdrag) if (status[u.id] === "klar" && !arFinal(u)) ut[u.omrade] = (ut[u.omrade] ?? 0) + 1;
+   return ut;
+ }
+ 
+diff --git a/src/spel/ui/useBengtsson.ts b/src/spel/ui/useBengtsson.ts
+index 361949feb6839f5af32e8ba4fc4926b4f405083b..7219cf9f33a8cfc83aa2462d986dc2b14c9053bc 100644
+--- a/src/spel/ui/useBengtsson.ts
++++ b/src/spel/ui/useBengtsson.ts
+@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
+ import entiteterJson from "../../../data/entiteter.json" with { type: "json" };
+ import { tolkaMedReserv } from "../../tolk/reserv.ts";
+ import { TAKT, aventyrKvar, aktivtSkrivUppdrag, bengtssonLagen, kravUppfylltTolkat, nastaSkrivUppdrag, sekTillRedo } from "../uppdragsmotor.ts";
+-import { mattUr, milstolpeNadd } from "../platser.ts";
++import { arFinal, mattUr, milstolpeNadd, platsMed } from "../platser.ts";
+ import npcJson from "../../../data/npc.json" with { type: "json" };
+ import { klarUppdrag, type FlodeSvar } from "../avflode.ts";
+ import { useMinne } from "../minne.ts";
+@@ -81,6 +81,9 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
+     if (aktivtSkrivUppdrag(s, pl)) return oppnaSkapa();
+     const nasta = nastaSkrivUppdrag(s, pl, fo);
+     if (nasta) {
++      // B6.2: final_fore (data/platser.json) – Bengtssons replik när finalen öppnas
++      const fore = arFinal(nasta) ? platsMed(pl)?.final_fore?.text : undefined;
++      if (fore) visaBanner(fore, "ovr");
+       useMinne.getState().sattUppdrag(nasta.id, "pagar");
+       return oppnaSkapa();
+     }
+diff --git a/src/spel/uppdragsmotor.ts b/src/spel/uppdragsmotor.ts
+index fb78b0fe0f7a0d6ae0636105d3ba1eceeb64190a..aebb57e5db242c26672b3293c6e2afd99cfd9800 100644
+--- a/src/spel/uppdragsmotor.ts
++++ b/src/spel/uppdragsmotor.ts
+@@ -3,6 +3,7 @@
+ import bengtssonJson from "../../data/bengtsson.json" with { type: "json" };
+ import ordJson from "../../data/ord.json" with { type: "json" };
+ import { ALLA_UPPDRAG, SKRIV, type Uppdrag } from "./aventyr.ts";
++import { arFinal } from "./platser.ts";
+ 
+ export const TAKT = bengtssonJson.takt;
+ 
+@@ -51,7 +52,7 @@ export function kravUppfylltTolkat(krav: Krav, text: string, harDjur: boolean):
+ 
+ /** Skriv-uppdragen på en plats; `final`-uppdrag bara när finalOk. */
+ function paPlats(plats: string, finalOk: boolean): Uppdrag[] {
+-  return SKRIV.filter((u) => u.omrade === plats && (finalOk || !u.final));
++  return SKRIV.filter((u) => u.omrade === plats && (finalOk || !arFinal(u)));
+ }
+ 
+ /** Uppdraget som är igång på platsen (status "pagar"), annars undefined. */
+diff --git a/src/tolk/lexikon.ts b/src/tolk/lexikon.ts
+index d557097568e61125ead229fda5bb0b0cd986198e..267a61512c2a3241bd0d0a4271b4be3f44d080f6 100644
+--- a/src/tolk/lexikon.ts
++++ b/src/tolk/lexikon.ts
+@@ -75,6 +75,21 @@ for (const [id, w] of sakOrd) {
+   for (const f of o.former) if (!formMap.has(f) && !reserverade.has(f)) formMap.set(f, o);
+ }
+ 
++/** B6.2: förled som också är en sak ("ljus" = stearinljus). Grammatiken behåller förledet ("en ljus katt"),
++ *  men ensamt eller före med/och/som blir ordet saken (tolka.ts). Böjda former ("ljuset", "ljusen") är bara saken. */
++const LED_SAK = new Map<string, Ord>();
++const forledNycklar = new Set(Object.keys(ORD.sammansattningar.forled));
++for (const [id, w] of sakOrd) {
++  if (!forledNycklar.has(w) || LED_SAK.has(w)) continue;
++  const { singular, plural } = foremalsFormer(w);
++  const o: Ord = { id: w, klass: "foremal", niva: "fritt", visa: w, former: [...singular, ...plural], plural, del: { kropp: id } };
++  LED_SAK.set(w, o);
++  for (const f of o.former) if (f !== w && !formMap.has(f) && !reserverade.has(f)) formMap.set(f, o);
++}
++export function ledSak(token: string): Ord | undefined {
++  return LED_SAK.get(token);
++}
++
+ export type Fras = { ord: Ord; slots: string[][]; valfritt: boolean };
+ 
+ const fraser: Fras[] = [];
+diff --git a/src/tolk/tolka.ts b/src/tolk/tolka.ts
+index 3449242860c61fdbf0c55fcb54fd20c0cae7315c..f5250267e52775d440a9dee9c21b443a20b1b5e6 100644
+--- a/src/tolk/tolka.ts
++++ b/src/tolk/tolka.ts
+@@ -15,6 +15,7 @@ import {
+   pluralOrd,
+   forslagTill,
+   type Suffix,
++  ledSak,
+ } from "./lexikon.ts";
+ import { arSparrat } from "./sparr.ts";
+ import type { Del, Forled, Ord, TolkaOpts, Utfall, Varelse } from "./typer.ts";
+@@ -366,6 +367,15 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
+         continue;
+       }
+       const led = ORD.sammansattningar.forled[token];
++      // B6.2: "ljus" är en sak när inget ord följer (eller bara med/och/som …): "ett ljus", "en kanin med ljus".
++      // "en ljus katt" är fortfarande förledet (ljusare färg).
++      const sak = led ? ledSak(token) : undefined;
++      const nasta = tokens[i + 1];
++      const nastaEn = nasta === undefined ? null : lasToken(nasta);
++      if (sak && (nasta === undefined || nastaEn?.t === "funk" || nastaEn?.t === "artikel")) {
++        sem.push({ t: "ord", o: { ...sak, genus: tokens[i - 1] === "ett" ? "n" : "u" }, form: token });
++        continue;
++      }
+       if (led) {
+         sem.push({ t: "led", key: token, del: led });
+         continue;
