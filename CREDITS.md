@@ -50,7 +50,7 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | kenney-fantasy-town-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/fantasy-town-kit | 11 |
 | kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 68 |
 | kenney-food-kit-2 | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 15 |
-| kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 45 |
+| kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 46 |
 | kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 6 |
 | kenney-holiday-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/holiday-kit | 16 |
 | kenney-mini-arcade | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-arcade | 7 |
@@ -95,6 +95,7 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | trollpennan-egna-m16 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 14 |
 | trollpennan-folk-m17 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 34 |
 | trollpennan-fordon-m18 | Kenney (watercraft-kit); tillägg: Trollpennan | CC0-1.0 | https://kenney.nl/assets/watercraft-kit | 31 |
+| trollpennan-hem-m20b | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 23 |
 | trollpennan-kok-m20 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 22 |
 | trollpennan-mfix | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 21 |
 | trollpennan-mfix2 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 8 |
