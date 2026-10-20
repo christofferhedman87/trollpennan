@@ -1,4 +1,5 @@
 // R9: bevis (375x812) för Bengtssons takt och ikon, stjärnförklaringen, förklaringen och ledtrådsytan i Skapa/Väck.
+// B6.2: uppdaterad till nuvarande beteende (gåtan bara utan uppdrag, idéraden fyller inte i svaret).
 // Kontrollerar: ingen figur först men en ikon; stjärnräknaren öppnar en ärlig förklaring; efter 3 djur bjuder Bengtsson in; ett klart uppdrag ger paus (ikonen kvar); ikonen ger uppdrag direkt; gåta + streck + förklaring syns i boken.
 // Användning: node rundor/R9-tydlighet/r9-prov.mjs --ut docs/skarmbilder/r9 [--dist dist-pages]  (kräver npm run build:pages). exit 0 = allt stämde.
 import fs from "node:fs";
@@ -54,27 +55,9 @@ await t("ordbok-sida").first().waitFor({ timeout: 5000 }).catch(() => {});
 m.stjarnor.ordbok_oppnas = (await p.getByTestId("ordbok").count()) > 0 || (await t("ordbok-sida").count()) > 0;
 await p.keyboard.press("Escape");
 if ((await t("stjarn-info").count()) > 0) await p.locator("[data-dialog-close]").first().click().catch(() => {});
-// 4. efter tre djur bjuder Bengtsson in med figur och utropstecken
-for (const d of ["en rosa kanin", "en blå katt", "en grön groda"]) { await p.evaluate((x) => window.__troll.vakna(x), d); await p.waitForTimeout(700); }
-await p.waitForTimeout(800);
-m.efter_3_djur = { figur: await figur.count(), utrop: await p.locator(".npc-utrop").count() };
-await skott("4-inbjudan");
-// 5. klara ett uppdrag: figuren går, ikonen är kvar (paus), ikonen ger nästa direkt
-await figur.first().click();
-await t("uppdrag-remsa").waitFor();
-await t("uppdrag-val-fras").first().click();
-await t("vakna").click();
-await p.waitForTimeout(800);
-if ((await t("stang-bok").count()) > 0) await t("stang-bok").click();
-await p.waitForTimeout(10500);
-m.efter_klart = { figur: await figur.count(), ikon: await ikon.count() };
-await skott("5-paus-ikon");
-await ikon.click();
-await t("uppdrag-remsa").waitFor();
-m.andra_direkt = (await t("uppdrag-remsa").innerText()).trim();
-
-// 3. ikonen ger uppdrag direkt, och boken har förklaring + ledtråd
-m.direkt_uppdrag = m.andra_direkt;
+// 3. (B6.2) boken utan uppdrag har förklaring + ledtråd (under uppdrag visas ingen gåta, R9I)
+await t("pennans-bok").click();
+await t("ledtrad-gata").waitFor();
 m.forklaring = (await t("hemligt-forklaring").innerText()).trim();
 m.gata1 = (await t("ledtrad-gata").innerText()).trim();
 m.streck = (await t("ledtrad-streck").innerText()).trim();
@@ -83,15 +66,37 @@ await skott("3-bok-gata");
 await t("ledtrad-ny").click();
 m.gata2 = (await t("ledtrad-gata").innerText()).trim();
 m.ny_gata_byter = m.gata2 !== m.gata1;
-// förklaringen får inte skymma tangentbordet eller Vakna
-m.vakna_synlig = !!(await t("vakna").boundingBox());
-m.tangentbord_synligt = (await t("tangentbord").boundingBox())?.y < 812;
-await t("pennan").click();
+// B6.2: Pennans bok öppnar med ordkorten; pennan växlar till tangentbordet
 m.etikett = (await t("forslag-etikett").innerText()).trim();
 await skott("3b-ordkort");
 await t("pennan").click();
+// förklaringen får inte skymma tangentbordet eller Vakna
+m.vakna_synlig = !!(await t("vakna").boundingBox());
+m.tangentbord_synligt = (await t("tangentbord").boundingBox())?.y < 812;
 await t("stang-bok").click();
-m.ok = m.start.figur === 0 && m.start.ikon === 1 && m.start.ikon_hojd >= 44 && /Ordbok/.test(m.stjarnor.text) && m.stjarnor.ordbok_oppnas && m.streck_ok && m.ny_gata_byter && m.etikett.length > 5 && m.vakna_synlig && m.tangentbord_synligt && m.efter_3_djur.figur === 1 && m.efter_3_djur.utrop === 1 && m.efter_klart.figur === 0 && m.efter_klart.ikon === 1 && m.andra_direkt.length > 10 && fel.length === 0;
+// 4. efter tre djur bjuder Bengtsson in med figur och utropstecken
+for (const d of ["en rosa kanin", "en blå katt", "en grön groda"]) { await p.evaluate((x) => window.__troll.vakna(x), d); await p.waitForTimeout(700); }
+await p.waitForTimeout(800);
+m.efter_3_djur = { figur: await figur.count(), utrop: await p.locator(".npc-utrop").count() };
+await skott("4-inbjudan");
+// 5. klara ett uppdrag: figuren går, ikonen är kvar (paus), ikonen ger nästa direkt
+await figur.first().click();
+await t("uppdrag-remsa").waitFor();
+// B6.2: idéraden ger inte längre hela svaret (R9K, "en kanin med …"), så barnet skriver klart själv
+const forsta = (await t("uppdrag-remsa").innerText()).trim();
+m.forsta_uppdrag = forsta;
+await p.evaluate(() => window.__troll.vakna("en kanin med mössa"));
+await p.waitForTimeout(800);
+if ((await t("stang-bok").count()) > 0) await t("stang-bok").click();
+await p.waitForTimeout(10500);
+m.efter_klart = { figur: await figur.count(), ikon: await ikon.count() };
+await skott("5-paus-ikon");
+await ikon.click();
+await t("uppdrag-remsa").waitFor();
+m.andra_direkt = (await t("uppdrag-remsa").innerText()).trim();
+m.ingen_gata_under_uppdrag = (await t("ledtrad").count()) === 0;
+
+m.ok = m.start.figur === 0 && m.start.ikon === 1 && m.start.ikon_hojd >= 44 && /Ordbok/.test(m.stjarnor.text) && m.stjarnor.ordbok_oppnas && m.streck_ok && m.ny_gata_byter && m.etikett.length > 5 && m.vakna_synlig && m.tangentbord_synligt && m.efter_3_djur.figur === 1 && m.efter_3_djur.utrop === 1 && m.efter_klart.figur === 0 && m.efter_klart.ikon === 1 && m.andra_direkt.length > 10 && m.andra_direkt !== m.forsta_uppdrag && m.ingen_gata_under_uppdrag && fel.length === 0;
 console.log(JSON.stringify(m, null, 1));
 await browser.close();
 server.close();

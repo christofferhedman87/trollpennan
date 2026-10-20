@@ -874,6 +874,8 @@
     "vattenskoter": { "typ": "foremal", "kategori": "fordon", "modell": "vattenskoter", "malhojd": 0.7, "art": "#EF5350", "framAxel": "+z", "forladda": false, "ord": ["vattenskoter"], "inlagd": "R3F-M18" },
     "zeppelinare": { "typ": "foremal", "kategori": "fordon", "modell": "zeppelinare", "malhojd": 1.6, "art": "#EF5350", "framAxel": "+x", "forladda": false, "ord": ["zeppelinare", "luftskepp"], "inlagd": "R3F-M18" },
     "motorcykel": { "typ": "foremal", "kategori": "fordon", "modell": "motorcykel", "malhojd": 1.2, "art": "#EF5350", "framAxel": "-x", "forladda": false, "ord": ["motorcykel"], "inlagd": "R3F-M18" },
-    "pickup": { "typ": "foremal", "kategori": "fordon", "modell": "pickup", "malhojd": 1.2, "art": "#EF5350", "framAxel": "+z", "forladda": false, "ord": ["pickup"], "inlagd": "R3F-M18" }
+    "pickup": { "typ": "foremal", "kategori": "fordon", "modell": "pickup", "malhojd": 1.2, "art": "#EF5350", "framAxel": "+z", "forladda": false, "ord": ["pickup"], "inlagd": "R3F-M18" },
+    "regnbage": { "typ": "natur", "kategori": "väder", "modell": "regnbage", "malhojd": 1, "art": "#E3F2FD", "forladda": false, "ord": ["regnbåge"], "inlagd": "B6.2" },
+    "eld": { "typ": "natur", "kategori": "väder", "modell": "eld", "malhojd": 0.7, "art": "#FFE0B2", "forladda": false, "ord": ["eld"], "inlagd": "B6.2" }
   }
 }

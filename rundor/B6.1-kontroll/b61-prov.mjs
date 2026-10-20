@@ -4,7 +4,7 @@
 //   G  bokens gåta tar platsens egna djur först, och "Ny gåta" stannar bland dem
 //   K  tackbubblan krockar inte med banderollen ("Guldord!", "+1 stjärna!") eller en annan bubbla
 //   E  stora saker (skyskrapa, slott, ufo, grävmaskin) står längst bak under ett tak och skymmer inget djur
-//   F  "en regnbåge" (känt ord utan modell) ger en synlig banderoll och boken stängs
+//   F  "randig" (känt ord utan modell; "en regnbåge" är en sak sedan B6.2) ger en synlig banderoll och boken stängs
 //   P  alla fyra platser: res dit på kartan, lös ett uppdrag, stall + hämta ut, gåva → tack
 //   node rundor/B6.1-kontroll/b61-prov.mjs --bilder <mapp>   (exit 0 = alla steg gröna; kräver npm run build:pages)
 import fs from "node:fs";
@@ -259,11 +259,11 @@ await blok("F", async () => {
   await p.waitForTimeout(400);
   const banners = [];
   const stopp = setInterval(() => p.locator(".banderoller").innerText().then((t) => t && banners.push(t)).catch(() => undefined), 150);
-  await p.evaluate(() => window.__troll.vakna("en regnbåge"));
+  await p.evaluate(() => window.__troll.vakna("randig"));
   await p.waitForTimeout(1500);
   clearInterval(stopp);
-  kolla("F en regnbåge: synlig banderoll", banners.some((b) => /kan jag inte rita/.test(b)), { banners: [...new Set(banners)] });
-  kolla("F en regnbåge: boken stängs", !(await synlig(p, "[data-testid=bok-skarm]")));
+  kolla("F randig: synlig banderoll", banners.some((b) => /kan jag inte rita/.test(b)), { banners: [...new Set(banners)] });
+  kolla("F randig: boken stängs", !(await synlig(p, "[data-testid=bok-skarm]")));
   await bild(p, "b61-F-regnbage.png");
   await ctx.close();
 });

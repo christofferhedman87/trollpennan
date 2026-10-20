@@ -75,6 +75,34 @@ for (const [id, w] of sakOrd) {
   for (const f of o.former) if (!formMap.has(f) && !reserverade.has(f)) formMap.set(f, o);
 }
 
+/** B6.2: förled som också är en sak ("ljus" = stearinljus). Grammatiken behåller förledet ("en ljus katt"),
+ *  men ensamt eller före med/och/som blir ordet saken (tolka.ts). Böjda former ("ljuset", "ljusen") är bara saken. */
+const LED_SAK = new Map<string, Ord>();
+const forledNycklar = new Set(Object.keys(ORD.sammansattningar.forled));
+for (const [id, w] of sakOrd) {
+  if (!forledNycklar.has(w) || LED_SAK.has(w)) continue;
+  const { singular, plural } = foremalsFormer(w);
+  const o: Ord = { id: w, klass: "foremal", niva: "fritt", visa: w, former: [...singular, ...plural], plural, del: { kropp: id } };
+  LED_SAK.set(w, o);
+  for (const f of o.former) if (f !== w && !formMap.has(f) && !reserverade.has(f)) formMap.set(f, o);
+}
+export function ledSak(token: string): Ord | undefined {
+  return LED_SAK.get(token);
+}
+
+/** B6.2: ord som redan betyder något annat (mönster "regnbåge", förmåga "eld") men också har en modell som sak.
+ *  Nyckel = varje form av ordet ("regnbåge", "regnbågen", "elden" …). tolka.ts väljer saken bara när ordet står fristående. */
+const DUBBEL_SAK = new Map<string, Ord>();
+for (const [id, w] of sakOrd) {
+  const annan = formMap.get(w);
+  if (!annan || annan.klass === "foremal" || annan.klass === "djur" || DUBBEL_SAK.has(w)) continue;
+  const o: Ord = { id: w, klass: "foremal", niva: "fritt", visa: w, former: [...new Set([...annan.former, w])], plural: [], del: { kropp: id } };
+  for (const f of o.former) if (!DUBBEL_SAK.has(f)) DUBBEL_SAK.set(f, o);
+}
+export function dubbelSak(token: string): Ord | undefined {
+  return DUBBEL_SAK.get(token);
+}
+
 export type Fras = { ord: Ord; slots: string[][]; valfritt: boolean };
 
 const fraser: Fras[] = [];

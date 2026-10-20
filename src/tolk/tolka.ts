@@ -15,6 +15,8 @@ import {
   pluralOrd,
   forslagTill,
   type Suffix,
+  ledSak,
+  dubbelSak,
 } from "./lexikon.ts";
 import { arSparrat } from "./sparr.ts";
 import type { Del, Forled, Ord, TolkaOpts, Utfall, Varelse } from "./typer.ts";
@@ -366,6 +368,15 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
         continue;
       }
       const led = ORD.sammansattningar.forled[token];
+      // B6.2: "ljus" är en sak när inget ord följer (eller bara med/och/som …): "ett ljus", "en kanin med ljus".
+      // "en ljus katt" är fortfarande förledet (ljusare färg).
+      const sak = led ? ledSak(token) : undefined;
+      const nasta = tokens[i + 1];
+      const nastaEn = nasta === undefined ? null : lasToken(nasta);
+      if (sak && (nasta === undefined || nastaEn?.t === "funk" || nastaEn?.t === "artikel")) {
+        sem.push({ t: "ord", o: { ...sak, genus: tokens[i - 1] === "ett" ? "n" : "u" }, form: token });
+        continue;
+      }
       if (led) {
         sem.push({ t: "led", key: token, del: led });
         continue;
@@ -408,6 +419,19 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
       continue;
     }
     if (en.t === "artikel") continue;
+    // B6.2: "en regnbåge", "en eld", "regnbågen" – ett mönster-/förmågeord som står fristående (artikel, antal eller först,
+    // och inget innehållsord efter) och har en modell blir saken. "en drake med eld", "en eldig drake",
+    // "en katt med regnbåge" behåller sin gamla betydelse.
+    if (en.t === "ord" && en.o.klass !== "foremal" && en.o.klass !== "djur") {
+      const sak = dubbelSak(token);
+      const fore = i === 0 ? null : lasToken(tokens[i - 1] ?? "");
+      const efter = tokens[i + 1] === undefined ? null : lasToken(tokens[i + 1]!);
+      const fristaende = (i === 0 || fore?.t === "artikel" || fore?.t === "antal") && (tokens[i + 1] === undefined || efter?.t === "funk" || efter?.t === "artikel");
+      if (sak && fristaende) {
+        sem.push({ t: "ord", o: { ...sak, genus: tokens[i - 1] === "ett" ? "n" : "u" }, form: token });
+        continue;
+      }
+    }
     if (en.t === "ord" && en.o.klass === "foremal") {
       // R3G: genus för ett härlett föremål tas från barnets egen artikel ("ett lok") eller bestämd form ("loket").
       const fore = tokens[i - 1];

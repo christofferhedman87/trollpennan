@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import entiteterJson from "../../../data/entiteter.json" with { type: "json" };
 import { tolkaMedReserv } from "../../tolk/reserv.ts";
 import { TAKT, aventyrKvar, aktivtSkrivUppdrag, bengtssonLagen, kravUppfylltTolkat, nastaSkrivUppdrag, sekTillRedo } from "../uppdragsmotor.ts";
-import { mattUr, milstolpeNadd } from "../platser.ts";
+import { arFinal, mattUr, milstolpeNadd, platsMed } from "../platser.ts";
 import npcJson from "../../../data/npc.json" with { type: "json" };
 import { klarUppdrag, type FlodeSvar } from "../avflode.ts";
 import { useMinne } from "../minne.ts";
@@ -81,6 +81,9 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
     if (aktivtSkrivUppdrag(s, pl)) return oppnaSkapa();
     const nasta = nastaSkrivUppdrag(s, pl, fo);
     if (nasta) {
+      // B6.2: final_fore (data/platser.json) – Bengtssons replik när finalen öppnas
+      const fore = arFinal(nasta) ? platsMed(pl)?.final_fore?.text : undefined;
+      if (fore) visaBanner(fore, "ovr");
       useMinne.getState().sattUppdrag(nasta.id, "pagar");
       return oppnaSkapa();
     }

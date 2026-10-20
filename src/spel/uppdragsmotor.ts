@@ -3,6 +3,7 @@
 import bengtssonJson from "../../data/bengtsson.json" with { type: "json" };
 import ordJson from "../../data/ord.json" with { type: "json" };
 import { ALLA_UPPDRAG, SKRIV, type Uppdrag } from "./aventyr.ts";
+import { arFinal } from "./platser.ts";
 
 export const TAKT = bengtssonJson.takt;
 
@@ -51,7 +52,7 @@ export function kravUppfylltTolkat(krav: Krav, text: string, harDjur: boolean): 
 
 /** Skriv-uppdragen på en plats; `final`-uppdrag bara när finalOk. */
 function paPlats(plats: string, finalOk: boolean): Uppdrag[] {
-  return SKRIV.filter((u) => u.omrade === plats && (finalOk || !u.final));
+  return SKRIV.filter((u) => u.omrade === plats && (finalOk || !arFinal(u)));
 }
 
 /** Uppdraget som är igång på platsen (status "pagar"), annars undefined. */
