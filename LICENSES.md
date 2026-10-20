@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1005 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1039 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -98,6 +98,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | trollpennan-musik-m23 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 29 |
 | trollpennan-saga-m19 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 8 |
 | trollpennan-skola-m22 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 28 |
+| trollpennan-sport-m24 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 34 |
 
 ## Alla modellfiler
 
@@ -1109,3 +1110,37 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | tuba | /models/bulk/tuba.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | ukulele | /models/bulk/ukulele.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | xylofon | /models/bulk/xylofon.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| badmintonracket | /models/bulk/badmintonracket.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| basketkorg | /models/bulk/basketkorg.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| bowlingklot | /models/bulk/bowlingklot.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| boxningshandske | /models/bulk/boxningshandske.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| darttavla | /models/bulk/darttavla.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| fotbollsmal | /models/bulk/fotbollsmal.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| frisbee | /models/bulk/frisbee.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| gungbrada | /models/bulk/gungbrada.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| hantel | /models/bulk/hantel.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| fiskhav | /models/bulk/fiskhav.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| hjalm | /models/bulk/hjalm.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| hockeyklubba | /models/bulk/hockeyklubba.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| hopprep | /models/bulk/hopprep.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| innebandyklubba | /models/bulk/innebandyklubba.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kagla | /models/bulk/kagla.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kajak | /models/bulk/kajak.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| medalj | /models/bulk/medalj.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| metspo | /models/bulk/metspo.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| paddel | /models/bulk/paddel.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| pingisbord | /models/bulk/pingisbord.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| pingisracket | /models/bulk/pingisracket.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| puck | /models/bulk/puck.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| rullskridsko | /models/bulk/rullskridsko.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| simring | /models/bulk/simring.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| skida | /models/bulk/skida.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| skivstang | /models/bulk/skivstang.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| skridsko | /models/bulk/skridsko.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| snowboard | /models/bulk/snowboard.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| stoppur | /models/bulk/stoppur.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| surfbrada | /models/bulk/surfbrada.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| tennisboll | /models/bulk/tennisboll.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| tennisracket | /models/bulk/tennisracket.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| visselpipa | /models/bulk/visselpipa.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| flytvast | /models/bulk/flytvast.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
