@@ -1,0 +1,4 @@
+{
+ "_om": "R3F-MFIX3: jultomten och narvalen får ingen palett. Med palett målas kroppen om i spelet: jultomtens röda dräkt blev orange/brun (palett från 355, mörk bodyL) och narvalen blek (paletten mättes på den gulvita beten). Provat i spelet: utan palett syns modellens egna färger. Färgord (en blå jultomte) slår då inte igenom på de två; det tas i kodrundan.",
+ "utan_palett": ["jultomte", "narval"]
+}

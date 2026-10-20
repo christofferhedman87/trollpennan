@@ -15,13 +15,12 @@ Doodles räkning (598 → 702) räknar alla `.glb`-filer i repot, även 21 filer
 | Start i kväll (main b679a3d) | 577 | 577 |
 | Efter M10–M14 (Doodle, f1f0880) | 681 | 473 |
 | Efter MFIX, M15, M16 (Doodle, main 3e99f42) | 770 | 384 |
-| När Doodle har kört MFIX2 (12 bort, 9 tillbaka: kors, krypta, gravsten borta) | 767 | 387 |
-| När Doodle har kört M17 (41, varav bonde, ninja, kvinna ersatta: +38) | 805 | 349 |
-| När Doodle har kört M18 (36) | 841 | 313 |
+| Efter MFIX2, M17, M18 (Doodle, main 23f909c) | 841 | 313 |
+| När Doodle har kört MFIX3 (11 bort, 11 tillbaka) | 841 | 313 |
 | När Doodle har kört M18b (23) | 864 | 290 |
-| När Doodle har kört M19 (12) | **876** | **278** |
+| När Doodle har kört M19 (10) | **874** | **280** |
 
-Underlag klara: M10–M19 = 303 modeller (M18b 23, M19 12), plus fixpaketen MFIX och MFIX2. Från MFIX2 gäller **hellre färre men snygga modeller än många konstiga** (Doodle): M18 gallrades från 42 till 36. Från M15 hämtas hela Kenney-kit direkt från kenney.nl (arkiv och License.txt ligger i varje inkorgsmapp, `_nedladdning/arkiv/`); det gav större paket (48 och 39).
+Underlag klara: M10–M19 = 301 modeller (M18b 23, M19 10), plus fixpaketen MFIX, MFIX2 och MFIX3 (Doodles genomgång av M17/M18: jultomten röd, brandman med hjälm, tydliga yrkesfigurer, tre olika lastbilar, mörkare narval; ordgranskning.tsv visar nu de granskade formerna). Inga symlänkar i commits: `.gitignore` har `node_modules` utan snedstreck och kor.sh stoppar om en symlänk hamnar i commiten. Från MFIX2 gäller **hellre färre men snygga modeller än många konstiga** (Doodle): M18 gallrades från 42 till 36. Från M15 hämtas hela Kenney-kit direkt från kenney.nl (arkiv och License.txt ligger i varje inkorgsmapp, `_nedladdning/arkiv/`); det gav större paket (48 och 39).
 Quaternius (quaternius.com) laddar sina paket via JavaScript och Google Drive och gick inte att hämta med skript; de Quaternius-paket som redan ligger i inkorgen används.
 
 ## Vad inkorgen räcker till
@@ -45,7 +44,7 @@ Orden från M14 och framåt utöver kategori-ord är förslag. Kontrollera dem m
 | **M17 ✔** | folk som klossfigurer (41, CC0) | **ersatta:** bonde, ninja, kvinna (Quaternius → Kenney Blocky, `bort.txt`); **nya:** brandman, clown, doktor/läkare, kock, mormor, farmor, prins, prinsessa, barn, älva/fe, frisör, sjuksköterska, dykare, brevbärare, målare, snickare, kapten, fiskare, viking, superhjälte, tjuv, äventyrare, detektiv, forskare, konstnär, ballerina/dansare, mekaniker, jägare, skogshuggare, vakt, kejsare, jultomte, mumie, alien, sjöman, rörmokare, servitör, sångare | Kenney Blocky Characters, omfärgade + egna tillbehör (`trollpennan-folk-m17`, `M17/folk-m17.mjs`) |
 | **M18 ✔** | fordon (36, CC0) | buss, skolbuss, limousin, formelbil, fyrhjuling, snöskoter, gaffeltruck, bulldozer, dumper, vält/vägvält, skördetröska, cykel, tandem, lådcykel, flygplan, jetplan, sjöflygplan, segelflygplan, luftballong, zeppelinare/luftskepp, ubåt, gondol, katamaran, vattenskoter, skottkärra, kälke (egna; cyklar, ubåt, gondol, kälke, zeppelinare och limousin i profil); tankbil, betongbil, bärgningsbil, glassbil, husbil, polisbåt, brandbåt, räddningsbåt (Kenney + egna tillägg); motorcykel, pickup (Poly Pizza) | `trollpennan-fordon-m18` (`M18/egna-m18.mjs`), Kenney Car/Watercraft, `polypizza-cc0-m18` |
 | **M18b ✔** | djur 3 (23, CC0) | björn, hamster, marsvin, snigel, nyckelpiga, sjöstjärna, humla, krokodil, ödla, stork, struts, kamel, känguru (egna); späckhuggare, blåval/valfisk, beluga, sjölejon, duva, kråka, fjällräv/polarräv, snöuggla (omfärgade Quaternius/Gobkit); drakfisk, makrill (Poly Pizza). Lodjur, järv, mink, hermelin, trana, skata och B5b-bytena kvar till ett senare djurpaket | `trollpennan-djur-m18b` (`M18b/m18b-egna.mjs`, `M18b/m18b-farg.mjs`), `polypizza-cc0-m18b` |
-| **M19 ✔** | sagoväsen (12, CC0) | sjöjungfru/havsfru, ängel, dvärg, ande/djinn (klossfigurer); sjöhäst, sjöorm, kraken, drakägg, kristallkula (egna); fenix (Gobkit-örn i eldfärger), pegasus (Quaternius-häst med egna vingar), drakunge/babydrake (Quaternius yellowdragon) | `trollpennan-saga-m19` (`M19/folk-m19.mjs`, `M19/m19-egna.mjs`) |
+| **M19 ✔** | sagoväsen (10, CC0) | sjöjungfru/havsfru, ängel, dvärg, ande/djinn (klossfigurer); sjöorm, kraken, drakägg, kristallkula (egna); fenix (Gobkit-örn i eldfärger), pegasus (Quaternius-häst med egna vingar). Sjöhäst utelämnad (tolktestet använder den som sammansättning av häst), drakunge utelämnad (Quaternius yellowdragon ger sidfel i spelet) | `trollpennan-saga-m19` (`M19/folk-m19.mjs`, `M19/m19-egna.mjs`) |
 | M20 | hem och kök | (variantord: säng, lampa, kastrull, tallrik, kopp, matta … de som saknas) | Kenney Furniture (27 oanvända) |
 | M21 | högtider | julgran, adventskrans, krans, snögubbe-varianter, pumpa, påskägg | Kenney/KayKit Holiday (23 oanvända), Halloween |
 | M22 | rymd och teknik | raket-varianter, astronaut, satellit, ufo, robot-varianter, teve | Kenney Space (12 oanvända) |

@@ -89,6 +89,9 @@ if [ "$(tail -n +2 "$UT/lagg-ordgranskning.tsv" | grep -c .)" != "0" ] || [ -f "
 fi
 # 3a2. Paketets ordgranskning.tsv visar de granskade formerna (ur data/ord.json), aldrig lagg-gissningar som "spelarar".
 node $D/ordgranskning-granskad.mjs "$D/$M/ordgranskning.tsv" | tee -a "$UT/bevis.txt"
+# 3a3. Valfritt: inlagg-tillagg.json "utan_palett": [id …] tar bort lagg-paletten för de entiteterna. Med palett målas kroppen om
+# efter art-färgen i spelet, och en klarröd modell blev orange/brun (jultomten, MFIX3). Bara data/entiteter.json.
+[ -f "$D/$M/inlagg-tillagg.json" ] && { node $D/utan-palett.mjs "$D/$M/inlagg-tillagg.json" | tee -a "$UT/bevis.txt"; [ "${PIPESTATUS[0]}" = 0 ] || { git checkout -- data src CREDITS.md LICENSES.md public/models/bulk; git clean -fdq public/models/bulk; stopp 3 "utan_palett kunde inte föras in (allt återställt)"; }; }
 # 3b. Gåtor för nya hemliga djur (r9.test.ts kräver en gåta per djurord). Data ur $D/$M/gator.json, inget annat ändras.
 if [ -f "$D/$M/gator.json" ]; then
   node -e '
