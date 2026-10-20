@@ -78,14 +78,22 @@ export function modellUrl(kropp: string): string | null {
   return (m && TILLGANGAR[m]?.fil) || null;
 }
 
-export type StorlekKlass = { id: string; tak: number; zon: "bak"; kant?: number };
-export type BakZon = { zon: { x: [number, number]; z: [number, number] }; min_avstand: number; fri_x: [number, number][] };
-const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak"; kant?: number }>; kategori: Record<string, string>; ids?: Record<string, string>; bak: BakZon };
+export type StorlekKlass = { id: string; tak: number; zon: "bak"; kant?: number; rad?: "bortom"; max_halv?: number };
+export type BakZon = {
+  zon: { x: [number, number]; z: [number, number] };
+  min_avstand: number;
+  fri_x: [number, number][];
+  /** B6.6: byggnaderna (klass med rad "bortom") står bakom staketet, i det här djupet. */
+  bortom?: { z: [number, number]; fri_x?: [number, number][] };
+  /** B6.6: halva synliga bredden längst bak i stående läge (kroppen ska rymmas). */
+  synlig_x?: number;
+};
+const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak"; kant?: number; rad?: "bortom"; max_halv?: number }>; kategori: Record<string, string>; ids?: Record<string, string>; bak: BakZon; minsta?: { storlek: number; yta: number; max_forstoring: number } };
 /** B6.3 (J): den bakre zonen för stora saker (data/storlek.json). */
 export const BAK_ZON: BakZon = STORLEK.bak;
 
 /** Ett fast tal i [0, 1) per (text, n) – samma uid ger alltid samma läge (FNV-1a). */
-function hashTal(s: string, n: number): number {
+export function hashTal(s: string, n: number): number {
   let h = 0x811c9dc5 ^ n;
   for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 0x01000193);
   h = Math.imul(h ^ (h >>> 15), 0x85ebca6b);
@@ -152,10 +160,15 @@ export const VICKNING = 0.27;
 /** B6.3: fri strand mellan kroppens kant och vattnet (Doodle: halva bredden + 0,15, inte bara mitten). */
 export const FOT_MARGINAL = 0.15;
 
+/** B6.6: halva bredden på marken (data/fotavtryck.json, barnets storleksord inräknat, under taket). */
+export function halvBredd(kropp: string, skala = 1): number {
+  return (FOT[kropp] ?? 0.5 * malhojd(kropp)) * takSkala(kropp, skala || 1);
+}
+
 /** B6.3: hur långt från vattnet mitten måste stå: halva bredden ur modellens bbox (data/fotavtryck.json, barnets
  *  storleksord inräknat; saknas raden 0,5 × målhöjden), minst klassens kant, plus vickningen för djur och marginalen. */
 export function fotKant(kropp: string, skala = 1): number {
-  const halv = (FOT[kropp] ?? 0.5 * malhojd(kropp)) * takSkala(kropp, skala || 1);
+  const halv = halvBredd(kropp, skala);
   return Math.max(halv, storlekKlass(kropp)?.kant ?? 0) + (arSak(kropp) ? 0 : VICKNING) + FOT_MARGINAL;
 }
 
@@ -184,7 +197,22 @@ export function skalaFor(kropp: string, h: number, b: number, d: number): number
   const s = mal / Math.max(0.001, matt);
   // B6.3: ingen skapelse bredare än slottet (2 × MAX_HALVBREDD) – långa modeller (apatosaurus 7,2, golem 5,1, neontetra
   // 2,9 breda) täckte dammen och fick ingen torr plats. Mäts på halva största bredden, som fotavtryck.json.
-  return Math.min(s, MAX_HALVBREDD / Math.max(0.001, 0.5 * Math.max(b, d)));
+  // B6.6: klassen kan tillåta bredare (slottet, kyrkan: storlek.json max_halv)
+  const bredTak = (storlekKlass(kropp)?.max_halv ?? MAX_HALVBREDD) / Math.max(0.001, 0.5 * Math.max(b, d));
+  if (!arSak(kropp)) return Math.min(s, bredTak);
+  // B6.6: en sak får aldrig bli så liten eller tunn att den försvinner i gräset (bäcken, stigen, fiskespöet, kniven):
+  // minsta största mått och minsta yta framifrån (storlek.json "minsta"), högst max_forstoring gånger, och aldrig över taket.
+  const M = STORLEK.minsta;
+  if (!M) return Math.min(s, bredTak);
+  const storst = Math.max(h, b, d) * s;
+  const yta = Math.max(b, d) * h * s * s;
+  let f = 1;
+  if (storst < M.storlek) f = Math.max(f, M.storlek / Math.max(0.001, storst));
+  if (yta < M.yta) f = Math.max(f, Math.sqrt(M.yta / Math.max(1e-6, yta)));
+  f = Math.min(f, M.max_forstoring);
+  const k = storlekKlass(kropp);
+  if (k) f = Math.min(f, Math.max(1, k.tak / Math.max(0.001, h * s)));
+  return Math.min(s * f, bredTak);
 }
 
 /** B6.3: största halva bredden på marken (världsenheter) en skapelse får ritas med; slottet är 1,15. */

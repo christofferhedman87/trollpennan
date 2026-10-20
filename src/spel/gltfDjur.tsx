@@ -289,7 +289,9 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
     const h = Math.max(0.001, box.max.y - box.min.y);
     const s = skalaFor(spec.kropp, h, box.max.x - box.min.x, box.max.z - box.min.z);
     c.scale.setScalar(s);
-    c.position.y = -box.min.y * s;
+    // B6.6: mitten av modellens ruta på skapelsens plats (som GltfSak). Förut flyttades bara botten till marken, så en
+    // modell med origo vid sidan av kroppen (kratern, raketen, rymdskeppet) ritades långt från sin plats, utanför bilden.
+    c.position.set(-((box.min.x + box.max.x) / 2) * s, -box.min.y * s, -((box.min.z + box.max.z) / 2) * s);
     c.updateMatrixWorld(true);
     fastAnkare(c, spec);
     return c;
