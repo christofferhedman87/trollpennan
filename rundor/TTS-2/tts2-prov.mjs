@@ -3,7 +3,8 @@
 //      läses av telefonen, ingen fast text saknar fil, och varje banner står minst max(2,4 s, lästid, replikens ms + 1,5 s).
 //   2) Ett djur väcks ("en kanin"): pratbubblan läses från filer. 3) Barnets eget påhittade ord: bara det ordet läses med
 //      telefonens svenska röst, resten från filer; 4) med bara en engelsk röst läses den meningen inte alls (tyst).
-//   5) Gåtan i boken läses från fil. 6) Ljudet av: ingenting. Inga sidfel.
+//   5) Gåtan i boken läses från fil. 6) Ljudet av: ingenting. 7) Tryck (B6.3 H): uppmaningen "…kan jag inte rita" står
+//      så länge rösten, men ett tryck stänger den direkt och tystar rösten – även när samma uppmaning ligger i kön. Inga sidfel.
 //   node --experimental-strip-types rundor/TTS-2/tts2-prov.mjs [--bilder <mapp>]   (exit 0 = gröna; kräver build:pages)
 import fs from "node:fs";
 import http from "node:http";
@@ -38,18 +39,24 @@ const fel = [];
 const PLATSER = ["skogen", "sjon", "grottan"];
 const BAS = { version: 2, introSedd: true, dragit: true, ang: [], garden: [], stjarnor: 0, oppnadePlatser: PLATSER, seddaIntro: [...PLATSER, "garden", "gard"], platsSkapelser: {} };
 
-async function sida(spar, rost = "sv-SE") {
+async function sida(spar, rost = "sv-SE", spelMs = 200) {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, deviceScaleFactor: 1, locale: "sv-SE" });
-  await ctx.addInitScript((lang) => {
+  await ctx.addInitScript(([lang, spelMs]) => {
     window.__spelat = [];
+    window.__pausat = [];
+    window.__avbrutet = 0;
     window.__talat = [];
     window.__bannrar = [];
     HTMLMediaElement.prototype.play = function () {
       window.__spelat.push(new URL(this.src, location.href).pathname);
-      setTimeout(() => this.dispatchEvent(new Event("ended")), 200);
+      this.__pausad = false;
+      setTimeout(() => this.__pausad || this.dispatchEvent(new Event("ended")), spelMs);
       return Promise.resolve();
     };
-    HTMLMediaElement.prototype.pause = function () {};
+    HTMLMediaElement.prototype.pause = function () {
+      this.__pausad = true;
+      window.__pausat.push({ fil: new URL(this.src, location.href).pathname, t: performance.now() });
+    };
     const roster = [{ lang, name: lang === "sv-SE" ? "Alva" : "Samantha", voiceURI: "x", default: true, localService: true }];
     Object.defineProperty(window, "speechSynthesis", {
       value: {
@@ -58,7 +65,9 @@ async function sida(spar, rost = "sv-SE") {
           window.__talat.push({ text: u.text, lang: u.lang, rost: u.voice?.lang ?? null });
           setTimeout(() => u.onend?.(new Event("end")), 150);
         },
-        cancel: () => {},
+        cancel: () => {
+          window.__avbrutet++;
+        },
         addEventListener: () => {},
         removeEventListener: () => {},
       },
@@ -82,7 +91,7 @@ async function sida(spar, rost = "sv-SE") {
         syns.delete(t);
       }
     }, 50);
-  }, rost);
+  }, [rost, spelMs]);
   await ctx.addInitScript((s) => {
     if (!sessionStorage.getItem("f")) {
       localStorage.setItem("trollpennan-v2", JSON.stringify(s));
@@ -176,6 +185,45 @@ for (const rost of ["sv-SE", "en-US"]) {
   kolla("ljudet av: ingenting läses", !L.spelat.some((s) => s.startsWith("/ljud/rost/")) && L.talat.length === 0 && L.rost.length === 0, { L });
   const fel2 = L.bannrar.filter((b) => Math.abs(b.ms - Math.max(2400, Math.min(12000, 1200 + 60 * b.text.length))) > 350);
   kolla("ljudet av: bannrarna står lästiden (inte röstens)", fel2.length === 0, { fel2, bannrar: L.bannrar });
+  await ctx.close();
+}
+// 7) tryck stänger uppmaningen direkt och tystar rösten (Doodles fynd i b63-prov H): ljudet spelar lika länge som filen
+{
+  const KAN = JSON.parse(fs.readFileSync("data/aterkoppling.json", "utf8")).kan_inte_rita;
+  const plan = rostPlan(KAN);
+  const { ctx, p } = await sida({ ...BAS, ljudPa: true }, "sv-SE", plan?.ms ?? 7000);
+  const syns = async () => (await p.locator(".banderoller").innerText().catch(() => "")).includes(KAN.slice(0, 20));
+  const mat = async () => {
+    await p.click("[data-testid=pennans-bok]");
+    await p.waitForTimeout(400);
+    await p.evaluate(() => window.__troll.vakna("randig"));
+  };
+  await mat();
+  await p.waitForFunction((t) => (document.querySelector(".banderoller")?.textContent ?? "").includes(t), KAN.slice(0, 20), { timeout: 10000 }).catch(() => {});
+  await p.waitForTimeout(1500);
+  // samma uppmaning en gång till medan den första står kvar (den hålls kvar för rösten) → en likadan hamnar i kön
+  await mat();
+  await p.waitForTimeout(600);
+  const fore = await syns();
+  const L0 = await las(p);
+  // det som spelar nu (gåtan i boken kan ligga före uppmaningen i kön – båda ska tystna av trycket)
+  const fil = plan && "f" in plan.delar[0] ? plan.delar[0].f : null;
+  const nu = L0.spelat.at(-1) ?? null;
+  const pausatFore = await p.evaluate((f) => window.__pausat.some((x) => x.fil === f), nu);
+  const spelar = !!nu && !pausatFore;
+  const nSpelat = L0.spelat.length;
+  const tKlick = Date.now();
+  const tSida = await p.evaluate(() => performance.now());
+  await p.locator(".banner.tryck").first().click();
+  await p.waitForTimeout(300);
+  const kvar300 = await syns();
+  await p.waitForTimeout(1500);
+  const kvar1800 = await syns();
+  const efter = await p.evaluate(() => ({ pausat: window.__pausat, avbrutet: window.__avbrutet, spelat: window.__spelat }));
+  if (bilder) await p.screenshot({ path: path.join(bilder, "tts2-tryck.png") });
+  kolla("tryck: uppmaningen står kvar och en röst spelar före trycket", fore && spelar, { fore, spelar, nu, fil, spelat: L0.spelat, ms: plan?.ms });
+  kolla("tryck: uppmaningen är borta 300 ms efter trycket och kommer inte tillbaka (samma text tas ur kön)", !kvar300 && !kvar1800, { kvar300, kvar1800, msEfterTryck: Date.now() - tKlick });
+  kolla("tryck: rösten tystnar (det som spelar pausas, kön töms) och uppmaningen läses inte efteråt", efter.pausat.some((x) => x.fil === nu && x.t >= tSida) && efter.avbrutet > 0 && efter.spelat.slice(nSpelat).length === 0, { nu, fil, pausat: efter.pausat, avbrutet: efter.avbrutet, nya: efter.spelat.slice(nSpelat) });
   await ctx.close();
 }
 await browser.close();
