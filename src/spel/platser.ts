@@ -29,7 +29,8 @@ export type Plats = {
   materialfarger?: Materialfarger;
   ljud?: unknown;
   intro?: unknown;
-  final_fore?: unknown;
+  /** B6.2: Bengtssons replik när platsens final blir tillgänglig (visas när barnet trycker på honom för finalen). */
+  final_fore?: { text: string; min?: string } | null;
   hemliga?: string[];
   uppdrag: string[];
 };
@@ -55,13 +56,20 @@ function nagonNadd(g: Villkorsgrupp | null | undefined, m: Matt): boolean {
   return !!g && g.nagon.some((v) => villkorNatt(v, m));
 }
 
-/** Ängen är alltid öppen. En plats som en gång öppnats förblir öppen. Annars räcker ett villkor ur `nagon`. */
+/** Ängen är alltid öppen. En plats som en gång öppnats förblir öppen. Annars räcker ett villkor ur `nagon`,
+ *  eller (B6.2) att en annan plats milstolpe med `las_upp: id` är nådd. */
 export function upplast(id: string, m: Matt, platser: Plats[] = PLATSER): boolean {
   if (id === START_PLATS) return true;
   const p = platsMed(id, platser);
   if (!p) return false;
   if (m.oppnade?.includes(id)) return true;
-  return nagonNadd(p.upplasning, m);
+  if (nagonNadd(p.upplasning, m)) return true;
+  return platser.some((q) => q.milstolpe?.las_upp === id && nagonNadd(q.milstolpe, m));
+}
+
+/** B6.2: platsens final = uppdraget med `final: true` i bengtsson.json eller det som `milstolpe.final` pekar på. */
+export function arFinal(u: { id: string; omrade: string; final?: boolean }, platser: Plats[] = PLATSER): boolean {
+  return !!u.final || (!!u.id && platsMed(u.omrade, platser)?.milstolpe?.final === u.id);
 }
 
 /** Får platsens final erbjudas? */
@@ -72,7 +80,7 @@ export function milstolpeNadd(id: string, m: Matt, platser: Plats[] = PLATSER): 
 /** Klara skriv-uppdrag per `omrade`, utan finaler. */
 export function klaraPerPlats(status: Record<string, "pagar" | "klar">, uppdrag: { id: string; omrade: string; final?: boolean }[] = SKRIV): Record<string, number> {
   const ut: Record<string, number> = {};
-  for (const u of uppdrag) if (status[u.id] === "klar" && !u.final) ut[u.omrade] = (ut[u.omrade] ?? 0) + 1;
+  for (const u of uppdrag) if (status[u.id] === "klar" && !arFinal(u)) ut[u.omrade] = (ut[u.omrade] ?? 0) + 1;
   return ut;
 }
 

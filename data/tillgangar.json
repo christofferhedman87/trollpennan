@@ -846,6 +846,8 @@
     "vattenskoter": { "fil": "/models/bulk/vattenskoter.glb", "licens": "CC0-1.0", "upphov": "Trollpennan", "kalla": "https://github.com/christofferhedman87/trollpennan", "paket": "trollpennan-fordon-m18", "trianglar": 216, "bytes": 8844, "stil": "nära", "inlagd": "R3F-M18" },
     "zeppelinare": { "fil": "/models/bulk/zeppelinare.glb", "licens": "CC0-1.0", "upphov": "Trollpennan", "kalla": "https://github.com/christofferhedman87/trollpennan", "paket": "trollpennan-fordon-m18", "trianglar": 404, "bytes": 12424, "stil": "nära", "inlagd": "R3F-M18" },
     "motorcykel": { "fil": "/models/bulk/motorcykel.glb", "licens": "CC0-1.0", "upphov": "AliceCassie", "kalla": "https://poly.pizza/m/j20srJUjpB", "paket": "polypizza-cc0-m18", "trianglar": 1500, "bytes": 23868, "stil": "nära", "inlagd": "R3F-M18" },
-    "pickup": { "fil": "/models/bulk/pickup.glb", "licens": "CC0-1.0", "upphov": "Quaternius", "kalla": "https://poly.pizza/m/qn4grQgHm8", "paket": "polypizza-cc0-m18", "trianglar": 4275, "bytes": 67304, "stil": "nära", "inlagd": "R3F-M18" }
+    "pickup": { "fil": "/models/bulk/pickup.glb", "licens": "CC0-1.0", "upphov": "Quaternius", "kalla": "https://poly.pizza/m/qn4grQgHm8", "paket": "polypizza-cc0-m18", "trianglar": 4275, "bytes": 67304, "stil": "nära", "inlagd": "R3F-M18" },
+    "regnbage": { "fil": "/models/bulk/regnbage.glb", "licens": "CC0-1.0", "upphov": "Trollpennan", "kalla": "https://github.com/christofferhedman87/trollpennan", "paket": "trollpennan-egna-m16", "trianglar": 576, "bytes": 45232, "stil": "nära", "inlagd": "B6.2" },
+    "eld": { "fil": "/models/bulk/eld.glb", "licens": "CC0-1.0", "upphov": "Trollpennan", "kalla": "https://github.com/christofferhedman87/trollpennan", "paket": "trollpennan-egna-m16", "trianglar": 100, "bytes": 9176, "stil": "nära", "inlagd": "B6.2" }
   }
 }
