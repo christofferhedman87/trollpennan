@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 898 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 922 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -42,7 +42,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-fantasy-town-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/fantasy-town-kit | 11 |
 | kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 68 |
 | kenney-food-kit-2 | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 15 |
-| kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 45 |
+| kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 46 |
 | kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 6 |
 | kenney-holiday-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/holiday-kit | 16 |
 | kenney-mini-arcade | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-arcade | 7 |
@@ -87,6 +87,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | trollpennan-egna-m16 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 14 |
 | trollpennan-folk-m17 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 34 |
 | trollpennan-fordon-m18 | Kenney (watercraft-kit); tillägg: Trollpennan | CC0-1.0 | https://kenney.nl/assets/watercraft-kit | 31 |
+| trollpennan-hem-m20b | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 23 |
 | trollpennan-kok-m20 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 22 |
 | trollpennan-mfix | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 21 |
 | trollpennan-mfix2 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 8 |
@@ -997,3 +998,27 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | glasskal | /models/bulk/glasskal.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | aggklocka | /models/bulk/aggklocka.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | matbord | /models/bulk/matbord.glb | CC0-1.0 | Kay Lousberg | https://kaylousberg.itch.io/furniture-bits |
+| barnstol | /models/bulk/barnstol.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| byra | /models/bulk/byra.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| dammsugare | /models/bulk/dammsugare.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| dockskap | /models/bulk/dockskap.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| ficklampa | /models/bulk/ficklampa.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| garderob | /models/bulk/garderob.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| glodlampa | /models/bulk/glodlampa.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| gokur | /models/bulk/gokur.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| gunghast | /models/bulk/gunghast.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| gungstol | /models/bulk/gungstol.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| hangmatta | /models/bulk/hangmatta.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| hatthylla | /models/bulk/hatthylla.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kontorsstol | /models/bulk/kontorsstol.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kvast | /models/bulk/kvast.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| leksakslada | /models/bulk/leksakslada.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| ljuslykta | /models/bulk/ljuslykta.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| pendelur | /models/bulk/pendelur.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| sittsack | /models/bulk/sittsack.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| skrivbordslampa | /models/bulk/skrivbordslampa.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| spargris | /models/bulk/spargris.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| tandborste | /models/bulk/tandborste.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| toapapper | /models/bulk/toapapper.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| vaggklocka | /models/bulk/vaggklocka.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| teve | /models/bulk/teve.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
