@@ -4,6 +4,7 @@ import { fyll } from "../fyll.ts";
 import { aktivGata, gatUrval, nastaGata } from "../gata.ts";
 import { platsMed } from "../platser.ts";
 import { useMinne } from "../minne.ts";
+import { sag } from "../rost.ts";
 import { LED } from "./spelData.ts";
 import { hemligaDjur } from "./hemliga.ts";
 
@@ -27,6 +28,11 @@ export function Ledtradsyta({ funna }: { funna: Record<string, unknown> }) {
   useEffect(() => {
     if (id && id !== gataId) sattGataId(id);
   }, [id, gataId, sattGataId]);
+  // TTS-2: gåtan läses upp en gång per gåta och spelomgång (Trollpennans röst)
+  const gataText = id ? LED[id]?.gata : undefined;
+  useEffect(() => {
+    if (id && gataText) sag(gataText, `gata:${id}`);
+  }, [id, gataText]);
   const hittade = alla.length - kvar.length;
   if (!id) return <p className="ledtrad-klar" data-testid="ledtrad">{hemligt.alla_hittade}</p>;
   const led = LED[id]!;
