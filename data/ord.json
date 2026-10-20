@@ -5738,7 +5738,6 @@
    "former": [
     "nattfjäril",
     "nattfjärilen",
-    "nattfjäriln",
     "nattfjärilar",
     "nattfjärilarna"
    ],
@@ -6008,7 +6007,6 @@
    "former": [
     "fjäril",
     "fjärilen",
-    "fjäriln",
     "fjärilar",
     "fjärilarna"
    ],
@@ -6027,7 +6025,6 @@
    "former": [
     "makaonfjäril",
     "makaonfjärilen",
-    "makaonfjäriln",
     "makaonfjärilar",
     "makaonfjärilarna"
    ],
@@ -6397,24 +6394,6 @@
    }
   },
   {
-   "id": "narval",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "narval",
-   "genus": "u",
-   "former": [
-    "narval",
-    "narvalen",
-    "narvalar",
-    "narvalarna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3F-MFIX trollpennan-mfix",
-   "del": {
-    "kropp": "narval"
-   }
-  },
-  {
    "id": "mask",
    "klass": "djur",
    "niva": "fritt",
@@ -6610,24 +6589,6 @@
    }
   },
   {
-   "id": "bebis",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "bebis",
-   "genus": "u",
-   "former": [
-    "bebis",
-    "bebisen",
-    "bebisar",
-    "bebisarna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3F-MFIX trollpennan-mfix",
-   "del": {
-    "kropp": "bebis"
-   }
-  },
-  {
    "id": "tjej",
    "klass": "djur",
    "niva": "fritt",
@@ -6717,19 +6678,56 @@
    }
   },
   {
-   "id": "gamer",
+   "id": "bebis",
    "klass": "djur",
    "niva": "fritt",
-   "visa": "gamer",
+   "visa": "bebis",
    "genus": "u",
    "former": [
-    "gamer",
-    "gamern"
+    "bebis",
+    "bebisen",
+    "bebisar",
+    "bebisarna"
    ],
    "signatur": "studs",
-   "kalla": "R3F-M16 trollpennan-mfix",
+   "kalla": "R3F-MFIX2 trollpennan-mfix2",
    "del": {
-    "kropp": "gamer"
+    "kropp": "bebis"
+   }
+  },
+  {
+   "id": "narval",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "narval",
+   "genus": "u",
+   "former": [
+    "narval",
+    "narvalen",
+    "narvalar",
+    "narvalarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX2 trollpennan-mfix2",
+   "del": {
+    "kropp": "narval"
+   }
+  },
+  {
+   "id": "spelare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "spelare",
+   "genus": "u",
+   "former": [
+    "spelare",
+    "spelaren",
+    "spelarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-MFIX2 trollpennan-mfix2",
+   "del": {
+    "kropp": "spelare"
    }
   }
  ],

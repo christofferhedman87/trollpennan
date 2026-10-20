@@ -44,22 +44,21 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | kenney-city-kit-industrial | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-industrial | 5 |
 | kenney-city-kit-roads | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-roads | 5 |
 | kenney-city-kit-suburban | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-suburban | 2 |
-| kenney-coaster-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/coaster-kit | 3 |
+| kenney-coaster-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/coaster-kit | 2 |
 | kenney-cube-pets | Kenney | CC0-1.0 | https://kenney.nl/assets/cube-pets | 13 |
 | kenney-factory-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/factory-kit | 5 |
 | kenney-fantasy-town-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/fantasy-town-kit | 11 |
 | kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 68 |
 | kenney-food-kit-2 | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 15 |
 | kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 45 |
-| kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 9 |
+| kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 6 |
 | kenney-holiday-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/holiday-kit | 16 |
 | kenney-mini-arcade | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-arcade | 7 |
-| kenney-mini-arena | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-arena | 1 |
 | kenney-mini-characters | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-characters | 4 |
 | kenney-mini-dungeon | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-dungeon | 11 |
 | kenney-mini-forest | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-forest | 4 |
 | kenney-mini-market-2 | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-market | 2 |
-| kenney-mini-skate | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-skate | 3 |
+| kenney-mini-skate | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-skate | 2 |
 | kenney-minigolf-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/minigolf-kit | 3 |
 | kenney-modular-buildings | Kenney | CC0-1.0 | https://kenney.nl/assets/modular-buildings | 2 |
 | kenney-modular-cave-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/modular-cave-kit | 3 |
@@ -73,7 +72,7 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | kenney-tower-defense-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/tower-defense-kit | 2 |
 | kenney-toy-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/toy-car-kit | 4 |
 | kenney-train-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/train-kit | 12 |
-| kenney-watercraft-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/watercraft-kit | 8 |
+| kenney-watercraft-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/watercraft-kit | 7 |
 | oga-cc0 | Teh_Bucket | CC0-1.0 | https://opengameart.org/content/hats-clothing-props | 7 |
 | polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 37 |
 | polypizza-cc0-2 | Quaternius | CC0-1.0 | https://poly.pizza/m/3aQgc75sUR | 16 |
@@ -90,8 +89,9 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | quaternius-ultimate-animated-animals | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimateanimatedanimals.html | 7 |
 | quaternius-ultimate-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimatemonsters.html | 11 |
 | trollpennan-egna-m14 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 3 |
-| trollpennan-egna-m16 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 14 |
-| trollpennan-mfix | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 25 |
+| trollpennan-egna-m16 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 13 |
+| trollpennan-mfix | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 21 |
+| trollpennan-mfix2 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 9 |
 
 Alla paket ovan är CC0 om inget annat står. Fullständig lista per fil finns i LICENSES.md.
 
