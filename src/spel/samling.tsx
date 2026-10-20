@@ -13,7 +13,7 @@ const OMR_NAMN = Object.fromEntries(
 const VILDA = (vildaJson as { djur: { id: string; namn: string; omrade: string }[] }).djur;
 const FOR = foralderJson;
 
-export function borRad(namn: string) {
+function borRad(namn: string) {
   return `Bor i ${namn}`;
 }
 
@@ -196,7 +196,7 @@ export function ForalderLiv() {
   );
 }
 
-export function ordText(frek: Record<string, number>) {
+function ordText(frek: Record<string, number>) {
   return Object.entries(frek)
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "sv"))
     .map(([w]) => w)

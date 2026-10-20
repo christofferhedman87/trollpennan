@@ -1,6 +1,7 @@
 import { useGLTF } from "@react-three/drei";
 import { useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
+import { belysScen } from "./belys.ts";
 
 const FARG: Record<string, string> = {
   grass: "#63c34a",
@@ -37,6 +38,7 @@ function geoGrupp(geo: THREE.BufferGeometry, start: number, count: number) {
 }
 
 function baka(scene: THREE.Object3D, farger?: Record<string, string>): Del[] {
+  belysScen(scene); // B6.1: KHR_materials_unlit → upplyst material, som alla andra modeller
   scene.updateMatrixWorld(true);
   const box = new THREE.Box3().setFromObject(scene);
   const size = new THREE.Vector3();

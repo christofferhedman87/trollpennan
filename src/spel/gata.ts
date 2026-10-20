@@ -12,3 +12,11 @@ export function nastaGata(kvar: string[], gataId: string | null): string | null 
   if (!nu) return null;
   return kvar[(kvar.indexOf(nu) + 1) % kvar.length]!;
 }
+
+/** B6.1: gåtorna som får väljas på en plats. Platsens egna hemliga djur (`hemliga` i data/platser.json) först; först när
+ *  de är hittade (eller platsen saknar egna, som ängen) väljs bland alla andra. "Ny gåta" går runt inom urvalet. */
+export function gatUrval(kvar: string[], platsHemliga: readonly string[] | undefined): string[] {
+  if (!platsHemliga?.length) return kvar;
+  const egna = kvar.filter((id) => platsHemliga.includes(id));
+  return egna.length ? egna : kvar;
+}

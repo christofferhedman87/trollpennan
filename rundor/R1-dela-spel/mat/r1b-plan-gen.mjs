@@ -42,7 +42,7 @@ function scan(ranges) {
 }
 const out = [];
 for (const s of SPEC) {
-  let fran, till, cond = null, condRad = null, ranges;
+  let fran, till, cond = null, condRad = null;
   if (s.fragment) { fran = s.fran; till = s.till; }
   else if (s.cond) {
     const l0 = s.cond; const je = (() => { let h; (function v(n) { if (!h && ts.isJsxExpression(n) && line(n.getStart()) === l0) h = n; ts.forEachChild(n, v); })(spel); return h; })();

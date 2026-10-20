@@ -7,6 +7,8 @@
 //   node verification/r1-dom-tur.mjs --jamfor /tmp/r1/fore1 /tmp/r1/fore2 /tmp/r1/efter   (exit 1 vid skillnad)
 //   --bara namn1,namn2   kör bara lägen vars namn ingår (numreringen är densamma; för omkörning av ett läge)
 // Lägen 01–20 skrevs för R1A, 21–28 lades till inför R1B (dialoger som 01–20 inte nådde).
+// B6.1: 10–11 följer det nya beteendet (kartan: låst skog → "Inte riktigt än"; tre djur → resan till skogen), och
+// humörikonen i 3D (R9K) normaliseras (ikon + skärmläge varierar av sig själv), så att 02–04, 06 och 15–17, 28 blir stabila.
 // Webbläsare: env CHROMIUM_PATH om satt, annars Playwrights egen chromium.
 import fs from "node:fs";
 import http from "node:http";
@@ -97,6 +99,15 @@ async function dom() {
     k.querySelectorAll(".banderoller").forEach((e) => (e.innerHTML = ""));
     k.querySelectorAll("[data-testid='bubbla']").forEach((e) => e.remove());
     k.querySelectorAll("[data-testid^='humor-'], [data-testid='zzz']").forEach((e) => { e.setAttribute("data-testid", "humor-X"); e.textContent = "X"; e.removeAttribute("style"); });
+    // B6.1: humörikonen över djuret i 3D (R9K) – slumpat humör och ett skärmläge som följer djuret (drei Html-omslag)
+    k.querySelectorAll(".humor-ikon-3d").forEach((e) => {
+      e.setAttribute("data-testid", "humor3d-X");
+      e.textContent = "X";
+    });
+    // B6.1: alla drei Html-omslag (ikon, "!"-markör, bubblor i 3D) följer kameran – skärmläget är inte DOM-innehåll.
+    k.querySelectorAll("div[style*='translate3d']").forEach((e) => e.removeAttribute("style"));
+    // B6.1: laddflaggan för 3D-scenen blir klar i sin egen takt
+    k.querySelectorAll("[data-klar]").forEach((e) => e.removeAttribute("data-klar"));
     k.querySelectorAll(".foto-knapp, .bubbla.onska, .bygg-meny").forEach((e) => e.removeAttribute("style"));
     k.querySelectorAll("[data-testid='onska-ansikte']").forEach((e) => e.removeAttribute("style"));
     k.querySelectorAll(".ang").forEach((e) => ["--duk-x", "--duk-y", "--duk-w", "--duk-h"].forEach((v) => e.style.removeProperty(v)));
@@ -144,6 +155,8 @@ async function lage(namn, forberedelse, handling) {
 const inget = async () => {};
 const oppnaMeny = async () => { await t("meny").click(); };
 const tillKartan = async () => { await medDjur(); await oppnaMeny(); await t("ut-pa-aventyr").click(); };
+// B6.1: skogen öppnas efter tre djur (data/platser.json upplasning); resan går direkt, utan djurval.
+const treDjurTillKartan = async () => { for (const d of ["en blå fågel", "en gris", "en katt"]) { await medDjur(d); await p.waitForTimeout(400); } await oppnaMeny(); await t("ut-pa-aventyr").click(); };
 
 await lage("start", inget, inget);
 await lage("ang-djur", inget, () => medDjur());
@@ -154,8 +167,8 @@ await lage("bok-behover", inget, () => medDjur("en elefant"));
 await lage("meny", inget, oppnaMeny);
 await lage("meny-last", oppnaMeny, async () => { await t("flik-gard").click(); });
 await lage("karta", medDjur, async () => { await oppnaMeny(); await t("ut-pa-aventyr").click(); });
-await lage("skogen-valj", tillKartan, async () => { await t("plats-skogen").click(); });
-await lage("skogen", async () => { await tillKartan(); await t("plats-skogen").click(); }, async () => { await p.locator('[data-testid="valj-djur"] button[data-testid^="valj-"]').first().click(); await p.waitForTimeout(700); });
+await lage("skogen-last", tillKartan, async () => { await t("plats-skogen").click({ force: true }); await p.waitForTimeout(400); });
+await lage("skogen", treDjurTillKartan, async () => { await t("plats-skogen").click(); await p.waitForTimeout(3500); });
 await lage("ordbok", inget, () => troll(() => window.__troll.ordbok(true)));
 await lage("foralder", inget, () => troll(() => window.__troll.foralder(true)));
 await lage("album", inget, () => troll(() => window.__troll.album(true)));

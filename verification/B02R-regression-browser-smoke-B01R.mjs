@@ -26,7 +26,7 @@ try {
  const state=await page.evaluate(()=>window.__troll.state());
  results.push({name:'idea UI creates dragon with crown',pass:state.ang.some(a=>a.kropp==='drake'&&a.tillbehor.some(t=>t.id==='krona')),state});
  await page.screenshot({path:'verification/mobile-created-B01R.png',animations:'disabled',timeout:5000}).catch(()=>{});
- const save=await page.evaluate(()=>localStorage.getItem('trollpennan-v2'));
+ await page.evaluate(()=>localStorage.getItem('trollpennan-v2'));
  await page.reload({waitUntil:'domcontentloaded'});await page.waitForFunction(()=>!!window.__troll);await page.waitForTimeout(1000);
  results.push({name:'reload restores dragon',pass:(await page.evaluate(()=>window.__troll.state())).ang.some(a=>a.kropp==='drake')});
  await page.evaluate(()=>window.__troll.plats('gard'));await page.waitForTimeout(700);await page.evaluate(()=>window.__troll.vakna('hus'));await page.waitForTimeout(800);
@@ -41,5 +41,5 @@ try {
  await context.close();
  const corrupt=await browser.newContext({viewport:{width:375,height:812}});await corrupt.addInitScript(()=>localStorage.setItem('trollpennan-v2','{broken'));const cp=await corrupt.newPage();await cp.goto('http://127.0.0.1:4173',{waitUntil:'domcontentloaded'});await cp.waitForFunction(()=>!!window.__troll,null,{timeout:10000});results.push({name:'corrupt storage starts safely',pass:await cp.locator('.lagrings-info').count()===1});await corrupt.close();
  fs.writeFileSync('verification/browser-B01R.json',JSON.stringify({method:'Chromium production build via local HTTP; SwiftShader, not real mobile GPU',results,errors,responses},null,2));
- console.log(JSON.stringify({results:results.map(({state,...x})=>x),errors,responses},null,2));
+ console.log(JSON.stringify({results:results.map(({state:_state,...x})=>x),errors,responses},null,2));
 } catch(e){console.error(e);fs.writeFileSync('verification/browser-B01R.json',JSON.stringify({results,errors,responses,failure:String(e)},null,2));process.exitCode=1;}finally{await browser.close();server.closeAllConnections();await new Promise(r=>server.close(r));}

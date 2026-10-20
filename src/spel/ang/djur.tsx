@@ -6,8 +6,8 @@ import type { Plats } from "../platser.ts";
 import { byggPack, forma } from "../djurmesh.ts";
 import { replik } from "../replik.ts";
 import { ljud } from "../ljud.ts";
-import { GltfDjur, GltfSak, harModell, type DjurSignal } from "../gltfDjur.tsx";
-import { arSak, hoppHojd, malhojd, svavar } from "../entiteter.ts";
+import { GltfDjur, GltfSak, type DjurSignal } from "../gltfDjur.tsx";
+import { arSak, harModell, hoppHojd, malhojd, svavar, takSkala } from "../entiteter.ts";
 import { faestTillbehor, procAnkare } from "../tillbehor/index.ts";
 import { DjurEffekter } from "../effekter.tsx";
 import { MILJO } from "../miljo.ts";
@@ -98,12 +98,11 @@ export function DjurForm({ spec }: { spec: Sparad }) {
       monsterFarg: spec.monsterfarg ?? "#6D4C41",
     });
   }, [farg, spec]);
-  const tillSign = spec.tillbehor.map((t) => `${t.id}:${t.farg ?? ""}`).join(",");
   const extra = useMemo(() => {
     const g = new THREE.Group();
     faestTillbehor(g, spec.kropp, spec.tillbehor);
     return g;
-  }, [spec, tillSign]);
+  }, [spec]);
   const mat = useMemo(() => {
     if (!spec.glans) return KROPP_MAT;
     return new THREE.MeshToonMaterial({
@@ -280,7 +279,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
     }
     const lyft = Math.sin(hopp.current * Math.PI) * (snurr.current > 0 ? 0.85 : 0.45);
     const bob = Math.sin(t * (flyg ? 2.4 : 1.6) + index) * (flyg ? 0.16 : sim ? 0.08 : 0.04);
-    const s = skal.current * (spec.skala || 1);
+    const s = skal.current * takSkala(spec.kropp, spec.skala || 1); // B6.1 (E): stora saker under taket
     const kram = 1 - Math.sin(Math.min(1, kisa.current) * Math.PI) * 0.14;
     g.scale.set((s * bred) / Math.sqrt(kram), s * hojd * kram, (s * bred) / Math.sqrt(kram));
     const wx = Math.cos(t * 0.25 + index) * 0.22;

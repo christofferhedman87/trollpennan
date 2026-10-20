@@ -5,6 +5,7 @@ import { SkeletonUtils } from "three-stdlib";
 import * as THREE from "three";
 import { byttPixel, graNiva, hexTillHsl, ljusTint, malAlbedo, rgbTillHsl, traffarPalett } from "./palett.ts";
 import { MILJO } from "./miljo.ts";
+import { belysScen } from "./belys.ts";
 
 const LJUSTINT = ljusTint(MILJO.ljus, MILJO.farg.ljusforstark);
 import type { Sparad } from "./brygga.ts";
@@ -205,7 +206,16 @@ function metallNoll(rot: THREE.Object3D) {
 /** Animerade modeller (skinnade nät) har en omslutande sfär för vilopositionen; utan det här kan de klippas bort mitt i en rörelse. */
 function ingenKulling(rot: THREE.Object3D) {
   rot.traverse((o) => {
-    if ((o as THREE.SkinnedMesh).isSkinnedMesh) o.frustumCulled = false;
+    const sm = o as THREE.SkinnedMesh;
+    if (!sm.isSkinnedMesh) return;
+    o.frustumCulled = false;
+    // B6.1: ett skinnat nät räknar sin träffsfär EN gång, vid första strålen. Kommer den medan djuret poppar fram
+    // (t.ex. ett djur som hämtas ut ur stallet på en plats) blir sfären 0 och djuret går aldrig mer att trycka på.
+    // Räkna om sfären vid varje stråle; strålar skjuts bara vid pekarhändelser och näten är små.
+    sm.raycast = (stral, traffar) => {
+      sm.computeBoundingSphere();
+      THREE.SkinnedMesh.prototype.raycast.call(sm, stral, traffar);
+    };
   });
 }
 
@@ -240,7 +250,7 @@ function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
           m.color.set("#ffffff");
         }
       }
-      if (glans && (roll === "farg" || (!ent?.material && pal))) {
+      if (glans && "emissive" in m && (roll === "farg" || (!ent?.material && pal))) {
         m.emissive = new THREE.Color("#FFE082");
         m.emissiveIntensity = 0.28;
       }
@@ -252,14 +262,6 @@ function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
 
 function fastAnkare(rot: THREE.Object3D, spec: Sparad) {
   faestTillbehor(rot, spec.kropp, spec.tillbehor, "modell");
-}
-
-export function harModell(kropp: string) {
-  return Boolean(modellUrlAv(kropp));
-}
-
-export function modellUrl(kropp: string) {
-  return modellUrlAv(kropp);
 }
 
 for (const url of forladdaUrls()) useGLTF.preload(url);
@@ -274,6 +276,7 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
   const klappTid = useRef(0);
   const sign = `${spec.kropp}|${spec.farg ?? ""}|${spec.glans ? 1 : 0}|${spec.tillbehor.map((t) => `${t.id}:${t.farg ?? ""}`).join(",")}`;
   const klon = useMemo(() => {
+    belysScen(gltf.scene);
     const c = SkeletonUtils.clone(gltf.scene) as THREE.Object3D;
     metallNoll(c);
     ingenKulling(c);
@@ -405,6 +408,7 @@ export function GltfSak({ id, vand = false, farger }: { id: string; vand?: boole
   const gltf = useGLTF(modellUrlAv(id)!);
   const fargNyckel = farger ? JSON.stringify(farger) : "";
   const klon = useMemo(() => {
+    belysScen(gltf.scene);
     const c = SkeletonUtils.clone(gltf.scene) as THREE.Object3D;
     if (farger) fargaOm(c, farger);
     metallNoll(c);

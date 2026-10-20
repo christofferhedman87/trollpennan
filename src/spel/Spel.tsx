@@ -1,4 +1,5 @@
 import { useDialogFokus } from "./dialogFokus";
+import { kanInteRita } from "@/tolk/aterkoppling.ts";
 import upplevelse from "../../data/upplevelse.json";
 import { LagringsInfo } from "./LagringsInfo";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -158,7 +159,6 @@ export function Spel() {
   const [skylt, setSkylt] = useState<{ text: string; nytt: string | null } | null>(null);
   const [valj, setValj] = useState<{ rubrik: string; eller?: string; djur: Sparad[]; nyckel: string } | null>(null);
   const [uppFlik, setUppFlik] = useState<"pagar" | "klar">("pagar");
-  const [skriverAv, setSkriverAv] = useState(false);
   const host = useRef<HTMLDivElement>(null);
   const angRef = useRef<HTMLElement>(null);
   const filRef = useRef<HTMLInputElement>(null);
@@ -368,7 +368,6 @@ export function Spel() {
     setPanel("spel");
     setGavaTill(null);
     gavaRef.current = null;
-    setSkriverAv(false);
     vantarRef.current = null;
     omradeRef.current = id;
     setOmrade(id);
@@ -421,7 +420,6 @@ export function Spel() {
       visaBanner(s.text, "ovr");
       setKartaText(s.text);
       vantarRef.current = { slag: "oppna", omrade: id, taggar: s.taggar };
-      setSkriverAv(true);
       setLage("skriv");
       setHand(true);
       setKartaOpp(false);
@@ -434,7 +432,6 @@ export function Spel() {
     valjKor.current = (d) => {
       setValj(null);
       vantarRef.current = null;
-      setSkriverAv(false);
       visaBanner(oppnaMed(id, d), "ovr");
       gaIn(id);
     };
@@ -450,7 +447,6 @@ export function Spel() {
     if (s.typ === "inga") {
       visaBanner(s.text, "ovr");
       vantarRef.current = { slag: "del", taggar: s.taggar };
-      setSkriverAv(true);
       setLage("skriv");
       setHand(true);
       setKartaOpp(false);
@@ -463,7 +459,6 @@ export function Spel() {
     valjKor.current = (d) => {
       setValj(null);
       vantarRef.current = null;
-      setSkriverAv(false);
       visaBanner(oppnaOn(d), "ovr");
       gaIn("on");
     };
@@ -480,7 +475,6 @@ export function Spel() {
       const text = fyll(OMR.karta.inget_djur, { kan });
       visaBanner(text, "ovr");
       vantarRef.current = { slag: "skicka", uppdrag: uppId, taggar: [tagg] };
-      setSkriverAv(true);
       setLage("skriv");
       setHand(true);
       setKartaOpp(false);
@@ -794,6 +788,8 @@ export function Spel() {
       return;
     }
     if (utfall.typ === "behover_djur") {
+      const kan = kanInteRita(utfall, raw); // B6.1 (F): känt ord utan modell → synlig banderoll, boken stängs
+      if (kan) { visaBanner(kan, "okand"); ljud.puff(); setBehover(null); setForslag(null); rensaSkriv(); setBokOpp(false); return; }
       useMinne.getState().sparaOkanda(utfall.okanda);
       for (const m of utfall.meddelanden) visaBanner(m, "okand");
       if (utfall.meddelanden.length) ljud.puff();
@@ -863,7 +859,6 @@ export function Spel() {
     const vant = vantarRef.current;
     if (vant && sista && passarDjur(sista, vant.taggar)) {
       vantarRef.current = null;
-      setSkriverAv(false);
       if (vant.slag === "oppna") {
         visaBanner(oppnaMed(vant.omrade, sista), "ovr");
         gaIn(vant.omrade);
@@ -1379,6 +1374,7 @@ export function Spel() {
       }
     }, 200);
     return () => window.clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- B6.1: dygnsklockan monteras en gång; visaBanner köar via bannerKo-ref och set-funktioner
   }, []);
 
   useEffect(() => {
@@ -1423,6 +1419,7 @@ export function Spel() {
     };
     window.addEventListener("keydown", ned);
     return () => window.removeEventListener("keydown", ned);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- B6.1: tangentlyssnaren monteras en gång; skrivTecken/sudda når bara state via refs och set-funktioner
   }, []);
 
   useEffect(() => {
@@ -1518,7 +1515,6 @@ export function Spel() {
         setGavaTill(null);
         setSkylt(null);
         setValj(null);
-        setSkriverAv(false);
         setKartaText(null);
         setPanel("spel");
         synkaAv(null);

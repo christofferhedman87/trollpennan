@@ -20,6 +20,7 @@ export function OnskaAnsikte({ djur }: { djur: Sparad }) {
     return () => {
       stopp = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- B6.1: rita om bara när djuret eller formeln byts, inte vid varje ny objektreferens
   }, [djur.uid, djur.formel]);
   return <canvas ref={ref} className="onska-ansikte" width={144} height={144} data-testid="onska-ansikte" aria-hidden />;
 }

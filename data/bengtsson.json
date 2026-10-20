@@ -1750,7 +1750,7 @@
    "klart": "Vilket färgglatt kompispar!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Kan två vänner låna varsin färg från en tomat och en klar sommarhimmel?",
+   "text_bengtsson": "Jag vill se två vänner: en i tomatens färg och en i himlens färg!",
    "klart_bengtsson": "Vilket färgglatt kompispar!",
    "krav": {
     "ord": [
@@ -1810,7 +1810,7 @@
    "klart": "Nu ser hela ängen extra glad ut!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Låt två vänner låna färger från solen och gräset!",
+   "text_bengtsson": "Jag vill se två vänner: en i solens färg och en i gräsets färg!",
    "klart_bengtsson": "Nu ser hela ängen extra glad ut!",
    "krav": {
     "ord": [
@@ -2662,7 +2662,7 @@
    "klart": "Vilken fin färgklick bland allt det gröna!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "En vän vill låna samma färg som en mogen tomat!",
+   "text_bengtsson": "Jag vill se en vän i samma färg som en tomat!",
    "klart_bengtsson": "Vilken fin färgklick bland allt det gröna!",
    "krav": {
     "ord": [
@@ -3566,7 +3566,7 @@
    "klart": "Vilken fin färgkompis till vattnet!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "En vän vill låna färgen från en klar sommarhimmel!",
+   "text_bengtsson": "Jag vill se en vän i samma färg som himlen!",
    "klart_bengtsson": "Vilken fin färgkompis till vattnet!",
    "krav": {
     "ord": [
@@ -4185,7 +4185,7 @@
    "klart": "Nu har både stranden och vattnet fått färg!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "Två vänner lånar färg från en tomat och från himlen. Den ena badar. Den andra sitter på stranden.",
+   "text_bengtsson": "En vän i tomatens färg badar i vattnet. En vän i himlens färg sitter på stranden.",
    "klart_bengtsson": "Nu har både stranden och vattnet fått färg!",
    "krav": {
     "ord": [
@@ -4509,7 +4509,7 @@
    "klart": "Nu har vi en liten solstråle här inne!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "En vän vill låna färgen från solen där ute!",
+   "text_bengtsson": "Jag vill se en vän i samma färg som solen!",
    "klart_bengtsson": "Nu har vi en liten solstråle här inne!",
    "krav": {
     "ord": [
@@ -5072,7 +5072,7 @@
    "klart": "Vilken färgglad liten samling!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "Två vänner lånar färg från gräset och solen. Den ena sitter på en sten. Den andra står bredvid.",
+   "text_bengtsson": "En vän i gräsets färg sitter på en sten. En vän i solens färg står bredvid stenen.",
    "klart_bengtsson": "Vilken färgglad liten samling!",
    "krav": {
     "ord": [

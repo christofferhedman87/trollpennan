@@ -90,7 +90,7 @@ async function skriv(namn, delar, farger) {
   d.createScene(namn).addChild(d.createNode(namn).setMesh(mesh));
   await io.write(`${UT}/${namn}.glb`, d);
 }
-const spegel = (f) => [f(1), f(-1)].flat();
+const _spegel = (f) => [f(1), f(-1)].flat();
 
 // kräfta (ca 1,5 lång, 0,35 hög): röd som på en kräftskiva, klor fram (+z)
 {
