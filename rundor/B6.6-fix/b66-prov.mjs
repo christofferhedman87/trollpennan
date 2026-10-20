@@ -30,7 +30,10 @@ const server = http.createServer((req, res) => {
 });
 await new Promise((r) => server.listen(0, "127.0.0.1", r));
 const URL0 = `http://127.0.0.1:${server.address().port}/`;
-const browser = await chromium.launch({ headless: true, args: ["--no-sandbox", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"] });
+// Webbläsaren startas om var 20:e grupp och om den har stängts (swiftshader under hög last); en grupp prövas högst 3 gånger.
+const starta = () => chromium.launch({ headless: true, args: ["--no-sandbox", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"] });
+let browser = await starta();
+const nyStart = async () => { await browser.close().catch(() => undefined); browser = await starta(); };
 const fel = [];
 const matt = {};
 const sparad = (kropp, i) => ({ uid: `b66-${i}-${kropp}`, // i = plats i gruppen (0–9)
@@ -47,24 +50,38 @@ const varfor = (k, m) => {
 const alltid = process.argv.includes("--alltid");
 for (let s = 0; s < ids.length; s += 10) {
   const grupp = ids.slice(s, s + 10);
-  const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, deviceScaleFactor: 1, locale: "sv-SE" });
-  await ctx.addInitScript((ang) => {
-    window.__tredSyn = {};
-    localStorage.setItem("trollpennan-v2", JSON.stringify({ version: 2, introSedd: true, dragit: true, ang, garden: [], stjarnor: 0, oppnadePlatser: [], seddaIntro: ["garden", "gard"], platsSkapelser: {} }));
-  }, grupp.map(sparad));
-  const p = await ctx.newPage();
-  p.on("pageerror", (e) => fel.push(`${grupp[0]}…: ${String(e).slice(0, 200)}`));
-  await p.goto(URL0, { waitUntil: "domcontentloaded" });
-  await p.waitForFunction(() => !!window.__troll, null, { timeout: 30000 }).catch(() => undefined);
-  // Modellerna hämtas när de används; tills dess ritas procedurkroppen (Suspense). Vänta på att nätet är tyst
-  // (alla .glb hämtade) och att alla har en mätning, sedan en stund till för att klonen ska skalas.
-  await p.waitForLoadState("networkidle", { timeout: 20000 }).catch(() => undefined);
-  await p.waitForFunction((n) => Object.values(window.__tredSyn ?? {}).filter((v) => v.mesh > 0).length >= n, grupp.length, { timeout: 15000 }).catch(() => undefined);
-  await p.waitForTimeout(1500);
-  const syn = await p.evaluate(() => window.__tredSyn ?? {});
-  grupp.forEach((k, i) => { matt[k] = syn[`b66-${i}-${k}`] ?? null; });
-  if (bilder && (alltid || grupp.some((k) => varfor(k, matt[k])))) await p.screenshot({ path: path.join(bilder, `b66-${grupp[0]}.png`) }).catch(() => undefined);
-  await ctx.close();
+  if (s > 0 && (s / 10) % 20 === 0) await nyStart();
+  for (let forsok = 1; ; forsok++) {
+    let ctx;
+    const f0 = fel.length; // sidfel från ett avbrutet försök räknas inte
+    try {
+      ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, deviceScaleFactor: 1, locale: "sv-SE" });
+      await ctx.addInitScript((ang) => {
+        window.__tredSyn = {};
+        localStorage.setItem("trollpennan-v2", JSON.stringify({ version: 2, introSedd: true, dragit: true, ang, garden: [], stjarnor: 0, oppnadePlatser: [], seddaIntro: ["garden", "gard"], platsSkapelser: {} }));
+      }, grupp.map(sparad));
+      const p = await ctx.newPage();
+      p.on("pageerror", (e) => fel.push(`${grupp[0]}…: ${String(e).slice(0, 200)}`));
+      await p.goto(URL0, { waitUntil: "domcontentloaded" });
+      await p.waitForFunction(() => !!window.__troll, null, { timeout: 30000 }).catch(() => undefined);
+      // Modellerna hämtas när de används; tills dess ritas procedurkroppen (Suspense). Vänta på att nätet är tyst
+      // (alla .glb hämtade) och att alla har en mätning, sedan en stund till för att klonen ska skalas.
+      await p.waitForLoadState("networkidle", { timeout: 20000 }).catch(() => undefined);
+      await p.waitForFunction((n) => Object.values(window.__tredSyn ?? {}).filter((v) => v.mesh > 0).length >= n, grupp.length, { timeout: 15000 }).catch(() => undefined);
+      await p.waitForTimeout(1500);
+      const syn = await p.evaluate(() => window.__tredSyn ?? {});
+      grupp.forEach((k, i) => { matt[k] = syn[`b66-${i}-${k}`] ?? null; });
+      if (bilder && (alltid || grupp.some((k) => varfor(k, matt[k])))) await p.screenshot({ path: path.join(bilder, `b66-${grupp[0]}.png`) }).catch(() => undefined);
+      await ctx.close();
+      break;
+    } catch (e) {
+      await ctx?.close().catch(() => undefined);
+      fel.length = f0;
+      if (forsok >= 3) throw e;
+      console.error(`… ${grupp[0]}: ${String(e).split("\n")[0].slice(0, 120)} – försök ${forsok + 1}`);
+      if (!browser.isConnected()) await nyStart();
+    }
+  }
   if ((s / 10) % 10 === 0) console.error(`… ${s + grupp.length}/${ids.length}`);
 }
 // BYGG (Doodle 08:26): byggnaderna längst bak och spridda, slottet större än sjukhuset, ingen framför grinden,
