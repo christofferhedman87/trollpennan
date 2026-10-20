@@ -1,0 +1,1011 @@
+diff --git a/data/attribut.json b/data/attribut.json
+index f262df1..e7d9700 100644
+--- a/data/attribut.json
++++ b/data/attribut.json
+@@ -8,9 +8,15 @@
+   "monster:regnbåge": ["regnbage"]
+  },
+  "i_kroppen": {
+-  "_om": "Egenskaper som ritas av kroppen eller rörelsen och inte som effekt. Syns på procedurkroppar; på GLB-modeller är det kvar att kontrollera (B6.5 rör dem inte).",
++  "_om": "Egenskaper som ritas av kroppen eller rörelsen och inte som effekt. Procedurkroppar ritar dem själva; på GLB-modeller målas mönstren (ränder, prickar, regnbåge) på kroppen enligt 'kroppsmonster' (R8-3a2).",
+   "lista": ["formaga:vingar", "formaga:fenor", "formaga:fartlinjer", "formaga:studs", "monster:ränder", "monster:prickar"]
+  },
++ "kroppsmonster": {
++  "_om": "R8-3a2: mönster som målas PÅ kroppen på alla GLB-modeller (src/spel/kroppsfarg.ts, en shader på kroppens material; ögon, betar och andra detaljer får inget). typ: band = färgband längs höjden, rander = ränder tvärs kroppens längsta led, prickar = runda prickar. farger = mönstrets färger; utan farger används ordets mönsterfärg (\"en röd och blå randig katt\") eller en mörkare ton av kroppen. antal = band, ränder eller prickar över kroppen. ersatter = effekten i 'effekter' som inte ritas när mönstret sitter på en GLB-kropp (regnbågen över djuret blir en regnbågsrandig kropp).",
++  "monster:regnbåge": { "typ": "band", "farger": ["#E53935", "#FB8C00", "#FDD835", "#43A047", "#1E88E5", "#8E24AA"], "antal": 6, "ersatter": "regnbage" },
++  "monster:ränder": { "typ": "rander", "antal": 5 },
++  "monster:prickar": { "typ": "prickar", "antal": 5 }
++ },
+  "particip": {
+   "_om": "Ett okänt ord som slutar så och vars förled varken är ett känt förled eller ett djur är ett particip ('dansande'), inte en sammansättning med efterledet 'ande' (anden från M19). Det blir ett okänt ord ('Ordet … kan jag inte än'), aldrig en extra skapelse.",
+   "slut": ["ande", "ende"]
+diff --git a/rundor/B6.5-fix/b65-prov.mjs b/rundor/B6.5-fix/b65-prov.mjs
+index 1f81635..304cff5 100644
+--- a/rundor/B6.5-fix/b65-prov.mjs
++++ b/rundor/B6.5-fix/b65-prov.mjs
+@@ -28,6 +28,7 @@ async function sida(spar) {
+   const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, deviceScaleFactor: 1, locale: "sv-SE" });
+   await ctx.addInitScript((s) => {
+     window.__tredEffekter = {};
++    window.__tredFarg = [];
+     if (!sessionStorage.getItem("f")) { localStorage.setItem("trollpennan-v2", JSON.stringify(s)); sessionStorage.setItem("f", "1"); }
+   }, { version: 2, introSedd: true, dragit: true, ang: [], garden: [], stjarnor: 0, oppnadePlatser: PLATSER, seddaIntro: [...PLATSER, "garden", "gard"], platsSkapelser: {}, ...spar });
+   const p = await ctx.newPage();
+@@ -85,7 +86,10 @@ await blok("A", async () => {
+     kolla(`A '${f.ord}': precis en skapelse, ${f.kropp} (inget ägg, ingen ande)`, spar.length === 1 && spar[0]?.kropp === f.kropp, { kroppar: spar.map((d) => d.kropp) });
+     const eff = await p.evaluate(() => window.__tredEffekter ?? {});
+     const uid = spar[0]?.uid;
+-    kolla(`A '${f.ord}': effekten ${f.effekt} ritas`, !!uid && (eff[uid] ?? []).includes(f.effekt), { effekter: eff[uid] });
++    // R8-3a2: på en GLB-kropp ersätts regnbågen av kroppsmönstret "band" (attribut.json → kroppsmonster.ersatter); bilden nedan
++    // ska fortfarande visa regnbågens nyanser
++    const monster = f.effekt === "regnbage" ? await p.evaluate((k) => (window.__tredFarg ?? []).some((r) => r.kropp === k && r.monster === "band"), f.kropp) : false;
++    kolla(`A '${f.ord}': effekten ${f.effekt} ritas${f.effekt === "regnbage" ? " (eller kroppsmönstret band, R8-3a2)" : ""}`, !!uid && ((eff[uid] ?? []).includes(f.effekt) || monster), { effekter: eff[uid], monster });
+     // pixlar: effekten syns (jämfört med ängen före)
+     let bast = { eld: 0, regnbage: [0, 0, 0, 0, 0, 0] };
+     for (let i = 0; i < 6; i++) { const m = await pixlar(p); if (m.eld > bast.eld) bast.eld = m.eld; bast.regnbage = bast.regnbage.map((v, k) => Math.max(v, m.regnbage[k])); await p.waitForTimeout(300); }
+diff --git a/rundor/R8-3a-farg/r83a-prov.mjs b/rundor/R8-3a-farg/r83a-prov.mjs
+index 4e4a54f..cb054f3 100644
+--- a/rundor/R8-3a-farg/r83a-prov.mjs
++++ b/rundor/R8-3a-farg/r83a-prov.mjs
+@@ -99,7 +99,7 @@ async function figur(fras, hMal) {
+   await ctx.close();
+   return { v, rader, ny, tack };
+ }
+-// [fras, kropp, målnyans (null = utan färgord), min andel, min antal pixlar]
++// [fras, kropp, målnyans (null = utan färgord), min andel, min antal pixlar, min täckning (standard TACK)]
+ const TACK = 0.35;
+ const FALL = [
+   ["en blå katt", "katt", 210, 0.6, 250],
+@@ -108,12 +108,14 @@ const FALL = [
+   ["en blå jultomte", "jultomte", 210, 0.6, 250],
+   ["en grön narval", "narval", 120, 0.5, 150],
+   ["en röd elefant", "elefant", 2, 0.6, 250],
+-  ["en blå bil", "bil", 210, 0.5, 150],
++  // R8-3a2: bilens rutor, däck, lyktor och stötfångare behålls (kroppsmasken), och glasburen står framför: 0,32 där.
++  // 0,25 skiljer fortfarande ut felet där bara taket blev blått (0,13).
++  ["en blå bil", "bil", 210, 0.5, 150, 0.25],
+   ["en lila drake", "drake", 285, 0.5, 250],
+   ["en jultomte", "jultomte", 2, 0.5, 200],
+   ["en kraken", "kraken", 285, 0.5, 200],
+ ];
+-for (const [fras, kropp, h, andel, minN] of FALL) {
++for (const [fras, kropp, h, andel, minN, minTack = TACK] of FALL) {
+   if (bara && !bara.includes(kropp)) continue;
+   if (!ENT[kropp]) { kolla(`${fras}: ${kropp} finns inte i datan – hoppas över`, true, { hoppad: true }); continue; }
+   try {
+@@ -125,7 +127,7 @@ for (const [fras, kropp, h, andel, minN] of FALL) {
+       kolla(`${fras} (utan färgord): egna färger, inget material ändrat, nyans ${h}° dominerar`, v?.kropp === kropp && rader.length > 0 && info.andrade === 0 && rader.every((r) => r.sjalvlyse === "#000000") && t >= minN && t / n >= andel, info);
+     } else {
+       const delvis = rader.filter((r) => r.efter !== r.fore || !r.egenKarta).length;
+-      kolla(`${fras}: kroppen i målnyansen ${h}° (≥ ${andel * 100} % av de nya mättade pixlarna, ≥ ${minN} st, ≥ ${TACK * 100} % av figurens pixlar)`, v?.kropp === kropp && delvis > 0 && t >= minN && t / n >= andel && tack.andel >= TACK, info);
++      kolla(`${fras}: kroppen i målnyansen ${h}° (≥ ${andel * 100} % av de nya mättade pixlarna, ≥ ${minN} st, ≥ ${minTack * 100} % av figurens pixlar)`, v?.kropp === kropp && delvis > 0 && t >= minN && t / n >= andel && tack.andel >= minTack, info);
+     }
+   } catch (e) { kolla(`${fras} kraschade`, false, { fel: String(e).split("\n")[0] }); }
+ }
+diff --git a/src/spel/attribut.ts b/src/spel/attribut.ts
+index 7fdff0f..49a9435 100644
+--- a/src/spel/attribut.ts
++++ b/src/spel/attribut.ts
+@@ -16,3 +16,23 @@ export function effekterFor(v: Pick<Varelse, "formagor" | "monster">): EffektNam
+     for (const e of EFFEKT_TABELL[k] ?? []) if ((EFFEKT_NAMN as readonly string[]).includes(e) && !ut.includes(e as EffektNamn)) ut.push(e as EffektNamn);
+   return ut;
+ }
++
++/** R8-3a2: ett mönster som målas på kroppen (data/attribut.json "kroppsmonster"). */
++export type KroppsMonster = { typ: "band" | "rander" | "prickar"; farger: string[]; antal: number; ersatter: string | null };
++const KM = (attributJson as { kroppsmonster?: Record<string, unknown> }).kroppsmonster ?? {};
++const TYPER = ["band", "rander", "prickar"] as const;
++
++/** Varelsens kroppsmönster ur datan, eller null. Färger: datans, annars ordets mönsterfärg, annars tomt (kroppens mörkare ton). */
++export function kroppsMonsterFor(v: Pick<Varelse, "monster" | "monsterfarg">): KroppsMonster | null {
++  if (!v.monster) return null;
++  const r = KM[`monster:${v.monster}`] as { typ?: string; farger?: string[]; antal?: number; ersatter?: string } | undefined;
++  if (!r || !(TYPER as readonly string[]).includes(r.typ ?? "")) return null;
++  const farger = r.farger?.length ? r.farger : v.monsterfarg ? [v.monsterfarg] : [];
++  return { typ: r.typ as KroppsMonster["typ"], farger, antal: Math.max(1, r.antal ?? 5), ersatter: r.ersatter ?? null };
++}
++
++/** Effekterna som ritas bredvid kroppen. På en GLB-kropp (`paKroppen`) ritas inte den effekt som kroppsmönstret ersätter. */
++export function effekterBredvid(v: Pick<Varelse, "formagor" | "monster" | "monsterfarg">, paKroppen: boolean): EffektNamn[] {
++  const ers = paKroppen ? kroppsMonsterFor(v)?.ersatter : null;
++  return effekterFor(v).filter((e) => e !== ers);
++}
+diff --git a/src/spel/effekter.tsx b/src/spel/effekter.tsx
+index 99deb59..136e40a 100644
+--- a/src/spel/effekter.tsx
++++ b/src/spel/effekter.tsx
+@@ -2,7 +2,8 @@ import { useFrame } from "@react-three/fiber";
+ import { useEffect, useMemo, useRef, type JSX } from "react";
+ import * as THREE from "three";
+ import type { Varelse } from "../tolk/typer.ts";
+-import { effekterFor, type EffektNamn } from "./attribut.ts";
++import { effekterBredvid, type EffektNamn } from "./attribut.ts";
++import { harModell } from "./entiteter.ts";
+ import type { Ankare } from "./tillbehor/index.ts";
+ 
+ const ELD_N = 24;
+@@ -404,9 +405,10 @@ const EFFEKTER: Record<EffektNamn, (p: { ankare: Ankare }) => JSX.Element> = {
+   regnbage: Regnbage,
+ };
+ 
+-/** Effekterna (eld, lågor, glöd, glitter, regnbåge) som barn till djurets grupp, ur data/attribut.json. Inga effekter ritar inget. */
++/** Effekterna (eld, lågor, glöd, glitter, regnbåge) som barn till djurets grupp, ur data/attribut.json. Inga effekter ritar inget.
++ *  R8-3a2: på en GLB-kropp ritas inte den effekt som kroppsmönstret ersätter (regnbågen målas på kroppen i stället). */
+ export function DjurEffekter({ varelse, ankare }: { varelse: Varelse; ankare: Ankare }) {
+-  const lista = effekterFor(varelse);
++  const lista = effekterBredvid(varelse, harModell(varelse.kropp));
+   const uid = (varelse as { uid?: string }).uid;
+   const nyckel = lista.join(",");
+   useEffect(() => {
+diff --git a/src/spel/fargning.ts b/src/spel/fargning.ts
+index 201ea7c..6555b73 100644
+--- a/src/spel/fargning.ts
++++ b/src/spel/fargning.ts
+@@ -78,12 +78,131 @@ export function kroppsRoller(mats: MatInfo[], roller?: Record<string, string>):
+   if (huvud < 0) mats.forEach((m, i) => { if (fri(m) && m.hsl[2] >= KROPP.morkL && (huvud < 0 || m.yta > (mats[huvud]?.yta ?? 0))) huvud = i; });
+   if (huvud < 0) mats.forEach((m, i) => { if (fri(m) && (huvud < 0 || m.yta > (mats[huvud]?.yta ?? 0))) huvud = i; });
+   const H = mats[huvud];
+-  return mats.map((m, i) => ({
+-    roll: data(m) ?? (i === huvud || (!!H && m.yta >= KROPP.minYta && m.hsl[2] >= KROPP.morkL && liknar(m.hsl, H.hsl)) ? "kropp" : "detalj"),
+-    huvud,
+-  }));
++  // R8-3a2: kroppen växer i kedja – ett material som liknar NÅGOT kroppsmaterial (inte bara huvudmaterialet) hör också till
++  // kroppen (en mage två nyanssteg bort via en mellanton). Samma gränser som förut per steg, så hud mot röd dräkt (23–33°) stannar.
++  const kropp = mats.map((m, i) => data(m) === null && (i === huvud || (!!H && m.yta >= KROPP.minYta && m.hsl[2] >= KROPP.morkL && liknar(m.hsl, H.hsl))));
++  for (let andrat = true; andrat; ) {
++    andrat = false;
++    mats.forEach((m, i) => {
++      if (kropp[i] || data(m) !== null || m.yta < KROPP.minYta || m.hsl[2] < KROPP.morkL) return;
++      if (mats.some((k, j) => (kropp[j] || data(k) === "kropp") && liknar(m.hsl, k.hsl))) kropp[i] = andrat = true;
++    });
++  }
++  return mats.map((m, i) => ({ roll: data(m) ?? (kropp[i] ? "kropp" : "detalj"), huvud }));
++}
++
++/** R8-3a2: gränser för kroppsmasken i en textur och för hörnfärger (en plats, testade i r8-3a2.test.ts). */
++export const MASK = {
++  /** Största steget mellan två grannar (|ΔR|+|ΔG|+|ΔB|, 0–765) inom kroppen: en mjuk gradient (ankans gulgröna rygg som
++   *  blir grön mage i samma färgruta) växer med, en skarp kant (öga, bete, näbb, ruta bredvid i atlasen) stoppar. */
++  steg: 30,
++  /** Kulör kropp: högsta nyansavstånd från kärnan för det som växer med (ankans 61° → 115° är 54°; näbben 20° från 61° … men
++   *  den ligger i en egen ruta och nås aldrig). */
++  nyans: 70,
++  /** Kulör kropp: lägsta mättnad för det som växer med. */
++  mattnad: 0.15,
++  /** Neutral kropp: högsta skillnad i ljushet från kroppen (elefantens grå 0,42–0,52 mot betarnas gräddvita 0,87). */
++  ljushet: 0.3,
++  /** En sammanhängande yta är kropp om minst så stor del av modellens användning av den är kärna (ankans kroppsruta ~0,7,
++   *  vingens ruta ~0). */
++  karnandel: 0.4,
++} as const;
++
++export type Karna = { hsl: Hsl; neutral: boolean };
++
++/** Kärnan själv: texlar som säkert är kropp (samma test som palettbytet: ±22° kulört, eller neutral nära kroppens ljushet). */
++export function iKarnan(p: Hsl, k: Karna): boolean {
++  if (k.neutral) return p[1] < 0.35 && Math.abs(p[2] - k.hsl[2]) < 0.12;
++  return nyansAvstand(p[0], k.hsl[0]) <= KROPP.nyans && p[1] > 0.25 && p[2] >= KROPP.morkL;
++}
++
++/** Får texeln/hörnet höra till kroppen om den nås från kärnan? (Samma familj, vidare gränser.) */
++export function iFamiljen(p: Hsl, k: Karna): boolean {
++  if (k.neutral) return p[1] < 0.35 && p[2] >= KROPP.morkL && Math.abs(p[2] - k.hsl[2]) <= MASK.ljushet;
++  return p[1] >= MASK.mattnad && p[2] >= 0.06 && nyansAvstand(p[0], k.hsl[0]) <= MASK.nyans;
++}
++
++/** Var modellen faktiskt använder texturen: texelindex och vikt (triangelns yta), ur samma stickprov som kärnfärgen. */
++export type Anvandning = { i: ArrayLike<number>; n: ArrayLike<number> };
++
++/** R8-3a2: kroppens texlar i en textur (RGBA, w × h). Från varje texel i kärnan växer en sammanhängande yta i små steg
++ *  (gradient) inom familjen. Ytan hör till kroppen om minst `MASK.karnandel` av det modellen ANVÄNDER av den (ytviktat
++ *  stickprov `anv`; utan `anv` ytans alla texlar) är kärna. En vinge eller fot vars gradient bara snuddar vid kroppens nyans
++ *  (ankans orange 20–45° mot kroppens 61°: nästan ingen användning i kärnan) behålls; ankans gröna mage i kroppens ruta följer
++ *  med (ryggen, som är kärna, är det mesta av användningen).
++ *  1 = kropp (byts/får mönster), 0 = behålls (ögon, betar, näbb, tänder, rosa öron, andra rutor i atlasen). */
++export function kroppsMask(d: ArrayLike<number>, w: number, h: number, k: Karna, anv?: Anvandning): Uint8Array {
++  const n = w * h;
++  const mask = new Uint8Array(n);
++  const komp = new Int32Array(n).fill(-1);
++  const ko = new Int32Array(n);
++  const px = (i: number) => rgbTillHsl(d[i * 4] ?? 0, d[i * 4 + 1] ?? 0, d[i * 4 + 2] ?? 0);
++  const ytor: { start: number; slut: number }[] = [];
++  let skriv = 0;
++  for (let s0 = 0; s0 < n; s0++) {
++    if (komp[s0]! >= 0 || (d[s0 * 4 + 3] ?? 0) < 8 || !iKarnan(px(s0), k)) continue;
++    const id = ytor.length;
++    const start = skriv;
++    let las = skriv;
++    komp[s0] = id;
++    ko[skriv++] = s0;
++    const prova = (fran: number, till: number) => {
++      if (komp[till]! >= 0 || (d[till * 4 + 3] ?? 0) < 8) return;
++      const a = fran * 4, c = till * 4;
++      const dd = Math.abs((d[a] ?? 0) - (d[c] ?? 0)) + Math.abs((d[a + 1] ?? 0) - (d[c + 1] ?? 0)) + Math.abs((d[a + 2] ?? 0) - (d[c + 2] ?? 0));
++      if (dd > MASK.steg || !iFamiljen(px(till), k)) return;
++      komp[till] = id;
++      ko[skriv++] = till;
++    };
++    while (las < skriv) {
++      const i = ko[las++]!;
++      const x = i % w;
++      if (x > 0) prova(i, i - 1);
++      if (x < w - 1) prova(i, i + 1);
++      if (i >= w) prova(i, i - w);
++      if (i + w < n) prova(i, i + w);
++    }
++    ytor.push({ start, slut: skriv });
++  }
++  // hur stor del av det modellen använder av ytan (ytviktat stickprov; utan stickprov alla ytans texlar) som är kärna
++  const del = ytor.map(() => ({ alla: 0, karna: 0 }));
++  const rakna = (t: number, v: number) => {
++    const id = komp[t]!;
++    if (id < 0) return;
++    const u = del[id]!;
++    u.alla += v;
++    if (iKarnan(px(t), k)) u.karna += v;
++  };
++  if (anv) for (let j = 0; j < anv.i.length; j++) { const t = anv.i[j] ?? -1; if (t >= 0 && t < n) rakna(t, anv.n[j] ?? 0); }
++  else for (let j = 0; j < skriv; j++) rakna(ko[j]!, 1);
++  ytor.forEach((y, id) => {
++    const u = del[id]!;
++    if (u.alla > 0 && u.karna / u.alla >= MASK.karnandel) for (let j = y.start; j < y.slut; j++) mask[ko[j]!] = 1;
++  });
++  return mask;
+ }
+ 
++/** R8-3a2: hörnfärger (sRGB 0–255, tre per hörn, materialfärgen redan inräknad) → kärnan och vilka hörn som är kropp.
++ *  Kärnan väljs som i en textur (valjKarna, en klump per hörn). Hörn i familjen är kropp; mörka (ögon, kanter) och andra kulörer
++ *  behålls (hörn har inga grannar att växa genom, så den mörka änden av en gradient räknas inte här). */
++export function hornKropp(rgb: ArrayLike<number>): { karna: Karna; kropp: Uint8Array } | null {
++  const n = Math.floor(rgb.length / 3);
++  const klumpar: Klump[] = [];
++  for (let i = 0; i < n; i++) klumpar.push({ n: 1, r: rgb[i * 3] ?? 0, g: rgb[i * 3 + 1] ?? 0, b: rgb[i * 3 + 2] ?? 0 });
++  const karna = valjKarna(klumpar);
++  if (!karna) return null;
++  const kropp = new Uint8Array(n);
++  for (let i = 0; i < n; i++) {
++    const p = rgbTillHsl(rgb[i * 3] ?? 0, rgb[i * 3 + 1] ?? 0, rgb[i * 3 + 2] ?? 0);
++    if (p[2] >= KROPP.morkL && (iKarnan(p, karna) || iFamiljen(p, karna))) kropp[i] = 1;
++  }
++  return { karna, kropp };
++}
++
++/** sRGB-byte (0–255) ↔ linjärt (0–1), samma gamma 2,2 som palett.ts. */
++export const tillLinjar = (b: number) => Math.pow(Math.max(0, b) / 255, 2.2);
++export const tillSrgb = (v: number) => Math.round(255 * Math.min(1, Math.max(0, Math.pow(Math.max(0, v), 1 / 2.2))));
++
+ /** En färgklump i en textur: vikt (yta) och medelfärg i sRGB 0–255. */
+ export type Klump = { n: number; r: number; g: number; b: number };
+ 
+@@ -105,10 +224,20 @@ export function valjKarna(klumpar: Klump[]): { hsl: Hsl; neutral: boolean } | nu
+     f.n += k.n; f.r += k.r; f.g += k.g; f.b += k.b;
+     fam.set(nyckel, f);
+   }
++  // R8-3a2: en kulör familj räknas ihop med grannfacken vars medelnyans ligger inom KROPP.nyans (bilens röda 9° och 12° hamnar
++  // i olika 20°-fack; var för sig under 30 %, så de grå rutorna blev kärna och bara taket färgades).
++  const kulorFam = [...fam].filter(([k]) => k.startsWith("c"));
++  const nyansAv = (f: Klump) => rgbTillHsl(f.r / f.n, f.g / f.n, f.b / f.n)[0];
++  const sammanslagen = (f: Klump): Klump => {
++    const h = nyansAv(f), s: Klump = { n: 0, r: 0, g: 0, b: 0 };
++    for (const [, g] of kulorFam) if (nyansAvstand(nyansAv(g), h) <= KROPP.nyans) { s.n += g.n; s.r += g.r; s.g += g.g; s.b += g.b; }
++    return s;
++  };
+   let bast: [string, Klump] | null = null, kulor: [string, Klump] | null = null;
+-  for (const e of fam) {
++  for (const [nyckel, f] of fam) {
++    const e: [string, Klump] = [nyckel, nyckel.startsWith("c") ? sammanslagen(f) : f];
+     if (!bast || e[1].n > bast[1].n) bast = e;
+-    if (e[0].startsWith("c") && (!kulor || e[1].n > kulor[1].n)) kulor = e;
++    if (nyckel.startsWith("c") && (!kulor || e[1].n > kulor[1].n)) kulor = e;
+   }
+   if (!bast) return null;
+   const val = bast[0].startsWith("n") && kulor && kulor[1].n >= 0.3 * total ? kulor : bast;
+@@ -119,7 +248,7 @@ export function valjKarna(klumpar: Klump[]): { hsl: Hsl; neutral: boolean } | nu
+ /** Kärnfärgen för ett material utan textur (sRGB-hex). */
+ export const hslAv = (hex: string): Hsl => hexTillHsl(hex);
+ 
+-export type FargRad = { kropp: string; mat: string; fore: string; efter: string; sjalvlyse: string; egenKarta: boolean; roll?: KroppRoll };
++export type FargRad = { kropp: string; mat: string; fore: string; efter: string; sjalvlyse: string; egenKarta: boolean; roll?: KroppRoll; mask?: number; horn?: boolean; monster?: string };
+ declare global {
+   interface Window {
+     /** B6.4/R8-3a, för prov: en rad per material när en GLB-kropp klonas (färg före/efter, självlyse, egen textur kvar, roll). */
+diff --git a/src/spel/gltfDjur.tsx b/src/spel/gltfDjur.tsx
+index b666cc8..7834e3f 100644
+--- a/src/spel/gltfDjur.tsx
++++ b/src/spel/gltfDjur.tsx
+@@ -3,8 +3,10 @@ import { useFrame } from "@react-three/fiber";
+ import { useLayoutEffect, useMemo, useRef } from "react";
+ import { SkeletonUtils } from "three-stdlib";
+ import * as THREE from "three";
+-import { fargning, kroppsRoller, valjKarna, type Klump, type KroppRoll, type MatInfo } from "./fargning.ts";
+-import { byttPixel, graNiva, hexTillHsl, ljusTint, malAlbedo, rgbTillHsl, traffarPalett, type Hsl, type Palett } from "./palett.ts";
++import { fargning, kroppsRoller, tillLinjar, valjKarna, type Anvandning, type Klump, type KroppRoll, type MatInfo } from "./fargning.ts";
++import { byttPixel, hexTillHsl, hslTillRgb, ljusTint, malAlbedo, rgbTillHsl, traffarPalett, type Hsl, type Palett } from "./palett.ts";
++import { kroppsMonsterFor } from "./attribut.ts";
++import { fargaHorn, harHornfarg, kroppsTextur, monsterFarger, monsterKoordinater, monsterPa } from "./kroppsfarg.ts";
+ import { MILJO } from "./miljo.ts";
+ import { belysScen } from "./belys.ts";
+ 
+@@ -18,43 +20,10 @@ export type DjurSignal = { klapp: number; ror: number };
+ 
+ const texCache = new Map<string, THREE.CanvasTexture>();
+ 
+-function graTextur(tex: THREE.Texture, bodyL: number): THREE.Texture {
+-  const nyckel = `gra|${bodyL.toFixed(3)}|${tex.uuid}`;
+-  const finns = texCache.get(nyckel);
+-  if (finns) return finns;
+-  const img = tex.image as CanvasImageSource | undefined;
+-  const w = (img as HTMLImageElement | undefined)?.width || (img as ImageBitmap | undefined)?.width;
+-  const h = (img as HTMLImageElement | undefined)?.height || (img as ImageBitmap | undefined)?.height;
+-  if (!img || !w || !h) return tex;
+-  const c = document.createElement("canvas");
+-  c.width = w;
+-  c.height = h;
+-  const x = c.getContext("2d", { willReadFrequently: true });
+-  if (!x) return tex;
+-  x.drawImage(img, 0, 0);
+-  const d = x.getImageData(0, 0, w, h);
+-  for (let i = 0; i < d.data.length; i += 4) {
+-    const v = graNiva(d.data[i] ?? 0, d.data[i + 1] ?? 0, d.data[i + 2] ?? 0, bodyL);
+-    d.data[i] = v;
+-    d.data[i + 1] = v;
+-    d.data[i + 2] = v;
+-  }
+-  x.putImageData(d, 0, 0);
+-  const t = new THREE.CanvasTexture(c);
+-  t.flipY = tex.flipY;
+-  t.colorSpace = THREE.SRGBColorSpace;
+-  t.magFilter = tex.magFilter;
+-  t.minFilter = tex.minFilter;
+-  t.wrapS = tex.wrapS;
+-  t.wrapT = tex.wrapT;
+-  t.needsUpdate = true;
+-  texCache.set(nyckel, t);
+-  return t;
+-}
+-
+ /** R8 färgrundan: bulkmodeller delar en standardpalett (nyans 25), men Kenney-modeller är en gemensam färgatlas där isbjörnen är vit/gräddvit och inte alls brun, så ingen pixel träffas och färgen "tas inte". Därför mäter vi vilken färg just den här kroppen använder (texeln vid nätets UV, vanligaste färgen) och ställer in paletten efter den. */
+-const KARN = new Map<string, (Palett & { hsl: Hsl }) | null>();
+-function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): (Palett & { hsl: Hsl }) | null {
++type Karn = Palett & { hsl: Hsl; anv?: Anvandning };
++const KARN = new Map<string, Karn | null>();
++function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): Karn | null {
+   const nyckel = `${mesh.geometry?.uuid}|${tex.uuid}`;
+   if (KARN.has(nyckel)) return KARN.get(nyckel) ?? null;
+   const svar = karnfargMat(mesh, tex);
+@@ -62,7 +31,7 @@ function karnfarg(mesh: THREE.Mesh, tex: THREE.Texture): (Palett & { hsl: Hsl })
+   return svar;
+ }
+ 
+-function karnfargMat(mesh: THREE.Mesh, tex: THREE.Texture): (Palett & { hsl: Hsl }) | null {
++function karnfargMat(mesh: THREE.Mesh, tex: THREE.Texture): Karn | null {
+   const img = tex.image as CanvasImageSource | undefined;
+   const uv = mesh.geometry?.attributes?.uv;
+   if (!img || !uv) return null;
+@@ -77,6 +46,7 @@ function karnfargMat(mesh: THREE.Mesh, tex: THREE.Texture): (Palett & { hsl: Hsl
+   x.drawImage(img, 0, 0);
+   const d = x.getImageData(0, 0, w, h).data;
+   const rakna = new Map<number, Klump>();
++  const anvI: number[] = [], anvN: number[] = []; // R8-3a2: var modellen använder texturen (för kroppsmasken)
+   // R8-3a: texeln i varje triangels mitt, viktad med triangelns yta (se valjKarna i fargning.ts)
+   const pos = mesh.geometry.attributes.position;
+   const idx = mesh.geometry.index;
+@@ -93,6 +63,8 @@ function karnfargMat(mesh: THREE.Mesh, tex: THREE.Texture): (Palett & { hsl: Hsl
+     const py = Math.min(h - 1, Math.max(0, Math.floor((((tex.flipY ? 1 - v : v) % 1 + 1) % 1) * h)));
+     const o = (py * w + px) * 4;
+     if ((d[o + 3] ?? 0) < 8) continue;
++    anvI.push(py * w + px);
++    anvN.push(yta);
+     const r = d[o] ?? 0;
+     const g = d[o + 1] ?? 0;
+     const b = d[o + 2] ?? 0;
+@@ -108,7 +80,8 @@ function karnfargMat(mesh: THREE.Mesh, tex: THREE.Texture): (Palett & { hsl: Hsl
+   if (!karna) return null;
+   const hsl = karna.hsl;
+   // neutral kropp (vit, grå, gräddvit): neutralt läge (range < 0), annars kroppens egen nyans
+-  return karna.neutral ? { from: 0, range: -1, bodyL: hsl[2], hsl } : { from: Math.round(hsl[0]), range: 22, bodyL: hsl[2], hsl };
++  const anv = { i: anvI, n: anvN };
++  return karna.neutral ? { from: 0, range: -1, bodyL: hsl[2], hsl, anv } : { from: Math.round(hsl[0]), range: 22, bodyL: hsl[2], hsl, anv };
+ }
+ 
+ function paletteSwap(tex: THREE.Texture, fromHue: number, range: number, toHex: string, bodyL: number) {
+@@ -260,7 +233,7 @@ function ytaPerMaterial(mesh: THREE.Mesh, antal: number): number[] {
+   return ut;
+ }
+ 
+-type Kalla = { src: THREE.MeshStandardMaterial; yta: number; karn: (Palett & { hsl: Hsl }) | null; mesh: THREE.Mesh };
++type Kalla = { src: THREE.MeshStandardMaterial; yta: number; karn: Karn | null; mesh: THREE.Mesh; horn: boolean; anv: Anvandning[] };
+ 
+ /** R8-3a: ett färgord färgar HELA kroppen på alla modeller (textur, materialfärger eller båda); ögon, hud och detaljer behålls.
+  *  1) Samla modellens material med yta och kärnfärg. 2) `kroppsRoller()` (fargning.ts) avgör kropp/ljus/detalj – ur datans
+@@ -272,19 +245,25 @@ function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
+   const hex = fargAv(spec);
+   const ent = entitet(spec.kropp);
+   const pal = ent?.palett && !ent.inlagd ? ent.palett : null; // de handjusterade första djuren (katt, hund …) behåller sin palett
++  // R8-3a2: ett mönster på kroppen (regnbåge, ränder, prickar) ur data/attribut.json "kroppsmonster" – också utan färgord.
++  const km = kroppsMonsterFor({ monster: spec.monster ?? null, monsterfarg: spec.monsterfarg ?? null });
++  const andra = !!hex || !!km;
+   rot.updateMatrixWorld(true);
+   const kallor = new Map<string, Kalla>();
+-  if (hex) {
++  if (andra) {
+     rot.traverse((o) => {
+       const mesh = o as THREE.Mesh;
+       if (!mesh.isMesh) return;
+       const lista = (Array.isArray(mesh.material) ? mesh.material : [mesh.material]) as THREE.MeshStandardMaterial[];
+       const ytor = ytaPerMaterial(mesh, lista.length);
+       lista.forEach((src, i) => {
+-        const k = kallor.get(src.uuid) ?? { src, yta: 0, karn: null, mesh };
++        const k = kallor.get(src.uuid) ?? { src, yta: 0, karn: null, mesh, horn: false, anv: [] };
+         const y = ytor[i] ?? 0;
+         if (src.map && (!k.karn || y > k.yta)) k.karn = karnfarg(mesh, src.map) ?? k.karn;
++        const ka = src.map ? karnfarg(mesh, src.map)?.anv : undefined; // R8-3a2: alla näts användning av texturen (kroppsmasken)
++        if (ka) k.anv.push(ka);
+         k.yta += y;
++        k.horn = k.horn || harHornfarg(mesh, src);
+         kallor.set(src.uuid, k);
+       });
+     });
+@@ -302,53 +281,100 @@ function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
+   const huvud = infos[roller[0]?.huvud ?? -1];
+   const kroppL = huvud ? (lista0[roller[0]!.huvud]?.karn?.bodyL ?? huvud.hsl[2]) : 0.5;
+   const klonade = new Map<string, THREE.MeshStandardMaterial>();
++  // R8-3a2: kroppsmaterial som får mönster (mask och kroppens luminans), hörnens kroppsvikt per nät
++  const monsterMat = new Map<THREE.MeshStandardMaterial, { mask: THREE.Texture | null; ref: number; kropp: string }>();
++  const vikter = new Map<THREE.Mesh, Map<number, number>>();
++  const monsterNat = new Set<THREE.Mesh>();
+   rot.traverse((o) => {
+     const mesh = o as THREE.Mesh;
+     if (!mesh.isMesh) return;
+     const lista = (Array.isArray(mesh.material) ? mesh.material : [mesh.material]) as THREE.MeshStandardMaterial[];
+-    const nya = lista.map((src) => {
++    const nya = lista.map((src, mi) => {
++      const roll0 = andra ? rollAv.get(src.uuid) : undefined;
++      const arKropp = roll0 === "kropp" || roll0 === "ljus";
++      const malH = hex ? (roll0 === "ljus" ? ljusare(hex) : hex) : null;
++      // R8-3a2: hörnfärger på kroppen – per nät (geometrin), också när materialet redan är klonat av ett annat nät
++      if (arKropp && kallor.get(src.uuid)?.horn) {
++        const v = fargaHorn(mesh, mi, src.color, malH, !!src.map, LJUSTINT);
++        if (v) vikter.set(mesh, new Map([...(vikter.get(mesh) ?? []), ...v]));
++      }
+       const finns = klonade.get(src.uuid);
+-      if (finns) return finns;
++      if (finns) {
++        if (monsterMat.has(finns)) monsterNat.add(mesh);
++        return finns;
++      }
+       const m = src.clone();
+       m.metalness = 0;
+       m.roughness = Math.max(m.roughness ?? 1, 0.75);
+       const namn = m.name || "";
+-      const roll = hex ? rollAv.get(src.uuid) : undefined;
++      const roll = hex ? roll0 : undefined;
++      const horn = !!kallor.get(src.uuid)?.horn && arKropp;
+       // B6.4: utan färgord (hex null) blir allt false/null – modellens egna färger, ingen glans (se fargning.ts).
+       const f = fargning({ hex, roll, harKarta: !!m.map, glans: !!spec.glans, ljusare });
+-      const mal = hex ? (roll === "ljus" ? ljusare(hex) : hex) : null;
+-      if (f.farg && mal) {
++      const mal = hex ? malH : null;
++      if (horn && mal) m.color.set("#ffffff"); // R8-3a2: färgen sitter nu i hörnfärgerna (fargaHorn), annars färg × hörnfärg = mörkt
++      else if (f.farg && mal) {
+         // materialfärg: målets nyans, materialets ljushet relativt kroppens, förkompenserad för ljuset
+         const [r, g, b] = byttPixel(hexTillHsl("#" + src.color.getHexString(THREE.SRGBColorSpace)), { from: 0, range: 22, bodyL: kroppL }, hexTillHsl(mal), LJUSTINT);
+         m.color.setRGB(r / 255, g / 255, b / 255, THREE.SRGBColorSpace);
+       }
++      const egen = pal ? null : (kallor.get(src.uuid)?.karn ?? null);
++      const allaAnv = kallor.get(src.uuid)?.anv ?? [];
++      const anv = { i: allaAnv.flatMap((a) => Array.from(a.i)), n: allaAnv.flatMap((a) => Array.from(a.n)) };
++      const karnaAv = (k: Karn) => ({ hsl: k.hsl, neutral: k.range < 0, bodyL: k.bodyL, anv, nyckel: src.uuid });
++      let mask: THREE.Texture | null = null;
++      let maskAndel: number | undefined;
+       if (f.palettByte && mal && m.map) {
+-        const egen = pal ? null : (kallor.get(src.uuid)?.karn ?? null);
+-        if (egen && egen.range < 0) {
+-          // R9: vit/grå kropp (isbjörn, elefant, narval): texturen blir gråskala och färgen läggs i materialet.
+-          m.map = graTextur(m.map, egen.bodyL);
+-          const [r, g, b] = malAlbedo(mal, LJUSTINT);
+-          m.color.setRGB(r, g, b);
+-        } else if (egen || pal) {
+-          const p = egen ?? pal!;
+-          m.map = paletteSwap(m.map, p.from, p.range, mal, p.bodyL);
++        if (egen) {
++          // R8-3a2: bara kroppens texlar byts (kroppsMask: kärnan + mjuk gradient inom familjen); betar, ögon, näbb behålls.
++          // Vit/grå kropp: gråskala × färg inbakat i texturen (förut i materialet, då blev hela texturen färgad).
++          const t = kroppsTextur(m.map, karnaAv(egen), mal, LJUSTINT);
++          if (t?.map) {
++            m.map = t.map;
++            m.color.set("#ffffff");
++            mask = t.mask;
++            maskAndel = t.andel;
++          }
++        } else if (pal) {
++          m.map = paletteSwap(m.map, pal.from, pal.range, mal, pal.bodyL);
+           m.color.set("#ffffff");
+         }
+       }
++      if (km && arKropp) {
++        const karn = kallor.get(src.uuid)?.karn ?? null;
++        if (!mask && src.map && karn) {
++          const t = kroppsTextur(src.map, karnaAv(karn), null, LJUSTINT);
++          mask = t?.mask ?? null;
++          maskAndel = t?.andel;
++        }
++        const kroppHex = mal ?? (src.map && karn ? hslHex(karn.hsl) : "#" + m.color.getHexString(THREE.SRGBColorSpace));
++        const ref = mal ? lumAv(malAlbedo(mal, LJUSTINT)) : src.map && karn ? lumAv(linAv(karn.hsl)) : lumAv([m.color.r, m.color.g, m.color.b]);
++        monsterMat.set(m, { mask, ref, kropp: kroppHex });
++        monsterNat.add(mesh);
++      }
+       if (f.glans && mal && "emissive" in m) {
+         // R8-3a: glansen i färgordets egen nyans (det gula självlyset gjorde röd till orange och den blå jultomtens mössa orange)
+         m.emissive = new THREE.Color(ljusare(mal));
+         m.emissiveIntensity = 0.16;
+       }
+       // B6.4/R8-3a: provräknare (bara när ett prov har lagt dit listan): materialets färg före och efter, roll.
+-      if (typeof window !== "undefined") window.__tredFarg?.push({ kropp: spec.kropp, mat: namn, fore: "#" + src.color.getHexString(), efter: "#" + m.color.getHexString(), sjalvlyse: "#" + m.emissive.getHexString(), egenKarta: m.map === src.map, roll });
++      // R8-3a2: andelen av texturen som är kropp (mask), hörnfärg och mönster.
++      if (typeof window !== "undefined") window.__tredFarg?.push({ kropp: spec.kropp, mat: namn, fore: "#" + src.color.getHexString(), efter: "#" + m.color.getHexString(), sjalvlyse: "#" + m.emissive.getHexString(), egenKarta: m.map === src.map, roll, mask: maskAndel, horn: horn || undefined, monster: km && arKropp ? km.typ : undefined });
+       klonade.set(src.uuid, m);
+       return m;
+     });
+     mesh.material = Array.isArray(mesh.material) ? nya : (nya[0] ?? mesh.material);
+   });
++  if (km && monsterMat.size > 0) {
++    const k = monsterKoordinater(rot, [...monsterNat], vikter);
++    for (const [m, o] of monsterMat) monsterPa(m, km, { farger: monsterFarger(km, o.kropp, LJUSTINT), ref: o.ref, skalaY: k.skalaY, axel: k.axel, mask: o.mask });
++  }
+ }
+ 
++const lumAv = (c: ArrayLike<number>) => 0.2126 * (c[0] ?? 0) + 0.7152 * (c[1] ?? 0) + 0.0722 * (c[2] ?? 0);
++const linAv = (hsl: Hsl) => hslTillRgb(...hsl).map((v) => tillLinjar(v));
++const hslHex = (hsl: Hsl) => "#" + hslTillRgb(...hsl).map((v) => v.toString(16).padStart(2, "0")).join("");
++
+ function fastAnkare(rot: THREE.Object3D, spec: Sparad) {
+   faestTillbehor(rot, spec.kropp, spec.tillbehor, "modell");
+ }
+diff --git a/src/spel/kroppsfarg.ts b/src/spel/kroppsfarg.ts
+new file mode 100644
+index 0000000..14c6e53
+--- /dev/null
++++ b/src/spel/kroppsfarg.ts
+@@ -0,0 +1,282 @@
++// R8-3a2: kroppens färg och mönster på GLB-modeller, generellt (ingen kod per modell). Används av fargaKlon i gltfDjur.tsx.
++//  1) Textur: bara KROPPENS texlar byts (kroppsMask i fargning.ts: kärnans färg + allt som når den i en mjuk gradient inom
++//     familjen). Ankans gröna mage i samma färgruta som ryggen följer med; elefantens betar, ögon och näbbar (skarp kant,
++//     annan familj) behålls. En vit/grå kropp blir gråskala × färg i texturen, inte i materialet (som färgade betarna).
++//  2) Hörnfärger: kroppens hörn får färgen i hörnfärgen och materialet blir vitt (förut färg × hörnfärg = mörkt/smutsigt).
++//  3) Mönster (data/attribut.json "kroppsmonster"): band, ränder eller prickar i en shader på kroppens material, i modellens
++//     egna koordinater (följer med i animationen). Masken (textur) och hörnens kroppsvikt håller ögon och detaljer fria.
++import * as THREE from "three";
++import type { KroppsMonster } from "./attribut.ts";
++import { hornKropp, kroppsMask, tillLinjar, tillSrgb, type Anvandning, type Karna } from "./fargning.ts";
++import { byttPixel, graNiva, hexTillHsl, hslTillRgb, malAlbedo, rgbTillHsl, type Tint } from "./palett.ts";
++
++/** Kroppens kärna i texturen, med var modellen använder texturen (`anv`) och vilket nät stickprovet kom från (`nyckel`). */
++type Kropp = Karna & { bodyL: number; anv?: Anvandning; nyckel?: string };
++const TEX = new Map<string, { map: THREE.Texture | null; mask: THREE.Texture; andel: number }>();
++
++function pixlar(tex: THREE.Texture): { d: Uint8ClampedArray; w: number; h: number; c: HTMLCanvasElement; x: CanvasRenderingContext2D; bild: ImageData } | null {
++  const img = tex.image as CanvasImageSource | undefined;
++  const w = (img as HTMLImageElement | undefined)?.width || (img as ImageBitmap | undefined)?.width;
++  const h = (img as HTMLImageElement | undefined)?.height || (img as ImageBitmap | undefined)?.height;
++  if (!img || !w || !h) return null;
++  const c = document.createElement("canvas");
++  c.width = w;
++  c.height = h;
++  const x = c.getContext("2d", { willReadFrequently: true });
++  if (!x) return null;
++  x.drawImage(img, 0, 0);
++  const bild = x.getImageData(0, 0, w, h);
++  return { d: bild.data, w, h, c, x, bild };
++}
++
++function somKalla(t: THREE.Texture, kalla: THREE.Texture, farg: boolean): THREE.Texture {
++  t.flipY = kalla.flipY;
++  t.colorSpace = farg ? THREE.SRGBColorSpace : THREE.NoColorSpace;
++  t.magFilter = kalla.magFilter;
++  t.minFilter = kalla.minFilter;
++  t.wrapS = kalla.wrapS;
++  t.wrapT = kalla.wrapT;
++  t.needsUpdate = true;
++  return t;
++}
++
++/** Kroppens texlar i texturen bytta mot `mal` (null = bara masken, för ett mönster utan färgord) och masken (R = 255 kropp).
++ *  Kulör kropp: målets nyans, texelns ljushet relativt kroppens (byttPixel). Neutral kropp: gråskala × målets albedo, inbakat. */
++export function kroppsTextur(tex: THREE.Texture, k: Kropp, mal: string | null, tint: Tint): { map: THREE.Texture | null; mask: THREE.Texture; andel: number } | null {
++  const nyckel = `${tex.uuid}|${k.nyckel ?? ""}|${k.neutral ? "n" : "c"}|${k.hsl.map((v) => v.toFixed(3)).join(",")}|${k.bodyL.toFixed(3)}|${mal ?? ""}`;
++  const finns = TEX.get(nyckel);
++  if (finns) return finns;
++  const p = pixlar(tex);
++  if (!p) return null;
++  const { d, w, h } = p;
++  const mask = kroppsMask(d, w, h, k, k.anv);
++  const mc = document.createElement("canvas");
++  mc.width = w;
++  mc.height = h;
++  const mx = mc.getContext("2d");
++  if (!mx) return null;
++  const md = mx.createImageData(w, h);
++  let antal = 0;
++  const malHsl = mal ? hexTillHsl(mal) : null;
++  const alb = mal ? malAlbedo(mal, tint) : null;
++  for (let i = 0; i < w * h; i++) {
++    const v = mask[i] ? 255 : 0;
++    md.data[i * 4] = md.data[i * 4 + 1] = md.data[i * 4 + 2] = v;
++    md.data[i * 4 + 3] = 255;
++    if (!mask[i]) continue;
++    antal++;
++    if (!malHsl || !alb) continue;
++    const o = i * 4;
++    const r = d[o] ?? 0, g = d[o + 1] ?? 0, b = d[o + 2] ?? 0;
++    if (k.neutral) {
++      const gra = tillLinjar(graNiva(r, g, b, k.bodyL));
++      d[o] = tillSrgb(gra * alb[0]);
++      d[o + 1] = tillSrgb(gra * alb[1]);
++      d[o + 2] = tillSrgb(gra * alb[2]);
++    } else {
++      const [nr, ng, nb] = byttPixel(rgbTillHsl(r, g, b), { from: k.hsl[0], range: 22, bodyL: k.bodyL }, malHsl, tint);
++      d[o] = nr;
++      d[o + 1] = ng;
++      d[o + 2] = nb;
++    }
++  }
++  mx.putImageData(md, 0, 0);
++  let map: THREE.Texture | null = null;
++  if (mal) {
++    p.x.putImageData(p.bild, 0, 0);
++    map = somKalla(new THREE.CanvasTexture(p.c), tex, true);
++  }
++  const ut = { map, mask: somKalla(new THREE.CanvasTexture(mc), tex, false), andel: antal / (w * h) };
++  TEX.set(nyckel, ut);
++  return ut;
++}
++
++/** Hörnen som en grupp i nätet använder (materialindex `mi`), eller alla. */
++function hornFor(mesh: THREE.Mesh, mi: number): number[] {
++  const geo = mesh.geometry;
++  const idx = geo.index;
++  const n = idx ? idx.count : geo.attributes.position?.count ?? 0;
++  const grupper = geo.groups.length > 0 ? geo.groups.filter((g) => (g.materialIndex ?? 0) === mi) : [{ start: 0, count: n }];
++  const s = new Set<number>();
++  for (const g of grupper) for (let i = g.start; i < Math.min(n, g.start + g.count); i++) s.add(idx ? idx.getX(i) : i);
++  return [...s];
++}
++
++/** Egen kopia av geometrin (delas annars med alla kloner av modellen via useGLTF). */
++function egenGeometri(mesh: THREE.Mesh): THREE.BufferGeometry {
++  if (!mesh.userData.r83a2Geo) {
++    mesh.geometry = mesh.geometry.clone();
++    mesh.userData.r83a2Geo = true;
++  }
++  return mesh.geometry;
++}
++
++/** Har nätet hörnfärger som inte bara är vita? (Vita hörnfärger ändrar ingenting och lämnas.) */
++export function harHornfarg(mesh: THREE.Mesh, m: THREE.Material): boolean {
++  const c = mesh.geometry?.attributes?.color;
++  if (!c || !(m as THREE.MeshStandardMaterial).vertexColors) return false;
++  for (let i = 0; i < c.count; i++) if (c.getX(i) < 0.98 || c.getY(i) < 0.98 || c.getZ(i) < 0.98) return true;
++  return false;
++}
++
++/** Hörnfärgerna i ett material med färgord: kroppens hörn får färgen (utan textur: målets nyans med hörnets ljushet relativt
++ *  kroppen; med textur: gråskala relativt kroppen, texturen bär färgen), övriga hörn behåller sin färg. Materialets färg bakas in
++ *  i hörnen och blir vit. Ger kroppsvikten per hörn (1/0) för mönstret, eller null. */
++export function fargaHorn(mesh: THREE.Mesh, mi: number, matFarg: THREE.Color, mal: string | null, harKarta: boolean, tint: Tint): Map<number, number> | null {
++  const c0 = mesh.geometry.attributes.color;
++  if (!c0) return null;
++  const horn = hornFor(mesh, mi);
++  const lin: number[] = [];
++  const srgb: number[] = [];
++  for (const i of horn) {
++    const r = c0.getX(i) * matFarg.r, g = c0.getY(i) * matFarg.g, b = c0.getZ(i) * matFarg.b;
++    lin.push(r, g, b);
++    srgb.push(tillSrgb(r), tillSrgb(g), tillSrgb(b));
++  }
++  const hk = hornKropp(srgb);
++  if (!hk) return null;
++  const vikt = new Map<number, number>();
++  horn.forEach((i, j) => vikt.set(i, hk.kropp[j] ?? 0));
++  if (!mal) return vikt;
++  const geo = egenGeometri(mesh);
++  const gammal = geo.attributes.color!;
++  const ny = new Float32Array(gammal.count * 3);
++  for (let i = 0; i < gammal.count; i++) {
++    ny[i * 3] = gammal.getX(i);
++    ny[i * 3 + 1] = gammal.getY(i);
++    ny[i * 3 + 2] = gammal.getZ(i);
++  }
++  const kroppL = hk.karna.hsl[2];
++  const [kr, kg, kb] = hslTillRgb(...hk.karna.hsl);
++  const kLum = Math.max(1e-4, 0.2126 * tillLinjar(kr) + 0.7152 * tillLinjar(kg) + 0.0722 * tillLinjar(kb));
++  const malHsl = hexTillHsl(mal);
++  horn.forEach((i, j) => {
++    const r = lin[j * 3]!, g = lin[j * 3 + 1]!, b = lin[j * 3 + 2]!;
++    let ut: [number, number, number] = [r, g, b];
++    if (hk.kropp[j]) {
++      if (harKarta) {
++        const v = Math.min(1, (0.2126 * r + 0.7152 * g + 0.0722 * b) / kLum);
++        ut = [v, v, v];
++      } else {
++        const [nr, ng, nb] = byttPixel(rgbTillHsl(srgb[j * 3]!, srgb[j * 3 + 1]!, srgb[j * 3 + 2]!), { from: 0, range: 22, bodyL: kroppL }, malHsl, tint);
++        ut = [tillLinjar(nr), tillLinjar(ng), tillLinjar(nb)];
++      }
++    }
++    ny[i * 3] = ut[0];
++    ny[i * 3 + 1] = ut[1];
++    ny[i * 3 + 2] = ut[2];
++  });
++  geo.setAttribute("color", new THREE.BufferAttribute(ny, 3));
++  return vikt;
++}
++
++/** Mönstrets koordinater: `aMonster` = (x, y, z) i modellens rotram (vilopose, normerat med största måttet) och w = kroppsvikt.
++ *  Ger skalan för höjden (band) och den längsta vågräta axeln (ränder). */
++export function monsterKoordinater(rot: THREE.Object3D, nat: THREE.Mesh[], vikter: Map<THREE.Mesh, Map<number, number>>): { skalaY: number; axel: [number, number, number] } {
++  rot.updateMatrixWorld(true);
++  const inv = rot.matrixWorld.clone().invert();
++  const v = new THREE.Vector3();
++  const box = new THREE.Box3();
++  const pos = new Map<THREE.Mesh, Float32Array>();
++  for (const m of nat) {
++    const n = m.geometry.attributes.position?.count ?? 0;
++    const a = new Float32Array(n * 3);
++    const mw = new THREE.Matrix4().multiplyMatrices(inv, m.matrixWorld);
++    for (let i = 0; i < n; i++) {
++      m.getVertexPosition(i, v).applyMatrix4(mw);
++      a[i * 3] = v.x;
++      a[i * 3 + 1] = v.y;
++      a[i * 3 + 2] = v.z;
++      box.expandByPoint(v);
++    }
++    pos.set(m, a);
++  }
++  const st = box.getSize(new THREE.Vector3());
++  const max = Math.max(1e-6, st.x, st.y, st.z);
++  for (const m of nat) {
++    const a = pos.get(m)!;
++    const n = a.length / 3;
++    const ut = new Float32Array(n * 4);
++    const vk = vikter.get(m);
++    for (let i = 0; i < n; i++) {
++      ut[i * 4] = (a[i * 3]! - box.min.x) / max;
++      ut[i * 4 + 1] = (a[i * 3 + 1]! - box.min.y) / max;
++      ut[i * 4 + 2] = (a[i * 3 + 2]! - box.min.z) / max;
++      ut[i * 4 + 3] = vk ? (vk.get(i) ?? 0) : 1;
++    }
++    egenGeometri(m).setAttribute("aMonster", new THREE.BufferAttribute(ut, 4));
++  }
++  return { skalaY: max / Math.max(1e-6, st.y), axel: st.x >= st.z ? [1, 0, 0] : [0, 0, 1] };
++}
++
++const TYP = { band: 0, rander: 1, prickar: 2 } as const;
++
++/** Mönstret på ett kroppsmaterial (MeshStandardMaterial-klon). `ref` = kroppens luminans (linjär), så att texturens skuggning
++ *  följer med; `farger` linjära albedon (förkompenserade för ljuset); `mask` = kroppsmasken om materialet har textur. */
++export function monsterPa(m: THREE.MeshStandardMaterial, km: KroppsMonster, o: { farger: [number, number, number][]; ref: number; skalaY: number; axel: [number, number, number]; mask: THREE.Texture | null }) {
++  const f = o.farger.slice(0, 6);
++  while (f.length < 6) f.push(f[f.length - 1] ?? [0.2, 0.2, 0.2]);
++  const typ = TYP[km.typ];
++  const harMask = !!(o.mask && m.map);
++  m.defines = { ...(m.defines ?? {}), MONSTER_TYP: typ, ...(harMask ? { MONSTER_MASK: "" } : {}) };
++  m.customProgramCacheKey = () => `r83a2-monster-${typ}-${harMask ? 1 : 0}`;
++  m.userData.monster = km.typ;
++  m.onBeforeCompile = (s) => {
++    s.uniforms.uMFarg = { value: f.map((c) => new THREE.Vector3(...c)) };
++    s.uniforms.uMAntal = { value: km.typ === "band" ? Math.max(1, Math.min(6, km.farger.length || km.antal)) : km.antal };
++    s.uniforms.uMRef = { value: Math.max(1e-3, o.ref) };
++    s.uniforms.uMSkalaY = { value: o.skalaY };
++    s.uniforms.uMAxel = { value: new THREE.Vector3(...o.axel) };
++    s.uniforms.uMMask = { value: harMask ? o.mask : null };
++    s.vertexShader = s.vertexShader
++      .replace("#include <common>", "#include <common>\nattribute vec4 aMonster;\nvarying vec4 vMonster;")
++      .replace("#include <begin_vertex>", "#include <begin_vertex>\nvMonster = aMonster;");
++    s.fragmentShader = s.fragmentShader
++      .replace(
++        "#include <common>",
++        "#include <common>\nvarying vec4 vMonster;\nuniform vec3 uMFarg[6];\nuniform float uMAntal;\nuniform float uMRef;\nuniform float uMSkalaY;\nuniform vec3 uMAxel;\n#ifdef MONSTER_MASK\nuniform sampler2D uMMask;\n#endif",
++      )
++      .replace("#include <color_fragment>", `#include <color_fragment>
++{
++  float kv = vMonster.w;
++#ifdef MONSTER_MASK
++  kv *= texture2D(uMMask, vMapUv).r;
++#endif
++  if (kv > 0.01) {
++    float lum = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722));
++    float sk = clamp(lum / uMRef, 0.55, 1.3);
++    vec3 ny = diffuseColor.rgb;
++#if MONSTER_TYP == 0
++    float t = clamp(vMonster.y * uMSkalaY, 0.0, 0.9999);
++    int bi = int(uMAntal) - 1 - int(floor(t * uMAntal));
++    vec3 bc = uMFarg[0];
++    for (int k = 1; k < 6; k++) { if (k == bi) bc = uMFarg[k]; }
++    ny = bc * sk;
++#elif MONSTER_TYP == 1
++    float u = dot(vMonster.xyz, uMAxel) + 0.025 * sin(vMonster.y * 18.0);
++    float fr = fract(u * uMAntal);
++    float rm = smoothstep(0.06, 0.12, fr) * (1.0 - smoothstep(0.44, 0.50, fr));
++    ny = mix(diffuseColor.rgb, uMFarg[0] * sk, rm);
++#else
++    vec3 pp = vMonster.xyz * uMAntal;
++    vec3 ce = floor(pp);
++    vec3 rr = fract(sin(vec3(dot(ce, vec3(127.1, 311.7, 74.7)), dot(ce, vec3(269.5, 183.3, 246.1)), dot(ce, vec3(113.5, 271.9, 124.6)))) * 43758.5453);
++    vec3 fp = fract(pp) - 0.5 - (rr - 0.5) * 0.3;
++    float pm = 1.0 - smoothstep(0.30, 0.35, length(fp));
++    ny = mix(diffuseColor.rgb, uMFarg[0] * sk, pm);
++#endif
++    diffuseColor.rgb = mix(diffuseColor.rgb, ny, kv);
++  }
++}`);
++  };
++  m.needsUpdate = true;
++}
++
++/** Mönstrets färger (linjära albedon): datans/ordets färger förkompenserade för ljuset; utan färger en mörkare ton av
++ *  kroppen (ljusare på en mörk kropp). `kropp` = kroppens färg i sRGB-hex. */
++export function monsterFarger(km: KroppsMonster, kropp: string, tint: Tint): [number, number, number][] {
++  if (km.farger.length) return km.farger.map((h) => malAlbedo(h, tint));
++  const [h, s, l] = hexTillHsl(kropp);
++  const [r, g, b] = hslTillRgb(h, Math.min(1, s * 1.1), l > 0.3 ? l * 0.35 : Math.min(0.9, l + 0.45));
++  return [[tillLinjar(r), tillLinjar(g), tillLinjar(b)]];
++}
+diff --git a/src/spel/r8-3a2.test.ts b/src/spel/r8-3a2.test.ts
+new file mode 100644
+index 0000000..bc93ce1
+--- /dev/null
++++ b/src/spel/r8-3a2.test.ts
+@@ -0,0 +1,153 @@
++// R8-3a2: kroppens färg följer hela kroppen (gradient i samma färgruta, kedja av material), detaljer i samma textur behålls
++// (betar, ögon, näbb), hörnfärger bakas in, och mönster (regnbåge, ränder, prickar) målas på kroppen ur data.
++import assert from "node:assert/strict";
++import { test } from "node:test";
++import attributJson from "../../data/attribut.json" with { type: "json" };
++import { ORD } from "../tolk/data.ts";
++import { tolka } from "../tolk/tolka.ts";
++import { effekterBredvid, effekterFor, kroppsMonsterFor } from "./attribut.ts";
++import { fargning, hornKropp, iKarnan, kroppsMask, kroppsRoller, MASK, valjKarna, type MatInfo } from "./fargning.ts";
++import { hexTillHsl, hslTillRgb, rgbTillHsl } from "./palett.ts";
++
++const mat = (namn: string, hex: string, yta: number): MatInfo => ({ namn, hsl: hexTillHsl(hex), yta });
++const roller = (m: MatInfo[], r?: Record<string, string>) => kroppsRoller(m, r).map((x) => x.roll);
++
++/** En textur med rutor (som Gobkit-atlasen): varje ruta en lodrät gradient mellan två färger. */
++function atlas(rutor: [string, string][], rw = 8, h = 32) {
++  const w = rutor.length * rw;
++  const d = new Uint8ClampedArray(w * h * 4);
++  rutor.forEach(([a, b], r) => {
++    const A = hexTillHsl(a), B = hexTillHsl(b);
++    for (let y = 0; y < h; y++) {
++      const t = y / (h - 1);
++      const dh = ((B[0] - A[0] + 540) % 360) - 180;
++      const [R, G, Bl] = hslTillRgb(A[0] + dh * t, A[1] + (B[1] - A[1]) * t, A[2] + (B[2] - A[2]) * t);
++      for (let x = r * rw; x < (r + 1) * rw; x++) {
++        const o = (y * w + x) * 4;
++        d[o] = R; d[o + 1] = G; d[o + 2] = Bl; d[o + 3] = 255;
++      }
++    }
++  });
++  return { d, w, h, rw };
++}
++/** Användning: stickprov mitt i ruta r, raderna y0..y1 (vikt 1 per texel). */
++const anvand = (w: number, rw: number, delar: [number, number, number][]) => {
++  const i: number[] = [], n: number[] = [];
++  for (const [r, y0, y1] of delar) for (let y = y0; y <= y1; y++) { i.push(y * w + r * rw + Math.floor(rw / 2)); n.push(1); }
++  return { i, n };
++};
++const andelRuta = (mask: Uint8Array, w: number, h: number, rw: number, r: number) => {
++  let n = 0;
++  for (let y = 0; y < h; y++) for (let x = r * rw; x < (r + 1) * rw; x++) n += mask[y * w + x] ?? 0;
++  return n / (rw * h);
++};
++
++test("R8-3a2: ankan – hela färgrutan med ryggens gulgröna och magens gröna gradient är kropp, näbbens orange ruta behålls", () => {
++  // ruta 0: kroppen (61° → 115°, som ankans atlasruta 13,3), ruta 1: näbb/fötter (20°), ruta 2: ögon (mörka)
++  const { d, w, h, rw } = atlas([["#9AA62E", "#2F8C3A"], ["#C2632C", "#D9822E"], ["#1A1A22", "#2A2A33"]]);
++  const k = { hsl: hexTillHsl("#9AA62E"), neutral: false };
++  // modellen använder ryggens övre del mest (kärnan 61°) och magens nedre del, näbben och ögonen lite
++  const mask = kroppsMask(d, w, h, k, anvand(w, rw, [[0, 0, 14], [0, 28, 31], [1, 10, 20], [2, 5, 8]]));
++  assert.equal(andelRuta(mask, w, h, rw, 0), 1, "hela kroppsrutan, också magens gröna ände");
++  assert.equal(andelRuta(mask, w, h, rw, 1), 0, "näbben");
++  assert.equal(andelRuta(mask, w, h, rw, 2), 0, "ögonen");
++  // R8-3a tog bara ±22° från kärnan: magens ände (115°) föll utanför
++  const p = rgbTillHsl(0x2f, 0x8c, 0x3a);
++  assert.equal(iKarnan(p, k), false);
++});
++
++test("R8-3a2: elefanten – grå kropp (två gråtoner) byts, gräddvita betar, rosa öron och mörka ögon behålls", () => {
++  const { d, w, h, rw } = atlas([["#5E6B73", "#87929A"], ["#EDE3CF", "#F7F1E4"], ["#D98DA0", "#E8A3B4"], ["#14161A", "#202228"]]);
++  const mask = kroppsMask(d, w, h, { hsl: rgbTillHsl(0x6b, 0x77, 0x80), neutral: true });
++  assert.equal(andelRuta(mask, w, h, rw, 0), 1, "kroppen");
++  assert.equal(andelRuta(mask, w, h, rw, 1), 0, "betarna");
++  assert.equal(andelRuta(mask, w, h, rw, 2), 0, "öronen");
++  assert.equal(andelRuta(mask, w, h, rw, 3), 0, "ögonen");
++});
++
++test("R8-3a2: en ruta bredvid i samma familj men med skarp kant växer inte in (steget är för stort)", () => {
++  const { d, w, h, rw } = atlas([["#3E8E41", "#3E8E41"], ["#9CCC65", "#9CCC65"]]);
++  const mask = kroppsMask(d, w, h, { hsl: hexTillHsl("#3E8E41"), neutral: false });
++  assert.equal(andelRuta(mask, w, h, rw, 1), 0);
++  assert.ok(MASK.steg < 60);
++});
++
++test("R8-3a2: material i kedja – en mage två nyanssteg bort via en mellanton hör till kroppen; hud mot röd dräkt gör det inte", () => {
++  const hm = (namn: string, h: number, yta: number): MatInfo => ({ namn, hsl: [h, 0.55, 0.45], yta });
++  // rygg 90°, mellanton 108°, mage 126° (36° från ryggen: R8-3a gav magen detalj), näbb 30°, ögon mörka
++  assert.deepEqual(roller([hm("rygg", 90, 0.5), hm("mellan", 108, 0.2), hm("mage", 126, 0.15), hm("nabb", 30, 0.1), mat("oga", "#111111", 0.05)]), ["kropp", "kropp", "kropp", "detalj", "detalj"]);
++  // R8-3a:s jultomte är oförändrad
++  const m = [mat("drakt", "#B71C1C", 0.4), mat("#8E1116", "#8E1116", 0.15), mat("hud", "#F1C27D", 0.1), mat("#FAFAFA", "#FAFAFA", 0.2), mat("#212121", "#212121", 0.1), mat("#FFC107", "#FFC107", 0.05)];
++  assert.deepEqual(roller(m), ["kropp", "kropp", "detalj", "detalj", "detalj", "detalj"]);
++  // datans behall stoppar kedjan
++  assert.deepEqual(roller([hm("rygg", 90, 0.5), hm("mellan", 108, 0.2), hm("mage", 126, 0.15)], { mellan: "behall" }), ["kropp", "detalj", "detalj"]);
++});
++
++test("R8-3a2: hörnfärger – kroppens hörn hittas (brun vas), svarta kanter behålls", () => {
++  const rgb = [130, 70, 25, 132, 72, 26, 128, 69, 24, 30, 28, 22];
++  const hk = hornKropp(rgb);
++  assert.ok(hk);
++  assert.deepEqual([...hk.kropp], [1, 1, 1, 0]);
++  assert.equal(hk.karna.neutral, false);
++  // grå hörnfärger (kuvertets skuggning): neutral kärna
++  assert.equal(hornKropp([235, 235, 235, 240, 240, 240, 160, 160, 160])?.karna.neutral, true);
++});
++
++test("R8-3a2: kroppsmönster ur data – regnbåge band (6 färger, ersätter regnbågen över djuret), ränder och prickar med ordets mönsterfärg", () => {
++  const v = (f: string) => {
++    const u = tolka(f);
++    assert.equal(u.typ, "skapad", f);
++    return (u as Extract<typeof u, { typ: "skapad" }>).varelse;
++  };
++  const rb = kroppsMonsterFor(v("en regnbågsfärgad katt"));
++  assert.equal(rb?.typ, "band");
++  assert.equal(rb?.farger.length, 6);
++  assert.deepEqual(effekterFor(v("en regnbågsfärgad katt")), ["regnbage"], "B6.5 oförändrad");
++  assert.deepEqual(effekterBredvid(v("en regnbågsfärgad katt"), true), [], "GLB: mönstret på kroppen i stället");
++  assert.deepEqual(effekterBredvid(v("en regnbågsfärgad katt"), false), ["regnbage"], "procedurkropp: effekten kvar");
++  assert.deepEqual(effekterBredvid(v("en glittrig katt"), true), ["glitter"]);
++  const r = kroppsMonsterFor(v("en röd och blå randig katt"));
++  assert.equal(r?.typ, "rander");
++  assert.deepEqual(r?.farger, ["#1E88E5"]);
++  assert.deepEqual(kroppsMonsterFor(v("en randig katt"))?.farger, [], "utan mönsterfärg: kroppens mörkare ton");
++  assert.equal(kroppsMonsterFor(v("en prickig hund"))?.typ, "prickar");
++  assert.equal(kroppsMonsterFor(v("en blå katt")), null);
++  assert.equal(kroppsMonsterFor({ monster: null, monsterfarg: null }), null);
++});
++
++test("R8-3a2: varje kroppsmönster i datan är ett mönster som ett ord kan ge, och har en känd typ", () => {
++  const monster = new Set<string>();
++  for (const o of ORD.ord) if ((o.del as { monster?: string } | undefined)?.monster) monster.add(`monster:${(o.del as { monster: string }).monster}`);
++  const km = (attributJson as { kroppsmonster: Record<string, { typ?: string }> }).kroppsmonster;
++  for (const [k, r] of Object.entries(km)) {
++    if (k.startsWith("_")) continue;
++    assert.ok(monster.has(k), `${k} ges inte av något ord`);
++    assert.ok(["band", "rander", "prickar"].includes(r.typ ?? ""), `${k}: okänd typ ${r.typ}`);
++  }
++});
++
++test("R8-3a2: B6.4 gäller – utan färgord ingen färgning (mönstret är något annat och kräver ett mönsterord)", () => {
++  for (const roll of [undefined, "kropp", "ljus", "detalj"]) assert.deepEqual(fargning({ hex: null, roll, harKarta: true, glans: true, ljusare: (x) => x }), { farg: null, palettByte: false, glans: false });
++  assert.equal(kroppsMonsterFor({ monster: null, monsterfarg: "#1E88E5" }), null);
++  assert.ok(valjKarna([]) === null);
++});
++
++test("R8-3a2: en ruta vars gradient bara snuddar vid kroppens nyans (ankans vinge 20° → 45° mot kroppens 61°) behålls", () => {
++  const { d, w, h, rw } = atlas([["#9AA62E", "#2F8C3A"], ["#B5482A", "#D9A02E"]]);
++  const mask = kroppsMask(d, w, h, { hsl: hexTillHsl("#9AA62E"), neutral: false }, anvand(w, rw, [[0, 0, 14], [1, 0, 31]]));
++  assert.equal(andelRuta(mask, w, h, rw, 0), 1, "kroppen");
++  assert.equal(andelRuta(mask, w, h, rw, 1), 0, "vingen");
++});
++
++test("R8-3a2: en kulör kropp som delas av två nyansfack (bilens röda 9° och 12°) vinner över grå rutor", () => {
++  const klump = (hex: string, n: number) => {
++    const [r, g, b] = hslTillRgb(...hexTillHsl(hex));
++    return { n, r: r * n, g: g * n, b: b * n };
++  };
++  // bilens kaross: grå rutor 40 %, röd 20 % + 14 % (två fack), däck 15 %, ljus 7 %
++  const k = valjKarna([klump("#7A7C86", 0.4), klump("#EE5A3D", 0.2), klump("#F5602A", 0.14), klump("#3A3A40", 0.15), klump("#E6F6FF", 0.07)]);
++  assert.ok(k && !k.neutral && (k.hsl[0] < 20 || k.hsl[0] > 350), `kärnan ska vara röd, var ${JSON.stringify(k)}`);
++  // två fack långt isär slås inte ihop: grått vinner när ingen kulör familj når 30 %
++  const g = valjKarna([klump("#7A7C86", 0.4), klump("#EE5A3D", 0.2), klump("#3D8AEE", 0.2), klump("#3A3A40", 0.2)]);
++  assert.ok(g && g.neutral, "grå kärna när de kulöra är olika nyanser");
++});
