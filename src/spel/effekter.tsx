@@ -2,7 +2,8 @@ import { useFrame } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, type JSX } from "react";
 import * as THREE from "three";
 import type { Varelse } from "../tolk/typer.ts";
-import { effekterFor, type EffektNamn } from "./attribut.ts";
+import { effekterBredvid, type EffektNamn } from "./attribut.ts";
+import { harModell } from "./entiteter.ts";
 import type { Ankare } from "./tillbehor/index.ts";
 
 const ELD_N = 24;
@@ -404,9 +405,10 @@ const EFFEKTER: Record<EffektNamn, (p: { ankare: Ankare }) => JSX.Element> = {
   regnbage: Regnbage,
 };
 
-/** Effekterna (eld, lågor, glöd, glitter, regnbåge) som barn till djurets grupp, ur data/attribut.json. Inga effekter ritar inget. */
+/** Effekterna (eld, lågor, glöd, glitter, regnbåge) som barn till djurets grupp, ur data/attribut.json. Inga effekter ritar inget.
+ *  R8-3a2: på en GLB-kropp ritas inte den effekt som kroppsmönstret ersätter (regnbågen målas på kroppen i stället). */
 export function DjurEffekter({ varelse, ankare }: { varelse: Varelse; ankare: Ankare }) {
-  const lista = effekterFor(varelse);
+  const lista = effekterBredvid(varelse, harModell(varelse.kropp));
   const uid = (varelse as { uid?: string }).uid;
   const nyckel = lista.join(",");
   useEffect(() => {

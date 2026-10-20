@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, type Dispatch, type RefObject, type SetStateAction } from "react";
+import { useRostBubblor } from "../rost.ts";
 import { Heart } from "lucide-react";
 import { brygga } from "../brygga.ts";
 import type { Sparad } from "../brygga.ts";
@@ -25,7 +26,7 @@ type AngLagerProps = {
   liv: Record<string, { humor: string; humorMs: number; humorLangd: number; favorit: string; favoritHittad: boolean; hjartan: number; }>;
   fotoMal: { uid: string; x: number; y: number; } | null;
   visaBanner: (texten: string, slag: Banner["slag"], ms?: number) => void;
-  stangBanner: () => void;
+  stangBanner: (tryckt?: string) => void;
   visaMossa: (h: Parameters<typeof mossaHand>[0]) => void;
   setFotoMal: Dispatch<SetStateAction<{ uid: string; x: number; y: number; } | null>>;
   banners: Banner[];
@@ -54,6 +55,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
   // B6.1: tackbubblan (och andra pratbubblor) får aldrig ligga över "Guldord!"-banderollen eller över varandra.
   const lagerRef = useRef<HTMLDivElement>(null);
   const harBubblor = bubblor.length > 0;
+  useRostBubblor(bubblor, onskan && onskaSyns && !onskaOpp && !harBubblor ? onskan.text : null); // TTS-2: pratbubblor och önskan läses upp
   useLayoutEffect(() => {
     if (lagerRef.current) undvikKrock(lagerRef.current);
   }, [bubblor, banners]);
@@ -117,7 +119,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
               // B6.3 (H): en uppmaning barnet ska hinna läsa är en knapp – den står kvar tills tiden gått eller barnet trycker
               const Tagg = b.tryck ? "button" : "p";
               return (
-                <Tagg key={b.id} className={`banner ${b.slag}${b.tryck ? " tryck" : ""}`} data-testid="puff" {...(b.tryck ? { type: "button" as const, onClick: stangBanner } : {})}>
+                <Tagg key={b.id} className={`banner ${b.slag}${b.tryck ? " tryck" : ""}`} data-testid="puff" {...(b.tryck ? { type: "button" as const, onClick: () => stangBanner(b.text) } : {})}>
                   {b.text}
                 </Tagg>
               );
