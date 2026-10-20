@@ -1,0 +1,1693 @@
+{
+ "version": 1,
+ "_om": "GENERERAD av scripts/rost-generera.mjs, ändra inte för hand. Nyckel = FNV-1a 32 av den normaliserade texten som visas (src/spel/rostManifest.ts). f = fil i public/, ms = längd, r = talare (data/rost.json), id = källa, t = texten.",
+ "modell": "eleven_multilingual_v2",
+ "intro": {
+  "f": "/ljud/rost/d2ae27a14447d446.mp3",
+  "ms": 18704,
+  "fran": [
+   0,
+   2.67,
+   5.74,
+   6.99,
+   7.44,
+   8,
+   8.37,
+   8.71,
+   10.18,
+   11.94,
+   13.8,
+   17.09
+  ],
+  "langd": 20.1,
+  "t": "Hej! Jag är Trollpennan. Det jag skriver … vaknar. Titta här: kå, a, en, i, en. Kanin! Där är den! Men jag kan inte välja själv. Jag behöver dig. Vad ska vi väcka först?"
+ },
+ "rader": {
+  "13650518": {
+   "f": "/ljud/rost/88f1ed94464459e4.mp3",
+   "ms": 3788,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sol-skugga.text",
+   "t": "Solen steker! Se om du kan skriva fram något som ger skugga."
+  },
+  "87940592": {
+   "f": "/ljud/rost/f7068c51d7fcc464.mp3",
+   "ms": 3187,
+   "r": "bengtsson",
+   "id": "bengtsson.json:mjuk-kompis.text",
+   "t": "Jag söker en vän som är skön att krama, som ett moln!"
+  },
+  "99595408": {
+   "f": "/ljud/rost/a1c4ed167d6baafc.mp3",
+   "ms": 1985,
+   "r": "bengtsson",
+   "id": "bengtsson.json:hitta-till-picknicken.klart",
+   "t": "Rätt väg, nu väntar picknicken!"
+  },
+  "0024d191": {
+   "f": "/ljud/rost/20aa2f4f0d3e0197.mp3",
+   "ms": 4911,
+   "r": "bengtsson",
+   "id": "uppdrag.json:vindhasten.text",
+   "t": "Något stort och vitt har landat på ön. Vad tror du att en häst gillar att äta?"
+  },
+  "00a0696a": {
+   "f": "/ljud/rost/3c6bf26180f97109.mp3",
+   "ms": 1933,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ljus-i-kvallen.klart",
+   "t": "Nu ser vi ju våra egna näsor!"
+  },
+  "00e39178": {
+   "f": "/ljud/rost/59926e0980686910.mp3",
+   "ms": 2952,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.grottan.glad.9",
+   "t": "Vill du skriva vidare eller titta på glittret en stund?"
+  },
+  "01430cc0": {
+   "f": "/ljud/rost/0285acf98b94bb75.mp3",
+   "ms": 2456,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-kvallsljus.klart",
+   "t": "Där är ju näsan, precis där vi lämnade den!"
+  },
+  "01468ed8": {
+   "f": "/ljud/rost/ee56788418db5618.mp3",
+   "ms": 2351,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-tva-spanare.klart",
+   "t": "Nu har vi spanare både högt och lågt!"
+  },
+  "01d8caf3": {
+   "f": "/ljud/rost/0397d8f74757a617.mp3",
+   "ms": 5277,
+   "r": "bengtsson",
+   "id": "bengtsson.json:snabb-och-langsam.text",
+   "t": "Två vänner ska tävla. En susar fram som vinden. En kryper fram som en snigel."
+  },
+  "02f05c72": {
+   "f": "/ljud/rost/d1de1d7929525b14.mp3",
+   "ms": 1985,
+   "r": "bengtsson",
+   "id": "bengtsson.json:regn-pa-nosen.klart",
+   "t": "Nu får regnet plaska utan oss!"
+  },
+  "06f306e7": {
+   "f": "/ljud/rost/0d20076f1dc76a46.mp3",
+   "ms": 3056,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.grottan.glad.2",
+   "t": "Min mustasch tycker att det här är en fin sagoplats."
+  },
+  "082d5e71": {
+   "f": "/ljud/rost/d543c1cd18e0c7b6.mp3",
+   "ms": 3344,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-ovantad-kapten.text",
+   "t": "Ett djur som bor i vattnet vill åka båt! Kan du skriva det?"
+  },
+  "0a171f84": {
+   "f": "/ljud/rost/bdba56988839fe1b.mp3",
+   "ms": 2220,
+   "r": "bengtsson",
+   "id": "bengtsson.json:musik-pa-angen.klart",
+   "t": "Nu dansar till och med mina strumpor!"
+  },
+  "0aec1653": {
+   "f": "/ljud/rost/b884fb22372ed222.mp3",
+   "ms": 2038,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-varm-van.klart",
+   "t": "Nu är det varmt ända ut i öronen!"
+  },
+  "0c4828cc": {
+   "f": "/ljud/rost/f8f036bad106c635.mp3",
+   "ms": 4023,
+   "r": "bengtsson",
+   "id": "bengtsson.json:kanin-fryser.klart",
+   "t": "Ahh, så skönt! Nu är kaninen varm igen. Tack för hjälpen!"
+  },
+  "0d33ac0f": {
+   "f": "/ljud/rost/3fd85235fd75a380.mp3",
+   "ms": 5799,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-final-bergets-berattelse.text",
+   "t": "Min minnesmaskin vill ha något som glittrar i berget och något med sagor i. Kan en vän ta med det?"
+  },
+  "0d54f889": {
+   "f": "/ljud/rost/c83dd377b35543a0.mp3",
+   "ms": 3370,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ljus-i-kvallen.text",
+   "t": "Ditt djur vill se bättre i kvällsmörkret! Vad kan hjälpa?"
+  },
+  "0da680ee": {
+   "f": "/ljud/rost/007c73b5a61dce21.mp3",
+   "ms": 3605,
+   "r": "bengtsson",
+   "id": "bengtsson.json:dags-att-vila.text",
+   "t": "Gääsp, ditt djur nickar till! Var kan det vila riktigt skönt?"
+  },
+  "0dd59362": {
+   "f": "/ljud/rost/fbcf16e9d55d57cc.mp3",
+   "ms": 3161,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.grottan.glad.7",
+   "t": "Du får skapa något som ingen av oss har tänkt på förut."
+  },
+  "0ef2fd57": {
+   "f": "/ljud/rost/65ede63c9b0fbde4.mp3",
+   "ms": 2534,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-mysig-lasplats.klart",
+   "t": "Nu lyser det om både orden och min mustasch!"
+  },
+  "10449ed4": {
+   "f": "/ljud/rost/e64e5453e1e977b7.mp3",
+   "ms": 1985,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ordet-pa.klart",
+   "t": "Vilken fin sittplats du ordnade!"
+  },
+  "11efdfe2": {
+   "f": "/ljud/rost/7e5477886d2ccd35.mp3",
+   "ms": 1907,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ordet-under.klart",
+   "t": "Där hittade vi en fin plats!"
+  },
+  "140f6d6e": {
+   "f": "/ljud/rost/a2a025a1c8d070b1.mp3",
+   "ms": 4127,
+   "r": "bengtsson",
+   "id": "bengtsson.json:kalla-tassar.text",
+   "t": "Brr, ditt djur huttrar! Kan du hjälpa det så att det slutar frysa?"
+  },
+  "153356a3": {
+   "f": "/ljud/rost/8d5c3cd35e0fdd79.mp3",
+   "ms": 3239,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.skogen.glad.0",
+   "t": "Hej igen! Skogen har plats för fler av dina idéer."
+  },
+  "1552c1ac": {
+   "f": "/ljud/rost/cfd78fe2a2e0276b.mp3",
+   "ms": 1620,
+   "r": "bengtsson",
+   "id": "bengtsson.json:hogt-och-lagt.klart",
+   "t": "Nu kan vi mäta med blicken!"
+  },
+  "171c099e": {
+   "f": "/ljud/rost/56db43ebc11008d2.mp3",
+   "ms": 3004,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.grottan.glad.4",
+   "t": "Här kan en liten tanke få ett alldeles eget hörn."
+  },
+  "1788db54": {
+   "f": "/ljud/rost/bb5777e50ebf34c8.mp3",
+   "ms": 2534,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ordet-med.klart",
+   "t": "Nu hör de ihop som jag och min doktorsväska!"
+  },
+  "18b15d15": {
+   "f": "/ljud/rost/72b5959bb770e4b4.mp3",
+   "ms": 4598,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-ben-som-vilar.text",
+   "t": "Min gåta har ben men tar aldrig en promenad! Vad kan en vän stå bredvid?"
+  },
+  "199da4bf": {
+   "f": "/ljud/rost/316d155213465604.mp3",
+   "ms": 1515,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-fruktpaus.klart",
+   "t": "Nu är strandfikat räddat!"
+  },
+  "1b0a6425": {
+   "f": "/ljud/rost/020e422b069b4f9e.mp3",
+   "ms": 2168,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-regnpaus.klart",
+   "t": "Nu kan regnet spela trumma på taket!"
+  },
+  "1ba31007": {
+   "f": "/ljud/rost/452986c8b6edc2db.mp3",
+   "ms": 4415,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-torr-overfart.text",
+   "t": "Fikat väntar på andra stranden! Hur kan en vän åka dit utan att simma?"
+  },
+  "1e6c01fe": {
+   "f": "/ljud/rost/722daebeec4da618.mp3",
+   "ms": 3579,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.skogen.glad.3",
+   "t": "Min mustasch pekar mot något roligt. Fast åt två håll!"
+  },
+  "20d622f5": {
+   "f": "/ljud/rost/24e670fac21afccb.mp3",
+   "ms": 3944,
+   "r": "bengtsson",
+   "id": "bengtsson.json:hitta-till-picknicken.text",
+   "t": "Ditt djur har glömt vägen till picknicken! Vad kan visa rätt håll?"
+  },
+  "24b8f510": {
+   "f": "/ljud/rost/ee50d15df41dacf2.mp3",
+   "ms": 2325,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-sitt-vid-vattnet.klart",
+   "t": "Här sitter vi och låter vågorna göra jobbet!"
+  },
+  "24d1d577": {
+   "f": "/ljud/rost/5d6e6e41faf51d65.mp3",
+   "ms": 4441,
+   "r": "bengtsson",
+   "id": "bengtsson.json:leriga-tassar.text",
+   "t": "Hoppsan, ditt djur har rullat i lera! Hur får vi bort kladdet?"
+  },
+  "263e9c04": {
+   "f": "/ljud/rost/37d34aae4da1878d.mp3",
+   "ms": 3579,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ordet-under.text",
+   "t": "Ditt djur vill stå under något. Skriv det med ordet under!"
+  },
+  "26b7d243": {
+   "f": "/ljud/rost/3852e5f63492aded.mp3",
+   "ms": 4598,
+   "r": "bengtsson",
+   "id": "bengtsson.json:regn-skydd.text",
+   "t": "Oj, det börjar regna! Kan du skriva fram något som skyddar mot regnet?"
+  },
+  "28349b55": {
+   "f": "/ljud/rost/6b4c0274c10c8404.mp3",
+   "ms": 3527,
+   "r": "bengtsson",
+   "id": "uppdrag.json:svampring.klart",
+   "t": "Boing, boing! Nu har vi tur allihop. Fina hopp!"
+  },
+  "2a3866e0": {
+   "f": "/ljud/rost/563e667bbfe583b4.mp3",
+   "ms": 3527,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-regnpaus.text",
+   "t": "Plipp på näsan! Kan du ordna en torr plats åt en vän?"
+  },
+  "2b7058e0": {
+   "f": "/ljud/rost/5699d101d1c5756c.mp3",
+   "ms": 3474,
+   "r": "bengtsson",
+   "id": "uppdrag.json:mossugglan.klart",
+   "t": "Hu-hu! Nu har Mossugglan en vän. Så snällt av dig."
+  },
+  "2bd47f50": {
+   "f": "/ljud/rost/04429d7c85fd2bbb.mp3",
+   "ms": 3762,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-magen-kurrar.text",
+   "t": "Kurr! Kan du ordna en matstund åt en hungrig skogsgäst?"
+  },
+  "2c28e2e5": {
+   "f": "/ljud/rost/88d0cb7df18cc531.mp3",
+   "ms": 5042,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-ljus-utanfor.text",
+   "t": "En vän vill sova i en koja. Utanför ska det lysa lite. Vad kan lysa?"
+  },
+  "2d41a742": {
+   "f": "/ljud/rost/2e5bfd34cb08268c.mp3",
+   "ms": 3109,
+   "r": "bengtsson",
+   "id": "uppdrag.json:kristallgrodan.klart",
+   "t": "Kvack-la-la! Hör hur fint det ekar i grottan."
+  },
+  "2df626f1": {
+   "f": "/ljud/rost/d139662aabe5c993.mp3",
+   "ms": 5851,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-hitta-riktningen.text",
+   "t": "En vän har gått vilse i skogen. Vad kan visa vägen hem? Den behöver två saker."
+  },
+  "2e0de130": {
+   "f": "/ljud/rost/33b9cc57083c963c.mp3",
+   "ms": 3788,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.grottan.glad.6",
+   "t": "Vilken dag för en tokig idé! Fast det säger jag varje dag."
+  },
+  "2e19716a": {
+   "f": "/ljud/rost/ba89d67ec7422886.mp3",
+   "ms": 2456,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-spara-matsacken.klart",
+   "t": "Där får fikat vänta på nästa fikapaus!"
+  },
+  "2e8b5236": {
+   "f": "/ljud/rost/9eb41e09ce82b25c.mp3",
+   "ms": 3657,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.skogen.glad.4",
+   "t": "En glänta, en penna och dina idéer. Vilken fin början!"
+  },
+  "30f09187": {
+   "f": "/ljud/rost/a97d87f67611db15.mp3",
+   "ms": 2220,
+   "r": "bengtsson",
+   "id": "bengtsson.json:vit-som-sno.klart",
+   "t": "Så fint, en liten vinterhälsning!"
+  },
+  "319cc5a6": {
+   "f": "/ljud/rost/95ca838b00587ccf.mp3",
+   "ms": 2821,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.skogen.glad.5",
+   "t": "Jag har hittat en bra plats för en helt ny tanke."
+  },
+  "328d6ec6": {
+   "f": "/ljud/rost/bf745d70480f7e6f.mp3",
+   "ms": 4206,
+   "r": "bengtsson",
+   "id": "uppdrag.json:skatten.klart",
+   "t": "Skattkistan är full av guldmynt och en gammal karta! Bra jobbat!"
+  },
+  "33a3d1ce": {
+   "f": "/ljud/rost/df4a57a96ecd2346.mp3",
+   "ms": 3370,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.sjon.glad.3",
+   "t": "Min mustasch speglar sig. Den ser extra klok ut i dag."
+  },
+  "368178ef": {
+   "f": "/ljud/rost/b6503ba4bd7b9cea.mp3",
+   "ms": 2403,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-tva-storlekar.klart",
+   "t": "Olika stora plask, samma glada bad!"
+  },
+  "369a257d": {
+   "f": "/ljud/rost/5b8256a2e35f60ca.mp3",
+   "ms": 3527,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-mysig-lasplats.text",
+   "t": "En vän vill läsa en saga när det blir mörkt. Vad behöver den?"
+  },
+  "37874cd6": {
+   "f": "/ljud/rost/d2d1777cfb3f3043.mp3",
+   "ms": 3762,
+   "r": "bengtsson",
+   "id": "bengtsson.json:regn-pa-nosen.text",
+   "t": "Plipp, plopp på nosen! Var kan ditt djur hålla sig torrt?"
+  },
+  "3789a652": {
+   "f": "/ljud/rost/c4b5fe89fb28feca.mp3",
+   "ms": 3474,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.sjon.glad.7",
+   "t": "Du får hitta på något alldeles eget. Det är din värld."
+  },
+  "39237f91": {
+   "f": "/ljud/rost/45f6a9b251bc34c5.mp3",
+   "ms": 1750,
+   "r": "bengtsson",
+   "id": "bengtsson.json:leriga-tassar.klart",
+   "t": "Nu glänser till och med öronen!"
+  },
+  "3974c029": {
+   "f": "/ljud/rost/9846a1a3216b40e4.mp3",
+   "ms": 5616,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-final-vattenglitter.text",
+   "t": "Min minnesmaskin vill ha något som glittrar och något som blommar. Kan en vän ta med det?"
+  },
+  "39ea67a9": {
+   "f": "/ljud/rost/d2d34fb884271068.mp3",
+   "ms": 3579,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-pa-bryggan.text",
+   "t": "En vän vill dingla med tassarna ovanför vattnet. Var kan den sitta?"
+  },
+  "3a6bb59f": {
+   "f": "/ljud/rost/4065e2e792610ca5.mp3",
+   "ms": 2220,
+   "r": "bengtsson",
+   "id": "bengtsson.json:resa-fran-soffan.klart",
+   "t": "Vilken resa, och tofflorna är kvar!"
+  },
+  "3abb0e2f": {
+   "f": "/ljud/rost/cdd01a19b85b7178.mp3",
+   "ms": 1620,
+   "r": "bengtsson",
+   "id": "bengtsson.json:pytteliten-kompis.klart",
+   "t": "Där är du ju, lilla kompis!"
+  },
+  "3b088445": {
+   "f": "/ljud/rost/54f0fb452fb6d996.mp3",
+   "ms": 3605,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-mjuk-vila.text",
+   "t": "Gääsp! Berget är så hårt. Var kan en vän sova mjukt?"
+  },
+  "3b4718d9": {
+   "f": "/ljud/rost/be1b2516c925af48.mp3",
+   "ms": 2116,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-ljus-utanfor.klart",
+   "t": "Vilket mysigt hem med välkomstsken!"
+  },
+  "3cb75481": {
+   "f": "/ljud/rost/4bd70c4cd8323ee6.mp3",
+   "ms": 4493,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-ordna-lasning.text",
+   "t": "En vän vill sitta still och titta på bilder och ord. Vad kan den läsa?"
+  },
+  "3d3a7c2c": {
+   "f": "/ljud/rost/b87fe8e211e87313.mp3",
+   "ms": 2273,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-vila-benen.klart",
+   "t": "Här sitter vi som två nöjda potatisar!"
+  },
+  "44ed0e1f": {
+   "f": "/ljud/rost/5c449840057872e1.mp3",
+   "ms": 2456,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-stor-och-liten.klart",
+   "t": "Olika stora vänner får plats i samma saga!"
+  },
+  "45c0c436": {
+   "f": "/ljud/rost/121b24e01bb16503.mp3",
+   "ms": 6766,
+   "r": "bengtsson",
+   "id": "uppdrag.json:hitta-kotte.text",
+   "t": "Hoppsan! Ekorren har tappat sin silverkotte och är ledsen. Kan du leta efter den bland svamparna?"
+  },
+  "45fd1ff4": {
+   "f": "/ljud/rost/71389151ad8c9c22.mp3",
+   "ms": 3657,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-fruktpaus.text",
+   "t": "Magen kurrar! Kan en vän få något saftigt från fruktfatet?"
+  },
+  "462a3fb4": {
+   "f": "/ljud/rost/3fb012aadee3296e.mp3",
+   "ms": 3370,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-sittpaus.text",
+   "t": "Puh, benen vill vila medan vi tittar på allt som glimmar!"
+  },
+  "47de3ace": {
+   "f": "/ljud/rost/1dcad84e437b8e54.mp3",
+   "ms": 3944,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-lys-vid-vattnet.text",
+   "t": "Kvällen speglar sig i vattnet! Vad hjälper en vän att se sin matsäck?"
+  },
+  "47ffe839": {
+   "f": "/ljud/rost/a890898e5429cd4d.mp3",
+   "ms": 2038,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-tva-satt-att-resa.klart",
+   "t": "Två vägar till samma fikapaus!"
+  },
+  "48cd65bf": {
+   "f": "/ljud/rost/16240a9bc43ecd9b.mp3",
+   "ms": 2220,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-glitter-i-kistan.klart",
+   "t": "Där kan glittret vila till nästa titt!"
+  },
+  "49bad38f": {
+   "f": "/ljud/rost/184ab75b41c78e13.mp3",
+   "ms": 2090,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-pa-bryggan.klart",
+   "t": "Perfekt utsikt över allt det blå!"
+  },
+  "49d744a0": {
+   "f": "/ljud/rost/0a994adfc6e53b80.mp3",
+   "ms": 1802,
+   "r": "bengtsson",
+   "id": "bengtsson.json:dags-att-vila.klart",
+   "t": "Sov gott, jag tassar på tå!"
+  },
+  "4b8f41cc": {
+   "f": "/ljud/rost/9894b9bcf8a38fb3.mp3",
+   "ms": 4310,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-under-tradet.text",
+   "t": "En vän vill sitta i skuggan under grenarna. Var sitter den? Skriv det!"
+  },
+  "4c1f97b8": {
+   "f": "/ljud/rost/b3ee003dc9c4a0ec.mp3",
+   "ms": 3579,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ordet-med.text",
+   "t": "Ditt djur vill ha något med sig. Skriv det med ordet med!"
+  },
+  "4cccf55e": {
+   "f": "/ljud/rost/77345aec6f19c395.mp3",
+   "ms": 1750,
+   "r": "bengtsson",
+   "id": "bengtsson.json:tva-farger.klart",
+   "t": "Vilket färgglatt kompispar!"
+  },
+  "4e54d126": {
+   "f": "/ljud/rost/0deba011da8a6b4f.mp3",
+   "ms": 2220,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-ljus-vid-krypin.klart",
+   "t": "Vilket mysigt krypin med välkomstsken!"
+  },
+  "4f7687c4": {
+   "f": "/ljud/rost/3b5622a45f33d6f1.mp3",
+   "ms": 5982,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-tva-storlekar.text",
+   "t": "Två vänner vill simma. En är stor som en båt. En är pytte, som en myra!"
+  },
+  "5015b0b5": {
+   "f": "/ljud/rost/d40766ebf068818d.mp3",
+   "ms": 3788,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-kvallsljus.text",
+   "t": "Skymningen är här! Vad kan hjälpa en vän att se sin egen nos?"
+  },
+  "53d09f7a": {
+   "f": "/ljud/rost/76f9b0423abfcc6d.mp3",
+   "ms": 1933,
+   "r": "bengtsson",
+   "id": "bengtsson.json:magen-kurrar.klart",
+   "t": "Nu låter magen glad i stället!"
+  },
+  "5658228f": {
+   "f": "/ljud/rost/3f0ca05b749a7224.mp3",
+   "ms": 5616,
+   "r": "bengtsson",
+   "id": "uppdrag.json:bavern.text",
+   "t": "Gamla bävern bygger en ny damm men har slut på material. Kan du ge honom pinnar eller löv?"
+  },
+  "592687b5": {
+   "f": "/ljud/rost/81a9b0d1a164278a.mp3",
+   "ms": 5146,
+   "r": "bengtsson",
+   "id": "bengtsson.json:atbar-regnbage.text",
+   "t": "Ditt djur vill bjuda på en regnbågsfika med tre färger! Vad kan ligga på fatet?"
+  },
+  "5b1507aa": {
+   "f": "/ljud/rost/478eb5d45e7ee7b7.mp3",
+   "ms": 5878,
+   "r": "bengtsson",
+   "id": "uppdrag.json:nattdraken.text",
+   "t": "Längst in i grottan bor Nattdraken. Hen har väntat länge på en vän. Vågar du hälsa på?"
+  },
+  "5b772d25": {
+   "f": "/ljud/rost/860ecb09033b4014.mp3",
+   "ms": 5198,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-tva-farger.text",
+   "t": "En vän i gräsets färg sitter på en sten. En vän i solens färg står bredvid stenen."
+  },
+  "5f87e2d0": {
+   "f": "/ljud/rost/68a5541421423915.mp3",
+   "ms": 2638,
+   "r": "bengtsson",
+   "id": "bengtsson.json:mjuk-kompis.klart",
+   "t": "Så fluffigt att min mustasch blir avundsjuk!"
+  },
+  "5f8ae8ce": {
+   "f": "/ljud/rost/262da2347713c334.mp3",
+   "ms": 3657,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-varma-oron.text",
+   "t": "Brr, här kittlar luften kallt! Kan en vän slippa huttra?"
+  },
+  "6060b375": {
+   "f": "/ljud/rost/198c4c74baf8e4ca.mp3",
+   "ms": 2273,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ovantat-kompismote.klart",
+   "t": "Vilket ovanligt och härligt möte!"
+  },
+  "60b8e623": {
+   "f": "/ljud/rost/e68f7e64549436a9.mp3",
+   "ms": 5381,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-stor-och-liten.text",
+   "t": "Två vänner vill bo här inne. En är stor som en björn. En är pytte, som en myra!"
+  },
+  "611c21ba": {
+   "f": "/ljud/rost/6dbb3d7b0aea566a.mp3",
+   "ms": 3605,
+   "r": "bengtsson",
+   "id": "uppdrag.json:parlhajen.text",
+   "t": "Pärlhajen är ensam nere vid bryggan. Kan du bli hennes vän?"
+  },
+  "615b0ae6": {
+   "f": "/ljud/rost/9296e237a024614e.mp3",
+   "ms": 3109,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-liten-van.text",
+   "t": "Vem kan få plats bredvid min allra minsta kaffekopp?"
+  },
+  "673316af": {
+   "f": "/ljud/rost/be9bbf3b73d7e39a.mp3",
+   "ms": 4780,
+   "r": "bengtsson",
+   "id": "bengtsson.json:kanin-fryser.text",
+   "t": "Det verkar som att din kanin fryser. Se om du kan skriva fram något som värmer."
+  },
+  "69a38080": {
+   "f": "/ljud/rost/df5dd4e9188ef656.mp3",
+   "ms": 2821,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.sjon.glad.5",
+   "t": "Jag har hittat en fin plats för en ny strandidé."
+  },
+  "6a0617ee": {
+   "f": "/ljud/rost/a5068b7e83934891.mp3",
+   "ms": 1672,
+   "r": "bengtsson",
+   "id": "bengtsson.json:solgul-van.klart",
+   "t": "Vilken solstråle till kompis!"
+  },
+  "6a798461": {
+   "f": "/ljud/rost/c83329460c435fe7.mp3",
+   "ms": 3187,
+   "r": "bengtsson",
+   "id": "bengtsson.json:rod-kompis.text",
+   "t": "Jag önskar mig en vän i samma färg som en mogen tomat!"
+  },
+  "6c49a4a1": {
+   "f": "/ljud/rost/0e5e935a953c59cb.mp3",
+   "ms": 1907,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-lys-vid-vattnet.klart",
+   "t": "Nu glittrar det både här och där!"
+  },
+  "6d0886d0": {
+   "f": "/ljud/rost/28b2246973442360.mp3",
+   "ms": 2769,
+   "r": "bengtsson",
+   "id": "bengtsson.json:stor-och-liten.text",
+   "t": "Jag vill se två vänner i helt olika storlekar!"
+  },
+  "6ddfbd36": {
+   "f": "/ljud/rost/ddabb7a0ce8922f6.mp3",
+   "ms": 3657,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-under-bordet.text",
+   "t": "En vän vill gömma sig under något som vi äter vid. Kan du skriva det?"
+  },
+  "6f1fcb82": {
+   "f": "/ljud/rost/5f86ea5f818580a6.mp3",
+   "ms": 1750,
+   "r": "bengtsson",
+   "id": "bengtsson.json:varmt-och-kallt.klart",
+   "t": "Vilken fin motsatsblandning!"
+  },
+  "71134f4e": {
+   "f": "/ljud/rost/4b37435d02b507da.mp3",
+   "ms": 2403,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.grottan.glad.3",
+   "t": "Du bestämmer vad som ska finnas i din grotta."
+  },
+  "714fb51e": {
+   "f": "/ljud/rost/2852d7f1111b0ba0.mp3",
+   "ms": 5016,
+   "r": "bengtsson",
+   "id": "npc.json:bengtsson.fel.1",
+   "t": "Intressant! Men jag tänkte på något annat. Vad mer kan du komma på?"
+  },
+  "72216de8": {
+   "f": "/ljud/rost/d9cb1dc99762054d.mp3",
+   "ms": 2769,
+   "r": "bengtsson",
+   "id": "bengtsson.json:lang-hals.text",
+   "t": "Vem kan kika högt över buskarna utan en stege?"
+  },
+  "72eb7f60": {
+   "f": "/ljud/rost/fc9bfe0e1f75c6a5.mp3",
+   "ms": 4963,
+   "r": "bengtsson",
+   "id": "uppdrag.json:skatten.text",
+   "t": "I grottan finns en skattkista, gömd där kristallerna är lila. Kan du hitta den?"
+  },
+  "732f4933": {
+   "f": "/ljud/rost/116d4c9e1be7f038.mp3",
+   "ms": 4180,
+   "r": "bengtsson",
+   "id": "bengtsson.json:redo-for-fest.text",
+   "t": "Ditt djur är bjudet på kalas! Vad kan göra det extra festfint?"
+  },
+  "760394c4": {
+   "f": "/ljud/rost/1dd45958de60620e.mp3",
+   "ms": 4362,
+   "r": "bengtsson",
+   "id": "bengtsson.json:over-backen.text",
+   "t": "Ditt djur vill till andra sidan bäcken med torra tassar! Hur ordnar vi det?"
+  },
+  "7608c165": {
+   "f": "/ljud/rost/336da7927711593d.mp3",
+   "ms": 2508,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-stor-och-liten.klart",
+   "t": "Olika storlek, lika välkomna på fikat!"
+  },
+  "78aeac0d": {
+   "f": "/ljud/rost/fd9efe8b400644be.mp3",
+   "ms": 3370,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-sitt-vid-vattnet.text",
+   "t": "Puh, benen vill pausa medan vi tittar på vågorna!"
+  },
+  "7957751b": {
+   "f": "/ljud/rost/42109caafd4f204f.mp3",
+   "ms": 4676,
+   "r": "bengtsson",
+   "id": "bengtsson.json:hogt-och-lagt.text",
+   "t": "Ditt djur vill stå vid två saker. En når upp till molnen. En når bara till knät."
+  },
+  "7973982e": {
+   "f": "/ljud/rost/b6757ab21d0a4fab.mp3",
+   "ms": 4075,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-forsta-skenet.text",
+   "t": "Här inne är det skymning hela dagen! Vad hjälper en vän att se bättre?"
+  },
+  "798bceb3": {
+   "f": "/ljud/rost/4188aaa80a329db7.mp3",
+   "ms": 3579,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ordet-i.text",
+   "t": "Ditt djur vill sitta inne i något. Skriv det med ordet i!"
+  },
+  "7d15ff0e": {
+   "f": "/ljud/rost/1e1e9fc59b98ad63.mp3",
+   "ms": 4310,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-skugga-pa-stranden.text",
+   "t": "Solen kittlar min näsa! Var kan en vän vila i skuggan på stranden?"
+  },
+  "7dddaced": {
+   "f": "/ljud/rost/71609d075cf61a59.mp3",
+   "ms": 2038,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-bla-van.klart",
+   "t": "Vilken fin färgkompis till vattnet!"
+  },
+  "7f5b201d": {
+   "f": "/ljud/rost/bd9d78b12ffd81df.mp3",
+   "ms": 2220,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-mjuk-vila.klart",
+   "t": "Nu tassar jag tyst förbi viloplatsen!"
+  },
+  "813b19d0": {
+   "f": "/ljud/rost/5d6de13c3eea5620.mp3",
+   "ms": 8124,
+   "r": "bengtsson",
+   "id": "uppdrag.json:svampring.text",
+   "t": "Titta, svampar i en ring! Man säger att den som hoppar i ringen får tur. Skicka dit ett djur som kan hoppa."
+  },
+  "8154fea0": {
+   "f": "/ljud/rost/fadb9942aec44226.mp3",
+   "ms": 2220,
+   "r": "bengtsson",
+   "id": "bengtsson.json:over-backen.klart",
+   "t": "Framme, och inte en blöt tå!"
+  },
+  "84e1e61f": {
+   "f": "/ljud/rost/68259f53905d564d.mp3",
+   "ms": 4415,
+   "r": "bengtsson",
+   "id": "npc.json:bengtsson.fel.2",
+   "t": "Oj, vad roligt! Men det var inte riktigt det jag letade efter. Prova igen!"
+  },
+  "8513e10d": {
+   "f": "/ljud/rost/9da76626086e39bc.mp3",
+   "ms": 2691,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sol-skugga.klart",
+   "t": "Ahh, skugga! Nu kan alla vila i det svala."
+  },
+  "854a9c89": {
+   "f": "/ljud/rost/6446993e636e4ce2.mp3",
+   "ms": 3579,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-eget-krypin.text",
+   "t": "En vän vill ha ett eget litet hem här inne. Vad kan den bo i?"
+  },
+  "873c9ec3": {
+   "f": "/ljud/rost/fe5a0f1b7eaa1658.mp3",
+   "ms": 2691,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.skogen.glad.6",
+   "t": "Skogen är redo. Du bestämmer vad som händer här."
+  },
+  "884f405a": {
+   "f": "/ljud/rost/b2098ec6224fad39.mp3",
+   "ms": 2038,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sol-och-gras.klart",
+   "t": "Nu ser hela ängen extra glad ut!"
+  },
+  "8bf2b160": {
+   "f": "/ljud/rost/e6c83a45d681e9ca.mp3",
+   "ms": 3474,
+   "r": "bengtsson",
+   "id": "uppdrag.json:kristallgrodan.text",
+   "t": "Kristallgrodan vill så gärna sjunga. Kan du få henne att börja?"
+  },
+  "8c9382c0": {
+   "f": "/ljud/rost/ccf162c059307b17.mp3",
+   "ms": 3657,
+   "r": "bengtsson",
+   "id": "bengtsson.json:magen-kurrar.text",
+   "t": "Kurr, kurr, säger magen på ditt djur! Vad kan få den nöjd?"
+  },
+  "8d94bfb2": {
+   "f": "/ljud/rost/6f83fb897bda3810.mp3",
+   "ms": 2168,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-sken-och-saga.klart",
+   "t": "Nu lyser sagostunden upp hela min dag!"
+  },
+  "8ffae5e6": {
+   "f": "/ljud/rost/f801d2623aa44a1a.mp3",
+   "ms": 4624,
+   "r": "bengtsson",
+   "id": "bengtsson.json:trakig-eftermiddag.text",
+   "t": "Ditt djur har räknat samma grässtrå sju gånger! Vad kan göra dagen roligare?"
+  },
+  "906437b9": {
+   "f": "/ljud/rost/a2032f8ec8572e99.mp3",
+   "ms": 1855,
+   "r": "bengtsson",
+   "id": "bengtsson.json:vingar-i-luften.klart",
+   "t": "Nu får molnen äntligen besök!"
+  },
+  "91ca3781": {
+   "f": "/ljud/rost/93d21309df35d7d2.mp3",
+   "ms": 2456,
+   "r": "bengtsson",
+   "id": "bengtsson.json:solgul-van.text",
+   "t": "Jag längtar efter en vän som lyser som solen!"
+  },
+  "9235d3fc": {
+   "f": "/ljud/rost/ad87f5f6b137230a.mp3",
+   "ms": 2325,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-under-tradet.klart",
+   "t": "Där blev det ett grönt tak över huvudet!"
+  },
+  "93b8ce67": {
+   "f": "/ljud/rost/fa679ffd45e8d88f.mp3",
+   "ms": 6113,
+   "r": "bengtsson",
+   "id": "bengtsson.json:omvanda-storlekar.text",
+   "t": "Min maskin har blivit tokig! Ett jättedjur blev som en myra, och en myra blev som ett hus!"
+  },
+  "94c6e252": {
+   "f": "/ljud/rost/619f60b965e412b3.mp3",
+   "ms": 4075,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.grottan.glad.0",
+   "t": "Hej! Här finns plats för både små sagor och stora idéer."
+  },
+  "94e3075a": {
+   "f": "/ljud/rost/ff4e0950520f6d87.mp3",
+   "ms": 2926,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.sjon.glad.6",
+   "t": "Sjön är redo. Du bestämmer vilka som kommer hit."
+  },
+  "958344f8": {
+   "f": "/ljud/rost/eb58a89e156edc7d.mp3",
+   "ms": 1750,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-sittpaus.klart",
+   "t": "Här kan vi sitta och klura en stund!"
+  },
+  "95f23a87": {
+   "f": "/ljud/rost/da5dadcc44791012.mp3",
+   "ms": 1855,
+   "r": "bengtsson",
+   "id": "bengtsson.json:gron-kompis.klart",
+   "t": "Nu får jag leta noga i gräset!"
+  },
+  "963bf7dd": {
+   "f": "/ljud/rost/3d43309a86f67072.mp3",
+   "ms": 2351,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-bla-van.text",
+   "t": "Jag vill se en vän i samma färg som himlen!"
+  },
+  "973a6549": {
+   "f": "/ljud/rost/da6bd43b1b586e69.mp3",
+   "ms": 2325,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-forsta-skenet.klart",
+   "t": "Nu ser jag både vägen och min mustasch!"
+  },
+  "97d6020e": {
+   "f": "/ljud/rost/38ee457121a63cac.mp3",
+   "ms": 2220,
+   "r": "bengtsson",
+   "id": "bengtsson.json:randig-kompis.text",
+   "t": "Jag söker en vän med streck på kroppen!"
+  },
+  "97d758d7": {
+   "f": "/ljud/rost/2901fbe2bba047f9.mp3",
+   "ms": 3762,
+   "r": "bengtsson",
+   "id": "uppdrag.json:parlhajen.klart",
+   "t": "Pärlhajen simmar runt och visar upp sin nya vän. Det är ju du!"
+  },
+  "98a0fc2c": {
+   "f": "/ljud/rost/105c6c5e831c9798.mp3",
+   "ms": 5982,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-stor-och-liten.text",
+   "t": "Jag vill se två vänner. En ska vara stor som ett hus. En ska vara pytte, som en myra!"
+  },
+  "98d30a7a": {
+   "f": "/ljud/rost/a1b605caabc9e2df.mp3",
+   "ms": 1672,
+   "r": "bengtsson",
+   "id": "bengtsson.json:rod-kompis.klart",
+   "t": "Vilken härlig färgklick!"
+  },
+  "9ab79c19": {
+   "f": "/ljud/rost/14d8db8f1942d03c.mp3",
+   "ms": 2168,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-under-bordet.klart",
+   "t": "Där hittade vi en riktigt fin liten vrå!"
+  },
+  "9b001273": {
+   "f": "/ljud/rost/11d0184e3c65a45e.mp3",
+   "ms": 4728,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-over-backen.text",
+   "t": "På andra sidan väntar fikat! Hur kommer en vän dit med torra tassar?"
+  },
+  "9df85609": {
+   "f": "/ljud/rost/8e91b29fbb857d6e.mp3",
+   "ms": 2638,
+   "r": "bengtsson",
+   "id": "bengtsson.json:redo-for-fest.klart",
+   "t": "Så stiligt att jag nästan tappar glasögonen!"
+  },
+  "a05f3927": {
+   "f": "/ljud/rost/4bb158aa0b7c3eb8.mp3",
+   "ms": 4963,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-glitter-i-kistan.text",
+   "t": "En vän har en skattkista. Den vill gömma något som glittrar i den. Vad kan det vara?"
+  },
+  "a147b9cc": {
+   "f": "/ljud/rost/81094da588a472e0.mp3",
+   "ms": 4676,
+   "r": "bengtsson",
+   "id": "uppdrag.json:fyren.text",
+   "t": "Å nej, fyren på ön har slocknat! Ta med ett djur som kan lysa ut till ön."
+  },
+  "a351d19e": {
+   "f": "/ljud/rost/ecc7318a6ad2834d.mp3",
+   "ms": 3605,
+   "r": "bengtsson",
+   "id": "uppdrag.json:vindhasten.klart",
+   "t": "Vindhästen gillar dig! Säg bara till, så flyger ni en sväng."
+  },
+  "a38738a7": {
+   "f": "/ljud/rost/d37ac224312d49d1.mp3",
+   "ms": 1985,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-tva-farger.klart",
+   "t": "Vilken färgglad liten samling!"
+  },
+  "a54250e2": {
+   "f": "/ljud/rost/fd73b4d581df6060.mp3",
+   "ms": 2586,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.sjon.glad.4",
+   "t": "Här kan din fantasi få både fötter och fenor."
+  },
+  "a61291db": {
+   "f": "/ljud/rost/7238c438d764f0a1.mp3",
+   "ms": 2926,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-stor-simmare.text",
+   "t": "Jag vill se en simmande vän som tar riktigt mycket plats!"
+  },
+  "aa30298d": {
+   "f": "/ljud/rost/7c0b9d39fedb9381.mp3",
+   "ms": 3161,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-liten-upptackare.text",
+   "t": "Vem kan kika in i ett hål som är mindre än min kaffekopp?"
+  },
+  "ac5d5a02": {
+   "f": "/ljud/rost/9b008bdba0d7f28f.mp3",
+   "ms": 3762,
+   "r": "bengtsson",
+   "id": "bengtsson.json:badlangtan.text",
+   "t": "Ditt djur längtar efter ett skönt plask! Var kan det doppa sig?"
+  },
+  "ae030e6e": {
+   "f": "/ljud/rost/c2d17abc50e81761.mp3",
+   "ms": 2403,
+   "r": "bengtsson",
+   "id": "bengtsson.json:jattestor-van.klart",
+   "t": "Oj, nu behöver jag en större kamera!"
+  },
+  "ae091a55": {
+   "f": "/ljud/rost/e5ef85d3fbaf2260.mp3",
+   "ms": 2873,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.sjon.glad.2",
+   "t": "En idé på stranden och en i vattnet. Du väljer!"
+  },
+  "aec2abe1": {
+   "f": "/ljud/rost/8e872df57f2e9afe.mp3",
+   "ms": 2769,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.sjon.glad.1",
+   "t": "Vattnet glittrar. Vad vill du skriva fram i dag?"
+  },
+  "aec71954": {
+   "f": "/ljud/rost/e798ae602a9dfc1b.mp3",
+   "ms": 3161,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-i-baten.text",
+   "t": "En vän vill sitta i en båt med åror. Kan du skriva det?"
+  },
+  "afff71ed": {
+   "f": "/ljud/rost/dbd08491ee5e09e8.mp3",
+   "ms": 1750,
+   "r": "bengtsson",
+   "id": "bengtsson.json:present-till-en-van.klart",
+   "t": "Vilken omtänksam överraskning!"
+  },
+  "b09621df": {
+   "f": "/ljud/rost/999e4d52670741f8.mp3",
+   "ms": 3892,
+   "r": "bengtsson",
+   "id": "uppdrag.json:hitta-kotte.klart",
+   "t": "Där var den! Nu kan Ekorren sova gott i natt. Tack för hjälpen!"
+  },
+  "b0f04279": {
+   "f": "/ljud/rost/9ec523e2aa904258.mp3",
+   "ms": 4023,
+   "r": "bengtsson",
+   "id": "platser.json:sjon.final_fore",
+   "t": "Maskinen minns min blöta strumpa! Vi behöver ett finare sjöminne."
+  },
+  "b1f6ae9d": {
+   "f": "/ljud/rost/1818632145f7c6ba.mp3",
+   "ms": 4441,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-regn-vid-stranden.text",
+   "t": "Plipp, plopp! Kan en vän få ett torrt krypin tills skuren är över?"
+  },
+  "b21e5602": {
+   "f": "/ljud/rost/e0867bcfe59723c8.mp3",
+   "ms": 3944,
+   "r": "bengtsson",
+   "id": "bengtsson.json:varmt-och-kallt.text",
+   "t": "Ditt djur vill ha något som värmer och något som kyler, som is!"
+  },
+  "b2e04518": {
+   "f": "/ljud/rost/c75efb9edd273926.mp3",
+   "ms": 5982,
+   "r": "bengtsson",
+   "id": "uppdrag.json:mossugglan.text",
+   "t": "Mossugglan sover och vill så gärna ha en vän. Väck henne med något blått, så blir ni vänner."
+  },
+  "b30da1b7": {
+   "f": "/ljud/rost/c78ec0868f56913d.mp3",
+   "ms": 3291,
+   "r": "bengtsson",
+   "id": "uppdrag.json:fyren.klart",
+   "t": "Nu lyser fyren igen! Båtarna hittar hem tack vare dig."
+  },
+  "b327ec82": {
+   "f": "/ljud/rost/9a22defc0155bf78.mp3",
+   "ms": 2220,
+   "r": "bengtsson",
+   "id": "bengtsson.json:stor-och-liten.klart",
+   "t": "Vänskap finns visst i alla storlekar!"
+  },
+  "b449cdf2": {
+   "f": "/ljud/rost/6dd94beed525f99a.mp3",
+   "ms": 4859,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ben-utan-promenad.text",
+   "t": "Min gåta har ben men tar aldrig en promenad! Vad kan ditt djur stå bredvid?"
+  },
+  "b4528991": {
+   "f": "/ljud/rost/d9eb3f54f84c6cad.mp3",
+   "ms": 2508,
+   "r": "bengtsson",
+   "id": "bengtsson.json:kalla-tassar.klart",
+   "t": "Så skönt, nu slutar tänderna spela trumma!"
+  },
+  "b4967c26": {
+   "f": "/ljud/rost/01889e6a5b328bf5.mp3",
+   "ms": 2769,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.skogen.glad.1",
+   "t": "Det prasslar om dagen! Vad vill du skriva fram?"
+  },
+  "b6dec963": {
+   "f": "/ljud/rost/ff82554fae550453.mp3",
+   "ms": 2769,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.grottan.glad.1",
+   "t": "Det glimmar i berget. Vad vill du skriva fram?"
+  },
+  "b78480b6": {
+   "f": "/ljud/rost/99ea9339892bae72.mp3",
+   "ms": 1672,
+   "r": "bengtsson",
+   "id": "bengtsson.json:snabb-och-langsam.klart",
+   "t": "Båda hinner fram till fikat!"
+  },
+  "b7f3cff9": {
+   "f": "/ljud/rost/2b49ce85a7b0a8a9.mp3",
+   "ms": 2638,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.grottan.glad.5",
+   "t": "Jag har hittat en bra plats att sitta och hitta på."
+  },
+  "b86d70b6": {
+   "f": "/ljud/rost/0d0058a010c1ecd8.mp3",
+   "ms": 6635,
+   "r": "bengtsson",
+   "id": "npc.json:bengtsson.bara_aventyr",
+   "t": "Här på ängen har jag inga fler uppdrag just nu. Ute på äventyret väntar fler. Titta i Uppdragsboken!"
+  },
+  "b9acaad6": {
+   "f": "/ljud/rost/52509766fa1be2a3.mp3",
+   "ms": 2090,
+   "r": "bengtsson",
+   "id": "bengtsson.json:lang-hals.klart",
+   "t": "Där uppe måste utsikten vara fin!"
+  },
+  "ba19f28e": {
+   "f": "/ljud/rost/3233e40b311d11ab.mp3",
+   "ms": 1802,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-regn-vid-stranden.klart",
+   "t": "Nu får dropparna bada utan oss!"
+  },
+  "bb96d379": {
+   "f": "/ljud/rost/eaee4590453da932.mp3",
+   "ms": 2351,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-tva-farger.klart",
+   "t": "Nu har både stranden och vattnet fått färg!"
+  },
+  "bcbc17fe": {
+   "f": "/ljud/rost/f8d7afcfee391d43.mp3",
+   "ms": 4728,
+   "r": "bengtsson",
+   "id": "platser.json:skogen.final_fore",
+   "t": "Maskinen minns fortfarande min lunch! Nu provar vi med något riktigt skogsmysigt."
+  },
+  "bcf1b902": {
+   "f": "/ljud/rost/c82782809d2193a7.mp3",
+   "ms": 2403,
+   "r": "bengtsson",
+   "id": "bengtsson.json:omvanda-storlekar.klart",
+   "t": "Nu behöver den lilla vännen den stora stolen!"
+  },
+  "be96ceb0": {
+   "f": "/ljud/rost/c5b6c58f7f44ced5.mp3",
+   "ms": 2116,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ben-utan-promenad.klart",
+   "t": "Du löste gåtan utan ett enda steg!"
+  },
+  "bf9ceccd": {
+   "f": "/ljud/rost/ddf3bdef48ce83d1.mp3",
+   "ms": 2456,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-stor-simmare.klart",
+   "t": "Oj, nu blev det gott om vän i vattnet!"
+  },
+  "c0698644": {
+   "f": "/ljud/rost/52a15241f825577c.mp3",
+   "ms": 4258,
+   "r": "bengtsson",
+   "id": "bengtsson.json:plats-for-en-van.text",
+   "t": "På ängen finns plats för vänskap! Vilka två vill leka tillsammans?"
+  },
+  "c0ab99e6": {
+   "f": "/ljud/rost/8640e73c2307ef5d.mp3",
+   "ms": 2090,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-hitta-riktningen.klart",
+   "t": "Nu hittar vi mer än bara min lunch!"
+  },
+  "c2e811da": {
+   "f": "/ljud/rost/f198e2228696c461.mp3",
+   "ms": 1855,
+   "r": "bengtsson",
+   "id": "bengtsson.json:badlangtan.klart",
+   "t": "Plask så trevligt det blev!"
+  },
+  "c458ab72": {
+   "f": "/ljud/rost/a0c8c5c84c28cb4b.mp3",
+   "ms": 2116,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ordet-i.klart",
+   "t": "Där inne blev det riktigt trivsamt!"
+  },
+  "c63ba3e6": {
+   "f": "/ljud/rost/80e54644b9fd3c4c.mp3",
+   "ms": 2325,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-magen-kurrar.klart",
+   "t": "Nu kurrar magen av glädje i stället!"
+  },
+  "c75b528e": {
+   "f": "/ljud/rost/06dc243d68c70112.mp3",
+   "ms": 1567,
+   "r": "bengtsson",
+   "id": "bengtsson.json:randig-kompis.klart",
+   "t": "Vilken stilig strecksamling!"
+  },
+  "c7c2dfae": {
+   "f": "/ljud/rost/d0eafc9429b45ed5.mp3",
+   "ms": 2534,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.skogen.glad.9",
+   "t": "Du kan skriva vidare eller bara titta en stund."
+  },
+  "c8f2a26e": {
+   "f": "/ljud/rost/6015048497707a42.mp3",
+   "ms": 4415,
+   "r": "bengtsson",
+   "id": "bengtsson.json:present-till-en-van.text",
+   "t": "Ditt djur vill överraska en kompis med något fint! Vad kan det ge bort?"
+  },
+  "c9b18f15": {
+   "f": "/ljud/rost/bc629e696f4c8bb9.mp3",
+   "ms": 5512,
+   "r": "bengtsson",
+   "id": "npc.json:bengtsson.inga_fler",
+   "t": "Nu har du hjälpt mig med allt jag kommer på just nu. Tack, du är en riktig språkdoktor!"
+  },
+  "cb3de90c": {
+   "f": "/ljud/rost/e6546295f2c77ebc.mp3",
+   "ms": 3056,
+   "r": "bengtsson",
+   "id": "bengtsson.json:jattestor-van.text",
+   "t": "Här behövs en vän som knappt får plats på mitt foto!"
+  },
+  "cc4eddf0": {
+   "f": "/ljud/rost/f5c0f30aefb46f6d.mp3",
+   "ms": 4676,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-las-och-lys.text",
+   "t": "En vän vill läsa en saga vid vattnet när det blir mörkt. Vad behöver den?"
+  },
+  "ccc5af05": {
+   "f": "/ljud/rost/747ad9500293ceb1.mp3",
+   "ms": 2586,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-final-bergets-berattelse.klart",
+   "t": "Nu kan grottans glans och sagor följa med hem!"
+  },
+  "cd2c6694": {
+   "f": "/ljud/rost/8dd8d92f2b466c71.mp3",
+   "ms": 4780,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-ljus-vid-krypin.text",
+   "t": "En vän vill sova i ett tält. Utanför ska det lysa lite. Vad kan lysa?"
+  },
+  "cf89e348": {
+   "f": "/ljud/rost/80be6e688a9bdccd.mp3",
+   "ms": 2586,
+   "r": "bengtsson",
+   "id": "uppdrag.json:bavern.klart",
+   "t": "Dammen är klar! Du får bada där när du vill."
+  },
+  "cfcf8511": {
+   "f": "/ljud/rost/b1bd7c3ed2c6738b.mp3",
+   "ms": 2351,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.skogen.glad.7",
+   "t": "Här får även de tokigaste idéerna plats."
+  },
+  "d04042bc": {
+   "f": "/ljud/rost/8d20d7de79fa6b1b.mp3",
+   "ms": 5669,
+   "r": "bengtsson",
+   "id": "npc.json:bengtsson.fel.0",
+   "t": "Hmm, det där ser fint ut, men jag tror inte att det hjälper. Försök med något annat!"
+  },
+  "d06747eb": {
+   "f": "/ljud/rost/98df1814a4d6a33c.mp3",
+   "ms": 2116,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-eget-krypin.klart",
+   "t": "Ett litet hem inne i ett stort berg!"
+  },
+  "d06c049d": {
+   "f": "/ljud/rost/0ba97d1dfa165e44.mp3",
+   "ms": 2456,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-skugga-pa-stranden.klart",
+   "t": "Här får både nosen och öronen solpaus!"
+  },
+  "d35a241c": {
+   "f": "/ljud/rost/d7a09cf932c644ae.mp3",
+   "ms": 2456,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.sjon.glad.8",
+   "t": "Jag tar en titt på vågorna medan du funderar."
+  },
+  "d3b854d5": {
+   "f": "/ljud/rost/0b64e8814ab9ce6b.mp3",
+   "ms": 3527,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.sjon.glad.0",
+   "t": "Hej! Här finns plats för både små plask och stora idéer."
+  },
+  "d41d533c": {
+   "f": "/ljud/rost/97cd900ba97787e8.mp3",
+   "ms": 4859,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ovantat-kompismote.text",
+   "t": "Ett djur från den kalla isen vill träffa ett djur från den varma djungeln. Vilka två?"
+  },
+  "d543433f": {
+   "f": "/ljud/rost/d4ef1d38083edf0e.mp3",
+   "ms": 2586,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-final-minnesljus.klart",
+   "t": "Nu kan vi ta med skogens mys hem till ängen!"
+  },
+  "d6b820bd": {
+   "f": "/ljud/rost/ae5f29f8f838492c.mp3",
+   "ms": 4624,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-tva-satt-att-resa.text",
+   "t": "En vän vill ro över vattnet. En annan vill gå över en bro. Kan du ordna det?"
+  },
+  "d6f4b0ac": {
+   "f": "/ljud/rost/93de2fb2301261ed.mp3",
+   "ms": 2273,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-liten-upptackare.klart",
+   "t": "Vilken liten upptäckare med stora idéer!"
+  },
+  "d9c2d087": {
+   "f": "/ljud/rost/83c49d69e24e3599.mp3",
+   "ms": 3527,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ordet-pa.text",
+   "t": "Ditt djur vill sitta uppe på något. Skriv det med ordet på!"
+  },
+  "daca6411": {
+   "f": "/ljud/rost/8b484172e576872f.mp3",
+   "ms": 4676,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-spara-matsacken.text",
+   "t": "Jag vill spara fikat till senare! Var kan en vän lägga det och stänga om det?"
+  },
+  "db599d51": {
+   "f": "/ljud/rost/d5cf389996c535a1.mp3",
+   "ms": 2116,
+   "r": "bengtsson",
+   "id": "bengtsson.json:plats-for-en-van.klart",
+   "t": "Nu blir det dubbelt så mycket fniss!"
+  },
+  "dba57757": {
+   "f": "/ljud/rost/de61b8db1fab8a4a.mp3",
+   "ms": 2403,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-ovantad-kapten.klart",
+   "t": "En simmare på båttur, vilken härlig idé!"
+  },
+  "dc0352ab": {
+   "f": "/ljud/rost/90ba0cd5dfefdf96.mp3",
+   "ms": 2456,
+   "r": "bengtsson",
+   "id": "bengtsson.json:vingar-i-luften.text",
+   "t": "Vem kan hälsa på molnen utan att klättra?"
+  },
+  "dedc65de": {
+   "f": "/ljud/rost/93602388db492392.mp3",
+   "ms": 3161,
+   "r": "bengtsson",
+   "id": "uppdrag.json:nattdraken.klart",
+   "t": "Nattdraken är inte ensam längre. Tack för att du kom!"
+  },
+  "df33e919": {
+   "f": "/ljud/rost/63319a7f55f0fcd5.mp3",
+   "ms": 2038,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-torr-overfart.klart",
+   "t": "Nu kan vi åka till nästa fikaplats!"
+  },
+  "dfe47db2": {
+   "f": "/ljud/rost/d750cba4f2c704fc.mp3",
+   "ms": 4728,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-tva-farger.text",
+   "t": "En vän i tomatens färg badar i vattnet. En vän i himlens färg sitter på stranden."
+  },
+  "e1e65328": {
+   "f": "/ljud/rost/c3f79955cff5c965.mp3",
+   "ms": 4676,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skugga-at-djuret.text",
+   "t": "Solen gassar och ditt djur vill vila svalare! Var finns en skön plats?"
+  },
+  "e1f16a14": {
+   "f": "/ljud/rost/59b23eaac7888b4c.mp3",
+   "ms": 2638,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-rod-van.text",
+   "t": "Jag vill se en vän i samma färg som en tomat!"
+  },
+  "e652295c": {
+   "f": "/ljud/rost/6def531cafc0b8d3.mp3",
+   "ms": 3527,
+   "r": "bengtsson",
+   "id": "bengtsson.json:pytteliten-kompis.text",
+   "t": "Min stora kikare söker en vän som är minst i hela världen!"
+  },
+  "e6b41944": {
+   "f": "/ljud/rost/d9ddab2791579a20.mp3",
+   "ms": 2116,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-varma-oron.klart",
+   "t": "Nu är det mysigt ända ut i öronen!"
+  },
+  "e721c73d": {
+   "f": "/ljud/rost/a93aa44c4f33644e.mp3",
+   "ms": 4180,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.skogen.glad.8",
+   "t": "Jag tänker ta en idépaus. Det betyder att jag hittar på mer!"
+  },
+  "e73465e2": {
+   "f": "/ljud/rost/8603c679cec4b495.mp3",
+   "ms": 1907,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skugga-at-djuret.klart",
+   "t": "Här kan vi svalka både nos och tår!"
+  },
+  "e861287c": {
+   "f": "/ljud/rost/ce7c438cc14d86e8.mp3",
+   "ms": 1907,
+   "r": "bengtsson",
+   "id": "bengtsson.json:trakig-eftermiddag.klart",
+   "t": "Hurra, nu har tristessen gått hem!"
+  },
+  "e9682650": {
+   "f": "/ljud/rost/64a7cb65827c79d7.mp3",
+   "ms": 3056,
+   "r": "bengtsson",
+   "id": "bengtsson.json:vit-som-sno.text",
+   "t": "Kan en vän få samma färg som ett snöigt vinterland?"
+  },
+  "e9bb70b9": {
+   "f": "/ljud/rost/299d49a7a42f08a8.mp3",
+   "ms": 4859,
+   "r": "bengtsson",
+   "id": "bengtsson.json:musik-pa-angen.text",
+   "t": "Ditt djur vill dansa, men det är alldeles tyst! Vad kan få igång takten?"
+  },
+  "eac67cc5": {
+   "f": "/ljud/rost/1425c4f5d02b9235.mp3",
+   "ms": 4310,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-vila-benen.text",
+   "t": "Puh, mina ben vill pausa! Kan en vän också få vila utan att stå?"
+  },
+  "ead2519b": {
+   "f": "/ljud/rost/5cf3736e24f46cf0.mp3",
+   "ms": 1985,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-i-baten.klart",
+   "t": "Där sitter vår passagerare fint!"
+  },
+  "ecd9e56f": {
+   "f": "/ljud/rost/bc833ffec15eab72.mp3",
+   "ms": 4545,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-varm-van.text",
+   "t": "Brr, kvällsluften kittlar! Kan du hjälpa en vän att slippa huttra?"
+  },
+  "ef06af03": {
+   "f": "/ljud/rost/3afa5eb61c044005.mp3",
+   "ms": 5695,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-tva-spanare.text",
+   "t": "En vän hoar högt bland grenar, en annan prasslar med taggig rygg! Vilka två söker jag?"
+  },
+  "f0afbc92": {
+   "f": "/ljud/rost/bc17702690b20384.mp3",
+   "ms": 4258,
+   "r": "bengtsson",
+   "id": "bengtsson.json:tva-farger.text",
+   "t": "Jag vill se två vänner: en i tomatens färg och en i himlens färg!"
+  },
+  "f1a11a8d": {
+   "f": "/ljud/rost/6a458a9de554740d.mp3",
+   "ms": 4859,
+   "r": "bengtsson",
+   "id": "bengtsson.json:resa-fran-soffan.text",
+   "t": "Ditt djur vill se hela världen, men sitta kvar i soffan. Vad kan hjälpa?"
+  },
+  "f1ad44ce": {
+   "f": "/ljud/rost/bc4598bdac115c69.mp3",
+   "ms": 2220,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.grottan.glad.8",
+   "t": "Jag lyssnar på dropparna medan du funderar."
+  },
+  "f2998fb0": {
+   "f": "/ljud/rost/c3da5e7e56fe0f1d.mp3",
+   "ms": 2325,
+   "r": "bengtsson",
+   "id": "bengtsson.json:atbar-regnbage.klart",
+   "t": "Vilken färgfest för både ögon och mage!"
+  },
+  "f3e84bce": {
+   "f": "/ljud/rost/3596e12db6aad30a.mp3",
+   "ms": 2456,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-ordna-lasning.klart",
+   "t": "Nu får fantasin gå på egen upptäcktsfärd!"
+  },
+  "f5bfbcd3": {
+   "f": "/ljud/rost/9b348b4bcb602c50.mp3",
+   "ms": 3579,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-sken-och-saga.text",
+   "t": "En vän vill läsa en saga här inne i mörkret. Vad behöver den?"
+  },
+  "f5f6f7ba": {
+   "f": "/ljud/rost/ff65cbfdff590986.mp3",
+   "ms": 1802,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-liten-van.klart",
+   "t": "Så liten vän, så stor glädje!"
+  },
+  "f63d9503": {
+   "f": "/ljud/rost/d98a5a2dda4943bc.mp3",
+   "ms": 3004,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.sjon.glad.9",
+   "t": "Vill du skapa mer eller bara njuta av glittret en stund?"
+  },
+  "f75dd08a": {
+   "f": "/ljud/rost/6bfa096987a8e5d9.mp3",
+   "ms": 2456,
+   "r": "bengtsson",
+   "id": "bengtsson.json:gron-kompis.text",
+   "t": "Vem kan få samma färg som gräset på ängen?"
+  },
+  "f7a937cf": {
+   "f": "/ljud/rost/bbd4461a9964c6bf.mp3",
+   "ms": 2325,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-gul-van.text",
+   "t": "Jag vill se en vän i samma färg som solen!"
+  },
+  "f9a2cd4e": {
+   "f": "/ljud/rost/abc11e077973532c.mp3",
+   "ms": 2534,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-final-vattenglitter.klart",
+   "t": "Nu kan sjöns glitter följa med hem till ängen!"
+  },
+  "f9c31696": {
+   "f": "/ljud/rost/8515cf610e1e829d.mp3",
+   "ms": 2351,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-las-och-lys.klart",
+   "t": "Nu får sagan sällskap av vågornas kluck!"
+  },
+  "fa3791b1": {
+   "f": "/ljud/rost/f9bd8ddcac272e00.mp3",
+   "ms": 2534,
+   "r": "bengtsson",
+   "id": "bengtsson.json:regn-skydd.klart",
+   "t": "Nu blir ingen blöt! Vilken fin idé."
+  },
+  "fa52a616": {
+   "f": "/ljud/rost/3c270d6e8ccd486e.mp3",
+   "ms": 4911,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-final-minnesljus.text",
+   "t": "Min minnesmaskin behöver ett sken och något som blommar! Kan en vän ta med båda?"
+  },
+  "fb88577e": {
+   "f": "/ljud/rost/b3c474e741e23fd3.mp3",
+   "ms": 4780,
+   "r": "bengtsson",
+   "id": "platser.json:grottan.final_fore",
+   "t": "Maskinen minns bara ekot av min hicka! Nu ger vi den en bättre berättelse."
+  },
+  "fdfcc520": {
+   "f": "/ljud/rost/780c081a30b0e9a4.mp3",
+   "ms": 2325,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-rod-van.klart",
+   "t": "Vilken fin färgklick bland allt det gröna!"
+  },
+  "fe87e64f": {
+   "f": "/ljud/rost/8cedf7ce96d00c5c.mp3",
+   "ms": 3944,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sol-och-gras.text",
+   "t": "Jag vill se två vänner: en i solens färg och en i gräsets färg!"
+  },
+  "fef470b2": {
+   "f": "/ljud/rost/4d62d4e33a44c45a.mp3",
+   "ms": 2508,
+   "r": "bengtsson",
+   "id": "npc.json:repliker_plats.skogen.glad.2",
+   "t": "Här kan en liten idé växa sig riktigt stor."
+  },
+  "fefc9011": {
+   "f": "/ljud/rost/a35df16eea5e1e23.mp3",
+   "ms": 2116,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-gul-van.klart",
+   "t": "Nu har vi en liten solstråle här inne!"
+  }
+ }
+}
