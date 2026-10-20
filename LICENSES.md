@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1070 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1098 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -90,6 +90,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | trollpennan-hem-m20b | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 20 |
 | trollpennan-klader-m21 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 26 |
 | trollpennan-kok-m20 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 21 |
+| trollpennan-mat-hus-m26 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 28 |
 | trollpennan-mfix | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 21 |
 | trollpennan-mfix2 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 8 |
 | trollpennan-mfix3 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 11 |
@@ -1176,3 +1177,31 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | vattenspridare | /models/bulk/vattenspridare.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | vaxthus | /models/bulk/vaxthus.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | verktygslada | /models/bulk/verktygslada.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| bibliotek | /models/bulk/bibliotek.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| biograf | /models/bulk/biograf.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| borg | /models/bulk/borg.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| bulle | /models/bulk/bulle.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| cirkus | /models/bulk/cirkus.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| garage | /models/bulk/garage.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| glasspinne | /models/bulk/glasspinne.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| gurka | /models/bulk/gurka.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| juice | /models/bulk/juice.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kakao | /models/bulk/kakao.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| korvbrod | /models/bulk/korvbrod.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kottbullar | /models/bulk/kottbullar.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| lakrits | /models/bulk/lakrits.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| lussekatt | /models/bulk/lussekatt.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| museum | /models/bulk/museum.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| pannkaka | /models/bulk/pannkaka.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| pasta | /models/bulk/pasta.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| persika | /models/bulk/persika.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| popcorn | /models/bulk/popcorn.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| risboll | /models/bulk/risboll.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| saft | /models/bulk/saft.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| semla | /models/bulk/semla.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| sjukhus | /models/bulk/sjukhus.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| skola | /models/bulk/skola.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| smoothie | /models/bulk/smoothie.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| smor | /models/bulk/smor.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| spagetti | /models/bulk/spagetti.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| sylt | /models/bulk/sylt.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
