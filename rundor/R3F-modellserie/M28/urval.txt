@@ -1,0 +1,27 @@
+# R3F-M28 (dubblingen, kök, hem, lek och post): 26 saker, alla CC0, egna lågpolymodeller (Trollpennan). Format: paket/filnamn.
+trollpennan-hem-lek-m28/bestick-egen.glb
+trollpennan-hem-lek-m28/diskmaskin-egen.glb
+trollpennan-hem-lek-m28/frimarke-egen.glb
+trollpennan-hem-lek-m28/galge-egen.glb
+trollpennan-hem-lek-m28/grytlapp-egen.glb
+trollpennan-hem-lek-m28/hanglas-egen.glb
+trollpennan-hem-lek-m28/hartork-egen.glb
+trollpennan-hem-lek-m28/jojo-egen.glb
+trollpennan-hem-lek-m28/kaffekopp-egen.glb
+trollpennan-hem-lek-m28/kulor-egen.glb
+trollpennan-hem-lek-m28/leksaksbil-egen.glb
+trollpennan-hem-lek-m28/nyckelknippa-egen.glb
+trollpennan-hem-lek-m28/ostkupa-egen.glb
+trollpennan-hem-lek-m28/paskagg-egen.glb
+trollpennan-hem-lek-m28/picknickkorg-egen.glb
+trollpennan-hem-lek-m28/sapbubblor-egen.glb
+trollpennan-hem-lek-m28/sopskyffel-egen.glb
+trollpennan-hem-lek-m28/strykbrada-egen.glb
+trollpennan-hem-lek-m28/strykjarn-egen.glb
+trollpennan-hem-lek-m28/studsboll-egen.glb
+trollpennan-hem-lek-m28/sugror-egen.glb
+trollpennan-hem-lek-m28/tandsticka-egen.glb
+trollpennan-hem-lek-m28/tvattkorg-egen.glb
+trollpennan-hem-lek-m28/vaffeljarn-egen.glb
+trollpennan-hem-lek-m28/vattenpistol-egen.glb
+trollpennan-hem-lek-m28/vykort-egen.glb
