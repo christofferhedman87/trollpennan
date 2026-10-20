@@ -117,18 +117,32 @@ await blok("H", async () => {
   await ctx.close();
 });
 
-// I: bebisen (och andra) på ängen – skärmbild av dammen med djur runt
+// I: djur och figurer runt dammen, fisken i den. Robust: lägena läses i världen (window.__tredPos, så som de ritas,
+// vickningen inräknad) och jämförs med dammen (window.__damm) – inte pixlar, som djur framför dammen skymmer.
 await blok("I", async () => {
   const { ctx, p } = await sida({});
-  for (const f of ["en ko", "en gris", "en bebis", "en katt", "en hund", "en fisk"]) {
+  const ord = ["en ko", "en gris", "en bebis", "en katt", "en hund", "en pojke", "en fisk", "ett slott", "en buss"];
+  for (const f of ord) {
     await p.evaluate((x) => window.__troll.vakna(x), f);
     await p.waitForTimeout(2300);
   }
   await stangBok(p);
-  await p.waitForTimeout(1200);
-  const s = await blaPunkter(p);
-  // djur framför dammen skymmer en del av den på skärmen; att ingen står i den visar b6-3.test.ts (djurPlats mot zonen)
-  kolla("I bebis, ko, gris, katt, hund runt dammen och fisken i den: vattnet syns", s.n >= 1, s);
+  const spar = await p.evaluate(() => JSON.parse(localStorage.getItem("trollpennan-v2") ?? "{}").ang ?? []);
+  const varst = {};
+  for (let i = 0; i < 12; i++) {
+    const { pos, damm } = await p.evaluate(() => ({ pos: window.__tredPos ?? {}, damm: window.__damm }));
+    for (const d of spar) {
+      const q = pos[d.uid];
+      if (!q || !damm) continue;
+      const a = Math.hypot(q.x - damm.x, q.z - damm.z) - damm.r;
+      varst[d.kropp] = Math.min(varst[d.kropp] ?? Infinity, Math.round(a * 100) / 100);
+    }
+    await p.waitForTimeout(400);
+  }
+  const land = Object.entries(varst).filter(([k]) => k !== "fisk");
+  kolla("I alla 9 skapelser har ett läge", Object.keys(varst).length === spar.length && spar.length === ord.length, { varst });
+  kolla("I inget djur, ingen figur och ingen sak står i dammen (minst 0,1 utanför kanten i alla 12 mätningar)", land.length >= 8 && land.every(([, a]) => a >= 0.1), { varst });
+  kolla("I fisken simmar i dammen", (varst.fisk ?? 1) < 0, { fisk: varst.fisk });
   await bild(p, "b63-I-bebis.png");
   await ctx.close();
 });

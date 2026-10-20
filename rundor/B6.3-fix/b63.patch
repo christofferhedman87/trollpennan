@@ -98,7 +98,7 @@ index 0000000..23ff8d6
 +/** Dammens mitt (x, z), vattnets radie, kantens yttre radie och vattenytans höjd. */
 +export const DAMM = { x: 1.12, z: -0.35, r: 0.72, kant: 0.76, y: SVAJ_AMP + 0.035 } as const;
 diff --git a/src/spel/ang/dekor.tsx b/src/spel/ang/dekor.tsx
-index 35b5b27..4d6db33 100644
+index 35b5b27..42beebb 100644
 --- a/src/spel/ang/dekor.tsx
 +++ b/src/spel/ang/dekor.tsx
 @@ -3,6 +3,9 @@ import { useLayoutEffect, useMemo, useRef } from "react";
@@ -111,11 +111,12 @@ index 35b5b27..4d6db33 100644
  
  export function Sond() {
    const fps = useRef({ n: 0, t: 0 });
-@@ -19,6 +22,14 @@ export function Sond() {
+@@ -19,6 +22,15 @@ export function Sond() {
      t.dz = Math.round(_dir.z * 100) / 100;
      const cam = state.camera as THREE.PerspectiveCamera;
      t.fov = cam.fov;
 +    // B6.3 (G), för prov: skärmpunkter (CSS-px) på dammens vatten – mitten och fyra punkter halvvägs ut
++    window.__damm = { x: DAMM.x, z: DAMM.z, r: DAMM.r };
 +    if (fps.current.n % 10 === 0) {
 +      const rekt = state.gl.domElement.getBoundingClientRect();
 +      t.damm = [[0, 0], [0.5, 0], [-0.5, 0], [0, 0.5], [0, -0.5]].map(([dx, dz]) => {
@@ -126,7 +127,7 @@ index 35b5b27..4d6db33 100644
      t.calls = state.gl.info.render.calls;
      t.tris = state.gl.info.render.triangles;
      const nu = state.clock.elapsedTime;
-@@ -260,7 +271,7 @@ export function Ringar() {
+@@ -260,7 +272,7 @@ export function Ringar() {
      }
    });
    return (
@@ -135,7 +136,7 @@ index 35b5b27..4d6db33 100644
        {[0, 1, 2].map((i) => (
          <mesh key={i}>
            <ringGeometry args={[0.55, 0.64, 20]} />
-@@ -289,7 +300,7 @@ export function Nackrosor() {
+@@ -289,7 +301,7 @@ export function Nackrosor() {
      [-0.18, -0.2, "#7CB342", false],
    ];
    return (
@@ -145,7 +146,7 @@ index 35b5b27..4d6db33 100644
          <group key={`${x}${z}`} position={[x, 0, z]}>
            <mesh rotation={[-Math.PI / 2, 0, x]}>
 diff --git a/src/spel/ang/delat.ts b/src/spel/ang/delat.ts
-index 19fc160..d8abe23 100644
+index 19fc160..d544abb 100644
 --- a/src/spel/ang/delat.ts
 +++ b/src/spel/ang/delat.ts
 @@ -3,7 +3,7 @@ import type { ThreeEvent } from "@react-three/fiber";
@@ -157,7 +158,7 @@ index 19fc160..d8abe23 100644
  import type { Plats } from "../platser.ts";
  import { placeraPaPlats } from "../platsYta.ts";
  
-@@ -53,6 +53,8 @@ declare global {
+@@ -53,8 +53,14 @@ declare global {
        fps?: number;
        husx?: number;
        husy?: number;
@@ -165,8 +166,14 @@ index 19fc160..d8abe23 100644
 +      damm?: { x: number; y: number }[];
      };
      __tredMal?: Record<string, { x: number; y: number }>;
++    /** B6.3, för prov: skapelsens läge i världen (x, z) som det ritas, vickning inräknad. */
++    __tredPos?: Record<string, { x: number; z: number }>;
++    /** B6.3, för prov: ängens damm (ang/damm.ts). */
++    __damm?: { x: number; z: number; r: number };
      /** B4.1, för prov: ljus = punktljus i poolen (fast antal), pol = ljuspölar, aktiva = tända ljus, scen = punktljus i scenen, program = shaderprogram. */
-@@ -123,7 +125,7 @@ const platsCache = new Map<string, Map<string, [number, number]>>();
+     __ljus?: { ljus: number; pol: number; aktiva: number; program: number; scen?: number };
+   }
+@@ -123,7 +129,7 @@ const platsCache = new Map<string, Map<string, [number, number]>>();
  
  /**
   * R8-2b: på en plats med zoner flyttas varje landdjur/sak till land (land/fri, aldrig vattenyta)
@@ -175,7 +182,7 @@ index 19fc160..d8abe23 100644
   */
  export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number, number, number] {
    const bas = djurPlatsBas(spec, alla);
-@@ -139,6 +141,7 @@ export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number,
+@@ -139,6 +145,7 @@ export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number,
          return [x, z] as [number, number];
        }),
        marka.map((d) => simmare(d)),
@@ -183,7 +190,7 @@ index 19fc160..d8abe23 100644
      );
      karta = new Map(marka.map((d, i) => [d.uid, ut[i]!]));
      if (platsCache.size > 30) platsCache.clear();
-@@ -157,9 +160,10 @@ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
+@@ -157,9 +164,10 @@ function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
    }
    // B6.1 (E): stora saker (data/storlek.json zon "bak") står längst bak, bakom alla djur
    if (storlekKlass(spec.kropp)?.zon === "bak") {
@@ -195,6 +202,26 @@ index 19fc160..d8abe23 100644
      return [p[0], 0, p[1]];
    }
    const land = alla.filter((d) => !simmare(d) && !flygare(d) && storlekKlass(d.kropp)?.zon !== "bak");
+diff --git a/src/spel/ang/djur.tsx b/src/spel/ang/djur.tsx
+index 953e873..e33a9d1 100644
+--- a/src/spel/ang/djur.tsx
++++ b/src/spel/ang/djur.tsx
+@@ -239,6 +239,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
+     return () => {
+       if (upp.current) window.removeEventListener("pointerup", upp.current);
+       if (window.__tredMal) delete window.__tredMal[spec.uid];
++      if (window.__tredPos) delete window.__tredPos[spec.uid];
+     };
+   }, [spec.uid]);
+   useFrame((state, delta) => {
+@@ -345,6 +346,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
+     }
+     if (t % 0.2 < d) {
+       g.getWorldPosition(_mal);
++      (window.__tredPos ??= {})[spec.uid] = { x: Math.round(_mal.x * 100) / 100, z: Math.round(_mal.z * 100) / 100 }; // B6.3, för prov
+       _mal.y += 1.2;
+       _mal.project(state.camera);
+       const rect = state.gl.domElement.getBoundingClientRect();
 diff --git a/src/spel/ang/himmel.tsx b/src/spel/ang/himmel.tsx
 index 947ec36..724da67 100644
 --- a/src/spel/ang/himmel.tsx

@@ -22,7 +22,7 @@ if ! git apply --check "$D/b63.patch" 2>"$UT/apply.txt"; then
 fi
 if [ "${TREVAGS:-0}" = 1 ]; then git apply --3way "$D/b63.patch" || { echo "STOPP 2: trevägs-apply misslyckades"; exit 2; }; git reset -q; else git apply "$D/b63.patch"; fi
 NYA="src/spel/b6-3.test.ts src/spel/ang/damm.ts"
-ANDRADE="PROJECT.md package.json data/aterkoppling.json data/platser.json data/storlek.json src/spel/Spel.tsx src/spel/ang/dekor.tsx src/spel/ang/delat.ts src/spel/ang/himmel.tsx src/spel/angen3d.tsx src/spel/entiteter.ts src/spel/kenneyNatur.tsx src/spel/platsYta.ts src/spel/platser.ts src/spel/ui/AngLager.tsx src/spel/ui/typer.ts src/styles.css src/tolk/aterkoppling.ts"
+ANDRADE="PROJECT.md package.json data/aterkoppling.json data/platser.json data/storlek.json src/spel/Spel.tsx src/spel/ang/dekor.tsx src/spel/ang/delat.ts src/spel/ang/djur.tsx src/spel/ang/himmel.tsx src/spel/angen3d.tsx src/spel/entiteter.ts src/spel/kenneyNatur.tsx src/spel/platsYta.ts src/spel/platser.ts src/spel/ui/AngLager.tsx src/spel/ui/typer.ts src/styles.css src/tolk/aterkoppling.ts"
 aterstall() { git checkout -q -- $ANDRADE; rm -f $NYA; }
 node "$D/b63-data.mjs" > "$UT/data.txt" 2>&1 || { cat "$UT/data.txt"; aterstall; echo "STOPP 2: b63-data.mjs föll"; exit 2; }
 grep VARNING "$UT/data.txt" || true
