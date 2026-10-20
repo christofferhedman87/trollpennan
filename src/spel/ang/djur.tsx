@@ -14,6 +14,8 @@ import { MILJO } from "../miljo.ts";
 import { synligKedja } from "../pekare.ts";
 import { AGG_KROPP, OrdAgg, ReservAgg } from "../ordagg.tsx";
 import { HumorIkon } from "./humorIkon.tsx";
+import { Ljusken } from "./ljusken.tsx";
+import type { Ljuskalla } from "../ljuskalla.ts";
 import { _mal, djurFarg, djurPlats, flygare, normDuk, simmare } from "./delat.ts";
 
 export class ModellGren extends Component<{ spec: Sparad; children: ReactNode }, { fel: boolean }> {
@@ -211,7 +213,8 @@ export function Hjartan({ puls }: { puls: number }) {
   );
 }
 
-export function DjurIScen({ spec, alla, plats }: { spec: Sparad; alla: Sparad[]; plats?: Plats }) {
+/** B4.1: `ljus` = platsens ljuskälla och vad i skapelsen som lyser (kroppen eller en sak den har med sig); bara de högst 4 senaste får den. */
+export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Sparad[]; plats?: Plats; ljus?: { kalla: Ljuskalla; vad: string } }) {
   const [x, y, z] = djurPlats(spec, alla, plats);
   const grupp = useRef<THREE.Group>(null);
   const skal = useRef(0.2);
@@ -426,8 +429,10 @@ export function DjurIScen({ spec, alla, plats }: { spec: Sparad; alla: Sparad[];
         <DjurEffekter varelse={spec} ankare={ankare} />
         {sak ? null : <HumorIkon uid={spec.uid} hojd={malhojd(spec.kropp) + 0.22} />}
       </group>
+      {ljus && ljus.vad === spec.kropp ? <Ljusken uid={spec.uid} kalla={ljus.kalla} hojd={y + malhojd(spec.kropp) * (spec.skala || 1) * 0.75} /> : null}
       {medSaker.map((id, i) => (
         <group key={id} position={[(0.45 + malhojd(spec.kropp) * 0.35) * (i % 2 === 0 ? 1 : -1) * (spec.skala || 1), 0, 0.2 + Math.floor(i / 2) * 0.3]}>
+          {ljus && ljus.vad === id ? <Ljusken uid={spec.uid} kalla={ljus.kalla} hojd={malhojd(id) * 0.75} /> : null}
           <ModellGren spec={{ ...spec, kropp: id }}>
             <Suspense fallback={null}>
               <GltfSak id={id} />

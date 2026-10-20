@@ -10,6 +10,8 @@ import { KV, miljoFor } from "../miljo.ts";
 import { useMinne } from "../minne.ts";
 import { DEKOR_SKALA, dekorFor, horisontFor, spridDekor, vattenytor, type SpriddDekor } from "../platsDekor.ts";
 import { platsMed } from "../platser.ts";
+import { ljuskallaFor, valjLjus } from "../ljuskalla.ts";
+import { LJUS_LAG, LjusPool } from "./ljusken.tsx";
 import { DjurIScen } from "./djur.tsx";
 import { Horisont } from "./dekor.tsx";
 import { SvajMark } from "./himmel.tsx";
@@ -128,6 +130,10 @@ export function PlatsScen({ plats }: { plats: string }) {
   const { miljo, ljusSkala, mark } = useMemo(() => miljoFor(platsMed(plats)?.miljo), [plats]);
   const platsData = platsMed(plats);
   const horisont = useMemo(() => horisontFor(platsMed(plats)?.miljo), [plats]);
+  // B4.1: platsens ljuskälla (data) och de högst 4 senast skapade sakerna som lyser. Ljusen är en fast pool (inga shader-ombyggen).
+  const kalla = useMemo(() => ljuskallaFor(platsMed(plats)), [plats]);
+  const lysande = useMemo(() => (kalla ? valjLjus(djur, kalla) : null), [djur, kalla]);
+  const tanda = useMemo(() => [...(lysande?.keys() ?? [])], [lysande]);
   const L = miljo.ljus;
   const k = ljusSkala;
   return (
@@ -156,8 +162,9 @@ export function PlatsScen({ plats }: { plats: string }) {
       {horisont ? <Horisont farger={horisont.farger} typ={horisont.typ} /> : null}
       <PlatsKamera />
       <PlatsDekor plats={plats} />
+      {kalla && !LJUS_LAG ? <LjusPool kalla={kalla} uids={tanda} /> : null}
       {djur.map((spec) => (
-        <DjurIScen key={spec.uid} spec={spec} alla={djur} plats={platsData} />
+        <DjurIScen key={spec.uid} spec={spec} alla={djur} plats={platsData} ljus={kalla && lysande?.has(spec.uid) ? { kalla, vad: lysande.get(spec.uid)! } : undefined} />
       ))}
       <SagaPenna />
       <OrbitControls
