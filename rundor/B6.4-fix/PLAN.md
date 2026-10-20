@@ -31,3 +31,7 @@ Från Doodle: utan färgord blev jultomten orange, brandhjälmen laxrosa, narval
 ## Kvar, R9C (ingen ändring här)
 - Med färgord och guldord lägger glansen fortfarande sitt gula självlyse över hela kroppen. På "en blå jultomte" blir
   mössan och ärmarna (`#D32F2F`) då orange. Det är nuvarande beteende med färgord och ändras inte, eftersom R9C är pausad.
+
+## Verifierat (2026-10-20 06:5x)
+- I ren kopia av main d865a5d med B6.3 inlagd (som Doodle kör dem i ordning): kor.sh EXIT=0, test:product 199, b64-prov 7 steg, regression b62/b61/r9k/r9/b63 exit 0, 0 sidfel.
+- `VARNING: narval … inlagd av R3F-MFIX4 – rörs inte` är väntad: MFIX4 bytte narvalen (egen modell, egna färger). Utan färgord syns modellens färger; färgord på narvalen tar inte (R9C pausad, ingen ändring).
