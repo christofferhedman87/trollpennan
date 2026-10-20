@@ -50,18 +50,21 @@ index 0000000..fd650f9
 +}
 diff --git a/data/placering.json b/data/placering.json
 new file mode 100644
-index 0000000..b35097b
+index 0000000..1bec45f
 --- /dev/null
 +++ b/data/placering.json
-@@ -0,0 +1,64 @@
+@@ -0,0 +1,67 @@
 +{
 + "_om": "P3a: EN placeringsregel för alla platser (ängen, sjön, skogen, grottan). Varje plats har band per roll (mark, vatten, luft, bak) i världskoordinater; banden delas i rutor (steg). Varje sak får en ledig ruta efter sin roll: simmare på vattenytan, flygare i luftbandet, stora saker (storlek.json zon bak) i det bakre bandet, övriga på marken (platsens land-zoner, platser.json). En ruta är ledig om kroppen ryms hel på skärmen (stående kamera 375 × 812, skarm.ts), inte står i en reserverad världsruta, inte går in i en annan kropp, och om ingen – varken den nya eller någon redan placerad – skyms mer än max_skymd av sin skärmruta (de framför, fasta saker och de reserverade skärmrutorna inräknade). Den nyaste får den främsta lediga rutan (störst z, sedan närmast mitten), sedan de andra från nyast till äldst; den äldsta hamnar därför längst bak. Finns ingen ledig ruta går den till stallet (somnar), aldrig över någon annan.",
-+ "max_skymd": 0.2,
-+ "max_skymd_aldre": 0.35,
++ "bak_lucka": 0.5,
++  "_om_bak_lucka": "B6.1 (E): stora saker (zon bak) står minst så här långt (m, z) bakom varje djur/sak på marken – banden överlappar, regeln håller isär dem",
++  "max_skymd": 0.3,
++ "max_skymd_aldre": 0.45,
 + "nya_antal": 3,
 + "_om_skymd": "gränsen gäller per ålder: högst max_skymd för de nya_antal nyaste (och platsens fasta saker), högst max_skymd_aldre för äldre. Huvudet (övre halvan av kroppens ruta – modellens huvud går inte att mäta i regeln) får skymmas högst huvud_skymd",
-+ "huvud_skymd": 0,
-+ "krymp_aldre_min": 0.5,
++ "huvud_skymd": 0.1,
++ "_om_beslut_2140": "Arkitekten 21:40: regeln använder provets gränser (30 % / 45 % skymt, huvudet högst 10 %) – rutorna är modellens egna (data/modellmatt.json) och stämmer med det ritade på säkra sidan (p3a-matt.test.ts), så ingen mätmarginal behövs; äldre ned till 40 %.",
++ "krymp_aldre_min": 0.4,
 + "krymp_steg": 0.1,
 + "_om_krymp_aldre": "när det är trångt ritas äldre (inte den nyaste) mindre, i steg om krymp_steg ned till krymp_aldre_min, innan de somnar. En äldre ritas aldrig större än en nyare: krympningen följer åldern och de äldsta står längst bak, så det ser ut som perspektiv (Arkitekten 18:59)",
 + "vandra": { "_om": "djuren vandrar runt sin plats (djur.tsx x ±0,22, z ±0,16). Fritt bete (1) när det är glest; när det är trångt mindre, ned till nästan stilla. Skärmrutan räknas med den faktiska radien", "x": 0.22, "z": 0.16, "steg": [1, 0.5, 0.15] },
@@ -1467,10 +1470,10 @@ index 0000000..8edb9de
 +});
 diff --git a/src/spel/p3a.test.ts b/src/spel/p3a.test.ts
 new file mode 100644
-index 0000000..9206ab7
+index 0000000..c2abc8a
 --- /dev/null
 +++ b/src/spel/p3a.test.ts
-@@ -0,0 +1,190 @@
+@@ -0,0 +1,191 @@
 +// P3a – EN placeringsregel för alla platser (data/placering.json, placering.ts). Ett prov per plats med 8 djur/saker:
 +// tre fasta frön och det värsta fallet. Inget som står kvar skyms mer än max_skymd av sin skärmruta (de framför, platsens
 +// fasta saker och de reserverade rutorna: utgångarna, guiden, Bengtsson, nedre raden), alla står på rätt underlag för sin
@@ -1534,13 +1537,14 @@ index 0000000..9206ab7
 +}
 +
 +for (const id of PLATSER_P3A) {
-+  test(`P3a: ${id} – 8 djur/saker (tre frön och värsta fallet): ingen skyms mer än sin gräns (20 % de tre nyaste, 35 % äldre), huvudet fritt, rätt underlag, den nya syns`, () => {
++  test(`P3a: ${id} – 8 djur/saker (tre frön och värsta fallet): ingen skyms mer än sin gräns (30 % de tre nyaste, 45 % äldre), huvudet högst 10 %, rätt underlag, den nya syns`, () => {
 +    const plats = platsMed(id)!;
 +    assert.ok(plats, id);
 +    const max = PLACERING.max_skymd;
 +    const aldre = PLACERING.max_skymd_aldre ?? max;
 +    const huvudMax = PLACERING.huvud_skymd ?? 0;
-+    assert.ok(max > 0 && max <= 0.2 && aldre <= 0.35 && huvudMax === 0);
++    // Arkitekten 21:40: regeln använder provets gränser – 30 % skymt de tre nyaste, 45 % äldre, huvudet högst 10 %
++    assert.ok(max > 0 && max <= 0.3 && aldre <= 0.45 && huvudMax <= 0.1);
 +    const fel: string[] = [];
 +    const lag: [string, string[]][] = [...FRON.map((f) => [`fro${f}`, lagFor(f)] as [string, string[]]), ...VARSTA];
 +    for (const [namn, kroppar] of lag) {
@@ -1663,10 +1667,10 @@ index 0000000..9206ab7
 +});
 diff --git a/src/spel/placering.ts b/src/spel/placering.ts
 new file mode 100644
-index 0000000..4daf44b
+index 0000000..8d2b23c
 --- /dev/null
 +++ b/src/spel/placering.ts
-@@ -0,0 +1,390 @@
+@@ -0,0 +1,399 @@
 +// P3a: EN placeringsregel för alla platser. Ren logik (ingen three), testas i Node. Data: data/placering.json.
 +//  - Varje plats har band per roll (mark, vatten, luft, bak), delade i rutor. Rollen kommer ur saken: simmare på vattnet,
 +//    flygare i luften, stora saker (storlek.json zon "bak") i det bakre bandet, resten på marken.
@@ -1691,6 +1695,7 @@ index 0000000..4daf44b
 +type PlatsRegel = { skala?: number; band: Partial<Record<Roll, Band>>; varld_reserverat: { namn: string; x: [number, number]; z: [number, number] }[]; fasta: Fast[] };
 +type Data = {
 +  max_skymd: number;
++  bak_lucka?: number;
 +  max_skymd_aldre?: number;
 +  nya_antal?: number;
 +  huvud_skymd?: number;
@@ -1777,7 +1782,7 @@ index 0000000..4daf44b
 +  return k * synSkala(d.kropp, (d.skala || 1) * k, z);
 +}
 +
-+type Satt = { id: string; x: number; z: number; halv: number; djup: number; r: Ruta; tackt: number; huvud: number; grans: number; plan?: boolean };
++type Satt = { id: string; x: number; z: number; halv: number; djup: number; r: Ruta; tackt: number; huvud: number; grans: number; plan?: boolean; roll?: Roll };
 +/** Övre halvan av rutan: där huvudet sitter (modellens huvud går inte att mäta i regeln). */
 +export const topp = (r: Ruta): Ruta => ({ ...r, y1: r.y0 + (r.y1 - r.y0) / 2 });
 +
@@ -1831,6 +1836,7 @@ index 0000000..4daf44b
 +  const P = PLACERING;
 +  const [nyGrans, aldreGrans, nyaAntal, huvudMax] = [P.max_skymd, P.max_skymd_aldre ?? P.max_skymd, P.nya_antal ?? 1, P.huvud_skymd ?? 1];
 +  const vick = P.vickning;
++  const bakLucka = P.bak_lucka ?? 0.5;
 +  const kam = kameraFor(plats);
 +  const satta: Satt[] = regel.fasta.map((f) => ({ id: `fast:${f.namn}`, x: f.x, z: f.z, halv: f.halv, djup: f.djup, r: sakRuta(f.x, f.z, f.halv, f.hojd, f.djup, 0, kam), tackt: 0, huvud: 0, grans: nyGrans, plan: f.plan }));
 +  const plana = satta.filter((s) => s.plan);
@@ -1871,6 +1877,12 @@ index 0000000..4daf44b
 +        const djup = m.djup + m.vand[1];
 +        // skärmens y beror inte på x, och skärmens x är linjär i x på varje djup och höjd: radens ruta räknas en gång
 +        const r0 = sakRuta(0, z, bredd, m.hojd, djup, y + m.y0, kam);
++        // stora saker står bakom alla djur och saker på marken (B6.1 E, bak_lucka): banden överlappar, så en rad som
++        // hamnar fel mot de redan satta är aldrig ledig (stallet får fortfarande leta i den)
++        const bakFel =
++          (roll === "mark" && satta.some((s) => s.roll === "bak" && s.r !== TOM && s.z > z - bakLucka)) ||
++          (roll === "bak" && satta.some((s) => s.roll === "mark" && s.r !== TOM && s.z < z + bakLucka));
++        if (bakFel && !medStall) continue;
 +        if (!medStall && (r0.y0 < 0 || r0.y1 > SKARM.h || r0.x1 - r0.x0 > SKARM.w)) continue;
 +        const [ya, yb] = [y + m.y0, y + m.y0 + m.hojd];
 +        const sk = [xSkala(ya, z + djup, kam), xSkala(yb, z + djup, kam), xSkala(ya, z - djup, kam), xSkala(yb, z - djup, kam)];
@@ -1936,6 +1948,7 @@ index 0000000..4daf44b
 +              kost += Math.max(0, s.tackt + tacker(r, s.r) - s.grans) + (s.plan ? 0 : Math.max(0, s.huvud + tacker(r, topp(s.r)) - huvudMax));
 +            }
 +          }
++          if (bakFel) kost += 1;
 +          if (kost <= 1e-9) return { fri: { lage: { x, y, z, roll, r, stall: false, vand: vandDel }, m, huvud, tackt, fel: 0, kost }, stall };
 +          const lage: Lage = { x, y, z, roll, r, stall: true, vand: vandDel };
 +          if (medStall && (!stall || stall.fel > 0 || kost < stall.kost - 1e-9)) stall = { lage, m, huvud, tackt, fel: 0, kost };
@@ -2008,7 +2021,7 @@ index 0000000..4daf44b
 +        s.tackt += tacker(lage.r, s.r);
 +        s.huvud += tacker(lage.r, topp(s.r));
 +      }
-+    satta.push({ id: d0.uid, x: lage.x, z: lage.z, halv: fynd.m.halv, djup: fynd.m.djup, r: lage.r, tackt: fynd.tackt, huvud: fynd.huvud, grans });
++    satta.push({ id: d0.uid, x: lage.x, z: lage.z, halv: fynd.m.halv, djup: fynd.m.djup, r: lage.r, tackt: fynd.tackt, huvud: fynd.huvud, grans, roll });
 +  });
 +  return ut;
 +}
@@ -2242,21 +2255,22 @@ index e303366..2037a41 100644
  test("R8-2b: horisont ur data – grottan berg, skogen/sjön skog, okänt = ingen", () => {
 diff --git a/src/spel/skarm.ts b/src/spel/skarm.ts
 new file mode 100644
-index 0000000..c914930
+index 0000000..f89bae1
 --- /dev/null
 +++ b/src/spel/skarm.ts
-@@ -0,0 +1,65 @@
+@@ -0,0 +1,66 @@
 +// P3: var en punkt på ängen/platsen hamnar på skärmen i stående läge (KameraRam: kameran i (0, 4,15, 9,8) mot
-+// (0, 1,05, −0,15), fov 58, 375 × 812; på de andra platserna närmare på samma linje, KAMERA_PLATS). Ren matematik utan three, för placeringen (vem skymmer vem) och för prov i Node.
++// (0, 1,05, −0,15), fov 58, 375 × 812; alla platser har samma avstånd, PLATS_MAX_AVSTAND). Ren matematik utan three, för placeringen (vem skymmer vem) och för prov i Node.
 +export type Ruta = { x0: number; y0: number; x1: number; y1: number };
 +
 +const MAL = [0, 1.05, -0.15] as const;
 +export type Kamera = readonly [number, number, number];
 +/** Ängens kamera (KameraRam). */
 +export const KAMERA_ANG: Kamera = [0, 4.15, 9.8];
-+/** P3a (Arkitekten 20:40): på de andra platserna håller OrbitControls kameran högst så här långt från målet
-+ *  (PlatsDekor maxDistance), så den står närmare på samma linje: (0, 3,876, 8,92) i stället för (0, 4,15, 9,8). */
-+export const PLATS_MAX_AVSTAND = 9.5;
++/** P3a (Arkitekten 21:40): kamerans största avstånd till målet på alla platser (PlatsDekor och ängens OrbitControls
++ *  får inte hålla den närmare). 10,5 ≥ ängens 10,42, så sjön, skogen och grottan ritas med ängens kamera (förut 9,5:
++ *  kameran stod i (0, 3,876, 8,92) och allt ritades ca 10 % större). */
++export const PLATS_MAX_AVSTAND = 10.5;
 +const ANG_AVSTAND = Math.hypot(KAMERA_ANG[0] - MAL[0], KAMERA_ANG[1] - MAL[1], KAMERA_ANG[2] - MAL[2]);
 +const kl = Math.min(1, PLATS_MAX_AVSTAND / ANG_AVSTAND);
 +export const KAMERA_PLATS: Kamera = [MAL[0] + (KAMERA_ANG[0] - MAL[0]) * kl, MAL[1] + (KAMERA_ANG[1] - MAL[1]) * kl, MAL[2] + (KAMERA_ANG[2] - MAL[2]) * kl];

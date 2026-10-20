@@ -293,3 +293,44 @@ Kapacitet efter lagningen av C (räknat i regeln):
 | sjön | 4 | 7 | 8 | 4 | 3 | 8 |
 | skogen | 8 | 7 | 8 | 8 | 5 | 8 |
 | grottan | 8 | 7 | 8 | 7 | 2 | 8 |
+
+### Arkitektens beslut 21:40 – genomfört
+
+- **(a)** Regeln använder provets gränser: de tre nyaste och platsens fasta saker skyms högst 30 %, äldre högst 45 %,
+  huvudet (övre halvan) högst 10 % (`placering.json` max_skymd 0,3 / max_skymd_aldre 0,45 / huvud_skymd 0,1). Provet
+  (p3-prov P, b66) har gränserna fast (70 % / 55 % / 10 %) och ingen mätmarginal längre – regelns ruta är modellens
+  (p3a-matt.test.ts, 3 px).
+- **(b)** Äldre ritas ned till 40 % (`krymp_aldre_min` 0,4), i steg efter ålder och trängsel. En äldre ritas aldrig
+  större än en nyare.
+- **(c)** Alla platser har ängens kameraavstånd via en konstant: `PLATS_MAX_AVSTAND` = 10,5 i skarm.ts. PlatsDekor
+  (`maxDistance`) och regelns kamera (`KAMERA_PLATS`, nu = `KAMERA_ANG`) läser samma tal.
+- **Kravnivå:** fro11 och bara jättar minst 3 vakna av 8, 8 katter 8 av 8, övriga minst 6 (p3-prov `KRAV`).
+- **Följd av (a) – lagat vid orsaken:** med de lösare gränserna fick äldre djur rader bakom en stor sak (flickan på
+  z −1,95 bakom slottet på −1,80). Det bröt B6.1 (E), "stora saker står bakom alla djur". Orsaken är att mark- och
+  bak-banden överlappar (ängen: mark −1,95…4,6, bak −3,3…−1,15). Regeln håller nu isär dem: en markrad ligger minst
+  `bak_lucka` 0,5 framför varje vaken stor sak, och omvänt. Rader som bryter det är aldrig lediga, men stallet får
+  leta i dem. B6.1-testet är oförändrat och grönt.
+
+Kapacitet (vakna av 8, räknat i regeln med de sanna rutorna, C-lagningen och bak_lucka; ett * betyder att den nya
+ritas mindre):
+
+| plats | fro11 (≥3) | fro2026 (≥6) | fro4242 (≥6) | blandad (≥6) | bara jättar (≥3) | 8 katter (8) |
+|---|---|---|---|---|---|---|
+| ängen | 6 | 8 | 7 | 7 | 6* | 8 |
+| sjön | 5 | 8 | 8 | 7 | 3 | 8 |
+| skogen | 8 | 7 | 8 | 8 | 6 | 8 |
+| grottan | 8 | 7 | 8 | 8 | 4 | 8 |
+
+Kravet gäller ängen och sjön, och alla fall når det.
+
+**Doodles punkter i proven:**
+
+| punkt | täcks av |
+|---|---|
+| bläckfisken står i kanten vid sjön | P: varje vaken syns ≥ 70/55 % med det som är utanför bild räknat som skymt, plus "inte mest utanför". Nytt fall sjön/doodle-sal har två bläckfiskar. |
+| sälen bakom ankan | Nytt fall sjön/doodle-sal (kanin, bläckfisk, säl, katt, hund, narval, anka, bläckfisk). Varje vaken syns ≥ sin gräns och huvudet är fritt. |
+| pucken större än kaffekoppen | F: storleksordningen jämförs i full storlek (puck 19×12 px mot kaffekopp 22×22 px på samma djup). |
+| narvalen liten | P: nytt krav att varje vaket djur i full storlek är minst syn.min_px (44) − 4 px i sitt minsta mått. Narvalen i full storlek är 72–112 px. En äldre narval som krympts till 40 % ritas ca 30 px, och det är beslut (b). |
+| växthuset och glaslådan skymmer slottet | Nytt fall ängen/doodle-slott: slottet äldre, växthuset och akvariet (antaget vara "glaslådan") nyare. Slottet får inte skymmas mer än 45 %. Ryms det inte, somnar det (i regeln: slottet sover, 7 av 8 vakna). |
+
+Doodle-fallen räknas inte mot kapacitetskravet.

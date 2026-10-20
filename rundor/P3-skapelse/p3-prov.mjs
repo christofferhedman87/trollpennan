@@ -7,11 +7,13 @@
 //      skymmer den; kameran går in mot den (window.__tredFokus) och tillbaka.
 //   P  P3a – EN placeringsregel (data/placering.json): på ängen, sjön, skogen och grottan, 8 djur/saker med tre fasta frön,
 //      blandade storlekar och två värsta fall (bara jättar; åtta katter) och Doodles lag: varje vaken skapelse syns till minst
-//      1 − (gräns + 0,1) av sin ritade ruta – gränsen 20 % för de tre nyaste och platsens fasta saker, 35 % för äldre (de
-//      framför, Bengtsson-figuren mätt i DOM:en och de reserverade rutorna inräknade) – och huvudet (övre halvan) är fritt
-//      (högst 0,1 mätmarginal); den nya står kvar, allt ryms i bild, simmare på vattnet, flygare i luften.
-//      Kapaciteten (Arkitekten 18:59): ängen och sjön minst 6 vakna av 8 för blandade storlekar och alla frön utom fro11,
-//      8 av 8 katter, minst 5 för bara jättar/monster (fro11, bara jättar).
+//      70 % av sin ritade ruta (de tre nyaste och platsens fasta saker) eller 55 % (äldre) – de framför, Bengtsson-figuren
+//      mätt i DOM:en och de reserverade rutorna inräknade – och huvudet (övre halvan) skyms högst 10 %; den nya står kvar,
+//      allt ryms i bild, simmare på vattnet, flygare i luften.
+//      Kapaciteten (Arkitekten 21:40): ängen och sjön minst 6 vakna av 8 för blandade storlekar och fröna 2026/4242, 8 av 8
+//      katter, minst 3 för jättar/monster (fro11, bara jättar). Gränserna 70 % / 55 % / huvud 10 % är fasta (regeln
+//      använder samma). Doodles fall: bläckfisken i kanten och sälen bakom ankan vid sjön, slottet bakom växthuset och
+//      akvariet (glaslådan) på ängen; varje vaket djur i full storlek ≥ syn.min_px (narvalen).
 //   K  Ankan på ängen (Doodle 18:46): den simmar i dammen och svävar aldrig; en fisk på ängen simmar också i dammen.
 //   T  Titelbilden ("Fortsätt") visar bara det senaste djuret: utsnittet följer djurets ritade kropp.
 //   F  Storlekar: slottet syns tydligt högre än sjukhuset; småsaker har rimlig inbördes storlek (pucken mindre än kaffekoppen).
@@ -124,13 +126,16 @@ await blok("C", async () => {
 // ängens fasta saker (spökhuset, dammen) räknade ur data med den stående kameran.
 // på main (före P3) finns ingen placering.json: samma tal som patchen, så att provet kan köras där och faller på riktigt
 const PLAC = fs.existsSync("data/placering.json") ? JSON.parse(fs.readFileSync("data/placering.json", "utf8")) : { max_skymd: 0.2, max_skymd_aldre: 0.35, nya_antal: 3, huvud_skymd: 0, platser: {}, skarm_reserverat: [{ namn: "utgangar", x0: 0, y0: 0, x1: 375, y1: 112 }, { namn: "guiden", x0: 12, y0: 112, x1: 363, y1: 150 }, { namn: "bengtsson", x0: 30, y0: 494, x1: 140, y1: 738 }, { namn: "nedre-raden", x0: 0, y0: 744, x1: 375, y1: 812 }] };
-const GRANS = 1 - (PLAC.max_skymd + 0.1); // modellens verkliga form mot den räknade rutan: 0,1 marginal (som B6.6/P3)
-const GRANS_ALDRE = 1 - ((PLAC.max_skymd_aldre ?? PLAC.max_skymd) + 0.1);
-const NYA_ANTAL = PLAC.nya_antal ?? 8;
-const HUVUD = (PLAC.huvud_skymd ?? 1) + 0.1;
+// Arkitekten 21:40: provets gränser ligger fast (syns ≥ 70 % de nyaste och platsens fasta saker, ≥ 55 % äldre, huvudet
+// skymt högst 10 %) och regeln använder samma tal – ingen mätmarginal (regelns ruta = modellens, p3a-matt.test.ts)
+const GRANS = 0.7;
+const GRANS_ALDRE = 0.55;
+const NYA_ANTAL = PLAC.nya_antal ?? 3;
+const HUVUD = 0.1;
 // kapacitetskravet (Arkitekten 18:59), vakna av 8 på ängen och sjön
-const KRAV = { fro11: 5, "varst-stora": 5, "varst-katter": 8 };
+const KRAV = { fro11: 3, "varst-stora": 3, "varst-katter": 8 }; // Arkitekten 21:40: jättar och monster ≥ 3, katter 8 av 8, övriga ≥ 6
 const kravFor = (namn) => KRAV[namn] ?? 6;
+const SYN_MIN_PX = (() => { try { return JSON.parse(fs.readFileSync("data/storlek.json", "utf8")).syn?.min_px ?? 44; } catch { return 44; } })();
 function slump(fro) {
   let a = fro >>> 0;
   return () => {
@@ -214,10 +219,15 @@ async function platsProv(plats, namn, kroppar) {
   kolla(`P ${plats} ${namn}: ${kvar.length} vakna av ${kroppar.length} – var och en syns ≥ ${Math.round(GRANS * 100)} % (de ${NYA_ANTAL} nyaste, platsens fasta saker) eller ≥ ${Math.round(GRANS_ALDRE * 100)} % (äldre); skymt eller utanför bilden räknas bort`, daliga.length === 0 && kvar.length >= 1, { daliga, kvar: kvar.map((d) => d.kropp), sovande: kroppar.length - lista.length });
   const huvudSkymt = andel.filter((a) => a.huvud > HUVUD);
   kolla(`P ${plats} ${namn}: inget huvud skyms (övre halvan av den ritade rutan, högst ${Math.round(HUVUD * 100)} % med mätmarginal)`, huvudSkymt.length === 0, { huvudSkymt });
-  if (plats === "ang" || plats === "sjon") kolla(`P ${plats} ${namn}: kapacitet – minst ${kravFor(namn)} vakna av 8 (Arkitekten 18:59)`, kvar.length >= kravFor(namn), { vakna: kvar.length });
+  if ((plats === "ang" || plats === "sjon") && !namn.startsWith("doodle")) kolla(`P ${plats} ${namn}: kapacitet – minst ${kravFor(namn)} vakna av 8 (Arkitekten 21:40)`, kvar.length >= kravFor(namn), { vakna: kvar.length });
   const nySyn = ny && saker.find((s) => s.uid === ny.uid);
   kolla(`P ${plats} ${namn}: den nya (${sista}) står kvar och syns`, !!nySyn && ny.kropp === sista, { ny: ny?.kropp, syns: andel.find((a) => a.k === ny?.kropp) });
   // utanför bilden räknas som skymt i andelen ovan; här: ingen står till största delen utanför
+  // minsta synliga storlek (P3, Doodle r83a: narvalen var väldigt liten): ett vaket djur i full storlek har sitt minsta
+  // mått ≥ syn.min_px (storlek.json) på skärmen, 4 px mätmarginal; ett äldre som ritas mindre (perspektiv) räknas i sin storlek
+  const MINPX = SYN_MIN_PX;
+  const smaDjur = saker.filter((s) => E[s.k]?.typ === "djur" && (pos[s.uid]?.k ?? 1) >= 1 && Math.min(s.r.w, s.r.h) < MINPX - 4);
+  kolla(`P ${plats} ${namn}: varje vaket djur i full storlek är minst ${MINPX} px (minsta måttet)`, smaDjur.length === 0, { sma: smaDjur.map((s) => ({ k: s.k, w: s.r.w, h: s.r.h })) });
   const halvUte = saker.filter((s) => tacktAv(s.r, [], true) > 0.5);
   kolla(`P ${plats} ${namn}: ingen står till största delen utanför bilden`, halvUte.length === 0, { ute: halvUte.map((s) => ({ k: s.k, r: s.r })) });
   const fel = saker.filter((s) => (s.sim && (s.flyg || s.y > 0.45)) || (s.flyg && s.y < 1));
@@ -231,6 +241,10 @@ await blok("P", async () => {
   // Doodles ängar (15:35) och hans kö vid sjön (16:20)
   kapacitet["ang/doodle-byggnader"] = await platsProv("ang", "doodle-byggnader", ["slott", "sjukhus", "cirkus", "vaxthus", "ko", "katt", "hund", "kanin"]);
   kapacitet["sjon/doodle-ko"] = await platsProv("sjon", "doodle-ko", ["anka", "kanin", "häst", "katt", "katt", "jultomte", "narval", "anka"]);
+  // Doodle 21:40: bläckfisken i kanten vid sjön, sälen bakom ankan, narvalen liten, växthuset och glaslådan (akvariet)
+  // framför slottet – samma krav: var och en syns (i bild, ≥ 70/55 %), huvudet fritt; narvalen se N nedan
+  kapacitet["sjon/doodle-sal"] = await platsProv("sjon", "doodle-sal", ["kanin", "blackfisk", "sal", "katt", "hund", "narval", "anka", "blackfisk"]);
+  kapacitet["ang/doodle-slott"] = await platsProv("ang", "doodle-slott", ["hund", "slott", "katt", "kanin", "gris", "akvarium", "vaxthus", "katt"]);
   kolla("P: kapacitet per plats (vakna av 8)", true, { kapacitet });
   fs.writeFileSync(path.join(bilder || ".", "p3-kapacitet.json"), JSON.stringify(kapacitet, null, 1));
 });
