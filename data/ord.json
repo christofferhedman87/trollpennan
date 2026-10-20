@@ -2640,24 +2640,6 @@
    }
   },
   {
-   "id": "bonde",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "bonde",
-   "genus": "u",
-   "former": [
-    "bonde",
-    "bonden",
-    "bönder",
-    "bönderna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3C polypizza-cc0",
-   "del": {
-    "kropp": "bonde"
-   }
-  },
-  {
    "id": "larv",
    "klass": "djur",
    "niva": "fritt",
@@ -4292,42 +4274,6 @@
    "kalla": "R3D polypizza-cc0",
    "del": {
     "kropp": "kalkon"
-   }
-  },
-  {
-   "id": "ninja",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "ninja",
-   "genus": "u",
-   "former": [
-    "ninja",
-    "ninjan",
-    "ninjor",
-    "ninjorna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3D polypizza-cc0",
-   "del": {
-    "kropp": "ninja"
-   }
-  },
-  {
-   "id": "kvinna",
-   "klass": "djur",
-   "niva": "fritt",
-   "visa": "kvinna",
-   "genus": "u",
-   "former": [
-    "kvinna",
-    "kvinnan",
-    "kvinnor",
-    "kvinnorna"
-   ],
-   "signatur": "studs",
-   "kalla": "R3D polypizza-cc0",
-   "del": {
-    "kropp": "kvinna"
    }
   },
   {
@@ -6728,6 +6674,773 @@
    "kalla": "R3F-MFIX2 trollpennan-mfix2",
    "del": {
     "kropp": "spelare"
+   }
+  },
+  {
+   "id": "bonde",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "bonde",
+   "genus": "u",
+   "former": [
+    "bonde",
+    "bonden",
+    "bönder",
+    "bönderna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "bonde"
+   }
+  },
+  {
+   "id": "ninja",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "ninja",
+   "genus": "u",
+   "former": [
+    "ninja",
+    "ninjan",
+    "ninjor",
+    "ninjorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "ninja"
+   }
+  },
+  {
+   "id": "kvinna",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kvinna",
+   "genus": "u",
+   "former": [
+    "kvinna",
+    "kvinnan",
+    "kvinnor",
+    "kvinnorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "kvinna"
+   }
+  },
+  {
+   "id": "brandman",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "brandman",
+   "genus": "u",
+   "former": [
+    "brandman",
+    "brandmannen",
+    "brandmän",
+    "brandmännen"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "brandman"
+   }
+  },
+  {
+   "id": "clown",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "clown",
+   "genus": "u",
+   "former": [
+    "clown",
+    "clownen",
+    "clowner",
+    "clownerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "clown"
+   }
+  },
+  {
+   "id": "doktor",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "doktor",
+   "genus": "u",
+   "former": [
+    "doktor",
+    "doktorn",
+    "doktorer",
+    "doktorerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "doktor"
+   }
+  },
+  {
+   "id": "läkare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "läkare",
+   "genus": "u",
+   "former": [
+    "läkare",
+    "läkaren",
+    "läkarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "doktor"
+   }
+  },
+  {
+   "id": "kock",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kock",
+   "genus": "u",
+   "former": [
+    "kock",
+    "kocken",
+    "kockar",
+    "kockarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "kock"
+   }
+  },
+  {
+   "id": "mormor",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mormor",
+   "genus": "u",
+   "former": [
+    "mormor"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "mormor"
+   }
+  },
+  {
+   "id": "farmor",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "farmor",
+   "genus": "u",
+   "former": [
+    "farmor"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "farmor"
+   }
+  },
+  {
+   "id": "prins",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "prins",
+   "genus": "u",
+   "former": [
+    "prins",
+    "prinsen",
+    "prinsar",
+    "prinsarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "prins"
+   }
+  },
+  {
+   "id": "prinsessa",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "prinsessa",
+   "genus": "u",
+   "former": [
+    "prinsessa",
+    "prinsessan",
+    "prinsessor",
+    "prinsessorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "prinsessa"
+   }
+  },
+  {
+   "id": "barn",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "barn",
+   "genus": "n",
+   "former": [
+    "barn",
+    "barnet",
+    "barnen"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "barn"
+   }
+  },
+  {
+   "id": "älva",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "älva",
+   "genus": "u",
+   "former": [
+    "älva",
+    "älvan",
+    "älvor",
+    "älvorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "alva"
+   }
+  },
+  {
+   "id": "fe",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "fe",
+   "genus": "u",
+   "former": [
+    "fe",
+    "fen",
+    "feer",
+    "feerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "alva"
+   }
+  },
+  {
+   "id": "frisör",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "frisör",
+   "genus": "u",
+   "former": [
+    "frisör",
+    "frisören",
+    "frisörer",
+    "frisörerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "frisor"
+   }
+  },
+  {
+   "id": "sjuksköterska",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "sjuksköterska",
+   "genus": "u",
+   "former": [
+    "sjuksköterska",
+    "sjuksköterskan",
+    "sjuksköterskor",
+    "sjuksköterskorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "sjukskoterska"
+   }
+  },
+  {
+   "id": "dykare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "dykare",
+   "genus": "u",
+   "former": [
+    "dykare",
+    "dykaren",
+    "dykarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "dykare"
+   }
+  },
+  {
+   "id": "brevbärare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "brevbärare",
+   "genus": "u",
+   "former": [
+    "brevbärare",
+    "brevbäraren",
+    "brevbärarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "brevbarare"
+   }
+  },
+  {
+   "id": "målare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "målare",
+   "genus": "u",
+   "former": [
+    "målare",
+    "målaren",
+    "målarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "malare"
+   }
+  },
+  {
+   "id": "snickare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "snickare",
+   "genus": "u",
+   "former": [
+    "snickare",
+    "snickaren",
+    "snickarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "snickare"
+   }
+  },
+  {
+   "id": "kapten",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kapten",
+   "genus": "u",
+   "former": [
+    "kapten",
+    "kaptenen",
+    "kaptener",
+    "kaptenerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "kapten"
+   }
+  },
+  {
+   "id": "fiskare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "fiskare",
+   "genus": "u",
+   "former": [
+    "fiskare",
+    "fiskaren"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "fiskare"
+   }
+  },
+  {
+   "id": "viking",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "viking",
+   "genus": "u",
+   "former": [
+    "viking",
+    "vikingen",
+    "vikingar",
+    "vikingarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "viking"
+   }
+  },
+  {
+   "id": "superhjälte",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "superhjälte",
+   "genus": "u",
+   "former": [
+    "superhjälte",
+    "superhjälten",
+    "superhjältar",
+    "superhjältarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "superhjalte"
+   }
+  },
+  {
+   "id": "tjuv",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "tjuv",
+   "genus": "u",
+   "former": [
+    "tjuv",
+    "tjuven",
+    "tjuvar",
+    "tjuvarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "tjuv"
+   }
+  },
+  {
+   "id": "äventyrare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "äventyrare",
+   "genus": "u",
+   "former": [
+    "äventyrare",
+    "äventyraren",
+    "äventyrarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "aventyrare"
+   }
+  },
+  {
+   "id": "detektiv",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "detektiv",
+   "genus": "u",
+   "former": [
+    "detektiv",
+    "detektiven",
+    "detektiver",
+    "detektiverna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "detektiv"
+   }
+  },
+  {
+   "id": "forskare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "forskare",
+   "genus": "u",
+   "former": [
+    "forskare",
+    "forskaren",
+    "forskarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "forskare"
+   }
+  },
+  {
+   "id": "konstnär",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "konstnär",
+   "genus": "u",
+   "former": [
+    "konstnär",
+    "konstnären",
+    "konstnärer",
+    "konstnärerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "konstnar"
+   }
+  },
+  {
+   "id": "ballerina",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "ballerina",
+   "genus": "u",
+   "former": [
+    "ballerina",
+    "ballerinan",
+    "ballerinor",
+    "ballerinorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "ballerina"
+   }
+  },
+  {
+   "id": "dansare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "dansare",
+   "genus": "u",
+   "former": [
+    "dansare",
+    "dansaren",
+    "dansarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "ballerina"
+   }
+  },
+  {
+   "id": "mekaniker",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mekaniker",
+   "genus": "u",
+   "former": [
+    "mekaniker",
+    "mekanikern",
+    "mekanikerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "mekaniker"
+   }
+  },
+  {
+   "id": "jägare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "jägare",
+   "genus": "u",
+   "former": [
+    "jägare",
+    "jägaren",
+    "jägarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "jagare"
+   }
+  },
+  {
+   "id": "skogshuggare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "skogshuggare",
+   "genus": "u",
+   "former": [
+    "skogshuggare",
+    "skogshuggaren",
+    "skogshuggarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "skogshuggare"
+   }
+  },
+  {
+   "id": "vakt",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "vakt",
+   "genus": "u",
+   "former": [
+    "vakt",
+    "vakten",
+    "vakter",
+    "vakterna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "vakt"
+   }
+  },
+  {
+   "id": "kejsare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kejsare",
+   "genus": "u",
+   "former": [
+    "kejsare",
+    "kejsaren",
+    "kejsarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "kejsare"
+   }
+  },
+  {
+   "id": "jultomte",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "jultomte",
+   "genus": "u",
+   "former": [
+    "jultomte",
+    "jultomten",
+    "jultomtar",
+    "jultomtarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "jultomte"
+   }
+  },
+  {
+   "id": "mumie",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "mumie",
+   "genus": "u",
+   "former": [
+    "mumie",
+    "mumien",
+    "mumier",
+    "mumierna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "mumie"
+   }
+  },
+  {
+   "id": "alien",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "alien",
+   "genus": "u",
+   "former": [
+    "alien",
+    "alienen"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "alien"
+   }
+  },
+  {
+   "id": "sjöman",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "sjöman",
+   "genus": "u",
+   "former": [
+    "sjöman",
+    "sjömannen",
+    "sjömän",
+    "sjömännen"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "sjoman"
+   }
+  },
+  {
+   "id": "rörmokare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "rörmokare",
+   "genus": "u",
+   "former": [
+    "rörmokare",
+    "rörmokaren",
+    "rörmokarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "rormokare"
+   }
+  },
+  {
+   "id": "servitör",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "servitör",
+   "genus": "u",
+   "former": [
+    "servitör",
+    "servitören",
+    "servitörer",
+    "servitörerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "servitor"
+   }
+  },
+  {
+   "id": "sångare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "sångare",
+   "genus": "u",
+   "former": [
+    "sångare",
+    "sångaren",
+    "sångarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M17 trollpennan-folk-m17",
+   "del": {
+    "kropp": "sangare"
    }
   }
  ],
