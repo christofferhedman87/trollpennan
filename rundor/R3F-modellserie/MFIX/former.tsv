@@ -1,0 +1,240 @@
+# R3F-MFIX: granskade böjningsformer för alla djur-, människo- och sagoord som lagts in av bulkrutinen (R3C, R3D, R3F-M1–M14).
+# Källa: SALDO (Språkbanken, CC BY 4.0, samma som data/ord.json) och SAOL-mönster för hand. Osäker plural är utelämnad hellre än gissad.
+ord	genus	former	# källa
+elefant	u	elefant, elefanten, elefanter, elefanterna	# SALDO nn_3u_karbid
+lejon	n	lejon, lejonet, lejonen	# SALDO nn_6n_blad
+zebra	u	zebra, zebran, zebror, zebrorna	# SALDO nn_1u_kamera
+pingvin	u	pingvin, pingvinen, pingviner, pingvinerna	# SALDO nn_3u_film
+räv	u	räv, räven, rävar, rävarna	# SALDO nn_2u_sten
+flodhäst	u	flodhäst, flodhästen, flodhästar, flodhästarna	# SALDO nn_2u_sten
+anka	u	anka, ankan, ankor, ankorna	# SALDO nn_1u_flicka
+örn	u	örn, örnen, örnar, örnarna	# SALDO nn_2u_sten
+tyrannosaurus	u	tyrannosaurus, tyrannosaurusen	# hand (SAOL-mönster)
+giraff	u	giraff, giraffen, giraffer, girafferna	# SALDO nn_3u_tid
+panda	u	panda, pandan, pandor, pandorna	# SALDO nn_1u_flicka
+krabba	u	krabba, krabban, krabbor, krabborna	# SALDO nn_1u_flicka
+delfin	u	delfin, delfinen, delfiner, delfinerna	# SALDO nn_3u_karbid
+orm	u	orm, ormen, ormar, ormarna	# SALDO nn_2u_sten
+clownfisk	u	clownfisk, clownfisken, clownfiskar, clownfiskarna	# SALDO clown+nn_2u_sten
+nemo	u	nemo	# hand (SAOL-mönster)
+spöke	n	spöke, spöket, spöken, spökena	# SALDO nn_5n_hjärta
+robot	u	robot, roboten, robotar, robotarna	# SALDO nn_2u_stol
+yeti	u	yeti, yetin	# hand (SAOL-mönster)
+snömänniska	u	snömänniska, snömänniskan, snömänniskor, snömänniskorna	# SALDO snö+nn_1u_människa
+astronaut	u	astronaut, astronauten, astronauter, astronauterna	# SALDO nn_3u_karbid
+rymdfarare	u	rymdfarare, rymdfararen, rymdfararna	# SALDO nn_6u_kikare
+bonde	u	bonde, bonden, bönder, bönderna	# SALDO nn_4u_bonde
+larv	u	larv, larven, larver, larverna	# hand (SAOL-mönster)
+kyckling	u	kyckling, kycklingen, kycklingar, kycklingarna	# SALDO nn_2u_stol
+ko	u	ko, kon, kor, korna	# hand (SAOL-mönster)
+hjort	u	hjort, hjorten, hjortar, hjortarna	# SALDO nn_2u_stol
+vildsvin	n	vildsvin, vildsvinet, vildsvinen	# SALDO nn_6n_bord
+koala	u	koala, koalan, koalor, koalorna	# SALDO nn_1u_kamera
+apa	u	apa, apan, apor, aporna	# SALDO nn_1u_flicka
+papegoja	u	papegoja, papegojan, papegojor, papegojorna	# SALDO nn_1u_flicka
+isbjörn	u	isbjörn, isbjörnen, isbjörnar, isbjörnarna	# SALDO nn_2u_mening
+tiger	u	tiger, tigern, tigrar, tigrarna	# SALDO nn_2u_nyckel
+människa	u	människa, människan, människor, människorna	# SALDO nn_1u_människa
+kyrkogårdsvaktmästare	u	kyrkogårdsvaktmästare, kyrkogårdsvaktmästaren, kyrkogårdsvaktmästarna	# SALDO kyrkogårds+nn_6u_kikare
+gubbe	u	gubbe, gubben, gubbar, gubbarna	# SALDO nn_2u_vinge
+hjälte	u	hjälte, hjälten, hjältar, hjältarna	# SALDO nn_2u_hjälte
+riddare	u	riddare, riddaren, riddarna	# SALDO nn_6u_kikare
+bågskytt	u	bågskytt, bågskytten, bågskyttar, bågskyttarna	# SALDO nn_2u_stol
+skelett	n	skelett, skelettet, skeletten	# SALDO nn_6n_bord
+vampyr	u	vampyr, vampyren, vampyrer, vampyrerna	# SALDO nn_3u_karbid
+zombie	u	zombie, zombien, zombier, zombierna	# hand (SAOL-mönster)
+nötknäppare	u	nötknäppare, nötknäpparen, nötknäpparna	# SALDO nn_6u_kikare
+rudolf	u	rudolf	# hand (SAOL-mönster)
+snögubbe	u	snögubbe, snögubben, snögubbar, snögubbarna	# SALDO nn_2u_ormbunke
+orch	u	orch, orchen	# hand (SAOL-mönster)
+troll	n	troll, trollet, trollen	# SALDO nn_6n_blad
+rymdvarelse	u	rymdvarelse, rymdvarelsen, rymdvarelser, rymdvarelserna	# SALDO rymd+nn_4u_linje
+utomjording	u	utomjording, utomjordingen, utomjordingar, utomjordingarna	# SALDO nn_2u_mening
+flundra	u	flundra, flundran, flundror, flundrorna	# SALDO nn_1u_aminosyra
+plattfisk	u	plattfisk, plattfisken, plattfiskar, plattfiskarna	# SALDO nn_2u_sten
+koi	u	koi, koin	# hand (SAOL-mönster)
+karp	u	karp, karpen, karpar, karparna	# SALDO nn_2u_sten
+piraya	u	piraya, pirayan, pirayor, pirayorna	# SALDO nn_1u_flicka
+svärdfisk	u	svärdfisk, svärdfisken, svärdfiskar, svärdfiskarna	# SALDO nn_2u_sten
+tonfisk	u	tonfisk, tonfisken, tonfiskar, tonfiskarna	# SALDO nn_2u_sten
+lama	u	lama, laman, lamor, lamorna	# SALDO nn_vu_lama
+mops	u	mops, mopsen, mopsar, mopsarna	# SALDO nn_2u_sten
+alpacka	u	alpacka, alpackan, alpackor, alpackorna	# SALDO nn_1u_aminosyra
+åsna	u	åsna, åsnan, åsnor, åsnorna	# SALDO nn_1u_olja
+husky	u	husky, huskyn	# hand (SAOL-mönster)
+draghund	u	draghund, draghunden, draghundar, draghundarna	# SALDO drag+nn_2u_sten
+kronhjort	u	kronhjort, kronhjorten, kronhjortar, kronhjortarna	# SALDO nn_2u_stol
+älg	u	älg, älgen, älgar, älgarna	# SALDO nn_2u_stol
+varg	u	varg, vargen, vargar, vargarna	# SALDO nn_2u_stol
+bläckfiskmonster	n	bläckfiskmonster, bläckfiskmonstret, bläckfiskmonstren	# SALDO bläckfisk+nn_6n_foder
+cyklop	u	cyklop, cyklopen, cykloper, cykloperna	# hand (SAOL-mönster)
+jätte	u	jätte, jätten, jättar, jättarna	# SALDO nn_2u_hjälte
+demon	u	demon, demonen, demoner, demonerna	# SALDO nn_3u_karbid
+svampmonster	n	svampmonster, svampmonstret, svampmonstren	# SALDO svamp+nn_6n_foder
+golem	u	golem, golemen	# hand (SAOL-mönster)
+stenvarelse	u	stenvarelse, stenvarelsen, stenvarelser, stenvarelserna	# SALDO sten+nn_4u_linje
+bläckfisk	u	bläckfisk, bläckfisken, bläckfiskar, bläckfiskarna	# SALDO nn_2u_sten
+trollkarl	u	trollkarl, trollkarlen, trollkarlar, trollkarlarna	# SALDO nn_2u_stol
+magiker	u	magiker, magikern, magikerna	# SALDO nn_6u_akademiker
+marulk	u	marulk, marulken, marulkar, marulkarna	# SALDO nn_2u_stol
+fladdermus	u	fladdermus, fladdermusen, fladdermöss, fladdermössen	# SALDO nn_6u_mus
+bi	n	bi, biet, bin, bina	# hand (SAOL-mönster)
+kirurgfisk	u	kirurgfisk, kirurgfisken, kirurgfiskar, kirurgfiskarna	# SALDO kirurg+nn_2u_sten
+corgi	u	corgi, corgin	# hand (SAOL-mönster)
+ankylosaurus	u	ankylosaurus, ankylosaurusen	# hand (SAOL-mönster)
+plesiosaurie	u	plesiosaurie, plesiosaurien, plesiosaurier, plesiosaurierna	# SALDO nn_4u_linje
+sjöodjur	n	sjöodjur, sjöodjuret, sjöodjuren	# SALDO nn_6n_departement
+pterodactylus	u	pterodactylus, pterodactylusen	# hand (SAOL-mönster)
+flygödla	u	flygödla, flygödlan, flygödlor, flygödlorna	# SALDO nn_1u_olja
+triceratops	u	triceratops, triceratopsen	# hand (SAOL-mönster)
+hind	u	hind, hinden, hindar, hindarna	# SALDO nn_2u_sten
+rådjur	n	rådjur, rådjuret, rådjuren	# SALDO nn_6n_departement
+tjur	u	tjur, tjuren, tjurar, tjurarna	# SALDO nn_2u_sten
+highlandsko	u	highlandsko, highlandskon, highlandskor, highlandskorna	# hand (SAOL-mönster)
+lamm	n	lamm, lammet, lammen	# hand (SAOL-mönster)
+flamingo	u	flamingo, flamingon, flamingor, flamingorna	# SALDO nn_4u_linje
+blåsfisk	u	blåsfisk, blåsfisken, blåsfiskar, blåsfiskarna	# SALDO blås+nn_2u_sten
+fugu	u	fugu, fugun	# SALDO nn_0u_radar
+get	u	get, geten, getter, getterna	# SALDO nn_3u_fot
+gås	u	gås, gåsen, gäss, gässen	# SALDO nn_6u_gås
+hare	u	hare, haren, harar, hararna	# SALDO nn_2u_vinge
+igelkott	u	igelkott, igelkotten, igelkottar, igelkottarna	# SALDO nn_2u_stol
+kolibri	u	kolibri, kolibrin, kolibrier, kolibrierna	# SALDO nn_3u_motor
+manet	u	manet, maneten, maneter, maneterna	# SALDO nn_3u_karbid
+kiwi	u	kiwi, kiwin	# hand (SAOL-mönster)
+ara	u	ara, aran, aror, arorna	# SALDO nn_1u_kamera
+murmeldjur	n	murmeldjur, murmeldjuret, murmeldjuren	# SALDO nn_6n_bord
+påfågel	u	påfågel, påfågeln, påfåglar, påfåglarna	# SALDO nn_2u_nyckel
+pelikan	u	pelikan, pelikanen, pelikaner, pelikanerna	# SALDO nn_3u_karbid
+näbbdjur	n	näbbdjur, näbbdjuret, näbbdjuren	# SALDO nn_6n_bord
+noshörning	u	noshörning, noshörningen, noshörningar, noshörningarna	# SALDO nn_2u_mening
+tupp	u	tupp, tuppen, tuppar, tupparna	# SALDO nn_2u_stol
+säl	u	säl, sälen, sälar, sälarna	# SALDO nn_2u_stol
+tukan	u	tukan, tukanen, tukaner, tukanerna	# SALDO nn_3u_karbid
+småvarelse	u	småvarelse, småvarelsen, småvarelser, småvarelserna	# SALDO små+nn_4u_linje
+nisse	u	nisse, nissen, nissar, nissarna	# SALDO nn_2u_hjälte
+höna	u	höna, hönan, hönor, hönorna	# SALDO nn_1u_flicka
+tvättbjörn	u	tvättbjörn, tvättbjörnen, tvättbjörnar, tvättbjörnarna	# SALDO nn_2u_mening
+spindel	u	spindel, spindeln, spindlar, spindlarna	# SALDO nn_2u_nyckel
+kalkon	u	kalkon, kalkonen, kalkoner, kalkonerna	# SALDO nn_3u_karbid
+ninja	u	ninja, ninjan, ninjor, ninjorna	# SALDO nn_1u_kamera
+kvinna	u	kvinna, kvinnan, kvinnor, kvinnorna	# SALDO nn_1u_kyrka
+mus	u	mus, musen, möss, mössen	# SALDO nn_6u_mus
+råtta	u	råtta, råttan, råttor, råttorna	# SALDO nn_1u_flicka
+tomte	u	tomte, tomten, tomtar, tomtarna	# SALDO nn_2u_hjälte
+gnom	u	gnom, gnomen, gnomer, gnomerna	# SALDO nn_3u_karbid
+trollkarlsgnom	u	trollkarlsgnom, trollkarlsgnomen, trollkarlsgnomer, trollkarlsgnomerna	# SALDO trollkarls+nn_3u_karbid
+carnotaurus	u	carnotaurus, carnotaurusen	# hand (SAOL-mönster)
+oviraptor	u	oviraptor, oviraptorn	# hand (SAOL-mönster)
+pachycephalosaurus	u	pachycephalosaurus, pachycephalosaurusen	# hand (SAOL-mönster)
+spinosaurus	u	spinosaurus, spinosaurusen	# hand (SAOL-mönster)
+stegosaurus	u	stegosaurus, stegosaurusen	# hand (SAOL-mönster)
+kalv	u	kalv, kalven, kalvar, kalvarna	# SALDO nn_2u_stol
+mjölkko	u	mjölkko, mjölkkon, mjölkkor, mjölkkorna	# SALDO nn_4u_linje
+får	n	får, fåret, fåren	# SALDO nn_6n_blad
+sköldpadda	u	sköldpadda, sköldpaddan, sköldpaddor, sköldpaddorna	# SALDO nn_1u_skyltdocka
+häxa	u	häxa, häxan, häxor, häxorna	# SALDO nn_1u_flicka
+trollslända	u	trollslända, trollsländan, trollsländor, trollsländorna	# SALDO nn_1u_skyltdocka
+apatosaurus	u	apatosaurus, apatosaurusen	# hand (SAOL-mönster)
+långhals	u	långhals, långhalsen, långhalsar, långhalsarna	# SALDO lång+nn_2u_sten
+parasaurolophus	u	parasaurolophus, parasaurolophusen	# hand (SAOL-mönster)
+velociraptor	u	velociraptor, velociraptorn	# hand (SAOL-mönster)
+kampfisk	u	kampfisk, kampfisken, kampfiskar, kampfiskarna	# SALDO kamp+nn_2u_sten
+klumpfisk	u	klumpfisk, klumpfisken, klumpfiskar, klumpfiskarna	# SALDO nn_2u_sten
+mandarinfisk	u	mandarinfisk, mandarinfisken, mandarinfiskar, mandarinfiskarna	# SALDO mandarin+nn_2u_sten
+papegojfisk	u	papegojfisk, papegojfisken, papegojfiskar, papegojfiskarna	# SALDO nn_2u_sten
+solfisk	u	solfisk, solfisken, solfiskar, solfiskarna	# SALDO sol+nn_2u_sten
+napoleonfisk	u	napoleonfisk, napoleonfisken, napoleonfiskar, napoleonfiskarna	# SALDO napoleon+nn_2u_sten
+kofisk	u	kofisk, kofisken, kofiskar, kofiskarna	# SALDO ko+nn_2u_sten
+trädmonster	n	trädmonster, trädmonstret, trädmonstren	# SALDO träd+nn_6n_foder
+oxe	u	oxe, oxen, oxar, oxarna	# SALDO nn_2u_vinge
+skimmel	u	skimmel, skimmeln, skimlar, skimlarna	# SALDO nn_2u_nyckel
+monstergroda	u	monstergroda, monstergrodan, monstergrodor, monstergrodorna	# SALDO monster+nn_1u_flicka
+monsterkatt	u	monsterkatt, monsterkatten, monsterkatter, monsterkatterna	# hand (SAOL-mönster)
+monsterhund	u	monsterhund, monsterhunden, monsterhundar, monsterhundarna	# SALDO monster+nn_2u_sten
+monsterduva	u	monsterduva, monsterduvan, monsterduvor, monsterduvorna	# SALDO monster+nn_1u_flicka
+alpackakung	u	alpackakung, alpackakungen, alpackakungar, alpackakungarna	# SALDO alpacka+nn_2u_mening
+jättebi	n	jättebi, jättebiet, jättebin, jättebina	# hand (SAOL-mönster)
+glubb	u	glubb, glubben, glubbar, glubbarna	# SALDO g+nn_2u_stol
+virvelvarelse	u	virvelvarelse, virvelvarelsen, virvelvarelser, virvelvarelserna	# SALDO virvel+nn_4u_linje
+geting	u	geting, getingen, getingar, getingarna	# SALDO nn_2u_stol
+valfisk	u	valfisk, valfisken, valfiskar, valfiskarna	# SALDO nn_2u_sten
+sjöborre	u	sjöborre, sjöborren, sjöborrar, sjöborrarna	# SALDO nn_2u_vinge
+fjärilsfisk	u	fjärilsfisk, fjärilsfisken, fjärilsfiskar, fjärilsfiskarna	# SALDO fjärils+nn_2u_sten
+neontetra	u	neontetra, neontetran, neontetror, neontetrorna	# SALDO neon+nn_1u_kamera
+snapper	u	snapper	# hand (SAOL-mönster)
+mussla	u	mussla, musslan, musslor, musslorna	# SALDO nn_1u_tavla
+utter	u	utter, uttern, uttrar, uttrarna	# SALDO nn_2u_nyckel
+svan	u	svan, svanen, svanar, svanarna	# SALDO nn_vu_svan
+abborre	u	abborre, abborren, abborrar, abborrarna	# SALDO nn_2u_vinge
+gädda	u	gädda, gäddan, gäddor, gäddorna	# SALDO nn_1u_flicka
+kräfta	u	kräfta, kräftan, kräftor, kräftorna	# SALDO nn_1u_flicka
+vattensalamander	u	vattensalamander, vattensalamandern, vattensalamandrar, vattensalamandrarna	# SALDO nn_2u_nyckel
+dingo	u	dingo, dingon, dingor, dingorna	# SALDO nn_4u_linje
+mullvad	u	mullvad, mullvaden, mullvadar, mullvadarna	# SALDO nn_2u_mening
+narval	u	narval, narvalen, narvalar, narvalarna	# SALDO nn_2u_mening
+vaktel	u	vaktel, vakteln, vaktlar, vaktlarna	# SALDO nn_2u_nyckel
+skorpion	u	skorpion, skorpionen, skorpioner, skorpionerna	# SALDO nn_3u_karbid
+mås	u	mås, måsen, måsar, måsarna	# SALDO nn_2u_sten
+fiskmås	u	fiskmås, fiskmåsen, fiskmåsar, fiskmåsarna	# SALDO nn_2u_sten
+pungdjävul	u	pungdjävul, pungdjävulen, pungdjävlar, pungdjävlarna	# hand (SAOL-mönster)
+kattbjörn	u	kattbjörn, kattbjörnen, kattbjörnar, kattbjörnarna	# SALDO katt+nn_2u_sten
+myrlejon	n	myrlejon, myrlejonet, myrlejonen	# SALDO nn_6n_bord
+bladlus	u	bladlus, bladlusen, bladlöss, bladlössen	# SALDO nn_6u_mus
+knäppare	u	knäppare, knäpparen, knäpparna	# SALDO nn_6u_kikare
+kackerlacka	u	kackerlacka, kackerlackan, kackerlackor, kackerlackorna	# SALDO nn_1u_flicka
+harkrank	u	harkrank, harkranken, harkrankar, harkrankarna	# SALDO nn_2u_mening
+dykarbagge	u	dykarbagge, dykarbaggen, dykarbaggar, dykarbaggarna	# SALDO nn_2u_vinge
+skalbagge	u	skalbagge, skalbaggen, skalbaggar, skalbaggarna	# SALDO nn_2u_ormbunke
+dyngbagge	u	dyngbagge, dyngbaggen, dyngbaggar, dyngbaggarna	# SALDO nn_2u_vinge
+tvestjärt	u	tvestjärt, tvestjärten, tvestjärtar, tvestjärtarna	# SALDO nn_2u_stol
+loppa	u	loppa, loppan, loppor, lopporna	# SALDO nn_1u_flicka
+vattenskinnbagge	u	vattenskinnbagge, vattenskinnbaggen, vattenskinnbaggar, vattenskinnbaggarna	# SALDO nn_2u_vinge
+giraffvivel	u	giraffvivel, giraffviveln, giraffvivlar, giraffvivlarna	# SALDO giraff+nn_2u_nyckel
+svärmare	u	svärmare, svärmaren, svärmarna	# SALDO nn_6u_kikare
+nattfjäril	u	nattfjäril, nattfjärilen, nattfjäriln, nattfjärilar, nattfjärilarna	# hand (SAOL-mönster)
+noshörningsbagge	u	noshörningsbagge, noshörningsbaggen, noshörningsbaggar, noshörningsbaggarna	# SALDO noshörnings+nn_2u_vinge
+blomfluga	u	blomfluga, blomflugan, blomflugor, blomflugorna	# SALDO blom+nn_1u_flicka
+fluga	u	fluga, flugan, flugor, flugorna	# SALDO nn_1u_flicka
+gräshoppa	u	gräshoppa, gräshoppan, gräshoppor, gräshopporna	# SALDO nn_1u_flicka
+vårtbitare	u	vårtbitare, vårtbitaren, vårtbitarna	# SALDO nn_6u_kikare
+guldögonslända	u	guldögonslända, guldögonsländan, guldögonsländor, guldögonsländorna	# SALDO guldögon+nn_1u_flicka
+myra	u	myra, myran, myror, myrorna	# SALDO nn_1u_flicka
+bladskräcka	u	bladskräcka, bladskräckan, bladskräckor, bladskräckorna	# SALDO bladsk+nn_1u_flicka
+dagslända	u	dagslända, dagsländan, dagsländor, dagsländorna	# SALDO nn_1u_skyltdocka
+mullvadssyrsa	u	mullvadssyrsa, mullvadssyrsan, mullvadssyrsor, mullvadssyrsorna	# SALDO nn_1u_flicka
+syrsa	u	syrsa, syrsan, syrsor, syrsorna	# SALDO nn_1u_flicka
+bönsyrsa	u	bönsyrsa, bönsyrsan, bönsyrsor, bönsyrsorna	# SALDO bön+nn_1u_flicka
+termit	u	termit, termiten, termiter, termiterna	# SALDO nn_3u_karbid
+pinnsyrsa	u	pinnsyrsa, pinnsyrsan, pinnsyrsor, pinnsyrsorna	# SALDO pinn+nn_1u_flicka
+fjäril	u	fjäril, fjärilen, fjäriln, fjärilar, fjärilarna	# hand (SAOL-mönster)
+makaonfjäril	u	makaonfjäril, makaonfjärilen, makaonfjäriln, makaonfjärilar, makaonfjärilarna	# hand (SAOL-mönster)
+sandjägare	u	sandjägare, sandjägaren, sandjägarna	# SALDO nn_6u_kikare
+sköldbagge	u	sköldbagge, sköldbaggen, sköldbaggar, sköldbaggarna	# SALDO sköld+nn_2u_vinge
+hornstrit	u	hornstrit, hornstriten, hornstritar, hornstritarna	# SALDO horn+nn_2u_stol
+skräddare	u	skräddare, skräddaren, skräddarna	# SALDO nn_6u_kikare
+mask	u	mask, masken, maskar, maskarna	# hand (SAOL-mönster)
+daggmask	u	daggmask, daggmasken, daggmaskar, daggmaskarna	# SALDO nn_2u_sten
+mamma	u	mamma, mamman, mammor, mammorna	# SALDO nn_1u_mamma
+pappa	u	pappa, pappan, pappor, papporna	# SALDO nn_1u_kamera
+lärare	u	lärare, läraren, lärarna	# SALDO nn_6u_kikare
+pojke	u	pojke, pojken, pojkar, pojkarna	# SALDO nn_2u_pojke
+kung	u	kung, kungen, kungar, kungarna	# SALDO nn_2u_mening
+cowboy	u	cowboy, cowboyen, cowboyer, cowboyerna	# hand (SAOL-mönster)
+byggarbetare	u	byggarbetare, byggarbetaren, byggarbetarna	# SALDO nn_6u_kikare
+arbetare	u	arbetare, arbetaren, arbetarna	# SALDO nn_6u_kikare
+pirat	u	pirat, piraten, pirater, piraterna	# SALDO nn_3u_karbid
+polis	u	polis, polisen, poliser, poliserna	# SALDO nn_3u_karbid
+farfar	u	farfar, farfadern, farfäder, farfäderna	# hand (SAOL-mönster)
+morfar	u	morfar, morfadern, morfäder, morfäderna	# hand (SAOL-mönster)
+chef	u	chef, chefen, chefer, cheferna	# SALDO nn_3u_tid
+bror	u	bror, brodern, brorn, bröder, bröderna	# hand (SAOL-mönster)
+kille	u	kille, killen, killar, killarna	# SALDO nn_2u_vinge
+syster	u	syster, systern, systrar, systrarna	# SALDO nn_2u_nyckel
+kompis	u	kompis, kompisen, kompisar, kompisarna	# SALDO nn_2u_sten
+sjörövare	u	sjörövare, sjörövaren, sjörövarna	# SALDO nn_6u_kikare
+scout	u	scout, scouten, scouter, scouterna	# SALDO nn_3u_film
+farbror	u	farbror, farbrodern, farbrorn, farbröder, farbröderna	# hand (SAOL-mönster)
+moster	u	moster, mostern, mostrar, mostrarna	# SALDO nn_2u_nyckel
+drottning	u	drottning, drottningen, drottningar, drottningarna	# hand (SAOL-mönster)
+bebis	u	bebis, bebisen, bebisar, bebisarna	# hand (SAOL-mönster)
