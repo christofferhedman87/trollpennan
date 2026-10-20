@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 682 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 730 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -30,27 +30,40 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kaykit-restaurant-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/restaurant-bits | 17 |
 | kaykit-rpg-tools-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/rpg-tools-bits | 25 |
 | kenney-blocky-characters | Kenney | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 13 |
-| kenney-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/car-kit | 19 |
+| kenney-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/car-kit | 20 |
 | kenney-castle-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/castle-kit | 2 |
+| kenney-city-kit-commercial | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-commercial | 5 |
+| kenney-city-kit-industrial | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-industrial | 3 |
+| kenney-city-kit-roads | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-roads | 4 |
 | kenney-city-kit-suburban | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-suburban | 2 |
+| kenney-coaster-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/coaster-kit | 2 |
 | kenney-cube-pets | Kenney | CC0-1.0 | https://kenney.nl/assets/cube-pets | 13 |
+| kenney-factory-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/factory-kit | 4 |
 | kenney-fantasy-town-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/fantasy-town-kit | 10 |
 | kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 68 |
 | kenney-food-kit-2 | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 15 |
 | kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 45 |
 | kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 6 |
 | kenney-holiday-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/holiday-kit | 15 |
+| kenney-mini-arcade | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-arcade | 6 |
+| kenney-mini-arena | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-arena | 1 |
+| kenney-mini-characters | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-characters | 3 |
 | kenney-mini-dungeon | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-dungeon | 11 |
 | kenney-mini-forest | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-forest | 4 |
 | kenney-mini-market-2 | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-market | 2 |
+| kenney-mini-skate | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-skate | 2 |
+| kenney-minigolf-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/minigolf-kit | 2 |
 | kenney-modular-cave-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/modular-cave-kit | 3 |
 | kenney-nature-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/nature-kit | 39 |
 | kenney-pirate-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/pirate-kit | 12 |
 | kenney-platformer-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/platformer-kit | 11 |
-| kenney-space-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/space-kit | 8 |
+| kenney-retro-urban-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/retro-urban-kit | 1 |
+| kenney-space-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/space-kit | 10 |
 | kenney-survival-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/survival-kit | 10 |
+| kenney-tower-defense-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/tower-defense-kit | 1 |
 | kenney-toy-car-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/toy-car-kit | 4 |
 | kenney-train-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/train-kit | 12 |
+| kenney-watercraft-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/watercraft-kit | 7 |
 | oga-cc0 | Teh_Bucket | CC0-1.0 | https://opengameart.org/content/hats-clothing-props | 7 |
 | polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 37 |
 | polypizza-cc0-2 | Quaternius | CC0-1.0 | https://poly.pizza/m/3aQgc75sUR | 16 |
@@ -67,7 +80,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | quaternius-ultimate-animated-animals | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimateanimatedanimals.html | 7 |
 | quaternius-ultimate-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimatemonsters.html | 11 |
 | trollpennan-egna-m14 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 3 |
-| trollpennan-mfix | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 20 |
+| trollpennan-mfix | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 24 |
 
 ## Alla modellfiler
 
@@ -756,3 +769,51 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | gitarr | /models/bulk/gitarr.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | kniv | /models/bulk/kniv.glb | CC0-1.0 | MilkAndBanana | https://poly.pizza/m/BKnBHbosy0 |
 | nallebjorn | /models/bulk/nallebjorn.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/furniture-kit |
+| gravmaskin | /models/bulk/gravmaskin.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/car-kit |
+| fiskebat | /models/bulk/fiskebat.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/watercraft-kit |
+| motorbat | /models/bulk/motorbat.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/watercraft-kit |
+| racerbat | /models/bulk/racerbat.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/watercraft-kit |
+| bogserbat | /models/bulk/bogserbat.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/watercraft-kit |
+| husbat | /models/bulk/husbat.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/watercraft-kit |
+| lastfartyg | /models/bulk/lastfartyg.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/watercraft-kit |
+| boj | /models/bulk/boj.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/watercraft-kit |
+| ufo | /models/bulk/ufo.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/tower-defense-kit |
+| parabol | /models/bulk/parabol.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/space-kit |
+| krater | /models/bulk/krater.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/space-kit |
+| skyskrapa | /models/bulk/skyskrapa.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-commercial |
+| kontor | /models/bulk/kontor.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-commercial |
+| hotell | /models/bulk/hotell.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-commercial |
+| affar | /models/bulk/affar.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-commercial |
+| fabrik | /models/bulk/fabrik.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-industrial |
+| skorsten | /models/bulk/skorsten.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-industrial |
+| solpanel | /models/bulk/solpanel.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-industrial |
+| kiosk | /models/bulk/kiosk.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/coaster-kit |
+| bajamaja | /models/bulk/bajamaja.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/coaster-kit |
+| parasoll | /models/bulk/parasoll.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-commercial |
+| rullstol | /models/bulk/rullstol.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-characters |
+| krycka | /models/bulk/krycka.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-characters |
+| kapp | /models/bulk/kapp.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-characters |
+| sparkcykel | /models/bulk/sparkcykel.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-skate |
+| ramp | /models/bulk/ramp.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-skate |
+| flipperspel | /models/bulk/flipperspel.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-arcade |
+| arkadspel | /models/bulk/arkadspel.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-arcade |
+| automat | /models/bulk/automat.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-arcade |
+| kassaapparat | /models/bulk/kassaapparat.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-arcade |
+| lyckohjul | /models/bulk/lyckohjul.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-arcade |
+| airhockey | /models/bulk/airhockey.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-arcade |
+| golfboll | /models/bulk/golfboll.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/minigolf-kit |
+| golfklubba | /models/bulk/golfklubba.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/minigolf-kit |
+| robotarm | /models/bulk/robotarm.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/factory-kit |
+| spak | /models/bulk/spak.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/factory-kit |
+| lyftkran | /models/bulk/lyftkran.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/factory-kit |
+| magnet | /models/bulk/magnet.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/factory-kit |
+| stoppskylt | /models/bulk/stoppskylt.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-roads |
+| varningsskylt | /models/bulk/varningsskylt.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-roads |
+| elstolpe | /models/bulk/elstolpe.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-roads |
+| trafikkon | /models/bulk/trafikkon.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-roads |
+| byggstallning | /models/bulk/byggstallning.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/retro-urban-kit |
+| fana | /models/bulk/fana.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-arena |
+| tjej | /models/bulk/tjej.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgad tröja och klosshatt: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| skejtare | /models/bulk/skejtare.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgad tröja och klosshatt: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| soldat | /models/bulk/soldat.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgad tröja och klosshatt: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| expedit | /models/bulk/expedit.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgad tröja och klosshatt: Trollpennan | https://kenney.nl/assets/blocky-characters |

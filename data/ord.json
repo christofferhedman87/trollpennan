@@ -6626,6 +6626,95 @@
    "del": {
     "kropp": "bebis"
    }
+  },
+  {
+   "id": "tjej",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "tjej",
+   "genus": "u",
+   "former": [
+    "tjej",
+    "tjejen",
+    "tjejer",
+    "tjejerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M15 trollpennan-mfix",
+   "del": {
+    "kropp": "tjej"
+   }
+  },
+  {
+   "id": "flicka",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "flicka",
+   "genus": "u",
+   "former": [
+    "flicka",
+    "flickan",
+    "flickor",
+    "flickorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M15 trollpennan-mfix",
+   "del": {
+    "kropp": "tjej"
+   }
+  },
+  {
+   "id": "skejtare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "skejtare",
+   "genus": "u",
+   "former": [
+    "skejtare",
+    "skejtaren",
+    "skejtarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M15 trollpennan-mfix",
+   "del": {
+    "kropp": "skejtare"
+   }
+  },
+  {
+   "id": "soldat",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "soldat",
+   "genus": "u",
+   "former": [
+    "soldat",
+    "soldaten",
+    "soldater",
+    "soldaterna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M15 trollpennan-mfix",
+   "del": {
+    "kropp": "soldat"
+   }
+  },
+  {
+   "id": "expedit",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "expedit",
+   "genus": "u",
+   "former": [
+    "expedit",
+    "expediten",
+    "expediter",
+    "expediterna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M15 trollpennan-mfix",
+   "del": {
+    "kropp": "expedit"
+   }
   }
  ],
  "kollisioner": {},

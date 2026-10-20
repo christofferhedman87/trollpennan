@@ -1977,6 +1977,36 @@
    "forsta": "B",
    "langd": 5,
    "granskad": false
+  },
+  "tjej": {
+   "gata": "Hon har tofsar i håret och leker gärna med sina kompisar.",
+   "forsta": "T",
+   "langd": 4,
+   "granskad": false
+  },
+  "flicka": {
+   "gata": "Hon har tofsar i håret och leker gärna med sina kompisar.",
+   "forsta": "F",
+   "langd": 6,
+   "granskad": false
+  },
+  "skejtare": {
+   "gata": "Han har keps och åker brädan upp och ner i rampen.",
+   "forsta": "S",
+   "langd": 8,
+   "granskad": false
+  },
+  "soldat": {
+   "gata": "Han har hjälm och uniform och marscherar i takt.",
+   "forsta": "S",
+   "langd": 6,
+   "granskad": false
+  },
+  "expedit": {
+   "gata": "Hon står bakom disken i affären och hjälper dig att betala.",
+   "forsta": "E",
+   "langd": 7,
+   "granskad": false
   }
  }
 }
