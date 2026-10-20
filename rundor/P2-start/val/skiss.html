@@ -1,0 +1,170 @@
+<!doctype html><html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=375">
+<style>
+@font-face{font-family:Fredoka;src:url(Fredoka-variable.ttf);font-weight:300 700}
+:root{--ink:#3b2f2f;--paper:#f6e7c8;--deep:#e4cfa4;--cream:#fff6e5;--moss:#3e8e5a;--mossd:#2d6a42;--berry:#c93a5a;--gold:#f2b632;--goldsoft:#f8e3a2;--sky:#8ecae6;--lilac:#6b4c9a}
+*{box-sizing:border-box}html,body{margin:0;width:375px;height:812px;overflow:hidden;font-family:Fredoka,sans-serif;color:var(--ink)}
+.v{position:relative;width:375px;height:812px;overflow:hidden;background:#7ec8f2 center/cover no-repeat}
+.lag{position:absolute;inset:0}
+button{font-family:inherit;color:inherit;border:0;cursor:pointer}
+/* gemensamt: HUD-topp */
+.top{position:absolute;top:10px;left:10px;right:10px;display:flex;align-items:center;gap:8px;z-index:5}
+.pill{min-height:44px;padding:0 14px;border-radius:999px;background:var(--cream);font-weight:700;font-size:18px;display:flex;align-items:center;gap:6px;box-shadow:0 4px 0 var(--deep)}
+.sq{width:48px;height:48px;border-radius:14px;background:var(--cream);display:grid;place-items:center;box-shadow:0 4px 0 var(--deep);font-size:22px}
+.vuxen{width:44px;height:44px;border-radius:50%;background:rgba(255,246,229,.85);display:grid;place-items:center;font-size:12px;font-weight:700;line-height:1;box-shadow:0 3px 0 var(--deep)}
+.sp{flex:1}
+.ikon-penna{display:inline-block;width:12px;height:34px;border-radius:6px 6px 2px 2px;background:linear-gradient(#f48fb1 0 70%,var(--gold) 70%);transform:rotate(28deg)}
+.portratt{width:46px;height:46px;border-radius:50%;background:#f3d9b8 url(glad.webp) no-repeat;background-size:150px auto;background-position:50% 6%;border:3px solid var(--gold);flex:none}
+/* logga */
+.logga{font-weight:700;font-size:54px;letter-spacing:.5px;color:var(--berry);-webkit-text-stroke:2px #fff6e5;paint-order:stroke fill;text-shadow:0 5px 0 #8a2338,0 9px 14px rgba(0,0,0,.25);line-height:1;text-align:center}
+.under{font-size:20px;font-weight:600;text-align:center}
+/* tangentbord */
+.tb{background:#efe1c2;padding:8px 4px 10px;border-radius:16px 16px 0 0;display:grid;gap:7px}
+.rad{display:flex;gap:3px;justify-content:center}
+.k{width:30px;height:46px;border-radius:8px;background:#fffaf0;box-shadow:0 2px 0 #cdb88d;display:grid;place-items:center;font-size:20px;font-weight:600}
+.k.dim{opacity:.55}.k.nasta{background:var(--gold);box-shadow:0 0 0 4px #fff3,0 0 18px 6px #f2b632cc;transform:scale(1.12);font-weight:700}
+.k.bred{width:52px}.k.mell{width:220px;font-size:16px}
+/* ordrutor */
+.rutor{display:flex;gap:8px;justify-content:center}
+.ruta{width:56px;height:66px;border-radius:12px;background:#fff;border:3px solid var(--deep);display:grid;place-items:center;font-size:38px;font-weight:700}
+.ruta.klar{border-color:var(--moss);color:var(--mossd)}.ruta.nu{border-color:var(--gold);box-shadow:0 0 0 4px #f2b63255}
+.etikett{display:none;position:absolute;left:0;right:0;bottom:0;padding:4px 8px;background:#000a;color:#fff;font:600 12px Fredoka;text-align:center;z-index:50}
+</style></head><body><div id="rot"></div>
+<script>
+const q=new URLSearchParams(location.search),V=q.get("v")||"A",S=q.get("s")||"titel";
+const TB=(nasta,dimAll)=>{const r=["qwertyuiopå","asdfghjklöä","zxcvbnm"];return `<div class="tb">${r.map((x,i)=>`<div class="rad">${[...x].map(c=>`<div class="k ${c===nasta?"nasta":(dimAll&&c!==nasta?"dim":"")}">${c}</div>`).join("")}${i===2?'<div class="k bred">⌫</div>':""}</div>`).join("")}<div class="rad"><div class="k mell">mellanslag</div></div></div>`};
+const RUTOR=(n)=>`<div class="rutor">${["k","a","t","t"].map((c,i)=>`<div class="ruta ${i<n?"klar":i===n?"nu":""}">${i<n?c:""}</div>`).join("")}</div>`;
+const hudTop=(stj=0,vux=true)=>`<div class="top"><div class="pill">★ ${stj}</div><div class="sp"></div>${vux?'<div class="vuxen" title="För vuxna">🔒</div>':""}<div class="sq">☰</div></div>`;
+const H={};
+/* ============ A: Ängen lever ============ */
+H.A={
+titel:`<div class="v" style="background-image:url(dag-katt.png)">
+ <div class="lag" style="background:linear-gradient(180deg,rgba(255,246,229,.0) 0,rgba(255,246,229,0) 40%,rgba(246,231,200,.92) 66%,#f6e7c8 80%)"></div>
+ <div class="lag" style="top:96px;display:grid;justify-items:center;align-content:start;gap:10px;height:200px">
+   <div style="display:flex;align-items:center;gap:12px"><span class="ikon-penna" style="height:52px;width:16px"></span><div class="logga" style="font-size:50px">Trollpennan</div></div>
+   <div class="under" style="background:#fff6e5dd;padding:4px 14px;border-radius:999px">Det du skriver vaknar.</div>
+ </div>
+ <div class="lag" style="top:auto;bottom:34px;padding:0 22px;display:grid;gap:14px">
+   <button style="min-height:96px;border-radius:24px;background:var(--berry);color:#fff;box-shadow:0 6px 0 #8a2338;display:grid;gap:2px;padding:12px 18px;text-align:left">
+     <span style="font-size:30px;font-weight:700">Fortsätt ▸</span>
+     <span style="font-size:16px;font-weight:500;opacity:.95">Senast väckte du en grå katt. Den sover vid dammen.</span></button>
+   <div style="display:flex;gap:12px;align-items:center">
+     <button style="flex:1;min-height:56px;border-radius:18px;background:var(--cream);border:3px solid var(--deep);font-size:19px;font-weight:600">Ny värld</button>
+     <button style="width:56px;height:56px;border-radius:18px;background:var(--cream);border:3px solid var(--deep);font-size:22px" aria-label="Ljud">🔊</button>
+   </div>
+   <div style="text-align:center;font-size:14px;opacity:.75">Vuxen? Inställningar finns bakom 🔒 i spelet.</div>
+ </div>
+ <div class="etikett">Förslag A · Titelskärm · levande äng (riktig 3D-scen bakom)</div></div>`,
+skriv:`<div class="v" style="background-image:url(dag-tom.png)">
+ <div class="lag" style="background:rgba(30,40,60,.18)"></div>
+ <div style="position:absolute;top:70px;left:16px;right:16px;display:flex;gap:10px;align-items:flex-start;z-index:3">
+   <span class="ikon-penna" style="margin-top:8px;height:44px;width:14px;flex:none"></span>
+   <div style="background:var(--cream);border-radius:20px;padding:12px 16px;font-size:21px;font-weight:600;box-shadow:0 4px 0 var(--deep)">Nu är det din tur!<br>Skriv <b style="letter-spacing:2px">katt</b>.</div>
+   <button style="flex:none;width:48px;height:48px;border-radius:50%;background:var(--cream);box-shadow:0 3px 0 var(--deep);font-size:20px">🔊</button>
+ </div>
+ <div style="position:absolute;top:212px;left:0;right:0;text-align:center;z-index:3"><div style="display:inline-block;padding:4px 14px;border-radius:999px;background:#fff6e5cc;font-size:15px;font-weight:600">Varje bokstav säger sitt ljud</div></div>
+ <div style="position:absolute;left:0;right:0;bottom:0;background:var(--paper);border-radius:24px 24px 0 0;box-shadow:0 -6px 20px #0003;padding:16px 8px 0;display:grid;gap:12px">
+   ${RUTOR(3)}
+   <div style="display:flex;gap:10px;padding:0 14px"><button style="flex:1;min-height:52px;border-radius:16px;background:#d9c7a3;color:#7a6a55;font-size:22px;font-weight:700">Vakna!</button><button style="min-height:52px;padding:0 14px;border-radius:16px;background:var(--cream);border:3px solid var(--deep);font-size:16px;font-weight:600">Hjälp mig</button></div>
+   ${TB("t",false)}
+ </div>
+ <div class="etikett">A · Introts slut: barnet skriver K-A-T-T (nästa bokstav lyser, ljudet hörs)</div></div>`,
+guide:`<div class="v" style="background-image:url(dag-katt.png)">
+ ${hudTop(1)}
+ <div style="position:absolute;top:70px;left:16px;right:16px;display:flex;gap:10px;align-items:flex-start;z-index:3">
+   <span class="ikon-penna" style="margin-top:8px;height:44px;width:14px;flex:none"></span>
+   <div style="background:var(--cream);border-radius:20px;padding:10px 14px;font-size:19px;font-weight:600;box-shadow:0 4px 0 var(--deep)">Katten vaknade! 🎉<br>Bengtsson vill be dig om något.</div>
+ </div>
+ <div style="position:absolute;left:12px;right:12px;bottom:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px;z-index:4">
+   <button style="min-height:76px;border-radius:22px;background:var(--cream);box-shadow:0 5px 0 var(--deep);display:flex;align-items:center;gap:10px;padding:0 12px;font-size:20px;font-weight:700;outline:5px solid var(--gold);outline-offset:3px"><span class="portratt"></span>Uppdrag</button>
+   <button style="min-height:76px;border-radius:22px;background:var(--berry);color:#fff;box-shadow:0 5px 0 #8a2338;display:flex;align-items:center;justify-content:center;gap:12px;font-size:22px;font-weight:700"><span class="ikon-penna" style="height:30px;width:10px"></span>Skriv</button>
+ </div>
+ <div style="position:absolute;left:70px;bottom:118px;z-index:6;font-size:44px;filter:drop-shadow(0 3px 0 #8a6b12)">👇</div>
+ <div style="position:absolute;left:4px;bottom:6px;width:190px;height:100px;border-radius:30px;border:4px solid #f2b632aa;z-index:3;box-shadow:0 0 24px 8px #f2b63277"></div>
+ <div class="etikett">A · Guiden: pil + gyllene ring på nästa steg · nedre rad: Uppdrag och Skriv lika stora</div></div>`
+};
+/* ============ B: Sagoboken ============ */
+H.B={
+titel:`<div class="v" style="background-image:url(1.jpg)">
+ <div class="lag" style="background:linear-gradient(180deg,rgba(20,24,70,.35),rgba(20,24,70,0) 40%,rgba(20,30,20,.0) 60%,rgba(20,24,40,.55))"></div>
+ <div class="lag" style="top:300px;display:grid;justify-items:center;gap:8px;height:150px">
+   <div class="logga" style="font-size:58px;color:#f8e3a2;-webkit-text-stroke:2px #3b2a6b;text-shadow:0 5px 0 #3b2a6b,0 0 26px #f2b632aa">Trollpennan</div>
+   <div class="under" style="color:#fff6e5;text-shadow:0 2px 6px #000a">Det du skriver vaknar.</div>
+ </div>
+ <div class="lag" style="top:auto;bottom:40px;padding:0 30px;display:grid;gap:14px">
+   <button style="min-height:92px;border-radius:14px;background:var(--cream) ;box-shadow:0 6px 0 #b8975c,0 0 0 3px #e9c46a inset;display:grid;gap:2px;padding:12px 18px;text-align:center">
+     <span style="font-size:28px;font-weight:700;color:var(--lilac)">📖 Fortsätt sagan</span>
+     <span style="font-size:16px;font-weight:500">Kapitel 3: den grå katten sover</span></button>
+   <button style="min-height:52px;border-radius:14px;background:#fff6e5cc;font-size:18px;font-weight:600">✦ Börja en ny saga</button>
+ </div>
+ <div class="etikett">Förslag B · Titelskärm · tecknad sagobild (befintlig introbild 1.jpg)</div></div>`,
+skriv:`<div class="v" style="background-image:url(1.jpg)">
+ <div class="lag" style="background:rgba(20,24,70,.25)"></div>
+ <div style="position:absolute;top:60px;left:22px;right:22px;z-index:3;background:var(--cream);border-radius:14px;padding:14px 16px;box-shadow:0 6px 0 #b8975c,0 0 0 3px #e9c46a inset;text-align:center">
+   <div style="font-size:15px;color:var(--lilac);font-weight:600">✦ Pennan viskar ✦</div>
+   <div style="font-size:24px;font-weight:600;margin-top:4px">Skriv ordet så vaknar det:</div>
+   <div style="font-size:44px;font-weight:700;letter-spacing:10px;margin-top:4px;color:var(--lilac)">KATT</div>
+ </div>
+ <div style="position:absolute;left:0;right:0;bottom:0;background:#fbf3df;border-radius:24px 24px 0 0;padding:16px 8px 0;display:grid;gap:12px;border-top:4px solid #e9c46a">
+   ${RUTOR(2)}
+   <div style="text-align:center;font-size:16px;font-weight:600;color:var(--lilac)">🔊 tt – som i <i>katt</i></div>
+   ${TB("t",true)}
+ </div>
+ <div class="etikett">B · Introts slut: ordet visas som förebild, övriga tangenter dämpade</div></div>`,
+guide:`<div class="v" style="background-image:url(dag-katt.png)">
+ ${hudTop(1)}
+ <div class="lag" style="z-index:4;background:radial-gradient(circle 70px at 60px 735px,transparent 64px,rgba(20,20,40,.62) 70px)"></div>
+ <div style="position:absolute;left:0;right:0;bottom:0;height:110px;display:flex;align-items:flex-end;justify-content:space-around;padding:0 10px 14px;z-index:3;background:linear-gradient(transparent,#0002)">
+   <button style="width:96px;display:grid;justify-items:center;gap:2px;background:none;font-size:15px;font-weight:700;color:#fff;text-shadow:0 2px 3px #000a"><span class="portratt" style="width:64px;height:64px;background-size:200px auto"></span>Bengtsson</button>
+   <button style="width:112px;height:112px;border-radius:50%;background:var(--berry);color:#fff;box-shadow:0 6px 0 #8a2338;display:grid;place-items:center;font-size:20px;font-weight:700;margin-bottom:6px"><span><span class="ikon-penna" style="height:34px;width:12px"></span><br>Skriv</span></button>
+   <button style="width:96px;display:grid;justify-items:center;gap:2px;background:none;font-size:15px;font-weight:700;color:#fff;text-shadow:0 2px 3px #000a"><span style="width:64px;height:64px;border-radius:50%;background:var(--cream);display:grid;place-items:center;font-size:30px;border:3px solid var(--deep)">🗺️</span>Karta</button>
+ </div>
+ <div style="position:absolute;top:300px;left:22px;right:22px;z-index:6;background:var(--cream);border-radius:14px;padding:14px 16px;box-shadow:0 6px 0 #b8975c,0 0 0 3px #e9c46a inset">
+   <div style="display:flex;gap:6px;margin-bottom:8px">${[1,2,3,4,5].map(i=>`<span style="flex:1;height:8px;border-radius:4px;background:${i<=2?"var(--lilac)":"#e4d7f0"}"></span>`).join("")}</div>
+   <div style="font-size:15px;color:var(--lilac);font-weight:600">Steg 2 av 5</div>
+   <div style="font-size:22px;font-weight:600;line-height:1.25">Bengtsson behöver hjälp. Tryck på honom!</div>
+   <div style="display:flex;gap:8px;margin-top:10px"><button style="min-height:44px;padding:0 14px;border-radius:12px;background:var(--lilac);color:#fff;font-size:16px;font-weight:600">🔊 Hör</button></div>
+ </div>
+ <div class="etikett">B · Guiden: strålkastare + sagokort "Steg 2 av 5" · nedre rad: stor rund Skriv i mitten</div></div>`
+};
+/* ============ C: Pennan visar vägen ============ */
+const PENNA=(x,y,r=-35,s=1)=>`<div style="position:absolute;left:${x}px;top:${y}px;z-index:8;transform:rotate(${r}deg) scale(${s});filter:drop-shadow(0 4px 2px #0004)"><div style="width:22px;height:96px;border-radius:11px 11px 3px 3px;background:linear-gradient(90deg,#8b5fbf,#6b4c9a 60%,#4e3577);position:relative"><div style="position:absolute;left:3px;right:3px;top:58px;height:6px;background:var(--gold);border-radius:2px"></div></div><div style="width:0;height:0;margin:0 auto;border-left:11px solid transparent;border-right:11px solid transparent;border-top:24px solid #e8c46a"></div><div style="position:absolute;left:8px;bottom:-4px;width:6px;height:10px;border-radius:2px;background:#3b2f2f"></div></div>`;
+const GNISTOR=(pts)=>pts.map(([x,y,s])=>`<div style="position:absolute;left:${x}px;top:${y}px;z-index:7;color:#ffe48a;font-size:${s}px;text-shadow:0 0 8px #f2b632">✦</div>`).join("");
+H.C={
+titel:`<div class="v" style="background-image:url(dag-katt.png);filter:none">
+ <div class="lag" style="background:linear-gradient(180deg,rgba(255,180,120,.28),rgba(120,80,160,.22) 55%,rgba(30,20,50,.55))"></div>
+ <div class="lag" style="top:120px;display:grid;justify-items:center;gap:6px;height:150px;z-index:3">
+   <div class="logga" style="font-size:56px;color:#fff6e5;-webkit-text-stroke:2px var(--lilac);text-shadow:0 5px 0 var(--lilac),0 0 24px #f2b632">Trollpennan</div>
+ </div>
+ ${PENNA(296,52,30,.9)}${GNISTOR([[60,196,18],[110,208,12],[170,214,16],[230,206,12],[278,190,20],[300,160,14]])}
+ <div class="lag" style="top:auto;bottom:30px;padding:0 20px;display:grid;gap:12px;z-index:3">
+   <button style="min-height:104px;border-radius:24px;background:var(--cream);box-shadow:0 6px 0 var(--deep);display:flex;align-items:center;gap:14px;padding:10px 14px;text-align:left">
+     <span style="width:76px;height:76px;border-radius:18px;background:url(dag-katt.png) -232px -588px/520px auto;border:3px solid var(--gold);flex:none"></span>
+     <span style="display:grid;gap:2px"><span style="font-size:28px;font-weight:700;color:var(--berry)">Fortsätt ▸</span><span style="font-size:16px">Katten och kaninen väntar på dig.</span></span></button>
+   <button style="min-height:52px;border-radius:18px;background:transparent;border:3px solid #fff6e5cc;color:#fff6e5;font-size:18px;font-weight:600">Ny värld</button>
+ </div>
+ <div class="etikett">Förslag C · Titelskärm · skymning, pennan skriver loggan, kort med sista djuret</div></div>`,
+skriv:`<div class="v" style="background-image:url(dag-tom.png)">
+ <div class="lag" style="background:rgba(30,40,60,.18)"></div>
+ ${PENNA(250,250,22,.75)}${GNISTOR([[150,300,14],[190,320,18],[226,316,12]])}
+ <div style="position:absolute;top:70px;left:16px;right:16px;z-index:3;text-align:center"><div style="display:inline-block;background:var(--cream);border-radius:20px;padding:12px 18px;font-size:21px;font-weight:600;box-shadow:0 4px 0 var(--deep)">Hjälp mig att skriva <b>katt</b>!<br><span style="font-size:16px;font-weight:500">k – a – tt</span></div></div>
+ <div style="position:absolute;left:0;right:0;bottom:0;background:var(--paper);border-radius:24px 24px 0 0;padding:16px 8px 0;display:grid;gap:12px">
+   ${RUTOR(1)}
+   ${TB("a",false)}
+ </div>
+ <div class="etikett">C · Introts slut: pennan (en figur) väntar på bokstäverna, ljuden k–a–tt</div></div>`,
+guide:`<div class="v" style="background-image:url(dag-katt.png)">
+ ${hudTop(1,true)}
+ <div style="position:absolute;top:66px;left:10px;z-index:4;background:#fff6e5ee;border-radius:16px;padding:8px 12px;box-shadow:0 3px 0 var(--deep);font-size:15px;font-weight:600;display:grid;gap:4px;width:190px">
+   <div style="font-size:13px;color:var(--lilac)">FÖRSTA STUNDEN</div>
+   <div>✅ <s>Väck ett djur</s></div><div>⭐ Hjälp Bengtsson</div><div style="opacity:.6">○ Väck tre djur</div><div style="opacity:.6">○ Hitta grinden</div>
+ </div>
+ ${PENNA(36,560,200,.7)}${GNISTOR([[96,540,14],[70,520,18]])}
+ <div style="position:absolute;left:120px;top:540px;z-index:6;background:var(--cream);border-radius:16px;padding:8px 12px;font-size:17px;font-weight:600;box-shadow:0 3px 0 var(--deep);max-width:200px">Bengtsson vill be dig om något!</div>
+ <div style="position:absolute;left:10px;right:10px;bottom:16px;display:flex;gap:10px;z-index:4">
+   <button style="width:92px;min-height:80px;border-radius:22px;background:var(--cream);box-shadow:0 5px 0 var(--deep);display:grid;justify-items:center;align-content:center;gap:2px;font-size:14px;font-weight:700"><span class="portratt" style="width:44px;height:44px"></span>Uppdrag</button>
+   <button style="flex:1;min-height:80px;border-radius:22px;background:var(--berry);color:#fff;box-shadow:0 5px 0 #8a2338;display:flex;align-items:center;justify-content:center;gap:12px;font-size:24px;font-weight:700"><span class="ikon-penna" style="height:32px;width:11px"></span>Skriv</button>
+ </div>
+ <div class="etikett">C · Guiden: pennan flyger och pekar + checklista · nedre rad: Uppdrag liten, Skriv stor</div></div>`
+};
+document.getElementById("rot").innerHTML=H[V][S];
+</script></body></html>
