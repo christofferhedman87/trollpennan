@@ -1663,10 +1663,10 @@ index 0000000..9206ab7
 +});
 diff --git a/src/spel/placering.ts b/src/spel/placering.ts
 new file mode 100644
-index 0000000..578ef52
+index 0000000..4daf44b
 --- /dev/null
 +++ b/src/spel/placering.ts
-@@ -0,0 +1,382 @@
+@@ -0,0 +1,390 @@
 +// P3a: EN placeringsregel för alla platser. Ren logik (ingen three), testas i Node. Data: data/placering.json.
 +//  - Varje plats har band per roll (mark, vatten, luft, bak), delade i rutor. Rollen kommer ur saken: simmare på vattnet,
 +//    flygare i luften, stora saker (storlek.json zon "bak") i det bakre bandet, resten på marken.
@@ -1971,10 +1971,18 @@ index 0000000..578ef52
 +        }
 +      }
 +    }
-+    // den nya får alltid en ruta: ryms den inte i bild ens på en tom plats (för stor) ritas den mindre, ned till krymp_min
-+    for (let k = 0.9; nr === 0 && !fynd && k >= (P.krymp_min ?? 0.6) - 1e-9; k -= 0.1) {
-+      const f = sok(skalad(k), false).fri;
-+      if (f) [fynd, krymp] = [f, Math.round(k * 100) / 100];
++    // den nya får alltid en ruta: ryms den inte i full storlek ritas den mindre, ned till krymp_min – och då i den storlek
++    // som ger den främsta rutan (Arkitekten: den nyaste står främst; torrkörning 3: elefanten tog 80 % på z 1,05 och
++    // katten och grisen hamnade framför den, med 60 % står den på z 3,45 längst fram)
++    for (let k = 0.9; nr === 0 && krymp === 1 && !fynd && k >= (P.krymp_min ?? 0.6) - 1e-9; k -= 0.1) {
++      let basta: Fynd | null = null;
++      let bk = 1;
++      for (let k2 = k; k2 >= (P.krymp_min ?? 0.6) - 1e-9; k2 -= 0.1) {
++        const f = sok(skalad(k2), false).fri;
++        if (f && (!basta || f.lage.z > basta.lage.z + 1e-9)) [basta, bk] = [f, Math.round(k2 * 100) / 100];
++      }
++      if (basta) [fynd, krymp] = [basta, bk];
++      break;
 +    }
 +    if (!fynd) {
 +      const st = minsta.stall;

@@ -185,13 +185,22 @@ async function platsProv(plats, namn, kroppar) {
   const st = await p.evaluate(() => JSON.parse(localStorage.getItem("trollpennan-v2") ?? "{}"));
   const lista = plats === "ang" ? (st.ang ?? []) : (st.platsSkapelser?.[plats] ?? []);
   const { syn, pos } = await p.evaluate(() => ({ syn: window.__tredSyn ?? {}, pos: window.__tredPos ?? {} }));
-  const npc = await p.locator("[data-testid=npc-figur]").first().boundingBox().catch(() => null);
+  // Bengtsson hoppar (.npc-figur.nytt: translateY upp till −8 px). Figurens ruta = layoutrutan utan hoppet (det är den
+  // data/placering.json beskriver: left 4, bottom 74, höjd 30vh); för skymningen räknas hoppet med (8 px uppåt).
+  const npc = await p.evaluate(() => {
+    const el = document.querySelector("[data-testid=npc-figur]");
+    if (!el) return null;
+    const r = el.getBoundingClientRect();
+    const t = getComputedStyle(el).transform;
+    const m = t && t !== "none" ? new DOMMatrixReadOnly(t) : null;
+    return { x: r.x - (m?.m41 ?? 0), y: r.y - (m?.m42 ?? 0), width: r.width, height: r.height, hopp: 8 };
+  }).catch(() => null);
   await bild(p, `p3-08-${plats}-${namn}.png`);
   await ctx.close();
   const ny = [...lista].sort((a, b) => b.skapad - a.skapad)[0];
   const kvar = lista.filter((d) => syn[d.uid] && syn[d.uid].mesh > 0 && pos[d.uid]);
   const fasta = (PLAC.platser[plats]?.fasta ?? []).map((f) => ({ k: `fast:${f.namn}`, z: f.z, r: fastRuta(f), plan: !!f.plan }));
-  const reserv = RESERVERAT.filter((r) => r.namn !== "bengtsson" || !npc).concat(npc ? [{ namn: "bengtsson", x: npc.x + npc.width * 0.18, y: npc.y, w: npc.width * 0.64, h: npc.height }] : []);
+  const reserv = RESERVERAT.filter((r) => r.namn !== "bengtsson" || !npc).concat(npc ? [{ namn: "bengtsson", x: npc.x + npc.width * 0.18, y: npc.y - npc.hopp, w: npc.width * 0.64, h: npc.height + npc.hopp }] : []);
   const saker = kvar.map((d) => ({ k: d.kropp, uid: d.uid, z: pos[d.uid].z, r: syn[d.uid], sim: !!pos[d.uid].sim, flyg: !!pos[d.uid].flyg, y: pos[d.uid].y ?? 0 }));
   const andel = [];
   const ordning = [...lista].sort((a, b) => b.skapad - a.skapad).map((d) => d.uid);

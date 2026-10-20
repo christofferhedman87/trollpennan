@@ -270,3 +270,26 @@ De gamla siffrorna (5–8) byggde på rutor som var för små. **Kravet nås int
 
 Med (a)+(b)+(c): ängen 6 8 7 7 5 8 och sjön 5 8 8 7 3 8. Allt nås utom bara jättar vid sjön (3). Med bara (a)+(b):
 ängen 6 8 7 7 5 8 och sjön 3 8 8 5 2 7. Med bara (c): sjön 6 8 8 6 3 7, men ängen är oförändrad (4 … 7).
+
+### Torrkörning 3 (main ee801d8, 21:08, exit 4) och vad som lagades efter
+
+- **Synligheten stämmer nu.** 0 av 13 synlighets- och huvudfel från torrkörning 2 är kvar. Kapaciteten i webbläsaren är
+  exakt regelns tal (ängen 4 / 2 / 7, sjön 4 / 4 / 3), så förutsägelsen håller.
+- **C elefanten:** den nya elefanten fick 80 % på z 1,04, och katten (äldre) stod framför den. Orsaken var att regeln
+  tog den största storleken som rymdes någonstans, inte den främsta rutan. Lagat: ryms den nya inte i full storlek väljs
+  den storlek (0,9 … krymp_min) som ger **den främsta** rutan. Elefanten står nu på z 3,6 med 60 %, och alla fem är
+  vakna (räknat i regeln).
+- **P Bengtsson-rutan:** figuren hoppar (.npc-figur.nytt, translateY upp till −8 px). Provet mätte den hoppande
+  figuren: underkanten 731,4 mot datans 738, 6,6 px. Lagat i provet: layoutrutan mäts utan transform (det är den datan
+  beskriver), och för skymningen räknas hoppet med (8 px uppåt).
+- Kvar: kapaciteten (se 20:40, minsta beslut). b66 och den andra regressionen kördes inte, för kor.sh stannar vid
+  p3-prov.
+
+Kapacitet efter lagningen av C (räknat i regeln):
+
+| plats | fro11 | fro2026 | fro4242 | blandad | bara jättar | 8 katter |
+|---|---|---|---|---|---|---|
+| ängen | 4 | 8 | 6 | 6 | 4 | 7 |
+| sjön | 4 | 7 | 8 | 4 | 3 | 8 |
+| skogen | 8 | 7 | 8 | 8 | 5 | 8 |
+| grottan | 8 | 7 | 8 | 7 | 2 | 8 |
