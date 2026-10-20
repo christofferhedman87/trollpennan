@@ -6282,8 +6282,8 @@
    "n": -16
   },
   "4113b1d6": {
-   "f": "/ljud/rost/2928d1497dfa1b85.mp3",
-   "ms": 7523,
+   "f": "/ljud/rost/57f79ae04e2e337b.mp3",
+   "ms": 7131,
    "r": "bengtsson",
    "id": "skyltar.json:.skyltar[].text_bengtsson",
    "t": "Ekorren har tappat sin silverkotte bland svamparna. Kan du hitta den och lägga den vid stubben? /Doktor Bengtsson",
@@ -6706,8 +6706,8 @@
    "n": -16
   },
   "45c0c436": {
-   "f": "/ljud/rost/121b24e01bb16503.mp3",
-   "ms": 6766,
+   "f": "/ljud/rost/9ed957146d58f6bf.mp3",
+   "ms": 6269,
    "r": "bengtsson",
    "id": "uppdrag.json:hitta-kotte.text",
    "t": "Hoppsan! Ekorren har tappat sin silverkotte och är ledsen. Kan du leta efter den bland svamparna?",
@@ -15330,7 +15330,7 @@
    "n": -16
   },
   "b09621df": {
-   "f": "/ljud/rost/999e4d52670741f8.mp3",
+   "f": "/ljud/rost/54021f97d82d2b9b.mp3",
    "ms": 3892,
    "r": "bengtsson",
    "id": "uppdrag.json:hitta-kotte.klart",
@@ -16082,8 +16082,8 @@
    "n": -16
   },
   "b86d70b6": {
-   "f": "/ljud/rost/0d0058a010c1ecd8.mp3",
-   "ms": 6635,
+   "f": "/ljud/rost/9fb2ca948bb785b4.mp3",
+   "ms": 7288,
    "r": "bengtsson",
    "id": "npc.json:bengtsson.bara_aventyr",
    "t": "Här på ängen har jag inga fler uppdrag just nu. Ute på äventyret väntar fler. Titta i Uppdragsboken!",
@@ -18778,8 +18778,8 @@
    "n": -16
   },
   "d95dedfa": {
-   "f": "/ljud/rost/11aa0d5b44c67690.mp3",
-   "ms": 9691,
+   "f": "/ljud/rost/8b3afcaa05f6c304.mp3",
+   "ms": 12356,
    "r": "pennan",
    "id": "skyltar.json:.skyltar[].text",
    "t": "Jag har tappat min fina silverkotte någonstans bland svamparna. Om du hittar den, lägg den vid stubben. /Ekorren",
