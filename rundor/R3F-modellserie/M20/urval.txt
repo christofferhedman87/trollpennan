@@ -1,0 +1,24 @@
+# R3F-M20 (dubblingen, kök): 23 saker, alla CC0. 22 egna lågpolymodeller (svarvade) och KayKit Furniture Bits table-medium som matbord. Format: paket/filnamn.
+trollpennan-kok-m20/tekanna-egen.glb
+trollpennan-kok-m20/kaffekanna-egen.glb
+trollpennan-kok-m20/tekopp-egen.glb
+trollpennan-kok-m20/termos-egen.glb
+trollpennan-kok-m20/slev-egen.glb
+trollpennan-kok-m20/durkslag-egen.glb
+trollpennan-kok-m20/ugnsvante-egen.glb
+trollpennan-kok-m20/forklade-egen.glb
+trollpennan-kok-m20/saltkar-egen.glb
+trollpennan-kok-m20/pepparkvarn-egen.glb
+trollpennan-kok-m20/aggkopp-egen.glb
+trollpennan-kok-m20/brodkorg-egen.glb
+trollpennan-kok-m20/kakburk-egen.glb
+trollpennan-kok-m20/wok-egen.glb
+trollpennan-kok-m20/mortel-egen.glb
+trollpennan-kok-m20/mjolkpaket-egen.glb
+trollpennan-kok-m20/fruktskal-egen.glb
+trollpennan-kok-m20/tartfat-egen.glb
+trollpennan-kok-m20/sockerskal-egen.glb
+trollpennan-kok-m20/pizzaskarare-egen.glb
+trollpennan-kok-m20/glasskal-egen.glb
+trollpennan-kok-m20/aggklocka-egen.glb
+kaykit-furniture-bits/table-medium.glb

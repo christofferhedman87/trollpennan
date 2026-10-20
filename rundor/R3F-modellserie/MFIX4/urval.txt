@@ -1,0 +1,7 @@
+trollpennan-mfix4/fjallrav-egen.glb
+trollpennan-mfix4/bjorn-egen.glb
+trollpennan-mfix4/hamster-egen.glb
+trollpennan-mfix4/marsvin-egen.glb
+trollpennan-mfix4/fenix-egen.glb
+trollpennan-mfix4/sjoorm-egen.glb
+trollpennan-mfix3/narval-gobkit.glb

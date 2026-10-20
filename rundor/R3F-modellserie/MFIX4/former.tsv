@@ -1,0 +1,10 @@
+# R3F-MFIX4: samma granskade former som i data/ord.json.
+ord	genus	former	# källa
+björn	u	björn, björnen, björnar, björnarna	# SALDO nn_2u_sten
+hamster	u	hamster, hamstern, hamstrar, hamstrarna	# SALDO nn_2u_nyckel
+marsvin	n	marsvin, marsvinet, marsvinen	# SALDO nn_6n_bord
+fjällräv	u	fjällräv, fjällräven, fjällrävar, fjällrävarna	# SALDO nn_2u_stol
+polarräv	u	polarräv, polarräven, polarrävar, polarrävarna	# SALDO nn_2u_stol
+sjöorm	u	sjöorm, sjöormen, sjöormar, sjöormarna	# SALDO nn_2u_stol
+fenix	u	fenix, fenixen	# hand (plural osäker, utelämnad)
+narval	u	narval, narvalen, narvalar, narvalarna	# som i data/ord.json
