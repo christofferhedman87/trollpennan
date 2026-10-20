@@ -45,9 +45,23 @@ export function nyckel(t) {
 function uttala(t) {
   let s = t;
   for (const [ord, som] of Object.entries(CFG.uttal ?? {})) {
+    if (ord.startsWith("_")) continue;
     s = s.replace(new RegExp(`(?<![\\p{L}])${ord.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\p{L}])`, "gu"), som);
   }
+  // TTS-3: 'uttal_stam' byter en ordstam i alla böjningar och sammansättningar (ekorre, Ekorrens, ekorrarna, Silverekorren …),
+  // med versal där stammen har versal. Texten i spelet ändras inte.
+  for (const [stam, som] of stammar()) s = s.replace(new RegExp(stam, "giu"), (m) => (m[0] !== m[0].toLocaleLowerCase("sv") ? som[0].toLocaleUpperCase("sv") + som.slice(1) : som));
   return s;
+}
+function stammar() {
+  return Object.entries(CFG.uttal_stam ?? {}).filter(([k]) => !k.startsWith("_"));
+}
+/** TTS-3: hashens tillägg för en rad – stamregeln (så att raderna görs om när regeln kommer) och 'omtag' (ett nytt försök
+ *  för en rad vars uttal inte blev rätt, t.ex. efter whisper-kontrollen). Rader som inte berörs får samma hash som förut. */
+function tillagg(t, k) {
+  const stam = stammar().filter(([k]) => new RegExp(k, "iu").test(t)).map(([k, v]) => `${k}>${v}`).join(",");
+  const om = CFG.omtag?.[k] ?? 0;
+  return (stam ? `stam:${stam}` : "") + (om ? `|omtag:${om}` : "");
 }
 
 /** Fasta texter i prioritetsordning: { id, t, talare }. Text med platshållare ({…}) eller djursignatur (" /Ekorren") hoppas över. */
@@ -250,7 +264,7 @@ const texter = [];
 }
 const nya = [];
 for (const r of texter) {
-  const h = hash(r.tal ?? r.t, r.talare);
+  const h = hash(r.tal ?? r.t, r.talare, tillagg(r.tal ?? r.t, nyckel(r.t)));
   const f = `/ljud/rost/${h}.mp3`;
   const fil = path.join(UT, `${h}.mp3`);
   const k = nyckel(r.t);
