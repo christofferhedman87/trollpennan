@@ -42,3 +42,27 @@ varje anrops kostnad (svarshuvudet character-cost). Gåtorna ligger sist, så ta
 test:product (rost.test.ts + rost2.test.ts), typecheck, eslint, check:struktur, build:pages, tts2-prov.mjs
 (Playwright: uppdrag klart, stjärnmall, kanin, gåta, eget ord med/utan svensk röst, ljudet av, bannerns tid),
 regression tts-prov (TTS-1), b62/b61/b64/r9 och b63/b65 om de är inlagda.
+
+## TTS-2-fix (#178, efter Doodles försök 2, exit 4)
+
+- **Tryck stänger alltid direkt** (b63-prov H): bannern hålls nu kvar så länge rösten, så en andra likadan uppmaning hann
+  läggas i kön och visades 200 ms efter trycket. `stangBanner(tryckt?)`: ett tryck (AngLager skickar bannerns text) tystar
+  rösten (`tystna()`) och tar bort samma text ur kön; timern anropar utan text som förut. Via tts2-data.mjs, 0 nya rader i
+  Spel.tsx. Steg 7 i tts2-prov: ljud lika långt som filen, en dubblett i kön, tryck → borta efter 300 ms och 1,8 s, det som
+  spelar pausas (ofta gåtan, som ligger före uppmaningen i kön) och inget spelas efteråt.
+- **r9-prov** läser bokens läge (skrivläge sedan P1) och växlar till ordkorten via pennan för `forslag-etikett`.
+- **kor.sh** kör om ett fallet regressionsprov ensamt en gång innan det räknas (mönstret från B6.6).
+- tts2.patch oförändrad: byte för byte densamma mot 53f9bba och passar ovanpå R8-3a och P2-2.
+
+## TTS-2-fix2 (efter Doodles försök 3, exit 4: "ingen fast text saknar fil")
+
+- `kallor` + `forsta-stunden.json` (P2): guidens steg (`steg[].text`, Coach.tsx läser upp) med pennans röst (Elin).
+  Titelskärmens knappar/etiketter (`titel.*`) och raden `senast.*` (mallen "Senast väckte du {text}.") läses inte upp och
+  får ingen fil – markerat i källans `_om`. Läggs de till i uppläsningen ska de in i källan (mallen delas då som andra).
+- Genomgång av alla data/*.json mot det som faktiskt läses (visaBanner, visaBubbla, Coach, uppdragsremsan, gåtan): också
+  `dygn.json` (kväll/morgon-bannrar, sov-/vaknarepliker), `sidor.json` (`oppnas`) och `byggsidor.json` (`last_ord.text`,
+  mall; byggsidornas titlar som värden, {ord} = barnets byggord är dynamiskt) saknades. Övriga filer är regler, ritningar,
+  dialogtexter som inte läses upp, eller redan täckta.
+- Kvar utanför data: "Det ordet kan Trollpennan inte än. Jag sparar det!" är hårdkodad i Spel.tsx (okänt ord) och har
+  ingen fil (reserv tyst) – flyttas till data i en senare runda.
+- 33 nya filer, 357 krediter.
