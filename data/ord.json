@@ -6715,6 +6715,22 @@
    "del": {
     "kropp": "expedit"
    }
+  },
+  {
+   "id": "gamer",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "gamer",
+   "genus": "u",
+   "former": [
+    "gamer",
+    "gamern"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M16 trollpennan-mfix",
+   "del": {
+    "kropp": "gamer"
+   }
   }
  ],
  "kollisioner": {},
