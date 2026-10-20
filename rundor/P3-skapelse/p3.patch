@@ -40,7 +40,7 @@ index d2a158c..59575a2 100644
  }
 diff --git a/data/placering.json b/data/placering.json
 new file mode 100644
-index 0000000..2af17bc
+index 0000000..e565da7
 --- /dev/null
 +++ b/data/placering.json
 @@ -0,0 +1,44 @@
@@ -49,7 +49,7 @@ index 0000000..2af17bc
 + "max_skymd": 0.2,
 + "steg": { "x": 0.125, "z": 0.15, "y": 0.4 },
 + "vickning": { "_om": "hur långt kroppen rör sig från sin ruta i sidled (djur.tsx): rutan räknas så mycket bredare", "mark": 0.22, "vatten": 0.22, "luft": 0.4, "bak": 0 },
-+ "vrid": { "_om": "djuren vrider sig när de går (djur.tsx yaw × 0,35, upp till ~60°): då syns längden, inte bara bredden. Ett djurs ruta räknas så här mycket bredare (prov C: elefanten 308 px ritad mot 221 px räknad)", "djur": 1.35 },
++ "vrid": { "_om": "djuren vrider sig när de går (djur.tsx yaw × 0,35, upp till ~60°): då syns längden, inte bara bredden. Ett djurs ruta räknas så här mycket bredare (prov C: elefanten 308 px ritad mot 221 px räknad)", "djur": 1.35, "vandra_x": 0.22, "vandra_z": 0.16, "_vandra": "djuren vandrar runt sin plats (djur.tsx wx ±0,22, wz ±0,16); rutan räknas med hela vandringen (torrkörning 18:18: pepparkakan skymdes av pappa som vandrat)" },
 + "djup": 0.6,
 + "krymp_min": 0.6,
 + "_om_krymp": "den nya får alltid en ruta: ryms den inte i bild ens på en tom plats ritas den mindre, i steg om 0,1, högst ned till krymp_min",
@@ -1284,10 +1284,10 @@ index 0000000..cebf27b
 +});
 diff --git a/src/spel/placering.ts b/src/spel/placering.ts
 new file mode 100644
-index 0000000..fe51b7e
+index 0000000..7f00655
 --- /dev/null
 +++ b/src/spel/placering.ts
-@@ -0,0 +1,195 @@
+@@ -0,0 +1,198 @@
 +// P3a: EN placeringsregel för alla platser. Ren logik (ingen three), testas i Node. Data: data/placering.json.
 +//  - Varje plats har band per roll (mark, vatten, luft, bak), delade i rutor. Rollen kommer ur saken: simmare på vattnet,
 +//    flygare i luften, stora saker (storlek.json zon "bak") i det bakre bandet, resten på marken.
@@ -1311,7 +1311,7 @@ index 0000000..fe51b7e
 +  max_skymd: number;
 +  steg: { x: number; z: number; y: number };
 +  vickning: Record<Roll, number>;
-+  vrid?: { djur: number };
++  vrid?: { djur: number; vandra_x?: number; vandra_z?: number };
 +  krymp_min?: number;
 +  djup: number;
 +  skarm_reserverat: (Ruta & { namn: string })[];
@@ -1340,13 +1340,16 @@ index 0000000..fe51b7e
 +export type Lage = { x: number; y: number; z: number; roll: Roll; /** skärmrutan som regeln räknade med */ r: Ruta; stall: boolean; /** den nya ritas så här mycket mindre när den annars inte ryms i bild */ krymp?: number };
 +
 +/** Kroppens mått på djupet z: halva bredden, höjden och djupet (barnets storleksord, taket och minsta synliga storlek). */
-+export function kroppMatt(d: Pick<Sparad, "kropp" | "skala">, z: number, plats?: Plats): { halv: number; hojd: number; djup: number; f: number } {
++export function kroppMatt(d: Pick<Sparad, "kropp" | "skala">, z: number, plats?: Plats): { halv: number; hojd: number; djup: number; f: number; vand: [number, number] } {
 +  const f = ritSkala(d, z, plats);
 +  // ett djur som vrider sig visar längden åt alla håll: rutan räknas lika djup som bred (prov P: korna och elefanten var
-+  // högre och bredare ritade än räknade)
-+  const vrid = ENTITETER[d.kropp]?.typ === "djur" ? (PLACERING.vrid?.djur ?? 1) : 1;
++  // högre och bredare ritade än räknade). Det vandrar också runt sin plats (`vand`): det räknas bara in i skärmrutan,
++  // inte i kroppen – två djur får gärna vandra förbi varandra.
++  const djur = ENTITETER[d.kropp]?.typ === "djur";
++  const vrid = djur ? (PLACERING.vrid?.djur ?? 1) : 1;
 +  const halv = halvBredd(d.kropp, d.skala || 1) * f * vrid;
-+  return { halv, hojd: malhojd(d.kropp) * takSkala(d.kropp, d.skala || 1) * f, djup: Math.max(0.2, vrid > 1 ? halv : halv * PLACERING.djup), f };
++  const vand: [number, number] = djur ? [PLACERING.vrid?.vandra_x ?? 0, PLACERING.vrid?.vandra_z ?? 0] : [0, 0];
++  return { halv, hojd: malhojd(d.kropp) * takSkala(d.kropp, d.skala || 1) * f, djup: Math.max(0.2, djur ? halv : halv * PLACERING.djup), f, vand };
 +}
 +
 +/** Hur mycket djur.tsx ritar kroppen större/mindre: platsens skala (data) × minsta synliga storlek på djupet z. */
@@ -1396,8 +1399,8 @@ index 0000000..fe51b7e
 +    let bast: { lage: Lage; kost: number; fel: number; m: ReturnType<typeof kroppMatt> } | null = null;
 +    for (const [x, y, z] of rutor(band, roll)) {
 +      const m = kroppMatt(d, z, plats);
-+      const halv = m.halv + (vick[roll] ?? 0);
-+      const r = sakRuta(x, z, halv, m.hojd, m.djup, y);
++      const halv = m.halv + m.vand[0] + (vick[roll] ?? 0);
++      const r = sakRuta(x, z, halv, m.hojd, m.djup + m.vand[1], y);
 +      // rätt underlag och inte i en reserverad världsruta (grinden)
 +      if (!underlag(roll, plats, x, z, d, m)) continue;
 +      if (regel.varld_reserverat.some((v) => x + m.halv > v.x[0] && x - m.halv < v.x[1] && z + m.djup > v.z[0] && z - m.djup < v.z[1])) continue;
@@ -1741,7 +1744,7 @@ index 0000000..4613fc0
 +  return ut;
 +}
 diff --git a/src/spel/ui/Titel.tsx b/src/spel/ui/Titel.tsx
-index 2579afa..7f0df82 100644
+index 2579afa..0c4ece3 100644
 --- a/src/spel/ui/Titel.tsx
 +++ b/src/spel/ui/Titel.tsx
 @@ -11,7 +11,9 @@ import "./titel-p2.css";
@@ -1755,11 +1758,20 @@ index 2579afa..7f0df82 100644
  function useDjurBild(uid: string | null) {
    const ref = useRef<HTMLCanvasElement>(null);
    const [klar, setKlar] = useState(false);
-@@ -20,21 +22,24 @@ function useDjurBild(uid: string | null) {
+@@ -20,21 +22,33 @@ function useDjurBild(uid: string | null) {
      let stopp = false;
      let raf = 0;
      const start = performance.now();
 +    window.__tredBild = { uid };
++    let forra: { x: number; y: number; w: number; h: number } | undefined;
++    // Djuret växer fram och hoppar när ängen startar: klipp först när kroppen stått still två mätningar i rad.
++    const stilla = (a: { x: number; y: number; w: number; h: number }) => {
++      const b = forra;
++      forra = { ...a };
++      if (!b) return false;
++      const tol = 0.04 * Math.max(a.w, a.h);
++      return Math.abs(a.x - b.x) < tol && Math.abs(a.y - b.y) < tol && Math.abs(a.w - b.w) < tol && Math.abs(a.h - b.h) < tol;
++    };
      const forsok = () => {
        if (stopp) return;
        const gl = document.querySelector<HTMLCanvasElement>(".angen-3d canvas");
@@ -1767,7 +1779,7 @@ index 2579afa..7f0df82 100644
 +      const kr = window.__tredBild?.uid === uid ? window.__tredBild.ruta : undefined;
        const ut = ref.current;
 -      if (gl && mal && ut) {
-+      if (gl && kr && kr.mesh > 0 && kr.w > 4 && kr.h > 4 && ut) {
++      if (gl && kr && kr.mesh > 0 && kr.w > 4 && kr.h > 4 && ut && (stilla(kr) || performance.now() - start > 6000)) {
          const r = gl.getBoundingClientRect();
          const k = gl.width / Math.max(1, r.width);
 -        const sida = 130;
@@ -1786,7 +1798,7 @@ index 2579afa..7f0df82 100644
            const p = g.getImageData(ut.width / 2, ut.height / 2, 1, 1).data;
            if (p[3]! > 0) {
              setKlar(true);
-@@ -48,6 +53,7 @@ function useDjurBild(uid: string | null) {
+@@ -48,6 +62,7 @@ function useDjurBild(uid: string | null) {
      return () => {
        stopp = true;
        cancelAnimationFrame(raf);
