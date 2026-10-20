@@ -47,8 +47,10 @@ Exit 0 → push, PR, squash-merge. Ingen data, inga modeller, ingen LICENSES.md 
 - Bilder i `/workspace/trollpennan-nulage/r83a-bilder/`: `r83a-<fall>.png`, `-nara.png` och `r83a-kontaktark.png`.
 
 ## Verifierat (2026-10-20)
-- Ren kopia av main e87b1ba med B6.3 och B6.5 inlagda (som Doodle kör dem): kor.sh EXIT=0. test:product 214, typecheck 0, eslint 0, struktur grön, build ok, r83a-prov 11/11, r83a-alla 160/160, b64/b62/b63/b65/r9k exit 0.
-- Patchen går också att lägga på main utan B6.3/B6.5 (`git apply --check` ok).
+- **main d14ebd6 (M28, 1 154 modeller) + B6.3 + B6.5**, ren kopia: kor.sh med `R83_ALLA=1`. r83a-alla gav **1 106 av 1 106 modeller färgade och 0 sidfel**, och r83a-prov 11/11. b64/b62/b65/r9k gick grönt. b63-prov steg I föll en gång (kon 0,08 från dammkanten mot gränsen 0,1). Steget faller också utan R8-3a, 1 av 4 körningar i parallell last, så det är vandring och inte färg. Därför har regressionen nu ett omförsök.
+- **main 12284c9 (MFIX6–8) + B6.3 + B6.5**: kor.sh EXIT=0. test:product 214, typecheck 0, eslint 0, struktur grön, build ok, r83a-prov 11/11, r83a-alla 158/158 och regressionen grön.
+- **main b1d2e79 (ny B6.3: bbox-placering, fotavtryck) + B6.3 + B6.5**: se slutraden i PR:en.
+- Patchen går att lägga på main både med och utan B6.3/B6.5 (`git apply --check` ok). package.json ändras med node, inte i patchen.
 
 ## Svagheter och kvar
 1. En vit eller grå kropp med textur blir gråskala gånger färgen **för hela texturen**. Elefantens betar blir därför röda. Det går att förfina genom att bara byta neutrala texlar nära kroppens ljushet, men det gav kantblödning i R9.
