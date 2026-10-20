@@ -1,0 +1,28 @@
+{
+ "_om": "R3F-M20: målhöjder (saker skalas efter max(h, 0,6·största bredd)).",
+ "malhojd_ord": {
+  "tekanna": 0.5,
+  "kaffekanna": 0.6,
+  "tekopp": 0.35,
+  "termos": 0.6,
+  "slev": 0.6,
+  "durkslag": 0.4,
+  "ugnsvante": 0.5,
+  "förkläde": 0.7,
+  "saltkar": 0.4,
+  "pepparkvarn": 0.5,
+  "äggkopp": 0.35,
+  "brödkorg": 0.4,
+  "kakburk": 0.4,
+  "wok": 0.5,
+  "mortel": 0.45,
+  "mjölkpaket": 0.55,
+  "fruktskål": 0.45,
+  "tårtfat": 0.55,
+  "sockerskål": 0.35,
+  "pizzaskärare": 0.5,
+  "glasskål": 0.45,
+  "äggklocka": 0.4,
+  "matbord": 0.9
+ }
+}
