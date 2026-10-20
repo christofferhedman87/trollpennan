@@ -61,7 +61,7 @@ test("djuren i entiteter.json är exakt de kroppar ord.json kan skapa, i albumet
 });
 
 /** Bulkrundornas rader (data/inlagg.json, scripts/modell-inlagg.mjs): inlagd är rundans namn. */
-const arBulk = (k: string) => /^(R3[CD]|R3F-M(\d+|FIX\d*))$/.test(String(ENTITETER[k]?.inlagd ?? ""));
+const arBulk = (k: string) => /^(R3[CD]|R3F-M(\d+[a-z]?|FIX\d*))$/.test(String(ENTITETER[k]?.inlagd ?? ""));
 
 test("R3D: andra bulkomgången är inne, bara CC0, och varje modellfil finns", () => {
   const r3d = Object.keys(ENTITETER).filter((k) => ENTITETER[k]?.inlagd === "R3D");
@@ -75,7 +75,7 @@ test("R3D: andra bulkomgången är inne, bara CC0, och varje modellfil finns", (
 });
 
 test("R3F-modellserien (M1, M2 …): bara CC0 och varje modellfil finns", () => {
-  const r3f = Object.keys(ENTITETER).filter((k) => /^R3F-M(\d+|FIX\d*)$/.test(String(ENTITETER[k]?.inlagd ?? "")));
+  const r3f = Object.keys(ENTITETER).filter((k) => /^R3F-M(\d+[a-z]?|FIX\d*)$/.test(String(ENTITETER[k]?.inlagd ?? "")));
   for (const k of r3f) {
     const t = TILLGANGAR[ENTITETER[k]!.modell as string];
     assert.ok(t, `${k}: tillgång saknas`);

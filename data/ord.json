@@ -7442,6 +7442,435 @@
    "del": {
     "kropp": "narval"
    }
+  },
+  {
+   "id": "björn",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "björn",
+   "genus": "u",
+   "former": [
+    "björn",
+    "björnen",
+    "björnar",
+    "björnarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "bjorn"
+   }
+  },
+  {
+   "id": "hamster",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "hamster",
+   "genus": "u",
+   "former": [
+    "hamster",
+    "hamstern",
+    "hamstrar",
+    "hamstrarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "hamster"
+   }
+  },
+  {
+   "id": "marsvin",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "marsvin",
+   "genus": "n",
+   "former": [
+    "marsvin",
+    "marsvinet",
+    "marsvinen"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "marsvin"
+   }
+  },
+  {
+   "id": "snigel",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "snigel",
+   "genus": "u",
+   "former": [
+    "snigel",
+    "snigeln",
+    "sniglar",
+    "sniglarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "snigel"
+   }
+  },
+  {
+   "id": "nyckelpiga",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "nyckelpiga",
+   "genus": "u",
+   "former": [
+    "nyckelpiga",
+    "nyckelpigan",
+    "nyckelpigor",
+    "nyckelpigorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "nyckelpiga"
+   }
+  },
+  {
+   "id": "sjöstjärna",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "sjöstjärna",
+   "genus": "u",
+   "former": [
+    "sjöstjärna",
+    "sjöstjärnan",
+    "sjöstjärnor",
+    "sjöstjärnorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "sjostjarna"
+   }
+  },
+  {
+   "id": "humla",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "humla",
+   "genus": "u",
+   "former": [
+    "humla",
+    "humlan",
+    "humlor",
+    "humlorna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "humla"
+   }
+  },
+  {
+   "id": "krokodil",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "krokodil",
+   "genus": "u",
+   "former": [
+    "krokodil",
+    "krokodilen",
+    "krokodiler",
+    "krokodilerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "krokodil"
+   }
+  },
+  {
+   "id": "ödla",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "ödla",
+   "genus": "u",
+   "former": [
+    "ödla",
+    "ödlan",
+    "ödlor",
+    "ödlorna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "odla"
+   }
+  },
+  {
+   "id": "stork",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "stork",
+   "genus": "u",
+   "former": [
+    "stork",
+    "storken",
+    "storkar",
+    "storkarna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "stork"
+   }
+  },
+  {
+   "id": "struts",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "struts",
+   "genus": "u",
+   "former": [
+    "struts",
+    "strutsen",
+    "strutsar",
+    "strutsarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "struts"
+   }
+  },
+  {
+   "id": "kamel",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kamel",
+   "genus": "u",
+   "former": [
+    "kamel",
+    "kamelen",
+    "kameler",
+    "kamelerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "kamel"
+   }
+  },
+  {
+   "id": "känguru",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "känguru",
+   "genus": "u",
+   "former": [
+    "känguru",
+    "kängurun",
+    "kängurur",
+    "känguruer",
+    "kängururna",
+    "känguruerna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "kanguru"
+   }
+  },
+  {
+   "id": "späckhuggare",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "späckhuggare",
+   "genus": "u",
+   "former": [
+    "späckhuggare",
+    "späckhuggaren",
+    "späckhuggarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "spackhuggare"
+   }
+  },
+  {
+   "id": "blåval",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "blåval",
+   "genus": "u",
+   "former": [
+    "blåval",
+    "blåvalen",
+    "blåvalar",
+    "blåvalarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "blaval"
+   }
+  },
+  {
+   "id": "beluga",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "beluga",
+   "genus": "u",
+   "former": [
+    "beluga",
+    "belugan"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "beluga"
+   }
+  },
+  {
+   "id": "sjölejon",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "sjölejon",
+   "genus": "n",
+   "former": [
+    "sjölejon",
+    "sjölejonet",
+    "sjölejonen"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "sjolejon"
+   }
+  },
+  {
+   "id": "duva",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "duva",
+   "genus": "u",
+   "former": [
+    "duva",
+    "duvan",
+    "duvor",
+    "duvorna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "duva"
+   }
+  },
+  {
+   "id": "kråka",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kråka",
+   "genus": "u",
+   "former": [
+    "kråka",
+    "kråkan",
+    "kråkor",
+    "kråkorna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "kraka"
+   }
+  },
+  {
+   "id": "fjällräv",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "fjällräv",
+   "genus": "u",
+   "former": [
+    "fjällräv",
+    "fjällräven",
+    "fjällrävar",
+    "fjällrävarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "fjallrav"
+   }
+  },
+  {
+   "id": "polarräv",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "polarräv",
+   "genus": "u",
+   "former": [
+    "polarräv",
+    "polarräven",
+    "polarrävar",
+    "polarrävarna"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "fjallrav"
+   }
+  },
+  {
+   "id": "snöuggla",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "snöuggla",
+   "genus": "u",
+   "former": [
+    "snöuggla",
+    "snöugglan",
+    "snöugglor",
+    "snöugglorna"
+   ],
+   "signatur": "vingar",
+   "kalla": "R3F-M18b trollpennan-djur-m18b",
+   "del": {
+    "kropp": "snouggla"
+   }
+  },
+  {
+   "id": "drakfisk",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "drakfisk",
+   "genus": "u",
+   "former": [
+    "drakfisk",
+    "drakfisken",
+    "drakfiskar",
+    "drakfiskarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M18b polypizza-cc0-m18b",
+   "del": {
+    "kropp": "drakfisk"
+   }
+  },
+  {
+   "id": "makrill",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "makrill",
+   "genus": "u",
+   "former": [
+    "makrill",
+    "makrillen",
+    "makrillar",
+    "makrillarna"
+   ],
+   "signatur": "fenor",
+   "kalla": "R3F-M18b polypizza-cc0-m18b",
+   "del": {
+    "kropp": "makrill"
+   }
   }
  ],
  "kollisioner": {},
