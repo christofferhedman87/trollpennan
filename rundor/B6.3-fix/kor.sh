@@ -3,7 +3,7 @@
 #   (G) dammens vatten syns alltid · (H) uppmaningen vid ord utan modell står ≥ 5 s eller tills barnet trycker
 #   · (I) inga djur/figurer/saker i ängens damm (simmare undantag) · (J) stora saker spridda bak, grinden fri.
 # Kod = b63.patch (git apply, annars --3way). Data = b63-data.mjs (aterkoppling.json, platser.json ängens zoner,
-#   storlek.json bak-zon/kant; idempotent per nyckel). Kräver B6.2 mergad. Doodle kör från repots rot på main:
+#   storlek.json bak-zon/kant, package.json; idempotent per nyckel) + fotavtryck.mjs (data/fotavtryck.json ur modellernas bbox). Kräver B6.2 mergad. Doodle kör från repots rot på main:
 #   git checkout main && git pull && git checkout -b runda-b63-kod && bash rundor/B6.3-fix/kor.sh
 # Exit 0 = commit finns → push, PR, squash-merge. 2 = förutsättning/patch. 3 = test/lint/bygge. 4 = Playwright.
 set -uo pipefail
@@ -21,12 +21,16 @@ if ! git apply --check "$D/b63.patch" 2>"$UT/apply.txt"; then
   TREVAGS=1
 fi
 if [ "${TREVAGS:-0}" = 1 ]; then git apply --3way "$D/b63.patch" || { echo "STOPP 2: trevägs-apply misslyckades"; exit 2; }; git reset -q; else git apply "$D/b63.patch"; fi
-NYA="src/spel/b6-3.test.ts src/spel/ang/damm.ts"
+NYA="src/spel/b6-3.test.ts src/spel/ang/damm.ts data/fotavtryck.json"
 ANDRADE="PROJECT.md package.json data/aterkoppling.json data/platser.json data/storlek.json src/spel/Spel.tsx src/spel/ang/dekor.tsx src/spel/ang/delat.ts src/spel/ang/djur.tsx src/spel/ang/himmel.tsx src/spel/angen3d.tsx src/spel/entiteter.ts src/spel/kenneyNatur.tsx src/spel/platsYta.ts src/spel/platser.ts src/spel/ui/AngLager.tsx src/spel/ui/typer.ts src/styles.css src/tolk/aterkoppling.ts"
 aterstall() { git checkout -q -- $ANDRADE; rm -f $NYA; }
 node "$D/b63-data.mjs" > "$UT/data.txt" 2>&1 || { cat "$UT/data.txt"; aterstall; echo "STOPP 2: b63-data.mjs föll"; exit 2; }
 grep VARNING "$UT/data.txt" || true
 [ -d node_modules ] || npm ci --silent
+# Doodle 07:33: placeringen håller kroppen (halva bredden ur modellens bbox + vickning + 0,15) från dammen. Måtten räknas
+#   här, på main, så att alla modellpaket som finns kommer med.
+node --experimental-strip-types "$D/fotavtryck.mjs" > "$UT/fot.txt" 2>&1 || { tail -5 "$UT/fot.txt"; aterstall; echo "STOPP 2: fotavtryck.mjs föll"; exit 2; }
+grep -E "VARNING|fotavtryck:" "$UT/fot.txt" || true
 npm run -s test:product > "$UT/test.txt" 2>&1 || { grep -A8 '^not ok' "$UT/test.txt" | head -40; aterstall; echo "STOPP 3: test:product föll"; exit 3; }
 N=$(npm run -s typecheck 2>&1 | grep -c "error TS" || true); [ "$N" -eq 0 ] || { npm run -s typecheck 2>&1 | grep "error TS" | head; aterstall; echo "STOPP 3: typecheck $N fel"; exit 3; }
 npm run -s typecheck:pages > "$UT/tcp.txt" 2>&1 || { tail -20 "$UT/tcp.txt"; aterstall; echo "STOPP 3: typecheck:pages föll"; exit 3; }
@@ -41,7 +45,7 @@ reg B6.2-fix/b62-prov "" & reg B6.1-kontroll/b61-prov "" & reg R8-2b/r8-2-prov "
 reg R9-tydlighet/r9-prov "--ut $UT/r9" & reg R9B-layout/r9b-prov "--ut $UT/r9b" & reg R9K-fix/r9k-prov "" & wait
 [ -s "$UT/regfel.txt" ] && { for f in $(cat "$UT/regfel.txt"); do echo "== $f"; grep -B2 '"ok": false' "$UT/$(basename $f).json" 2>/dev/null | head -20; tail -5 "$UT/$(basename $f).err"; done; aterstall; echo "STOPP 4: prov föll: $(cat "$UT/regfel.txt" | tr '\n' ' ')"; exit 4; }
 git add $ANDRADE $NYA
-git commit -qm "B6.3: dammens vatten över markens svaj, uppmaningen ≥ 5 s eller tryck, ängen har dammzon (inga djur i dammen), stora saker spridda bak med grinden fri (Arkitektens patch)"
+git commit -qm "B6.3: dammens vatten över markens svaj, uppmaningen ≥ 5 s eller tryck, ängen har dammzon (inga djur i dammen), stora saker spridda bak med grinden fri, placering efter modellens bbox + 0,15 (Arkitektens patch)"
 echo "B6.3 OK: test:product $(grep -E '^# pass' "$UT/test.txt" | awk '{print $3}') gröna, typecheck/typecheck:pages 0, eslint . 0 fel, $(tail -1 "$UT/struktur.txt"), build:pages ok, b63-prov exit 0 ($(grep -c '"ok": true' "$UT/prov.json") steg), b62-prov, b61-prov, r8-2-prov, r9-prov, r9b-prov, r9k-prov exit 0."
 echo "Bilder: $BILD/b63-*.png"
 echo "Nu: git push -u origin runda-b63-kod, PR, squash-merge. Skicka utdata till Arkitekten."

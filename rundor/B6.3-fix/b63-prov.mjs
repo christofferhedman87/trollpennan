@@ -39,6 +39,7 @@ async function sida(spar) {
   await p.waitForTimeout(2500);
   return { ctx, p };
 }
+const DOODLE_0826 = ["ett bowlingklot", "ett akvarium", "en spjälsäng", "ett påskägg", "en vattenpistol", "en filt", "en fiol", "ett mikroskop", "ett trumset", "en ko"];
 async function blok(id, fn) { if (!bara.includes(id[0])) return; try { await fn(); } catch (e) { kolla(`block ${id} kraschade`, false, { fel: String(e).split("\n")[0] }); } }
 const bild = async (p, n) => bilder && p.screenshot({ path: path.join(bilder, n), animations: "disabled", timeout: 45000 }).catch(() => undefined);
 const synlig = (p, s) => p.locator(s).first().isVisible().catch(() => false);
@@ -104,6 +105,23 @@ await blok("D", async () => {
   await ctx.close();
 });
 
+// D2 (Doodle 08:26): spjälsängen fick vattnet att försvinna; bowlingklot, akvarium, påskägg, vattenpistol, filt och fiol stod i dammen.
+await blok("D2", async () => {
+  const { ctx, p } = await sida({});
+  for (const f of DOODLE_0826) {
+    await p.evaluate((x) => window.__troll.vakna(x), f);
+    await p.waitForTimeout(2300);
+  }
+  await stangBok(p);
+  await p.waitForTimeout(1500);
+  const full = await dammSerie(p);
+  const stabil = full.perPunkt.every((n) => n === 0 || n === 24);
+  kolla("D2 spjälsäng m.fl. (10 saker): ingen punkt på vattnet blinkar bort", full.serie.length === 24 && stabil, { per_punkt: full.perPunkt.join(","), per_bild: full.serie.map((s) => s.n).join("") });
+  kolla("D2 spjälsäng m.fl.: minst 3 av 5 punkter syns i varje bild", full.minst >= 3, { minst: full.minst });
+  await bild(p, "b63-D2-spjalsang.png");
+  await ctx.close();
+});
+
 // H: uppmaningen vid ord utan modell står ≥ 5 s, och ett tryck stänger den
 await blok("H", async () => {
   const { ctx, p } = await sida({});
@@ -126,44 +144,77 @@ await blok("H", async () => {
   t0 = await mat();
   await p.waitForTimeout(600);
   await bild(p, "b63-H-uppmaning.png");
+  // Mät trycket, inte tiden sedan boken (skärmbilden kan ta sekunder på en lastad maskin): uppmaningen står kvar
+  // precis före trycket och är borta strax efter, så det är trycket som stänger den.
+  const text = async () => /kan jag inte rita/.test(await p.locator(".banderoller").innerText().catch(() => ""));
+  const fore = await text();
+  const tKlick = Date.now();
   await p.locator(".banner.tryck").click();
   await p.waitForTimeout(400);
-  const kvar = /kan jag inte rita/.test(await p.locator(".banderoller").innerText().catch(() => ""));
-  kolla("H ett tryck stänger uppmaningen", !kvar && Date.now() - t0 < 4000);
+  const kvar = await text();
+  kolla("H ett tryck stänger uppmaningen", fore && !kvar && Date.now() - tKlick < 2500, { fore, kvar, msSedanBok: tKlick - t0, msEfterTryck: Date.now() - tKlick });
   await ctx.close();
 });
 
-// I: djur, figurer och småsaker (kaffekanna, väggklocka) runt dammen, fisken i den. Robust: lägena läses i världen (window.__tredPos, så som de ritas,
+// I: djur, figurer och saker runt dammen, fisken i den. Robust: lägena läses i världen (window.__tredPos, så som de ritas,
 // vickningen inräknad) och jämförs med dammen (window.__damm) – inte pixlar, som djur framför dammen skymmer.
-await blok("I", async () => {
-  const { ctx, p } = await sida({});
-  // Doodle 06:14: kaffekannan, väggklockan och bebisen hamnade i dammen (M20/M20b-saker).
-  const ord = ["en ko", "en gris", "en bebis", "en katt", "en pojke", "en fisk", "ett slott", "en buss", "en kaffekanna", "en väggklocka"];
-  // Ängen rymmer 10; fler och den äldsta går till stallet. Därför 10 här.
-  for (const f of ord) {
-    await p.evaluate((x) => window.__troll.vakna(x), f);
-    await p.waitForTimeout(2300);
-  }
-  await stangBok(p);
-  const spar = await p.evaluate(() => JSON.parse(localStorage.getItem("trollpennan-v2") ?? "{}").ang ?? []);
-  const varst = {};
-  for (let i = 0; i < 12; i++) {
-    const { pos, damm } = await p.evaluate(() => ({ pos: window.__tredPos ?? {}, damm: window.__damm }));
-    for (const d of spar) {
-      const q = pos[d.uid];
-      if (!q || !damm) continue;
-      const a = Math.hypot(q.x - damm.x, q.z - damm.z) - damm.r;
-      varst[d.kropp] = Math.min(varst[d.kropp] ?? Infinity, Math.round(a * 100) / 100);
+// Kravet gäller KROPPEN, inte mitten: avstånd till kanten minus halva bredden ur modellens bbox (data/fotavtryck.json)
+// ska vara ≥ 0,1 i alla 12 mätningar. Flera varv: två fasta (Doodles fall) och slumpade ur en pool, fröet skrivs ut
+// (--fro <tal> upprepar ett varv, --varv <n> antal slumpvarv, standard 2).
+const FOT = JSON.parse(fs.readFileSync("data/fotavtryck.json", "utf8")).halvbredd;
+const ENT = JSON.parse(fs.readFileSync("data/entiteter.json", "utf8")).entiteter;
+const halv = (d) => (FOT[d.kropp] ?? 0.5 * (ENT[d.kropp]?.malhojd ?? 1)) * (d.skala || 1);
+const POOL = ["en ko", "en gris", "en bebis", "en katt", "en pojke", "ett slott", "en buss", "en kaffekanna", "en väggklocka", "ett mikroskop", "ett trumset",
+  "en jordglob", "ett ägg", "ett bowlingklot", "ett akvarium", "en spjälsäng", "ett påskägg", "en vattenpistol", "en filt", "en fiol", "en hund", "en traktor", "ett bord", "en elefant", "en kvast", "en gitarr", "en säng", "ett hus", "en lampa", "en lakrits", "ett frimärke", "ett sjukhus", "en apatosaurus", "en triceratops", "en cirkus"];
+const slump = (fro) => () => ((fro = (fro * 1664525 + 1013904223) >>> 0) / 2 ** 32);
+const fro0 = Number(arg("fro", String(Date.now() % 100000)));
+const varv = [
+  { namn: "I1", ord: ["en ko", "en gris", "en bebis", "en katt", "en pojke", "en fisk", "ett slott", "en buss", "en kaffekanna", "en väggklocka"] },
+  // Doodle 07:33: mikroskop och trumset i dammen; 06:14 jordglob, ägg (armband finns inte som entitet).
+  { namn: "I2", ord: ["ett mikroskop", "ett trumset", "en jordglob", "ett ägg", "en väggklocka", "en ko", "en fisk", "en hund", "en buss", "en kaffekanna"] },
+  // Doodle 08:26: alla saker, inte bara djur
+  { namn: "I3", ord: DOODLE_0826 },
+  // Doodle 08:59: lakrits och frimärke vid dammkanten
+  { namn: "I4", ord: ["en lakrits", "ett frimärke", "ett bowlingklot", "ett påskägg", "en vattenpistol", "en fiol", "en kaffekanna", "en väggklocka", "en fisk", "en katt"] },
+];
+for (let v = 0; v < Number(arg("varv", "2")); v++) {
+  const r = slump(fro0 + v * 7919);
+  const pool = [...POOL].sort(() => r() - 0.5);
+  const ord = pool.slice(0, 9);
+  ord.splice(Math.floor(r() * 10), 0, "en fisk");
+  varv.push({ namn: `I${5 + v}`, ord, fro: fro0 + v * 7919 });
+}
+// Ängen rymmer 10; fler och den äldsta går till stallet. Därför 10 per varv.
+for (const { namn, ord, fro } of varv) {
+  await blok(namn, async () => {
+    const { ctx, p } = await sida({});
+    for (const f of ord) {
+      await p.evaluate((x) => window.__troll.vakna(x), f);
+      await p.waitForTimeout(2300);
     }
-    await p.waitForTimeout(400);
-  }
-  const land = Object.entries(varst).filter(([k]) => k !== "fisk");
-  kolla("I alla 10 skapelser har ett läge (kaffekanna, väggklocka och bebis med)", Object.keys(varst).length === spar.length && spar.length === ord.length && ["kaffekanna", "vaggklocka", "bebis"].every((k) => k in varst), { varst });
-  kolla("I inget djur, ingen figur och ingen sak står i dammen (minst 0,1 utanför kanten i alla 12 mätningar)", land.length >= 9 && land.every(([, a]) => a >= 0.1), { varst });
-  kolla("I fisken simmar i dammen", (varst.fisk ?? 1) < 0, { fisk: varst.fisk });
-  await bild(p, "b63-I-bebis.png");
-  await ctx.close();
-});
+    await stangBok(p);
+    const spar = await p.evaluate(() => JSON.parse(localStorage.getItem("trollpennan-v2") ?? "{}").ang ?? []);
+    const varst = {};
+    const mitt = {};
+    for (let i = 0; i < 12; i++) {
+      const { pos, damm } = await p.evaluate(() => ({ pos: window.__tredPos ?? {}, damm: window.__damm }));
+      for (const d of spar) {
+        const q = pos[d.uid];
+        if (!q || !damm) continue;
+        const a = Math.hypot(q.x - damm.x, q.z - damm.z) - damm.r;
+        mitt[d.kropp] = Math.min(mitt[d.kropp] ?? Infinity, Math.round(a * 100) / 100);
+        varst[d.kropp] = Math.min(varst[d.kropp] ?? Infinity, Math.round((a - (d.kropp === "fisk" ? 0 : halv(d))) * 100) / 100);
+      }
+      await p.waitForTimeout(400);
+    }
+    const land = Object.entries(varst).filter(([k]) => k !== "fisk");
+    kolla(`${namn} alla 10 skapelser har ett läge`, Object.keys(varst).length === spar.length && spar.length === ord.length, { ord, fro, kroppar: spar.map((d) => d.kropp) });
+    kolla(`${namn} ingen kropp i dammen (kanten minus halva bredden ≥ 0,1 i alla 12 mätningar)`, land.length >= ord.filter((o) => o !== "en fisk").length && land.every(([, a]) => a >= 0.1), { kropp: varst, mitt, fro });
+    if (ord.includes("en fisk")) kolla(`${namn} fisken simmar i dammen`, (varst.fisk ?? 1) < 0, { fisk: varst.fisk });
+    await bild(p, `b63-${namn}-damm.png`);
+    await ctx.close();
+  });
+}
 
 kolla("inga sidfel", fel.length === 0, { fel: fel.slice(0, 5) });
 console.log(JSON.stringify(steg, null, 1));

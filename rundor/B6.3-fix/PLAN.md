@@ -11,3 +11,24 @@ Doodle: `git checkout main && git pull && git checkout -b runda-b63-kod && bash 
 | J | Fordonen bildar en vägg framför staketet. | Bakre platserna var en fast lista med sju punkter, nästan på samma djup, som fylldes i ordning. | storlek.json `bak`: `zon` (x −2,7…2,7, z −1,9…−1,15), `min_avstand` 0,95 och `fri_x` [[−1,4; 0]] (ingen stor sak har sin mitt framför grinden eller staketets mitt). `bakPlatser()`: läget slumpas men är fast per uid (hash). Djupet sprids med gyllene snittet plus jitter, så att två saker i följd aldrig hamnar på samma djup. Fortfarande bakom alla djur. | b6-3.test.ts J (spridning i x ≥ 3 och z ≥ 0,3, högst 2 per 0,1 i djup, de fyra första ≥ 0,95 isär, ingen framför grinden); b63-prov D-bild |
 
 B6.1-provets stora-saker-steg och B6.2-provet körs som regression i kor.sh.
+
+## Rättning efter Doodles körning på eaa80b3 (07:33): placering efter modellens bbox
+
+Kon stod 0,08 utanför dammkanten (kravet 0,1). Orsaken: ängens marginal var 0,28 från mitten, vickningen ±0,22, och kroppens bredd räknades inte alls.
+Kravet sänks inte; placeringen ändras:
+
+- **`data/fotavtryck.json`** (ny, genereras av `fotavtryck.mjs` i kor.sh på main, så att alla modellpaket kommer med): halva bredden på marken per entitet, ur modellens GLB-bbox (nodernas transformer inräknade) gånger spelets skala (`skalaFor`). 1005 entiteter på a96d864.
+- **`fotKant(kropp, skala)`** (entiteter.ts): halva bredden (barnets storleksord inräknat, under taket; saknas raden 0,5 × målhöjden) eller klassens kant om den är större, plus vickningen 0,27 för djur (x ±0,22, z ±0,16) och **0,15**. `djurPlats` skickar den som kant till `placeraPaPlats`.
+- **`torrKropp`** provar 16 riktningar på avståndet m och en ring på m/2 (med 8 kom vattnet närmare än m mellan riktningarna; bussen hamnade 0,06 från vattnet i enhetstestet).
+- Prov I mäter **kroppen**: avståndet till kanten minus halva bredden ≥ 0,1 i alla 12 mätningar. Kör två fasta varv (I1 = Doodles fall, I2 = mikroskop, trumset, jordglob, ägg, väggklocka, ko, hund, buss, kaffekanna, fisk) och slumpade varv ur en pool med 23 saker och djur (`--varv n`, `--fro tal`; fröet står i prov.json).
+- Prov H mäter trycket i stället för tiden sedan boken öppnades (vid load 26 tog skärmbilden över 3 s).
+- package.json läggs inte längre i patchen (den krockade med B6.4:s tillägg). `b63-data.mjs` lägger in `b6-3.test.ts` textuellt.
+
+Påskägg och armband finns inte som entiteter; ägget (`agg`) är med i stället. Prov D täcker att dammvattnet syns med många saker: 8 stora saker, alltså fler än de 5 i M21.
+
+## Tillägg (Doodle 08:26, main f078460, 1 154 tillgångar): ALLA skapelser, inte bara djur
+
+- Regeln gäller allt på marken (djur och saker): `djurPlats` skickar `fotKant` för varje icke-flygare. Saker har ingen vickning, men har halva bredden + 0,15.
+- **Enhetstest över alla entiteter**: varje modell på marken (1 100+ på f078460, Doodles fall först: bowlingklot, akvarium, spjälsäng, påskägg, vattenpistol, filt, fiol, mikroskop, trumset, ko) placeras i lag om 10 via `djurPlats`; kroppens kant ska vara ≥ 0,1 från vattnet med vickningen inräknad.
+- Testet hittade 5 modeller utan torr plats (apatosaurus 7,2 breda, golem 5,1, velociraptor, trollslända, triceratops). **`MAX_HALVBREDD = 1,2`** i `skalaFor`: ingen skapelse ritas bredare än slottet (2,4). Det gör 30 modeller mindre i bredd, t.ex. dinosaurierna, golem, neontetra (2,9 bred!), fenix, bro, brygga, hangar, snöfort. Det är ett smakbeslut, så konstanten kan justeras; storlek per typ hör till B6.6.
+- Prov D2: dammvattnet med Doodles 10 saker (spjälsäng m.fl.) blinkar inte bort, minst 3 av 5 punkter syns. Prov I3: samma 10 saker, kroppen utanför dammen. Prov I4 (Doodle 08:59): lakrits, frimärke och 8 småsaker. Poolen för slumpvarven har 30 ord (med sjukhus, apatosaurus, triceratops och cirkus).
