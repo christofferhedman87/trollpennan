@@ -134,3 +134,30 @@ granskad-fält, och där läggs bara `vattenfagel` till på anka och gås. Inga 
 - Titelbilden klipps först när kroppen stått still två mätningar i rad (djuret växer fram och hoppar när ängen startar;
   utsnittet var 52×73 px när kaninen var 83×111).
 
+## Arkitektens kapacitetsbeslut 18:41 – STATUS: kravet nås inte (stoppat, se rapporten)
+
+Krav: minst 6 vakna av 8 på ängen och sjön i värsta fall med blandade storlekar, minst 5 med 8 katter. Kameran är fast.
+Gjort i data och regel:
+1. Djupare markband: ängen z −1,95 … 4,6 (förut −0,9 … 1,9: fram till staketet och grinden och ned till nedre raden), sjön egen
+   rad z −5,5 … 4,6 (förut 2,3). Marken (platser.json) tar slut vid z ≈ 3,5–4 på båda platserna.
+2. Gränsen per ålder: 20 % för de 3 nyaste och platsens fasta saker, 35 % för äldre. Huvudet (övre halvan av rutan;
+   modellens huvud går inte att mäta i regeln) får skymmas 0 %.
+3. Äldre ritas ned till 70 % innan de somnar. Den nyaste behåller full storlek (krymp_min finns bara kvar när den nya inte
+   ryms i bild ens på en tom plats).
+4. Vandringen är 1, 0,5 eller 0,15 av ±0,22/±0,16: fritt bete när alla ryms så, annars mindre. Skärmrutan, vridningen
+   och djur.tsx använder den faktiska radien.
+Dessutom: äldre tar den bakersta lediga rutan (de äldsta längst bak), och en anka på ängen simmar i dammen (Doodle 18:46,
+den svävade vid trädkanten).
+
+Vakna av 8 (räknat i regeln, `/tmp/p3kap.ts`):
+
+| plats | fro11 | fro2026 | fro4242 | blandad | stora | 8 katter |
+|---|---|---|---|---|---|---|
+| ängen | 5 | 6 | 5 | 5 | 2 | 7 |
+| sjön | 2 | 7 | 7 | 5 | 3 | 7 |
+| skogen | 8 | 7 | 6 | 8 | 5 | 8 |
+| grottan | 8 | 7 | 6 | 7 | 4 | 8 |
+
+(blandad = elefant, hund, katt, häst, kanin, giraff, gris, ko; stora = bara jättar: elefant, giraff, slott, valfisk,
+dinosaurie, häst, ko, elefant.)
+

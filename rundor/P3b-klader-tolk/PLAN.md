@@ -42,3 +42,10 @@ Röst: när ordspärren inte längre spärrar 'sportbil'/'grottport' behövs tv�
 - `data/test-fraser.json` `p3_tolkning`: 22 fraser (nytt: sportbil, port, grottport, eld, gul/stor eld, gul regnbåge,
   drake med eld, och ett spärrord som ska spärras). Provet skriver "en röd sportbil", "en gul eld" och "en stor eld" i spelet.
 
+
+## Från Doodle 18:46 (torrkörning på main 5b7e697)
+
+- **"en röd sportbil" känns inte igen.** Sportbil blir biff eller stek, och eld blir ubåt. Delordsmatchningen och
+  fristående dubbelord ovan ska täcka det. P3b:s prov ska skriva exakt "en röd sportbil" i spelet och kräva att det blir
+  sportbil, inte biff eller stek, och att "eld" aldrig blir ubåt.
+- **Inte P3:** ankans tofs, och procedurella kroppar som får en båge i stället för mönster. Det är en senare färgfix.
