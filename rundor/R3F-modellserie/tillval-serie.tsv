@@ -451,8 +451,8 @@ kenney-factory-kit/robot-arm-a.glb	robotarm	robotarm
 kenney-factory-kit/lever-single.glb	spak	spak	
 kenney-factory-kit/crane.glb	lyftkran	lyftkran,kran	
 kenney-factory-kit/crane-magnet.glb	magnet	magnet	
-kenney-city-kit-roads/road-sign-stop.glb	stoppskylt	stoppskylt	
-kenney-city-kit-roads/road-sign-warning.glb	varningsskylt	varningsskylt	
+kenney-city-kit-roads/road-sign-stop.glb	stoppskylt	stoppskylt	-x
+kenney-city-kit-roads/road-sign-warning.glb	varningsskylt	varningsskylt	-x
 kenney-city-kit-roads/electricity-pole.glb	elstolpe	elstolpe	
 kenney-city-kit-roads/construction-cone.glb	trafikkon	trafikkon,vägkon	
 kenney-retro-urban-kit/scaffolding-structure.glb	byggstallning	byggställning	
