@@ -58,32 +58,48 @@ async function blaPunkter(p) {
     c.height = im.height;
     const g = c.getContext("2d");
     g.drawImage(im, 0, 0);
-    let n = 0;
-    for (const q of pts) {
+    const mask = pts.map((q) => {
       const [R, G, B] = g.getImageData(q.x, q.y, 1, 1).data;
-      if (B > 170 && B > R + 40 && B > G - 10) n++;
-    }
-    return { n, av: pts.length };
+      return B > 170 && B > R + 40 && B > G - 10;
+    });
+    return { n: mask.filter(Boolean).length, av: pts.length, mask };
   }, { png, pts });
 }
 
-// D + J: åtta stora saker på ängen (de står bak, bakom dammen); vattnet syns i varje bild under ~9 s (markens svaj).
-// Före B6.3 var vattnet borta i en del av bilderna (marken svajade upp genom det) och sakerna stod på rad framför staketet.
+// D + J: dammens vatten syns alltid, också med åtta stora saker på ängen (de står bak, bakom dammen).
+// Robust (B6.3, omgjort): ett djupfel (marken svajar upp genom vattnet) syns som att en punkt på vattnet är blå i vissa
+// bilder och inte i andra. En sak som står still framför dammen skymmer en punkt i ALLA bilder – det är inget fel.
+// Därför: (D0) utan saker blinkar ingen punkt och minst 4 av 5 är blå i alla 24 bilder; (D) med 8 saker är varje punkt antingen blå i alla
+// 24 bilder eller i ingen (stabil), och minst 2 är blå. Före B6.3 saknades vattnet helt i en del bilder (0 av 5).
+async function dammSerie(p) {
+  const serie = [];
+  for (let i = 0; i < 24; i++) {
+    serie.push(await blaPunkter(p));
+    await p.waitForTimeout(350);
+  }
+  const av = serie[0]?.av ?? 0;
+  const perPunkt = Array.from({ length: av }, (_, k) => serie.filter((s) => s.mask[k]).length);
+  return { serie, av, perPunkt, minst: Math.min(...serie.map((s) => s.n)) };
+}
 await blok("D", async () => {
   const { ctx, p } = await sida({});
+  await stangBok(p);
+  await p.waitForTimeout(1500);
+  const tom = await dammSerie(p);
+  // Mitten kan ligga under en näckros eller en ring; det är stilla och därför ingen blinkning.
+  const tomStabil = tom.perPunkt.every((n) => n === 0 || n === 24);
+  kolla("D0 tom äng: ingen punkt blinkar bort och minst 4 av 5 punkter är blå i alla 24 bilder", tom.serie.length === 24 && tom.av === 5 && tomStabil && tom.minst >= 4, { per_punkt: tom.perPunkt.join(","), per_bild: tom.serie.map((s) => s.n).join("") });
   for (const f of ["en bil", "en buss", "en traktor", "ett slott", "en raket", "ett tåg", "en grävmaskin", "en ubåt"]) {
     await p.evaluate((x) => window.__troll.vakna(x), f);
     await p.waitForTimeout(2300);
   }
   await stangBok(p);
   await p.waitForTimeout(1500);
-  const serie = [];
-  for (let i = 0; i < 24; i++) {
-    serie.push(await blaPunkter(p));
-    await p.waitForTimeout(350);
-  }
-  const minst = Math.min(...serie.map((s) => s.n));
-  kolla("D 8 stora saker: dammens vatten syns i alla 24 bilder (minst 4 av 5 punkter blå)", serie.length === 24 && minst >= 4, { per_bild: serie.map((s) => s.n).join("") });
+  const full = await dammSerie(p);
+  const stabil = full.perPunkt.every((n) => n === 0 || n === 24);
+  const synliga = full.perPunkt.filter((n) => n === 24).length;
+  kolla("D 8 stora saker: ingen punkt på vattnet blinkar bort (varje punkt blå i alla 24 bilder eller skymd i alla)", full.serie.length === 24 && stabil, { per_punkt: full.perPunkt.join(","), per_bild: full.serie.map((s) => s.n).join("") });
+  kolla("D 8 stora saker: minst 2 av 5 punkter syns i varje bild", full.minst >= 2 && synliga >= 2, { minst: full.minst });
   await bild(p, "b63-D-damm-8-saker.png");
   await ctx.close();
 });
@@ -117,11 +133,13 @@ await blok("H", async () => {
   await ctx.close();
 });
 
-// I: djur och figurer runt dammen, fisken i den. Robust: lägena läses i världen (window.__tredPos, så som de ritas,
+// I: djur, figurer och småsaker (kaffekanna, väggklocka) runt dammen, fisken i den. Robust: lägena läses i världen (window.__tredPos, så som de ritas,
 // vickningen inräknad) och jämförs med dammen (window.__damm) – inte pixlar, som djur framför dammen skymmer.
 await blok("I", async () => {
   const { ctx, p } = await sida({});
-  const ord = ["en ko", "en gris", "en bebis", "en katt", "en hund", "en pojke", "en fisk", "ett slott", "en buss"];
+  // Doodle 06:14: kaffekannan, väggklockan och bebisen hamnade i dammen (M20/M20b-saker).
+  const ord = ["en ko", "en gris", "en bebis", "en katt", "en pojke", "en fisk", "ett slott", "en buss", "en kaffekanna", "en väggklocka"];
+  // Ängen rymmer 10; fler och den äldsta går till stallet. Därför 10 här.
   for (const f of ord) {
     await p.evaluate((x) => window.__troll.vakna(x), f);
     await p.waitForTimeout(2300);
@@ -140,8 +158,8 @@ await blok("I", async () => {
     await p.waitForTimeout(400);
   }
   const land = Object.entries(varst).filter(([k]) => k !== "fisk");
-  kolla("I alla 9 skapelser har ett läge", Object.keys(varst).length === spar.length && spar.length === ord.length, { varst });
-  kolla("I inget djur, ingen figur och ingen sak står i dammen (minst 0,1 utanför kanten i alla 12 mätningar)", land.length >= 8 && land.every(([, a]) => a >= 0.1), { varst });
+  kolla("I alla 10 skapelser har ett läge (kaffekanna, väggklocka och bebis med)", Object.keys(varst).length === spar.length && spar.length === ord.length && ["kaffekanna", "vaggklocka", "bebis"].every((k) => k in varst), { varst });
+  kolla("I inget djur, ingen figur och ingen sak står i dammen (minst 0,1 utanför kanten i alla 12 mätningar)", land.length >= 9 && land.every(([, a]) => a >= 0.1), { varst });
   kolla("I fisken simmar i dammen", (varst.fisk ?? 1) < 0, { fisk: varst.fisk });
   await bild(p, "b63-I-bebis.png");
   await ctx.close();
