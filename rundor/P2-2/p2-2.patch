@@ -53,7 +53,7 @@ index e1c9520..9d77d98 100644
 -createRoot(document.getElementById("root")!).render(<SpelGrans><Suspense fallback={<main className="spel laddar"><h1>Trollpennan</h1><p role="status">{texter.load}</p></main>}><Spel /></Suspense></SpelGrans>);
 +createRoot(document.getElementById("root")!).render(<SpelGrans><Suspense fallback={<main className="spel laddar"><h1>Trollpennan</h1><p role="status">{texter.load}</p></main>}><Spel /><Titel /></Suspense></SpelGrans>);
 diff --git a/src/spel/Spel.tsx b/src/spel/Spel.tsx
-index ea8f2ca..33b5a5c 100644
+index b4adf51..350ec00 100644
 --- a/src/spel/Spel.tsx
 +++ b/src/spel/Spel.tsx
 @@ -99,7 +99,7 @@ import { KopDialog, StjarnDialog, MossaPanel, SkyltDialog, ValjDjurDialog, VisKo
@@ -65,7 +65,7 @@ index ea8f2ca..33b5a5c 100644
  import { useBengtsson } from "./ui/useBengtsson.ts";
  import { usePlats } from "./ui/usePlats.ts";
  import { START_PLATS } from "./platser.ts";
-@@ -1778,14 +1778,10 @@ export function Spel() {
+@@ -1779,14 +1779,10 @@ export function Spel() {
          {omrade && !kartaOpp ? <OmradeHud tryckPlats={tryckPlats} bytFolje={bytFolje} /> : null}
          <Hud oppnaStjarnor={() => setStjarnInfo(true)} haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} />
          <MenyPanel menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} senare={senare} panel={panel} varld={varld} valjVarld={valjVarld} lasMeny={lasMeny} oppnaUppdrag={oppnaUppdrag} setBokOpp={setBokOpp} oppnaKarta={oppnaKarta} setIntroNy={setIntroNy} setIntro={setIntro} menySaker={menySaker} borjaOm={borjaOm} />
@@ -719,16 +719,18 @@ index 0000000..340b73f
 +@media (prefers-reduced-motion: reduce){.coach-ring,.coach-pil{animation:none}}
 diff --git a/src/spel/ui/hud-p2.css b/src/spel/ui/hud-p2.css
 new file mode 100644
-index 0000000..1610d0b
+index 0000000..61d9365
 --- /dev/null
 +++ b/src/spel/ui/hud-p2.css
-@@ -0,0 +1,6 @@
+@@ -0,0 +1,8 @@
 +/* P2-2 nedre knappraden (förslag A): Uppdrag (Bengtsson) och Skriv lika stora. Föräldraknappen får ett lås. */
 +.hud-bot.tva{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 +.hud-bot.tva .npc-ikon{position:static;min-height:64px;border-radius:22px;justify-content:center;font-size:1.2rem;box-shadow:0 5px 0 var(--color-paper-deep)}
 +.hud-bot.tva .bok-knapp{min-height:64px;border-radius:22px}
 +.ang:has(.stall-chip.panel) .hud-bot.tva{grid-template-columns:1fr 1fr}
 +.foralder-knapp .prick-las{width:20px;height:20px;padding:3px;border-radius:50%;background:#fff6e5d9;color:var(--color-ink);box-sizing:content-box}
++/* Menyn är ett eget lager: nedre raden göms medan den är öppen (förut gömdes Bengtssons ikon på samma sätt). */
++.ang:has(.meny-panel) .hud-bot.tva{display:none}
 diff --git a/src/spel/ui/intro-p2.css b/src/spel/ui/intro-p2.css
 index 5392cf6..66bd17c 100644
 --- a/src/spel/ui/intro-p2.css

@@ -102,6 +102,15 @@ const bubKrock = await p.evaluate((b) => [...document.querySelectorAll("button")
 kolla("T2 pratbubblan täcker ingen knapp", !!bub && bubKrock.length === 0, { bub, bubKrock });
 await p.waitForTimeout(1200);
 await bild("03-guide-uppdrag-skriv");
+// T2b menyn öppen: nedre raden ligger inte under menyns knappar (P1:s överlappsprov, läget meny-last)
+await tryck(t("meny"));
+await synlig("meny-panel");
+await t("flik-gard").click().catch(() => undefined);
+await p.waitForTimeout(400);
+const menyKrock = await OVERLAPP(".meny-panel button, .hud-bot button");
+kolla("T2b menyn öppen: inga överlapp mot nedre raden", menyKrock.ut.length === 0, menyKrock);
+await p.locator(".meny-bak").click({ position: { x: 5, y: 700 } }).catch(() => undefined);
+kolla("T2b menyn stängd: Uppdrag och Skriv syns igen", await synlig("pennans-bok") && await p.locator(".hud-bot [data-testid=bengtsson-ikon]").isVisible());
 
 // T3 tillbaka: titeln med Fortsätt (bild + rad) och den diskreta Börja om
 await p.reload({ waitUntil: "domcontentloaded" });

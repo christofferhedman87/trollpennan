@@ -126,11 +126,10 @@ Bubblan viker undan medan en banderoll syns. Den lägger sig under "Dra för att
 - B6.5 om den är mergad
 
 ## Konflikter och ordning
-- **Origin kollat 2026-10-20 ≈12:20 (UTC+2):**
-  - **B6.3 är mergad** (#167, 4e93c0a).
-  - P1 och P2-1 är **inte** mergade. Bara rundmaterialet finns (P1 #166, P2-1 på `arkitekt/p2-start`).
-- **Ordning:** `kor.sh` kräver B6.3, P1 och P2-1 och stoppar med exit 2 annars. Kör alltså P1 → P2-1 → P2-2.
-- **Patchen är skriven mot main + P1 + P2-1** och torrkörd på main 4e93c0a (med B6.3) + P1 + P2-1. Se utlåtandet.
+- **Origin kollat 2026-10-20 ≈14:40 (UTC+2):** B6.3 (#167), P1 (#168) och P2-1 (#169 material, #170 kod, 5041c28) är mergade. Grenen är rebasad på 5041c28.
+- **Ordning:** `kor.sh` kräver B6.3, P1 och P2-1 (stoppar med exit 2 annars). Alla tre ligger på main, så inget behöver köras före.
+- **Torrkörd** i en ren kopia av main 5041c28 + grenen. Se utlåtandet.
+- **Rättat efter första torrkörningen:** P1:s överlappsprov (läget `meny-last`) föll, eftersom den nya, högre nedre raden (64 px, alltid synlig Uppdrag) låg 9 px under menyns "Börja om". Förut gömdes Bengtssons ikon när menyn var öppen. Nu göms nedre raden på samma sätt medan menyn är öppen (`hud-p2.css`, en rad), och `p2-2-prov` har fått steget T2b som provar just det.
 - **Delade filer:**
   - B6.3 rörde `Spel.tsx`, `delat.ts`, `djur.tsx` och `angen3d.tsx`.
   - P2-2 rör `Spel.tsx` (bara grenen och en rad) och `byggnader.tsx` (bara grinden).
