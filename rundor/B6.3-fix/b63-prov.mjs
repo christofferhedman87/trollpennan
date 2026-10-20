@@ -126,10 +126,15 @@ await blok("H", async () => {
   t0 = await mat();
   await p.waitForTimeout(600);
   await bild(p, "b63-H-uppmaning.png");
+  // Mät trycket, inte tiden sedan boken (skärmbilden kan ta sekunder på en lastad maskin): uppmaningen står kvar
+  // precis före trycket och är borta strax efter, så det är trycket som stänger den.
+  const text = async () => /kan jag inte rita/.test(await p.locator(".banderoller").innerText().catch(() => ""));
+  const fore = await text();
+  const tKlick = Date.now();
   await p.locator(".banner.tryck").click();
   await p.waitForTimeout(400);
-  const kvar = /kan jag inte rita/.test(await p.locator(".banderoller").innerText().catch(() => ""));
-  kolla("H ett tryck stänger uppmaningen", !kvar && Date.now() - t0 < 4000);
+  const kvar = await text();
+  kolla("H ett tryck stänger uppmaningen", fore && !kvar && Date.now() - tKlick < 2500, { fore, kvar, msSedanBok: tKlick - t0, msEfterTryck: Date.now() - tKlick });
   await ctx.close();
 });
 
