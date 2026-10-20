@@ -8,8 +8,11 @@
 //   B  Bengtssons första uppdrag "en kanin med mössa" skrivet i spelet: mössan sitter på kaninens huvud, inte i dammen.
 //   C  Landning: efter fem djur landar "en katt" (och "en elefant", "en gul fisk" i dammen) framme, syns ≥ 80 % och ingen
 //      skymmer den; kameran går in mot den (window.__tredFokus) och tillbaka.
-//   D  Tolkningen ändrar aldrig barnets ord i tysthet: "en dansande banan" blir aldrig "ande"; "en blixtkatt" frågar "Menade du katt?".
-//   E  Sjön (Doodles fynd): bläckfisken ryms i bild och sälen skyms inte av ankan (B6.6:s synliga bredd per djup).
+//   D  Tolkningen ändrar aldrig barnets ord i tysthet: "en dansande banan" blir aldrig "ande"; "en blixtkatt" frågar "Menade du katt?";
+//      "en röd sportbil" blir en sportbil och "en gul eld"/"en stor eld" en eld (Doodle r83a: biff/ubåt).
+//   E  Sjön (Doodles fynd): bläckfisken ryms i bild och sälen skyms inte av ankan (B6.6:s synliga bredd per djup); Doodles kö
+//      (r83a, nio skapelser): ankorna simmar på vattnet, var och en syns ≥ 1 − (max_skymd + 0,1) med guiden inräknad, och
+//      inget djur är mindre än 0,9 × syn.min_px på skärmen (narvalen).
 //   F  Byggnader och stora saker (Doodle 15:35): varje sak syns till minst 1 − (max_skymd + 0,1) av sin skärmruta
 //      (data/storlek.json; de som står framför räknas), slottet syns tydligt högre än sjukhuset, och småsaker har rimlig
 //      inbördes storlek (pucken mindre än kaffekoppen).
@@ -26,6 +29,7 @@ const MODELLER = (arg("modeller", "kanin,häst,giraff,krokodil") ?? "").split(",
 if (bilder) fs.mkdirSync(bilder, { recursive: true });
 const E = JSON.parse(fs.readFileSync("data/entiteter.json", "utf8")).entiteter;
 const PL = fs.existsSync("data/plagg.json") ? JSON.parse(fs.readFileSync("data/plagg.json", "utf8")).plagg : {};
+const STORLEK = JSON.parse(fs.readFileSync("data/storlek.json", "utf8"));
 const KLADER = Object.keys(E).filter((k) => E[k].typ === "tillbehor");
 const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".glb": "model/gltf-binary", ".png": "image/png", ".webp": "image/webp", ".svg": "image/svg+xml", ".mp3": "audio/mpeg", ".woff2": "font/woff2", ".woff": "font/woff", ".ttf": "font/ttf" };
 const server = http.createServer((req, res) => {
@@ -203,6 +207,15 @@ await blok("D", async () => {
   await p.waitForTimeout(2500);
   const nu = await sparAng(p);
   kolla("D: ett tryck på 'katt' skapar katten", nu.length === fore + 1 && nu.some((d) => d.kropp === "katt"), { antal: nu.length });
+  // Doodle r83a: "sportbil" blev en biff, "eld" en ubåt – varje ord som har en modell blir just den saken
+  for (const [ord, ratt] of [["en röd sportbil", ["sportbil", "bil"]], ["en gul eld", ["eld"]], ["en stor eld", ["eld"]]]) {
+    const n0 = (await sparAng(p)).length;
+    await vakna(p, [ord], 2500);
+    const ny = (await sparAng(p)).sort((a, b) => b.skapad - a.skapad);
+    const sk = ny.length > n0 ? ny[0] : null;
+    kolla(`D: '${ord}' blir ${ratt.join(" eller ")}`, !!sk && ratt.includes(sk.kropp), { kropp: sk?.kropp ?? null, formel: sk?.formel ?? null, antal: [n0, ny.length] });
+  }
+  await bild(p, "p3-07b-sportbil-eld.png");
   await ctx.close();
 });
 
@@ -225,11 +238,47 @@ await blok("E", async () => {
     kolla(`E ${namn}: bläckfisken ryms i bild (vänsterkanten)`, !!r && r.x >= -3 && r.x + r.w <= 378, { r });
     const sal = uid("sal");
     const s = sal ? syn[sal] : null;
-    const framfor = alla.filter((d) => d.uid !== sal && syn[d.uid] && pos[d.uid] && sal && pos[sal] && (pos[d.uid].z > pos[sal].z + 0.05 || d.kropp === "anka"));
+    const framfor = alla.filter((d) => d.uid !== sal && syn[d.uid] && pos[d.uid] && sal && pos[sal] && (pos[d.uid].z > pos[sal].z + 0.05 || pos[d.uid].flyg));
     const vem = framfor.map((d) => ({ k: d.kropp, t: s ? tacker(syn[d.uid], s) : 1 })).filter((x) => x.t > 0.02);
     const tot = vem.reduce((a, x) => a + x.t, 0);
     kolla(`E ${namn}: sälen syns ≥ 80 % (ankan och de andra framför skymmer den inte)`, !!s && tot <= 0.2, { vem: vem.map((x) => `${x.k} ${Math.round(x.t * 100)} %`), s });
   }
+  // Doodle r83a: hans kö vid sjön, skriven en i taget i spelet
+  const KO = ["en blå anka", "en röd kanin", "en rosa häst", "en grön katt", "en regnbågsfärgad katt", "en blå jultomte", "en lila narval", "en röd katt", "en gul anka"];
+  const { ctx, p } = await sida({ plats: "sjon" });
+  await vakna(p, KO, 2200);
+  await p.waitForTimeout(2500);
+  const sjo = await p.evaluate(() => JSON.parse(localStorage.getItem("trollpennan-v2") ?? "{}").platsSkapelser?.sjon ?? []);
+  const syn = await p.evaluate(() => window.__tredSyn ?? {});
+  const pos = await p.evaluate(() => window.__tredPos ?? {});
+  const npc = await p.locator("[data-testid=npc-figur]").first().boundingBox().catch(() => null);
+  await bild(p, "p3-08c-sjon-doodle-ko.png");
+  await ctx.close();
+  const SYNDATA = STORLEK.syn ?? {};
+  const hinder = (SYNDATA.skarm_hinder ?? []).map((h) => ({ x: h.x0, y: h.y0, w: h.x1 - h.x0, h: h.y1 - h.y0 }));
+  kolla("E r83a: guidens ruta i data ligger inom figuren på skärmen", !npc || hinder.every((h) => h.x >= npc.x - 2 && h.x + h.w <= npc.x + npc.width + 2 && h.y >= npc.y - 2 && h.y + h.h <= npc.y + npc.height + 2), { npc, hinder });
+  const ankor = sjo.filter((d) => d.kropp === "anka");
+  const anke = ankor.map((d) => ({ uid: d.uid, pos: pos[d.uid], r: syn[d.uid] }));
+  kolla("E r83a: ankorna simmar på vattenytan (inte vid trädkanten)", ankor.length === 2 && anke.every((a) => a.pos && a.pos.sim && !a.pos.flyg && a.pos.y < 0.45 && a.r && a.r.y + a.r.h > 300), { anke });
+  const kvar = sjo.filter((d) => syn[d.uid] && pos[d.uid] && !pos[d.uid].flyg);
+  const lika = (a, b) => Math.abs(pos[a.uid].z - pos[b.uid].z) <= 0.05;
+  const andel = kvar.map((d) => {
+    const r = syn[d.uid];
+    let t = hinder.reduce((a, h) => a + tacker(h, r), 0);
+    const vem = [];
+    for (const o of kvar) {
+      if (o === d) continue;
+      if (!(pos[o.uid].z > pos[d.uid].z + 0.05 || (lika(o, d) && Math.abs(pos[o.uid].x - pos[d.uid].x) < 0.5))) continue;
+      const q = tacker(syn[o.uid], r);
+      if (q > 0.02) vem.push(`${o.kropp} ${Math.round(q * 100)} %`);
+      t += q;
+    }
+    return { k: d.kropp, syns: runda(1 - t), vem, px: Math.min(r.w, r.h) };
+  });
+  const GRANS_E = 1 - ((STORLEK.bak?.max_skymd ?? 0.15) + 0.1);
+  kolla(`E r83a: ${kvar.length} skapelser vid sjön – var och en syns ≥ ${Math.round(GRANS_E * 100)} % (de framför och guiden inräknade)`, kvar.length >= 7 && andel.every((a) => a.syns >= GRANS_E), { andel: andel.filter((a) => a.syns < GRANS_E), antal: kvar.length, sjo: sjo.map((d) => d.kropp) });
+  const MIN = Math.round((SYNDATA.min_px ?? 44) * 0.9);
+  kolla(`E r83a: minsta synliga storlek – varje djur minst ${MIN} px på skärmen (narvalen)`, andel.every((a) => a.px >= MIN) && andel.some((a) => a.k === "narval"), { sma: andel.filter((a) => a.px < MIN), narval: andel.find((a) => a.k === "narval") });
 });
 
 // ---- F: byggnader och stora saker skymmer inte varandra; småsakernas storlek ----
@@ -272,7 +321,8 @@ await blok("F", async () => {
   const lag = [
     ["Doodles äng", ["slott", "sjukhus", "cirkus", "vaxthus"]],
     ["Doodles äng, omvänd", ["vaxthus", "cirkus", "sjukhus", "slott", "ko"]],
-    ["fordon och möbler", ["bil", "soffa", "slott", "sjukhus"]],
+    ["fordon och slott", ["traktor", "slott", "cirkus"]],
+    ["buss, soffa och sjukhus", ["buss", "soffa", "sjukhus"]],
   ];
   for (const [namn, kroppar] of lag) {
     const { ctx, p } = await sida({ ang: kroppar.map((k, i) => sparad(`f-${i}-${k}`, k, 1000 + i)) });
