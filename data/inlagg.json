@@ -48,11 +48,23 @@
   },
   "undertyp_rorelse": { "djur/flyginsekt": "flyg", "djur/fisk": "sim", "djur/fågel": "flyg" },
   "rorelse_ord": {
-    "sim": ["svan", "haj", "val", "delfin", "manet", "säl", "marulk", "blåsfisk", "fugu", "guldfisk", "koi", "piraya", "svärdfisk", "tonfisk", "clownfisk", "flundra", "kirurgfisk", "plesiosaurie", "krabba"],
+    "sim": ["havsfru", "sjöjungfru", "kraken", "sjöorm", "svan", "haj", "val", "delfin", "manet", "säl", "marulk", "blåsfisk", "fugu", "guldfisk", "koi", "piraya", "svärdfisk", "tonfisk", "clownfisk", "flundra", "kirurgfisk", "plesiosaurie", "krabba"],
     "land": ["pingvin", "kiwi", "tupp", "höna", "kalkon", "struts", "kyckling"],
-    "flyg": ["fladdermus", "bi", "kolibri", "pterodactylus", "örn", "uggla", "gås", "flamingo", "papegoja", "ara", "påfågel", "tukan", "pelikan", "anka"]
+    "flyg": ["ängel", "fenix", "fladdermus", "bi", "kolibri", "pterodactylus", "örn", "uggla", "gås", "flamingo", "papegoja", "ara", "påfågel", "tukan", "pelikan", "anka"]
   },
   "malhojd_ord": {
+    "kristallkula": 0.6,
+    "drakägg": 0.6,
+    "pegasus": 1.6,
+    "fenix": 0.8,
+    "kraken": 1.2,
+    "sjöorm": 0.5,
+    "djinn": 1.3,
+    "ande": 1.3,
+    "dvärg": 0.9,
+    "ängel": 1.3,
+    "havsfru": 1.2,
+    "sjöjungfru": 1.2,
     "makrill": 0.4,
     "drakfisk": 0.45,
     "snöuggla": 0.6,
