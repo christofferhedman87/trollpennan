@@ -43,7 +43,9 @@ node "$D/r83a-prov.mjs" --bilder "$BILD" > "$UT/prov.json" 2>"$UT/prov.err" || {
 ANTAL=160; [ "${R83_ALLA:-0}" = 1 ] && ANTAL=0
 node "$D/r83a-alla.mjs" --antal $ANTAL --ut "$UT/alla.json" > "$UT/alla.txt" 2>/dev/null || { cat "$UT/alla.txt"; aterstall; echo "STOPP 4: r83a-alla: modeller utan färg eller sidfel"; exit 4; }
 # regression: B6.4 (egna färger utan färgord), B6.5 och B6.3 om de är mergade, B6.2, R9K
-reg() { [ -f "rundor/$1.mjs" ] || return 0; node "rundor/$1.mjs" > "$UT/$(basename $1).json" 2>"$UT/$(basename $1).err" || echo "$1" >> "$UT/regfel.txt"; }
+# Ett omförsök per prov: b63-prov steg I mäter vandrande djur mot dammkanten (marginal 0,1) och föll 1 av 4 gånger både med
+# och utan R8-3a i parallellkörning (kon 0,08 från kanten). Faller det två gånger är det ett riktigt fel.
+reg() { [ -f "rundor/$1.mjs" ] || return 0; node "rundor/$1.mjs" > "$UT/$(basename $1).json" 2>"$UT/$(basename $1).err" || node "rundor/$1.mjs" > "$UT/$(basename $1).json" 2>"$UT/$(basename $1).err" || echo "$1" >> "$UT/regfel.txt"; }
 reg B6.4-fix/b64-prov & reg B6.2-fix/b62-prov & wait
 [ -f src/spel/b6-5.test.ts ] && reg B6.5-fix/b65-prov & [ -f src/spel/b6-3.test.ts ] && reg B6.3-fix/b63-prov & reg R9K-fix/r9k-prov & wait
 [ -s "$UT/regfel.txt" ] && { for f in $(cat "$UT/regfel.txt"); do echo "== $f"; grep -B2 '"ok": false' "$UT/$(basename $f).json" 2>/dev/null | head -20; tail -5 "$UT/$(basename $f).err"; done; aterstall; echo "STOPP 4: prov föll: $(cat "$UT/regfel.txt" | tr '\n' ' ')"; exit 4; }
