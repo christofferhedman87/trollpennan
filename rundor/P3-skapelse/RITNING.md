@@ -388,3 +388,9 @@ trångast står djuren still och vrider sig inte. Gränserna ändras inte. Då b
 | sjön | 6 | 8 | 8 | 6 | 3 | 8 |
 | skogen | 8 | 7 | 8 | 8 | 6 | 8 |
 | grottan | 8 | 7 | 8 | 8 | 5 | 8 |
+
+### Torrkörning 5 (main 8f52375, 22:56–23:08, med b57b40e): exit 4
+
+p3-prov föll bara på kapaciteten, och precis som regeln räknar: ängen 8 katter 7, sjön blandad 5, bara jättar 2 och
+8 katter 7. Alla krav på synlighet, huvud, minsta storlek, titelutsnitt, småsaker (F), Bengtsson och ankan är gröna.
+Det röda kan bara lösas med ett beslut, se "Minsta beslut" ovan.
