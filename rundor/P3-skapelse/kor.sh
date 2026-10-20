@@ -6,7 +6,7 @@
 #   och nedre raden); den nya får den främsta lediga rutan (för stor: ritas mindre, högst till krymp_min) och kameran
 #   visar den; den som inte ryms somnar (stallet). Titelbilden visar bara det senaste djuret. Minsta synliga storlek,
 #   småsakernas storlek, ankan simmar vid sjön. Kläder och tolkning = P3b (egen runda). Se rundor/P3-skapelse/RITNING.md.
-# Kod = p3.patch (git apply, annars --3way). Kräver B6.3, B6.5, B6.6, R8-3a, P1, P2-1, P2-2 (main) och TTS-2 före.
+# Kod = p3.patch (git apply, annars --3way). Kräver B6.3, B6.5, B6.6, R8-3a, R8-3a2, P1, P2-1, P2-2 och TTS-2 (main 3c661d1).
 # Spel.tsx får inte växa. Doodle kör från repots rot på main:
 #   git checkout main && git pull && git checkout -b runda-p3-kod && bash rundor/P3-skapelse/kor.sh
 # Exit 0 = commit finns → push, PR, squash-merge. 2 = förutsättning/patch. 3 = test/lint/bygge. 4 = Playwright.
