@@ -40,16 +40,19 @@ index d2a158c..59575a2 100644
  }
 diff --git a/data/placering.json b/data/placering.json
 new file mode 100644
-index 0000000..7bb4fde
+index 0000000..2af17bc
 --- /dev/null
 +++ b/data/placering.json
-@@ -0,0 +1,41 @@
+@@ -0,0 +1,44 @@
 +{
 + "_om": "P3a: EN placeringsregel för alla platser (ängen, sjön, skogen, grottan). Varje plats har band per roll (mark, vatten, luft, bak) i världskoordinater; banden delas i rutor (steg). Varje sak får en ledig ruta efter sin roll: simmare på vattenytan, flygare i luftbandet, stora saker (storlek.json zon bak) i det bakre bandet, övriga på marken (platsens land-zoner, platser.json). En ruta är ledig om kroppen ryms hel på skärmen (stående kamera 375 × 812, skarm.ts), inte står i en reserverad världsruta, inte går in i en annan kropp, och om ingen – varken den nya eller någon redan placerad – skyms mer än max_skymd av sin skärmruta (de framför, fasta saker och de reserverade skärmrutorna inräknade). Den nyaste får den främsta lediga rutan (störst z, sedan närmast mitten), sedan de andra från nyast till äldst; den äldsta hamnar därför längst bak. Finns ingen ledig ruta går den till stallet (somnar), aldrig över någon annan.",
 + "max_skymd": 0.2,
 + "steg": { "x": 0.125, "z": 0.15, "y": 0.4 },
-+ "vickning": { "_om": "hur långt kroppen rör sig från sin ruta i sidled (djur.tsx): rutan räknas så mycket bredare", "mark": 0.12, "vatten": 0.22, "luft": 0.4, "bak": 0 },
++ "vickning": { "_om": "hur långt kroppen rör sig från sin ruta i sidled (djur.tsx): rutan räknas så mycket bredare", "mark": 0.22, "vatten": 0.22, "luft": 0.4, "bak": 0 },
++ "vrid": { "_om": "djuren vrider sig när de går (djur.tsx yaw × 0,35, upp till ~60°): då syns längden, inte bara bredden. Ett djurs ruta räknas så här mycket bredare (prov C: elefanten 308 px ritad mot 221 px räknad)", "djur": 1.35 },
 + "djup": 0.6,
++ "krymp_min": 0.6,
++ "_om_krymp": "den nya får alltid en ruta: ryms den inte i bild ens på en tom plats ritas den mindre, i steg om 0,1, högst ned till krymp_min",
 + "skarm_reserverat": [
 +  { "namn": "utgangar", "_om": "övre raden: stjärnor, platsens namn, 'Till ängen'", "x0": 0, "y0": 0, "x1": 375, "y1": 112 },
 +  { "namn": "guiden", "_om": "P2-2:s bubbla högst upp", "x0": 12, "y0": 112, "x1": 363, "y1": 150 },
@@ -85,204 +88,6 @@ index 0000000..7bb4fde
 +  }
 + }
 +}
-diff --git a/data/plagg.json b/data/plagg.json
-new file mode 100644
-index 0000000..c781d4a
---- /dev/null
-+++ b/data/plagg.json
-@@ -0,0 +1,192 @@
-+{
-+ "version": 1,
-+ "_om": "P3: kläder sitter PÅ skapelsen. En rad per kläd-entitet (typ 'tillbehor' i data/entiteter.json): 'del' = kroppsdelen den fästs vid. Kroppsdelarna härleds generellt ur skapelsens egen form (punkter i höjdband, 'delar' nedan), så ingen modell behöver en egen rad. 'fyll' = bredd som andel av kroppsdelens bredd (hand: höjd som andel av kroppens höjd), 'maxH' = högsta höjd som andel av kroppens höjd, 'par' = modellen är EN sko/stövel och ritas som ett par. 'modeller' = valfri rättning per kropp (andelar av kroppens ruta), bara där den härledda punkten blir fel. Nytt plagg = en rad här, ingen kod.",
-+ "delar": {
-+  "huvud": {
-+   "band": [
-+    0.72,
-+    1.0
-+   ],
-+   "fyll": 0.9,
-+   "maxH": 0.5,
-+   "sjunk": 0.22,
-+   "_om": "hattar och mössor: botten på huvudets topp, lite nedsjunken"
-+  },
-+  "hals": {
-+   "band": [
-+    0.58,
-+    0.74
-+   ],
-+   "fyll": 0.8,
-+   "maxH": 0.32,
-+   "fram": 0.85,
-+   "_om": "halsband och slips: framsidan av halsen/bröstet"
-+  },
-+  "kropp": {
-+   "band": [
-+    0.22,
-+    0.68
-+   ],
-+   "fyll": 1.08,
-+   "maxH": 0.62,
-+   "_om": "tröjor, jackor, klänningar: runt bålen"
-+  },
-+  "hoft": {
-+   "band": [
-+    0.12,
-+    0.45
-+   ],
-+   "fyll": 1.05,
-+   "maxH": 0.42,
-+   "_om": "byxor och kjolar: nedre delen av kroppen"
-+  },
-+  "fotter": {
-+   "band": [
-+    0.0,
-+    0.16
-+   ],
-+   "fyll": 1.0,
-+   "maxH": 0.3,
-+   "_om": "skor och stövlar: på marken framför/under kroppen"
-+  },
-+  "hand": {
-+   "band": [
-+    0.25,
-+    0.6
-+   ],
-+   "fyll": 0.55,
-+   "maxH": 0.7,
-+   "_om": "trollstav, vante, handske: vid kroppens sida (höger), storlek efter kroppens höjd"
-+  }
-+ },
-+ "plagg": {
-+  "alvmossa": {
-+   "del": "huvud"
-+  },
-+  "haxhatt": {
-+   "del": "huvud"
-+  },
-+  "cylinderhatt": {
-+   "del": "huvud"
-+  },
-+  "keps": {
-+   "del": "huvud"
-+  },
-+  "luva": {
-+   "del": "huvud"
-+  },
-+  "festhatt": {
-+   "del": "huvud"
-+  },
-+  "badmossa": {
-+   "del": "huvud"
-+  },
-+  "nattmossa": {
-+   "del": "huvud"
-+  },
-+  "solhatt": {
-+   "del": "huvud",
-+   "fyll": 1.3
-+  },
-+  "sombrero": {
-+   "del": "huvud",
-+   "fyll": 1.5
-+  },
-+  "halmhatt": {
-+   "del": "huvud",
-+   "fyll": 1.2
-+  },
-+  "halsband": {
-+   "del": "hals"
-+  },
-+  "slips": {
-+   "del": "hals",
-+   "fyll": 0.35,
-+   "maxH": 0.4
-+  },
-+  "troja": {
-+   "del": "kropp"
-+  },
-+  "jacka": {
-+   "del": "kropp"
-+  },
-+  "kofta": {
-+   "del": "kropp"
-+  },
-+  "regnjacka": {
-+   "del": "kropp"
-+  },
-+  "skjorta": {
-+   "del": "kropp"
-+  },
-+  "flytvast": {
-+   "del": "kropp"
-+  },
-+  "morgonrock": {
-+   "del": "kropp"
-+  },
-+  "pyjamas": {
-+   "del": "kropp"
-+  },
-+  "klanning": {
-+   "del": "kropp"
-+  },
-+  "baddrakt": {
-+   "del": "kropp"
-+  },
-+  "overall": {
-+   "del": "kropp"
-+  },
-+  "hangslen": {
-+   "del": "kropp"
-+  },
-+  "byxor": {
-+   "del": "hoft"
-+  },
-+  "kjol": {
-+   "del": "hoft"
-+  },
-+  "stovlar": {
-+   "del": "fotter"
-+  },
-+  "tofflor": {
-+   "del": "fotter"
-+  },
-+  "gummistovel": {
-+   "del": "fotter",
-+   "par": true
-+  },
-+  "strumpa": {
-+   "del": "fotter",
-+   "par": true
-+  },
-+  "sko": {
-+   "del": "fotter",
-+   "par": true
-+  },
-+  "rullskridsko": {
-+   "del": "fotter",
-+   "par": true
-+  },
-+  "skridsko": {
-+   "del": "fotter",
-+   "par": true
-+  },
-+  "sandal": {
-+   "del": "fotter",
-+   "par": true
-+  },
-+  "trollstav": {
-+   "del": "hand"
-+  },
-+  "handske": {
-+   "del": "hand",
-+   "fyll": 0.3
-+  },
-+  "vante": {
-+   "del": "hand",
-+   "fyll": 0.3
-+  }
-+ },
-+ "modeller": {}
-+}
 diff --git a/data/storlek.json b/data/storlek.json
 index 6f5bce4..deab12d 100644
 --- a/data/storlek.json
@@ -313,156 +118,6 @@ index 6f5bce4..deab12d 100644
 -  "synlig_x": 2.9
   }
  }
-diff --git a/data/test-fraser.json b/data/test-fraser.json
-index 855c8df..1f991ce 100644
---- a/data/test-fraser.json
-+++ b/data/test-fraser.json
-@@ -280,5 +280,129 @@
-    },
-    "kraver_kod": true
-   }
-- ]
--}
-\ No newline at end of file
-+ ],
-+ "p3_tolkning": {
-+  "_om": "P3 (granskning 2.1/6.5): tolkningen ändrar aldrig barnets ord i tysthet. Varje fras ger antingen rätt tolkning, en fråga ('Menade du …?') eller ett ordägg med barnets hela ord. 'aldrig' = ord som inte får dyka upp i formeln.",
-+  "fraser": [
-+   {
-+    "fras": "en dansande banan",
-+    "aldrig": [
-+     "ande"
-+    ],
-+    "kropp": "banan",
-+    "agg": "dansande"
-+   },
-+   {
-+    "fras": "en springande hund",
-+    "formel": "en hund som springer snabbt"
-+   },
-+   {
-+    "fras": "en flygande gris",
-+    "formel": "en flygande gris"
-+   },
-+   {
-+    "fras": "en skrattande banan",
-+    "aldrig": [
-+     "ande",
-+     "katt"
-+    ],
-+    "kropp": "banan",
-+    "agg": "skrattande"
-+   },
-+   {
-+    "fras": "en vrålande lejon",
-+    "aldrig": [
-+     "ande"
-+    ],
-+    "kropp": "lejon",
-+    "agg": "vrålande"
-+   },
-+   {
-+    "fras": "en brinnande häst",
-+    "aldrig": [
-+     "ande"
-+    ]
-+   },
-+   {
-+    "fras": "en blixtkatt",
-+    "fraga": "katt"
-+   },
-+   {
-+    "fras": "en prinsessdrake",
-+    "fraga": "drake",
-+    "aldrig": [
-+     "ess"
-+    ]
-+   },
-+   {
-+    "fras": "en storm",
-+    "aldrig": [
-+     "orm"
-+    ]
-+   },
-+   {
-+    "fras": "en strand",
-+    "aldrig": [
-+     "and",
-+     "anka"
-+    ]
-+   },
-+   {
-+    "fras": "en eldkanin",
-+    "formel": "en eldkanin"
-+   },
-+   {
-+    "fras": "en regnbågsdrake",
-+    "formel": "en regnbågsdrake"
-+   },
-+   {
-+    "fras": "en sportbil",
-+    "kropp": "sportbil",
-+    "_om": "P3 (Doodle r83a): ska skapas, inte spärras eller bli 'behöver ett djur'"
-+   },
-+   {
-+    "fras": "en röd sportbil",
-+    "kropp": "sportbil",
-+    "_om": "P3 (Doodle r83a): ska skapas, inte spärras eller bli 'behöver ett djur'"
-+   },
-+   {
-+    "fras": "en port",
-+    "kropp": "valv",
-+    "_om": "P3 (Doodle r83a): ska skapas, inte spärras eller bli 'behöver ett djur'"
-+   },
-+   {
-+    "fras": "en grottport",
-+    "kropp": "grottport",
-+    "_om": "P3 (Doodle r83a): ska skapas, inte spärras eller bli 'behöver ett djur'"
-+   },
-+   {
-+    "fras": "en eld",
-+    "kropp": "eld",
-+    "_om": "P3 (Doodle r83a): ska skapas, inte spärras eller bli 'behöver ett djur'"
-+   },
-+   {
-+    "fras": "en gul eld",
-+    "kropp": "eld",
-+    "_om": "P3 (Doodle r83a): ska skapas, inte spärras eller bli 'behöver ett djur'"
-+   },
-+   {
-+    "fras": "en stor eld",
-+    "kropp": "eld",
-+    "_om": "P3 (Doodle r83a): ska skapas, inte spärras eller bli 'behöver ett djur'"
-+   },
-+   {
-+    "fras": "en gul regnbåge",
-+    "kropp": "regnbage",
-+    "_om": "P3 (Doodle r83a): ska skapas, inte spärras eller bli 'behöver ett djur'"
-+   },
-+   {
-+    "fras": "en porrkanin",
-+    "sparr": true
-+   },
-+   {
-+    "fras": "en drake med eld",
-+    "kropp": "drake"
-+   }
-+  ]
-+ }
-+}
-diff --git a/rundor/B6.6-fix/b66-prov.mjs b/rundor/B6.6-fix/b66-prov.mjs
-index b0ad366..a69a673 100644
---- a/rundor/B6.6-fix/b66-prov.mjs
-+++ b/rundor/B6.6-fix/b66-prov.mjs
-@@ -108,7 +108,7 @@ if (!bara) {
-     const kolla = (namn, ok, info) => bygg.push({ namn: `BYGG${v + 1} ${namn}`, ok: !!ok, ...info });
-     const hus = ordn.filter((k) => !["ko", "katt"].includes(k));
-     kolla("alla byggnader bakom staketet (z ≤ -2,3) och bakom djuren", hus.every((k) => m[k].z <= -2.3 && m[k].z < Math.min(m.ko.z, m.katt.z) - 0.5), { z: Object.fromEntries(hus.map((k) => [k, m[k].z])) });
--    kolla("ingen byggnad framför grinden (x -1,2 … -0,2 med halva bredden)", hus.every((k) => m[k].x + FOT[k] <= -1.2 + 0.02 || m[k].x - FOT[k] >= -0.2 - 0.02), { x: Object.fromEntries(hus.map((k) => [k, m[k].x])) });
-+    kolla("ingen byggnad framför grinden (x -1,2 … -0,2 med halva ritade bredden, P3: radens skala k)", hus.every((k) => m[k].x + FOT[k] * (m[k].k ?? 1) <= -1.2 + 0.02 || m[k].x - FOT[k] * (m[k].k ?? 1) >= -0.2 - 0.02), { x: Object.fromEntries(hus.map((k) => [k, m[k].x])) });
-     kolla("slottet är högre än sjukhuset på skärmen", m.slott.h > m.sjukhus.h * 1.15, { slott: m.slott.h, sjukhus: m.sjukhus.h });
-     const over = (a, b) => Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x)) * Math.max(0, Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y));
-     const [c, vx] = [m.cirkus, m.vaxthus];
 diff --git a/src/spel/ang/byggnader.tsx b/src/spel/ang/byggnader.tsx
 index 9fa5843..68d0500 100644
 --- a/src/spel/ang/byggnader.tsx
@@ -545,7 +200,7 @@ index b8ccbd2..d8b6550 100644
 -  return true;
 -}
 diff --git a/src/spel/ang/delat.ts b/src/spel/ang/delat.ts
-index a967002..4d80f18 100644
+index a967002..c5c7b50 100644
 --- a/src/spel/ang/delat.ts
 +++ b/src/spel/ang/delat.ts
 @@ -3,10 +3,9 @@ import type { ThreeEvent } from "@react-three/fiber";
@@ -580,7 +235,7 @@ index a967002..4d80f18 100644
    }
  }
  
-@@ -111,185 +112,22 @@ export function djurFarg(spec: Sparad) {
+@@ -111,185 +112,27 @@ export function djurFarg(spec: Sparad) {
    return artFarg(spec.kropp);
  }
  
@@ -731,8 +386,10 @@ index a967002..4d80f18 100644
 -  if (bakCache.size > 30) bakCache.clear();
 -  bakCache.set(nyckel, ut);
 -  return ut;
--}
--
++  const l = placeraMedMinne(alla, plats).get(spec.uid);
++  return l ? [l.x, l.y, l.z] : [0, 0, 0];
+ }
+ 
 -function djurPlatsBas(spec: Sparad, alla: Sparad[]): [number, number, number] {
 -  if (simmare(spec)) {
 -    const sim = alla.filter((d) => simmare(d));
@@ -770,13 +427,14 @@ index a967002..4d80f18 100644
 -  // fler än tio (platserna): spridda inom bilden med gyllene snittet, inte längre utanför kanten
 -  const slot = LAND_SLOT[i] ?? [-1.5 + ((i * 0.618) % 1) * 3, -0.2 + ((i * 0.382) % 1) * 1.7];
 -  return [slot[0], 0, slot[1]];
-+  const l = placeraMedMinne(alla, plats).get(spec.uid);
-+  return l ? [l.x, l.y, l.z] : [0, 0, 0];
++/** P3a: den nya ritas mindre om den annars inte ryms i bild (placering.ts krymp), annars 1. */
++export function djurKrymp(spec: Sparad, alla: Sparad[], plats?: Plats): number {
++  return placeraMedMinne(alla, plats).get(spec.uid)?.krymp ?? 1;
  }
  
  export function slag(id: string): "hus" | "trad" | "blomma" | "damm" | "talt" | "mur" {
 diff --git a/src/spel/ang/djur.tsx b/src/spel/ang/djur.tsx
-index c9085da..da32ea3 100644
+index c9085da..bcace5e 100644
 --- a/src/spel/ang/djur.tsx
 +++ b/src/spel/ang/djur.tsx
 @@ -7,7 +7,8 @@ import { byggPack, forma } from "../djurmesh.ts";
@@ -789,18 +447,26 @@ index c9085da..da32ea3 100644
  import { faestTillbehor, procAnkare } from "../tillbehor/index.ts";
  import { DjurEffekter } from "../effekter.tsx";
  import { MILJO } from "../miljo.ts";
-@@ -17,6 +18,10 @@ import { HumorIkon } from "./humorIkon.tsx";
+@@ -16,7 +17,9 @@ import { AGG_KROPP, OrdAgg, ReservAgg } from "../ordagg.tsx";
+ import { HumorIkon } from "./humorIkon.tsx";
  import { Ljusken } from "./ljusken.tsx";
  import type { Ljuskalla } from "../ljuskalla.ts";
- import { _mal, djurFarg, djurPlats, flygare, normDuk, simmare, synMatt } from "./delat.ts";
-+import { arPlagg } from "../plagg/data.ts";
+-import { _mal, djurFarg, djurPlats, flygare, normDuk, simmare, synMatt } from "./delat.ts";
++import { _mal, djurFarg, djurKrymp, djurPlats, flygare, normDuk, simmare, synMatt } from "./delat.ts";
 +import { sakLage } from "../landning.ts";
 +import { torrKropp } from "../platsYta.ts";
-+import { PlaggPaKropp } from "../plagg/Plagg.tsx";
  
  export class ModellGren extends Component<{ spec: Sparad; children: ReactNode }, { fel: boolean }> {
    state = { fel: false };
-@@ -231,11 +236,20 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
+@@ -215,6 +218,7 @@ export function Hjartan({ puls }: { puls: number }) {
+ /** B4.1: `ljus` = platsens ljuskälla och vad i skapelsen som lyser (kroppen eller en sak den har med sig); bara de högst 4 senaste får den. */
+ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Sparad[]; plats?: Plats; ljus?: { kalla: Ljuskalla; vad: string } }) {
+   const [x, y, z] = djurPlats(spec, alla, plats);
++  const krymp = djurKrymp(spec, alla, plats); // P3a: för stor för bilden → ritas mindre
+   const grupp = useRef<THREE.Group>(null);
+   const kroppRef = useRef<THREE.Group>(null);
+   const skal = useRef(0.2);
+@@ -231,11 +235,19 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
    const upp = useRef<((ev: PointerEvent) => void) | null>(null);
    const [puls, setPuls] = useState(0);
    const index = alla.findIndex((d) => d.uid === spec.uid);
@@ -809,11 +475,9 @@ index c9085da..da32ea3 100644
 +  const flyg = flygare(spec, plats);
 +  const sim = simmare(spec, plats); // P3: en vattenfågel simmar på en plats med vatten
    const ankare = useMemo(() => procAnkare(spec.kropp), [spec.kropp]);
-+  const synS = ritSkala(spec, z, plats); // P3a: platsens skala och minsta synliga storlek (samma som placeringsregeln räknar med)
++  const synS = ritSkala(spec, z, plats) * krymp; // P3a: platsens skala och minsta synliga storlek (samma som placeringsregeln räknar med)
    const sak = arSak(spec.kropp);
--  const medSaker = spec.tillbehor.map((t) => t.id).filter((id) => id !== spec.kropp && arSak(id));
-+  // P3: kläder (data/plagg.json) sitter på kroppen (PlaggPaKropp), bara övriga saker står bredvid
-+  const medSaker = spec.tillbehor.map((t) => t.id).filter((id) => id !== spec.kropp && arSak(id) && !arPlagg(id));
+   const medSaker = spec.tillbehor.map((t) => t.id).filter((id) => id !== spec.kropp && arSak(id));
 +  // P3: saken bredvid står på torr mark (inte i dammen): sidan, andra sidan eller framför
 +  const sakPos = (id: string, i: number): [number, number, number] => {
 +    const onskad: [number, number] = [(0.45 + malhojd(spec.kropp) * 0.35) * (i % 2 === 0 ? 1 : -1) * (spec.skala || 1), 0.2 + Math.floor(i / 2) * 0.3];
@@ -824,7 +488,7 @@ index c9085da..da32ea3 100644
    useEffect(() => {
      return () => {
        if (upp.current) window.removeEventListener("pointerup", upp.current);
-@@ -281,7 +295,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
+@@ -281,7 +293,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
      }
      const lyft = Math.sin(hopp.current * Math.PI) * (snurr.current > 0 ? 0.85 : 0.45);
      const bob = Math.sin(t * (flyg ? 2.4 : 1.6) + index) * (flyg ? 0.16 : sim ? 0.08 : 0.04);
@@ -833,7 +497,7 @@ index c9085da..da32ea3 100644
      const kram = 1 - Math.sin(Math.min(1, kisa.current) * Math.PI) * 0.14;
      g.scale.set((s * bred) / Math.sqrt(kram), s * hojd * kram, (s * bred) / Math.sqrt(kram));
      const wx = Math.cos(t * 0.25 + index) * 0.22;
-@@ -347,7 +361,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
+@@ -347,7 +359,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
      }
      if (t % 0.2 < d) {
        g.getWorldPosition(_mal);
@@ -842,7 +506,7 @@ index c9085da..da32ea3 100644
        _mal.y += 1.2;
        _mal.project(state.camera);
        const rect = state.gl.domElement.getBoundingClientRect();
-@@ -358,6 +372,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
+@@ -358,6 +370,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
        };
        const kr = kroppRef.current;
        if (window.__tredSyn && kr) window.__tredSyn[spec.uid] = synMatt(kr, state.camera, rect); // B6.6, för prov
@@ -850,14 +514,7 @@ index c9085da..da32ea3 100644
      }
    });
    function ned(e: ThreeEvent<PointerEvent>) {
-@@ -431,13 +446,14 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
-           <DjurForm spec={spec} />
-         )}
-         </group>
-+        <PlaggPaKropp spec={spec} kropp={kroppRef} />
-         <ReservAgg spec={spec} />
-         <DjurEffekter varelse={spec} ankare={ankare} />
-         {sak ? null : <HumorIkon uid={spec.uid} hojd={malhojd(spec.kropp) + 0.22} />}
+@@ -437,7 +450,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
        </group>
        {ljus && ljus.vad === spec.kropp ? <Ljusken uid={spec.uid} kalla={ljus.kalla} hojd={y + malhojd(spec.kropp) * (spec.skala || 1) * 0.75} /> : null}
        {medSaker.map((id, i) => (
@@ -1317,28 +974,6 @@ index 72903c0..53e5610 100644
    f = Math.min(f, M.max_forstoring);
    const k = storlekKlass(kropp);
    if (k) f = Math.min(f, Math.max(1, k.tak / Math.max(0.001, h * s)));
-diff --git a/src/spel/gltfDjur.tsx b/src/spel/gltfDjur.tsx
-index b666cc8..b2086c5 100644
---- a/src/spel/gltfDjur.tsx
-+++ b/src/spel/gltfDjur.tsx
-@@ -206,7 +206,7 @@ function fargaOm(rot: THREE.Object3D, farger: Record<string, string>) {
-   });
- }
- 
--function metallNoll(rot: THREE.Object3D) {
-+export function metallNoll(rot: THREE.Object3D) {
-   rot.traverse((o) => {
-     const mesh = o as THREE.Mesh;
-     if (!mesh.isMesh) return;
-@@ -268,7 +268,7 @@ type Kalla = { src: THREE.MeshStandardMaterial; yta: number; karn: (Palett & { h
-  *  (vit/grå kropp: gråskala × färg); materialfärg → färgordets nyans med materialets ljushet relativt kroppens (skuggor och
-  *  ljusare mage bevaras), förkompenserad för scenens ljus. Glansen (guldord) lyser i färgordets egen nyans och bara på kroppen.
-  *  Utan färgord (hex null): ingenting ändras (B6.4). */
--function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
-+export function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
-   const hex = fargAv(spec);
-   const ent = entitet(spec.kropp);
-   const pal = ent?.palett && !ent.inlagd ? ent.palett : null; // de handjusterade första djuren (katt, hund …) behåller sin palett
 diff --git a/src/spel/landning.ts b/src/spel/landning.ts
 new file mode 100644
 index 0000000..a6cbb2f
@@ -1434,86 +1069,19 @@ index 39ec6cb..ed1f06f 100644
      brygga.skapa(ang[ang.length - 1]!);
 diff --git a/src/spel/p3.test.ts b/src/spel/p3.test.ts
 new file mode 100644
-index 0000000..54c1935
+index 0000000..50b123c
 --- /dev/null
 +++ b/src/spel/p3.test.ts
-@@ -0,0 +1,163 @@
-+// P3 – skapelsen syns rätt: kläderna sitter på kroppen (data/plagg.json), tolkningen ändrar aldrig barnets ord i tysthet,
-+// minsta synliga storlek, saker bredvid inte i dammen. Placeringen (den nya framme, ingen skyms) provas i p3a.test.ts.
+@@ -0,0 +1,54 @@
++// P3a – skapelsen syns: minsta synliga storlek, saken bredvid ett djur på torr mark, småsakernas inbördes storlek.
++// Placeringsregeln provas i p3a.test.ts; kläder och tolkning kommer i P3b.
 +import assert from "node:assert/strict";
 +import { test } from "node:test";
-+import fraser from "../../data/test-fraser.json" with { type: "json" };
-+import { tolkaMedReserv } from "../tolk/reserv.ts";
-+import { arSparrat } from "../tolk/sparr.ts";
-+import entJson from "../../data/entiteter.json" with { type: "json" };
 +import { ENTITETER, halvBredd, malhojd, skalaFor, SYN, synSkala } from "./entiteter.ts";
 +import { sakLage } from "./landning.ts";
-+import { kontrolleraPlagg, kroppsdelar, PLAGG, plaggLage, plaggRegel } from "./plagg/data.ts";
 +import { platsMed, START_PLATS } from "./platser.ts";
 +import { torrKropp } from "./platsYta.ts";
 +import { skarmRuta } from "./skarm.ts";
-+
-+const KLADER = Object.keys(ENTITETER).filter((k) => ENTITETER[k]!.typ === "tillbehor");
-+
-+
-+/** En låda (x0..x1, y0..y1, z0..z1) som punkter. */
-+function lada(ut: number[], [x0, y0, z0]: number[], [x1, y1, z1]: number[], n = 6) {
-+  for (let i = 0; i <= n; i++) for (let j = 0; j <= n; j++) for (let k = 0; k <= n; k++) ut.push(x0! + ((x1! - x0!) * i) / n, y0! + ((y1! - y0!) * j) / n, z0! + ((z1! - z0!) * k) / n);
-+}
-+// Tre former: en stående kanin (kropp + huvud ovanpå), en fyrbent häst (huvudet fram och högt), en liggande fisk (lång i z).
-+const FORMER: Record<string, number[]> = {};
-+{
-+  const k: number[] = [];
-+  lada(k, [-0.3, 0, -0.25], [0.3, 0.6, 0.25]);
-+  lada(k, [-0.22, 0.6, -0.15], [0.22, 1.0, 0.25]);
-+  FORMER.kanin = k;
-+  const h: number[] = [];
-+  lada(h, [-0.25, 0.7, -0.6], [0.25, 1.1, 0.5]); // bål
-+  for (const [x, z] of [[-0.18, -0.5], [0.18, -0.5], [-0.18, 0.4], [0.18, 0.4]]) lada(h, [x! - 0.06, 0, z! - 0.06], [x! + 0.06, 0.7, z! + 0.06], 3);
-+  lada(h, [-0.12, 1.1, 0.35], [0.12, 1.5, 0.65]); // hals och huvud fram
-+  FORMER.hast = h;
-+  const f: number[] = [];
-+  lada(f, [-0.15, 0, -0.6], [0.15, 0.45, 0.6]);
-+  FORMER.fisk = f;
-+}
-+
-+test("P3: alla 38 kläd-entiteter har en rad i data/plagg.json och datan är giltig", () => {
-+  assert.equal(KLADER.length, 38);
-+  assert.deepEqual(kontrolleraPlagg(KLADER), []);
-+  for (const id of KLADER) assert.ok(PLAGG[id], id);
-+});
-+
-+test("P3: kroppsdelarna härleds ur formen – plagget sitter på rätt del på kanin, häst och fisk (alla 38)", () => {
-+  for (const [namn, pts] of Object.entries(FORMER)) {
-+    const k = kroppsdelar(pts)!;
-+    const H = k.ruta.max[1] - k.ruta.min[1];
-+    assert.ok(k.huvud.topp > k.ruta.min[1] + 0.9 * H, `${namn}: huvudets topp`);
-+    if (namn === "hast") assert.ok(k.huvud.z > 0.2, "hästens huvud sitter fram");
-+    for (const id of KLADER) {
-+      const l = plaggLage(id, k, [0.5, 0.4, 0.5])!;
-+      const del = plaggRegel(id)!.del;
-+      const [x, y, z] = l.pos;
-+      const h = 0.4 * l.skala;
-+      // på kroppen: mitten inom kroppens ruta (med en halv plaggbredd marginal), inte bredvid på marken
-+      const m = 0.25 * l.skala + 0.05;
-+      assert.ok(x >= k.ruta.min[0] - m && x <= k.ruta.max[0] + m && z >= k.ruta.min[2] - m && z <= k.ruta.max[2] + m, `${namn}/${id}: utanför kroppen (${x.toFixed(2)}, ${z.toFixed(2)})`);
-+      assert.ok(l.skala > 0 && h <= 0.75 * H + 1e-9, `${namn}/${id}: storlek ${h.toFixed(2)} av ${H.toFixed(2)}`);
-+      if (del === "huvud") assert.ok(y + h / 2 > k.ruta.min[1] + 0.75 * H, `${namn}/${id}: inte på huvudet`);
-+      if (del === "fotter") assert.ok(y <= k.ruta.min[1] + 0.01, `${namn}/${id}: inte vid fötterna`);
-+      if (del === "kropp" || del === "hoft") assert.ok(y > k.ruta.min[1] && y + h < k.ruta.max[1] + 1e-9, `${namn}/${id}: inte på bålen`);
-+    }
-+  }
-+});
-+
-+test("P3: 'en kanin med mössa' (Bengtssons första uppdrag) – mössan är ett plagg på huvudet, ingen sak på marken", () => {
-+  const u = tolkaMedReserv("en kanin med mössa");
-+  assert.equal(u.typ, "skapad");
-+  if (u.typ !== "skapad") return;
-+  const ids = u.varelse.tillbehor.map((t) => t.id);
-+  assert.ok(ids.includes("alvmossa"), JSON.stringify(ids));
-+  assert.equal(plaggRegel("alvmossa")?.del, "huvud");
-+});
-+
 +
 +test("P3 (Doodle r83a): minsta synliga storlek – varje djur på varje djup är minst syn.min_px (inom max_forstoring)", () => {
 +  const S = SYN!;
@@ -1549,40 +1117,6 @@ index 0000000..54c1935
 +  assert.ok(provade > 10);
 +});
 +
-+test("P3: tolkningen ändrar aldrig barnets ord i tysthet (data/test-fraser.json p3_tolkning)", () => {
-+  const rader = (fraser as unknown as { p3_tolkning: { fraser: { fras: string; aldrig?: string[]; kropp?: string; agg?: string; formel?: string; fraga?: string; sparr?: boolean }[] } }).p3_tolkning.fraser;
-+  assert.ok(rader.length >= 10);
-+  for (const r of rader) {
-+    const u = tolkaMedReserv(r.fras);
-+    const namn = JSON.stringify(r.fras);
-+    if (r.sparr) {
-+      assert.equal(u.typ, "sparr", namn);
-+      continue;
-+    }
-+    if (r.kropp) assert.equal(u.typ, "skapad", `${namn}: ${u.typ}`);
-+    if (r.fraga) {
-+      assert.equal(u.typ, "forslag", namn);
-+      if (u.typ === "forslag") assert.deepEqual(u.forslag.map((f) => f.id), [r.fraga], namn);
-+    }
-+    if (u.typ === "skapad") {
-+      const ord = u.varelse.formel.split(/\s+/);
-+      for (const a of r.aldrig ?? []) assert.ok(!ord.includes(a), `${namn} → "${u.varelse.formel}" innehåller ${a}`);
-+      if (r.formel) assert.equal(u.varelse.formel, r.formel, namn);
-+      if (r.kropp) assert.equal(u.varelse.kropp, r.kropp, namn);
-+      if (r.agg) {
-+        assert.ok(u.okanda.includes(r.agg), `${namn}: ${r.agg} inte sparat som okänt`);
-+        assert.ok(u.meddelanden.some((m) => m.includes(r.agg!)), `${namn}: barnet får inte veta om ${r.agg}`);
-+      }
-+      // generellt: varje ord barnet skrev finns i formeln, är ett känt funktionsord eller sägs till om (okända)
-+      for (const t of r.fras.toLocaleLowerCase("sv").split(/\s+/)) {
-+        if (["en", "ett"].includes(t)) continue;
-+        assert.ok(u.okanda.includes(t) || u.varelse.formel.includes(t) || u.funna.length > 0, `${namn}: ordet ${t} försvann tyst`);
-+      }
-+    } else if (!r.fraga) assert.ok(u.typ === "forslag" || u.typ === "behover_djur", `${namn}: ${u.typ}`);
-+    if (u.typ === "forslag") for (const a of r.aldrig ?? []) assert.ok(!u.forslag.some((f) => f.id === a) || r.fraga === a || u.token !== r.fras, namn);
-+  }
-+});
-+
 +test("P3 (Doodle 15:35): småsaker har rimlig inbördes storlek – pucken är mindre än kaffekoppen, ordningen följer målhöjden", () => {
 +  // modellernas egna mått (GLB-bbox: höjd, bredd, djup), uppmätta 2026-10-20
 +  const matt: Record<string, [number, number, number]> = { puck: [0.08, 0.24, 0.24], kaffekopp: [0.25, 0.32, 0.32], kopp: [0.2, 0.23, 0.29], tallrik: [0.1, 0.95, 0.95] };
@@ -1591,14 +1125,6 @@ index 0000000..54c1935
 +  assert.ok(storst("kaffekopp") <= storst("kopp") + 1e-9 && storst("kopp") <= storst("tallrik") + 1e-9, "kaffekopp ≤ kopp ≤ tallrik (målhöjd 0,4 / 0,5 / 0,5)");
 +  // ingen småsak försvinner: största måttet minst storlek × (1 − lutning) + lutning × målhöjd
 +  assert.ok(storst("puck") >= 0.3, `puck ${storst("puck")}`);
-+});
-+
-+test("P3: inget ord som har en modell spärras (delordsmatchning mot korta stammar)", () => {
-+  const ent = (entJson as unknown as { entiteter: Record<string, { ord?: string[] }> }).entiteter;
-+  const ord = [...new Set(Object.values(ent).flatMap((e) => e.ord ?? []))];
-+  const sparrade = ord.filter((w) => arSparrat(`en ${w}`) || arSparrat(`en röd ${w}`));
-+  assert.deepEqual(sparrade, []);
-+  for (const w of ["porr", "en porrkanin", "pooorr"]) assert.ok(arSparrat(w), w);
 +});
 +
 diff --git a/src/spel/p3a.test.ts b/src/spel/p3a.test.ts
@@ -1758,10 +1284,10 @@ index 0000000..cebf27b
 +});
 diff --git a/src/spel/placering.ts b/src/spel/placering.ts
 new file mode 100644
-index 0000000..065bd71
+index 0000000..c4f08da
 --- /dev/null
 +++ b/src/spel/placering.ts
-@@ -0,0 +1,179 @@
+@@ -0,0 +1,193 @@
 +// P3a: EN placeringsregel för alla platser. Ren logik (ingen three), testas i Node. Data: data/placering.json.
 +//  - Varje plats har band per roll (mark, vatten, luft, bak), delade i rutor. Rollen kommer ur saken: simmare på vattnet,
 +//    flygare i luften, stora saker (storlek.json zon "bak") i det bakre bandet, resten på marken.
@@ -1785,6 +1311,8 @@ index 0000000..065bd71
 +  max_skymd: number;
 +  steg: { x: number; z: number; y: number };
 +  vickning: Record<Roll, number>;
++  vrid?: { djur: number };
++  krymp_min?: number;
 +  djup: number;
 +  skarm_reserverat: (Ruta & { namn: string })[];
 +  platser: Record<string, PlatsRegel>;
@@ -1809,13 +1337,14 @@ index 0000000..065bd71
 +  return "mark";
 +}
 +
-+export type Lage = { x: number; y: number; z: number; roll: Roll; /** skärmrutan som regeln räknade med */ r: Ruta; stall: boolean };
++export type Lage = { x: number; y: number; z: number; roll: Roll; /** skärmrutan som regeln räknade med */ r: Ruta; stall: boolean; /** den nya ritas så här mycket mindre när den annars inte ryms i bild */ krymp?: number };
 +
 +/** Kroppens mått på djupet z: halva bredden, höjden och djupet (barnets storleksord, taket och minsta synliga storlek). */
 +export function kroppMatt(d: Pick<Sparad, "kropp" | "skala">, z: number, plats?: Plats): { halv: number; hojd: number; djup: number; f: number } {
 +  const f = ritSkala(d, z, plats);
-+  const halv = halvBredd(d.kropp, d.skala || 1) * f;
-+  return { halv, hojd: malhojd(d.kropp) * takSkala(d.kropp, d.skala || 1) * f, djup: Math.max(0.2, halv * PLACERING.djup), f };
++  const vrid = ENTITETER[d.kropp]?.typ === "djur" ? (PLACERING.vrid?.djur ?? 1) : 1;
++  const halv = halvBredd(d.kropp, d.skala || 1) * f * vrid;
++  return { halv, hojd: malhojd(d.kropp) * takSkala(d.kropp, d.skala || 1) * f, djup: Math.max(0.2, (halv / vrid) * PLACERING.djup), f };
 +}
 +
 +/** Hur mycket djur.tsx ritar kroppen större/mindre: platsens skala (data) × minsta synliga storlek på djupet z. */
@@ -1861,6 +1390,7 @@ index 0000000..065bd71
 +    const band = regel.band[roll] ?? regel.band.mark!;
 +    // bäst = en ledig ruta (först funnen, främst). Annars stall: den minst dåliga rutan som ändå står på rätt underlag
 +    // (fel = 0: ingen kropp i vägen, 1: utanför bild – där syns den inte, 2: i en annan kropp; sedan minst skymning)
++    const sok = (d: Sparad) => {
 +    let bast: { lage: Lage; kost: number; fel: number; m: ReturnType<typeof kroppMatt> } | null = null;
 +    for (const [x, y, z] of rutor(band, roll)) {
 +      const m = kroppMatt(d, z, plats);
@@ -1890,6 +1420,15 @@ index 0000000..065bd71
 +      }
 +      if (!bast || fel < bast.fel || (fel === bast.fel && kost < bast.kost - 1e-9)) bast = { lage, kost, fel, m };
 +    }
++    return bast;
++    };
++    let bast = sok(d);
++    let krymp = 1;
++    // den nya får alltid en ruta: ryms den inte ens så (för stor för bilden) ritas den mindre, högst ned till krymp_min
++    for (let k = 0.9; d === ordning[0] && bast?.lage.stall !== false && k >= (PLACERING.krymp_min ?? 0.6) - 1e-9; k -= 0.1) {
++      const b = sok({ ...d, skala: (d.skala || 1) * k });
++      if (b && !b.lage.stall) [bast, krymp] = [b, Math.round(k * 100) / 100];
++    }
 +    if (!bast) {
 +      // inget läge alls på rätt underlag (bör inte hända): längst bak i mitten, i stallet
 +      const z = band.z[0];
@@ -1897,7 +1436,8 @@ index 0000000..065bd71
 +      ut.set(d.uid, { x: 0, y: band.y?.[0] ?? 0, z, roll, r: sakRuta(0, z, m.halv, m.hojd, m.djup), stall: true });
 +      continue;
 +    }
-+    const { lage, m } = bast;
++    const { m } = bast;
++    const lage = krymp < 1 ? { ...bast.lage, krymp } : bast.lage;
 +    ut.set(d.uid, lage);
 +    if (lage.stall) {
 +      // i stallet tar den ingen plats på skärmen, men ingen annan i stallet ställs ovanpå den
@@ -1940,343 +1480,6 @@ index 0000000..065bd71
 +export function iStallet(alla: readonly Sparad[], plats?: Plats): Sparad[] {
 +  const l = placeraMedMinne(alla, plats);
 +  return alla.filter((d) => l.get(d.uid)?.stall);
-+}
-diff --git a/src/spel/plagg/Plagg.tsx b/src/spel/plagg/Plagg.tsx
-new file mode 100644
-index 0000000..3c72aea
---- /dev/null
-+++ b/src/spel/plagg/Plagg.tsx
-@@ -0,0 +1,173 @@
-+// P3: kläderna (data/plagg.json) ritas PÅ skapelsen, inte bredvid den på marken. Kroppsdelarna härleds ur skapelsens
-+// egna meshar (plagg/data.ts kroppsdelar), mäts om när kroppen byts (procedurkropp → GLB) och följer huvudets ben
-+// när modellen har ett. En komponent för alla plagg; inget per plagg i koden.
-+import { useGLTF } from "@react-three/drei";
-+import { useFrame } from "@react-three/fiber";
-+import { Suspense, useMemo, useRef, useState, type RefObject } from "react";
-+import { SkeletonUtils } from "three-stdlib";
-+import * as THREE from "three";
-+import type { Sparad } from "../brygga.ts";
-+import { entitet, framVinkel, modellUrl } from "../entiteter.ts";
-+import { belysScen } from "../belys.ts";
-+import { fargaKlon, metallNoll } from "../gltfDjur.tsx";
-+import { arPlagg, kroppsdelar, MODELLER, plaggLage, plaggRegel, type Kroppsdelar, type Punkt } from "./data.ts";
-+
-+declare global {
-+  interface Window {
-+    /** P3, för prov: per skapelse, varje plagg och kroppen som världsrutor [min, max]. */
-+    __tredPlagg?: Record<string, { id: string; del: string; kropp: [Punkt, Punkt]; plagg: [Punkt, Punkt] }[]>;
-+  }
-+}
-+
-+const MAX_PER_MESH = 900;
-+const _v = new THREE.Vector3();
-+const _inv = new THREE.Matrix4();
-+
-+/** Kroppens punkter i `rum`-gruppens lokala koordinater (skinnade meshar i sin nuvarande pose). */
-+function punkterUr(kropp: THREE.Object3D, rum: THREE.Object3D): { xyz: Float32Array; sign: string } {
-+  rum.updateWorldMatrix(true, true);
-+  _inv.copy(rum.matrixWorld).invert();
-+  const ut: number[] = [];
-+  const sign: string[] = [];
-+  kropp.traverseVisible((o) => {
-+    const m = o as THREE.Mesh;
-+    if (!m.isMesh || !m.geometry?.attributes?.position) return;
-+    const pos = m.geometry.attributes.position;
-+    sign.push(`${m.geometry.uuid}:${pos.count}`);
-+    const steg = Math.max(1, Math.ceil(pos.count / MAX_PER_MESH));
-+    const skinn = (m as THREE.SkinnedMesh).isSkinnedMesh ? (m as THREE.SkinnedMesh) : null;
-+    for (let i = 0; i < pos.count; i += steg) {
-+      _v.fromBufferAttribute(pos, i);
-+      if (skinn) skinn.applyBoneTransform(i, _v);
-+      _v.applyMatrix4(m.matrixWorld).applyMatrix4(_inv);
-+      ut.push(_v.x, _v.y, _v.z);
-+    }
-+  });
-+  return { xyz: new Float32Array(ut), sign: sign.join("|") };
-+}
-+
-+function huvudBen(kropp: THREE.Object3D): THREE.Object3D | null {
-+  let hit: THREE.Object3D | null = null;
-+  kropp.traverse((o) => {
-+    if (!hit && (o as THREE.Bone).isBone && /head|huvud/i.test(o.name)) hit = o;
-+  });
-+  return hit;
-+}
-+
-+export function PlaggPaKropp({ spec, kropp }: { spec: Sparad; kropp: RefObject<THREE.Group | null> }) {
-+  const ids = useMemo(() => [...new Set(spec.tillbehor.map((t) => t.id).filter(arPlagg))], [spec.tillbehor]);
-+  const rum = useRef<THREE.Group>(null);
-+  const huvud = useRef<THREE.Group>(null);
-+  const [delar, setDelar] = useState<Kroppsdelar | null>(null);
-+  const sign = useRef("");
-+  const ben = useRef<{ ben: THREE.Object3D; vila: THREE.Vector3 } | null>(null);
-+  const ram = useRef(0);
-+  useFrame(() => {
-+    const k = kropp.current;
-+    const r = rum.current;
-+    if (!k || !r || !ids.length) return;
-+    ram.current += 1;
-+    // mät om när kroppen byts (procedurkroppen ersätts av modellen när den har laddats)
-+    if (ram.current % 12 === 1) {
-+      let s = "";
-+      k.traverseVisible((o) => {
-+        const m = o as THREE.Mesh;
-+        if (m.isMesh) s += m.geometry?.uuid ?? "";
-+      });
-+      if (s && s !== sign.current) {
-+        const { xyz } = punkterUr(k, r);
-+        const ny = kroppsdelar(xyz, MODELLER[spec.kropp] ?? {});
-+        if (ny) {
-+          sign.current = s;
-+          setDelar(ny);
-+          const b = huvudBen(k);
-+          ben.current = b ? { ben: b, vila: r.worldToLocal(b.getWorldPosition(new THREE.Vector3())) } : null;
-+        }
-+      }
-+    }
-+    // huvudets plagg följer huvudbenet (idle, dans) när modellen har ett
-+    const h = huvud.current;
-+    if (h && ben.current) {
-+      const nu = r.worldToLocal(ben.current.ben.getWorldPosition(_v));
-+      h.position.copy(nu).sub(ben.current.vila);
-+    }
-+    if (typeof window !== "undefined" && window.__tredPlagg && ram.current % 15 === 0) {
-+      const kb = new THREE.Box3().setFromObject(k);
-+      const rad: NonNullable<Window["__tredPlagg"]>[string] = [];
-+      r.traverse((o) => {
-+        const id = o.userData.plagg as string | undefined;
-+        if (!id) return;
-+        const pb = new THREE.Box3().setFromObject(o);
-+        if (pb.isEmpty() || kb.isEmpty()) return;
-+        rad.push({ id, del: plaggRegel(id)?.del ?? "", kropp: [kb.min.toArray(), kb.max.toArray()], plagg: [pb.min.toArray(), pb.max.toArray()] });
-+      });
-+      window.__tredPlagg[spec.uid] = rad;
-+    }
-+  });
-+  if (!ids.length) return null;
-+  const farg = (id: string) => spec.tillbehor.find((t) => t.id === id)?.farg ?? null;
-+  return (
-+    <group ref={rum} name="plagg">
-+      {delar ? (
-+        <>
-+          <group ref={huvud}>
-+            {ids.filter((id) => plaggRegel(id)?.del === "huvud").map((id) => (
-+              <Suspense key={id} fallback={null}>
-+                <EttPlagg id={id} farg={farg(id)} delar={delar} />
-+              </Suspense>
-+            ))}
-+          </group>
-+          {ids.filter((id) => plaggRegel(id)?.del !== "huvud").map((id) => (
-+            <Suspense key={id} fallback={null}>
-+              <EttPlagg id={id} farg={farg(id)} delar={delar} />
-+            </Suspense>
-+          ))}
-+        </>
-+      ) : null}
-+    </group>
-+  );
-+}
-+
-+/** Ett plagg: modellen vriden med bredsidan mot kameran, botten i y = 0 och mitten i x/z = 0, sedan läge och skala ur kroppsdelen. */
-+function EttPlagg({ id, farg, delar }: { id: string; farg: string | null; delar: Kroppsdelar }) {
-+  const gltf = useGLTF(modellUrl(id)!);
-+  const { klon, box } = useMemo(() => {
-+    belysScen(gltf.scene);
-+    const c = SkeletonUtils.clone(gltf.scene) as THREE.Object3D;
-+    metallNoll(c);
-+    if (farg) fargaKlon(c, { kropp: id, farg } as Sparad);
-+    const r = plaggRegel(id);
-+    const ax = entitet(id)?.framAxel;
-+    c.updateMatrixWorld(true);
-+    let b = new THREE.Box3().setFromObject(c);
-+    // bredsidan mot kameran: ett plagg för bålen/halsen/höften som är djupare än brett ligger på sidan i sin fil
-+    const vrid = ax ? framVinkel(ax) : r && r.del !== "huvud" && r.del !== "fotter" && b.max.z - b.min.z > 1.3 * (b.max.x - b.min.x) ? Math.PI / 2 : 0;
-+    const v = new THREE.Group();
-+    v.rotation.y = vrid;
-+    v.add(c);
-+    v.updateMatrixWorld(true);
-+    b = new THREE.Box3().setFromObject(v);
-+    const inre = new THREE.Group();
-+    inre.add(v);
-+    v.position.set(-(b.min.x + b.max.x) / 2, -b.min.y, -(b.min.z + b.max.z) / 2);
-+    return { klon: inre, box: [b.max.x - b.min.x, b.max.y - b.min.y, b.max.z - b.min.z] as Punkt };
-+  }, [gltf.scene, id, farg]);
-+  const lage = plaggLage(id, delar, box);
-+  const par = lage?.par ?? 1;
-+  const andra = useMemo(() => (par > 1 ? SkeletonUtils.clone(klon) : null), [klon, par]);
-+  if (!lage) return null;
-+  const [x, y, z] = lage.pos;
-+  const isar = lage.par > 1 ? (box[0] * lage.skala) / 2 + 0.02 : 0;
-+  return (
-+    <group position={[x, y, z]} scale={lage.skala} userData={{ plagg: id }}>
-+      <group position={[-isar / lage.skala, 0, 0]}>
-+        <primitive object={klon} />
-+      </group>
-+      {andra ? (
-+        <group position={[isar / lage.skala, 0, 0]}>
-+          <primitive object={andra} />
-+        </group>
-+      ) : null}
-+    </group>
-+  );
-+}
-diff --git a/src/spel/plagg/data.ts b/src/spel/plagg/data.ts
-new file mode 100644
-index 0000000..aa03b49
---- /dev/null
-+++ b/src/spel/plagg/data.ts
-@@ -0,0 +1,152 @@
-+// P3: kläder på skapelsen. Rena funktioner över data/plagg.json (ingen three-import, testas i Node).
-+// Kroppsdelarna (huvud, hals, kropp, höft, fötter, hand) härleds generellt ur skapelsens egna punkter i höjdband,
-+// så att mössan hamnar på huvudet på en kanin, en häst, en fisk eller en bil utan en rad per modell.
-+import plaggJson from "../../../data/plagg.json" with { type: "json" };
-+
-+export type DelNamn = "huvud" | "hals" | "kropp" | "hoft" | "fotter" | "hand";
-+export const DELNAMN: readonly DelNamn[] = ["huvud", "hals", "kropp", "hoft", "fotter", "hand"];
-+export type DelRegel = { band: [number, number]; fyll: number; maxH: number; sjunk?: number; fram?: number };
-+export type PlaggRad = { del: DelNamn; fyll?: number; maxH?: number; par?: boolean };
-+/** Rättning per kropp: andelar (0–1) av kroppens ruta för en dels mitt, och/eller dess bredd som andel av rutans bredd. */
-+export type DelRatt = { f?: [number, number, number]; bredd?: number };
-+
-+type PlaggData = { delar: Record<DelNamn, DelRegel>; plagg: Record<string, PlaggRad>; modeller: Record<string, Partial<Record<DelNamn, DelRatt>>> };
-+const D = plaggJson as unknown as PlaggData;
-+export const DELAR = D.delar;
-+export const PLAGG = D.plagg;
-+export const MODELLER = D.modeller;
-+
-+export function arPlagg(id: string): boolean {
-+  return !!PLAGG[id];
-+}
-+
-+/** Regeln för plagget: delens regel med plaggets egna fyll/maxH ovanpå. */
-+export function plaggRegel(id: string): (DelRegel & { del: DelNamn; par: boolean }) | null {
-+  const p = PLAGG[id];
-+  if (!p) return null;
-+  const r = DELAR[p.del];
-+  return { ...r, fyll: p.fyll ?? r.fyll, maxH: p.maxH ?? r.maxH, del: p.del, par: !!p.par };
-+}
-+
-+export type Punkt = [number, number, number];
-+/** En kroppsdel: mitt (x, y, z), bredd (x), djup (z), framkant (z), topp och botten (y). */
-+export type Kroppsdel = { x: number; y: number; z: number; bredd: number; djup: number; fram: number; topp: number; botten: number };
-+export type Kroppsdelar = Record<DelNamn, Kroppsdel> & { ruta: { min: Punkt; max: Punkt } };
-+
-+function kvantil(s: number[], q: number): number {
-+  if (!s.length) return 0;
-+  const i = Math.min(s.length - 1, Math.max(0, Math.round(q * (s.length - 1))));
-+  return s[i]!;
-+}
-+
-+/**
-+ * Kroppsdelarna ur skapelsens punkter (lokala koordinater, +y upp, +z mot kameran). Varje del är punkterna i delens
-+ * höjdband (data/plagg.json `delar.*.band`, andelar av höjden): mitten är bandets median, bredden 10–90 %-spannet i x.
-+ * Huvudets topp är bandets översta punkt, handen kroppsbandets högra kant. `ratt` (data `modeller`) ersätter en dels mitt/bredd.
-+ * `xyz` = platta punkter [x0, y0, z0, x1, …].
-+ */
-+export function kroppsdelar(xyz: ArrayLike<number>, ratt: Partial<Record<DelNamn, DelRatt>> = {}): Kroppsdelar | null {
-+  const n = Math.floor(xyz.length / 3);
-+  if (n < 4) return null;
-+  const min: Punkt = [Infinity, Infinity, Infinity];
-+  const max: Punkt = [-Infinity, -Infinity, -Infinity];
-+  for (let i = 0; i < n; i++)
-+    for (let k = 0; k < 3; k++) {
-+      const v = xyz[i * 3 + k]!;
-+      if (v < min[k]!) min[k] = v;
-+      if (v > max[k]!) max[k] = v;
-+    }
-+  const H = Math.max(1e-4, max[1] - min[1]);
-+  const W = Math.max(1e-4, max[0] - min[0]);
-+  const ut = { ruta: { min, max } } as Kroppsdelar;
-+  for (const namn of DELNAMN) {
-+    const [a, b] = DELAR[namn].band;
-+    const y0 = min[1] + a * H;
-+    const y1 = min[1] + b * H;
-+    const xs: number[] = [];
-+    const ys: number[] = [];
-+    const zs: number[] = [];
-+    for (let i = 0; i < n; i++) {
-+      const y = xyz[i * 3 + 1]!;
-+      if (y < y0 - 1e-6 || y > y1 + 1e-6) continue;
-+      xs.push(xyz[i * 3]!);
-+      ys.push(y);
-+      zs.push(xyz[i * 3 + 2]!);
-+    }
-+    if (!xs.length) {
-+      xs.push((min[0] + max[0]) / 2);
-+      ys.push((y0 + y1) / 2);
-+      zs.push((min[2] + max[2]) / 2);
-+    }
-+    xs.sort((p, q) => p - q);
-+    ys.sort((p, q) => p - q);
-+    zs.sort((p, q) => p - q);
-+    const del: Kroppsdel = {
-+      x: (kvantil(xs, 0.1) + kvantil(xs, 0.9)) / 2,
-+      y: kvantil(ys, 0.5),
-+      z: kvantil(zs, 0.5),
-+      bredd: Math.max(0.05 * W, kvantil(xs, 0.9) - kvantil(xs, 0.1)),
-+      djup: Math.max(0.02, kvantil(zs, 0.9) - kvantil(zs, 0.1)),
-+      fram: kvantil(zs, DELAR[namn].fram ?? 0.9),
-+      topp: kvantil(ys, 0.99),
-+      botten: kvantil(ys, 0.01),
-+    };
-+    if (namn === "hand") {
-+      del.x = kvantil(xs, 0.95);
-+      del.y = (y0 + y1) / 2;
-+    }
-+    const r = ratt[namn];
-+    if (r?.f) {
-+      del.x = min[0] + r.f[0] * W;
-+      del.y = min[1] + r.f[1] * H;
-+      del.z = min[2] + r.f[2] * (max[2] - min[2]);
-+      del.topp = del.y;
-+      del.fram = Math.max(del.fram, del.z);
-+    }
-+    if (r?.bredd) del.bredd = r.bredd * W;
-+    ut[namn] = del;
-+  }
-+  return ut;
-+}
-+
-+/** Plaggets läge och skala. `box` = plaggets egen storlek [b, h, d] efter vridning, botten i y = 0 och mitten i x/z = 0. */
-+export function plaggLage(id: string, k: Kroppsdelar, box: Punkt): { pos: Punkt; skala: number; par: number } | null {
-+  const r = plaggRegel(id);
-+  if (!r) return null;
-+  const H = k.ruta.max[1] - k.ruta.min[1];
-+  const d = k[r.del];
-+  const [bw, bh, bd] = [Math.max(1e-4, box[0]), Math.max(1e-4, box[1]), Math.max(1e-4, box[2])];
-+  const par = r.par ? 2 : 1;
-+  // hand: storleken efter kroppens höjd (trollstaven ska synas), annars efter delens bredd
-+  let s = r.del === "hand" ? (r.fyll * H) / Math.max(bh, bw) : (d.bredd * r.fyll) / par / bw;
-+  s = Math.min(s, (r.maxH * H) / bh);
-+  const h = bh * s;
-+  let y: number;
-+  let z = d.z;
-+  if (r.del === "huvud") y = d.topp - (r.sjunk ?? 0) * h;
-+  else if (r.del === "fotter") {
-+    y = k.ruta.min[1];
-+    z = d.fram - (bd * s) / 2;
-+  } else if (r.del === "hals") {
-+    y = d.y - h / 2;
-+    z = d.fram;
-+  } else y = d.y - h / 2;
-+  return { pos: [d.x, y, z], skala: s, par };
-+}
-+
-+/** Granskar datan mot entiteterna. Tom lista = ok. */
-+export function kontrolleraPlagg(kladIds: string[]): string[] {
-+  const fel: string[] = [];
-+  for (const id of kladIds) if (!PLAGG[id]) fel.push(`${id}: kläd-entitet utan rad i data/plagg.json`);
-+  for (const [id, p] of Object.entries(PLAGG)) {
-+    if (!DELNAMN.includes(p.del)) fel.push(`${id}: okänd del ${String(p.del)}`);
-+    if (p.fyll !== undefined && !(p.fyll > 0)) fel.push(`${id}: ogiltig fyll`);
-+    if (p.maxH !== undefined && !(p.maxH > 0)) fel.push(`${id}: ogiltig maxH`);
-+  }
-+  for (const n of DELNAMN) {
-+    const r = DELAR[n];
-+    if (!r || r.band[0] < 0 || r.band[1] > 1 || r.band[0] >= r.band[1]) fel.push(`delar.${n}: ogiltigt band`);
-+  }
-+  for (const [kropp, rr] of Object.entries(MODELLER)) for (const n of Object.keys(rr)) if (!DELNAMN.includes(n as DelNamn)) fel.push(`modeller.${kropp}: okänd del ${n}`);
-+  return fel;
 +}
 diff --git a/src/spel/platsYta.ts b/src/spel/platsYta.ts
 index f7ea41c..29774ea 100644
@@ -2415,6 +1618,21 @@ index f7ea41c..29774ea 100644
 +export function synligHalv(wz: number): number {
 +  return 0.25 * (9.8 - wz);
  }
+diff --git a/src/spel/platser.test.ts b/src/spel/platser.test.ts
+index 6ebaab3..d24f0f7 100644
+--- a/src/spel/platser.test.ts
++++ b/src/spel/platser.test.ts
+@@ -71,7 +71,9 @@ test("B1.3a: en skapelse i skogen hamnar i platsSkapelser.skogen, ängen oförä
+   assert.equal(e.platsSkapelser.skogen?.length, 2);
+   assert.deepEqual(e.ang.map((a) => a.uid), angFore, "ang är oförändrad");
+   for (let i = 0; i < 12; i++) useMinne.getState().laggPaAng(v, 1);
+-  assert.equal(useMinne.getState().platsSkapelser.skogen?.length, 10, "samma tak på 10");
++  // P3a: taket är 10, men den som inte får en ledig ruta (placeringsregeln) somnar – högst 10, och den senaste är kvar
++  const skogen = useMinne.getState().platsSkapelser.skogen ?? [];
++  assert.ok(skogen.length <= 10 && skogen.length >= 5, `samma tak på 10 (${skogen.length})`);
+   useMinne.getState().aterstall();
+ });
+ 
 diff --git a/src/spel/r8-2b.test.ts b/src/spel/r8-2b.test.ts
 index e303366..2037a41 100644
 --- a/src/spel/r8-2b.test.ts
@@ -2574,146 +1792,3 @@ index 2579afa..7f0df82 100644
      };
    }, [uid]);
    return { ref, klar };
-diff --git a/src/tolk/reserv.ts b/src/tolk/reserv.ts
-index f1a5200..d1ad9db 100644
---- a/src/tolk/reserv.ts
-+++ b/src/tolk/reserv.ts
-@@ -154,13 +154,15 @@ export function tolkaMedReserv(raw: string, opts: TolkaOpts = {}): Utfall {
-     const i = kvar.indexOf(u.token);
-     const plats = platsAv(kvar, i < 0 ? 0 : i);
-     const kand = R.forslag.ej_om_kand && ["kategori_ord", "lemma"].includes(kategoriFor(u.token, plats).steg);
--    const bra = kand ? [] : trovardiga(u.token, plats, u.forslag);
-+    // P3: efterledet ur barnets eget ord ("ullkanin" → kanin) är alltid en trovärdig fråga, oavsett stavningsavstånd
-+    const bra = u.efterled ? u.forslag : kand ? [] : trovardiga(u.token, plats, u.forslag);
-     if (bra.length) {
-       return {
-         typ: "forslag",
-         token: u.token,
-         text: bra.length === 1 ? `Menade du ${bra[0]!.visa}?` : "Menade du …?",
-         forslag: bra.map((f) => ({ id: f.id, visa: f.visa })),
-+        ...(u.efterled ? { efterled: true } : {}),
-       };
-     }
-     bort.push(u.token);
-diff --git a/src/tolk/sparr.ts b/src/tolk/sparr.ts
-index 6e66d9f..afec130 100644
---- a/src/tolk/sparr.ts
-+++ b/src/tolk/sparr.ts
-@@ -17,12 +17,22 @@ export function normSparr(s: string): string {
- }
- 
- const EXAKT = new Set(BLOCK.ord.map(normSparr));
--const STAMMAR = BLOCK.stammar.filter((s) => s.length >= 4).map(normSparr);
-+// P3 (Doodle: "en sportbil" spärrades): en stam som krymper under fyra bokstäver när dubbelbokstäver slås ihop
-+// ("porr" → "por") matchade inne i vanliga ord ("sportbil"). Sådana stammar jämförs med dubbelbokstaven kvar.
-+const STAMMAR = BLOCK.stammar
-+  .filter((s) => s.length >= 4)
-+  .map((s) => (normSparr(s).length >= 4 ? { stam: normSparr(s), dubbel: false } : { stam: normDubbelRa(s), dubbel: true }));
- const UNDANTAG = new Set(BLOCK.undantag_fran_stammar.map(normSparr));
- 
--function stamTraff(n: string): boolean {
-+function normDubbelRa(s: string): string {
-+  let t = s.toLocaleLowerCase("sv").replace(/0/g, "o").replace(/1/g, "i").replace(/3/g, "e").replace(/4/g, "a").replace(/5/g, "s").replace(/7/g, "t");
-+  t = t.replace(/[^a-zåäö]/g, "");
-+  return t.replace(/(.)\1{2,}/g, "$1$1");
-+}
-+
-+function stamTraff(n: string, d: string): boolean {
-   if (!n || UNDANTAG.has(n)) return false;
--  return STAMMAR.some((stam) => stam.length >= 3 && n.includes(stam));
-+  return STAMMAR.some((s) => (s.dubbel ? d.includes(s.stam) : n.includes(s.stam)));
- }
- 
- function arOrdform(token: string): boolean {
-@@ -41,7 +51,7 @@ export function arSparrat(raw: string): boolean {
-   const kolla = (text: string) => {
-     const n = normSparr(text);
-     if (!n || UNDANTAG.has(n)) return false;
--    return EXAKT.has(n) || stamTraff(n);
-+    return EXAKT.has(n) || stamTraff(n, normDubbelRa(text));
-   };
- 
-   for (const t of tokens) {
-diff --git a/src/tolk/tolk.test.ts b/src/tolk/tolk.test.ts
-index 201e025..95c9815 100644
---- a/src/tolk/tolk.test.ts
-+++ b/src/tolk/tolk.test.ts
-@@ -162,18 +162,23 @@ test("ordkort ger inte guld", () => {
-   assert.ok(u.funna.includes("kanin"));
- });
- 
--test("blixtkatt sparar förleden", () => {
--  const u = skapad("blixtkatt");
--  assert.equal(u.varelse.kropp, "katt");
--  assert.ok(u.okanda.includes("blixt"));
--  assert.ok(u.meddelanden.some((m) => m.includes("blixt") && m.includes("sparat")));
--  assert.ok(!JSON.stringify(u.varelse).includes("blixt"));
-+// P3 (granskning 2.1/6.5): ett ord med okänt förled delas inte längre tyst ("blixt|katt" gav katten och sparade "blixt",
-+// "dans|ande" gav anden, "prinsess" blev "prins" + "ess"). Barnet får frågan om efterledet och väljer själv.
-+test("blixtkatt frågar: Menade du katt?", () => {
-+  const u = tolka("blixtkatt");
-+  assert.equal(u.typ, "forslag");
-+  if (u.typ !== "forslag") return;
-+  assert.equal(u.token, "blixtkatt");
-+  assert.equal(u.text, "Menade du katt?");
-+  assert.deepEqual(u.forslag.map((f) => f.id), ["katt"]);
-+  assert.equal(u.efterled, true);
- });
- 
--test("monsterkanin", () => {
--  const u = skapad("monsterkanin");
--  assert.equal(u.varelse.kropp, "kanin");
--  assert.ok(u.meddelanden.some((m) => m.startsWith("Ordet monster")));
-+test("monsterkanin frågar: Menade du kanin?", () => {
-+  const u = tolka("monsterkanin");
-+  assert.equal(u.typ, "forslag");
-+  if (u.typ !== "forslag") return;
-+  assert.equal(u.text, "Menade du kanin?");
- });
- 
- test("okänt ord utan djur", () => {
-diff --git a/src/tolk/tolka.ts b/src/tolk/tolka.ts
-index fd31f7a..156ed00 100644
---- a/src/tolk/tolka.ts
-+++ b/src/tolk/tolka.ts
-@@ -362,6 +362,13 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
-     const en = lasToken(token);
-     if (!en) {
-       const komp = delaOrd(token);
-+      // P3 (granskning 2.1/6.5): ett ord delas aldrig tyst för att hitta ett annat ord. Går förledet inte att läsa helt
-+      // (okända bitar: "dans|ande", "prinsess" → "prins" + "ess", "skratt|katt") skapas inte efterledet i tysthet –
-+      // barnet får frågan "Menade du katt?" och väljer själv (Nej → ordägg med hela ordet).
-+      if (komp?.t === "komp" && komp.okanda.length) {
-+        const visa = komp.suffix.ord.visa;
-+        return { typ: "forslag", token, text: `Menade du ${visa}?`, forslag: [{ id: komp.suffix.ord.id, visa }], efterled: true };
-+      }
-       if (komp) {
-         sem.push(komp);
-         continue;
-@@ -431,7 +438,11 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
-       const sak = dubbelSak(token);
-       const fore = i === 0 ? null : lasToken(tokens[i - 1] ?? "");
-       const efter = tokens[i + 1] === undefined ? null : lasToken(tokens[i + 1]!);
--      const fristaende = (i === 0 || fore?.t === "artikel" || fore?.t === "antal") && (tokens[i + 1] === undefined || efter?.t === "funk" || efter?.t === "artikel");
-+      // P3 (Doodle: "en gul eld", "en stor eld" blev "behöver ett djur"): fristående även med beskrivande ord före
-+      // (färg, storlek, egenskap) – bara artiklar, antal och sådana ord står före, och inget innehållsord efter
-+      const beskriver = (t: ReturnType<typeof lasToken> | null) => !!t && (t.t === "artikel" || t.t === "antal" || (t.t === "ord" && ["farg", "storlek", "egenskap"].includes(t.o.klass)));
-+      const bara = i === 0 || fore?.t === "artikel" || fore?.t === "antal" || tokens.slice(0, i).every((t) => beskriver(lasToken(t)));
-+      const fristaende = bara && (tokens[i + 1] === undefined || efter?.t === "funk" || efter?.t === "artikel");
-       if (sak && fristaende) {
-         sem.push({ t: "ord", o: { ...sak, genus: tokens[i - 1] === "ett" ? "n" : "u" }, form: token });
-         continue;
-diff --git a/src/tolk/typer.ts b/src/tolk/typer.ts
-index 6ce2d36..95a8658 100644
---- a/src/tolk/typer.ts
-+++ b/src/tolk/typer.ts
-@@ -121,7 +121,8 @@ export type ForslagKort = { id: string; visa: string };
- 
- export type Utfall =
-   | { typ: "sparr"; text: string }
--  | { typ: "forslag"; token: string; text: string; forslag: ForslagKort[] }
-+  /** P3: `efterled` = ordet är förled + känt efterled där förledet inte gick att läsa ("ullkanin" → "Menade du kanin?"). */
-+  | { typ: "forslag"; token: string; text: string; forslag: ForslagKort[]; efterled?: boolean }
-   | {
-       typ: "behover_djur";
-       text: string;
