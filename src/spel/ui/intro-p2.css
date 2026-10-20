@@ -1,0 +1,18 @@
+/* P2 – introts skrivscen (rundor/P2-start/RITNING.md). Egen fil: styles.css rörs inte. */
+.intro-skriv{position:absolute;z-index:4;left:0;right:0;bottom:0;pointer-events:auto;display:flex;flex-direction:column;gap:10px;
+  padding:14px 6px max(8px, env(safe-area-inset-bottom));background:var(--color-paper);border-radius:24px 24px 0 0;box-shadow:0 -6px 20px #0003}
+.intro-uppmaning{margin:0;text-align:center;font-family:var(--font-display);font-size:1.35rem;font-weight:700;color:var(--color-ink)}
+.intro-rutor{display:flex;justify-content:center;gap:8px}
+.intro-rutor.skak{animation:intro-skak .35s ease}
+.intro-ruta{width:56px;height:64px;border-radius:12px;background:#fff;border:3px solid var(--color-paper-deep);display:grid;place-items:center;
+  font-family:var(--font-display);font-size:2.3rem;font-weight:700;color:var(--color-moss-deep)}
+.intro-ruta.klar{border-color:var(--color-moss)}
+.intro-ruta.nu{border-color:var(--color-gold);box-shadow:0 0 0 4px #f2b63255}
+.intro-knappar{display:flex;gap:10px;padding:0 8px}
+.intro-vakna{flex:1;min-height:52px;border:0;border-radius:16px;background:#d9c7a3;color:#6b5a45;font-family:var(--font-display);font-size:1.4rem;font-weight:700}
+.intro-vakna.redo{background:var(--color-berry);color:var(--color-cream);box-shadow:0 4px 0 #8e2344;animation:intro-redo 1.2s ease-in-out infinite}
+.intro-hjalp,.intro-tillbaka{min-height:52px;padding:0 14px;border:3px solid var(--color-paper-deep);border-radius:16px;background:var(--color-cream);color:var(--color-ink);font-size:1rem;font-weight:800}
+.intro-tangenter .tangent.nasta{background:var(--color-gold);box-shadow:0 0 0 3px #fff8,0 0 16px 4px #f2b632cc;position:relative;z-index:1}
+@keyframes intro-skak{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes intro-redo{50%{transform:scale(1.03)}}
+@media (prefers-reduced-motion: reduce){.intro-rutor.skak,.intro-vakna.redo{animation:none}}

@@ -1,0 +1,39 @@
+{
+  "_om": "P2: den guidade starten. Stegen visas i ordning efter introt; ett steg är klart när villkoret i klart_nar är uppfyllt i sparningen (useMinne). Villkor: {falt, minst, varde?}. Fältet räknas som längden på en lista, antalet nycklar i ett objekt (eller antalet värden lika med varde), ett tal eller sant/falskt (1/0). pekar_pa: 'testid:a|testid:b' (första synliga) eller '3d:<namn>' (skärmpunkt i window.__tredMal). albumKropp = olika djursorter barnet väckt; introts kanin räknas, därför 2 för första egna djuret och 5 för tre till. Ändra här, ingen kod.",
+  "senast": {
+    "med_djur": "Senast väckte du {text}.",
+    "tom": "Ängen väntar på ditt första ord."
+  },
+  "steg": [
+    {
+      "id": "forsta-ordet",
+      "text": "Tryck på Pennans bok och skriv ett djur!",
+      "pekar_pa": "testid:pennans-bok",
+      "klart_nar": { "falt": "albumKropp", "minst": 2 }
+    },
+    {
+      "id": "bengtsson",
+      "text": "Bengtsson vill be dig om något. Tryck på honom!",
+      "pekar_pa": "testid:bengtsson-ikon|testid:npc-figur",
+      "klart_nar": { "falt": "uppdrag", "minst": 1 }
+    },
+    {
+      "id": "uppdraget",
+      "text": "Skriv det Bengtsson ber om i Pennans bok.",
+      "pekar_pa": "testid:pennans-bok",
+      "klart_nar": { "falt": "uppdrag", "varde": "klar", "minst": 1 }
+    },
+    {
+      "id": "tre-djur",
+      "text": "Väck tre djur till!",
+      "pekar_pa": "testid:pennans-bok",
+      "klart_nar": { "falt": "albumKropp", "minst": 5 }
+    },
+    {
+      "id": "grinden",
+      "text": "Grinden är öppen. Tryck på den och gå till Skogen!",
+      "pekar_pa": "3d:grind",
+      "klart_nar": { "falt": "seddaIntro", "minst": 1 }
+    }
+  ]
+}

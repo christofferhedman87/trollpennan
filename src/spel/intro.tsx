@@ -3,6 +3,7 @@ import introJson from "../../data/intro.json" with { type: "json" };
 import upplevelseJson from "../../data/upplevelse.json" with { type: "json" };
 import { sagaNu } from "./saga.ts";
 import { rostIntro } from "./rostManifest.ts";
+import { IntroSkriv, type IntroSkrivData } from "./ui/IntroSkriv.tsx";
 
 type Scen = { fas: number; text: string; fran: number; ord?: number; ordklar?: boolean };
 
@@ -14,6 +15,8 @@ const INTRO = introJson as {
   ord: string[];
   langd: number;
   scener: Scen[];
+  /** P2: finns den slutar introt med att barnet skriver ordet själv. */
+  skriv?: IntroSkrivData;
 };
 
 // TTS-1: Trollpennans förgenererade röst (data/rost-manifest.json) med egna scentider; annars saga.mp3 och tiderna i intro.json
@@ -196,7 +199,9 @@ export function Intro({
       <p className="intro-text" data-testid="intro-text">
         {scen.text}
       </p>
-      {scen.fas >= 5 ? (
+      {scen.fas >= 5 && INTRO.skriv ? (
+        <IntroSkriv cfg={INTRO.skriv} ideer={FORSTA_IDEER} onVakna={onIde} onIde={onIde} />
+      ) : scen.fas >= 5 ? (
         <div className="intro-ideer" data-testid="intro-ideer" role="group" aria-label={scen.text}>
           {FORSTA_IDEER.map((ex) => (
             <button key={ex} type="button" className="intro-ide" data-testid="intro-ide" onClick={() => onIde(ex)}>
