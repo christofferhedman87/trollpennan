@@ -16,7 +16,7 @@ import { AGG_KROPP, OrdAgg, ReservAgg } from "../ordagg.tsx";
 import { HumorIkon } from "./humorIkon.tsx";
 import { Ljusken } from "./ljusken.tsx";
 import type { Ljuskalla } from "../ljuskalla.ts";
-import { _mal, djurFarg, djurPlats, flygare, normDuk, simmare } from "./delat.ts";
+import { _mal, djurFarg, djurPlats, flygare, normDuk, simmare, synMatt } from "./delat.ts";
 
 export class ModellGren extends Component<{ spec: Sparad; children: ReactNode }, { fel: boolean }> {
   state = { fel: false };
@@ -216,6 +216,7 @@ export function Hjartan({ puls }: { puls: number }) {
 export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Sparad[]; plats?: Plats; ljus?: { kalla: Ljuskalla; vad: string } }) {
   const [x, y, z] = djurPlats(spec, alla, plats);
   const grupp = useRef<THREE.Group>(null);
+  const kroppRef = useRef<THREE.Group>(null);
   const skal = useRef(0.2);
   const fod = useRef(-1);
   const landad = useRef(false);
@@ -355,6 +356,8 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
         x: Math.round(rect.left + ((_mal.x + 1) / 2) * rect.width),
         y: Math.round(rect.top + ((1 - _mal.y) / 2) * rect.height),
       };
+      const kr = kroppRef.current;
+      if (window.__tredSyn && kr) window.__tredSyn[spec.uid] = synMatt(kr, state.camera, rect); // B6.6, för prov
     }
   });
   function ned(e: ThreeEvent<PointerEvent>) {
@@ -415,6 +418,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
         ))}
       </group>
       <group ref={grupp} position={[0, y, 0]}>
+        <group ref={kroppRef} name="kropp">
         {harModell(spec.kropp) ? (
           <ModellGren spec={spec}>
             <Suspense fallback={sak ? null : <DjurForm spec={spec} />}>
@@ -426,6 +430,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
         ) : (
           <DjurForm spec={spec} />
         )}
+        </group>
         <ReservAgg spec={spec} />
         <DjurEffekter varelse={spec} ankare={ankare} />
         {sak ? null : <HumorIkon uid={spec.uid} hojd={malhojd(spec.kropp) + 0.22} />}

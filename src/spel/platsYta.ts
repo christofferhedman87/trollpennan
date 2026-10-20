@@ -58,7 +58,21 @@ function harZoner(p: Plats | undefined): p is Plats {
 }
 
 /** Närmaste tillåtna punkt (platsrutnät STEG) till `onskad`, minst `min` från `upptagna`. Deterministisk. */
-function narmast(p: Plats, onskad: [number, number], upptagna: [number, number][], ok: (wx: number, wz: number) => boolean): [number, number] {
+/** B6.6: så långt ut i sidled (världsenheter) ser kameran en skapelse i stående läge (375 px). Förut kunde en flyttad
+ *  skapelse (bort från dammen) hamna utanför bildens högra kant. Hittas ingen plats inom gränsen söks utan gräns. */
+export const SYNLIG_X = 1.6;
+
+/** B6.6: längre fram (större z) ser kameran smalare, och en stor kropp (marginal m) sticker ut mot kameran. Bilden är
+ *  ≈ 0,25 · (9,8 − z) åt vardera hållet i stående läge (kameran på z 9,8, fov 58). Giraffen längst fram (z 2,6) stod förut utanför. */
+export function synligX(wz: number, m = 0): number {
+  return Math.min(SYNLIG_X, 0.25 * (9.8 - wz - m));
+}
+
+function narmast(p: Plats, onskad: [number, number], upptagna: [number, number][], ok: (wx: number, wz: number) => boolean, m = 0): [number, number] {
+  return narmastInom(p, onskad, upptagna, (wx, wz) => Math.abs(wx) <= synligX(wz, m) && ok(wx, wz)) ?? narmastInom(p, onskad, upptagna, ok) ?? onskad;
+}
+
+function narmastInom(p: Plats, onskad: [number, number], upptagna: [number, number][], ok: (wx: number, wz: number) => boolean): [number, number] | null {
   for (const min of [MIN_AVSTAND, MIN_AVSTAND / 2, 0]) {
     let bast: [number, number] | null = null;
     let bastD = Infinity;
@@ -76,7 +90,7 @@ function narmast(p: Plats, onskad: [number, number], upptagna: [number, number][
     }
     if (bast) return bast;
   }
-  return onskad;
+  return null;
 }
 
 /**
@@ -103,7 +117,7 @@ export function placeraPaPlats(
       ? (wx: number, wz: number) => iVatten(p, ...tillPlats(wx, wz))
       : (wx: number, wz: number) => torrKropp(p, wx, wz, m) && (!villkor || villkor(wx, wz));
     const fri = !ut.some(([ux, uz]) => Math.hypot(ux - o[0], uz - o[1]) < MIN_AVSTAND);
-    ut.push(ok(o[0], o[1]) && fri ? o : narmast(p, o, ut, ok));
+    ut.push(ok(o[0], o[1]) && fri ? o : narmast(p, o, ut, ok, simmare ? 0 : m));
   });
   return ut;
 }
