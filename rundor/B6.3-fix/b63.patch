@@ -380,7 +380,7 @@ index 0000000..9549359
 +
 +test("B6.3 (I, Doodle 08:26): ALLA skapelser på marken – djur och saker – står med kroppen utanför dammen", () => {
 +  // Doodles fall först (bowlingklot, akvarium, spjälsäng, påskägg, vattenpistol, filt, fiol), sedan varje entitet i lag om 10.
-+  const ENT = (entJson as { entiteter: Record<string, { modell?: string }> }).entiteter;
++  const ENT = (entJson as unknown as { entiteter: Record<string, { modell?: string }> }).entiteter;
 +  const doodle = ["bowlingklot", "akvarium", "spjalsang", "paskagg", "vattenpistol", "filt", "fiol", "mikroskop", "trumset", "ko"].filter((k) => k in ENT);
 +  const ovriga = Object.keys(ENT).filter((k) => ENT[k]!.modell && !flyger(k, []) && !simmar(k, []) && !doodle.includes(k)).sort();
 +  const lag = [doodle];
