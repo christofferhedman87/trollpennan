@@ -8,8 +8,14 @@
   "monster:regnbåge": ["regnbage"]
  },
  "i_kroppen": {
-  "_om": "Egenskaper som ritas av kroppen eller rörelsen och inte som effekt. Syns på procedurkroppar; på GLB-modeller är det kvar att kontrollera (B6.5 rör dem inte).",
+  "_om": "Egenskaper som ritas av kroppen eller rörelsen och inte som effekt. Procedurkroppar ritar dem själva; på GLB-modeller målas mönstren (ränder, prickar, regnbåge) på kroppen enligt 'kroppsmonster' (R8-3a2).",
   "lista": ["formaga:vingar", "formaga:fenor", "formaga:fartlinjer", "formaga:studs", "monster:ränder", "monster:prickar"]
+ },
+ "kroppsmonster": {
+  "_om": "R8-3a2: mönster som målas PÅ kroppen på alla GLB-modeller (src/spel/kroppsfarg.ts, en shader på kroppens material; ögon, betar och andra detaljer får inget). typ: band = färgband längs höjden, rander = ränder tvärs kroppens längsta led, prickar = runda prickar. farger = mönstrets färger; utan farger används ordets mönsterfärg (\"en röd och blå randig katt\") eller en mörkare ton av kroppen. antal = band, ränder eller prickar över kroppen. ersatter = effekten i 'effekter' som inte ritas när mönstret sitter på en GLB-kropp (regnbågen över djuret blir en regnbågsrandig kropp).",
+  "monster:regnbåge": { "typ": "band", "farger": ["#E53935", "#FB8C00", "#FDD835", "#43A047", "#1E88E5", "#8E24AA"], "antal": 6, "ersatter": "regnbage" },
+  "monster:ränder": { "typ": "rander", "antal": 5 },
+  "monster:prickar": { "typ": "prickar", "antal": 5 }
  },
  "particip": {
   "_om": "Ett okänt ord som slutar så och vars förled varken är ett känt förled eller ett djur är ett particip ('dansande'), inte en sammansättning med efterledet 'ande' (anden från M19). Det blir ett okänt ord ('Ordet … kan jag inte än'), aldrig en extra skapelse.",
