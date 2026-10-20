@@ -180,6 +180,15 @@ function tacktAv(b, fram, ram = false) {
   for (let y = b.y + 1; y < b.y + b.h; y += 2) for (let x = b.x + 1; x < b.x + b.w; x += 2) { n++; if (ute(x, y) || f.some((r) => x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h)) t++; }
   return n ? t / n : 0;
 }
+/** P3a torr 6 (T): andel av utsnittet b som visar andra djur – en punkt räknas om den ligger i en grannes ruta och inte
+ *  är dold bakom det egna djuret (punkten inne i egen ruta och grannen längre bak). */
+function syntAndra(b, egen, egenZ, andra) {
+  if (b.w <= 0 || b.h <= 0) return 0;
+  const inne = (r, x, y) => !!r && x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h;
+  let n = 0, t = 0;
+  for (let y = b.y + 1; y < b.y + b.h; y += 2) for (let x = b.x + 1; x < b.x + b.w; x += 2) { n++; if (andra.some((r) => inne(r, x, y) && !(r.z < egenZ && inne(egen, x, y)))) t++; }
+  return n ? t / n : 0;
+}
 const RESERVERAT = PLAC.skarm_reserverat.map((r) => ({ namn: r.namn, x: r.x0, y: r.y0, w: r.x1 - r.x0, h: r.y1 - r.y0 }));
 async function platsProv(plats, namn, kroppar) {
   const pre = kroppar.slice(0, 7).map((k, i) => sparad(`p-${plats}-${namn}-${i}`, k, 1000 + i));
@@ -280,7 +289,10 @@ await blok("T", async () => {
   await p.waitForSelector("canvas.titel-bild.klar", { timeout: 15000 }).catch(() => undefined);
   await p.waitForTimeout(600);
   const ut = await p.evaluate(() => { const c = document.querySelector("canvas.titel-bild"); return c ? { utsnitt: c.dataset.utsnitt ?? null, klar: c.classList.contains("klar") } : null; });
-  const syn = await p.evaluate(() => window.__tredSyn ?? {});
+  // P3a torr 6: kaninen hoppar av sig själv (entiteter.json hopp 0,55, var 3–4,5 s, upp till 0,45 m). Utsnittet klipps när
+  // kroppen står still, men mätningen kom mitt i ett hopp (lådans botten 0,41 m över marken, kroppen 36 px för högt).
+  // Mät därför när kaninen står på marken: lådans botten högst guppet (±0,04 m) över marken – ett villkor, ingen väntetid.
+  const syn = await p.waitForFunction((uid) => { const s = window.__tredSyn ?? {}; const k = s[uid]; return k && k.b && k.b[1] <= 0.06 ? JSON.parse(JSON.stringify(s)) : null; }, "t-5-kanin", { timeout: 15000, polling: 50 }).then((h) => h.jsonValue()).catch(() => p.evaluate(() => window.__tredSyn ?? {}));
   await bild(p, "p3-11-titel.png");
   if (bilder) await p.locator("canvas.titel-bild").first().screenshot({ path: path.join(bilder, "p3-11b-titel-utsnitt.png") }).catch(() => undefined);
   await ctx.close();
@@ -289,7 +301,11 @@ await blok("T", async () => {
   const [x, y, w, h] = (ut?.utsnitt ?? "").split(",").map(Number);
   const u = ut?.utsnitt ? { x, y, w, h } : null;
   const inne = u && r ? tacker(u, r) : 0;
-  const andra = u ? tacktAv(u, djur.slice(0, 5).map((k, i) => syn[`t-${i}-${k}`]).filter(Boolean)) : 1;
+  // Det som syns av andra djur i utsnittet: en granne som står bakom kaninen (lägre z) syns inte där kaninens kropp står
+  // (P3a torr 6: grisen bakom kaninen räknades med sina dolda delar, 30–46 % i stället för det som syns, ca 16 %).
+  // Grannar framför kaninen räknas med hela sin ruta, som förut. Gränsen 25 % är oförändrad.
+  const zMitt = (q) => (q?.b ? (q.b[2] + q.b[5]) / 2 : -Infinity);
+  const andra = u ? syntAndra(u, r, zMitt(r), djur.slice(0, 5).map((k, i) => syn[`t-${i}-${k}`]).filter(Boolean).map((q) => ({ ...q, z: zMitt(q) }))) : 1;
   kolla("T: titelbildens utsnitt följer det senaste djuret (kaninen ryms i utsnittet)", !!ut?.klar && inne >= 0.95, { ut, r, inne: runda(inne) });
   kolla("T: utsnittet visar bara det senaste djuret (andra djur täcker ≤ 25 % av utsnittet, utsnittet ≤ 1,6 × kroppen)", !!u && !!r && andra <= 0.25 && u.w * u.h <= 1.6 * r.w * r.h, { andra: runda(andra), u, r });
 });

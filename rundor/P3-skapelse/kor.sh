@@ -56,7 +56,7 @@ SPEL=$(wc -l < src/spel/Spel.tsx); [ "$SPEL" -le "$SPEL0" ] || { aterstall; echo
 npm run -s build:pages > "$UT/build.txt" 2>&1 || { tail -20 "$UT/build.txt"; aterstall; echo "STOPP 3: build:pages föll"; exit 3; }
 # Huvudprovet (375x812). Ett omförsök: swiftshader är långsam i parallellkörning; två fall = riktigt fel.
 prov() { node "$D/p3-prov.mjs" --dist dist-pages --bilder "$BILD" > "$UT/prov.json" 2>"$UT/prov.err"; }
-prov || prov || { grep '^FEL' "$UT/prov.err"; tail -5 "$UT/prov.err"; aterstall; echo "STOPP 4: Playwright p3-prov föll"; exit 4; }
+prov || { cp "$UT/prov.err" "$UT/prov1.err"; grep "^FEL" "$UT/prov1.err" | sed "s/^/varv 1: /" | cut -c1-220; prov; } || { grep '^FEL' "$UT/prov.err"; tail -5 "$UT/prov.err"; aterstall; echo "STOPP 4: Playwright p3-prov föll"; exit 4; }
 # regression: placering (B6.3, B6.5), boken (P1, R9K), start (P2-1, P2-2), B6.4, B6.1, R8-2, B6.6
 reg() { [ -f "rundor/$1.mjs" ] || return 0; local n; n=$(basename "$1"); node "rundor/$1.mjs" ${2:-} > "$UT/$n.json" 2>"$UT/$n.err" || node "rundor/$1.mjs" ${2:-} > "$UT/$n.json" 2>"$UT/$n.err" || echo "$1" >> "$UT/regfel.txt"; }
 # B6.6:s b66-prov är omskrivet till placeringsregeln (Arkitekten 18:59): ingen modell osynlig, de vakna syns till minst

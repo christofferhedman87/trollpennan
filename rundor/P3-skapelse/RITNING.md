@@ -422,3 +422,19 @@ main, där P3a inte finns, så placeringen eller krympningen i P3a är inte orsa
 för allt som har en modell och inte är ett djur, även kläder. Därför ritar `djur.tsx` mössan i `medSaker`, som en sak
 bredvid djuret, inte på huvudet. P3a ändrar bara var en sådan sak står (torr mark via `sakLage`) och skalar inte om den.
 Lagningen (`arPlagg`, kläderna på kroppsdelen) hör till P3b A och är noterad i `rundor/P3b-klader-tolk/PLAN.md`.
+
+### Torrkörning 6 (main a848f8f, 00:18–00:35, med 6bb1c1e): exit 4, bara T
+
+Kapaciteten är grön i alla fall (ängen och sjön), och alla krav på synlighet, huvud, storlek och F är gröna. Två fel i T,
+båda i provets mätning, inte i Titel eller regeln:
+1. **Kaninen mättes mitt i ett hopp.** Kaninen hoppar av sig själv (`hopp` 0,55, var 3–4,5 s). Lådans botten låg
+   0,41 m över marken när provet läste `__tredSyn`, så kroppen låg 36 px högre än i utsnittet (som klipptes när den stod
+   still). Lagat: provet läser kroppen först när lådans botten är högst guppet över marken (`b[1] ≤ 0,06`). Det är ett
+   villkor, ingen väntetid.
+2. **Andra djur i utsnittet räknades med sina dolda delar.** Med nivå 0 är alla sex vakna, och grisen står bakom
+   kaninen (z 2,1 mot 3,6). Grisens hela ruta räknades, 30–46 % av utsnittet, men den delen bakom kaninens kropp syns
+   inte i bilden. Lagat: en punkt räknas som "annat djur" om den ligger i en grannes ruta och inte är dold bakom kaninen.
+   En granne framför räknas som förut med hela sin ruta. Gränsen 25 % och 1,6 × kroppen är oförändrade. Det som syns
+   av grisen är ungefär 16 %.
+T kördes tre gånger i rad mot bygget av patchen på a848f8f, och alla tre var gröna. kor.sh sparar nu första provvarvets fel
+(`prov1.err`) och skriver dem i loggen, så att det syns om något bara faller i första varvet.
