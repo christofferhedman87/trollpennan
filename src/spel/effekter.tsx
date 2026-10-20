@@ -1,7 +1,8 @@
 import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, type JSX } from "react";
 import * as THREE from "three";
 import type { Varelse } from "../tolk/typer.ts";
+import { effekterFor, type EffektNamn } from "./attribut.ts";
 import type { Ankare } from "./tillbehor/index.ts";
 
 const ELD_N = 24;
@@ -295,17 +296,134 @@ function GlitterRing({ ankare }: { ankare: Ankare }) {
   );
 }
 
-/** Eld, glöd och glitter som barn till djurets grupp. Tom förmåga ritar inget. */
+const LAGOR_N = 44;
+
+/** B6.5: lågor över hela kroppen ("en brinnande hund"). Partiklar stiger från ryggen över kroppens bredd, röd → gul. */
+function Lagor({ ankare }: { ankare: Ankare }) {
+  const pack = useMemo(() => {
+    const pos = new Float32Array(LAGOR_N * 3);
+    const col = new Float32Array(LAGOR_N * 3);
+    const storlek = new Float32Array(LAGOR_N).fill(18);
+    const seed = new Float32Array(LAGOR_N * 3);
+    for (let i = 0; i < LAGOR_N; i++) {
+      seed[i * 3] = ((i * 0.618) % 1) * 2 - 1;
+      seed[i * 3 + 1] = (i * 0.37) % 1;
+      seed[i * 3 + 2] = 0.7 + (i % 4) * 0.12;
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    g.setAttribute("color", new THREE.BufferAttribute(col, 3));
+    g.setAttribute("pstorlek", new THREE.BufferAttribute(storlek, 1));
+    return { geo: g, seed };
+  }, []);
+  const textur = useMemo(() => mjukPunkt(), []);
+  const mat = useMemo(() => punktMedStorlek(textur, 0.95), [textur]);
+  const ref = useRef<THREE.Points>(null);
+  const ton = useRef({ r: 0, g: 0, b: 0 });
+  useFrame((state) => {
+    const p = ref.current;
+    if (!p) return;
+    const attr = p.geometry.getAttribute("position") as THREE.BufferAttribute;
+    const col = p.geometry.getAttribute("color") as THREE.BufferAttribute;
+    const stor = p.geometry.getAttribute("pstorlek") as THREE.BufferAttribute;
+    const arr = attr.array as Float32Array;
+    const carr = col.array as Float32Array;
+    const sarr = stor.array as Float32Array;
+    const t = state.clock.elapsedTime;
+    const bredd = Math.max(0.25, ankare.bredd) * 0.55;
+    const rygg = Math.max(0.2, ankare.hojd * 0.6);
+    const hojd = Math.max(0.4, ankare.hojd * 0.95);
+    const { seed } = pack;
+    for (let i = 0; i < LAGOR_N; i++) {
+      const x = seed[i * 3] ?? 0;
+      const liv = (t * (seed[i * 3 + 2] ?? 0.8) + (seed[i * 3 + 1] ?? 0)) % 1;
+      arr[i * 3] = x * bredd * (1 - liv * 0.5);
+      arr[i * 3 + 1] = rygg + liv * hojd;
+      arr[i * 3 + 2] = Math.sin(i * 2.3) * bredd * 0.5;
+      sarr[i] = 34 - liv * 22;
+      const c = ton.current;
+      if (liv < 0.35) lerp3(GUL, ORANGE, liv / 0.35, c);
+      else lerp3(ORANGE, ROD, (liv - 0.35) / 0.65, c);
+      carr[i * 3] = c.r;
+      carr[i * 3 + 1] = c.g;
+      carr[i * 3 + 2] = c.b;
+    }
+    attr.needsUpdate = true;
+    col.needsUpdate = true;
+    stor.needsUpdate = true;
+  });
+  return <points ref={ref} geometry={pack.geo} material={mat} frustumCulled={false} renderOrder={2} />;
+}
+
+const REGNBAGE = ["#E53935", "#FB8C00", "#FDD835", "#43A047", "#1E88E5", "#8E24AA"] as const;
+
+/** B6.5: regnbåge över djuret ("en regnbågsfärgad katt"). En effekt bredvid kroppen – kroppen målas inte om (R9C är pausad). */
+function Regnbage({ ankare }: { ankare: Ankare }) {
+  const grupp = useRef<THREE.Group>(null);
+  const r = Math.max(0.3, ankare.bredd * 0.62, ankare.hojd * 0.55);
+  const tjock = r * 0.07;
+  const geos = useMemo(
+    () => REGNBAGE.map((_, i) => new THREE.TorusGeometry(r - i * tjock * 1.6, tjock * 0.8, 6, 28, Math.PI)),
+    [r, tjock],
+  );
+  const mats = useMemo(
+    () => REGNBAGE.map((f) => new THREE.MeshBasicMaterial({ color: f, toneMapped: false, transparent: true, opacity: 0.92, depthWrite: false })),
+    [],
+  );
+  useEffect(() => () => {
+    for (const g of geos) g.dispose();
+  }, [geos]);
+  useEffect(() => () => {
+    for (const m of mats) m.dispose();
+  }, [mats]);
+  useFrame((state) => {
+    const g = grupp.current;
+    if (!g) return;
+    // Bågen vänds mot kameran, så att den syns från alla håll.
+    const kam = state.camera.position;
+    g.parent?.updateWorldMatrix(true, false);
+    g.lookAt(kam.x, g.getWorldPosition(regnbageV).y, kam.z);
+    const puls = 0.85 + 0.15 * Math.sin(state.clock.elapsedTime * 2);
+    for (const m of mats) m.opacity = 0.75 + 0.2 * puls;
+  });
+  return (
+    <group ref={grupp} position={[0, ankare.hojd * 0.55, 0]} name="regnbage">
+      {geos.map((g, i) => (
+        <mesh key={i} geometry={g} material={mats[i]} renderOrder={1} />
+      ))}
+    </group>
+  );
+}
+const regnbageV = new THREE.Vector3();
+
+const EFFEKTER: Record<EffektNamn, (p: { ankare: Ankare }) => JSX.Element> = {
+  eld: Eld,
+  lagor: Lagor,
+  glod: Aura,
+  glitter: GlitterRing,
+  regnbage: Regnbage,
+};
+
+/** Effekterna (eld, lågor, glöd, glitter, regnbåge) som barn till djurets grupp, ur data/attribut.json. Inga effekter ritar inget. */
 export function DjurEffekter({ varelse, ankare }: { varelse: Varelse; ankare: Ankare }) {
-  const eld = varelse.formagor.includes("flammor");
-  const glod = varelse.formagor.includes("aura");
-  const glitter = varelse.monster === "glitter";
-  if (!eld && !glod && !glitter) return null;
+  const lista = effekterFor(varelse);
+  const uid = (varelse as { uid?: string }).uid;
+  const nyckel = lista.join(",");
+  useEffect(() => {
+    const w = window.__tredEffekter;
+    if (!w || !uid) return;
+    w[uid] = nyckel ? nyckel.split(",") : [];
+    return () => {
+      delete w[uid];
+    };
+  }, [uid, nyckel]);
+  if (!lista.length) return null;
   return (
     <group name="djur-effekter">
-      {glod ? <Aura ankare={ankare} /> : null}
-      {eld ? <Eld ankare={ankare} /> : null}
-      {glitter ? <GlitterRing ankare={ankare} /> : null}
+      {lista.map((e) => {
+        const K = EFFEKTER[e];
+        return K ? <K key={e} ankare={ankare} /> : null;
+      })}
     </group>
   );
 }

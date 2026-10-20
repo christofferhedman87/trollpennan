@@ -80,7 +80,7 @@ export function modellUrl(kropp: string): string | null {
 
 export type StorlekKlass = { id: string; tak: number; zon: "bak"; kant?: number };
 export type BakZon = { zon: { x: [number, number]; z: [number, number] }; min_avstand: number; fri_x: [number, number][] };
-const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak"; kant?: number }>; kategori: Record<string, string>; bak: BakZon };
+const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak"; kant?: number }>; kategori: Record<string, string>; ids?: Record<string, string>; bak: BakZon };
 /** B6.3 (J): den bakre zonen för stora saker (data/storlek.json). */
 export const BAK_ZON: BakZon = STORLEK.bak;
 
@@ -126,7 +126,8 @@ export function bakPlatser(uids: string[], zon: BakZon = BAK_ZON): [number, numb
 export function storlekKlass(kropp: string): StorlekKlass | null {
   const e = ENTITETER[kropp];
   if (!e || e.typ === "djur") return null;
-  const id = STORLEK.kategori[e.kategori];
+  // B6.5: klass per entitet (storlek.json ids, t.ex. matbordet) före kategorin
+  const id = STORLEK.ids?.[kropp] ?? STORLEK.kategori[e.kategori];
   const k = id ? STORLEK.klasser[id] : undefined;
   return k && id ? { id, ...k } : null;
 }

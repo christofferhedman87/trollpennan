@@ -1,0 +1,18 @@
+{
+ "_om": "B6.5: attributraderna. Varje egenskap som ett ord kan ge (formaga:<id>, monster:<id>) har här en rad med effekten som ritas på ängen, också på GLB-modeller (src/spel/effekter.tsx, EFFEKTER per namn). Ett nytt attributord i data/ord.json kräver en rad här (b6-5.test.ts), så att det aldrig blir ett ägg eller ingenting. Effekterna målar aldrig om kroppen (färg från färgord, R9C, är pausad).",
+ "effekter": {
+  "formaga:flammor": ["eld"],
+  "formaga:lagor": ["lagor"],
+  "formaga:aura": ["glod"],
+  "monster:glitter": ["glitter"],
+  "monster:regnbåge": ["regnbage"]
+ },
+ "i_kroppen": {
+  "_om": "Egenskaper som ritas av kroppen eller rörelsen och inte som effekt. Syns på procedurkroppar; på GLB-modeller är det kvar att kontrollera (B6.5 rör dem inte).",
+  "lista": ["formaga:vingar", "formaga:fenor", "formaga:fartlinjer", "formaga:studs", "monster:ränder", "monster:prickar"]
+ },
+ "particip": {
+  "_om": "Ett okänt ord som slutar så och vars förled varken är ett känt förled eller ett djur är ett particip ('dansande'), inte en sammansättning med efterledet 'ande' (anden från M19). Det blir ett okänt ord ('Ordet … kan jag inte än'), aldrig en extra skapelse.",
+  "slut": ["ande", "ende"]
+ }
+}

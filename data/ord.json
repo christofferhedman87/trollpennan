@@ -8041,6 +8041,63 @@
    "del": {
     "kropp": "narval"
    }
+  },
+  {
+   "id": "brinnande",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "brinnande",
+   "former": [
+    "brinnande"
+   ],
+   "bojning": {
+    "u": "brinnande",
+    "n": "brinnande",
+    "pl": "brinnande"
+   },
+   "ordklass": "adjektiv",
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "lagor"
+   }
+  },
+  {
+   "id": "flammande",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "flammande",
+   "former": [
+    "flammande"
+   ],
+   "bojning": {
+    "u": "flammande",
+    "n": "flammande",
+    "pl": "flammande"
+   },
+   "ordklass": "adjektiv",
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "lagor"
+   }
+  },
+  {
+   "id": "glödande",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "glödande",
+   "former": [
+    "glödande"
+   ],
+   "bojning": {
+    "u": "glödande",
+    "n": "glödande",
+    "pl": "glödande"
+   },
+   "ordklass": "adjektiv",
+   "kalla": "SALDO",
+   "del": {
+    "formaga": "aura"
+   }
   }
  ],
  "kollisioner": {},

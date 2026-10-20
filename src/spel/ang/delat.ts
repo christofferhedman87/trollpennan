@@ -6,7 +6,7 @@ import type { Sparad } from "../brygga.ts";
 import { artFarg, bakPlatser, flyger, fotKant, siktHojd, siktRadie, simmar, storlekKlass, vikt } from "../entiteter.ts";
 import { siktFri } from "./damm.ts";
 import { START_PLATS, type Plats } from "../platser.ts";
-import { placeraPaPlats } from "../platsYta.ts";
+import { placeraPaPlats, simPlatser } from "../platsYta.ts";
 
 export const HINT = (texterJson as { tred_hint: string }).tred_hint;
 export const SNART = (texterJson as { demo: { snart: string } }).demo.snart;
@@ -64,6 +64,8 @@ declare global {
     __damm?: { x: number; z: number; r: number };
     /** B4.1, för prov: ljus = punktljus i poolen (fast antal), pol = ljuspölar, aktiva = tända ljus, scen = punktljus i scenen, program = shaderprogram. */
     __ljus?: { ljus: number; pol: number; aktiva: number; program: number; scen?: number };
+    /** B6.5, för prov: effekterna som ritas per skapelse (uid). Finns bara när ett prov har lagt dit objektet. */
+    __tredEffekter?: Record<string, string[]>;
   }
 }
 
@@ -139,9 +141,14 @@ export function djurPlats(spec: Sparad, alla: Sparad[], plats?: Plats): [number,
   let karta = platsCache.get(nyckel);
   if (!karta) {
     const marka = alla.filter((d) => !flygare(d));
+    // B6.5: simmarna sprids över platsens vatten i stället för att alla önskar samma lilla ring (klump vid bryggan)
+    const simUid = marka.filter((d) => simmare(d)).map((d) => d.uid);
+    const sprid = simPlatser(plats, simUid.length);
     const ut = placeraPaPlats(
       plats,
       marka.map((d) => {
+        const k = sprid ? simUid.indexOf(d.uid) : -1;
+        if (k >= 0 && sprid?.[k]) return sprid[k]!;
         const [x, , z] = djurPlatsBas(d, alla);
         return [x, z] as [number, number];
       }),

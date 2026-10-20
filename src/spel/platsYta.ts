@@ -107,3 +107,51 @@ export function placeraPaPlats(
   });
   return ut;
 }
+
+/**
+ * B6.5: önskade lägen för `n` simmare, spridda över platsens största vattenyta (världspunkter). Deterministiskt:
+ * ett rutnät i ytan (12 % marginal, i sidled inom platsens fri-zon), första punkten närmast ytans mitt, sedan alltid den punkt som ligger längst från
+ * de redan valda. Förut önskade alla simmare samma lilla ring, så de klumpade sig vid bryggan. null = platsen saknar vatten.
+ */
+export function simPlatser(p: Plats | undefined, n: number): [number, number][] | null {
+  const ytor = (p?.zoner ?? []).filter((z) => z.typ === "vattenyta");
+  if (!p || !ytor.length || n <= 0) return null;
+  const area = (r: Zon["rekt"]) => Math.abs((r[2] - r[0]) * (r[3] - r[1]));
+  const z = ytor.slice().sort((a, b) => area(b.rekt) - area(a.rekt))[0]!;
+  let [x0, x1] = [Math.min(z.rekt[0], z.rekt[2]), Math.max(z.rekt[0], z.rekt[2])];
+  // Inom platsens "fri"-zon i sidled (där kameran ramar in), så att ingen simmare hamnar utanför bilden på stora sjöar.
+  const fri = p.zoner.find((q) => q.typ === "fri");
+  if (fri) {
+    const f0 = Math.max(x0, Math.min(fri.rekt[0], fri.rekt[2]));
+    const f1 = Math.min(x1, Math.max(fri.rekt[0], fri.rekt[2]));
+    if (f1 - f0 > 0.05) [x0, x1] = [f0, f1];
+  }
+  const [y0, y1] = [Math.min(z.rekt[1], z.rekt[3]), Math.max(z.rekt[1], z.rekt[3])];
+  const mx = (x1 - x0) * 0.12;
+  const my = (y1 - y0) * 0.12;
+  const kand: [number, number][] = [];
+  for (let i = 0; i <= 8; i++)
+    for (let j = 0; j <= 5; j++) {
+      const w = franPlats(x0 + mx + ((x1 - x0 - 2 * mx) * i) / 8, y0 + my + ((y1 - y0 - 2 * my) * j) / 5);
+      if (iVatten(p, ...tillPlats(w[0], w[1]))) kand.push(w);
+    }
+  if (!kand.length) return null;
+  const mitt = franPlats((x0 + x1) / 2, (y0 + y1) / 2);
+  const ut: [number, number][] = [];
+  let forsta = kand[0]!;
+  for (const k of kand) if (Math.hypot(k[0] - mitt[0], k[1] - mitt[1]) < Math.hypot(forsta[0] - mitt[0], forsta[1] - mitt[1])) forsta = k;
+  ut.push(forsta);
+  while (ut.length < n) {
+    let bast = kand[0]!;
+    let bastD = -1;
+    for (const k of kand) {
+      const d = Math.min(...ut.map((u) => Math.hypot(u[0] - k[0], u[1] - k[1])));
+      if (d > bastD) {
+        bastD = d;
+        bast = k;
+      }
+    }
+    ut.push(bast);
+  }
+  return ut;
+}
