@@ -1687,10 +1687,10 @@ index 0000000..8932f95
 +});
 diff --git a/src/spel/placering.ts b/src/spel/placering.ts
 new file mode 100644
-index 0000000..b54fc71
+index 0000000..fa766d3
 --- /dev/null
 +++ b/src/spel/placering.ts
-@@ -0,0 +1,419 @@
+@@ -0,0 +1,424 @@
 +// P3a: EN placeringsregel för alla platser. Ren logik (ingen three), testas i Node. Data: data/placering.json.
 +//  - Varje plats har band per roll (mark, vatten, luft, bak), delade i rutor. Rollen kommer ur saken: simmare på vattnet,
 +//    flygare i luften, stora saker (storlek.json zon "bak") i det bakre bandet, resten på marken.
@@ -1912,6 +1912,8 @@ index 0000000..b54fc71
 +        const [ya, yb] = [y + m.y0, y + m.y0 + m.hojd];
 +        const sk = [xSkala(ya, z + djup, kam), xSkala(yb, z + djup, kam), xSkala(ya, z - djup, kam), xSkala(yb, z - djup, kam)];
 +        const [sMin, sMax] = [Math.min(...sk), Math.max(...sk)];
++        // P3a torr 6: bara de satta som når raden på djupet kan krocka (samma villkor som nedan, delat i z och x)
++        const iRaden = satta.filter((s) => !s.plan && Math.abs(s.z - z) < s.djup + m.djup);
 +        for (let xi = 0; xi < xs.length; xi++) {
 +          const x = xs[xi]!;
 +          // rätt underlag (i den storlek som ritas men med full vandring, som B6.3: avståndet till vattnet ändras inte när
@@ -1936,7 +1938,7 @@ index 0000000..b54fc71
 +          }
 +          // går inte in i en annan kropp
 +          let krock = false;
-+          for (const s of satta) if (!s.plan && Math.abs(s.x - x) < s.halv + m.halv && Math.abs(s.z - z) < s.djup + m.djup) { krock = true; break; }
++          for (const s of iRaden) if (Math.abs(s.x - x) < s.halv + m.halv) { krock = true; break; }
 +          if (krock) {
 +            if (medStall && !stall) stall = { lage: { x, y, z, roll, r: TOM, stall: true, vand: vandDel }, m, huvud: 0, tackt: 0, fel: 2, kost: 0 };
 +            continue;
@@ -2056,18 +2058,21 @@ index 0000000..b54fc71
 + * värsta läget – de två har vandrat så nära varandra det går, i x och y var för sig. huvud: bara b:s övre halva.
 + */
 +const MATFEL = PLACERING.matfel_px ?? 0;
++function axel(a0: number, a1: number, ea: number, b0: number, b1: number, eb: number): number {
++  const ha = (a1 - a0) / 2;
++  const hb2 = (b1 - b0) / 2;
++  const d = Math.max(0, Math.abs((a0 + a1) / 2 - (b0 + b1) / 2) - ea - eb);
++  return Math.max(0, Math.min(ha + hb2 - d, 2 * ha, 2 * hb2));
++}
++// P3a torr 6: utan mellanobjekt (varst är det mesta av placeringens tid: 43 % i profilen) – samma räkning som förut
 +function varst(ra: Ruta, ka: Ruta, rb: Ruta, kb: Ruta, huvud: boolean): number {
-+  const hb = huvud ? { ...kb, y1: kb.y0 + (kb.y1 - kb.y0) / 2 } : kb;
-+  const axel = (a0: number, a1: number, ea: number, b0: number, b1: number, eb: number) => {
-+    const [ha, hb2] = [(a1 - a0) / 2, (b1 - b0) / 2];
-+    const d = Math.max(0, Math.abs((a0 + a1) / 2 - (b0 + b1) / 2) - ea - eb);
-+    return Math.max(0, Math.min(ha + hb2 - d, 2 * ha, 2 * hb2));
-+  };
-+  const e = (r: Ruta, k: Ruta): [number, number] => [Math.max(0, k.x0 - r.x0, r.x1 - k.x1), Math.max(0, k.y0 - r.y0, r.y1 - k.y1)];
-+  const [eax, eay] = e(ra, ka).map((v) => v + MATFEL) as [number, number]; // den framför kan vara mätfelet större
-+  const [ebx, eby] = e(rb, kb);
-+  const yta = Math.max(1e-6, (hb.x1 - hb.x0) * (hb.y1 - hb.y0));
-+  return (axel(ka.x0, ka.x1, eax, hb.x0, hb.x1, ebx) * axel(ka.y0, ka.y1, eay, hb.y0, hb.y1, eby)) / yta;
++  const hy1 = huvud ? kb.y0 + (kb.y1 - kb.y0) / 2 : kb.y1;
++  const eax = Math.max(0, ka.x0 - ra.x0, ra.x1 - ka.x1) + MATFEL; // den framför kan vara mätfelet större
++  const eay = Math.max(0, ka.y0 - ra.y0, ra.y1 - ka.y1) + MATFEL;
++  const ebx = Math.max(0, kb.x0 - rb.x0, rb.x1 - kb.x1);
++  const eby = Math.max(0, kb.y0 - rb.y0, rb.y1 - kb.y1);
++  const yta = Math.max(1e-6, (kb.x1 - kb.x0) * (hy1 - kb.y0));
++  return (axel(ka.x0, ka.x1, eax, kb.x0, kb.x1, ebx) * axel(ka.y0, ka.y1, eay, kb.y0, hy1, eby)) / yta;
 +}
 +
 +

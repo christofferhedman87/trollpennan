@@ -438,3 +438,16 @@ båda i provets mätning, inte i Titel eller regeln:
    av grisen är ungefär 16 %.
 T kördes tre gånger i rad mot bygget av patchen på a848f8f, och alla tre var gröna. kor.sh sparar nu första provvarvets fel
 (`prov1.err`) och skriver dem i loggen, så att det syns om något bara faller i första varvet.
+
+### Torrkörning 6, andra försöket (00:42, med 86a4ce9): STOPP 3, prestandatestet
+
+`p3a.test.ts` "en ny skapelse placeras på under 50 ms CPU" föll på skogen, med en median på 52,6 ms. Testet låg på
+gränsen redan före nivå 0: i vila var medianen 48–50 ms på skogen och 57 ms på ängen utan nivå 0. Orsaken syntes i
+profilen: `varst` stod för 43 % av tiden och skapade nya objekt och arrayer vid varje anrop, och krocktestet gick
+igenom alla satta för varje ruta. Lagat i `placering.ts`, med samma räkning:
+- `varst` räknar utan mellanobjekt.
+- Krocktestet filtrerar först de satta som når raden på djupet och prövar sedan bara x.
+
+Resultatet är identiskt (sha1 över `placera` för 336 världar: 1–14 skapelser × 4 platser × 6, före = efter). Medianen
+är nu 22 ms på ängen, 15 på sjön, 21 på skogen och 20 i grottan, mot 33, 21, 48 och 31 före. Gränsen 50 ms är
+oförändrad.
