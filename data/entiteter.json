@@ -696,6 +696,24 @@
     "ris": { "typ": "foremal", "kategori": "mat", "modell": "ris", "malhojd": 0.4, "art": "#FFB74D", "forladda": false, "ord": ["ris", "risboll"], "inlagd": "R3F-M13" },
     "spatel": { "typ": "foremal", "kategori": "mat", "modell": "spatel", "malhojd": 0.4, "art": "#FFB74D", "forladda": false, "ord": ["spatel", "stekspade"], "inlagd": "R3F-M13" },
     "nudlar": { "typ": "foremal", "kategori": "mat", "modell": "nudlar", "malhojd": 0.4, "art": "#FFB74D", "forladda": false, "ord": ["nudlar"], "inlagd": "R3F-M13" },
-    "kott": { "typ": "foremal", "kategori": "mat", "modell": "kott", "malhojd": 0.4, "art": "#FFB74D", "forladda": false, "ord": ["kött"], "inlagd": "R3F-M13" }
+    "kott": { "typ": "foremal", "kategori": "mat", "modell": "kott", "malhojd": 0.4, "art": "#FFB74D", "forladda": false, "ord": ["kött"], "inlagd": "R3F-M13" },
+    "badanka": { "typ": "foremal", "kategori": "föremål", "modell": "badanka", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["badanka", "gummianka"], "inlagd": "R3F-M14" },
+    "batteri": { "typ": "foremal", "kategori": "föremål", "modell": "batteri", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["batteri"], "inlagd": "R3F-M14" },
+    "brev": { "typ": "foremal", "kategori": "föremål", "modell": "brev", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["brev"], "inlagd": "R3F-M14" },
+    "gitarr": { "typ": "foremal", "kategori": "föremål", "modell": "gitarr", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["gitarr"], "inlagd": "R3F-M14" },
+    "horlurar": { "typ": "foremal", "kategori": "föremål", "modell": "horlurar", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["hörlurar"], "inlagd": "R3F-M14" },
+    "kuvert": { "typ": "foremal", "kategori": "föremål", "modell": "kuvert", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["kuvert"], "inlagd": "R3F-M14" },
+    "mikrofon": { "typ": "foremal", "kategori": "föremål", "modell": "mikrofon", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["mikrofon"], "inlagd": "R3F-M14" },
+    "paket": { "typ": "foremal", "kategori": "föremål", "modell": "paket", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["paket"], "inlagd": "R3F-M14" },
+    "tval": { "typ": "foremal", "kategori": "föremål", "modell": "tval", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["tvål"], "inlagd": "R3F-M14" },
+    "telefon": { "typ": "foremal", "kategori": "föremål", "modell": "telefon", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["telefon", "mobil", "mobiltelefon"], "inlagd": "R3F-M14" },
+    "vackarklocka": { "typ": "foremal", "kategori": "föremål", "modell": "vackarklocka", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["väckarklocka"], "inlagd": "R3F-M14" },
+    "vaska": { "typ": "foremal", "kategori": "föremål", "modell": "vaska", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["väska"], "inlagd": "R3F-M14" },
+    "vattenkanna": { "typ": "foremal", "kategori": "föremål", "modell": "vattenkanna", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["vattenkanna"], "inlagd": "R3F-M14" },
+    "boll": { "typ": "foremal", "kategori": "föremål", "modell": "boll", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["boll", "badboll"], "inlagd": "R3F-M14" },
+    "trumma": { "typ": "foremal", "kategori": "föremål", "modell": "trumma", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["trumma"], "inlagd": "R3F-M14" },
+    "ballong": { "typ": "foremal", "kategori": "föremål", "modell": "ballong", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["ballong"], "inlagd": "R3F-M14" },
+    "kundvagn": { "typ": "foremal", "kategori": "föremål", "modell": "kundvagn", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["kundvagn"], "inlagd": "R3F-M14" },
+    "korg": { "typ": "foremal", "kategori": "föremål", "modell": "korg", "malhojd": 0.5, "art": "#FFD54F", "forladda": false, "ord": ["korg"], "inlagd": "R3F-M14" }
   }
 }
