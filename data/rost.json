@@ -244,6 +244,29 @@
         ]
       },
       {
+        "_om": "TTS-2-fix2: kvälls- och morgonbannrar (Spel.tsx dygnsklockan) och djurens dygnsrepliker (liv.ts sovRad/vackRad/ugglaRad, pratbubblor).",
+        "fil": "dygn.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.texter\\.[a-z_]+\\[\\]$"
+        ]
+      },
+      {
+        "_om": "TTS-2-fix2: bannern när en köpt sida öppnas (Spel.tsx) och bubblan/bannern när ett byggord står på en sida som inte är köpt (mall: {sida} = byggsidans titel bland värdena, {n} = tal, {ord} = barnets byggord, dynamiskt).",
+        "fil": "sidor.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.sidor\\[\\]\\.oppnas$"
+        ]
+      },
+      {
+        "fil": "byggsidor.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.last_ord\\.text\\[\\]$"
+        ]
+      },
+      {
         "varden": true
       },
       {
@@ -316,6 +339,12 @@
           "^\\.flikar\\.garden$"
         ],
         "sma": true
+      },
+      {
+        "fil": "byggsidor.json",
+        "falt": [
+          "^\\.sidor\\[\\]\\.titel$"
+        ]
       }
     ]
   }
