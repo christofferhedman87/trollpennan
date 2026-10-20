@@ -284,6 +284,7 @@ export function exportera() {
     mossaRakn: s.mossaRakn,
     ordFrek: s.ordFrek,
     onskanAntal: s.onskanAntal,
+    egnaDjur: s.egnaDjur,
     skatterHitta: s.skatterHitta,
     byggda: s.byggda,
     introSedd: s.introSedd,

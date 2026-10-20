@@ -1,5 +1,5 @@
 {
-  "_om": "P2: den guidade starten. Stegen visas i ordning efter introt; ett steg är klart när villkoret i klart_nar är uppfyllt i sparningen (useMinne). Villkor: {falt, minst, varde?}. Fältet räknas som längden på en lista, antalet nycklar i ett objekt (eller antalet värden lika med varde), ett tal eller sant/falskt (1/0). pekar_pa: 'testid:a|testid:b' (första synliga) eller '3d:<namn>' (skärmpunkt i window.__tredMal). albumKropp = olika djursorter barnet väckt; introts kanin räknas, därför 2 för första egna djuret och 5 för tre till. Ändra här, ingen kod.",
+  "_om": "P2: den guidade starten. Stegen visas i ordning efter introt; ett steg är klart när villkoret i klart_nar är uppfyllt i sparningen (useMinne). Villkor: {falt, minst, varde?}. Fältet räknas som längden på en lista, antalet nycklar i ett objekt (eller antalet värden lika med varde), ett tal eller sant/falskt (1/0). pekar_pa: 'testid:a|testid:b' (första synliga) eller '3d:<namn>' (skärmpunkt i window.__tredMal). egnaDjur = djur barnet själv väckt efter introt (TTS-3: introts kanin och katt räknas inte, så steget 'skriv ett djur' syns): 1 för första egna djuret, 5 för tre till (uppdraget ger minst ett). Ändra här, ingen kod.",
   "titel": {
     "logga": "Trollpennan",
     "under": "Det du skriver vaknar.",
@@ -22,7 +22,7 @@
       "id": "forsta-ordet",
       "text": "Tryck på Pennans bok och skriv ett djur!",
       "pekar_pa": "testid:pennans-bok",
-      "klart_nar": { "falt": "albumKropp", "minst": 2 }
+      "klart_nar": { "falt": "egnaDjur", "minst": 1 }
     },
     {
       "id": "bengtsson",
@@ -40,7 +40,7 @@
       "id": "tre-djur",
       "text": "Väck tre djur till!",
       "pekar_pa": "testid:pennans-bok",
-      "klart_nar": { "falt": "albumKropp", "minst": 5 }
+      "klart_nar": { "falt": "egnaDjur", "minst": 5 }
     },
     {
       "id": "grinden",

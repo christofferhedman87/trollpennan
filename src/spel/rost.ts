@@ -7,12 +7,20 @@ import { useMinne } from "./minne.ts";
 import { DYNAMISK, RESERV, normalisera, rostPlan, type RostDel } from "./rostManifest.ts";
 
 type Logg = { text: string; fil: string | null; satt: "fil" | "mall" | "reserv" | "tyst" | "saknas"; delar?: number; dynamisk?: boolean };
-const ko: string[] = [];
+/** TTS-3: kön. forst = bannerns röst – den går före allt annat i kön, och en guiderad/pratbubbla/önskan som redan läses
+ *  avbryts (tonas ut på TONA_MS) så att bannerns röst börjar direkt. Den avbrutna läses inte om (texten står kvar). */
+const ko: { text: string; forst: boolean }[] = [];
 const engang = new Set<string>();
 let nu: HTMLAudioElement | null = null;
 let upptagen = false;
 let lyssnar = false;
 let omgang = 0;
+let nuText: string | null = null;
+let nuForst = false;
+/** element som tonas ut efter ett avbrott – ett tryck (tystna) eller ljudet av stoppar dem direkt */
+const tonar = new Set<HTMLAudioElement>();
+/** TTS-3-fix: uttoningen när en banner avbryter en guiderad eller pratbubbla (ms). */
+export const TONA_MS = 150;
 
 function logg(l: Logg) {
   const w = window as unknown as { __rost?: Logg[] };
@@ -37,21 +45,29 @@ function telefon(text: string, sv: SpeechSynthesisVoice, klar: () => void) {
   speechSynthesis.speak(u);
 }
 
-function spelaDelar(delar: RostDel[], sv: SpeechSynthesisVoice | null) {
+function spelaDelar(text: string, delar: RostDel[], sv: SpeechSynthesisVoice | null) {
   const min = omgang;
   let i = 0;
   const steg = () => {
     if (min !== omgang) return;
     const d = delar[i++];
-    if (!d) return nasta();
+    if (!d) {
+      klocka.klar(text);
+      return nasta();
+    }
     if ("f" in d) {
       const a = new Audio(d.f);
       nu = a;
       a.addEventListener("ended", steg);
       a.addEventListener("error", steg);
-      a.play().catch(() => steg());
-    } else if (sv) telefon(d.dynamisk, sv, steg);
-    else steg();
+      a.play().then(
+        () => klocka.spelar(text), // play-löftet uppfylls när uppspelningen faktiskt startar
+        () => steg(),
+      );
+    } else if (sv) {
+      klocka.spelar(text);
+      telefon(d.dynamisk, sv, steg);
+    } else steg();
   };
   steg();
 }
@@ -59,52 +75,106 @@ function spelaDelar(delar: RostDel[], sv: SpeechSynthesisVoice | null) {
 function nasta() {
   upptagen = false;
   nu = null;
-  const text = ko.shift();
-  if (text === undefined) return;
+  nuText = null;
+  nuForst = false;
+  const rad = ko.shift();
+  if (rad === undefined) return;
+  const text = rad.text;
   if (!useMinne.getState().ljudPa) {
     ko.length = 0;
     return;
   }
   upptagen = true;
+  nuText = text;
+  nuForst = rad.forst;
   const plan = rostPlan(text);
   if (plan) {
     const sv = plan.dynamisk && DYNAMISK === "webblasare" ? svenskRost() : null;
     if (plan.dynamisk && !sv) {
       logg({ text, fil: null, satt: "tyst", dynamisk: true });
+      klocka.klar(text);
       return nasta();
     }
     const forsta = plan.delar.find((d): d is { f: string; ms: number } => "f" in d);
     logg({ text, fil: forsta?.f ?? null, satt: plan.delar.length > 1 ? "mall" : "fil", delar: plan.delar.length, dynamisk: plan.dynamisk });
-    spelaDelar(plan.delar, sv);
+    spelaDelar(text, plan.delar, sv);
     return;
   }
   const sv = RESERV === "webblasare" ? svenskRost() : null;
   if (sv) {
     logg({ text, fil: null, satt: "reserv" });
-    telefon(text, sv, nasta);
+    klocka.spelar(text);
+    telefon(text, sv, () => (klocka.klar(text), nasta()));
     return;
   }
   logg({ text, fil: null, satt: "saknas" });
+  klocka.klar(text);
   nasta();
 }
 
-/** Stoppar allt som läses och tömmer kön. */
-export function tystna() {
+function tonaUt(a: HTMLAudioElement) {
+  tonar.add(a);
+  const v0 = a.volume;
+  const t0 = performance.now();
+  const steg = () => {
+    if (!tonar.has(a)) return;
+    const k = (performance.now() - t0) / TONA_MS;
+    if (k >= 1 || a.paused) {
+      tonar.delete(a);
+      a.pause();
+      return;
+    }
+    try {
+      a.volume = v0 * (1 - k); // iOS: volume är skrivskyddad – då pausas den efter TONA_MS
+    } catch {
+      // ignoreras
+    }
+    window.setTimeout(steg, 25);
+  };
+  steg();
+}
+
+/** TTS-3-fix: en banner kom medan en guiderad/pratbubbla/önskan läses – den tonas ut och bannerns röst börjar direkt. */
+function avbryt() {
+  omgang++; // spelaDelar för den avbrutna fortsätter inte (ingen nästa del, ingen omstart)
+  const a = nu;
+  nu = null;
+  if (a) tonaUt(a);
+  if (typeof speechSynthesis !== "undefined") speechSynthesis.cancel();
+  nasta();
+}
+
+function stoppa() {
   ko.length = 0;
   omgang++;
+  for (const a of tonar) a.pause();
+  tonar.clear();
   nu?.pause();
   nu = null;
+  nuText = null;
+  nuForst = false;
   upptagen = false;
   if (typeof speechSynthesis !== "undefined") speechSynthesis.cancel();
 }
 
-/** Läs upp en text som visas. enGang = nyckel som bara läses en gång per spelomgång (t.ex. uppdragets id). Högst fyra i kö. */
-export function sag(text: string, enGang?: string) {
+/** Stoppar allt som läses och tömmer kön – barnet tryckte bort bannern, så dess klocka släpps också. */
+export function tystna() {
+  klocka.slapp();
+  stoppa();
+}
+
+/** Läs upp en text som visas. enGang = nyckel som bara läses en gång per spelomgång (t.ex. uppdragets id). Högst fyra i kö.
+ *  forst (TTS-3) = bannerns röst: läggs före pratbubblor/önskan i kön och avbryter en guiderad/pratbubbla som läses (TTS-3-fix).
+ *  Blir kön för lång tas den äldsta som inte är forst bort. */
+export function sag(text: string, enGang?: string, forst = false) {
   if (typeof window === "undefined" || !text.trim()) return;
   if (!lyssnar) {
     lyssnar = true;
     useMinne.subscribe((s, f) => {
-      if (f.ljudPa && !s.ljudPa) tystna();
+      if (f.ljudPa && !s.ljudPa) {
+        stoppa();
+        klocka.utanRost(); // ljudet av: bannern står den vanliga tiden
+      }
     });
   }
   if (!useMinne.getState().ljudPa) return;
@@ -112,9 +182,18 @@ export function sag(text: string, enGang?: string) {
     if (engang.has(enGang)) return;
     engang.add(enGang);
   }
-  ko.push(normalisera(text));
-  while (ko.length > 4) ko.shift();
+  const rad = { text: normalisera(text), forst };
+  if (forst) {
+    const i = ko.findIndex((x) => !x.forst);
+    if (i < 0) ko.push(rad);
+    else ko.splice(i, 0, rad);
+  } else ko.push(rad);
+  while (ko.length > 4) {
+    const i = ko.findIndex((x) => !x.forst);
+    ko.splice(i < 0 ? 0 : i, 1);
+  }
   if (!upptagen) nasta();
+  else if (forst && !nuForst) avbryt();
 }
 
 /** Hur länge en text tar att läsa (ms) när den har fil eller mall, annars 0. */
@@ -136,10 +215,83 @@ export function bannerTid(text: string, bas: number): number {
   return ms > 0 ? Math.max(las, ms + 1500) : las;
 }
 
-/** Läser upp bannrar (alla slag) när de visas, en gång per banner. */
+/** TTS-3: hur länge en banner väntar på att dess röst ska börja innan den vanliga tiden gäller (ms, räknat från visningen). */
+export const ROST_START_MS = 6000;
+/** TTS-3: efter rösten står bannern minst så här länge till (ms). */
+export const EFTER_ROST_MS = 1500;
+
+/** TTS-3: bannerns klocka. Bara en banner syns åt gången, så det finns högst en klocka. Utan röst (ljud av, ingen fil och
+ *  tyst reserv, kön tappade repliken) gäller den vanliga tiden: bannerTid() från visningen. Med röst börjar tiden när rösten
+ *  faktiskt spelar (play/playing) och bannern stängs tidigast vid max(start + lästid, slut + 1,5 s). Startar rösten inte
+ *  inom ROST_START_MS gäller den vanliga tiden. Ett tryck (tystna) släpper klockan – bannern stängs då av trycket. */
+type Klocka = { text: string; las: number; ms: number; t0: number; start: number | null; timer: number; stang: () => void };
+let aktiv: Klocka | null = null;
+const klocka = {
+  satt(k: Klocka, ms: number) {
+    window.clearTimeout(k.timer);
+    k.timer = window.setTimeout(() => {
+      if (aktiv === k) aktiv = null;
+      k.stang();
+    }, Math.max(0, ms));
+  },
+  spelar(text: string) {
+    const k = aktiv;
+    if (!k || k.text !== text) return;
+    k.start ??= performance.now();
+    // vaktpost om 'ended' aldrig kommer: replikens längd + marginal
+    klocka.satt(k, Math.max(k.las, k.ms + EFTER_ROST_MS) + 4000);
+  },
+  klar(text: string) {
+    const k = aktiv;
+    if (!k || k.text !== text) return;
+    const nu = performance.now();
+    if (k.start === null) return klocka.satt(k, k.t0 + bannerTidMs(k) - nu); // spelades aldrig: vanliga tiden
+    klocka.satt(k, Math.max(k.start + k.las, nu + EFTER_ROST_MS) - nu);
+  },
+  utanRost() {
+    const k = aktiv;
+    if (k) klocka.satt(k, Math.max(k.t0 + k.las, performance.now()) - performance.now());
+  },
+  slapp() {
+    if (aktiv) window.clearTimeout(aktiv.timer);
+    aktiv = null;
+  },
+};
+function bannerTidMs(k: Klocka) {
+  return k.ms > 0 && useMinne.getState().ljudPa ? Math.max(k.las, k.ms + EFTER_ROST_MS) : k.las;
+}
+
+/** TTS-3: startar bannerns klocka och anropar stang() när bannern ska gå. Returnerar ett timer-id (för clearTimeout i
+ *  anroparen, som förut); klockan själv släpps av nästa banner eller av ett tryck (tystna). */
+export function bannerKlocka(text: string, bas: number, stang: () => void): number {
+  klocka.slapp();
+  const t = normalisera(text);
+  const k: Klocka = { text: t, las: Math.max(bas, lasbarTid(t)), ms: lasTid(t), t0: performance.now(), start: null, timer: 0, stang };
+  if (typeof window === "undefined" || !useMinne.getState().ljudPa || k.ms === 0) {
+    k.timer = window.setTimeout(stang, k.las);
+    return k.timer;
+  }
+  aktiv = k;
+  if (nuText === t) k.start = k.t0; // rösten läser redan samma text
+  const vanlig = () => {
+    // vanliga tiden har gått utan att rösten börjat: ligger repliken kvar i kön väntar bannern till ROST_START_MS
+    const kvar = k.t0 + ROST_START_MS - performance.now();
+    if (aktiv === k && k.start === null && kvar > 0 && ko.some((x) => x.text === t)) {
+      k.timer = window.setTimeout(vanlig, kvar);
+      return;
+    }
+    if (aktiv === k) aktiv = null;
+    stang();
+  };
+  k.timer = window.setTimeout(vanlig, bannerTidMs(k));
+  if (k.start !== null) klocka.spelar(t);
+  return k.timer;
+}
+
+/** Läser upp bannrar (alla slag) när de visas, en gång per banner – före pratbubblorna i kön (TTS-3). */
 export function useRostBannrar(banners: { id: number; text: string }[]) {
   useEffect(() => {
-    for (const b of banners) sag(b.text, `banner:${b.id}`);
+    for (const b of banners) sag(b.text, `banner:${b.id}`, true);
   }, [banners]);
 }
 

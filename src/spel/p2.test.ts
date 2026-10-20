@@ -19,17 +19,19 @@ test("P2: rakna – lista, objekt, värde, tal, sant/falskt", () => {
 test("P2: ingen guide före introt, första steget direkt efter", () => {
   assert.equal(aktivtSteg({ introSedd: false }), null);
   assert.equal(aktivtSteg({ introSedd: true, albumKropp: {} })?.steg.id, "forsta-ordet");
-  // introts kanin räknas inte som barnets eget första djur
-  assert.equal(aktivtSteg({ introSedd: true, albumKropp: album("kanin") })?.steg.id, "forsta-ordet");
+  // TTS-3: introts kanin OCH katt räknas inte – efter introt (två djur i albumet) börjar guiden med "skriv ett djur"
+  assert.equal(aktivtSteg({ introSedd: true, albumKropp: album("kanin", "katt"), egnaDjur: 0 })?.steg.id, "forsta-ordet");
+  assert.equal(aktivtSteg({ introSedd: true, albumKropp: album("kanin", "katt"), egnaDjur: 1 })?.steg.id, "bengtsson");
 });
 
 test("P2: stegen följer sparningen i ordning", () => {
-  const bas = { introSedd: true, albumKropp: album("kanin", "katt"), uppdrag: {}, seddaIntro: [] };
+  const bas = { introSedd: true, albumKropp: album("kanin", "katt"), egnaDjur: 1, uppdrag: {}, seddaIntro: [] };
   assert.equal(aktivtSteg(bas)?.steg.id, "bengtsson");
   assert.equal(aktivtSteg({ ...bas, uppdrag: { u1: "pagar" } })?.steg.id, "uppdraget");
-  const klar = { ...bas, uppdrag: { u1: "klar" } };
+  const klar = { ...bas, egnaDjur: 2, uppdrag: { u1: "klar" } };
   assert.equal(aktivtSteg(klar)?.steg.id, "tre-djur");
-  const fyra = { ...klar, albumKropp: album("kanin", "katt", "gris", "hund", "fagel") };
+  assert.equal(aktivtSteg({ ...klar, egnaDjur: 4 })?.steg.id, "tre-djur");
+  const fyra = { ...klar, egnaDjur: 5 };
   const g = aktivtSteg(fyra);
   assert.equal(g?.steg.id, "grinden");
   assert.equal(g?.nr, FORSTA.steg.length);
@@ -37,7 +39,7 @@ test("P2: stegen följer sparningen i ordning", () => {
 });
 
 test("P2: varje steg har text, mål och ett villkor på ett fält som finns i sparningen", () => {
-  const falt = new Set(["albumKropp", "uppdrag", "seddaIntro", "ang", "funna", "oppnadePlatser", "stjarnor", "dragit"]);
+  const falt = new Set(["egnaDjur", "albumKropp", "uppdrag", "seddaIntro", "ang", "funna", "oppnadePlatser", "stjarnor", "dragit"]);
   for (const s of FORSTA.steg) {
     assert.ok(s.text.trim() && s.id, s.id);
     assert.ok(falt.has(s.klart_nar.falt), `${s.id}: okänt fält ${s.klart_nar.falt}`);
