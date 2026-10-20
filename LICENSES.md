@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 662 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 680 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -42,6 +42,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-holiday-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/holiday-kit | 15 |
 | kenney-mini-dungeon | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-dungeon | 11 |
 | kenney-mini-forest | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-forest | 4 |
+| kenney-mini-market-2 | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-market | 2 |
 | kenney-modular-cave-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/modular-cave-kit | 3 |
 | kenney-nature-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/nature-kit | 39 |
 | kenney-pirate-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/pirate-kit | 12 |
@@ -54,6 +55,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | polypizza-cc0 | Quaternius | CC0-1.0 | https://poly.pizza/m/3LzFgI3GLO | 38 |
 | polypizza-cc0-2 | Quaternius | CC0-1.0 | https://poly.pizza/m/3aQgc75sUR | 16 |
 | polypizza-cc0-3 | Quaternius | CC0-1.0 | https://poly.pizza/m/9kF7eTDbhO | 7 |
+| polypizza-cc0-4 | CreativeTrio | CC0-1.0 | https://poly.pizza/m/oH3dEdlDpB | 13 |
 | quaternius-animated-dinosaurs | Quaternius | CC0-1.0 | https://quaternius.com/packs/animateddinosaurs.html | 3 |
 | quaternius-cute-fish | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutefish.html | 13 |
 | quaternius-cute-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutemonsters.html | 6 |
@@ -65,6 +67,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | quaternius-stylized-nature-megakit | Quaternius | CC0-1.0 | https://quaternius.itch.io/stylized-nature-megakit | 2 |
 | quaternius-ultimate-animated-animals | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimateanimatedanimals.html | 7 |
 | quaternius-ultimate-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/ultimatemonsters.html | 11 |
+| trollpennan-egna-m14 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 3 |
 
 ## Alla modellfiler
 
@@ -733,3 +736,21 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | spatel | /models/bulk/spatel.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | nudlar | /models/bulk/nudlar.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
 | kott | /models/bulk/kott.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/food-kit |
+| badanka | /models/bulk/badanka.glb | CC0-1.0 | CreativeTrio | https://poly.pizza/m/oH3dEdlDpB |
+| batteri | /models/bulk/batteri.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/MYa3uWdwPU |
+| brev | /models/bulk/brev.glb | CC0-1.0 | Isa Lousberg | https://poly.pizza/m/BJS8VvgPkQ |
+| gitarr | /models/bulk/gitarr.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/5Fp8gpomrb |
+| horlurar | /models/bulk/horlurar.glb | CC0-1.0 | CreativeTrio | https://poly.pizza/m/PSsWSIAYIL |
+| kuvert | /models/bulk/kuvert.glb | CC0-1.0 | reyshapes | https://poly.pizza/m/M9mVmRXHif |
+| mikrofon | /models/bulk/mikrofon.glb | CC0-1.0 | iPoly3D | https://poly.pizza/m/yqbacXdPsg |
+| paket | /models/bulk/paket.glb | CC0-1.0 | Isa Lousberg | https://poly.pizza/m/hvj3HXY7FG |
+| tval | /models/bulk/tval.glb | CC0-1.0 | MiniPoly | https://poly.pizza/m/d4b5btUs1F |
+| telefon | /models/bulk/telefon.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/k2kgBepoMU |
+| vackarklocka | /models/bulk/vackarklocka.glb | CC0-1.0 | CreativeTrio | https://poly.pizza/m/y5f363OS9C |
+| vaska | /models/bulk/vaska.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/Wq1JPPqHZS |
+| vattenkanna | /models/bulk/vattenkanna.glb | CC0-1.0 | Isa Lousberg | https://poly.pizza/m/V8J1TC441f |
+| boll | /models/bulk/boll.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| trumma | /models/bulk/trumma.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| ballong | /models/bulk/ballong.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kundvagn | /models/bulk/kundvagn.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-market |
+| korg | /models/bulk/korg.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/mini-market |
