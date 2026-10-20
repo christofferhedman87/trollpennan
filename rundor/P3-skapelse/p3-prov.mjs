@@ -280,9 +280,10 @@ await blok("F", async () => {
     await bild(p, "p3-09-slott-sjukhus.png");
     await ctx.close();
     const [s, h] = [syn["f-0-slott"], syn["f-1-sjukhus"]];
-    // jämförs på samma avstånd: skärmhöjden × (kamerans z 9,8 − z) / 10
-    const pa = (q, uid) => (q ? q.h * (9.8 - (pos[uid]?.z ?? 0)) / 10 : 0);
-    kolla("F: slottet syns tydligt högre än sjukhuset (≥ 1,2 × höjden på samma avstånd)", !!s && !!h && pa(s, "f-0-slott") >= 1.2 * pa(h, "f-1-sjukhus"), { slott: s, sjukhus: h, z: [pos["f-0-slott"]?.z, pos["f-1-sjukhus"]?.z] });
+    // jämförs på samma avstånd och i full storlek: skärmhöjden × (kamerans z 9,8 − z) / 10 / krympningen (den äldre ritas
+    // mindre som perspektiv, Arkitekten 18:59 – det är inte modellens storlek)
+    const pa = (q, uid) => (q ? q.h * (9.8 - (pos[uid]?.z ?? 0)) / 10 / (pos[uid]?.k ?? 1) : 0);
+    kolla("F: slottet syns tydligt högre än sjukhuset (≥ 1,2 × höjden på samma avstånd)", !!s && !!h && pa(s, "f-0-slott") >= 1.2 * pa(h, "f-1-sjukhus"), { slott: s, sjukhus: h, z: [pos["f-0-slott"]?.z, pos["f-1-sjukhus"]?.z], k: [pos["f-0-slott"]?.k, pos["f-1-sjukhus"]?.k] });
   }
   // småsaker bredvid varandra: pucken är mindre än kaffekoppen (största måttet på skärmen och ytan)
   const smaa = ["puck", "kaffekopp", "kopp", "tallrik"];
