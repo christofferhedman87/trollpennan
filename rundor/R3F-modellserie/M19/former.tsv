@@ -1,0 +1,15 @@
+# R3F-M19: granskade former (SALDO/SAOL-mönster, osäker plural utelämnad).
+ord	genus	former	# källa
+sjöjungfru	u	sjöjungfru, sjöjungfrun, sjöjungfrur, sjöjungfrurna	# SALDO nn_4u_linje
+havsfru	u	havsfru, havsfrun, havsfruar, havsfruarna	# SALDO nn_2u_bro
+ängel	u	ängel, ängeln, änglar, änglarna	# SALDO nn_2u_ängel
+dvärg	u	dvärg, dvärgen, dvärgar, dvärgarna	# SALDO nn_2u_stol
+ande	u	ande, anden, andar, andarna	# SALDO nn_2u_hjälte
+djinn	u	djinn, djinnen	# hand (plural osäker, utelämnad)
+sjöhäst	u	sjöhäst, sjöhästen, sjöhästar, sjöhästarna	# SALDO nn_2u_sten
+sjöorm	u	sjöorm, sjöormen, sjöormar, sjöormarna	# SALDO nn_2u_stol
+kraken	u	kraken	# hand (bara grundform; "kraken" är också bestämd form av krake)
+fenix	u	fenix, fenixen	# hand (plural osäker, utelämnad)
+pegasus	u	pegasus	# hand (bara grundform)
+drakunge	u	drakunge, drakungen, drakungar, drakungarna	# hand (som unge, nn_2u_hjälte)
+babydrake	u	babydrake, babydraken, babydrakar, babydrakarna	# hand (som drake, nn_2u_vinge)
