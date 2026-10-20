@@ -1,0 +1,8 @@
+# R3F-MFIX4: tas bort och läggs in igen med ny modell (samma id, ord och fram; sjöorm byter fram till +z).
+fjallrav
+bjorn
+hamster
+marsvin
+fenix
+sjoorm
+narval

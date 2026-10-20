@@ -92,6 +92,12 @@ node $D/ordgranskning-granskad.mjs "$D/$M/ordgranskning.tsv" | tee -a "$UT/bevis
 # 3a3. Valfritt: inlagg-tillagg.json "egna_farger": [id …] tar bort lagg-paletten och farg-materialet för de entiteterna, så att
 # modellens egna färger syns (annars målas kroppen med art-färgen när barnet inte skrivit något färgord). Bara data/entiteter.json.
 [ -f "$D/$M/inlagg-tillagg.json" ] && { node $D/egna-farger.mjs "$D/$M/inlagg-tillagg.json" | tee -a "$UT/bevis.txt"; [ "${PIPESTATUS[0]}" = 0 ] || { git checkout -- data src CREDITS.md LICENSES.md public/models/bulk; git clean -fdq public/models/bulk; stopp 3 "egna_farger kunde inte föras in (allt återställt)"; }; }
+# 3a4. Valfritt: inlagg-tillagg.json "byt_fil": { id: "paket/fil.glb" } byter bara modellfilen för entiteter som redan finns
+# (ord, gåtor och inlagg-data från rundan som lade in dem står kvar). Se byt-fil.mjs.
+if [ -f "$D/$M/inlagg-tillagg.json" ] && grep -q '"byt_fil"' "$D/$M/inlagg-tillagg.json"; then
+  node $D/byt-fil.mjs "$D/$M/inlagg-tillagg.json" "$INK" | tee -a "$UT/bevis.txt"
+  [ "${PIPESTATUS[0]}" = 0 ] || { git checkout -- data src CREDITS.md LICENSES.md public/models/bulk; git clean -fdq public/models/bulk; stopp 3 "byt_fil kunde inte föras in (allt återställt)"; }
+fi
 # 3b. Gåtor för nya hemliga djur (r9.test.ts kräver en gåta per djurord). Data ur $D/$M/gator.json, inget annat ändras.
 if [ -f "$D/$M/gator.json" ]; then
   node -e '

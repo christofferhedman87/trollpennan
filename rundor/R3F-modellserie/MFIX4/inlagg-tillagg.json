@@ -1,0 +1,6 @@
+{
+ "_om": "R3F-MFIX4: nya modeller för djuren som såg fel ut i spelet (fjällräv liten och getlik, björn med pelarben, hamster och marsvin runda bollar, fenix som ett ugglehuvud, sjöorm liten och platt, narval liten) och ny fil för eld (såg ut som en kon). Större målhöjd där djuret blev för litet. Egna färger: utan färgord målades kroppen annars med art-färgen (fjällräven blev gråbrun). Eld byter bara fil, så B6.2:s ord och data står kvar.",
+ "malhojd_ord_ersatt": { "fjällräv": 0.75, "polarräv": 0.75, "hamster": 0.4, "fenix": 1.0, "sjöorm": 1.0, "narval": 0.7 },
+ "egna_farger": ["fjallrav", "bjorn", "hamster", "marsvin", "fenix", "sjoorm", "narval"],
+ "byt_fil": { "eld": "trollpennan-mfix4/eld-egen.glb" }
+}
