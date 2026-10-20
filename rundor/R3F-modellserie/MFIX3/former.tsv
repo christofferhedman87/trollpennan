@@ -1,0 +1,10 @@
+# R3F-MFIX3: samma granskade former som i data/ord.json.
+ord	genus	former	# källa
+jultomte	u	jultomte, jultomten, jultomtar, jultomtarna	# som i data/ord.json
+brandman	u	brandman, brandmannen, brandmän, brandmännen	# som i data/ord.json
+äventyrare	u	äventyrare, äventyraren, äventyrarna	# som i data/ord.json
+detektiv	u	detektiv, detektiven, detektiver, detektiverna	# som i data/ord.json
+sjöman	u	sjöman, sjömannen, sjömän, sjömännen	# som i data/ord.json
+rörmokare	u	rörmokare, rörmokaren, rörmokarna	# som i data/ord.json
+mekaniker	u	mekaniker, mekanikern, mekanikerna	# som i data/ord.json
+narval	u	narval, narvalen, narvalar, narvalarna	# som i data/ord.json

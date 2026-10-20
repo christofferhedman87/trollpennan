@@ -1,0 +1,27 @@
+# R3F-M18b: granskade former (SALDO/SAOL-mönster, osäker plural utelämnad).
+ord	genus	former	# källa
+björn	u	björn, björnen, björnar, björnarna	# SALDO nn_2u_sten
+hamster	u	hamster, hamstern, hamstrar, hamstrarna	# SALDO nn_2u_nyckel
+marsvin	n	marsvin, marsvinet, marsvinen	# SALDO nn_6n_bord
+snigel	u	snigel, snigeln, sniglar, sniglarna	# SALDO nn_2u_nyckel
+nyckelpiga	u	nyckelpiga, nyckelpigan, nyckelpigor, nyckelpigorna	# SALDO nn_1u_flicka
+sjöstjärna	u	sjöstjärna, sjöstjärnan, sjöstjärnor, sjöstjärnorna	# SALDO nn_1u_olja
+humla	u	humla, humlan, humlor, humlorna	# SALDO nn_1u_olja
+krokodil	u	krokodil, krokodilen, krokodiler, krokodilerna	# SALDO nn_3u_karbid
+ödla	u	ödla, ödlan, ödlor, ödlorna	# SALDO nn_1u_olja
+stork	u	stork, storken, storkar, storkarna	# SALDO nn_2u_sten
+struts	u	struts, strutsen, strutsar, strutsarna	# SALDO nn_2u_sten
+kamel	u	kamel, kamelen, kameler, kamelerna	# SALDO nn_3u_tid
+känguru	u	känguru, kängurun, kängurur, känguruer, kängururna, känguruerna	# SALDO nn_vu_hambo
+späckhuggare	u	späckhuggare, späckhuggaren, späckhuggarna	# SALDO nn_6u_kikare
+blåval	u	blåval, blåvalen, blåvalar, blåvalarna	# SALDO nn_2u_stol
+valfisk	u	valfisk, valfisken, valfiskar, valfiskarna	# SALDO nn_2u_sten
+beluga	u	beluga, belugan	# hand (plural osäker, utelämnad)
+sjölejon	n	sjölejon, sjölejonet, sjölejonen	# SALDO nn_6n_bord
+duva	u	duva, duvan, duvor, duvorna	# SALDO nn_1u_flicka
+kråka	u	kråka, kråkan, kråkor, kråkorna	# SALDO nn_1u_flicka
+fjällräv	u	fjällräv, fjällräven, fjällrävar, fjällrävarna	# SALDO nn_2u_stol
+polarräv	u	polarräv, polarräven, polarrävar, polarrävarna	# SALDO nn_2u_stol
+snöuggla	u	snöuggla, snöugglan, snöugglor, snöugglorna	# hand (som uggla, nn_1u_flicka)
+drakfisk	u	drakfisk, drakfisken, drakfiskar, drakfiskarna	# hand (som fisk, nn_2u_sten)
+makrill	u	makrill, makrillen, makrillar, makrillarna	# SALDO nn_2u_stol

@@ -1,19 +1,19 @@
-ord	genus	former (gissade)	entitet	fil
-carnotaurus	u	carnotaurus, carnotaurusen, carnotaurusar, carnotaurusarna	carnotaurus	gobkit-cc0-djur-och-natur/dino-carnotaurus.glb
-oviraptor	u	oviraptor, oviraptoren, oviraptorar, oviraptorarna	oviraptor	gobkit-cc0-djur-och-natur/dino-oviraptor.glb
-pachycephalosaurus	u	pachycephalosaurus, pachycephalosaurusen, pachycephalosaurusar, pachycephalosaurusarna	pachycephalosaurus	gobkit-cc0-djur-och-natur/dino-pachycephalosaurus.glb
-spinosaurus	u	spinosaurus, spinosaurusen, spinosaurusar, spinosaurusarna	spinosaurus	gobkit-cc0-djur-och-natur/dino-spinosaurus.glb
-stegosaurus	u	stegosaurus, stegosaurusen, stegosaurusar, stegosaurusarna	stegosaurus	gobkit-cc0-djur-och-natur/dino-stegosaurus.glb
+ord	genus	former (granskade, ur data/ord.json)	entitet	fil
+carnotaurus	u	carnotaurus, carnotaurusen	carnotaurus	gobkit-cc0-djur-och-natur/dino-carnotaurus.glb
+oviraptor	u	oviraptor, oviraptorn	oviraptor	gobkit-cc0-djur-och-natur/dino-oviraptor.glb
+pachycephalosaurus	u	pachycephalosaurus, pachycephalosaurusen	pachycephalosaurus	gobkit-cc0-djur-och-natur/dino-pachycephalosaurus.glb
+spinosaurus	u	spinosaurus, spinosaurusen	spinosaurus	gobkit-cc0-djur-och-natur/dino-spinosaurus.glb
+stegosaurus	u	stegosaurus, stegosaurusen	stegosaurus	gobkit-cc0-djur-och-natur/dino-stegosaurus.glb
 kalv	u	kalv, kalven, kalvar, kalvarna	kalv	gobkit-cc0-djur-och-natur/farm-calf.glb
-mjölkko	u	mjölkko, mjölkkon	mjolkko	gobkit-cc0-djur-och-natur/farm-holsteincow.glb
+mjölkko	u	mjölkko, mjölkkon, mjölkkor, mjölkkorna	mjolkko	gobkit-cc0-djur-och-natur/farm-holsteincow.glb
 får	n	får, fåret, fåren	far	gobkit-cc0-djur-och-natur/farm-sheep.glb
 sköldpadda	u	sköldpadda, sköldpaddan, sköldpaddor, sköldpaddorna	skoldpadda	polypizza-cc0/turtle-turtle-character-xmwfrz.glb
 häxa	u	häxa, häxan, häxor, häxorna	haxa	polypizza-cc0/witch-chibi-witch-dkexfk.glb
 trollslända	u	trollslända, trollsländan, trollsländor, trollsländorna	trollslanda	polypizza-cc0/dragonfly-dragonfly-de6jep.glb
-apatosaurus	u	apatosaurus, apatosaurusen, apatosaurusar, apatosaurusarna	apatosaurus	quaternius-animated-dinosaurs/apatosaurus.glb
+apatosaurus	u	apatosaurus, apatosaurusen	apatosaurus	quaternius-animated-dinosaurs/apatosaurus.glb
 långhals	u	långhals, långhalsen, långhalsar, långhalsarna	apatosaurus	quaternius-animated-dinosaurs/apatosaurus.glb
-parasaurolophus	u	parasaurolophus, parasaurolophusen, parasaurolophusar, parasaurolophusarna	parasaurolophus	quaternius-animated-dinosaurs/parasaurolophus.glb
-velociraptor	u	velociraptor, velociraptoren, velociraptorar, velociraptorarna	velociraptor	quaternius-animated-dinosaurs/velociraptor.glb
+parasaurolophus	u	parasaurolophus, parasaurolophusen	parasaurolophus	quaternius-animated-dinosaurs/parasaurolophus.glb
+velociraptor	u	velociraptor, velociraptorn	velociraptor	quaternius-animated-dinosaurs/velociraptor.glb
 kampfisk	u	kampfisk, kampfisken, kampfiskar, kampfiskarna	kampfisk	quaternius-cute-fish/betta.glb
 klumpfisk	u	klumpfisk, klumpfisken, klumpfiskar, klumpfiskarna	klumpfisk	quaternius-cute-fish/blobfish.glb
 mandarinfisk	u	mandarinfisk, mandarinfisken, mandarinfiskar, mandarinfiskarna	mandarinfisk	quaternius-cute-fish/mandarinfish.glb
@@ -21,21 +21,21 @@ papegojfisk	u	papegojfisk, papegojfisken, papegojfiskar, papegojfiskarna	papegoj
 solfisk	u	solfisk, solfisken, solfiskar, solfiskarna	solfisk	quaternius-cute-fish/sunfish.glb
 napoleonfisk	u	napoleonfisk, napoleonfisken, napoleonfiskar, napoleonfiskarna	napoleonfisk	quaternius-cute-fish/humphead.glb
 kofisk	u	kofisk, kofisken, kofiskar, kofiskarna	kofisk	quaternius-cute-fish/cowfish.glb
-trädmonster	n	trädmonster, trädmonsteret, trädmonsteren	tradmonster	quaternius-cute-monsters/tree.glb
+trädmonster	n	trädmonster, trädmonstret, trädmonstren	tradmonster	quaternius-cute-monsters/tree.glb
 oxe	u	oxe, oxen, oxar, oxarna	oxe	quaternius-ultimate-animated-animals/bull.glb
-skimmel	u	skimmel, skimmelen, skimmelar, skimmelarna	skimmel	quaternius-ultimate-animated-animals/horse-white.glb
+skimmel	u	skimmel, skimmeln, skimlar, skimlarna	skimmel	quaternius-ultimate-animated-animals/horse-white.glb
 monstergroda	u	monstergroda, monstergrodan, monstergrodor, monstergrodorna	monstergroda	quaternius-ultimate-monsters/stor-frog.glb
-monsterkatt	u	monsterkatt, monsterkatten, monsterkattar, monsterkattarna	monsterkatt	quaternius-ultimate-monsters/klump-cat.glb
+monsterkatt	u	monsterkatt, monsterkatten, monsterkatter, monsterkatterna	monsterkatt	quaternius-ultimate-monsters/klump-cat.glb
 monsterhund	u	monsterhund, monsterhunden, monsterhundar, monsterhundarna	monsterhund	quaternius-ultimate-monsters/klump-dog.glb
 monsterduva	u	monsterduva, monsterduvan, monsterduvor, monsterduvorna	monsterduva	quaternius-ultimate-monsters/klump-pigeon.glb
 alpackakung	u	alpackakung, alpackakungen, alpackakungar, alpackakungarna	alpackakung	quaternius-ultimate-monsters/flyg-alpaking.glb
-jättebi	n	jättebi, jättebit, jättebin, jättebinen	jattebi	quaternius-ultimate-monsters/flyg-armabee.glb
+jättebi	n	jättebi, jättebiet, jättebin, jättebina	jattebi	quaternius-ultimate-monsters/flyg-armabee.glb
 glubb	u	glubb, glubben, glubbar, glubbarna	glubb	quaternius-ultimate-monsters/flyg-glub.glb
-virvelvarelse	u	virvelvarelse, virvelvarelsen, virvelvarelsar, virvelvarelsarna	virvelvarelse	quaternius-ultimate-monsters/flyg-hywirl.glb
+virvelvarelse	u	virvelvarelse, virvelvarelsen, virvelvarelser, virvelvarelserna	virvelvarelse	quaternius-ultimate-monsters/flyg-hywirl.glb
 geting	u	geting, getingen, getingar, getingarna	geting	polypizza-cc0-2/wasp-3aqgc7.glb
 valfisk	u	valfisk, valfisken, valfiskar, valfiskarna	valfisk	polypizza-cc0-2/whale-jgfwp6.glb
 sjöborre	u	sjöborre, sjöborren, sjöborrar, sjöborrarna	sjoborre	polypizza-cc0-2/sea-urchin-open-ldyojy.glb
 fjärilsfisk	u	fjärilsfisk, fjärilsfisken, fjärilsfiskar, fjärilsfiskarna	fjarilsfisk	polypizza-cc0-2/butterfly-fish-s2mkbe.glb
 neontetra	u	neontetra, neontetran, neontetror, neontetrorna	neontetra	polypizza-cc0-2/tetra-l6ahog.glb
-snapper	u	snapper, snapperen, snapperar, snapperarna	snapper	polypizza-cc0-2/red-snapper-brkfdk.glb
+snapper	u	snapper	snapper	polypizza-cc0-2/red-snapper-brkfdk.glb
 mussla	u	mussla, musslan, musslor, musslorna	mussla	polypizza-cc0-2/mussel-open-ewhac3.glb

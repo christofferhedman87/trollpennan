@@ -1,45 +1,45 @@
-ord	genus	former (gissade)	entitet	fil
-bonde	u	bonde, bonden, bondar, bondarna	bonde	trollpennan-folk-m17/bonde-blocky.glb
+ord	genus	former (granskade, ur data/ord.json)	entitet	fil
+bonde	u	bonde, bonden, bönder, bönderna	bonde	trollpennan-folk-m17/bonde-blocky.glb
 ninja	u	ninja, ninjan, ninjor, ninjorna	ninja	trollpennan-folk-m17/ninja-blocky.glb
 kvinna	u	kvinna, kvinnan, kvinnor, kvinnorna	kvinna	trollpennan-folk-m17/kvinna-blocky.glb
-brandman	u	brandman, brandmanen, brandmanar, brandmanarna	brandman	trollpennan-folk-m17/brandman-blocky.glb
-clown	u	clown, clownen, clownar, clownarna	clown	trollpennan-folk-m17/clown-blocky.glb
-doktor	u	doktor, doktoren, doktorar, doktorarna	doktor	trollpennan-folk-m17/doktor-blocky.glb
-läkare	u	läkare, läkaren, läkarar, läkararna	doktor	trollpennan-folk-m17/doktor-blocky.glb
+brandman	u	brandman, brandmannen, brandmän, brandmännen	brandman	trollpennan-folk-m17/brandman-blocky.glb
+clown	u	clown, clownen, clowner, clownerna	clown	trollpennan-folk-m17/clown-blocky.glb
+doktor	u	doktor, doktorn, doktorer, doktorerna	doktor	trollpennan-folk-m17/doktor-blocky.glb
+läkare	u	läkare, läkaren, läkarna	doktor	trollpennan-folk-m17/doktor-blocky.glb
 kock	u	kock, kocken, kockar, kockarna	kock	trollpennan-folk-m17/kock-blocky.glb
-mormor	u	mormor, mormoren, mormorar, mormorarna	mormor	trollpennan-folk-m17/mormor-blocky.glb
-farmor	u	farmor, farmoren, farmorar, farmorarna	farmor	trollpennan-folk-m17/farmor-blocky.glb
+mormor	u	mormor	mormor	trollpennan-folk-m17/mormor-blocky.glb
+farmor	u	farmor	farmor	trollpennan-folk-m17/farmor-blocky.glb
 prins	u	prins, prinsen, prinsar, prinsarna	prins	trollpennan-folk-m17/prins-blocky.glb
 prinsessa	u	prinsessa, prinsessan, prinsessor, prinsessorna	prinsessa	trollpennan-folk-m17/prinsessa-blocky.glb
-barn	u	barn, barnen, barnar, barnarna	barn	trollpennan-folk-m17/barn-blocky.glb
+barn	u	barn, barnet, barnen	barn	trollpennan-folk-m17/barn-blocky.glb
 älva	u	älva, älvan, älvor, älvorna	alva	trollpennan-folk-m17/alva-blocky.glb
-fe	u	fe, fen, far, farna	alva	trollpennan-folk-m17/alva-blocky.glb
-frisör	u	frisör, frisören, frisörar, frisörarna	frisor	trollpennan-folk-m17/frisor-blocky.glb
+fe	u	fe, fen, feer, feerna	alva	trollpennan-folk-m17/alva-blocky.glb
+frisör	u	frisör, frisören, frisörer, frisörerna	frisor	trollpennan-folk-m17/frisor-blocky.glb
 sjuksköterska	u	sjuksköterska, sjuksköterskan, sjuksköterskor, sjuksköterskorna	sjukskoterska	trollpennan-folk-m17/sjukskoterska-blocky.glb
-dykare	u	dykare, dykaren, dykarar, dykararna	dykare	trollpennan-folk-m17/dykare-blocky.glb
-brevbärare	u	brevbärare, brevbäraren, brevbärarar, brevbärararna	brevbarare	trollpennan-folk-m17/brevbarare-blocky.glb
-målare	u	målare, målaren, målarar, målararna	malare	trollpennan-folk-m17/malare-blocky.glb
-snickare	u	snickare, snickaren, snickarar, snickararna	snickare	trollpennan-folk-m17/snickare-blocky.glb
-kapten	u	kapten, kaptenen, kaptenar, kaptenarna	kapten	trollpennan-folk-m17/kapten-blocky.glb
-fiskare	u	fiskare, fiskaren, fiskarar, fiskararna	fiskare	trollpennan-folk-m17/fiskare-blocky.glb
+dykare	u	dykare, dykaren, dykarna	dykare	trollpennan-folk-m17/dykare-blocky.glb
+brevbärare	u	brevbärare, brevbäraren, brevbärarna	brevbarare	trollpennan-folk-m17/brevbarare-blocky.glb
+målare	u	målare, målaren, målarna	malare	trollpennan-folk-m17/malare-blocky.glb
+snickare	u	snickare, snickaren, snickarna	snickare	trollpennan-folk-m17/snickare-blocky.glb
+kapten	u	kapten, kaptenen, kaptener, kaptenerna	kapten	trollpennan-folk-m17/kapten-blocky.glb
+fiskare	u	fiskare, fiskaren	fiskare	trollpennan-folk-m17/fiskare-blocky.glb
 viking	u	viking, vikingen, vikingar, vikingarna	viking	trollpennan-folk-m17/viking-blocky.glb
 superhjälte	u	superhjälte, superhjälten, superhjältar, superhjältarna	superhjalte	trollpennan-folk-m17/superhjalte-blocky.glb
 tjuv	u	tjuv, tjuven, tjuvar, tjuvarna	tjuv	trollpennan-folk-m17/tjuv-blocky.glb
-äventyrare	u	äventyrare, äventyraren, äventyrarar, äventyrararna	aventyrare	trollpennan-folk-m17/aventyrare-blocky.glb
-detektiv	u	detektiv, detektiven, detektivar, detektivarna	detektiv	trollpennan-folk-m17/detektiv-blocky.glb
-forskare	u	forskare, forskaren, forskarar, forskararna	forskare	trollpennan-folk-m17/forskare-blocky.glb
-konstnär	u	konstnär, konstnären, konstnärar, konstnärarna	konstnar	trollpennan-folk-m17/konstnar-blocky.glb
+äventyrare	u	äventyrare, äventyraren, äventyrarna	aventyrare	trollpennan-folk-m17/aventyrare-blocky.glb
+detektiv	u	detektiv, detektiven, detektiver, detektiverna	detektiv	trollpennan-folk-m17/detektiv-blocky.glb
+forskare	u	forskare, forskaren, forskarna	forskare	trollpennan-folk-m17/forskare-blocky.glb
+konstnär	u	konstnär, konstnären, konstnärer, konstnärerna	konstnar	trollpennan-folk-m17/konstnar-blocky.glb
 ballerina	u	ballerina, ballerinan, ballerinor, ballerinorna	ballerina	trollpennan-folk-m17/ballerina-blocky.glb
-dansare	u	dansare, dansaren, dansarar, dansararna	ballerina	trollpennan-folk-m17/ballerina-blocky.glb
-mekaniker	u	mekaniker, mekanikeren, mekanikerar, mekanikerarna	mekaniker	trollpennan-folk-m17/mekaniker-blocky.glb
-jägare	u	jägare, jägaren, jägarar, jägararna	jagare	trollpennan-folk-m17/jagare-blocky.glb
-skogshuggare	u	skogshuggare, skogshuggaren, skogshuggarar, skogshuggararna	skogshuggare	trollpennan-folk-m17/skogshuggare-blocky.glb
-vakt	u	vakt, vakten, vaktar, vaktarna	vakt	trollpennan-folk-m17/vakt-blocky.glb
-kejsare	u	kejsare, kejsaren, kejsarar, kejsararna	kejsare	trollpennan-folk-m17/kejsare-blocky.glb
+dansare	u	dansare, dansaren, dansarna	ballerina	trollpennan-folk-m17/ballerina-blocky.glb
+mekaniker	u	mekaniker, mekanikern, mekanikerna	mekaniker	trollpennan-folk-m17/mekaniker-blocky.glb
+jägare	u	jägare, jägaren, jägarna	jagare	trollpennan-folk-m17/jagare-blocky.glb
+skogshuggare	u	skogshuggare, skogshuggaren, skogshuggarna	skogshuggare	trollpennan-folk-m17/skogshuggare-blocky.glb
+vakt	u	vakt, vakten, vakter, vakterna	vakt	trollpennan-folk-m17/vakt-blocky.glb
+kejsare	u	kejsare, kejsaren, kejsarna	kejsare	trollpennan-folk-m17/kejsare-blocky.glb
 jultomte	u	jultomte, jultomten, jultomtar, jultomtarna	jultomte	trollpennan-folk-m17/jultomte-blocky.glb
-mumie	u	mumie, mumien, mumiar, mumiarna	mumie	trollpennan-folk-m17/mumie-blocky.glb
-alien	u	alien, alienen, alienar, alienarna	alien	trollpennan-folk-m17/alien-blocky.glb
-sjöman	u	sjöman, sjömanen, sjömanar, sjömanarna	sjoman	trollpennan-folk-m17/sjoman-blocky.glb
-rörmokare	u	rörmokare, rörmokaren, rörmokarar, rörmokararna	rormokare	trollpennan-folk-m17/rormokare-blocky.glb
-servitör	u	servitör, servitören, servitörar, servitörarna	servitor	trollpennan-folk-m17/servitor-blocky.glb
-sångare	u	sångare, sångaren, sångarar, sångararna	sangare	trollpennan-folk-m17/sangare-blocky.glb
+mumie	u	mumie, mumien, mumier, mumierna	mumie	trollpennan-folk-m17/mumie-blocky.glb
+alien	u	alien, alienen	alien	trollpennan-folk-m17/alien-blocky.glb
+sjöman	u	sjöman, sjömannen, sjömän, sjömännen	sjoman	trollpennan-folk-m17/sjoman-blocky.glb
+rörmokare	u	rörmokare, rörmokaren, rörmokarna	rormokare	trollpennan-folk-m17/rormokare-blocky.glb
+servitör	u	servitör, servitören, servitörer, servitörerna	servitor	trollpennan-folk-m17/servitor-blocky.glb
+sångare	u	sångare, sångaren, sångarna	sangare	trollpennan-folk-m17/sangare-blocky.glb

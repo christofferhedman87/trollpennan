@@ -1,0 +1,29 @@
+{
+ "_om": "R3F-M19: målhöjder; fenix och ängel flyger, sjöorm och kraken simmar.",
+ "malhojd_ord": {
+  "sjöjungfru": 1.2,
+  "havsfru": 1.2,
+  "ängel": 1.3,
+  "dvärg": 0.9,
+  "ande": 1.3,
+  "djinn": 1.3,
+  "sjöorm": 0.5,
+  "kraken": 1.2,
+  "fenix": 0.8,
+  "pegasus": 1.6,
+  "drakägg": 0.6,
+  "kristallkula": 0.6
+ },
+ "rorelse_ord_tillagg": {
+  "flyg": [
+   "fenix",
+   "ängel"
+  ],
+  "sim": [
+   "sjöorm",
+   "kraken",
+   "sjöjungfru",
+   "havsfru"
+  ]
+ }
+}

@@ -87,6 +87,11 @@ if [ "$(tail -n +2 "$UT/lagg-ordgranskning.tsv" | grep -c .)" != "0" ] || [ -f "
     stopp 3 "granskade former saknas eller är fel ($D/$M/former.tsv). Allt återställt."
   fi
 fi
+# 3a2. Paketets ordgranskning.tsv visar de granskade formerna (ur data/ord.json), aldrig lagg-gissningar som "spelarar".
+node $D/ordgranskning-granskad.mjs "$D/$M/ordgranskning.tsv" | tee -a "$UT/bevis.txt"
+# 3a3. Valfritt: inlagg-tillagg.json "egna_farger": [id …] tar bort lagg-paletten och farg-materialet för de entiteterna, så att
+# modellens egna färger syns (annars målas kroppen med art-färgen när barnet inte skrivit något färgord). Bara data/entiteter.json.
+[ -f "$D/$M/inlagg-tillagg.json" ] && { node $D/egna-farger.mjs "$D/$M/inlagg-tillagg.json" | tee -a "$UT/bevis.txt"; [ "${PIPESTATUS[0]}" = 0 ] || { git checkout -- data src CREDITS.md LICENSES.md public/models/bulk; git clean -fdq public/models/bulk; stopp 3 "egna_farger kunde inte föras in (allt återställt)"; }; }
 # 3b. Gåtor för nya hemliga djur (r9.test.ts kräver en gåta per djurord). Data ur $D/$M/gator.json, inget annat ändras.
 if [ -f "$D/$M/gator.json" ]; then
   node -e '
@@ -129,10 +134,12 @@ fi
   echo "Körd $(date '+%Y-%m-%d %H:%M %Z') på $(git rev-parse --short HEAD) ($(git branch --show-current))."; echo
   echo '```'; cat "$UT/bevis.txt"; echo '```'; echo
   echo "Sammanfattning ur lagg:"; echo '```'; sed -n '/^{/,/^}/p' "$UT/lagg.txt" | grep -E '"(rader|ok|ok_flaggad|hoppade|fel|unika_nya_ord)"'; echo '```'
-  echo; echo "Ordgranskning: lagg-gissningar i \`$D/$M/ordgranskning.tsv\`; de former som ligger i spelet är de granskade i \`$D/$M/former.tsv\`."
+  echo; echo "Ordgranskning: \`$D/$M/ordgranskning.tsv\` visar formerna som ligger i spelet (granskade i \`$D/$M/former.tsv\`)."
   [ $AVV -ne 0 ] && echo && echo "**AVVIKELSE: rader märkta AVV ovan. Ingen merge förrän Arkitekten tittat.**"
 } > "$LOGG"
 git add -A -- CREDITS.md LICENSES.md data public/models/bulk src/spel/entiteter.test.ts $TESTFILER docs/skarmbilder/r3f "$D/$M"
+# Aldrig symlänkar i en commit (#116 checkade in node_modules-länkar; Doodle tog bort dem i #119).
+if git diff --cached --raw | awk '$2 == "120000"' | grep -q .; then git diff --cached --raw | awk '$2 == "120000"' | tee -a "$UT/bevis.txt"; git reset -q; stopp 3 "symlänk i commit (se ovan)"; fi
 git commit -q -m "Runda R3F-$M: modellserien, $FORV modeller (CC0, hämtas när ordet används)" || stopp 3 "commit misslyckades"
 echo; echo "KLART: $(git log --oneline -1). $( [ $AVV -eq 0 ] && echo 'Alla bevis OK: pusha, PR, merge.' || echo 'AVVIKELSE: pusha och öppna PR men MERGA INTE.')"
 exit $(( AVV ? 4 : 0 ))

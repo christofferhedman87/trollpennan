@@ -1,16 +1,16 @@
-ord	genus	former (gissade)	entitet	fil
-dingo	u	dingo, dingon	dingo	gobkit-cc0-2/dingo.glb
+ord	genus	former (granskade, ur data/ord.json)	entitet	fil
+dingo	u	dingo, dingon, dingor, dingorna	dingo	gobkit-cc0-2/dingo.glb
 mullvad	u	mullvad, mullvaden, mullvadar, mullvadarna	mullvad	gobkit-cc0-2/mole.glb
 narval	u	narval, narvalen, narvalar, narvalarna	narval	gobkit-cc0-2/narwhal.glb
-vaktel	u	vaktel, vaktelen, vaktelar, vaktelarna	vaktel	gobkit-cc0-2/quail.glb
-skorpion	u	skorpion, skorpionen, skorpionar, skorpionarna	skorpion	gobkit-cc0-2/scorpion.glb
+vaktel	u	vaktel, vakteln, vaktlar, vaktlarna	vaktel	gobkit-cc0-2/quail.glb
+skorpion	u	skorpion, skorpionen, skorpioner, skorpionerna	skorpion	gobkit-cc0-2/scorpion.glb
 mås	u	mås, måsen, måsar, måsarna	mas	gobkit-cc0-2/seagull.glb
 fiskmås	u	fiskmås, fiskmåsen, fiskmåsar, fiskmåsarna	mas	gobkit-cc0-2/seagull.glb
-pungdjävul	u	pungdjävul, pungdjävulen, pungdjävular, pungdjävularna	pungdjavul	gobkit-cc0-2/tasmaniandevil.glb
+pungdjävul	u	pungdjävul, pungdjävulen, pungdjävlar, pungdjävlarna	pungdjavul	gobkit-cc0-2/tasmaniandevil.glb
 kattbjörn	u	kattbjörn, kattbjörnen, kattbjörnar, kattbjörnarna	rodpanda	gobkit-cc0-2/red.glb
-myrlejon	u	myrlejon, myrlejonen, myrlejonar, myrlejonarna	myrlejon	gobkit-cc0-2/antlionlarva.glb
-bladlus	u	bladlus, bladlusen, bladlusar, bladlusarna	bladlus	gobkit-cc0-2/aphid.glb
-knäppare	u	knäppare, knäpparen, knäpparar, knäppararna	knappare	gobkit-cc0-2/clickbeetle.glb
+myrlejon	u	myrlejon, myrlejonet, myrlejonen	myrlejon	gobkit-cc0-2/antlionlarva.glb
+bladlus	u	bladlus, bladlusen, bladlöss, bladlössen	bladlus	gobkit-cc0-2/aphid.glb
+knäppare	u	knäppare, knäpparen, knäpparna	knappare	gobkit-cc0-2/clickbeetle.glb
 kackerlacka	u	kackerlacka, kackerlackan, kackerlackor, kackerlackorna	kackerlacka	gobkit-cc0-2/cockroach.glb
 harkrank	u	harkrank, harkranken, harkrankar, harkrankarna	harkrank	gobkit-cc0-2/cranefly.glb
 dykarbagge	u	dykarbagge, dykarbaggen, dykarbaggar, dykarbaggarna	dykarbagge	gobkit-cc0-2/divingbeetle.glb
@@ -19,14 +19,14 @@ dyngbagge	u	dyngbagge, dyngbaggen, dyngbaggar, dyngbaggarna	skalbagge	gobkit-cc0
 tvestjärt	u	tvestjärt, tvestjärten, tvestjärtar, tvestjärtarna	tvestjart	gobkit-cc0-2/earwig.glb
 loppa	u	loppa, loppan, loppor, lopporna	loppa	gobkit-cc0-2/flea.glb
 vattenskinnbagge	u	vattenskinnbagge, vattenskinnbaggen, vattenskinnbaggar, vattenskinnbaggarna	vattenskinnbagge	gobkit-cc0-2/giantwaterbug.glb
-giraffvivel	u	giraffvivel, giraffvivelen, giraffvivelar, giraffvivelarna	giraffvivel	gobkit-cc0-2/giraffeweevil.glb
-svärmare	u	svärmare, svärmaren, svärmarar, svärmararna	svarmare	gobkit-cc0-2/hawkmoth.glb
+giraffvivel	u	giraffvivel, giraffviveln, giraffvivlar, giraffvivlarna	giraffvivel	gobkit-cc0-2/giraffeweevil.glb
+svärmare	u	svärmare, svärmaren, svärmarna	svarmare	gobkit-cc0-2/hawkmoth.glb
 nattfjäril	u	nattfjäril, nattfjärilen, nattfjärilar, nattfjärilarna	svarmare	gobkit-cc0-2/hawkmoth.glb
 noshörningsbagge	u	noshörningsbagge, noshörningsbaggen, noshörningsbaggar, noshörningsbaggarna	noshorningsbagge	gobkit-cc0-2/herculesbeetle.glb
 blomfluga	u	blomfluga, blomflugan, blomflugor, blomflugorna	blomfluga	gobkit-cc0-2/hoverfly.glb
 fluga	u	fluga, flugan, flugor, flugorna	blomfluga	gobkit-cc0-2/hoverfly.glb
 gräshoppa	u	gräshoppa, gräshoppan, gräshoppor, gräshopporna	grashoppa	gobkit-cc0-2/katydid.glb
-vårtbitare	u	vårtbitare, vårtbitaren, vårtbitarar, vårtbitararna	grashoppa	gobkit-cc0-2/katydid.glb
+vårtbitare	u	vårtbitare, vårtbitaren, vårtbitarna	grashoppa	gobkit-cc0-2/katydid.glb
 guldögonslända	u	guldögonslända, guldögonsländan, guldögonsländor, guldögonsländorna	guldogonslanda	gobkit-cc0-2/lacewing.glb
 myra	u	myra, myran, myror, myrorna	myra	gobkit-cc0-2/leafcutterant.glb
 bladskräcka	u	bladskräcka, bladskräckan, bladskräckor, bladskräckorna	bladskracka	gobkit-cc0-2/leafinsect.glb
@@ -34,13 +34,13 @@ dagslända	u	dagslända, dagsländan, dagsländor, dagsländorna	dagslanda	gobki
 mullvadssyrsa	u	mullvadssyrsa, mullvadssyrsan, mullvadssyrsor, mullvadssyrsorna	mullvadssyrsa	gobkit-cc0-2/molecricket.glb
 syrsa	u	syrsa, syrsan, syrsor, syrsorna	mullvadssyrsa	gobkit-cc0-2/molecricket.glb
 bönsyrsa	u	bönsyrsa, bönsyrsan, bönsyrsor, bönsyrsorna	bonsyrsa	gobkit-cc0-2/orchidmantis.glb
-termit	u	termit, termiten, termitar, termitarna	termit	gobkit-cc0-2/soldiertermite.glb
+termit	u	termit, termiten, termiter, termiterna	termit	gobkit-cc0-2/soldiertermite.glb
 pinnsyrsa	u	pinnsyrsa, pinnsyrsan, pinnsyrsor, pinnsyrsorna	pinnsyrsa	gobkit-cc0-2/stickinsect.glb
 fjäril	u	fjäril, fjärilen, fjärilar, fjärilarna	fjaril	gobkit-cc0-2/swallowtail.glb
 makaonfjäril	u	makaonfjäril, makaonfjärilen, makaonfjärilar, makaonfjärilarna	fjaril	gobkit-cc0-2/swallowtail.glb
-sandjägare	u	sandjägare, sandjägaren, sandjägarar, sandjägararna	sandjagare	gobkit-cc0-2/tigerbeetle.glb
+sandjägare	u	sandjägare, sandjägaren, sandjägarna	sandjagare	gobkit-cc0-2/tigerbeetle.glb
 sköldbagge	u	sköldbagge, sköldbaggen, sköldbaggar, sköldbaggarna	skoldbagge	gobkit-cc0-2/tortoisebeetle.glb
 hornstrit	u	hornstrit, hornstriten, hornstritar, hornstritarna	hornstrit	gobkit-cc0-2/treehopper.glb
-skräddare	u	skräddare, skräddaren, skräddarar, skräddararna	skraddare	gobkit-cc0-2/waterstrider.glb
+skräddare	u	skräddare, skräddaren, skräddarna	skraddare	gobkit-cc0-2/waterstrider.glb
 mask	u	mask, masken, maskar, maskarna	mask	polypizza-cc0/worm-worm-kinaab.glb
 daggmask	u	daggmask, daggmasken, daggmaskar, daggmaskarna	mask	polypizza-cc0/worm-worm-kinaab.glb

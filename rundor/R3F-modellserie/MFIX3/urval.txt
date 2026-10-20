@@ -1,0 +1,12 @@
+# R3F-MFIX3: rättelser efter Doodles genomgång av MFIX2–M18: jultomte, brandman, äventyrare/detektiv och sjöman/rörmokare/mekaniker får tydliga särdrag, tre lastbilar skiljer sig åt, narvalen är inte blek. Alla CC0.
+trollpennan-mfix3/jultomte-blocky.glb
+trollpennan-mfix3/brandman-blocky.glb
+trollpennan-mfix3/aventyrare-blocky.glb
+trollpennan-mfix3/detektiv-blocky.glb
+trollpennan-mfix3/sjoman-blocky.glb
+trollpennan-mfix3/rormokare-blocky.glb
+trollpennan-mfix3/mekaniker-blocky.glb
+trollpennan-mfix3/bargningsbil-kenney.glb
+trollpennan-mfix3/betongbil-kenney.glb
+trollpennan-mfix3/tankbil-kenney.glb
+trollpennan-mfix3/narval-gobkit.glb

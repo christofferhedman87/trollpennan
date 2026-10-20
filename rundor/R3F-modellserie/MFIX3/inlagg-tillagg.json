@@ -1,0 +1,4 @@
+{
+ "_om": "R3F-MFIX3: de åtta rättade djuren/figurerna behåller sina egna färger (ingen palett, inget farg-material). Provat i spelet: med palett blev jultomten orange/brun och narvalen blek; med farg-material blev brandmannens hjälm laxrosa (art-färgen). Färgord (en blå jultomte) slår då inte igenom på dem; det tas i kodrundan.",
+ "egna_farger": ["jultomte", "brandman", "aventyrare", "detektiv", "sjoman", "rormokare", "mekaniker", "narval"]
+}
