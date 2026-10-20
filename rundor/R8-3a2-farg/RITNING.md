@@ -118,7 +118,31 @@ Det här är en patchrunda, inte en Build-runda. Grinden gäller fullt ut för B
 | 8 | Ett mål | **Ja.** "Färgen följer kroppen", med fyra sammanhörande fel i samma kodväg (`fargaKlon`). |
 | 9 | Vem skriver koden | **Arkitekten (patch).** Doodle kör bara kor.sh. Granskande bot skriver ingen spelkod. |
 
-**Utlåtande:** klar att köra som skript efter torrkörningen nedan. Anmärkning 1 åtgärdas i PROJECT.md vid merge.
+**Utlåtande:** klar att köra som skript. Torrkörning 2 gav EXIT 0, se nedan. Anmärkning 1 åtgärdas i PROJECT.md vid merge.
+
+## Torrkörning
+Körd i en ren worktree av origin/main, med `nice -n 19` och nohup. Loggen ligger i `/workspace/r83a2-torr.log` och `.exit`.
+
+- **Torrkörning 1** (main 16b6125, 17:01–17:34): **EXIT 4**. Två regressioner hittades.
+  - r83a-prov "en blå bil": bara taket blev blått. Felet satt i `valjKarna`, som delade nyansen över två fack. Det är lagat.
+  - b65-prov: "effekten regnbage ritas" föll. Effekten är ersatt med flit, och provet godkänner nu kroppsmönstret.
+  - b62, b63, b64, r9k och r83a-alla var gröna redan där.
+- **Torrkörning 2** (main a22bfbc, 17:34–18:02): **EXIT 0**. Commit 1871a5a i torrträdet.
+  - test:product 257 gröna;
+  - typecheck/typecheck:pages 0;
+  - eslint . 0 fel och 0 varningar;
+  - check:struktur GRÖN;
+  - Spel.tsx orörd;
+  - build:pages ok;
+  - r83a2-prov: före 6 FEL (exit 1), efter 8/8;
+  - r83a-prov exit 0;
+  - r83a-alla 158/158 färgade (2 med annan kropp: sportbil→stek och eld→ubat, kända datafel som P3 tar);
+  - b64, b62, b65, b63 och r9k exit 0.
+
+Bilder: `/workspace/trollpennan-nulage/r83a2-bilder/` (`r83a2-fore-*.png`, `r83a2-efter-*.png`). Kontaktarket (före till vänster, efter till höger) ligger både där och i `rundor/R8-3a2-farg/bilder/r83a2-kontaktark.png`.
+
+Körkommando för Doodle:
+`git checkout main && git pull && git checkout -b runda-r83a2-kod && bash rundor/R8-3a2-farg/kor.sh`
 
 ## Kvar / svagheter
 - **Ankans tofs** på huvudet är grön även efter patchen. Den är en egen detalj (egen färgruta, liten, annan nyans) och räknas med flit inte som kropp. Kärnregeln skulle annars också färga näbbar och fötter.
