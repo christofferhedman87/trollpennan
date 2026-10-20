@@ -394,3 +394,31 @@ trångast står djuren still och vrider sig inte. Gränserna ändras inte. Då b
 p3-prov föll bara på kapaciteten, och precis som regeln räknar: ängen 8 katter 7, sjön blandad 5, bara jättar 2 och
 8 katter 7. Alla krav på synlighet, huvud, minsta storlek, titelutsnitt, småsaker (F), Bengtsson och ankan är gröna.
 Det röda kan bara lösas med ett beslut, se "Minsta beslut" ovan.
+
+### Arkitektens beslut 23:12 – vandringsnivå 0, genomfört (21 okt)
+
+- `placering.json` `vandra.steg` = `[1, 0.5, 0.15, 0]`. Nivå 0 används bara när det är som trångast. Djuren flyttar
+  sig då inte och vrider sig inte (djur.tsx: vandringen och vridningen × 0), men de lever kvar på platsen: guppet
+  (±0,04 på marken, ±0,08 i vattnet, räknat i regelns ruta) och andningen (kram) är kvar. Flygare vickar som förut.
+- Gränserna är oförändrade: 30 % / 45 % skymt, huvudet högst 10 %, äldre ned till 40 %, kameraavstånd 10,5.
+- Patchen är omgjord på main a848f8f (TTS-3 mergad, #185, #186). Den enda skillnaden mot förra patchen är raden i
+  `placering.json`; resten är radförskjutningar i `minne.ts`.
+
+Kapacitet med nivå 0 (vakna av 8, räknat i regeln på a848f8f; ⁰ = nivå 0 används):
+
+| plats | fro11 (≥3) | fro2026 (≥6) | fro4242 (≥6) | blandad (≥6) | bara jättar (≥3) | 8 katter (8) |
+|---|---|---|---|---|---|---|
+| ängen | 6⁰ | 8⁰ | 7⁰ | 7⁰ | 4⁰ | 8⁰ |
+| sjön | 6⁰ | 8⁰ | 8⁰ | 6⁰ | 3⁰ | 8⁰ |
+| skogen | 8⁰ | 7⁰ | 8⁰ | 8⁰ | 6⁰ | 8 |
+| grottan | 8⁰ | 7⁰ | 8⁰ | 8⁰ | 5⁰ | 8 |
+
+Alla fall når kravet, med exakt de tal som förutsades under "Minsta beslut".
+
+### Doodles kanin med mössa (TTS-3 försök 3, main a848f8f) – P3b, inte P3a
+
+Den gröna mössan (`alvmossa`, typ tillbehör, kategori kläder) ligger på marken bredvid kaninen. Bilden är tagen på
+main, där P3a inte finns, så placeringen eller krympningen i P3a är inte orsaken. Orsaken är på main: `arSak()` är sann
+för allt som har en modell och inte är ett djur, även kläder. Därför ritar `djur.tsx` mössan i `medSaker`, som en sak
+bredvid djuret, inte på huvudet. P3a ändrar bara var en sådan sak står (torr mark via `sakLage`) och skalar inte om den.
+Lagningen (`arPlagg`, kläderna på kroppsdelen) hör till P3b A och är noterad i `rundor/P3b-klader-tolk/PLAN.md`.

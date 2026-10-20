@@ -45,6 +45,14 @@ hans ja). Ingen kor.sh i P3a/P3b anropar ElevenLabs; filerna görs först efter 
   drake med eld, och ett spärrord som ska spärras). Provet skriver "en röd sportbil", "en gul eld" och "en stor eld" i spelet.
 
 
+## Från Doodle 21 okt (TTS-3 försök 3, main a848f8f)
+
+- **"en kanin med mössa": den gröna mössan ligger på marken bredvid kaninen** (`ko-20okt/tts3/forsok3/zoom-kanin.png`).
+  Det är fel A på main: `arSak()` är sann för kläder med modell (`alvmossa`), så `djur.tsx` ritar mössan i `medSaker` som
+  en sak bredvid djuret. P3a orsakar det inte (bilden är från main utan P3a). Lagas här med `arPlagg` (kläder ritas inte
+  som sak) och `PlaggPaKropp`. P3b:s prov B ska skriva exakt "en kanin med mössa" på ängen efter P3a och kräva att mössans
+  ruta ligger över kaninens huvud.
+
 ## Från Doodle 18:46 (torrkörning på main 5b7e697)
 
 - **"en röd sportbil" känns inte igen.** Sportbil blir biff eller stek, och eld blir ubåt. Delordsmatchningen och

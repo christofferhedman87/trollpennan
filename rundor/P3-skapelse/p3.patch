@@ -50,7 +50,7 @@ index 0000000..fd650f9
 +}
 diff --git a/data/placering.json b/data/placering.json
 new file mode 100644
-index 0000000..d014059
+index 0000000..41e541c
 --- /dev/null
 +++ b/data/placering.json
 @@ -0,0 +1,69 @@
@@ -69,7 +69,7 @@ index 0000000..d014059
 + "krymp_aldre_min": 0.4,
 + "krymp_steg": 0.1,
 + "_om_krymp_aldre": "när det är trångt ritas äldre (inte den nyaste) mindre, i steg om krymp_steg ned till krymp_aldre_min, innan de somnar. En äldre ritas aldrig större än en nyare: krympningen följer åldern och de äldsta står längst bak, så det ser ut som perspektiv (Arkitekten 18:59)",
-+ "vandra": { "_om": "djuren vandrar runt sin plats (djur.tsx x ±0,22, z ±0,16). Fritt bete (1) när det är glest; när det är trångt mindre, ned till nästan stilla. Skärmrutan räknas med den faktiska radien", "x": 0.22, "z": 0.16, "steg": [1, 0.5, 0.15] },
++ "vandra": { "_om": "djuren vandrar runt sin plats (djur.tsx x ±0,22, z ±0,16). Fritt bete (1) när det är glest; när det är trångt mindre, ned till nästan stilla. Skärmrutan räknas med den faktiska radien", "x": 0.22, "z": 0.16, "steg": [1, 0.5, 0.15, 0], "_om_niva0": "Arkitektens beslut 20 okt 23:12: en sista nivå 0 när det är som trångast. Djuren flyttar sig inte och vrider sig inte (djur.tsx: vandring och vridning × 0), men lever kvar på platsen: guppet (räknat i regelns ruta) och andningen (kram) finns kvar. Gränserna är oförändrade." },
 + "steg": { "x": 0.125, "z": 0.15, "y": 0.4 },
 + "vickning": { "_om": "hur långt en flygare rör sig från sin ruta i sidled (djur.tsx slingan ±0,4); djurens vandring räknas i vandra", "mark": 0, "vatten": 0, "luft": 0.4, "bak": 0 },
 + "vrid": { "_om": "djuren vrider sig när de går (djur.tsx yaw × 0,35, upp till ~60°): då syns längden, inte bara bredden. Ett djurs ruta räknas så här mycket bredare (prov C: elefanten 308 px ritad mot 221 px räknad)", "djur": 1.35 },
@@ -1251,7 +1251,7 @@ index 0000000..a6cbb2f
 +}
 +
 diff --git a/src/spel/minne.ts b/src/spel/minne.ts
-index 39ec6cb..ed1f06f 100644
+index 28d2498..40f647b 100644
 --- a/src/spel/minne.ts
 +++ b/src/spel/minne.ts
 @@ -5,8 +5,9 @@ import { byggMedId } from "../tolk/byggtolk.ts";
@@ -1265,7 +1265,7 @@ index 39ec6cb..ed1f06f 100644
  
  
  export type Lage = "kort" | "skriv";
-@@ -338,6 +339,13 @@ export const useMinne = create<Minne>((set, get) => ({
+@@ -343,6 +344,13 @@ export const useMinne = create<Minne>((set, get) => ({
        // B1.3a: på andra platser sparas skapelsen per plats, samma tak; ängen (`ang`) rörs inte.
        const nyaP: Sparad[] = Array.from({ length: antal }, (_, i) => ({ ...v, uid: crypto.randomUUID(), skapad: Date.now() + i }));
        const r = laggMedTak(get().platsSkapelser[plats] ?? [], get().sovande, nyaP);
@@ -1279,7 +1279,7 @@ index 39ec6cb..ed1f06f 100644
        set({ platsSkapelser: { ...get().platsSkapelser, [plats]: r.lista }, sovande: r.sovande });
        return { nya: nyaP, somnade: r.somnade };
      }
-@@ -356,6 +364,13 @@ export const useMinne = create<Minne>((set, get) => ({
+@@ -361,6 +369,13 @@ export const useMinne = create<Minne>((set, get) => ({
        ang = [...ang, sparad];
        nya.push(sparad);
      }
@@ -1293,7 +1293,7 @@ index 39ec6cb..ed1f06f 100644
      set({ ang, sovande });
      return { nya, somnade };
    },
-@@ -373,6 +388,15 @@ export const useMinne = create<Minne>((set, get) => ({
+@@ -378,6 +393,15 @@ export const useMinne = create<Minne>((set, get) => ({
        }
      }
      ang = [...ang, { ...hittad, skapad: Date.now() }];
