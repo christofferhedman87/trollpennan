@@ -1,5 +1,5 @@
 {
- "_om": "R3F-MFIX: narvalen mindre, svanen simmar, bacon och kött större, gitarren större, bebisen liten; tak 6 000 trianglar per sak (användarens regel).",
+ "_om": "R3F-MFIX: narvalen mindre, svanen simmar, bacon och kött större, gitarren större, bebisen liten, masken kortare; tak 6 000 trianglar per sak (användarens regel).",
  "malhojd_ord": {
   "drottning": 1.3,
   "bebis": 0.6
@@ -10,7 +10,8 @@
   "bacon": 0.7,
   "kött": 0.55,
   "gitarr": 0.8,
-  "nallebjörn": 0.5
+  "nallebjörn": 0.5,
+  "mask": 0.15
  },
  "rorelse_ord_tillagg": {
   "sim": [
