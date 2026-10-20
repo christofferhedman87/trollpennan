@@ -104,6 +104,7 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | trollpennan-mfix4 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 7 |
 | trollpennan-mfix5 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 4 |
 | trollpennan-saga-m19 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 8 |
+| trollpennan-skola-m22 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 28 |
 
 Alla paket ovan är CC0 om inget annat står. Fullständig lista per fil finns i LICENSES.md.
 
