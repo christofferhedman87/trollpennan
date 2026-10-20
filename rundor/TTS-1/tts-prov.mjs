@@ -1,6 +1,6 @@
 // TTS-1: röstljudet i spelet. Playwright 375x812, Audio.play och speechSynthesis spioneras (inget ljud spelas på riktigt).
 //   1) Introt spelar Trollpennans förgenererade fil (manifestets intro), inte saga.mp3, och bara den filen laddas vid start.
-//   2) Spelet utan intro laddar ingen röstfil vid start (lat laddning).
+//   2) Spelet utan intro laddar bara röstfiler som spelas vid start (lat laddning; guidens steg läses sedan P2).
 //   3) Bengtssons uppdrag (huvudknappen) läses från rätt fil; klart-repliken likaså; "Uppdrag klart!" (ingen fil) går till
 //      reserven med en påhittad sv-SE-röst. 4) Med bara en engelsk röst blir reserven tyst. 5) Ljudet av: ingenting läses. Inga sidfel.
 //   node rundor/TTS-1/tts-prov.mjs [--bilder <mapp>]   (exit 0 = alla steg gröna; kräver npm run build:pages)
@@ -118,7 +118,9 @@ const vanta = (p) => p.waitForFunction(() => !!window.__troll, null, { timeout: 
   const { ctx, p, hamtat } = await sida({ ...BAS, ljudPa: true });
   await vanta(p);
   await p.waitForTimeout(3000);
-  kolla("utan intro laddas ingen röstfil vid start (lat)", hamtat.length === 0, { hamtat });
+  // P2/TTS-2-fix2: guidens första steg läses upp vid start – lat betyder att bara det som spelas hämtas (ingen förladdning)
+  const spelat0 = await p.evaluate(() => window.__spelat);
+  kolla("utan intro laddas bara röstfiler som spelas vid start (lat)", hamtat.every((h) => spelat0.includes(h)) && hamtat.length <= 2, { hamtat, spelat0 });
   await p.click("[data-testid=bengtsson-ikon], [data-testid=npc-figur]");
   await p.waitForSelector("[data-testid=uppdrag-remsa]");
   const id = await p.getAttribute("[data-testid=uppdrag-remsa]", "data-uppdrag");
@@ -128,7 +130,7 @@ const vanta = (p) => p.waitForFunction(() => !!window.__troll, null, { timeout: 
   await p.waitForTimeout(800);
   let spelat = await p.evaluate(() => window.__spelat);
   kolla("Bengtssons uppdrag läses från rätt fil", !!fil && spelat.includes(fil), { id, fil, spelat });
-  kolla("bara den filen har laddats", hamtat.every((h) => h === fil), { hamtat });
+  kolla("bara filer som spelats har laddats (uppdraget + ev. guidens steg)", hamtat.includes(fil) && hamtat.every((h) => spelat.includes(h)), { hamtat, spelat });
   if (bilder) await p.screenshot({ path: path.join(bilder, "tts-uppdrag.png") });
   const fras = u?.val?.grupper?.[0]?.forslag?.[0]?.fras ?? `en kanin med ${u?.krav?.ord?.[0] ?? "mössa"}`;
   await p.evaluate((f) => window.__troll.vakna(f), fras);
