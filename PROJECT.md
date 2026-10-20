@@ -128,7 +128,14 @@ Före dem: **4E** (PR #9, 0,52 USD, glöd som rund gloria bakom djuret, bra på 
 8. **B6** kontroll + buggfix — **skript** (B6.1) sedan **Build** (B6.2–3)
 9. **TTS** gratis svensk röst — efter B6; eget block
 
-**Christoffers låsta beslut:** stall = meny (ingen stallbyggnad än) · ERROR-automaten behålls + text "Inte riktigt än" under · R8-2 efter B1, före platserna · TTS efter områdena · röd/grön på djur (R9C) **pausad**.
+10. **R8-3 grafikblocket** (Christoffer 2026-10-20: nästa block, direkt efter modellerna; `rundor/R8-3/RITNING.md`). Ordning: B6.3 → B6.5 → MFIX6 → R8-3a → R8-3b → R8-3c → R8-3d → R8-3e, en gren och PR per steg:
+    - **R8-3a** färg från färgord på alla modeller (R9C): hela kroppen, ögon/hud/detaljer behålls, utan färgord egna färger (B6.4) — **skript** `git checkout main && git pull && git checkout -b runda-r83a-kod && bash rundor/R8-3a-farg/kor.sh` (`rundor/R8-3a-farg/PLAN.md`; patch + kor.sh i nästa underlags-PR)
+    - **R8-3b** FPS-vakt `hog`→`lag` (p95 > 40 ms i 3 s) — skript, ritning klar, patch skrivs efter R8-3a
+    - **R8-3c** kontur (inverterat skal) + enhetliga material på GLB — skript; Christoffer väljer tjocklek ur två bilder
+    - **R8-3d** vind i träden, färgjitter, vatten med vågor — skript
+    - **R8-3e** horisont i två lager, dis, sjöns kanter — **Build** (smak), prompt skrivs efter R8-3d
+
+**Christoffers låsta beslut:** stall = meny (ingen stallbyggnad än) · ERROR-automaten behålls + text "Inte riktigt än" under · R8-2 efter B1, före platserna · TTS efter områdena · röd/grön på djur (R9C) **återupptagen 2026-10-20 → R8-3a** · R8-3 direkt efter modellerna · TTS-röst: nst = Bengtsson (Trollpennan: lisa önskad, licens oklar; molnröster utreds).
 
 Efter blocken kvar: R4B kamera, R5 Gården, R7 Phaser bort. Copilot-data: `rundor/BLOCK-platser/data-utkast/`. Historik/grindtabell nedan är bakgrund; **följ bara köordningen ovan.**
 
@@ -157,7 +164,7 @@ Grinden (skillen `build-round-gate`, 7 punkter): (1) projektkarta aktuell, (2) �
 | **R8 Grafik (ersätter 'Snyggare grafik' och Färgrunda)** | **R8-1: RITNING+PROMPT+patch klara, GO** (`rundor/R8-grafik/`); R8-2 ritas efter Christoffers smak | R8-1: `data/miljo.json` (ljus, himmel, dis, färggrad, vinjett, marktextur, kvalitet hög/låg), generell färgrunda (isbjörnen blir blå), före/efter-bilder och mobilmått. R8-2: horisont, träd, blobbskuggor, kontur på djur, vatten, FPS-vakt; filstorlekstaket höjs när R8-2 behöver texturer |
 | **R9 Tydlighet (färgord, hemliga djur + gåtor, Bengtssons takt + ikon, stjärnförklaring)** | **Körd av Doodle (PR #41); färgfelet för röd/grön kvar → R9C** (`rundor/R9-tydlighet/`) | Färg: sRGB-fix + gråskala/material för vita djur (blå och gul OK i bild; röd och grön gulsticka kvar, steg 0 för Doodle). 123 nya gåtor, ledtrådsyta, takt 3 djur/150 s/75 s i `data/bengtsson.json`, stjärnor öppnar Ordbokssidor (`data/stjarnor.json`) |
 | **R9B Layout-småfixar** (ledtrådsyta kompakt vid uppdrag, Bengtsson skärmrelativ via data/npc.json, förslagsraden avklippt) | **Klar, inlagd direkt** (`rundor/R9B-layout/`, `ref/r9b.patch`, bevis `r9b-prov.mjs`) |
-| **R9C Färgord röd/grön** (röd isbjörn ~23° mot 1°, grön ~76° mot 123°; tulpaner rätt) | **Väntar** (pausad av Christoffer; ingen färgpatch) |
+| **R9C Färgord röd/grön** (röd isbjörn ~23° mot 1°, grön ~76° mot 123°; tulpaner rätt) | **→ R8-3a** (patch klar; orsak: guldordets gula självlyse + bara ett material/bara entiteter med palett färgades) |
 | R6B Platserna (skog, sjö, grotta) som R3F-scener | **NEJ** | Beror på R5 (R3F-scener för byggnader/gård) och R4B (kamera) |
 | R7 Phaser bort | **NEJ** | Beror på R5 och R6B verifierade i bild |
 
@@ -709,7 +716,7 @@ Gränsfall att lägga till vid R3B: tomt fält, 60 tecken, versaler, `Å Ä Ö`,
 | 4 | Valfisk/snurra/gaffel/släde/jacka/planka/brandpost/julkrans konstiga eller svåra att se | **B5** |
 | 5 | Mantel/horn/halsduk sitter fel; färgord färgar inte föremål | **B6.2** |
 | 6 | Felstavat föremål → inget "Menade du …?"; DOM 03–05 ostabila; saknar `djur`/`final` i data | **B6.1** / B2–B4 |
-| 7 | Röd/grön på djurmodeller | **R9C pausad** (Christoffer) |
+| 7 | Röd/grön på djurmodeller; "en blå jultomte" med orange mössa; narval/bil utan färg | **R8-3a** (`rundor/R8-3a-farg/`) |
 | 8 | Tackbubbla vs Guldord: ej bildverifierad | R9G-bevis |
 | 9 | "Till stallet" vid ankomst utan tryck (Phaser räknade UI-tryck) · stall-banner kvar efter hämtning · tryck träffar djuret bakom · klistrigt "Vad vill du ge?" | **R9H** (`rundor/R9H-fix/`) |
 | 10 | "en röv" i stall-listan: **inget fel** – texten är "en räv" (test mot blocklist.json för alla djur); typsnitt/bildskärpa. Större namn i R9H | R9H |
