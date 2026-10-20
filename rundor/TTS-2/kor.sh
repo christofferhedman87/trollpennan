@@ -44,6 +44,8 @@ node --experimental-strip-types "$D/tts2-prov.mjs" --bilder "$BILD" > "$UT/prov.
 reg() { node "rundor/$1.mjs" $2 > "$UT/$(basename $1).json" 2>"$UT/$(basename $1).err" || echo "$1" >> "$UT/regfel.txt"; }
 reg TTS-1/tts-prov "" & reg B6.2-fix/b62-prov "" & reg B6.1-kontroll/b61-prov "" & wait
 reg B6.4-fix/b64-prov "" & reg R9-tydlighet/r9-prov "--ut $UT/r9" & { [ -f src/spel/b6-3.test.ts ] && reg B6.3-fix/b63-prov ""; } & { [ -f src/spel/b6-5.test.ts ] && reg B6.5-fix/b65-prov ""; } & wait
+# ett prov som föll när flera kördes samtidigt (timeout under last) körs om ensamt en gång; först då räknas det som fel (mönster från B6.6)
+if [ -s "$UT/regfel.txt" ]; then mv "$UT/regfel.txt" "$UT/regfel1.txt"; for f in $(cat "$UT/regfel1.txt"); do echo "kör om ensamt: $f"; if [ "$f" = R9-tydlighet/r9-prov ]; then reg "$f" "--ut $UT/r9"; else reg "$f" ""; fi; done; fi
 [ -s "$UT/regfel.txt" ] && { for f in $(cat "$UT/regfel.txt"); do echo "== $f"; grep -B2 '"ok": false' "$UT/$(basename $f).json" 2>/dev/null | head -20; grep '^FEL' "$UT/$(basename $f).err" | head; tail -5 "$UT/$(basename $f).err"; done; aterstall; echo "STOPP 4: prov föll: $(cat "$UT/regfel.txt" | tr '\n' ' ')"; exit 4; }
 git add $ANDRADE $NYA
 git commit -qm "TTS-2: fasta texter, mallar och 'en kanin' från förgenererade filer, telefonens svenska röst bara för barnets egna ord, bannern står så länge repliken (Arkitektens patch)"
