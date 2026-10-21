@@ -478,3 +478,12 @@ från första varvet i torr 5 kom alltså inte igen, så provet behövde ingen n
 Ändrade mergade prov, utöver b66: `rundor/B6.3-fix/b63-prov.mjs` (I-varven) och `rundor/B6.1-kontroll/b61-prov.mjs`
 (E). Båda ligger i patchen och i kor.sh `ANDRADE`. Skälet är detsamma som för b66 (Arkitekten 18:59): den som inte får
 en ledig ruta somnar. Det gamla kravet att alla står på ängen strider mot kapacitetsbeslutet.
+
+### Torrkörning 6, fjärde försöket (02:40, med 38ced2a): F föll, avbrutet och lagat
+
+Golvet med `matfel_px` stoppar pucken i mittens bakre rutor, där den skulle ritas cirka 24 px. Den hamnade i stället
+vid bildkanten (x 12 px), där också djupet syns, och mättes 27 × 14 px. Det var lika brett som kaffekoppen i mitten, och
+provet krävde "mindre". I världen är pucken 0,38 × 0,13 m och kaffekoppen 0,43 × 0,34 m. F jämför nu i den ritade
+världslådan (`__tredSyn` b), som per definition är på samma avstånd: största måttet och ytan framifrån. Kravet att alla
+småsaker är minst 24 px på skärmen är oförändrat. Felet är deterministiskt, så körningen avbröts i andra provvarvet
+och startades om med lagningen. F och T är gröna mot bygget.

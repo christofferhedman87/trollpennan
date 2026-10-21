@@ -339,7 +339,13 @@ await blok("F", async () => {
   const djup = (k) => (9.8 - m[k].z) / 10;
   const st = (k) => (m[k] ? Math.max(m[k].w, m[k].h) * djup(k) : 0);
   const yt = (k) => (m[k] ? m[k].w * m[k].h * djup(k) ** 2 : 0);
-  kolla("F småsaker: pucken är mindre än kaffekoppen på skärmen (största måttet och ytan, på samma avstånd)", st("puck") > 0 && st("puck") < st("kaffekopp") && yt("puck") < yt("kaffekopp"), { puck: m.puck, kaffekopp: m.kaffekopp });
+  // P3a torr 6: jämförs i den ritade världslådan (__tredSyn b: samma avstånd per definition). Skärmmåttet räknat om med z
+  // räcker inte när en står vid bildkanten: där syns också djupet, så pucken (0,38 × 0,13 m) mättes 27 px bred vid x 12,
+  // lika bred som kaffekoppen (0,43 × 0,34 m) i mitten. Utan låda: skärmmåttet som förut.
+  const vb = (k) => (m[k]?.b ? [Math.max(m[k].b[3] - m[k].b[0], m[k].b[4] - m[k].b[1], m[k].b[5] - m[k].b[2]), (m[k].b[3] - m[k].b[0]) * (m[k].b[4] - m[k].b[1])] : null);
+  const [vp, vk] = [vb("puck"), vb("kaffekopp")];
+  const mindre = vp && vk ? vp[0] > 0 && vp[0] < vk[0] && vp[1] < vk[1] : st("puck") > 0 && st("puck") < st("kaffekopp") && yt("puck") < yt("kaffekopp");
+  kolla("F småsaker: pucken är mindre än kaffekoppen (största måttet och ytan framifrån, i den ritade världslådan)", mindre, { puck: m.puck, kaffekopp: m.kaffekopp, varld: { puck: vp, kaffekopp: vk } });
   kolla("F småsaker: alla syns (största måttet ≥ 24 px, som B6.6)", smaa.every((k) => m[k] && Math.max(m[k].w, m[k].h) >= 24), { storst: Object.fromEntries(smaa.map((k) => [k, m[k] ? Math.round(Math.max(m[k].w, m[k].h)) : 0])) });
 });
 
