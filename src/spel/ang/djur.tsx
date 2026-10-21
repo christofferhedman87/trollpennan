@@ -413,7 +413,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
     window.addEventListener("pointerup", klar, { once: true });
   }
   return (
-    <group position={[x, 0, z]} onPointerDown={ned}>
+    <group position={[x, 0, z]} onPointerDown={ned} userData={{ trollDel: spec.uid }}>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.04, 0]}>
         <circleGeometry args={[0.55, 12]} />
         <meshBasicMaterial color="#2F4A22" transparent opacity={0.14} />
@@ -434,7 +434,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
         ))}
       </group>
       <group ref={grupp} position={[0, y, 0]}>
-        <group ref={kroppRef} name="kropp">
+        <group ref={kroppRef} name="kropp" userData={{ trollUid: spec.uid }}>
         {harModell(spec.kropp) ? (
           <ModellGren spec={spec}>
             <Suspense fallback={sak ? null : <DjurForm spec={spec} />}>

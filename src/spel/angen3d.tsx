@@ -16,6 +16,7 @@ import { PlatsScen } from "./ang/PlatsDekor.tsx";
 import { START_PLATS, platsMed } from "./platser.ts";
 import { SagaBoll, SagaKamera, SagaKanin, SagaLjus, SagaPenna, type OrbitStyr } from "./ang/saga.tsx";
 import { KameraFokus } from "./ang/fokus.tsx";
+import { IdPass } from "./ang/idpass.tsx";
 
 /** B6.3 (I): ängens zoner (dammen) ur data/platser.json – djur, figurer och saker hålls ur dammen, simmare i den. */
 const ANG_PLATS = platsMed(START_PLATS);
@@ -246,6 +247,7 @@ export function Angen3D({ natt, saga = false, onGrind }: { natt: number; saga?: 
           }}
         >
           <Scen natt={natt} onSnart={onSnart} saga={saga} />
+          <IdPass />
         </Canvas>
       </TredGren>
       <div className="vinjett" aria-hidden />
