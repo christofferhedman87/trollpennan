@@ -7,7 +7,7 @@ import type { SparatBygge } from "./bygge.ts";
 import { BYGG } from "../tolk/byggtolk.ts";
 import { START_PLATS, TAK_PER_PLATS, laggMedTak, mattUr, platsMed, upplast } from "./platser.ts";
 import { hamtaFranStall, flyttaTillStall, type StallUt } from "./stall.ts";
-import { iStallet } from "./placering.ts";
+import { byggnadsord, iStallet, redanUtan, somnaEn } from "./placering.ts";
 
 
 export type Lage = "kort" | "skriv";
@@ -344,12 +344,25 @@ export const useMinne = create<Minne>((set, get) => ({
       // B1.3a: på andra platser sparas skapelsen per plats, samma tak; ängen (`ang`) rörs inte.
       const nyaP: Sparad[] = Array.from({ length: antal }, (_, i) => ({ ...v, uid: crypto.randomUUID(), skapad: Date.now() + i }));
       const r = laggMedTak(get().platsSkapelser[plats] ?? [], get().sovande, nyaP);
-      // P3a: när platsens rutor är fulla går den äldsta som inte fick någon ruta till stallet (aldrig den nya)
-      const p = platsMed(plats);
-      for (const old of iStallet(r.lista, p).filter((d) => !nyaP.some((n) => n.uid === d.uid))) {
+      // P3a-fix (beslut B): högst en somnar per ord – den äldsta utan ledig ruta, ur den nyas budget (aldrig den nya)
+      const nyaU = new Set(nyaP.map((n) => n.uid));
+      const takSov = r.somnade.length > 0; // taket (TAK_PER_PLATS) har redan sövt en för det här ordet
+      for (const u of redanUtan(r.lista, nyaU, platsMed(plats))) {
+        r.lista = r.lista.filter((d) => d.uid !== u.uid);
+        r.sovande = [...r.sovande, u].slice(-40);
+        r.somnade.push(u);
+      }
+      const old = takSov ? null : somnaEn(r.lista, nyaU, platsMed(plats));
+      if (old) {
         r.lista = r.lista.filter((d) => d.uid !== old.uid);
         r.sovande = [...r.sovande, old].slice(-40);
         r.somnade.push(old);
+      }
+      // står någon ändå kvar utan synlig ruta somnar den hellre än står osynlig – inte i Doodles ordlistor
+      if (old && !byggnadsord(r.lista, nyaU, platsMed(plats))) for (const u of iStallet(r.lista, platsMed(plats)).filter((d) => !nyaU.has(d.uid))) {
+        r.lista = r.lista.filter((d) => d.uid !== u.uid);
+        r.sovande = [...r.sovande, u].slice(-40);
+        r.somnade.push(u);
       }
       set({ platsSkapelser: { ...get().platsSkapelser, [plats]: r.lista }, sovande: r.sovande });
       return { nya: nyaP, somnade: r.somnade };
@@ -369,12 +382,24 @@ export const useMinne = create<Minne>((set, get) => ({
       ang = [...ang, sparad];
       nya.push(sparad);
     }
-    // P3a: samma regel på ängen
-    const nyaUid = new Set(nya.map((d) => d.uid));
-    for (const old of iStallet(ang, platsMed(START_PLATS)).filter((d) => !nyaUid.has(d.uid))) {
+    // P3a-fix: samma regel på ängen
+    const nyaU = new Set(nya.map((d) => d.uid));
+    const takSov = somnade.length > 0;
+    for (const u of redanUtan(ang, nyaU, platsMed(START_PLATS))) {
+      ang = ang.filter((d) => d.uid !== u.uid);
+      sovande = [...sovande, u].slice(-40);
+      somnade.push(u);
+    }
+    const old = takSov ? null : somnaEn(ang, nyaU, platsMed(START_PLATS));
+    if (old) {
       ang = ang.filter((d) => d.uid !== old.uid);
       sovande = [...sovande, old].slice(-40);
       somnade.push(old);
+    }
+    if (old && !byggnadsord(ang, nyaU, platsMed(START_PLATS))) for (const u of iStallet(ang, platsMed(START_PLATS)).filter((d) => !nyaU.has(d.uid))) {
+      ang = ang.filter((d) => d.uid !== u.uid);
+      sovande = [...sovande, u].slice(-40);
+      somnade.push(u);
     }
     set({ ang, sovande });
     return { nya, somnade };
@@ -395,7 +420,7 @@ export const useMinne = create<Minne>((set, get) => ({
     ang = [...ang, { ...hittad, skapad: Date.now() }];
     // P3a: fick någon annan ingen ledig ruta somnar den (den äldsta), aldrig den som kallas hit
     if (!somnad) {
-      const old = iStallet(ang, platsMed(START_PLATS)).find((d) => d.uid !== hittad.uid);
+      const old = somnaEn(ang, new Set([hittad.uid]), platsMed(START_PLATS));
       if (old) {
         ang = ang.filter((d) => d !== old);
         sovande = [...sovande, old];

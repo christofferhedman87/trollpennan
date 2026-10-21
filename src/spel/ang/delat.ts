@@ -114,12 +114,14 @@ export function djurFarg(spec: Sparad) {
 }
 
 /** P3: en vattenfågel (entiteter.json vattenfagel) utan barnets vingar simmar på en plats med vattenyta (P3a: också i ängens damm). */
-export function flygare(spec: Sparad, plats?: Plats) {
-  return rollFor(spec, plats) === "luft";
+/** P3a-fix: med alla räknas rollen regeln gav (en säl utan vattenruta står på marken), annars saken själv. */
+const rollI = (spec: Sparad, plats?: Plats, alla?: Sparad[]) => (alla && placeraMedMinne(alla, plats).get(spec.uid)?.roll) || rollFor(spec, plats);
+export function flygare(spec: Sparad, plats?: Plats, alla?: Sparad[]) {
+  return rollI(spec, plats, alla) === "luft";
 }
 
-export function simmare(spec: Sparad, plats?: Plats) {
-  return rollFor(spec, plats) === "vatten";
+export function simmare(spec: Sparad, plats?: Plats, alla?: Sparad[]) {
+  return rollI(spec, plats, alla) === "vatten";
 }
 
 /**

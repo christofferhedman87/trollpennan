@@ -157,6 +157,13 @@ export function arSak(kropp: string): boolean {
   return !!e && e.typ !== "djur" && !!modellUrl(kropp);
 }
 
+/** P3a-fix: en småsak (storlek.json smasak: en sak med målhöjd i intervallet – koppen, pucken, saxen). */
+export function arSmasak(kropp: string): boolean {
+  const sm = STORLEK.smasak?.malhojd;
+  const mal = malhojd(kropp);
+  return !!sm && arSak(kropp) && mal >= sm[0] - 1e-9 && mal <= sm[1] + 1e-9;
+}
+
 /** R3G: skala för en modell. Djur: målhöjden är höjden. Saker: målhöjden gäller det största av höjden och 0,6 × längsta sidan,
  * så platta och långa saker (gaffel, planka, lok) inte blir jättar eller streck. */
 export function skalaFor(kropp: string, h: number, b: number, d: number): number {

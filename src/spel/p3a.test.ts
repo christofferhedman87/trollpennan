@@ -129,7 +129,7 @@ test("P3a: roll ur data – simmare på vattenytan, flygare i luftbandet, stora 
   assert.equal(rollFor(spar("a", "katt", 1, ["vingar"]), ang), "luft");
 });
 
-test("P3a: ryms inte allt hamnar den äldsta i stallet (somnar) – aldrig den nya, aldrig över någon", async () => {
+test("P3a-fix (beslut B): ryms inte allt somnar en per ord (fler bara om de annars stod osynliga), aldrig den nya, ingen vaken utan ruta", async () => {
   const { useMinne } = await import("./minne.ts");
   const varelse = (k: string) => ({ kropp: k, formel: `en ${k}`, beskrivning: "", skala: 1, alpha: 1, formagor: [], tillbehor: [], overraskningar: [], farg: null }) as never;
   // barnet skapar en i taget: en sekund mellan varje (annars får alla samma `skapad`)
@@ -141,15 +141,19 @@ test("P3a: ryms inte allt hamnar den äldsta i stallet (somnar) – aldrig den n
     const ang = id === START_PLATS;
     useMinne.setState({ ang: [], sovande: [], plats: id, platsSkapelser: {} } as never);
     let somnat = 0;
+    let flera = 0;
     for (const k of ["elefant", "kanin", "häst", "katt", "katt", "jultomte", "katt", "hund", "gris", "ko", "elefant", "kanin"].filter((k) => ENTITETER[k])) {
       const r = useMinne.getState().laggPaAng(varelse(k), 1);
       assert.ok(!r.somnade.some((s) => r.nya.some((n) => n.uid === s.uid)), `${id} ${k}: den nya somnade`);
       somnat += r.somnade.length;
       const lista = ang ? useMinne.getState().ang : (useMinne.getState().platsSkapelser[id] ?? []);
       assert.ok(lista.some((d) => d.uid === r.nya[0]!.uid), `${id} ${k}: den nya finns`);
-      assert.deepEqual(iStallet(lista, plats).map((d) => d.kropp), [], `${id} ${k}: någon står kvar utan ruta`);
+      // högst en väljs att somna (taket eller somnaEn); fler bara om de annars skulle stå osynliga – ingen vaken står utan ruta
+      assert.deepEqual(iStallet(lista, plats).map((d) => d.kropp), [], `${id} ${k}: någon vaken står utan ruta`);
+      if (r.somnade.length > 1) flera++;
     }
     assert.ok(somnat > 0, `${id}: ingen somnade av 12`);
+    assert.ok(flera <= 2, `${id}: ${flera} ord av 12 sövde fler än en`);
   }
   Date.now = nu;
   useMinne.setState({ plats: START_PLATS } as never);

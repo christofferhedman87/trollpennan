@@ -237,10 +237,10 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
   const upp = useRef<((ev: PointerEvent) => void) | null>(null);
   const [puls, setPuls] = useState(0);
   const index = alla.findIndex((d) => d.uid === spec.uid);
-  const flyg = flygare(spec, plats);
-  const sim = simmare(spec, plats); // P3: en vattenfågel simmar på en plats med vatten
+  const flyg = flygare(spec, plats, alla);
+  const sim = simmare(spec, plats, alla); // P3a-fix: simmar/flyger efter rollen regeln gav
   const ankare = useMemo(() => procAnkare(spec.kropp), [spec.kropp]);
-  const ritSpec = krymp < 1 ? { ...spec, skala: (spec.skala || 1) * krymp } : spec; // P3a: samma mått som placeringsregeln
+  const ritSpec = krymp !== 1 ? { ...spec, skala: (spec.skala || 1) * krymp } : spec; // P3a: samma mått som placeringsregeln, också när en småsak växer
   const synS = ritSkala(ritSpec, z, plats); // P3a: platsens skala och minsta synliga storlek (samma som placeringsregeln räknar med)
   const sak = arSak(spec.kropp);
   const medSaker = spec.tillbehor.map((t) => t.id).filter((id) => id !== spec.kropp && arSak(id));
