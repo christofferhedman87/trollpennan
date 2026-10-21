@@ -4,6 +4,8 @@ import entiteterJson from "../../data/entiteter.json" with { type: "json" };
 import tillgangarJson from "../../data/tillgangar.json" with { type: "json" };
 import storlekJson from "../../data/storlek.json" with { type: "json" };
 import fotJson from "../../data/fotavtryck.json" with { type: "json" };
+import { skarmRuta } from "./skarm.ts";
+import modellmattSynJson from "../../data/modellmatt.json" with { type: "json" };
 
 export type Typ = "djur" | "tillbehor" | "byggnad" | "foremal" | "natur";
 export type Rorelse = "land" | "flyg" | "sim" | "svavar";
@@ -20,6 +22,8 @@ export type Entitet = {
   /** Grundfärg när barnet inte skrivit någon (kodritad form och kort). */
   art: string;
   rorelse?: Rorelse;
+  /** P3 (Doodle r83a: blå ankan svävade vid trädkanten): flyger, men på en plats med vatten (inte ängen) simmar den i vattenytan. */
+  vattenfagel?: boolean;
   vikt?: number;
   /** Hopphöjd (sekunder av hopp-animationen); saknas = hoppar inte. */
   hopp?: number;
@@ -79,56 +83,7 @@ export function modellUrl(kropp: string): string | null {
 }
 
 export type StorlekKlass = { id: string; tak: number; zon: "bak"; kant?: number; rad?: "bortom"; max_halv?: number };
-export type BakZon = {
-  zon: { x: [number, number]; z: [number, number] };
-  min_avstand: number;
-  fri_x: [number, number][];
-  /** B6.6: byggnaderna (klass med rad "bortom") står bakom staketet, i det här djupet. */
-  bortom?: { z: [number, number]; fri_x?: [number, number][] };
-  /** B6.6: halva synliga bredden längst bak i stående läge (kroppen ska rymmas). */
-  synlig_x?: number;
-};
-const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak"; kant?: number; rad?: "bortom"; max_halv?: number }>; kategori: Record<string, string>; ids?: Record<string, string>; bak: BakZon; minsta?: { storlek: number; yta: number; max_forstoring: number } };
-/** B6.3 (J): den bakre zonen för stora saker (data/storlek.json). */
-export const BAK_ZON: BakZon = STORLEK.bak;
-
-/** Ett fast tal i [0, 1) per (text, n) – samma uid ger alltid samma läge (FNV-1a). */
-export function hashTal(s: string, n: number): number {
-  let h = 0x811c9dc5 ^ n;
-  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 0x01000193);
-  h = Math.imul(h ^ (h >>> 15), 0x85ebca6b);
-  return ((h ^ (h >>> 13)) >>> 0) / 4294967296;
-}
-
-/** B6.3 (J): lägen i den bakre zonen för de stora sakerna, i ordning. Spridda i sidled och djupled (fast läge per uid,
- *  ingen rad), minst min_avstand isär och aldrig i en fri_x-sträcka (grinden i staketet syns alltid). */
-export function bakPlatser(uids: string[], zon: BakZon = BAK_ZON): [number, number][] {
-  const ut: [number, number][] = [];
-  const [x0, x1] = zon.zon.x;
-  const [z0, z1] = zon.zon.z;
-  const ledig = (x: number) => !zon.fri_x.some(([a, b]) => x >= a && x <= b);
-  for (const [i, uid] of uids.entries()) {
-    let bast: [number, number] | null = null;
-    let bastD = -1;
-    for (let k = 0; k < 200; k++) {
-      const x = x0 + (x1 - x0) * hashTal(uid, 2 * k);
-      // djupled: gyllene snittet per ordning + jitter, så att två saker i följd aldrig hamnar på samma djup (ingen rad)
-      const z = z0 + (z1 - z0) * ((i * 0.618 + hashTal(uid, 2 * k + 1) * 0.3) % 1);
-      if (!ledig(x)) continue;
-      const d = Math.min(Infinity, ...ut.map(([ux, uz]) => Math.hypot(ux - x, uz - z)));
-      if (d >= zon.min_avstand) {
-        bast = [x, z];
-        break;
-      }
-      if (d > bastD) {
-        bastD = d;
-        bast = [x, z];
-      }
-    }
-    ut.push(bast ?? [x1, z0]);
-  }
-  return ut.map(([x, z]) => [Math.round(x * 100) / 100, Math.round(z * 100) / 100]);
-}
+const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak"; kant?: number; rad?: "bortom"; max_halv?: number }>; kategori: Record<string, string>; ids?: Record<string, string>; minsta?: { storlek: number; yta: number; max_forstoring: number; lutning?: number; ovanifran?: number }; smasak?: { malhojd: [number, number] }; syn?: { min_px: number; max_forstoring: number } };
 
 /** B6.1 (E): storleksklassen för en sak ur data/storlek.json (via kategorin). Djur har aldrig någon klass. */
 export function storlekKlass(kropp: string): StorlekKlass | null {
@@ -165,6 +120,28 @@ export function halvBredd(kropp: string, skala = 1): number {
   return (FOT[kropp] ?? 0.5 * malhojd(kropp)) * takSkala(kropp, skala || 1);
 }
 
+/**
+ * P3 (Doodle r83a: narvalen var väldigt liten): minsta synliga storlek för en varelse. Kroppens skärmruta på djupet wz
+ * (stående kamera, skarm.ts) får inte ha sitt minsta mått (bredd eller höjd) under syn.min_px (data/storlek.json).
+ * Annars förstoras den, högst syn.max_forstoring gånger. Gäller djur, inte saker (de har minsta) eller stora saker (bak).
+ */
+export const SYN = STORLEK.syn;
+const MODELLMATT_SYN = (modellmattSynJson as unknown as { matt: Record<string, number[]> }).matt;
+export function synSkala(kropp: string, skala: number, wz: number): number {
+  const S = STORLEK.syn;
+  const e = ENTITETER[kropp];
+  if (!S || !e || e.typ !== "djur") return 1;
+  // P3a torr 4: modellens egna mått (data/modellmatt.json, som placeringsregeln) – fotavtrycket är den största halva
+  // utbredningen (fjällräven 0,62 mot sin bredd 0,33/2) och gav för små djur
+  const mm0 = MODELLMATT_SYN[kropp];
+  const mm = mm0 && (harModell(kropp) || mm0.length > 3) ? mm0 : undefined;
+  const ts = takSkala(kropp, skala || 1);
+  const r = mm ? skarmRuta(0, 0, wz, (mm[0]! * ts) / 2, mm[1]! * ts) : skarmRuta(0, 0, wz, halvBredd(kropp, skala), malhojd(kropp) * ts);
+  const minsta = Math.min(r.x1 - r.x0, r.y1 - r.y0);
+  if (minsta <= 0) return 1;
+  return Math.min(S.max_forstoring, Math.max(1, S.min_px / minsta));
+}
+
 /** B6.3: hur långt från vattnet mitten måste stå: halva bredden ur modellens bbox (data/fotavtryck.json, barnets
  *  storleksord inräknat; saknas raden 0,5 × målhöjden), minst klassens kant, plus vickningen för djur och marginalen. */
 export function fotKant(kropp: string, skala = 1): number {
@@ -172,16 +149,7 @@ export function fotKant(kropp: string, skala = 1): number {
   return Math.max(halv, storlekKlass(kropp)?.kant ?? 0) + (arSak(kropp) ? 0 : VICKNING) + FOT_MARGINAL;
 }
 
-/** B6.3 (Doodle 09:17): kroppens radie för siktzonen: halva bredden (eller klassens kant), vickningen för djur, 0,1. */
-export function siktRadie(kropp: string, skala = 1): number {
-  return fotKant(kropp, skala) - FOT_MARGINAL + 0.1;
-}
 
-/** B6.3 (Doodle 09:17): kroppens överkant för siktzonen: målhöjden under taket, för djur även studs och pratbubblan
- *  (HumorIkon, Html vid målhöjd + 0,22, ungefär 0,3 hög). */
-export function siktHojd(kropp: string, skala = 1): number {
-  return malhojd(kropp) * takSkala(kropp, skala || 1) + (arSak(kropp) ? 0.05 : 0.6);
-}
 
 /** R3G: allt med modell som inte är ett djur (föremål, natur, byggnad, mat, fordon, kläder) står still på ängen. */
 export function arSak(kropp: string): boolean {
@@ -193,7 +161,10 @@ export function arSak(kropp: string): boolean {
  * så platta och långa saker (gaffel, planka, lok) inte blir jättar eller streck. */
 export function skalaFor(kropp: string, h: number, b: number, d: number): number {
   const mal = malhojd(kropp);
-  const matt = arSak(kropp) ? Math.max(h, 0.6 * Math.max(b, d)) : h;
+  // P3: småsaker (storlek.json smasak) mäts med största måttet, så att deras inbördes storlek följer målhöjden
+  const sm = STORLEK.smasak?.malhojd;
+  const langd = sm && mal >= sm[0] - 1e-9 && mal <= sm[1] + 1e-9 ? 1 : 0.6;
+  const matt = arSak(kropp) ? Math.max(h, langd * Math.max(b, d)) : h;
   const s = mal / Math.max(0.001, matt);
   // B6.3: ingen skapelse bredare än slottet (2 × MAX_HALVBREDD) – långa modeller (apatosaurus 7,2, golem 5,1, neontetra
   // 2,9 breda) täckte dammen och fick ingen torr plats. Mäts på halva största bredden, som fotavtryck.json.
@@ -205,10 +176,16 @@ export function skalaFor(kropp: string, h: number, b: number, d: number): number
   const M = STORLEK.minsta;
   if (!M) return Math.min(s, bredTak);
   const storst = Math.max(h, b, d) * s;
-  const yta = Math.max(b, d) * h * s * s;
+  // P3: ytan som kameran ser den (framsidan, eller ovansidan snett uppifrån om den är större), så att platta saker inte blåses upp
+  const yta = Math.max(Math.max(b, d) * h, Math.max(b, d) * Math.min(b, d) * (M.ovanifran ?? 0)) * s * s;
+  // P3: för småsaker ett mjukt golv som behåller ordningen (pucken förblir mindre än koppen); når storlek vid storlek
+  const lut = langd === 1 ? (M.lutning ?? 0) : 0;
+  const golv = M.storlek * (1 - lut) + lut * storst;
   let f = 1;
-  if (storst < M.storlek) f = Math.max(f, M.storlek / Math.max(0.001, storst));
-  if (yta < M.yta) f = Math.max(f, Math.sqrt(M.yta / Math.max(1e-6, yta)));
+  if (storst < golv) f = Math.max(f, golv / Math.max(0.001, storst));
+  // P3: ytkravet följer golvet i kvadrat (en småsak med lägre golv kräver mindre yta), så ordningen håller även här
+  const ytKrav = M.yta * Math.min(1, golv / M.storlek) ** 2;
+  if (yta < ytKrav) f = Math.max(f, Math.sqrt(ytKrav / Math.max(1e-6, yta)));
   f = Math.min(f, M.max_forstoring);
   const k = storlekKlass(kropp);
   if (k) f = Math.min(f, Math.max(1, k.tak / Math.max(0.001, h * s)));

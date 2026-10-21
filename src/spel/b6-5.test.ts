@@ -9,7 +9,7 @@ import { djurPlats } from "./ang/delat.ts";
 import { EFFEKT_NAMN, EFFEKT_TABELL, I_KROPPEN, effekterFor } from "./attribut.ts";
 import { ENTITETER, simmar, storlekKlass } from "./entiteter.ts";
 import { PLATSER } from "./platser.ts";
-import { iVatten, simPlatser, tillPlats } from "./platsYta.ts";
+import { iVatten, tillPlats } from "./platsYta.ts";
 
 const skapad = (f: string) => {
   const u = tolka(f);
@@ -53,12 +53,10 @@ test("B6.5: varje egenskap som ett ord kan ge har en attributrad (effekt eller r
 
 test("B6.5: simmare på sjön sprids över vattnet (inte en klump vid bryggan)", () => {
   const sjon = PLATSER.find((p) => p.id === "sjon")!;
-  const pts = simPlatser(sjon, 5)!;
-  assert.equal(pts.length, 5);
-  for (const p of pts) assert.ok(iVatten(sjon, ...tillPlats(p[0], p[1])), `${p} i vattnet`);
   const spar = (uid: string, kropp: string) => ({ uid, kropp, formel: `en ${kropp}`, beskrivning: "", skala: 1, alpha: 1, formagor: [], tillbehor: [], overraskningar: [], skapad: 1 }) as never;
   const alla = ["fisk", "haj", "delfin", "narval", "sal"].map((k, i) => spar(`s${i}`, k));
   const lagen = alla.map((d) => djurPlats(d, alla, sjon));
+  for (const p of lagen) assert.ok(iVatten(sjon, ...tillPlats(p[0], p[2])), `${p} i vattnet`);
   let minst = Infinity;
   for (let i = 0; i < lagen.length; i++)
     for (let j = i + 1; j < lagen.length; j++) minst = Math.min(minst, Math.hypot(lagen[i]![0] - lagen[j]![0], lagen[i]![2] - lagen[j]![2]));

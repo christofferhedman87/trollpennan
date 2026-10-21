@@ -7,7 +7,8 @@ import { byggPack, forma } from "../djurmesh.ts";
 import { replik } from "../replik.ts";
 import { ljud } from "../ljud.ts";
 import { GltfDjur, GltfSak, type DjurSignal } from "../gltfDjur.tsx";
-import { arSak, harModell, hoppHojd, malhojd, svavar, takSkala } from "../entiteter.ts";
+import { arSak, fotKant, harModell, hoppHojd, malhojd, svavar, takSkala } from "../entiteter.ts";
+import { regelFor, ritSkala } from "../placering.ts";
 import { faestTillbehor, procAnkare } from "../tillbehor/index.ts";
 import { DjurEffekter } from "../effekter.tsx";
 import { MILJO } from "../miljo.ts";
@@ -16,7 +17,9 @@ import { AGG_KROPP, OrdAgg, ReservAgg } from "../ordagg.tsx";
 import { HumorIkon } from "./humorIkon.tsx";
 import { Ljusken } from "./ljusken.tsx";
 import type { Ljuskalla } from "../ljuskalla.ts";
-import { _mal, djurFarg, djurPlats, flygare, normDuk, simmare, synMatt } from "./delat.ts";
+import { _mal, djurFarg, djurIStall, djurKrymp, djurPlats, djurVand, flygare, normDuk, simmare, synMatt } from "./delat.ts";
+import { sakLage } from "../landning.ts";
+import { torrKropp } from "../platsYta.ts";
 
 export class ModellGren extends Component<{ spec: Sparad; children: ReactNode }, { fel: boolean }> {
   state = { fel: false };
@@ -215,6 +218,9 @@ export function Hjartan({ puls }: { puls: number }) {
 /** B4.1: `ljus` = platsens ljuskälla och vad i skapelsen som lyser (kroppen eller en sak den har med sig); bara de högst 4 senaste får den. */
 export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Sparad[]; plats?: Plats; ljus?: { kalla: Ljuskalla; vad: string } }) {
   const [x, y, z] = djurPlats(spec, alla, plats);
+  const krymp = djurKrymp(spec, alla, plats); // P3a: trångt (äldre) eller för stor för bilden → ritas mindre
+  const vand = djurVand(spec, alla, plats); // P3a: vandringens radie, mindre när det är trångt
+  const iStall = djurIStall(spec, alla, plats); // P3a: för prov (b66: den som inte fick plats står i stallet)
   const grupp = useRef<THREE.Group>(null);
   const kroppRef = useRef<THREE.Group>(null);
   const skal = useRef(0.2);
@@ -231,11 +237,20 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
   const upp = useRef<((ev: PointerEvent) => void) | null>(null);
   const [puls, setPuls] = useState(0);
   const index = alla.findIndex((d) => d.uid === spec.uid);
-  const flyg = flygare(spec);
-  const sim = simmare(spec);
+  const flyg = flygare(spec, plats);
+  const sim = simmare(spec, plats); // P3: en vattenfågel simmar på en plats med vatten
   const ankare = useMemo(() => procAnkare(spec.kropp), [spec.kropp]);
+  const ritSpec = krymp < 1 ? { ...spec, skala: (spec.skala || 1) * krymp } : spec; // P3a: samma mått som placeringsregeln
+  const synS = ritSkala(ritSpec, z, plats); // P3a: platsens skala och minsta synliga storlek (samma som placeringsregeln räknar med)
   const sak = arSak(spec.kropp);
   const medSaker = spec.tillbehor.map((t) => t.id).filter((id) => id !== spec.kropp && arSak(id));
+  // P3: saken bredvid står på torr mark (inte i dammen): sidan, andra sidan eller framför
+  const sakPos = (id: string, i: number): [number, number, number] => {
+    const onskad: [number, number] = [(0.45 + malhojd(spec.kropp) * 0.35) * (i % 2 === 0 ? 1 : -1) * (spec.skala || 1), 0.2 + Math.floor(i / 2) * 0.3];
+    const torr = plats && !sim ? (wx: number, wz: number) => torrKropp(plats, wx, wz, fotKant(id, 1)) : undefined;
+    const [ox, oz] = sakLage(x, z, onskad, torr);
+    return [ox, 0, oz];
+  };
   useEffect(() => {
     return () => {
       if (upp.current) window.removeEventListener("pointerup", upp.current);
@@ -281,13 +296,13 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
     }
     const lyft = Math.sin(hopp.current * Math.PI) * (snurr.current > 0 ? 0.85 : 0.45);
     const bob = Math.sin(t * (flyg ? 2.4 : 1.6) + index) * (flyg ? 0.16 : sim ? 0.08 : 0.04);
-    const s = skal.current * takSkala(spec.kropp, spec.skala || 1); // B6.1 (E): stora saker under taket
+    const s = skal.current * takSkala(spec.kropp, ritSpec.skala || 1) * synS; // B6.1 (E): stora saker under taket; P3a: minsta synliga storlek
     const kram = 1 - Math.sin(Math.min(1, kisa.current) * Math.PI) * 0.14;
     g.scale.set((s * bred) / Math.sqrt(kram), s * hojd * kram, (s * bred) / Math.sqrt(kram));
-    const wx = Math.cos(t * 0.25 + index) * 0.22;
-    const wz = Math.sin(t * 0.21 + index * 1.4) * 0.16;
-    const spx = -Math.sin(t * 0.25 + index) * 0.22 * 0.25;
-    const spz = Math.cos(t * 0.21 + index * 1.4) * 0.16 * 0.21;
+    const wx = Math.cos(t * 0.25 + index) * 0.22 * vand;
+    const wz = Math.sin(t * 0.21 + index * 1.4) * 0.16 * vand;
+    const spx = -Math.sin(t * 0.25 + index) * 0.22 * 0.25 * vand;
+    const spz = Math.cos(t * 0.21 + index * 1.4) * 0.16 * 0.21 * vand;
     signal.current.ror = Math.hypot(spx, spz) * 10;
     if (flyg) {
       const loop = t * 0.85 + index;
@@ -312,12 +327,12 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       g.rotation.y = snurr.current > 0 ? t * 7 : 0;
       signal.current.ror = 0;
     } else {
-      g.position.x = sim ? Math.cos(t * 0.7 + index) * 0.22 : wx;
-      g.position.z = sim ? Math.sin(t * 0.7 + index) * 0.16 : wz;
+      g.position.x = sim ? Math.cos(t * 0.7 + index) * 0.22 * vand : wx;
+      g.position.z = sim ? Math.sin(t * 0.7 + index) * 0.16 * vand : wz;
       g.position.y = y + bob + lyft;
       const yaw = Math.atan2(spx, spz);
       g.rotation.z = 0;
-      g.rotation.y = snurr.current > 0 ? t * 7 : yaw * 0.35;
+      g.rotation.y = snurr.current > 0 ? t * 7 : yaw * 0.35 * vand; // P3a: står den nästan stilla vrider den sig lika lite
     }
     const gnist = puff.current;
     if (gnist) {
@@ -347,7 +362,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
     }
     if (t % 0.2 < d) {
       g.getWorldPosition(_mal);
-      (window.__tredPos ??= {})[spec.uid] = { x: Math.round(_mal.x * 100) / 100, z: Math.round(_mal.z * 100) / 100 }; // B6.3, för prov
+      (window.__tredPos ??= {})[spec.uid] = { x: Math.round(_mal.x * 100) / 100, z: Math.round(_mal.z * 100) / 100, y: Math.round(_mal.y * 100) / 100, sim, flyg, stall: iStall, k: krymp, syn: Math.round((synS / (regelFor(plats).skala ?? 1)) * 100) / 100 }; // B6.3, för prov; P3a: simmar/flyger/stallet
       _mal.y += 1.2;
       _mal.project(state.camera);
       const rect = state.gl.domElement.getBoundingClientRect();
@@ -358,6 +373,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       };
       const kr = kroppRef.current;
       if (window.__tredSyn && kr) window.__tredSyn[spec.uid] = synMatt(kr, state.camera, rect); // B6.6, för prov
+      if (window.__tredBild?.uid === spec.uid && kr) window.__tredBild.ruta = synMatt(kr, state.camera, rect); // P3a: titelbilden
     }
   });
   function ned(e: ThreeEvent<PointerEvent>) {
@@ -437,7 +453,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       </group>
       {ljus && ljus.vad === spec.kropp ? <Ljusken uid={spec.uid} kalla={ljus.kalla} hojd={y + malhojd(spec.kropp) * (spec.skala || 1) * 0.75} /> : null}
       {medSaker.map((id, i) => (
-        <group key={id} position={[(0.45 + malhojd(spec.kropp) * 0.35) * (i % 2 === 0 ? 1 : -1) * (spec.skala || 1), 0, 0.2 + Math.floor(i / 2) * 0.3]}>
+        <group key={id} position={sakPos(id, i)}>
           {ljus && ljus.vad === id ? <Ljusken uid={spec.uid} kalla={ljus.kalla} hojd={malhojd(id) * 0.75} /> : null}
           <ModellGren spec={{ ...spec, kropp: id }}>
             <Suspense fallback={null}>

@@ -240,7 +240,11 @@ await blok("E", async () => {
   await stangBok(p);
   await p.waitForTimeout(2500);
   const s = await sparat(p);
-  kolla("E sex saker/djur på ängen", s.ang?.length === 6, { kroppar: s.ang?.map((d) => d.kropp) });
+  // P3a (Arkitektens kapacitetsbeslut 21:40, "bara jättar" minst 3): den som inte får en ledig ruta somnar och kan väckas.
+  // Alla sex finns – vakna på ängen eller sovande – och flickan och katten är vakna. Förut skulle alla sex stå på ängen.
+  const sover = [...(s.sovande ?? []), ...(s.stall ?? [])];
+  const vaken = new Set((s.ang ?? []).map((d) => d.uid));
+  kolla("E sex saker/djur på ängen (vakna, eller sovande i stallet – P3a)", (s.ang?.length ?? 0) + sover.length === 6 && vaken.has(tjej) && vaken.has(katt) && stora.some((u) => vaken.has(u)), { kroppar: s.ang?.map((d) => d.kropp), sover: sover.map((d) => d.kropp) });
   for (const [namn, uid] of [["flickan", tjej], ["katten", katt]]) {
     const m = await malAv(p, uid);
     kolla(`E ${namn} syns (har ett skärmläge)`, !!m && m.x > 0 && m.x < 375 && m.y > 60 && m.y < 760, { m });
@@ -248,9 +252,9 @@ await blok("E", async () => {
     kolla(`E ${namn}: skärmpunkten ligger på 3D-ytan (inte under UI)`, traff === "CANVAS", { traff });
   }
   const djurY = await Promise.all([tjej, katt].map((u) => malAv(p, u)));
-  const sakY = await Promise.all(stora.map((u) => malAv(p, u)));
+  const sakY = await Promise.all(stora.filter((u) => vaken.has(u)).map((u) => malAv(p, u))); // P3a: de vakna stora sakerna
   // stora saker längre bak = högre upp på skärmen (mindre y) än djurens fötter
-  kolla("E alla stora saker står bakom djuren (högre upp på skärmen)", sakY.every((m) => m) && djurY.every((m) => m) && Math.max(...sakY.map((m) => m.y)) < Math.min(...djurY.map((m) => m.y)), { sakY, djurY });
+  kolla("E alla stora saker står bakom djuren (högre upp på skärmen)", sakY.length >= 1 && sakY.every((m) => m) && djurY.every((m) => m) && Math.max(...sakY.map((m) => m.y)) < Math.min(...djurY.map((m) => m.y)), { sakY, djurY });
   await bild(p, "b61-E-stora-saker.png");
   await ctx.close();
 });

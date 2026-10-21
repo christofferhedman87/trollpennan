@@ -79,5 +79,13 @@
  "farg": {
   "_om": "Djurens färgord (blå isbjörn m.fl.): ljusforstark = kalibrering av hur mycket scenens ljus förstärker en färg på kroppen (1 = beräknat ur ljuset; högre = mörkare albedo, lägre = ljusare). Justera mot bild med rundor/R9-tydlighet/farg-prov.mjs.",
   "ljusforstark": 1.0
+ },
+ "landning": {
+  "_om": "P3: den nyaste skapelsen på ängen landar längst fram (x, z) och syns hel – till vänster om mitten, eftersom dammens siktzon (B6.3) går genom mitten framtill. Ingen annan skapelse står framför den: platser närmare kameran än z − fri_z och inom |x − landning.x| < fri_x väljs inte av de andra (de glider bakåt). 'fokus': kameran går mjukt närmare den nya skapelsen (in_ms), stannar (stanna_ms) och går tillbaka (ut_ms); 'narmare' = andel av avståndet, 'mot' = hur mycket blicken flyttas mot skapelsen. Av vid prefers-reduced-motion.",
+  "x": -0.6,
+  "z": 1.25,
+  "fri_x": 1.1,
+  "fri_z": 0.35,
+  "fokus": { "in_ms": 600, "stanna_ms": 900, "ut_ms": 800, "narmare": 0.3, "mot": 0.55 }
  }
 }

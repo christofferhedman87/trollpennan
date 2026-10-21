@@ -5,7 +5,7 @@ import type { Sparad } from "./brygga.ts";
 import { djurPlats } from "./ang/delat.ts";
 import { ANKARE_HOJD, ankareFor, dekorFor, horisontFor, spridDekor, DEKOR_SKALA } from "./platsDekor.ts";
 import { PLATSER, platsMed } from "./platser.ts";
-import { iVatten, paLand, placeraPaPlats, tillPlats, torrKropp } from "./platsYta.ts";
+import { iVatten, paLand, tillPlats, torrKropp } from "./platsYta.ts";
 
 const spec = (uid: string, kropp: string, formagor: string[] = []) => ({ uid, kropp, formagor, tillbehor: [], skapad: 0 }) as unknown as Sparad;
 const LAND = ["kanin", "gris", "katt", "hund", "ko", "rav", "mus", "hast"];
@@ -26,17 +26,9 @@ for (const id of ["skogen", "sjon", "grottan"]) {
   });
 }
 
-test("R8-2b: en punkt mitt i sjön flyttas till land; simmare i vatten stannar i vatten", () => {
-  const p = platsMed("sjon")!;
-  const [land, sim] = placeraPaPlats(p, [[1, -3], [1, -3]], [false, true]);
-  assert.ok(paLand(p, ...tillPlats(land![0], land![1])));
-  assert.ok(iVatten(p, ...tillPlats(sim![0], sim![1])));
-});
-
 test("R8-2b: ängen (utan plats) är oförändrad", () => {
   const alla = LAND.map((k, i) => spec(`a${i}`, k));
   assert.deepEqual(alla.map((d) => djurPlats(d, alla)), alla.map((d) => djurPlats(d, alla, undefined)));
-  assert.deepEqual(placeraPaPlats(platsMed("ang"), [[0, 0]]), [[0, 0]]);
 });
 
 test("R8-2b: horisont ur data – grottan berg, skogen/sjön skog, okänt = ingen", () => {

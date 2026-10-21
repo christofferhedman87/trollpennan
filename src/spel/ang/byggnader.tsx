@@ -7,6 +7,10 @@ import type { SparatBygge } from "../bygge.ts";
 import { _mal, slag, usePennTryck } from "./delat.ts";
 import { Hanglas, Rok } from "./dekor.tsx";
 import { TOON_MAP } from "./djur.tsx";
+import { PLACERING } from "../placering.ts";
+
+/** P3a: spökhusets läge ur data/placering.json (ang.fasta), samma som placeringen räknar med. */
+const SPOK = PLACERING.platser.ang?.fasta?.find((f) => f.namn === "spokhus") ?? { x: 2.15, z: -1.7 };
 
 export function Hus({
   position,
@@ -169,7 +173,7 @@ export function SpokHus({ onSnart }: { onSnart: () => void }) {
     }
   });
   return (
-    <group name="spokhus" position={[2.15, 0, -1.7]} scale={1.05} onPointerDown={ned}>
+    <group name="spokhus" position={[SPOK.x, 0, SPOK.z]} scale={1.05} onPointerDown={ned}>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0.05]}>
         <circleGeometry args={[1.15, 16]} />
         <meshToonMaterial color="#C4A574" gradientMap={TOON_MAP} />

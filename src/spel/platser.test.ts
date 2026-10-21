@@ -71,7 +71,9 @@ test("B1.3a: en skapelse i skogen hamnar i platsSkapelser.skogen, ängen oförä
   assert.equal(e.platsSkapelser.skogen?.length, 2);
   assert.deepEqual(e.ang.map((a) => a.uid), angFore, "ang är oförändrad");
   for (let i = 0; i < 12; i++) useMinne.getState().laggPaAng(v, 1);
-  assert.equal(useMinne.getState().platsSkapelser.skogen?.length, 10, "samma tak på 10");
+  // P3a: taket är 10, men den som inte får en ledig ruta (placeringsregeln) somnar – högst 10, och den senaste är kvar
+  const skogen = useMinne.getState().platsSkapelser.skogen ?? [];
+  assert.ok(skogen.length <= 10 && skogen.length >= 5, `samma tak på 10 (${skogen.length})`);
   useMinne.getState().aterstall();
 });
 

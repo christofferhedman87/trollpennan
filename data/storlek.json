@@ -7,7 +7,9 @@
   "fordon": { "tak": 1.1, "zon": "bak", "kant": 0.65 },
   "mobel": { "tak": 1.1, "zon": "bak", "kant": 0.6 }
  },
- "minsta": { "_om": "B6.6: ingen sak försvinner i gräset. Skalan höjs (högst max_forstoring, aldrig över klassens tak) tills största måttet och ytan framifrån räcker.", "storlek": 0.45, "yta": 0.06, "max_forstoring": 2.5 },
+ "minsta": { "_om": "B6.6: ingen sak försvinner i gräset. Skalan höjs (högst max_forstoring, aldrig över klassens tak) tills största måttet och ytan framifrån räcker.", "storlek": 0.45, "yta": 0.06, "max_forstoring": 2.5, "_om_p3": "P3 (Doodle: pucken större än kaffekoppen): för småsaker (smasak) är golvet mjukt och behåller ordningen – största måttet blir minst storlek × (1 − lutning) + lutning × eget mått (så en mindre sak förblir mindre; vid storlek är golvet detsamma som förut; ytkravet följer golvet i kvadrat), och ytan räknas som kameran ser den: det största av framsidan och ovansidan × ovanifran (kameran tittar snett ned), så en platt sak (puck, tallrik) inte blåses upp.", "lutning": 0.5, "ovanifran": 0.3 },
+ "smasak": { "_om": "P3: småsaker (målhöjd i intervallet) jämförs med sitt största mått, inte höjden: målhöjden är det största måttet, så en platt puck (0,3) blir mindre än en kaffekopp (0,4). Utanför intervallet gäller R3G:s regel (största av höjden och 0,6 × längsta sidan); bäck och stig (0,1) är remsor på marken och följer den.", "malhojd": [0.2, 0.5] },
+ "syn": { "_om": "P3 (Doodle r83a: narvalen var väldigt liten): varje djur syns minst så här stort. Kroppens skärmruta på sitt djup (stående kamera 375 × 812, fot på marken, halva bredden ur fotavtryck.json, höjden = målhöjden) får inte ha sitt minsta mått under min_px; annars förstoras djuret, högst max_forstoring gånger (entiteter.ts synSkala; placeringsregeln räknar med den, placering.ts). Provet mäter den ritade rutan (window.__tredSyn).", "min_px": 44, "max_forstoring": 1.6 },
  "kategori": {
   "hus": "stor",
   "grotta": "stor",
@@ -74,14 +76,5 @@
   "airhockey": "mobel",
   "dansmaskin": "mobel",
   "dorr": "mobel"
- },
- "bak": {
-  "_om": "B6.3 (J): stora saker sprids i den bakre zonen (x, z i ängens koordinater; djurens platser har z ≥ -0.15), med slumpat men fast läge per skapelse (uid), ingen rad. min_avstand mellan två stora saker; kant (per klass) = sakens halva bredd, så långt från vattnet står den; fri_x = sträckor i x där ingen stor sak får ha sin mitt (grinden och mitten av staketet syns alltid, med sakens halva bredd inräknad). Saker på ängen hålls också borta från dammen (platser.json, ängens zon 'damm').",
-  "zon": { "x": [-2.7, 2.7], "z": [-1.9, -1.15] },
-  "min_avstand": 0.95,
-  "fri_x": [[-1.4, 0.0]],
-  "_om_bortom": "B6.6: byggnaderna (klass med rad bortom) står bakom staketet i det här djupet, högst längst bak; synlig_x = halva synliga bredden längst bak i stående läge, kroppen ska rymmas. Bakom staketet hålls bara själva grinden fri (bortom.fri_x), den syns framför byggnaderna.",
-  "bortom": { "z": [-3.3, -2.35], "fri_x": [[-1.2, -0.2]] },
-  "synlig_x": 2.9
  }
 }

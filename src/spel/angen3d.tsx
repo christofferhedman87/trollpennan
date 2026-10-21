@@ -15,6 +15,7 @@ import { KameraRam } from "./ang/kamera.tsx";
 import { PlatsScen } from "./ang/PlatsDekor.tsx";
 import { START_PLATS, platsMed } from "./platser.ts";
 import { SagaBoll, SagaKamera, SagaKanin, SagaLjus, SagaPenna, type OrbitStyr } from "./ang/saga.tsx";
+import { KameraFokus } from "./ang/fokus.tsx";
 
 /** B6.3 (I): ängens zoner (dammen) ur data/platser.json – djur, figurer och saker hålls ur dammen, simmare i den. */
 const ANG_PLATS = platsMed(START_PLATS);
@@ -155,6 +156,7 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
       />
       <SagaKamera styr={styr} />
       <KameraRam styr={styr} />
+      <KameraFokus styr={styr} plats={ANG_PLATS} />
     </>
   );
 }

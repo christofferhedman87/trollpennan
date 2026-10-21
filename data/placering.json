@@ -1,0 +1,69 @@
+{
+ "_om": "P3a: EN placeringsregel för alla platser (ängen, sjön, skogen, grottan). Varje plats har band per roll (mark, vatten, luft, bak) i världskoordinater; banden delas i rutor (steg). Varje sak får en ledig ruta efter sin roll: simmare på vattenytan, flygare i luftbandet, stora saker (storlek.json zon bak) i det bakre bandet, övriga på marken (platsens land-zoner, platser.json). En ruta är ledig om kroppen ryms hel på skärmen (stående kamera 375 × 812, skarm.ts), inte står i en reserverad världsruta, inte går in i en annan kropp, och om ingen – varken den nya eller någon redan placerad – skyms mer än max_skymd av sin skärmruta (de framför, fasta saker och de reserverade skärmrutorna inräknade). Den nyaste får den främsta lediga rutan (störst z, sedan närmast mitten), sedan de andra från nyast till äldst; den äldsta hamnar därför längst bak. Finns ingen ledig ruta går den till stallet (somnar), aldrig över någon annan.",
+ "bak_lucka": 0.5,
+  "matfel_px": 3,
+  "_om_matfel_px": "P3a torr 5: regelns ruta stämmer med den ritade modellen inom så här många px per kant (p3a-matt.test.ts PX). En kropp framför räknas så mycket större, så att gränsen håller även vid mätfelet. Det är ingen ändrad gräns: små saker (pepparkakan, 15 px hög) skymdes 13 % där regeln räknade 9 %",
+  "_om_bak_lucka": "B6.1 (E): stora saker (zon bak) står minst så här långt (m, z) bakom varje djur/sak på marken – banden överlappar, regeln håller isär dem",
+  "max_skymd": 0.3,
+ "max_skymd_aldre": 0.45,
+ "nya_antal": 3,
+ "_om_skymd": "gränsen gäller per ålder: högst max_skymd för de nya_antal nyaste (och platsens fasta saker), högst max_skymd_aldre för äldre. Huvudet (övre halvan av kroppens ruta – modellens huvud går inte att mäta i regeln) får skymmas högst huvud_skymd",
+ "huvud_skymd": 0.1,
+ "_om_beslut_2140": "Arkitekten 21:40: regeln använder provets gränser (30 % / 45 % skymt, huvudet högst 10 %) – rutorna är modellens egna (data/modellmatt.json) och stämmer med det ritade på säkra sidan (p3a-matt.test.ts), så ingen mätmarginal behövs; äldre ned till 40 %.",
+ "krymp_aldre_min": 0.4,
+ "krymp_steg": 0.1,
+ "_om_krymp_aldre": "när det är trångt ritas äldre (inte den nyaste) mindre, i steg om krymp_steg ned till krymp_aldre_min, innan de somnar. En äldre ritas aldrig större än en nyare: krympningen följer åldern och de äldsta står längst bak, så det ser ut som perspektiv (Arkitekten 18:59)",
+ "vandra": { "_om": "djuren vandrar runt sin plats (djur.tsx x ±0,22, z ±0,16). Fritt bete (1) när det är glest; när det är trångt mindre, ned till nästan stilla. Skärmrutan räknas med den faktiska radien", "x": 0.22, "z": 0.16, "steg": [1, 0.5, 0.15, 0], "_om_niva0": "Arkitektens beslut 20 okt 23:12: en sista nivå 0 när det är som trångast. Djuren flyttar sig inte och vrider sig inte (djur.tsx: vandring och vridning × 0), men lever kvar på platsen: guppet (räknat i regelns ruta) och andningen (kram) finns kvar. Gränserna är oförändrade." },
+ "steg": { "x": 0.125, "z": 0.15, "y": 0.4 },
+ "vickning": { "_om": "hur långt en flygare rör sig från sin ruta i sidled (djur.tsx slingan ±0,4); djurens vandring räknas i vandra", "mark": 0, "vatten": 0, "luft": 0.4, "bak": 0 },
+ "vrid": { "_om": "djuren vrider sig när de går (djur.tsx yaw × 0,35, upp till ~60°): då syns längden, inte bara bredden. Ett djurs ruta räknas så här mycket bredare (prov C: elefanten 308 px ritad mot 221 px räknad)", "djur": 1.35 },
+ "djup": 0.6,
+ "synlig_golv": { "_om": "P3a (b66, Arkitekten 18:59: ingen är osynlig): en sak står bara där dess ruta är minst så här stor (B6.6:s gränser), annars längre fram, större eller i stallet. Rutan räknas ur modellens egna mått (data/modellmatt.json), samma låda som provet mäter.", "storst_px": 24, "minst_px": 4, "yta_px": 200 },
+ "krymp_min": 0.6,
+ "_om_krymp": "den nya får alltid en ruta: ryms den inte i bild ens på en tom plats ritas den mindre, i steg om 0,1, högst ned till krymp_min",
+ "skarm_reserverat": [
+  { "namn": "utgangar", "_om": "övre raden: stjärnor, platsens namn, 'Till ängen'", "x0": 0, "y0": 0, "x1": 375, "y1": 112 },
+  { "namn": "guiden", "_om": "P2-2:s bubbla högst upp", "x0": 12, "y0": 112, "x1": 363, "y1": 150 },
+  { "namn": "bengtsson", "_om": ".npc-figur: left 4, bottom 74, höjd 30vh = 244 px; kroppen i bildens mitt", "x0": 30, "y0": 494, "x1": 140, "y1": 738 },
+  { "namn": "nedre-raden", "_om": "Pennans bok / Uppdrag + Skriv", "x0": 0, "y0": 744, "x1": 375, "y1": 812 }
+ ],
+ "platser": {
+  "ang": {
+   "skala": 1,
+   "band": {
+    "mark": { "z": [-1.95, 4.6] },
+    "vatten": { "z": [-1.2, 0.5] },
+    "luft": { "y": [1.6, 2.4], "z": [-1.4, -0.4] },
+    "bak": { "z": [-3.3, -1.15] }
+   },
+   "varld_reserverat": [
+    { "namn": "grinden", "_om": "vägen till grinden i staketet (B6.6 fri_x)", "x": [-1.4, 0], "z": [-3.4, -1.0] }
+   ],
+   "fasta": [
+    { "namn": "spokhus", "x": 2.15, "z": -1.7, "halv": 0.73, "djup": 0.58, "hojd": 1.8 },
+    { "namn": "damm", "_om": "plan: underlag för simmarna; landdjuren får inte skymma den mer än max_skymd (B6.3:s siktzon)", "x": 1.12, "z": -0.35, "halv": 0.76, "djup": 0.76, "hojd": 0.12, "plan": true }
+   ]
+  },
+  "sjon": {
+   "_om": "markbandet går ända fram till nedre raden (stranden framför Bengtsson); bakåt tar sanden slut vid vattnet (zonerna)",
+   "band": {
+    "mark": { "z": [-5.5, 4.6] },
+    "vatten": { "z": [-6.5, 0] },
+    "luft": { "y": [1.6, 2.4], "z": [-2.4, -0.4] },
+    "bak": { "z": [-5.5, -1.5] }
+   },
+   "varld_reserverat": [],
+   "fasta": []
+  },
+  "standard": {
+   "band": {
+    "mark": { "z": [-5.5, 2.3] },
+    "vatten": { "z": [-6.5, 0] },
+    "luft": { "y": [1.6, 2.4], "z": [-2.4, -0.4] },
+    "bak": { "z": [-5.5, -1.5] }
+   },
+   "varld_reserverat": [],
+   "fasta": []
+  }
+ }
+}
