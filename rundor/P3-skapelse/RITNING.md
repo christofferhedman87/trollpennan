@@ -451,3 +451,30 @@ igenom alla satta för varje ruta. Lagat i `placering.ts`, med samma räkning:
 Resultatet är identiskt (sha1 över `placera` för 336 världar: 1–14 skapelser × 4 platser × 6, före = efter). Medianen
 är nu 22 ms på ängen, 15 på sjön, 21 på skogen och 20 i grottan, mot 33, 21, 48 och 31 före. Gränsen 50 ms är
 oförändrad.
+
+### Torrkörning 6, tredje försöket (00:59–02:14, med 0873764): exit 4 i regressionen
+
+test:product, typecheck, eslint, struktur och bygget var gröna, och p3-prov var grönt redan i första varvet. Ängens fel
+från första varvet i torr 5 kom alltså inte igen, så provet behövde ingen ny väntan. Tre regressionsprov föll:
+
+1. **b63 I5/I6** (slumpade frön 66781 och 74700): "alla 10 skapelser har ett läge". Sjukhus, bord och slott, och
+   traktorn, sov i stallet. Ingen kropp stod i dammen: den minsta marginalen var 0,26. Provet förutsatte att "ängen
+   rymmer 10", men det gäller inte efter kapacitetsbeslutet (21:40). Ändrat: alla 10 ska finnas, antingen vakna på ängen
+   eller sovande i stallet, och kravet att ingen kropp står i dammen gäller alla vakna. Grönt med samma frön.
+2. **b61 E**: "sex saker/djur på ängen". Skyskrapan och slottet sov, och fyra av sex var vakna. Det är fallet "bara
+   jättar" (krav ≥ 3). Ändrat: alla sex ska finnas, vakna eller sovande, flickan och katten ska vara vakna och minst en stor
+   sak vaken, och de vakna stora sakerna ska stå bakom djuren. Grönt.
+3. **b66**:
+   - **BYGG1, ingen byggnad framför grinden:** kyrkan på x 0,5. Provet räknade kyrkans bredd med fotavtrycket 0,71,
+     som är den största halva utbredningen (djupet). I x är kyrkan 0,425 bred och ritas från x 0,075, och grinden är
+     x −1,4…0. Provet läser nu den ritade lådans bredd i x (`__tredSyn` b). Grindens ruta är oförändrad.
+   - **Tio modeller "för liten"**, som var sanna fel i regeln. Golvet (`synlig_golv`, B6.6:s gränser 24 px / 4 px /
+     200 px²) gällde bara saker. Därför kunde äldre småkryp som krympts mot 40 % bli 13 × 15 px (bladlus, knäppare,
+     kackerlacka). Saker låg dessutom precis på gränsen i regelns ruta men 1–2 px under den i bilden (sax: regeln 24, ritad
+     22). Lagat i `placering.ts`: golvet gäller alla kroppar och mäts på kroppen själv minus `matfel_px`. Den som blir för
+     liten får en större storlek längre fram eller somnar. Gränserna är oförändrade, och kapacitetstabellen är oförändrad.
+     Med regeln är sax, spade och skruvnyckel nu 11 × 27, bladlusen 20 × 27 och klubban 9 × 36.
+
+Ändrade mergade prov, utöver b66: `rundor/B6.3-fix/b63-prov.mjs` (I-varven) och `rundor/B6.1-kontroll/b61-prov.mjs`
+(E). Båda ligger i patchen och i kor.sh `ANDRADE`. Skälet är detsamma som för b66 (Arkitekten 18:59): den som inte får
+en ledig ruta somnar. Det gamla kravet att alla står på ängen strider mot kapacitetsbeslutet.
