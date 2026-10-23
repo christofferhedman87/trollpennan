@@ -5,3 +5,4 @@ screenshots/
 attachments/
 *.log
 .DS_Store
+*.patch
