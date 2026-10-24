@@ -6,9 +6,11 @@ import {
   boj,
   forledTillOrd,
   kortDjur,
+  forledKant,
   langstaAtom,
   langstaSuffix,
   lasToken,
+  skarKandOrd,
   matchaFras,
   ordFranForm,
   ordMedId,
@@ -250,6 +252,7 @@ function delaOrd(token: string): Sem | null {
   if (!suffix) return null;
   const prefix = token.slice(0, token.length - suffix.form.length);
   if (prefix.length < 2) return null;
+  if (skarKandOrd(token, prefix.length, suffix.form) || !forledKant(prefix)) return null;
   const las = lasPrefix(prefix);
   // B6.5: "brinnande" är inte "brinn" + "ande" (anden). Okänt förled + particip-slut = okänt ord (data/attribut.json particip).
   if (!las.mods.length && !las.djur.length && PARTICIP_SLUT.some((s) => token.endsWith(s))) return null;
@@ -384,6 +387,11 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
       }
       if (led) {
         sem.push({ t: "led", key: token, del: led });
+        continue;
+      }
+      // Ett riktigt ord (NST, funktionsord eller ordform) ska inte rättas till ett djur. "storm" är inte stork.
+      if (forledKant(token)) {
+        sem.push({ t: "okand", raw: token });
         continue;
       }
       const kompForslag = forslagKomp(token);
