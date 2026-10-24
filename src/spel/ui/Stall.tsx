@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { brygga } from "../brygga.ts";
 import { useMinne } from "../minne.ts";
 import { TEXTER } from "./spelData.ts";
+import type { Kalla } from "../rostKo.ts";
 import type { Banner } from "./typer.ts";
 
 const CHIP_MS = 6000;
@@ -15,7 +16,7 @@ function finns(uid: string): boolean {
 
 /** Efter tryck på ett djur (ängen eller annan plats): en knapp i ~6 s. B6.1: knappen ligger i UI-raden längst ner bredvid
  *  "Pennans bok", aldrig över djuret, så att ett nytt tryck på djuret aldrig ställer in det i stallet av misstag. */
-export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: Banner["slag"]) => void }) {
+export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: Banner["slag"], kalla: Kalla) => void }) {
   const [mal, setMal] = useState<{ uid: string } | null>(null);
   useEffect(() => {
     const sluta = brygga.lyssna((h) => {
@@ -47,7 +48,7 @@ export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: B
       data-testid="djur-till-stall"
       data-uid={mal.uid}
       onClick={() => {
-        if (useMinne.getState().tillStall(mal.uid)) visaBanner(TEXTER.stall.flytta, "ovr");
+        if (useMinne.getState().tillStall(mal.uid)) visaBanner(TEXTER.stall.flytta, "ovr", "tapp");
         setMal(null);
       }}
     >
@@ -57,14 +58,14 @@ export function StallChip({ visaBanner }: { visaBanner: (texten: string, slag: B
 }
 
 /** R9I: "Till stallet" inne i gåvorutan, så att knappen aldrig döljs när ett sugen djur öppnar boken. */
-export function GavaStallKnapp({ uid, visaBanner, klar }: { uid: string; visaBanner: (texten: string, slag: Banner["slag"]) => void; klar: () => void }) {
+export function GavaStallKnapp({ uid, visaBanner, klar }: { uid: string; visaBanner: (texten: string, slag: Banner["slag"], kalla: Kalla) => void; klar: () => void }) {
   return (
     <button
       type="button"
       className="stall-chip i-bok"
       data-testid="gava-till-stall"
       onClick={() => {
-        if (useMinne.getState().tillStall(uid)) visaBanner(TEXTER.stall.flytta, "ovr");
+        if (useMinne.getState().tillStall(uid)) visaBanner(TEXTER.stall.flytta, "ovr", "tapp");
         klar();
       }}
     >

@@ -6,6 +6,7 @@ import { arFinal, mattUr, milstolpeNadd, platsMed } from "../platser.ts";
 import npcJson from "../../../data/npc.json" with { type: "json" };
 import { klarUppdrag, type FlodeSvar } from "../avflode.ts";
 import { useMinne } from "../minne.ts";
+import type { Kalla } from "../rostKo.ts";
 import { NPC_DEL, mineVararMs, valjMine } from "../npc.ts";
 
 const NPC_ID = "bengtsson";
@@ -22,7 +23,7 @@ function blevDjur(raw: string): boolean {
 }
 
 type Hjalp = {
-  visaBanner: (text: string, slag: "ovr") => void;
+  visaBanner: (text: string, slag: "ovr", kalla: Kalla) => void;
   belonaFlode: (r: FlodeSvar) => void;
   oppnaSkapa: () => void;
   oppnaUppdragsbok: () => void;
@@ -83,21 +84,21 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
     if (nasta) {
       // B6.2: final_fore (data/platser.json) – Bengtssons replik när finalen öppnas
       const fore = arFinal(nasta) ? platsMed(pl)?.final_fore?.text : undefined;
-      if (fore) visaBanner(fore, "ovr");
+      if (fore) visaBanner(fore, "ovr", "tapp");
       useMinne.getState().sattUppdrag(nasta.id, "pagar");
       return oppnaSkapa();
     }
     const glad = REPLIKER_PLATS[pl]?.glad;
     if (glad?.length) {
-      visaBanner(glad[Math.floor(Math.random() * glad.length)]!, "ovr");
+      visaBanner(glad[Math.floor(Math.random() * glad.length)]!, "ovr", "tapp");
       return;
     }
     const rep = NPC_DEL[NPC_ID]?.repliker;
     if (aventyrKvar(s)) {
-      if (rep?.bara_aventyr) visaBanner(rep.bara_aventyr, "ovr");
+      if (rep?.bara_aventyr) visaBanner(rep.bara_aventyr, "ovr", "tapp");
       return oppnaUppdragsbok();
     }
-    if (rep?.inga_fler) visaBanner(rep.inga_fler, "ovr");
+    if (rep?.inga_fler) visaBanner(rep.inga_fler, "ovr", "tapp");
   }
 
   /** Anropas när barnet har skrivit något som blev ett djur/ägg. Skapandet sker alltid; här bara uppdraget. */
@@ -111,7 +112,7 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
       return "klar";
     }
     const fel = NPC_DEL[NPC_ID]?.repliker?.fel ?? [];
-    if (fel.length) visaBanner(fel[felNr.current++ % fel.length]!, "ovr");
+    if (fel.length) visaBanner(fel[felNr.current++ % fel.length]!, "ovr", "bengtsson_fel");
     blinka("fel");
     return "fel";
   }

@@ -16,13 +16,14 @@ import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
 import { OnskaAnsikte } from "./OnskaAnsikte.tsx";
 import { bestamdAv, frasForByggOrd, kanEtikett, kortIkon } from "./hjalp.ts";
 import { FIR, FLIKAR, TANGENTBORD, TEXTER } from "./spelData.ts";
+import type { Kalla } from "../rostKo.ts";
 import type { Banner, Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
 import { GavaStallKnapp } from "./Stall.tsx";
 import { BokSvar } from "./BokSvar.tsx";
 
 type BokSkarmProps = {
   stangBok: () => void;
-  visaBanner: (texten: string, slag: Banner["slag"]) => void;
+  visaBanner: (texten: string, slag: Banner["slag"], kalla: Kalla) => void;
   andrar: boolean;
   panel: "spel" | "byggbok" | "uppdrag";
   lage: Lage;

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "_om": "R1: en kö för all röst. prio lägre = viktigare. baste_fore_ms räknas från anmälan. oombedd = räknas mot oombedd_mellan_ms. Ändra här, ingen kod.",
+  "takt": { "oombedd_mellan_ms": 10000, "vanta_pa_svar_ms": 1500, "dubblett_ms": 4000, "ko_tak": 4 },
+  "klasser": {
+    "svar":     { "prio": 0, "oombedd": false, "baste_fore_ms": 3000,  "tak": 2, "avbryter": ["belonung", "folj", "guide", "info"] },
+    "belonung": { "prio": 1, "oombedd": true,  "baste_fore_ms": 6000,  "tak": 1, "avbryter": ["guide", "info"], "en_per_handling": true,
+                  "ordning": ["guldord", "hemligt_ord", "sida_klar", "ny_niva", "uppdrag_klart", "mossa_text", "mossa_beloning", "stjarnor"] },
+    "folj":     { "prio": 2, "oombedd": true,  "baste_fore_ms": 6000,  "tak": 2, "avbryter": ["guide", "info"] },
+    "guide":    { "prio": 3, "oombedd": true,  "baste_fore_ms": 20000, "tak": 2, "tak_per_kalla": 1, "forst_efter_handling": true,
+                  "tom_tid_ms": 20000, "tyst_fore_ms": 5000, "ordning": ["coach", "uppdrag", "onskan", "tryck", "gata"] },
+    "info":     { "prio": 4, "oombedd": true,  "baste_fore_ms": 10000, "tak": 1, "forst_efter_handling": true, "tyst_fore_ms": 5000, "inte_forsta_ms": 180000 }
+  },
+  "kallor": {
+    "hej": "svar", "tapp": "svar", "sparr": "svar", "okand_inget": "svar", "nastan": "svar",
+    "guldord": "belonung", "hemligt_ord": "belonung", "stjarnor": "belonung", "mossa_text": "belonung", "mossa_beloning": "belonung",
+    "ny_niva": "belonung", "sida_klar": "belonung", "uppdrag_klart": "belonung",
+    "sov": "folj", "okand_ordbit": "folj", "overraskning": "folj", "oppnas": "folj", "uppfyll_tack": "folj", "bjud": "folj", "bengtsson_fel": "folj",
+    "coach": "guide", "uppdrag": "guide", "onskan": "guide", "tryck": "guide", "gata": "guide",
+    "dygn": "info"
+  }
+}

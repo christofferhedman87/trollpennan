@@ -9,6 +9,7 @@ import stjarnorJson from "../../../data/stjarnor.json" with { type: "json" };
 import onskningarJson from "../../../data/onskningar.json" with { type: "json" };
 import { ALLA_UPPDRAG } from "../aventyr.ts";
 import { djurPris } from "./hjalp.ts";
+import type { Kalla } from "../rostKo.ts";
 import type { Banner, KopFraga, VisKort } from "./typer.ts";
 
 type SkyltDialogProps = {
@@ -63,7 +64,7 @@ export function ValjDjurDialog({ valj, valjKor, setValj }: ValjDjurDialogProps) 
 
 type VisKortDjurProps = {
   visKort: Extract<NonNullable<VisKort>, { slag: "djur" }>;
-  visaBanner: (texten: string, slag: Banner["slag"]) => void;
+  visaBanner: (texten: string, slag: Banner["slag"], kalla: Kalla) => void;
   visaMossa: (h: Parameters<typeof mossaHand>[0]) => void;
   setVisKort: Dispatch<SetStateAction<VisKort>>;
 };
@@ -85,7 +86,7 @@ export function VisKortDjur({ visKort, visaBanner, visaMossa, setVisKort }: VisK
               data-testid="ta-foto"
               onClick={() => {
                 const text = sparaFoto(visKort.spec);
-                visaBanner(text, "ovr");
+                visaBanner(text, "ovr", "tapp");
                 if (text === ALBUM.texter.foto_klart) visaMossa({ foto: true, poang: poangAv(visKort.spec) });
               }}
             >

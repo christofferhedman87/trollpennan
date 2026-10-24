@@ -2,11 +2,19 @@
 // eller en mall där de fasta delarna och kända värden ("en kanin", tal, namn) är filer. Barnets egna ord (dynamisk text)
 // läses med telefonens svenska röst om den finns, annars läses den meningen inte. Fasta texter utan fil: 'reserv' i
 // data/rost.json ('tyst' = ingen telefonröst, de genereras i stället). Aldrig en engelsk röst. Ingen kod per replik.
-import { useEffect } from "react";
 import { useMinne } from "./minne.ts";
 import { DYNAMISK, RESERV, normalisera, rostPlan, type RostDel } from "./rostManifest.ts";
 
-type Logg = { text: string; fil: string | null; satt: "fil" | "mall" | "reserv" | "tyst" | "saknas"; delar?: number; dynamisk?: boolean };
+type Logg = {
+  text: string;
+  fil: string | null;
+  satt: "fil" | "mall" | "reserv" | "tyst" | "saknas" | "struken" | "avbruten";
+  delar?: number;
+  dynamisk?: boolean;
+  klass?: string;
+  kalla?: string;
+  fodd?: number;
+};
 /** TTS-3: kön. forst = bannerns röst – den går före allt annat i kön, och en guiderad/pratbubbla/önskan som redan läses
  *  avbryts (tonas ut på TONA_MS) så att bannerns röst börjar direkt. Den avbrutna läses inte om (texten står kvar). */
 const ko: { text: string; forst: boolean }[] = [];
@@ -288,19 +296,86 @@ export function bannerKlocka(text: string, bas: number, stang: () => void): numb
   return k.timer;
 }
 
-/** Läser upp bannrar (alla slag) när de visas, en gång per banner – före pratbubblorna i kön (TTS-3). */
-export function useRostBannrar(banners: { id: number; text: string }[]) {
-  useEffect(() => {
-    for (const b of banners) sag(b.text, `banner:${b.id}`, true);
-  }, [banners]);
+/** R1: spelare åt rostKo. Egen generation, rör inte sag-kön eller bannerns klocka. Loggar hörda rader synkront. */
+type UppMeta = { klass: string; kalla: string; fodd: number };
+let uppOmg = 0;
+let uppLjud: HTMLAudioElement | null = null;
+
+export function spelaUpp(text: string, meta: UppMeta, klar: () => void): { avbryt: () => void } {
+  const min = ++uppOmg;
+  const t = normalisera(text);
+  let vanta: ReturnType<typeof setTimeout> | null = null;
+  const fardig = () => {
+    if (min !== uppOmg) return;
+    uppLjud = null;
+    vanta = null;
+    klocka.klar(t);
+    klar();
+  };
+  const avbryt = () => {
+    if (min !== uppOmg) return;
+    uppOmg++;
+    if (vanta !== null) clearTimeout(vanta);
+    vanta = null;
+    const a = uppLjud;
+    uppLjud = null;
+    if (a) tonaUt(a);
+    if (typeof speechSynthesis !== "undefined") speechSynthesis.cancel();
+  };
+  const bas = { text, klass: meta.klass, kalla: meta.kalla, fodd: meta.fodd };
+  const plan = rostPlan(text);
+  if (plan) {
+    const sv = plan.dynamisk && DYNAMISK === "webblasare" ? svenskRost() : null;
+    if (plan.dynamisk && !sv) {
+      logg({ ...bas, fil: null, satt: "tyst", dynamisk: true });
+      klocka.spelar(t);
+      vanta = setTimeout(fardig, 1800);
+      return { avbryt };
+    }
+    const forsta = plan.delar.find((d): d is { f: string; ms: number } => "f" in d);
+    logg({ ...bas, fil: forsta?.f ?? null, satt: plan.delar.length > 1 ? "mall" : "fil", delar: plan.delar.length, dynamisk: plan.dynamisk });
+    spelaUppDelar(plan.delar, sv, min, t, fardig);
+    return { avbryt };
+  }
+  const sv = RESERV === "webblasare" ? svenskRost() : null;
+  if (sv) {
+    logg({ ...bas, fil: null, satt: "reserv" });
+    klocka.spelar(t);
+    telefon(text, sv, () => {
+      if (min === uppOmg) fardig();
+    });
+    return { avbryt };
+  }
+  logg({ ...bas, fil: null, satt: "saknas" });
+  queueMicrotask(fardig);
+  return { avbryt };
 }
 
-/** TTS-2: djurens pratbubblor och önskan som syns, en gång per bubbla/önskan. */
-export function useRostBubblor(bubblor: { id: number; text: string }[], onskan: string | null) {
-  useEffect(() => {
-    for (const b of bubblor) sag(b.text, `bubbla:${b.id}`);
-  }, [bubblor]);
-  useEffect(() => {
-    if (onskan) sag(onskan, `onskan:${onskan}`);
-  }, [onskan]);
+function spelaUppDelar(delar: RostDel[], sv: SpeechSynthesisVoice | null, min: number, t: string, fardig: () => void) {
+  let i = 0;
+  const steg = () => {
+    if (min !== uppOmg) return;
+    const d = delar[i++];
+    if (!d) {
+      fardig();
+      return;
+    }
+    if ("f" in d) {
+      const a = new Audio(d.f);
+      uppLjud = a;
+      const vidare = () => {
+        if (min === uppOmg) steg();
+      };
+      a.addEventListener("ended", vidare);
+      a.addEventListener("error", vidare);
+      a.play().then(
+        () => klocka.spelar(t),
+        () => steg(),
+      );
+    } else if (sv) {
+      klocka.spelar(t);
+      telefon(d.dynamisk, sv, steg);
+    } else steg();
+  };
+  steg();
 }
