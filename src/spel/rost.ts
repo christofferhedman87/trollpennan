@@ -303,14 +303,20 @@ let uppLjud: HTMLAudioElement | null = null;
 
 export function spelaUpp(text: string, meta: UppMeta, klar: () => void): { avbryt: () => void } {
   const min = ++uppOmg;
+  const t = normalisera(text);
+  let vanta: ReturnType<typeof setTimeout> | null = null;
   const fardig = () => {
     if (min !== uppOmg) return;
     uppLjud = null;
+    vanta = null;
+    klocka.klar(t);
     klar();
   };
   const avbryt = () => {
     if (min !== uppOmg) return;
     uppOmg++;
+    if (vanta !== null) clearTimeout(vanta);
+    vanta = null;
     const a = uppLjud;
     uppLjud = null;
     if (a) tonaUt(a);
@@ -322,17 +328,19 @@ export function spelaUpp(text: string, meta: UppMeta, klar: () => void): { avbry
     const sv = plan.dynamisk && DYNAMISK === "webblasare" ? svenskRost() : null;
     if (plan.dynamisk && !sv) {
       logg({ ...bas, fil: null, satt: "tyst", dynamisk: true });
-      queueMicrotask(fardig);
+      klocka.spelar(t);
+      vanta = setTimeout(fardig, 1800);
       return { avbryt };
     }
     const forsta = plan.delar.find((d): d is { f: string; ms: number } => "f" in d);
     logg({ ...bas, fil: forsta?.f ?? null, satt: plan.delar.length > 1 ? "mall" : "fil", delar: plan.delar.length, dynamisk: plan.dynamisk });
-    spelaUppDelar(plan.delar, sv, min, fardig);
+    spelaUppDelar(plan.delar, sv, min, t, fardig);
     return { avbryt };
   }
   const sv = RESERV === "webblasare" ? svenskRost() : null;
   if (sv) {
     logg({ ...bas, fil: null, satt: "reserv" });
+    klocka.spelar(t);
     telefon(text, sv, () => {
       if (min === uppOmg) fardig();
     });
@@ -343,7 +351,7 @@ export function spelaUpp(text: string, meta: UppMeta, klar: () => void): { avbry
   return { avbryt };
 }
 
-function spelaUppDelar(delar: RostDel[], sv: SpeechSynthesisVoice | null, min: number, fardig: () => void) {
+function spelaUppDelar(delar: RostDel[], sv: SpeechSynthesisVoice | null, min: number, t: string, fardig: () => void) {
   let i = 0;
   const steg = () => {
     if (min !== uppOmg) return;
@@ -361,11 +369,13 @@ function spelaUppDelar(delar: RostDel[], sv: SpeechSynthesisVoice | null, min: n
       a.addEventListener("ended", vidare);
       a.addEventListener("error", vidare);
       a.play().then(
-        () => undefined,
+        () => klocka.spelar(t),
         () => steg(),
       );
-    } else if (sv) telefon(d.dynamisk, sv, steg);
-    else steg();
+    } else if (sv) {
+      klocka.spelar(t);
+      telefon(d.dynamisk, sv, steg);
+    } else steg();
   };
   steg();
 }

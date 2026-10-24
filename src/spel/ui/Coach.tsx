@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 import { FORSTA, aktivtSteg, malFor } from "../forstaStunden.ts";
 import { useMinne } from "../minne.ts";
 import { START_PLATS } from "../platser.ts";
-import { sag } from "../rost.ts";
+import * as rostKo from "../rostKo.ts";
 import { useStart } from "../start.ts";
 import "./coach-p2.css";
 
@@ -54,7 +54,9 @@ export function Coach({ aktiv }: { aktiv: boolean }) {
   const id = steg?.steg.id;
   const synlig = ruta !== null;
   useEffect(() => {
-    if (synlig && text && id) sag(text, `coach-${id}`);
+    if (!synlig || !text || !id) return;
+    rostKo.anmal({ text, kalla: "coach", nyckel: `coach-${id}` });
+    return () => rostKo.stryk(text);
   }, [synlig, text, id]);
   if (!ruta || !steg) return null;
   const pad = 6;

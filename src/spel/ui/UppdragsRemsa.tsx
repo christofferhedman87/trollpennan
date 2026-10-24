@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { NPC, uppdragText, type Uppdrag } from "../aventyr.ts";
-import { sag } from "../rost.ts";
+import * as rostKo from "../rostKo.ts";
 import { ideRad } from "../ideRad.ts";
 
 /** Remsan överst i Skapa-menyn: uppdraget som pågår, med givarens namn och (R6A-3) guidande förslag. Fritext är kvar.
@@ -10,7 +10,9 @@ export function UppdragsRemsa({ uppdrag, fyllForslag }: { uppdrag: Uppdrag | und
   const lasId = uppdrag?.id;
   // TTS-1: uppdraget läses upp en gång per spelomgång när remsan visas
   useEffect(() => {
-    if (lasId && lasText) sag(lasText, `uppdrag:${lasId}`);
+    if (!lasId || !lasText) return;
+    rostKo.anmal({ text: lasText, kalla: "uppdrag", nyckel: `uppdrag:${lasId}` });
+    return () => rostKo.stryk(lasText);
   }, [lasId, lasText]);
   if (!uppdrag) return null;
   const namn = uppdrag.givare ? NPC[uppdrag.givare]?.namn : undefined;

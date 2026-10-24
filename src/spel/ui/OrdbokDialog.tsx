@@ -7,6 +7,7 @@ import type { Lage } from "../minne.ts";
 import { replik } from "../replik.ts";
 import { djurPris, streck } from "./hjalp.ts";
 import { FIR, SIDOR } from "./spelData.ts";
+import type { Kalla } from "../rostKo.ts";
 import type { Banner, VisKort } from "./typer.ts";
 
 type OrdbokDialogProps = {
@@ -30,7 +31,7 @@ type OrdbokDialogProps = {
   formler: { text: string; spec: Sparad; }[];
   setVisKort: Dispatch<SetStateAction<VisKort>>;
   sovande: Sparad[];
-  visaBanner: (texten: string, slag: Banner["slag"]) => void;
+  visaBanner: (texten: string, slag: Banner["slag"], kalla: Kalla) => void;
 };
 
 export function OrdbokDialog({ hittatAntal, totalOrd, stjarnor, kopRad, koptaSidor, funna, sidOpp, forsokKop, setSidOpp, textRef, setText, setHand, setLage, setOrdbok, kvar, hittade, hemliga, formler, setVisKort, sovande, visaBanner }: OrdbokDialogProps) {
@@ -138,7 +139,7 @@ export function OrdbokDialog({ hittatAntal, totalOrd, stjarnor, kopRad, koptaSid
                     className="kom-hit"
                     onClick={() => {
                       const somnad = useMinne.getState().kallaHit(s.uid);
-                      if (somnad) visaBanner(replik(somnad, "sover"), "sov");
+                      if (somnad) visaBanner(replik(somnad, "sover"), "sov", "sov");
                       setOrdbok(false);
                     }}
                   >

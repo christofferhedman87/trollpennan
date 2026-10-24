@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, type Dispatch, type RefObject, type SetStateAction } from "react";
-import { useRostBubblor } from "../rost.ts";
+import * as rostKo from "../rostKo.ts";
 import { Heart } from "lucide-react";
 import { brygga } from "../brygga.ts";
 import type { Sparad } from "../brygga.ts";
@@ -25,7 +25,7 @@ type AngLagerProps = {
   hemma: Hemdjur[];
   liv: Record<string, { humor: string; humorMs: number; humorLangd: number; favorit: string; favoritHittad: boolean; hjartan: number; }>;
   fotoMal: { uid: string; x: number; y: number; } | null;
-  visaBanner: (texten: string, slag: Banner["slag"], ms?: number) => void;
+  visaBanner: (texten: string, slag: Banner["slag"], kalla: rostKo.Kalla, ms?: number) => void;
   stangBanner: (tryckt?: string) => void;
   visaMossa: (h: Parameters<typeof mossaHand>[0]) => void;
   setFotoMal: Dispatch<SetStateAction<{ uid: string; x: number; y: number; } | null>>;
@@ -55,7 +55,12 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
   // B6.1: tackbubblan (och andra pratbubblor) får aldrig ligga över "Guldord!"-banderollen eller över varandra.
   const lagerRef = useRef<HTMLDivElement>(null);
   const harBubblor = bubblor.length > 0;
-  useRostBubblor(bubblor, onskan && onskaSyns && !onskaOpp && !harBubblor ? onskan.text : null); // TTS-2: pratbubblor och önskan läses upp
+  const onskanText = onskan && onskaSyns && !onskaOpp && !harBubblor ? onskan.text : null;
+  useEffect(() => {
+    if (!onskanText) return;
+    rostKo.anmal({ text: onskanText, kalla: "onskan", nyckel: `onskan:${onskanText}` });
+    return () => rostKo.stryk(onskanText);
+  }, [onskanText]);
   useLayoutEffect(() => {
     if (lagerRef.current) undvikKrock(lagerRef.current);
   }, [bubblor, banners]);
@@ -105,7 +110,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
                   useMinne.getState().hemma.find((h) => h.spec.uid === fotoMal.uid)?.spec;
                 if (!djur) return;
                 const text = sparaFoto(djur);
-                visaBanner(text, "ovr");
+                visaBanner(text, "ovr", "tapp");
                 if (text === ALBUM.texter.foto_klart) visaMossa({ foto: true, poang: poangAv(djur) });
                 setFotoMal(null);
               }}
@@ -150,7 +155,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
                 onClick={() => {
                   brygga.flyttaBygg(meny.uid);
                   setMeny(null);
-                  visaBanner(TEXTER.flytta_hjalp, "ovr");
+                  visaBanner(TEXTER.flytta_hjalp, "ovr", "tapp");
                 }}
               >
                 {TEXTER.meny.flytta}
@@ -162,7 +167,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
                   setMeny(null);
                   setLage("skriv");
                   setBokOpp(true);
-                  visaBanner(TEXTER.bygg_om_hjalp, "ovr");
+                  visaBanner(TEXTER.bygg_om_hjalp, "ovr", "tapp");
                 }}
               >
                 {TEXTER.meny.bygg_om}
@@ -204,7 +209,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
                   key={b.uid}
                   type="button"
                   onClick={() => {
-                    if (!useMinne.getState().franLada(b.uid)) visaBanner(TEXTER.lada.full, "ovr");
+                    if (!useMinne.getState().franLada(b.uid)) visaBanner(TEXTER.lada.full, "ovr", "tapp");
                   }}
                 >
                   {TEXTER.lada.ta_fram}: {b.formel}

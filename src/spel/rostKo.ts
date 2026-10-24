@@ -307,7 +307,7 @@ export function anmal(r: { text: string; kalla: Kalla; nyckel?: string; banner?:
   const text = r.text ?? "";
   if (!text.trim()) return;
   const kalla = r.kalla;
-  const klass = TAKT.kallor[kalla];
+  const klass = TAKT.kallor[kalla] as Klass;
   if (!klass) return;
   if (!ljudPa() && !r.banner) return;
   if (r.nyckel && (nyckelBrand.has(r.nyckel) || spelar?.rad.nyckel === r.nyckel || ko.some((x) => x.nyckel === r.nyckel))) return;
@@ -376,9 +376,7 @@ export function handling(): void {
 export function oppna(): void {
   if (!oppnatEnGang) {
     oppnatEnGang = true;
-    for (const rad of [...ko]) {
-      if (rad.klass === "svar" || rad.klass === "belonung" || rad.klass === "folj") strykRad(rad);
-    }
+    ko = ko.filter((rad) => rad.klass === "guide" || rad.klass === "info");
     senastHandlingVid = null;
     senastOombeddStart = null;
     belonungStartad.clear();

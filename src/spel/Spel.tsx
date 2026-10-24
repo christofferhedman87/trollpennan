@@ -19,7 +19,8 @@ import { ljud } from "./ljud.ts";
 import { useMinne, type Lage, type OnskaSpar } from "./minne.ts";
 import { byggTraff, geTraff, kompisTraff, nastanRad, ONSK, ONSK_BYGG, tillaggFras, valjDjurOnska } from "./onska.ts";
 import { replik } from "./replik.ts";
-import { bannerKlocka, tystna, useRostBannrar } from "./rost.ts";
+import { bannerKlocka } from "./rost.ts";
+import * as rostKo from "./rostKo.ts";
 import { avBro, type AvHandelse } from "./avbro.ts";
 import { AlbumVy } from "./samling.tsx";
 import {
@@ -177,20 +178,23 @@ export function Spel() {
   const nastanRef = useRef(0);
   const paHandelse = useRef<(h: Handelse) => void>(() => undefined);
   const visaOnskaRef = useRef<() => void>(() => undefined);
-  const bannerKo = useRef<Banner[]>([]);
-  const bannerSyns = useRef(false);
   const bannerTimer = useRef<number | null>(null);
+  const introRef = useRef(!useMinne.getState().introSedd);
+  const introStart = useRef(true);
   textRef.current = text;
   handRef.current = hand;
-  useRostBannrar(banners); // TTS-1: bannrar av slaget ovr läses upp (förgenererad röst via manifestet, annars reserven)
   useLayoutEffect(() => {
-    if (useMinne.getState().introSedd) setIntro(false);
+    if (!useMinne.getState().introSedd) return;
+    introRef.current = false;
+    rostKo.oppna();
+    setIntro(false);
   }, []);
-  useEffect(() => {
-    return () => {
-      if (bannerTimer.current) window.clearTimeout(bannerTimer.current);
-    };
-  }, []);
+  useEffect(() => { if (introStart.current) introStart.current = false; else if (intro) rostKo.stang(); }, [intro]);
+  useEffect(() => rostKo.prenumerera((b) => {
+    if (bannerTimer.current) window.clearTimeout(bannerTimer.current);
+    bannerTimer.current = b ? bannerKlocka(b.text, b.ms ?? 2400, () => { bannerTimer.current = null; setBanners([]); }) : null;
+    setBanners(b ? [{ id: b.id, text: b.text, slag: b.slag, ...(b.ms ? { ms: b.ms, tryck: true } : {}) }] : []);
+  }), []);
   gavaRef.current = gavaTill;
   overlayRef.current = ordbok || foralder || !!visKort || !!kop || stjarnInfo || kopia != null || kartaOpp || !!omrade || !!valj || !!skylt || !!gavaTill || panel === "uppdrag" || albumOpp || mossaOpp;
 
@@ -219,31 +223,18 @@ export function Spel() {
   const totalOrd = allaOrd.filter((o) => o.niva === "fritt" || o.niva === "kort").length;
   const hittatAntal = allaOrd.filter((o) => funna[o.id] && (o.niva === "fritt" || o.niva === "kort")).length;
 
-  function visaNastaBanner() {
-    const next = bannerKo.current.shift();
-    if (!next) {
-      bannerSyns.current = false;
-      setBanners([]);
-      return;
-    }
-    bannerSyns.current = true;
-    setBanners([next]);
-    bannerTimer.current = bannerKlocka(next.text, next.ms ?? 2400, () => stangBanner()); // TTS-3: tiden räknas från röstens start, slut + 1,5 s
-  }
-
-  /** B6.3 (H): banderollen går och nästa i kön visas efter 200 ms – när tiden gått eller barnet trycker. */
+  /** B6.3 (H): tryck stänger bannern och tystar kön. Tiden stänger bara bannern. */
   function stangBanner(tryckt?: string) {
-    if (bannerTimer.current) window.clearTimeout(bannerTimer.current); if (tryckt !== undefined) { tystna(); bannerKo.current = bannerKo.current.filter((b) => b.text !== tryckt); } // TTS-2: tryck = stäng direkt + tysta
+    if (bannerTimer.current) window.clearTimeout(bannerTimer.current);
+    bannerTimer.current = null;
     setBanners([]);
-    bannerTimer.current = window.setTimeout(() => ((bannerTimer.current = null), visaNastaBanner()), 200);
+    if (tryckt !== undefined) rostKo.tryck();
   }
 
-  function slackBanner(texten: string) { bannerKo.current = bannerKo.current.filter((b) => b.text !== texten); setBanners((l) => l.filter((b) => b.text !== texten)); }
+  function slackBanner(texten: string) { const t = platsText(texten, varldRef.current); rostKo.stryk(t); setBanners((l) => l.filter((b) => b.text !== t)); }
   useStallBanner(slackBanner);
-  function visaBanner(texten: string, slag: Banner["slag"], ms?: number) {
-    bannerKo.current.push({ id: nyId(), text: platsText(texten, varldRef.current), slag, ...(ms ? { ms, tryck: true } : {}) });
-    if (bannerSyns.current) return;
-    visaNastaBanner();
+  function visaBanner(texten: string, slag: Banner["slag"], kalla: rostKo.Kalla, ms?: number) {
+    rostKo.anmal({ text: platsText(texten, varldRef.current), kalla, banner: { slag, ms } });
   }
 
   function lasMeny() {
@@ -254,9 +245,10 @@ export function Spel() {
     });
   }
 
-  function visaBubbla(rad: string, x: number, y: number, hjarta: boolean, ovan = false, ensam = false) {
+  function visaBubbla(rad: string, x: number, y: number, hjarta: boolean, ovan = false, ensam = false, kalla: rostKo.Kalla | null = "tapp") {
     const texten = platsText(rad, varldRef.current); // R9K: {platsen} → platsen barnet är på
     const id = nyId();
+    if (kalla) rostKo.anmal({ text: texten, kalla, nyckel: `bubbla:${id}` });
     setBubblor((prev) => {
       const start = ensam ? [] : prev;
       if (ovan) {
@@ -274,7 +266,7 @@ export function Spel() {
       const yy = hoger && vanster ? 0.3 : 0.03;
       return [...start, { id, text: texten, x: xx, y: yy, hjarta, ovan: false }].slice(-2);
     });
-    window.setTimeout(() => setBubblor((b) => b.filter((x) => x.id !== id)), 4200);
+    window.setTimeout(() => { setBubblor((b) => b.filter((x) => x.id !== id)); if (kalla === "tryck") rostKo.stryk(texten); }, 4200);
   }
 
   function visaVarld(p: Varld) {
@@ -326,11 +318,11 @@ export function Spel() {
   }
 
   function belonaFlode(r: FlodeSvar) {
-    for (const t of r.texter) if (t) visaBanner(t, "ovr");
+    for (const t of r.texter) if (t) visaBanner(t, "ovr", "uppdrag_klart");
     if (r.stj > 0) {
       useMinne.getState().geStjarnor(r.stj);
       ljud.stjarna();
-      visaBanner(r.stj === 1 ? FIR.stjarnor.fa_en : fyll(FIR.stjarnor.fa, { n: r.stj }), "ovr");
+      visaBanner(r.stj === 1 ? FIR.stjarnor.fa_en : fyll(FIR.stjarnor.fa, { n: r.stj }), "ovr", "stjarnor");
     }
     if (r.hem && r.sparad) {
       setGavaTill(null);
@@ -345,11 +337,11 @@ export function Spel() {
 
   function visaMossa(h: Parameters<typeof mossaHand>[0]) {
     const r = mossaHand(h);
-    for (const t of r.texter) if (t) visaBanner(t, "ovr");
+    for (const t of r.texter) if (t) visaBanner(t, "ovr", "mossa_text");
     if (r.stj > 0) {
       useMinne.getState().geStjarnor(r.stj);
       ljud.stjarna();
-      visaBanner(fyll(MOSSA.beloning.text, { n: r.stj }), "ovr");
+      visaBanner(fyll(MOSSA.beloning.text, { n: r.stj }), "ovr", "mossa_beloning");
     }
   }
 
@@ -362,7 +354,7 @@ export function Spel() {
       geHjarta(d.uid);
       const tack = HUMOR.tack_text[Math.floor(Math.random() * HUMOR.tack_text.length)] ?? HUMOR.tack_text[0]!;
       const p = brygga.platser().find((x) => x.uid === d.uid);
-      visaBubbla(tack, p?.x ?? 0.5, p?.topp ?? p?.y ?? 0.3, true, true);
+      visaBubbla(tack, p?.x ?? 0.5, p?.topp ?? p?.y ?? 0.3, true, true, false, "bjud");
     }
   }
 
@@ -374,12 +366,12 @@ export function Spel() {
     vantarRef.current = null;
     omradeRef.current = id;
     setOmrade(id);
-    for (const t of startaForPlats(id)) visaBanner(t, "ovr");
+    for (const t of startaForPlats(id)) visaBanner(t, "ovr", "tapp");
     if (id === "grottan") {
       const inne = omradeMed("grottan")?.inne;
       const f = foljeNu();
-      if (inne && f && harTagg(f, "lysa")) visaBanner(fyll(inne.klart, { djur: f.formel }), "ovr");
-      else if (inne) visaBanner(inne.text, "ovr");
+      if (inne && f && harTagg(f, "lysa")) visaBanner(fyll(inne.klart, { djur: f.formel }), "ovr", "tapp");
+      else if (inne) visaBanner(inne.text, "ovr", "tapp");
     }
     synkaAv(id);
     const folje = foljeNu();
@@ -415,12 +407,12 @@ export function Spel() {
     }
     if (s.typ === "bro") {
       oppnaBro(id);
-      visaBanner(s.text, "ovr");
+      visaBanner(s.text, "ovr", "tapp");
       gaIn(id);
       return;
     }
     if (s.typ === "inga") {
-      visaBanner(s.text, "ovr");
+      visaBanner(s.text, "ovr", "tapp");
       setKartaText(s.text);
       vantarRef.current = { slag: "oppna", omrade: id, taggar: s.taggar };
       setLage("skriv");
@@ -435,7 +427,7 @@ export function Spel() {
     valjKor.current = (d) => {
       setValj(null);
       vantarRef.current = null;
-      visaBanner(oppnaMed(id, d), "ovr");
+      visaBanner(oppnaMed(id, d), "ovr", "tapp");
       gaIn(id);
     };
     setValj({ rubrik: fyll(OMR.karta.valj_djur, { kan }), eller: s.eller, djur: s.djur, nyckel: id });
@@ -448,7 +440,7 @@ export function Spel() {
       return;
     }
     if (s.typ === "inga") {
-      visaBanner(s.text, "ovr");
+      visaBanner(s.text, "ovr", "tapp");
       vantarRef.current = { slag: "del", taggar: s.taggar };
       setLage("skriv");
       setHand(true);
@@ -462,7 +454,7 @@ export function Spel() {
     valjKor.current = (d) => {
       setValj(null);
       vantarRef.current = null;
-      visaBanner(oppnaOn(d), "ovr");
+      visaBanner(oppnaOn(d), "ovr", "tapp");
       gaIn("on");
     };
     setValj({ rubrik: fyll(OMR.karta.valj_djur, { kan }), eller: s.eller, djur: s.djur, nyckel: "on" });
@@ -476,7 +468,7 @@ export function Spel() {
     const kan = OMR.karta.kan_text[tagg] ?? tagg;
     if (!lista.length) {
       const text = fyll(OMR.karta.inget_djur, { kan });
-      visaBanner(text, "ovr");
+      visaBanner(text, "ovr", "tapp");
       vantarRef.current = { slag: "skicka", uppdrag: uppId, taggar: [tagg] };
       setLage("skriv");
       setHand(true);
@@ -500,10 +492,10 @@ export function Spel() {
       const o = omradeRef.current;
       if (o === "grottan") {
         const inne = omradeMed("grottan")?.inne;
-        if (inne && harTagg(d, "lysa")) visaBanner(fyll(inne.klart, { djur: d.formel }), "ovr");
+        if (inne && harTagg(d, "lysa")) visaBanner(fyll(inne.klart, { djur: d.formel }), "ovr", "tapp");
       }
       if (o) synkaAv(o);
-      visaBanner(fyll(TEXTER_AV.foljeslagare.foljer, { djur: d.formel }), "ovr");
+      visaBanner(fyll(TEXTER_AV.foljeslagare.foljer, { djur: d.formel }), "ovr", "tapp");
     };
     setValj({ rubrik: TEXTER_AV.foljeslagare.byt, djur, nyckel: "byt" });
   }
@@ -511,7 +503,7 @@ export function Spel() {
   function kanskeForstaGard() {
     if (!useMinne.getState().forstaGard) return;
     useMinne.getState().sattForsta();
-    for (const rad of TEXTER.forsta_besok) visaBanner(rad, "ovr");
+    for (const rad of TEXTER.forsta_besok) visaBanner(rad, "ovr", "tapp");
   }
 
   function oppnaBygglage() {
@@ -601,12 +593,12 @@ export function Spel() {
       s.markeraSida(sida.id);
       s.geStjarnor(FIR.sida_klar.stjarnor);
       ljud.stjarna();
-      visaBanner(fyll(FIR.sida_klar.text, { sida: sida.titel }), "ovr");
+      visaBanner(fyll(FIR.sida_klar.text, { sida: sida.titel }), "ovr", "sida_klar");
     }
     const fritt = ordLista().filter((o) => o.niva === "fritt");
     if (fritt.length && fritt.every((o) => useMinne.getState().funna[o.id]) && !useMinne.getState().sidaKlar.includes("bok")) {
       useMinne.getState().markeraSida("bok");
-      visaBanner(FIR.bok_klar.text, "ovr");
+      visaBanner(FIR.bok_klar.text, "ovr", "sida_klar");
     }
   }
 
@@ -619,20 +611,20 @@ export function Spel() {
     let stj = 0;
     if (nyaGuld.length) {
       stj += nyaGuld.length * FIR.guldord.stjarnor;
-      visaBanner(fyll(FIR.guldord.text[0]!, { ord: ordVis(nyaGuld[0]!) }), "ovr");
+      visaBanner(fyll(FIR.guldord.text[0]!, { ord: ordVis(nyaGuld[0]!) }), "ovr", "guldord");
       ljud.guld();
       if (glitterUid) brygga.glitter(glitterUid);
       visaMossa({ guld: nyaGuld.length });
     }
     if (nyaHemliga.length) {
       stj += nyaHemliga.length * FIR.hemligt_ord.stjarnor;
-      visaBanner(fyll(FIR.hemligt_ord.text[0]!, { ord: ordVis(nyaHemliga[0]!) }), "ovr");
+      visaBanner(fyll(FIR.hemligt_ord.text[0]!, { ord: ordVis(nyaHemliga[0]!) }), "ovr", "hemligt_ord");
       visaMossa({ hemligt: nyaHemliga.length });
     }
     if (stj > 0) {
       useMinne.getState().geStjarnor(stj);
       ljud.stjarna();
-      visaBanner(stj === 1 ? FIR.stjarnor.fa_en : fyll(FIR.stjarnor.fa, { n: stj }), "ovr");
+      visaBanner(stj === 1 ? FIR.stjarnor.fa_en : fyll(FIR.stjarnor.fa, { n: stj }), "ovr", "stjarnor");
     }
     kollaSidor();
   }
@@ -650,8 +642,8 @@ export function Spel() {
     ljud.stjarna();
     brygga.glad(uid);
     const p = brygga.platser().find((q) => q.uid === uid);
-    visaBubbla(tack, p?.x ?? x, p?.topp ?? p?.y ?? y, false, true);
-    visaBanner(stj === 1 ? FIR.stjarnor.fa_en : fyll(FIR.stjarnor.fa, { n: stj }), "ovr");
+    visaBubbla(tack, p?.x ?? x, p?.topp ?? p?.y ?? y, false, true, false, "uppfyll_tack");
+    visaBanner(stj === 1 ? FIR.stjarnor.fa_en : fyll(FIR.stjarnor.fa, { n: stj }), "ovr", "stjarnor");
     visaMossa({ onskan: 1 });
   }
 
@@ -665,7 +657,7 @@ export function Spel() {
   }
 
   function hanteraBygg(utfall: Extract<ReturnType<typeof tolkaBygg>, { typ: "bygge" }>) {
-    useMinne.getState().sparaOkanda(utfall.okanda);
+    useMinne.getState().sparaOkanda(utfall.okanda); rostKo.handling();
     const agda = useMinne.getState().byggSidor;
     const las = utfall.byggen.map((b) => lastBygge(b, agda)).filter((x) => x != null);
     if (las.length) {
@@ -673,8 +665,8 @@ export function Spel() {
       const mall = BYGGSIDOR.last_ord.text[0] ?? "";
       const texten = fyll(mall, { ord: x.ord, sida: x.titel, n: x.pris });
       setByggPuff(texten);
-      visaBubbla(texten, 0.5, 0.55, false, true, true);
-      visaBanner(texten, "ovr");
+      visaBubbla(texten, 0.5, 0.55, false, true, true, null);
+      visaBanner(texten, "ovr", "tapp");
       useMinne.getState().sparaSnart(x.sidaId, x.ord);
       setBokOpp(true);
       return;
@@ -683,7 +675,7 @@ export function Spel() {
     const behov = om ? Math.max(0, utfall.byggen.length - 1) : utfall.byggen.length;
     const lediga = BYGG.max_pa_garden - useMinne.getState().garden.length;
     if (behov > lediga) {
-      visaBanner(TEXTER.lada.full, "ovr");
+      visaBanner(TEXTER.lada.full, "ovr", "tapp");
       return;
     }
     visaPlatsRen("gard");
@@ -720,9 +712,9 @@ export function Spel() {
         if (ons.krav.hem_for_djuret && djur && hem) {
           const res = useMinne.getState().flyttaIn(djur.uid, hem.uid);
           ok = res === "ok";
-          if (res === "ok") visaBanner(fyll(TEXTER.bo.flyttar_in[0]!, { djur: djur.formel, hem: bestamdHem(hem) }), "ovr");
-          else if (res === "full") visaBanner(TEXTER.bo.full, "ovr");
-          else visaBanner(fyll(TEXTER.bo.passar_inte, { djur: djur.formel }), "ovr");
+          if (res === "ok") visaBanner(fyll(TEXTER.bo.flyttar_in[0]!, { djur: djur.formel, hem: bestamdHem(hem) }), "ovr", "tapp");
+          else if (res === "full") visaBanner(TEXTER.bo.full, "ovr", "tapp");
+          else visaBanner(fyll(TEXTER.bo.passar_inte, { djur: djur.formel }), "ovr", "tapp");
         }
         if (ok && djur) uppfyll(aktiv, ons.tack, ons.stjarnor, djur.uid, hem?.x ?? 0.5, hem?.y ?? 0.4);
       }
@@ -749,7 +741,7 @@ export function Spel() {
       const u = tolka(fras, { kalla: opt.hand ? "skriv" : "kort", inteGuld: opt.inteGuld });
       if (u.typ === "sparr") {
         rensaSkriv();
-        visaBanner(u.text, "sparr");
+        visaBanner(u.text, "sparr", "sparr");
         ljud.puff();
         return;
       }
@@ -761,7 +753,7 @@ export function Spel() {
       if (u.typ !== "skapad") {
         if (u.typ === "behover_djur") {
           useMinne.getState().sparaOkanda(u.okanda);
-          for (const m of u.meddelanden) visaBanner(m, "okand");
+          for (const m of u.meddelanden) visaBanner(m, "okand", "okand_inget");
         }
         return;
       }
@@ -771,7 +763,7 @@ export function Spel() {
       else {
         ljud.nastan();
         const p = brygga.platser().find((x) => x.uid === aktiv.uid);
-        visaBubbla(nastanRad(nastanRef.current), p?.x ?? 0.5, p?.topp ?? 0.3, false, true);
+        visaBubbla(nastanRad(nastanRef.current), p?.x ?? 0.5, p?.topp ?? 0.3, false, true, false, "nastan");
         nastanRef.current += 1;
       }
       rensaSkriv();
@@ -781,7 +773,7 @@ export function Spel() {
     const utfall: Utfall = tolkaMedReserv(raw, { kalla: opt.hand ? "skriv" : "kort", inteGuld: opt.inteGuld });
     if (utfall.typ === "sparr") {
       rensaSkriv();
-      visaBanner(utfall.text, "sparr");
+      visaBanner(utfall.text, "sparr", "sparr");
       ljud.puff();
       return;
     }
@@ -792,9 +784,9 @@ export function Spel() {
     }
     if (utfall.typ === "behover_djur") {
       const kan = kanInteRita(utfall, raw); // B6.1 (F): känt ord utan modell → synlig banderoll, boken stängs
-      if (kan) { visaBanner(kan, "okand", KAN_INTE_RITA_MS); ljud.puff(); setBehover(null); setForslag(null); rensaSkriv(); setBokOpp(false); return; } // B6.3 (H): ≥ 5 s eller tryck
+      if (kan) { visaBanner(kan, "okand", "okand_inget", KAN_INTE_RITA_MS); ljud.puff(); setBehover(null); setForslag(null); rensaSkriv(); setBokOpp(false); return; } // B6.3 (H): ≥ 5 s eller tryck
       useMinne.getState().sparaOkanda(utfall.okanda);
-      for (const m of utfall.meddelanden) visaBanner(m, "okand");
+      for (const m of utfall.meddelanden) visaBanner(m, "okand", "okand_inget");
       if (utfall.meddelanden.length) ljud.puff();
       setBehover({ text: utfall.text, djur: utfall.djur });
       setForslag(null);
@@ -807,16 +799,17 @@ export function Spel() {
     if (utfall.guld.length) utfall.varelse.glans = true;
     const { nya, somnade } = useMinne.getState().laggPaAng(utfall.varelse, utfall.antal);
     for (const s of somnade) brygga.taBort(s.uid);
-    for (const s of somnade) visaBanner(replik(s, "sover"), "sov");
+    for (const s of somnade) visaBanner(replik(s, "sover"), "sov", "sov");
     for (const n of nya) {
       brygga.skapa(n, n === nya[nya.length - 1]);
       const ny = komIhagDjur(n);
       if (ny) {
         const mall = ALBUM.sallsynthet.ny_niva_text[Math.floor(Math.random() * ALBUM.sallsynthet.ny_niva_text.length)] ?? ALBUM.sallsynthet.ny_niva_text[0]!;
-        visaBanner(fyll(mall, { niva: ny }), "ovr");
+        visaBanner(fyll(mall, { niva: ny }), "ovr", "ny_niva");
       }
     }
     const sista = nya[nya.length - 1];
+    if (sista && !introRef.current) rostKo.anmal({ text: replik(utfall.varelse, "hej"), kalla: "hej" });
     if (sista) {
       visaMossa({
         taggar: taggarFor(utfall.varelse),
@@ -827,8 +820,8 @@ export function Spel() {
     }
     bengtsson.prova(raw); // först, så Bengtssons rad hamnar före de vanliga bannrarna i kön
     belona(utfall, utfall.guld.length && opt.hand ? sista?.uid : undefined, opt.hand);
-    for (const m of utfall.meddelanden) visaBanner(m, "okand");
-    for (const o of utfall.varelse.overraskningar) visaBanner(o.text, "ovr");
+    for (const m of utfall.meddelanden) visaBanner(m, "okand", "okand_ordbit");
+    for (const o of utfall.varelse.overraskningar) visaBanner(o.text, "ovr", "overraskning");
     ljud.puff();
     if (sista) {
       const visa = (kvar: number) => {
@@ -839,14 +832,14 @@ export function Spel() {
         }
         const sida = (p?.x ?? 0.5) < 0.5 ? 0.62 : 0.38;
         const yy = Math.max(0.5, Math.min(0.62, p?.topp ?? 0.5));
-        visaBubbla(replik(utfall.varelse, "hej"), sida, yy, false, true, true);
+        visaBubbla(replik(utfall.varelse, "hej"), sida, yy, false, true, true, null);
         brygga.glad(sista.uid);
         brygga.glitter(sista.uid);
         if (utfall.varelse.formagor.length) {
           const uid = sista.uid;
           window.setTimeout(() => {
             if (!useMinne.getState().ang.some((a) => a.uid === uid) && !useMinne.getState().hemma.some((h) => h.spec.uid === uid)) return;
-            visaBubbla(replik(utfall.varelse, "tryck"), sida, yy, false, true, true);
+            visaBubbla(replik(utfall.varelse, "tryck"), sida, yy, false, true, true, "tryck");
           }, 900);
         }
       };
@@ -863,10 +856,10 @@ export function Spel() {
     if (vant && sista && passarDjur(sista, vant.taggar)) {
       vantarRef.current = null;
       if (vant.slag === "oppna") {
-        visaBanner(oppnaMed(vant.omrade, sista), "ovr");
+        visaBanner(oppnaMed(vant.omrade, sista), "ovr", "oppnas");
         gaIn(vant.omrade);
       } else if (vant.slag === "del") {
-        visaBanner(oppnaOn(sista), "ovr");
+        visaBanner(oppnaOn(sista), "ovr", "oppnas");
         gaIn("on");
       } else {
         const r = skickaDjur(vant.uppdrag, sista);
@@ -880,6 +873,7 @@ export function Spel() {
     ljud.lasOpp();
     const trim = raw.trim();
     if (!trim) return;
+    rostKo.handling();
     if (platsUi.forsokSkriv(trim)) { rensaSkriv(); setBokOpp(false); return; }
     noteraSkriv(trim);
     if (gavaRef.current?.startsWith("egen:")) {
@@ -887,7 +881,7 @@ export function Spel() {
       const u = tolkaGava(trim);
       if (u.typ === "tom") return;
       if (u.typ === "djur") {
-        visaBanner(TEXTER_AV.gavoruta.djur_i_rutan, "ovr");
+        visaBanner(TEXTER_AV.gavoruta.djur_i_rutan, "ovr", "tapp");
         setGavaTill(null); gavaRef.current = null;
         rensaSkriv();
         return;
@@ -899,7 +893,7 @@ export function Spel() {
       }
       if (u.typ === "okant") {
         useMinne.getState().sparaOkanda(u.okanda);
-        visaBanner(TEXTER_AV.gavoruta.okant, "okand");
+        visaBanner(TEXTER_AV.gavoruta.okant, "okand", "okand_inget");
         rensaSkriv();
         return;
       }
@@ -958,9 +952,7 @@ export function Spel() {
     utfor(fras, { hand: true });
   }
 
-  function vaknaNu() {
-    utfor(textRef.current, { hand: handRef.current });
-  }
+  function vaknaNu() { rostKo.handling(); utfor(textRef.current, { hand: handRef.current }); }
 
   function skrivTecken(bit: string) {
     setBokOpp(true);
@@ -978,7 +970,7 @@ export function Spel() {
         setForslag(null);
         setBehover(null);
         setText(next);
-        visaBanner("Det ordet kan Trollpennan inte.", "sparr");
+        visaBanner("Det ordet kan Trollpennan inte.", "sparr", "sparr");
         ljud.puff();
         return;
       }
@@ -1033,6 +1025,7 @@ export function Spel() {
 
   function valjForslag(kortet: ForslagKort) {
     if (!forslag) return;
+    rostKo.handling();
     const ny = bytOrd(textRef.current, forslag.token, kortet.visa);
     textRef.current = ny;
     setText(ny);
@@ -1050,7 +1043,7 @@ export function Spel() {
     textRef.current = ny;
     setText(ny);
     setForslag(null);
-    visaBanner("Det ordet kan Trollpennan inte än. Jag sparar det!", "okand");
+    visaBanner("Det ordet kan Trollpennan inte än. Jag sparar det!", "okand", "okand_inget");
     ljud.puff();
   }
 
@@ -1077,7 +1070,7 @@ export function Spel() {
   }
 
   function fyllExempel(ex: string) {
-    ljud.lasOpp();
+    ljud.lasOpp(); rostKo.handling();
     ljud.pling();
     textRef.current = ex;
     setText(ex);
@@ -1107,7 +1100,7 @@ export function Spel() {
   }
 
   function forsokKop(slag: "djur" | "bygg", id: string, titel: string, pris: number) {
-    setKopRad(null);
+    setKopRad(null); rostKo.handling();
     if (useMinne.getState().stjarnor < pris) {
       setKopRad(fyll(FIR.stjarnor.for_fa, { n: pris - useMinne.getState().stjarnor }));
       setKop(null);
@@ -1121,11 +1114,11 @@ export function Spel() {
     const ok = kop.slag === "djur" ? useMinne.getState().kopSida(kop.id, kop.pris) : useMinne.getState().kopBygg(kop.id, kop.pris);
     if (ok) {
       ljud.sida();
-      visaBanner(fyll(FIR.ny_sida.text, { sida: kop.titel }), "ovr");
+      visaBanner(fyll(FIR.ny_sida.text, { sida: kop.titel }), "ovr", "tapp");
       if (kop.slag === "bygg") setByggSidaId(kop.id);
       if (kop.slag === "djur") {
         const sida = SIDOR.sidor.find((s) => s.id === kop.id);
-        if (sida) visaBanner(sida.oppnas, "ovr");
+        if (sida) visaBanner(sida.oppnas, "ovr", "tapp");
       }
     }
     setKop(null);
@@ -1145,9 +1138,9 @@ export function Spel() {
       setMeny(null);
       return;
     }
-    if (res === "full") visaBanner(TEXTER.bo.full, "ovr");
-    else if (res === "passar") visaBanner(fyll(TEXTER.bo.passar_inte, { djur: djur.formel }), "ovr");
-    else visaBanner(TEXTER.bo.ingen, "ovr");
+    if (res === "full") visaBanner(TEXTER.bo.full, "ovr", "tapp");
+    else if (res === "passar") visaBanner(fyll(TEXTER.bo.passar_inte, { djur: djur.formel }), "ovr", "tapp");
+    else visaBanner(TEXTER.bo.ingen, "ovr", "tapp");
   }
 
   function borjaOm() {
@@ -1373,11 +1366,11 @@ export function Spel() {
       if (dt > 0 && fas !== senFas) {
         senFas = fas;
         const rader = fas === "kvall" ? DYGN.texter.kvall_borjar : DYGN.texter.morgon;
-        for (const rad of rader) visaBanner(rad, "ovr");
+        for (const rad of rader) visaBanner(rad, "ovr", "dygn");
       }
     }, 200);
     return () => window.clearInterval(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- B6.1: dygnsklockan monteras en gång; visaBanner köar via bannerKo-ref och set-funktioner
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- B6.1: dygnsklockan monteras en gång; visaBanner köar via rostKo och set-funktioner
   }, []);
 
   useEffect(() => {
@@ -1503,8 +1496,7 @@ export function Spel() {
         setForalder(false);
         setBubblor([]);
         setBanners([]);
-        bannerKo.current = [];
-        bannerSyns.current = false;
+        rostKo.tryck();
         setMeny(null);
         setBoUid(null);
         setOnskaOpp(false);
@@ -1629,7 +1621,7 @@ export function Spel() {
     if (h.typ === "skylt") {
       const r = lasSkylt(h.id);
       setSkylt(r);
-      if (r.nytt) visaBanner(r.nytt, "ovr");
+      if (r.nytt) visaBanner(r.nytt, "ovr", "tapp");
       if (omradeRef.current) synkaAv(omradeRef.current);
       return;
     }
@@ -1759,12 +1751,14 @@ export function Spel() {
             sagaNu.aktiv = false;
             stallKanin();
             useMinne.getState().sattIntro();
+            introRef.current = false; rostKo.oppna();
             setIntro(false);
           }}
           onIde={(ex) => {
             vackIde(ex);
             sagaNu.aktiv = false;
             useMinne.getState().sattIntro();
+            introRef.current = false; rostKo.oppna();
             setIntro(false);
           }}
         />
