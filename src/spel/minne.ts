@@ -7,7 +7,7 @@ import type { SparatBygge } from "./bygge.ts";
 import { BYGG } from "../tolk/byggtolk.ts";
 import { START_PLATS, TAK_PER_PLATS, laggMedTak, mattUr, platsMed, upplast } from "./platser.ts";
 import { hamtaFranStall, flyttaTillStall, type StallUt } from "./stall.ts";
-import { byggnadsord, iStallet, redanUtan, somnaEn } from "./placering.ts";
+import { somnaEn } from "./placering.ts";
 
 
 export type Lage = "kort" | "skriv";
@@ -346,23 +346,14 @@ export const useMinne = create<Minne>((set, get) => ({
       const r = laggMedTak(get().platsSkapelser[plats] ?? [], get().sovande, nyaP);
       // P3a-fix (beslut B): högst en somnar per ord – den äldsta utan ledig ruta, ur den nyas budget (aldrig den nya)
       const nyaU = new Set(nyaP.map((n) => n.uid));
-      const takSov = r.somnade.length > 0; // taket (TAK_PER_PLATS) har redan sövt en för det här ordet
-      for (const u of redanUtan(r.lista, nyaU, platsMed(plats))) {
-        r.lista = r.lista.filter((d) => d.uid !== u.uid);
-        r.sovande = [...r.sovande, u].slice(-40);
-        r.somnade.push(u);
-      }
-      const old = takSov ? null : somnaEn(r.lista, nyaU, platsMed(plats));
-      if (old) {
-        r.lista = r.lista.filter((d) => d.uid !== old.uid);
-        r.sovande = [...r.sovande, old].slice(-40);
-        r.somnade.push(old);
-      }
-      // står någon ändå kvar utan synlig ruta somnar den hellre än står osynlig – inte i Doodles ordlistor
-      if (old && !byggnadsord(r.lista, nyaU, platsMed(plats))) for (const u of iStallet(r.lista, platsMed(plats)).filter((d) => !nyaU.has(d.uid))) {
-        r.lista = r.lista.filter((d) => d.uid !== u.uid);
-        r.sovande = [...r.sovande, u].slice(-40);
-        r.somnade.push(u);
+      // Högst en väg söver per ord. Har taket redan sövt en, sover ingen mer.
+      if (r.somnade.length === 0) {
+        const old = somnaEn(r.lista, nyaU, platsMed(plats));
+        if (old) {
+          r.lista = r.lista.filter((d) => d.uid !== old.uid);
+          r.sovande = [...r.sovande, old].slice(-40);
+          r.somnade.push(old);
+        }
       }
       set({ platsSkapelser: { ...get().platsSkapelser, [plats]: r.lista }, sovande: r.sovande });
       return { nya: nyaP, somnade: r.somnade };
@@ -384,22 +375,14 @@ export const useMinne = create<Minne>((set, get) => ({
     }
     // P3a-fix: samma regel på ängen
     const nyaU = new Set(nya.map((d) => d.uid));
-    const takSov = somnade.length > 0;
-    for (const u of redanUtan(ang, nyaU, platsMed(START_PLATS))) {
-      ang = ang.filter((d) => d.uid !== u.uid);
-      sovande = [...sovande, u].slice(-40);
-      somnade.push(u);
-    }
-    const old = takSov ? null : somnaEn(ang, nyaU, platsMed(START_PLATS));
-    if (old) {
-      ang = ang.filter((d) => d.uid !== old.uid);
-      sovande = [...sovande, old].slice(-40);
-      somnade.push(old);
-    }
-    if (old && !byggnadsord(ang, nyaU, platsMed(START_PLATS))) for (const u of iStallet(ang, platsMed(START_PLATS)).filter((d) => !nyaU.has(d.uid))) {
-      ang = ang.filter((d) => d.uid !== u.uid);
-      sovande = [...sovande, u].slice(-40);
-      somnade.push(u);
+    // Högst en väg söver per ord. Har taket redan sövt en, sover ingen mer.
+    if (somnade.length === 0) {
+      const old = somnaEn(ang, nyaU, platsMed(START_PLATS));
+      if (old) {
+        ang = ang.filter((d) => d.uid !== old.uid);
+        sovande = [...sovande, old].slice(-40);
+        somnade.push(old);
+      }
     }
     set({ ang, sovande });
     return { nya, somnade };

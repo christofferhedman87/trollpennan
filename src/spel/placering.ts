@@ -281,6 +281,22 @@ export function placera(alla: readonly Sparad[], plats?: Plats): Map<string, Lag
         if (n === 0) break;
       }
     }
+    // Någon saknar ruta: äldre, och sist den nya, ritas i reserv_krymp tills ingen saknar ruta.
+    // Taket kan redan ha sövt den enda per ord – då måste noll vara vakna utan ruta.
+    if (n > 0) {
+      const lock = [PLACERING.krymp_aldre_min ?? 0.4, ...(PLACERING.reserv_krymp ?? [])];
+      const nyaK = [undefined, ...lock.filter((k) => k <= (PLACERING.krymp_min ?? 0.6) + 1e-9)];
+      for (const cap of lock) {
+        for (const k of nyaK) {
+          const l = placeraNiva(alla, plats, minst, true, k, undefined, cap);
+          if (ny && l.get(ny.uid)?.stall) continue;
+          const nl = utan(l);
+          if (nl < n) [basta, n] = [l, nl];
+          if (n === 0) break;
+        }
+        if (n === 0) break;
+      }
+    }
     return basta;
   }
   for (const v of steg) {
@@ -293,7 +309,7 @@ export function placera(alla: readonly Sparad[], plats?: Plats): Map<string, Lag
 /** Underlaget beror bara på kroppen, storleksordet, rollen, platsen och rutan: räknas en gång per ruta och sparas. */
 const underMinne = new Map<string, Map<number, boolean>>();
 
-function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel: number, krympAldre: boolean, nyStorlek?: number, nyZmax?: number): Map<string, Lage> {
+function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel: number, krympAldre: boolean, nyStorlek?: number, nyZmax?: number, aldreTak?: number): Map<string, Lage> {
   const regel = regelFor(plats);
   const P = PLACERING;
   // P3a-fix: regeln räknar med en säkerhetsmarginal mot skärmprovet (rutor och 6 px-celler är grövre än pixlarna;
@@ -313,7 +329,7 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
   const ordning = [...efterAlder.slice(0, 1), ...efterAlder.slice(1).filter(arBak), ...efterAlder.slice(1).filter((d) => !arBak(d))];
   const ut = new Map<string, Lage>();
   const steg = P.krymp_steg ?? 0.1;
-  let tak = 1; // äldre ritas aldrig större än en nyare (krympningen följer åldern, som perspektiv)
+  let tak = aldreTak ?? 1; // äldre ritas aldrig större än en nyare (krympningen följer åldern, som perspektiv)
   ordning.forEach((d0, nr) => {
     // P3a-fix (beslut C): den nya står alltid i bild – finns ingen ruta på vattnet (grottans lilla damm) eller i luften
     // står den på marken (Doodle 21 okt: sälen fick stallplatsen längst bak, z −6,5, utan banner)
@@ -458,8 +474,13 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
     // storlekarna att pröva: full (eller som den närmast nyare), sedan i steg ned till krymp_aldre_min
     const storlekar: number[] = [];
     if (nr === 0 && nyStorlek) storlekar.push(nyStorlek);
-    else if (nr > 0 && krympAldre) for (let k = arBak(d0) ? 1 : tak; k >= (P.krymp_aldre_min ?? 1) - 1e-9; k -= steg) storlekar.push(Math.round(k * 100) / 100);
-    else storlekar.push(1);
+    else if (nr > 0 && krympAldre) {
+      const golvK = P.krymp_aldre_min ?? 1;
+      const start = arBak(d0) ? 1 : tak;
+      if (start >= golvK - 1e-9) for (let k = start; k >= golvK - 1e-9; k -= steg) storlekar.push(Math.round(k * 100) / 100);
+      else if (Number.isFinite(start)) storlekar.push(Math.round(start * 100) / 100);
+    } else storlekar.push(1);
+    if (!storlekar.length) storlekar.push(1);
     let fynd: Fynd | null = null;
     let krymp = 1;
     let minsta: { fri: Fynd | null; stall: Fynd | null } = { fri: null, stall: null };
@@ -505,7 +526,7 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
     }
     // P3a-fix (beslut B): ryms den inte ens minst och ingen ur budgeten kan somna, får den äldre bli ännu mindre
     // (reserv_krymp) – golvet (synlig_golv) gäller fortfarande, så den syns
-    for (const k of nr > 0 && krympAldre && !fynd && alla.length <= RESERV_MAX ? (P.reserv_krymp ?? []) : []) {
+    for (const k of nr > 0 && krympAldre && !fynd && alla.length <= RESERV_MAX ? (P.reserv_krymp ?? []).filter((k) => k <= tak + 1e-9) : []) {
       const f = sok(skalad(k), false).fri;
       if (f) {
         [fynd, krymp] = [f, k];
@@ -532,7 +553,11 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
     }
     const lage = krymp !== 1 ? { ...fynd.lage, krymp } : fynd.lage;
     ut.set(d0.uid, lage);
-    if (nr > 0 && !arBak(d0)) tak = Math.min(tak, krymp);
+    if (nr > 0 && !arBak(d0) && Number.isFinite(krymp)) {
+      // reserv_krymp hos en nyare får inte dra de äldre under krymp_aldre_min: de prövar golvet först
+      const golv = aldreTak !== undefined ? (P.krymp_aldre_min ?? krymp) : 0;
+      tak = Math.min(tak, Math.max(krymp, golv));
+    }
     for (const s of satta)
       if (s.r !== TOM && (framfor({ z: lage.z }, s) || Math.abs(lage.z - s.z) <= 0.05) && !(s.plan && roll === "vatten")) {
         s.tackt += varst(lage.r, fynd.k ?? lage.r, s.r, s.k, false);
