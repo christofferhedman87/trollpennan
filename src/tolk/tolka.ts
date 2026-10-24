@@ -21,6 +21,7 @@ import {
   dubbelSak,
 } from "./lexikon.ts";
 import attributJson from "../../data/attribut.json" with { type: "json" };
+import katJson from "../../data/kategori-ord.json" with { type: "json" };
 import { arSparrat } from "./sparr.ts";
 import type { Del, Forled, Ord, TolkaOpts, Utfall, Varelse } from "./typer.ts";
 
@@ -246,6 +247,13 @@ function delaMod(token: string): { key: string; del: Forled; ord: Ord; rest: str
 }
 
 const PARTICIP_SLUT: readonly string[] = attributJson.particip.slut;
+
+// Gamla prov kräver repliken för blixt (natur) och monster (person). Andra kända förled är tysta.
+const TALA_VIDARE = new Set(["natur", "person"]);
+const KAT_ORD = new Map<string, string>();
+for (const [k, lista] of Object.entries((katJson as { kategorier: Record<string, string[]> }).kategorier)) {
+  for (const w of lista) if (!KAT_ORD.has(w)) KAT_ORD.set(w, k);
+}
 
 function delaOrd(token: string): Sem | null {
   const suffix = langstaSuffix(token);
@@ -524,6 +532,8 @@ function laggTillbehor(b: Bygg, o: Ord) {
 function applyKomp(b: Bygg, k: Extract<Sem, { t: "komp" }>, mode: Mode, visaLed = true) {
   for (const bit of k.okanda) {
     if (arSparrat(bit)) return "sparr" as const;
+    // En förledsbit ("en" i enkatt, "mål" i målvakt) är inte barnets hela ord.
+    if (bit !== k.raw && forledKant(bit) && !TALA_VIDARE.has(KAT_ORD.get(bit) ?? "")) continue;
     b.okanda.push(bit);
     b.meddelanden.push(`Ordet ${bit} kan jag inte än. Jag har sparat det!`);
   }

@@ -1,5 +1,6 @@
 import { tolka } from "../../../src/tolk/tolka.ts";
 import { lasToken, langstaSuffix } from "../../../src/tolk/lexikon.ts";
+import { tolkaMedReserv } from "../../../src/tolk/reserv.ts";
 import { readFileSync, writeFileSync } from "node:fs";
 const kelly = JSON.parse(readFileSync("/workspace/arkitekt-mat/kelly.json","utf8")) as any[];
 const nouns = [...new Set(kelly.filter(k=>true).map(k=>String(k.gf).toLowerCase()).filter(w=>/^[a-zåäö]+$/.test(w)))];
@@ -18,10 +19,33 @@ function prova(lista: string, w: string) {
   n[lista+"Traff"]++;
   rows.push([lista+":"+(kelly.find(k=>String(k.gf).toLowerCase()===w)?.pos??"djur"), w, u.varelse.formel, del.join("+"), s.form].join("\t"));
 }
-for (const w of nouns) prova("kelly", w);
-for (const w of djur) prova("djur", w);
+const facit = readFileSync("facit-o1a.tsv", "utf8").trim().split("\n").slice(1).map((line) => {
+  const [lista, ord, , , facitKol, forvantat] = line.split("\t");
+  return { lista, ord: ord ?? "", facit: facitKol ?? "", forvantat: forvantat ?? "" };
+});
+const rattOrd = new Set(facit.filter((r) => r.facit === "ratt").map((r) => r.ord));
+const felDjur: Record<string, number> = { kelly: 0, djur: 0 };
+function raknaFelDjur(lista: string, w: string) {
+  if (lasToken(w) || rattOrd.has(w)) return;
+  const u = tolkaMedReserv(w);
+  if (u.typ !== "skapad" || u.varelse.kropp === "agg") return;
+  const s = langstaSuffix(w);
+  const franEfterled = s?.ord.del?.kropp ?? s?.ord.id;
+  if (!s || franEfterled !== u.varelse.kropp) return;
+  felDjur[lista] = (felDjur[lista] ?? 0) + 1;
+}
+for (const w of nouns) { prova("kelly", w); raknaFelDjur("kelly", w); }
+for (const w of djur) { prova("djur", w); raknaFelDjur("djur", w); }
+let rattBehallna = 0;
+for (const r of facit) {
+  if (r.facit !== "ratt") continue;
+  const u = tolkaMedReserv(r.ord);
+  if (u.typ === "skapad" && u.varelse.kropp === r.forvantat) rattBehallna++;
+}
 writeFileSync("suffixfel.tsv", rows.join("\n")+"\n");
 console.log(n);
+console.log("fel_djur", felDjur);
+console.log("ratt_behallna", rattBehallna, "av", facit.filter((r) => r.facit === "ratt").length);
 const bySuf: Record<string,number> = {};
 for (const r of rows.slice(1)) { const s=r.split("\t")[4]!; bySuf[s]=(bySuf[s]??0)+1; }
 console.log(Object.entries(bySuf).sort((a,b)=>b[1]-a[1]).slice(0,20));
