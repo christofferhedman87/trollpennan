@@ -814,6 +814,8 @@ function byggFran(sem: Sem[]): Bygg | "sparr" {
       if (sparr === "sparr") return "sparr";
       continue;
     }
+    // Blandning byggs i byggBlandning och når inte hit. Hoppa så resten är vanliga ord.
+    if (s.t === "blanda") continue;
     const o = s.o;
     if (o.klass === "djur") {
       if (!(sist && o.id === sist.o.id && s.form === sist.form)) markera(b, o.id, true);
