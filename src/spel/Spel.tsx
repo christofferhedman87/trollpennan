@@ -5,7 +5,7 @@ import { LagringsInfo } from "./LagringsInfo";
 import { useEffect, useRef } from "react";
 import { hemligaKvar, ordLista, tolka } from "@/tolk/tolka.ts";
 import { tolkaMedReserv } from "@/tolk/reserv.ts";
-import { aktivtSkrivUppdrag, onskaFarKomma } from "./uppdragsmotor.ts";
+import { onskaFarKomma } from "./uppdragsmotor.ts";
 import { noteraSaknade } from "@/tolk/saknade.ts";
 import type { ForslagKort, Ord, Utfall } from "@/tolk/typer.ts";
 import { BYGG, byggMedId, formelBygg, tolkaBygg } from "@/tolk/byggtolk.ts";
@@ -64,7 +64,6 @@ import type { Slot, Val, Varld } from "./ui/typer.ts";
 import { BYGGSIDOR, FIR, SIDOR, TEXTER } from "./ui/spelData.ts";
 import {
   arKopia,
-  bastaFlik,
   bestamdAv,
   bokstav,
   bytOrd,
@@ -94,6 +93,7 @@ import { useSpelTillstand } from "./styr/useSpelTillstand.ts";
 import { useBannrar } from "./styr/useBannrar.ts";
 import { useVarld } from "./styr/useVarld.ts";
 import { useAventyr } from "./styr/useAventyr.ts";
+import { useOnska } from "./styr/useOnska.ts";
 
 export function Spel() {
   useDialogFokus();
@@ -101,6 +101,7 @@ export function Spel() {
   const b = useBannrar({ t });
   const v = useVarld({ t, b });
   const a = useAventyr({ t, b, v });
+  const o = useOnska({ t, v });
   const {
     text, setText, lage, setLage, flik, setFlik, val, setVal, setHand, forslag, setForslag, behover,
     setBehover, bubblor, setBubblor, banners, setBanners, visKort, setVisKort, ordbok, setOrdbok,
@@ -120,30 +121,10 @@ export function Spel() {
   } = t;
   const { stangBanner, visaBanner, visaBubbla, visaMossa, bjud } = b;
   const {
-    lasMeny, visaVarld, synkaAv, oppnaKarta, kanskeForstaGard, oppnaBygglage, oppnaUppdrag,
-    visaPlatsRen, valjVarld,
+    lasMeny, visaVarld, synkaAv, oppnaKarta, oppnaBygglage, oppnaUppdrag, visaPlatsRen, valjVarld,
   } = v;
   const { belonaFlode, gaIn, tryckPlats, tryckOn, oppnaSkicka, bytFolje, bengtsson, platsUi } = a;
-  // R9D: när Bengtssons uppdrag startar tas en djurönskan bort, så att boken bara visar ett uppdrag och förslagen hör till det
-  const pagarId = aktivtSkrivUppdrag(uppdragSpar)?.id;
-  useEffect(() => {
-    if (!pagarId) return;
-    const o = useMinne.getState().onskan;
-    if (!o || o.kalla !== "djur") return;
-    useMinne.getState().sattOnska(null);
-    onskaSkrivRef.current = false;
-    setOnskaOpp(false);
-    setOnskaSyns(false);
-  }, [pagarId]);
-
-  function stangBok() {
-    const paGard = varldRef.current === "gard";
-    setBokOpp(false);
-    setPanel("spel");
-    setByggPuff(null);
-    stangOnska();
-    if (paGard) kanskeForstaGard();
-  }
+  const { stangBok, oppnaOnska } = o;
 
   function kollaSidor() {
     const s = useMinne.getState();
@@ -607,28 +588,6 @@ export function Spel() {
     ljud.puff();
   }
 
-  function oppnaOnska() {
-    const o = useMinne.getState().onskan;
-    if (!o) return;
-    setOnskaOpp(true);
-    setBokOpp(true);
-    setMenyOpp(false);
-    const ex = exempelFor(o);
-    const traff = kortForExempel(ex, ordLista());
-    if (o.kalla === "bygg") {
-      onskaSkrivRef.current = false;
-      oppnaBygglage();
-      setOnskaOpp(true);
-      return;
-    }
-    setPanel("spel");
-    onskaSkrivRef.current = o.typ === "ge";
-    if (traff.length) {
-      setLage("kort");
-      setFlik(bastaFlik(traff));
-    } else setLage("skriv");
-  }
-
   function fyllExempel(ex: string) {
     ljud.lasOpp(); rostKo.handling();
     ljud.pling();
@@ -652,11 +611,6 @@ export function Spel() {
     setBehover(null);
     setVal({});
     utfor(ex, { hand: true });
-  }
-
-  function stangOnska() {
-    onskaSkrivRef.current = false;
-    setOnskaOpp(false);
   }
 
   function forsokKop(slag: "djur" | "bygg", id: string, titel: string, pris: number) {
