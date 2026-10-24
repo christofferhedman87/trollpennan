@@ -1,0 +1,7 @@
+lika      ang: gränssnitt 0 px (brus 0), helbild 16057 px (brus 17040), dom och lista lika
+lika      skogen: gränssnitt 0 px (brus 0), helbild 0 px (brus 5584), dom och lista lika
+lika      sjon: gränssnitt 0 px (brus 0), helbild 0 px (brus 9580), dom och lista lika
+lika      grottan: gränssnitt 0 px (brus 0), helbild 321 px (brus 9957), dom och lista lika
+lika      gard: gränssnitt 0 px (brus 0), helbild 0 px (brus 0), dom och lista lika
+
+skarm-s1 GRÖN: alla fem platser lika

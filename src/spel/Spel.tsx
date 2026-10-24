@@ -1,96 +1,64 @@
 import { useDialogFokus } from "./dialogFokus";
-import { KAN_INTE_RITA_MS, kanInteRita } from "@/tolk/aterkoppling.ts";
 import upplevelse from "../../data/upplevelse.json";
 import { LagringsInfo } from "./LagringsInfo";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { hemligaKvar, ordLista, tolka } from "@/tolk/tolka.ts";
-import { tolkaMedReserv } from "@/tolk/reserv.ts";
-import { aktivtSkrivUppdrag, onskaFarKomma } from "./uppdragsmotor.ts";
-import { noteraSaknade } from "@/tolk/saknade.ts";
-import type { ForslagKort, Ord, Utfall } from "@/tolk/typer.ts";
-import { BYGG, byggMedId, formelBygg, tolkaBygg } from "@/tolk/byggtolk.ts";
-import { bestamdHem, franTolk, ledigPlats } from "./bygge.ts";
-import { brygga, type Handelse, type Sparad } from "./brygga.ts";
+import { onskaFarKomma } from "./uppdragsmotor.ts";
+import type { ForslagKort, Ord } from "@/tolk/typer.ts";
+import { byggMedId } from "@/tolk/byggtolk.ts";
+import { bestamdHem } from "./bygge.ts";
+import { brygga } from "./brygga.ts";
 import { fyll } from "./fyll.ts";
 import { Angen3D } from "./angen3d.tsx";
 import { Intro } from "./intro.tsx";
 import { sagaNu } from "./saga.ts";
 import { ljud } from "./ljud.ts";
 import { useMinne, type Lage, type OnskaSpar } from "./minne.ts";
-import { byggTraff, geTraff, kompisTraff, nastanRad, ONSK, ONSK_BYGG, tillaggFras, valjDjurOnska } from "./onska.ts";
-import { replik } from "./replik.ts";
-import { bannerKlocka } from "./rost.ts";
+import { ONSK, ONSK_BYGG, valjDjurOnska } from "./onska.ts";
 import * as rostKo from "./rostKo.ts";
-import { avBro, type AvHandelse } from "./avbro.ts";
+import { avBro } from "./avbro.ts";
 import { AlbumVy } from "./samling.tsx";
 import {
   ALBUM,
-  BYGG_ORD,
   DYGN,
-  HUMOR,
   MOSSA,
-  arSammansatt,
   framDygn,
-  geEgenGava,
-  geHjarta,
   hoppaDag,
   hoppaKvall,
   djurMedUid,
   gavoInbjudanVidTryck,
-  inbjudanAv,
   komIhagDjur,
   kvallStyrka,
-  mossaHand,
-  noteraSkriv,
   nyttLiv,
   oppnaMossaLista,
   poangAv,
   replikHumor,
   sparaFoto,
   synkaVisning,
-  taggarFor,
   tickLiv,
   ugglaRad,
   vackRad,
   visningsTid,
   fasAv,
 } from "./liv.ts";
-import { tolkaGava } from "@/tolk/gavotolk.ts";
-import { harTagg, omradeMed, OMR, TEXTER_AV, UPP, passarDjur } from "./aventyr.ts";
+import { TEXTER_AV } from "./aventyr.ts";
 import {
-  allaMina,
-  djurSomKan,
-  forsokOn,
-  forsokPlats,
-  foljeNu,
-  geGavor,
   lasSkylt,
-  oppnaBro,
-  oppnaMed,
-  oppnaOn,
   plockaSkatt,
-  skickaDjur,
-  startaForPlats,
-  type FlodeSvar,
-  type Vantar,
 } from "./avflode.ts";
-import type { Banner, Bubbla, Forslag, KopFraga, Slot, Val, Varld, VisKort } from "./ui/typer.ts";
+import type { Slot, Val, Varld } from "./ui/typer.ts";
 import { BYGGSIDOR, FIR, SIDOR, TEXTER } from "./ui/spelData.ts";
 import {
   arKopia,
-  bastaFlik,
   bestamdAv,
   bokstav,
   bytOrd,
   exempelFor,
   exportera,
   kortForExempel,
-  lastBygge,
   malTillDuk,
   meningAv,
-  nyId,
   onskaAnkare,
-  ordVis,
   taBortOrd,
   utanSparratSuffix,
 } from "./ui/hjalp.ts";
@@ -101,843 +69,49 @@ import { ForalderDialog } from "./ui/ForalderDialog.tsx";
 import { nattvaken } from "./entiteter.ts";
 import { Hud, HudBot, MenyPanel } from "./ui/Hud.tsx";
 import { NpcFigur } from "./ui/NpcFigur.tsx";
-import { useBengtsson } from "./ui/useBengtsson.ts";
-import { usePlats } from "./ui/usePlats.ts";
 import { START_PLATS } from "./platser.ts";
-import { platsText } from "./platsText.ts";
 import { PlatsResa } from "./ui/PlatsResa.tsx";
-import { useStallBanner } from "./ui/useStallBanner.ts";
 import { KartaLager, OmradeHud } from "./ui/KartaLager.tsx";
 import { OrdbokDialog } from "./ui/OrdbokDialog.tsx";
+import { useSpelTillstand } from "./styr/useSpelTillstand.ts";
+import { useBannrar } from "./styr/useBannrar.ts";
+import { useVarld } from "./styr/useVarld.ts";
+import { useAventyr } from "./styr/useAventyr.ts";
+import { useOnska } from "./styr/useOnska.ts";
+import { useBelona } from "./styr/useBelona.ts";
+import { useSkapa } from "./styr/useSkapa.ts";
 
 export function Spel() {
   useDialogFokus();
-  const [text, setText] = useState("");
-  const [lage, setLage] = useState<Lage>(() => useMinne.getState().startLage);
-  const [flik, setFlik] = useState<Slot>("djur");
-  const [val, setVal] = useState<Val>({});
-  const [hand, setHand] = useState(false);
-  const [forslag, setForslag] = useState<Forslag | null>(null);
-  const [behover, setBehover] = useState<{ text: string; djur: { id: string; visa: string }[] } | null>(null);
-  const [bubblor, setBubblor] = useState<Bubbla[]>([]);
-  const [banners, setBanners] = useState<Banner[]>([]);
-  const [visKort, setVisKort] = useState<VisKort>(null);
-  const [ordbok, setOrdbok] = useState(false);
-  const [foralder, setForalder] = useState(false);
-  const [natt, setNatt] = useState(0);
-  const [albumOpp, setAlbumOpp] = useState(false);
-  const [mossaOpp, setMossaOpp] = useState(false);
-  const [halsning, setHalsning] = useState("");
-  const [fotoMal, setFotoMal] = useState<{ uid: string; x: number; y: number } | null>(null);
-  const [haller, setHaller] = useState(false);
-  const [bokOpp, setBokOpp] = useState(false);
-  const [menyOpp, setMenyOpp] = useState(false);
-  const [intro, setIntro] = useState(true);
-  const [introNy, setIntroNy] = useState(0);
-  const [saker, setSaker] = useState(false);
-  const [menySaker, setMenySaker] = useState(false);
-  const [senare, setSenare] = useState(false);
-  const [varld, setVarld] = useState<Varld>("ang");
-  const [panel, setPanel] = useState<"spel" | "byggbok" | "uppdrag">("spel");
-  const [meny, setMeny] = useState<{ uid: string; x: number; y: number } | null>(null);
-  const [boUid, setBoUid] = useState<string | null>(null);
-  const [ladaOpp, setLadaOpp] = useState(false);
-  const [byggSidaId, setByggSidaId] = useState("start");
-  const [byggPuff, setByggPuff] = useState<string | null>(null);
-  const [sidOpp, setSidOpp] = useState<string | null>(null);
-  const [kop, setKop] = useState<KopFraga | null>(null);
-  const [stjarnInfo, setStjarnInfo] = useState(false);
-  const [kopRad, setKopRad] = useState<string | null>(null);
-  const [onskaOpp, setOnskaOpp] = useState(false);
-  const [onskaPos, setOnskaPos] = useState({ x: 0.5, y: 0.16 });
-  const [onskaSyns, setOnskaSyns] = useState(false);
-  const [foralderRad, setForalderRad] = useState<string | null>(null);
-  const [kopia, setKopia] = useState<unknown>(null);
-  const [kartaOpp, setKartaOpp] = useState(false);
-  const [forstaRad, setForstaRad] = useState<string[] | null>(null);
-  const [kartaText, setKartaText] = useState<string | null>(null);
-  const [omrade, setOmrade] = useState<string | null>(null);
-  const [gavaTill, setGavaTill] = useState<string | null>(null);
-  const [skylt, setSkylt] = useState<{ text: string; nytt: string | null } | null>(null);
-  const [valj, setValj] = useState<{ rubrik: string; eller?: string; djur: Sparad[]; nyckel: string } | null>(null);
-  const [uppFlik, setUppFlik] = useState<"pagar" | "klar">("pagar");
-  const host = useRef<HTMLDivElement>(null);
-  const angRef = useRef<HTMLElement>(null);
-  const filRef = useRef<HTMLInputElement>(null);
-  const textRef = useRef(text);
-  const handRef = useRef(hand);
-  const overlayRef = useRef(false);
-  const varldRef = useRef<Varld>("ang");
-  const onskaSkrivRef = useRef(false);
-  const omUidRef = useRef<string | null>(null);
-  const omradeRef = useRef<string | null>(null);
-  const gavaRef = useRef<string | null>(null);
-  const vantarRef = useRef<Vantar | null>(null);
-  const valjKor = useRef<(d: Sparad) => void>(() => undefined);
-  const avHand = useRef<(h: AvHandelse) => void>(() => undefined);
-  const nastanRef = useRef(0);
-  const paHandelse = useRef<(h: Handelse) => void>(() => undefined);
-  const visaOnskaRef = useRef<() => void>(() => undefined);
-  const bannerTimer = useRef<number | null>(null);
-  const introRef = useRef(!useMinne.getState().introSedd);
-  const introStart = useRef(true);
-  textRef.current = text;
-  handRef.current = hand;
-  useLayoutEffect(() => {
-    if (!useMinne.getState().introSedd) return;
-    introRef.current = false;
-    rostKo.oppna();
-    setIntro(false);
-  }, []);
-  useEffect(() => { if (introStart.current) introStart.current = false; else if (intro) rostKo.stang(); }, [intro]);
-  useEffect(() => rostKo.prenumerera((b) => {
-    if (bannerTimer.current) window.clearTimeout(bannerTimer.current);
-    bannerTimer.current = b ? bannerKlocka(b.text, b.ms ?? 2400, () => { bannerTimer.current = null; setBanners([]); }) : null;
-    setBanners(b ? [{ id: b.id, text: b.text, slag: b.slag, ...(b.ms ? { ms: b.ms, tryck: true } : {}) }] : []);
-  }), []);
-  gavaRef.current = gavaTill;
-  overlayRef.current = ordbok || foralder || !!visKort || !!kop || stjarnInfo || kopia != null || kartaOpp || !!omrade || !!valj || !!skylt || !!gavaTill || panel === "uppdrag" || albumOpp || mossaOpp;
-
-  const funna = useMinne((s) => s.funna);
-  const kortGang = useMinne((s) => s.kortGang);
-  const startLage = useMinne((s) => s.startLage);
-  const onskelista = useMinne((s) => s.onskelista);
-  const sovande = useMinne((s) => s.sovande);
-  const formler = useMinne((s) => s.formler);
-  const stjarnor = useMinne((s) => s.stjarnor);
-  const onskan = useMinne((s) => s.onskan);
-  const koptaSidor = useMinne((s) => s.koptaSidor);
-  const byggSidor = useMinne((s) => s.byggSidor);
-  const garden = useMinne((s) => s.garden);
-  const lada = useMinne((s) => s.lada);
-  const ang = useMinne((s) => s.ang);
-  const hemma = useMinne((s) => s.hemma);
-  const ljudPa = useMinne((s) => s.ljudPa);
-  const uppdragSpar = useMinne((s) => s.uppdrag);
-  const oppna = useMinne((s) => s.oppna);
-  const mossaLista = useMinne((s) => s.mossaLista);
-  const mossaExtra = useMinne((s) => s.mossaExtra);
-  const liv = useMinne((s) => s.liv);
-
-  const allaOrd = ordLista();
-  const totalOrd = allaOrd.filter((o) => o.niva === "fritt" || o.niva === "kort").length;
-  const hittatAntal = allaOrd.filter((o) => funna[o.id] && (o.niva === "fritt" || o.niva === "kort")).length;
-
-  /** B6.3 (H): tryck stänger bannern och tystar kön. Tiden stänger bara bannern. */
-  function stangBanner(tryckt?: string) {
-    if (bannerTimer.current) window.clearTimeout(bannerTimer.current);
-    bannerTimer.current = null;
-    setBanners([]);
-    if (tryckt !== undefined) rostKo.tryck();
-  }
-
-  function slackBanner(texten: string) { const t = platsText(texten, varldRef.current); rostKo.stryk(t); setBanners((l) => l.filter((b) => b.text !== t)); }
-  useStallBanner(slackBanner);
-  function visaBanner(texten: string, slag: Banner["slag"], kalla: rostKo.Kalla, ms?: number) {
-    rostKo.anmal({ text: platsText(texten, varldRef.current), kalla, banner: { slag, ms } });
-  }
-
-  function lasMeny() {
-    setSenare(true);
-    setMenySaker(false);
-    requestAnimationFrame(() => {
-      document.querySelector("[data-testid=demo-senare]")?.scrollIntoView({ block: "nearest" });
-    });
-  }
-
-  function visaBubbla(rad: string, x: number, y: number, hjarta: boolean, ovan = false, ensam = false, kalla: rostKo.Kalla | null = "tapp") {
-    const texten = platsText(rad, varldRef.current); // R9K: {platsen} → platsen barnet är på
-    const id = nyId();
-    if (kalla) rostKo.anmal({ text: texten, kalla, nyckel: `bubbla:${id}` });
-    setBubblor((prev) => {
-      const start = ensam ? [] : prev;
-      if (ovan) {
-        const i3d = typeof document !== "undefined" && !!document.querySelector("[data-testid='angen-3d']");
-        const xx = i3d ? Math.min(0.82, Math.max(0.18, x)) : Math.min(0.64, Math.max(0.36, x));
-        const yy = i3d ? Math.min(0.78, Math.max(0.58, y)) : Math.max(0.48, Math.min(0.72, y));
-        return [...start, { id, text: texten, x: xx, y: yy, hjarta, ovan: true }].slice(-2);
-      }
-      const hoger = start.some((a) => a.x > 0.5);
-      const vanster = start.some((a) => a.x <= 0.5);
-      let sida = x < 0.5 ? "h" : "v";
-      if (sida === "h" && hoger && !vanster) sida = "v";
-      if (sida === "v" && vanster && !hoger) sida = "h";
-      const xx = sida === "h" ? 0.74 : 0.26;
-      const yy = hoger && vanster ? 0.3 : 0.03;
-      return [...start, { id, text: texten, x: xx, y: yy, hjarta, ovan: false }].slice(-2);
-    });
-    window.setTimeout(() => { setBubblor((b) => b.filter((x) => x.id !== id)); if (kalla === "tryck") rostKo.stryk(texten); }, 4200);
-  }
-
-  function visaVarld(p: Varld) {
-    varldRef.current = p;
-    setVarld(p);
-    setPanel("spel");
-    setMeny(null);
-    if (!omradeRef.current) brygga.visa(p);
-  }
-
-  function lamnaAv() {
-    omradeRef.current = null;
-    setOmrade(null);
-    synkaAv(null);
-  }
-
-  function synkaAv(plats: string | null) {
-    const s = useMinne.getState();
-    const folje = allaMina().find((d) => d.uid === s.foljeUid) ?? null;
-    avBro.satt({
-      plats,
-      folje,
-      van: s.van,
-      uppdrag: s.uppdrag,
-      fyr: s.fyr,
-      on: plats === "on",
-    });
-    const game = (window as unknown as {
-      __spel?: {
-        scene: {
-          sleep: (k: string) => void;
-          wake: (k: string) => void;
-          isSleeping: (k: string) => boolean;
-          isActive: (k: string) => boolean;
-          start: (k: string) => void;
-        };
-      };
-    }).__spel;
-    if (!game) return;
-    if (plats) {
-      game.scene.sleep("ang");
-      game.scene.sleep("gard");
-      if (game.scene.isSleeping("av")) game.scene.wake("av");
-      else if (!game.scene.isActive("av")) game.scene.start("av");
-    } else if (game.scene.isActive("av") || game.scene.isSleeping("av")) {
-      game.scene.sleep("av");
-      brygga.visa(varldRef.current);
-    }
-  }
-
-  function belonaFlode(r: FlodeSvar) {
-    for (const t of r.texter) if (t) visaBanner(t, "ovr", "uppdrag_klart");
-    if (r.stj > 0) {
-      useMinne.getState().geStjarnor(r.stj);
-      ljud.stjarna();
-      visaBanner(r.stj === 1 ? FIR.stjarnor.fa_en : fyll(FIR.stjarnor.fa, { n: r.stj }), "ovr", "stjarnor");
-    }
-    if (r.hem && r.sparad) {
-      setGavaTill(null);
-      gavaRef.current = null;
-      lamnaAv();
-      visaVarld("ang");
-      brygga.skapa(r.sparad, true);
-      return;
-    }
-    if (omradeRef.current) synkaAv(omradeRef.current);
-  }
-
-  function visaMossa(h: Parameters<typeof mossaHand>[0]) {
-    const r = mossaHand(h);
-    for (const t of r.texter) if (t) visaBanner(t, "ovr", "mossa_text");
-    if (r.stj > 0) {
-      useMinne.getState().geStjarnor(r.stj);
-      ljud.stjarna();
-      visaBanner(fyll(MOSSA.beloning.text, { n: r.stj }), "ovr", "mossa_beloning");
-    }
-  }
-
-  function bjud(slag: string, uid?: string) {
-    const s = useMinne.getState();
-    const djur = [...s.ang, ...s.hemma.map((x) => x.spec)];
-    for (const d of djur) {
-      if (uid && d.uid !== uid) continue;
-      if (inbjudanAv(d.uid) !== slag) continue;
-      geHjarta(d.uid);
-      const tack = HUMOR.tack_text[Math.floor(Math.random() * HUMOR.tack_text.length)] ?? HUMOR.tack_text[0]!;
-      const p = brygga.platser().find((x) => x.uid === d.uid);
-      visaBubbla(tack, p?.x ?? 0.5, p?.topp ?? p?.y ?? 0.3, true, true, false, "bjud");
-    }
-  }
-
-  function gaIn(id: string) {
-    setKartaOpp(false);
-    setPanel("spel");
-    setGavaTill(null);
-    gavaRef.current = null;
-    vantarRef.current = null;
-    omradeRef.current = id;
-    setOmrade(id);
-    for (const t of startaForPlats(id)) visaBanner(t, "ovr", "tapp");
-    if (id === "grottan") {
-      const inne = omradeMed("grottan")?.inne;
-      const f = foljeNu();
-      if (inne && f && harTagg(f, "lysa")) visaBanner(fyll(inne.klart, { djur: f.formel }), "ovr", "tapp");
-      else if (inne) visaBanner(inne.text, "ovr", "tapp");
-    }
-    synkaAv(id);
-    const folje = foljeNu();
-    if (folje) {
-      bjud("aventyr", folje.uid);
-      visaMossa({ aventyr: true });
-    }
-  }
-
-  function oppnaKarta() {
-    setPanel("spel");
-    setMeny(null);
-    setKartaOpp(true);
-    if (useMinne.getState().forstaKarta) {
-      useMinne.getState().settKarta();
-      setForstaRad([...TEXTER_AV.forsta_gangen]);
-    }
-  }
-
-  function tryckPlats(id: string) {
-    if (id === "garden") {
-      setKartaOpp(false);
-      setKartaText(null);
-      lamnaAv();
-      valjVarld("gard");
-      return;
-    }
-    const s = forsokPlats(id);
-    if (s.typ === "nas") return;
-    if (s.typ === "in") {
-      gaIn(s.id);
-      return;
-    }
-    if (s.typ === "bro") {
-      oppnaBro(id);
-      visaBanner(s.text, "ovr", "tapp");
-      gaIn(id);
-      return;
-    }
-    if (s.typ === "inga") {
-      visaBanner(s.text, "ovr", "tapp");
-      setKartaText(s.text);
-      vantarRef.current = { slag: "oppna", omrade: id, taggar: s.taggar };
-      setLage("skriv");
-      setHand(true);
-      setKartaOpp(false);
-      setBokOpp(true);
-      return;
-    }
-    const kan = s.taggar.map((t) => OMR.karta.kan_text[t] ?? t).join(" ");
-    setKartaText(s.text);
-    vantarRef.current = { slag: "oppna", omrade: id, taggar: s.taggar };
-    valjKor.current = (d) => {
-      setValj(null);
-      vantarRef.current = null;
-      visaBanner(oppnaMed(id, d), "ovr", "tapp");
-      gaIn(id);
-    };
-    setValj({ rubrik: fyll(OMR.karta.valj_djur, { kan }), eller: s.eller, djur: s.djur, nyckel: id });
-  }
-
-  function tryckOn() {
-    const s = forsokOn();
-    if (s.typ === "in") {
-      gaIn("on");
-      return;
-    }
-    if (s.typ === "inga") {
-      visaBanner(s.text, "ovr", "tapp");
-      vantarRef.current = { slag: "del", taggar: s.taggar };
-      setLage("skriv");
-      setHand(true);
-      setKartaOpp(false);
-      setBokOpp(true);
-      return;
-    }
-    if (s.typ !== "valj") return;
-    const kan = s.taggar.map((t) => OMR.karta.kan_text[t] ?? t).join(" ");
-    vantarRef.current = { slag: "del", taggar: s.taggar };
-    valjKor.current = (d) => {
-      setValj(null);
-      vantarRef.current = null;
-      visaBanner(oppnaOn(d), "ovr", "tapp");
-      gaIn("on");
-    };
-    setValj({ rubrik: fyll(OMR.karta.valj_djur, { kan }), eller: s.eller, djur: s.djur, nyckel: "on" });
-  }
-
-  function oppnaSkicka(uppId: string) {
-    const tagg = UPP.uppdrag.find((u) => u.id === uppId)?.mal.skicka_tagg;
-    if (!tagg || useMinne.getState().uppdrag[uppId] === "klar") return;
-    if (!useMinne.getState().uppdrag[uppId]) useMinne.getState().sattUppdrag(uppId, "pagar");
-    const lista = djurSomKan([tagg]);
-    const kan = OMR.karta.kan_text[tagg] ?? tagg;
-    if (!lista.length) {
-      const text = fyll(OMR.karta.inget_djur, { kan });
-      visaBanner(text, "ovr", "tapp");
-      vantarRef.current = { slag: "skicka", uppdrag: uppId, taggar: [tagg] };
-      setLage("skriv");
-      setHand(true);
-      setKartaOpp(false);
-      setBokOpp(true);
-      return;
-    }
-    valjKor.current = (d) => {
-      setValj(null);
-      const r = skickaDjur(uppId, d);
-      if (r) belonaFlode(r);
-    };
-    setValj({ rubrik: fyll(OMR.karta.valj_djur, { kan }), djur: lista, nyckel: uppId });
-  }
-
-  function bytFolje() {
-    const djur = allaMina();
-    valjKor.current = (d) => {
-      setValj(null);
-      useMinne.getState().sattFolje(d.uid);
-      const o = omradeRef.current;
-      if (o === "grottan") {
-        const inne = omradeMed("grottan")?.inne;
-        if (inne && harTagg(d, "lysa")) visaBanner(fyll(inne.klart, { djur: d.formel }), "ovr", "tapp");
-      }
-      if (o) synkaAv(o);
-      visaBanner(fyll(TEXTER_AV.foljeslagare.foljer, { djur: d.formel }), "ovr", "tapp");
-    };
-    setValj({ rubrik: TEXTER_AV.foljeslagare.byt, djur, nyckel: "byt" });
-  }
-
-  function kanskeForstaGard() {
-    if (!useMinne.getState().forstaGard) return;
-    useMinne.getState().sattForsta();
-    for (const rad of TEXTER.forsta_besok) visaBanner(rad, "ovr", "tapp");
-  }
-
-  function oppnaBygglage() {
-    setKartaOpp(false);
-    setMenyOpp(false);
-    setMeny(null);
-    varldRef.current = "gard";
-    setVarld("gard");
-    if (omradeRef.current) lamnaAv();
-    else brygga.visa("gard");
-    setPanel("byggbok");
-    setLage("kort");
-    setForslag(null);
-    setBehover(null);
-    setBokOpp(true);
-  }
-
-  function oppnaUppdrag() {
-    setMenyOpp(false);
-    setPanel("uppdrag");
-    setBokOpp(true);
-  }
-
-  function oppnaSkapa() {
-    setPanel("spel");
-    setLage("skriv");
-    setForslag(null);
-    setBehover(null);
-    setBokOpp(true);
-  }
-  const bengtsson = useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdragsbok: oppnaUppdrag });
-  const platsUi = usePlats({ visaFel: () => bengtsson.visaFel() });
-  // R9D: när Bengtssons uppdrag startar tas en djurönskan bort, så att boken bara visar ett uppdrag och förslagen hör till det
-  const pagarId = aktivtSkrivUppdrag(uppdragSpar)?.id;
-  useEffect(() => {
-    if (!pagarId) return;
-    const o = useMinne.getState().onskan;
-    if (!o || o.kalla !== "djur") return;
-    useMinne.getState().sattOnska(null);
-    onskaSkrivRef.current = false;
-    setOnskaOpp(false);
-    setOnskaSyns(false);
-  }, [pagarId]);
-
-  function stangBok() {
-    const paGard = varldRef.current === "gard";
-    setBokOpp(false);
-    setPanel("spel");
-    setByggPuff(null);
-    stangOnska();
-    if (paGard) kanskeForstaGard();
-  }
-
-  function visaPlatsRen(id: "ang" | "gard") {
-    setKartaOpp(false);
-    setMenyOpp(false);
-    if (omradeRef.current) lamnaAv();
-    setPanel("spel");
-    visaVarld(id);
-    setBokOpp(false);
-    if (id === "gard") kanskeForstaGard();
-  }
-
-  function valjVarld(id: "ang" | "gard" | "byggbok") {
-    setKartaOpp(false);
-    setMenyOpp(false);
-    if (id === "byggbok") {
-      oppnaBygglage();
-      return;
-    }
-    if (omradeRef.current) lamnaAv();
-    if (id === "gard") {
-      visaVarld("gard");
-      setBokOpp(false);
-      kanskeForstaGard();
-      return;
-    }
-    visaVarld("ang");
-    setBokOpp(false);
-  }
-
-  function kollaSidor() {
-    const s = useMinne.getState();
-    for (const sida of SIDOR.sidor) {
-      if (!s.koptaSidor.includes(sida.id) || s.sidaKlar.includes(sida.id)) continue;
-      if (!sida.ord.every((id) => s.funna[id])) continue;
-      s.markeraSida(sida.id);
-      s.geStjarnor(FIR.sida_klar.stjarnor);
-      ljud.stjarna();
-      visaBanner(fyll(FIR.sida_klar.text, { sida: sida.titel }), "ovr", "sida_klar");
-    }
-    const fritt = ordLista().filter((o) => o.niva === "fritt");
-    if (fritt.length && fritt.every((o) => useMinne.getState().funna[o.id]) && !useMinne.getState().sidaKlar.includes("bok")) {
-      useMinne.getState().markeraSida("bok");
-      visaBanner(FIR.bok_klar.text, "ovr", "sida_klar");
-    }
-  }
-
-  function belona(u: { funna: string[]; guld: string[] }, glitterUid?: string, firaguld = true) {
-    const guldLista = firaguld ? u.guld : [];
-    const innan = useMinne.getState().funna;
-    const nyaGuld = guldLista.filter((id) => !innan[id]?.guld);
-    const nyaHemliga = u.funna.filter((id) => !innan[id] && ordLista().find((o) => o.id === id)?.niva === "fritt");
-    useMinne.getState().registrera(u.funna, guldLista);
-    let stj = 0;
-    if (nyaGuld.length) {
-      stj += nyaGuld.length * FIR.guldord.stjarnor;
-      visaBanner(fyll(FIR.guldord.text[0]!, { ord: ordVis(nyaGuld[0]!) }), "ovr", "guldord");
-      ljud.guld();
-      if (glitterUid) brygga.glitter(glitterUid);
-      visaMossa({ guld: nyaGuld.length });
-    }
-    if (nyaHemliga.length) {
-      stj += nyaHemliga.length * FIR.hemligt_ord.stjarnor;
-      visaBanner(fyll(FIR.hemligt_ord.text[0]!, { ord: ordVis(nyaHemliga[0]!) }), "ovr", "hemligt_ord");
-      visaMossa({ hemligt: nyaHemliga.length });
-    }
-    if (stj > 0) {
-      useMinne.getState().geStjarnor(stj);
-      ljud.stjarna();
-      visaBanner(stj === 1 ? FIR.stjarnor.fa_en : fyll(FIR.stjarnor.fa, { n: stj }), "ovr", "stjarnor");
-    }
-    kollaSidor();
-  }
-
-  function uppfyll(o: OnskaSpar, tack: string, stj: number, uid: string, x = 0.5, y = 0.35) {
-    useMinne.getState().geStjarnor(stj);
-    useMinne.getState().sattOnska(null);
-    useMinne.setState({ onskanAntal: useMinne.getState().onskanAntal + 1 });
-    useMinne.getState().noteraOnska();
-    onskaSkrivRef.current = false;
-    setOnskaOpp(false);
-    setOnskaSyns(false);
-    setBokOpp(false);
-    ljud.uppfylld();
-    ljud.stjarna();
-    brygga.glad(uid);
-    const p = brygga.platser().find((q) => q.uid === uid);
-    visaBubbla(tack, p?.x ?? x, p?.topp ?? p?.y ?? y, false, true, false, "uppfyll_tack");
-    visaBanner(stj === 1 ? FIR.stjarnor.fa_en : fyll(FIR.stjarnor.fa, { n: stj }), "ovr", "stjarnor");
-    visaMossa({ onskan: 1 });
-  }
-
-  function rensaSkriv() {
-    setText("");
-    textRef.current = "";
-    setVal({});
-    setHand(false);
-    setForslag(null);
-    setBehover(null);
-  }
-
-  function hanteraBygg(utfall: Extract<ReturnType<typeof tolkaBygg>, { typ: "bygge" }>) {
-    useMinne.getState().sparaOkanda(utfall.okanda); rostKo.handling();
-    const agda = useMinne.getState().byggSidor;
-    const las = utfall.byggen.map((b) => lastBygge(b, agda)).filter((x) => x != null);
-    if (las.length) {
-      const x = las[0]!;
-      const mall = BYGGSIDOR.last_ord.text[0] ?? "";
-      const texten = fyll(mall, { ord: x.ord, sida: x.titel, n: x.pris });
-      setByggPuff(texten);
-      visaBubbla(texten, 0.5, 0.55, false, true, true, null);
-      visaBanner(texten, "ovr", "tapp");
-      useMinne.getState().sparaSnart(x.sidaId, x.ord);
-      setBokOpp(true);
-      return;
-    }
-    const om = omUidRef.current;
-    const behov = om ? Math.max(0, utfall.byggen.length - 1) : utfall.byggen.length;
-    const lediga = BYGG.max_pa_garden - useMinne.getState().garden.length;
-    if (behov > lediga) {
-      visaBanner(TEXTER.lada.full, "ovr", "tapp");
-      return;
-    }
-    visaPlatsRen("gard");
-    const redan = useMinne.getState().garden.map((p) => ({ x: p.x, y: p.y }));
-    const gjorda = utfall.byggen.map((b) => {
-      const pos = ledigPlats([...redan]);
-      redan.push(pos);
-      return franTolk(b, formelBygg(b), pos.x, pos.y);
-    });
-    if (om && gjorda[0]) {
-      useMinne.getState().bytBygge(om, gjorda[0]);
-      if (gjorda.length > 1) useMinne.getState().laggByggen(gjorda.slice(1));
-      omUidRef.current = null;
-    } else {
-      useMinne.getState().laggByggen(gjorda);
-    }
-    const forsta = useMinne.getState().garden.find((g) => g.uid === gjorda[0]?.uid) ?? gjorda[0];
-    if (forsta) {
-      const rad = TEXTER.byggt[Math.floor(Math.random() * TEXTER.byggt.length)] ?? TEXTER.byggt[0]!;
-      visaBubbla(fyll(rad, { formel: utfall.formel }), forsta.x, Math.max(0.12, forsta.y - 0.16), false, true, true);
-      ljud.uppfylld();
-    }
-    setByggPuff(null);
-    const aktiv = useMinne.getState().onskan;
-    if (aktiv?.kalla === "bygg") {
-      const ons = ONSK_BYGG.onskningar.find((o) => o.id === aktiv.id);
-      const djur =
-        useMinne.getState().ang.find((a) => a.uid === aktiv.uid) ??
-        useMinne.getState().hemma.find((h) => h.spec.uid === aktiv.uid)?.spec;
-      const traff = ons ? byggTraff(utfall.byggen, ons, djur?.kropp) : null;
-      if (ons && traff) {
-        const hem = useMinne.getState().garden.find((g) => gjorda.some((x) => x.uid === g.uid) && g.bygg === traff.bygg);
-        let ok = true;
-        if (ons.krav.hem_for_djuret && djur && hem) {
-          const res = useMinne.getState().flyttaIn(djur.uid, hem.uid);
-          ok = res === "ok";
-          if (res === "ok") visaBanner(fyll(TEXTER.bo.flyttar_in[0]!, { djur: djur.formel, hem: bestamdHem(hem) }), "ovr", "tapp");
-          else if (res === "full") visaBanner(TEXTER.bo.full, "ovr", "tapp");
-          else visaBanner(fyll(TEXTER.bo.passar_inte, { djur: djur.formel }), "ovr", "tapp");
-        }
-        if (ok && djur) uppfyll(aktiv, ons.tack, ons.stjarnor, djur.uid, hem?.x ?? 0.5, hem?.y ?? 0.4);
-      }
-    }
-    if (utfall.byggen.some((b) => BYGG_ORD.find((o) => o.id === b.bygg)?.typ === "lek")) bjud("lek");
-    visaMossa({ byggen: utfall.byggen });
-    rensaSkriv();
-    setBokOpp(false);
-  }
-
-  function hanteraDjur(raw: string, opt: { hand: boolean; inteGuld?: string[] }) {
-    const aktiv = useMinne.getState().onskan;
-    const ge = onskaSkrivRef.current && aktiv?.kalla === "djur" && aktiv.typ === "ge";
-    if (ge && aktiv) {
-      const bas =
-        useMinne.getState().ang.find((a) => a.uid === aktiv.uid) ??
-        useMinne.getState().hemma.find((h) => h.spec.uid === aktiv.uid)?.spec;
-      const ons = ONSK.onskningar.find((o) => o.id === aktiv.id);
-      const fras = bas ? tillaggFras(bas, raw) : null;
-      if (!bas || !fras || !ons) {
-        rensaSkriv();
-        return;
-      }
-      const u = tolka(fras, { kalla: opt.hand ? "skriv" : "kort", inteGuld: opt.inteGuld });
-      if (u.typ === "sparr") {
-        rensaSkriv();
-        visaBanner(u.text, "sparr", "sparr");
-        ljud.puff();
-        return;
-      }
-      if (u.typ === "forslag") {
-        setForslag({ token: u.token, text: u.text, forslag: u.forslag });
-        setBehover(null);
-        return;
-      }
-      if (u.typ !== "skapad") {
-        if (u.typ === "behover_djur") {
-          useMinne.getState().sparaOkanda(u.okanda);
-          for (const m of u.meddelanden) visaBanner(m, "okand", "okand_inget");
-        }
-        return;
-      }
-      useMinne.getState().uppdateraDjur(aktiv.uid, u.varelse);
-      belona(u, aktiv.uid, opt.hand);
-      if (geTraff(bas, u.varelse, ons)) uppfyll(aktiv, ons.tack, ons.stjarnor, aktiv.uid);
-      else {
-        ljud.nastan();
-        const p = brygga.platser().find((x) => x.uid === aktiv.uid);
-        visaBubbla(nastanRad(nastanRef.current), p?.x ?? 0.5, p?.topp ?? 0.3, false, true, false, "nastan");
-        nastanRef.current += 1;
-      }
-      rensaSkriv();
-      return;
-    }
-
-    const utfall: Utfall = tolkaMedReserv(raw, { kalla: opt.hand ? "skriv" : "kort", inteGuld: opt.inteGuld });
-    if (utfall.typ === "sparr") {
-      rensaSkriv();
-      visaBanner(utfall.text, "sparr", "sparr");
-      ljud.puff();
-      return;
-    }
-    if (utfall.typ === "forslag") {
-      setForslag({ token: utfall.token, text: utfall.text, forslag: utfall.forslag });
-      setBehover(null);
-      return;
-    }
-    if (utfall.typ === "behover_djur") {
-      const kan = kanInteRita(utfall, raw); // B6.1 (F): känt ord utan modell → synlig banderoll, boken stängs
-      if (kan) { visaBanner(kan, "okand", "okand_inget", KAN_INTE_RITA_MS); ljud.puff(); setBehover(null); setForslag(null); rensaSkriv(); setBokOpp(false); return; } // B6.3 (H): ≥ 5 s eller tryck
-      useMinne.getState().sparaOkanda(utfall.okanda);
-      for (const m of utfall.meddelanden) visaBanner(m, "okand", "okand_inget");
-      if (utfall.meddelanden.length) ljud.puff();
-      setBehover({ text: utfall.text, djur: utfall.djur });
-      setForslag(null);
-      return;
-    }
-    if (utfall.varelse.reserv?.length) {
-      useMinne.getState().sparaOkanda(utfall.okanda);
-      noteraSaknade(utfall.varelse.reserv);
-    }
-    if (utfall.guld.length) utfall.varelse.glans = true;
-    const { nya, somnade } = useMinne.getState().laggPaAng(utfall.varelse, utfall.antal);
-    for (const s of somnade) brygga.taBort(s.uid);
-    for (const s of somnade) visaBanner(replik(s, "sover"), "sov", "sov");
-    for (const n of nya) {
-      brygga.skapa(n, n === nya[nya.length - 1]);
-      const ny = komIhagDjur(n);
-      if (ny) {
-        const mall = ALBUM.sallsynthet.ny_niva_text[Math.floor(Math.random() * ALBUM.sallsynthet.ny_niva_text.length)] ?? ALBUM.sallsynthet.ny_niva_text[0]!;
-        visaBanner(fyll(mall, { niva: ny }), "ovr", "ny_niva");
-      }
-    }
-    const sista = nya[nya.length - 1];
-    if (sista && !introRef.current) rostKo.anmal({ text: replik(utfall.varelse, "hej"), kalla: "hej" });
-    if (sista) {
-      visaMossa({
-        taggar: taggarFor(utfall.varelse),
-        antal: utfall.antal,
-        sammansatt: arSammansatt(raw) || arSammansatt(utfall.varelse.formel),
-        poang: poangAv(utfall.varelse),
-      });
-    }
-    bengtsson.prova(raw); // först, så Bengtssons rad hamnar före de vanliga bannrarna i kön
-    belona(utfall, utfall.guld.length && opt.hand ? sista?.uid : undefined, opt.hand);
-    for (const m of utfall.meddelanden) visaBanner(m, "okand", "okand_ordbit");
-    for (const o of utfall.varelse.overraskningar) visaBanner(o.text, "ovr", "overraskning");
-    ljud.puff();
-    if (sista) {
-      const visa = (kvar: number) => {
-        const p = brygga.platser().find((x) => x.uid === sista.uid);
-        if (!p && kvar > 0) {
-          window.setTimeout(() => visa(kvar - 1), 160);
-          return;
-        }
-        const sida = (p?.x ?? 0.5) < 0.5 ? 0.62 : 0.38;
-        const yy = Math.max(0.5, Math.min(0.62, p?.topp ?? 0.5));
-        visaBubbla(replik(utfall.varelse, "hej"), sida, yy, false, true, true, null);
-        brygga.glad(sista.uid);
-        brygga.glitter(sista.uid);
-        if (utfall.varelse.formagor.length) {
-          const uid = sista.uid;
-          window.setTimeout(() => {
-            if (!useMinne.getState().ang.some((a) => a.uid === uid) && !useMinne.getState().hemma.some((h) => h.spec.uid === uid)) return;
-            visaBubbla(replik(utfall.varelse, "tryck"), sida, yy, false, true, true, "tryck");
-          }, 900);
-        }
-      };
-      window.setTimeout(() => visa(8), 280);
-      setFotoMal(null);
-      setBokOpp(false);
-    }
-    if (varldRef.current === "gard") visaVarld("ang");
-    if (aktiv?.kalla === "djur" && aktiv.typ === "kompis" && sista) {
-      const ons = ONSK.onskningar.find((o) => o.id === aktiv.id);
-      if (ons && kompisTraff(sista, ons)) uppfyll(aktiv, ons.tack, ons.stjarnor, sista.uid);
-    }
-    const vant = vantarRef.current;
-    if (vant && sista && passarDjur(sista, vant.taggar)) {
-      vantarRef.current = null;
-      if (vant.slag === "oppna") {
-        visaBanner(oppnaMed(vant.omrade, sista), "ovr", "oppnas");
-        gaIn(vant.omrade);
-      } else if (vant.slag === "del") {
-        visaBanner(oppnaOn(sista), "ovr", "oppnas");
-        gaIn("on");
-      } else {
-        const r = skickaDjur(vant.uppdrag, sista);
-        if (r) belonaFlode(r);
-      }
-    }
-    rensaSkriv();
-  }
-
-  function utfor(raw: string, opt: { hand: boolean; inteGuld?: string[] }) {
-    ljud.lasOpp();
-    const trim = raw.trim();
-    if (!trim) return;
-    rostKo.handling();
-    if (platsUi.forsokSkriv(trim)) { rensaSkriv(); setBokOpp(false); return; }
-    noteraSkriv(trim);
-    if (gavaRef.current?.startsWith("egen:")) {
-      const uid = gavaRef.current.slice(5);
-      const u = tolkaGava(trim);
-      if (u.typ === "tom") return;
-      if (u.typ === "djur") {
-        visaBanner(TEXTER_AV.gavoruta.djur_i_rutan, "ovr", "tapp");
-        setGavaTill(null); gavaRef.current = null;
-        rensaSkriv();
-        return;
-      }
-      if (u.typ === "forslag") {
-        setForslag({ token: u.token, text: u.text, forslag: [{ id: u.forslag, visa: u.forslag }] });
-        setBehover(null);
-        return;
-      }
-      if (u.typ === "okant") {
-        useMinne.getState().sparaOkanda(u.okanda);
-        visaBanner(TEXTER_AV.gavoruta.okant, "okand", "okand_inget");
-        rensaSkriv();
-        return;
-      }
-      if (u.okanda.length) useMinne.getState().sparaOkanda(u.okanda);
-      const taggar = [...new Set(u.gavor.flatMap((g) => g.taggar))];
-      const favorit = taggar.includes(useMinne.getState().liv[uid]?.favorit ?? "");
-      const svar = geEgenGava(uid, taggar);
-      const p = brygga.platser().find((x) => x.uid === uid);
-      visaBubbla(svar.text, p?.x ?? 0.5, p?.topp ?? 0.3, true, true);
-      visaMossa({ gavaTaggar: taggar, favorit });
-      setGavaTill(null);
-      gavaRef.current = null;
-      rensaSkriv();
-      return;
-    }
-    if (gavaRef.current) {
-      const svar = geGavor(gavaRef.current, trim);
-      if (svar.forslag) {
-        setForslag({ token: svar.forslag.token, text: svar.forslag.text, forslag: [{ id: svar.forslag.ord, visa: svar.forslag.ord }] });
-        setBehover(null);
-        return;
-      }
-      belonaFlode(svar);
-      if (!svar.okant) { setGavaTill(null); gavaRef.current = null; }
-      rensaSkriv();
-      return;
-    }
-    if (varldRef.current === "gard" && !vantarRef.current && !omradeRef.current) {
-      const bygg = tolkaBygg(trim);
-      if (bygg.typ === "forslag") {
-        setForslag({ token: bygg.token, text: bygg.text, forslag: bygg.forslag });
-        setBehover(null);
-        return;
-      }
-      if (bygg.typ === "bygge") {
-        hanteraBygg(bygg);
-        return;
-      }
-    }
-    hanteraDjur(trim, opt);
-  }
-
-  const utforRef = useRef(utfor);
-  utforRef.current = utfor;
+  const t = useSpelTillstand();
+  const b = useBannrar({ t });
+  const v = useVarld({ t, b });
+  const a = useAventyr({ t, b, v });
+  const o = useOnska({ t, v });
+  const be = useBelona({ t, b });
+  const s = useSkapa({ t, b, v, a, be });
+  const {
+    text, setText, lage, setLage, flik, setFlik, val, setVal, setHand, forslag, setForslag, behover,
+    setBehover, bubblor, setBubblor, banners, setBanners, visKort, setVisKort, ordbok, setOrdbok,
+    foralder, setForalder, natt, setNatt, albumOpp, setAlbumOpp, mossaOpp, setMossaOpp, halsning,
+    setHalsning, fotoMal, setFotoMal, haller, setHaller, bokOpp, setBokOpp, menyOpp, setMenyOpp,
+    intro, setIntro, introNy, setIntroNy, saker, setSaker, menySaker, setMenySaker, senare,
+    setSenare, varld, panel, setPanel, meny, setMeny, boUid, setBoUid, ladaOpp, setLadaOpp,
+    byggSidaId, setByggSidaId, byggPuff, setByggPuff, sidOpp, setSidOpp, kop, setKop, stjarnInfo,
+    setStjarnInfo, kopRad, setKopRad, onskaOpp, setOnskaOpp, onskaPos, setOnskaPos, onskaSyns,
+    setOnskaSyns, foralderRad, setForalderRad, kopia, setKopia, kartaOpp, setKartaOpp, forstaRad,
+    kartaText, setKartaText, omrade, setOmrade, gavaTill, setGavaTill, skylt, setSkylt, valj,
+    setValj, uppFlik, setUppFlik, host, angRef, filRef, textRef, handRef, overlayRef, onskaSkrivRef,
+    omUidRef, omradeRef, gavaRef, vantarRef, valjKor, avHand, paHandelse, visaOnskaRef, introRef,
+    funna, kortGang, startLage, onskelista, sovande, formler, stjarnor, onskan, koptaSidor,
+    byggSidor, garden, lada, ang, hemma, ljudPa, uppdragSpar, oppna, mossaLista, mossaExtra, liv,
+    allaOrd, totalOrd, hittatAntal,
+  } = t;
+  const { stangBanner, visaBanner, visaBubbla, visaMossa, bjud } = b;
+  const { lasMeny, visaVarld, synkaAv, oppnaKarta, oppnaBygglage, oppnaUppdrag, valjVarld } = v;
+  const { belonaFlode, tryckPlats, tryckOn, oppnaSkicka, bytFolje, bengtsson, platsUi } = a;
+  const { stangBok, oppnaOnska } = o;
+  const { rensaSkriv, utfor, utforRef } = s;
 
   function byggFras(fras: string) {
     ljud.lasOpp();
@@ -1047,28 +221,6 @@ export function Spel() {
     ljud.puff();
   }
 
-  function oppnaOnska() {
-    const o = useMinne.getState().onskan;
-    if (!o) return;
-    setOnskaOpp(true);
-    setBokOpp(true);
-    setMenyOpp(false);
-    const ex = exempelFor(o);
-    const traff = kortForExempel(ex, ordLista());
-    if (o.kalla === "bygg") {
-      onskaSkrivRef.current = false;
-      oppnaBygglage();
-      setOnskaOpp(true);
-      return;
-    }
-    setPanel("spel");
-    onskaSkrivRef.current = o.typ === "ge";
-    if (traff.length) {
-      setLage("kort");
-      setFlik(bastaFlik(traff));
-    } else setLage("skriv");
-  }
-
   function fyllExempel(ex: string) {
     ljud.lasOpp(); rostKo.handling();
     ljud.pling();
@@ -1092,11 +244,6 @@ export function Spel() {
     setBehover(null);
     setVal({});
     utfor(ex, { hand: true });
-  }
-
-  function stangOnska() {
-    onskaSkrivRef.current = false;
-    setOnskaOpp(false);
   }
 
   function forsokKop(slag: "djur" | "bygg", id: string, titel: string, pris: number) {
