@@ -4,6 +4,7 @@ import type { VarldStyr } from "./useVarld.ts";
 import type { Aventyr } from "./useAventyr.ts";
 import type { Onska } from "./useOnska.ts";
 import type { Belona } from "./useBelona.ts";
+import type { Skapa } from "./useSkapa.ts";
 
 export type { SpelTillstand } from "./useSpelTillstand.ts";
 
@@ -14,4 +15,5 @@ export interface SpelKarna {
   a: Aventyr;
   o: Onska;
   be: Belona;
+  s: Skapa;
 }
