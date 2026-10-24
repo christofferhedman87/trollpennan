@@ -1,5 +1,6 @@
 import { avstand, felgrans } from "./avstand.ts";
-import { ORD } from "./data.ts";
+import entiteterJson from "../../data/entiteter.json" with { type: "json" };
+import { KANNETECKEN, ORD } from "./data.ts";
 import {
   arOchSa,
   arPluralForm,
@@ -23,7 +24,9 @@ import {
 import attributJson from "../../data/attribut.json" with { type: "json" };
 import katJson from "../../data/kategori-ord.json" with { type: "json" };
 import { arSparrat } from "./sparr.ts";
-import type { Del, Forled, Ord, TolkaOpts, Utfall, Varelse } from "./typer.ts";
+import type { Del, Forled, Kannetecken, Ord, TolkaOpts, Utfall, Varelse } from "./typer.ts";
+
+const ART = (entiteterJson as { entiteter: Record<string, { art?: string }> }).entiteter;
 
 const SPARR_TEXT = "Det ordet kan Trollpennan inte.";
 const OKAND_TEXT = "Det ordet kan Trollpennan inte än. Jag sparar det!";
@@ -45,7 +48,8 @@ type Sem =
       raw: string;
     }
   | { t: "okand"; raw: string }
-  | { t: "led"; key: string; del: Forled };
+  | { t: "led"; key: string; del: Forled }
+  | { t: "blanda"; a: Ord; aForm: string; b: Ord | null; bRaw: string };
 
 type Funnen = { id: string; exakt: boolean };
 
@@ -83,6 +87,8 @@ type Bygg = {
   inteDjur: string[];
   okanda: string[];
   meddelanden: string[];
+  /** O1b: färdig mening när frasen är en blandning. Ersätter formelAv. */
+  blandFormel: string | null;
 };
 
 function tomBygg(): Bygg {
@@ -117,6 +123,7 @@ function tomBygg(): Bygg {
     inteDjur: [],
     okanda: [],
     meddelanden: [],
+    blandFormel: null,
   };
 }
 
@@ -355,7 +362,154 @@ function forslagKomp(token: string): { id: string; visa: string; avst: number }[
   return ut;
 }
 
+function tomKannetecken(k: Kannetecken | undefined): boolean {
+  if (!k) return true;
+  return !k.farg && !k.monster && k.tillbehor.length === 0 && k.formagor.length === 0;
+}
+
+function genitiv(o: Ord): string {
+  return `${o.former[1] ?? o.visa}s`;
+}
+
+type Lan = {
+  farg: string | null;
+  monster: string | null;
+  monsterfarg: string | null;
+  tillbehor: string[];
+  formagor: string[];
+  text: string;
+};
+
+/** Kännetecken att lägga på A. Tom rad faller tillbaka på artfärgen (bara blandning, inte sammansättning). */
+function lanAv(o: Ord): Lan {
+  const k = KANNETECKEN.djur[o.id];
+  if (k && !tomKannetecken(k)) {
+    return {
+      farg: k.farg,
+      monster: k.monster,
+      monsterfarg: k.monsterfarg,
+      tillbehor: k.tillbehor,
+      formagor: k.formagor,
+      text: k.beskrivning ?? `${genitiv(o)} färg`,
+    };
+  }
+  const kropp = o.del?.kropp ?? o.id;
+  return {
+    farg: ART[kropp]?.art ?? null,
+    monster: null,
+    monsterfarg: null,
+    tillbehor: [],
+    formagor: [],
+    text: `${genitiv(o)} färg`,
+  };
+}
+
+function appliceraLan(b: Bygg, lan: Lan, dolj: boolean) {
+  if (lan.farg && !b.fargOrd) b.fargHex = lan.farg;
+  if (lan.monster) {
+    b.monster = lan.monster;
+    b.monsterfarg = lan.monsterfarg;
+    if (dolj) b.monsterDolj = true;
+  }
+  for (const tb of lan.tillbehor) laggRecept(b, tb);
+  for (const fm of lan.formagor) laggFormaga(b, fm, null, "dolj");
+}
+
+/** Förledsdjur i en sammansättning. Tom rad gör inget, så mullvad inte färgar ett sammansatt ord. */
+function laggKannetecken(b: Bygg, o: Ord, dolj: boolean) {
+  const k = KANNETECKEN.djur[o.id];
+  if (!k || tomKannetecken(k)) return;
+  appliceraLan(
+    b,
+    {
+      farg: k.farg,
+      monster: k.monster,
+      monsterfarg: k.monsterfarg,
+      tillbehor: k.tillbehor,
+      formagor: k.formagor,
+      text: k.beskrivning ?? "",
+    },
+    dolj,
+  );
+}
+
+function djurAvToken(token: string): Ord | null {
+  const en = lasToken(token);
+  if (en?.t === "ord" && en.o.klass === "djur") return en.o;
+  return null;
+}
+
+type BlandTraff = { a: Ord; aForm: string; b: Ord | null; bRaw: string };
+
+function hoppaArtikel(tokens: string[], i: number): number {
+  const t = tokens[i] ?? "";
+  return t === "en" || t === "ett" ? i + 1 : i;
+}
+
+/** B ska vara sista ordet: ett djur, eller ett okänt ord. Ett känt icke-djur är inte en blandning. */
+function lasB(tokens: string[], i: number): { b: Ord | null; bRaw: string } | null {
+  const bRaw = tokens[i];
+  if (!bRaw || i + 1 !== tokens.length) return null;
+  const b = djurAvToken(bRaw);
+  if (!b && lasToken(bRaw)) return null;
+  return { b, bRaw };
+}
+
+function matchBlandning(tokens: string[]): BlandTraff | null {
+  const bl = ORD.funktionsord.blanda;
+  if (!bl || tokens.length < 3) return null;
+  const efter = new Set(bl.efter_a);
+  const fore = new Set(bl.fore);
+  const koppla = new Set(bl.koppla);
+  const halften = new Set(bl.halften);
+
+  {
+    const i = hoppaArtikel(tokens, 0);
+    const aForm = tokens[i] ?? "";
+    const a = djurAvToken(aForm);
+    if (a && efter.has(tokens[i + 1] ?? "") && (tokens[i + 2] ?? "") === "med") {
+      const b = lasB(tokens, hoppaArtikel(tokens, i + 3));
+      if (b) return { a, aForm, b: b.b, bRaw: b.bRaw };
+    }
+  }
+  {
+    let i = hoppaArtikel(tokens, 0);
+    if (fore.has(tokens[i] ?? "") && koppla.has(tokens[i + 1] ?? "")) {
+      i = hoppaArtikel(tokens, i + 2);
+      const aForm = tokens[i] ?? "";
+      const a = djurAvToken(aForm);
+      if (a && (tokens[i + 1] ?? "") === "och") {
+        const b = lasB(tokens, hoppaArtikel(tokens, i + 2));
+        if (b) return { a, aForm, b: b.b, bRaw: b.bRaw };
+      }
+    }
+  }
+  if (halften.has(tokens[0] ?? "")) {
+    const i = hoppaArtikel(tokens, 1);
+    const aForm = tokens[i] ?? "";
+    const a = djurAvToken(aForm);
+    if (a && halften.has(tokens[i + 1] ?? "")) {
+      const b = lasB(tokens, hoppaArtikel(tokens, i + 2));
+      if (b) return { a, aForm, b: b.b, bRaw: b.bRaw };
+    }
+  }
+  return null;
+}
+
+/** Två kända djur i en blandningsfras. null när mönstret saknas eller B är okänt. */
+export function blandPar(raw: string): { a: Ord; b: Ord } | null {
+  const m = matchBlandning(tokensAv(raw));
+  if (!m?.b) return null;
+  return { a: m.a, b: m.b };
+}
+
 function semantisera(tokens: string[]): Sem[] | Utfall {
+  const bland = matchBlandning(tokens);
+  if (bland) {
+    const sem: Sem[] = [{ t: "blanda", a: bland.a, aForm: bland.aForm, b: bland.b, bRaw: bland.bRaw }];
+    if (!bland.b) sem.push({ t: "okand", raw: bland.bRaw });
+    return sem;
+  }
   const sem: Sem[] = [];
   for (let i = 0; i < tokens.length; i++) {
     if (arOchSa(tokens, i)) {
@@ -547,6 +701,7 @@ function applyKomp(b: Bygg, k: Extract<Sem, { t: "komp" }>, mode: Mode, visaLed 
     for (const d of k.djur) {
       markera(b, d.id, false);
       if (d.signatur) laggFormaga(b, d.signatur, null, "dolj");
+      laggKannetecken(b, d, !visaLed);
     }
     return;
   }
@@ -561,7 +716,29 @@ function applyKomp(b: Bygg, k: Extract<Sem, { t: "komp" }>, mode: Mode, visaLed 
   markera(b, k.suffix.ord.id, false);
 }
 
+function byggBlandning(sem: Sem[]): Bygg | null {
+  const bland = sem.find((s): s is Extract<Sem, { t: "blanda" }> => s.t === "blanda");
+  if (!bland) return null;
+  const b = tomBygg();
+  sattDjur(b, bland.a, bland.aForm);
+  markera(b, bland.a.id, true);
+  if (bland.b) {
+    markera(b, bland.b.id, true);
+    const lan = lanAv(bland.b);
+    appliceraLan(b, lan, false);
+    const artikel = bland.a.genus === "n" ? "ett" : "en";
+    const formel = `${artikel} ${bland.a.visa} med ${lan.text}`;
+    b.blandFormel = formel;
+    b.meddelanden.push(`${formel.charAt(0).toLocaleUpperCase("sv")}${formel.slice(1)}!`);
+  }
+  for (const s of sem) if (s.t === "okand") b.okanda.push(s.raw);
+  if (b.okanda.length) b.meddelanden.unshift(OKAND_TEXT);
+  return b;
+}
+
 function byggFran(sem: Sem[]): Bygg | "sparr" {
+  const blandad = byggBlandning(sem);
+  if (blandad) return blandad;
   const b = tomBygg();
   let mode: Mode = "fore";
   // Sista djuret före med/som blir kroppen.
@@ -637,6 +814,8 @@ function byggFran(sem: Sem[]): Bygg | "sparr" {
       if (sparr === "sparr") return "sparr";
       continue;
     }
+    // Blandning byggs i byggBlandning och når inte hit. Hoppa så resten är vanliga ord.
+    if (s.t === "blanda") continue;
     const o = s.o;
     if (o.klass === "djur") {
       if (!(sist && o.id === sist.o.id && s.form === sist.form)) markera(b, o.id, true);
@@ -871,7 +1050,7 @@ export function tolka(raw: string, opts: TolkaOpts = {}): Utfall {
   const talat = byggd.antalSatt ? byggd.antal : byggd.plural ? 3 : 1;
   const tak = ORD.funktionsord.antal_tak ?? talat;
   const antal = Math.min(talat, Math.max(1, tak));
-  const formel = formelAv(byggd);
+  const formel = byggd.blandFormel ?? formelAv(byggd);
   const varelse: Varelse = {
     kropp: byggd.kropp,
     farg: byggd.fargHex,

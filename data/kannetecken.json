@@ -1,0 +1,2802 @@
+{
+ "version": 1,
+ "_om": "O1b: vad ett djur lånar ut när det blandas in i ett annat. Fylls av scripts/kannetecken-fyll.mjs. Kurerat för vanligaste-50.txt plus enhörning, zebra och noshörning. Övriga djur, mullvad inräknad, har tom rad.",
+ "djur": {
+  "kanin": {
+   "farg": "#F48FB1",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "kaninens rosa färg"
+  },
+  "katt": {
+   "farg": "#64B5F6",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "kattens blå färg"
+  },
+  "hund": {
+   "farg": "#FFD54F",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "hundens gula färg"
+  },
+  "drake": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [
+    "vingar"
+   ],
+   "beskrivning": "drakens vingar"
+  },
+  "häst": {
+   "farg": "#8D6E63",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "hästens bruna färg"
+  },
+  "fågel": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [
+    "vingar"
+   ],
+   "beskrivning": "fågelns vingar"
+  },
+  "fisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [
+    "fenor"
+   ],
+   "beskrivning": "fiskens fenor"
+  },
+  "groda": {
+   "farg": "#8BC34A",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "grodans gröna färg"
+  },
+  "kattunge": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kisse": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "valp": {
+   "farg": "#FFD54F",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "valpens gula färg"
+  },
+  "vovve": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "ponny": {
+   "farg": "#8D6E63",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "ponnyns bruna färg"
+  },
+  "föl": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "padda": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "gris": {
+   "farg": "#F8BBD0",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "grisens rosa färg"
+  },
+  "nöff": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "nasse": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kulting": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "dinosaurie": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "dino": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "uggla": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "ekorre": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "bäver": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "haj": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "enhörning": {
+   "farg": "#FAFAFA",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [
+    "horn"
+   ],
+   "formagor": [],
+   "beskrivning": "enhörningens horn och vita färg"
+  },
+  "elefant": {
+   "farg": "#9E9E9E",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "elefantens grå färg"
+  },
+  "lejon": {
+   "farg": "#FFC107",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "lejonets gula färg"
+  },
+  "zebra": {
+   "farg": null,
+   "monster": "ränder",
+   "monsterfarg": "#2B2B2B",
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "zebrans ränder"
+  },
+  "pingvin": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "räv": {
+   "farg": "#FB8C00",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "rävens orange färg"
+  },
+  "flodhäst": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "anka": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [
+    "vingar"
+   ],
+   "beskrivning": "ankans vingar"
+  },
+  "örn": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [
+    "vingar"
+   ],
+   "beskrivning": "örnens vingar"
+  },
+  "tyrannosaurus": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "giraff": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "panda": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "krabba": {
+   "farg": "#E53935",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "krabbans röda färg"
+  },
+  "delfin": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "orm": {
+   "farg": "#43A047",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "ormens gröna färg"
+  },
+  "clownfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "nemo": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "spöke": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "robot": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "yeti": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "snömänniska": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "astronaut": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "rymdfarare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "larv": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kyckling": {
+   "farg": "#FDD835",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "kycklingens gula färg"
+  },
+  "ko": {
+   "farg": "#FAFAFA",
+   "monster": "prickar",
+   "monsterfarg": "#2B2B2B",
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "kons prickar och vita färg"
+  },
+  "hjort": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [
+    "horn"
+   ],
+   "formagor": [],
+   "beskrivning": "hjortens horn"
+  },
+  "vildsvin": {
+   "farg": "#8D6E63",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "vildsvinets bruna färg"
+  },
+  "koala": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "apa": {
+   "farg": "#8D6E63",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "apans bruna färg"
+  },
+  "papegoja": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "isbjörn": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "tiger": {
+   "farg": "#FB8C00",
+   "monster": "ränder",
+   "monsterfarg": "#2B2B2B",
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "tigerns ränder och orange färg"
+  },
+  "människa": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kyrkogårdsvaktmästare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "gubbe": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "hjälte": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "riddare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "bågskytt": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "skelett": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "vampyr": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "zombie": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "nötknäppare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "rudolf": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "snögubbe": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "orch": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "troll": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "rymdvarelse": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "utomjording": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "flundra": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "plattfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "koi": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "karp": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "piraya": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "svärdfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "tonfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "lama": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "mops": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "alpacka": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "åsna": {
+   "farg": "#9E9E9E",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "åsnans grå färg"
+  },
+  "husky": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "draghund": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kronhjort": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "älg": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [
+    "horn"
+   ],
+   "formagor": [],
+   "beskrivning": "älgens horn"
+  },
+  "varg": {
+   "farg": "#9E9E9E",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "vargens grå färg"
+  },
+  "bläckfiskmonster": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "cyklop": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "jätte": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "demon": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "svampmonster": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "golem": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "stenvarelse": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "bläckfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "trollkarl": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "magiker": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "marulk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "fladdermus": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "bi": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [
+    "vingar"
+   ],
+   "beskrivning": "biets vingar"
+  },
+  "kirurgfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "corgi": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "ankylosaurus": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "plesiosaurie": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "sjöodjur": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "pterodactylus": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "flygödla": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "triceratops": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "hind": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "rådjur": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [
+    "horn"
+   ],
+   "formagor": [],
+   "beskrivning": "rådjurets horn"
+  },
+  "tjur": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [
+    "horn"
+   ],
+   "formagor": [],
+   "beskrivning": "tjurens horn"
+  },
+  "highlandsko": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "lamm": {
+   "farg": "#FAFAFA",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "lammets vita färg"
+  },
+  "flamingo": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "blåsfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "fugu": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "get": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [
+    "horn"
+   ],
+   "formagor": [],
+   "beskrivning": "getens horn"
+  },
+  "gås": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [
+    "vingar"
+   ],
+   "beskrivning": "gåsens vingar"
+  },
+  "hare": {
+   "farg": "#8D6E63",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "harens bruna färg"
+  },
+  "igelkott": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kolibri": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "manet": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kiwi": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "ara": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "murmeldjur": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "påfågel": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "pelikan": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "näbbdjur": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "noshörning": {
+   "farg": "#9E9E9E",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [
+    "horn"
+   ],
+   "formagor": [],
+   "beskrivning": "noshörningens horn"
+  },
+  "tupp": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "säl": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "tukan": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "småvarelse": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "nisse": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "höna": {
+   "farg": "#8D6E63",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "hönans bruna färg"
+  },
+  "tvättbjörn": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "spindel": {
+   "farg": "#2B2B2B",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "spindelns svarta färg"
+  },
+  "kalkon": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "mus": {
+   "farg": "#9E9E9E",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "musens grå färg"
+  },
+  "råtta": {
+   "farg": "#9E9E9E",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "råttans grå färg"
+  },
+  "tomte": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "gnom": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "trollkarlsgnom": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "carnotaurus": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "oviraptor": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "pachycephalosaurus": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "spinosaurus": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "stegosaurus": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kalv": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "mjölkko": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "får": {
+   "farg": "#FAFAFA",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "fårets vita färg"
+  },
+  "sköldpadda": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "häxa": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "trollslända": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "apatosaurus": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "långhals": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "parasaurolophus": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "velociraptor": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kampfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "klumpfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "mandarinfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "papegojfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "solfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "napoleonfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kofisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "trädmonster": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "oxe": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [
+    "horn"
+   ],
+   "formagor": [],
+   "beskrivning": "oxens horn"
+  },
+  "skimmel": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "monstergroda": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "monsterkatt": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "monsterhund": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "monsterduva": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "alpackakung": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "jättebi": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "glubb": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "virvelvarelse": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "geting": {
+   "farg": "#FDD835",
+   "monster": "ränder",
+   "monsterfarg": "#2B2B2B",
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "getingens ränder och gula färg"
+  },
+  "valfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "sjöborre": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "fjärilsfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "neontetra": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "snapper": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "mussla": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "utter": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kräfta": {
+   "farg": "#E53935",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "kräftans röda färg"
+  },
+  "vattensalamander": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "dingo": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "mullvad": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "vaktel": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "skorpion": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "mås": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "fiskmås": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "pungdjävul": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kattbjörn": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "myrlejon": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "bladlus": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "knäppare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kackerlacka": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "harkrank": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "dykarbagge": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "skalbagge": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "dyngbagge": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "tvestjärt": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "loppa": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "vattenskinnbagge": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "giraffvivel": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "svärmare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "nattfjäril": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "noshörningsbagge": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "blomfluga": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "fluga": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [
+    "vingar"
+   ],
+   "beskrivning": "flugans vingar"
+  },
+  "gräshoppa": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "vårtbitare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "guldögonslända": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "myra": {
+   "farg": "#2B2B2B",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "myrans svarta färg"
+  },
+  "bladskräcka": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "dagslända": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "mullvadssyrsa": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "syrsa": {
+   "farg": "#43A047",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "syrsans gröna färg"
+  },
+  "bönsyrsa": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "termit": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "pinnsyrsa": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "fjäril": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [
+    "vingar"
+   ],
+   "beskrivning": "fjärilens vingar"
+  },
+  "makaonfjäril": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "sandjägare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "sköldbagge": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "hornstrit": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "skräddare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kung": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "polis": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "farfar": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "morfar": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "chef": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "bror": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kille": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "syster": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kompis": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "sjörövare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "scout": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "farbror": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "moster": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "svan": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "abborre": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "gädda": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "mask": {
+   "farg": "#F48FB1",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "maskens rosa färg"
+  },
+  "daggmask": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "mamma": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "pappa": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "lärare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "pojke": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "cowboy": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "byggarbetare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "arbetare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "pirat": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "drottning": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "tjej": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "flicka": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "skejtare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "soldat": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "expedit": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "bebis": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "spelare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "bonde": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "ninja": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kvinna": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "clown": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "doktor": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "läkare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kock": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "mormor": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "farmor": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "prins": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "prinsessa": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "barn": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "älva": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "fe": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "frisör": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "sjuksköterska": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "dykare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "brevbärare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "målare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "snickare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kapten": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "fiskare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "viking": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "superhjälte": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "tjuv": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "forskare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "konstnär": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "ballerina": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "dansare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "jägare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "skogshuggare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "vakt": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kejsare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "mumie": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "alien": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "servitör": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "sångare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "jultomte": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "brandman": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "äventyrare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "detektiv": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "sjöman": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "rörmokare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "mekaniker": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "snigel": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "nyckelpiga": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "sjöstjärna": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "humla": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "krokodil": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "ödla": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "stork": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "struts": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kamel": {
+   "farg": "#C27138",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "kamelens bruna färg"
+  },
+  "känguru": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "späckhuggare": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "blåval": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "beluga": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "sjölejon": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "duva": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [
+    "vingar"
+   ],
+   "beskrivning": "duvans vingar"
+  },
+  "kråka": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "snöuggla": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "drakfisk": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "makrill": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "sjöjungfru": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "havsfru": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "ängel": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "dvärg": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "ande": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "djinn": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kraken": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "pegasus": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "fjällräv": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "polarräv": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "björn": {
+   "farg": "#8D6E63",
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": "björnens bruna färg"
+  },
+  "hamster": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "marsvin": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "fenix": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "sjöorm": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "narval": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  },
+  "kapybara": {
+   "farg": null,
+   "monster": null,
+   "monsterfarg": null,
+   "tillbehor": [],
+   "formagor": [],
+   "beskrivning": null
+  }
+ }
+}

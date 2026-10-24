@@ -71,7 +71,13 @@
    "mini": "storlek-"
   },
   "antal_tak": 6,
-  "antal_not": "Högst antal_tak djur per mening. 'tio katter' ger 6 katter och formeln säger ändå 'tio katter'."
+  "antal_not": "Högst antal_tak djur per mening. 'tio katter' ger 6 katter och formeln säger ändå 'tio katter'.",
+  "blanda": {
+   "efter_a": ["blandad", "blandat", "blandade", "korsad", "korsat", "korsade", "mixad", "mixat"],
+   "fore": ["blandning", "korsning", "mix"],
+   "koppla": ["av", "mellan"],
+   "halften": ["hälften", "halva"]
+  }
  },
  "sammansattningar": {
   "regel": "Ett okänt ord delas bakifrån: sista delen ska vara ett djur (eller ett tillbehör efter \"med\"). Förlederna läses från vänster. Ett fogande s mellan delarna godtas alltid (regnbågskanin, fågelskatt).",
