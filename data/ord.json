@@ -384,7 +384,8 @@
     "fågel",
     "fågeln",
     "fåglar",
-    "fåglarna"
+    "fåglarna",
+    "kanariefågel"
    ],
    "sammansattningsled": [
     "fågel",
@@ -6151,7 +6152,10 @@
     "brodern",
     "brorn",
     "bröder",
-    "bröderna"
+    "bröderna",
+    "morbror",
+    "storebror",
+    "lillebror"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
@@ -6187,7 +6191,9 @@
     "syster",
     "systern",
     "systrar",
-    "systrarna"
+    "systrarna",
+    "storasyster",
+    "lillasyster"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
