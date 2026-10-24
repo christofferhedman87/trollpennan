@@ -265,6 +265,14 @@ function steg(a: number, b: number, s: number): number[] {
  * fritt bete om det går, annars mindre vandring, och krympning bara om den behövs.
  */
 export function placera(alla: readonly Sparad[], plats?: Plats): Map<string, Lage> {
+  const pid = plats?.id ?? START_PLATS;
+  if (pid !== senastPlats) {
+    senastPlats = pid;
+    satMinne.clear();
+    underMinne.clear();
+    torrMinne.clear();
+    radMinne.clear();
+  }
   const steg = PLACERING.vandra?.steg ?? [1];
   const minst = steg.at(-1) ?? 1;
   const alltVaket = (l: Map<string, Lage>) => [...l.values()].every((q) => !q.stall);
@@ -321,8 +329,11 @@ export function placera(alla: readonly Sparad[], plats?: Plats): Map<string, Lag
   return tatast;
 }
 
-/** Underlaget beror bara på kroppen, storleksordet, rollen, platsen och rutan: räknas en gång per ruta och sparas. */
-const underMinne = new Map<string, Map<number, boolean>>();
+/** Underlaget per kropp, sedan skala/roll/band, sedan ruta. Ingen ny sträng per ruta. Töms när platsen byts. */
+const underMinne = new Map<string, Map<number, Map<number, boolean>>>();
+/** Torr mark per ruta (x, z, marginal). En plats i taget, så nyckeln behöver inget plats-id. */
+const torrMinne = new Map<number, boolean>();
+let senastPlats = "";
 
 function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel: number, krympAldre: boolean, nyStorlek?: number, nyZmax?: number, aldreTak?: number): Map<string, Lage> {
   const regel = regelFor(plats);
@@ -365,12 +376,14 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
     const platt = !!mmS && mmS[1]! < 0.5 * Math.max(mmS[0]!, mmS[2]!);
     const smaKrav = (d: Sparad) => sma && nr === 0 && (d.skala || 1) / (d0.skala || 1) < vaxMax - 1e-9;
     const underFor = (d: Sparad) => {
-      const uKey = `${plats?.id ?? ""}|${d.kropp}|${d.skala}|${roll}|${band.z}`;
-      let under = underMinne.get(uKey);
-      if (!under) {
-        if (underMinne.size > 400) underMinne.clear();
-        underMinne.set(uKey, (under = new Map()));
-      }
+      let perKropp = underMinne.get(d.kropp);
+      if (!perKropp) underMinne.set(d.kropp, (perKropp = new Map()));
+      const rollN = roll === "mark" ? 0 : roll === "vatten" ? 1 : roll === "luft" ? 2 : 3;
+      const z0 = Math.round(band.z[0] * 1000) + 30000;
+      const z1 = Math.round(band.z[1] * 1000) + 30000;
+      const nyckel = ((Math.round((d.skala || 1) * 1000) * 4 + rollN) * 100000 + z0) * 100000 + z1;
+      let under = perKropp.get(nyckel);
+      if (!under) perKropp.set(nyckel, (under = new Map()));
       return under;
     };
     type Fynd = { lage: Lage; m: ReturnType<typeof kroppMatt>; huvud: number; tackt: number; fel: number; kost: number; k?: Ruta };
@@ -456,8 +469,9 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
             tackt += varst(q, q, r, c, false);
             huvud += varst(q, q, r, c, true) / fh0;
           }
-          tackt += dekorSkymd(plats, r, c, z, false); // mot kroppens mitt: dekor mellan mitten och framsidan skymmer också
-          huvud += dekorSkymd(plats, r, c, z, true) / fh0;
+          dekorSkymd(plats, r, c, z, false); // ett svep: kropp och huvud (dekorUtK/dekorUtH)
+          tackt += dekorUtK;
+          huvud += dekorUtH / fh0;
           let kost = Math.max(0, tackt - grans) + Math.max(0, huvud - huvudMax);
           for (const s of satta) {
             if (kost > 0 && !medStall) break;
@@ -622,15 +636,12 @@ function underlag(roll: Roll, plats: Plats | undefined, x: number, z: number, d:
   const kant = Math.max(fotKant(d.kropp, (d.skala || 1) * m.f), Math.max(m.halv, m.djup) + FOT_MARGINAL);
   // kanten avrundas uppåt till 0,05 (lite större marginal, aldrig mindre) så att alla kroppar delar samma uträkning per ruta
   const marg = Math.ceil(Math.max(kant, plats.kant_marginal ?? KANT_MARGINAL) * 20 - 1e-9) / 20;
-  const k = `${plats.id}|${x}|${z}|${marg}`;
-  let ok = torrMinne.get(k);
-  if (ok === undefined) {
-    if (torrMinne.size > 200000) torrMinne.clear();
-    torrMinne.set(k, (ok = torrKropp(plats, x, z, marg)));
-  }
+  // x och z ligger på tusendelar inom ±64, marginalen på 0,05. Fälten går inte in i varandra.
+  const nyckel = Math.round(marg * 20) * 2 ** 34 + Math.round((z + 64) * 1000) * 2 ** 17 + Math.round((x + 64) * 1000);
+  let ok = torrMinne.get(nyckel);
+  if (ok === undefined) torrMinne.set(nyckel, (ok = torrKropp(plats, x, z, marg)));
   return ok;
 }
-const torrMinne = new Map<string, boolean>();
 
 const cache = new Map<string, Map<string, Lage>>();
 /** placera med minne: samma skapelser på samma plats ger samma svar utan ny uträkning. */
