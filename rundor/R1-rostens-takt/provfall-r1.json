@@ -1,0 +1,122 @@
+{
+  "_om": "R1 Röstens takt – facit för den rena schemaläggaren (src/spel/rostKo.ts) med falsk klocka. Arkitekten 2026-10-24. Tider i ms. Varje spelad rad låter las_ms (standard 1800) om inget annat står, sedan är den klar. Händelser: {ms, typ:'oppna'} (introt slut, kön öppnas; kön börjar stängd), {ms, typ:'handling'} (barnet gör något = rostKo.handling()), {ms, typ:'anmal', kalla, text, las_ms?}. Förväntat: 'spelas' = rader som ska starta, i den ordningen, med start i [min, max]; 'stryks' = rader som aldrig får spelas (loggas satt 'struken'); 'avbryts' = rader som startar men tonas ut (satt 'avbruten') och inte spelas om. Takten läses ur data/rost-takt.json; ändras ett tal där ska facit räknas om, inte proven tänjas.",
+  "fall": [
+    {
+      "namn": "gris – ett svar och en belöning, resten stryks (dagens loggsekvens 243,9–263,8 s)",
+      "handelser": [
+        { "ms": 0, "typ": "oppna" },
+        { "ms": 0, "typ": "handling" },
+        { "ms": 0, "typ": "anmal", "kalla": "hemligt_ord", "text": "Nytt ord i boken: gris!" },
+        { "ms": 0, "typ": "anmal", "kalla": "mossa_text", "text": "Toppen! Det skriver jag upp i Pennans bok." },
+        { "ms": 0, "typ": "anmal", "kalla": "mossa_beloning", "text": "+1 stjärnor från Mossa!" },
+        { "ms": 0, "typ": "anmal", "kalla": "stjarnor", "text": "+1 stjärna!" },
+        { "ms": 0, "typ": "anmal", "kalla": "okand_ordbit", "text": "Ordet en kan jag inte än …" },
+        { "ms": 280, "typ": "anmal", "kalla": "hej", "text": "Hej! Här kommer en gris!" }
+      ],
+      "forvantat": {
+        "spelas": [
+          { "text": "Hej! Här kommer en gris!", "min": 280, "max": 450 },
+          { "text": "Nytt ord i boken: gris!", "min": 2080, "max": 2300 }
+        ],
+        "stryks": ["Toppen! Det skriver jag upp i Pennans bok.", "+1 stjärnor från Mossa!", "+1 stjärna!", "Ordet en kan jag inte än …"]
+      }
+    },
+    {
+      "namn": "efter introt – guiden väntar på barnet, nytt coachsteg ersätter gammalt",
+      "handelser": [
+        { "ms": 0, "typ": "anmal", "kalla": "gata", "text": "Mjau! Jag är en liten bebis. Vem är jag?" },
+        { "ms": 2000, "typ": "oppna" },
+        { "ms": 2000, "typ": "anmal", "kalla": "coach", "text": "Tryck på Pennans bok och skriv ett djur!" },
+        { "ms": 5000, "typ": "handling" },
+        { "ms": 5000, "typ": "anmal", "kalla": "stjarnor", "text": "+1 stjärna!" },
+        { "ms": 5280, "typ": "anmal", "kalla": "hej", "text": "Hej! Här kommer en katt!" },
+        { "ms": 5500, "typ": "anmal", "kalla": "coach", "text": "Bengtsson vill be dig om något. Tryck på honom!" }
+      ],
+      "forvantat": {
+        "spelas": [
+          { "text": "Hej! Här kommer en katt!", "min": 5280, "max": 5450 },
+          { "text": "+1 stjärna!", "min": 7080, "max": 7300 },
+          { "text": "Bengtsson vill be dig om något. Tryck på honom!", "min": 17080, "max": 17300 }
+        ],
+        "stryks": ["Tryck på Pennans bok och skriv ett djur!", "Mjau! Jag är en liten bebis. Vem är jag?"]
+      }
+    },
+    {
+      "namn": "svaret går först – barnets handling avbryter guiden, guiden läses inte om",
+      "handelser": [
+        { "ms": 0, "typ": "oppna" },
+        { "ms": 0, "typ": "handling" },
+        { "ms": 280, "typ": "anmal", "kalla": "hej", "text": "Hej! Här kommer en katt!" },
+        { "ms": 20000, "typ": "anmal", "kalla": "coach", "text": "Väck tre djur till!", "las_ms": 3000 },
+        { "ms": 20500, "typ": "handling" },
+        { "ms": 20780, "typ": "anmal", "kalla": "hej", "text": "Hej! Här kommer en hund!" }
+      ],
+      "forvantat": {
+        "spelas": [
+          { "text": "Hej! Här kommer en katt!", "min": 280, "max": 450 },
+          { "text": "Väck tre djur till!", "min": 20000, "max": 20200 },
+          { "text": "Hej! Här kommer en hund!", "min": 20780, "max": 21000 }
+        ],
+        "avbryts": ["Väck tre djur till!"],
+        "stryks": []
+      }
+    },
+    {
+      "namn": "takt och bäst-före – en följdrad som inte hinner inom 6 s stryks, nästa spelas",
+      "handelser": [
+        { "ms": 0, "typ": "oppna" },
+        { "ms": 0, "typ": "handling" },
+        { "ms": 0, "typ": "anmal", "kalla": "stjarnor", "text": "+1 stjärna!" },
+        { "ms": 280, "typ": "anmal", "kalla": "hej", "text": "Hej! Här kommer en katt!" },
+        { "ms": 4000, "typ": "anmal", "kalla": "sov", "text": "Zzz …" },
+        { "ms": 13000, "typ": "anmal", "kalla": "sov", "text": "Snark …" }
+      ],
+      "forvantat": {
+        "spelas": [
+          { "text": "Hej! Här kommer en katt!", "min": 280, "max": 450 },
+          { "text": "+1 stjärna!", "min": 2080, "max": 2300 },
+          { "text": "Snark …", "min": 13000, "max": 13200 }
+        ],
+        "stryks": ["Zzz …"]
+      }
+    },
+    {
+      "namn": "dubblett – samma text som spelas, ligger i kön eller startade inom 4 s spelas inte igen",
+      "handelser": [
+        { "ms": 0, "typ": "oppna" },
+        { "ms": 0, "typ": "handling" },
+        { "ms": 280, "typ": "anmal", "kalla": "hej", "text": "Hej! Här kommer en katt!" },
+        { "ms": 1000, "typ": "anmal", "kalla": "tapp", "text": "Hej! Här kommer en katt!" },
+        { "ms": 3000, "typ": "anmal", "kalla": "tapp", "text": "Hej! Här kommer en katt!" },
+        { "ms": 7000, "typ": "anmal", "kalla": "tapp", "text": "Hej! Här kommer en katt!" }
+      ],
+      "forvantat": {
+        "spelas": [
+          { "text": "Hej! Här kommer en katt!", "min": 280, "max": 450 },
+          { "text": "Hej! Här kommer en katt!", "min": 7000, "max": 7200 }
+        ],
+        "antal_strukna": 2,
+        "stryks": []
+      }
+    },
+    {
+      "namn": "dygnstext – inte de första 3 minuterna, sedan ja",
+      "handelser": [
+        { "ms": 0, "typ": "oppna" },
+        { "ms": 0, "typ": "handling" },
+        { "ms": 280, "typ": "anmal", "kalla": "hej", "text": "Hej! Här kommer en katt!" },
+        { "ms": 60000, "typ": "anmal", "kalla": "dygn", "text": "Solen går ner. Snart är det kväll på gården." },
+        { "ms": 60000, "typ": "anmal", "kalla": "dygn", "text": "Titta, den första stjärnan!" },
+        { "ms": 200000, "typ": "anmal", "kalla": "dygn", "text": "God morgon! En ny dag på gården." },
+        { "ms": 200000, "typ": "anmal", "kalla": "dygn", "text": "Tuppen gal! Nej förresten, vi har ingen tupp. God morgon ändå!" }
+      ],
+      "forvantat": {
+        "spelas": [
+          { "text": "Hej! Här kommer en katt!", "min": 280, "max": 450 },
+          { "text": "God morgon! En ny dag på gården.", "min": 200000, "max": 200200 }
+        ],
+        "stryks": ["Solen går ner. Snart är det kväll på gården.", "Titta, den första stjärnan!", "Tuppen gal! Nej förresten, vi har ingen tupp. God morgon ändå!"]
+      }
+    }
+  ]
+}

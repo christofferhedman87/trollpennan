@@ -1,0 +1,280 @@
+{
+ "url": "https://trollpennan.christofferhedman87.workers.dev/",
+ "tIntroSlut": 24658.90000000596,
+ "rost": [
+  {
+   "t": 24368.5,
+   "text": "Guldord! Du skrev katt alldeles själv!",
+   "fil": "/ljud/rost/97a4f5394ddf5481.mp3",
+   "satt": "mall",
+   "delar": 3,
+   "dynamisk": false
+  },
+  {
+   "t": 30129.5,
+   "text": "Tryck på Pennans bok och skriv ett djur!",
+   "fil": "/ljud/rost/4729db4b30aaecc2.mp3",
+   "satt": "fil",
+   "delar": 1,
+   "dynamisk": false
+  },
+  {
+   "t": 31835.09999999404,
+   "text": "+1 stjärna!",
+   "fil": "/ljud/rost/3e9dc37fe86a6d46.mp3",
+   "satt": "fil",
+   "delar": 1,
+   "dynamisk": false
+  },
+  {
+   "t": 33982.70000001788,
+   "text": "Mjau! Jag är en liten bebis med morrhår och mjuka tassar.",
+   "fil": "/ljud/rost/8e9b4842495c1f94.mp3",
+   "satt": "fil",
+   "delar": 1,
+   "dynamisk": false
+  },
+  {
+   "t": 39035.90000000596,
+   "text": "Bengtsson vill be dig om något. Tryck på honom!",
+   "fil": "/ljud/rost/e6fd5454d3584d43.mp3",
+   "satt": "fil",
+   "delar": 1,
+   "dynamisk": false
+  },
+  {
+   "t": 43452.80000001192,
+   "text": "Hej! Här kommer en katt!",
+   "fil": "/ljud/rost/111b0ad1bd7eeb7c.mp3",
+   "satt": "mall",
+   "delar": 2,
+   "dynamisk": false
+  },
+  {
+   "t": 48186.59999999404,
+   "text": "Wow, ett ovanligt djur! Ett sådant har du inte haft förut.",
+   "fil": "/ljud/rost/7a7af21b73c23d20.mp3",
+   "satt": "mall",
+   "delar": 3,
+   "dynamisk": false
+  },
+  {
+   "t": 55765.90000000596,
+   "text": "Hej! Här kommer en blå hund!",
+   "fil": null,
+   "satt": "tyst",
+   "dynamisk": true
+  },
+  {
+   "t": 57467.5,
+   "text": "Guldord! Du skrev hund alldeles själv!",
+   "fil": "/ljud/rost/97a4f5394ddf5481.mp3",
+   "satt": "mall",
+   "delar": 3,
+   "dynamisk": false
+  },
+  {
+   "t": 64229.80000001192,
+   "text": "Hej! Här kommer en gris!",
+   "fil": "/ljud/rost/111b0ad1bd7eeb7c.mp3",
+   "satt": "mall",
+   "delar": 2,
+   "dynamisk": false
+  },
+  {
+   "t": 64490.40000000596,
+   "text": "+2 stjärnor!",
+   "fil": "/ljud/rost/a526d8997e3fb5bb.mp3",
+   "satt": "mall",
+   "delar": 2,
+   "dynamisk": false
+  },
+  {
+   "t": 68555.30000001192,
+   "text": "Guldord! Du skrev gris alldeles själv!",
+   "fil": "/ljud/rost/97a4f5394ddf5481.mp3",
+   "satt": "mall",
+   "delar": 3,
+   "dynamisk": false
+  },
+  {
+   "t": 75185.40000000596,
+   "text": "Nytt ord i boken: gris!",
+   "fil": "/ljud/rost/b479e02d2f02ecfd.mp3",
+   "satt": "mall",
+   "delar": 2,
+   "dynamisk": false
+  },
+  {
+   "t": 79690.90000000596,
+   "text": "+2 stjärnor!",
+   "fil": "/ljud/rost/a526d8997e3fb5bb.mp3",
+   "satt": "mall",
+   "delar": 2,
+   "dynamisk": false
+  }
+ ],
+ "filer": [
+  {
+   "t": 5443.0999999940395,
+   "fil": "/ljud/rost/d2ae27a14447d446.mp3"
+  },
+  {
+   "t": 24368.59999999404,
+   "fil": "/ljud/rost/97a4f5394ddf5481.mp3"
+  },
+  {
+   "t": 27221.90000000596,
+   "fil": "/ljud/rost/5793af5a27b070bb.mp3"
+  },
+  {
+   "t": 28446.70000001788,
+   "fil": "/ljud/rost/5c52ce9854b7a2c2.mp3"
+  },
+  {
+   "t": 30129.59999999404,
+   "fil": "/ljud/rost/4729db4b30aaecc2.mp3"
+  },
+  {
+   "t": 31835.20000001788,
+   "fil": "/ljud/rost/3e9dc37fe86a6d46.mp3"
+  },
+  {
+   "t": 33982.90000000596,
+   "fil": "/ljud/rost/8e9b4842495c1f94.mp3"
+  },
+  {
+   "t": 39035.90000000596,
+   "fil": "/ljud/rost/e6fd5454d3584d43.mp3"
+  },
+  {
+   "t": 43452.80000001192,
+   "fil": "/ljud/rost/111b0ad1bd7eeb7c.mp3"
+  },
+  {
+   "t": 45204.09999999404,
+   "fil": "/ljud/rost/acae41baef1b00c3.mp3"
+  },
+  {
+   "t": 48186.70000001788,
+   "fil": "/ljud/rost/7a7af21b73c23d20.mp3"
+  },
+  {
+   "t": 49787.90000000596,
+   "fil": "/ljud/rost/59a33a47b2347470.mp3"
+  },
+  {
+   "t": 51268.90000000596,
+   "fil": "/ljud/rost/db967993a3539e8c.mp3"
+  },
+  {
+   "t": 57467.59999999404,
+   "fil": "/ljud/rost/97a4f5394ddf5481.mp3"
+  },
+  {
+   "t": 60071.59999999404,
+   "fil": "/ljud/rost/59d44ce65479a4a4.mp3"
+  },
+  {
+   "t": 61271.80000001192,
+   "fil": "/ljud/rost/5c52ce9854b7a2c2.mp3"
+  },
+  {
+   "t": 64229.90000000596,
+   "fil": "/ljud/rost/111b0ad1bd7eeb7c.mp3"
+  },
+  {
+   "t": 64490.59999999404,
+   "fil": "/ljud/rost/a526d8997e3fb5bb.mp3"
+  },
+  {
+   "t": 65504.80000001192,
+   "fil": "/ljud/rost/c1667ce61df0ce0a.mp3"
+  },
+  {
+   "t": 68555.30000001192,
+   "fil": "/ljud/rost/97a4f5394ddf5481.mp3"
+  },
+  {
+   "t": 71115.40000000596,
+   "fil": "/ljud/rost/b13b758cc743a486.mp3"
+  },
+  {
+   "t": 71994,
+   "fil": "/ljud/rost/5c52ce9854b7a2c2.mp3"
+  },
+  {
+   "t": 75185.5,
+   "fil": "/ljud/rost/b479e02d2f02ecfd.mp3"
+  },
+  {
+   "t": 77149.09999999404,
+   "fil": "/ljud/rost/b13b758cc743a486.mp3"
+  },
+  {
+   "t": 79691,
+   "fil": "/ljud/rost/a526d8997e3fb5bb.mp3"
+  },
+  {
+   "t": 80562.5,
+   "fil": "/ljud/rost/c1667ce61df0ce0a.mp3"
+  }
+ ],
+ "bann": [
+  {
+   "t": 24423.70000001788,
+   "text": "Guldord! Du skrev katt alldeles själv!"
+  },
+  {
+   "t": 31863.09999999404,
+   "text": "+1 stjärna!"
+  },
+  {
+   "t": 48263.09999999404,
+   "text": "Wow, ett ovanligt djur! Ett sådant har du inte haft förut."
+  },
+  {
+   "t": 57563.09999999404,
+   "text": "Guldord! Du skrev hund alldeles själv!"
+  },
+  {
+   "t": 64563.80000001192,
+   "text": "+2 stjärnor!"
+  },
+  {
+   "t": 68563,
+   "text": "Guldord! Du skrev gris alldeles själv!"
+  },
+  {
+   "t": 75263.09999999404,
+   "text": "Nytt ord i boken: gris!"
+  },
+  {
+   "t": 79763.09999999404,
+   "text": "+2 stjärnor!"
+  }
+ ],
+ "hand": [
+  {
+   "t": 5312.700000017881,
+   "text": "titel-borja"
+  },
+  {
+   "t": 24290.70000001788,
+   "text": "intro-vakna"
+  },
+  {
+   "t": 30998.70000001788,
+   "text": "vakna en katt"
+  },
+  {
+   "t": 47994.09999999404,
+   "text": "vakna en blå hund"
+  },
+  {
+   "t": 63738,
+   "text": "vakna en gris"
+  }
+ ],
+ "sidfel": []
+}
