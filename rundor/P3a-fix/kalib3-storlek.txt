@@ -1,0 +1,18 @@
+storleken: siluettens ruta / regelns låda (minst, median; regeln använder nu):
+  anka         bredd 0.74 / 0.87  höjd 0.71 / 0.74  n 30  regeln 0.7 × 0.7 (standard)
+  blackfisk    bredd 0.86 / 0.88  höjd 0.85 / 0.87  n 15  regeln 0.7 × 0.7 (standard)
+  elefant      bredd 0.81 / 0.88  höjd 0.76 / 0.78  n 41  regeln 0.7 × 0.7 (standard)
+  giraff       bredd 0.82 / 0.93  höjd 0.71 / 0.79  n 49  regeln 0.7 × 0.7 (standard)
+  hund         bredd 0.84 / 0.92  höjd 0.73 / 0.78  n 59  regeln 0.7 × 0.7 (standard)
+  häst         bredd 0.83 / 0.92  höjd 0.72 / 0.80  n 63  regeln 0.7 × 0.7 (standard)
+  kaffekopp    bredd 0.82 / 0.89  höjd 0.78 / 0.79  n 8  regeln 0.7 × 0.7 (standard)
+  kanin        bredd 0.83 / 0.95  höjd 0.72 / 0.82  n 46  regeln 0.7 × 0.7 (standard)
+  katt         bredd 0.81 / 0.94  höjd 0.85 / 0.92  n 79  regeln 0.7 × 0.7 (standard)
+  ko           bredd 0.83 / 0.90  höjd 0.73 / 0.78  n 48  regeln 0.7 × 0.7 (standard)
+  narval       bredd 0.89 / 0.97  höjd 0.67 / 0.74  n 14  regeln 0.7 × 0.7 (standard)  ← skärmen mindre än regeln
+  puck         bredd 0.86 / 0.95  höjd 0.64 / 0.64  n 4  regeln 0.7 × 0.7 (standard)  ← skärmen mindre än regeln
+  sal          bredd 0.74 / 0.91  höjd 0.67 / 0.78  n 34  regeln 0.7 × 0.7 (standard)  ← skärmen mindre än regeln
+  sjukhus      bredd 0.98 / 0.98  höjd 0.94 / 0.96  n 9  regeln 0.7 × 0.7 (standard)
+  slott        bredd 0.97 / 0.97  höjd 0.88 / 0.91  n 31  regeln 0.7 × 0.7 (standard)
+  vaxthus      bredd 0.98 / 0.99  höjd 0.92 / 0.96  n 16  regeln 0.7 × 0.7 (standard)
+förslag siluett_andel (minsta, nedåt till 0,05): {"anka":[0.7,0.7],"blackfisk":[0.85,0.85],"elefant":[0.8,0.75],"giraff":[0.8,0.7],"hund":[0.8,0.7],"häst":[0.8,0.7],"kaffekopp":[0.8,0.75],"kanin":[0.8,0.7],"katt":[0.8,0.85],"ko":[0.8,0.7],"narval":[0.85,0.65],"puck":[0.85,0.6],"sal":[0.7,0.65],"sjukhus":[0.95,0.9],"slott":[0.95,0.85],"vaxthus":[0.95,0.9]}

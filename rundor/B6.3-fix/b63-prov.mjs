@@ -234,7 +234,7 @@ for (let v = 0; v < Number(arg("varv", "2")); v++) {
   ord.splice(Math.floor(r() * 10), 0, "en fisk");
   varv.push({ namn: `I${5 + v}`, ord, fro: fro0 + v * 7919 });
 }
-// Ängen rymmer 10; fler och den äldsta går till stallet. Därför 10 per varv.
+// 10 per varv. P3a: de som inte får en ledig ruta somnar (se nedan).
 for (const { namn, ord, fro } of varv) {
   await blok(namn, async () => {
     const { ctx, p } = await sida({});
@@ -243,7 +243,12 @@ for (const { namn, ord, fro } of varv) {
       await p.waitForTimeout(2300);
     }
     await stangBok(p);
-    const spar = await p.evaluate(() => JSON.parse(localStorage.getItem("trollpennan-v2") ?? "{}").ang ?? []);
+    // P3a (Arkitektens kapacitetsbeslut 18:59/21:40): ängen rymmer inte alltid 10 – den som inte får en ledig ruta somnar
+    // (sovande/stall) och kan väckas. Kravet "ingen kropp i dammen" gäller alla vakna; de sovande räknas som att de har
+    // ett läge (i stallet). Förut: "Ängen rymmer 10" och alla 10 skulle stå på ängen.
+    const st = await p.evaluate(() => JSON.parse(localStorage.getItem("trollpennan-v2") ?? "{}"));
+    const spar = st.ang ?? [];
+    const sover = [...(st.sovande ?? []), ...(st.stall ?? [])];
     const varst = {};
     const mitt = {};
     for (let i = 0; i < 12; i++) {
@@ -258,8 +263,8 @@ for (const { namn, ord, fro } of varv) {
       await p.waitForTimeout(400);
     }
     const land = Object.entries(varst).filter(([k]) => k !== "fisk");
-    kolla(`${namn} alla 10 skapelser har ett läge`, Object.keys(varst).length === spar.length && spar.length === ord.length, { ord, fro, kroppar: spar.map((d) => d.kropp) });
-    kolla(`${namn} ingen kropp i dammen (kanten minus halva bredden ≥ 0,1 i alla 12 mätningar)`, land.length >= ord.filter((o) => o !== "en fisk").length && land.every(([, a]) => a >= 0.1), { kropp: varst, mitt, fro });
+    kolla(`${namn} alla 10 skapelser har ett läge (vakna på ängen, eller sover i stallet – P3a)`, Object.keys(varst).length === spar.length && spar.length + sover.length === ord.length && spar.length >= 1, { ord, fro, kroppar: spar.map((d) => d.kropp), sover: sover.map((d) => d.kropp) });
+    kolla(`${namn} ingen kropp i dammen (kanten minus halva bredden ≥ 0,1 i alla 12 mätningar)`, land.length >= spar.filter((d) => d.kropp !== "fisk").length && land.every(([, a]) => a >= 0.1), { kropp: varst, mitt, fro });
     if (ord.includes("en fisk")) kolla(`${namn} fisken simmar i dammen`, (varst.fisk ?? 1) < 0, { fisk: varst.fisk });
     await bild(p, `b63-${namn}-damm.png`);
     await ctx.close();

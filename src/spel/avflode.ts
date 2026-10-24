@@ -1,6 +1,7 @@
 import type { SparatBygge } from "./bygge.ts";
 import { brygga, type Sparad } from "./brygga.ts";
 import { fyll } from "./fyll.ts";
+import { replik } from "./replik.ts";
 import { useMinne } from "./minne.ts";
 import { tolkaGava } from "../tolk/gavotolk.ts";
 import {
@@ -227,6 +228,7 @@ export function bliVan(id: string): FlodeSvar {
     stj += k.stj;
   }
   for (const s of somnade) brygga.taBort(s.uid);
+  texter.push(...somnade.map((s) => replik(s, "sover"))); // P3a-fix (beslut B): varje somnad får sin egen banner
   return { texter, stj, hem: true, sparad, somnade };
 }
 

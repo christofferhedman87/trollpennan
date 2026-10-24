@@ -1,5 +1,11 @@
 // B6.6: "skapad men osynlig" – varje tillgång med modell (entiteter.json) läggs på ängen, tio åt gången, och mäts på skärmen
 // (window.__tredSyn: skärmrutan för modellens yta, antal synliga meshar). Playwright 375x812.
+// P3a (Arkitekten 18:59): kraven skrivna om till placeringsregeln. Tio på en gång ryms inte alla vakna på ängen:
+//   - ingen modell är osynlig: var och en har en synlig mesh (vaken eller i stallet), och de vakna en rimlig storlek;
+//   - de vakna (window.__tredPos stall = false) syns till minst 80 % (de tre nyaste) eller 65 % (äldre) av sin ritade
+//     ruta, med 0,1 mätmarginal som P3 (modellens form mot rutan): ≥ 70 % resp. ≥ 55 %. Skymt (de framför, de
+//     reserverade rutorna i data/placering.json) och utanför bilden räknas bort;
+//   - de som inte fick plats står i stallet (stall = true) – där ritas de, men var spelar ingen roll.
 //   node rundor/B6.6-fix/b66-prov.mjs [--bara kvast,teve] [--ut <json>] [--bilder <mapp> [--alltid]]   (exit 0 = alla syns)
 import fs from "node:fs";
 import http from "node:http";
@@ -38,13 +44,24 @@ const fel = [];
 const matt = {};
 const sparad = (kropp, i) => ({ uid: `b66-${i}-${kropp}`, // i = plats i gruppen (0–9)
   kropp, formel: `en ${kropp}`, beskrivning: "", skala: 1, alpha: 1, formagor: [], tillbehor: [], overraskningar: [], skapad: 1000 + i });
-const andelIBild = (m) => { const ix = Math.max(0, Math.min(375, m.x + m.w) - Math.max(0, m.x)); const iy = Math.max(0, Math.min(740, m.y + m.h) - Math.max(150, m.y)); return (ix * iy) / Math.max(1, m.w * m.h); };
-const mittIBild = (m) => { const cx = m.x + m.w / 2, cy = m.y + m.h / 2; return cx >= 0 && cx <= 375 && cy >= 150 && cy <= 740; };
+const PLAC = fs.existsSync("data/placering.json") ? JSON.parse(fs.readFileSync("data/placering.json", "utf8")) : null;
+const RESERV = (PLAC?.skarm_reserverat ?? []).map((r) => ({ x: r.x0, y: r.y0, w: r.x1 - r.x0, h: r.y1 - r.y0 }));
+const [GRANS_NY, GRANS_ALDRE, NYA] = [0.8 - 0.1, 0.65 - 0.1, PLAC?.nya_antal ?? 3];
+/** Täckt andel av b (rutnät 2 px, unionen): rutorna i `fram` och det som ligger utanför bilden. */
+const tacktAv = (b, fram) => {
+  let n = 0, t = 0;
+  for (let y = b.y + 1; y < b.y + b.h; y += 2) for (let x = b.x + 1; x < b.x + b.w; x += 2) { n++; if (x < 0 || x > 375 || y < 0 || y > 812 || fram.some((r) => x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h)) t++; }
+  return n ? t / n : 1;
+};
+const pos = {};
+const synlig = {}; // uid-index → syns-andel för de vakna
 const varfor = (k, m) => {
   if (!m) return "ingen mätning";
   if (m.mesh === 0) return "ingen synlig mesh";
+  if (pos[k]?.stall) return null; // i stallet: i spelet står den inte på ängen (minne.ts), modellen finns (mesh)
   if (Math.max(m.w, m.h) < MIN_STORST || Math.min(m.w, m.h) < MIN_MINST || m.w * m.h < MIN_YTA) return "för liten";
-  if (bak(k) ? andelIBild(m) < 0.25 : !mittIBild(m)) return "utanför bilden";
+  if (!pos[k]) return "inget läge";
+  if (!pos[k].stall && synlig[k] && synlig[k].syns < synlig[k].grans) return `vaken men syns bara ${Math.round(synlig[k].syns * 100)} % (< ${Math.round(synlig[k].grans * 100)} %)`;
   return null;
 };
 const alltid = process.argv.includes("--alltid");
@@ -69,8 +86,14 @@ for (let s = 0; s < ids.length; s += 10) {
       await p.waitForLoadState("networkidle", { timeout: 20000 }).catch(() => undefined);
       await p.waitForFunction((n) => Object.values(window.__tredSyn ?? {}).filter((v) => v.mesh > 0).length >= n, grupp.length, { timeout: 15000 }).catch(() => undefined);
       await p.waitForTimeout(1500);
-      const syn = await p.evaluate(() => window.__tredSyn ?? {});
-      grupp.forEach((k, i) => { matt[k] = syn[`b66-${i}-${k}`] ?? null; });
+      const { syn, tpos } = await p.evaluate(() => ({ syn: window.__tredSyn ?? {}, tpos: window.__tredPos ?? {} }));
+      grupp.forEach((k, i) => { matt[k] = syn[`b66-${i}-${k}`] ?? null; pos[k] = tpos[`b66-${i}-${k}`] ?? null; });
+      // de vakna: synlig andel mot sin gräns (de tre nyaste = högst i, skapad 1000 + i)
+      const vakna = grupp.map((k, i) => ({ k, i })).filter(({ k }) => matt[k] && pos[k] && !pos[k].stall);
+      for (const { k, i } of vakna) {
+        const fram = [...RESERV, ...vakna.filter((o) => o.k !== k && pos[o.k].z > pos[k].z + 0.05).map((o) => matt[o.k])];
+        synlig[k] = { syns: Math.round((1 - tacktAv(matt[k], fram)) * 100) / 100, grans: grupp.length - 1 - i < NYA ? GRANS_NY : GRANS_ALDRE };
+      }
       if (bilder && (alltid || grupp.some((k) => varfor(k, matt[k])))) await p.screenshot({ path: path.join(bilder, `b66-${grupp[0]}.png`) }).catch(() => undefined);
       await ctx.close();
       break;
@@ -106,23 +129,35 @@ if (!bara) {
     const { syn, pos } = await p.evaluate(() => ({ syn: window.__tredSyn ?? {}, pos: window.__tredPos ?? {} }));
     const m = Object.fromEntries(ordn.map((k) => [k, { ...syn[`bygg${v}-${k}`], ...pos[`bygg${v}-${k}`] }]));
     const kolla = (namn, ok, info) => bygg.push({ namn: `BYGG${v + 1} ${namn}`, ok: !!ok, ...info });
+    // P3a: byggnaderna har rollen "bak" (storlek.json zon bak) och står i det bakre bandet; de som inte får plats står i
+    // stallet. Grinden är en reserverad världsruta. Slottet mot sjukhuset provas i p3-prov F.
     const hus = ordn.filter((k) => !["ko", "katt"].includes(k));
-    kolla("alla byggnader bakom staketet (z ≤ -2,3) och bakom djuren", hus.every((k) => m[k].z <= -2.3 && m[k].z < Math.min(m.ko.z, m.katt.z) - 0.5), { z: Object.fromEntries(hus.map((k) => [k, m[k].z])) });
-    kolla("ingen byggnad framför grinden (x -1,2 … -0,2 med halva bredden)", hus.every((k) => m[k].x + FOT[k] <= -1.2 + 0.02 || m[k].x - FOT[k] >= -0.2 - 0.02), { x: Object.fromEntries(hus.map((k) => [k, m[k].x])) });
-    kolla("slottet är högre än sjukhuset på skärmen", m.slott.h > m.sjukhus.h * 1.15, { slott: m.slott.h, sjukhus: m.sjukhus.h });
+    const vakenHus = hus.filter((k) => m[k].z !== undefined && !m[k].stall);
+    const bakBand = PLAC?.platser?.ang?.band?.bak?.z ?? [-99, 99];
+    kolla("vakna byggnader står i det bakre bandet (data/placering.json)", vakenHus.length >= 1 && vakenHus.every((k) => m[k].z >= bakBand[0] - 0.01 && m[k].z <= bakBand[1] + 0.01), { vakna: Object.fromEntries(vakenHus.map((k) => [k, m[k].z])), stall: hus.filter((k) => m[k].stall) });
+    const grind = PLAC?.platser?.ang?.varld_reserverat?.find((g) => g.namn === "grinden") ?? { x: [-1.2, -0.2], z: [-99, 99] };
+    // P3a torr 6: bredden i x är den ritade lådans (window.__tredSyn b = världslådan min/max), inte fotavtrycket.
+    // Fotavtrycket är den största halva utbredningen: kyrkan 0,71 (djupet) mot 0,425 i x, så kyrkan på x 0,5 räknades
+    // in i grinden (x −1,4…0) fast den ritas från x 0,075. Utan lådan: fotavtrycket som förut.
+    const iGrind = (k) => {
+      const b = m[k].b;
+      const [x0, x1] = b ? [b[0] + 0.05, b[3] - 0.05] : [m[k].x - (FOT[k] * (m[k].k ?? 1) - 0.05), m[k].x + (FOT[k] * (m[k].k ?? 1) - 0.05)];
+      return x1 > grind.x[0] && x0 < grind.x[1] && m[k].z > grind.z[0] && m[k].z < grind.z[1];
+    };
+    kolla("ingen byggnad framför grinden (grindens världsruta i data/placering.json, den ritade lådans bredd i x)", vakenHus.every((k) => !iGrind(k)), { x: Object.fromEntries(vakenHus.map((k) => [k, [m[k].x, m[k].z, m[k].k ?? 1]])) });
     const over = (a, b) => Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x)) * Math.max(0, Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y));
     const [c, vx] = [m.cirkus, m.vaxthus];
-    const skymt = c.z > vx.z ? over({ x: c.x, y: c.y, w: c.w, h: c.h }, vx) / Math.max(1, vx.w * vx.h) : 0;
-    kolla("cirkustältet skymmer inte växthuset (står det framför, täcker det högst 30 % av växthusets ruta)", skymt <= 0.3, { skymt: Math.round(skymt * 100) / 100, cirkus_z: c.z, vaxthus_z: vx.z });
-    const xs = hus.map((k) => m[k].x);
-    kolla("byggnaderna spridda (x-spännvidd ≥ 2,5)", Math.max(...xs) - Math.min(...xs) >= 2.5, { x: xs });
+    const skymt = !c.stall && !vx.stall && c.z > vx.z ? over({ x: c.x, y: c.y, w: c.w, h: c.h }, vx) / Math.max(1, vx.w * vx.h) : 0;
+    kolla("cirkustältet skymmer inte växthuset (står båda vakna och tältet framför, täcker det högst 30 % av växthusets ruta)", skymt <= 0.3, { skymt: Math.round(skymt * 100) / 100, cirkus: { z: c.z, stall: !!c.stall }, vaxthus: { z: vx.z, stall: !!vx.stall } });
+    kolla("ingen modell är osynlig (synlig mesh, vaken eller i stallet)", ordn.every((k) => (m[k].mesh ?? 0) > 0), { mesh: Object.fromEntries(ordn.map((k) => [k, m[k].mesh ?? 0])) });
     if (bilder) await p.screenshot({ path: path.join(bilder, `b66-BYGG${v + 1}.png`) }).catch(() => undefined);
     await ctx.close();
   }
   for (const b of bygg) console.error(`${b.ok ? "ok  " : "FEL "} ${b.namn}`);
 }
-const osynliga = Object.entries(matt).map(([k, m]) => ({ id: k, modell: E[k].modell, varfor: varfor(k, m), ...(m ?? {}) })).filter((o) => o.varfor);
-const res = { antal: ids.length, matta: Object.values(matt).filter(Boolean).length, osynliga, bygg, fel: fel.slice(0, 10) };
+const osynliga = Object.entries(matt).map(([k, m]) => ({ id: k, modell: E[k].modell, varfor: varfor(k, m), stall: !!pos[k]?.stall, ...(synlig[k] ?? {}), ...(m ?? {}) })).filter((o) => o.varfor);
+const iStallet = Object.keys(matt).filter((k) => pos[k]?.stall).length;
+const res = { antal: ids.length, matta: Object.values(matt).filter(Boolean).length, vakna: ids.length - iStallet, iStallet, osynliga, bygg, fel: fel.slice(0, 10) };
 if (ut) fs.writeFileSync(ut, JSON.stringify({ ...res, matt }, null, 1));
 console.log(JSON.stringify(res, null, 1));
 await browser.close();

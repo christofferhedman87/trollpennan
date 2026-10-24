@@ -807,7 +807,7 @@ export function Spel() {
     if (utfall.guld.length) utfall.varelse.glans = true;
     const { nya, somnade } = useMinne.getState().laggPaAng(utfall.varelse, utfall.antal);
     for (const s of somnade) brygga.taBort(s.uid);
-    if (somnade[0]) visaBanner(replik(somnade[0], "sover"), "sov");
+    for (const s of somnade) visaBanner(replik(s, "sover"), "sov");
     for (const n of nya) {
       brygga.skapa(n, n === nya[nya.length - 1]);
       const ny = komIhagDjur(n);

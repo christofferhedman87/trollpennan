@@ -5,8 +5,9 @@ import { byggMedId } from "../tolk/byggtolk.ts";
 import { brygga, type Sparad } from "./brygga.ts";
 import type { SparatBygge } from "./bygge.ts";
 import { BYGG } from "../tolk/byggtolk.ts";
-import { START_PLATS, TAK_PER_PLATS, laggMedTak, mattUr, upplast } from "./platser.ts";
+import { START_PLATS, TAK_PER_PLATS, laggMedTak, mattUr, platsMed, upplast } from "./platser.ts";
 import { hamtaFranStall, flyttaTillStall, type StallUt } from "./stall.ts";
+import { somnaEn } from "./placering.ts";
 
 
 export type Lage = "kort" | "skriv";
@@ -343,6 +344,17 @@ export const useMinne = create<Minne>((set, get) => ({
       // B1.3a: på andra platser sparas skapelsen per plats, samma tak; ängen (`ang`) rörs inte.
       const nyaP: Sparad[] = Array.from({ length: antal }, (_, i) => ({ ...v, uid: crypto.randomUUID(), skapad: Date.now() + i }));
       const r = laggMedTak(get().platsSkapelser[plats] ?? [], get().sovande, nyaP);
+      // P3a-fix (beslut B): högst en somnar per ord – den äldsta utan ledig ruta, ur den nyas budget (aldrig den nya)
+      const nyaU = new Set(nyaP.map((n) => n.uid));
+      // Högst en väg söver per ord. Har taket redan sövt en, sover ingen mer.
+      if (r.somnade.length === 0) {
+        const old = somnaEn(r.lista, nyaU, platsMed(plats));
+        if (old) {
+          r.lista = r.lista.filter((d) => d.uid !== old.uid);
+          r.sovande = [...r.sovande, old].slice(-40);
+          r.somnade.push(old);
+        }
+      }
       set({ platsSkapelser: { ...get().platsSkapelser, [plats]: r.lista }, sovande: r.sovande });
       return { nya: nyaP, somnade: r.somnade };
     }
@@ -361,6 +373,17 @@ export const useMinne = create<Minne>((set, get) => ({
       ang = [...ang, sparad];
       nya.push(sparad);
     }
+    // P3a-fix: samma regel på ängen
+    const nyaU = new Set(nya.map((d) => d.uid));
+    // Högst en väg söver per ord. Har taket redan sövt en, sover ingen mer.
+    if (somnade.length === 0) {
+      const old = somnaEn(ang, nyaU, platsMed(START_PLATS));
+      if (old) {
+        ang = ang.filter((d) => d.uid !== old.uid);
+        sovande = [...sovande, old].slice(-40);
+        somnade.push(old);
+      }
+    }
     set({ ang, sovande });
     return { nya, somnade };
   },
@@ -378,6 +401,15 @@ export const useMinne = create<Minne>((set, get) => ({
       }
     }
     ang = [...ang, { ...hittad, skapad: Date.now() }];
+    // P3a: fick någon annan ingen ledig ruta somnar den (den äldsta), aldrig den som kallas hit
+    if (!somnad) {
+      const old = somnaEn(ang, new Set([hittad.uid]), platsMed(START_PLATS));
+      if (old) {
+        ang = ang.filter((d) => d !== old);
+        sovande = [...sovande, old];
+        somnad = old;
+      }
+    }
     set({ ang, sovande });
     if (somnad) brygga.taBort(somnad.uid);
     brygga.skapa(ang[ang.length - 1]!);

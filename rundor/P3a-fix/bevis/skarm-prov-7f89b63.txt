@@ -1,0 +1,77 @@
+ok   S grottan ord 1 "en katt": den nya syns (katt)
+ok   S grottan ord 1 "en katt": alla vakna syns på skärmen (1 av 1)
+ok   S grottan ord 1 "en katt": högst en somnar (0) och varje somnad får en banner (0)
+ok   S grottan ord 2 "en elefant": den nya syns (elefant)
+ok   S grottan ord 2 "en elefant": alla vakna syns på skärmen (2 av 2)
+ok   S grottan ord 2 "en elefant": högst en somnar (0) och varje somnad får en banner (0)
+ok   S grottan ord 3 "en hund": den nya syns (hund)
+ok   S grottan ord 3 "en hund": alla vakna syns på skärmen (3 av 3)
+ok   S grottan ord 3 "en hund": högst en somnar (0) och varje somnad får en banner (0)
+FEL  S grottan ord 4 "en kanin": den nya syns (kanin) {"ny":{"k":"kanin","ok":false,"syn":0.85,"huvud":0.88,"px":[58,85],"varfor":"huvudet syns 88 %"}}
+FEL  S grottan ord 4 "en kanin": alla vakna syns på skärmen (3 av 4) {"daliga":[{"k":"kanin","ok":false,"syn":0.85,"huvud":0.88,"px":[58,85],"varfor":"huvudet syns 88 %"}]}
+ok   S grottan ord 4 "en kanin": högst en somnar (0) och varje somnad får en banner (0)
+ok   S grottan ord 5 "en giraff": den nya syns (giraff)
+ok   S grottan ord 5 "en giraff": alla vakna syns på skärmen (5 av 5)
+ok   S grottan ord 5 "en giraff": högst en somnar (0) och varje somnad får en banner (0)
+ok   S grottan ord 6 "en häst": den nya syns (häst)
+ok   S grottan ord 6 "en häst": alla vakna syns på skärmen (6 av 6)
+ok   S grottan ord 6 "en häst": högst en somnar (0) och varje somnad får en banner (0)
+ok   S grottan ord 7 "en ko": den nya syns (ko)
+ok   S grottan ord 7 "en ko": alla vakna syns på skärmen (7 av 7)
+ok   S grottan ord 7 "en ko": högst en somnar (0) och varje somnad får en banner (0)
+FEL  S grottan ord 8 "en säl": den nya syns (sal) {"ny":{"k":"sal","ok":false,"syn":0.15,"huvud":0.32,"px":[55,49],"varfor":"syns 15 % (< 70 %), huvudet syns 32 %"}}
+FEL  S grottan ord 8 "en säl": alla vakna syns på skärmen (7 av 8) {"daliga":[{"k":"sal","ok":false,"syn":0.15,"huvud":0.32,"px":[55,49],"varfor":"syns 15 % (< 70 %), huvudet syns 32 %"}]}
+ok   S grottan ord 8 "en säl": högst en somnar (0) och varje somnad får en banner (0)
+ok   S grottan: 8 skrivna ger minst 6 vakna och synliga (7 synliga av 8 vakna)
+ok   S ang ord 1 "en katt": den nya syns (katt)
+ok   S ang ord 1 "en katt": alla vakna syns på skärmen (1 av 1)
+ok   S ang ord 1 "en katt": högst en somnar (0) och varje somnad får en banner (0)
+FEL  S ang ord 1 "en katt": spokhus syns ≥ 70 % (58 %) {"m":{"sil":6752,"syn":3910,"silHuvud":1443,"synHuvud":1330,"x0":244,"y0":366,"x1":375,"y1":466,"kant":true,"hud":0}}
+ok   S ang ord 1 "en katt": grind syns ≥ 90 % (91 %)
+ok   S ang ord 2 "en häst": den nya syns (häst)
+ok   S ang ord 2 "en häst": alla vakna syns på skärmen (2 av 2)
+ok   S ang ord 2 "en häst": högst en somnar (0) och varje somnad får en banner (0)
+FEL  S ang ord 2 "en häst": spokhus syns ≥ 70 % (63 %) {"m":{"sil":7679,"syn":4817,"silHuvud":1683,"synHuvud":1595,"x0":244,"y0":306,"x1":375,"y1":466,"kant":true,"hud":0}}
+ok   S ang ord 2 "en häst": grind syns ≥ 90 % (91 %)
+ok   S ang ord 3 "en elefant": den nya syns (elefant)
+ok   S ang ord 3 "en elefant": alla vakna syns på skärmen (3 av 3)
+ok   S ang ord 3 "en elefant": högst en somnar (0) och varje somnad får en banner (0)
+FEL  S ang ord 3 "en elefant": spokhus syns ≥ 70 % (62 %) {"m":{"sil":7423,"syn":4567,"silHuvud":1520,"synHuvud":1412,"x0":244,"y0":321,"x1":375,"y1":466,"kant":true,"hud":0}}
+FEL  S ang ord 3 "en elefant": grind syns ≥ 90 % (79 %) {"m":{"sil":938,"syn":741,"silHuvud":487,"synHuvud":446,"x0":120,"y0":391,"x1":173,"y1":431,"kant":false,"hud":0}}
+ok   S ang ord 4 "ett slott": den nya syns (slott)
+FEL  S ang ord 4 "ett slott": alla vakna syns på skärmen (2 av 4) {"daliga":[{"k":"häst","ok":false,"syn":0.63,"huvud":1,"px":[38,73],"varfor":"syns 63 % (< 70 %)"},{"k":"katt","ok":false,"syn":0.32,"huvud":0.4,"px":[47,70],"varfor":"syns 32 % (< 55.00000000000001 %), huvudet syns 40 %"}]}
+ok   S ang ord 4 "ett slott": högst en somnar (0) och varje somnad får en banner (0)
+FEL  S ang ord 4 "ett slott": spokhus syns ≥ 70 % (58 %) {"m":{"sil":6833,"syn":3989,"silHuvud":1521,"synHuvud":1407,"x0":244,"y0":365,"x1":375,"y1":466,"kant":true,"hud":0}}
+ok   S ang ord 4 "ett slott": grind syns ≥ 90 % (90 %)
+FEL  S ang ord 5 "ett sjukhus": den nya syns (sjukhus) {"ny":{"k":"sjukhus","ok":false,"syn":0.67,"huvud":1,"px":[93,94],"varfor":"syns 67 % (< 70 %)"}}
+FEL  S ang ord 5 "ett sjukhus": alla vakna syns på skärmen (4 av 5) {"daliga":[{"k":"sjukhus","ok":false,"syn":0.67,"huvud":1,"px":[93,94],"varfor":"syns 67 % (< 70 %)"}]}
+ok   S ang ord 5 "ett sjukhus": högst en somnar (0) och varje somnad får en banner (0)
+FEL  S ang ord 5 "ett sjukhus": spokhus syns ≥ 70 % (59 %) {"m":{"sil":6957,"syn":4079,"silHuvud":1618,"synHuvud":1467,"x0":244,"y0":362,"x1":375,"y1":466,"kant":true,"hud":0}}
+FEL  S ang ord 5 "ett sjukhus": grind syns ≥ 90 % (84 %) {"m":{"sil":938,"syn":784,"silHuvud":487,"synHuvud":487,"x0":120,"y0":391,"x1":173,"y1":431,"kant":false,"hud":0}}
+FEL  S ang ord 6 "en ko": den nya syns (ko) {"ny":{"k":"ko","ok":false,"syn":0.82,"huvud":0.8,"px":[138,136],"varfor":"huvudet syns 80 %"}}
+FEL  S ang ord 6 "en ko": alla vakna syns på skärmen (5 av 6) {"daliga":[{"k":"ko","ok":false,"syn":0.82,"huvud":0.8,"px":[138,136],"varfor":"huvudet syns 80 %"}]}
+ok   S ang ord 6 "en ko": högst en somnar (0) och varje somnad får en banner (0)
+FEL  S ang ord 6 "en ko": spokhus syns ≥ 70 % (64 %) {"m":{"sil":7792,"syn":4956,"silHuvud":1611,"synHuvud":1538,"x0":244,"y0":303,"x1":375,"y1":466,"kant":true,"hud":0}}
+FEL  S ang ord 6 "en ko": grind syns ≥ 90 % (50 %) {"m":{"sil":939,"syn":465,"silHuvud":488,"synHuvud":439,"x0":120,"y0":391,"x1":173,"y1":431,"kant":false,"hud":0}}
+FEL  S ang ord 7 "en kanin": den nya syns (kanin) {"ny":{"k":"kanin","ok":false,"syn":0.81,"huvud":0.8,"px":[67,98],"varfor":"huvudet syns 80 %"}}
+FEL  S ang ord 7 "en kanin": alla vakna syns på skärmen (5 av 6) {"daliga":[{"k":"kanin","ok":false,"syn":0.81,"huvud":0.8,"px":[67,98],"varfor":"huvudet syns 80 %"}]}
+FEL  S ang ord 7 "en kanin": högst en somnar (1) och varje somnad får en banner (0) {"somnade":1,"bann":0}
+FEL  S ang ord 7 "en kanin": spokhus syns ≥ 70 % (61 %) {"m":{"sil":7457,"syn":4572,"silHuvud":1565,"synHuvud":1430,"x0":244,"y0":321,"x1":375,"y1":466,"kant":true,"hud":0}}
+FEL  S ang ord 7 "en kanin": grind syns ≥ 90 % (87 %) {"m":{"sil":937,"syn":812,"silHuvud":486,"synHuvud":486,"x0":120,"y0":391,"x1":173,"y1":431,"kant":false,"hud":0}}
+ok   S ang ord 8 "ett växthus": den nya syns (vaxthus)
+FEL  S ang ord 8 "ett växthus": alla vakna syns på skärmen (5 av 7) {"daliga":[{"k":"ko","ok":false,"syn":0.82,"huvud":0.8,"px":[139,137],"varfor":"huvudet syns 80 %"},{"k":"katt","ok":false,"syn":0.86,"huvud":0.89,"px":[46,71],"varfor":"huvudet syns 89 %"}]}
+ok   S ang ord 8 "ett växthus": högst en somnar (0) och varje somnad får en banner (0)
+FEL  S ang ord 8 "ett växthus": spokhus syns ≥ 70 % (61 %) {"m":{"sil":7268,"syn":4433,"silHuvud":1476,"synHuvud":1373,"x0":244,"y0":332,"x1":375,"y1":466,"kant":true,"hud":0}}
+FEL  S ang ord 8 "ett växthus": grind syns ≥ 90 % (47 %) {"m":{"sil":937,"syn":443,"silHuvud":486,"synHuvud":338,"x0":120,"y0":391,"x1":173,"y1":431,"kant":false,"hud":0}}
+FEL  S ang ord 9 "en giraff": den nya syns (giraff) {"ny":{"k":"giraff","ok":false,"syn":0.58,"huvud":0.85,"px":[205,198],"varfor":"syns 58 % (< 70 %), huvudet syns 85 %"}}
+FEL  S ang ord 9 "en giraff": alla vakna syns på skärmen (1 av 3) {"daliga":[{"k":"giraff","ok":false,"syn":0.58,"huvud":0.85,"px":[205,198],"varfor":"syns 58 % (< 70 %), huvudet syns 85 %"},{"k":"ko","ok":false,"syn":0.42,"huvud":0.47,"px":[49,48],"varfor":"syns 42 % (< 70 %), huvudet syns 47 %"}]}
+FEL  S ang ord 9 "en giraff": högst en somnar (5) och varje somnad får en banner (0) {"somnade":5,"bann":0}
+FEL  S ang ord 9 "en giraff": spokhus syns ≥ 70 % (59 %) {"m":{"sil":6953,"syn":4079,"silHuvud":1622,"synHuvud":1477,"x0":244,"y0":363,"x1":375,"y1":466,"kant":true,"hud":0}}
+FEL  S ang ord 9 "en giraff": grind syns ≥ 90 % (78 %) {"m":{"sil":934,"syn":728,"silHuvud":484,"synHuvud":484,"x0":120,"y0":391,"x1":173,"y1":431,"kant":false,"hud":0}}
+FEL  S ang ord 10 "en hund": den nya syns (hund) {"ny":{"k":"hund","ok":false,"syn":0.73,"huvud":0.73,"px":[89,111],"varfor":"huvudet syns 73 %"}}
+FEL  S ang ord 10 "en hund": alla vakna syns på skärmen (3 av 4) {"daliga":[{"k":"hund","ok":false,"syn":0.73,"huvud":0.73,"px":[89,111],"varfor":"huvudet syns 73 %"}]}
+ok   S ang ord 10 "en hund": högst en somnar (0) och varje somnad får en banner (0)
+FEL  S ang ord 10 "en hund": spokhus syns ≥ 70 % (58 %) {"m":{"sil":6851,"syn":4005,"silHuvud":1541,"synHuvud":1425,"x0":244,"y0":365,"x1":375,"y1":466,"kant":true,"hud":0}}
+FEL  S ang ord 10 "en hund": grind syns ≥ 90 % (28 %) {"m":{"sil":938,"syn":264,"silHuvud":487,"synHuvud":123,"x0":120,"y0":391,"x1":173,"y1":431,"kant":false,"hud":0}}
+FEL  S ang: 10 skrivna ger minst 6 vakna och synliga (3 synliga av 4 vakna) {"sista":{"b":[{"k":"hund","ok":false,"syn":0.73,"huvud":0.73,"px":[89,111],"varfor":"huvudet syns 73 %"},{"k":"giraff","ok":true,"syn":1,"huvud":1,"px":[145,147]},{"k":"kanin","ok":true,"syn":1,"huvud":1,"px":[44,68]},{"k":"ko","ok":true,"syn":1,"huvud":1,"px":[121,120]}],"vakna":4,"synliga":3}}
+ok   inga sidfel

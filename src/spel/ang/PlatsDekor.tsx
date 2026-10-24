@@ -10,6 +10,7 @@ import { KV, miljoFor } from "../miljo.ts";
 import { useMinne } from "../minne.ts";
 import { DEKOR_SKALA, dekorFor, horisontFor, spridDekor, vattenytor, type SpriddDekor } from "../platsDekor.ts";
 import { platsMed } from "../platser.ts";
+import { PLATS_MAX_AVSTAND } from "../skarm.ts";
 import { ljuskallaFor, valjLjus } from "../ljuskalla.ts";
 import { LJUS_LAG, LjusPool } from "./ljusken.tsx";
 import { DjurIScen } from "./djur.tsx";
@@ -177,7 +178,7 @@ export function PlatsScen({ plats }: { plats: string }) {
         minAzimuthAngle={-1.05}
         maxAzimuthAngle={1.05}
         minDistance={3.6}
-        maxDistance={9.5}
+        maxDistance={PLATS_MAX_AVSTAND}
         target={[0, 0.7, 0.5]}
         rotateSpeed={0.7}
         zoomSpeed={0.75}
