@@ -2,8 +2,9 @@ import RESERV from "../../data/reserv.json" with { type: "json" };
 import KATEGORI_ORD from "../../data/kategori-ord.json" with { type: "json" };
 import { avstand } from "./avstand.ts";
 import { langstaSuffix, lasToken, ordMedId } from "./lexikon.ts";
+import { noteraSaknade } from "./saknade.ts";
 import { arSparrat } from "./sparr.ts";
-import { tolka } from "./tolka.ts";
+import { blandPar, tolka } from "./tolka.ts";
 import type { ReservDel, TolkaOpts, Utfall } from "./typer.ts";
 
 /**
@@ -141,6 +142,24 @@ function fyllText(mall: string, ord: string): string {
   return mall.replace(/\{ord\}/g, ord);
 }
 
+/** Två kända djur i en blandning: notera frasen, men lägg inget i varelse.reserv. */
+function noteraBlandning(raw: string): void {
+  const par = blandPar(raw);
+  if (!par) return;
+  const slug = tokensAv(raw).join("").slice(0, 24);
+  if (!/^[a-zåäö]{2,24}$/.test(slug)) return;
+  noteraSaknade([
+    {
+      ord: slug,
+      kategori: "blandning",
+      steg: "agg",
+      plats: "djur",
+      farg: "#9E9E9E",
+      grund: `${par.a.id}+${par.b.id}`,
+    },
+  ]);
+}
+
 /** tolka() + reservkedjan. tolka() är oförändrad; det här lägger ägg där den ger "ingenting". */
 export function tolkaMedReserv(raw: string, opts: TolkaOpts = {}): Utfall {
   let u = tolka(raw, opts);
@@ -171,7 +190,10 @@ export function tolkaMedReserv(raw: string, opts: TolkaOpts = {}): Utfall {
 
   const heltOkanda = u.typ === "skapad" || u.typ === "behover_djur" ? u.okanda.filter((o) => tokens.includes(o)) : [];
   const ord = tokens.filter((t, i) => (heltOkanda.includes(t) || bort.includes(t)) && tokens.indexOf(t) === i);
-  if (!ord.length) return u;
+  if (!ord.length) {
+    if (u.typ === "skapad") noteraBlandning(raw);
+    return u;
+  }
   const max = R.agg.max_totalt;
   const delar = ord.map((t) => reservFor(t.slice(0, R.agg.etikett_max), platsAv(tokens, tokens.indexOf(t))));
 
