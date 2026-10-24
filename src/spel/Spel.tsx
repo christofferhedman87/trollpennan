@@ -102,85 +102,35 @@ import { KartaLager, OmradeHud } from "./ui/KartaLager.tsx";
 import { OrdbokDialog } from "./ui/OrdbokDialog.tsx";
 import { useSpelTillstand } from "./styr/useSpelTillstand.ts";
 import { useBannrar } from "./styr/useBannrar.ts";
+import { useVarld } from "./styr/useVarld.ts";
 
 export function Spel() {
   useDialogFokus();
   const t = useSpelTillstand();
   const b = useBannrar({ t });
+  const v = useVarld({ t, b });
   const {
     text, setText, lage, setLage, flik, setFlik, val, setVal, setHand, forslag, setForslag, behover,
     setBehover, bubblor, setBubblor, banners, setBanners, visKort, setVisKort, ordbok, setOrdbok,
     foralder, setForalder, natt, setNatt, albumOpp, setAlbumOpp, mossaOpp, setMossaOpp, halsning,
     setHalsning, fotoMal, setFotoMal, haller, setHaller, bokOpp, setBokOpp, menyOpp, setMenyOpp,
     intro, setIntro, introNy, setIntroNy, saker, setSaker, menySaker, setMenySaker, senare,
-    setSenare, varld, setVarld, panel, setPanel, meny, setMeny, boUid, setBoUid, ladaOpp, setLadaOpp,
+    setSenare, varld, panel, setPanel, meny, setMeny, boUid, setBoUid, ladaOpp, setLadaOpp,
     byggSidaId, setByggSidaId, byggPuff, setByggPuff, sidOpp, setSidOpp, kop, setKop, stjarnInfo,
     setStjarnInfo, kopRad, setKopRad, onskaOpp, setOnskaOpp, onskaPos, setOnskaPos, onskaSyns,
     setOnskaSyns, foralderRad, setForalderRad, kopia, setKopia, kartaOpp, setKartaOpp, forstaRad,
-    setForstaRad, kartaText, setKartaText, omrade, setOmrade, gavaTill, setGavaTill, skylt, setSkylt,
-    valj, setValj, uppFlik, setUppFlik, host, angRef, filRef, textRef, handRef, overlayRef, varldRef,
+    kartaText, setKartaText, omrade, setOmrade, gavaTill, setGavaTill, skylt, setSkylt, valj,
+    setValj, uppFlik, setUppFlik, host, angRef, filRef, textRef, handRef, overlayRef, varldRef,
     onskaSkrivRef, omUidRef, omradeRef, gavaRef, vantarRef, valjKor, avHand, nastanRef, paHandelse,
     visaOnskaRef, introRef, funna, kortGang, startLage, onskelista, sovande, formler, stjarnor,
     onskan, koptaSidor, byggSidor, garden, lada, ang, hemma, ljudPa, uppdragSpar, oppna, mossaLista,
     mossaExtra, liv, allaOrd, totalOrd, hittatAntal,
   } = t;
   const { stangBanner, visaBanner, visaBubbla, visaMossa, bjud } = b;
-
-  function lasMeny() {
-    setSenare(true);
-    setMenySaker(false);
-    requestAnimationFrame(() => {
-      document.querySelector("[data-testid=demo-senare]")?.scrollIntoView({ block: "nearest" });
-    });
-  }
-
-  function visaVarld(p: Varld) {
-    varldRef.current = p;
-    setVarld(p);
-    setPanel("spel");
-    setMeny(null);
-    if (!omradeRef.current) brygga.visa(p);
-  }
-
-  function lamnaAv() {
-    omradeRef.current = null;
-    setOmrade(null);
-    synkaAv(null);
-  }
-
-  function synkaAv(plats: string | null) {
-    const s = useMinne.getState();
-    const folje = allaMina().find((d) => d.uid === s.foljeUid) ?? null;
-    avBro.satt({
-      plats,
-      folje,
-      van: s.van,
-      uppdrag: s.uppdrag,
-      fyr: s.fyr,
-      on: plats === "on",
-    });
-    const game = (window as unknown as {
-      __spel?: {
-        scene: {
-          sleep: (k: string) => void;
-          wake: (k: string) => void;
-          isSleeping: (k: string) => boolean;
-          isActive: (k: string) => boolean;
-          start: (k: string) => void;
-        };
-      };
-    }).__spel;
-    if (!game) return;
-    if (plats) {
-      game.scene.sleep("ang");
-      game.scene.sleep("gard");
-      if (game.scene.isSleeping("av")) game.scene.wake("av");
-      else if (!game.scene.isActive("av")) game.scene.start("av");
-    } else if (game.scene.isActive("av") || game.scene.isSleeping("av")) {
-      game.scene.sleep("av");
-      brygga.visa(varldRef.current);
-    }
-  }
+  const {
+    lasMeny, visaVarld, lamnaAv, synkaAv, oppnaKarta, kanskeForstaGard, oppnaBygglage, oppnaUppdrag,
+    oppnaSkapa, visaPlatsRen, valjVarld,
+  } = v;
 
   function belonaFlode(r: FlodeSvar) {
     for (const t of r.texter) if (t) visaBanner(t, "ovr", "uppdrag_klart");
@@ -220,16 +170,6 @@ export function Spel() {
     if (folje) {
       bjud("aventyr", folje.uid);
       visaMossa({ aventyr: true });
-    }
-  }
-
-  function oppnaKarta() {
-    setPanel("spel");
-    setMeny(null);
-    setKartaOpp(true);
-    if (useMinne.getState().forstaKarta) {
-      useMinne.getState().settKarta();
-      setForstaRad([...TEXTER_AV.forsta_gangen]);
     }
   }
 
@@ -341,41 +281,6 @@ export function Spel() {
     };
     setValj({ rubrik: TEXTER_AV.foljeslagare.byt, djur, nyckel: "byt" });
   }
-
-  function kanskeForstaGard() {
-    if (!useMinne.getState().forstaGard) return;
-    useMinne.getState().sattForsta();
-    for (const rad of TEXTER.forsta_besok) visaBanner(rad, "ovr", "tapp");
-  }
-
-  function oppnaBygglage() {
-    setKartaOpp(false);
-    setMenyOpp(false);
-    setMeny(null);
-    varldRef.current = "gard";
-    setVarld("gard");
-    if (omradeRef.current) lamnaAv();
-    else brygga.visa("gard");
-    setPanel("byggbok");
-    setLage("kort");
-    setForslag(null);
-    setBehover(null);
-    setBokOpp(true);
-  }
-
-  function oppnaUppdrag() {
-    setMenyOpp(false);
-    setPanel("uppdrag");
-    setBokOpp(true);
-  }
-
-  function oppnaSkapa() {
-    setPanel("spel");
-    setLage("skriv");
-    setForslag(null);
-    setBehover(null);
-    setBokOpp(true);
-  }
   const bengtsson = useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdragsbok: oppnaUppdrag });
   const platsUi = usePlats({ visaFel: () => bengtsson.visaFel() });
   // R9D: när Bengtssons uppdrag startar tas en djurönskan bort, så att boken bara visar ett uppdrag och förslagen hör till det
@@ -397,34 +302,6 @@ export function Spel() {
     setByggPuff(null);
     stangOnska();
     if (paGard) kanskeForstaGard();
-  }
-
-  function visaPlatsRen(id: "ang" | "gard") {
-    setKartaOpp(false);
-    setMenyOpp(false);
-    if (omradeRef.current) lamnaAv();
-    setPanel("spel");
-    visaVarld(id);
-    setBokOpp(false);
-    if (id === "gard") kanskeForstaGard();
-  }
-
-  function valjVarld(id: "ang" | "gard" | "byggbok") {
-    setKartaOpp(false);
-    setMenyOpp(false);
-    if (id === "byggbok") {
-      oppnaBygglage();
-      return;
-    }
-    if (omradeRef.current) lamnaAv();
-    if (id === "gard") {
-      visaVarld("gard");
-      setBokOpp(false);
-      kanskeForstaGard();
-      return;
-    }
-    visaVarld("ang");
-    setBokOpp(false);
   }
 
   function kollaSidor() {
