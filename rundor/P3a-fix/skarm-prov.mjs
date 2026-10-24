@@ -5,8 +5,8 @@
 //   - högst 30 % är skymt (de tre nyaste) eller högst 45 % (äldre), och huvudet (siluettens övre halva) högst 10 %
 //     (HUD-rutorna, guiden och Bengtsson räknas som skymmande);
 //   - siluetten är helt i bild (når inte bildkanten);
-//   - den når minsta storlek: B6.6:s golv (24 px / 4 px / 200 px²), det nya djuret ≥ 40 px och en småsak ≥ 37 px
-//     (40 px minus mätfelet, beslut C) på den kortaste ledden – en platt småsak (pucken) på den längsta.
+//   - den når minsta storlek: B6.6:s golv (24 px / 4 px / 200 px²), det nya djuret ≥ 40 px och varje småsak i bild
+//     ≥ 40 px på den kortaste ledden – en platt småsak (pucken) på den längsta.
 // Dessutom gäller per ord: högst EN somnar, och varje somnad får en egen banner (beslut B). Platsens fasta saker
 // (spökhuset, grinden) syns, räknat mot den tomma ängen: spökhuset ≥ 70 %, grinden ≥ 90 % (förbjuden zon, beslut D). Ängen med 10 skrivna ska ha
 // minst 6 vakna och synliga.
@@ -15,6 +15,9 @@ import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
 import { chromium } from "playwright";
+import { kameraFor, kroppMatt } from "../../src/spel/placering.ts";
+import { platsMed } from "../../src/spel/platser.ts";
+import { sakRuta } from "../../src/spel/skymning.ts";
 
 const arg = (n, d) => { const i = process.argv.indexOf(`--${n}`); return i >= 0 ? process.argv[i + 1] : d; };
 const dist = path.resolve(arg("dist", "dist-pages"));
@@ -28,6 +31,7 @@ const S = JSON.parse(fs.readFileSync("data/storlek.json", "utf8"));
 const MM = fs.existsSync("data/modellmatt.json") ? JSON.parse(fs.readFileSync("data/modellmatt.json", "utf8")).matt : {};
 const platt = (k) => smasak(k) && !!MM[k] && MM[k][1] < 0.5 * Math.max(MM[k][0], MM[k][2]);
 const smasak = (k) => { const e = E[k]; const [a, b] = S.smasak?.malhojd ?? [0.2, 0.5]; return !!e && e.typ !== "djur" && (e.malhojd ?? 1) >= a && (e.malhojd ?? 1) <= b; };
+const byggnad = (k) => { const e = E[k]; if (!e || e.typ === "djur") return false; const id = S.ids?.[k] ?? S.kategori?.[e.kategori]; return S.klasser?.[id]?.zon === "bak"; };
 const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".glb": "model/gltf-binary", ".png": "image/png", ".webp": "image/webp", ".svg": "image/svg+xml", ".mp3": "audio/mpeg", ".woff2": "font/woff2", ".woff": "font/woff", ".ttf": "font/ttf" };
 const server = http.createServer((req, res) => {
   let f = path.join(dist, decodeURIComponent(new URL(req.url, "http://x").pathname));
@@ -131,7 +135,7 @@ function bedom(lista, id, ny) {
     const syn = m.syn / m.sil;
     const huvud = m.silHuvud ? m.synHuvud / m.silHuvud : 1;
     const [w, h] = [m.x1 - m.x0, m.y1 - m.y0];
-    const minst = d.uid === ny ? (smasak(d.kropp) ? 37 : E[d.kropp]?.typ === "djur" ? 40 : 24) : 0;
+    const minst = smasak(d.kropp) ? 40 : d.uid === ny ? (E[d.kropp]?.typ === "djur" ? 40 : 24) : 0;
     const golv = Math.max(w, h) >= 24 && Math.min(w, h) >= 4 && w * h >= 200;
     const fel = [syn < grans && `syns ${Math.round(syn * 100)} % (< ${grans * 100} %)`, Math.round(huvud * 100) < 90 && `huvudet syns ${Math.round(huvud * 100)} %`, m.kant && "inte helt i bild", !golv && `för liten ${w}×${h}`, minst && (platt(d.kropp) ? Math.max(w, h) : Math.min(w, h)) < minst && `${platt(d.kropp) ? "längsta" : "kortaste"} ledden ${platt(d.kropp) ? Math.max(w, h) : Math.min(w, h)} px (< ${minst})`].filter(Boolean);
     return { k: d.kropp, ok: fel.length === 0, syn: Math.round(syn * 100) / 100, huvud: Math.round(huvud * 100) / 100, px: [w, h], ...(fel.length ? { varfor: fel.join(", ") } : {}) };
@@ -201,6 +205,42 @@ for (const { v, fro, plats: plats0 } of block) {
       kolla(`${namn}: alla vakna syns på skärmen (${b.filter((q) => q.ok).length} av ${b.length})`, b.every((q) => q.ok), { daliga: b.filter((q) => !q.ok) });
       kolla(`${namn}: högst en somnar (${somnade})`, somnade <= 1, { somnade, bann });
       allaSomnade += somnade;
+      const pos = await p.evaluate(() => window.__tredPos ?? {});
+      const byggs = [...nu.lista].filter((d) => byggnad(d.kropp)).sort((a, c) => c.skapad - a.skapad);
+      if (ny && byggnad(ny.kropp) && byggs[0]?.uid === ny.uid) {
+        const y1 = id[ny.uid]?.y1 ?? 0;
+        const bakom = byggs.slice(1).filter((d) => id[d.uid] && y1 < id[d.uid].y1);
+        const platsObj = platsMed(pl);
+        const kam = kameraFor(platsObj);
+        const band = (PLAC.platser[pl] ?? PLAC.platser.standard).band.bak;
+        const frontZ = band.z[1];
+        const q = pos[ny.uid];
+        const yHar = q ? sakRuta(q.x, q.z, 0.05, 0.05, 0.05, q.y || 0, kam).y1 : 0;
+        const yRad = q ? sakRuta(q.x, frontZ - PLAC.steg.z, 0.05, 0.05, 0.05, 0, kam).y1 : 0;
+        const inom = !!q && yHar >= yRad - 0.5;
+        let holl = null;
+        if (!inom && q) {
+          const bm = kroppMatt({ kropp: ny.kropp, skala: q.k || 1 }, q.z, platsObj, "bak", 0);
+          let bast = Infinity;
+          for (const d of nu.lista) {
+            if (byggnad(d.kropp)) continue;
+            const o = pos[d.uid];
+            if (!o) continue;
+            const dm = kroppMatt({ kropp: d.kropp, skala: o.k || 1 }, o.z, platsObj, "mark", 0);
+            if (Math.abs(o.x - q.x) >= dm.halv + bm.halv) continue;
+            if (o.z >= frontZ + (PLAC.bak_lucka ?? 0.5)) continue;
+            if (o.z < bast) { bast = o.z; holl = d.kropp; }
+          }
+        }
+        kolla(`${namn}: nya byggnaden främst (${ny.kropp})`, bakom.length === 0 && inom, { bakom: bakom.map((d) => d.kropp), holl: inom ? undefined : (holl ?? "inget djur"), y1: Math.round(y1), yHar: Math.round(yHar), yRad: Math.round(yRad) });
+      }
+      if (pl === "ang" && n + 1 >= 5 && n + 1 <= 10) {
+        for (const d of byggs.slice(0, 2)) {
+          const m = id[d.uid];
+          const syn = m?.sil ? m.syn / m.sil : 0;
+          kolla(`${namn}: ${d.kropp} ≥ 90 % synlig (${Math.round(syn * 100)} %)`, syn >= 0.9, { syn });
+        }
+      }
       if (pl === "ang") for (const f of ["fast:spokhus", "fast:grind"]) {
         const [m, m0] = [id[f], tom[f]];
         const g = f === "fast:grind" ? 0.9 : 0.7;
