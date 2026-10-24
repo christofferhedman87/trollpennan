@@ -1,5 +1,6 @@
 import { avstand, felgrans } from "./avstand.ts";
 import { ORD } from "./data.ts";
+import attributJson from "../../data/attribut.json" with { type: "json" };
 import entiteterJson from "../../data/entiteter.json" with { type: "json" };
 import orddelarJson from "../../data/orddelar.json" with { type: "json" };
 import reservJson from "../../data/reserv.json" with { type: "json" };
@@ -220,6 +221,33 @@ for (const o of ALLA) {
   for (const led of o.sammansattningsled ?? []) DJUR_STAM.add(led);
 }
 
+// Attribut som ritas på kroppen (data/attribut.json). Förled dit, inte NST-substantiv i FORLED.
+const ATTRIBUT_KOPPLING = new Set<string>();
+{
+  const att = attributJson as {
+    effekter?: Record<string, unknown>;
+    i_kroppen?: { lista?: string[] };
+    kroppsmonster?: Record<string, unknown>;
+  };
+  for (const k of Object.keys(att.effekter ?? {})) if (!k.startsWith("_")) ATTRIBUT_KOPPLING.add(k);
+  for (const k of att.i_kroppen?.lista ?? []) ATTRIBUT_KOPPLING.add(k);
+  for (const k of Object.keys(att.kroppsmonster ?? {})) if (!k.startsWith("_")) ATTRIBUT_KOPPLING.add(k);
+}
+
+function knutetTillAttribut(del: { monster?: string; formaga?: string } | undefined): boolean {
+  if (!del) return false;
+  if (del.monster && ATTRIBUT_KOPPLING.has(`monster:${del.monster}`)) return true;
+  if (del.formaga && ATTRIBUT_KOPPLING.has(`formaga:${del.formaga}`)) return true;
+  return false;
+}
+
+/** Sammansättningsförled och attributstammar ("regnbåg", "regnbågs"). Inte "inkomst". */
+const LED_STAM = new Set<string>(Object.keys(ORD.sammansattningar.forled));
+for (const o of ALLA) {
+  if (!knutetTillAttribut(o.del)) continue;
+  for (const led of o.sammansattningsled ?? []) if (!led.includes(" ")) LED_STAM.add(led);
+}
+
 const fw = ORD.funktionsord;
 const FUNK = new Set<string>(
   [...fw.artiklar, ...fw.som, ...fw.med, ...fw.och, ...fw.kan, ...Object.keys(fw.antal), ...Object.keys(fw.forstarkning)].filter(
@@ -231,6 +259,7 @@ const FUNK = new Set<string>(
 function ordFormKant(s: string): boolean {
   if (s.length < 2) return false;
   if (FUNK.has(s)) return true;
+  if (LED_STAM.has(s)) return true;
   const o = formMap.get(s);
   if (!o) return false;
   if (o.klass === "djur") return DJUR_STAM.has(s);
@@ -238,6 +267,7 @@ function ordFormKant(s: string): boolean {
 }
 
 function atomerTacker(s: string): boolean {
+  if (LED_STAM.has(s)) return true;
   let rest = s;
   let n = 0;
   while (rest.length) {
@@ -272,13 +302,18 @@ export function skarKandOrd(token: string, prefixLen: number, suffixForm: string
   return FORLED.has(w) || ordFormKant(w);
 }
 
+/** Vänsterledet äger foget när det är djurstam eller sammansättnings-/attributförled, inte ett NST-substantiv. */
+function vansterAgerFog(vanster: string): boolean {
+  return DJUR_STAM.has(vanster) || ordFormKant(vanster) || atomerTacker(vanster);
+}
+
 function langreBlockerar(ord: string, suffixLen: number, suffixForm: string): boolean {
   for (const e of LANGRE) {
     if (e.length <= suffixLen) break;
     if (e.length >= ord.length || !ord.endsWith(e)) continue;
-    // "fågels" + katt: skatt stjäl foget från djurstammen. inkomst + skatt gör inte det.
+    // "fågels"/"regnbågs" + katt: skatt stjäl foget. inkomst + skatt gör inte det.
     const vanster = ord.slice(0, ord.length - e.length);
-    if (FOG.has(e[0]!) && DJUR_STAM.has(vanster) && e.slice(1) === suffixForm) continue;
+    if (FOG.has(e[0]!) && e.slice(1) === suffixForm && vansterAgerFog(vanster)) continue;
     return true;
   }
   return false;

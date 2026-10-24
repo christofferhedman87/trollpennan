@@ -1,7 +1,7 @@
 import { tolka } from "../../../src/tolk/tolka.ts";
 import { lasToken, langstaSuffix } from "../../../src/tolk/lexikon.ts";
 import { tolkaMedReserv } from "../../../src/tolk/reserv.ts";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 const kelly = JSON.parse(readFileSync("/workspace/arkitekt-mat/kelly.json","utf8")) as any[];
 const nouns = [...new Set(kelly.filter(k=>true).map(k=>String(k.gf).toLowerCase()).filter(w=>/^[a-zåäö]+$/.test(w)))];
 const djur = ["kapybara","capybara","bältdjur","myrslok","tapir","okapi","jaguar","gepard","leopard","puma","lodjur","järv","grävling","mård","vessla","hermelin","illern","sengångare","lemur","gorilla","schimpans","orangutang","babian","lama","jak","bison","wombat","näbbdjur","dromedar","antilop","gasell","gnu","hyena","surikat","mangust","piggsvin","skunk","tvättbjörn","bläckfisk","sjöhäst","manet","sjöko","valross","säl","pelikan","kakadua","undulat","kanariefågel","koltrast","rödhake","domherre","talgoxe","skata","kaja","måsfågel","albatross","kondor","gam","struts","emu","kasuar","axolotl","kameleont","leguan","gecko","salamander","ödla","sköldpadda","alligator","kobra","pyton","anakonda","skorpion","tarantel","snigel","mask","larv","marsvin","chinchilla","degu","gerbil","ökenråtta","lämmel","bäver","utter","mink","älg","ren","rådjur","dovhjort","mufflon","ibex","stenbock","jakuar"];
@@ -29,6 +29,10 @@ function raknaFelDjur(lista: string, w: string) {
   if (lasToken(w) || rattOrd.has(w)) return;
   const u = tolkaMedReserv(w);
   if (u.typ !== "skapad" || u.varelse.kropp === "agg") return;
+  // Äkta sammansättning (barnbarn, sjöhäst, måsfågel) har inget okänt led och räknas inte.
+  const bas = tolka(w);
+  const okanda = (bas.typ === "skapad" || bas.typ === "behover_djur" ? bas.okanda : []).filter((x) => x !== w);
+  if (!okanda.length) return;
   const s = langstaSuffix(w);
   const franEfterled = s?.ord.del?.kropp ?? s?.ord.id;
   if (!s || franEfterled !== u.varelse.kropp) return;
@@ -42,7 +46,6 @@ for (const r of facit) {
   const u = tolkaMedReserv(r.ord);
   if (u.typ === "skapad" && u.varelse.kropp === r.forvantat) rattBehallna++;
 }
-writeFileSync("suffixfel.tsv", rows.join("\n")+"\n");
 console.log(n);
 console.log("fel_djur", felDjur);
 console.log("ratt_behallna", rattBehallna, "av", facit.filter((r) => r.facit === "ratt").length);

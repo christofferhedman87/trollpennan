@@ -10377,6 +10377,14 @@
    "t": "en borrmaskin",
    "n": -16
   },
+  "6fe51851": {
+   "f": "/ljud/rost/db967993a3539e8c.mp3",
+   "ms": 4362,
+   "r": "pennan",
+   "id": "varde:en kapybara",
+   "t": "en kapybara",
+   "n": -16
+  },
   "6fe6ca04": {
    "f": "/ljud/rost/926e4550dd699bea.mp3",
    "ms": 1202,
@@ -17617,6 +17625,14 @@
    "r": "pennan",
    "id": "varde:en tyrannosaurus",
    "t": "en tyrannosaurus",
+   "n": -16
+  },
+  "c8b0b1f3": {
+   "f": "/ljud/rost/db967993a3539e8c.mp3",
+   "ms": 4362,
+   "r": "pennan",
+   "id": "ledtradar.json:.ledtradar.kapybara.gata",
+   "t": "En stor, snäll gnagare som älskar att bada och vila i solen.",
    "n": -16
   },
   "c8da689e": {
