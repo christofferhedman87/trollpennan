@@ -124,3 +124,4 @@ Alla paket ovan är CC0 om inget annat står. Fullständig lista per fil finns i
 | Källa | Licens | Vad vi tog |
 |---|---|---|
 | NST:s svenska uttalslexikon, orddelarna i [stts-se/decomp](https://github.com/stts-se/decomp) `decompserver/decomp_files/sv_nst.txt` | Ordlistan är CC0 (Språkbanken / Nasjonalbiblioteket, [NST pronunciation lexicon for Swedish](https://data.norge.no/en/datasets/fcac8fa6-2b4a-3208-bca7-dca32e0c52b9/nst-pronunciation-lexicon-for-swedish)). Dekompositionskoden är MIT. | Bara listan: `PREFIX` och `SUFFIX`, omgjord till `data/orddelar.json` av `scripts/orddelar-bygg.mjs`. Ingen Go-kod, inget nytt beroende. |
+| Demute VO Priority System, Sunshine Shuffle (gemensam röstkö) och Pixel Crushers ("bark priority") | Inspiration, ingen kod | Mönster för röstschemaläggaren i src/spel/rostKo.ts och data/rost-takt.json (prioritet, FIFO, bäst-före, nedkylning vid uttag, avbrott bara av lägre prioritet). Ingen kod kopierad, inget nytt beroende. |
