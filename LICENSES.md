@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1153 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1154 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -19,6 +19,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | (för hand) Quaternius – Dragon (Ultimate Monsters) | Quaternius – Dragon (Ultimate Monsters) | CC0-1.0 | https://poly.pizza/m/3rUm1cN3yp | 1 |
 | (för hand) Quaternius – Horse (Cube World Kit) | Quaternius – Horse (Cube World Kit) | CC0-1.0 | https://poly.pizza/m/D3hAeqeDBE | 1 |
 | b5a-sjo-cc0 | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 3 |
+| gamideo-cozy-animals | Gamideo (itch: dragofive), AI-gjord med Meshy AI | CC0-1.0 | https://dragofive.itch.io/cozy-animals-3d | 1 |
 | gobkit-cc0-2 | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 35 |
 | gobkit-cc0-djur-och-natur | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 59 |
 | kaykit-block-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/block-bits | 1 |
@@ -1265,6 +1266,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | vaffeljarn | /models/bulk/vaffeljarn.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | vattenpistol | /models/bulk/vattenpistol.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | vykort | /models/bulk/vykort.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
+| kapybara | /models/bulk/kapybara.glb | CC0-1.0 | Gamideo (itch: dragofive), AI-gjord med Meshy AI | https://dragofive.itch.io/cozy-animals-3d |
 
 ## Röster och tal
 

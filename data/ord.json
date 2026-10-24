@@ -8098,6 +8098,31 @@
    "del": {
     "formaga": "aura"
    }
+  },
+  {
+   "id": "kapybara",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kapybara",
+   "genus": "u",
+   "former": [
+    "kapybara",
+    "kapybaran",
+    "kapybaror",
+    "kapybarorna",
+    "capybara",
+    "capybaran",
+    "capybaror",
+    "capybarorna"
+   ],
+   "sammansattningsled": [
+    "kapybara"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M29 gamideo-cozy-animals",
+   "del": {
+    "kropp": "kapybara"
+   }
   }
  ],
  "kollisioner": {},

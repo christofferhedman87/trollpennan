@@ -1187,6 +1187,7 @@
     "tvattkorg": { "typ": "foremal", "kategori": "föremål", "modell": "tvattkorg", "malhojd": 0.45, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["tvättkorg"], "inlagd": "R3F-M28" },
     "vaffeljarn": { "typ": "foremal", "kategori": "föremål", "modell": "vaffeljarn", "malhojd": 0.4, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["våffeljärn"], "inlagd": "R3F-M28" },
     "vattenpistol": { "typ": "foremal", "kategori": "föremål", "modell": "vattenpistol", "malhojd": 0.4, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["vattenpistol"], "inlagd": "R3F-M28" },
-    "vykort": { "typ": "foremal", "kategori": "föremål", "modell": "vykort", "malhojd": 0.4, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["vykort"], "inlagd": "R3F-M28" }
+    "vykort": { "typ": "foremal", "kategori": "föremål", "modell": "vykort", "malhojd": 0.4, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["vykort"], "inlagd": "R3F-M28" },
+    "kapybara": { "typ": "djur", "kategori": "djur", "modell": "kapybara", "malhojd": 0.7, "palett": { "from": 25, "range": 22, "bodyL": 0.48 }, "art": "#BE6F37", "forladda": false, "ord": ["kapybara"], "inlagd": "R3F-M29" }
   }
 }

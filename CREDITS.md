@@ -27,6 +27,7 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | Paket | Upphov | Licens | Källa | Antal modeller |
 |---|---|---|---|---|
 | b5a-sjo-cc0 | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 3 |
+| gamideo-cozy-animals | Gamideo (itch: dragofive), AI-gjord med Meshy AI | CC0-1.0 | https://dragofive.itch.io/cozy-animals-3d | 1 |
 | gobkit-cc0-2 | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 35 |
 | gobkit-cc0-djur-och-natur | Gobkit (Alsomind Tech Co., Ltd.) | CC0-1.0 | https://gobkit.com/freebies | 59 |
 | kaykit-block-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/block-bits | 1 |
@@ -117,10 +118,9 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 
 Alla paket ovan är CC0 om inget annat står. Fullständig lista per fil finns i LICENSES.md.
 
+<!-- R3C:end -->
 ## Ordlistor och kod från andra
 
 | Källa | Licens | Vad vi tog |
 |---|---|---|
 | NST:s svenska uttalslexikon, orddelarna i [stts-se/decomp](https://github.com/stts-se/decomp) `decompserver/decomp_files/sv_nst.txt` | Ordlistan är CC0 (Språkbanken / Nasjonalbiblioteket, [NST pronunciation lexicon for Swedish](https://data.norge.no/en/datasets/fcac8fa6-2b4a-3208-bca7-dca32e0c52b9/nst-pronunciation-lexicon-for-swedish)). Dekompositionskoden är MIT. | Bara listan: `PREFIX` och `SUFFIX`, omgjord till `data/orddelar.json` av `scripts/orddelar-bygg.mjs`. Ingen Go-kod, inget nytt beroende. |
-
-<!-- R3C:end -->
