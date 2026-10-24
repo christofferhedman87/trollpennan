@@ -69,6 +69,13 @@ export type OrdData = {
     antal: Record<string, number>;
     forstarkning: Record<string, string>;
     antal_tak?: number;
+    /** O1b: blandord. `koppla` gäller bara inuti ett blandmönster, inte som globala funktionsord. */
+    blanda: {
+      efter_a: string[];
+      fore: string[];
+      koppla: string[];
+      halften: string[];
+    };
   };
   sammansattningar: {
     regel: string;
@@ -77,6 +84,21 @@ export type OrdData = {
   repliker: Record<string, string[]>;
   overraskningar: { om: string[]; effekt: string; text: string }[];
   ord: Ord[];
+};
+
+/** Vad ett djur lånar ut när det blandas in i ett annat (data/kannetecken.json). */
+export type Kannetecken = {
+  farg: string | null;
+  monster: string | null;
+  monsterfarg: string | null;
+  tillbehor: string[];
+  formagor: string[];
+  beskrivning: string | null;
+};
+
+export type KanneteckenData = {
+  version: number;
+  djur: Record<string, Kannetecken>;
 };
 
 export type BlockData = {
