@@ -6,9 +6,11 @@ import {
   boj,
   forledTillOrd,
   kortDjur,
+  forledKant,
   langstaAtom,
   langstaSuffix,
   lasToken,
+  skarKandOrd,
   matchaFras,
   ordFranForm,
   ordMedId,
@@ -19,6 +21,7 @@ import {
   dubbelSak,
 } from "./lexikon.ts";
 import attributJson from "../../data/attribut.json" with { type: "json" };
+import katJson from "../../data/kategori-ord.json" with { type: "json" };
 import { arSparrat } from "./sparr.ts";
 import type { Del, Forled, Ord, TolkaOpts, Utfall, Varelse } from "./typer.ts";
 
@@ -245,11 +248,19 @@ function delaMod(token: string): { key: string; del: Forled; ord: Ord; rest: str
 
 const PARTICIP_SLUT: readonly string[] = attributJson.particip.slut;
 
+// Gamla prov kräver repliken för blixt (natur) och monster (person). Andra kända förled är tysta.
+const TALA_VIDARE = new Set(["natur", "person"]);
+const KAT_ORD = new Map<string, string>();
+for (const [k, lista] of Object.entries((katJson as { kategorier: Record<string, string[]> }).kategorier)) {
+  for (const w of lista) if (!KAT_ORD.has(w)) KAT_ORD.set(w, k);
+}
+
 function delaOrd(token: string): Sem | null {
   const suffix = langstaSuffix(token);
   if (!suffix) return null;
   const prefix = token.slice(0, token.length - suffix.form.length);
   if (prefix.length < 2) return null;
+  if (skarKandOrd(token, prefix.length, suffix.form) || !forledKant(prefix)) return null;
   const las = lasPrefix(prefix);
   // B6.5: "brinnande" är inte "brinn" + "ande" (anden). Okänt förled + particip-slut = okänt ord (data/attribut.json particip).
   if (!las.mods.length && !las.djur.length && PARTICIP_SLUT.some((s) => token.endsWith(s))) return null;
@@ -386,6 +397,11 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
         sem.push({ t: "led", key: token, del: led });
         continue;
       }
+      // Ett riktigt ord (NST, funktionsord eller ordform) ska inte rättas till ett djur. "storm" är inte stork.
+      if (forledKant(token)) {
+        sem.push({ t: "okand", raw: token });
+        continue;
+      }
       const kompForslag = forslagKomp(token);
       if (kompForslag.length === 1) {
         return {
@@ -516,6 +532,8 @@ function laggTillbehor(b: Bygg, o: Ord) {
 function applyKomp(b: Bygg, k: Extract<Sem, { t: "komp" }>, mode: Mode, visaLed = true) {
   for (const bit of k.okanda) {
     if (arSparrat(bit)) return "sparr" as const;
+    // En förledsbit ("en" i enkatt, "mål" i målvakt) är inte barnets hela ord.
+    if (bit !== k.raw && forledKant(bit) && !TALA_VIDARE.has(KAT_ORD.get(bit) ?? "")) continue;
     b.okanda.push(bit);
     b.meddelanden.push(`Ordet ${bit} kan jag inte än. Jag har sparat det!`);
   }

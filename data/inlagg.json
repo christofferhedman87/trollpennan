@@ -53,6 +53,7 @@
     "flyg": ["ängel", "fenix", "fladdermus", "bi", "kolibri", "pterodactylus", "örn", "uggla", "gås", "flamingo", "papegoja", "ara", "påfågel", "tukan", "pelikan", "anka"]
   },
   "malhojd_ord": {
+    "kapybara": 0.7,
     "vykort": 0.4,
     "vattenpistol": 0.4,
     "våffeljärn": 0.4,

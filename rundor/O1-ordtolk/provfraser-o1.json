@@ -1,0 +1,28 @@
+{
+  "_om": "O1 provfraser (Arkitekten 2026-10-24). Varje fras körs genom tolkaMedReserv (src/tolk/reserv.ts) och i genomspelningen genom spelet. kropp = Varelse.kropp, agg = Varelse.reserv.length (ReservAgg ritar en äggfigur per post, kropp 'agg' räknas som ett ägg), inte_kropp = får aldrig bli den kroppen. tillbehor/monster/formagor = måste finnas i Varelse. ingen_replik = ingen text i meddelanden får börja så. 'fore' = resultatet på main 36fc702 (uppmätt med tsx).",
+  "O1a": [
+    {"fras": "kapybara", "kropp": "kapybara", "agg": 0, "ingen_replik": "Ordet kapyb", "fore": "ara, Ordet kapyb kan jag inte än"},
+    {"fras": "en capybara", "kropp": "kapybara", "agg": 0, "ingen_replik": "Ordet capyb", "fore": "ara"},
+    {"fras": "två kapybaror", "kropp": "kapybara", "agg": 0, "antal": 2, "fore": "ara"},
+    {"fras": "enkatt", "kropp": "katt", "agg": 0, "ingen_replik": "Ordet en ", "fore": "katt, Ordet en kan jag inte än"},
+    {"fras": "spara", "inte_kropp": "ara", "agg": 1, "fore": "ara"},
+    {"fras": "en storm", "inte_kropp": "orm", "agg": 1, "fore": "orm"},
+    {"fras": "en budget", "inte_kropp": "get", "agg": 1, "fore": "get"},
+    {"fras": "inkomstskatt", "inte_kropp": "katt", "fore": "katt"},
+    {"fras": "en talgoxe", "inte_kropp": "oxe", "fore": "oxe"},
+    {"fras": "målvakt", "kropp": "vakt", "ingen_replik": "Ordet mål", "fore": "vakt, Ordet mål kan jag inte än"},
+    {"fras": "en tandläkare", "kropp": "doktor", "fore": "doktor (läkare)"},
+    {"fras": "en kanariefågel", "kropp": "fågel", "agg": 0, "fore": "fågel"}
+  ],
+  "O1b": [
+    {"fras": "noshörning blandat med enhörning", "kropp": "noshorning", "tillbehor": ["horn"], "agg": 0, "fore": "noshorning, inget horn, 1 ägg (blandat)"},
+    {"fras": "en noshörning blandad med en enhörning", "kropp": "noshorning", "tillbehor": ["horn"], "agg": 0, "fore": "noshorning, 1 ägg (blandad)"},
+    {"fras": "hälften katt hälften fisk", "kropp": "katt", "formagor": ["fenor"], "agg": 0, "fore": "fisk, 1 ägg (hälften)"},
+    {"fras": "en hund blandad med en zebra", "kropp": "hund", "monster": "ränder", "agg": 0, "fore": "hund, 1 ägg (blandad)"},
+    {"fras": "en blandning av en gris och en enhörning", "kropp": "gris", "tillbehor": ["horn"], "agg": 0, "fore": "häst (enhörning), 2 ägg (blandning, av)"},
+    {"fras": "en korsning mellan katt och fisk", "kropp": "katt", "formagor": ["fenor"], "agg": 0, "fore": "(med hund) hund, 2 ägg (korsning, mellan)"},
+    {"fras": "en katt blandad med en mullvad", "kropp": "katt", "farg_fran": "mullvad", "agg": 0, "replik_borjar": "En katt med mullvadens färg", "not": "reserven: mullvad har inga kännetecken (inte i kureringslistan)"},
+    {"fras": "en katt blandad med en gurkmeja", "kropp": "katt", "agg": 1, "agg_ord": ["gurkmeja"], "not": "högst ett ägg per okänt ord barnet skrev; blandad blir aldrig ägg"},
+    {"fras": "enhörningsnoshörning", "kropp": "noshorning", "tillbehor": ["horn"], "agg": 0, "fore": "noshorning, inget horn", "valfri": true}
+  ]
+}

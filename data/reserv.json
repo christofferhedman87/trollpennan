@@ -47,6 +47,7 @@
   },
   "lemma_min_stam": 2,
   "sammansatt_min_led": 4,
+  "sammansattning": { "min_suffix": 4, "fog": ["s", "a", "e"], "forled_kalla": "orddelar" },
   "regler": [
     {
       "suffix": "het",

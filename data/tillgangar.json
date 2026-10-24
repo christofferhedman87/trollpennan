@@ -1159,6 +1159,7 @@
     "tvattkorg": { "fil": "/models/bulk/tvattkorg.glb", "licens": "CC0-1.0", "upphov": "Trollpennan", "kalla": "https://github.com/christofferhedman87/trollpennan", "paket": "trollpennan-hem-lek-m28", "trianglar": 716, "bytes": 17336, "stil": "nära", "inlagd": "R3F-M28" },
     "vaffeljarn": { "fil": "/models/bulk/vaffeljarn.glb", "licens": "CC0-1.0", "upphov": "Trollpennan", "kalla": "https://github.com/christofferhedman87/trollpennan", "paket": "trollpennan-hem-lek-m28", "trianglar": 284, "bytes": 10180, "stil": "nära", "inlagd": "R3F-M28" },
     "vattenpistol": { "fil": "/models/bulk/vattenpistol.glb", "licens": "CC0-1.0", "upphov": "Trollpennan", "kalla": "https://github.com/christofferhedman87/trollpennan", "paket": "trollpennan-hem-lek-m28", "trianglar": 180, "bytes": 9240, "stil": "nära", "inlagd": "R3F-M28" },
-    "vykort": { "fil": "/models/bulk/vykort.glb", "licens": "CC0-1.0", "upphov": "Trollpennan", "kalla": "https://github.com/christofferhedman87/trollpennan", "paket": "trollpennan-hem-lek-m28", "trianglar": 116, "bytes": 8548, "stil": "nära", "inlagd": "R3F-M28" }
+    "vykort": { "fil": "/models/bulk/vykort.glb", "licens": "CC0-1.0", "upphov": "Trollpennan", "kalla": "https://github.com/christofferhedman87/trollpennan", "paket": "trollpennan-hem-lek-m28", "trianglar": 116, "bytes": 8548, "stil": "nära", "inlagd": "R3F-M28" },
+    "kapybara": { "fil": "/models/bulk/kapybara.glb", "licens": "CC0-1.0", "upphov": "Gamideo (itch: dragofive), AI-gjord med Meshy AI", "kalla": "https://dragofive.itch.io/cozy-animals-3d", "paket": "gamideo-cozy-animals", "trianglar": 1561, "bytes": 154412, "stil": "nära", "inlagd": "R3F-M29" }
   }
 }

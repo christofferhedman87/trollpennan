@@ -384,7 +384,8 @@
     "fågel",
     "fågeln",
     "fåglar",
-    "fåglarna"
+    "fåglarna",
+    "kanariefågel"
    ],
    "sammansattningsled": [
     "fågel",
@@ -6151,7 +6152,10 @@
     "brodern",
     "brorn",
     "bröder",
-    "bröderna"
+    "bröderna",
+    "morbror",
+    "storebror",
+    "lillebror"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
@@ -6187,7 +6191,9 @@
     "syster",
     "systern",
     "systrar",
-    "systrarna"
+    "systrarna",
+    "storasyster",
+    "lillasyster"
    ],
    "signatur": "studs",
    "kalla": "R3F-M12 kenney-blocky-characters",
@@ -8097,6 +8103,31 @@
    "kalla": "SALDO",
    "del": {
     "formaga": "aura"
+   }
+  },
+  {
+   "id": "kapybara",
+   "klass": "djur",
+   "niva": "fritt",
+   "visa": "kapybara",
+   "genus": "u",
+   "former": [
+    "kapybara",
+    "kapybaran",
+    "kapybaror",
+    "kapybarorna",
+    "capybara",
+    "capybaran",
+    "capybaror",
+    "capybarorna"
+   ],
+   "sammansattningsled": [
+    "kapybara"
+   ],
+   "signatur": "studs",
+   "kalla": "R3F-M29 gamideo-cozy-animals",
+   "del": {
+    "kropp": "kapybara"
    }
   }
  ],
