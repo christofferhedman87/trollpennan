@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1166 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1169 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -86,7 +86,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | trollpennan-djur-m18b | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 17 |
 | trollpennan-egna-m14 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 3 |
 | trollpennan-egna-m16 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 14 |
-| trollpennan-folk-m17 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 34 |
+| trollpennan-folk-m17 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | CC0-1.0 | https://kenney.nl/assets/blocky-characters | 37 |
 | trollpennan-fordon-m18 | Kenney (watercraft-kit); tillägg: Trollpennan | CC0-1.0 | https://kenney.nl/assets/watercraft-kit | 31 |
 | trollpennan-hem-lek-m28 | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 24 |
 | trollpennan-hem-m20b | Trollpennan | CC0-1.0 | https://github.com/christofferhedman87/trollpennan | 20 |
@@ -1279,6 +1279,9 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | gard-hage-3x3 | /models/gard/hage-fence-3x3-kenney-suburban.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-suburban |
 | gard-hobal | /models/gard/hobal-kenney-hay-bale.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/graveyard-kit |
 | gard-hobal-bunt | /models/gard/hobal-kenney-hay-bale-bundled.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/graveyard-kit |
+| bengtsson | /models/bulk/bengtsson.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| v6-doktor-bengtsson-blocky | /models/folk/v6-doktor-bengtsson-blocky.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| v6-doktor-bengtsson-vitrock-blocky | /models/folk/v6-doktor-bengtsson-vitrock-blocky.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |
 
 ## Röster och tal
 

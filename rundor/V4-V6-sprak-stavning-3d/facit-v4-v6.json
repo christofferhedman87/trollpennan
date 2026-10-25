@@ -1,0 +1,181 @@
+{
+  "v4": {
+    "neutrum_fraser": [
+      {
+        "in": "träd",
+        "formel": "ett träd",
+        "kropp": "trad"
+      },
+      {
+        "in": "en träd",
+        "formel": "ett träd",
+        "kropp": "trad"
+      },
+      {
+        "in": "ett träd",
+        "formel": "ett träd",
+        "kropp": "trad"
+      },
+      {
+        "in": "ett äppelträd",
+        "formel": "ett äppelträd",
+        "kropp": "trad"
+      },
+      {
+        "in": "ett rött hus",
+        "formel": "ett rött hus",
+        "kropp": "hus"
+      },
+      {
+        "in": "en röd hus",
+        "formel": "ett rött hus",
+        "kropp": "hus"
+      },
+      {
+        "in": "ett stort slott",
+        "formel": "ett stort slott",
+        "kropp": "slott"
+      },
+      {
+        "in": "ett rymdskepp",
+        "formel": "ett rymdskepp",
+        "kropp": "rymdskepp"
+      },
+      {
+        "in": "en rymdskepp",
+        "formel": "ett rymdskepp",
+        "kropp": "rymdskepp"
+      },
+      {
+        "in": "ett svärd",
+        "formel": "ett svärd",
+        "kropp": "svard"
+      }
+    ],
+    "sparrade_ord": [
+      "kniv",
+      "pistol",
+      "gevär",
+      "bomb",
+      "blod",
+      "döda",
+      "skjuta",
+      "mörda",
+      "granat",
+      "kulspruta"
+    ],
+    "tillatna_sammansattningar": [
+      {
+        "in": "en smörkniv",
+        "typ": "skapad",
+        "kropp": "kniv"
+      },
+      {
+        "in": "en vattenpistol",
+        "typ": "skapad",
+        "kropp": "vattenpistol"
+      },
+      {
+        "in": "en sportbil",
+        "typ": "skapad",
+        "kropp": "sportbil"
+      }
+    ],
+    "ljudfallor_forslag": [
+      {
+        "in": "tjykling",
+        "typ": "forslag",
+        "ord": "kyckling"
+      },
+      {
+        "in": "en röd tjykling",
+        "typ": "forslag",
+        "ord": "kyckling"
+      },
+      {
+        "in": "sjöldpadda",
+        "typ": "forslag",
+        "ord": "sköldpadda"
+      }
+    ],
+    "stjarn_kongruens": {
+      "en": "Du har 1 stjärna",
+      "tva": "Du har 2 stjärnor"
+    },
+    "stor_menings_start": {
+      "mall": "Klart! {formel} står på gården.",
+      "formel": "ett rött hus",
+      "forvantad": "Klart! Ett rött hus står på gården."
+    }
+  },
+  "v5": {
+    "min_tangent_bredd_px": 33,
+    "min_tangent_hojd_px": 44,
+    "fonetiska_par": [
+      {
+        "skrivet": "tjykling",
+        "mal": "kyckling",
+        "typ": "ljud",
+        "rattPrefix": ""
+      },
+      {
+        "skrivet": "sjöldpadda",
+        "mal": "sköldpadda",
+        "typ": "ljud",
+        "rattPrefix": ""
+      },
+      {
+        "skrivet": "järta",
+        "mal": "hjärta",
+        "typ": "ljud",
+        "rattPrefix": ""
+      },
+      {
+        "skrivet": "kat",
+        "mal": "katt",
+        "typ": "dubbel",
+        "rattPrefix": "kat"
+      },
+      {
+        "skrivet": "kanin",
+        "mal": "kanin",
+        "typ": "allman",
+        "rattPrefix": "kanin"
+      }
+    ],
+    "fras_ersattning": [
+      {
+        "in": "en röd kat",
+        "fran": "kat",
+        "till": "katt",
+        "ut": "en röd katt"
+      },
+      {
+        "in": "en liten tjykling",
+        "fran": "tjykling",
+        "till": "kyckling",
+        "ut": "en liten kyckling"
+      }
+    ]
+  },
+  "v6": {
+    "max_aktiva_bubblor": 1,
+    "max_aktiva_bannrar": 1,
+    "forbjuden_engelsk_text": "ERROR",
+    "bubbla_min_font_px": 18,
+    "bubbla_min_kontrast": 7,
+    "bengtsson_3d_cc0_modeller": [
+      "/models/bulk/bengtsson.glb",
+      "/models/folk/v6-doktor-bengtsson-blocky.glb",
+      "/models/folk/v6-doktor-bengtsson-vitrock-blocky.glb",
+      "/models/bulk/doktor.glb",
+      "/models/bulk/forskare.glb"
+    ],
+    "bubbla_bounds_375x812": {
+      "min_left": 4,
+      "max_right": 371,
+      "min_top": 52,
+      "max_bottom": 720
+    }
+  }
+}
