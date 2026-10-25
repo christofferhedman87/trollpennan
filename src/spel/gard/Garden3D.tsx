@@ -1,0 +1,218 @@
+import { Bounds, OrthographicCamera } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Component, Suspense, useEffect, useMemo, useState, type ReactNode } from "react";
+import * as THREE from "three";
+import { brygga } from "../brygga.ts";
+import { KV, MILJO } from "../miljo.ts";
+import { useMinne } from "../minne.ts";
+import { ByggeModell, DekorHobalar } from "./ByggModell.tsx";
+import { MarkPlan } from "./MarkPlan.tsx";
+import {
+  CELL_STORLEK,
+  GARD_BREDD,
+  GARD_DJUP,
+  arKantBygge,
+  cellTillXy,
+  hittaSlutnaHagar,
+  kantTillXy,
+  kanterForByggen,
+  varldTillCell,
+  varldTillKant,
+  xyTillCell,
+  xyTillKant,
+  type CellPlats,
+  type KantPlats,
+  type SlutenHage,
+} from "./rutnat.ts";
+
+export type Gard3dDiag = {
+  aktiv: boolean;
+  celler: { bredd: number; djup: number };
+  byggen: { uid: string; bygg: string; cell: CellPlats | null; kant: KantPlats | null }[];
+  kanter: KantPlats[];
+  hagar: SlutenHage[];
+  djur: unknown[];
+};
+
+declare global {
+  interface Window {
+    __gard3d?: Gard3dDiag;
+  }
+}
+
+class WebbGren extends Component<{ children: ReactNode }, { fel: boolean }> {
+  state = { fel: false };
+  static getDerivedStateFromError() {
+    return { fel: true };
+  }
+  render() {
+    if (this.state.fel) return <p className="garden-reserv">Gården vilar en stund.</p>;
+    return this.props.children;
+  }
+}
+
+function ljusPos(v: readonly number[]): [number, number, number] {
+  return [v[0] ?? 3, v[1] ?? 6, v[2] ?? 5];
+}
+
+function Scen({
+  garden,
+  kanter,
+  hagar,
+  flyttarUid,
+  setFlyttarUid,
+}: {
+  garden: ReturnType<typeof useMinne.getState>["garden"];
+  kanter: KantPlats[];
+  hagar: SlutenHage[];
+  flyttarUid: string | null;
+  setFlyttarUid: (uid: string | null) => void;
+}) {
+  const L = MILJO.ljus;
+  return (
+    <>
+      <color attach="background" args={[MILJO.himmel.bakgrund]} />
+      <fog attach="fog" args={[MILJO.dis.farg, MILJO.dis.nara, MILJO.dis.fjarran]} />
+      <OrthographicCamera
+        makeDefault
+        position={[10, 12, 10]}
+        zoom={48}
+        near={-40}
+        far={80}
+        onUpdate={(c) => c.lookAt(0, 0, 0)}
+      />
+      <ambientLight intensity={L.ambient.styrka} color={L.ambient.farg} />
+      <hemisphereLight args={[L.hemi.himmel, L.hemi.mark, L.hemi.styrka]} />
+      <directionalLight
+        color={L.nyckel.farg}
+        intensity={L.nyckel.styrka}
+        position={ljusPos(L.nyckel.position)}
+        castShadow
+        shadow-mapSize-width={KV.skuggkarta}
+        shadow-mapSize-height={KV.skuggkarta}
+        shadow-camera-near={0.5}
+        shadow-camera-far={30}
+        shadow-camera-left={-8}
+        shadow-camera-right={8}
+        shadow-camera-top={8}
+        shadow-camera-bottom={-8}
+        shadow-bias={-0.0004}
+      />
+      <directionalLight color={L.fyll.farg} position={[-4, 3, 2]} intensity={L.fyll.styrka} />
+      <Bounds fit clip observe margin={1.1} maxDuration={0}>
+        <mesh visible={false} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[GARD_BREDD * CELL_STORLEK, GARD_DJUP * CELL_STORLEK]} />
+        </mesh>
+      </Bounds>
+      <MarkPlan
+        garden={garden}
+        hagar={hagar}
+        kanter={kanter}
+        flyttarUid={flyttarUid}
+        onValj={(e) => {
+          if (!flyttarUid) return;
+          const b = garden.find((x) => x.uid === flyttarUid);
+          if (!b) return;
+          e.stopPropagation();
+          const cell = varldTillCell(e.point.x, e.point.z);
+          const pos = arKantBygge(b.bygg)
+            ? kantTillXy(varldTillKant(e.point.x, e.point.z))
+            : cellTillXy(cell.gx, cell.gz);
+          brygga.skicka({ typ: "byggd", uid: flyttarUid, x: pos.x, y: pos.y });
+          setFlyttarUid(null);
+        }}
+      />
+      <Suspense fallback={null}>
+        <DekorHobalar />
+      </Suspense>
+      {garden.map((b) => (
+        <ByggeModell key={b.uid} b={b} flyttar={flyttarUid !== null} />
+      ))}
+    </>
+  );
+}
+
+export function Garden3D() {
+  const garden = useMinne((s) => s.garden);
+  const hemma = useMinne((s) => s.hemma);
+  const [flyttarUid, setFlyttarUid] = useState<string | null>(null);
+  const kanter = useMemo(() => kanterForByggen(garden), [garden]);
+  const hagar = useMemo(() => hittaSlutnaHagar(kanter), [kanter]);
+
+  useEffect(() => {
+    brygga.registrera("gard", {
+      flytta: (uid) => setFlyttarUid(uid),
+      platser: () => {
+        const s = useMinne.getState();
+        if (s.hemma.length === 0) return [];
+        return s.hemma.map((h) => {
+          const hem = s.garden.find((g) => g.uid === h.hem);
+          const x = hem?.x ?? 0.5;
+          const y = hem?.y ?? 0.5;
+          return { uid: h.spec.uid, x, y, topp: Math.max(0.08, y - 0.14) };
+        });
+      },
+      skapa: () => undefined,
+      taBort: () => undefined,
+      puff: () => undefined,
+      tom: () => setFlyttarUid(null),
+      visa: () => undefined,
+      synka: () => undefined,
+    });
+    brygga.skicka({ typ: "redo" });
+    return () => {
+      brygga.registrera("gard", null);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (flyttarUid && !garden.some((b) => b.uid === flyttarUid)) setFlyttarUid(null);
+  }, [garden, flyttarUid]);
+
+  useEffect(() => {
+    window.__gard3d = {
+      aktiv: true,
+      celler: { bredd: GARD_BREDD, djup: GARD_DJUP },
+      byggen: garden.map((b) => ({
+        uid: b.uid,
+        bygg: b.bygg,
+        cell: arKantBygge(b.bygg) ? null : xyTillCell(b.x, b.y),
+        kant: arKantBygge(b.bygg) ? xyTillKant(b.x, b.y) : null,
+      })),
+      kanter,
+      hagar,
+      djur: [],
+    };
+    return () => {
+      const nu = window.__gard3d;
+      if (nu) window.__gard3d = { ...nu, aktiv: false };
+    };
+  }, [garden, kanter, hagar, hemma]);
+
+  const dprMax = Math.min(2, KV.dpr_max);
+  return (
+    <div className="angen-3d garden-3d" data-vy="garden-3d">
+      <WebbGren>
+        <Canvas
+          dpr={[1, dprMax]}
+          shadows
+          gl={{ antialias: true, toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1 }}
+          onCreated={({ gl }) => {
+            gl.shadowMap.type = THREE.PCFShadowMap;
+            gl.domElement.addEventListener("webglcontextlost", (e) => e.preventDefault(), {
+              once: false,
+            });
+          }}
+        >
+          <Scen
+            garden={garden}
+            kanter={kanter}
+            hagar={hagar}
+            flyttarUid={flyttarUid}
+            setFlyttarUid={setFlyttarUid}
+          />
+        </Canvas>
+      </WebbGren>
+    </div>
+  );
+}
