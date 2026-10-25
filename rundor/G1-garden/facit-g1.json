@@ -1,0 +1,86 @@
+{
+  "rutnat": {
+    "bredd": 6,
+    "djup": 10,
+    "cellStorlek": 1.0,
+    "xMin": 0.10,
+    "xSpan": 0.80,
+    "yMin": 0.32,
+    "ySpan": 0.60,
+    "minneClamp": {
+      "xMin": 0.06,
+      "xMax": 0.94,
+      "yMin": 0.30,
+      "yMax": 0.94
+    }
+  },
+  "nyaCc0Modeller": [
+    { "id": "gard-stall-fantasy", "fil": "/models/gard/stall-fantasy-quaternius.glb", "licens": "CC0-1.0" },
+    { "id": "gard-stall-oppen-lada", "fil": "/models/gard/stall-oppen-lada-quaternius.glb", "licens": "CC0-1.0" },
+    { "id": "gard-honshus", "fil": "/models/gard/honshus-quaternius.glb", "licens": "CC0-1.0" },
+    { "id": "gard-lada-liten", "fil": "/models/gard/lada-liten-quaternius.glb", "licens": "CC0-1.0" },
+    { "id": "gard-hus-fantasy", "fil": "/models/gard/hus-fantasy-quaternius.glb", "licens": "CC0-1.0" },
+    { "id": "gard-liten", "fil": "/models/gard/gard-liten-quaternius.glb", "licens": "CC0-1.0" },
+    { "id": "gard-koja", "fil": "/models/gard/koja-quaternius.glb", "licens": "CC0-1.0" },
+    { "id": "gard-bod", "fil": "/models/gard/bod-quaternius.glb", "licens": "CC0-1.0" },
+    { "id": "gard-hage-2x2", "fil": "/models/gard/hage-fence-2x2-kenney-suburban.glb", "licens": "CC0-1.0" },
+    { "id": "gard-hage-3x3", "fil": "/models/gard/hage-fence-3x3-kenney-suburban.glb", "licens": "CC0-1.0" },
+    { "id": "gard-hobal", "fil": "/models/gard/hobal-kenney-hay-bale.glb", "licens": "CC0-1.0" },
+    { "id": "gard-hobal-bunt", "fil": "/models/gard/hobal-kenney-hay-bale-bundled.glb", "licens": "CC0-1.0" }
+  ],
+  "staketModeller": [
+    "/models/natur/fence_simple.glb",
+    "/models/natur/fence_gate.glb"
+  ],
+  "bfsFall": [
+    {
+      "namn": "tom-gard",
+      "kanter": [],
+      "forvantatAntalHagar": 0,
+      "forvantadeCeller": []
+    },
+    {
+      "namn": "oppen-3-kanter",
+      "kanter": [
+        { "gx": 2, "gz": 4, "kant": "N" },
+        { "gx": 2, "gz": 5, "kant": "N" },
+        { "gx": 2, "gz": 4, "kant": "W" }
+      ],
+      "forvantatAntalHagar": 0,
+      "forvantadeCeller": []
+    },
+    {
+      "namn": "sluten-1x1-ruta-2-4",
+      "kanter": [
+        { "gx": 2, "gz": 4, "kant": "N" },
+        { "gx": 2, "gz": 5, "kant": "N" },
+        { "gx": 2, "gz": 4, "kant": "W" },
+        { "gx": 3, "gz": 4, "kant": "W" }
+      ],
+      "forvantatAntalHagar": 1,
+      "forvantadeCeller": [
+        { "gx": 2, "gz": 4 }
+      ]
+    },
+    {
+      "namn": "sluten-2x2-hage",
+      "kanter": [
+        { "gx": 2, "gz": 4, "kant": "N" },
+        { "gx": 3, "gz": 4, "kant": "N" },
+        { "gx": 2, "gz": 6, "kant": "N" },
+        { "gx": 3, "gz": 6, "kant": "N" },
+        { "gx": 2, "gz": 4, "kant": "W" },
+        { "gx": 2, "gz": 5, "kant": "W" },
+        { "gx": 4, "gz": 4, "kant": "W" },
+        { "gx": 4, "gz": 5, "kant": "W" }
+      ],
+      "forvantatAntalHagar": 1,
+      "forvantadeCeller": [
+        { "gx": 2, "gz": 4 },
+        { "gx": 3, "gz": 4 },
+        { "gx": 2, "gz": 5 },
+        { "gx": 3, "gz": 5 }
+      ]
+    }
+  ]
+}

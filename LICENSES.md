@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1154 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1166 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -36,7 +36,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-city-kit-commercial | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-commercial | 5 |
 | kenney-city-kit-industrial | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-industrial | 5 |
 | kenney-city-kit-roads | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-roads | 5 |
-| kenney-city-kit-suburban | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-suburban | 2 |
+| kenney-city-kit-suburban | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-suburban | 4 |
 | kenney-coaster-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/coaster-kit | 2 |
 | kenney-cube-pets | Kenney | CC0-1.0 | https://kenney.nl/assets/cube-pets | 13 |
 | kenney-factory-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/factory-kit | 5 |
@@ -44,7 +44,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kenney-food-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 68 |
 | kenney-food-kit-2 | Kenney | CC0-1.0 | https://kenney.nl/assets/food-kit | 15 |
 | kenney-furniture-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/furniture-kit | 46 |
-| kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 6 |
+| kenney-graveyard-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/graveyard-kit | 8 |
 | kenney-holiday-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/holiday-kit | 16 |
 | kenney-mini-arcade | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-arcade | 7 |
 | kenney-mini-characters | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-characters | 4 |
@@ -77,7 +77,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | quaternius-cute-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutemonsters.html | 6 |
 | quaternius-fantasy-props-megakit | Quaternius | CC0-1.0 | https://quaternius.itch.io/fantasy-props-megakit | 11 |
 | quaternius-farm-animals | Quaternius | CC0-1.0 | https://quaternius.com/packs/farmanimal.html | 2 |
-| quaternius-farm-buildings | Quaternius | CC0-1.0 | https://quaternius.com/packs/farmbuildings.html | 10 |
+| quaternius-farm-buildings | Quaternius | CC0-1.0 | https://quaternius.com/packs/farmbuildings.html | 18 |
 | quaternius-medieval-village-megakit | Quaternius | CC0-1.0 | https://quaternius.itch.io/medieval-village-megakit | 1 |
 | quaternius-ships | Quaternius | CC0-1.0 | https://quaternius.com/packs/ships.html | 4 |
 | quaternius-stylized-nature-megakit | Quaternius | CC0-1.0 | https://quaternius.itch.io/stylized-nature-megakit | 2 |
@@ -1267,6 +1267,18 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | vattenpistol | /models/bulk/vattenpistol.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | vykort | /models/bulk/vykort.glb | CC0-1.0 | Trollpennan | https://github.com/christofferhedman87/trollpennan |
 | kapybara | /models/bulk/kapybara.glb | CC0-1.0 | Gamideo (itch: dragofive), AI-gjord med Meshy AI | https://dragofive.itch.io/cozy-animals-3d |
+| gard-stall-fantasy | /models/gard/stall-fantasy-quaternius.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/qhNQSOGGbi |
+| gard-stall-oppen-lada | /models/gard/stall-oppen-lada-quaternius.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/ZIdWHxYsUv |
+| gard-honshus | /models/gard/honshus-quaternius.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/DM0F8siLam |
+| gard-lada-liten | /models/gard/lada-liten-quaternius.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/aTcDP7UERC |
+| gard-hus-fantasy | /models/gard/hus-fantasy-quaternius.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/BH2XHWUNmF |
+| gard-liten | /models/gard/gard-liten-quaternius.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/nELNHkk0Uh |
+| gard-koja | /models/gard/koja-quaternius.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/4MJWbyd6vw |
+| gard-bod | /models/gard/bod-quaternius.glb | CC0-1.0 | Quaternius | https://poly.pizza/m/BsTn4bKSGb |
+| gard-hage-2x2 | /models/gard/hage-fence-2x2-kenney-suburban.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-suburban |
+| gard-hage-3x3 | /models/gard/hage-fence-3x3-kenney-suburban.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/city-kit-suburban |
+| gard-hobal | /models/gard/hobal-kenney-hay-bale.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/graveyard-kit |
+| gard-hobal-bunt | /models/gard/hobal-kenney-hay-bale-bundled.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/graveyard-kit |
 
 ## Röster och tal
 
