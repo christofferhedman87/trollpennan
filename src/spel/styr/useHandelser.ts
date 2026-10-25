@@ -11,7 +11,7 @@ import { onskaFarKomma } from "../uppdragsmotor.ts";
 import type { SpelKarna } from "./typer.ts";
 
 export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
-  const { setLage, setHand, setVisKort, setMossaOpp, setHalsning, setFotoMal, setMeny, setBoUid, setOnskaPos, setOnskaSyns, setGavaTill, host, textRef, handRef, overlayRef, onskaSkrivRef, gavaRef, paHandelse, visaOnskaRef } = k.t;
+  const { setLage, setHand, setVisKort, setMossaOpp, setHalsning, setFotoMal, setMeny, setBoUid, setOnskaPos, setOnskaSyns, setGavaTill, textRef, handRef, overlayRef, onskaSkrivRef, gavaRef, paHandelse, visaOnskaRef } = k.t;
   const { visaBubbla } = k.b;
   const { bengtsson } = k.a;
 
@@ -134,30 +134,11 @@ export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
 
   useEffect(() => {
     ljud.satt(useMinne.getState().ljudPa);
-    const el = host.current;
-    if (!el) return;
-    let dead = false;
-    let game: { destroy: (removeCanvas: boolean) => void } | null = null;
     const stopp = brygga.lyssna((h) => paHandelse.current(h));
     const tick = window.setInterval(() => visaOnskaRef.current(), 1000);
-    void import("../starta.ts").then(async (m) => {
-      if (dead || !host.current) return;
-      try {
-        const g = await m.starta(host.current);
-        if (dead) {
-          g.destroy(true);
-          return;
-        }
-        game = g;
-      } catch {
-        /* ängen får vila om kitet saknas */
-      }
-    });
     return () => {
-      dead = true;
       stopp();
       window.clearInterval(tick);
-      game?.destroy(true);
     };
   }, []);
 }

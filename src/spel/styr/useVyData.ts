@@ -16,15 +16,24 @@ export function useVyData(k: Pick<SpelKarna, "t">) {
     const rot = angRef.current;
     if (!rot) return;
     const synka = () => {
-      const canvas = rot.querySelector("canvas");
-      if (!canvas) return;
       const a = rot.getBoundingClientRect();
-      const c = canvas.getBoundingClientRect();
-      if (a.width < 2 || a.height < 2 || c.width < 2) return;
-      rot.style.setProperty("--duk-x", String((c.left - a.left) / a.width));
-      rot.style.setProperty("--duk-y", String((c.top - a.top) / a.height));
-      rot.style.setProperty("--duk-w", String(c.width / a.width));
-      rot.style.setProperty("--duk-h", String(c.height / a.height));
+      if (a.width < 2 || a.height < 2) return;
+      const canvas = rot.querySelector("canvas");
+      const c = canvas instanceof HTMLElement ? canvas.getBoundingClientRect() : null;
+      const liten = !!c && c.width >= 2 && c.height >= 2 && (c.width < a.width * 0.92 || c.height < a.height * 0.92);
+      if (liten && c) {
+        rot.style.setProperty("--duk-x", String((c.left - a.left) / a.width));
+        rot.style.setProperty("--duk-y", String((c.top - a.top) / a.height));
+        rot.style.setProperty("--duk-w", String(c.width / a.width));
+        rot.style.setProperty("--duk-h", String(c.height / a.height));
+        return;
+      }
+      const w = Math.min(a.width, a.height * (750 / 900));
+      const h = Math.min(a.height, a.width * (900 / 750));
+      rot.style.setProperty("--duk-x", String((a.width - w) / (2 * a.width)));
+      rot.style.setProperty("--duk-y", "0");
+      rot.style.setProperty("--duk-w", String(w / a.width));
+      rot.style.setProperty("--duk-h", String(h / a.height));
     };
     synka();
     const ro = new ResizeObserver(synka);

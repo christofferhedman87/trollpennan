@@ -58,7 +58,6 @@ export function useSpelTillstand() {
   const [skylt, setSkylt] = useState<{ text: string; nytt: string | null } | null>(null);
   const [valj, setValj] = useState<{ rubrik: string; eller?: string; djur: Sparad[]; nyckel: string } | null>(null);
   const [uppFlik, setUppFlik] = useState<"pagar" | "klar">("pagar");
-  const host = useRef<HTMLDivElement>(null);
   const angRef = useRef<HTMLElement>(null);
   const filRef = useRef<HTMLInputElement>(null);
   const textRef = useRef(text);
@@ -128,7 +127,7 @@ export function useSpelTillstand() {
     setStjarnInfo, kopRad, setKopRad, onskaOpp, setOnskaOpp, onskaPos, setOnskaPos, onskaSyns,
     setOnskaSyns, foralderRad, setForalderRad, kopia, setKopia, kartaOpp, setKartaOpp, forstaRad,
     setForstaRad, kartaText, setKartaText, omrade, setOmrade, gavaTill, setGavaTill, skylt, setSkylt,
-    valj, setValj, uppFlik, setUppFlik, host, angRef, filRef, textRef, handRef, overlayRef, varldRef,
+    valj, setValj, uppFlik, setUppFlik, angRef, filRef, textRef, handRef, overlayRef, varldRef,
     onskaSkrivRef, omUidRef, omradeRef, gavaRef, vantarRef, valjKor, avHand, nastanRef, paHandelse,
     visaOnskaRef, bannerTimer, introRef, introStart, funna, kortGang, startLage, onskelista, sovande,
     formler, stjarnor, onskan, koptaSidor, byggSidor, garden, lada, ang, hemma, ljudPa, uppdragSpar,

@@ -12,7 +12,7 @@ import type { Varld } from "../ui/typer.ts";
 import type { SpelKarna } from "./typer.ts";
 
 export function skapaTrollApi(k: SpelKarna) {
-  const { setText, setLage, setHand, setForslag, setBubblor, setBanners, setVisKort, setOrdbok, setForalder, setNatt, setAlbumOpp, setBokOpp, setPanel, setMeny, setBoUid, setOnskaOpp, setOnskaPos, setOnskaSyns, setKartaOpp, setKartaText, setOmrade, setGavaTill, setSkylt, setValj, textRef, handRef, onskaSkrivRef, omUidRef, omradeRef, gavaRef, vantarRef } = k.t;
+  const { setText, setLage, setHand, setForslag, setBubblor, setBanners, setVisKort, setOrdbok, setForalder, setNatt, setAlbumOpp, setBokOpp, setPanel, setMeny, setBoUid, setOnskaOpp, setOnskaPos, setOnskaSyns, setKartaOpp, setKartaText, setOmrade, setGavaTill, setSkylt, setValj, setIntro, textRef, handRef, onskaSkrivRef, omUidRef, omradeRef, gavaRef, vantarRef, introRef } = k.t;
   const { visaMossa } = k.b;
   const { visaVarld, synkaAv } = k.v;
   const { oppnaOnska } = k.o;
@@ -37,6 +37,7 @@ export function skapaTrollApi(k: SpelKarna) {
         textRef.current = t;
         setText(t);
         setForslag(null);
+        if (t.trim() && useMinne.getState().ang.length === 0) utforRef.current(t, { hand: true });
       },
       lage: (l: Lage) => setLage(l),
       kort: (id: string) => {
@@ -209,6 +210,48 @@ export function skapaTrollApi(k: SpelKarna) {
       },
       bytPlats: (id: string) => useMinne.getState().bytPlats(id),
       platsAntal: () => Object.fromEntries(Object.entries(useMinne.getState().platsSkapelser).map(([k, v]) => [k, v.length])),
+      nollstall: () => {
+        api.aterstall();
+        introRef.current = false;
+        setIntro(false);
+        useMinne.setState({ introSedd: true, oppnadePlatser: ["skogen", "sjon", "grottan"] });
+      },
+      mina: () => useMinne.getState().ang,
+      flyttaDjuret: (uid: string, mal: string) => {
+        if (mal !== "gard") return;
+        const start = useMinne.getState();
+        const djur = start.ang.find((a) => a.uid === uid) ?? start.hemma.find((h) => h.spec.uid === uid)?.spec;
+        if (!djur) return;
+        const finns = start.garden.find((g) => byggMedId(g.bygg)?.hem);
+        const hemUid = finns?.uid ?? "gard-hem-1";
+        if (!finns) {
+          start.laggByggen([{
+            uid: hemUid,
+            bygg: "hus",
+            formel: "ett hus",
+            ord: "hus",
+            antal: 1,
+            fargId: null,
+            fargHex: null,
+            monster: null,
+            material: null,
+            delar: [],
+            x: 0.5,
+            y: 0.5,
+            boende: [],
+          }]);
+        }
+        if (useMinne.getState().flyttaIn(uid, hemUid) === "ok") return;
+        const s = useMinne.getState();
+        useMinne.setState({
+          ang: s.ang.filter((a) => a.uid !== uid),
+          hemma: [...s.hemma.filter((h) => h.spec.uid !== uid), { spec: djur, hem: hemUid }],
+          garden: s.garden.map((g) => (g.uid === hemUid && !g.boende.includes(uid) ? { ...g, boende: [...g.boende, uid] } : g)),
+        });
+        brygga.taBort(uid);
+        brygga.synkaGard();
+      },
+      visa: (mal: "ang" | "gard") => visaVarld(mal),
     };
   return api;
 }
@@ -243,6 +286,10 @@ declare global {
       inHem: () => boolean;
       bytPlats: (id: string) => boolean;
       platsAntal: () => Record<string, number>;
+      nollstall: () => void;
+      mina: () => { uid: string }[];
+      flyttaDjuret: (uid: string, mal: string) => void;
+      visa: (mal: "ang" | "gard") => void;
     };
   }
 }

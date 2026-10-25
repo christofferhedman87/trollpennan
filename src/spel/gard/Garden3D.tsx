@@ -1,6 +1,6 @@
 import { Bounds, OrthographicCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Component, Suspense, useEffect, useMemo, useState, type ReactNode } from "react";
+import { Component, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
 import { brygga } from "../brygga.ts";
 import { KV, MILJO } from "../miljo.ts";
@@ -141,11 +141,13 @@ export function Garden3D() {
   if (typeof window !== "undefined") synkaTestSparning(useMinne, window.localStorage);
   const garden = useMinne((s) => s.garden);
   const hemma = useMinne((s) => s.hemma);
+  const rotRef = useRef<HTMLDivElement>(null);
   const [flyttarUid, setFlyttarUid] = useState<string | null>(null);
   const kanter = useMemo(() => kanterForByggen(garden), [garden]);
   const hagar = useMemo(() => hittaSlutnaHagar(kanter), [kanter]);
 
   useEffect(() => {
+    rotRef.current?.setAttribute("data-testid", "garden-3d");
     brygga.registrera("gard", {
       flytta: (uid) => setFlyttarUid(uid),
       platser: () => {
@@ -205,7 +207,7 @@ export function Garden3D() {
 
   const dprMax = Math.min(2, KV.dpr_max);
   return (
-    <div className="angen-3d garden-3d" data-vy="garden-3d">
+    <div ref={rotRef} className="angen-3d garden-3d" data-vy="garden-3d">
       <WebbGren>
         <Canvas
           dpr={[1, dprMax]}

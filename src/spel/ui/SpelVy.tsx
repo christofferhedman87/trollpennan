@@ -43,7 +43,7 @@ export function SpelVy() {
     setMeny, boUid, setBoUid, ladaOpp, setLadaOpp, setByggSidaId, byggPuff, setByggPuff, sidOpp,
     setSidOpp, kop, setKop, stjarnInfo, setStjarnInfo, kopRad, onskaOpp, onskaSyns, foralderRad,
     kopia, setKopia, kartaOpp, setKartaOpp, forstaRad, kartaText, setKartaText, omrade,
-    gavaTill, skylt, setSkylt, valj, setValj, uppFlik, setUppFlik, host, angRef, filRef,
+    gavaTill, skylt, setSkylt, valj, setValj, uppFlik, setUppFlik, angRef, filRef,
     textRef, overlayRef, omUidRef, valjKor, introRef, funna, kortGang, startLage, onskelista,
     sovande, formler, stjarnor, onskan, koptaSidor, lada, ang, hemma, ljudPa, uppdragSpar,
     oppna, mossaLista, mossaExtra, liv, totalOrd, hittatAntal,
@@ -95,7 +95,6 @@ export function SpelVy() {
       ) : null}
       <section className={visa3d ? "ang tred" : "ang"} ref={angRef} aria-label={varld === "gard" ? TEXTER.flikar.garden : TEXTER.flikar.angen} inert={intro}>
         <div className="natt-bak" style={{ opacity: natt }} />
-        <div className="duk" ref={host} />
         {visa3d ? <Angen3D natt={natt} saga={intro} onGrind={platsUi.tryckGrind} /> : null}
         {visa3d ? <PlatsResa plats={platsUi.plats} namn={platsUi.namn} ton={platsUi.ton} skylt={platsUi.skylt} intro={platsUi.intro} hem={platsUi.hem} /> : null}
         <AngLager natt={natt} varld={varld} omrade={omrade} panel={panel} ang={ang} hemma={hemma} liv={liv} fotoMal={fotoMal} visaBanner={visaBanner} stangBanner={stangBanner} visaMossa={visaMossa} setFotoMal={setFotoMal} banners={banners} bubblor={bubblor} onskan={onskan} onskaOpp={onskaOpp} onskaSyns={onskaSyns} ank={ank} oppnaOnska={oppnaOnska} meny={meny} setMeny={setMeny} omUidRef={omUidRef} setLage={setLage} setBokOpp={setBokOpp} setLadaOpp={setLadaOpp} menyHem={menyHem} setBoUid={setBoUid} lada={lada} ladaOpp={ladaOpp} boUid={boUid} boDjur={boDjur} flyttaInDjur={flyttaInDjur} />
