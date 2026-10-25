@@ -28,7 +28,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
     onskaSkrivRef, nastanRef, introRef, setFotoMal, varldRef, vantarRef, gavaRef, setGavaTill,
     omradeRef,
   } = k.t;
-  const { visaBubbla, visaBanner, bjud, visaMossa } = k.b;
+  const { visaBubbla, visaBanner, bjud, visaMossa, rensaVidHandling } = k.b;
   const { visaPlatsRen, visaVarld } = k.v;
   const { bengtsson, gaIn, belonaFlode, platsUi } = k.a;
   const { uppfyll, belona } = k.be;
@@ -41,7 +41,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
     setBehover(null);
   }
   function hanteraBygg(utfall: Extract<ReturnType<typeof tolkaBygg>, { typ: "bygge" }>) {
-    useMinne.getState().sparaOkanda(utfall.okanda); rostKo.handling();
+    useMinne.getState().sparaOkanda(utfall.okanda); rostKo.handling(); rensaVidHandling();
     const agda = useMinne.getState().byggSidor;
     const las = utfall.byggen.map((b) => lastBygge(b, agda)).filter((x) => x != null);
     if (las.length) {
@@ -256,6 +256,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
     const trim = raw.trim();
     if (!trim) return;
     rostKo.handling();
+    rensaVidHandling();
     if (platsUi.forsokSkriv(trim)) { rensaSkriv(); setBokOpp(false); return; }
     noteraSkriv(trim);
     if (gavaRef.current?.startsWith("egen:")) {

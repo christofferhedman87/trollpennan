@@ -120,7 +120,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
           ) : null}
           {panel === "spel" ? <StallChip visaBanner={visaBanner} /> : null}
           <div className="banderoller" role="status" aria-live="polite" aria-atomic="true">
-            {banners.map((b) => {
+            {banners.slice(0, 1).map((b) => {
               // B6.3 (H): en uppmaning barnet ska hinna läsa är en knapp – den står kvar tills tiden gått eller barnet trycker
               const Tagg = b.tryck ? "button" : "p";
               return (
@@ -130,13 +130,15 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
               );
             })}
           </div>
-          {bubblor.map((b) => (
+          {panel === "spel" && !onskaOpp && !ladaOpp && !boUid && !meny
+            ? bubblor.slice(-1).map((b) => (
             <div key={b.id} className={b.ovan ? "bubbla ovan" : "bubbla"} style={bubblaStil(b.x, b.y)} data-testid="bubbla">
               {b.hjarta ? <Heart className="hjarta" aria-hidden /> : null}
               <p>{b.text}</p>
             </div>
-          ))}
-          {onskan && !onskaOpp && onskaSyns && !bubblor.length ? (
+          ))
+            : null}
+          {onskan && onskaSyns && panel === "spel" && !onskaOpp && !ladaOpp && !boUid && !meny && bubblor.length === 0 ? (
             <button
               type="button"
               className={ank.vanster ? "bubbla onska vanster" : "bubbla onska hoger"}

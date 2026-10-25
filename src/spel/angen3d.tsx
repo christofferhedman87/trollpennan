@@ -12,6 +12,7 @@ import { DAMM } from "./ang/damm.ts";
 import { Eldflugor, FagelFlyg, Fjarilar, Forgrund, Glitter, GrasTuvor, Horisont, Ljusflackar, Moln, Nackrosor, Ringar, Sond, Stenar, TradOchBlommor } from "./ang/dekor.tsx";
 import { Byggnad, Skogsstig, SpokHus } from "./ang/byggnader.tsx";
 import { DjurIScen } from "./ang/djur.tsx";
+import { Bengtsson3D } from "./ang/Bengtsson3D.tsx";
 import { Himmel, SvajMark } from "./ang/himmel.tsx";
 import { KameraRam } from "./ang/kamera.tsx";
 import { PlatsScen } from "./ang/PlatsDekor.tsx";
@@ -114,6 +115,11 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
           <KenneyNatur />
         </Suspense>
       </NaturGren>
+      {!saga ? (
+        <Suspense fallback={null}>
+          <Bengtsson3D />
+        </Suspense>
+      ) : null}
       <Ljusflackar />
       {/* B6.3 (G): vattnet över markens svaj (ang/damm.ts) */}
       <mesh name="damm-vatten" rotation={[-Math.PI / 2, 0, 0]} position={[DAMM.x, DAMM.y, DAMM.z]}>

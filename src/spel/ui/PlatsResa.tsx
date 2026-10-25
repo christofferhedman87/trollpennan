@@ -28,7 +28,7 @@ export function PlatsResa({ plats, namn, ton, skylt, intro, hem }: Props) {
       {ton ? <div className="plats-ton" data-testid="plats-ton" aria-hidden /> : null}
       {intro ? (
         <div className="plats-intro" data-testid="plats-intro">
-          <img src={mineUrl("bengtsson", intro.min)} alt="" width={72} height={72} />
+          <img src={mineUrl("bengtsson", intro.min === "automat" ? "tankande" : intro.min)} alt="" width={72} height={72} />
           <p>{intro.text}</p>
         </div>
       ) : null}
