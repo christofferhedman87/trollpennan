@@ -1410,5 +1410,82 @@
     }
    ]
   }
+ ],
+ "varldskarta": [
+  {
+   "id": "ang",
+   "namn": "Ängen",
+   "ikon": "🌸",
+   "tema": "ang",
+   "farg": "#e7f6d8",
+   "kant": "#3e8e5a",
+   "lockelse": "Skriv fram djur, saker och väder vid den soliga dammen.",
+   "ordbrickor": [
+    { "ikon": "🐱", "ord": "katt" },
+    { "ikon": "🌈", "ord": "regnbåge" },
+    { "ikon": "🎈", "ord": "boll" }
+   ],
+   "rost_text": "Nu kan du resa till nya platser! Öppna kartan eller skriv ett platsnamn i boken."
+  },
+  {
+   "id": "garden",
+   "namn": "Gården",
+   "ikon": "🏡",
+   "tema": "gard",
+   "farg": "#fff1d6",
+   "kant": "#c47b3a",
+   "lockelse": "Bygg hus, staket och mysiga hagar åt dina djur.",
+   "ordbrickor": [
+    { "ikon": "🏡", "ord": "hus" },
+    { "ikon": "🐄", "ord": "ko" },
+    { "ikon": "🌻", "ord": "blomma" }
+   ],
+   "rost_text": "Det här är din gård! Här kan du bygga vad du vill."
+  },
+  {
+   "id": "skogen",
+   "namn": "Glittrande skogen",
+   "ikon": "🌲",
+   "tema": "skog",
+   "farg": "#e3f0d8",
+   "kant": "#2f6b3a",
+   "lockelse": "Möt Mossugglan och hjälp ekorren bland de höga granarna.",
+   "ordbrickor": [
+    { "ikon": "🦉", "ord": "uggla" },
+    { "ikon": "🐿️", "ord": "ekorre" },
+    { "ikon": "🌲", "ord": "kotte" }
+   ],
+   "rost_text": "Här luktar det skog och nya idéer! Vad vill du skriva fram?"
+  },
+  {
+   "id": "sjon",
+   "namn": "Dimsjön",
+   "ikon": "⛵",
+   "tema": "sjo",
+   "farg": "#e4f2f8",
+   "kant": "#3d7ea6",
+   "lockelse": "Segla ut till fyrön och hjälp gamla bävern vid vattnet.",
+   "ordbrickor": [
+    { "ikon": "🐸", "ord": "groda" },
+    { "ikon": "🦫", "ord": "bäver" },
+    { "ikon": "⛵", "ord": "båt" }
+   ],
+   "rost_text": "Här glittrar det ända in i glasögonen! Vad vill du skriva fram?"
+  },
+  {
+   "id": "grottan",
+   "namn": "Kristallgrottan",
+   "ikon": "💎",
+   "tema": "grotta",
+   "farg": "#f3e9fb",
+   "kant": "#6b4c9a",
+   "lockelse": "Tänd de glittrande kristallerna och hälsa på Nattdraken.",
+   "ordbrickor": [
+    { "ikon": "🐉", "ord": "drake" },
+    { "ikon": "🦇", "ord": "fladdermus" },
+    { "ikon": "🔦", "ord": "ficklampa" }
+   ],
+   "rost_text": "Här inne glimmar idéerna! Vad vill du skriva fram?"
+  }
  ]
 }

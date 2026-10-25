@@ -67,7 +67,7 @@ export function Hud({ oppnaStjarnor, haller, setHaller, setForalder, stjarnor, h
               setSenare(false);
             }}
           >
-            <span />
+            <span ref={(el) => el?.setAttribute("data-testid", "meny-knapp")} />
             <span />
             <span />
           </button>

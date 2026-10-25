@@ -74,13 +74,13 @@ export function lasIn(): Data {
   }
 }
 
-/** Sparning → Data. Saknade fält får standardvärden. `{ introSedd }` utan version accepteras. */
+/** Sparning → Data. Saknade fält får standardvärden. `{ introSedd }` eller `{ introSett }` utan version accepteras. */
 export function franSparning(raw: unknown): Data {
   try {
     const bas = tom();
     let indata = raw;
-    if (objekt(raw) && raw.version === undefined && typeof raw.introSedd === "boolean") {
-      indata = { version: 2, ...raw };
+    if (objekt(raw) && raw.version === undefined && (typeof raw.introSedd === "boolean" || typeof raw.introSett === "boolean")) {
+      indata = { version: 2, ...raw, introSedd: typeof raw.introSedd === "boolean" ? raw.introSedd : Boolean(raw.introSett) };
     }
     const normalized = normalisera(indata, bas);
     if (!normalized || !arData({ ...normalized, version: 2 })) {
