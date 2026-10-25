@@ -6,6 +6,7 @@ import type { Onska } from "./useOnska.ts";
 import type { Belona } from "./useBelona.ts";
 import type { Skapa } from "./useSkapa.ts";
 import type { Gard } from "./useGard.ts";
+import type { Skriv } from "./useSkriv.ts";
 
 export type { SpelTillstand } from "./useSpelTillstand.ts";
 
@@ -18,4 +19,5 @@ export interface SpelKarna {
   be: Belona;
   s: Skapa;
   g: Gard;
+  sk: Skriv;
 }
