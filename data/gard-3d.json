@@ -1,0 +1,66 @@
+{
+  "rutnat": {
+    "bredd": 6,
+    "djup": 10,
+    "cellStorlek": 1.0,
+    "xMin": 0.10,
+    "xSpan": 0.80,
+    "yMin": 0.32,
+    "ySpan": 0.60
+  },
+  "kamera": {
+    "position": [10, 12, 10],
+    "zoom": 48,
+    "near": -40,
+    "far": 80,
+    "margin": 1.1
+  },
+  "staket": {
+    "enkelFil": "/models/natur/fence_simple.glb",
+    "grindFil": "/models/natur/fence_gate.glb",
+    "kantOrd": ["staket", "mur", "port"]
+  },
+  "byggnader": {
+    "stall": { "fil": "/models/gard/stall-fantasy-quaternius.glb", "tillgangId": "gard-stall-fantasy", "malhojd": 1.45, "reserv": "hus", "farg": "#B71C1C" },
+    "hus": { "fil": "/models/gard/hus-fantasy-quaternius.glb", "tillgangId": "gard-hus-fantasy", "malhojd": 1.55, "reserv": "hus", "farg": "#E57373" },
+    "stuga": { "fil": "/models/gard/gard-liten-quaternius.glb", "tillgangId": "gard-liten", "malhojd": 1.15, "reserv": "hus", "farg": "#C62828" },
+    "koja": { "fil": "/models/gard/koja-quaternius.glb", "tillgangId": "gard-koja", "malhojd": 0.95, "reserv": "hus", "farg": "#A1887F" },
+    "hundkoja": { "fil": "/models/bulk/koja.glb", "tillgangId": "koja", "malhojd": 0.85, "reserv": "hus", "farg": "#8D6E63" },
+    "fågelholk": { "fil": "/models/gard/honshus-quaternius.glb", "tillgangId": "gard-honshus", "malhojd": 1.05, "reserv": "hus", "farg": "#A1887F" },
+    "pepparkakshus": { "fil": "/models/gard/bod-quaternius.glb", "tillgangId": "gard-bod", "malhojd": 1.15, "reserv": "hus", "farg": "#8D6E63" },
+    "trädhus": { "fil": "/models/gard/lada-liten-quaternius.glb", "tillgangId": "gard-lada-liten", "malhojd": 1.45, "reserv": "hus", "farg": "#6D4C41" },
+    "slott": { "fil": "/models/bulk/slott.glb", "tillgangId": "slott", "malhojd": 1.75, "reserv": "torn", "farg": "#B0BEC5" },
+    "torn": { "fil": "/models/bulk/torn.glb", "tillgangId": "torn", "malhojd": 1.65, "reserv": "torn", "farg": "#B0BEC5" },
+    "fyr": { "fil": "/models/bulk/slottstorn.glb", "tillgangId": "slottstorn", "malhojd": 1.7, "reserv": "torn", "farg": "#EF5350" },
+    "tält": { "fil": "/models/bulk/talt.glb", "tillgangId": "talt", "malhojd": 1.0, "reserv": "hus", "farg": "#FFA726" },
+    "träd": { "fil": "/models/natur/tree_oak.glb", "tillgangId": null, "malhojd": 1.4, "reserv": "trad", "farg": "#43A047" },
+    "äppelträd": { "fil": "/models/natur/tree_fat.glb", "tillgangId": null, "malhojd": 1.45, "reserv": "trad", "farg": "#43A047" },
+    "gran": { "fil": "/models/bulk/gran.glb", "tillgangId": "gran", "malhojd": 1.5, "reserv": "trad", "farg": "#2E7D32" },
+    "palm": { "fil": "/models/bulk/palm.glb", "tillgangId": "palm", "malhojd": 1.45, "reserv": "trad", "farg": "#66BB6A" },
+    "blomma": { "fil": "/models/natur/flower_redA.glb", "tillgangId": null, "malhojd": 0.45, "reserv": "trad", "farg": "#F06292" },
+    "buske": { "fil": "/models/natur/plant_bushLarge.glb", "tillgangId": null, "malhojd": 0.55, "reserv": "trad", "farg": "#66BB6A" },
+    "svamp": { "fil": "/models/bulk/svamp.glb", "tillgangId": "svamp", "malhojd": 0.45, "reserv": "trad", "farg": "#EF5350" },
+    "bänk": { "fil": "/models/bulk/bank.glb", "tillgangId": "bank", "malhojd": 0.65, "reserv": "lek", "farg": "#8D6E63" },
+    "brunn": { "fil": "/models/bulk/brunn.glb", "tillgangId": "brunn", "malhojd": 0.9, "reserv": "torn", "farg": "#90A4AE" },
+    "fontän": { "fil": "/models/bulk/fontan.glb", "tillgangId": "fontan", "malhojd": 1.0, "reserv": "damm", "farg": "#4FC3F7" },
+    "gunga": { "fil": "/models/bulk/gungbrada.glb", "tillgangId": "gungbrada", "malhojd": 0.85, "reserv": "lek", "farg": "#FF7043" },
+    "rutschkana": { "fil": null, "tillgangId": null, "malhojd": 1.0, "reserv": "lek", "farg": "#AB47BC" },
+    "studsmatta": { "fil": null, "tillgangId": null, "malhojd": 0.65, "reserv": "lek", "farg": "#42A5F5" },
+    "sandlåda": { "fil": null, "tillgangId": null, "malhojd": 0.45, "reserv": "lek", "farg": "#FFCA28" },
+    "karusell": { "fil": null, "tillgangId": null, "malhojd": 0.95, "reserv": "lek", "farg": "#EC407A" },
+    "klätterställning": { "fil": null, "tillgangId": null, "malhojd": 1.1, "reserv": "lek", "farg": "#26A69A" },
+    "bro": { "fil": "/models/bulk/bro.glb", "tillgangId": "bro", "malhojd": 0.65, "reserv": "bro", "farg": "#8D6E63" },
+    "regnbågsbro": { "fil": "/models/bulk/bro.glb", "tillgangId": "bro", "malhojd": 0.75, "reserv": "bro", "farg": "#FF7043" },
+    "damm": { "fil": null, "tillgangId": null, "malhojd": 0.2, "reserv": "damm", "farg": "#4FC3F7" },
+    "vallgrav": { "fil": null, "tillgangId": null, "malhojd": 0.2, "reserv": "damm", "farg": "#4FC3F7" },
+    "lykta": { "fil": "/models/bulk/lykta.glb", "tillgangId": "lykta", "malhojd": 1.1, "reserv": "torn", "farg": "#37474F" },
+    "staket": { "fil": null, "tillgangId": null, "malhojd": 0.7, "reserv": "hus", "farg": "#FFFFFF" },
+    "mur": { "fil": null, "tillgangId": null, "malhojd": 0.85, "reserv": "torn", "farg": "#9E9E9E" },
+    "port": { "fil": null, "tillgangId": null, "malhojd": 1.1, "reserv": "torn", "farg": "#795548" }
+  },
+  "dekor": [
+    { "fil": "/models/gard/hobal-kenney-hay-bale-bundled.glb", "tillgangId": "gard-hobal-bunt", "wx": -3.1, "wz": -4.6, "rotY": 0.3, "malhojd": 0.55 },
+    { "fil": "/models/gard/hobal-kenney-hay-bale.glb", "tillgangId": "gard-hobal", "wx": 3.1, "wz": -4.5, "rotY": -0.4, "malhojd": 0.4 },
+    { "fil": "/models/gard/hobal-kenney-hay-bale.glb", "tillgangId": "gard-hobal", "wx": -3.1, "wz": 4.4, "rotY": 0.8, "malhojd": 0.4 }
+  ]
+}
