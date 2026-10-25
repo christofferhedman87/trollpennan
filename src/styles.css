@@ -107,6 +107,10 @@ position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);z-index:6;marg
 background:var(--color-cream);color:var(--color-ink);font-size:1.35rem;font-weight:800;line-height:1.2;
 border-radius:18px;padding:14px 18px;box-shadow:0 6px 0 var(--color-paper-deep)}
 .ang.tred .duk{visibility:hidden}
+.ang:has(.garden-3d){background:#7ec8f2;--duk-x:0!important;--duk-y:0!important;--duk-w:1!important;--duk-h:1!important}
+.ang:has(.garden-3d)::after{display:none}
+.ang:has(.garden-3d) .duk{visibility:hidden;pointer-events:none}
+.garden-reserv{position:absolute;inset:0;display:grid;place-items:center;margin:0;padding:24px;text-align:center;font-weight:800;color:var(--color-ink)}
 .ang.tred .humor-ikon,.ang.tred .foto-knapp{display:none}
 .ang-lager{
 pointer-events:none;position:absolute;inset:0;overflow:hidden;z-index:2}

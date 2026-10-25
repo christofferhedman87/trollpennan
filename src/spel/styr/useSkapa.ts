@@ -9,7 +9,8 @@ import type { Utfall } from "@/tolk/typer.ts";
 import { passarDjur, TEXTER_AV } from "../aventyr.ts";
 import { geGavor, oppnaMed, oppnaOn, skickaDjur } from "../avflode.ts";
 import { brygga } from "../brygga.ts";
-import { bestamdHem, franTolk, ledigPlats } from "../bygge.ts";
+import { bestamdHem, franTolk } from "../bygge.ts";
+import { arKantBygge, ledigCellPlats, ledigKantPlats } from "../gard/rutnat.ts";
 import { fyll } from "../fyll.ts";
 import { ALBUM, arSammansatt, BYGG_ORD, geEgenGava, komIhagDjur, noteraSkriv, poangAv, taggarFor } from "../liv.ts";
 import { ljud } from "../ljud.ts";
@@ -62,10 +63,10 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
       return;
     }
     visaPlatsRen("gard");
-    const redan = useMinne.getState().garden.map((p) => ({ x: p.x, y: p.y }));
+    const redan = useMinne.getState().garden.map((p) => ({ x: p.x, y: p.y, bygg: p.bygg, antal: p.antal }));
     const gjorda = utfall.byggen.map((b) => {
-      const pos = ledigPlats([...redan]);
-      redan.push(pos);
+      const pos = arKantBygge(b.bygg) ? ledigKantPlats(redan) : ledigCellPlats(redan);
+      redan.push({ x: pos.x, y: pos.y, bygg: b.bygg, antal: b.antal });
       return franTolk(b, formelBygg(b), pos.x, pos.y);
     });
     if (om && gjorda[0]) {
