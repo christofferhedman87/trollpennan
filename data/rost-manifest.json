@@ -11618,6 +11618,14 @@
    "t": "en gaffeltruck",
    "n": -16
   },
+  "7ee8f593": {
+   "f": "/ljud/rost/db967993a3539e8c.mp3",
+   "ms": 4362,
+   "r": "pennan",
+   "id": "varde:en sportbil",
+   "t": "en sportbil",
+   "n": -16
+  },
   "7ef50073": {
    "f": "/ljud/rost/1a230f6176d65de4.mp3",
    "ms": 1254,
@@ -13176,6 +13184,14 @@
    "r": "pennan",
    "id": "varde:med hängslen",
    "t": "med hängslen",
+   "n": -16
+  },
+  "930d7c7f": {
+   "f": "/ljud/rost/db967993a3539e8c.mp3",
+   "ms": 4362,
+   "r": "pennan",
+   "id": "varde:en grottport",
+   "t": "en grottport",
    "n": -16
   },
   "9316054a": {

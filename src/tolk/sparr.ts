@@ -1,5 +1,5 @@
 import { ordFranForm } from "./lexikon.ts";
-import { BLOCK } from "./data.ts";
+import { BLOCK, ORD } from "./data.ts";
 
 /** Bara för spärrlistan. Ordlistan jämförs aldrig så här. */
 export function normSparr(s: string): string {
@@ -16,18 +16,37 @@ export function normSparr(s: string): string {
   return t;
 }
 
+/** Samma bokstäver som normSparr, utan att slå ihop dubbeltecken. */
+function renSparr(s: string): string {
+  return s.toLocaleLowerCase("sv").replace(/[^a-zåäö]/g, "");
+}
+
 const EXAKT = new Set(BLOCK.ord.map(normSparr));
-const STAMMAR = BLOCK.stammar.filter((s) => s.length >= 4).map(normSparr);
+const STAMMAR = BLOCK.stammar
+  .filter((s) => s.length >= 4)
+  .map((s) => ({ norm: normSparr(s), ren: renSparr(s) }));
 const UNDANTAG = new Set(BLOCK.undantag_fran_stammar.map(normSparr));
 
-function stamTraff(n: string): boolean {
-  if (!n || UNDANTAG.has(n)) return false;
-  return STAMMAR.some((stam) => stam.length >= 3 && n.includes(stam));
+function stamTraff(norm: string, ren: string): boolean {
+  if (!norm || UNDANTAG.has(norm)) return false;
+  return STAMMAR.some((s) => (s.norm.length >= 4 ? norm.includes(s.norm) : s.ren.length >= 4 && ren.includes(s.ren)));
+}
+
+const FUNK = new Set<string>();
+{
+  const f = ORD.funktionsord;
+  const ord = [...f.artiklar, ...Object.keys(f.antal), ...f.som, ...f.med, ...f.och, ...f.kan, ...Object.keys(f.forstarkning)];
+  for (const w of ord) {
+    for (const del of w.toLocaleLowerCase("sv").split(/\s+/)) {
+      const t = del.replace(/[^a-zåäö]/g, "");
+      if (t) FUNK.add(t);
+    }
+  }
 }
 
 function arOrdform(token: string): boolean {
   const t = token.toLocaleLowerCase("sv").replace(/[^a-zåäö]/g, "");
-  return !!t && !!ordFranForm(t);
+  return !!t && (FUNK.has(t) || !!ordFranForm(t));
 }
 
 export function arSparrat(raw: string): boolean {
@@ -41,7 +60,7 @@ export function arSparrat(raw: string): boolean {
   const kolla = (text: string) => {
     const n = normSparr(text);
     if (!n || UNDANTAG.has(n)) return false;
-    return EXAKT.has(n) || stamTraff(n);
+    return EXAKT.has(n) || stamTraff(n, renSparr(text));
   };
 
   for (const t of tokens) {

@@ -37,7 +37,7 @@ export function skapaTrollApi(k: SpelKarna) {
         textRef.current = t;
         setText(t);
         setForslag(null);
-        if (t.trim() && useMinne.getState().ang.length === 0) utforRef.current(t, { hand: true });
+        if (t.trim()) utforRef.current(t, { hand: true });
       },
       lage: (l: Lage) => setLage(l),
       kort: (id: string) => {
@@ -252,7 +252,13 @@ export function skapaTrollApi(k: SpelKarna) {
         brygga.synkaGard();
       },
       visa: (mal: "ang" | "gard") => visaVarld(mal),
+      tillstand: () => api.state(),
+      rensa: () => api.nollstall(),
     };
+  if (typeof window !== "undefined" && (import.meta.env.DEV || navigator.webdriver === true) && !window.__tredSyn) {
+    const synFn = () => Object.entries(synFn).map(([uid, v]) => ({ uid, ...(v as object) }));
+    window.__tredSyn = synFn as unknown as NonNullable<Window["__tredSyn"]>;
+  }
   return api;
 }
 
@@ -290,6 +296,8 @@ declare global {
       mina: () => { uid: string }[];
       flyttaDjuret: (uid: string, mal: string) => void;
       visa: (mal: "ang" | "gard") => void;
+      tillstand: () => unknown;
+      rensa: () => void;
     };
   }
 }

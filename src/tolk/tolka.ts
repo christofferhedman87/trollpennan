@@ -503,6 +503,44 @@ export function blandPar(raw: string): { a: Ord; b: Ord } | null {
   return { a: m.a, b: m.b };
 }
 
+/** Föregående led i samma fras (efter senaste "och") som gör att en dubbel sak inte står ensam. */
+function inneHallFore(sem: Sem[]): boolean {
+  let start = 0;
+  for (let j = sem.length - 1; j >= 0; j--) {
+    const s = sem[j];
+    if (s?.t === "funk" && s.v === "och") {
+      start = j + 1;
+      break;
+    }
+  }
+  for (let j = start; j < sem.length; j++) {
+    const s = sem[j]!;
+    if (s.t === "ord" && (s.o.klass === "djur" || s.o.klass === "foremal")) return true;
+    if (s.t === "komp" || s.t === "blanda") return true;
+    if (s.t === "funk" && (s.v === "med" || s.v === "som" || s.v === "kan")) return true;
+  }
+  return false;
+}
+
+function sakFristaende(sem: Sem[], tokens: string[], i: number): boolean {
+  if (inneHallFore(sem)) return false;
+  if (tokens[i + 1] === undefined) return true;
+  const efter = lasToken(tokens[i + 1]!);
+  return efter?.t === "funk" || efter?.t === "artikel";
+}
+
+function genusIFras(tokens: string[], i: number): "n" | "u" {
+  let start = 0;
+  for (let j = i - 1; j >= 0; j--) {
+    if (tokens[j] === "och") {
+      start = j + 1;
+      break;
+    }
+  }
+  for (let j = start; j < i; j++) if (tokens[j] === "ett" || tokens[j] === "mitt") return "n";
+  return "u";
+}
+
 function semantisera(tokens: string[]): Sem[] | Utfall {
   const bland = matchBlandning(tokens);
   if (bland) {
@@ -526,6 +564,11 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
     const token = tokens[i] ?? "";
     const en = lasToken(token);
     if (!en) {
+      const losSak = dubbelSak(token);
+      if (losSak && sakFristaende(sem, tokens, i)) {
+        sem.push({ t: "ord", o: { ...losSak, genus: genusIFras(tokens, i) }, form: token });
+        continue;
+      }
       const komp = delaOrd(token);
       if (komp) {
         sem.push(komp);
@@ -599,11 +642,8 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
     // "en katt med regnbåge" behåller sin gamla betydelse.
     if (en.t === "ord" && en.o.klass !== "foremal" && en.o.klass !== "djur") {
       const sak = dubbelSak(token);
-      const fore = i === 0 ? null : lasToken(tokens[i - 1] ?? "");
-      const efter = tokens[i + 1] === undefined ? null : lasToken(tokens[i + 1]!);
-      const fristaende = (i === 0 || fore?.t === "artikel" || fore?.t === "antal") && (tokens[i + 1] === undefined || efter?.t === "funk" || efter?.t === "artikel");
-      if (sak && fristaende) {
-        sem.push({ t: "ord", o: { ...sak, genus: tokens[i - 1] === "ett" ? "n" : "u" }, form: token });
+      if (sak && sakFristaende(sem, tokens, i)) {
+        sem.push({ t: "ord", o: { ...sak, genus: genusIFras(tokens, i) }, form: token });
         continue;
       }
     }
@@ -615,7 +655,13 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
       continue;
     }
     if (en.t === "antal") sem.push({ t: "antal", n: en.n });
-    else if (en.t === "boost") sem.push({ t: "boost", dir: en.dir, skala: en.skala });
+    else if (en.t === "boost") {
+      const djurOrd = ordFranForm(token);
+      const efter = tokens[i + 1] === undefined ? null : lasToken(tokens[i + 1]!);
+      if (djurOrd?.klass === "djur" && (tokens[i + 1] === undefined || efter?.t === "funk" || efter?.t === "artikel")) {
+        sem.push({ t: "ord", o: djurOrd, form: token });
+      } else sem.push({ t: "boost", dir: en.dir, skala: en.skala });
+    }
     else if (en.t === "funk") sem.push({ t: "funk", v: en.v });
     else if (en.t === "ord") sem.push({ t: "ord", o: en.o, form: token });
   }

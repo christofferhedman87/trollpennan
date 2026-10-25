@@ -99,7 +99,17 @@ const DUBBEL_SAK = new Map<string, Ord>();
 for (const [id, w] of sakOrd) {
   const annan = formMap.get(w);
   if (!annan || annan.klass === "foremal" || annan.klass === "djur" || DUBBEL_SAK.has(w)) continue;
-  const o: Ord = { id: w, klass: "foremal", niva: "fritt", visa: w, former: [...new Set([...annan.former, w])], plural: [], del: { kropp: id } };
+  const { singular, plural } = foremalsFormer(w);
+  // Böjningarna ligger bara i DUBBEL_SAK, inte i formMap, så ordFormKant är oförändrad.
+  const o: Ord = {
+    id: w,
+    klass: "foremal",
+    niva: "fritt",
+    visa: w,
+    former: [...new Set([...annan.former, ...singular, ...plural])],
+    plural,
+    del: { kropp: id },
+  };
   for (const f of o.former) if (!DUBBEL_SAK.has(f)) DUBBEL_SAK.set(f, o);
 }
 export function dubbelSak(token: string): Ord | undefined {
