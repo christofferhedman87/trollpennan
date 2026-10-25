@@ -4,6 +4,7 @@ import { brygga } from "../brygga.ts";
 import { ALBUM, fasAv, hoppaDag, hoppaKvall, kvallStyrka, nyttLiv, poangAv, sparaFoto, synkaVisning, tickLiv, visningsTid } from "../liv.ts";
 import { ljud } from "../ljud.ts";
 import { type Lage, type OnskaSpar, useMinne } from "../minne.ts";
+import { platsMed } from "../platser.ts";
 import { ONSK, ONSK_BYGG } from "../onska.ts";
 import * as rostKo from "../rostKo.ts";
 import { bokstav } from "../ui/hjalp.ts";
@@ -83,6 +84,8 @@ export function skapaTrollApi(k: SpelKarna) {
           onskanAntal: s.onskanAntal,
           van: s.van,
           byggda: s.byggda,
+          plats: s.plats,
+          oppnadePlatser: s.oppnadePlatser,
         };
       },
       aterstall: () => {
@@ -123,7 +126,16 @@ export function skapaTrollApi(k: SpelKarna) {
       },
       ordbok: (oppna: boolean) => setOrdbok(oppna),
       foralder: (oppna: boolean) => setForalder(oppna),
-      plats: (p: Varld) => visaVarld(p),
+      plats: (p: Varld | string) => {
+        if (p === "gard") {
+          visaVarld("gard");
+          return;
+        }
+        if (p === "ang" || platsMed(p)) {
+          useMinne.getState().oppnaPlats(p);
+          visaVarld("ang");
+        }
+      },
       onska: (id: string, oppna?: boolean) => {
         const djur = useMinne.getState().ang[0];
         if (!djur) return;
@@ -275,7 +287,7 @@ declare global {
       formel: () => void;
       ordbok: (oppna: boolean) => void;
       foralder: (oppna: boolean) => void;
-      plats: (p: Varld) => void;
+      plats: (p: Varld | string) => void;
       onska: (id: string, oppna?: boolean) => void;
       stjarnor: (n: number) => void;
       kop: (id: string) => void;

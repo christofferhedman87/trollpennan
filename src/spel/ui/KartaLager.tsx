@@ -1,5 +1,5 @@
 import { OMR, TEXTER_AV } from "../aventyr.ts";
-import { PLATSER, upplast, mattUr } from "../platser.ts";
+import { PLATSER, kanResaTill, mattUr } from "../platser.ts";
 import { useMinne } from "../minne.ts";
 import { TEXTER } from "./spelData.ts";
 
@@ -29,7 +29,7 @@ export function KartaLager({ forstaRad, kartaText, tryckPlats, onLast }: KartaLa
         {TEXTER.flikar.garden}
       </button>
       {PLATSER.map((o) => {
-        const oppen = upplast(o.id, m);
+        const oppen = kanResaTill(o.id, m);
         return (
           <button
             key={o.id}

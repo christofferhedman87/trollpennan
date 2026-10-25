@@ -36,11 +36,12 @@ export type Plats = {
   /** B6.3 (I): avstånd från vattenkanten för landdjur och saker på just den här platsen (standard KANT_MARGINAL). */
   kant_marginal?: number;
 };
-export type PlatsData = { version: number; yta: { x: [number, number]; z: [number, number] }; platser: Plats[]; beloningar: unknown[] };
+export type PlatsData = { version: number; olast_karta?: boolean; yta: { x: [number, number]; z: [number, number] }; platser: Plats[]; beloningar: unknown[] };
 /** Det som villkoren mäts mot. */
 export type Matt = { skapelser: Record<string, number>; klara: Record<string, number>; oppnade?: string[] };
 
 export const PLATSDATA = platserJson as unknown as PlatsData;
+export const OLAST_KARTA = PLATSDATA.olast_karta === true;
 export const PLATSER: Plats[] = [...PLATSDATA.platser].sort((a, b) => a.ordning - b.ordning);
 export const START_PLATS = "ang";
 export const TAK_PER_PLATS = 10;
@@ -67,6 +68,15 @@ export function upplast(id: string, m: Matt, platser: Plats[] = PLATSER): boolea
   if (m.oppnade?.includes(id)) return true;
   if (nagonNadd(p.upplasning, m)) return true;
   return platser.some((q) => q.milstolpe?.las_upp === id && nagonNadd(q.milstolpe, m));
+}
+
+/** P4c: är platsen öppen att resa till på kartan och i spelet? */
+export function kanResaTill(id: string, m: Matt, platser: Plats[] = PLATSER): boolean {
+  if (id === START_PLATS) return true;
+  const p = platsMed(id, platser);
+  if (!p) return false;
+  if (OLAST_KARTA) return true;
+  return upplast(id, m, platser);
 }
 
 /** B6.2: platsens final = uppdraget med `final: true` i bengtsson.json eller det som `milstolpe.final` pekar på. */
