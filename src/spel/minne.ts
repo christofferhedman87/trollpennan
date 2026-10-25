@@ -5,7 +5,7 @@ import { byggMedId } from "../tolk/byggtolk.ts";
 import { brygga, type Sparad } from "./brygga.ts";
 import type { SparatBygge } from "./bygge.ts";
 import { BYGG } from "../tolk/byggtolk.ts";
-import { START_PLATS, TAK_PER_PLATS, mattUr, upplast } from "./platser.ts";
+import { START_PLATS, TAK_PER_PLATS, mattUr, platsMed, upplast } from "./platser.ts";
 import { hamtaFranStall, flyttaTillStall, type StallUt } from "./stall.ts";
 import { arData, franSparning, kallaHitSpar, laggPaAngSpar, lasIn, spara, tom } from "./minneSparning.ts";
 
@@ -131,6 +131,8 @@ export type Store = Data & {
   laggSkatt: (b: SparatBygge) => void;
   /** B1.3a: gå till en plats; bara upplåsta. true om bytet skedde. */
   bytPlats: (id: string) => boolean;
+  /** P4c: öppna en känd plats och gå dit, även innan upplåsningsvillkoret. */
+  oppnaPlats: (id: string) => boolean;
   /** B1.4: markera att platsens intro visats. */
   markeraIntro: (id: string) => void;
   /** R9G: flytta ett djur från platsen/ängen/gården till stallet. */
@@ -328,6 +330,13 @@ export const useMinne = create<Store>((set, get) => ({
   bytPlats: (id) => {
     const d = get();
     if (!upplast(id, mattUr(d))) return false;
+    const oppnadePlatser = id === START_PLATS || d.oppnadePlatser.includes(id) ? d.oppnadePlatser : [...d.oppnadePlatser, id];
+    set({ plats: id, oppnadePlatser });
+    return true;
+  },
+  oppnaPlats: (id) => {
+    const d = get();
+    if (!platsMed(id)) return false;
     const oppnadePlatser = id === START_PLATS || d.oppnadePlatser.includes(id) ? d.oppnadePlatser : [...d.oppnadePlatser, id];
     set({ plats: id, oppnadePlatser });
     return true;

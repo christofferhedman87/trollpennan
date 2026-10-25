@@ -1,14 +1,23 @@
 // B1.4: resa mellan platser – ton ut/in, intro-bubbla, grind och skrivet platsnamn.
 import { useCallback, useEffect, useRef, useState } from "react";
-import { mattUr, platsMed, PLATSER, START_PLATS, upplast } from "../platser.ts";
+import { kanResaTill, mattUr, OLAST_KARTA, platsMed, PLATSER, START_PLATS } from "../platser.ts";
 import { useMinne } from "../minne.ts";
 import { FEL_RESA, forstaUpplasta, nyPlatsVantar, platsFranText } from "../resa.ts";
 
-type Hjalp = { visaFel: () => void };
+type Hjalp = { visaFel: () => void; tillGard?: () => void };
+
+const GARD_FRAS = new Set([
+  "gården",
+  "garden",
+  "till gården",
+  "till garden",
+  "gå till gården",
+  "ga till garden",
+]);
 
 const TON_MS = 400;
 
-export function usePlats({ visaFel }: Hjalp) {
+export function usePlats({ visaFel, tillGard }: Hjalp) {
   const plats = useMinne((s) => s.plats);
   const oppnade = useMinne((s) => s.oppnadePlatser);
   const angN = useMinne((s) => s.ang.length);
@@ -27,7 +36,7 @@ export function usePlats({ visaFel }: Hjalp) {
 
   const matt = useCallback(() => mattUr(useMinne.getState()), []);
 
-  const upplasta = PLATSER.filter((p) => upplast(p.id, matt())).map((p) => p.id);
+  const upplasta = PLATSER.filter((p) => kanResaTill(p.id, matt())).map((p) => p.id);
   // angN: skylten ska ritas om när barnet skapar djur
   void angN;
 
@@ -35,7 +44,7 @@ export function usePlats({ visaFel }: Hjalp) {
     (id: string): boolean => {
       const d = useMinne.getState();
       if (d.plats === id) return true;
-      if (!d.bytPlats(id)) {
+      if (!kanResaTill(id, matt()) || !d.oppnaPlats(id)) {
         visaFel();
         return false;
       }
@@ -51,23 +60,28 @@ export function usePlats({ visaFel }: Hjalp) {
       }
       return true;
     },
-    [visaFel],
+    [matt, visaFel],
   );
 
   const tryckGrind = useCallback((): boolean => {
-    const id = forstaUpplasta(matt());
+    const id = forstaUpplasta(matt()) ?? (OLAST_KARTA ? "skogen" : null);
     if (!id) return false;
     return resTill(id);
   }, [matt, resTill]);
 
   const forsokSkriv = useCallback(
     (raw: string): boolean => {
+      const t = raw.trim().toLowerCase().replace(/[!?.]+$/g, "");
+      if (GARD_FRAS.has(t) && tillGard) {
+        tillGard();
+        return true;
+      }
       const id = platsFranText(raw);
       if (!id) return false;
       resTill(id);
       return true;
     },
-    [resTill],
+    [resTill, tillGard],
   );
 
   return {

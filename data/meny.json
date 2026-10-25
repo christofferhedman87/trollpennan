@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "oppen": {
+    "ang": true,
+    "gard": true,
+    "byggbok": true,
+    "album": true,
+    "aventyr": true,
+    "uppdrag": true,
+    "stall": true,
+    "ordbok": true
+  }
+}

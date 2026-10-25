@@ -161,7 +161,7 @@ export function useAventyr(k: Pick<SpelKarna, "t" | "b" | "v">) {
     setValj({ rubrik: TEXTER_AV.foljeslagare.byt, djur, nyckel: "byt" });
   }
   const bengtsson = useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdragsbok: oppnaUppdrag });
-  const platsUi = usePlats({ visaFel: () => bengtsson.visaFel() });
+  const platsUi = usePlats({ visaFel: () => bengtsson.visaFel(), tillGard: () => valjVarld("gard") });
   return { belonaFlode, gaIn, tryckPlats, tryckOn, oppnaSkicka, bytFolje, bengtsson, platsUi };
 }
 

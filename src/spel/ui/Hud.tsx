@@ -1,6 +1,7 @@
 import type { Dispatch, SetStateAction } from "react";
 import { Lock, Pencil } from "lucide-react";
 import introJson from "../../../data/intro.json" with { type: "json" };
+import menyJson from "../../../data/meny.json" with { type: "json" };
 import { OMR, UPP } from "../aventyr.ts";
 import { fyll } from "../fyll.ts";
 import { ALBUM } from "../liv.ts";
@@ -91,9 +92,11 @@ type MenyPanelProps = {
   setIntro: Dispatch<SetStateAction<boolean>>;
   menySaker: boolean;
   borjaOm: () => void;
+  oppnaAlbum?: () => void;
+  oppnaOrdbok?: () => void;
 };
 
-export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare, panel, varld, valjVarld, lasMeny, oppnaUppdrag, setBokOpp, oppnaKarta, setIntroNy, setIntro, menySaker, borjaOm }: MenyPanelProps) {
+export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare, panel, varld, valjVarld, lasMeny, oppnaUppdrag, setBokOpp, oppnaKarta, setIntroNy, setIntro, menySaker, borjaOm, oppnaAlbum, oppnaOrdbok }: MenyPanelProps) {
   return (
 <>
         {menyOpp ? (
@@ -114,17 +117,45 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
             >
               {TEXTER.flikar.angen}
             </button>
-            <button type="button" className="last" data-testid="flik-gard" data-last="ja" onClick={lasMeny}>
+            <button
+              type="button"
+              data-testid="flik-gard"
+              className={menyJson.oppen.gard ? (panel === "spel" && varld === "gard" ? "pa" : "") : "last"}
+              {...(menyJson.oppen.gard ? {} : { "data-last": "ja" })}
+              onClick={menyJson.oppen.gard ? () => valjVarld("gard") : lasMeny}
+            >
               <span>{TEXTER.flikar.garden}</span>
-              <Lock aria-hidden />
+              {menyJson.oppen.gard ? null : <Lock aria-hidden />}
             </button>
-            <button type="button" className="last" data-testid="flik-byggbok" data-last="ja" onClick={lasMeny}>
+            <button
+              type="button"
+              data-testid="flik-byggbok"
+              className={menyJson.oppen.byggbok ? (panel === "byggbok" ? "pa" : "") : "last"}
+              {...(menyJson.oppen.byggbok ? {} : { "data-last": "ja" })}
+              onClick={menyJson.oppen.byggbok ? () => valjVarld("byggbok") : lasMeny}
+            >
               <span>{TEXTER.flikar.byggboken}</span>
-              <Lock aria-hidden />
+              {menyJson.oppen.byggbok ? null : <Lock aria-hidden />}
             </button>
-            <button type="button" className="last" data-testid="album-knapp" data-last="ja" onClick={lasMeny}>
+            <button
+              type="button"
+              data-testid="album-knapp"
+              className={menyJson.oppen.album ? "" : "last"}
+              {...(menyJson.oppen.album ? {} : { "data-last": "ja" })}
+              onClick={
+                menyJson.oppen.album
+                  ? () => {
+                      setMenyOpp(false);
+                      setMenySaker(false);
+                      setSenare(false);
+                      setBokOpp(false);
+                      oppnaAlbum?.();
+                    }
+                  : lasMeny
+              }
+            >
               <span>{ALBUM.texter.knapp}</span>
-              <Lock aria-hidden />
+              {menyJson.oppen.album ? null : <Lock aria-hidden />}
             </button>
             <button type="button" data-testid="ut-pa-aventyr" onClick={() => { setMenyOpp(false); setBokOpp(false); oppnaKarta(); }}>
               <span>{OMR.karta.knapp}</span>
@@ -133,9 +164,25 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
               <span>{UPP.texter.rubrik}</span>
             </button>
             <StallMeny stang={() => { setMenyOpp(false); setMenySaker(false); setSenare(false); }} />
-            <button type="button" className="last" data-testid="ordbok" data-last="ja" onClick={lasMeny}>
+            <button
+              type="button"
+              data-testid="ordbok"
+              className={menyJson.oppen.ordbok ? "" : "last"}
+              {...(menyJson.oppen.ordbok ? {} : { "data-last": "ja" })}
+              onClick={
+                menyJson.oppen.ordbok
+                  ? () => {
+                      setMenyOpp(false);
+                      setMenySaker(false);
+                      setSenare(false);
+                      setBokOpp(false);
+                      oppnaOrdbok?.();
+                    }
+                  : lasMeny
+              }
+            >
               <span>Bok</span>
-              <Lock aria-hidden />
+              {menyJson.oppen.ordbok ? null : <Lock aria-hidden />}
             </button>
             <button
               type="button"

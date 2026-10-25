@@ -186,6 +186,7 @@ export function spara(d: Store) {
     sattIntro: _aj,
     sattTittat: _ak,
     bytPlats: _al,
+    oppnaPlats: _at,
     markeraIntro: _am,
     tillStall: _an,
     franStall: _ao,
