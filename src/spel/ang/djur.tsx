@@ -20,6 +20,18 @@ import type { Ljuskalla } from "../ljuskalla.ts";
 import { _mal, djurFarg, djurIStall, djurKrymp, djurPlats, djurVand, flygare, normDuk, simmare, synMatt } from "./delat.ts";
 import { sakLage } from "../landning.ts";
 import { torrKropp } from "../platsYta.ts";
+import { malTillDuk } from "../ui/hjalp.ts";
+
+function StjarnPuff() {
+  const g = useRef<THREE.Group>(null);
+  useFrame(({ clock }) => { if (g.current) g.current.position.y = Math.sin(clock.elapsedTime * 1.6) * 0.06; });
+  return (
+    <group ref={g}>
+      <mesh><sphereGeometry args={[0.16, 10, 8]} /><meshStandardMaterial color="#F2B632" emissive="#FFE082" emissiveIntensity={0.35} roughness={0.5} /></mesh>
+      {[0, 1, 2, 3].map((i) => <mesh key={i} position={[Math.cos(i * 1.5708) * 0.28, 0.05, Math.sin(i * 1.5708) * 0.28]}><sphereGeometry args={[0.09, 8, 6]} /><meshStandardMaterial color="#FFF6E5" roughness={0.7} /></mesh>)}
+    </group>
+  );
+}
 
 export class ModellGren extends Component<{ spec: Sparad; children: ReactNode }, { fel: boolean }> {
   state = { fel: false };
@@ -30,7 +42,8 @@ export class ModellGren extends Component<{ spec: Sparad; children: ReactNode },
     return { fel: true };
   }
   render() {
-    return this.state.fel ? <DjurForm spec={this.props.spec} /> : this.props.children;
+    if (!this.state.fel) return this.props.children;
+    return arSak(this.props.spec.kropp) ? <StjarnPuff /> : <DjurForm spec={this.props.spec} />;
   }
 }
 
@@ -395,7 +408,9 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       if (!g || !canvas) return;
       g.getWorldPosition(_mal);
       _mal.y += 1.2;
-      const pos = normDuk(canvas, _mal.project(e.camera));
+      const malPos = malTillDuk(spec.uid) ?? normDuk(canvas, _mal.project(e.camera));
+      const bx = Math.min(0.78, Math.max(0.22, malPos.x));
+      const by = Math.min(0.76, Math.max(0.18, malPos.y - 0.06));
       klapp.current += 1;
       signal.current.klapp = klapp.current;
       hopp.current = 1;
@@ -406,8 +421,8 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
         typ: "tryck",
         uid: spec.uid,
         text: replik(spec, "tryck"),
-        x: pos.x,
-        y: Math.max(0.2, pos.y - 0.06),
+        x: bx,
+        y: by,
         klapp: klapp.current,
       });
     };

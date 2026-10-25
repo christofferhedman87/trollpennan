@@ -21,29 +21,22 @@ export function useBannrar(k: Pick<SpelKarna, "t">) {
   }
   function slackBanner(texten: string) { const t = platsText(texten, varldRef.current); rostKo.stryk(t); setBanners((l) => l.filter((b) => b.text !== t)); }
   useStallBanner(slackBanner);
+  function rensaVidHandling() {
+    setBubblor([]);
+  }
   function visaBanner(texten: string, slag: Banner["slag"], kalla: rostKo.Kalla, ms?: number) {
+    if (arNyHandling(kalla)) setBubblor([]);
     rostKo.anmal({ text: platsText(texten, varldRef.current), kalla, banner: { slag, ms } });
   }
   function visaBubbla(rad: string, x: number, y: number, hjarta: boolean, ovan = false, ensam = false, kalla: rostKo.Kalla | null = "tapp") {
     const texten = platsText(rad, varldRef.current); // R9K: {platsen} → platsen barnet är på
     const id = nyId();
     if (kalla) rostKo.anmal({ text: texten, kalla, nyckel: `bubbla:${id}` });
+    const kx = Math.min(0.78, Math.max(0.22, x));
+    const ky = Math.min(0.76, Math.max(0.18, y));
     setBubblor((prev) => {
       const start = ensam ? [] : prev;
-      if (ovan) {
-        const i3d = typeof document !== "undefined" && !!document.querySelector("[data-testid='angen-3d']");
-        const xx = i3d ? Math.min(0.82, Math.max(0.18, x)) : Math.min(0.64, Math.max(0.36, x));
-        const yy = i3d ? Math.min(0.78, Math.max(0.58, y)) : Math.max(0.48, Math.min(0.72, y));
-        return [...start, { id, text: texten, x: xx, y: yy, hjarta, ovan: true }].slice(-2);
-      }
-      const hoger = start.some((a) => a.x > 0.5);
-      const vanster = start.some((a) => a.x <= 0.5);
-      let sida = x < 0.5 ? "h" : "v";
-      if (sida === "h" && hoger && !vanster) sida = "v";
-      if (sida === "v" && vanster && !hoger) sida = "h";
-      const xx = sida === "h" ? 0.74 : 0.26;
-      const yy = hoger && vanster ? 0.3 : 0.03;
-      return [...start, { id, text: texten, x: xx, y: yy, hjarta, ovan: false }].slice(-2);
+      return [...start, { id, text: texten, x: kx, y: ky, hjarta, ovan }].slice(-1);
     });
     window.setTimeout(() => { setBubblor((b) => b.filter((x) => x.id !== id)); if (kalla === "tryck") rostKo.stryk(texten); }, 4200);
   }
@@ -68,7 +61,12 @@ export function useBannrar(k: Pick<SpelKarna, "t">) {
       visaBubbla(tack, p?.x ?? 0.5, p?.topp ?? p?.y ?? 0.3, true, true, false, "bjud");
     }
   }
-  return { stangBanner, slackBanner, visaBanner, visaBubbla, visaMossa, bjud };
+  return { stangBanner, slackBanner, visaBanner, visaBubbla, visaMossa, bjud, rensaVidHandling };
+}
+
+/** V6: ny handling (väckt ord eller klart uppdrag) tar bort gamla pratbubblor. */
+function arNyHandling(kalla: string) {
+  return kalla === "skapad" || kalla === "uppdrag_klart";
 }
 
 export type Bannrar = ReturnType<typeof useBannrar>;
