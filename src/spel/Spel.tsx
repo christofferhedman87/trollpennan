@@ -11,14 +11,9 @@ import { sagaNu } from "./saga.ts";
 import { ljud } from "./ljud.ts";
 import { useMinne } from "./minne.ts";
 import * as rostKo from "./rostKo.ts";
-import { avBro } from "./avbro.ts";
 import { AlbumVy } from "./samling.tsx";
 import { komIhagDjur } from "./liv.ts";
 import { TEXTER_AV } from "./aventyr.ts";
-import {
-  lasSkylt,
-  plockaSkatt,
-} from "./avflode.ts";
 import { BYGGSIDOR, FIR, TEXTER } from "./ui/spelData.ts";
 import { bestamdAv, exempelFor, kortForExempel, onskaAnkare } from "./ui/hjalp.ts";
 import { AngLager } from "./ui/AngLager.tsx";
@@ -44,6 +39,7 @@ import { useKlocka } from "./styr/useKlocka.ts";
 import { useSkriv } from "./styr/useSkriv.ts";
 import { skapaTrollApi } from "./styr/trollApi.ts";
 import type { SpelKarna } from "./styr/typer.ts";
+import { useAvBro } from "./styr/useAvBro.ts";
 
 export function Spel() {
   useDialogFokus();
@@ -114,45 +110,9 @@ export function Spel() {
       delete window.__troll;
     };
   });
+  useAvBro({ t, b, v, a });
 
-  avHand.current = (h) => {
-    if (h.typ === "skylt") {
-      const r = lasSkylt(h.id);
-      setSkylt(r);
-      if (r.nytt) visaBanner(r.nytt, "ovr", "tapp");
-      if (omradeRef.current) synkaAv(omradeRef.current);
-      return;
-    }
-    if (h.typ === "vild") {
-      setGavaTill(h.id);
-      gavaRef.current = h.id;
-      setLage("skriv");
-      setHand(true);
-      handRef.current = true;
-      setForslag(null);
-      return;
-    }
-    if (h.typ === "skatt") {
-      belonaFlode(plockaSkatt(h.id));
-      return;
-    }
-    if (h.typ === "plats" && h.id === "on" && omradeRef.current === "on") {
-      oppnaSkicka("fyren");
-      return;
-    }
-    if (h.typ === "plats" && h.id === "on") {
-      tryckOn();
-      return;
-    }
-    if (h.typ === "plats" && h.id === "svampringen") oppnaSkicka("svampring");
-  };
 
-  useEffect(() => {
-    const stop = avBro.lyssna((h) => avHand.current(h));
-    return () => {
-      stop();
-    };
-  }, []);
 
   useEffect(() => {
     const rot = angRef.current;
