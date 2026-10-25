@@ -1,9 +1,9 @@
 {
  "_om": "Äventyrets områden. Taggarna i 'kraver' är samma som i data/egenskaper.json (runda 3), och här räknas även kroppens egna taggar (fågel flyger, fisk simmar, dinosaurie är stor). Ett djur med rätt tagg kan följa med som följeslagare. Ett område som är öppnat förblir öppet.",
  "karta": {
-  "rubrik": "Kartan",
+  "rubrik": "🗺️ Världskartan",
   "knapp": "Ut på äventyr",
-  "hjalp": "Tryck på en plats för att resa dit. Gråa platser är låsta än – då säger Bengtsson Inte riktigt än.",
+  "hjalp": "Välj en plats på stigen! Alla vägar är öppna.",
   "valj_djur": "Vem ska följa med? Välj ett djur som {kan}.",
   "kan_text": {
    "flyga": "kan flyga",

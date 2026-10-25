@@ -1,0 +1,31 @@
+{
+  "v1": {
+    "platser": ["ang", "garden", "skogen", "sjon", "grottan"],
+    "ordbrickor_per_plats": 3,
+    "forbjudna_fraser": [
+      "Skogen öppnas när du har skapat tre djur",
+      "Sjön och Grottan kommer senare",
+      "gråa platserna öppnas senare"
+    ],
+    "rost_texter": {
+      "ang": "Nu kan du resa till nya platser! Öppna kartan eller skriv ett platsnamn i boken.",
+      "garden": "Det här är din gård! Här kan du bygga vad du vill.",
+      "skogen": "Här luktar det skog och nya idéer! Vad vill du skriva fram?",
+      "sjon": "Här glittrar det ända in i glasögonen! Vad vill du skriva fram?",
+      "grottan": "Här inne glimmar idéerna! Vad vill du skriva fram?"
+    },
+    "min_knapp_px": 44
+  },
+  "v2": {
+    "skapa_djur_visa_text": "Tryck på Skriv och skriv ett djur!",
+    "skriv_onskan_visa_text": "Tryck på Skriv och skriv det Bengtsson ber om!",
+    "forbjuden_foralder_rubrik": "(P1–P3)",
+    "min_meny_ikoner": 7,
+    "min_knapp_px": 44
+  },
+  "v3": {
+    "skapar_flikar": ["vy-flik-skriv", "vy-flik-gata", "vy-flik-ideer"],
+    "min_bok_top_px": 250,
+    "min_synliga_ordkort": 4
+  }
+}

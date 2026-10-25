@@ -51,7 +51,7 @@ export function useVarld(k: Pick<SpelKarna, "t" | "b">) {
     setKartaOpp(true);
     if (useMinne.getState().forstaKarta) {
       useMinne.getState().settKarta();
-      setForstaRad([...TEXTER_AV.forsta_gangen]);
+      setForstaRad([TEXTER_AV.forsta_gangen[0]!]);
     }
   }
   function kanskeForstaGard() {
