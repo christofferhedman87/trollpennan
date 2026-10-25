@@ -65,8 +65,10 @@ declare global {
     __ljus?: { ljus: number; pol: number; aktiva: number; program: number; scen?: number };
     /** B6.5, för prov: effekterna som ritas per skapelse (uid). Finns bara när ett prov har lagt dit objektet. */
     __tredEffekter?: Record<string, string[]>;
-    /** B6.6, för prov: kroppens ruta på skärmen (CSS-px) och antal synliga meshar. Finns bara när ett prov har lagt dit objektet. */
-    __tredSyn?: Record<string, { x: number; y: number; w: number; h: number; mesh: number; b?: number[] }>;
+    /** B6.6, för prov: kroppens ruta på skärmen (CSS-px) och antal synliga meshar. Går att anropa och att skriva på per uid. */
+    __tredSyn?: Record<string, { x: number; y: number; w: number; h: number; mesh: number; b?: number[] }> & {
+      (): { uid: string; x?: number; y?: number; w?: number; h?: number; mesh?: number; b?: number[] }[];
+    };
     __tredKamera?: { p: number[]; fov: number };
     /** P3a: titelbildens djur (uid) – djur.tsx mäter dess ritade kropp (CSS-px) så att utsnittet visar bara det djuret. */
     __tredBild?: { uid: string; ruta?: { x: number; y: number; w: number; h: number; mesh: number } };
