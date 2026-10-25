@@ -32,6 +32,12 @@ function stamTraff(norm: string, ren: string): boolean {
   return STAMMAR.some((s) => (s.norm.length >= 4 ? norm.includes(s.norm) : s.ren.length >= 4 && ren.includes(s.ren)));
 }
 
+/** Trygga sammansättningar som innehåller ett spärrat led ("kniv", "pistol"). */
+export const TILLATNA_ORD = new Set([
+  "smörkniv", "smörkniven", "smörknivar",
+  "vattenpistol", "vattenpistolen", "vattenpistoler",
+]);
+
 const FUNK = new Set<string>();
 {
   const f = ORD.funktionsord;
@@ -46,6 +52,7 @@ const FUNK = new Set<string>();
 
 function arOrdform(token: string): boolean {
   const t = token.toLocaleLowerCase("sv").replace(/[^a-zåäö]/g, "");
+  if (TILLATNA_ORD.has(t)) return true;
   return !!t && (FUNK.has(t) || !!ordFranForm(t));
 }
 

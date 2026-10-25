@@ -1,5 +1,6 @@
 import { ORD } from "@/tolk/data.ts";
 import type { Varelse } from "@/tolk/typer.ts";
+import { storMeningsStart } from "./fyll.ts";
 
 function slump(lista: string[]): string {
   return lista[Math.floor(Math.random() * lista.length)] ?? "";
@@ -14,7 +15,7 @@ export function replik(v: Varelse, slag: "hej" | "tryck" | "sover"): string {
   if (slag === "hej") {
     const lista = r.hej ?? [];
     const medFormel = lista.find((s) => s.includes("{formel}"));
-    return fyll(medFormel ?? slump(lista), v);
+    return storMeningsStart(fyll(medFormel ?? slump(lista), v));
   }
   let lista = r.hej ?? [];
   if (slag === "sover") lista = r.sover ?? lista;
@@ -23,5 +24,5 @@ export function replik(v: Varelse, slag: "hej" | "tryck" | "sover"): string {
     const nyckel = v.formagor[Math.floor(Math.random() * v.formagor.length)] ?? "";
     lista = r[nyckel] ?? r.utan_formaga ?? lista;
   } else lista = r.utan_formaga ?? lista;
-  return fyll(slump(lista), v);
+  return storMeningsStart(fyll(slump(lista), v));
 }
