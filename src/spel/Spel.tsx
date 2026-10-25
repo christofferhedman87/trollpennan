@@ -16,7 +16,7 @@ import { ONSK, ONSK_BYGG } from "./onska.ts";
 import * as rostKo from "./rostKo.ts";
 import { avBro } from "./avbro.ts";
 import { AlbumVy } from "./samling.tsx";
-import { ALBUM, DYGN, framDygn, hoppaDag, hoppaKvall, komIhagDjur, kvallStyrka, nyttLiv, poangAv, sparaFoto, synkaVisning, tickLiv, visningsTid, fasAv } from "./liv.ts";
+import { ALBUM, hoppaDag, hoppaKvall, komIhagDjur, kvallStyrka, nyttLiv, poangAv, sparaFoto, synkaVisning, tickLiv, visningsTid, fasAv } from "./liv.ts";
 import { TEXTER_AV } from "./aventyr.ts";
 import {
   lasSkylt,
@@ -44,6 +44,7 @@ import { useBelona } from "./styr/useBelona.ts";
 import { useSkapa } from "./styr/useSkapa.ts";
 import { useGard } from "./styr/useGard.ts";
 import { useHandelser } from "./styr/useHandelser.ts";
+import { useKlocka } from "./styr/useKlocka.ts";
 
 export function Spel() {
   useDialogFokus();
@@ -57,6 +58,7 @@ export function Spel() {
   const g = useGard({ t, b, v, s });
   const { forsokKop, bekraftaKop, flyttaInDjur, borjaOm, sparaKopia, lasFil, lasInKopia } = g;
   useHandelser({ t, b, a });
+  useKlocka({ t, b });
   const {
     text, setText, lage, setLage, flik, setFlik, val, setVal, setHand, forslag, setForslag, behover,
     setBehover, bubblor, setBubblor, banners, setBanners, visKort, setVisKort, ordbok, setOrdbok,
@@ -223,32 +225,6 @@ export function Spel() {
 
 
 
-  useEffect(() => {
-    let sen = performance.now();
-    let senFas = fasAv(visningsTid());
-    const id = window.setInterval(() => {
-      const nu = performance.now();
-      const dt = document.hidden ? 0 : Math.min(1500, nu - sen);
-      sen = nu;
-      if (dt > 0) framDygn(dt);
-      const sparad = useMinne.getState().dygnMs;
-      const vis = visningsTid();
-      if (vis - sparad >= 3000) {
-        const del = tickLiv(useMinne.getState(), vis - sparad);
-        useMinne.setState(del);
-        if (typeof del.dygnMs === "number") synkaVisning(del.dygnMs);
-      }
-      setNatt(kvallStyrka(visningsTid()));
-      const fas = fasAv(visningsTid());
-      if (dt > 0 && fas !== senFas) {
-        senFas = fas;
-        const rader = fas === "kvall" ? DYGN.texter.kvall_borjar : DYGN.texter.morgon;
-        for (const rad of rader) visaBanner(rad, "ovr", "dygn");
-      }
-    }, 200);
-    return () => window.clearInterval(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- B6.1: dygnsklockan monteras en gång; visaBanner köar via rostKo och set-funktioner
-  }, []);
 
   useEffect(() => {
     if (forslag || behover || gavaTill || onskaOpp) setBokOpp(true);
