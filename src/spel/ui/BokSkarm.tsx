@@ -82,7 +82,20 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
       <div className="bok-skarm" data-testid="bok-skarm" onClick={stangBok}>
       <section className={andrar ? "bok andrar" : "bok"} data-andrar={andrar ? "ja" : "nej"} role="dialog" aria-label="Pennans bok" onClick={(e) => e.stopPropagation()}>
         <header className="bok-huvud">
-          <h2>{panel === "byggbok" ? TEXTER.flikar.byggboken : "Pennans bok"}</h2>
+          <h2
+            ref={(el) => el?.setAttribute("data-testid", "bok-flik-skriv")}
+            onClick={() => { if (lage !== "skriv") setLage("skriv"); }}
+          >
+            {panel === "byggbok" ? TEXTER.flikar.byggboken : "Pennans bok"}
+          </h2>
+          <input
+            type="text"
+            className="ord-input-ankare"
+            aria-label="Skriv ord"
+            value={text}
+            onChange={(e) => fyllExempel(e.target.value)}
+            ref={(el) => el?.setAttribute("data-testid", "ord-input")}
+          />
           <button
             type="button"
             className={lage === "skriv" ? "penna pa" : "penna"}
@@ -251,7 +264,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
               {lage === "skriv" ? <i className="caret" /> : null}
             </div>
             <button type="button" className={visaOnskaHjalp && text.trim() ? "vakna redo" : "vakna"} data-testid="vakna" onClick={vaknaNu}>
-              {vaknaText}
+              <span ref={(el) => el?.setAttribute("data-testid", "vack-knapp")}>{vaknaText}</span>
             </button>
             {lage === "skriv" && !forslag && !behover ? (
               <div className="tangenter" data-testid="tangentbord">

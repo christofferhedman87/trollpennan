@@ -28,6 +28,7 @@ type ForalderDialogProps = {
 export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef, lasFil, foralderRad, kopia, lasInKopia, setKopia, onskelista, setSaker, saker, borjaOm, setForalder }: ForalderDialogProps) {
   const rostPa = useMinne((s) => s.rostPa);
   const effektPa = useMinne((s) => s.effektPa);
+  const lasnivaVal = useMinne((s) => s.lasnivaVal);
   return (
         <div className="skarm" role="dialog" aria-label="För vuxna" data-testid="foralder">
           <div className="ark sida">
@@ -57,6 +58,14 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
               >
                 Skriv själv
               </button>
+            </div>
+            <h3>Läsnivå</h3>
+            <p>Auto följer hur många djur som hittats. En vuxen kan låsa nivån.</p>
+            <div className="valj-lage" data-p4="lasniva-knapp">
+              <button type="button" className={lasnivaVal === "auto" ? "pa" : ""} data-p4="lasniva-auto" onClick={() => useMinne.getState().sattLasniva("auto")}>Auto</button>
+              <button type="button" className={lasnivaVal === 1 ? "pa" : ""} data-p4="lasniva-1" onClick={() => useMinne.getState().sattLasniva(1)}>Nivå 1</button>
+              <button type="button" className={lasnivaVal === 2 ? "pa" : ""} data-p4="lasniva-2" onClick={() => useMinne.getState().sattLasniva(2)}>Nivå 2</button>
+              <button type="button" className={lasnivaVal === 3 ? "pa" : ""} data-p4="lasniva-3" onClick={() => useMinne.getState().sattLasniva(3)}>Nivå 3</button>
             </div>
             <h3>Ljud</h3>
             <div className="rad-kort">

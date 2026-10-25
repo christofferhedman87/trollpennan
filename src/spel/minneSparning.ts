@@ -61,6 +61,7 @@ export function tom(): Data {
     seddaIntro: [],
     stall: [],
     gataId: null,
+    lasnivaVal: "auto",
   };
 }
 
@@ -135,6 +136,7 @@ export function franSparning(raw: unknown): Data {
       seddaIntro: Array.isArray(p.seddaIntro) ? (p.seddaIntro as string[]).filter((x) => typeof x === "string") : [],
       stall: Array.isArray(p.stall) ? (p.stall as Sparad[]).filter(arDjur) : [],
       gataId: typeof p.gataId === "string" && p.gataId ? p.gataId : null,
+      lasnivaVal: rawObj.lasnivaVal === 1 || rawObj.lasnivaVal === 2 || rawObj.lasnivaVal === 3 ? rawObj.lasnivaVal : "auto",
     };
   } catch {
     return tom();
@@ -188,6 +190,7 @@ export function spara(d: Store) {
     tillStall: _an,
     franStall: _ao,
     sattGataId: _ap,
+    sattLasniva: _as,
     ...data
   } = d;
   skrivLokalt(() => window.localStorage, { ...data, version: 2 });

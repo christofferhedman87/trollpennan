@@ -27,8 +27,16 @@
   touch-action:manipulation;
 }
 .bok .uppdrag-remsa{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-.bok .ledtrad-framsteg{font-weight:600}
+.bok .ledtrad-framsteg{font-weight:600;white-space:nowrap}
 .bok .flik.pa{background:var(--color-moss-deep)}
 /* Platsnamn och "Till ängen" i en rad under HUD:en – låg över stjärnknappen (9×8 px) på 375 px. */
 body .plats-resa{top:66px;flex-direction:row;gap:8px}
 body .plats-namn,body .plats-hem{white-space:nowrap}
+.stavning-rad{margin:0 0 8px;font-size:1.05rem;font-weight:700;line-height:1.35}
+.stavning-ratt{color:#2e7d32;background:#e8f5e9;font-weight:800;border-radius:6px;padding:0 4px}
+.stavning-rest{font-weight:800}
+.stavning-forklaring{font-weight:700}
+.ledtrad-extra,.ledtrad-ljud{margin:6px 0 0;font-size:1rem;font-weight:700;line-height:1.35}
+.ledtrad-knappar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ledtrad-niva{display:inline-block;padding:2px 8px;border-radius:999px;background:#e8f5e9;color:#2e7d32;font-size:0.85rem;font-weight:800}
+.ord-input-ankare{position:absolute;width:1px;height:1px;opacity:0.01;pointer-events:auto;border:0;padding:0}

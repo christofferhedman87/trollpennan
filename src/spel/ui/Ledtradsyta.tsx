@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import hemligt from "../../../data/hemligt.json" with { type: "json" };
 import lasningJson from "../../../data/lasning.json" with { type: "json" };
 import { fyll } from "../fyll.ts";
-import { aktivGata, gatUrval, nastaGata } from "../gata.ts";
+import { aktivGata, nastaGata } from "../gata.ts";
+import { aktuellLasniva, lasnivaUrval, ledtradsSteg } from "../lasniva.ts";
 import { platsMed } from "../platser.ts";
 import { useMinne } from "../minne.ts";
 import * as rostKo from "../rostKo.ts";
@@ -14,36 +15,41 @@ import { hemligaDjur } from "./hemliga.ts";
  * R9G: gåtan är låst (minne.gataId) tills ordet hittats eller barnet trycker "Ny gåta". Under ett uppdrag visas ingen gåta
  * alls (R9I), så den gamla hopfällda (`kompakt`) varianten är borttagen (B6.1).
  * B6.1: på en plats väljs platsens egna hemliga djur först (`hemliga` i data/platser.json), sedan alla andra.
+ * P4b: urvalet filtreras på läsnivå, och Ledtråd visar fler bokstäver i två steg utan att avslöja hela ordet.
  */
 export function Ledtradsyta({ funna }: { funna: Record<string, unknown> }) {
   const alla = useMemo(() => hemligaDjur(), []);
   const gataId = useMinne((s) => s.gataId);
   const sattGataId = useMinne((s) => s.sattGataId);
   const plats = useMinne((s) => s.plats);
-  const kvar = alla.filter((o) => !funna[o.id]);
-  const kvarIds = gatUrval(
-    kvar.map((o) => o.id),
-    platsMed(plats)?.hemliga,
-  );
-  const id = aktivGata(kvarIds, gataId);
+  const lasnivaVal = useMinne((s) => s.lasnivaVal);
+  const hittade = alla.filter((o) => Boolean(funna[o.id])).map((o) => o.id);
+  const allaOhittade = alla.filter((o) => !funna[o.id]).map((o) => o.id);
+  const niva = aktuellLasniva(hittade, lasnivaVal);
+  const kvar = lasnivaUrval(allaOhittade, platsMed(plats)?.hemliga, niva);
+  const vald = aktivGata(kvar, gataId);
   useEffect(() => {
-    if (id && id !== gataId) sattGataId(id);
-  }, [id, gataId, sattGataId]);
-  // TTS-2: gåtan läses upp en gång per gåta och spelomgång (Trollpennans röst)
-  const gataText = id ? LED[id]?.gata : undefined;
+    if (vald && vald !== gataId) sattGataId(vald);
+  }, [vald, gataId, sattGataId]);
+  const [steg, setSteg] = useState<0 | 1 | 2>(0);
   useEffect(() => {
-    if (!id || !gataText) return;
-    rostKo.anmal({ text: gataText, kalla: "gata", nyckel: `gata:${id}` });
+    setSteg(0);
+  }, [vald]);
+  const gataText = vald ? LED[vald]?.gata : undefined;
+  useEffect(() => {
+    if (!vald || !gataText) return;
+    rostKo.anmal({ text: gataText, kalla: "gata", nyckel: `gata:${vald}` });
     return () => rostKo.stryk(gataText);
-  }, [id, gataText]);
+  }, [vald, gataText]);
   const [visaGata, setVisaGata] = useState(true);
-  const hittade = alla.length - kvar.length;
-  if (!id) return <p className="ledtrad-klar" data-testid="ledtrad">{hemligt.alla_hittade}</p>;
-  const led = LED[id]!;
+  const stegData = vald ? ledtradsSteg(vald, steg) : null;
+  if (!vald) return <p className="ledtrad-klar" data-testid="ledtrad">{hemligt.alla_hittade}</p>;
+  const led = LED[vald]!;
   const streck = `${led.forsta} ${Array.from({ length: Math.max(0, led.langd - 1) }, () => "_").join(" ")}`.trim();
-  const framsteg = fyll(hemligt.hittade, { n: hittade, total: alla.length });
+  const framsteg = fyll(hemligt.hittade, { n: hittade.length, total: alla.length });
+  const lasText = steg >= 1 && stegData?.extraText ? `${led.gata} ${stegData.extraText}` : led.gata;
   return (
-    <div className="ledtrad" data-testid="ledtrad" data-hemligt={id}>
+    <div className="ledtrad" data-testid="ledtrad" data-hemligt={vald}>
       <b>
         {hemligt.ledtrad_rubrik}{" "}
         {visaGata ? (
@@ -57,25 +63,48 @@ export function Ledtradsyta({ funna }: { funna: Record<string, unknown> }) {
           >
             {lasningJson.bok.visa_gata}
           </button>
-        )}
+        )}{" "}
+        <span className="ledtrad-niva" data-p4="lasniva-badge">Nivå {niva}</span>
       </b>
       {visaGata ? (
         <>
           <p className="ledtrad-gata" data-testid="ledtrad-gata">{led.gata}</p>
-          <button
-            type="button"
-            className="lyssna-knapp"
-            data-p4="lyssna-gata"
-            aria-label={lasningJson.lyssna.aria_gata}
-            onClick={() => rostKo.lasUpp(led.gata)}
-          >
-            🔊 {lasningJson.lyssna.knapp}
-          </button>
           <div className="ledtrad-rad">
-            <span className="ledtrad-streck" data-testid="ledtrad-streck" aria-label={`${led.langd} bokstäver, börjar på ${led.forsta}`}>{streck}</span>
-            <button type="button" className="nej" data-testid="ledtrad-ny" onClick={() => sattGataId(nastaGata(kvarIds, id))}>
+            <span className="ledtrad-streck" data-testid="ledtrad-streck" aria-label={`${led.langd} bokstäver, börjar på ${led.forsta}`}>{stegData?.streck ?? streck}</span>
+            <button
+              type="button"
+              className="nej"
+              data-testid="ledtrad-ny"
+              onClick={() => {
+                setSteg(0);
+                sattGataId(nastaGata(kvar, vald));
+              }}
+            >
               {hemligt.ny_gata}
             </button>
+          </div>
+          {stegData?.extraText ? <p className="ledtrad-extra" data-p4="ledtrad-extra">{stegData.extraText}</p> : null}
+          {stegData?.ljudText ? <p className="ledtrad-ljud" data-p4="ledtrad-ljud">{stegData.ljudText}</p> : null}
+          <div className="ledtrad-knappar">
+            <button
+              type="button"
+              className="lyssna-knapp"
+              data-p4="lyssna-gata"
+              aria-label={lasningJson.lyssna.aria_gata}
+              onClick={() => rostKo.lasUpp(lasText)}
+            >
+              🔊 {lasningJson.lyssna.knapp}
+            </button>
+            {steg < 2 && (
+              <button
+                type="button"
+                className="lyssna-knapp ledtrad-knapp"
+                data-p4="ledtrad-knapp"
+                onClick={() => setSteg((s) => (s < 2 ? ((s + 1) as 0 | 1 | 2) : s))}
+              >
+                {lasningJson.ledtrad.knapp} ({steg + 1}/2)
+              </button>
+            )}
           </div>
           <p className="ledtrad-hint" data-testid="ledtrad-hint">{hemligt.skriv_hint}</p>
           <button type="button" className="nej" onClick={() => setVisaGata(false)}>
