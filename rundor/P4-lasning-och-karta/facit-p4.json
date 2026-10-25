@@ -1,0 +1,183 @@
+{
+  "version": 1,
+  "beskrivning": "Facit för P4a (uppläsning och separata ljudreglage utan ny TTS), P4b (läsnivåer 1-3, ledtrådstrappa i 3 steg och specifik stavningsåterkoppling) och P4c (olåst karta och meny där alla platser och verktyg är öppna direkt).",
+  "neutral_rostfil": "/ljud/rost/db967993a3539e8c.mp3",
+  "p4a": {
+    "rost_takt_kalla": {
+      "nyckel": "las_upp",
+      "klass": "svar"
+    },
+    "ljud_reglage": {
+      "falt": [
+        "ljudPa",
+        "rostPa",
+        "effektPa"
+      ],
+      "metoder": [
+        "sattLjud",
+        "sattRost",
+        "sattEffekt"
+      ]
+    },
+    "lyssna_attribut": [
+      "lyssna-gata",
+      "lyssna-uppdrag",
+      "lyssna-onska",
+      "lyssna-forslag",
+      "rost-knapp",
+      "effekt-knapp"
+    ],
+    "min_tryckyta_px": 44
+  },
+  "p4b": {
+    "lasniva_exempel": {
+      "1": [
+        "ko",
+        "bi",
+        "apa",
+        "räv",
+        "orm",
+        "anka",
+        "gris",
+        "valp",
+        "haj",
+        "hare",
+        "älg",
+        "koi",
+        "svan",
+        "yeti"
+      ],
+      "2": [
+        "padda",
+        "uggla",
+        "bäver",
+        "lejon",
+        "zebra",
+        "panda",
+        "delfin",
+        "tiger",
+        "ekorre",
+        "lamm",
+        "hjort",
+        "tjur"
+      ],
+      "3": [
+        "kattunge",
+        "enhörning",
+        "elefant",
+        "pingvin",
+        "flodhäst",
+        "dinosaurie",
+        "papegoja",
+        "isbjörn",
+        "clownfisk"
+      ]
+    },
+    "auto_steg": [
+      {
+        "funna_antal": 0,
+        "forvantad_niva": 1
+      },
+      {
+        "funna_antal": 2,
+        "forvantad_niva": 1
+      },
+      {
+        "funna_antal": 3,
+        "forvantad_niva": 2
+      },
+      {
+        "funna_antal": 7,
+        "forvantad_niva": 2
+      },
+      {
+        "funna_antal": 8,
+        "forvantad_niva": 3
+      }
+    ],
+    "ledtrad_steg": {
+      "ord": "kattunge",
+      "steg0": {
+        "synliga_bokstaver": 1,
+        "visar_hela": false
+      },
+      "steg1": {
+        "min_synliga_bokstaver": 2,
+        "visar_hela": false,
+        "har_hjalptext": true
+      },
+      "steg2": {
+        "min_synliga_bokstaver": 3,
+        "visar_hela": false,
+        "har_ljudstod": true
+      }
+    },
+    "stavning_exempel": [
+      {
+        "skrivet": "kat",
+        "mal": "katt",
+        "typ": "dubbel",
+        "ratt_prefix": "kat"
+      },
+      {
+        "skrivet": "pada",
+        "mal": "padda",
+        "typ": "dubbel",
+        "ratt_prefix": "pad"
+      },
+      {
+        "skrivet": "kani",
+        "mal": "kanin",
+        "typ": "saknas",
+        "ratt_prefix": "kani"
+      },
+      {
+        "skrivet": "kanni",
+        "mal": "kanin",
+        "typ": "omkastad",
+        "ratt_prefix": "kan"
+      }
+    ]
+  },
+  "p4c": {
+    "platser_oppna_direkt": [
+      "ang",
+      "skogen",
+      "sjon",
+      "grottan"
+    ],
+    "karta_knappar_oppna": [
+      "plats-garden",
+      "plats-skogen",
+      "plats-sjon",
+      "plats-grottan"
+    ],
+    "meny_knappar_oppna": [
+      "flik-ang",
+      "flik-gard",
+      "flik-byggbok",
+      "album-knapp",
+      "ut-pa-aventyr",
+      "uppdrag-knapp",
+      "ordbok"
+    ],
+    "skriv_resa_exempel": [
+      {
+        "text": "skogen",
+        "mal_plats": "skogen"
+      },
+      {
+        "text": "till sjön",
+        "mal_plats": "sjon"
+      },
+      {
+        "text": "gå till grottan",
+        "mal_plats": "grottan"
+      },
+      {
+        "text": "ängen",
+        "mal_plats": "ang"
+      }
+    ]
+  }
+}
