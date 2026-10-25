@@ -85,6 +85,8 @@ export type Data = {
   stall: Sparad[];
   /** R9G: gåtan som visas; byts bara när ordet hittats eller barnet trycker "Ny gåta". */
   gataId: string | null;
+  /** P4b: automatisk lästrappa eller en låst nivå vald av en vuxen. */
+  lasnivaVal: "auto" | 1 | 2 | 3;
 };
 
 export type Store = Data & {
@@ -136,6 +138,7 @@ export type Store = Data & {
   /** R9G: hämta ett djur ur stallet till platsen barnet är på (tak TAK_PER_PLATS). */
   franStall: (uid: string) => StallUt;
   sattGataId: (id: string | null) => void;
+  sattLasniva: (val: "auto" | 1 | 2 | 3) => void;
 };
 
 export const useMinne = create<Store>((set, get) => ({
@@ -352,6 +355,7 @@ export const useMinne = create<Store>((set, get) => ({
     if (get().gataId === id) return;
     set({ gataId: id });
   },
+  sattLasniva: (val) => set({ lasnivaVal: val }),
   sattFyrPa: () => set({ fyr: true }),
   settKarta: () => set({ forstaKarta: false }),
   markeraOmradeKlar: (id) => {

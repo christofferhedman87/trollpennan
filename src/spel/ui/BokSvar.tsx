@@ -2,6 +2,7 @@
 // direkt ovanför skrivrutan, så att knapparna alltid syns hela och aldrig hamnar under rutan (granskningen 1.2, K4).
 import type { ForslagKort } from "@/tolk/typer.ts";
 import lasningJson from "../../../data/lasning.json" with { type: "json" };
+import { stavningsFeedback } from "../lasniva.ts";
 import * as rostKo from "../rostKo.ts";
 import type { Forslag } from "./typer.ts";
 import "./bok-p1.css";
@@ -15,12 +16,24 @@ type Props = {
 };
 
 export function BokSvar({ forslag, valjForslag, nejForslag, behover, utfor }: Props) {
+  const fb = forslag && forslag.forslag.length > 0 ? stavningsFeedback(forslag.token, forslag.forslag[0]!.visa) : null;
   if (!forslag && !behover) return null;
   return (
     <div className="bok-svar" aria-live="polite">
       {forslag ? (
         <div className="forslag" data-testid="forslag">
           <p>{forslag.text}</p>
+          {fb ? (
+            <p className="stavning-rad" data-p4="stavning-tips">
+              {fb.rattPrefix && (
+                <span className="stavning-ratt" data-p4="stavning-ratt">
+                  {fb.rattPrefix}
+                </span>
+              )}
+              {fb.restenSkrivet && <span className="stavning-rest">{fb.restenSkrivet}</span>}
+              <span className="stavning-forklaring"> — {fb.forklaring}</span>
+            </p>
+          ) : null}
           <button
             type="button"
             className="lyssna-knapp"

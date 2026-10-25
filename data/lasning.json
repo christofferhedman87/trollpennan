@@ -36,5 +36,26 @@
     "last_rubrik": "Låst plats",
     "framsteg_uppdrag": "{klara} av {krav} uppdrag klara i {omrade}",
     "framsteg_skapelser": "{klara} av {krav} skapelser i {omrade}"
+  },
+  "lasniva": {
+    "niva1_max_langd": 4,
+    "niva3_min_langd": 7,
+    "svara_ljud": ["sj", "tj", "hj", "ng", "ck"],
+    "undantag": {},
+    "auto_trappsteg": {
+      "niva2_min_funna": 3,
+      "niva3_min_funna": 8
+    }
+  },
+  "ledtrad": {
+    "knapp": "Ledtråd 💡",
+    "stavelser_mall": "Ordet har {antal} delar: {delar}.",
+    "ljud_mall": "Lyssna på början: {ljud}."
+  },
+  "stavning": {
+    "dubbel_mall": "Nästan! I {mal} hörs två {bokstav}.",
+    "saknas_mall": "Så nära! Det fattas bara en bokstav i {mal}.",
+    "omkastad_mall": "Bra försök! Två bokstäver har bytt plats i {mal}.",
+    "allman_mall": "Bra försök! Titta på början av {mal}."
   }
 }
