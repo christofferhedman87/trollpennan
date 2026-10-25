@@ -9,6 +9,25 @@
 .bok .remsa{cursor:text;touch-action:manipulation}
 /* Kontrast ≥ 4,5:1 (granskningen: 3,75:1) */
 .bok .ledtrad-hint{color:var(--color-moss-deep);font-size:1rem}
+.lyssna-knapp{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  min-height:44px;
+  min-width:44px;
+  padding:6px 14px;
+  border-radius:999px;
+  border:2px solid var(--color-moss-deep);
+  background:var(--color-cream);
+  color:var(--color-ink);
+  font:inherit;
+  font-weight:700;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+.bok .uppdrag-remsa{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.bok .ledtrad-framsteg{font-weight:600}
 .bok .flik.pa{background:var(--color-moss-deep)}
 /* Platsnamn och "Till ängen" i en rad under HUD:en – låg över stjärnknappen (9×8 px) på 375 px. */
 body .plats-resa{top:66px;flex-direction:row;gap:8px}

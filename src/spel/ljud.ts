@@ -11,11 +11,11 @@ type LjudFil = { ljud: Record<string, LjudSpec> };
 const DATA = ljudJson as LjudFil;
 const MASTER = 0.25;
 
-let pa = true;
+let av = false;
 let ctx: AudioContext | null = null;
 
 function kontext(): AudioContext | null {
-  if (!pa || typeof window === "undefined") return null;
+  if (av || typeof window === "undefined") return null;
   if (!ctx) ctx = new AudioContext();
   if (ctx.state === "suspended") void ctx.resume();
   return ctx;
@@ -60,7 +60,10 @@ function brus(ac: AudioContext, spec: NonNullable<LjudSpec["brus"]>, volym: numb
 export const ljud = {
   logg: [] as string[],
   satt(v: boolean) {
-    pa = v;
+    av = !v;
+  },
+  effektPa(): boolean {
+    return !av;
   },
   lasOpp() {
     if (typeof window === "undefined") return;
@@ -107,7 +110,7 @@ export const ljud = {
   fil(namn: "pop" | "vakna" | "klick" | "landa" | "glitter") {
     this.logg.push(namn);
     if (this.logg.length > 40) this.logg.shift();
-    if (!pa || typeof window === "undefined") return;
+    if (av || typeof window === "undefined") return;
     const a = new Audio(`/ljud-ui/${namn}.mp3`);
     a.volume = 0.45;
     void a.play().catch(() => undefined);

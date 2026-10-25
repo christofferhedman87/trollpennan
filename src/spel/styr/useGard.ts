@@ -103,7 +103,7 @@ export function useGard(k: Pick<SpelKarna, "t" | "b" | "v" | "s">) {
       setKopia(null);
       return;
     }
-    ljud.satt(useMinne.getState().ljudPa);
+    ljud.satt(useMinne.getState().effektPa && useMinne.getState().ljudPa);
     setLage(useMinne.getState().startLage);
     rensaSkriv();
     setVisKort(null);

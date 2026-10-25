@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import lasningJson from "../../../data/lasning.json" with { type: "json" };
 import { NPC, uppdragText, type Uppdrag } from "../aventyr.ts";
 import * as rostKo from "../rostKo.ts";
 import { ideRad } from "../ideRad.ts";
@@ -22,6 +23,15 @@ export function UppdragsRemsa({ uppdrag, fyllForslag }: { uppdrag: Uppdrag | und
       <p className="uppdrag-remsa" data-testid="uppdrag-remsa" data-uppdrag={uppdrag.id}>
         {namn ? <b>{namn}: </b> : null}
         {uppdragText(uppdrag)}
+        <button
+          type="button"
+          className="lyssna-knapp"
+          data-p4="lyssna-uppdrag"
+          aria-label={lasningJson.lyssna.aria_uppdrag}
+          onClick={() => rostKo.lasUpp(uppdragText(uppdrag))}
+        >
+          🔊 {lasningJson.lyssna.knapp}
+        </button>
       </p>
       {rad && fyllForslag ? (
         <div className="uppdrag-val" data-testid="uppdrag-val" role="group" aria-label={rad.rubrik || undefined}>

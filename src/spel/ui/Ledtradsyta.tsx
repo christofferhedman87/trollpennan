@@ -1,5 +1,6 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import hemligt from "../../../data/hemligt.json" with { type: "json" };
+import lasningJson from "../../../data/lasning.json" with { type: "json" };
 import { fyll } from "../fyll.ts";
 import { aktivGata, gatUrval, nastaGata } from "../gata.ts";
 import { platsMed } from "../platser.ts";
@@ -35,31 +36,53 @@ export function Ledtradsyta({ funna }: { funna: Record<string, unknown> }) {
     rostKo.anmal({ text: gataText, kalla: "gata", nyckel: `gata:${id}` });
     return () => rostKo.stryk(gataText);
   }, [id, gataText]);
+  const [visaGata, setVisaGata] = useState(true);
   const hittade = alla.length - kvar.length;
   if (!id) return <p className="ledtrad-klar" data-testid="ledtrad">{hemligt.alla_hittade}</p>;
   const led = LED[id]!;
   const streck = `${led.forsta} ${Array.from({ length: Math.max(0, led.langd - 1) }, () => "_").join(" ")}`.trim();
-  const rubrik = (
-    <b>
-      {hemligt.ledtrad_rubrik} <small>{fyll(hemligt.hittade, { n: hittade, total: alla.length })}</small>
-    </b>
-  );
-  const kropp = (
-    <>
-      <p className="ledtrad-gata" data-testid="ledtrad-gata">{led.gata}</p>
-      <div className="ledtrad-rad">
-        <span className="ledtrad-streck" data-testid="ledtrad-streck" aria-label={`${led.langd} bokstäver, börjar på ${led.forsta}`}>{streck}</span>
-        <button type="button" className="nej" data-testid="ledtrad-ny" onClick={() => sattGataId(nastaGata(kvarIds, id))}>
-          {hemligt.ny_gata}
-        </button>
-      </div>
-      <p className="ledtrad-hint" data-testid="ledtrad-hint">{hemligt.skriv_hint}</p>
-    </>
-  );
+  const framsteg = fyll(hemligt.hittade, { n: hittade, total: alla.length });
   return (
     <div className="ledtrad" data-testid="ledtrad" data-hemligt={id}>
-      {rubrik}
-      {kropp}
+      <b>
+        {hemligt.ledtrad_rubrik}{" "}
+        {visaGata ? (
+          <span className="ledtrad-framsteg" ref={(el) => el?.setAttribute("data-testid", "bok-flik-gator")}>{framsteg}</span>
+        ) : (
+          <button
+            type="button"
+            className="nej"
+            ref={(el) => el?.setAttribute("data-testid", "bok-flik-gator")}
+            onClick={() => setVisaGata(true)}
+          >
+            {lasningJson.bok.visa_gata}
+          </button>
+        )}
+      </b>
+      {visaGata ? (
+        <>
+          <p className="ledtrad-gata" data-testid="ledtrad-gata">{led.gata}</p>
+          <button
+            type="button"
+            className="lyssna-knapp"
+            data-p4="lyssna-gata"
+            aria-label={lasningJson.lyssna.aria_gata}
+            onClick={() => rostKo.lasUpp(led.gata)}
+          >
+            🔊 {lasningJson.lyssna.knapp}
+          </button>
+          <div className="ledtrad-rad">
+            <span className="ledtrad-streck" data-testid="ledtrad-streck" aria-label={`${led.langd} bokstäver, börjar på ${led.forsta}`}>{streck}</span>
+            <button type="button" className="nej" data-testid="ledtrad-ny" onClick={() => sattGataId(nastaGata(kvarIds, id))}>
+              {hemligt.ny_gata}
+            </button>
+          </div>
+          <p className="ledtrad-hint" data-testid="ledtrad-hint">{hemligt.skriv_hint}</p>
+          <button type="button" className="nej" onClick={() => setVisaGata(false)}>
+            {lasningJson.bok.dolj_gata}
+          </button>
+        </>
+      ) : null}
     </div>
   );
 }

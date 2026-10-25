@@ -12,7 +12,7 @@ export type LokalLagring = Pick<Storage, "getItem" | "setItem">;
 export function lasLokalt(hamta: () => LokalLagring): unknown {
   try {
     const store = hamta();
-    const text = store.getItem("trollpennan-v2") ?? store.getItem("trollpennan:v2") ?? store.getItem("trollpennan-v1");
+    const text = store.getItem("trollpennan-v2") ?? store.getItem("trollpennan:v2") ?? store.getItem("trollpennan-v1") ?? store.getItem("trollpennan-spel");
     if (!text) return null;
     try { return JSON.parse(text); } catch { markeraSkadad(); return null; }
   } catch { meddela("otillganglig"); return null; }

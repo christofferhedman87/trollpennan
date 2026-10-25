@@ -1,4 +1,5 @@
 import type { Dispatch, RefObject, SetStateAction } from "react";
+import lasningJson from "../../../data/lasning.json" with { type: "json" };
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
 import type { Lage } from "../minne.ts";
@@ -25,6 +26,8 @@ type ForalderDialogProps = {
 };
 
 export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef, lasFil, foralderRad, kopia, lasInKopia, setKopia, onskelista, setSaker, saker, borjaOm, setForalder }: ForalderDialogProps) {
+  const rostPa = useMinne((s) => s.rostPa);
+  const effektPa = useMinne((s) => s.effektPa);
   return (
         <div className="skarm" role="dialog" aria-label="För vuxna" data-testid="foralder">
           <div className="ark sida">
@@ -56,6 +59,7 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
               </button>
             </div>
             <h3>Ljud</h3>
+            <div className="rad-kort">
             <button
               type="button"
               className={ljudPa ? "pa ljud-knapp" : "ljud-knapp"}
@@ -69,6 +73,29 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
             >
               {ljudPa ? LJUD_PA : LJUD_AV}
             </button>
+            <button
+              type="button"
+              className={rostPa ? "pa ljud-knapp" : "ljud-knapp"}
+              data-p4="rost-knapp"
+              aria-pressed={rostPa}
+              onClick={() => useMinne.getState().sattRost(!useMinne.getState().rostPa)}
+            >
+              {rostPa ? lasningJson.ljud.rost_pa : lasningJson.ljud.rost_av}
+            </button>
+            <button
+              type="button"
+              className={effektPa ? "pa ljud-knapp" : "ljud-knapp"}
+              data-p4="effekt-knapp"
+              aria-pressed={effektPa}
+              onClick={() => {
+                const nasta = !useMinne.getState().effektPa;
+                useMinne.getState().sattEffekt(nasta);
+                ljud.satt(nasta);
+              }}
+            >
+              {effektPa ? lasningJson.ljud.effekt_pa : lasningJson.ljud.effekt_av}
+            </button>
+            </div>
             <h3>{TEXTER.backup.rubrik}</h3>
             <p>{TEXTER.backup.spara_hjalp}</p>
             <button type="button" className="kort" data-testid="spara-kopia" onClick={sparaKopia}>
