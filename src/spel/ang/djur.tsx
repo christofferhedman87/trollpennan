@@ -7,7 +7,7 @@ import { byggPack, forma } from "../djurmesh.ts";
 import { replik } from "../replik.ts";
 import { ljud } from "../ljud.ts";
 import { GltfDjur, GltfSak, type DjurSignal } from "../gltfDjur.tsx";
-import { arSak, fotKant, harModell, hoppHojd, malhojd, svavar, takSkala } from "../entiteter.ts";
+import { arPlagg, arSak, fotKant, harModell, hoppHojd, malhojd, svavar, takSkala } from "../entiteter.ts";
 import { regelFor, ritSkala } from "../placering.ts";
 import { faestTillbehor, procAnkare } from "../tillbehor/index.ts";
 import { DjurEffekter } from "../effekter.tsx";
@@ -243,7 +243,9 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
   const ritSpec = krymp !== 1 ? { ...spec, skala: (spec.skala || 1) * krymp } : spec; // P3a: samma mått som placeringsregeln, också när en småsak växer
   const synS = ritSkala(ritSpec, z, plats); // P3a: platsens skala och minsta synliga storlek (samma som placeringsregeln räknar med)
   const sak = arSak(spec.kropp);
-  const medSaker = spec.tillbehor.map((t) => t.id).filter((id) => id !== spec.kropp && arSak(id));
+  const medSaker = spec.tillbehor
+    .map((t) => t.id)
+    .filter((id) => id !== spec.kropp && arSak(id) && !arPlagg(id));
   // P3: saken bredvid står på torr mark (inte i dammen): sidan, andra sidan eller framför
   const sakPos = (id: string, i: number): [number, number, number] => {
     const onskad: [number, number] = [(0.45 + malhojd(spec.kropp) * 0.35) * (i % 2 === 0 ? 1 : -1) * (spec.skala || 1), 0.2 + Math.floor(i / 2) * 0.3];

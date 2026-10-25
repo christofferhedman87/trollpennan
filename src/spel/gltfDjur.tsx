@@ -1,7 +1,7 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useLayoutEffect, useMemo, useRef } from "react";
-import { SkeletonUtils } from "three-stdlib";
+import { Suspense, useLayoutEffect, useMemo, useRef } from "react";
+import { MeshoptDecoder, SkeletonUtils } from "three-stdlib";
 import * as THREE from "three";
 import { fargning, kroppsRoller, tillLinjar, valjKarna, type Anvandning, type Klump, type KroppRoll, type MatInfo } from "./fargning.ts";
 import { byttPixel, hexTillHsl, hslTillRgb, ljusTint, malAlbedo, rgbTillHsl, traffarPalett, type Hsl, type Palett } from "./palett.ts";
@@ -12,8 +12,8 @@ import { belysScen } from "./belys.ts";
 
 const LJUSTINT = ljusTint(MILJO.ljus, MILJO.farg.ljusforstark);
 import type { Sparad } from "./brygga.ts";
-import { entitet, forladdaUrls, framVinkel, modellUrl as modellUrlAv, skalaFor } from "./entiteter.ts";
-import { faestTillbehor } from "./tillbehor/index.ts";
+import { arPlagg, entitet, forladdaUrls, framVinkel, modellUrl as modellUrlAv, skalaFor } from "./entiteter.ts";
+import { faestPlaggKlon, faestTillbehor } from "./tillbehor/index.ts";
 
 /** Kodbyggd reserv om en GLB saknas. Komponenten skickas in utifrån så den här filen inte drar in hela ängen. */
 export type DjurSignal = { klapp: number; ror: number };
@@ -379,6 +379,40 @@ function fastAnkare(rot: THREE.Object3D, spec: Sparad) {
   faestTillbehor(rot, spec.kropp, spec.tillbehor, "modell");
 }
 
+function kopplaMeshopt(loader: { setMeshoptDecoder: (d: unknown) => void }) {
+  const av = MeshoptDecoder as unknown;
+  loader.setMeshoptDecoder(typeof av === "function" ? (av as () => unknown)() : av);
+}
+
+/** GLB-plagg (mössa, tröja, stövel) fästs på klonen, inte som en sak på marken. */
+function GltfPlagg({ rot, kropp, id, farg }: { rot: THREE.Object3D; kropp: string; id: string; farg: string | null }) {
+  const gltf = useGLTF(modellUrlAv(id)!, true, true, kopplaMeshopt);
+  useLayoutEffect(() => {
+    const nod = faestPlaggKlon(rot, kropp, id, gltf.scene, farg);
+    return () => {
+      nod?.parent?.remove(nod);
+    };
+  }, [rot, kropp, id, farg, gltf.scene]);
+  return null;
+}
+
+function GltfInnehall({ klon, spec, fram }: { klon: THREE.Object3D; spec: Sparad; fram: number }) {
+  const glbPlagg = useMemo(
+    () => spec.tillbehor.filter((t) => t.id !== spec.kropp && arPlagg(t.id)),
+    [spec.tillbehor, spec.kropp],
+  );
+  return (
+    <group rotation={[0, fram, 0]}>
+      <primitive object={klon} />
+      {glbPlagg.map((t) => (
+        <Suspense key={t.id} fallback={null}>
+          <GltfPlagg rot={klon} kropp={spec.kropp} id={t.id} farg={t.farg} />
+        </Suspense>
+      ))}
+    </group>
+  );
+}
+
 for (const url of forladdaUrls()) useGLTF.preload(url);
 
 export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: DjurSignal } }) {
@@ -510,9 +544,7 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
   return (
     <group ref={rot}>
       <group ref={inre}>
-        <group rotation={[0, fram, 0]}>
-          <primitive object={klon} />
-        </group>
+        <GltfInnehall klon={klon} spec={spec} fram={fram} />
       </group>
     </group>
   );

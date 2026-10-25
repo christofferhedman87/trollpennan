@@ -157,6 +157,12 @@ export function arSak(kropp: string): boolean {
   return !!e && e.typ !== "djur" && !!modellUrl(kropp);
 }
 
+/** Kläder med 3D-modell som ska sitta på djuret vid "med", inte som en sak på marken. */
+export function arPlagg(id: string): boolean {
+  const e = ENTITETER[id];
+  return e?.typ === "tillbehor" && !!modellUrl(id);
+}
+
 /** P3a-fix: en småsak (storlek.json smasak: en sak med målhöjd i intervallet – koppen, pucken, saxen). */
 export function arSmasak(kropp: string): boolean {
   const sm = STORLEK.smasak?.malhojd;

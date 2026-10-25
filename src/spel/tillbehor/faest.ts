@@ -1,15 +1,32 @@
 import * as THREE from "three";
+import { SkeletonUtils } from "three-stdlib";
 import type { TillbehorSpec } from "../../tolk/typer.ts";
-import { forskjutning, skalaVarde, tillbehorRad, type Plats, type TillbehorRad } from "./data.ts";
+import { entitet, framVinkel } from "../entiteter.ts";
+import { forskjutning, kroppRad, plaggKonfig, skalaVarde, tillbehorRad, type Plats, type TillbehorRad } from "./data.ts";
 import { ankareFor, procAnkare, type Ankare } from "./ankare.ts";
 import { byggTillbehor } from "./bygg.ts";
 
-const _q = new THREE.Quaternion();
+const _qRot = new THREE.Quaternion();
+const _qFram = new THREE.Quaternion();
 const _v = new THREE.Vector3();
 const _onskad = new THREE.Matrix4();
 const _inv = new THREE.Matrix4();
 const _lokal = new THREE.Matrix4();
 const _s = new THREE.Vector3();
+const Y_AXEL = new THREE.Vector3(0, 1, 0);
+
+function framForKropp(kropp: string): number {
+  const kr = kroppRad(kropp);
+  return framVinkel(kr.modell?.framAxel ?? kr.framAxel ?? entitet(kropp)?.framAxel);
+}
+
+/** Världsorientering där plaggets +z pekar mot nosen efter djurets framAxel-vridning. */
+function orientFor(rot: THREE.Object3D, kropp: string): THREE.Quaternion {
+  rot.getWorldQuaternion(_qRot);
+  const fram = framForKropp(kropp);
+  if (fram) _qRot.multiply(_qFram.setFromAxisAngle(Y_AXEL, -fram));
+  return _qRot;
+}
 
 /** Läge för tillbehöret: ankaret, ev. draget mot ett annat ankare, plus förskjutning ut (−x), upp (+y) och fram (+z) i rotens axlar. */
 export function platsFor(p: Plats, a: Ankare, q: THREE.Quaternion | null): THREE.Vector3 {
@@ -24,12 +41,11 @@ export function platsFor(p: Plats, a: Ankare, q: THREE.Quaternion | null): THREE
   return pos.add(_v);
 }
 
-function fastVarld(parent: THREE.Object3D, rot: THREE.Object3D, obj: THREE.Object3D, pos: THREE.Vector3, skala: number) {
+function fastVarld(parent: THREE.Object3D, rot: THREE.Object3D, kropp: string, obj: THREE.Object3D, pos: THREE.Vector3, skala: number) {
   rot.updateWorldMatrix(true, true);
   parent.updateWorldMatrix(true, true);
-  rot.getWorldQuaternion(_q);
   _s.set(skala, skala, skala);
-  _onskad.compose(pos, _q, _s);
+  _onskad.compose(pos, orientFor(rot, kropp), _s);
   _inv.copy(parent.matrixWorld).invert();
   _lokal.multiplyMatrices(_inv, _onskad);
   _lokal.decompose(obj.position, obj.quaternion, obj.scale);
@@ -46,21 +62,90 @@ export function faestTillbehor(
   tillbehor: TillbehorSpec[],
   rum: "modell" | "mesh" = "mesh",
 ) {
-  const a = rum === "modell" ? ankareFor(rot, kropp) : procAnkare(kropp);
+  const a = rum === "modell" ? ankareFor(rot, kropp, "modell") : procAnkare(kropp);
   const parent = a.ben ?? rot;
   for (const t of tillbehor) {
     const rad: TillbehorRad | null = tillbehorRad(t.id, kropp);
     if (!rad) continue;
     const obj = byggTillbehor(t.id, rad, t.farg);
     const p = a.varld ? rad.plats : (rad.platsMesh ?? rad.plats);
-    const q = a.varld ? rot.getWorldQuaternion(new THREE.Quaternion()) : null;
+    const q = a.varld ? orientFor(rot, kropp).clone() : null;
     const pos = platsFor(p, a, q);
     const skala = skalaVarde(rad.skala, a.bredd, a.hojd);
-    if (a.varld) fastVarld(parent, rot, obj, pos, skala);
+    if (a.varld) fastVarld(parent, rot, kropp, obj, pos, skala);
     else {
       obj.position.copy(pos);
       obj.scale.setScalar(skala);
       parent.add(obj);
     }
   }
+}
+
+function basFor(ankare: string, a: Ankare, rotPos: THREE.Vector3): THREE.Vector3 {
+  if (ankare === "huvudTopp") return a.huvudTopp.clone();
+  if (ankare === "hals") return a.hals.clone();
+  if (ankare === "rygg") return a.rygg.clone();
+  if (ankare === "fot") return new THREE.Vector3(a.hals.x, (a.fotY ?? rotPos.y) + 0.02 * a.hojd, rotPos.z + (a.hals.z - rotPos.z) * 0.55);
+  return new THREE.Vector3(a.hals.x, (a.fotY ?? rotPos.y) + 0.45 * a.hojd, rotPos.z + (a.hals.z - rotPos.z) * 0.45);
+}
+
+function taBortPar(rot: THREE.Object3D, plaggId: string, par: string) {
+  const borta: THREE.Object3D[] = [];
+  rot.traverse((o) => {
+    if (o.name === "tillbehor-" + plaggId || (par && o.userData?.plaggPar === par)) borta.push(o);
+  });
+  for (const o of borta) o.parent?.remove(o);
+}
+
+function fargaKlon(klon: THREE.Object3D, farg: string) {
+  klon.traverse((o) => {
+    const mesh = o as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    const byt = (m: THREE.Material) => {
+      const k = m.clone();
+      if ("color" in k && k.color instanceof THREE.Color) k.color.set(farg);
+      return k;
+    };
+    mesh.material = Array.isArray(mesh.material) ? mesh.material.map(byt) : byt(mesh.material);
+  });
+}
+
+/** Monterar ett GLB-plagg på djurets ankare. Returnerar hållaren, eller null om id saknas i plagg.json. */
+export function faestPlaggKlon(
+  rot: THREE.Object3D,
+  kropp: string,
+  plaggId: string,
+  plaggScen: THREE.Object3D,
+  farg?: string | null,
+): THREE.Object3D | null {
+  const cfg = plaggKonfig(plaggId);
+  if (!cfg) return null;
+  const a = ankareFor(rot, kropp, "modell");
+  const parent = (cfg.ankare === "huvudTopp" ? a.ben : null) ?? rot;
+  taBortPar(rot, plaggId, cfg.par);
+  const rotPos = rot.getWorldPosition(new THREE.Vector3());
+  const bas = basFor(cfg.ankare, a, rotPos);
+  const off = new THREE.Vector3(-cfg.ut * a.bredd, cfg.upp * a.hojd, cfg.fram * a.bredd);
+  off.applyQuaternion(orientFor(rot, kropp));
+  const pos = bas.add(off);
+  const klon = SkeletonUtils.clone(plaggScen);
+  klon.updateMatrixWorld(true);
+  const box0 = new THREE.Box3().setFromObject(klon);
+  const sz = box0.getSize(new THREE.Vector3());
+  const maxDim = Math.max(0.001, sz.x, sz.y, sz.z);
+  const malMatt = Math.min(a.hojd * 0.55, Math.max(0.14, a.bredd * cfg.skala));
+  const s = malMatt / maxDim;
+  klon.scale.setScalar(s);
+  klon.position.set(
+    -((box0.min.x + box0.max.x) / 2) * s,
+    cfg.botten ? -box0.min.y * s : -((box0.min.y + box0.max.y) / 2) * s,
+    -((box0.min.z + box0.max.z) / 2) * s,
+  );
+  if (farg) fargaKlon(klon, farg);
+  const hallare = new THREE.Group();
+  hallare.name = "tillbehor-" + plaggId;
+  hallare.userData.plaggPar = cfg.par;
+  hallare.add(klon);
+  fastVarld(parent, rot, kropp, hallare, pos, 1);
+  return hallare;
 }

@@ -1,6 +1,7 @@
 // Tillbehörsdata: rena funktioner över data/tillbehor.json och data/fastpunkter.json. Ingen three-import (testas i Node).
 import tillbehorJson from "../../../data/tillbehor.json" with { type: "json" };
 import fastpunkterJson from "../../../data/fastpunkter.json" with { type: "json" };
+import plaggJson from "../../../data/plagg.json" with { type: "json" };
 
 export type Vec3 = [number, number, number];
 export type Forskjutning = { bredd?: number; hojd?: number; abs?: number; min?: number; tecken?: number };
@@ -43,6 +44,29 @@ export const KROPPAR = fastpunkterJson.kroppar as unknown as Record<string, Krop
 
 export function kroppRad(kropp: string): KroppRad {
   return KROPPAR[kropp] ?? KROPPAR["standard"]!;
+}
+
+export type PlaggKonfig = {
+  ankare: "huvudTopp" | "hals" | "rygg" | "fot" | "hand";
+  skala: number;
+  upp: number;
+  fram: number;
+  ut: number;
+  botten: boolean;
+  par: string;
+};
+
+type PlaggRef = string | (Partial<PlaggKonfig> & { grupp?: string });
+
+/** Grupp för ett GLB-plagg ur data/plagg.json. Värdet kan vara ett gruppnamn eller en överstyrning. */
+export function plaggKonfig(id: string): PlaggKonfig | null {
+  const ref = (plaggJson.plagg as Record<string, PlaggRef>)[id];
+  if (!ref) return null;
+  const grupper = plaggJson.grupper as Record<string, PlaggKonfig>;
+  if (typeof ref === "string") return grupper[ref] ?? null;
+  const bas = ref.grupp ? grupper[ref.grupp] : undefined;
+  if (!bas) return null;
+  return { ...bas, ...ref };
 }
 
 /** Tillbehörets rad för ett djur: grundraden med djurets `overstyr` (faktor, plats, platsMesh) ovanpå. Null om id saknas. */
