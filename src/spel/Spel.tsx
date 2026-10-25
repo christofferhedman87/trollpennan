@@ -2,9 +2,6 @@ import { useDialogFokus } from "./dialogFokus";
 import upplevelse from "../../data/upplevelse.json";
 import { LagringsInfo } from "./LagringsInfo";
 import { useEffect } from "react";
-import { hemligaKvar, tolka } from "@/tolk/tolka.ts";
-import { byggMedId } from "@/tolk/byggtolk.ts";
-import { fyll } from "./fyll.ts";
 import { Angen3D } from "./angen3d.tsx";
 import { Intro } from "./intro.tsx";
 import { sagaNu } from "./saga.ts";
@@ -12,10 +9,7 @@ import { ljud } from "./ljud.ts";
 import { useMinne } from "./minne.ts";
 import * as rostKo from "./rostKo.ts";
 import { AlbumVy } from "./samling.tsx";
-import { komIhagDjur } from "./liv.ts";
-import { TEXTER_AV } from "./aventyr.ts";
-import { BYGGSIDOR, FIR, TEXTER } from "./ui/spelData.ts";
-import { bestamdAv, exempelFor, kortForExempel, onskaAnkare } from "./ui/hjalp.ts";
+import { TEXTER } from "./ui/spelData.ts";
 import { AngLager } from "./ui/AngLager.tsx";
 import { BokSkarm } from "./ui/BokSkarm.tsx";
 import { KopDialog, StjarnDialog, MossaPanel, SkyltDialog, ValjDjurDialog, VisKortBygg, VisKortDjur } from "./ui/Dialoger.tsx";
@@ -40,6 +34,7 @@ import { useSkriv } from "./styr/useSkriv.ts";
 import { skapaTrollApi } from "./styr/trollApi.ts";
 import type { SpelKarna } from "./styr/typer.ts";
 import { useAvBro } from "./styr/useAvBro.ts";
+import { useVyData } from "./styr/useVyData.ts";
 
 export function Spel() {
   useDialogFokus();
@@ -102,7 +97,6 @@ export function Spel() {
 
 
 
-  const k: SpelKarna = { t, b, v, a, o, be, s, g, sk };
   useEffect(() => {
     const api = skapaTrollApi(k);
     if (import.meta.env.DEV || navigator.webdriver === true) window.__troll = api; // TTS-3: bara i dev och när ett prov styr webbläsaren – aldrig för barn
@@ -111,85 +105,14 @@ export function Spel() {
     };
   });
   useAvBro({ t, b, v, a });
+  const vy = useVyData({ t });
+  const { visaOnskaHjalp, onskaDjur, andrar, vaknaText, onskaEx, onskaKort, onskaIds, ank, kort, hemliga, kvar, hittade, boDjur, menyHem, visa3d, agdaSidor, lastaSidor, byggSida, stallKanin } = vy;
+  const k: SpelKarna = { t, b, v, a, o, be, s, g, sk, vy };
 
 
 
-  useEffect(() => {
-    const rot = angRef.current;
-    if (!rot) return;
-    const synka = () => {
-      const canvas = rot.querySelector("canvas");
-      if (!canvas) return;
-      const a = rot.getBoundingClientRect();
-      const c = canvas.getBoundingClientRect();
-      if (a.width < 2 || a.height < 2 || c.width < 2) return;
-      rot.style.setProperty("--duk-x", String((c.left - a.left) / a.width));
-      rot.style.setProperty("--duk-y", String((c.top - a.top) / a.height));
-      rot.style.setProperty("--duk-w", String(c.width / a.width));
-      rot.style.setProperty("--duk-h", String(c.height / a.height));
-    };
-    synka();
-    const ro = new ResizeObserver(synka);
-    ro.observe(rot);
-    const id = window.setInterval(synka, 500);
-    return () => {
-      ro.disconnect();
-      window.clearInterval(id);
-    };
-  }, []);
 
-  const visaOnskaHjalp = Boolean(onskan && (onskaOpp || !onskaSyns));
-  const onskaDjur =
-    visaOnskaHjalp && onskan
-      ? (ang.find((a) => a.uid === onskan.uid) ?? hemma.find((h) => h.spec.uid === onskan.uid)?.spec)
-      : undefined;
-  const andrar = Boolean(visaOnskaHjalp && onskan?.kalla === "djur" && onskaDjur);
-  const vaknaText = gavaTill
-    ? TEXTER_AV.gavoruta.knapp
-    : varld === "gard" && !omrade
-      ? TEXTER.penna_bygg.knapp
-      : andrar && onskaDjur
-        ? onskan?.typ === "kompis"
-          ? FIR.onskan.kompis
-          : fyll(FIR.onskan.andra, { djur: bestamdAv(onskaDjur.kropp, false) })
-        : "Vakna!";
-  const onskaEx = onskan ? exempelFor(onskan) : [];
-  const onskaKort = visaOnskaHjalp ? kortForExempel(onskaEx, allaOrd) : [];
-  const onskaIds = new Set(onskaKort.map((o) => o.id));
-  const i3d = typeof document !== "undefined" && !!document.querySelector("[data-testid='angen-3d']");
-  const ank = i3d
-    ? {
-        x: 0.7,
-        y: 0.3,
-        vanster: true,
-      }
-    : onskaAnkare(onskaPos.x, onskaPos.y);
-  const kort = allaOrd
-    .filter((o) => o.niva === "kort" && o.klass === flik)
-    .slice()
-    .sort((a, b) => Number(onskaIds.has(b.id)) - Number(onskaIds.has(a.id)));
-  const hemliga = allaOrd.filter((o) => o.niva === "fritt");
-  const kvar = hemligaKvar(funna);
-  const hittade = allaOrd.filter((o) => funna[o.id]);
-  const boBygge = garden.find((b) => b.uid === boUid);
-  const boHem = boBygge ? byggMedId(boBygge.bygg) : undefined;
-  const boDjur = boHem?.hem ? ang.filter((a) => boHem.hem!.kroppar.includes(a.kropp)) : [];
-  const menyBygge = garden.find((b) => b.uid === meny?.uid);
-  const menyHem = menyBygge ? byggMedId(menyBygge.bygg)?.hem : null;
-  const visa3d = varld === "ang" && !omrade && !kartaOpp;
-  const agdaSidor = BYGGSIDOR.sidor.filter((s) => byggSidor.includes(s.id));
-  const lastaSidor = BYGGSIDOR.sidor.filter((s) => s.kostnad > 0 && !byggSidor.includes(s.id));
-  const byggSida = agdaSidor.find((s) => s.id === byggSidaId) ?? agdaSidor[0] ?? BYGGSIDOR.sidor[0]!;
 
-  function stallKanin() {
-    const s = useMinne.getState();
-    if (s.ang.length || s.hemma.length) return;
-    const u = tolka("en rosa kanin", { kalla: "kort" });
-    if (u.typ !== "skapad") return;
-    const { nya } = useMinne.getState().laggPaAng(u.varelse, 1);
-    const n = nya[0];
-    if (n) komIhagDjur(n);
-  }
 
   return (
     <main className="spel" onPointerDown={() => ljud.lasOpp()}>
