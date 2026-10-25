@@ -5,6 +5,11 @@
 import { useMinne } from "./minne.ts";
 import { DYNAMISK, RESERV, normalisera, rostPlan, type RostDel } from "./rostManifest.ts";
 
+function rostPa(): boolean {
+  const s = useMinne.getState();
+  return (s.rostPa ?? true) && s.ljudPa;
+}
+
 type Logg = {
   text: string;
   fil: string | null;
@@ -88,7 +93,7 @@ function nasta() {
   const rad = ko.shift();
   if (rad === undefined) return;
   const text = rad.text;
-  if (!useMinne.getState().ljudPa) {
+  if (!rostPa()) {
     ko.length = 0;
     return;
   }
@@ -179,13 +184,16 @@ export function sag(text: string, enGang?: string, forst = false) {
   if (!lyssnar) {
     lyssnar = true;
     useMinne.subscribe((s, f) => {
-      if (f.ljudPa && !s.ljudPa) {
+      const fore = (f.rostPa ?? true) && f.ljudPa;
+      const nuPa = (s.rostPa ?? true) && s.ljudPa;
+      if (fore && !nuPa) {
         stoppa();
+        ko.length = 0;
         klocka.utanRost(); // ljudet av: bannern står den vanliga tiden
       }
     });
   }
-  if (!useMinne.getState().ljudPa) return;
+  if (!rostPa()) return;
   if (enGang) {
     if (engang.has(enGang)) return;
     engang.add(enGang);
@@ -218,7 +226,7 @@ export function lasbarTid(text: string): number {
  *  läsa medan rösten läser och bannern aldrig försvinner mitt i repliken. */
 export function bannerTid(text: string, bas: number): number {
   const las = Math.max(bas, lasbarTid(text));
-  if (typeof window === "undefined" || !useMinne.getState().ljudPa) return las;
+  if (typeof window === "undefined" || !rostPa()) return las;
   const ms = lasTid(text);
   return ms > 0 ? Math.max(las, ms + 1500) : las;
 }
@@ -266,7 +274,7 @@ const klocka = {
   },
 };
 function bannerTidMs(k: Klocka) {
-  return k.ms > 0 && useMinne.getState().ljudPa ? Math.max(k.las, k.ms + EFTER_ROST_MS) : k.las;
+  return k.ms > 0 && rostPa() ? Math.max(k.las, k.ms + EFTER_ROST_MS) : k.las;
 }
 
 /** TTS-3: startar bannerns klocka och anropar stang() när bannern ska gå. Returnerar ett timer-id (för clearTimeout i
@@ -275,7 +283,7 @@ export function bannerKlocka(text: string, bas: number, stang: () => void): numb
   klocka.slapp();
   const t = normalisera(text);
   const k: Klocka = { text: t, las: Math.max(bas, lasbarTid(t)), ms: lasTid(t), t0: performance.now(), start: null, timer: 0, stang };
-  if (typeof window === "undefined" || !useMinne.getState().ljudPa || k.ms === 0) {
+  if (typeof window === "undefined" || !rostPa() || k.ms === 0) {
     k.timer = window.setTimeout(stang, k.las);
     return k.timer;
   }

@@ -1,6 +1,8 @@
 // P1: barnets svarsyta i boken – "Menade du …?" och "Pennan behöver …". Ligger UTANFÖR bokens skrollyta (bok-mitt),
 // direkt ovanför skrivrutan, så att knapparna alltid syns hela och aldrig hamnar under rutan (granskningen 1.2, K4).
 import type { ForslagKort } from "@/tolk/typer.ts";
+import lasningJson from "../../../data/lasning.json" with { type: "json" };
+import * as rostKo from "../rostKo.ts";
 import type { Forslag } from "./typer.ts";
 import "./bok-p1.css";
 
@@ -19,6 +21,15 @@ export function BokSvar({ forslag, valjForslag, nejForslag, behover, utfor }: Pr
       {forslag ? (
         <div className="forslag" data-testid="forslag">
           <p>{forslag.text}</p>
+          <button
+            type="button"
+            className="lyssna-knapp"
+            data-p4="lyssna-forslag"
+            aria-label={lasningJson.lyssna.aria_forslag}
+            onClick={() => rostKo.lasUpp(`${forslag.text} ${forslag.forslag.map((f) => f.visa).join(", ")}`)}
+          >
+            🔊 {lasningJson.lyssna.knapp}
+          </button>
           <div className="rad-kort">
             {forslag.forslag.map((f) => (
               <button key={f.id} type="button" className="kort" data-testid={`forslag-${f.id}`} onClick={() => valjForslag(f)}>
@@ -33,6 +44,15 @@ export function BokSvar({ forslag, valjForslag, nejForslag, behover, utfor }: Pr
       ) : behover ? (
         <div className="behover" data-testid="behover">
           <p>{behover.text}</p>
+          <button
+            type="button"
+            className="lyssna-knapp"
+            data-p4="lyssna-onska"
+            aria-label={lasningJson.lyssna.aria_onska}
+            onClick={() => rostKo.lasUpp(behover.text)}
+          >
+            🔊 {lasningJson.lyssna.knapp}
+          </button>
           <div className="rad-kort">
             {behover.djur.map((d) => (
               <button key={d.id} type="button" className="kort" data-testid={`prova-${d.id}`} onClick={() => utfor(d.id, { hand: false })}>

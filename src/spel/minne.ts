@@ -1,13 +1,15 @@
-import { lasLokalt, skrivLokalt, normalisera, objekt, arDjur, arBygge, markeraSkadad, tillatSkrivning } from "./lagring.ts";
+import { normalisera, tillatSkrivning } from "./lagring.ts";
 import { create } from "zustand";
 import type { Varelse } from "../tolk/typer.ts";
 import { byggMedId } from "../tolk/byggtolk.ts";
 import { brygga, type Sparad } from "./brygga.ts";
 import type { SparatBygge } from "./bygge.ts";
 import { BYGG } from "../tolk/byggtolk.ts";
-import { START_PLATS, TAK_PER_PLATS, laggMedTak, mattUr, platsMed, upplast } from "./platser.ts";
+import { START_PLATS, TAK_PER_PLATS, mattUr, upplast } from "./platser.ts";
 import { hamtaFranStall, flyttaTillStall, type StallUt } from "./stall.ts";
-import { somnaEn } from "./placering.ts";
+import { arData, franSparning, kallaHitSpar, laggPaAngSpar, lasIn, spara, tom } from "./minneSparning.ts";
+
+export { franSparning };
 
 
 export type Lage = "kort" | "skriv";
@@ -33,6 +35,8 @@ export type Data = {
   ang: Sparad[];
   stjarnor: number;
   ljudPa: boolean;
+  rostPa: boolean;
+  effektPa: boolean;
   koptaSidor: string[];
   byggSidor: string[];
   snart: Record<string, string[]>;
@@ -83,7 +87,7 @@ export type Data = {
   gataId: string | null;
 };
 
-type Minne = Data & {
+export type Store = Data & {
   registrera: (ids: string[], guld: string[]) => void;
   sparaOkanda: (ord: string[]) => void;
   laggPaAng: (v: Varelse, antal: number) => { nya: Sparad[]; somnade: Sparad[] };
@@ -106,6 +110,8 @@ type Minne = Data & {
   settOnska: (id: string) => void;
   markeraSida: (id: string) => void;
   sattLjud: (pa: boolean) => void;
+  sattRost: (pa: boolean) => void;
+  sattEffekt: (pa: boolean) => void;
   sattIntro: () => void;
   sattTittat: () => void;
   sattForsta: () => void;
@@ -132,195 +138,8 @@ type Minne = Data & {
   sattGataId: (id: string | null) => void;
 };
 
-function tom(): Data {
-  return {
-    version: 2,
-    startLage: "skriv",
-    startLageVald: false,
-    funna: {},
-    kortGang: {},
-    onskelista: [],
-    sovande: [],
-    formler: [],
-    ang: [],
-    stjarnor: 0,
-    ljudPa: true,
-    koptaSidor: [],
-    byggSidor: ["start"],
-    snart: {},
-    garden: [],
-    lada: [],
-    hemma: [],
-    onskan: null,
-    seddOnska: [],
-    sidaKlar: [],
-    forstaGard: true,
-    onskaVid: 0,
-    oppna: [],
-    foljeUid: null,
-    hjartan: {},
-    van: [],
-    uppdrag: {},
-    fyr: false,
-    forstaKarta: true,
-    klarOmraden: [],
-    dygnMs: 0,
-    liv: {},
-    albumKropp: {},
-    foton: [],
-    seddaNiva: [],
-    mossaLista: [],
-    mossaDag: 0,
-    mossaExtra: false,
-    mossaRakn: { onskan: 0, hemligt: 0, guld: 0 },
-    ordFrek: {},
-    onskanAntal: 0,
-    egnaDjur: 0,
-    skatterHitta: [],
-    byggda: [],
-    introSedd: false,
-    dragit: false,
-    plats: START_PLATS,
-    platsSkapelser: {},
-    oppnadePlatser: [],
-    seddaIntro: [],
-    stall: [],
-    gataId: null,
-  };
-}
-
-function las(): Data {
-  if (typeof window === "undefined") return tom();
-  try {
-    return franSparning(lasLokalt(() => window.localStorage));
-  } catch {
-    return tom();
-  }
-}
-
-/** B1.3a: sparning → Data (ren, testbar). Saknade fält får standardvärden; sparversionen är oförändrad. */
-export function franSparning(raw: unknown): Data {
-  try {
-    const bas = tom();
-    const normalized = normalisera(raw, bas);
-    if (!normalized || !arData({ ...normalized, version: 2 })) {
-      if (raw !== null) markeraSkadad();
-      return bas;
-    }
-    const p = normalized as unknown as Record<string, unknown>;
-    const byggSidor = Array.isArray(p.byggSidor) ? (p.byggSidor as string[]) : [];
-    return {
-      ...bas,
-      ...(p as Partial<Data>),
-      version: 2,
-      byggSidor: byggSidor.length ? byggSidor : ["start"],
-      startLage: p.startLageVald === true && p.startLage === "kort" ? "kort" : "skriv",
-      ljudPa: p.ljudPa !== false,
-      stjarnor: typeof p.stjarnor === "number" ? p.stjarnor : 0,
-      oppna: Array.isArray(p.oppna) ? (p.oppna as string[]) : [],
-      foljeUid: typeof p.foljeUid === "string" ? p.foljeUid : null,
-      hjartan: p.hjartan && typeof p.hjartan === "object" ? (p.hjartan as Record<string, number>) : {},
-      van: Array.isArray(p.van) ? (p.van as string[]) : [],
-      uppdrag: p.uppdrag && typeof p.uppdrag === "object" ? (p.uppdrag as Record<string, "pagar" | "klar">) : {},
-      fyr: p.fyr === true,
-      forstaKarta: p.forstaKarta !== false,
-      klarOmraden: Array.isArray(p.klarOmraden) ? (p.klarOmraden as string[]) : [],
-      dygnMs: typeof p.dygnMs === "number" ? p.dygnMs : 0,
-      liv: p.liv && typeof p.liv === "object" ? (p.liv as Data["liv"]) : {},
-      albumKropp: p.albumKropp && typeof p.albumKropp === "object" ? (p.albumKropp as Data["albumKropp"]) : {},
-      foton: Array.isArray(p.foton) ? (p.foton as Data["foton"]) : [],
-      seddaNiva: Array.isArray(p.seddaNiva) ? (p.seddaNiva as string[]) : [],
-      mossaLista: Array.isArray(p.mossaLista) ? (p.mossaLista as Data["mossaLista"]) : [],
-      mossaDag: typeof p.mossaDag === "number" ? p.mossaDag : 0,
-      mossaExtra: p.mossaExtra === true,
-      mossaRakn:
-        p.mossaRakn && typeof p.mossaRakn === "object"
-          ? (p.mossaRakn as Data["mossaRakn"])
-          : { onskan: 0, hemligt: 0, guld: 0 },
-      ordFrek: p.ordFrek && typeof p.ordFrek === "object" ? (p.ordFrek as Record<string, number>) : {},
-      onskanAntal: typeof p.onskanAntal === "number" ? p.onskanAntal : 0,
-      // äldre sparningar: introts två djur (kanin, katt) räknas bort ur albumet
-      egnaDjur: objekt(raw) && typeof raw.egnaDjur === "number" ? raw.egnaDjur : Math.max(0, Object.keys(p.albumKropp && typeof p.albumKropp === "object" ? p.albumKropp : {}).length - 2),
-      skatterHitta: Array.isArray(p.skatterHitta) ? (p.skatterHitta as string[]) : [],
-      byggda: Array.isArray(p.byggda) ? (p.byggda as string[]) : [],
-      introSedd: p.introSedd === true,
-      dragit: p.dragit === true,
-      plats: typeof p.plats === "string" && p.plats ? p.plats : START_PLATS,
-      platsSkapelser: objekt(p.platsSkapelser) ? (p.platsSkapelser as Data["platsSkapelser"]) : {},
-      oppnadePlatser: Array.isArray(p.oppnadePlatser) ? (p.oppnadePlatser as string[]).filter((x) => typeof x === "string") : [],
-      seddaIntro: Array.isArray(p.seddaIntro) ? (p.seddaIntro as string[]).filter((x) => typeof x === "string") : [],
-      stall: Array.isArray(p.stall) ? (p.stall as Sparad[]).filter(arDjur) : [],
-      gataId: typeof p.gataId === "string" && p.gataId ? p.gataId : null,
-    };
-  } catch {
-    return tom();
-  }
-}
-
-function spara(d: Data) {
-  if (typeof window === "undefined") return;
-  const {
-    registrera: _a,
-    sparaOkanda: _b,
-    laggPaAng: _c,
-    kallaHit: _d,
-    sparaFormel: _e,
-    anvandKort: _f,
-    sattStart: _g,
-    aterstall: _h,
-    geStjarnor: _i,
-    kopSida: _j,
-    kopBygg: _k,
-    laggByggen: _l,
-    flyttaBygge: _m,
-    bytBygge: _n,
-    tillLada: _o,
-    franLada: _p,
-    flyttaIn: _q,
-    uppdateraDjur: _r,
-    sattOnska: _s,
-    settOnska: _t,
-    markeraSida: _u,
-    sattLjud: _v,
-    sattForsta: _w,
-    noteraOnska: _x,
-    sparaSnart: _z,
-    importera: _y,
-    oppnaOmrade: _aa,
-    sattFolje: _ab,
-    raknaHjarta: _ac,
-    markeraVan: _ad,
-    sattUppdrag: _ae,
-    sattFyrPa: _af,
-    settKarta: _ag,
-    markeraOmradeKlar: _ah,
-    laggSkatt: _ai,
-    sattIntro: _aj,
-    sattTittat: _ak,
-    bytPlats: _al,
-    markeraIntro: _am,
-    tillStall: _an,
-    franStall: _ao,
-    sattGataId: _ap,
-    ...data
-  } = d as Data & Record<string, unknown>;
-  skrivLokalt(() => window.localStorage, { ...data, version: 2 });
-}
-
-function arData(v: unknown): v is Partial<Data> {
-  if (!objekt(v) || !normalisera(v, tom())) return false;
-  if (v.startLage !== undefined && v.startLage !== "kort" && v.startLage !== "skriv") return false;
-  for (const k of ["ang", "sovande", "stall"]) if (v[k] !== undefined && (!Array.isArray(v[k]) || !(v[k] as unknown[]).every(arDjur))) return false;
-  for (const k of ["garden", "lada"]) if (v[k] !== undefined && (!Array.isArray(v[k]) || !(v[k] as unknown[]).every(arBygge))) return false;
-  if (v.hemma !== undefined && (!Array.isArray(v.hemma) || !v.hemma.every(x => objekt(x) && arDjur(x.spec) && typeof x.hem === "string"))) return false;
-  if (v.platsSkapelser !== undefined && (!objekt(v.platsSkapelser) || !Object.values(v.platsSkapelser).every((l) => Array.isArray(l) && l.every(arDjur)))) return false;
-  if (v.formler !== undefined && (!Array.isArray(v.formler) || !v.formler.every(x => objekt(x) && arDjur(x.spec) && typeof x.text === "string"))) return false;
-  // Import måste ha verkligt sparinnehåll, inte bara ett versionsnummer.
-  return Array.isArray(v.ang) && Array.isArray(v.garden) && typeof v.stjarnor === "number" && Number.isFinite(v.stjarnor);
-}
-
-export const useMinne = create<Minne>((set, get) => ({
-  ...las(),
+export const useMinne = create<Store>((set, get) => ({
+  ...lasIn(),
   registrera: (ids, guldIds) => {
     const funna = { ...get().funna };
     const guld = new Set(guldIds);
@@ -339,81 +158,17 @@ export const useMinne = create<Minne>((set, get) => ({
     set({ onskelista: next.slice(-80) });
   },
   laggPaAng: (v, antal) => {
-    const plats = get().plats;
-    if (plats !== START_PLATS) {
-      // B1.3a: på andra platser sparas skapelsen per plats, samma tak; ängen (`ang`) rörs inte.
-      const nyaP: Sparad[] = Array.from({ length: antal }, (_, i) => ({ ...v, uid: crypto.randomUUID(), skapad: Date.now() + i }));
-      const r = laggMedTak(get().platsSkapelser[plats] ?? [], get().sovande, nyaP);
-      // P3a-fix (beslut B): högst en somnar per ord – den äldsta utan ledig ruta, ur den nyas budget (aldrig den nya)
-      const nyaU = new Set(nyaP.map((n) => n.uid));
-      // Högst en väg söver per ord. Har taket redan sövt en, sover ingen mer.
-      if (r.somnade.length === 0) {
-        const old = somnaEn(r.lista, nyaU, platsMed(plats));
-        if (old) {
-          r.lista = r.lista.filter((d) => d.uid !== old.uid);
-          r.sovande = [...r.sovande, old].slice(-40);
-          r.somnade.push(old);
-        }
-      }
-      set({ platsSkapelser: { ...get().platsSkapelser, [plats]: r.lista }, sovande: r.sovande });
-      return { nya: nyaP, somnade: r.somnade };
-    }
-    const nya: Sparad[] = [];
-    const somnade: Sparad[] = [];
-    let ang = [...get().ang];
-    let sovande = [...get().sovande];
-    for (let i = 0; i < antal; i++) {
-      while (ang.length >= TAK_PER_PLATS) {
-        const old = ang.shift();
-        if (!old) break;
-        sovande = [...sovande, old].slice(-40);
-        somnade.push(old);
-      }
-      const sparad: Sparad = { ...v, uid: crypto.randomUUID(), skapad: Date.now() + i };
-      ang = [...ang, sparad];
-      nya.push(sparad);
-    }
-    // P3a-fix: samma regel på ängen
-    const nyaU = new Set(nya.map((d) => d.uid));
-    // Högst en väg söver per ord. Har taket redan sövt en, sover ingen mer.
-    if (somnade.length === 0) {
-      const old = somnaEn(ang, nyaU, platsMed(START_PLATS));
-      if (old) {
-        ang = ang.filter((d) => d.uid !== old.uid);
-        sovande = [...sovande, old].slice(-40);
-        somnade.push(old);
-      }
-    }
-    set({ ang, sovande });
-    return { nya, somnade };
+    const { patch, resultat } = laggPaAngSpar(get(), v, antal);
+    set(patch);
+    return resultat;
   },
   kallaHit: (uid) => {
-    const hittad = get().sovande.find((s) => s.uid === uid);
-    if (!hittad) return null;
-    let ang = [...get().ang];
-    let sovande = get().sovande.filter((s) => s.uid !== uid);
-    let somnad: Sparad | null = null;
-    if (ang.length >= TAK_PER_PLATS) {
-      const old = ang.shift();
-      if (old) {
-        sovande = [...sovande, old];
-        somnad = old;
-      }
-    }
-    ang = [...ang, { ...hittad, skapad: Date.now() }];
-    // P3a: fick någon annan ingen ledig ruta somnar den (den äldsta), aldrig den som kallas hit
-    if (!somnad) {
-      const old = somnaEn(ang, new Set([hittad.uid]), platsMed(START_PLATS));
-      if (old) {
-        ang = ang.filter((d) => d !== old);
-        sovande = [...sovande, old];
-        somnad = old;
-      }
-    }
-    set({ ang, sovande });
-    if (somnad) brygga.taBort(somnad.uid);
-    brygga.skapa(ang[ang.length - 1]!);
-    return somnad;
+    const r = kallaHitSpar(get(), uid);
+    if (!r) return null;
+    set(r.patch);
+    if (r.somnad) brygga.taBort(r.somnad.uid);
+    brygga.skapa(r.visad);
+    return r.somnad;
   },
   sparaFormel: (spec) => {
     if (get().formler.some((f) => f.text === spec.formel)) return;
@@ -535,7 +290,9 @@ export const useMinne = create<Minne>((set, get) => ({
     if (get().sidaKlar.includes(id)) return;
     set({ sidaKlar: [...get().sidaKlar, id] });
   },
-  sattLjud: (pa) => set({ ljudPa: pa }),
+  sattLjud: (pa) => set({ ljudPa: pa, rostPa: pa, effektPa: pa }),
+  sattRost: (pa) => set((s) => ({ rostPa: pa, ljudPa: pa || s.effektPa })),
+  sattEffekt: (pa) => set((s) => ({ effektPa: pa, ljudPa: pa || s.rostPa })),
   sattIntro: () => set({ introSedd: true }),
   sattTittat: () => {
     if (get().dragit) return;

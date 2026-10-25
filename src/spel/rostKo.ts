@@ -1,63 +1,13 @@
 // R1: en kö för all röst. Takten ligger i data/rost-takt.json. Spelaren (ljud + logg) bor i rost.ts.
-import data from "../../data/rost-takt.json" with { type: "json" };
 import { useMinne } from "./minne.ts";
-import { normalisera } from "./rostManifest.ts";
 import { spelaUpp } from "./rost.ts";
+import {
+  DATA_TAKT, TAKT, bastForeMs, fore, kanStarta, klassAv, klassData, loggaRost, normaliseraNyckel, sammaMeningsfullhet,
+  type Anmalan, type BannerSlag, type Kalla, type Klocka, type Klass, type Meta, type Rad, type Spelare, type StartLage,
+} from "./rostKoRegler.ts";
 
-const DATA_TAKT = {
-  oombedd_mellan_ms: data.takt.oombedd_mellan_ms,
-  vanta_pa_svar_ms: data.takt.vanta_pa_svar_ms,
-  dubblett_ms: data.takt.dubblett_ms,
-  ko_tak: data.takt.ko_tak,
-};
-
-export const TAKT = {
-  version: data.version,
-  _om: data._om,
-  takt: { ...DATA_TAKT },
-  klasser: data.klasser,
-  kallor: data.kallor,
-};
-
-export type Kalla = keyof typeof TAKT.kallor;
-export type Klass = keyof typeof TAKT.klasser;
-export type BannerSlag = "ovr" | "okand" | "sparr" | "sov";
-export type Rad = {
-  id: number;
-  text: string;
-  kalla: Kalla;
-  klass: Klass;
-  nyckel?: string;
-  banner?: { slag: BannerSlag; ms?: number };
-  fodd: number;
-  handling: number;
-  las_ms?: number;
-};
-
-type KlassData = {
-  prio: number;
-  oombedd: boolean;
-  baste_fore_ms: number;
-  tak: number;
-  avbryter?: readonly string[];
-  en_per_handling?: boolean;
-  ordning?: readonly string[];
-  tak_per_kalla?: number;
-  forst_efter_handling?: boolean;
-  tom_tid_ms?: number;
-  tyst_fore_ms?: number;
-  inte_forsta_ms?: number;
-};
-
+export { TAKT, type Anmalan, type BannerSlag, type Kalla, type Klocka, type Klass, type Rad, type Spelare };
 type BannerLyssnare = (b: { id: number; text: string; slag: BannerSlag; ms?: number } | null) => void;
-type Klocka = {
-  nu: () => number;
-  senare: (ms: number, fn: () => void) => number;
-  avbrytSenare: (id: number) => void;
-};
-type Meta = { klass: string; kalla: string; fodd: number };
-type Spelare = (text: string, meta: Meta, las_ms: number | undefined, klar: () => void) => { avbryt: () => void };
-
 const MARGINAL_MS = 15;
 
 let inj: (Klocka & { spela: Spelare }) | null = null;
@@ -111,85 +61,42 @@ function avbrytSenare(id: number) {
   }
 }
 
-function klassData(klass: Klass): KlassData {
-  return TAKT.klasser[klass] as KlassData;
-}
-
-function norm(text: string): string {
-  return normalisera(text);
-}
-
-function logga(rad: { text: string; klass: Klass; kalla: Kalla; fodd: number }, satt: "struken" | "avbruten") {
-  const win = (globalThis as unknown as { window?: { __rost?: unknown[] } }).window;
-  if (!win) return;
-  (win.__rost ??= []).push({ text: rad.text, fil: null, satt, klass: rad.klass, kalla: rad.kalla, fodd: rad.fodd });
-}
-
 function meddela(b: { id: number; text: string; slag: BannerSlag; ms?: number } | null) {
   for (const f of lyssnare) f(b);
 }
 
 function ljudPa(): boolean {
-  return useMinne.getState().ljudPa;
+  const s = useMinne.getState();
+  return (s.rostPa ?? true) && s.ljudPa;
 }
 
 function strykRad(rad: Rad) {
   const i = ko.findIndex((r) => r.id === rad.id);
   if (i < 0) return;
   ko.splice(i, 1);
-  logga(rad, "struken");
-}
-
-function ordningIndex(rad: Rad): number {
-  const ord = klassData(rad.klass).ordning;
-  if (!ord) return 0;
-  const i = ord.indexOf(rad.kalla);
-  return i < 0 ? ord.length + 1 : i;
+  loggaRost(rad, "struken");
 }
 
 function basta(rader: Rad[]): Rad | null {
   if (rader.length === 0) return null;
-  return [...rader].sort((a, b) => {
-    const p = klassData(a.klass).prio - klassData(b.klass).prio;
-    if (p !== 0) return p;
-    const o = ordningIndex(a) - ordningIndex(b);
-    if (o !== 0) return o;
-    return a.fodd - b.fodd || a.id - b.id;
-  })[0]!;
+  return [...rader].sort(fore)[0]!;
 }
 
-/** Får raden starta just nu? Pågående rad avbryts bara om dess klass står i avbryter. */
-function kanStarta(rad: Rad): boolean {
-  if (!oppen) return false;
-  const k = klassData(rad.klass);
-  if (nu() - rad.fodd >= k.baste_fore_ms) return false;
-  if (rad.klass !== "svar" && senastHandlingVid !== null) {
-    const svarDenna = senastSvarHandling === handlingNr;
-    if (!svarDenna && nu() - senastHandlingVid < TAKT.takt.vanta_pa_svar_ms) return false;
-  }
-  if (k.oombedd && senastOombeddStart !== null && nu() - senastOombeddStart < TAKT.takt.oombedd_mellan_ms) return false;
-  if (k.tyst_fore_ms !== undefined) {
-    if (spelar) return false;
-    if (tystSedan === null || nu() - tystSedan < k.tyst_fore_ms) return false;
-  }
-  if (rad.klass === "guide") {
-    const handlingOk = senastHandlingVid !== null && (senastGuideStart === null || senastHandlingVid > senastGuideStart);
-    const tystTid = Math.max(oppnaVid ?? -Infinity, senastHandlingVid ?? -Infinity, senastGuideStart ?? -Infinity);
-    const tomOk = oppnaVid !== null && k.tom_tid_ms !== undefined && nu() - tystTid >= k.tom_tid_ms;
-    if (!handlingOk && !tomOk) return false;
-  }
-  if (rad.klass === "info" && k.forst_efter_handling && senastHandlingVid === null) return false;
-  if (spelar) {
-    const av = k.avbryter ?? [];
-    if (!av.includes(spelar.rad.klass)) return false;
-  }
-  return true;
+function startLage(): StartLage {
+  return {
+    oppen, nu: nu(), senastHandlingVid, senastSvarHandling, handlingNr, senastOombeddStart,
+    spelar: spelar !== null, spelarKlass: spelar?.rad.klass ?? null, tystSedan, oppnaVid, senastGuideStart,
+  };
+}
+
+function startbar(rad: Rad): boolean {
+  return kanStarta(rad, startLage());
 }
 
 function markeraStart(rad: Rad) {
   const t = nu();
   if (rad.nyckel) nyckelBrand.add(rad.nyckel);
-  senastStart.set(norm(rad.text), t);
+  senastStart.set(normaliseraNyckel(rad.text), t);
   if (klassData(rad.klass).oombedd) senastOombeddStart = t;
   if (rad.klass === "svar") senastSvarHandling = handlingNr;
   if (rad.klass === "guide") senastGuideStart = t;
@@ -208,7 +115,7 @@ function starta(rad: Rad) {
     const gammal = spelar;
     spelar = null;
     gammal.avbryt();
-    logga(gammal.rad, "avbruten");
+    loggaRost(gammal.rad, "avbruten");
   }
   markeraStart(rad);
   if (rad.banner) meddela({ id: rad.id, text: rad.text, slag: rad.banner.slag, ms: rad.banner.ms });
@@ -231,7 +138,7 @@ function starta(rad: Rad) {
 
 function rensa() {
   for (const rad of [...ko]) {
-    if (nu() - rad.fodd >= klassData(rad.klass).baste_fore_ms) strykRad(rad);
+    if (nu() - rad.fodd >= bastForeMs(rad.klass)) strykRad(rad);
   }
 }
 
@@ -277,8 +184,7 @@ function pump() {
   do {
     pumpIgen = false;
     rensa();
-    if (!oppen) break;
-    const b = basta(ko.filter((r) => kanStarta(r)));
+    const b = basta(ko.filter((r) => startbar(r)));
     if (b) starta(b);
   } while (pumpIgen);
   pumpDjup--;
@@ -286,15 +192,15 @@ function pump() {
 }
 
 function dubblett(text: string, banner: Rad["banner"]): boolean {
-  const n = norm(text);
-  if (spelar && norm(spelar.rad.text) === n) {
+  const n = normaliseraNyckel(text);
+  if (spelar && sammaMeningsfullhet(spelar.rad.text, text)) {
     if (banner && !spelar.rad.banner) {
       spelar.rad.banner = banner;
       meddela({ id: spelar.rad.id, text: spelar.rad.text, slag: banner.slag, ms: banner.ms });
     }
     return true;
   }
-  const finns = ko.find((r) => norm(r.text) === n);
+  const finns = ko.find((r) => sammaMeningsfullhet(r.text, text));
   if (finns) {
     if (banner && !finns.banner) finns.banner = banner;
     return true;
@@ -303,11 +209,11 @@ function dubblett(text: string, banner: Rad["banner"]): boolean {
   return sen !== undefined && nu() - sen < TAKT.takt.dubblett_ms;
 }
 
-export function anmal(r: { text: string; kalla: Kalla; nyckel?: string; banner?: { slag: BannerSlag; ms?: number }; las_ms?: number }): void {
+export function anmal(r: Anmalan): void {
   const text = r.text ?? "";
   if (!text.trim()) return;
   const kalla = r.kalla;
-  const klass = TAKT.kallor[kalla] as Klass;
+  const klass = klassAv(kalla);
   if (!klass) return;
   if (!ljudPa() && !r.banner) return;
   if (r.nyckel && (nyckelBrand.has(r.nyckel) || spelar?.rad.nyckel === r.nyckel || ko.some((x) => x.nyckel === r.nyckel))) return;
@@ -316,12 +222,12 @@ export function anmal(r: { text: string; kalla: Kalla; nyckel?: string; banner?:
   if (klass === "info") {
     const grans = k.inte_forsta_ms ?? 0;
     if (forstaHandlingVid === null || nu() - forstaHandlingVid < grans) {
-      logga(stub, "struken");
+      loggaRost(stub, "struken");
       return;
     }
   }
-  if (dubblett(text, r.banner)) {
-    logga(stub, "struken");
+  if (kalla !== "las_upp" && dubblett(text, r.banner)) {
+    loggaRost(stub, "struken");
     return;
   }
   const rad: Rad = {
@@ -337,7 +243,7 @@ export function anmal(r: { text: string; kalla: Kalla; nyckel?: string; banner?:
   };
   if (k.en_per_handling) {
     if (belonungStartad.has(handlingNr)) {
-      logga(rad, "struken");
+      loggaRost(rad, "struken");
       return;
     }
     const finns = ko.find((x) => x.klass === "belonung" && x.handling === handlingNr);
@@ -348,7 +254,7 @@ export function anmal(r: { text: string; kalla: Kalla; nyckel?: string; banner?:
       const nyBattre = ny !== -1 && (gam === -1 || ny < gam);
       if (nyBattre) strykRad(finns);
       else {
-        logga(rad, "struken");
+        loggaRost(rad, "struken");
         return;
       }
     }
@@ -356,13 +262,34 @@ export function anmal(r: { text: string; kalla: Kalla; nyckel?: string; banner?:
   if (k.tak_per_kalla !== undefined) {
     for (const gammal of ko.filter((x) => x.kalla === kalla)) strykRad(gammal);
   }
-  const farDirekt = kanStarta(rad);
+  const farDirekt = startbar(rad);
   if (!farDirekt && (ko.filter((x) => x.klass === klass).length >= k.tak || ko.length >= TAKT.takt.ko_tak)) {
-    logga(rad, "struken");
+    loggaRost(rad, "struken");
     return;
   }
   ko.push(rad);
   pump();
+}
+
+/** P4a: direkt uppläsning när barnet själv trycker på en Lyssna-knapp. */
+export function lasUpp(text: string): void {
+  const ren = text.trim();
+  if (!ren || !ljudPa()) return;
+  const nyckel = normaliseraNyckel(ren);
+  nyckelBrand.delete(nyckel);
+  senastStart.delete(nyckel);
+  if (spelar && sammaMeningsfullhet(spelar.rad.text, ren)) {
+    const gammal = spelar;
+    spelar = null;
+    gammal.avbryt();
+    loggaRost(gammal.rad, "avbruten");
+  }
+  for (let i = ko.length - 1; i >= 0; i--) {
+    const rad = ko[i]!;
+    if (rad.nyckel === nyckel || sammaMeningsfullhet(rad.text, ren)) ko.splice(i, 1);
+  }
+  handling();
+  anmal({ text: ren, kalla: "las_upp" });
 }
 
 export function handling(): void {
@@ -405,7 +332,7 @@ export function tryck(): void {
     const rad = spelar.rad;
     spelar.avbryt();
     spelar = null;
-    logga(rad, "avbruten");
+    loggaRost(rad, "avbruten");
   }
   for (const rad of [...ko]) strykRad(rad);
   tystSedan = nu();
@@ -417,8 +344,8 @@ export function tryck(): void {
 }
 
 export function stryk(text: string): void {
-  const n = norm(text);
-  for (const rad of [...ko]) if (norm(rad.text) === n) strykRad(rad);
+  const n = normaliseraNyckel(text);
+  for (const rad of [...ko]) if (normaliseraNyckel(rad.text) === n) strykRad(rad);
   schemalagg();
 }
 

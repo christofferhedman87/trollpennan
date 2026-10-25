@@ -1,0 +1,40 @@
+{
+  "_kommentar": "P4: texter för uppläsning på tryck, nästavningshjälp ('Menade du?') och områdeskartans vägledning.",
+  "lyssna": {
+    "knapp": "Lyssna",
+    "aria_gata": "Lyssna på gåtan",
+    "aria_uppdrag": "Lyssna på uppdraget",
+    "aria_onska": "Lyssna på önskan",
+    "aria_forslag": "Lyssna på förslagen"
+  },
+  "ljud": {
+    "rost_pa": "Röst: På",
+    "rost_av": "Röst: Av",
+    "effekt_pa": "Ljudeffekter: På",
+    "effekt_av": "Ljudeffekter: Av"
+  },
+  "menade_du": {
+    "rubrik": "Menade du:",
+    "annat_ord": "Jag menade något annat",
+    "max_avstand_kort": 1,
+    "max_avstand_lang": 2,
+    "min_langd_for_2": 5,
+    "max_forslag": 3
+  },
+  "bok": {
+    "visa_ideer": "Visa idéer 💡",
+    "dolj_ideer": "Dölj idéer",
+    "visa_gata": "Visa gåtan 🔍",
+    "dolj_gata": "Dölj gåtan"
+  },
+  "karta": {
+    "rubrik": "Ut på äventyr",
+    "undertitel": "Tryck på en plats för att resa dit!",
+    "har_ar_du": "Här är du",
+    "besokt": "Besökt",
+    "ny_plats": "Ny plats!",
+    "last_rubrik": "Låst plats",
+    "framsteg_uppdrag": "{klara} av {krav} uppdrag klara i {omrade}",
+    "framsteg_skapelser": "{klara} av {krav} skapelser i {omrade}"
+  }
+}

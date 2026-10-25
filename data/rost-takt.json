@@ -17,6 +17,7 @@
     "ny_niva": "belonung", "sida_klar": "belonung", "uppdrag_klart": "belonung",
     "sov": "folj", "okand_ordbit": "folj", "overraskning": "folj", "oppnas": "folj", "uppfyll_tack": "folj", "bjud": "folj", "bengtsson_fel": "folj",
     "coach": "guide", "uppdrag": "guide", "onskan": "guide", "tryck": "guide", "gata": "guide",
-    "dygn": "info"
+    "dygn": "info",
+    "las_upp": "svar"
   }
 }

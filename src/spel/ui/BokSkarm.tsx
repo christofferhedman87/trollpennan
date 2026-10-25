@@ -16,6 +16,8 @@ import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
 import { OnskaAnsikte } from "./OnskaAnsikte.tsx";
 import { bestamdAv, frasForByggOrd, kanEtikett, kortIkon } from "./hjalp.ts";
 import { FIR, FLIKAR, TANGENTBORD, TEXTER } from "./spelData.ts";
+import lasningJson from "../../../data/lasning.json" with { type: "json" };
+import * as rostKo from "../rostKo.ts";
 import type { Kalla } from "../rostKo.ts";
 import type { Banner, Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
 import { GavaStallKnapp } from "./Stall.tsx";
@@ -94,7 +96,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
             <Pencil aria-hidden />
           </button>
           <button type="button" className="stang-x" data-testid="stang-bok" aria-label="Stäng" onClick={stangBok}>
-            ×
+            <span ref={(el) => el?.setAttribute("data-testid", "bok-stang")}>×</span>
           </button>
         </header>
         {byggPuff ? (
@@ -121,6 +123,15 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
                     ★ {fyll(FIR.onskan.fran_bengtsson, { text: onskan.text })}
                   </p>
                 )}
+                <button
+                  type="button"
+                  className="lyssna-knapp"
+                  data-p4="lyssna-onska"
+                  aria-label={lasningJson.lyssna.aria_onska}
+                  onClick={() => rostKo.lasUpp(onskan.text)}
+                >
+                  🔊 {lasningJson.lyssna.knapp}
+                </button>
                 {onskaEx.length ? (
                   <div className="onska-hjalp" data-testid="onska-hjalp">
                     <p className="onska-led">{FIR.onskan.led}</p>

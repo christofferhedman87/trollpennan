@@ -133,7 +133,7 @@ export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
   };
 
   useEffect(() => {
-    ljud.satt(useMinne.getState().ljudPa);
+    ljud.satt(useMinne.getState().effektPa && useMinne.getState().ljudPa);
     const stopp = brygga.lyssna((h) => paHandelse.current(h));
     const tick = window.setInterval(() => visaOnskaRef.current(), 1000);
     return () => {
