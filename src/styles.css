@@ -91,10 +91,6 @@ radial-gradient(circle at 28% 74%, #fff59d 0 6px, #fbc02d 7px, #0000 10px),
 radial-gradient(ellipse 34px 12px at 24% 36%, #5eaf50 0 68%, #0000 70%),
 radial-gradient(ellipse 42px 14px at 64% 30%, #4caf50 0 68%, #0000 70%),
 radial-gradient(ellipse 30px 11px at 52% 68%, #66bb6a 0 68%, #0000 70%)}
-.duk{
-touch-action:none;position:absolute;inset:0;z-index:1}
-.duk canvas{
-touch-action:none}
 .angen-3d{
 position:absolute;inset:0;z-index:1;touch-action:none}
 .angen-3d canvas{
@@ -106,10 +102,8 @@ position:absolute;top:62px;left:50%;transform:translateX(-50%);z-index:2;margin:
 position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);z-index:6;margin:0;pointer-events:none;
 background:var(--color-cream);color:var(--color-ink);font-size:1.35rem;font-weight:800;line-height:1.2;
 border-radius:18px;padding:14px 18px;box-shadow:0 6px 0 var(--color-paper-deep)}
-.ang.tred .duk{visibility:hidden}
 .ang:has(.garden-3d){background:#7ec8f2;--duk-x:0!important;--duk-y:0!important;--duk-w:1!important;--duk-h:1!important}
 .ang:has(.garden-3d)::after{display:none}
-.ang:has(.garden-3d) .duk{visibility:hidden;pointer-events:none}
 .garden-reserv{position:absolute;inset:0;display:grid;place-items:center;margin:0;padding:24px;text-align:center;font-weight:800;color:var(--color-ink)}
 .ang.tred .humor-ikon,.ang.tred .foto-knapp{display:none}
 .ang-lager{

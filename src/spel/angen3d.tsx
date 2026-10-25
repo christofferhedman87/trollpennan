@@ -2,7 +2,9 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Component, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
+import { brygga } from "./brygga.ts";
 import { useMinne } from "./minne.ts";
+import { malTillDuk } from "./ui/hjalp.ts";
 import { KenneyNatur } from "./kenneyNatur.tsx";
 import { KV, MILJO } from "./miljo.ts";
 import { HINT, SNART } from "./ang/delat.ts";
@@ -207,6 +209,28 @@ export function Angen3D({ natt, saga = false, onGrind }: { natt: number; saga?: 
       window.removeEventListener("pointermove", flytta);
       window.removeEventListener("pointerup", upp);
       window.removeEventListener("pointercancel", upp);
+    };
+  }, []);
+  useEffect(() => {
+    brygga.registrera("ang", {
+      platser: () => {
+        const s = useMinne.getState();
+        const lista = s.plats === START_PLATS ? s.ang : (s.platsSkapelser[s.plats] ?? []);
+        return lista.map((a) => {
+          const p = malTillDuk(a.uid);
+          const x = p?.x ?? 0.5;
+          const y = p?.y ?? 0.5;
+          return { uid: a.uid, x, y, topp: p ? Math.max(0.08, p.y - 0.14) : 0.45 };
+        });
+      },
+      skapa: () => undefined,
+      taBort: () => undefined,
+      puff: () => undefined,
+      tom: () => undefined,
+      visa: () => undefined,
+    });
+    return () => {
+      brygga.registrera("ang", null);
     };
   }, []);
   const onSnart = useCallback(() => {

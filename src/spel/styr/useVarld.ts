@@ -43,27 +43,7 @@ export function useVarld(k: Pick<SpelKarna, "t" | "b">) {
       fyr: s.fyr,
       on: plats === "on",
     });
-    const game = (window as unknown as {
-      __spel?: {
-        scene: {
-          sleep: (k: string) => void;
-          wake: (k: string) => void;
-          isSleeping: (k: string) => boolean;
-          isActive: (k: string) => boolean;
-          start: (k: string) => void;
-        };
-      };
-    }).__spel;
-    if (!game) return;
-    if (plats) {
-      game.scene.sleep("ang");
-      game.scene.sleep("gard");
-      if (game.scene.isSleeping("av")) game.scene.wake("av");
-      else if (!game.scene.isActive("av")) game.scene.start("av");
-    } else if (game.scene.isActive("av") || game.scene.isSleeping("av")) {
-      game.scene.sleep("av");
-      brygga.visa(varldRef.current);
-    }
+    if (!plats) brygga.visa(varldRef.current);
   }
   function oppnaKarta() {
     setPanel("spel");
