@@ -1,8 +1,8 @@
-import { arSparrat } from "@/tolk/sparr.ts";
+import { arSparrat } from "../../tolk/sparr.ts";
 import { bubblaVanster } from "./bubbla.ts";
-import { BYGG, materialMed, type ByggeTolk } from "@/tolk/byggtolk.ts";
-import { ordLista } from "@/tolk/tolka.ts";
-import type { Ord } from "@/tolk/typer.ts";
+import { BYGG, materialMed, type ByggeTolk } from "../../tolk/byggtolk.ts";
+import { ordLista } from "../../tolk/tolka.ts";
+import type { Ord } from "../../tolk/typer.ts";
 import { useMinne, type OnskaSpar } from "../minne.ts";
 import { ONSK, ONSK_BYGG } from "../onska.ts";
 import { BYGGSIDOR, FLIKAR, LED, SIDOR } from "./spelData.ts";
@@ -159,11 +159,11 @@ export function bokstav(s: string) {
   return s.replace(/[^a-zA-ZåäöÅÄÖ ]/g, "").slice(0, 80);
 }
 
-export function bytOrd(text: string, fran: string, till: string) {
+export function bytOrd(text: string, gammal: string, ny: string) {
   const delar = text.split(" ");
-  const i = delar.findIndex((d) => d.toLocaleLowerCase("sv") === fran.toLocaleLowerCase("sv"));
+  const i = delar.findIndex((w) => w.toLocaleLowerCase("sv") === gammal.toLocaleLowerCase("sv"));
   if (i < 0) return text;
-  delar[i] = till;
+  delar[i] = ny;
   return delar.join(" ");
 }
 

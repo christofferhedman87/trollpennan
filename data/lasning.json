@@ -56,6 +56,7 @@
     "dubbel_mall": "Nästan! I {mal} hörs två {bokstav}.",
     "saknas_mall": "Så nära! Det fattas bara en bokstav i {mal}.",
     "omkastad_mall": "Bra försök! Två bokstäver har bytt plats i {mal}.",
+    "ljud_mall": "Du stavade det som det låter! I '{mal}' stavas det här ljudet så här.",
     "allman_mall": "Bra försök! Titta på början av {mal}."
   }
 }
