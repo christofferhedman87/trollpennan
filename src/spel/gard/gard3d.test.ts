@@ -18,8 +18,10 @@ import {
   ledigKantPlats,
   xyTillCell,
   xyTillKant,
+  type CellPlats,
   type KantPlats,
 } from "./rutnat.ts";
+import { skapaGardVandrare, tillatnaCellerForHem, uppdateraGardVandrare } from "./vandra.ts";
 
 const ROT = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const KLAMP = { xMin: 0.06, xMax: 0.94, yMin: 0.3, yMax: 0.94 };
@@ -153,4 +155,67 @@ test("BFS hittar slutna hagar och fyra lediga kanter sluter en ruta", () => {
   );
   assert.equal(hagar.length, 1);
   assert.deepEqual(hagar[0]?.celler, [{ gx: 2, gz: 4 }]);
+});
+
+function stega(celler: CellPlats[], hageId: string | null, steg: number) {
+  let v = skapaGardVandrare(1, 10, celler, hageId, 0);
+  const besokta = new Set([`${v.cell.gx},${v.cell.gz}`]);
+  let utanfor = 0;
+  for (let i = 0; i < steg; i += 1) {
+    v = uppdateraGardVandrare(v, 0.05);
+    const nyckel = `${v.cell.gx},${v.cell.gz}`;
+    besokta.add(nyckel);
+    if (!celler.some((c) => c.gx === v.cell.gx && c.gz === v.cell.gz)) utanfor += 1;
+  }
+  return { v, besokta, utanfor };
+}
+
+const HAGE_2X2: CellPlats[] = [
+  { gx: 2, gz: 4 },
+  { gx: 3, gz: 4 },
+  { gx: 2, gz: 5 },
+  { gx: 3, gz: 5 },
+];
+
+test("djur i 2×2-hage vandrar inne i rutorna under 400 steg", () => {
+  const { v, besokta, utanfor } = stega(HAGE_2X2, "hage-1", 400);
+  assert.equal(utanfor, 0);
+  assert.ok(v.forflyttad > 1.5, `forflyttad ${v.forflyttad}`);
+  assert.ok(besokta.size >= 2, `besökte ${besokta.size}`);
+});
+
+test("L-hage kliver aldrig in i det öppna hörnet", () => {
+  const celler: CellPlats[] = [
+    { gx: 2, gz: 4 },
+    { gx: 2, gz: 5 },
+    { gx: 3, gz: 5 },
+  ];
+  const { v, utanfor } = stega(celler, "hage-l", 400);
+  assert.equal(utanfor, 0);
+  assert.equal([...stega(celler, "hage-l", 400).besokta].includes("3,4"), false);
+  assert.ok(v.forflyttad > 0.4);
+});
+
+test("staket och stall intill hagen delar hagens celler", () => {
+  const kanter: KantPlats[] = [
+    { gx: 2, gz: 4, kant: "N" },
+    { gx: 3, gz: 4, kant: "N" },
+    { gx: 2, gz: 6, kant: "N" },
+    { gx: 3, gz: 6, kant: "N" },
+    { gx: 2, gz: 4, kant: "W" },
+    { gx: 2, gz: 5, kant: "W" },
+    { gx: 4, gz: 4, kant: "W" },
+    { gx: 4, gz: 5, kant: "W" },
+  ];
+  const hagar = hittaSlutnaHagar(kanter);
+  assert.equal(hagar.length, 1);
+  const kant: KantPlats = kanter[0] ?? { gx: 2, gz: 4, kant: "N" };
+  const xy = kantTillXy(kant);
+  const staket = tillatnaCellerForHem({ uid: "101", bygg: "staket", x: xy.x, y: xy.y }, hagar, kanter);
+  assert.equal(staket.hageId, hagar[0]?.id);
+  assert.deepEqual(staket.celler, hagar[0]?.celler);
+  const stallXy = cellTillXy(1, 4);
+  const stall = tillatnaCellerForHem({ uid: "105", bygg: "stall", x: stallXy.x, y: stallXy.y }, hagar, kanter);
+  assert.equal(stall.hageId, hagar[0]?.id);
+  assert.deepEqual(stall.celler, hagar[0]?.celler);
 });

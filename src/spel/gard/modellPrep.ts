@@ -72,6 +72,14 @@ function harFarg(m: THREE.Material): m is THREE.Material & { color: THREE.Color 
   return "color" in m && m.color instanceof THREE.Color;
 }
 
+function harMetall(m: THREE.Material): m is THREE.Material & { metalness: number } {
+  return "metalness" in m && typeof m.metalness === "number";
+}
+
+function harYta(m: THREE.Material): m is THREE.Material & { roughness: number } {
+  return "roughness" in m && typeof m.roughness === "number";
+}
+
 /** Egen materialkopia, mjukt dragen mot `hex` när en färg finns. Geometrin delas med cachen. */
 export function egnaMaterial(rot: THREE.Object3D, hex: string | null): void {
   if (hex) MAL.set(hex);
@@ -82,6 +90,8 @@ export function egnaMaterial(rot: THREE.Object3D, hex: string | null): void {
       const k = m.clone();
       k.userData = { ...m.userData, egenKopia: true };
       if (hex && harFarg(k)) k.color.lerp(MAL, 0.42);
+      if (harMetall(k)) k.metalness = Math.min(k.metalness, 0.15);
+      if (harYta(k)) k.roughness = Math.max(k.roughness, 0.65);
       return k;
     });
     const forsta = nya[0];
