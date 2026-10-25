@@ -1,11 +1,12 @@
 import lasningJson from "../../data/lasning.json" with { type: "json" };
 import ledtradarJson from "../../data/ledtradar.json" with { type: "json" };
+import { ljudStam } from "../tolk/avstand.ts";
 import { gatUrval } from "./gata.ts";
 import { fyll } from "./fyll.ts";
 
 export type Lasniva = 1 | 2 | 3;
 export type LasnivaVal = "auto" | Lasniva;
-export type StavningsTyp = "dubbel" | "saknas" | "omkastad" | "allman";
+export type StavningsTyp = "dubbel" | "saknas" | "omkastad" | "ljud" | "allman";
 export type StavningsFeedback = {
   nara: boolean;
   typ: StavningsTyp;
@@ -84,7 +85,8 @@ export function ledtradsSteg(id: string, steg: 0 | 1 | 2): { streck: string; syn
     if (latt) extraText = latt;
     else {
       const delar = delaStavelser(k);
-      extraText = fyll(lasningJson.ledtrad.stavelser_mall, { antal: delar.length, delar: delar.join(" – ") });
+      const maskerade = delar.map((d, i) => (i === delar.length - 1 ? "_".repeat(d.length) : d)).join(" – ");
+      extraText = fyll(lasningJson.ledtrad.stavelser_mall, { antal: delar.length, delar: maskerade });
     }
   }
   const ljud = bok.slice(0, Math.min(4, synliga)).join(" – ");
@@ -141,6 +143,10 @@ export function stavningsFeedback(skrivet: string, mal: string): StavningsFeedba
   const resten = s.slice(rattPrefix.length);
   if (DUBBEL_RE.test(m) && m.replace(/([bcdfghjklmnpqrstvwxz])\1/gi, "$1") === s) {
     return svar("dubbel", rattPrefix, resten, fyll(lasningJson.stavning.dubbel_mall, { bokstav: (m.match(DUBBEL_RE)?.[1] ?? "").toUpperCase(), mal: m }));
+  }
+  if (s !== m && ljudStam(s) === ljudStam(m)) {
+    const ljudMall = lasningJson.stavning.ljud_mall ?? lasningJson.stavning.allman_mall;
+    return svar("ljud", "", resten, fyll(ljudMall, { mal: m, ratt: rattPrefix || m[0] || "" }));
   }
   if (m.length === s.length + 1 && kanTaBortEn(m, s)) return svar("saknas", rattPrefix, resten, fyll(lasningJson.stavning.saknas_mall, { mal: m }));
   if (m.length === s.length && arOmkastad(s, m)) return svar("omkastad", rattPrefix, resten, fyll(lasningJson.stavning.omkastad_mall, { mal: m }));

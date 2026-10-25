@@ -41,7 +41,7 @@ type BokSkarmProps = {
 
 export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop, setPanel }: BokSkarmProps) {
   const [skaparVy, setSkaparVy] = useState<"skriv" | "gata" | "ideer">("skriv");
-  const [visaTgb, setVisaTgb] = useState(false);
+  const [versaler, setVersaler] = useState(false);
   const aktivtUpp = panel === "uppdrag" ? (aktivtSkrivUppdrag(uppdragSpar, platsNu()) ?? nastaSkrivUppdrag(uppdragSpar, platsNu(), false)) : undefined;
   const uppRader = ALLA_UPPDRAG.filter((u) => (uppFlik === "klar" ? uppdragSpar[u.id] === "klar" : uppdragSpar[u.id] === "pagar" && u.id !== aktivtUpp?.id));
   return (
@@ -59,7 +59,10 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
             className="ord-input-ankare"
             aria-label="Skriv ord"
             value={text}
-            onChange={(e) => fyllExempel(e.target.value)}
+            onChange={(e) => {
+              setForslag(null);
+              fyllExempel(e.target.value);
+            }}
             ref={(el) => el?.setAttribute("data-testid", "ord-input")}
           />
           <button
@@ -69,7 +72,6 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
             data-testid="pennan"
             onClick={() => {
               setSkaparVy("skriv");
-              setVisaTgb((v) => !v);
               setLage((l) => (l === "skriv" ? "kort" : "skriv"));
               setForslag(null);
             }}
@@ -225,7 +227,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
               data-testid="remsa"
               role="textbox"
               aria-label="Skrivrutan"
-              onClick={() => { setVisaTgb(true); if (lage !== "skriv") setLage("skriv"); }}
+              onClick={() => { if (lage !== "skriv") setLage("skriv"); }}
             >
               {text ? (
                 text
@@ -244,10 +246,15 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
               <span ref={(el) => el?.setAttribute("data-testid", "vack-knapp")}>{vaknaText}</span>
             </button>
             </div>
-            {visaTgb && lage === "skriv" && !forslag && !behover ? (
+            {lage === "skriv" ? (
               <div className="tangenter" data-testid="tangentbord">
-                {TANGENTBORD.rader.map((rad) => (
+                {TANGENTBORD.rader.map((rad, radIdx) => (
                   <div className="rad" key={rad.join("")}>
+                    {radIdx === 2 ? (
+                      <button type="button" className="tangent skift" data-v5="skift-knapp" aria-pressed={versaler} onClick={() => setVersaler((v) => !v)}>
+                        {versaler ? "abc" : "ABC"}
+                      </button>
+                    ) : null}
                     {rad.map((t) =>
                       t === "{radera}" ? (
                         <button key={t} type="button" className="tangent radera" data-testid="radera" aria-label="Sudda" onClick={sudda}>
@@ -258,8 +265,8 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
                           mellanslag
                         </button>
                       ) : (
-                        <button key={t} type="button" className="tangent" onClick={() => skrivTecken(t)}>
-                          {t}
+                        <button key={t} type="button" className="tangent" aria-label={versaler ? t.toLocaleUpperCase("sv") : t} onClick={() => skrivTecken(versaler ? t.toLocaleUpperCase("sv") : t)}>
+                          {versaler ? t.toLocaleUpperCase("sv") : t}
                         </button>
                       ),
                     )}

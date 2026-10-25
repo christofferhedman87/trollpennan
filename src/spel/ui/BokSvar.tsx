@@ -21,7 +21,7 @@ export function BokSvar({ forslag, valjForslag, nejForslag, behover, utfor }: Pr
   return (
     <div className="bok-svar" aria-live="polite">
       {forslag ? (
-        <div className="forslag" data-testid="forslag">
+        <div className="forslag" data-testid="forslag" data-v5="stavning-kort">
           <p>{forslag.text}</p>
           {fb ? (
             <p className="stavning-rad" data-p4="stavning-tips">
