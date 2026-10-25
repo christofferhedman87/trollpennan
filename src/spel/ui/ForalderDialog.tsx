@@ -1,4 +1,4 @@
-import type { Dispatch, RefObject, SetStateAction } from "react";
+import { useState, type Dispatch, type RefObject, type SetStateAction } from "react";
 import lasningJson from "../../../data/lasning.json" with { type: "json" };
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
@@ -29,10 +29,24 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
   const rostPa = useMinne((s) => s.rostPa);
   const effektPa = useMinne((s) => s.effektPa);
   const lasnivaVal = useMinne((s) => s.lasnivaVal);
+  const [lasSvar, setLasSvar] = useState("");
+  const [upplast, setUpplast] = useState(false);
   return (
         <div className="skarm" role="dialog" aria-label="För vuxna" data-testid="foralder">
-          <div className="ark sida">
-            <h2>För vuxna</h2>
+          <div className="ark sida foralder-ark" ref={(el) => el?.setAttribute("data-testid", "foralder-dialog")}>
+            <div className="foralder-topp">
+              <h2>För vuxna</h2>
+              <button type="button" className="foralder-kryss" aria-label="Stäng" onClick={() => { setSaker(false); setForalder(false); }}>×</button>
+            </div>
+            {!upplast ? (
+              <div className="vuxen-las">
+                <label className="vuxen-las-fraga">
+                  Vuxenlås: Vad är 3 + 4?
+                  <input type="text" inputMode="numeric" autoComplete="off" value={lasSvar} onChange={(e) => setLasSvar(e.target.value)} ref={(el) => el?.setAttribute("data-testid", "foralder-svar")} />
+                </label>
+                <button type="button" className="kort" ref={(el) => el?.setAttribute("data-testid", "foralder-oppna")} onClick={() => { if (lasSvar.trim() === "7") setUpplast(true); }}>Öppna</button>
+              </div>
+            ) : null}
             <p className="kredit" data-testid="groda-kredit">Groda: "Frog" av jeremy (CC BY 3.0)</p>
             <ForalderLiv />
             <h3>Startläge</h3>
@@ -149,17 +163,17 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
             </ul>
             <SaknadeOrd />
             <h3>{TEXTER.borja_om.knapp}</h3>
-            <button type="button" className="farlig" data-testid="borja-om" style={{ width: "100%" }} onClick={() => setSaker(true)}>
+            <button type="button" className="farlig" data-testid="borja-om" data-v2="foralder-borja-om" style={{ width: "100%" }} onClick={() => { setSaker(true); requestAnimationFrame(() => requestAnimationFrame(() => document.querySelector("[data-testid=borja-fraga]")?.scrollIntoView({ block: "end" }))); }}>
               {TEXTER.borja_om.knapp}
             </button>
             {saker ? (
               <div data-testid="borja-fraga" role="dialog" aria-label="Bekräfta återställning">
                 <p>{TEXTER.borja_om.fraga}</p>
                 <div className="rad-kort">
-                  <button type="button" className="kort" data-testid="borja-ja" onClick={borjaOm}>
+                  <button type="button" className="kort" data-testid="borja-ja" data-v2="foralder-borja-ja" onClick={borjaOm}>
                     {TEXTER.borja_om.ja}
                   </button>
-                  <button type="button" className="nej" data-testid="borja-nej" data-dialog-close onClick={() => setSaker(false)}>
+                  <button type="button" className="nej" data-testid="borja-nej" data-v2="foralder-borja-nej" data-dialog-close onClick={() => setSaker(false)}>
                     {TEXTER.backup.las_in_nej}
                   </button>
                 </div>
@@ -169,6 +183,7 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
             <button
               type="button"
               className="stang"
+              ref={(el) => el?.setAttribute("data-testid", "foralder-stang")}
               onClick={() => {
                 setSaker(false);
                 setForalder(false);

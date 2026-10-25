@@ -5,7 +5,8 @@ import upplevelse from "../../../data/upplevelse.json";
 import hemligt from "../../../data/hemligt.json" with { type: "json" };
 import { Ledtradsyta } from "./Ledtradsyta.tsx";
 import { ALLA_UPPDRAG, NPC, TEXTER_AV, UPP, uppdragText } from "../aventyr.ts";
-import { aktivtSkrivUppdrag } from "../uppdragsmotor.ts";
+import { aktivtSkrivUppdrag, nastaSkrivUppdrag } from "../uppdragsmotor.ts";
+import { useMinne } from "../minne.ts";
 import { exempelFor } from "../ideRad.ts";
 import { gavoRuta } from "./gavoRuta.ts";
 import { platsNu } from "./useBengtsson.ts";
@@ -75,18 +76,21 @@ type BokSkarmProps = {
   kopRad: string | null;
   lastaSidor: SidaBygg[];
   forsokKop: (slag: "djur" | "bygg", id: string, titel: string, pris: number) => void;
+  setPanel?: Dispatch<SetStateAction<"spel" | "byggbok" | "uppdrag">>;
 };
 
-export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop }: BokSkarmProps) {
+export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop, setPanel }: BokSkarmProps) {
+  const aktivtUpp = panel === "uppdrag" ? (aktivtSkrivUppdrag(uppdragSpar, platsNu()) ?? nastaSkrivUppdrag(uppdragSpar, platsNu(), false)) : undefined;
+  const uppRader = ALLA_UPPDRAG.filter((u) => (uppFlik === "klar" ? uppdragSpar[u.id] === "klar" : uppdragSpar[u.id] === "pagar" && u.id !== aktivtUpp?.id));
   return (
       <div className="bok-skarm" data-testid="bok-skarm" onClick={stangBok}>
       <section className={andrar ? "bok andrar" : "bok"} data-andrar={andrar ? "ja" : "nej"} role="dialog" aria-label="Pennans bok" onClick={(e) => e.stopPropagation()}>
-        <header className="bok-huvud">
+        <header className="bok-huvud bok-topp">
           <h2
             ref={(el) => el?.setAttribute("data-testid", "bok-flik-skriv")}
             onClick={() => { if (lage !== "skriv") setLage("skriv"); }}
           >
-            {panel === "byggbok" ? TEXTER.flikar.byggboken : "Pennans bok"}
+            {panel === "byggbok" ? TEXTER.flikar.byggboken : panel === "uppdrag" ? "📋 Uppdrag" : "Pennans bok"}
           </h2>
           <input
             type="text"
@@ -108,7 +112,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
           >
             <Pencil aria-hidden />
           </button>
-          <button type="button" className="stang-x" data-testid="stang-bok" aria-label="Stäng" onClick={stangBok}>
+          <button type="button" className="stang-x stang" data-testid="stang-bok" aria-label="Stäng" onClick={stangBok}>
             <span ref={(el) => el?.setAttribute("data-testid", "bok-stang")}>×</span>
           </button>
         </header>
@@ -175,6 +179,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
             ) : null}
             {!gavaTill && !andrar && varld === "ang" ? (
               <div className={aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? "skapar-guide kompakt" : "skapar-guide"} data-testid="skapar-guide">
+                <button type="button" className="kort gata-ankare" ref={(el) => el?.setAttribute("data-testid", "bok-flik-gator")} onClick={() => setLage("kort")}>🧩 Gåta</button>
                 {aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? null : <p>{hemligt.steg}</p>}
                 {aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? null : <p className="hemligt-forklaring" data-testid="hemligt-forklaring">{hemligt.forklaring}</p>}
                 {/* R9I (Christoffer): ingen gåta alls – inte heller räknare eller "Visa gåtan" – medan ett uppdrag pågår */}
@@ -292,26 +297,27 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
           </>
         ) : panel === "uppdrag" ? (
           <div className="kort-yta uppdrag" data-testid="uppdragbok">
-            <h2>{UPP.texter.rubrik}</h2>
             <div className="rad-kort">
-              <button type="button" className={uppFlik === "pagar" ? "kort" : "nej"} data-testid="flik-pagar" onClick={() => setUppFlik("pagar")}>
-                {UPP.texter.flik_pagaende}
-              </button>
-              <button type="button" className={uppFlik === "klar" ? "kort" : "nej"} data-testid="flik-klara" onClick={() => setUppFlik("klar")}>
-                {UPP.texter.flik_klara}
-              </button>
+              <button type="button" className={uppFlik === "pagar" ? "kort" : "nej"} data-testid="flik-pagar" onClick={() => setUppFlik("pagar")}>{UPP.texter.flik_pagaende}</button>
+              <button type="button" className={uppFlik === "klar" ? "kort" : "nej"} data-testid="flik-klara" onClick={() => setUppFlik("klar")}>{UPP.texter.flik_klara}</button>
             </div>
-            {ALLA_UPPDRAG.filter((u) => (uppFlik === "klar" ? uppdragSpar[u.id] === "klar" : uppdragSpar[u.id] === "pagar")).length === 0 ? (
-              <p>{UPP.texter.inga}</p>
+            {uppFlik === "pagar" && aktivtUpp ? (
+              <div className="aktivt-uppdrag-kort" data-v2="aktivt-uppdrag-kort">
+                <div className="aktivt-uppdrag-huvud">
+                  <strong>📋 {aktivtUpp.givare && NPC[aktivtUpp.givare] ? NPC[aktivtUpp.givare]!.namn : "Aktuellt uppdrag"}</strong>
+                  <button type="button" className="lyssna-knapp" data-v2="lyssna-aktivt-uppdrag" aria-label={lasningJson.lyssna.aria_uppdrag} onClick={() => rostKo.lasUpp(uppdragText(aktivtUpp))}>🔊 {lasningJson.lyssna.knapp}</button>
+                </div>
+                <p className="aktivt-uppdrag-text">{uppdragText(aktivtUpp)}</p>
+                <button type="button" className="kort aktivt-uppdrag-skriv" onClick={() => { if (!uppdragSpar[aktivtUpp.id]) useMinne.getState().sattUppdrag(aktivtUpp.id, "pagar"); setPanel?.("spel"); setLage("skriv"); }}>✍️ Skriv lösningen</button>
+              </div>
             ) : null}
-            {ALLA_UPPDRAG
-              .filter((u) => (uppFlik === "klar" ? uppdragSpar[u.id] === "klar" : uppdragSpar[u.id] === "pagar"))
-              .map((u) => (
-                <p key={u.id} className="uppdrag-rad" data-testid={`uppdrag-${u.id}`} data-givare={u.givare ?? ""}>
-                  {u.givare && NPC[u.givare] ? <b>{NPC[u.givare]!.namn}: </b> : null}
-                  {uppdragText(u)}
-                </p>
-              ))}
+            {uppRader.length === 0 && !(uppFlik === "pagar" && aktivtUpp) ? <p>{UPP.texter.inga}</p> : null}
+            {uppRader.map((u) => (
+              <p key={u.id} className="uppdrag-rad" data-testid={`uppdrag-${u.id}`} data-givare={u.givare ?? ""}>
+                <span>{u.givare && NPC[u.givare] ? <b>{NPC[u.givare]!.namn}: </b> : null}{uppdragText(u)}</span>
+                <button type="button" className="lyssna-knapp" aria-label={lasningJson.lyssna.aria_uppdrag} onClick={() => rostKo.lasUpp(uppdragText(u))}>🔊</button>
+              </p>
+            ))}
           </div>
         ) : (
           <div className="byggbok-wrap" data-testid="byggbok">

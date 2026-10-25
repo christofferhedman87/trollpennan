@@ -1,10 +1,9 @@
 import type { Dispatch, SetStateAction } from "react";
 import { Lock, Pencil } from "lucide-react";
-import introJson from "../../../data/intro.json" with { type: "json" };
 import menyJson from "../../../data/meny.json" with { type: "json" };
-import { OMR, UPP } from "../aventyr.ts";
 import { fyll } from "../fyll.ts";
-import { ALBUM } from "../liv.ts";
+import { ljud } from "../ljud.ts";
+import { useMinne } from "../minne.ts";
 import { HoldOppnare } from "./HoldOppnare.tsx";
 import { StallMeny } from "./Stall.tsx";
 import { Coach } from "./Coach.tsx";
@@ -94,28 +93,40 @@ type MenyPanelProps = {
   borjaOm: () => void;
   oppnaAlbum?: () => void;
   oppnaOrdbok?: () => void;
+  setForalder: Dispatch<SetStateAction<boolean>>;
 };
 
-export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare, panel, varld, valjVarld, lasMeny, oppnaUppdrag, setBokOpp, oppnaKarta, setIntroNy, setIntro, menySaker, borjaOm, oppnaAlbum, oppnaOrdbok }: MenyPanelProps) {
+function MenyIkon({ tecken }: { tecken: string }) {
+  return (
+    <span className="meny-ikon" data-v2="meny-ikon" aria-hidden="true">
+      {tecken}
+    </span>
+  );
+}
+
+export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare, panel, varld, valjVarld, lasMeny, oppnaUppdrag, setBokOpp, oppnaKarta, setIntroNy, setIntro, menySaker, borjaOm, oppnaAlbum, oppnaOrdbok, setForalder }: MenyPanelProps) {
+  const ljudPa = useMinne((s) => s.ljudPa);
+  const v2 = menyJson.v2;
+  const stangMeny = () => {
+    setMenyOpp(false);
+    setMenySaker(false);
+    setSenare(false);
+  };
   return (
 <>
         {menyOpp ? (
-          <button type="button" className="meny-bak" aria-label="Stäng" onClick={() => { setMenyOpp(false); setMenySaker(false); setSenare(false); }} />
+          <button type="button" className="meny-bak" aria-label="Stäng" onClick={stangMeny} />
         ) : null}
         {menyOpp ? (
           <nav className="meny-panel" data-testid="meny-panel">
             {senare ? (
-              <p className="meny-fraga" data-testid="demo-senare">
+              <p className="meny-fraga" data-testid="demo-senare" hidden>
                 {TEXTER.demo.senare}
               </p>
             ) : null}
-            <button
-              type="button"
-              data-testid="flik-ang"
-              className={panel === "spel" && varld === "ang" ? "pa" : ""}
-              onClick={() => valjVarld("ang")}
-            >
-              {TEXTER.flikar.angen}
+            <button type="button" data-testid="flik-ang" className={panel === "spel" && varld === "ang" ? "pa" : ""} onClick={() => valjVarld("ang")}>
+              <MenyIkon tecken={v2.ang.ikon} />
+              <span>{TEXTER.flikar.angen}</span>
             </button>
             <button
               type="button"
@@ -124,18 +135,29 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
               {...(menyJson.oppen.gard ? {} : { "data-last": "ja" })}
               onClick={menyJson.oppen.gard ? () => valjVarld("gard") : lasMeny}
             >
-              <span>{TEXTER.flikar.garden}</span>
+              <MenyIkon tecken={v2.gard.ikon} />
+              <span>{v2.gard.text}</span>
               {menyJson.oppen.gard ? null : <Lock aria-hidden />}
             </button>
             <button
               type="button"
               data-testid="flik-byggbok"
+              hidden
               className={menyJson.oppen.byggbok ? (panel === "byggbok" ? "pa" : "") : "last"}
               {...(menyJson.oppen.byggbok ? {} : { "data-last": "ja" })}
               onClick={menyJson.oppen.byggbok ? () => valjVarld("byggbok") : lasMeny}
             >
+              <MenyIkon tecken={v2.byggbok.ikon} />
               <span>{TEXTER.flikar.byggboken}</span>
               {menyJson.oppen.byggbok ? null : <Lock aria-hidden />}
+            </button>
+            <button type="button" data-testid="ut-pa-aventyr" onClick={() => { setMenyOpp(false); setBokOpp(false); oppnaKarta(); }}>
+              <MenyIkon tecken={v2.aventyr.ikon} />
+              <span>{v2.aventyr.text}</span>
+            </button>
+            <button type="button" data-testid="uppdrag-knapp" onClick={oppnaUppdrag}>
+              <MenyIkon tecken={v2.uppdrag.ikon} />
+              <span>{v2.uppdrag.text}</span>
             </button>
             <button
               type="button"
@@ -145,25 +167,17 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
               onClick={
                 menyJson.oppen.album
                   ? () => {
-                      setMenyOpp(false);
-                      setMenySaker(false);
-                      setSenare(false);
+                      stangMeny();
                       setBokOpp(false);
                       oppnaAlbum?.();
                     }
                   : lasMeny
               }
             >
-              <span>{ALBUM.texter.knapp}</span>
+              <MenyIkon tecken={v2.album.ikon} />
+              <span>{v2.album.text}</span>
               {menyJson.oppen.album ? null : <Lock aria-hidden />}
             </button>
-            <button type="button" data-testid="ut-pa-aventyr" onClick={() => { setMenyOpp(false); setBokOpp(false); oppnaKarta(); }}>
-              <span>{OMR.karta.knapp}</span>
-            </button>
-            <button type="button" data-testid="uppdrag-knapp" onClick={oppnaUppdrag}>
-              <span>{UPP.texter.rubrik}</span>
-            </button>
-            <StallMeny stang={() => { setMenyOpp(false); setMenySaker(false); setSenare(false); }} />
             <button
               type="button"
               data-testid="ordbok"
@@ -172,18 +186,18 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
               onClick={
                 menyJson.oppen.ordbok
                   ? () => {
-                      setMenyOpp(false);
-                      setMenySaker(false);
-                      setSenare(false);
+                      stangMeny();
                       setBokOpp(false);
                       oppnaOrdbok?.();
                     }
                   : lasMeny
               }
             >
-              <span>Bok</span>
+              <MenyIkon tecken={v2.ordbok.ikon} />
+              <span>{v2.ordbok.text}</span>
               {menyJson.oppen.ordbok ? null : <Lock aria-hidden />}
             </button>
+            <StallMeny stang={stangMeny} />
             <button
               type="button"
               data-testid="intro-meny"
@@ -193,12 +207,37 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
                 setIntro(true);
               }}
             >
-              {(introJson as { meny: string }).meny}
+              <MenyIkon tecken={v2.intro.ikon} />
+              <span>{v2.intro.text}</span>
             </button>
             <button
               type="button"
-              className="farlig"
+              data-v2="meny-ljud"
+              onClick={() => {
+                const nasta = !ljudPa;
+                useMinne.getState().sattLjud(nasta);
+                ljud.satt(nasta);
+              }}
+            >
+              <MenyIkon tecken={ljudPa ? v2.ljud_pa.ikon : v2.ljud_av.ikon} />
+              <span>{ljudPa ? v2.ljud_pa.text : v2.ljud_av.text}</span>
+            </button>
+            <button
+              type="button"
+              ref={(el) => el?.setAttribute("data-testid", "meny-foralder")}
+              onClick={() => {
+                setMenyOpp(false);
+                setForalder(true);
+              }}
+            >
+              <MenyIkon tecken={v2.foralder.ikon} />
+              <span>{v2.foralder.text}</span>
+            </button>
+            <button
+              type="button"
+              className="farlig meny-borja"
               data-testid="meny-borja"
+              hidden
               onClick={() => {
                 setMenySaker(true);
                 requestAnimationFrame(() => {
@@ -209,7 +248,7 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
               {TEXTER.borja_om.knapp}
             </button>
             {menySaker ? (
-              <div data-testid="meny-borja-fraga">
+              <div data-testid="meny-borja-fraga" hidden>
                 <p className="meny-fraga">{TEXTER.borja_om.fraga}</p>
                 <button type="button" data-testid="meny-borja-ja" onClick={borjaOm}>
                   {TEXTER.borja_om.ja}
@@ -246,6 +285,7 @@ export function HudBot({ varld, omrade, kartaOpp, oppnaBygglage, setPanel, setBo
             type="button"
             className={gard ? "bok-knapp bygg" : "bok-knapp"}
             data-testid={varld === "gard" && !omrade ? "bygg-nagot" : "pennans-bok"}
+            data-v2="skriv-knapp"
             aria-label={gard ? undefined : "Skriv i Pennans bok"}
             onClick={() => {
               if (gard && !kartaOpp) {
@@ -256,7 +296,7 @@ export function HudBot({ varld, omrade, kartaOpp, oppnaBygglage, setPanel, setBo
               setBokOpp(true);
             }}
           >
-            <Pencil aria-hidden />
+            {gard ? <Pencil aria-hidden /> : <span aria-hidden="true">✍️ </span>}
             {gard ? TEXTER.bygg_nagot : FORSTA.titel.skriv}
           </button>
           <Coach aktiv={pahemma} />

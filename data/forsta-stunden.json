@@ -21,6 +21,7 @@
     {
       "id": "forsta-ordet",
       "text": "Tryck på Pennans bok och skriv ett djur!",
+      "visa_text": "Tryck på Skriv och skriv ett djur!",
       "pekar_pa": "testid:pennans-bok",
       "klart_nar": { "falt": "egnaDjur", "minst": 1 }
     },
@@ -33,6 +34,7 @@
     {
       "id": "uppdraget",
       "text": "Skriv det Bengtsson ber om i Pennans bok.",
+      "visa_text": "Tryck på Skriv och skriv det Bengtsson ber om!",
       "pekar_pa": "testid:pennans-bok",
       "klart_nar": { "falt": "uppdrag", "varde": "klar", "minst": 1 }
     },

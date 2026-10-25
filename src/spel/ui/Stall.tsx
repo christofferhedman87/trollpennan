@@ -1,6 +1,7 @@
 // R9G: stallet som lista i menyn + knappen "Till stallet" vid djuret man tryckt på. Läser minnet själv (useMinne),
 // så Spel.tsx behöver inga nya props. Ingen 3D-byggnad.
 import { useEffect, useState } from "react";
+import menyJson from "../../../data/meny.json" with { type: "json" };
 import { brygga } from "../brygga.ts";
 import { useMinne } from "../minne.ts";
 import { TEXTER } from "./spelData.ts";
@@ -82,6 +83,7 @@ export function StallMeny({ stang }: { stang: () => void }) {
   return (
     <>
       <button type="button" data-testid="meny-stall" aria-expanded={oppen} onClick={() => { setOppen((v) => !v); setFull(false); }}>
+        <span className="meny-ikon" data-v2="meny-ikon" aria-hidden="true">{menyJson.v2.stall.ikon}</span>
         <span>
           {TEXTER.stall.meny} {stall.length ? `(${stall.length})` : ""}
         </span>
