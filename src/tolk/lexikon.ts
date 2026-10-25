@@ -1,4 +1,4 @@
-import { avstand, felgrans } from "./avstand.ts";
+import { avstand, felgrans, ljudStam } from "./avstand.ts";
 import { ORD } from "./data.ts";
 import attributJson from "../../data/attribut.json" with { type: "json" };
 import entiteterJson from "../../data/entiteter.json" with { type: "json" };
@@ -40,6 +40,17 @@ export function foremalsFormer(w: string): { singular: string[]; plural: string[
   };
 }
 
+/** T-ord. Sammansättningar som "rymdskepp" och "äppelträd" står med, så hela ordet får genus n. */
+export const NEUTRUM_ORD = new Set([
+  "hus", "höghus", "pepparkakshus", "hönshus", "växthus", "sjukhus",
+  "slott", "torn", "slottstorn", "vattentorn", "svärd", "tåg", "flygplan",
+  "skepp", "rymdskepp", "luftskepp", "piratskepp", "ankare", "tält", "staket",
+  "träd", "äppelträd", "höstträd", "snöträd", "moln", "berg", "ägg", "äpple",
+  "päron", "ljus", "hjul", "kors", "golv", "tak", "fönster", "spöke", "lejon",
+  "får", "bi", "troll", "skelett", "spjut", "block", "vattenfall", "bord", "glas",
+  "bröd", "hjärta", "paraply", "lok", "vrak", "piano", "bälte", "halsband", "armband",
+]);
+
 type EntRad = { typ: string; modell: string | null; ord?: string[] };
 export const FOREMAL: Ord[] = [];
 // Ord som redan betyder något i grammatiken (förled som "ljus", förstärkning, funktionsord) tas aldrig.
@@ -73,6 +84,7 @@ for (const [id, w] of sakOrd) {
     former: [...singular, ...plural],
     plural,
     del: { kropp: id },
+    ...(NEUTRUM_ORD.has(w) ? { genus: "n" as const } : {}),
   };
   FOREMAL.push(o);
   for (const f of o.former) if (!formMap.has(f) && !reserverade.has(f)) formMap.set(f, o);
@@ -85,7 +97,7 @@ const forledNycklar = new Set(Object.keys(ORD.sammansattningar.forled));
 for (const [id, w] of sakOrd) {
   if (!forledNycklar.has(w) || LED_SAK.has(w)) continue;
   const { singular, plural } = foremalsFormer(w);
-  const o: Ord = { id: w, klass: "foremal", niva: "fritt", visa: w, former: [...singular, ...plural], plural, del: { kropp: id } };
+  const o: Ord = { id: w, klass: "foremal", niva: "fritt", visa: w, former: [...singular, ...plural], plural, del: { kropp: id }, ...(NEUTRUM_ORD.has(w) ? { genus: "n" as const } : {}) };
   LED_SAK.set(w, o);
   for (const f of o.former) if (f !== w && !formMap.has(f) && !reserverade.has(f)) formMap.set(f, o);
 }
@@ -109,6 +121,7 @@ for (const [id, w] of sakOrd) {
     former: [...new Set([...annan.former, ...singular, ...plural])],
     plural,
     del: { kropp: id },
+    ...(NEUTRUM_ORD.has(w) ? { genus: "n" as const } : {}),
   };
   for (const f of o.former) if (!DUBBEL_SAK.has(f)) DUBBEL_SAK.set(f, o);
 }
@@ -371,15 +384,21 @@ export function langstaAtom(rest: string): Atom | null {
   return best;
 }
 
-export function forslagTill(token: string): { id: string; visa: string; avst: number }[] {
+export function forslagTill(token: string, maxAvst = 2): { id: string; visa: string; avst: number }[] {
   const grans = felgrans(token.length);
+  const effMax = Math.min(grans, maxAvst);
+  const stamT = ljudStam(token);
   const bast = new Map<string, number>();
   for (const o of ALLA) {
     const former = new Set<string>([o.visa, o.id, ...(o.former ?? [])]);
     for (const f of former) {
       if (!f || f === token) continue;
-      if (Math.abs(f.length - token.length) > grans + 1) continue;
-      const d = avstand(token, f);
+      const dLjud = ljudStam(f) === stamT ? 0.5 : Infinity;
+      const lenMax = dLjud === 0.5 ? 3 : grans + 1;
+      if (Math.abs(f.length - token.length) > lenMax) continue;
+      const dRaw = Math.abs(f.length - token.length) > grans + 1 ? Infinity : avstand(token, f);
+      const d = Math.min(dRaw, dLjud);
+      if (!(d <= effMax + 1e-9 || dLjud === 0.5) || !(d > 0)) continue;
       const prev = bast.get(o.id);
       if (prev == null || d < prev) bast.set(o.id, d);
     }

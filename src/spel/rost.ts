@@ -58,7 +58,7 @@ function telefon(text: string, sv: SpeechSynthesisVoice, klar: () => void) {
   speechSynthesis.speak(u);
 }
 
-function spelaDelar(text: string, delar: RostDel[], sv: SpeechSynthesisVoice | null) {
+function spelaDelar(text: string, delar: RostDel[], _sv: SpeechSynthesisVoice | null) {
   const min = omgang;
   let i = 0;
   const steg = () => {
@@ -77,9 +77,9 @@ function spelaDelar(text: string, delar: RostDel[], sv: SpeechSynthesisVoice | n
         () => klocka.spelar(text), // play-löftet uppfylls när uppspelningen faktiskt startar
         () => steg(),
       );
-    } else if (sv) {
-      klocka.spelar(text);
-      telefon(d.dynamisk, sv, steg);
+    } else if ("dynamisk" in d) {
+      // Okända ord och ordägg läses inte upp med webbläsarens röst. Förinspelade delar spelas som vanligt.
+      steg();
     } else steg();
   };
   steg();
@@ -103,11 +103,6 @@ function nasta() {
   const plan = rostPlan(text);
   if (plan) {
     const sv = plan.dynamisk && DYNAMISK === "webblasare" ? svenskRost() : null;
-    if (plan.dynamisk && !sv) {
-      logg({ text, fil: null, satt: "tyst", dynamisk: true });
-      klocka.klar(text);
-      return nasta();
-    }
     const forsta = plan.delar.find((d): d is { f: string; ms: number } => "f" in d);
     logg({ text, fil: forsta?.f ?? null, satt: plan.delar.length > 1 ? "mall" : "fil", delar: plan.delar.length, dynamisk: plan.dynamisk });
     spelaDelar(text, plan.delar, sv);
@@ -334,12 +329,6 @@ export function spelaUpp(text: string, meta: UppMeta, klar: () => void): { avbry
   const plan = rostPlan(text);
   if (plan) {
     const sv = plan.dynamisk && DYNAMISK === "webblasare" ? svenskRost() : null;
-    if (plan.dynamisk && !sv) {
-      logg({ ...bas, fil: null, satt: "tyst", dynamisk: true });
-      klocka.spelar(t);
-      vanta = setTimeout(fardig, 1800);
-      return { avbryt };
-    }
     const forsta = plan.delar.find((d): d is { f: string; ms: number } => "f" in d);
     logg({ ...bas, fil: forsta?.f ?? null, satt: plan.delar.length > 1 ? "mall" : "fil", delar: plan.delar.length, dynamisk: plan.dynamisk });
     spelaUppDelar(plan.delar, sv, min, t, fardig);
@@ -359,7 +348,7 @@ export function spelaUpp(text: string, meta: UppMeta, klar: () => void): { avbry
   return { avbryt };
 }
 
-function spelaUppDelar(delar: RostDel[], sv: SpeechSynthesisVoice | null, min: number, t: string, fardig: () => void) {
+function spelaUppDelar(delar: RostDel[], _sv: SpeechSynthesisVoice | null, min: number, t: string, fardig: () => void) {
   let i = 0;
   const steg = () => {
     if (min !== uppOmg) return;
@@ -380,9 +369,8 @@ function spelaUppDelar(delar: RostDel[], sv: SpeechSynthesisVoice | null, min: n
         () => klocka.spelar(t),
         () => steg(),
       );
-    } else if (sv) {
-      klocka.spelar(t);
-      telefon(d.dynamisk, sv, steg);
+    } else if ("dynamisk" in d) {
+      steg();
     } else steg();
   };
   steg();

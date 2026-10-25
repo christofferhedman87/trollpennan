@@ -36,12 +36,26 @@ export function nyckel(t: string): string {
   return h.toString(16).padStart(8, "0");
 }
 
+/** Första bokstaven efter meningsstart tillbaka till gemen, så "Ett hus" träffar "ett hus". */
+function sankMeningsStart(s: string): string {
+  return s.replace(/^([A-ZÅÄÖ])/, (m) => m.toLowerCase());
+}
+
+function rostForNormaliserad(text: string): RostRad | null {
+  const n = normalisera(text);
+  const hel = rad(nyckel(n));
+  if (hel) return hel;
+  const lag = sankMeningsStart(n);
+  if (lag !== n) return rad(nyckel(lag));
+  return null;
+}
+
 /** Filen för en text som visas. Exakt träff, annars delen efter första ": " (t.ex. "Nytt uppdrag från Doktor Bengtsson: …"). */
 export function rostFor(text: string): RostRad | null {
-  const hel = rad(nyckel(text));
+  const hel = rostForNormaliserad(text);
   if (hel) return hel;
   const i = text.indexOf(": ");
-  return i > 0 ? rad(nyckel(text.slice(i + 2))) : null;
+  return i > 0 ? rostForNormaliserad(text.slice(i + 2)) : null;
 }
 
 /** Introts röstfil med scenernas starttider, eller null (då gäller data/intro.json och saga.mp3). */
@@ -71,11 +85,9 @@ function mallar(): Mall[] {
   });
   return MALLAR;
 }
-/** Ett värde i en mall som filer: hela värdet, eller helt uppdelat i kända värden ("en kanin" + "med mössa"), annars null. */
-function vardeDelar(varde: string): { f: string; ms: number }[] | null {
-  const hel = rad(nyckel(varde));
-  if (hel) return [hel];
-  const ord = varde.split(" ");
+/** Hela värdet som fil, eller uppdelat i kända bitar. Versal meningsstart provas som gemen. */
+function ordSekvens(text: string): { f: string; ms: number }[] | null {
+  const ord = text.split(" ");
   const ut: { f: string; ms: number }[] = [];
   for (let i = 0; i < ord.length; ) {
     let j = ord.length;
@@ -91,9 +103,49 @@ function vardeDelar(varde: string): { f: string; ms: number }[] | null {
   }
   return ut.length > 1 ? ut : null;
 }
+
+/** Dela på " och " / " med " när hela värdet inte är en fil ("Ett rött hus" + "blir det."). */
+function delaLed(text: string): { f: string; ms: number }[] | null {
+  const bitar = text.split(/ och | med /);
+  if (bitar.length < 2) return null;
+  const ut: { f: string; ms: number }[] = [];
+  for (const bit of bitar) {
+    const hel = rad(nyckel(bit));
+    if (hel) {
+      ut.push(hel);
+      continue;
+    }
+    const sek = ordSekvens(bit);
+    if (!sek) return null;
+    ut.push(...sek);
+  }
+  return ut.length > 1 ? ut : null;
+}
+
+/** Ett värde i en mall som filer: hela värdet, eller helt uppdelat i kända värden ("en kanin" + "med mössa"), annars null. */
+function vardeDelar(varde: string): { f: string; ms: number }[] | null {
+  const hel = rad(nyckel(varde));
+  if (hel) return [hel];
+  const sek = ordSekvens(varde);
+  if (sek) return sek;
+  const n = normalisera(varde);
+  const lag = sankMeningsStart(n);
+  if (lag !== n) {
+    const r = rad(nyckel(lag));
+    if (r) return [r];
+    const lagSek = ordSekvens(lag) ?? delaLed(lag);
+    if (lagSek) return lagSek;
+  }
+  return delaLed(n);
+}
 function ettPlan(text: string): RostPlan | null {
   const hel = rad(nyckel(text));
   if (hel) return { delar: [hel], ms: hel.ms, dynamisk: false };
+  const lag = sankMeningsStart(normalisera(text));
+  if (lag !== normalisera(text)) {
+    const r = rad(nyckel(lag));
+    if (r) return { delar: [r], ms: r.ms, dynamisk: false };
+  }
   const t = normalisera(text);
   for (const mall of mallar()) {
     const m = mall.re.exec(t);

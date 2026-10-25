@@ -61,9 +61,25 @@ function mjukt(s: string): { pre: string; rest: string } | null {
   return null;
 }
 
+/** Svensk ljudstam: tje-/sje-/j-ljud i ordstart, ck och dubbelteckning. */
+export function ljudStam(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/^(stj|skj|sch|sh|sj)/, "SJ")
+    .replace(/^sk(?=[eiyäö])/, "SJ")
+    .replace(/^(tj|kj)/, "TJ")
+    .replace(/^k(?=[eiyäö])/, "TJ")
+    .replace(/^(gj|dj|hj|lj)/, "j")
+    .replace(/ck/g, "k")
+    .replace(/(.)\1+/g, "$1")
+    .replace(/å/g, "o")
+    .replace(/ä/g, "e");
+}
+
 /** Damerau-Levenshtein med billiga fel från ord.json. */
 export function avstand(a: string, b: string): number {
   const bas = dl(a, b);
+  if (a !== b && ljudStam(a) === ljudStam(b)) return Math.min(bas, 0.5);
   const A = mjukt(a);
   const B = mjukt(b);
   if (A && B && A.pre !== B.pre) return Math.min(bas, 0.5 + dl(A.rest, B.rest));

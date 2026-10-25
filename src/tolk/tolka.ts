@@ -529,15 +529,24 @@ function sakFristaende(sem: Sem[], tokens: string[], i: number): boolean {
   return efter?.t === "funk" || efter?.t === "artikel";
 }
 
-function genusIFras(tokens: string[], i: number): "n" | "u" {
-  let start = 0;
-  for (let j = i - 1; j >= 0; j--) {
-    if (tokens[j] === "och") {
-      start = j + 1;
-      break;
-    }
+const NEUTRUM_ADJ = new Set([
+  "rött", "blått", "grönt", "gult", "vitt", "svart", "grått", "brunt",
+  "stort", "litet", "högt", "lågt", "långt", "kort", "brett", "smalt",
+  "tjockt", "tunt", "varmt", "kallt", "mjukt", "hårt", "snabbt", "långsamt",
+  "glatt", "argt", "snällt", "läskigt", "vackert", "fint", "nytt", "gammalt",
+]);
+
+/** "svart" och "kort" ser likadana ut i utrum. De tvingar inte ett-form på en bil. */
+const NEUTRUM_SIGNAL = new Set([...NEUTRUM_ADJ].filter((w) => w !== "svart" && w !== "kort"));
+
+function genusIFras(tokens: string[], fran: number): "u" | "n" {
+  for (let j = fran - 1; j >= 0; j--) {
+    const t = tokens[j] ?? "";
+    if (t === "och" || t === "med" || t === "vid" || t === "i" || t === "på") break;
+    if (t === "ett" || t === "mitt") return "n";
+    if (t === "en") return "u";
+    if (NEUTRUM_ADJ.has(t) && NEUTRUM_SIGNAL.has(t)) return "n";
   }
-  for (let j = start; j < i; j++) if (tokens[j] === "ett" || tokens[j] === "mitt") return "n";
   return "u";
 }
 
@@ -566,7 +575,7 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
     if (!en) {
       const losSak = dubbelSak(token);
       if (losSak && sakFristaende(sem, tokens, i)) {
-        sem.push({ t: "ord", o: { ...losSak, genus: genusIFras(tokens, i) }, form: token });
+        sem.push({ t: "ord", o: { ...losSak, genus: losSak.genus === "n" ? "n" : genusIFras(tokens, i) }, form: token });
         continue;
       }
       const komp = delaOrd(token);
@@ -587,7 +596,7 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
       const nasta = tokens[i + 1];
       const nastaEn = nasta === undefined ? null : lasToken(nasta);
       if (sak && (nasta === undefined || nastaEn?.t === "funk" || nastaEn?.t === "artikel")) {
-        sem.push({ t: "ord", o: { ...sak, genus: tokens[i - 1] === "ett" ? "n" : "u" }, form: token });
+        sem.push({ t: "ord", o: { ...sak, genus: sak.genus === "n" ? "n" : genusIFras(tokens, i) }, form: token });
         continue;
       }
       if (led) {
@@ -599,38 +608,24 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
         sem.push({ t: "okand", raw: token });
         continue;
       }
-      const kompForslag = forslagKomp(token);
-      if (kompForslag.length === 1) {
-        return {
-          typ: "forslag",
-          token,
-          text: `Menade du ${kompForslag[0]!.visa}?`,
-          forslag: kompForslag.map((f) => ({ id: f.id, visa: f.visa })),
-        };
-      }
-      if (kompForslag.length > 1) {
-        return {
-          typ: "forslag",
-          token,
-          text: "Menade du …?",
-          forslag: kompForslag.map((f) => ({ id: f.id, visa: f.visa })),
-        };
-      }
       const forsl = forslagTill(token);
-      if (forsl.length === 1) {
+      const kompForslag = forslagKomp(token);
+      const val =
+        forsl.length > 0 && (!kompForslag.length || forsl[0]!.avst < kompForslag[0]!.avst) ? forsl : kompForslag;
+      if (val.length === 1) {
         return {
           typ: "forslag",
           token,
-          text: `Menade du ${forsl[0]!.visa}?`,
-          forslag: forsl.map((f) => ({ id: f.id, visa: f.visa })),
+          text: `Menade du ${val[0]!.visa}?`,
+          forslag: val.map((f) => ({ id: f.id, visa: f.visa })),
         };
       }
-      if (forsl.length > 1) {
+      if (val.length > 1) {
         return {
           typ: "forslag",
           token,
           text: "Menade du …?",
-          forslag: forsl.map((f) => ({ id: f.id, visa: f.visa })),
+          forslag: val.map((f) => ({ id: f.id, visa: f.visa })),
         };
       }
       sem.push({ t: "okand", raw: token });
@@ -643,14 +638,20 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
     if (en.t === "ord" && en.o.klass !== "foremal" && en.o.klass !== "djur") {
       const sak = dubbelSak(token);
       if (sak && sakFristaende(sem, tokens, i)) {
-        sem.push({ t: "ord", o: { ...sak, genus: genusIFras(tokens, i) }, form: token });
+        sem.push({ t: "ord", o: { ...sak, genus: sak.genus === "n" ? "n" : genusIFras(tokens, i) }, form: token });
         continue;
       }
     }
     if (en.t === "ord" && en.o.klass === "foremal") {
-      // R3G: genus för ett härlett föremål tas från barnets egen artikel ("ett lok") eller bestämd form ("loket").
+      // R3G: genus för ett härlett föremål. T-ord och neutrum i frasen vinner över "en".
       const fore = tokens[i - 1];
-      const n = fore === "ett" || fore === "mitt" || token === en.o.visa + "et" || token === en.o.visa + "t";
+      const n =
+        en.o.genus === "n" ||
+        genusIFras(tokens, i) === "n" ||
+        fore === "ett" ||
+        fore === "mitt" ||
+        token === en.o.visa + "et" ||
+        token === en.o.visa + "t";
       sem.push({ t: "ord", o: { ...en.o, genus: n ? "n" : "u" }, form: token });
       continue;
     }
@@ -682,9 +683,10 @@ function nastaArTillbehor(sem: Sem[], i: number): boolean {
   return false;
 }
 
-function nastaArSak(sem: Sem[], i: number): boolean {
+function nastaArSak(sem: Sem[], i: number, ensamSak?: Ord | null): boolean {
   if (nastaArTillbehor(sem, i)) return true;
   const n = sem[i + 1];
+  if (n && n.t === "ord" && ensamSak && n.o === ensamSak) return false;
   return !!n && n.t === "ord" && n.o.klass === "foremal";
 }
 
@@ -882,7 +884,7 @@ function byggFran(sem: Sem[]): Bygg | "sparr" {
       continue;
     }
     // R9F: storlek/egenskap efter "med"/"vid"/"i" … eller direkt före en sak ("ett högt torn") beskriver saken, inte djuret
-    if ((o.klass === "egenskap" || o.klass === "storlek") && (mode === "med" || nastaArSak(sem, i))) {
+    if ((o.klass === "egenskap" || o.klass === "storlek") && (mode === "med" || nastaArSak(sem, i, ensamSak))) {
       markera(b, o.id, false);
       if (o.klass === "egenskap" && !b.inteDjur.includes(o.id)) b.inteDjur.push(o.id);
       continue;
