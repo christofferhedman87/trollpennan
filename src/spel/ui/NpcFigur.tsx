@@ -35,7 +35,7 @@ export function NpcIkon({ npc, nytt, text, alt, onClick }: IkonProps) {
   return (
     <button type="button" className={nytt ? "npc-ikon nytt" : "npc-ikon"} data-testid="bengtsson-ikon" aria-label={alt} onClick={onClick}>
       <img src={mineUrl(npc, f.standard)} alt="" draggable={false} width={52} height={52} />
-      <span>{text}</span>
+      <span>📋 {text}</span>
     </button>
   );
 }

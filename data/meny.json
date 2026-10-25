@@ -9,5 +9,19 @@
     "uppdrag": true,
     "stall": true,
     "ordbok": true
+  },
+  "v2": {
+    "ang": { "ikon": "🌿", "text": "Ängen" },
+    "gard": { "ikon": "🏡", "text": "Gården & Byggboken" },
+    "byggbok": { "ikon": "🔨", "text": "Byggboken" },
+    "aventyr": { "ikon": "🗺️", "text": "Världskarta – Ut på äventyr" },
+    "uppdrag": { "ikon": "📋", "text": "Uppdrag" },
+    "album": { "ikon": "🐾", "text": "Djuralbum" },
+    "ordbok": { "ikon": "📖", "text": "Ordbok – Alla ord" },
+    "stall": { "ikon": "🐴", "text": "Stallet" },
+    "intro": { "ikon": "🎬", "text": "Se introt igen" },
+    "ljud_pa": { "ikon": "🔊", "text": "Ljud: På" },
+    "ljud_av": { "ikon": "🔇", "text": "Ljud: Av" },
+    "foralder": { "ikon": "🔒", "text": "För vuxna" }
   }
 }

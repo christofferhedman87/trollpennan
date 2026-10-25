@@ -64,7 +64,7 @@ export function Coach({ aktiv }: { aktiv: boolean }) {
     <div className="coach" data-testid="coach" data-steg={steg.steg.id} aria-live="polite">
       <p className="coach-bubbla">
         <span className="coach-penna" aria-hidden />
-        <span>{steg.steg.text}</span>
+        <span>{steg.steg.visa_text ?? steg.steg.text}</span>
       </p>
       <span className="coach-ring" style={{ left: ruta.x - pad, top: ruta.y - pad, width: ruta.b + pad * 2, height: ruta.h + pad * 2 }} aria-hidden />
       <span className="coach-pil" style={{ left: ruta.x + ruta.b / 2 - 22, top: ruta.y - 58 }} aria-hidden>
