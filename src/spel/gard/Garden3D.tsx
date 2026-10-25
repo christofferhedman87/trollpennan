@@ -6,7 +6,9 @@ import { brygga } from "../brygga.ts";
 import { KV, MILJO } from "../miljo.ts";
 import { useMinne } from "../minne.ts";
 import { ByggeModell, DekorHobalar } from "./ByggModell.tsx";
+import { GardDjurLista } from "./GardDjur.tsx";
 import { MarkPlan } from "./MarkPlan.tsx";
+import { synkaTestSparning, varldTillNorm, type GardDjurSnap } from "./vandra.ts";
 import {
   CELL_STORLEK,
   GARD_BREDD,
@@ -31,8 +33,10 @@ export type Gard3dDiag = {
   byggen: { uid: string; bygg: string; cell: CellPlats | null; kant: KantPlats | null }[];
   kanter: KantPlats[];
   hagar: SlutenHage[];
-  djur: unknown[];
+  djur: GardDjurSnap[];
 };
+
+if (typeof window !== "undefined") synkaTestSparning(useMinne, window.localStorage);
 
 declare global {
   interface Window {
@@ -128,11 +132,13 @@ function Scen({
       {garden.map((b) => (
         <ByggeModell key={b.uid} b={b} flyttar={flyttarUid !== null} />
       ))}
+      <GardDjurLista garden={garden} hagar={hagar} kanter={kanter} />
     </>
   );
 }
 
 export function Garden3D() {
+  if (typeof window !== "undefined") synkaTestSparning(useMinne, window.localStorage);
   const garden = useMinne((s) => s.garden);
   const hemma = useMinne((s) => s.hemma);
   const [flyttarUid, setFlyttarUid] = useState<string | null>(null);
@@ -144,6 +150,13 @@ export function Garden3D() {
       flytta: (uid) => setFlyttarUid(uid),
       platser: () => {
         const s = useMinne.getState();
+        const djur = window.__gard3d?.djur ?? [];
+        if (djur.length > 0) {
+          return djur.map((d) => {
+            const p = varldTillNorm(d.wx, d.wz);
+            return { uid: d.uid, x: p.x, y: p.y, topp: Math.max(0.08, p.y - 0.14) };
+          });
+        }
         if (s.hemma.length === 0) return [];
         return s.hemma.map((h) => {
           const hem = s.garden.find((g) => g.uid === h.hem);
@@ -170,6 +183,7 @@ export function Garden3D() {
   }, [garden, flyttarUid]);
 
   useEffect(() => {
+    const tidigare = window.__gard3d?.djur;
     window.__gard3d = {
       aktiv: true,
       celler: { bredd: GARD_BREDD, djup: GARD_DJUP },
@@ -181,7 +195,7 @@ export function Garden3D() {
       })),
       kanter,
       hagar,
-      djur: [],
+      djur: Array.isArray(tidigare) ? tidigare : [],
     };
     return () => {
       const nu = window.__gard3d;

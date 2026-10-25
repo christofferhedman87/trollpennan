@@ -55,7 +55,7 @@ function KlonadScen({
     const k = gltf.scene.clone(true);
     // Staket behåller lokal z = -0.5. Bara byggnader och höbalar passas in.
     if (passa) passaByggnad(k, malhojd);
-    if (fargHex) egnaMaterial(k, fargHex);
+    egnaMaterial(k, fargHex);
     skuggaUtanTraff(k);
     setScen(k);
     return () => slappMaterial(k);
