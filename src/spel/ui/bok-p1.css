@@ -40,3 +40,37 @@ body .plats-namn,body .plats-hem{white-space:nowrap}
 .ledtrad-knappar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .ledtrad-niva{display:inline-block;padding:2px 8px;border-radius:999px;background:#e8f5e9;color:#2e7d32;font-size:0.85rem;font-weight:800}
 .ord-input-ankare{position:absolute;width:1px;height:1px;opacity:0.01;pointer-events:auto;border:0;padding:0}
+
+/* V3: Halvhöjd på skrivfönstret så att 3D-ängen syns ovanför (top >= 260px på 375x812) */
+.bok{max-height:66dvh;height:66dvh;padding-bottom:max(6px,env(safe-area-inset-bottom))}
+.bok-skarm .bok,.bok-skarm .bok:has(.tangenter){max-height:66dvh;height:66dvh}
+.bok-huvud.bok-topp{min-height:46px;padding:6px 10px 2px}
+.bok-huvud.bok-topp h2{font-size:1.3rem}
+.bok-topp .stang-x{min-width:44px;min-height:44px;width:44px;height:44px;font-size:1.6rem;border-radius:14px;display:inline-flex;align-items:center;justify-content:center}
+
+/* V3: 3 vyflikar överst (Skriv, Gåta, Idéer) */
+.bok .skapar-vy-flikar{display:flex;gap:6px;padding:2px 10px 4px}
+.bok .skapar-vy-flikar .flik{flex:1;min-height:36px;padding:4px 8px;border-radius:12px;font-size:.95rem;font-weight:800;background:var(--color-cream);color:var(--color-ink);border:2px solid var(--color-paper-deep)}
+.bok .skapar-vy-flikar .flik.pa{background:var(--color-moss-deep);color:var(--color-cream);border-color:var(--color-moss-deep)}
+
+/* V3: Kompakt gåtremsa under Skriv-fliken */
+.bok .ledtrad.kompakt{padding:2px 10px}
+.bok .ledtrad.kompakt .ledtrad-rad{min-height:34px;padding:2px 8px;background:var(--color-cream);border-radius:12px}
+.bok .forslag-etikett{display:none}
+
+/* V3: Kategoriflikar på en kompakt rad + minst 4-6 synliga ordkort direkt utan rullning */
+.bok .bok-mitt .flikar{flex-wrap:nowrap;overflow-x:auto;gap:4px;padding:2px 10px 4px}
+.bok .bok-mitt .flikar .flik{flex:1 0 auto;min-height:34px;padding:0 10px;font-size:.92rem;background:var(--color-cream)}
+.bok .bok-mitt .flikar .flik.pa{background:var(--color-moss-deep);color:var(--color-cream)}
+.bok .bok-mitt .kort-yta{padding:2px 10px 6px}
+.bok .bok-mitt .rutnat{grid-template-columns:1fr 1fr;gap:6px}
+.bok .bok-mitt .ord-kort{min-height:40px;padding:6px 10px;font-size:1rem;border-radius:12px;display:flex;align-items:center}
+
+/* V3: Skrivruta + Väck! sida vid sida längst ner i boken */
+.bok .skriv-rad{display:flex;align-items:center;gap:8px;padding:4px 10px 2px;flex-shrink:0}
+.bok .skriv-rad .remsa.skriv-remsa{flex:1;min-height:44px;max-height:3.2rem;margin:0;padding:8px 12px;display:flex;align-items:center}
+.bok .skriv-rad .vakna{flex:0 0 auto;min-height:44px;margin:0;padding:0 18px;font-size:1.3rem}
+
+/* V3: Idéknappar visar hela texten utan att klippas med ellipsis */
+.bok .ideer{display:flex;flex-wrap:wrap;gap:6px;padding:4px 10px 8px}
+.bok .ideer .kort{white-space:normal;text-overflow:clip;overflow:visible;height:auto;min-height:42px;line-height:1.25;text-align:left;padding:8px 12px;flex:1 1 calc(50% - 6px)}
