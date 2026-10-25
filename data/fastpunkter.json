@@ -146,7 +146,7 @@
      }
     },
     "mantel": {
-     "faktor": 0.85,
+     "faktor": 0.58,
      "plats": {
       "ankare": "hals",
       "mot": {
@@ -157,6 +157,14 @@
        "bredd": 0.14,
        "min": 0.04,
        "tecken": -1
+      }
+     }
+    },
+    "halsduk": {
+     "plats": {
+      "ankare": "hals",
+      "upp": {
+       "hojd": 0.06
       }
      }
     }
@@ -203,7 +211,7 @@
      }
     },
     "mantel": {
-     "faktor": 0.85,
+     "faktor": 0.62,
      "plats": {
       "ankare": "hals",
       "mot": {
@@ -272,6 +280,9 @@
        "t": 0.4
       }
      }
+    },
+    "mantel": {
+     "faktor": 0.9
     }
    }
   },
@@ -758,6 +769,11 @@
      "mun": [0.5, 0.5, 1],
      "hals": [0.5, 0.62, 0.64],
      "rygg": [0.5, 0.6, 0.38]
+    }
+   },
+   "overstyr": {
+    "mantel": {
+     "faktor": 0.75
     }
    }
   },
@@ -8229,6 +8245,20 @@
      "hals": [0.64, 0.62, 0.5],
      "rygg": [0.38, 0.6, 0.5]
     }
+   },
+   "overstyr": {
+    "halsduk": {
+     "faktor": 0.42,
+     "plats": {
+      "ankare": "hals",
+      "upp": {
+       "hojd": 0.18
+      }
+     }
+    },
+    "mantel": {
+     "faktor": 0.48
+    }
    }
   },
   "odla": {
@@ -9068,6 +9098,11 @@
      "mun": [0.5, 0.5, 1],
      "hals": [0.5, 0.62, 0.64],
      "rygg": [0.5, 0.6, 0.38]
+    }
+   },
+   "overstyr": {
+    "mantel": {
+     "faktor": 0.75
     }
    }
   }
