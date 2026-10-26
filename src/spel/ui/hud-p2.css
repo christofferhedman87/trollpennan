@@ -77,6 +77,14 @@ body:has(.bok, .karta-lager, .meny-panel, .modal-bg) :is(.bubbla, .tred-hint) {
 body:has(.banner, .bubbla) .tred-hint {
   display: none;
 }
+.album-rutnat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+article.slimepedia-kort{display:flex;flex-direction:column;gap:6px;min-width:0;padding:6px}
+.slimepedia-huvud{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;min-width:0}
+.slimepedia-namn,.slimepedia-huvud .album-plats-tagg{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:800}
+[data-s5="favorit-piller"]{margin:0;font-size:12px;line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:2px 8px;border-radius:999px;background:#ffe7a3;color:#3b2f2f}
+[data-s5="skriv-till-djuret"]{min-height:44px;width:100%;padding:4px 6px;border:0;border-radius:12px;background:#f2b632;color:#3b2f2f;font-size:12px;font-weight:800;white-space:nowrap}
+.sol-piller{display:inline-flex;align-items:center;min-height:28px;padding:2px 8px;border-radius:999px;background:#fff6e5;color:#3b2f2f;font-weight:800;font-size:14px;white-space:nowrap;pointer-events:none;border:2px solid #e7c98a}
+.sol-piller.guld{background:#ffe08a;border-color:#f2b632}
 .npc-figur[data-v6="bengtsson-medaljong"] {
   width: 64px;
   height: 64px;

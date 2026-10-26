@@ -24,6 +24,7 @@ import { _mal, djurFarg, djurIStall, djurKrymp, djurPlats, djurVand, flygare, no
 import { sakLage } from "../landning.ts";
 import { torrKropp } from "../platsYta.ts";
 import { malTillDuk } from "../ui/hjalp.ts";
+import { SolstjarnaPlopp } from "../solstjarna.ts";
 
 function pausaAnim(): boolean {
   return typeof window !== "undefined" && window.__PAUSE_ANIM === true;
@@ -376,6 +377,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
           <ModellGren spec={{ ...spec, kropp: id }}><Suspense fallback={null}><GltfSak id={id} /></Suspense></ModellGren>
         </group>
       ))}
+      {index === 0 ? <SolstjarnaPlopp /> : null}
     </group>
   );
 }

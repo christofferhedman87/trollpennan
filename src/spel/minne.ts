@@ -91,6 +91,7 @@ export type Data = {
   /** P4b: automatisk lästrappa eller en låst nivå vald av en vuxen. */
   lasnivaVal: "auto" | 1 | 2 | 3;
   solstjarnor?: number;
+  albumNiva?: Record<string, number>;
   vaktardjur?: Record<string, { matad: number; vackt: boolean }>;
 };
 

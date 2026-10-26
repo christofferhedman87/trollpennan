@@ -6,9 +6,11 @@ import { tolkaMedReserv } from "@/tolk/reserv.ts";
 import { ordLista } from "@/tolk/tolka.ts";
 import type { Sparad } from "./brygga.ts";
 import { fyll } from "./fyll.ts";
-import { ALBUM, BYGG_ORD, KROPPAR, SKATTER, gavaOrd, sparaFoto, taBortFoto } from "./liv.ts";
+import { ALBUM, BYGG_ORD, KROPPAR, SKATTER, sparaFoto, taBortFoto } from "./liv.ts";
 import { useMinne } from "./minne.ts";
+import { nivaAvKropp } from "../persist/spara.ts";
 import { albumBild, PLATS_ANG, PLATS_AVENTYR, PLATS_GARD, platsVild } from "./v9aHjalp.ts";
+import { SlimepediaKort } from "./ui/AlbumDialog.tsx";
 
 const OMR_NAMN = Object.fromEntries(
   (omradenJson as { omraden: { id: string; namn: string }[] }).omraden.map((o) => [o.id, o.namn]),
@@ -23,10 +25,6 @@ function borRad(namn: string) {
 function stjarnor(id: string) {
   const n = ALBUM.sallsynthet.nivaer.find((x) => x.id === id);
   return "★".repeat(n?.stjarnor ?? 1);
-}
-
-function nivaNamn(id: string) {
-  return ALBUM.sallsynthet.nivaer.find((x) => x.id === id)?.namn ?? id;
 }
 
 function reservKanin(): Sparad | null {
@@ -63,6 +61,7 @@ export function AlbumVy({ stang }: { stang: () => void }) {
   const skatter = useMinne((s) => s.skatterHitta);
   const byggda = useMinne((s) => s.byggda);
   const foton = useMinne((s) => s.foton);
+  const albumSpar = useMinne((s) => s.albumNiva);
   const [flik, setFlik] = useState(ALBUM.sidor[0]!.id);
   const sidor = ALBUM.sidor;
   const vald = sidor.find((s) => s.id === flik) ?? sidor[0]!;
@@ -94,24 +93,11 @@ export function AlbumVy({ stang }: { stang: () => void }) {
           <div className="album-rutnat">
             {KROPPAR.map((id) => {
               const m = kropp[id];
+              const niva = Math.max(albumSpar?.[id] ?? 0, nivaAvKropp(m));
+              const rad = `${niva >= 1 ? "★" : "☆"} ${niva >= 2 ? "★" : "☆"} ${niva >= 3 ? "★" : "☆"}`;
               return (
-                <article key={id} className={m ? "album-ruta" : "album-ruta okand"} data-testid={`kropp-${id}`}>
-                  <AlbumMark bild={albumBild(id, "djur")} plats={PLATS_ANG}>
-                    {m ? (
-                      <>
-                        <p className="album-stj" data-testid={`stjarnor-${id}`}>
-                          {stjarnor(m.niva)}
-                        </p>
-                        <p>{m.formel}</p>
-                        <p>
-                          {nivaNamn(m.niva)} · {ALBUM.texter.hjartan} {"♥".repeat(m.hjartan)}
-                        </p>
-                        <p>{m.favorit ? fyll(ALBUM.texter.favorit, { gava: gavaOrd(m.favorit) }) : ALBUM.texter.okand_favorit}</p>
-                      </>
-                    ) : (
-                      <p>{id}</p>
-                    )}
-                  </AlbumMark>
+                <article key={id} className={m ? "album-ruta slimepedia-kort" : "album-ruta okand slimepedia-kort"} data-testid={`kropp-${id}`} data-s5="slimepedia-kort">
+                  <SlimepediaKort id={id} bild={albumBild(id, "djur")} namn={id} plats={PLATS_ANG} albumNiva={niva} stang={stang} stjarnor={<p className="album-stj" data-testid={`stjarnor-${id}`}>{rad}</p>} />
                 </article>
               );
             })}

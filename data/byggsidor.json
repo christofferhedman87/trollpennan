@@ -107,6 +107,20 @@
     "kristall",
     "guld"
    ]
+  },
+  {
+   "id": "solgard",
+   "titel": "Solgården",
+   "kostnad": 8,
+   "beskrivning": "Soltak till hagen, Musikfontän, Kristall-lykta och Studsbolls-korg. Låses upp med Solstjärnor.",
+   "exempel": "ett soltak till hagen",
+   "ord": [
+    "hage-soltak",
+    "musikfontan",
+    "kristall-lykta",
+    "studsbolls-korg"
+   ],
+   "material": []
   }
  ],
  "last_ord": {
