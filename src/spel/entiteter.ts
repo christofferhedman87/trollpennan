@@ -16,6 +16,8 @@ export type Entitet = {
   kategori: string;
   /** Nyckel i tillgangar.json, eller null om djuret bara finns som kodritad form. */
   modell: string | null;
+  /** Rundad CC0-modell (s-djur-*). Saknas fältet ritas modell som förut. */
+  rundModell?: string | null;
   /** Önskad höjd i ängens enheter (krävs när modell finns). */
   malhojd?: number;
   palett?: Palett;
@@ -80,6 +82,17 @@ export function harModell(kropp: string): boolean {
 export function modellUrl(kropp: string): string | null {
   const m = ENTITETER[kropp]?.modell;
   return (m && TILLGANGAR[m]?.fil) || null;
+}
+
+/** Rundad djurmodell om den finns, annars samma fil som modellUrl. Ändrar inte modellUrl. */
+export function djurGltfUrl(kropp: string): string | null {
+  const rm = ENTITETER[kropp]?.rundModell;
+  if (rm && TILLGANGAR[rm]?.fil) return TILLGANGAR[rm]!.fil;
+  return modellUrl(kropp);
+}
+
+export function harDjurGltf(kropp: string): boolean {
+  return djurGltfUrl(kropp) !== null;
 }
 
 export type StorlekKlass = { id: string; tak: number; zon: "bak"; kant?: number; rad?: "bortom"; max_halv?: number };
@@ -262,6 +275,7 @@ export function kontrolleraEntiteter(): string[] {
     if (!TYPER.includes(e.typ)) fel.push(`${id}: okänd typ ${String(e.typ)}`);
     if (!e.kategori) fel.push(`${id}: saknar kategori`);
     if (e.modell !== null && !TILLGANGAR[e.modell]?.fil) fel.push(`${id}: modell "${e.modell}" finns inte som fil i tillgangar.json`);
+    if (e.rundModell && !TILLGANGAR[e.rundModell]?.fil) fel.push(`${id}: rundModell "${e.rundModell}" finns inte som fil i tillgangar.json`);
     if (e.modell !== null && !(typeof e.malhojd === "number" && e.malhojd > 0)) fel.push(`${id}: modell kräver malhojd > 0`);
     if (!hex.test(e.art)) fel.push(`${id}: art är ingen hexfärg`);
     if (e.standardfarg !== undefined && !hex.test(e.standardfarg)) fel.push(`${id}: standardfarg är ingen hexfärg`);

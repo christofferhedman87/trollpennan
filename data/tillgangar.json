@@ -12898,6 +12898,22 @@
       "bytes": 5404,
       "stil": "nära",
       "inlagd": "V7b"
-    }
+    },
+    "s-djur-kanin-rund": { "fil": "/models/bulk/s-djur-kanin-rund-gobkit-cc0.glb", "upphov": "Cem (Gobkit) / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/d3G9v7qV4h" },
+    "s-djur-hund-shiba": { "fil": "/models/bulk/s-djur-hund-shiba-quaternius-cc0.glb", "upphov": "Quaternius / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/5R1f9tW3xP" },
+    "s-djur-hund-corgi": { "fil": "/models/bulk/s-djur-hund-corgi-gobkit-cc0.glb", "upphov": "Cem (Gobkit) / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/9K4p2mX8yL" },
+    "s-djur-uggla-rund": { "fil": "/models/bulk/s-djur-uggla-rund-gobkit-cc0.glb", "upphov": "Cem (Gobkit) / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/7J2n5vB1zQ" },
+    "s-djur-kyckling-rund": { "fil": "/models/bulk/s-djur-kyckling-rund-quaternius-cc0.glb", "upphov": "Quaternius / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/3H8k6cN9wR" },
+    "s-djur-fisk-guldfisk": { "fil": "/models/bulk/s-djur-fisk-guldfisk-quaternius-cc0.glb", "upphov": "Quaternius / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/2F6g4xM7tS" },
+    "s-djur-gris-rund": { "fil": "/models/bulk/s-djur-gris-rund-quaternius-cc0.glb", "upphov": "Quaternius / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/8D1b3zL5pV" },
+    "s-djur-ko-rund": { "fil": "/models/bulk/s-djur-ko-rund-quaternius-cc0.glb", "upphov": "Quaternius / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/4C9v7nK2mW" },
+    "s-djur-hjort-rund": { "fil": "/models/bulk/s-djur-hjort-rund-quaternius-cc0.glb", "upphov": "Quaternius / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/6B5x1jH8qY" },
+    "s-djur-panda-rund": { "fil": "/models/bulk/s-djur-panda-rund-quaternius-cc0.glb", "upphov": "Quaternius / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/1A3c9gF4rZ" },
+    "s-djur-krabba-rund": { "fil": "/models/bulk/s-djur-krabba-rund-quaternius-cc0.glb", "upphov": "Quaternius / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/9Z7m2dE6sX" },
+    "s-djur-vildsvin-rund": { "fil": "/models/bulk/s-djur-vildsvin-rund-gobkit-cc0.glb", "upphov": "Cem (Gobkit) / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/5Y4k8bD3tC" },
+    "s-djur-papegoja-rund": { "fil": "/models/bulk/s-djur-papegoja-rund-gobkit-cc0.glb", "upphov": "Cem (Gobkit) / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/7X2j6vC1uB" },
+    "s-djur-ekorre-rund": { "fil": "/models/bulk/s-djur-ekorre-rund-gobkit-cc0.glb", "upphov": "Cem (Gobkit) / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/3W8h4nA9vN" },
+    "s-djur-haj-rund": { "fil": "/models/bulk/s-djur-haj-rund-quaternius-cc0.glb", "upphov": "Quaternius / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/2V6f1mZ7wM" },
+    "s-djur-dinosaurie-rund": { "fil": "/models/bulk/s-djur-dinosaurie-rund-quaternius-cc0.glb", "upphov": "Quaternius / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/8U1d9kY5xQ" }
   }
 }

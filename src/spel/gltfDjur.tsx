@@ -13,10 +13,11 @@ import { mjukrundaScen } from "./mjukGeometri.ts";
 
 const LJUSTINT = ljusTint(MILJO.ljus, MILJO.farg.ljusforstark);
 import type { Sparad } from "./brygga.ts";
-import { arPlagg, entitet, forladdaUrls, framVinkel, modellUrl as modellUrlAv, skalaFor } from "./entiteter.ts";
+import { arPlagg, djurGltfUrl, entitet, forladdaUrls, framVinkel, modellUrl as modellUrlAv, skalaFor } from "./entiteter.ts";
 import { forladdaNarLedig } from "./modeller/forladda.ts";
 import { DjurModellGren } from "./modeller/StjarnPuffReserv.tsx";
-import { faestPlaggKlon, faestTillbehor } from "./tillbehor/index.ts";
+import { AnsiktsUttryck } from "./tillbehor/AnsiktsUttryck.tsx";
+import { faestPlaggKlon, faestTillbehor, type Ankare } from "./tillbehor/index.ts";
 
 /** Kodbyggd reserv om en GLB saknas. Komponenten skickas in utifrån så den här filen inte drar in hela ängen. */
 export type DjurHumör = "glad" | "hungrig" | "fortjust" | "somnig" | "busig";
@@ -453,14 +454,16 @@ function GltfPlagg({ rot, kropp, id, farg }: { rot: THREE.Object3D; kropp: strin
   return null;
 }
 
-function GltfInnehall({ klon, spec, fram }: { klon: THREE.Object3D; spec: Sparad; fram: number }) {
+function GltfInnehall({ klon, spec, fram, signal, index }: { klon: THREE.Object3D; spec: Sparad; fram: number; signal: { current: DjurSignal }; index: number }) {
   const glbPlagg = useMemo(
     () => spec.tillbehor.filter((t) => t.id !== spec.kropp && plaggModellUrl(normaliseraPlaggId(t.id)) != null),
     [spec.tillbehor, spec.kropp],
   );
+  const ankare = (klon.userData.ankare as Ankare | undefined) ?? null;
   return (
     <group rotation={[0, fram, 0]}>
       <primitive object={klon} />
+      {entitet(spec.kropp)?.typ === "djur" ? <AnsiktsUttryck ankare={ankare} klon={klon} signal={signal} index={index} /> : null}
       {glbPlagg.map((t) => (
         <DjurModellGren key={t.id} reserv={null}>
           <Suspense fallback={null}>
@@ -474,8 +477,8 @@ function GltfInnehall({ klon, spec, fram }: { klon: THREE.Object3D; spec: Sparad
 
 forladdaNarLedig(forladdaUrls());
 
-export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: DjurSignal } }) {
-  const url = modellUrlAv(spec.kropp) ?? modellUrlAv("kanin")!;
+export function GltfDjur({ spec, signal, index = 0 }: { spec: Sparad; signal: { current: DjurSignal }; index?: number }) {
+  const url = djurGltfUrl(spec.kropp) ?? djurGltfUrl("kanin")!;
   const gltf = useGLTF(url);
   const rot = useRef<THREE.Group>(null);
   const inre = useRef<THREE.Group>(null);
@@ -530,14 +533,15 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
     const k = spec.kropp;
     const skapa = k === "drake" ? "Fast_Flying" : k === "häst" ? "Jump_Start" : k === "groda" ? "" : "dance";
     const idle = k === "drake" ? "Flying_Idle" : k === "häst" ? "Idle" : "idle";
-    if (skapa) spela(skapa, k !== "drake");
+    const startad = skapa ? spela(skapa, k !== "drake") : false;
     const ms = k === "drake" ? 1000 : k === "häst" ? 700 : 0;
     let timer = 0;
     const tillIdle = () => {
       fas.current = "idle";
       if (k !== "groda") spela(idle, false);
     };
-    if (ms > 0) timer = window.setTimeout(tillIdle, ms);
+    if (!startad) tillIdle();
+    else if (ms > 0) timer = window.setTimeout(tillIdle, ms);
     const onFin = () => {
       if (fas.current === "skapas" && ms === 0) tillIdle();
       else if (fas.current === "klapp") {
@@ -604,7 +608,7 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
   return (
     <group ref={rot}>
       <group ref={inre}>
-        <GltfInnehall klon={klon} spec={spec} fram={fram} />
+        <GltfInnehall klon={klon} spec={spec} fram={fram} signal={signal} index={index} />
       </group>
     </group>
   );
