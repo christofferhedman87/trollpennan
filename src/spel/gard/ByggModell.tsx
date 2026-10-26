@@ -3,7 +3,7 @@ import { useThree } from "@react-three/fiber";
 import { Component, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
 import type { Object3D } from "three";
 import gard3d from "../../../data/gard-3d.json" with { type: "json" };
-import type { SparatBygge } from "../bygge.ts";
+import { fonsterAntalForBygge, takFargForBygge, type SparatBygge } from "../bygge.ts";
 import { belysScen } from "../belys.ts";
 import { brygga } from "../brygga.ts";
 import { arKantBygge, cellTillVarld, kantNyckel, kantTillVarld, xyTillCell } from "./rutnat.ts";
@@ -11,6 +11,7 @@ import {
   arReserv,
   byggRad,
   egnaMaterial,
+  inspekteraHus3D,
   kantMitt,
   kanterForEtt,
   passaByggnad,
@@ -42,11 +43,19 @@ function KlonadScen({
   malhojd,
   fargHex,
   passa,
+  takFargHex = null,
+  fonsterAntal = null,
+  uid = null,
+  klickbar = false,
 }: {
   url: string;
   malhojd: number;
   fargHex: string | null;
   passa: boolean;
+  takFargHex?: string | null;
+  fonsterAntal?: number | null;
+  uid?: string | null;
+  klickbar?: boolean;
 }) {
   const gltf = useGLTF(url);
   const [scen, setScen] = useState<Object3D | null>(null);
@@ -55,11 +64,28 @@ function KlonadScen({
     const k = gltf.scene.clone(true);
     // Staket behåller lokal z = -0.5. Bara byggnader och höbalar passas in.
     if (passa) passaByggnad(k, malhojd);
-    egnaMaterial(k, fargHex);
-    skuggaUtanTraff(k);
+    egnaMaterial(k, fargHex, takFargHex, fonsterAntal);
+    if (uid && window.__gard3d) {
+      const diag = inspekteraHus3D(k);
+      const gard = window.__gard3d;
+      window.__gard3d = {
+        ...gard,
+        byggen: gard.byggen.map((x) =>
+          x.uid === uid
+            ? {
+                ...x,
+                wallsColorHex: diag.wallsColorHex ?? x.wallsColorHex,
+                roofColorHex: diag.roofColorHex ?? x.roofColorHex,
+                synligaFonsterNoder: diag.wallsColorHex ? diag.synligaFonsterNoder : x.synligaFonsterNoder,
+              }
+            : x,
+        ),
+      };
+    }
+    skuggaUtanTraff(k, klickbar);
     setScen(k);
     return () => slappMaterial(k);
-  }, [gltf.scene, malhojd, fargHex, passa]);
+  }, [gltf.scene, malhojd, fargHex, passa, takFargHex, fonsterAntal, uid, klickbar]);
   if (!scen) return null;
   return <primitive object={scen} />;
 }
@@ -157,13 +183,9 @@ function StaketBit({ b, flyttar }: { b: SparatBygge; flyttar: boolean }) {
             <group position={[v.wx, 0, v.wz]} rotation={[0, v.rotY, 0]}>
               <Suspense fallback={<StaketReserv farg={farg} />}>
                 <ModellGren reserv={<StaketReserv farg={farg} />}>
-                  <KlonadScen url={fil} malhojd={0} fargHex={b.fargHex} passa={false} />
+                  <KlonadScen url={fil} malhojd={0} fargHex={b.fargHex} passa={false} klickbar />
                 </ModellGren>
               </Suspense>
-              <mesh position={[0, 0.35, -0.5]}>
-                <boxGeometry args={[0.96, 0.7, 0.28]} />
-                <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-              </mesh>
             </group>
           </TryckYta>
         );
@@ -180,6 +202,8 @@ function HusBit({ b, flyttar }: { b: SparatBygge; flyttar: boolean }) {
   const cell = xyTillCell(b.x, b.y);
   const { wx, wz } = cellTillVarld(cell.gx, cell.gz);
   const reserv = <ReservForm slag={slag} farg={farg} hojd={hojd} />;
+  const storlekSkala = b.storlekId === "liten" ? 0.78 : b.storlekId === "stor" ? 1.28 : 1;
+  if (!rad?.fil) return null;
   return (
     <TryckYta
       uid={b.uid}
@@ -188,20 +212,21 @@ function HusBit({ b, flyttar }: { b: SparatBygge; flyttar: boolean }) {
       punkt={[wx, hojd * 0.65, wz]}
       flyttar={flyttar}
     >
-      <group position={[wx, 0, wz]}>
-        {rad?.fil ? (
-          <Suspense fallback={reserv}>
-            <ModellGren reserv={reserv}>
-              <KlonadScen url={rad.fil} malhojd={hojd} fargHex={b.fargHex} passa />
-            </ModellGren>
-          </Suspense>
-        ) : (
-          reserv
-        )}
-        <mesh position={[0, hojd / 2, 0]}>
-          <boxGeometry args={[0.92, Math.max(hojd, 0.4), 0.92]} />
-          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-        </mesh>
+      <group position={[wx, 0, wz]} scale={storlekSkala}>
+        <Suspense fallback={reserv}>
+          <ModellGren reserv={reserv}>
+            <KlonadScen
+              url={rad.fil}
+              malhojd={hojd}
+              fargHex={b.fargHex}
+              takFargHex={takFargForBygge(b)}
+              fonsterAntal={fonsterAntalForBygge(b)}
+              uid={b.uid}
+              klickbar
+              passa
+            />
+          </ModellGren>
+        </Suspense>
       </group>
     </TryckYta>
   );

@@ -10,6 +10,7 @@ import { passarDjur, TEXTER_AV } from "../aventyr.ts";
 import { geGavor, oppnaMed, oppnaOn, skickaDjur } from "../avflode.ts";
 import { brygga } from "../brygga.ts";
 import { bestamdHem, franTolk } from "../bygge.ts";
+import { appliceraByggMening, tolkaByggMening } from "../gard/byggTolk.ts";
 import { arKantBygge, ledigCellPlats, ledigKantPlats } from "../gard/rutnat.ts";
 import { fyll } from "../fyll.ts";
 import { ALBUM, arSammansatt, BYGG_ORD, geEgenGava, komIhagDjur, noteraSkriv, poangAv, taggarFor } from "../liv.ts";
@@ -40,7 +41,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
     setForslag(null);
     setBehover(null);
   }
-  function hanteraBygg(utfall: Extract<ReturnType<typeof tolkaBygg>, { typ: "bygge" }>) {
+  function hanteraBygg(utfall: Extract<ReturnType<typeof tolkaBygg>, { typ: "bygge" }>, mening = "") {
     useMinne.getState().sparaOkanda(utfall.okanda); rostKo.handling(); rensaVidHandling();
     const agda = useMinne.getState().byggSidor;
     const las = utfall.byggen.map((b) => lastBygge(b, agda)).filter((x) => x != null);
@@ -56,30 +57,47 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
       return;
     }
     const om = omUidRef.current;
-    const behov = om ? Math.max(0, utfall.byggen.length - 1) : utfall.byggen.length;
+    const ensam = utfall.byggen.length === 1 ? utfall.byggen[0] : undefined;
+    const bef = !om && ensam && ensam.antal === 1 ? useMinne.getState().garden.find((x) => x.bygg === ensam.bygg) : undefined;
+    const harAttr = !!ensam && (ensam.adj.length > 0 || ensam.delar.length > 0 || !!ensam.material);
+    const uppdatera = !!bef && harAttr;
+    const behov = om ? Math.max(0, utfall.byggen.length - 1) : uppdatera ? 0 : utfall.byggen.length;
     const lediga = BYGG.max_pa_garden - useMinne.getState().garden.length;
     if (behov > lediga) {
       visaBanner(TEXTER.lada.full, "ovr", "tapp");
       return;
     }
     visaPlatsRen("gard");
-    const redan = useMinne.getState().garden.map((p) => ({ x: p.x, y: p.y, bygg: p.bygg, antal: p.antal }));
-    const gjorda = utfall.byggen.map((b) => {
-      const pos = arKantBygge(b.bygg) ? ledigKantPlats(redan) : ledigCellPlats(redan);
-      redan.push({ x: pos.x, y: pos.y, bygg: b.bygg, antal: b.antal });
-      return franTolk(b, formelBygg(b), pos.x, pos.y);
-    });
-    if (om && gjorda[0]) {
-      useMinne.getState().bytBygge(om, gjorda[0]);
-      if (gjorda.length > 1) useMinne.getState().laggByggen(gjorda.slice(1));
-      omUidRef.current = null;
-    } else {
-      useMinne.getState().laggByggen(gjorda);
+    let gjorda: ReturnType<typeof franTolk>[] = [];
+    if (uppdatera && bef) {
+      const tolkad = tolkaByggMening(mening || utfall.formel, bef.bygg);
+      if (tolkad) {
+        const uppdaterad = appliceraByggMening(bef, tolkad);
+        useMinne.getState().bytBygge(bef.uid, uppdaterad);
+        gjorda = [uppdaterad];
+      }
     }
-    const forsta = useMinne.getState().garden.find((g) => g.uid === gjorda[0]?.uid) ?? gjorda[0];
-    if (forsta) {
-      const rad = TEXTER.byggt[Math.floor(Math.random() * TEXTER.byggt.length)] ?? TEXTER.byggt[0]!;
-      visaBubbla(fyll(rad, { formel: utfall.formel }), forsta.x, Math.max(0.12, forsta.y - 0.16), false, true, true);
+    if (!gjorda.length) {
+      const redan = useMinne.getState().garden.map((p) => ({ x: p.x, y: p.y, bygg: p.bygg, antal: p.antal }));
+      gjorda = utfall.byggen.map((b) => {
+        const pos = arKantBygge(b.bygg) ? ledigKantPlats(redan) : ledigCellPlats(redan);
+        redan.push({ x: pos.x, y: pos.y, bygg: b.bygg, antal: b.antal });
+        return franTolk(b, formelBygg(b), pos.x, pos.y);
+      });
+      if (om && gjorda[0]) {
+        useMinne.getState().bytBygge(om, gjorda[0]);
+        if (gjorda.length > 1) useMinne.getState().laggByggen(gjorda.slice(1));
+        omUidRef.current = null;
+      } else {
+        useMinne.getState().laggByggen(gjorda);
+      }
+    }
+    const visat = useMinne.getState().garden.find((g) => g.uid === gjorda[0]?.uid) ?? gjorda[0];
+    if (visat) {
+      const mall = TEXTER.byggt.find((r) => r.startsWith("Klart!") && r.includes("{formel}")) ?? TEXTER.byggt[0]!;
+      const klarText = fyll(mall, { formel: visat.formel });
+      visaBanner(klarText, "ovr", "tapp");
+      visaBubbla(klarText, visat.x, Math.max(0.18, visat.y - 0.14), false, true, true, "tapp");
       ljud.uppfylld();
     }
     setByggPuff(null);
@@ -312,8 +330,16 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
         return;
       }
       if (bygg.typ === "bygge") {
-        hanteraBygg(bygg);
+        hanteraBygg(bygg, trim);
         return;
+      }
+      const sista = useMinne.getState().garden.at(-1);
+      if (sista) {
+        const extra = tolkaByggMening(trim, sista.bygg);
+        if (extra) {
+          hanteraBygg({ typ: "bygge", formel: extra.formel, byggen: [extra.tolk], okanda: [] }, trim);
+          return;
+        }
       }
     }
     hanteraDjur(trim, opt);

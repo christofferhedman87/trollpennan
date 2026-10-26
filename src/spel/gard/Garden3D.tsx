@@ -2,6 +2,8 @@ import { Bounds, OrthographicCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Component, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
+import gard3dJson from "../../../data/gard-3d.json" with { type: "json" };
+import { fonsterAntalForBygge, takFargForBygge } from "../bygge.ts";
 import { brygga } from "../brygga.ts";
 import { KV, MILJO } from "../miljo.ts";
 import { useMinne } from "../minne.ts";
@@ -30,7 +32,21 @@ import {
 export type Gard3dDiag = {
   aktiv: boolean;
   celler: { bredd: number; djup: number };
-  byggen: { uid: string; bygg: string; cell: CellPlats | null; kant: KantPlats | null }[];
+  byggen: {
+    uid: string;
+    bygg: string;
+    cell: CellPlats | null;
+    kant: KantPlats | null;
+    modellFil: string | null;
+    fargHex: string | null;
+    takFargHex: string | null;
+    wallsColorHex: string;
+    roofColorHex: string;
+    fonsterAntal: number;
+    synligaFonsterNoder: string[];
+    storlekId: "liten" | "stor" | null;
+    formel: string;
+  }[];
   kanter: KantPlats[];
   hagar: SlutenHage[];
   djur: GardDjurSnap[];
@@ -189,12 +205,25 @@ export function Garden3D() {
     window.__gard3d = {
       aktiv: true,
       celler: { bredd: GARD_BREDD, djup: GARD_DJUP },
-      byggen: garden.map((b) => ({
-        uid: b.uid,
-        bygg: b.bygg,
-        cell: arKantBygge(b.bygg) ? null : xyTillCell(b.x, b.y),
-        kant: arKantBygge(b.bygg) ? xyTillKant(b.x, b.y) : null,
-      })),
+      byggen: garden.map((b) => {
+        const fonsterAntal = fonsterAntalForBygge(b);
+        const takFargHex = takFargForBygge(b);
+        return {
+          uid: b.uid,
+          bygg: b.bygg,
+          cell: arKantBygge(b.bygg) ? null : xyTillCell(b.x, b.y),
+          kant: arKantBygge(b.bygg) ? xyTillKant(b.x, b.y) : null,
+          modellFil: gard3dJson.byggnader[b.bygg as keyof typeof gard3dJson.byggnader]?.fil ?? null,
+          fargHex: b.fargHex,
+          takFargHex,
+          wallsColorHex: (b.fargHex ?? "#e53935").toLowerCase(),
+          roofColorHex: (takFargHex ?? b.fargHex ?? "#8d6e63").toLowerCase(),
+          fonsterAntal,
+          synligaFonsterNoder: (["Window_1", "Window_2", "Window_3", "Window_Side"] as const).filter((_, i) => fonsterAntal >= i + 1),
+          storlekId: b.storlekId ?? null,
+          formel: b.formel,
+        };
+      }),
       kanter,
       hagar,
       djur: Array.isArray(tidigare) ? tidigare : [],

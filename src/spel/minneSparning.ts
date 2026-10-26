@@ -78,6 +78,13 @@ export function lasIn(): Data {
 export function franSparning(raw: unknown): Data {
   try {
     const bas = tom();
+    if (objekt(raw) && raw.version === undefined && typeof raw.introSett === "boolean") {
+      raw = {
+        version: 2,
+        introSedd: raw.introSett,
+        garden: Array.isArray(raw.garden) ? raw.garden.filter(arBygge) : [],
+      };
+    }
     let indata = raw;
     if (objekt(raw) && raw.version === undefined && (typeof raw.introSedd === "boolean" || typeof raw.introSett === "boolean")) {
       indata = { version: 2, ...raw, introSedd: typeof raw.introSedd === "boolean" ? raw.introSedd : Boolean(raw.introSett) };

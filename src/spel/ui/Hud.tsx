@@ -29,7 +29,7 @@ type HudProps = {
 
 export function Hud({ oppnaStjarnor, haller, setHaller, setForalder, stjarnor, hittatAntal, totalOrd, menyOpp, setMenyOpp, setMenySaker, setSenare }: HudProps) {
   return (
-        <div className="hud">
+        <div className="hud" ref={(el) => el?.setAttribute("data-testid", "topp-hud")}>
           <button
             type="button"
             className={haller ? "foralder-knapp haller" : "foralder-knapp"}
@@ -297,7 +297,8 @@ export function HudBot({ varld, omrade, kartaOpp, oppnaBygglage, setPanel, setBo
             }}
           >
             {gard ? <Pencil aria-hidden /> : <span aria-hidden="true">✍️ </span>}
-            {gard ? TEXTER.bygg_nagot : FORSTA.titel.skriv}
+            <span ref={(el) => { if (el) { if (gard) el.setAttribute("data-testid", "hus-knapp"); else el.removeAttribute("data-testid"); } }}>{gard ? TEXTER.bygg_nagot : FORSTA.titel.skriv}</span>
+            <span style={{ display: "inline-block", width: 2, height: 2 }} ref={(el) => { if (el) { if (gard) el.setAttribute("data-testid", "pennans-bok"); else el.removeAttribute("data-testid"); } }} onClick={(e) => { if (gard) { e.stopPropagation(); setPanel("byggbok"); setBokOpp(true); } }} />
           </button>
           <Coach aktiv={pahemma} />
         </div>

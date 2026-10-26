@@ -18,6 +18,7 @@ export type SparatBygge = {
   monster: string | null;
   material: string | null;
   delar: ByggDelSpar[];
+  storlekId?: "liten" | "stor" | null;
   x: number;
   y: number;
   boende: string[];
@@ -26,6 +27,8 @@ export type SparatBygge = {
 export function franTolk(b: ByggeTolk, formel: string, x: number, y: number): SparatBygge {
   const farg = b.adj.find((a) => a.klass === "farg");
   const monster = b.adj.find((a) => a.klass === "monster");
+  const sid = b.adj.find((a) => a.klass === "storlek")?.id;
+  const storlekId = sid === "liten" || sid === "stor" ? sid : null;
   return {
     uid: crypto.randomUUID(),
     bygg: b.bygg,
@@ -42,10 +45,20 @@ export function franTolk(b: ByggeTolk, formel: string, x: number, y: number): Sp
       fargHex: fargHexFor(d.adj.find((a) => a.klass === "farg")?.id ?? null),
       material: d.material,
     })),
+    storlekId,
     x,
     y,
     boende: [],
   };
+}
+
+export function takFargForBygge(b: Pick<SparatBygge, "delar">): string | null {
+  return b.delar.find((d) => d.id === "tak")?.fargHex ?? null;
+}
+
+export function fonsterAntalForBygge(b: Pick<SparatBygge, "delar">): number {
+  const d = b.delar.find((x) => x.id === "fönster");
+  return d ? d.antal : 3;
 }
 
 export function bestamdHem(b: SparatBygge): string {

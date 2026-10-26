@@ -225,6 +225,18 @@ export function tolkaBygg(fras: string): ByggUtfall {
       i += 1;
       continue;
     }
+    if (w === "utan" && cur.bygg) {
+      mode = "del";
+      pendAntal = { n: 0, w };
+      i += 1;
+      continue;
+    }
+    if ((w === "inga" || w === "noll") && (mode === "del" || cur.bygg)) {
+      mode = "del";
+      pendAntal = { n: 0, w };
+      i += 1;
+      continue;
+    }
     if (w === "av") {
       const id = t[i + 1];
       const m = id ? mat.get(id) ?? matForled.get(id) : undefined;
@@ -326,8 +338,10 @@ export function formelBygg(b: ByggeTolk): string {
   const art = pl ? b.antalOrd || "" : bo.genus;
   let s = [art, adjs, ordet].filter(Boolean).join(" ");
   if (b.material && !(b.ord || "").includes(b.material)) s += " av " + b.material;
-  if (b.delar.length) {
-    const parts = b.delar.map((d) => {
+  const medDelar = b.delar.filter((d) => d.antal > 0);
+  const utanDelar = b.delar.filter((d) => d.antal === 0);
+  if (medDelar.length) {
+    const parts = medDelar.map((d) => {
       const info = BYGG.delar.find((x) => x.id === d.del)!;
       const dpl = d.antal > 1;
       const a = d.adj.map((x) => bojBygg(x.id, info.genus, dpl)).join(" ");
@@ -336,6 +350,16 @@ export function formelBygg(b: ByggeTolk): string {
       return [num, a, namn].filter(Boolean).join(" ") + (d.material ? " av " + d.material : "");
     });
     s += " med " + (parts.length > 1 ? parts.slice(0, -1).join(", ") + " och " + parts[parts.length - 1] : parts[0]);
+  }
+  if (utanDelar.length) {
+    const utanStr = utanDelar
+      .map((d) => {
+        const info = BYGG.delar.find((x) => x.id === d.del);
+        const ord = info ? info.former[0]! : d.del;
+        return "utan " + ord;
+      })
+      .join(" och ");
+    s += medDelar.length ? " och " + utanStr : " " + utanStr;
   }
   return s;
 }
