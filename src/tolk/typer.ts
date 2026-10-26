@@ -137,6 +137,8 @@ export type Varelse = {
   overraskningar: { effekt: string; text: string }[];
   /** Okända ord som ägg. Vid kropp "agg" är första posten själva kroppen, övriga svävar ovanför. */
   reserv?: ReservDel[];
+  /** Barnets eget namn, t.ex. ur "en katt som heter Misse". */
+  smeknamn?: string;
 };
 
 export type ForslagKort = { id: string; visa: string };

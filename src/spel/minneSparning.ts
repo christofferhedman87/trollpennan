@@ -204,6 +204,7 @@ export function spara(d: Store) {
     franStall: _ao,
     sattGataId: _ap,
     sattLasniva: _as,
+    bytSmeknamn: _bt,
     ...data
   } = d;
   skrivLokalt(() => window.localStorage, { ...data, version: 2 });
@@ -299,4 +300,22 @@ export function kallaHitSpar(
     }
   }
   return { patch: { ang, sovande }, somnad, visad: ang[ang.length - 1]! };
+}
+
+/** D3: formatera och skriv barnets namn på djuret i alla listor och i albumet. */
+export function bytSmeknamnSpar(state: Data, uid: string, smeknamn: string): { patch: Partial<Data>; djur: Sparad } | null {
+  const rent = smeknamn.trim().slice(0, 20);
+  const namn = rent ? rent.charAt(0).toLocaleUpperCase("sv") + rent.slice(1) : undefined;
+  const med = (d: Sparad): Sparad => (d.uid === uid ? { ...d, smeknamn: namn } : d);
+  const ang = state.ang.map(med);
+  const sovande = state.sovande.map(med);
+  const stall = state.stall.map(med);
+  const hemma = state.hemma.map((h) => (h.spec.uid === uid ? { ...h, spec: med(h.spec) } : h));
+  const platsSkapelser: Data["platsSkapelser"] = {};
+  for (const [k, lista] of Object.entries(state.platsSkapelser)) platsSkapelser[k] = lista.map(med);
+  const djur = ang.find((d) => d.uid === uid) ?? Object.values(platsSkapelser).flat().find((d) => d.uid === uid) ?? hemma.find((h) => h.spec.uid === uid)?.spec ?? sovande.find((d) => d.uid === uid) ?? stall.find((d) => d.uid === uid);
+  if (!djur) return null;
+  const fore = state.albumKropp[djur.kropp];
+  const albumKropp = fore ? { ...state.albumKropp, [djur.kropp]: { ...fore, smeknamn: namn } } : state.albumKropp;
+  return { patch: { ang, platsSkapelser, hemma, sovande, stall, albumKropp }, djur };
 }

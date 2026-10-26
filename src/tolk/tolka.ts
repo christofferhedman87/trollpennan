@@ -1095,9 +1095,23 @@ function overraskningar(b: Bygg): { effekt: string; text: string }[] {
   return träff;
 }
 
+const NAMN_RE = /\b(?:som\s+heter|heter|som\s+kallas|kallas(?:\s+för)?|vid\s+namn)\s+([a-zåäöA-ZÅÄÖ]{2,20})\b/i;
+
+/** Plockar "som heter Misse" ur meningen innan tokenisering, så namnet inte blir okänt ord eller reservägg. */
+export function extraheraSmeknamn(raw: string): { renText: string; smeknamn?: string } {
+  const m = NAMN_RE.exec(raw);
+  if (!m?.[1]) return { renText: raw };
+  const namnRaw = m[1];
+  const smeknamn = namnRaw.charAt(0).toLocaleUpperCase("sv") + namnRaw.slice(1);
+  const fore = raw.slice(0, m.index).replace(/\s+(?:och|som)\s*$/i, " ");
+  const efter = raw.slice(m.index + m[0].length);
+  return { renText: `${fore} ${efter}`.replace(/\s+/g, " ").trim(), smeknamn };
+}
+
 export function tolka(raw: string, opts: TolkaOpts = {}): Utfall {
-  if (arSparrat(raw)) return { typ: "sparr", text: SPARR_TEXT };
-  const tokens = tokensAv(raw);
+  const { renText, smeknamn } = extraheraSmeknamn(raw);
+  if (arSparrat(raw) || arSparrat(renText)) return { typ: "sparr", text: SPARR_TEXT };
+  const tokens = tokensAv(renText);
   if (arSparrat(tokens.join(" "))) return { typ: "sparr", text: SPARR_TEXT };
   if (!tokens.length) {
     return { typ: "behover_djur", text: BEHOVER_TEXT, djur: kortDjur(3), okanda: [], meddelanden: [] };
@@ -1134,6 +1148,7 @@ export function tolka(raw: string, opts: TolkaOpts = {}): Utfall {
     formel,
     beskrivning: formel.replace(/^(en|ett|två|tre|fyra|fem|sex|sju|åtta|nio|tio)\s+/, ""),
     overraskningar: overraskningar(byggd),
+    ...(smeknamn ? { smeknamn } : {}),
   };
   const kalla = opts.kalla ?? "skriv";
   const inte = new Set(opts.inteGuld ?? []);

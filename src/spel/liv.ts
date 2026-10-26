@@ -50,9 +50,9 @@ export type Liv = {
   hjartan: number;
 };
 
-export type Foto = { id: string; formel: string; kropp: string; niva: string; poang: number };
+export type Foto = { id: string; formel: string; kropp: string; niva: string; poang: number; smeknamn?: string };
 export type MossaPost = { id: string; klar: boolean };
-export type KroppMinn = { formel: string; poang: number; niva: string; favorit?: string; hjartan: number };
+export type KroppMinn = { formel: string; poang: number; niva: string; favorit?: string; hjartan: number; smeknamn?: string };
 
 export type Handelse = {
   taggar?: Set<string>;
@@ -317,8 +317,8 @@ export function komIhagDjur(v: Varelse & { uid: string }): string | null {
   const fore = s.albumKropp[v.kropp];
   const bast =
     !fore || poang >= fore.poang
-      ? { formel: v.formel, poang, niva: niva.id, favorit: fore?.favorit, hjartan: Math.max(fore?.hjartan ?? 0, liv.hjartan) }
-      : fore;
+      ? { formel: v.formel, poang, niva: niva.id, favorit: fore?.favorit, hjartan: Math.max(fore?.hjartan ?? 0, liv.hjartan), smeknamn: v.smeknamn ?? fore?.smeknamn }
+      : v.smeknamn ? { ...fore, smeknamn: v.smeknamn } : fore;
   const sedda = new Set(s.seddaNiva);
   let ny: string | null = null;
   if (!sedda.has(niva.id) && niva.id !== "vanlig") {
@@ -471,7 +471,7 @@ export function sparaFoto(v: Sparad): string {
   const poang = poangAv(v);
   const niva = nivaAv(poang);
   useMinne.setState({
-    foton: [...s.foton, { id: crypto.randomUUID(), formel: v.formel, kropp: v.kropp, niva: niva.id, poang }],
+    foton: [...s.foton, { id: crypto.randomUUID(), formel: v.formel, kropp: v.kropp, niva: niva.id, poang, smeknamn: v.smeknamn }],
   });
   return ALBUM.texter.foto_klart;
 }

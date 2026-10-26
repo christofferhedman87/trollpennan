@@ -81,19 +81,34 @@ function spelaDelar(text: string, delar: RostDel[], _sv: SpeechSynthesisVoice | 
       } catch {
         steg();
       }
-    } else if ("dynamisk" in d) {
-      // Okända ord och ordägg läses inte upp med webbläsarens röst. Förinspelade delar spelas som vanligt.
-      steg();
     } else steg();
   };
   steg();
 }
 
+/** D7: vanliga utrop läses som en sammanhållen inspelning. Bannern behåller barnets egen text. */
+export function sammanhallenRostText(text: string): string {
+  const s = text.trim();
+  if (/^(?:Guldord!\s+Du skrev .+ alldeles själv!|Guldord!\s+.+\s+[–-]\s+och du stavade helt rätt!|Wow,\s+.+!\s+Ett guldord till boken!)$/i.test(s)) {
+    return "Wow, du har skrivit ett guldord! Du får en stjärna!";
+  }
+  if (/^(?:Nytt ord i boken:\s*.+!|Du hittade .+!)$/i.test(s)) {
+    return "Titta! Du hittade ett helt nytt ord till boken!";
+  }
+  if (/^(?:Hej!\s+Här kommer .+|Se!\s+.+\s+vaknar\.|Titta,\s+.+\s+är här!)$/i.test(s)) {
+    return "Titta, det du skrev vaknar till liv!";
+  }
+  if (/^(?:Nu står .+ på gården!|Tadaa!\s+Här är .+!|Klart!\s+.+\s+står på gården\.|Wow,\s+.+!\s+Snyggt bygge!)$/i.test(s)) {
+    return "Tadaa! Snyggt bygge, nu står det på gården!";
+  }
+  if (/^\+\d+\s+stjärnor!$/i.test(s)) {
+    return "Hurra! Du fick nya stjärnor!";
+  }
+  return text;
+}
+
 function nasta() {
-  upptagen = false;
-  nu = null;
-  nuText = null;
-  nuForst = false;
+  upptagen = false; nu = null; nuText = null; nuForst = false;
   const rad = ko.shift();
   if (rad === undefined) return;
   const text = rad.text;
@@ -104,7 +119,7 @@ function nasta() {
   upptagen = true;
   nuText = text;
   nuForst = rad.forst;
-  const plan = rostPlan(text);
+  const plan = rostPlan(sammanhallenRostText(text));
   if (plan) {
     const sv = plan.dynamisk && DYNAMISK === "webblasare" ? svenskRost() : null;
     const forsta = plan.delar.find((d): d is { f: string; ms: number } => "f" in d);
@@ -330,7 +345,7 @@ export function spelaUpp(text: string, meta: UppMeta, klar: () => void): { avbry
     if (typeof speechSynthesis !== "undefined") speechSynthesis.cancel();
   };
   const bas = { text, klass: meta.klass, kalla: meta.kalla, fodd: meta.fodd };
-  const plan = rostPlan(text);
+  const plan = rostPlan(sammanhallenRostText(text));
   if (plan) {
     const sv = plan.dynamisk && DYNAMISK === "webblasare" ? svenskRost() : null;
     const forsta = plan.delar.find((d): d is { f: string; ms: number } => "f" in d);
@@ -377,8 +392,6 @@ function spelaUppDelar(delar: RostDel[], _sv: SpeechSynthesisVoice | null, min: 
       } catch {
         steg();
       }
-    } else if ("dynamisk" in d) {
-      steg();
     } else steg();
   };
   steg();

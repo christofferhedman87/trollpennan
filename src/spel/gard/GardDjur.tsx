@@ -1,3 +1,4 @@
+import { Html } from "@react-three/drei";
 import { useFrame, type ThreeEvent } from "@react-three/fiber";
 import { Suspense, useMemo, useRef } from "react";
 import type { Group } from "three";
@@ -103,6 +104,11 @@ function GardEtt({
         nere.current = null;
       }}
     >
+      {spec.smeknamn ? (
+        <Html position={[0, 1.35, 0]} center zIndexRange={[3, 0]} style={{ pointerEvents: "auto" }}>
+          <span className="djur-namn-3d" data-d3="djur-namn-3d" ref={(el) => el?.setAttribute("data-testid", "djur-namn-3d")} onClick={(e) => { e.stopPropagation(); window.dispatchEvent(new CustomEvent("troll-gava-klick", { detail: spec.uid })); }}>{spec.smeknamn}</span>
+        </Html>
+      ) : null}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0]}>
         <circleGeometry args={[0.32, 16]} />
         <meshBasicMaterial color="#2F4A22" transparent opacity={0.14} depthWrite={false} />

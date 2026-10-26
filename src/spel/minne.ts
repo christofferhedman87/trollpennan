@@ -10,7 +10,7 @@ import { MAX_SYNLIGA_DJUR, START_PLATS, mattUr, platsMed, upplast } from "./plat
 export { MAX_SYNLIGA_DJUR };
 import { hamtaFranStall, flyttaTillStall, type StallUt } from "./stall.ts";
 import { kopplaAng } from "./aventyr.ts";
-import { arData, franSparning, kallaHitSpar, laggPaAngSpar, lasIn, spara, tom } from "./minneSparning.ts";
+import { arData, bytSmeknamnSpar, franSparning, kallaHitSpar, laggPaAngSpar, lasIn, spara, tom } from "./minneSparning.ts";
 
 export { franSparning };
 
@@ -61,8 +61,8 @@ export type Data = {
   klarOmraden: string[];
   dygnMs: number;
   liv: Record<string, { humor: string; humorMs: number; humorLangd: number; favorit: string; favoritHittad: boolean; hjartan: number }>;
-  albumKropp: Record<string, { formel: string; poang: number; niva: string; favorit?: string; hjartan: number }>;
-  foton: { id: string; formel: string; kropp: string; niva: string; poang: number }[];
+  albumKropp: Record<string, { formel: string; poang: number; niva: string; favorit?: string; hjartan: number; smeknamn?: string }>;
+  foton: { id: string; formel: string; kropp: string; niva: string; poang: number; smeknamn?: string }[];
   seddaNiva: string[];
   mossaLista: { id: string; klar: boolean }[];
   mossaDag: number;
@@ -114,6 +114,7 @@ export type Store = Data & {
   franLada: (uid: string) => boolean;
   flyttaIn: (djurUid: string, byggeUid: string) => "ok" | "full" | "passar" | "saknas" | "ingen";
   uppdateraDjur: (uid: string, spec: Varelse) => Sparad | null;
+  bytSmeknamn: (uid: string, smeknamn: string) => Sparad | null;
   sattOnska: (o: OnskaSpar | null) => void;
   settOnska: (id: string) => void;
   markeraSida: (id: string) => void;
@@ -283,32 +284,33 @@ export const useMinne = create<Store>((set, get) => ({
   uppdateraDjur: (uid, spec) => {
     const ang = get().ang.find((a) => a.uid === uid);
     if (ang) {
-      const next = { ...ang, ...spec, uid, skapad: ang.skapad };
+      const next = { ...ang, ...spec, uid, skapad: ang.skapad, smeknamn: spec.smeknamn ?? ang.smeknamn };
       set({ ang: get().ang.map((a) => (a.uid === uid ? next : a)) });
       brygga.andra(next);
       return next;
     }
     const hem = get().hemma.find((h) => h.spec.uid === uid);
     if (!hem) return null;
-    const next = { ...hem.spec, ...spec, uid, skapad: hem.spec.skapad };
+    const next = { ...hem.spec, ...spec, uid, skapad: hem.spec.skapad, smeknamn: spec.smeknamn ?? hem.spec.smeknamn };
     set({ hemma: get().hemma.map((h) => (h.spec.uid === uid ? { ...h, spec: next } : h)) });
     brygga.synkaGard();
     return next;
   },
+  bytSmeknamn: (uid, smeknamn) => {
+    const r = bytSmeknamnSpar(get(), uid, smeknamn);
+    if (!r) return null;
+    set(r.patch);
+    spara(get());
+    return r.djur;
+  },
   sattOnska: (o) => set({ onskan: o }),
   settOnska: (id) => set({ seddOnska: [...get().seddOnska, id].slice(-80) }),
-  markeraSida: (id) => {
-    if (get().sidaKlar.includes(id)) return;
-    set({ sidaKlar: [...get().sidaKlar, id] });
-  },
+  markeraSida: (id) => { if (!get().sidaKlar.includes(id)) set({ sidaKlar: [...get().sidaKlar, id] }); },
   sattLjud: (pa) => set({ ljudPa: pa, rostPa: pa, effektPa: pa }),
   sattRost: (pa) => set((s) => ({ rostPa: pa, ljudPa: pa || s.effektPa })),
   sattEffekt: (pa) => set((s) => ({ effektPa: pa, ljudPa: pa || s.rostPa })),
   sattIntro: () => set({ introSedd: true }),
-  sattTittat: () => {
-    if (get().dragit) return;
-    set({ dragit: true });
-  },
+  sattTittat: () => { if (!get().dragit) set({ dragit: true }); },
   sattForsta: () => set({ forstaGard: false }),
   noteraOnska: () => set({ onskaVid: Date.now() }),
   sparaSnart: (sida, ord) => {
@@ -318,20 +320,14 @@ export const useMinne = create<Store>((set, get) => ({
     if (lista.includes(w)) return;
     set({ snart: { ...get().snart, [sida]: [...lista, w] } });
   },
-  oppnaOmrade: (id) => {
-    if (get().oppna.includes(id)) return;
-    set({ oppna: [...get().oppna, id] });
-  },
+  oppnaOmrade: (id) => { if (!get().oppna.includes(id)) set({ oppna: [...get().oppna, id] }); },
   sattFolje: (uid) => set({ foljeUid: uid }),
   raknaHjarta: (id, n) => {
     const hj = (get().hjartan[id] ?? 0) + n;
     set({ hjartan: { ...get().hjartan, [id]: hj } });
     return hj;
   },
-  markeraVan: (id) => {
-    if (get().van.includes(id)) return;
-    set({ van: [...get().van, id] });
-  },
+  markeraVan: (id) => { if (!get().van.includes(id)) set({ van: [...get().van, id] }); },
   sattUppdrag: (id, status) => set({ uppdrag: { ...get().uppdrag, [id]: status } }),
   bytPlats: (id) => {
     const d = get();
@@ -347,10 +343,7 @@ export const useMinne = create<Store>((set, get) => ({
     set({ plats: id, oppnadePlatser });
     return true;
   },
-  markeraIntro: (id) => {
-    if (get().seddaIntro.includes(id)) return;
-    set({ seddaIntro: [...get().seddaIntro, id] });
-  },
+  markeraIntro: (id) => { if (!get().seddaIntro.includes(id)) set({ seddaIntro: [...get().seddaIntro, id] }); },
   tillStall: (uid) => {
     const ut = flyttaTillStall(get(), uid);
     if (!ut) return false;
@@ -366,10 +359,7 @@ export const useMinne = create<Store>((set, get) => ({
     if (get().plats === START_PLATS) brygga.skapa(r.djur, true);
     return "ok";
   },
-  sattGataId: (id) => {
-    if (get().gataId === id) return;
-    set({ gataId: id });
-  },
+  sattGataId: (id) => { if (get().gataId !== id) set({ gataId: id }); },
   sattLasniva: (val) => set({ lasnivaVal: val }),
   sattFyrPa: () => set({ fyr: true }),
   settKarta: () => set({ forstaKarta: false }),
