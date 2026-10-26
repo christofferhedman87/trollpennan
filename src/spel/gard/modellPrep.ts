@@ -14,7 +14,6 @@ export type ByggRad = (typeof gard3d.byggnader)[keyof typeof gard3d.byggnader];
 export type ReservSlag = "hus" | "torn" | "damm" | "trad" | "lek" | "bro";
 
 const TABELL = new Map<string, ByggRad>(Object.entries(gard3d.byggnader));
-const MAL = new THREE.Color();
 const BOX = new THREE.Box3();
 const STORLEK = new THREE.Vector3();
 const PROJ = new THREE.Vector3();
@@ -80,16 +79,59 @@ function harYta(m: THREE.Material): m is THREE.Material & { roughness: number } 
   return "roughness" in m && typeof m.roughness === "number";
 }
 
-/** Egen materialkopia, mjukt dragen mot `hex` när en färg finns. Geometrin delas med cachen. */
-export function egnaMaterial(rot: THREE.Object3D, hex: string | null): void {
-  if (hex) MAL.set(hex);
+const FONSTER_NODER = ["Window_1", "Window_2", "Window_3", "Window_Side"] as const;
+
+function arVaggNamn(namn: string): boolean {
+  return /^(walls|vagg|vägg|plaster|lightred|darkred|wood|body)$/i.test(namn);
+}
+
+function arTakNamn(namn: string): boolean {
+  return /^(roof|rooftiles|roofblack|tak)$/i.test(namn);
+}
+
+function arOrordNamn(namn: string): boolean {
+  return /^(trim|windows|door|foundation|greenery)$/i.test(namn);
+}
+
+function matLista(o: THREE.Mesh): THREE.Material[] {
+  return Array.isArray(o.material) ? o.material : o.material ? [o.material] : [];
+}
+
+function fonsterTal(fonsterAntal: number | null | undefined): number {
+  if (fonsterAntal === null || fonsterAntal === undefined) return 3;
+  return Math.max(0, Math.min(4, Math.round(fonsterAntal)));
+}
+
+/** Egen materialkopia. `Walls` får ren väggfärg, `Roof` får takfärg, fönsternoder styrs av antal. */
+export function egnaMaterial(
+  rot: THREE.Object3D,
+  fargHex: string | null,
+  takFargHex: string | null = null,
+  fonsterAntal: number | null = 3,
+): void {
+  const fonster = fonsterTal(fonsterAntal);
+  let harWalls = false;
+  rot.traverse((o) => {
+    const nod = FONSTER_NODER.indexOf(o.name as (typeof FONSTER_NODER)[number]);
+    if (nod >= 0) o.visible = fonster >= nod + 1;
+    if (!(o instanceof THREE.Mesh)) return;
+    for (const m of matLista(o)) {
+      if (arVaggNamn(m.name) || arVaggNamn(o.name)) harWalls = true;
+    }
+  });
   rot.traverse((o) => {
     if (!(o instanceof THREE.Mesh) || !o.material) return;
-    const lista = Array.isArray(o.material) ? o.material : [o.material];
-    const nya = lista.map((m) => {
+    const lista = matLista(o);
+    const nya = lista.map((m, idx) => {
       const k = m.clone();
+      k.name = m.name;
       k.userData = { ...m.userData, egenKopia: true };
-      if (hex && harFarg(k)) k.color.lerp(MAL, 0.42);
+      const namn = k.name || o.name;
+      if (harFarg(k)) {
+        if (fargHex && arVaggNamn(namn)) k.color.set(fargHex);
+        else if (takFargHex && arTakNamn(namn)) k.color.set(takFargHex);
+        else if (fargHex && !harWalls && idx === 0 && !arTakNamn(namn) && !arOrordNamn(namn)) k.color.set(fargHex);
+      }
       if (harMetall(k)) k.metalness = Math.min(k.metalness, 0.15);
       if (harYta(k)) k.roughness = Math.max(k.roughness, 0.65);
       return k;
@@ -98,6 +140,32 @@ export function egnaMaterial(rot: THREE.Object3D, hex: string | null): void {
     if (!forsta) return;
     o.material = Array.isArray(o.material) ? nya : forsta;
   });
+}
+
+export function inspekteraHus3D(rot: THREE.Object3D): {
+  wallsColorHex: string | null;
+  roofColorHex: string | null;
+  synligaFonsterNoder: string[];
+} {
+  let wallsColorHex: string | null = null;
+  let roofColorHex: string | null = null;
+  const synliga = new Set<string>();
+  rot.traverse((o) => {
+    if ((FONSTER_NODER as readonly string[]).includes(o.name) && o.visible) synliga.add(o.name);
+    if (!(o instanceof THREE.Mesh)) return;
+    for (const m of matLista(o)) {
+      if (!harFarg(m)) continue;
+      const hex = "#" + m.color.getHexString();
+      const namn = m.name || o.name;
+      if (arVaggNamn(namn)) wallsColorHex = hex;
+      if (arTakNamn(namn)) roofColorHex = hex;
+    }
+  });
+  return {
+    wallsColorHex,
+    roofColorHex,
+    synligaFonsterNoder: FONSTER_NODER.filter((n) => synliga.has(n)),
+  };
 }
 
 export function slappMaterial(rot: THREE.Object3D): void {
@@ -123,12 +191,12 @@ export function passaByggnad(rot: THREE.Object3D, malhojd: number): void {
   rot.position.set(-cx * s, -BOX.min.y * s, -cz * s);
 }
 
-export function skuggaUtanTraff(rot: THREE.Object3D): void {
+export function skuggaUtanTraff(rot: THREE.Object3D, klickbar = false): void {
   rot.traverse((o) => {
     if (!(o instanceof THREE.Mesh)) return;
     o.castShadow = true;
     o.receiveShadow = true;
-    o.raycast = () => undefined;
+    if (!klickbar) o.raycast = () => undefined;
   });
 }
 

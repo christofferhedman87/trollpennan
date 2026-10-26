@@ -85,3 +85,39 @@ body .plats-namn,body .plats-hem{white-space:nowrap}
 .bok .ideer .kort{white-space:normal;text-overflow:clip;overflow:visible;height:auto;min-height:42px;min-width:0;max-width:100%;line-height:1.25;text-align:left;padding:8px 12px;flex:1 1 100%;box-sizing:border-box;overflow-wrap:anywhere}
 .bok .forslag-ideer,.bok .forslag-rad,.bok .onskan-rad{max-width:100%;box-sizing:border-box;flex-wrap:wrap}
 .bok .forslag-ideer button,.bok [data-testid^="bygg-exempel"],.bok [data-testid^="onskan-forslag"]{max-width:100%;box-sizing:border-box;white-space:normal;overflow-wrap:anywhere}
+
+/* V7b: Byggboken under topp-HUD, skrivknapp och kort som inte täcker låsta sidor. */
+.bok-skarm .bok.byggbok,
+.bok-skarm .bok {
+  max-height: calc(100dvh - max(62px, calc(env(safe-area-inset-top, 0px) + 60px)));
+}
+.bygg-skriv-knapp {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 6px 12px;
+  border-radius: 14px;
+  border: 2px solid #D9C3A0;
+  background: #FFF6E5;
+  color: #3B2F2F;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.byggbok-wrap {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.byggbok-wrap .kort-yta.byggbok {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+.byggbok-wrap .last-rad {
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 1;
+}

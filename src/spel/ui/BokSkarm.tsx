@@ -78,7 +78,12 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
           >
             <Pencil aria-hidden />
           </button>
-          <button type="button" className="stang-x stang" data-testid="stang-bok" data-v3="bok-stang" aria-label="Stäng" onClick={stangBok}>
+          {panel === "byggbok" ? (
+            <button type="button" className="bygg-skriv-knapp" data-v7b="bygg-skriv-knapp" onClick={() => setLage(lage === "skriv" ? "kort" : "skriv")}>
+              {lage === "skriv" ? "📖 Byggkort" : "✍️ Skriv & bygg"}
+            </button>
+          ) : null}
+          <button type="button" className="stang-x stang" data-testid="stang-bok" data-v7b="stang-byggbok" data-v3="bok-stang" aria-label="Stäng" onClick={stangBok}>
             <span ref={(el) => el?.setAttribute("data-testid", "bok-stang")}>×</span>
           </button>
         </header>
