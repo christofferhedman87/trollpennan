@@ -1,0 +1,172 @@
+/* F2: exklusivt läge, 1-radig uppdragsremsa och Slime Rancher Juicy UI. */
+.bok{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+.bok > .lages-vaxlare{
+  display:flex;
+  flex-shrink:0;
+  gap:6px;
+  padding:1px 8px 2px;
+  box-sizing:border-box;
+  max-width:100%;
+}
+.bok .lages-knapp{
+  flex:1 1 140px;
+  min-height:44px;
+  min-width:140px;
+  padding:6px 10px;
+  border-radius:18px;
+  border:3px solid #D9C3A0;
+  background:#FFF6E5;
+  color:#3B2F2F;
+  box-shadow:0 4px 0 #C4AD88;
+  font-weight:800;
+  font-size:0.95rem;
+  line-height:1.1;
+  cursor:pointer;
+  box-sizing:border-box;
+  transition:transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),box-shadow 180ms ease;
+}
+.bok .lages-knapp.pa{background:#F2B632}
+.bok .lages-knapp:active{
+  transform:translateY(3px) scale(0.96, 0.94);
+  box-shadow:0 1px 0 #C4AD88;
+}
+.bok > .bok-mitt{
+  flex:1 1 auto;
+  min-height:0;
+  margin-bottom:6px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.bok .bok-mitt .kort-yta[data-v3="ordkort"]{
+  flex:1 1 auto;
+  min-height:0;
+  max-height:100%;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+.bok .skriv-rad{flex-shrink:0;position:relative;z-index:2}
+.bok .remsa.skriv-remsa{flex-shrink:0;position:relative;z-index:2}
+.bok .tangenter{flex-shrink:0;margin-top:4px;position:relative;z-index:2}
+
+.bok .skapar-vy-flikar .flik,
+.bok [data-v3^="vy-flik-"]{
+  min-height:44px;
+  padding:8px 14px;
+  box-sizing:border-box;
+}
+.bok .bok-mitt .flikar.kategorier button,
+.bok .kategorier button{
+  min-height:44px;
+  padding:6px 12px;
+  box-sizing:border-box;
+}
+.bok .tangenter .tangent.mellanslag{
+  min-height:44px;
+  height:44px;
+}
+
+.bok .bok-mitt .ord-kort,
+.bok .ord-kort,
+.bok .kort,
+.bok .lages-knapp,
+.bok .skapar-vy-flikar .flik,
+.bok .kategorier button{
+  border-radius:18px;
+  border:3px solid #D9C3A0;
+  box-shadow:0 4px 0 #C4AD88;
+  transition:transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),box-shadow 180ms ease;
+}
+.bok .ord-kort:active,
+.bok .kort:active,
+.bok .lages-knapp:active,
+.bok .skapar-vy-flikar .flik:active,
+.bok .kategorier button:active,
+.bok .tangent:active{
+  transform:translateY(3px) scale(0.96, 0.94);
+  box-shadow:0 1px 0 #C4AD88;
+}
+@keyframes bok-pop-in{
+  0%{transform:scale(0.85)}
+  60%{transform:scale(1.06)}
+  100%{transform:scale(1)}
+}
+.bok .kort.vald{animation:bok-pop-in 280ms cubic-bezier(0.34, 1.56, 0.64, 1)}
+
+.bok .bok-mitt .uppdrag-remsa,
+.bok .uppdrag-remsa{
+  flex:0 0 38px;
+  height:38px;
+  max-height:40px;
+  min-height:38px;
+  flex-wrap:nowrap;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:6px;
+  padding:2px 8px;
+  margin:0 8px 4px;
+  overflow:hidden;
+  white-space:nowrap;
+  box-sizing:border-box;
+  background:#FFF6E5;
+  border:2px solid #F2B632;
+  border-radius:14px;
+}
+.bok .uppdrag-remsa-text{
+  flex:1 1 auto;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.bok .bok-mitt .uppdrag-remsa .lyssna-knapp,
+.bok .uppdrag-remsa .lyssna-knapp{
+  flex:0 0 44px;
+  width:44px;
+  min-width:44px;
+  min-height:44px;
+  margin-block:-5px;
+  padding:0;
+}
+.bok .uppdrag-val,
+.bok .uppdrag-val-grupp,
+.bok .ideer{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  white-space:normal;
+  max-width:100%;
+  padding-right:12px;
+  box-sizing:border-box;
+  overflow-x:hidden;
+}
+.bok .uppdrag-val-grupp{flex:1 1 100%}
+.bok .uppdrag-val .onska-chip,
+.bok .ideer .kort{
+  max-width:100%;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  box-sizing:border-box;
+}
+.bok .ledtrad{
+  max-height:165px;
+  overflow:auto;
+  margin:2px 8px;
+  padding:4px 8px;
+}
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}

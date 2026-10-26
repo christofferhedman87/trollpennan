@@ -2,13 +2,14 @@ import { useEffect } from "react";
 import type { ForslagKort, Ord } from "@/tolk/typer.ts";
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
+import { valUrText } from "../useSkriv.ts";
 import * as rostKo from "../rostKo.ts";
 import { bokstav, bytOrd, meningAv, taBortOrd, utanSparratSuffix } from "../ui/hjalp.ts";
 import type { Slot, Val } from "../ui/typer.ts";
 import type { SpelKarna } from "./typer.ts";
 
 export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
-  const { setText, setLage, setVal, setHand, forslag, setForslag, behover, setBehover, setVisKort, setOrdbok, setForalder, setAlbumOpp, setMossaOpp, bokOpp, setBokOpp, setByggPuff, setKop, onskaOpp, setKopia, gavaTill, setGavaTill, textRef, handRef, overlayRef, gavaRef } = k.t;
+  const { setText, setLage, setVal, setFlik, setHand, forslag, setForslag, behover, setBehover, setVisKort, setOrdbok, setForalder, setAlbumOpp, setMossaOpp, bokOpp, setBokOpp, setByggPuff, setKop, onskaOpp, setKopia, gavaTill, setGavaTill, textRef, handRef, overlayRef, gavaRef } = k.t;
   const { visaBanner } = k.b;
   const { utfor, utforRef } = k.s;
 
@@ -76,11 +77,16 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
     setBehover(null);
     setLage("kort");
     const slot = ord.klass as Slot;
+    const artikelMatch = textRef.current.trim().match(/^(en|ett)\s+/i);
     setVal((prev) => {
-      const next: Val = { ...prev };
+      const bas = Object.keys(prev).length > 0 ? prev : valUrText(textRef.current);
+      const next: Val = { ...bas };
       if (next[slot]?.id === ord.id) delete next[slot];
       else next[slot] = ord;
-      const mening = meningAv(next);
+      const grund = meningAv(next);
+      const mening = artikelMatch && grund && !/^(en|ett)\s+/i.test(grund)
+        ? `${artikelMatch[1]!.toLocaleLowerCase("sv")} ${grund}`
+        : grund;
       textRef.current = mening;
       setText(mening);
       return next;
@@ -129,7 +135,9 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
     handRef.current = false;
     setForslag(null);
     setBehover(null);
-    setVal({});
+    const nastaVal = valUrText(ex);
+    setVal(nastaVal);
+    if (/\bmed\s*…?\s*$/i.test(ex)) setFlik("tillbehor");
   }
 
   function vackIde(ex: string) {
