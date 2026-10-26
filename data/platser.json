@@ -21,7 +21,18 @@
     "nagon": []
    },
    "milstolpe": null,
-   "miljo": {},
+   "miljo": {
+    "slimePalett": {
+     "himmel": ["#3898EC", "#78CBFA", "#FFF0D4"],
+     "dis": "#F7EBD2",
+     "mark": ["#AEE571", "#7ED35C", "#52B74E"],
+     "vatten": ["#4CE8E0", "#1E88E5"],
+     "nyckel": "#FFECD0",
+     "hemi": ["#E3F4FF", "#8CD468"],
+     "kant": "#FFF3C4",
+     "skugga": "#256D3B"
+    }
+   },
    "zoner": [
     {
      "id": "angen",
@@ -79,6 +90,15 @@
     "las_upp": "sjon"
    },
    "miljo": {
+    "slimePalett": {
+     "himmel": ["#2E8B9A", "#7ED6C9", "#FFE4A8"],
+     "dis": "#C4EBD8",
+     "mark": ["#3E9E6C", "#9CE06E", "#5CD6C8"],
+     "nyckel": "#FFE094",
+     "hemi": ["#B2F0E8", "#2D6E5E"],
+     "kant": "#FFE57F",
+     "skugga": "#1F524C"
+    },
     "himmel": {
      "bakgrund": "#E7EDDD"
     },
@@ -545,6 +565,16 @@
     "las_upp": "grottan"
    },
    "miljo": {
+    "slimePalett": {
+     "himmel": ["#2998E6", "#7CE0F8", "#FFF3D1"],
+     "dis": "#DDF7FA",
+     "mark": ["#F7DC9C", "#E2B874"],
+     "vatten": ["#4CE8E0", "#1E88E5", "#FFFDF7"],
+     "nyckel": "#FFF0C8",
+     "hemi": ["#D6F6FF", "#F2C97D"],
+     "kant": "#FFFFFF",
+     "skugga": "#2C6B8E"
+    },
     "himmel": {
      "bakgrund": "#DFEEF0"
     },
@@ -928,6 +958,16 @@
     "las_upp": null
    },
    "miljo": {
+    "slimePalett": {
+     "himmel": ["#2A1E4D", "#433175", "#56CFE1"],
+     "dis": "#4B3B80",
+     "mark": ["#5E4B8B", "#4AD9C5"],
+     "vatten": "#48CAE4",
+     "nyckel": "#FFE4B5",
+     "hemi": ["#9C6ADE", "#48BFE3"],
+     "kant": "#64DFDF",
+     "skugga": "#3B2667"
+    },
     "himmel": {
      "bakgrund": "#626579"
     },
@@ -1432,6 +1472,17 @@
    "namn": "Gården",
    "ikon": "🏡",
    "tema": "gard",
+   "miljo": {
+    "slimePalett": {
+     "himmel": ["#4FA9EC", "#82D1F7", "#FFF3D6"],
+     "dis": "#FFF3D6",
+     "mark": ["#84D464", "#C5E87E", "#E8C992"],
+     "nyckel": "#FFEBC8",
+     "hemi": ["#FFF7E6", "#9AD86C"],
+     "kant": "#FFF6E5",
+     "skugga": "#3A6B3C"
+    }
+   },
    "farg": "#fff1d6",
    "kant": "#c47b3a",
    "lockelse": "Bygg hus, staket och mysiga hagar åt dina djur.",

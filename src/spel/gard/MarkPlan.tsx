@@ -39,8 +39,8 @@ const Q = new THREE.Quaternion();
 const UPP = new THREE.Vector3(0, 1, 0);
 const RUTA = new THREE.PlaneGeometry(1, 1);
 const KANT = new THREE.BoxGeometry(0.9, 0.05, 0.1);
-const MAT_RUTA = new THREE.MeshStandardMaterial({ color: "#7dce6a", roughness: 1 });
-const MAT_HAGE = new THREE.MeshStandardMaterial({ color: "#aed581", roughness: 1 });
+const MAT_RUTA = new THREE.MeshStandardMaterial({ color: "#49B652", roughness: 0.72 });
+const MAT_HAGE = new THREE.MeshStandardMaterial({ color: "#82E05A", roughness: 0.72 });
 const MAT_CELL = new THREE.MeshStandardMaterial({
   color: "#ffe082",
   transparent: true,

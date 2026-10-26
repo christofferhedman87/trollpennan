@@ -1,0 +1,190 @@
+{
+  "skarm": {
+    "bredd": 375,
+    "hojd": 812
+  },
+  "largoSkala": {
+    "scaleXZ": 1.25,
+    "scaleY": 1.18,
+    "basSkarmPx": {
+      "x0": 157.4,
+      "x1": 217.6,
+      "y0": 437.3,
+      "y1": 529.5,
+      "breddPx": 60.1,
+      "hojdPx": 92.1
+    },
+    "largoSkarmPx": {
+      "x0": 149.3,
+      "x1": 225.7,
+      "y0": 422.6,
+      "y1": 532.8,
+      "breddPx": 76.3,
+      "hojdPx": 110.3
+    },
+    "utstickPx": {
+      "katt_oron": 12.9,
+      "drak_vingar": 22.7,
+      "enhorning_horn": 12.1
+    }
+  },
+  "krockfriaParGrupper": {
+    "f4_plagg": [
+      {
+        "id": "mossa",
+        "par": "hatt",
+        "ankare": "huvudTopp",
+        "offset": {
+          "ut": 0,
+          "upp": 0,
+          "fram": 0.04
+        }
+      },
+      {
+        "id": "halsduk",
+        "par": "hals",
+        "ankare": "hals",
+        "offset": {
+          "ut": 0,
+          "upp": 0,
+          "fram": 0.08
+        }
+      },
+      {
+        "id": "filt",
+        "par": "rygg",
+        "ankare": "rygg",
+        "offset": {
+          "ut": 0,
+          "upp": 0.02,
+          "fram": -0.04
+        }
+      }
+    ],
+    "s2_uttryck": [
+      {
+        "id": "ansiktsuttryck",
+        "par": "uttryck",
+        "ankare": "ansikte",
+        "offset": {
+          "ut": 0,
+          "upp": 0,
+          "fram": 0.012
+        },
+        "polygonOffsetFactor": -2
+      }
+    ],
+    "s3_largo": [
+      {
+        "id": "oron",
+        "par": "oron",
+        "ankare": "huvudTopp",
+        "offset": {
+          "ut": 0.28,
+          "upp": 0.08,
+          "fram": 0
+        }
+      },
+      {
+        "id": "vingar",
+        "par": "vingar",
+        "ankare": "rygg",
+        "offset": {
+          "ut": 0.22,
+          "upp": 0.14,
+          "fram": -0.05
+        }
+      },
+      {
+        "id": "horn",
+        "par": "horn",
+        "ankare": "huvudTopp",
+        "offset": {
+          "ut": 0,
+          "upp": 0.05,
+          "fram": 0.18
+        }
+      },
+      {
+        "id": "svans",
+        "par": "svans",
+        "ankare": "rygg",
+        "offset": {
+          "ut": 0,
+          "upp": -0.04,
+          "fram": -0.45
+        }
+      }
+    ]
+  },
+  "skuttBanaTillMatLeksak": {
+    "start": [
+      0,
+      1.25
+    ],
+    "malPunkt": [
+      1.15,
+      1.45
+    ],
+    "framkomstDist": 0.177,
+    "antalSteg": 7,
+    "maxHoppY": 0.217,
+    "steg": [
+      {
+        "t": 0,
+        "x": 0,
+        "y": 0,
+        "z": 1.25,
+        "dist": 1.167
+      },
+      {
+        "t": 0.1,
+        "x": 0.163,
+        "y": 0.142,
+        "z": 1.278,
+        "dist": 1.002
+      },
+      {
+        "t": 0.2,
+        "x": 0.325,
+        "y": 0.217,
+        "z": 1.307,
+        "dist": 0.837
+      },
+      {
+        "t": 0.3,
+        "x": 0.488,
+        "y": 0.19,
+        "z": 1.335,
+        "dist": 0.672
+      },
+      {
+        "t": 0.4,
+        "x": 0.65,
+        "y": 0.074,
+        "z": 1.363,
+        "dist": 0.507
+      },
+      {
+        "t": 0.5,
+        "x": 0.813,
+        "y": 0.077,
+        "z": 1.391,
+        "dist": 0.342
+      },
+      {
+        "t": 0.6,
+        "x": 0.975,
+        "y": 0,
+        "z": 1.42,
+        "dist": 0.177
+      }
+    ]
+  },
+  "kravUppfyllda": {
+    "largoMinst68x68Px": true,
+    "signaturdelUtstickMinst12Px": true,
+    "nollParKrockarMellanF4S2S3": true,
+    "skuttNarFramInom1_2s": true
+  }
+}

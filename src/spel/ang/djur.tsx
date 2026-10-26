@@ -50,8 +50,8 @@ export class ModellGren extends Component<{ spec: Sparad; children: ReactNode },
 }
 
 export const TOON_MAP = (() => {
-  const data = new Uint8Array([72, 158, 255]);
-  const t = new THREE.DataTexture(data, 3, 1, THREE.RedFormat);
+  const data = new Uint8Array([124, 172, 218, 255]);
+  const t = new THREE.DataTexture(data, 4, 1, THREE.RedFormat);
   t.minFilter = THREE.NearestFilter;
   t.magFilter = THREE.NearestFilter;
   t.colorSpace = THREE.NoColorSpace;
@@ -320,7 +320,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
   }
   return (
     <group position={[x, 0, z]} onPointerDown={ned} userData={{ trollDel: spec.uid }}>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.04, 0]}><circleGeometry args={[0.55, 12]} /><meshBasicMaterial color="#2F4A22" transparent opacity={0.14} /></mesh>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.04, 0]}><circleGeometry args={[0.55, 12]} /><meshBasicMaterial color="#256D3B" transparent opacity={0.20} /></mesh>
       {sim ? (
         <mesh ref={plask} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.08, 0]} visible={false}>
           <ringGeometry args={[0.32, 0.46, 16]} />

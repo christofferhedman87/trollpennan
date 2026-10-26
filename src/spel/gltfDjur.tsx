@@ -8,7 +8,8 @@ import { byttPixel, hexTillHsl, hslTillRgb, ljusTint, malAlbedo, rgbTillHsl, tra
 import { kroppsMonsterFor } from "./attribut.ts";
 import { fargaHorn, harHornfarg, kroppsTextur, monsterFarger, monsterKoordinater, monsterPa } from "./kroppsfarg.ts";
 import { MILJO } from "./miljo.ts";
-import { belysScen } from "./belys.ts";
+import { appliceraSlimeGlod, belysScen } from "./belys.ts";
+import { mjukrundaScen } from "./mjukGeometri.ts";
 
 const LJUSTINT = ljusTint(MILJO.ljus, MILJO.farg.ljusforstark);
 import type { Sparad } from "./brygga.ts";
@@ -200,6 +201,20 @@ function fargaOm(rot: THREE.Object3D, farger: Record<string, string>) {
       return k;
     };
     mesh.material = Array.isArray(mesh.material) ? mesh.material.map(byt) : byt(mesh.material);
+  });
+}
+
+/** S1: mjukrunda klonen (kubdjur får puff) och lägg Slime-glöd på varje standardmaterial. */
+function slimePaKlon(klon: THREE.Object3D, modellSokvag: string) {
+  const arKubDjur = /animal-|blocky/i.test(modellSokvag);
+  mjukrundaScen(klon, arKubDjur);
+  klon.traverse((o) => {
+    const mesh = o as THREE.Mesh;
+    if (!mesh.isMesh || !mesh.material) return;
+    const lista = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+    for (const m of lista) {
+      if ((m as THREE.MeshStandardMaterial).isMeshStandardMaterial) appliceraSlimeGlod(m as THREE.MeshStandardMaterial);
+    }
   });
 }
 
@@ -484,6 +499,7 @@ export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: Dj
     c.position.set(-((box.min.x + box.max.x) / 2) * s, -box.min.y * s, -((box.min.z + box.max.z) / 2) * s);
     c.updateMatrixWorld(true);
     fastAnkare(c, spec);
+    slimePaKlon(c, url);
     return c;
     // spec läses via sign så klonen inte byggs om varje render
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -613,6 +629,7 @@ export function GltfSak({ id, vand = false, farger }: { id: string; vand?: boole
       c.rotation.x = Math.PI;
       c.position.set(-((box.min.x + box.max.x) / 2) * s, box.max.y * s, ((box.min.z + box.max.z) / 2) * s);
     } else c.position.set(-((box.min.x + box.max.x) / 2) * s, -box.min.y * s, -((box.min.z + box.max.z) / 2) * s);
+    slimePaKlon(c, modellUrlAv(id) ?? "");
     return c;
   // eslint-disable-next-line react-hooks/exhaustive-deps -- fargNyckel bär innehållet i farger
   }, [gltf.scene, id, vand, fargNyckel]);
