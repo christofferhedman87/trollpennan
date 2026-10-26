@@ -19,7 +19,7 @@ import { ALBUM, arSammansatt, BYGG_ORD, geEgenGava, komIhagDjur, noteraSkriv, po
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
 import { arVarmePlagg, mossaPaFrysKanin } from "./mossaKanin.ts";
-import { byggTraff, geTraff, kompisTraff, nastanRad, ONSK, ONSK_BYGG, tillaggFras } from "../onska.ts";
+import { byggTraff, geTraff, kompisTraff, laggPa, nastanRad, ONSK, ONSK_BYGG, tillaggFras } from "../onska.ts";
 import { replik } from "../replik.ts";
 import * as rostKo from "../rostKo.ts";
 import { lastBygge } from "../ui/hjalp.ts";
@@ -206,6 +206,16 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
       if (text.includes("halsduk") && !text.includes(" med ") && useMinne.getState().ang.length > 0) {
         return hanteraDjur(`${useMinne.getState().ang[0]!.kropp} med ${text}`, opt);
       }
+      if (!utfall.okanda.length) {
+        const st = useMinne.getState();
+        const aktivPlats = platsNu();
+        const platsDjur = aktivPlats === "ang" ? st.ang : (st.platsSkapelser[aktivPlats] ?? []);
+        const malDjur = platsDjur.at(-1) ?? st.ang.at(-1);
+        const kladd = malDjur ? laggPa(malDjur, text) : null;
+        if (malDjur && kladd && kladd.formel !== malDjur.formel && st.uppdateraDjur(malDjur.uid, kladd)) {
+          noteraSolSkapelse(kladd); brygga.glad(malDjur.uid); brygga.glitter(malDjur.uid); ljud.puff(); rensaSkriv(); setBokOpp(false); return;
+        }
+      }
       const kan = kanInteRita(utfall, text); // B6.1 (F): känt ord utan modell → synlig banderoll, boken stängs
       if (kan) { visaBanner(kan, "okand", "okand_inget", KAN_INTE_RITA_MS); ljud.puff(); setBehover(null); setForslag(null); rensaSkriv(); setBokOpp(false); return; } // B6.3 (H): ≥ 5 s eller tryck
       useMinne.getState().sparaOkanda(utfall.okanda);
@@ -387,5 +397,4 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
   utforRef.current = utfor;
   return { rensaSkriv, hanteraBygg, hanteraDjur, utfor, utforRef };
 }
-
 export type Skapa = ReturnType<typeof useSkapa>;

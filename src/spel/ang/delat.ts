@@ -7,6 +7,8 @@ import { artFarg } from "../entiteter.ts";
 import type { Plats } from "../platser.ts";
 import { placeraMedMinne, rollFor } from "../placering.ts";
 
+/** D4: saker djuret kan sitta, stå eller ligga på. Första saken ritas under tassarna. */
+export const PLATTFORM_SAKER = new Set(["sten", "stubbe", "kudde", "matta", "bank", "bro"]);
 export const HINT = (texterJson as { tred_hint: string }).tred_hint;
 export const SNART = (texterJson as { demo: { snart: string } }).demo.snart;
 export const TRAD: [number, number, number][] = [

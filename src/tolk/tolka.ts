@@ -34,10 +34,23 @@ const BEHOVER_TEXT = "Pennan behöver ett djur. Prova …";
 
 type Mode = "fore" | "med" | "som";
 
+/** D4: positionsverb återställer mode till "fore" och blir aldrig okända. */
+const POSITIONS_VERB = new Set([
+  "sitter", "sitta", "satt", "står", "stå", "stod",
+  "ligger", "ligga", "låg", "vilar", "vila",
+  "bor", "bo", "hänger", "hänga", "klättrar", "klättra", "rider", "rida",
+]);
+/** D4: kropps- och rumsankare ignoreras tyst (aldrig okanda, aldrig ägg). */
+const KROPPS_LAGEN = new Set([
+  "huvudet", "huvud", "ryggen", "rygg", "magen", "mage",
+  "nosen", "nos", "svansen", "svans", "halsen", "hals",
+  "foten", "fötterna", "tassen", "tassarna", "marken", "gräset", "luften", "vattnet",
+]);
+
 type Sem =
   | { t: "antal"; n: number }
   | { t: "boost"; dir: string; skala: number }
-  | { t: "funk"; v: "som" | "med" | "och" | "kan" }
+  | { t: "funk"; v: "som" | "med" | "och" | "kan" | "fore" }
   | { t: "ord"; o: Ord; form: string }
   | {
       t: "komp";
@@ -571,6 +584,13 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
       continue;
     }
     const token = tokens[i] ?? "";
+    if (KROPPS_LAGEN.has(token) || POSITIONS_VERB.has(token)) {
+      const kand = lasToken(token);
+      if (kand?.t !== "ord") {
+        if (POSITIONS_VERB.has(token)) sem.push({ t: "funk", v: "fore" });
+        continue;
+      }
+    }
     const en = lasToken(token);
     if (!en) {
       const losSak = dubbelSak(token);
@@ -669,7 +689,8 @@ function semantisera(tokens: string[]): Sem[] | Utfall {
   return sem;
 }
 
-function modeAv(v: "som" | "med" | "och" | "kan", nu: Mode): Mode {
+function modeAv(v: "som" | "med" | "och" | "kan" | "fore", nu: Mode): Mode {
+  if (v === "fore") return "fore";
   if (v === "med") return "med";
   if (v === "som" || v === "kan") return "som";
   return nu;

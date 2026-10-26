@@ -18,7 +18,21 @@
  "kortgrans": "Med ordkort: 1 färg, 1 mönster, 1 storlek, 1 förmåga, 1 tillbehör. Skriver man själv: flera förmågor och tillbehör, färg på tillbehör, förstärkningar och sammansättningar.",
  "funktionsord": {
   "som": [
-   "som"
+   "som",
+   "men",
+   "att",
+   "när",
+   "där",
+   "dit",
+   "så",
+   "än",
+   "fast",
+   "medan",
+   "eftersom",
+   "om",
+   "är",
+   "var",
+   "blir"
   ],
   "med": [
    "med",
@@ -33,7 +47,18 @@
    "ovanpå",
    "intill",
    "hos",
-   "nära"
+   "nära",
+   "bland",
+   "kring",
+   "runt",
+   "ur",
+   "från",
+   "mot",
+   "genom",
+   "mellan",
+   "har",
+   "bär",
+   "iförd"
   ],
   "och": [
    "och",
@@ -8151,6 +8176,16 @@
    "ordklass": "adjektiv",
    "kalla": "hand",
    "del": { "formaga": "studs", "glans": true }
+  },
+  {
+   "id": "glad",
+   "visa": "glad",
+   "former": ["glad", "glatt", "glada"],
+   "klass": "egenskap",
+   "niva": "start",
+   "bojning": { "en": "glad", "ett": "glatt", "flera": "glada", "u": "glad", "n": "glatt", "pl": "glada" },
+   "motsats": "ledsen",
+   "del": {}
   }
  ],
  "kollisioner": {},
