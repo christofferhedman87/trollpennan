@@ -292,7 +292,7 @@ type HudBotProps = {
   setPanel: Dispatch<SetStateAction<"spel" | "byggbok" | "uppdrag">>;
   setBokOpp: Dispatch<SetStateAction<boolean>>;
   /** P2-2: Bengtsson som primär knapp bredvid Skriv (förslag A). */
-  npc?: { npcId: string; ikonText: string; ikonAlt: string; klicka: () => void };
+  npc?: { npcId: string; mine: string; nytt: boolean; ikonText: string; ikonAlt: string; klicka: () => void };
 };
 
 export function HudBot({ varld, omrade, kartaOpp, oppnaBygglage, setPanel, setBokOpp, npc }: HudBotProps) {
@@ -300,12 +300,13 @@ export function HudBot({ varld, omrade, kartaOpp, oppnaBygglage, setPanel, setBo
   const pahemma = varld === "ang" && !omrade && !kartaOpp;
   return (
         <div className={pahemma && npc ? "hud-bot tva" : "hud-bot"}>
-          {pahemma && npc ? <NpcIkon npc={npc.npcId} nytt={false} text={npc.ikonText} alt={npc.ikonAlt} onClick={npc.klicka} /> : null}
+          {pahemma && npc ? <NpcIkon npc={npc.npcId} mine={npc.mine} nytt={npc.nytt} etikett="📋 Uppdrag" onClick={npc.klicka} /> : null}
           <button
             type="button"
             className={gard ? "bok-knapp bygg" : "bok-knapp"}
             data-testid={varld === "gard" && !omrade ? "bygg-nagot" : "pennans-bok"}
             data-v2="skriv-knapp"
+            data-m1="hud-skapa"
             aria-label={gard ? undefined : "Skriv i Pennans bok"}
             onClick={() => {
               if (gard && !kartaOpp) {
@@ -316,9 +317,21 @@ export function HudBot({ varld, omrade, kartaOpp, oppnaBygglage, setPanel, setBo
               setBokOpp(true);
             }}
           >
-            {gard ? <Pencil aria-hidden /> : <span aria-hidden="true">✍️ </span>}
-            <span ref={(el) => { if (el) { if (gard) el.setAttribute("data-testid", "hus-knapp"); else el.removeAttribute("data-testid"); } }}>{gard ? TEXTER.bygg_nagot : FORSTA.titel.skriv}</span>
-            <span style={{ display: "inline-block", width: 2, height: 2 }} ref={(el) => { if (el) { if (gard) el.setAttribute("data-testid", "pennans-bok"); else el.removeAttribute("data-testid"); } }} onClick={(e) => { if (gard) { e.stopPropagation(); setPanel("byggbok"); setBokOpp(true); } }} />
+            {pahemma ? (
+              <>
+                <span className="hud-kort-ikon" aria-hidden="true">🪄</span>
+                <span className="hud-kort-text">
+                  <span className="hud-kort-over">Pennans bok</span>
+                  <span className="hud-kort-huvud">Trolla fram · Skriv</span>
+                </span>
+              </>
+            ) : (
+              <>
+                {gard ? <Pencil aria-hidden /> : <span aria-hidden="true">✍️ </span>}
+                <span ref={(el) => { if (el) { if (gard) el.setAttribute("data-testid", "hus-knapp"); else el.removeAttribute("data-testid"); } }}>{gard ? TEXTER.bygg_nagot : FORSTA.titel.skriv}</span>
+                <span style={{ display: "inline-block", width: 2, height: 2 }} ref={(el) => { if (el) { if (gard) el.setAttribute("data-testid", "pennans-bok"); else el.removeAttribute("data-testid"); } }} onClick={(e) => { if (gard) { e.stopPropagation(); setPanel("byggbok"); setBokOpp(true); } }} />
+              </>
+            )}
           </button>
           <Coach aktiv={pahemma} />
         </div>

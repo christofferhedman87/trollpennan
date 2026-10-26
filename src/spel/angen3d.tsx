@@ -186,7 +186,7 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
 export function Angen3D({ natt, saga = false, onGrind }: { natt: number; saga?: boolean; onGrind?: () => boolean }) {
   const djur = useMinne((s) => s.ang);
   const garden = useMinne((s) => s.garden);
-  const dragit = useMinne((s) => s.dragit);
+  const interagerat = useMinne((s) => s.dragit);
   const plats = useMinne((s) => s.plats);
   const [prat, setPrat] = useState(false);
   const [dpr, setDpr] = useState<[number, number] | number>([1, KV.dpr_max]);
@@ -261,7 +261,7 @@ export function Angen3D({ natt, saga = false, onGrind }: { natt: number; saga?: 
   }, [onGrind]);
   return (
     <div ref={rot} className="angen-3d" data-testid="angen-3d" data-v9b-r3f="adaptive-bvh" data-v9b-dpr={Array.isArray(dpr) ? dpr.join("-") : String(dpr)} style={{ "--grad-m": KV.farggrad ? MILJO.farggrad.mattnad : 1, "--grad-k": KV.farggrad ? MILJO.farggrad.kontrast : 1, "--vinjett": MILJO.vinjett.styrka } as React.CSSProperties} data-djur={djur.length} data-byggen={garden.length} data-saga={saga ? "ja" : "nej"} data-plats={plats}>
-      {!saga && !dragit ? (
+      {!saga && !interagerat && djur.length > 0 ? (
         <p className="tred-hint" data-testid="tred-hint">
           {HINT}
         </p>
