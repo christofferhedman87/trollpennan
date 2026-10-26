@@ -3000,7 +3000,7 @@
       "inlagd": "R3D"
     },
     "alvmossa": {
-      "fil": "/models/bulk/alvmossa.glb",
+      "fil": "/models/bulk/f-mossa-vinter-cc0.glb",
       "licens": "CC0-1.0",
       "upphov": "Teh_Bucket",
       "kalla": "https://opengameart.org/content/hats-clothing-props",
@@ -3044,7 +3044,7 @@
       "inlagd": "R3D"
     },
     "luva": {
-      "fil": "/models/bulk/luva.glb",
+      "fil": "/models/bulk/f-mossa-toppluva-cc0.glb",
       "licens": "CC0-1.0",
       "upphov": "Lucian Pavel",
       "kalla": "https://opengameart.org/content/santa-hat",
@@ -10117,7 +10117,7 @@
       "inlagd": "R3F-M20b"
     },
     "filt": {
-      "fil": "/models/bulk/filt.glb",
+      "fil": "/models/bulk/f-filt-vikt-cc0.glb",
       "licens": "CC0-1.0",
       "upphov": "Trollpennan",
       "kalla": "https://github.com/christofferhedman87/trollpennan",
