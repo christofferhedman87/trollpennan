@@ -69,14 +69,18 @@ function spelaDelar(text: string, delar: RostDel[], _sv: SpeechSynthesisVoice | 
       return nasta();
     }
     if ("f" in d) {
-      const a = new Audio(d.f);
-      nu = a;
-      a.addEventListener("ended", steg);
-      a.addEventListener("error", steg);
-      a.play().then(
-        () => klocka.spelar(text), // play-löftet uppfylls när uppspelningen faktiskt startar
-        () => steg(),
-      );
+      try {
+        const a = new Audio(d.f);
+        nu = a;
+        a.addEventListener("ended", steg);
+        a.addEventListener("error", steg);
+        a.play().then(
+          () => klocka.spelar(text), // play-löftet uppfylls när uppspelningen faktiskt startar
+          () => steg(),
+        );
+      } catch {
+        steg();
+      }
     } else if ("dynamisk" in d) {
       // Okända ord och ordägg läses inte upp med webbläsarens röst. Förinspelade delar spelas som vanligt.
       steg();
@@ -358,17 +362,21 @@ function spelaUppDelar(delar: RostDel[], _sv: SpeechSynthesisVoice | null, min: 
       return;
     }
     if ("f" in d) {
-      const a = new Audio(d.f);
-      uppLjud = a;
-      const vidare = () => {
-        if (min === uppOmg) steg();
-      };
-      a.addEventListener("ended", vidare);
-      a.addEventListener("error", vidare);
-      a.play().then(
-        () => klocka.spelar(t),
-        () => steg(),
-      );
+      try {
+        const a = new Audio(d.f);
+        uppLjud = a;
+        const vidare = () => {
+          if (min === uppOmg) steg();
+        };
+        a.addEventListener("ended", vidare);
+        a.addEventListener("error", vidare);
+        a.play().then(
+          () => klocka.spelar(t),
+          () => steg(),
+        );
+      } catch {
+        steg();
+      }
     } else if ("dynamisk" in d) {
       steg();
     } else steg();

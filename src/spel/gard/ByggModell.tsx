@@ -1,6 +1,8 @@
 import { useGLTF } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import { Component, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
+import { forladdaNarLedig } from "../modeller/forladda.ts";
+import { StjarnPuffReserv } from "../modeller/StjarnPuffReserv.tsx";
 import type { Object3D } from "three";
 import gard3d from "../../../data/gard-3d.json" with { type: "json" };
 import { fonsterAntalForBygge, takFargForBygge, type SparatBygge } from "../bygge.ts";
@@ -26,12 +28,15 @@ import { ReservForm, StaketReserv } from "./ReservForm.tsx";
 const FILER = new Set<string>([gard3d.staket.enkelFil, gard3d.staket.grindFil]);
 for (const rad of Object.values(gard3d.byggnader)) if (rad.fil) FILER.add(rad.fil);
 for (const d of gard3d.dekor) FILER.add(d.fil);
-for (const fil of FILER) useGLTF.preload(fil);
+forladdaNarLedig(FILER);
 
 class ModellGren extends Component<{ children: ReactNode; reserv: ReactNode }, { fel: boolean }> {
   state = { fel: false };
   static getDerivedStateFromError() {
     return { fel: true };
+  }
+  componentDidCatch() {
+    /* tyst reserv, ingen pageerror */
   }
   render() {
     return this.state.fel ? this.props.reserv : this.props.children;
@@ -243,7 +248,7 @@ export function DekorHobalar() {
       {gard3d.dekor.map((d) => (
         <group key={`${d.wx},${d.wz}`} position={[d.wx, 0, d.wz]} rotation={[0, d.rotY, 0]}>
           <Suspense fallback={null}>
-            <ModellGren reserv={null}>
+            <ModellGren reserv={<StjarnPuffReserv skala={0.7} y={0.3} />}>
               <KlonadScen url={d.fil} malhojd={d.malhojd} fargHex={null} passa />
             </ModellGren>
           </Suspense>
