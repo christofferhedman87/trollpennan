@@ -7,7 +7,7 @@ import { Ledtradsyta } from "./Ledtradsyta.tsx";
 import { ALLA_UPPDRAG, NPC, TEXTER_AV, UPP, uppdragText } from "../aventyr.ts";
 import { aktivtSkrivUppdrag, nastaSkrivUppdrag } from "../uppdragsmotor.ts";
 import { useMinne } from "../minne.ts";
-import { exempelFor } from "../ideRad.ts";
+import { exempelFor, uppdragForslag } from "../ideRad.ts";
 import { gavoRuta } from "./gavoRuta.ts";
 import { platsNu } from "./useBengtsson.ts";
 import { UppdragsRemsa } from "./UppdragsRemsa.tsx";
@@ -290,10 +290,11 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
               <div className="aktivt-uppdrag-kort" data-v2="aktivt-uppdrag-kort">
                 <div className="aktivt-uppdrag-huvud">
                   <strong>📋 {aktivtUpp.givare && NPC[aktivtUpp.givare] ? NPC[aktivtUpp.givare]!.namn : "Aktuellt uppdrag"}</strong>
-                  <button type="button" className="lyssna-knapp" data-v2="lyssna-aktivt-uppdrag" aria-label={lasningJson.lyssna.aria_uppdrag} onClick={() => rostKo.lasUpp(uppdragText(aktivtUpp))}>🔊 {lasningJson.lyssna.knapp}</button>
+                  <button type="button" className="lyssna-knapp" data-v2="lyssna-aktivt-uppdrag" data-p4="lyssna-uppdrag" aria-label={lasningJson.lyssna.aria_uppdrag} onClick={() => rostKo.lasUpp(uppdragText(aktivtUpp))}>🔊 {lasningJson.lyssna.knapp}</button>
                 </div>
                 <p className="aktivt-uppdrag-text">{uppdragText(aktivtUpp)}</p>
-                <button type="button" className="kort aktivt-uppdrag-skriv" onClick={() => { if (!uppdragSpar[aktivtUpp.id]) useMinne.getState().sattUppdrag(aktivtUpp.id, "pagar"); setPanel?.("spel"); setLage("skriv"); }}>✍️ Skriv lösningen</button>
+                <div className="uppdrag-ide-chips">{uppdragForslag(aktivtUpp).map((fras) => <button key={fras} type="button" className="uppdrag-ide-chip" data-f3="uppdrag-ide-chip" onClick={() => { fyllExempel(fras); setPanel?.("spel"); }}>{fras}</button>)}</div>
+                <button type="button" ref={(el) => el?.setAttribute("data-testid", "uppdrag-los-i-boken")} className="aktivt-uppdrag-skapa" data-v2="skapa-for-uppdrag" data-f3="uppdrag-los-i-boken" onClick={() => { setPanel?.("spel"); setLage("kort"); }}>✍️ Lös i boken</button>
               </div>
             ) : null}
             {uppRader.length === 0 && !(uppFlik === "pagar" && aktivtUpp) ? <p>{UPP.texter.inga}</p> : null}

@@ -47,7 +47,7 @@ export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
       if (djur && gavoInbjudanVidTryck(djur.uid)) {
         setGavaTill(`egen:${djur.uid}`);
         gavaRef.current = `egen:${djur.uid}`;
-        setLage("skriv");
+        setLage("kort");
         setHand(true);
         handRef.current = true;
       }
@@ -136,9 +136,20 @@ export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
     ljud.satt(useMinne.getState().effektPa && useMinne.getState().ljudPa);
     const stopp = brygga.lyssna((h) => paHandelse.current(h));
     const tick = window.setInterval(() => visaOnskaRef.current(), 1000);
+    const gavaKlick = (e: Event) => {
+      const uid = (e as CustomEvent<string>).detail;
+      if (!uid) return;
+      setGavaTill(`egen:${uid}`);
+      gavaRef.current = `egen:${uid}`;
+      setLage("kort");
+      setHand(true);
+      handRef.current = true;
+    };
+    window.addEventListener("troll-gava-klick", gavaKlick);
     return () => {
       stopp();
       window.clearInterval(tick);
+      window.removeEventListener("troll-gava-klick", gavaKlick);
     };
   }, []);
 }

@@ -18,7 +18,13 @@ export function ordIText(text: string): string[] {
 /** Rättvis träff: exakt, böjt ("filten", "filtar") eller ingår i ett sammansatt ord ("ullmössa"). Ord under 4 bokstäver måste vara exakta. */
 export function ordTraffar(token: string, ord: string): boolean {
   if (token === ord) return true;
-  return ord.length >= 4 && (token.startsWith(ord) || token.endsWith(ord));
+  if (ord.length < 4) return false;
+  if (token.startsWith(ord)) {
+    const rest = token.slice(ord.length);
+    if (rest === "r" && ord.endsWith("e")) return false;
+    return true;
+  }
+  return token.endsWith(ord);
 }
 
 /** B1.2: ordets böjningsformer ur data/ord.json (`former`, slås upp på `id`), byggd en gång. "röd" → "rött", "röda". */

@@ -342,6 +342,132 @@
    ],
    "ritning": "Gul taggig blomma på grön stjälk.",
    "kit_nyckel": "gavor/maskros"
+  },
+  {
+   "id": "vatten",
+   "genus": "ett",
+   "former": [
+    "vatten",
+    "vattnet",
+    "vatten",
+    "vattnen"
+   ],
+   "farg": "blå",
+   "taggar": [
+    "sött"
+   ]
+  },
+  {
+   "id": "säng",
+   "genus": "en",
+   "former": [
+    "säng",
+    "sängen",
+    "sängar",
+    "sängarna"
+   ],
+   "farg": "brun",
+   "taggar": [
+    "mjukt"
+   ]
+  },
+  {
+   "id": "kram",
+   "genus": "en",
+   "former": [
+    "kram",
+    "kramen",
+    "kramar",
+    "kramarna"
+   ],
+   "farg": "rosa",
+   "taggar": [
+    "mjukt"
+   ]
+  },
+  {
+   "id": "banan",
+   "genus": "en",
+   "former": [
+    "banan",
+    "bananen",
+    "bananer",
+    "bananerna"
+   ],
+   "farg": "gul",
+   "taggar": [
+    "sött"
+   ]
+  },
+  {
+   "id": "bulle",
+   "genus": "en",
+   "former": [
+    "bulle",
+    "bullen",
+    "bullar",
+    "bullarna"
+   ],
+   "farg": "brun",
+   "taggar": [
+    "sött"
+   ]
+  },
+  {
+   "id": "saft",
+   "genus": "en",
+   "former": [
+    "saft",
+    "saften",
+    "safter",
+    "safterna"
+   ],
+   "farg": "röd",
+   "taggar": [
+    "sött"
+   ]
+  },
+  {
+   "id": "kudde",
+   "genus": "en",
+   "former": [
+    "kudde",
+    "kudden",
+    "kuddar",
+    "kuddarna"
+   ],
+   "farg": "vit",
+   "taggar": [
+    "mjukt"
+   ]
+  },
+  {
+   "id": "filt",
+   "genus": "en",
+   "former": [
+    "filt",
+    "filten",
+    "filtar",
+    "filtarna"
+   ],
+   "farg": "blå",
+   "taggar": [
+    "mjukt"
+   ]
+  },
+  {
+   "id": "boll",
+   "genus": "en",
+   "former": [
+    "boll",
+    "bollen",
+    "bollar",
+    "bollarna"
+   ],
+   "farg": "röd",
+   "taggar": [
+    "leka"
+   ]
   }
  ]
 }

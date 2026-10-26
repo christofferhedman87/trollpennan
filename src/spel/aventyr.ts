@@ -224,13 +224,41 @@ export function omradeArKlart(omrade: string, status: Record<string, "pagar" | "
   return lista.length > 0 && lista.every((u) => status[u.id] === "klar");
 }
 
-/** Texten som visas för uppdraget: givarens (Bengtsson) när den finns, annars den ursprungliga. */
-export function uppdragText(u: Uppdrag): string {
-  return u.givare && u.text_bengtsson ? u.text_bengtsson : u.text;
+type AngLas = { ang: { kropp: string }[] };
+let hamtaAng: () => AngLas = () => ({ ang: [] });
+
+/** Minnet kopplar läsaren efter sin egen init, så aventyr inte importerar minnet (cykel via platser). */
+export function kopplaAng(hamta: () => AngLas) {
+  hamtaAng = hamta;
 }
 
-export function uppdragKlart(u: Uppdrag): string {
-  return u.givare && u.klart_bengtsson ? u.klart_bengtsson : u.klart;
+/** Första djurets kropp på ängen, annars kanin. */
+export function forstaDjurKropp(ang?: { kropp: string }[]): string {
+  return (ang ?? hamtaAng().ang)[0]?.kropp ?? "kanin";
+}
+
+function foljeNamn(s: { ang?: { kropp: string }[] } | undefined): string {
+  return forstaDjurKropp(s?.ang);
+}
+
+function bytFrysDjur(bas: string, djur: string): string {
+  const namn = `${djur[0]!.toUpperCase()}${djur.slice(1)}`;
+  return bas.replace(/\bdin kanin\b/gi, `din ${djur}`).replace(/\bKaninen\b/g, namn).replace(/\bkaninen\b/g, `din ${djur}`);
+}
+
+/** Texten som visas för uppdraget: givarens (Bengtsson) när den finns, annars den ursprungliga. */
+export function uppdragText(u: Pick<Uppdrag, "givare" | "text" | "text_bengtsson"> & { id?: string }, malDjur?: string): string {
+  const bas = u.givare && u.text_bengtsson ? u.text_bengtsson : u.text;
+  if (u.id !== "kanin-fryser") return bas;
+  const djur = (malDjur ?? forstaDjurKropp()).toLocaleLowerCase("sv");
+  return djur && djur !== "kanin" ? bytFrysDjur(bas, djur) : bas;
+}
+
+export function uppdragKlart(u: Pick<Uppdrag, "givare" | "klart" | "klart_bengtsson"> & { id?: string }, s = hamtaAng(), malDjur?: string): string {
+  const bas = fyll(u.givare && u.klart_bengtsson ? u.klart_bengtsson : u.klart, { djur: foljeNamn(s) });
+  if (u.id !== "kanin-fryser") return bas;
+  const djur = (malDjur ?? forstaDjurKropp(s?.ang)).toLocaleLowerCase("sv");
+  return djur && djur !== "kanin" ? bytFrysDjur(bas, djur) : bas;
 }
 
 /** Raden "Nytt uppdrag …" med givarens namn när uppdraget har en givare. */

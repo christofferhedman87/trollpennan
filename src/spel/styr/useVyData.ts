@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { byggMedId } from "@/tolk/byggtolk.ts";
+import { GAVOR } from "@/tolk/gavotolk.ts";
 import { hemligaKvar, tolka } from "@/tolk/tolka.ts";
+import type { Ord } from "@/tolk/typer.ts";
 import { TEXTER_AV } from "../aventyr.ts";
 import { fyll } from "../fyll.ts";
 import { komIhagDjur } from "../liv.ts";
@@ -9,8 +11,20 @@ import { bestamdAv, exempelFor, kortForExempel, onskaAnkare } from "../ui/hjalp.
 import { BYGGSIDOR, FIR, TEXTER } from "../ui/spelData.ts";
 import type { SpelKarna } from "./typer.ts";
 
+const GAVA_SUGEN = ["äpple", "morot", "banan", "bulle", "vatten", "saft", "kudde", "filt", "säng", "boll", "kram"];
+const GAVA_VARM = ["kudde", "filt", "säng", "kakao", "te", "soppa", "äpple", "morot", "vatten"];
+
+function gavaKortLista(humor?: string): Ord[] {
+  const prio = humor === "trott" || humor === "fryser" ? GAVA_VARM : GAVA_SUGEN;
+  const rank = new Map(prio.map((id, i) => [id, i]));
+  return [...GAVOR.gavor]
+    .sort((a, b) => (rank.get(a.id) ?? 1000) - (rank.get(b.id) ?? 1000))
+    .map((g) => ({ id: g.id, visa: g.former[0] ?? g.id, klass: "djur" as const, genus: g.genus, former: g.former, niva: "start" as const, del: {} }) as unknown as Ord);
+}
+
 export function useVyData(k: Pick<SpelKarna, "t">) {
   const { flik, varld, meny, boUid, byggSidaId, onskaOpp, onskaPos, onskaSyns, kartaOpp, omrade, gavaTill, angRef, funna, onskan, byggSidor, garden, ang, hemma, allaOrd, panel } = k.t;
+  const liv = useMinne((s) => s.liv);
 
   useEffect(() => {
     const rot = angRef.current;
@@ -86,7 +100,8 @@ export function useVyData(k: Pick<SpelKarna, "t">) {
     .filter((o) => o.niva === "kort" && o.klass === flik)
     .slice()
     .sort((a, b) => Number(onskaIds.has(b.id)) - Number(onskaIds.has(a.id)));
-  const kort = forstaSkapelse && flik === "djur" ? kortAlla.filter((o) => START_DJUR.includes(o.id)).slice(0, 8) : kortAlla;
+  const kortDjur = forstaSkapelse && flik === "djur" ? kortAlla.filter((o) => START_DJUR.includes(o.id)).slice(0, 8) : kortAlla;
+  const kort = gavaTill !== null ? gavaKortLista(liv[gavaTill.slice(5)]?.humor) : kortDjur;
 
   const hemliga = allaOrd.filter((o) => o.niva === "fritt");
 

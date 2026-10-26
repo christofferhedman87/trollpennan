@@ -92,6 +92,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
                     className="humor-ikon"
                     data-testid={sov ? "zzz" : `humor-${liv[djur.uid]?.humor ?? "glad"}`}
                     style={{ ...dukStil(p.x, p.topp ?? p.y) }}
+                    onClick={() => window.dispatchEvent(new CustomEvent("troll-gava-klick", { detail: djur.uid }))}
                   >
                     {sov ? sovText() : ikon}
                   </span>
@@ -132,7 +133,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
           </div>
           {panel === "spel" && !onskaOpp && !ladaOpp && !boUid && !meny
             ? bubblor.slice(-1).map((b) => (
-            <div key={b.id} className={b.ovan ? "bubbla ovan" : "bubbla"} style={bubblaStil(b.x, b.y)} data-testid="bubbla">
+            <div key={b.id} className={`${b.ovan ? "bubbla ovan" : "bubbla"}${b.hjarta ? " bubbla-tack" : ""}`} style={bubblaStil(b.x, b.y)} data-testid="bubbla">
               {b.hjarta ? <Heart className="hjarta" aria-hidden /> : null}
               <p>{b.text}</p>
             </div>

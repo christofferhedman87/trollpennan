@@ -38,7 +38,7 @@ export function useBannrar(k: Pick<SpelKarna, "t">) {
       const start = ensam ? [] : prev;
       return [...start, { id, text: texten, x: kx, y: ky, hjarta, ovan }].slice(-1);
     });
-    window.setTimeout(() => { setBubblor((b) => b.filter((x) => x.id !== id)); if (kalla === "tryck") rostKo.stryk(texten); }, 4200);
+    window.setTimeout(() => { setBubblor((b) => b.filter((x) => x.id !== id)); if (kalla === "tryck") rostKo.stryk(texten); }, 4500);
   }
   function visaMossa(h: Parameters<typeof mossaHand>[0]) {
     const r = mossaHand(h);

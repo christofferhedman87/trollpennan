@@ -109,7 +109,7 @@ border-radius:18px;padding:14px 18px;box-shadow:0 6px 0 var(--color-paper-deep)}
 .ang-lager{
 pointer-events:none;position:absolute;inset:0;overflow:hidden;z-index:2}
 .bubbla{
-background:var(--color-cream);max-width:min(18rem,78%);color:var(--color-ink);box-shadow:0 8px 0 var(--color-paper-deep);font-size:var(--text-ui);border-radius:16px;padding:10px 14px;position:absolute;transform:translate(-50%);z-index:5}
+background:var(--color-cream);max-width:min(18rem,78%);color:var(--color-ink);box-shadow:0 8px 0 var(--color-paper-deep);font-size:var(--text-ui);border-radius:16px;padding:10px 14px;position:absolute;transform:translate(-50%);z-index:5;min-width:48px;min-height:48px}
 .bubbla.ovan{
 transform:translate(-50%,-115%)}
 .bubbla p{
@@ -502,7 +502,11 @@ animation:none}
   position: absolute;
   z-index: 3;
   transform: translate(-50%, -120%);
-  min-width: 36px;
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 2px 8px;
   border-radius: 999px;
   background: var(--color-cream);
@@ -511,6 +515,18 @@ animation:none}
   font-weight: 800;
   line-height: 1.2;
   text-align: center;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.bubbla.bubbla-tack {
+  border: 2px solid #F2B632;
+  box-shadow: 0 6px 18px rgba(242, 182, 50, 0.28);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bubbla.bubbla-tack .hjarta {
+  flex-shrink: 0;
 }
 
 .lykta {
@@ -762,10 +778,14 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
 
 /* R9K: humörikonen ovanför djuret i 3D (ikon per humör i data/humor.json) */
 .humor-ikon-3d {
-  display: inline-block;
-  pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  cursor: pointer;
   user-select: none;
-  min-width: 30px;
+  min-width: 48px;
+  min-height: 48px;
   padding: 1px 6px;
   border-radius: 999px;
   background: var(--color-cream);

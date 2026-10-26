@@ -9,6 +9,7 @@ import { MAX_SYNLIGA_DJUR, START_PLATS, mattUr, platsMed, upplast } from "./plat
 
 export { MAX_SYNLIGA_DJUR };
 import { hamtaFranStall, flyttaTillStall, type StallUt } from "./stall.ts";
+import { kopplaAng } from "./aventyr.ts";
 import { arData, franSparning, kallaHitSpar, laggPaAngSpar, lasIn, spara, tom } from "./minneSparning.ts";
 
 export { franSparning };
@@ -89,6 +90,8 @@ export type Data = {
   gataId: string | null;
   /** P4b: automatisk lästrappa eller en låst nivå vald av en vuxen. */
   lasnivaVal: "auto" | 1 | 2 | 3;
+  solstjarnor?: number;
+  vaktardjur?: Record<string, { matad: number; vackt: boolean }>;
 };
 
 export type Store = Data & {
@@ -392,3 +395,4 @@ export const useMinne = create<Store>((set, get) => ({
 }));
 
 useMinne.subscribe((s) => spara(s));
+kopplaAng(() => useMinne.getState());

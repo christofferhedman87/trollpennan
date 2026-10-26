@@ -20,7 +20,7 @@ export function useAvBro(k: Pick<SpelKarna, "t" | "b" | "v" | "a">) {
     if (h.typ === "vild") {
       setGavaTill(h.id);
       gavaRef.current = h.id;
-      setLage("skriv");
+      setLage("kort");
       setHand(true);
       handRef.current = true;
       setForslag(null);
