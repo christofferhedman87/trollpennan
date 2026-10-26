@@ -1,6 +1,6 @@
 # PROJECT.md – Trollpennan (kort projektkarta)
 
-**Uppdaterad 2026-10-26 av Arkitekten, mot `main` = `2f17ee8` (#215, V9b mergad — hela Blockserie V klar).** Uppdatera efter varje sammanslagen runda (grindregel 1 i `build-round-gate`).
+**Uppdaterad 2026-10-26 av Arkitekten, mot `main` = `a1dabdc` (#224, S4 mergad — hela Blockserie F #216–#220 samt S1–S4 #221–#224 klara, S5 pågår, Blockserie D D1–D3 beställd).** Uppdatera efter varje sammanslagen runda (grindregel 1 i `build-round-gate`).
 Granskning: https://trollpennan.christofferhedman87.workers.dev/ (byggs från `main`, Playwright 375×812). `trollpennan.grok.me` är gammal och ska inte användas.
 
 - **Plan för Blockserie F (`F1`–`F5`, 2026-10-26 — Första minuterna, UX i världsklass & 5 krokar till Blockserie S):** [`docs/blockserie-f-2026-10-26.md`](docs/blockserie-f-2026-10-26.md)
@@ -21,7 +21,7 @@ Granskning: https://trollpennan.christofferhedman87.workers.dev/ (byggs från `m
 
 **Täckning** (Kelly topp-1000, `rundor/R3B-reservform/r3b-matt.mjs`; 18 okt → 21 okt): egen form för substantiv 1,3 → 9,6 %, adjektiv 1,9 → 2,1 % och verb 0,8 → 3,2 %. Något synligt (egen form eller ordägg) 0 → 95–97 %. Metod: `verification/tackning-2026-10-18.md`.
 
-## Vad som finns på `main` (`2f17ee8`)
+## Vad som finns på `main` (`a1dabdc`)
 | Del | Var |
 |---|---|
 | Ordtolkning & svensk grammatik (`O1a` #190, `O1b` #191, `P3b-1` #199, `V4` #207, `V8a` #212) | `src/tolk/` (`tolka.ts`, `lexikon.ts`, `sparr.ts`, `avstand.ts`, `reserv.ts`, `v4-sprak.test.ts`), `src/spel/fyll.ts`, `data/ord.json`, `data/blocklist.json`, `data/kannetecken.json`, `data/orddelar.json` |
@@ -71,8 +71,25 @@ Granskning: https://trollpennan.christofferhedman87.workers.dev/ (byggs från `m
 
 | # | Runda | Rundmapp & Beställning | Innehåll (1 sammanhållet mål per runda) | Turtak | Status |
 |---|---|---|---|---|---|
-| 1 | **S1** | `rundor/S1-S3-slime-varld-ansikten-largo/BESTALLNING-S1.md` | **Solvarm Slime Rancher-värld i 60 fps (`375×812`):** `appliceraSlimeGlod` med `customProgramCacheKey` (0 extra draw calls), `<VindGras antal={180} />` i 1 draw call + `<Solkorn antal={35} />`, de 5 biompaletterna (`slimePalett`) + CC0-biomrekvisita (`s-biom-svampkluster-cc0.glb`, `s-biom-nackros-cc0.glb`, `s-plort-kristall-cc0.glb`) och `#FFF6E5` HUD-piller med `2px solid #3B2F2F` (`0 %` scrim). | 42 | **Beställd (`origin/arkitekt/s1-s5-bestallning`)** |
-| 2 | **S2** | `rundor/S1-S3-slime-varld-ansikten-largo/BESTALLNING-S2.md` | **Rundade CC0-djurmodeller (`s-djur-*.glb` för 15 kub-/klossdjur) & uttrycksfulla Slime Rancher-ansikten i bulk (`<AnsiktsUttryck />`):** monterad i `AnsiktsUttryck.tsx` via `rot.userData.ankare` (`par: "uttryck"`), 5 reaktiva uttryck (`^‿^`, `★‿★`, `•o•`, `•︵•`, `>‿<`) med dubbel vit *catchlight* och `#F48FB1`-kinder i `useFrame`, `≥ 24×14 px` på skärmen och `0 px` bubbel-överlapp. | 42 | **Beställd (`origin/arkitekt/s1-s5-bestallning`)** |
-| 3 | **S3** | `rundor/S1-S3-slime-varld-ansikten-largo/BESTALLNING-S3.md` | **Dedikerad 3D-placerings- & rörelselösare för Largo-djurblandningar (`1.25×`) och Slime-skutt mot mat/leksak:** förkalibrerad i `matt/kalibrering-s3.json` (`≥ 68×68 px`, krockfria `par`-ankare `"oron"`, `"vingar"`, `"horn"` med `≥ 12 px` utstick), aktivt skutt (`stegMotMalPunkt` inom `1.2 s`) mot `s-leksak-studsboll-cc0.glb`, `s-leksak-kudde-cc0.glb`, `s-mat-jordgubbe-cc0.glb`, `s-mat-honung-cc0.glb` & kompisskutt. | 36 | **Beställd (`origin/arkitekt/s1-s5-bestallning`)** |
-| 4 | **S4** | `rundor/S4-S5-vaktardjur-solstjarnor-album/BESTALLNING-S4.md` | **Mysiga Väktardjur (*Gordo Slimes*, `2.1×`) i Skogen (*Bamse-Bum*), Sjön (*Kapten Plask*) & Grottan (*Glitter-Glim*):** `data/vaktardjur.json` + `src/spel/ang/vaktardjur.tsx` med 3-zons matningsvy på `375×812` (`Zon A y=58..126`, `Zon B y=128..366` fri 3D-sikt, `Zon C y=366..812`), `+12 %` svällning per mening och vid `3/3` `s-vaktar-skattkista-cc0.glb` + 5 Solstjärnor + gårdsritning. | 42 | **Beställd (`origin/arkitekt/s1-s5-bestallning`)** |
+| 1 | **S1** | `rundor/S1-S3-slime-varld-ansikten-largo/BESTALLNING-S1.md` | **Solvarm Slime Rancher-värld i 60 fps (`375×812`):** `appliceraSlimeGlod` med `customProgramCacheKey` (0 extra draw calls), `<VindGras antal={180} />` i 1 draw call + `<Solkorn antal={35} />`, de 5 biompaletterna (`slimePalett`) + CC0-biomrekvisita (`s-biom-svampkluster-cc0.glb`, `s-biom-nackros-cc0.glb`, `s-plort-kristall-cc0.glb`) och `#FFF6E5` HUD-piller med `2px solid #3B2F2F` (`0 %` scrim). | 42 | **Mergad (#221)** |
+| 2 | **S2** | `rundor/S1-S3-slime-varld-ansikten-largo/BESTALLNING-S2.md` | **Rundade CC0-djurmodeller (`s-djur-*.glb` för 15 kub-/klossdjur) & uttrycksfulla Slime Rancher-ansikten i bulk (`<AnsiktsUttryck />`):** monterad i `AnsiktsUttryck.tsx` via `rot.userData.ankare` (`par: "uttryck"`), 5 reaktiva uttryck (`^‿^`, `★‿★`, `•o•`, `•︵•`, `>‿<`) med dubbel vit *catchlight* och `#F48FB1`-kinder i `useFrame`, `≥ 24×14 px` på skärmen och `0 px` bubbel-överlapp. | 42 | **Mergad (#222)** |
+| 3 | **S3** | `rundor/S1-S3-slime-varld-ansikten-largo/BESTALLNING-S3.md` | **Dedikerad 3D-placerings- & rörelselösare för Largo-djurblandningar (`1.25×`) och Slime-skutt mot mat/leksak:** förkalibrerad i `matt/kalibrering-s3.json` (`≥ 68×68 px`, krockfria `par`-ankare `"oron"`, `"vingar"`, `"horn"` med `≥ 12 px` utstick), aktivt skutt (`stegMotMalPunkt` inom `1.2 s`) mot `s-leksak-studsboll-cc0.glb`, `s-leksak-kudde-cc0.glb`, `s-mat-jordgubbe-cc0.glb`, `s-mat-honung-cc0.glb` & kompisskutt. | 36 | **Mergad (#223)** |
+| 4 | **S4** | `rundor/S4-S5-vaktardjur-solstjarnor-album/BESTALLNING-S4.md` | **Mysiga Väktardjur (*Gordo Slimes*, `2.1×`) i Skogen (*Bamse-Bum*), Sjön (*Kapten Plask*) & Grottan (*Glitter-Glim*):** `data/vaktardjur.json` + `src/spel/ang/vaktardjur.tsx` med 3-zons matningsvy på `375×812` (`Zon A y=58..126`, `Zon B y=128..366` fri 3D-sikt, `Zon C y=366..812`), `+12 %` svällning per mening och vid `3/3` `s-vaktar-skattkista-cc0.glb` + 5 Solstjärnor + gårdsritning. | 42 | **Mergad (#224, `a1dabdc`)** |
 | 5 | **S5** | `rundor/S4-S5-vaktardjur-solstjarnor-album/BESTALLNING-S5.md` | **Solstjärne-loop (*Plorts* `+1 ★` / `+2 ★ Favorit!`), Gårdsuppgraderingar & 3-stjärnigt *Slimepedia*-Album:** `src/spel/solstjarna.ts` (`s-solstjarna-plort-cc0.glb` & `s-plort-kristall-cc0.glb`), gårdsuppgraderingar i `Garden3D.tsx`/`byggsidor.json` och 3-stjärnigt *Slimepedia*-Album i `AlbumDialog.tsx` (max 2 kort/rad, max 4 staplade element/kort, `★ ★ ☆`, favoritmat-piller och `✍️ Skriv till djuret`). | 42 | **Beställd (`origin/arkitekt/s1-s5-bestallning`)** |
+
+### 4. Nästa serie direkt efter S5: Blockserie D (`D1`–`D3`: Dagnys speltest, Mobilfixar, Smeknamn & Sammanhållna Röstfraser) i `rundor/D1-D3-dagnys-speltest-fixar/` (Beställd på `origin/arkitekt/d1-d3-bestallning`)
+
+- **Grindbevis:** `rundor/D1-D3-dagnys-speltest-fixar/GRIND.md`
+- **Kodspaning (Fynd D1–D7):** `/workspace/kod-inkorg/D1-D3/spaning.md`
+- **5 nya sammanhållna ElevenLabs-röstfiler för Trollpennan (`pennan`, `4Ct5uMEndw4cJ7q0Jx0l`, `-16 LUFS`):**
+  1. `public/ljud/rost/cd6dfbe4984fa1c4.mp3` (`14c9a5af`: *"Wow, du har skrivit ett guldord! Du får en stjärna!"*, `6766 ms`)
+  2. `public/ljud/rost/3e4aec0917aef47a.mp3` (`8841cbf5`: *"Titta! Du hittade ett helt nytt ord till boken!"*, `4963 ms`)
+  3. `public/ljud/rost/f88da967ffcbd8f5.mp3` (`666f97f2`: *"Titta, det du skrev vaknar till liv!"*, `4023 ms`)
+  4. `public/ljud/rost/a4981119866c1746.mp3` (`5133aa4c`: *"Tadaa! Snyggt bygge, nu står det på gården!"*, `4362 ms`)
+  5. `public/ljud/rost/bc39930f05380799.mp3` (`3dcac43d`: *"Hurra! Du fick nya stjärnor!"*, `2534 ms`)
+
+| # | Runda | Beställning | Innehåll (1 sammanhållet mål per runda) | Turtak | Status |
+|---|---|---|---|---|---|
+| 1 | **D1** | `rundor/D1-D3-dagnys-speltest-fixar/BESTALLNING-D1.md` | **Rena 3D-djuransikten med humör-aura ovanför `huvudTopp` (`D1`), Lås mot mobilens systemtangentbord (`inputMode="none"`, `D2`) & 2D-Doktor Bengtsson på ängen + konsekvent titel `"Doktor Bengtsson"` (`D6`).** | 38 | **Beställd (`origin/arkitekt/d1-d3-bestallning`)** |
+| 2 | **D2** | `rundor/D1-D3-dagnys-speltest-fixar/BESTALLNING-D2.md` | **Bisatser, bindeord (`som`/`har`/`med`/`och`/`är`/`kan`) & påklädning utan reserv-ägg (`D3`) + Sammansatta rumsscener (`"på en sten sitter en hund"`) med plattformsplacering i 3D (`D4`).** | 40 | **Beställd (`origin/arkitekt/d1-d3-bestallning`)** |
+| 3 | **D3** | `rundor/D1-D3-dagnys-speltest-fixar/BESTALLNING-D3.md` | **Egna namn/smeknamn på djuren i text (`"en katt som heter Misse"`, `"döp katten till Misse"`), i UI (`"🏷️ Döp"`/`"🏷️ Byt namn"`), på 3D-namnskylt & i Album (`D5`) + inkoppling av de 5 sammanhållna ElevenLabs-röstfraserna i `src/spel/rost.ts` (`D7`).** | 40 | **Beställd (`origin/arkitekt/d1-d3-bestallning`)** |
