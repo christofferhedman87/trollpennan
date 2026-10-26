@@ -277,7 +277,7 @@ function delaOrd(token: string): Sem | null {
 function tokensAv(raw: string): string[] {
   return raw
     .toLocaleLowerCase("sv")
-    .replace(/[^a-zåäö\s]/g, " ")
+    .replace(/[^a-zåäö0-9\s]/g, " ")
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, 60)
@@ -1111,7 +1111,7 @@ export function tolka(raw: string, opts: TolkaOpts = {}): Utfall {
     kontur: byggd.kontur,
     glans: byggd.glans,
     formel,
-    beskrivning: formel.replace(/^(en|ett|två|tre|fyra|fem)\s+/, ""),
+    beskrivning: formel.replace(/^(en|ett|två|tre|fyra|fem|sex|sju|åtta|nio|tio)\s+/, ""),
     overraskningar: overraskningar(byggd),
   };
   const kalla = opts.kalla ?? "skriv";
@@ -1152,3 +1152,5 @@ export function kategorier() {
     tillbehor: "Har",
   } as const;
 }
+
+export { delaOchMening } from "./ochMening.ts";

@@ -81,7 +81,7 @@ export type OrdData = {
     regel: string;
     forled: Record<string, Forled>;
   };
-  repliker: Record<string, string[]>;
+  repliker: Record<string, string[] | string>;
   overraskningar: { om: string[]; effekt: string; text: string }[];
   ord: Ord[];
 };

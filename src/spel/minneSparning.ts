@@ -3,7 +3,7 @@ import type { Varelse } from "../tolk/typer.ts";
 import type { Sparad } from "./brygga.ts";
 import type { Data, Store } from "./minne.ts";
 import { somnaEn } from "./placering.ts";
-import { START_PLATS, TAK_PER_PLATS, laggMedTak, platsMed } from "./platser.ts";
+import { MAX_SYNLIGA_DJUR, START_PLATS, laggMedTak, platsMed } from "./platser.ts";
 
 export function tom(): Data {
   return {
@@ -246,7 +246,7 @@ export function laggPaAngSpar(
   let ang = [...state.ang];
   let sovande = [...state.sovande];
   for (let i = 0; i < antal; i++) {
-    while (ang.length >= TAK_PER_PLATS) {
+    while (ang.length >= MAX_SYNLIGA_DJUR) {
       const old = ang.shift();
       if (!old) break;
       sovande = [...sovande, old].slice(-40);
@@ -277,7 +277,7 @@ export function kallaHitSpar(
   let ang = [...state.ang];
   let sovande = state.sovande.filter((s) => s.uid !== uid);
   let somnad: Sparad | null = null;
-  if (ang.length >= TAK_PER_PLATS) {
+  if (ang.length >= MAX_SYNLIGA_DJUR) {
     const old = ang.shift();
     if (old) {
       sovande = [...sovande, old];

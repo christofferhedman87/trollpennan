@@ -51,7 +51,7 @@ const SKARM = { w: 375, h: 812 };
 const GOLV = PLACERING.synlig_golv;
 const KANT_PX = 8;
 /** reserv_krymp bara i spelets storlek (tak 10 per plats): med 30 i prestandaprovet vore det för dyrt */
-const RESERV_MAX = 12;
+const RESERV_MAX = 16;
 /** P3a-fix (beslut C): en småsak når minst så här många px på den kortaste ledden (minus mätfelet). */
 const SMASAK_PX = (PLACERING.smasak_px ?? 0) - (PLACERING.matfel_px ?? 0);
 
@@ -671,7 +671,18 @@ export function somnaEn(alla: readonly Sparad[], nyaUid: ReadonlySet<string>, pl
   // Arkitekten 10:31 (b), undantag från beslut B: står ett djur ändå utan ruta efter ett byggnadsord (byggnaden har redan
   // ställts längre bak, placera) söver byggnadsordet det äldsta djuret utan ruta – högst ett per ord, med egen banner
   const undantag = !kandidater.length && budget.has(true) ? utan.filter((d) => !bak(d)) : [];
-  return [...kandidater, ...undantag].sort((a, b) => a.skapad - b.skapad)[0] ?? null;
+  const val = [...kandidater, ...undantag].sort((a, b) => a.skapad - b.skapad)[0] ?? null;
+  if (val) return val;
+  // 16 vanliga katter stannar (äldre på 0,35). 12 tunga djur trycker alla äldre till reservgolvet: då söver ordet den äldsta.
+  if (alla.length > 10) {
+    const l = placeraMedMinne(alla, plats);
+    const minR = (PLACERING.reserv_krymp?.at(-1) ?? 0.25) + 1e-9;
+    const aldre = alla.filter((d) => !nyaUid.has(d.uid) && budget.has(bak(d)));
+    if (aldre.length > 0 && aldre.every((d) => (l.get(d.uid)?.krymp ?? 1) <= minR)) {
+      return aldre.sort((a, b) => a.skapad - b.skapad)[0] ?? null;
+    }
+  }
+  return null;
 }
 /** Arkitekten 10:31 (b): ett byggnadsord söver högst ett djur – ingen fler efter den första (minne.ts). */
 export function byggnadsord(alla: readonly Sparad[], nyaUid: ReadonlySet<string>, plats?: Plats): boolean {
