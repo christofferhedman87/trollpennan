@@ -56,6 +56,9 @@ function rostForNormaliserad(text: string): RostRad | null {
   const n = kaninFryserNeutral(normalisera(text));
   const hel = rad(nyckel(n));
   if (hel) return hel;
+  if (n.includes("Doktor Bengtsson")) {
+    const alt = rad(nyckel(n.replaceAll("Doktor Bengtsson", "Bengtsson"))); if (alt) return alt;
+  }
   const lag = sankMeningsStart(n);
   if (lag !== n) return rad(nyckel(lag));
   return null;

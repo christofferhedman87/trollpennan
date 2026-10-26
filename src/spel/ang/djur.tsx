@@ -227,7 +227,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       if (hoppH !== null) { hopp.current = hoppH; ljud.plopp(); }
       vila.current = kanHoppa ? 3.1 + (index % 3) * 0.7 : 5;
     }
-    const sq = squashSkala(t + index * 1.7, hopp.current);
+    const sq = squashSkala(t + index * 1.7, hopp.current, 0, signal.current.humör);
     const lyft = pause ? 0 : (snurr.current > 0 ? Math.sin(hopp.current * Math.PI) * 0.85 : sq.lyft);
     const bob = pause ? 0 : Math.sin(t * (flyg ? 2.4 : 1.6) + index) * (flyg ? 0.16 : sim ? 0.08 : 0.04);
     const s = skal.current * takSkala(spec.kropp, ritSpec.skala || 1) * synS;

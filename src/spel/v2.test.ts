@@ -12,8 +12,8 @@ test("V2: visa_text ligger bredvid oförändrad rösttext", () => {
   const upp = steg.find((s) => s.id === "uppdraget");
   assert.equal(ord?.text, "Tryck på Pennans bok och skriv ett djur!");
   assert.equal(ord?.visa_text, "Tryck på Skriv och skriv ett djur!");
-  assert.equal(upp?.text, "Skriv det Bengtsson ber om i Pennans bok.");
-  assert.equal(upp?.visa_text, "Tryck på Skriv och skriv det Bengtsson ber om!");
+  assert.equal(upp?.text, "Skriv det Doktor Bengtsson ber om i Pennans bok.");
+  assert.equal(upp?.visa_text, "Tryck på Skriv och skriv det Doktor Bengtsson ber om!");
 });
 
 test("V2: Coach visar visa_text och anmäler fortfarande steg.text", () => {

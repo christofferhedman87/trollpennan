@@ -2404,6 +2404,14 @@
    "t": "nattfjäril",
    "n": -16
   },
+  "14c9a5af": {
+   "f": "/ljud/rost/cd6dfbe4984fa1c4.mp3",
+   "ms": 6766,
+   "r": "pennan",
+   "id": "firande.json:.guldord.sammanhallen",
+   "t": "Wow, du har skrivit ett guldord! Du får en stjärna!",
+   "n": -16
+  },
   "14c9af10": {
    "f": "/ljud/rost/3dd35bdc5df5e22d.mp3",
    "ms": 1019,
@@ -3556,6 +3564,14 @@
    "t": "en katapult",
    "n": -16
   },
+  "23a95d40": {
+   "f": "/ljud/rost/40de0071816fc1e7.mp3",
+   "ms": 1280,
+   "r": "pennan",
+   "id": "varde:ett tält",
+   "t": "ett tält",
+   "n": -16
+  },
   "23afcbd5": {
    "f": "/ljud/rost/603bfc94c0a8b219.mp3",
    "ms": 1019,
@@ -4445,6 +4461,14 @@
    "t": "Den går och nickar med huvudet på torget och kuttrar.",
    "n": -16
   },
+  "2d3d48d9": {
+   "f": "/ljud/rost/db967993a3539e8c.mp3",
+   "ms": 4362,
+   "r": "pennan",
+   "id": "varde:ett block",
+   "t": "ett block",
+   "n": -16
+  },
   "2d41a742": {
    "f": "/ljud/rost/2e5bfd34cb08268c.mp3",
    "ms": 3109,
@@ -4595,6 +4619,14 @@
    "r": "pennan",
    "id": "varde:med sombrero",
    "t": "med sombrero",
+   "n": -16
+  },
+  "2e6eaddb": {
+   "f": "/ljud/rost/d4ba85a72dffe573.mp3",
+   "ms": 1254,
+   "r": "pennan",
+   "id": "varde:ett äppelträd",
+   "t": "ett äppelträd",
    "n": -16
   },
   "2e71c9b5": {
@@ -4755,6 +4787,14 @@
    "r": "pennan",
    "id": "ledtradar.json:.ledtradar.nattfjäril.gata",
    "t": "Jag flyger mot lampan när det är mörkt ute, med dammiga vingar.",
+   "n": -16
+  },
+  "30290de9": {
+   "f": "/ljud/rost/abd49b088fc88038.mp3",
+   "ms": 1437,
+   "r": "pennan",
+   "id": "varde:ett flygplan",
+   "t": "ett flygplan",
    "n": -16
   },
   "3049c6e1": {
@@ -5075,6 +5115,14 @@
    "r": "pennan",
    "id": "onskningar.json:.onskningar[].text",
    "t": "Jag vill ha en kompis som kan simma med mig i dammen.",
+   "n": -16
+  },
+  "33330f50": {
+   "f": "/ljud/rost/c9050ab26de0b431.mp3",
+   "ms": 1672,
+   "r": "pennan",
+   "id": "varde:ett slottstorn",
+   "t": "ett slottstorn",
    "n": -16
   },
   "335c306c": {
@@ -5837,6 +5885,14 @@
    "t": "gul",
    "n": -16
   },
+  "3c528b0f": {
+   "f": "/ljud/rost/52ec7a5a0a3efe22.mp3",
+   "ms": 1437,
+   "r": "pennan",
+   "id": "varde:ett sjukhus",
+   "t": "ett sjukhus",
+   "n": -16
+  },
   "3c633902": {
    "f": "/ljud/rost/9967c126a5552fcd.mp3",
    "ms": 6217,
@@ -6005,6 +6061,14 @@
    "t": "en skruvmejsel",
    "n": -16
   },
+  "3dcac43d": {
+   "f": "/ljud/rost/bc39930f05380799.mp3",
+   "ms": 2534,
+   "r": "pennan",
+   "id": "firande.json:.stjarnor.sammanhallen",
+   "t": "Hurra! Du fick nya stjärnor!",
+   "n": -16
+  },
   "3dd3573c": {
    "f": "/ljud/rost/2f886dea0f90eb38.mp3",
    "ms": 1802,
@@ -6147,6 +6211,14 @@
    "r": "pennan",
    "id": "ledtradar.json:.ledtradar.marulk.gata",
    "t": "Havsdjup-fisk med en lampa framför stor mun som lockar till sig bytet i mörkret.",
+   "n": -16
+  },
+  "3f1f1985": {
+   "f": "/ljud/rost/60c0a37bd253b547.mp3",
+   "ms": 1071,
+   "r": "pennan",
+   "id": "varde:ett torn",
+   "t": "ett torn",
    "n": -16
   },
   "3f320887": {
@@ -7206,6 +7278,14 @@
    "t": "Sov gott, jag tassar på tå!",
    "n": -16
   },
+  "49ecb912": {
+   "f": "/ljud/rost/d4ba85a72dffe573.mp3",
+   "ms": 1254,
+   "r": "pennan",
+   "id": "varde:ett träd",
+   "t": "ett träd",
+   "n": -16
+  },
   "4a1e526b": {
    "f": "/ljud/rost/4da01b0be0c01b3a.mp3",
    "ms": 1672,
@@ -7710,6 +7790,14 @@
    "t": "En mörk mask runt ögonen och ringar på svansen har jag, men ingen kostym.",
    "n": -16
   },
+  "4e9d8edf": {
+   "f": "/ljud/rost/ace3499bdf5d1dac.mp3",
+   "ms": 1384,
+   "r": "pennan",
+   "id": "varde:ett hönshus",
+   "t": "ett hönshus",
+   "n": -16
+  },
   "4ea20a99": {
    "f": "/ljud/rost/2053f2d17c848ad0.mp3",
    "ms": 1567,
@@ -7884,6 +7972,14 @@
    "r": "pennan",
    "id": "varde:en draghund",
    "t": "en draghund",
+   "n": -16
+  },
+  "5133aa4c": {
+   "f": "/ljud/rost/a4981119866c1746.mp3",
+   "ms": 4362,
+   "r": "pennan",
+   "id": "texter-gard.json:.byggt.sammanhallen",
+   "t": "Tadaa! Snyggt bygge, nu står det på gården!",
    "n": -16
   },
   "51415e36": {
@@ -8263,6 +8359,14 @@
    "t": "Mycket, mycket större än stor. Börjar som en jätte.",
    "n": -16
   },
+  "55986abb": {
+   "f": "/ljud/rost/5e7fd17251c5a5e6.mp3",
+   "ms": 1097,
+   "r": "pennan",
+   "id": "varde:ett päron",
+   "t": "ett päron",
+   "n": -16
+  },
   "55a743ed": {
    "f": "/ljud/rost/1f94b40ed91c2c23.mp3",
    "ms": 4963,
@@ -8526,6 +8630,14 @@
    "r": "pennan",
    "id": "mossa.json:.uppdrag[].text",
    "t": "Jag har aldrig sett en gris. Kan du skriva en?",
+   "n": -16
+  },
+  "5920eb3a": {
+   "f": "/ljud/rost/36ea0c9f567656a4.mp3",
+   "ms": 1071,
+   "r": "pennan",
+   "id": "varde:ett ägg",
+   "t": "ett ägg",
    "n": -16
   },
   "592687b5": {
@@ -8936,6 +9048,14 @@
    "t": "en fjällräv",
    "n": -16
   },
+  "5e2aa609": {
+   "f": "/ljud/rost/6336146bd9c5c2e3.mp3",
+   "ms": 1149,
+   "r": "pennan",
+   "id": "varde:ett skepp",
+   "t": "ett skepp",
+   "n": -16
+  },
   "5e517142": {
    "f": "/ljud/rost/dc1dca555c1d5b37.mp3",
    "ms": 1620,
@@ -9336,6 +9456,14 @@
    "t": "en manet",
    "n": -16
   },
+  "628798b6": {
+   "f": "/ljud/rost/2b5c6085a895ab38.mp3",
+   "ms": 1071,
+   "r": "pennan",
+   "id": "varde:ett bröd",
+   "t": "ett bröd",
+   "n": -16
+  },
   "6294f8da": {
    "f": "/ljud/rost/995cff67396b1367.mp3",
    "ms": 3788,
@@ -9657,6 +9785,14 @@
    "t": "med kjol",
    "n": -16
   },
+  "666f97f2": {
+   "f": "/ljud/rost/f88da967ffcbd8f5.mp3",
+   "ms": 4023,
+   "r": "pennan",
+   "id": "ord.json:.repliker.hej.sammanhallen",
+   "t": "Titta, det du skrev vaknar till liv!",
+   "n": -16
+  },
   "667d0efb": {
    "f": "/ljud/rost/24b2ed1c2ee68580.mp3",
    "ms": 1149,
@@ -9671,6 +9807,14 @@
    "r": "pennan",
    "id": "varde:en matbord",
    "t": "en matbord",
+   "n": -16
+  },
+  "66e55945": {
+   "f": "/ljud/rost/3931649a74d60dfb.mp3",
+   "ms": 1097,
+   "r": "pennan",
+   "id": "varde:ett bord",
+   "t": "ett bord",
    "n": -16
   },
   "66ec5fb6": {
@@ -9729,6 +9873,14 @@
    "t": "en stövlar",
    "n": -16
   },
+  "6793bd62": {
+   "f": "/ljud/rost/027f5b066d079263.mp3",
+   "ms": 1280,
+   "r": "pennan",
+   "id": "varde:ett fönster",
+   "t": "ett fönster",
+   "n": -16
+  },
   "679478d0": {
    "f": "/ljud/rost/a8f2fe14d14249c1.mp3",
    "ms": 1071,
@@ -9783,6 +9935,14 @@
    "r": "pennan",
    "id": "varde:uggla",
    "t": "uggla",
+   "n": -16
+  },
+  "6801a249": {
+   "f": "/ljud/rost/db967993a3539e8c.mp3",
+   "ms": 4362,
+   "r": "pennan",
+   "id": "varde:ett höghus",
+   "t": "ett höghus",
    "n": -16
   },
   "6822f1b4": {
@@ -9969,6 +10129,14 @@
    "t": "Gå på äventyr med ett djur.",
    "n": -16
   },
+  "6b2ffab3": {
+   "f": "/ljud/rost/4407289fbbbcf4e6.mp3",
+   "ms": 1515,
+   "r": "pennan",
+   "id": "varde:ett vattenfall",
+   "t": "ett vattenfall",
+   "n": -16
+  },
   "6b42d084": {
    "f": "/ljud/rost/9d9f26b2674b9688.mp3",
    "ms": 3239,
@@ -10071,6 +10239,14 @@
    "r": "pennan",
    "id": "varde:med tofflor",
    "t": "med tofflor",
+   "n": -16
+  },
+  "6c8ff398": {
+   "f": "/ljud/rost/c0ec1e115f8c7b75.mp3",
+   "ms": 1019,
+   "r": "pennan",
+   "id": "varde:en smörkniv",
+   "t": "en smörkniv",
    "n": -16
   },
   "6ca0fcd7": {
@@ -10689,6 +10865,14 @@
    "t": "en räv",
    "n": -16
   },
+  "731cc436": {
+   "f": "/ljud/rost/3dd35bdc5df5e22d.mp3",
+   "ms": 1019,
+   "r": "pennan",
+   "id": "varde:ett lok",
+   "t": "ett lok",
+   "n": -16
+  },
   "732ec770": {
    "f": "/ljud/rost/3e9dc37fe86a6d46.mp3",
    "ms": 2090,
@@ -11007,6 +11191,14 @@
    "r": "pennan",
    "id": "varde:en dino",
    "t": "en dino",
+   "n": -16
+  },
+  "76c2d737": {
+   "f": "/ljud/rost/0fe7a6e1f1b99f0e.mp3",
+   "ms": 1515,
+   "r": "pennan",
+   "id": "varde:ett snöträd",
+   "t": "ett snöträd",
    "n": -16
   },
   "770dd145": {
@@ -11466,6 +11658,14 @@
    "t": "en hyvel",
    "n": -16
   },
+  "7c70cf4a": {
+   "f": "/ljud/rost/a403cae1c149aafd.mp3",
+   "ms": 1280,
+   "r": "pennan",
+   "id": "varde:ett växthus",
+   "t": "ett växthus",
+   "n": -16
+  },
   "7c9bd45a": {
    "f": "/ljud/rost/096407b4a3e42276.mp3",
    "ms": 1332,
@@ -11848,6 +12048,14 @@
    "r": "pennan",
    "id": "mossa.json:.uppdrag[].text",
    "t": "Skriv ett guldord alldeles själv.",
+   "n": -16
+  },
+  "82527a0c": {
+   "f": "/ljud/rost/f1fd4c6f41cd80a9.mp3",
+   "ms": 1097,
+   "r": "pennan",
+   "id": "varde:ett tåg",
+   "t": "ett tåg",
    "n": -16
   },
   "8276601f": {
@@ -12346,6 +12554,14 @@
    "t": "en cykel",
    "n": -16
   },
+  "8841cbf5": {
+   "f": "/ljud/rost/3e4aec0917aef47a.mp3",
+   "ms": 4963,
+   "r": "pennan",
+   "id": "firande.json:.hemligt_ord.sammanhallen",
+   "t": "Titta! Du hittade ett helt nytt ord till boken!",
+   "n": -16
+  },
   "88458dba": {
    "f": "/ljud/rost/76d8c3ef22b895b2.mp3",
    "ms": 1202,
@@ -12592,6 +12808,14 @@
    "r": "pennan",
    "id": "varde:en skogshuggare",
    "t": "en skogshuggare",
+   "n": -16
+  },
+  "8bc44b87": {
+   "f": "/ljud/rost/0fa3a37330421d8d.mp3",
+   "ms": 1254,
+   "r": "pennan",
+   "id": "varde:ett äpple",
+   "t": "ett äpple",
    "n": -16
   },
   "8bdc5952": {
@@ -13498,12 +13722,12 @@
    "t": "och rullskridsko",
    "n": -16
   },
-  "9630f6a7": {
+  "64897216": {
    "f": "/ljud/rost/e6fd5454d3584d43.mp3",
    "ms": 4258,
    "r": "pennan",
    "id": "forsta-stunden.json:.steg[].text",
-   "t": "Bengtsson vill be dig om något. Tryck på honom!",
+   "t": "Doktor Bengtsson vill be dig om något. Tryck på honom!",
    "n": -16
   },
   "963789a8": {
@@ -14922,6 +15146,14 @@
    "t": "stjärnor från Mossa!",
    "n": -16
   },
+  "a8e2ae22": {
+   "f": "/ljud/rost/695ebbe5984082e2.mp3",
+   "ms": 1332,
+   "r": "pennan",
+   "id": "varde:ett staket",
+   "t": "ett staket",
+   "n": -16
+  },
   "a9039640": {
    "f": "/ljud/rost/30cb5404f93129e9.mp3",
    "ms": 1620,
@@ -15008,6 +15240,14 @@
    "r": "pennan",
    "id": "varde:en smörgås",
    "t": "en smörgås",
+   "n": -16
+  },
+  "a9a9eaa1": {
+   "f": "/ljud/rost/a8b2dd912726842d.mp3",
+   "ms": 1384,
+   "r": "pennan",
+   "id": "varde:ett halsband",
+   "t": "ett halsband",
    "n": -16
   },
   "a9b0056f": {
@@ -15946,6 +16186,14 @@
    "t": "en paprika",
    "n": -16
   },
+  "b41c291e": {
+   "f": "/ljud/rost/db967993a3539e8c.mp3",
+   "ms": 4362,
+   "r": "pennan",
+   "id": "varde:ett luftskepp",
+   "t": "ett luftskepp",
+   "n": -16
+  },
   "b43b7117": {
    "f": "/ljud/rost/60c0a37bd253b547.mp3",
    "ms": 1071,
@@ -16113,6 +16361,14 @@
    "r": "pennan",
    "id": "varde:en spargris",
    "t": "en spargris",
+   "n": -16
+  },
+  "b62fdeaa": {
+   "f": "/ljud/rost/cd11f8b8da5dd5e9.mp3",
+   "ms": 1019,
+   "r": "pennan",
+   "id": "varde:ett berg",
+   "t": "ett berg",
    "n": -16
   },
   "b650095a": {
@@ -16507,12 +16763,12 @@
    "t": "En tyst krigare helt i svart som gömmer sig i skuggorna.",
    "n": -16
   },
-  "baa6f4c9": {
+  "48e25714": {
    "f": "/ljud/rost/97e8a8fff61be583.mp3",
    "ms": 2952,
    "r": "pennan",
    "id": "forsta-stunden.json:.steg[].text",
-   "t": "Skriv det Bengtsson ber om i Pennans bok.",
+   "t": "Skriv det Doktor Bengtsson ber om i Pennans bok.",
    "n": -16
   },
   "baecf3ca": {
@@ -16537,6 +16793,14 @@
    "r": "pennan",
    "id": "mossa.json:.klart[]",
    "t": "Tack! Det var precis vad jag hoppades på.",
+   "n": -16
+  },
+  "bb3b746e": {
+   "f": "/ljud/rost/3d1594c7543b12b5.mp3",
+   "ms": 1202,
+   "r": "pennan",
+   "id": "varde:ett moln",
+   "t": "ett moln",
    "n": -16
   },
   "bb580b46": {
@@ -16827,6 +17091,14 @@
    "t": "Ett platt havsdjur som ligger på botten med båda ögonen på samma sida.",
    "n": -16
   },
+  "be8ed594": {
+   "f": "/ljud/rost/4a346edb997557bf.mp3",
+   "ms": 1019,
+   "r": "pennan",
+   "id": "varde:ett hus",
+   "t": "ett hus",
+   "n": -16
+  },
   "be96ceb0": {
    "f": "/ljud/rost/c5b6c58f7f44ced5.mp3",
    "ms": 2116,
@@ -17051,6 +17323,14 @@
    "t": "en tröja",
    "n": -16
   },
+  "c1ced08f": {
+   "f": "/ljud/rost/3bb4fce576b75053.mp3",
+   "ms": 1019,
+   "r": "pennan",
+   "id": "varde:ett glas",
+   "t": "ett glas",
+   "n": -16
+  },
   "c1d679cc": {
    "f": "/ljud/rost/1993f3a01a901955.mp3",
    "ms": 1332,
@@ -17193,6 +17473,14 @@
    "r": "pennan",
    "id": "varde:scout",
    "t": "scout",
+   "n": -16
+  },
+  "c33092e2": {
+   "f": "/ljud/rost/cb4b513352134c3c.mp3",
+   "ms": 1097,
+   "r": "pennan",
+   "id": "varde:ett ljus",
+   "t": "ett ljus",
    "n": -16
   },
   "c34da5fd": {
@@ -17425,6 +17713,14 @@
    "r": "pennan",
    "id": "varde:en solfisk",
    "t": "en solfisk",
+   "n": -16
+  },
+  "c6158b03": {
+   "f": "/ljud/rost/2be0a8e3ad8ccc08.mp3",
+   "ms": 1384,
+   "r": "pennan",
+   "id": "varde:ett höstträd",
+   "t": "ett höstträd",
    "n": -16
   },
   "c626bfc2": {
@@ -17843,6 +18139,14 @@
    "t": "en ädelsten",
    "n": -16
   },
+  "caf97260": {
+   "f": "/ljud/rost/7214bb8c5c0d3c6e.mp3",
+   "ms": 1280,
+   "r": "pennan",
+   "id": "varde:ett slott",
+   "t": "ett slott",
+   "n": -16
+  },
   "cb18d7ea": {
    "f": "/ljud/rost/ed4633cb36b8dde1.mp3",
    "ms": 1202,
@@ -18065,6 +18369,14 @@
    "r": "pennan",
    "id": "varde:fjäril",
    "t": "fjäril",
+   "n": -16
+  },
+  "cd552373": {
+   "f": "/ljud/rost/ab7eecba22d60022.mp3",
+   "ms": 1254,
+   "r": "pennan",
+   "id": "varde:ett hjärta",
+   "t": "ett hjärta",
    "n": -16
   },
   "cdae9ac6": {
@@ -20004,6 +20316,14 @@
    "t": "en vattensalamander",
    "n": -16
   },
+  "e4e67b65": {
+   "f": "/ljud/rost/3787fd5c8da7179a.mp3",
+   "ms": 1332,
+   "r": "pennan",
+   "id": "varde:ett svärd",
+   "t": "ett svärd",
+   "n": -16
+  },
   "e50c5cd5": {
    "f": "/ljud/rost/05d65c73b121d452.mp3",
    "ms": 2038,
@@ -20066,6 +20386,14 @@
    "r": "pennan",
    "id": "onskningar.json:.onskningar[].text",
    "t": "Jag vill träffa ett djur från urtiden, för länge sedan.",
+   "n": -16
+  },
+  "e6377e72": {
+   "f": "/ljud/rost/51fbe18eb5a7f03a.mp3",
+   "ms": 1855,
+   "r": "pennan",
+   "id": "varde:ett pepparkakshus",
+   "t": "ett pepparkakshus",
    "n": -16
   },
   "e6480951": {
@@ -20396,6 +20724,14 @@
    "t": "Med min långa hals når jag blad som de flesta andra djur inte kommer åt.",
    "n": -16
   },
+  "ea044323": {
+   "f": "/ljud/rost/63f2f377ee2815cb.mp3",
+   "ms": 1489,
+   "r": "pennan",
+   "id": "varde:ett piratskepp",
+   "t": "ett piratskepp",
+   "n": -16
+  },
   "ea3917c1": {
    "f": "/ljud/rost/f7e9cda0b37e9955.mp3",
    "ms": 1254,
@@ -20442,6 +20778,14 @@
    "r": "bengtsson",
    "id": "platser.json:.platser[].intro.text",
    "t": "Här inne glimmar idéerna! Vad vill du skriva fram?",
+   "n": -16
+  },
+  "ea74addf": {
+   "f": "/ljud/rost/d80e427d4ba7b0d9.mp3",
+   "ms": 1437,
+   "r": "pennan",
+   "id": "varde:ett vattentorn",
+   "t": "ett vattentorn",
    "n": -16
   },
   "ea944c75": {
@@ -20900,6 +21244,14 @@
    "t": "Jag vill se två vänner: en i tomatens färg och en i himlens färg!",
    "n": -16
   },
+  "f0dff1c1": {
+   "f": "/ljud/rost/37f044354d8140d7.mp3",
+   "ms": 1332,
+   "r": "pennan",
+   "id": "varde:ett paraply",
+   "t": "ett paraply",
+   "n": -16
+  },
   "f10f4700": {
    "f": "/ljud/rost/b8b830e7daf8dd42.mp3",
    "ms": 3605,
@@ -20954,6 +21306,14 @@
    "r": "pennan",
    "id": "ledtradar.json:.ledtradar.demon.gata",
    "t": "Ett lurigt rött väsen med horn från undre världen.",
+   "n": -16
+  },
+  "f15a7935": {
+   "f": "/ljud/rost/8bcc009306736eed.mp3",
+   "ms": 1384,
+   "r": "pennan",
+   "id": "varde:ett rymdskepp",
+   "t": "ett rymdskepp",
    "n": -16
   },
   "f18249ea": {
@@ -21236,6 +21596,14 @@
    "t": "Nu får fantasin gå på egen upptäcktsfärd!",
    "n": -16
   },
+  "f3f4e230": {
+   "f": "/ljud/rost/db967993a3539e8c.mp3",
+   "ms": 4362,
+   "r": "pennan",
+   "id": "varde:ett vrak",
+   "t": "ett vrak",
+   "n": -16
+  },
   "f3fac4b5": {
    "f": "/ljud/rost/2c329fd8d67ec900.mp3",
    "ms": 1384,
@@ -21282,6 +21650,14 @@
    "r": "pennan",
    "id": "varde:polarräv",
    "t": "polarräv",
+   "n": -16
+  },
+  "f4794f59": {
+   "f": "/ljud/rost/ad84921053ca909b.mp3",
+   "ms": 1489,
+   "r": "pennan",
+   "id": "varde:ett armband",
+   "t": "ett armband",
    "n": -16
   },
   "f4bb49d7": {
@@ -22132,6 +22508,14 @@
    "t": "Han har glasögon och mustasch och är din mammas pappa.",
    "n": -16
   },
+  "fd2b9985": {
+   "f": "/ljud/rost/0859feea67f02f81.mp3",
+   "ms": 1149,
+   "r": "pennan",
+   "id": "varde:ett piano",
+   "t": "ett piano",
+   "n": -16
+  },
   "fd3c80ec": {
    "f": "/ljud/rost/3051816d12d28715.mp3",
    "ms": 5381,
@@ -22402,350 +22786,6 @@
    "r": "pennan",
    "id": "varde:en golfklubba",
    "t": "en golfklubba",
-   "n": -16
-  },
-  "be8ed594": {
-   "f": "/ljud/rost/4a346edb997557bf.mp3",
-   "ms": 1019,
-   "r": "pennan",
-   "id": "varde:ett hus",
-   "t": "ett hus",
-   "n": -16
-  },
-  "6801a249": {
-   "f": "/ljud/rost/db967993a3539e8c.mp3",
-   "ms": 4362,
-   "r": "pennan",
-   "id": "varde:ett höghus",
-   "t": "ett höghus",
-   "n": -16
-  },
-  "3f1f1985": {
-   "f": "/ljud/rost/60c0a37bd253b547.mp3",
-   "ms": 1071,
-   "r": "pennan",
-   "id": "varde:ett torn",
-   "t": "ett torn",
-   "n": -16
-  },
-  "e6377e72": {
-   "f": "/ljud/rost/51fbe18eb5a7f03a.mp3",
-   "ms": 1855,
-   "r": "pennan",
-   "id": "varde:ett pepparkakshus",
-   "t": "ett pepparkakshus",
-   "n": -16
-  },
-  "a8e2ae22": {
-   "f": "/ljud/rost/695ebbe5984082e2.mp3",
-   "ms": 1332,
-   "r": "pennan",
-   "id": "varde:ett staket",
-   "t": "ett staket",
-   "n": -16
-  },
-  "49ecb912": {
-   "f": "/ljud/rost/d4ba85a72dffe573.mp3",
-   "ms": 1254,
-   "r": "pennan",
-   "id": "varde:ett träd",
-   "t": "ett träd",
-   "n": -16
-  },
-  "2e6eaddb": {
-   "f": "/ljud/rost/d4ba85a72dffe573.mp3",
-   "ms": 1254,
-   "r": "pennan",
-   "id": "varde:ett äppelträd",
-   "t": "ett äppelträd",
-   "n": -16
-  },
-  "8bc44b87": {
-   "f": "/ljud/rost/0fa3a37330421d8d.mp3",
-   "ms": 1254,
-   "r": "pennan",
-   "id": "varde:ett äpple",
-   "t": "ett äpple",
-   "n": -16
-  },
-  "bb3b746e": {
-   "f": "/ljud/rost/3d1594c7543b12b5.mp3",
-   "ms": 1202,
-   "r": "pennan",
-   "id": "varde:ett moln",
-   "t": "ett moln",
-   "n": -16
-  },
-  "ea044323": {
-   "f": "/ljud/rost/63f2f377ee2815cb.mp3",
-   "ms": 1489,
-   "r": "pennan",
-   "id": "varde:ett piratskepp",
-   "t": "ett piratskepp",
-   "n": -16
-  },
-  "731cc436": {
-   "f": "/ljud/rost/3dd35bdc5df5e22d.mp3",
-   "ms": 1019,
-   "r": "pennan",
-   "id": "varde:ett lok",
-   "t": "ett lok",
-   "n": -16
-  },
-  "c1ced08f": {
-   "f": "/ljud/rost/3bb4fce576b75053.mp3",
-   "ms": 1019,
-   "r": "pennan",
-   "id": "varde:ett glas",
-   "t": "ett glas",
-   "n": -16
-  },
-  "e4e67b65": {
-   "f": "/ljud/rost/3787fd5c8da7179a.mp3",
-   "ms": 1332,
-   "r": "pennan",
-   "id": "varde:ett svärd",
-   "t": "ett svärd",
-   "n": -16
-  },
-  "cd552373": {
-   "f": "/ljud/rost/ab7eecba22d60022.mp3",
-   "ms": 1254,
-   "r": "pennan",
-   "id": "varde:ett hjärta",
-   "t": "ett hjärta",
-   "n": -16
-  },
-  "33330f50": {
-   "f": "/ljud/rost/c9050ab26de0b431.mp3",
-   "ms": 1672,
-   "r": "pennan",
-   "id": "varde:ett slottstorn",
-   "t": "ett slottstorn",
-   "n": -16
-  },
-  "23a95d40": {
-   "f": "/ljud/rost/40de0071816fc1e7.mp3",
-   "ms": 1280,
-   "r": "pennan",
-   "id": "varde:ett tält",
-   "t": "ett tält",
-   "n": -16
-  },
-  "6b2ffab3": {
-   "f": "/ljud/rost/4407289fbbbcf4e6.mp3",
-   "ms": 1515,
-   "r": "pennan",
-   "id": "varde:ett vattenfall",
-   "t": "ett vattenfall",
-   "n": -16
-  },
-  "628798b6": {
-   "f": "/ljud/rost/2b5c6085a895ab38.mp3",
-   "ms": 1071,
-   "r": "pennan",
-   "id": "varde:ett bröd",
-   "t": "ett bröd",
-   "n": -16
-  },
-  "66e55945": {
-   "f": "/ljud/rost/3931649a74d60dfb.mp3",
-   "ms": 1097,
-   "r": "pennan",
-   "id": "varde:ett bord",
-   "t": "ett bord",
-   "n": -16
-  },
-  "c6158b03": {
-   "f": "/ljud/rost/2be0a8e3ad8ccc08.mp3",
-   "ms": 1384,
-   "r": "pennan",
-   "id": "varde:ett höstträd",
-   "t": "ett höstträd",
-   "n": -16
-  },
-  "76c2d737": {
-   "f": "/ljud/rost/0fe7a6e1f1b99f0e.mp3",
-   "ms": 1515,
-   "r": "pennan",
-   "id": "varde:ett snöträd",
-   "t": "ett snöträd",
-   "n": -16
-  },
-  "4e9d8edf": {
-   "f": "/ljud/rost/ace3499bdf5d1dac.mp3",
-   "ms": 1384,
-   "r": "pennan",
-   "id": "varde:ett hönshus",
-   "t": "ett hönshus",
-   "n": -16
-  },
-  "ea74addf": {
-   "f": "/ljud/rost/d80e427d4ba7b0d9.mp3",
-   "ms": 1437,
-   "r": "pennan",
-   "id": "varde:ett vattentorn",
-   "t": "ett vattentorn",
-   "n": -16
-  },
-  "b62fdeaa": {
-   "f": "/ljud/rost/cd11f8b8da5dd5e9.mp3",
-   "ms": 1019,
-   "r": "pennan",
-   "id": "varde:ett berg",
-   "t": "ett berg",
-   "n": -16
-  },
-  "2d3d48d9": {
-   "f": "/ljud/rost/db967993a3539e8c.mp3",
-   "ms": 4362,
-   "r": "pennan",
-   "id": "varde:ett block",
-   "t": "ett block",
-   "n": -16
-  },
-  "f0dff1c1": {
-   "f": "/ljud/rost/37f044354d8140d7.mp3",
-   "ms": 1332,
-   "r": "pennan",
-   "id": "varde:ett paraply",
-   "t": "ett paraply",
-   "n": -16
-  },
-  "a9a9eaa1": {
-   "f": "/ljud/rost/a8b2dd912726842d.mp3",
-   "ms": 1384,
-   "r": "pennan",
-   "id": "varde:ett halsband",
-   "t": "ett halsband",
-   "n": -16
-  },
-  "55986abb": {
-   "f": "/ljud/rost/5e7fd17251c5a5e6.mp3",
-   "ms": 1097,
-   "r": "pennan",
-   "id": "varde:ett päron",
-   "t": "ett päron",
-   "n": -16
-  },
-  "5920eb3a": {
-   "f": "/ljud/rost/36ea0c9f567656a4.mp3",
-   "ms": 1071,
-   "r": "pennan",
-   "id": "varde:ett ägg",
-   "t": "ett ägg",
-   "n": -16
-  },
-  "82527a0c": {
-   "f": "/ljud/rost/f1fd4c6f41cd80a9.mp3",
-   "ms": 1097,
-   "r": "pennan",
-   "id": "varde:ett tåg",
-   "t": "ett tåg",
-   "n": -16
-  },
-  "5e2aa609": {
-   "f": "/ljud/rost/6336146bd9c5c2e3.mp3",
-   "ms": 1149,
-   "r": "pennan",
-   "id": "varde:ett skepp",
-   "t": "ett skepp",
-   "n": -16
-  },
-  "f3f4e230": {
-   "f": "/ljud/rost/db967993a3539e8c.mp3",
-   "ms": 4362,
-   "r": "pennan",
-   "id": "varde:ett vrak",
-   "t": "ett vrak",
-   "n": -16
-  },
-  "f15a7935": {
-   "f": "/ljud/rost/8bcc009306736eed.mp3",
-   "ms": 1384,
-   "r": "pennan",
-   "id": "varde:ett rymdskepp",
-   "t": "ett rymdskepp",
-   "n": -16
-  },
-  "c33092e2": {
-   "f": "/ljud/rost/cb4b513352134c3c.mp3",
-   "ms": 1097,
-   "r": "pennan",
-   "id": "varde:ett ljus",
-   "t": "ett ljus",
-   "n": -16
-  },
-  "6c8ff398": {
-   "f": "/ljud/rost/c0ec1e115f8c7b75.mp3",
-   "ms": 1019,
-   "r": "pennan",
-   "id": "varde:en smörkniv",
-   "t": "en smörkniv",
-   "n": -16
-  },
-  "caf97260": {
-   "f": "/ljud/rost/7214bb8c5c0d3c6e.mp3",
-   "ms": 1280,
-   "r": "pennan",
-   "id": "varde:ett slott",
-   "t": "ett slott",
-   "n": -16
-  },
-  "6793bd62": {
-   "f": "/ljud/rost/027f5b066d079263.mp3",
-   "ms": 1280,
-   "r": "pennan",
-   "id": "varde:ett fönster",
-   "t": "ett fönster",
-   "n": -16
-  },
-  "30290de9": {
-   "f": "/ljud/rost/abd49b088fc88038.mp3",
-   "ms": 1437,
-   "r": "pennan",
-   "id": "varde:ett flygplan",
-   "t": "ett flygplan",
-   "n": -16
-  },
-  "b41c291e": {
-   "f": "/ljud/rost/db967993a3539e8c.mp3",
-   "ms": 4362,
-   "r": "pennan",
-   "id": "varde:ett luftskepp",
-   "t": "ett luftskepp",
-   "n": -16
-  },
-  "fd2b9985": {
-   "f": "/ljud/rost/0859feea67f02f81.mp3",
-   "ms": 1149,
-   "r": "pennan",
-   "id": "varde:ett piano",
-   "t": "ett piano",
-   "n": -16
-  },
-  "7c70cf4a": {
-   "f": "/ljud/rost/a403cae1c149aafd.mp3",
-   "ms": 1280,
-   "r": "pennan",
-   "id": "varde:ett växthus",
-   "t": "ett växthus",
-   "n": -16
-  },
-  "3c528b0f": {
-   "f": "/ljud/rost/52ec7a5a0a3efe22.mp3",
-   "ms": 1437,
-   "r": "pennan",
-   "id": "varde:ett sjukhus",
-   "t": "ett sjukhus",
-   "n": -16
-  },
-  "f4794f59": {
-   "f": "/ljud/rost/ad84921053ca909b.mp3",
-   "ms": 1489,
-   "r": "pennan",
-   "id": "varde:ett armband",
-   "t": "ett armband",
    "n": -16
   }
  }
