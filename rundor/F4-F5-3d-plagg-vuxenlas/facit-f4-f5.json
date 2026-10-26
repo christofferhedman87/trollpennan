@@ -1,0 +1,33 @@
+{
+  "rundor": ["F4", "F5"],
+  "viewport": { "width": 375, "height": 812 },
+  "f4": {
+    "calibrationFile": "rundor/F4-F5-3d-plagg-vuxenlas/matt/kalibrering-f4.json",
+    "models": [
+      "/models/bulk/f-mossa-vinter-cc0.glb",
+      "/models/bulk/f-mossa-toppluva-cc0.glb",
+      "/models/bulk/f-halsduk-cc0.glb",
+      "/models/bulk/f-filt-draperad-cc0.glb",
+      "/models/bulk/f-filt-vikt-cc0.glb"
+    ],
+    "p3b2TillbehorWithModelCount": 38,
+    "bengtssonWorldPos": [-1.45, 0, 1.5],
+    "bengtssonScreenBounds": {
+      "minX": 18,
+      "maxX": 135,
+      "minY": 380,
+      "maxY": 565,
+      "minHitboxWidthPx": 64,
+      "minHitboxHeightPx": 96
+    },
+    "minPlaggVisibleRatio": 0.25
+  },
+  "f5": {
+    "lockedParentControlsCount": 0,
+    "modalCloseButtonMaxTopPx": 80,
+    "modalCloseButtonMinSizePx": 44,
+    "gardenHomeButtonMinHeightPx": 44,
+    "dansandeFormaga": "studs",
+    "dubbelMallExpectedSubstring": "vokalen kort"
+  }
+}

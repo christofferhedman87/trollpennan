@@ -1289,6 +1289,24 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | gard-v7-lada-tre-fonster | /models/gard/v7-lada-hus-quaternius-tre-fonster.glb | CC0-1.0 | Quaternius | https://quaternius.com/packs/ultimatefarm.html |
 | gard-v7-fonster-modul | /models/gard/v7-fonster-modul-kenney.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/modular-buildings |
 
+| f-mossa-vinter | /models/bulk/f-mossa-vinter-cc0.glb | CC0-1.0 | Kenney (Blocky Characters / Holiday Kit); stickad mössa & tofs: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| f-mossa-toppluva | /models/bulk/f-mossa-toppluva-cc0.glb | CC0-1.0 | Kenney (Holiday Kit / Blocky Characters); toppluva: Trollpennan | https://kenney.nl/assets/holiday-kit |
+| f-halsduk | /models/bulk/f-halsduk-cc0.glb | CC0-1.0 | Kenney (Blocky Characters / Holiday Kit); halsduk med knut & fransar: Trollpennan | https://kenney.nl/assets/blocky-characters |
+| f-filt-draperad | /models/bulk/f-filt-draperad-cc0.glb | CC0-1.0 | Teh_Bucket (OpenGameArt CC0) / Kenney (Furniture Kit); ryggfilt: Trollpennan | https://opengameart.org/content/low-poly-Blanket-stack |
+| f-filt-vikt | /models/bulk/f-filt-vikt-cc0.glb | CC0-1.0 | Teh_Bucket (OpenGameArt CC0) | https://opengameart.org/content/low-poly-Blanket-stack |
+| f-trollpenna-magisk | /models/bulk/f-trollpenna-magisk-cc0.glb | CC0-1.0 | Kay Lousberg (KayKit RPG Tools Bits) & Quaternius (Poly Pizza CC0); sammansatt: Trollpennan | https://kaylousberg.itch.io/rpg-tools-bits |
+| f-fjaderpenna-quill | /models/bulk/f-fjaderpenna-quill-cc0.glb | CC0-1.0 | Kay Lousberg (KayKit RPG Tools Bits) & Kenney (Nature Kit CC0); fjäderpenna: Trollpennan | https://kaylousberg.itch.io/rpg-tools-bits |
+| f-magisk-stjarna-effekt | /models/bulk/f-magisk-stjarna-effekt-cc0.glb | CC0-1.0 | Quaternius (Poly Pizza CC0) & Kenney (Platformer Kit CC0) | https://poly.pizza/m/tYAu1A216F |
+| s-solstjarna-plort | /models/bulk/s-solstjarna-plort-cc0.glb | CC0-1.0 | Quaternius (Poly Pizza CC0) & Kenney (Platformer Kit CC0) | https://poly.pizza/m/tYAu1A216F |
+| s-plort-kristall | /models/bulk/s-plort-kristall-cc0.glb | CC0-1.0 | Quaternius | https://quaternius.com |
+| s-leksak-studsboll | /models/bulk/s-leksak-studsboll-cc0.glb | CC0-1.0 | Kenney | https://kenney.nl/assets |
+| s-leksak-kudde | /models/bulk/s-leksak-kudde-cc0.glb | CC0-1.0 | Kenney | https://kenney.nl/assets |
+| s-mat-honung | /models/bulk/s-mat-honung-cc0.glb | CC0-1.0 | Kenney (Food Kit) | https://kenney.nl/assets/food-kit |
+| s-mat-jordgubbe | /models/bulk/s-mat-jordgubbe-cc0.glb | CC0-1.0 | Kenney (Food Kit) | https://kenney.nl/assets/food-kit |
+| s-biom-svampkluster | /models/bulk/s-biom-svampkluster-cc0.glb | CC0-1.0 | Quaternius (Ultimate Nature Pack) | https://quaternius.com/packs/ultimatenature.html |
+| s-biom-nackros | /models/bulk/s-biom-nackros-cc0.glb | CC0-1.0 | Quaternius (Ultimate Nature Pack) | https://quaternius.com/packs/ultimatenature.html |
+| s-vaktar-skattkista | /models/bulk/s-vaktar-skattkista-cc0.glb | CC0-1.0 | Kay Lousberg (KayKit) | https://kaylousberg.itch.io |
+
 ## Röster och tal
 
 | Filer | Upphov | Licens | Källa |

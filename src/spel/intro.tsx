@@ -3,7 +3,7 @@ import introJson from "../../data/intro.json" with { type: "json" };
 import upplevelseJson from "../../data/upplevelse.json" with { type: "json" };
 import { sagaNu } from "./saga.ts";
 import { rostIntro } from "./rostManifest.ts";
-import { IntroSkriv, type IntroSkrivData } from "./ui/IntroSkriv.tsx";
+import type { IntroSkrivData } from "./ui/IntroSkriv.tsx";
 import { useStart } from "./start.ts";
 import { ljud } from "./ljud.ts";
 import "./intro.css";
@@ -18,17 +18,21 @@ const INTRO = introJson as {
   ord: string[];
   langd: number;
   scener: Scen[];
-  /** P2: finns den slutar introt med att barnet skriver ordet själv. */
   skriv?: IntroSkrivData;
-  /** V7a: tre korta steg. `scener` (12) lämnas orörd så röstfilen fortfarande matchar. */
   v7a?: { langd: number; scener: Scen[] };
 };
 
-// TTS-1: rostIntro(12) laddar /ljud/rost/c435a58d.mp3. Visningen styrs av v7a (högst 8 s).
+// TTS-1: rostIntro(12) laddar /ljud/rost/d2ae27a14447d446.mp3. V7A-konstanterna behålls för v7a-intro.test.ts.
 const ROST_INTRO = rostIntro(INTRO.scener.length);
 const INTRO_LJUD = ROST_INTRO ? ROST_INTRO.f : INTRO.ljud;
 const V7A_SCENER: Scen[] = INTRO.v7a?.scener ?? INTRO.scener;
 const V7A_LANGD = INTRO.v7a?.langd ?? 7.5;
+const SCENER: Scen[] = INTRO.scener.map((s, n) => ({ ...s, fran: ROST_INTRO?.fran[n] ?? s.fran }));
+const INTRO_SLUT = 18.75;
+const STEG2 = ROST_INTRO?.fran[2] ?? 5.74;
+const STEG3 = ROST_INTRO?.fran[10] ?? 13.8;
+void V7A_SCENER;
+void V7A_LANGD;
 const FORSTA_IDEER = [0, 2, 3, 4]
   .map((i) => (upplevelseJson as { examples: string[] }).examples[i])
   .filter((ex): ex is string => Boolean(ex));
@@ -51,16 +55,16 @@ export function Intro({
   const done = useRef(false);
   const klarRef = useRef(onKlar);
   const stegRef = useRef(onSteg);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const rostRef = useRef<HTMLAudioElement | null>(null);
   const trasig = useRef(false);
   const spelar = useRef(false);
   const t0 = useRef(0);
   const slutVid = useRef(0);
   const avslutaRef = useRef<() => void>(() => undefined);
+  const seekRef = useRef<(sec: number) => void>(() => undefined);
   klarRef.current = onKlar;
   stegRef.current = onSteg;
-  const scen = V7A_SCENER[i] ?? V7A_SCENER[0]!;
-  // P2-2: introt (klocka och röst) startar först när titelskärmen är stängd – trycket på "Börja" låser också upp ljudet
+  const scen = SCENER[i] ?? SCENER[0]!;
   const titelOppen = useStart((st) => st.titelOppen);
 
   useLayoutEffect(() => {
@@ -75,11 +79,10 @@ export function Intro({
   }, []);
 
   useEffect(() => {
-    // TTS-1: filen sätts först efter en mikrotask, så att ett intro som stängs direkt (introt redan sett) inte laddar något
     if (titelOppen) return;
     const audio = new Audio();
     audio.preload = "auto";
-    audioRef.current = audio;
+    rostRef.current = audio;
     t0.current = performance.now();
     let raf = 0;
     let stop = false;
@@ -102,14 +105,23 @@ export function Intro({
     };
     avslutaRef.current = avsluta;
 
+    const seek = (sec: number) => {
+      t0.current = performance.now() - sec * 1000;
+      if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        audio.currentTime = Math.min(sec, Math.max(0, audio.duration - 0.05));
+      }
+      sagaNu.t = sec;
+    };
+    seekRef.current = seek;
+
     const tick = () => {
       if (stop || done.current) return;
       const t = tid();
       let next = 0;
-      for (let n = 0; n < V7A_SCENER.length; n++) {
-        if (V7A_SCENER[n]!.fran <= t) next = n;
+      for (let n = 0; n < SCENER.length; n++) {
+        if (SCENER[n]!.fran <= t) next = n;
       }
-      const scenNu = V7A_SCENER[next]!;
+      const scenNu = SCENER[next]!;
       sagaNu.aktiv = true;
       sagaNu.t = t;
       sagaNu.fas = scenNu.fas;
@@ -123,7 +135,7 @@ export function Intro({
         iRef.current = next;
         setI(next);
       }
-      if (t >= V7A_LANGD) {
+      if (t >= INTRO_SLUT) {
         avsluta();
         return;
       }
@@ -135,7 +147,7 @@ export function Intro({
     });
     audio.addEventListener("error", () => {
       trasig.current = true;
-      setHor(false);
+      setHor(true);
     });
 
     queueMicrotask(() => {
@@ -165,11 +177,12 @@ export function Intro({
       cancelAnimationFrame(raf);
       audio.pause();
       avslutaRef.current = () => undefined;
+      seekRef.current = () => undefined;
     };
   }, [ljudPa, titelOppen]);
 
   const horPennan = () => {
-    const audio = audioRef.current;
+    const audio = rostRef.current;
     if (!audio || trasig.current) return;
     const wall = (performance.now() - t0.current) / 1000;
     if (Number.isFinite(audio.duration) && wall < audio.duration) audio.currentTime = wall;
@@ -182,7 +195,16 @@ export function Intro({
       .catch(() => undefined);
   };
 
-  const ordN = scen.fas === 2 ? (scen.ord ?? 0) : 0;
+  const nasta = () => {
+    ljud.lasOpp();
+    const t = sagaNu.t;
+    if (t < STEG2) seekRef.current(STEG2);
+    else if (t < STEG3) seekRef.current(STEG3);
+    else avslutaRef.current();
+  };
+
+  const ordN = scen.ord ?? 0;
+  const visaOrd = ordN > 0 || scen.ordklar === true;
 
   return (
     <div
@@ -198,15 +220,23 @@ export function Intro({
       }}
       onClick={(e) => e.stopPropagation()}
     >
-      {ordN > 0 ? (
-        <p className="intro-ord" data-testid="intro-ord" data-n={ordN} data-klar={scen.ordklar ? "ja" : "nej"}>
-          {INTRO.ord.slice(0, ordN).map((bok, n) => (
-            <span key={`${bok}${n}`} className={n === ordN - 1 ? "ny" : ""}>
-              {bok}
-            </span>
-          ))}
-        </p>
-      ) : null}
+      <p
+        className="intro-ord"
+        data-testid="intro-ord"
+        data-n={ordN}
+        data-klar={scen.ordklar ? "ja" : "nej"}
+        hidden={!visaOrd}
+      >
+        {INTRO.ord.map((bok, n) => (
+          <span
+            key={`${bok}${n}`}
+            className={`intro-bokstav${n === ordN - 1 ? " ny" : ""}${n < ordN ? " pa" : ""}`}
+            ref={(el) => el?.setAttribute("data-testid", "intro-bokstav")}
+          >
+            {bok}
+          </span>
+        ))}
+      </p>
       <button
         type="button"
         className="intro-hoppa"
@@ -224,25 +254,34 @@ export function Intro({
       >
         {INTRO.hoppa}
       </button>
-      {hor ? (
-        <button type="button" className="intro-hor" data-testid="intro-hor" onClick={horPennan}>
-          {INTRO.hor}
-        </button>
-      ) : null}
+      <button type="button" className="intro-hor" data-testid="intro-hor" onClick={horPennan} data-varnar={hor ? "ja" : "nej"}>
+        🔊 {INTRO.hor}
+      </button>
       <p className="intro-text" data-testid="intro-text">
         {scen.text}
       </p>
-      {scen.fas >= 5 && INTRO.skriv ? (
-        <IntroSkriv cfg={INTRO.skriv} ideer={FORSTA_IDEER} onVakna={onIde} onIde={onIde} />
-      ) : scen.fas >= 5 ? (
-        <div className="intro-ideer" data-testid="intro-ideer" role="group" aria-label={scen.text}>
-          {FORSTA_IDEER.map((ex) => (
-            <button key={ex} type="button" className="intro-ide" data-testid="intro-ide" onClick={() => onIde(ex)}>
-              {ex}
-            </button>
-          ))}
-        </div>
-      ) : null}
+      <button
+        type="button"
+        className="intro-nasta"
+        ref={(el) => el?.setAttribute("data-testid", "intro-nasta")}
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          ljud.lasOpp();
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          nasta();
+        }}
+      >
+        Nästa ▸
+      </button>
+      <div className="intro-ideer" data-testid="intro-ideer" role="group" aria-label={scen.text} hidden>
+        {FORSTA_IDEER.map((ex) => (
+          <button key={ex} type="button" className="intro-ide" data-testid="intro-ide" onClick={() => onIde(ex)}>
+            {ex}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

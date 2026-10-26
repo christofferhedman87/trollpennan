@@ -31,8 +31,12 @@ export function useBelona(k: Pick<SpelKarna, "t" | "b">) {
     const innan = useMinne.getState().funna;
     const nyaGuld = guldLista.filter((id) => !innan[id]?.guld);
     const nyaHemliga = u.funna.filter((id) => !innan[id] && ordLista().find((o) => o.id === id)?.niva === "fritt");
+    const nyttDjurKort =
+      !firaguld &&
+      u.funna.some((id) => !innan[id] && ordLista().find((o) => o.id === id)?.klass === "djur");
     useMinne.getState().registrera(u.funna, guldLista);
     let stj = 0;
+    if (nyttDjurKort) stj += 1;
     if (nyaGuld.length) {
       stj += nyaGuld.length * FIR.guldord.stjarnor;
       visaBanner(fyll(FIR.guldord.text[0]!, { ord: ordVis(nyaGuld[0]!) }), "ovr", "guldord");

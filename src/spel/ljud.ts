@@ -86,6 +86,26 @@ export const ljud = {
   boing() {
     this.spel("boing");
   },
+  plopp(tonSkift = 0) {
+    this.logg.push("plopp");
+    if (this.logg.length > 40) this.logg.shift();
+    const ac = kontext();
+    if (!ac) return;
+    const o = ac.createOscillator();
+    const g = ac.createGain();
+    o.type = "sine";
+    const f = 420 * Math.pow(2, tonSkift / 12);
+    const nar = ac.currentTime;
+    o.frequency.setValueAtTime(f, nar);
+    o.frequency.exponentialRampToValueAtTime(Math.max(40, f * 0.45), nar + 0.18);
+    g.gain.setValueAtTime(0.0001, nar);
+    g.gain.linearRampToValueAtTime(Math.min(MASTER, 0.12), nar + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, nar + 0.2);
+    o.connect(g);
+    g.connect(ac.destination);
+    o.start(nar);
+    o.stop(nar + 0.22);
+  },
   puff() {
     this.spel("puff");
   },

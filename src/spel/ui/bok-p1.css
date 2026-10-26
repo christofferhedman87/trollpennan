@@ -91,6 +91,10 @@ body .plats-namn,body .plats-hem{white-space:nowrap}
 .bok-skarm .bok {
   max-height: calc(100dvh - max(62px, calc(env(safe-area-inset-top, 0px) + 60px)));
 }
+.bok-skarm.forsta-vy{background:transparent;backdrop-filter:none}
+.bok-skarm.forsta-vy .bok.forsta-skapelse,.bok.forsta-skapelse{max-height:55dvh;height:auto}
+.bok.forsta-skapelse .ord-kort{min-height:52px}
+.bok .forsta-val{margin:4px 10px 2px;font-size:1.05rem;font-weight:800;color:#3B2F2F}
 .bygg-skriv-knapp {
   min-height: 44px;
   min-width: 44px;
