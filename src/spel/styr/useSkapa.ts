@@ -218,6 +218,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
       noteraSaknade(utfall.varelse.reserv);
     }
     if (utfall.guld.length) utfall.varelse.glans = true;
+    if (utfall.varelse.formagor.length || utfall.varelse.reserv?.some((r) => r.kategori === "handling")) utfall.varelse.glans = true;
     const { nya, somnade } = laggEllerVarma(utfall.varelse, utfall.antal);
     for (const s of somnade) brygga.taBort(s.uid);
     for (const s of somnade) visaBanner(replik(s, "sover"), "sov", "sov");

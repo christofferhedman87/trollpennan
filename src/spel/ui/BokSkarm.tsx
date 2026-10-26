@@ -78,7 +78,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
               {lage === "skriv" ? "📖 Byggkort" : "✍️ Skriv & bygg"}
             </button>
           ) : null}
-          <button type="button" className="stang-x stang" data-testid="stang-bok" data-v7b="stang-byggbok" data-v3="bok-stang" aria-label="Stäng" onClick={stangBok}>
+          <button type="button" className="stang-x stang" data-testid="stang-bok" data-v7b="stang-byggbok" data-v3="bok-stang" data-f5="modal-stang" aria-label="Stäng" onClick={stangBok}>
             <span ref={(el) => el?.setAttribute("data-testid", "bok-stang")}>×</span>
           </button>
         </header>

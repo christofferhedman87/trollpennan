@@ -219,7 +219,7 @@ export function KartaLager({ kartaText, tryckPlats, stangKarta, nuvarandePlats }
         >
           🔊 Lyssna
         </button>
-        <button type="button" className="karta-stang" data-v1="karta-stang" aria-label="Stäng karta" onClick={() => stangKarta?.()}>
+        <button type="button" className="karta-stang" data-v1="karta-stang" data-f5="modal-stang" aria-label="Stäng karta" ref={(el) => el?.setAttribute("data-testid", "modal-stang")} onClick={() => stangKarta?.()}>
           ×
         </button>
       </div>

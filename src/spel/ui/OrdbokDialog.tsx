@@ -51,7 +51,7 @@ export function OrdbokDialog({ hittatAntal, totalOrd, stjarnor, kopRad, koptaSid
         <div className="skarm" role="dialog" aria-label="Ordboken" data-testid="ordbok-sida">
           <div className="ark sida">
             <div className="v9a-huvud">
-              <button type="button" className="stang-x stang" data-v9a="ordbok-stang" aria-label="Stäng" onClick={() => setOrdbok(false)}>
+              <button type="button" className="stang-x stang" data-v9a="ordbok-stang" data-f5="modal-stang" aria-label="Stäng" ref={(el) => el?.setAttribute("data-testid", "modal-stang")} onClick={() => setOrdbok(false)}>
                 ×
               </button>
             </div>

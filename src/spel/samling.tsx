@@ -72,7 +72,7 @@ export function AlbumVy({ stang }: { stang: () => void }) {
     <div className="skarm" role="dialog" aria-label={ALBUM.texter.knapp} data-testid="album">
       <div className="ark sida album">
         <div className="v9a-huvud">
-          <button type="button" className="stang-x stang" data-v9a="album-stang" aria-label="Stäng" onClick={stang}>
+          <button type="button" className="stang-x stang" data-v9a="album-stang" data-f5="modal-stang" aria-label="Stäng" ref={(el) => el?.setAttribute("data-testid", "modal-stang")} onClick={stang}>
             ×
           </button>
         </div>

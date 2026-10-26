@@ -36,7 +36,7 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
           <div className="ark sida foralder-ark" ref={(el) => el?.setAttribute("data-testid", "foralder-dialog")}>
             <div className="foralder-topp">
               <h2>För vuxna</h2>
-              <button type="button" className="foralder-kryss" aria-label="Stäng" onClick={() => { setSaker(false); setForalder(false); }}>×</button>
+              <button type="button" className="foralder-kryss" data-f5="modal-stang" aria-label="Stäng" ref={(el) => el?.setAttribute("data-testid", "modal-stang")} onClick={() => { setSaker(false); setForalder(false); }}>×</button>
             </div>
             {!upplast ? (
               <div className="vuxen-las">
@@ -47,6 +47,8 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
                 <button type="button" className="kort" ref={(el) => el?.setAttribute("data-testid", "foralder-oppna")} onClick={() => { if (lasSvar.trim() === "7") setUpplast(true); }}>Öppna</button>
               </div>
             ) : null}
+            {upplast ? (
+            <>
             <p className="kredit" data-testid="groda-kredit">Groda: "Frog" av jeremy (CC BY 3.0)</p>
             <ForalderLiv />
             <h3>Startläge</h3>
@@ -191,6 +193,8 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
             >
               Stäng
             </button>
+            </>
+            ) : null}
           </div>
         </div>
   );

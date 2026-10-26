@@ -46,7 +46,7 @@ body .plats-namn,body .plats-hem{white-space:nowrap}
 .bok-skarm .bok,.bok-skarm .bok:has(.tangenter){max-height:67dvh;height:67dvh;padding-bottom:2px}
 .bok-huvud.bok-topp{min-height:36px;padding:2px 10px}
 .bok-huvud.bok-topp h2{font-size:1.3rem}
-.bok-topp .stang-x{min-width:44px;min-height:44px;width:44px;height:44px;font-size:1.6rem;border-radius:14px;display:inline-flex;align-items:center;justify-content:center}
+.bok-topp .stang-x{min-width:48px;min-height:48px;width:48px;height:48px;font-size:1.6rem;border-radius:14px;display:inline-flex;align-items:center;justify-content:center}
 
 /* V3: 3 vyflikar överst (Skriv, Gåta, Idéer) */
 .bok .skapar-vy-flikar{display:flex;gap:4px;padding:2px 8px}
