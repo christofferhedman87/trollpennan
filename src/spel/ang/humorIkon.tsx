@@ -9,8 +9,17 @@ export function HumorIkon({ uid, hojd }: { uid: string; hojd: number }) {
   const ikon = humor ? HUMOR_IKON[humor] : undefined;
   if (!humor || !ikon) return null;
   return (
-    <Html position={[0, hojd, 0]} center zIndexRange={[3, 0]} style={{ pointerEvents: "none" }}>
-      <span className="humor-ikon-3d" data-testid={`humor3d-${humor}`} data-uid={uid} aria-hidden>
+    <Html position={[0, hojd, 0]} center zIndexRange={[3, 0]} style={{ pointerEvents: "auto" }}>
+      <span
+        className="humor-ikon-3d"
+        data-testid={`humor3d-${humor}`}
+        data-uid={uid}
+        aria-hidden
+        onClick={(e) => {
+          e.stopPropagation();
+          window.dispatchEvent(new CustomEvent("troll-gava-klick", { detail: uid }));
+        }}
+      >
         {ikon}
       </span>
     </Html>

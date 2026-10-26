@@ -17,6 +17,8 @@ export function tom(): Data {
     formler: [],
     ang: [],
     stjarnor: 0,
+    solstjarnor: 0,
+    vaktardjur: {},
     ljudPa: true,
     rostPa: true,
     effektPa: true,
@@ -144,6 +146,8 @@ export function franSparning(raw: unknown): Data {
       stall: Array.isArray(p.stall) ? (p.stall as Sparad[]).filter(arDjur) : [],
       gataId: typeof p.gataId === "string" && p.gataId ? p.gataId : null,
       lasnivaVal: rawObj.lasnivaVal === 1 || rawObj.lasnivaVal === 2 || rawObj.lasnivaVal === 3 ? rawObj.lasnivaVal : "auto",
+      solstjarnor: typeof p.solstjarnor === "number" ? p.solstjarnor : 0,
+      vaktardjur: p.vaktardjur && typeof p.vaktardjur === "object" ? (p.vaktardjur as Data["vaktardjur"]) : {},
     };
   } catch {
     return tom();

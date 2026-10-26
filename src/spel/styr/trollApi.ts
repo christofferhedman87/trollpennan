@@ -198,7 +198,7 @@ export function skapaTrollApi(k: SpelKarna) {
       geGava: (uid: string) => {
         setGavaTill(`egen:${uid}`);
         gavaRef.current = `egen:${uid}`;
-        setLage("skriv");
+        setLage("kort");
         setHand(true);
       },
       album: (oppna: boolean) => setAlbumOpp(oppna),

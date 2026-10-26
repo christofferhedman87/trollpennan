@@ -3,6 +3,7 @@ import { TEXTER_AV } from "../aventyr.ts";
 import { allaMina } from "../avflode.ts";
 import { brygga } from "../brygga.ts";
 import { useMinne } from "../minne.ts";
+import { aktivtSkrivUppdrag, nastaSkrivUppdrag } from "../uppdragsmotor.ts";
 import { TEXTER } from "../ui/spelData.ts";
 import type { Varld } from "../ui/typer.ts";
 import type { SpelKarna } from "./typer.ts";
@@ -74,6 +75,11 @@ export function useVarld(k: Pick<SpelKarna, "t" | "b">) {
     setBokOpp(true);
   }
   function oppnaUppdrag() {
+    const s = useMinne.getState();
+    if (!aktivtSkrivUppdrag(s.uppdrag, s.plats)) {
+      const nasta = nastaSkrivUppdrag(s.uppdrag, s.plats);
+      if (nasta) s.sattUppdrag(nasta.id, "pagar");
+    }
     setMenyOpp(false);
     setPanel("uppdrag");
     setBokOpp(true);

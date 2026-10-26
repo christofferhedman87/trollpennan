@@ -30,7 +30,7 @@ type Hjalp = {
 };
 
 /** Bengtsson på skärmen: vilken mine, vad ett klick gör, och kontrollen av det barnet skrev. All logik som data/motor; här bara limmet. */
-export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdragsbok }: Hjalp) {
+export function useBengtsson({ visaBanner, belonaFlode, oppnaUppdragsbok }: Hjalp) {
   const status = useMinne((s) => s.uppdrag);
   const [tillfallig, setTillfallig] = useState<"fel" | "klar_nyss" | null>(null);
   const timer = useRef<number | null>(null);
@@ -79,14 +79,14 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
     const s = useMinne.getState().uppdrag;
     const pl = platsNu();
     const fo = milstolpeNadd(pl, mattUr(useMinne.getState()));
-    if (aktivtSkrivUppdrag(s, pl)) return oppnaSkapa();
+    if (aktivtSkrivUppdrag(s, pl)) return oppnaUppdragsbok();
     const nasta = nastaSkrivUppdrag(s, pl, fo);
     if (nasta) {
       // B6.2: final_fore (data/platser.json) – Bengtssons replik när finalen öppnas
       const fore = arFinal(nasta) ? platsMed(pl)?.final_fore?.text : undefined;
       if (fore) visaBanner(fore, "ovr", "tapp");
       useMinne.getState().sattUppdrag(nasta.id, "pagar");
-      return oppnaSkapa();
+      return oppnaUppdragsbok();
     }
     const glad = REPLIKER_PLATS[pl]?.glad;
     if (glad?.length) {
@@ -124,5 +124,9 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaSkapa, oppnaUppdrag
   });
 
   const visaFel = () => blinka("fel");
+  useEffect(() => {
+    window.addEventListener("troll-npc-klick", klicka);
+    return () => window.removeEventListener("troll-npc-klick", klicka);
+  });
   return { mine, nytt, synlig, klicka, prova, matt, visaFel, npcId: NPC_ID, ikonText: TAKT.ikon_text, ikonAlt: TAKT.ikon_alt };
 }

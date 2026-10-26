@@ -41,8 +41,19 @@ function sankMeningsStart(s: string): string {
   return s.replace(/^([A-ZÅÄÖ])/, (m) => m.toLowerCase());
 }
 
+/** Befintlig djurneutral röst när kanin-fryser läses med ett annat djur. Inga nya mp3. */
+function kaninFryserNeutral(n: string): string {
+  if (/^Det verkar som att din (?!kanin\b).+ fryser\. Se om du kan skriva fram något som värmer\.$/i.test(n)) {
+    return "Brr, ditt djur huttrar! Kan du hjälpa det så att det slutar frysa?";
+  }
+  if (/^Ahh, så skönt! Nu är (?!kaninen\b).+ varm igen\. Tack för hjälpen!$/i.test(n)) {
+    return "Så skönt, nu slutar tänderna spela trumma!";
+  }
+  return n;
+}
+
 function rostForNormaliserad(text: string): RostRad | null {
-  const n = normalisera(text);
+  const n = kaninFryserNeutral(normalisera(text));
   const hel = rad(nyckel(n));
   if (hel) return hel;
   const lag = sankMeningsStart(n);
@@ -139,6 +150,7 @@ function vardeDelar(varde: string): { f: string; ms: number }[] | null {
   return delaLed(n);
 }
 function ettPlan(text: string): RostPlan | null {
+  text = kaninFryserNeutral(normalisera(text));
   const hel = rad(nyckel(text));
   if (hel) return { delar: [hel], ms: hel.ms, dynamisk: false };
   const lag = sankMeningsStart(normalisera(text));

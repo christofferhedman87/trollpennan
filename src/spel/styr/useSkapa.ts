@@ -6,7 +6,9 @@ import { tolkaMedReserv } from "@/tolk/reserv.ts";
 import { noteraSaknade } from "@/tolk/saknade.ts";
 import { delaOchMening, tolka } from "@/tolk/tolka.ts";
 import type { Utfall, Varelse } from "@/tolk/typer.ts";
-import { passarDjur, TEXTER_AV } from "../aventyr.ts";
+import { passarDjur, TEXTER_AV, uppdragKlart } from "../aventyr.ts";
+import { aktivtSkrivUppdrag } from "../uppdragsmotor.ts";
+import { platsNu } from "../ui/useBengtsson.ts";
 import { geGavor, oppnaMed, oppnaOn, skickaDjur } from "../avflode.ts";
 import { brygga, type Sparad } from "../brygga.ts";
 import { bestamdHem, franTolk } from "../bygge.ts";
@@ -234,8 +236,9 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
         poang: poangAv(utfall.varelse),
       });
     }
-    bengtsson.prova(raw); // först, så Bengtssons rad hamnar före de vanliga bannrarna i kön
-    belona(utfall, utfall.guld.length && opt.hand ? sista?.uid : undefined, opt.hand);
+    const aktivtFore = aktivtSkrivUppdrag(useMinne.getState().uppdrag, platsNu());
+    const uppRes = bengtsson.prova(raw);
+    belona(utfall, utfall.guld.length && opt.hand ? sista?.uid : undefined, opt.hand && uppRes !== "klar");
     for (const m of utfall.meddelanden) visaBanner(m, "okand", "okand_ordbit");
     for (const o of utfall.varelse.overraskningar) visaBanner(o.text, "ovr", "overraskning");
     ljud.puff();
@@ -248,10 +251,11 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
         }
         const sida = (p?.x ?? 0.5) < 0.5 ? 0.62 : 0.38;
         const yy = Math.max(0.5, Math.min(0.62, p?.topp ?? 0.5));
-        visaBubbla(replik(utfall.varelse, "hej"), sida, yy, false, true, true, null);
+        const tack = uppRes === "klar" && aktivtFore ? aktivtFore : null;
+        visaBubbla(tack ? uppdragKlart(tack) : replik(utfall.varelse, "hej"), sida, yy, !!tack, true, true, null);
         brygga.glad(sista.uid);
         brygga.glitter(sista.uid);
-        if (utfall.varelse.formagor.length) {
+        if (!tack && utfall.varelse.formagor.length) {
           const uid = sista.uid;
           window.setTimeout(() => {
             if (!useMinne.getState().ang.some((a) => a.uid === uid) && !useMinne.getState().hemma.some((h) => h.spec.uid === uid)) return;

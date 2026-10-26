@@ -79,7 +79,7 @@ export function klarUppdrag(id: string): FlodeSvar {
   if (!u || useMinne.getState().uppdrag[u.id] === "klar") return { texter: [], stj: 0 };
   if (!useMinne.getState().uppdrag[u.id]) useMinne.getState().sattUppdrag(u.id, "pagar");
   useMinne.getState().sattUppdrag(u.id, "klar");
-  const texter = [UPP.texter.klart, uppdragKlart(u)];
+  const texter = u.typ === "skriv" ? [uppdragKlart(u)] : [UPP.texter.klart, uppdragKlart(u)];
   if (u.skatt) {
     const namn = SKATTER.skatter.find((s) => s.id === u.skatt)?.namn ?? u.skatt;
     useMinne.getState().laggSkatt(skattBygge(u.skatt));

@@ -69,6 +69,13 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
   }
 
   function valjKort(ord: Ord) {
+    if (gavaRef.current) {
+      const fras = `${ord.genus} ${ord.visa}`;
+      textRef.current = fras;
+      setText(fras);
+      setVal({ djur: ord });
+      return;
+    }
     ljud.lasOpp();
     ljud.pling();
     useMinne.getState().anvandKort(ord.id);
@@ -77,9 +84,10 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
     setBehover(null);
     setLage("kort");
     const slot = ord.klass as Slot;
-    const artikelMatch = textRef.current.trim().match(/^(en|ett)\s+/i);
+    const nuText = textRef.current;
+    const artikelMatch = nuText.trim().match(/^(en|ett)\s+/i);
     setVal((prev) => {
-      const bas = Object.keys(prev).length > 0 ? prev : valUrText(textRef.current);
+      const bas = Object.keys(prev).length > 0 ? prev : valUrText(nuText);
       const next: Val = { ...bas };
       if (next[slot]?.id === ord.id) delete next[slot];
       else next[slot] = ord;

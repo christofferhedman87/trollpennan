@@ -13,7 +13,10 @@
 .aktivt-uppdrag-kort{background:var(--color-gold-soft);border:2px solid var(--color-gold);border-radius:16px;padding:12px;margin:10px 0}
 .aktivt-uppdrag-huvud{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .aktivt-uppdrag-text{margin:8px 0;font-size:1.15rem;font-weight:800;line-height:1.35}
-.aktivt-uppdrag-skriv{width:100%;min-height:48px;margin-top:4px}
+.aktivt-uppdrag-skriv,.aktivt-uppdrag-skapa{width:100%;min-height:48px;margin-top:4px;padding:10px 18px;border-radius:14px;font-weight:800}
+.aktivt-uppdrag-skapa{background:#F2B632;color:#3B2F2F;border:2px solid #C88A14;box-shadow:0 4px 0 #C88A14}
+.uppdrag-ide-chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.uppdrag-ide-chip{min-height:40px;padding:8px 12px;border-radius:999px;border:2px solid #E7C98A;background:#FFF6E5;color:#3B2F2F;font-weight:800;cursor:pointer}
 [data-v2="lyssna-aktivt-uppdrag"]{min-width:48px;min-height:48px;display:inline-flex;align-items:center;justify-content:center}
 .bok .uppdrag-rad{display:flex;align-items:center;gap:8px}
 .bok .uppdrag-rad > span{flex:1;min-width:0}
@@ -45,6 +48,27 @@
   box-shadow: 0 6px 18px rgba(59, 47, 47, 0.16);
   pointer-events: none;
   z-index: 12;
+  min-width: 48px;
+  min-height: 48px;
+}
+.bubbla.bubbla-tack {
+  border: 2px solid #F2B632;
+  box-shadow: 0 6px 18px rgba(242, 182, 50, 0.28);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bubbla.bubbla-tack .hjarta {
+  flex-shrink: 0;
+}
+.humor-ikon {
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  cursor: pointer;
 }
 body:has(.bok, .karta-lager, .meny-panel, .modal-bg) :is(.bubbla, .tred-hint) {
   display: none !important;
