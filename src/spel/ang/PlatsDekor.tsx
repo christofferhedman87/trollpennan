@@ -20,6 +20,7 @@ import { SvajMark } from "./himmel.tsx";
 import { SagaPenna } from "./saga.tsx";
 import { KameraRam } from "./kamera.tsx";
 import type { OrbitStyr } from "./saga.tsx";
+import { VaktarDjur, vaktarForPlats } from "./vaktardjur.tsx";
 
 
 /** Kameran börjar närmare platsens dekor (ängen har egen start). */
@@ -192,6 +193,7 @@ export function PlatsScen({ plats }: { plats: string }) {
       {horisont ? <Horisont farger={horisont.farger} typ={horisont.typ} /> : null}
       <PlatsKamera />
       <PlatsDekor plats={plats} />
+      {vaktarForPlats(plats) ? <VaktarDjur plats={plats} /> : null}
       {kalla && !LJUS_LAG ? <LjusPool kalla={kalla} uids={tanda} /> : null}
       {djur.map((spec) => (
         <DjurIScen key={spec.uid} spec={spec} alla={djur} plats={platsData} ljus={kalla && lysande?.has(spec.uid) ? { kalla, vad: lysande.get(spec.uid)! } : undefined} />

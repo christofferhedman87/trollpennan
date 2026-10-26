@@ -23,6 +23,7 @@ import { byggTraff, geTraff, kompisTraff, nastanRad, ONSK, ONSK_BYGG, tillaggFra
 import { replik } from "../replik.ts";
 import * as rostKo from "../rostKo.ts";
 import { lastBygge } from "../ui/hjalp.ts";
+import { mataVaktardjur } from "../ang/vaktardjur.tsx";
 import { BYGGSIDOR, TEXTER } from "../ui/spelData.ts";
 import type { SpelKarna } from "./typer.ts";
 
@@ -313,7 +314,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
     rostKo.handling();
     rensaVidHandling();
     if (platsUi.forsokSkriv(trim)) { rensaSkriv(); setBokOpp(false); return; }
-    noteraSkriv(trim);
+    noteraSkriv(trim); mataVaktardjur(useMinne.getState().plats, trim);
     if (gavaRef.current?.startsWith("egen:")) {
       const uid = gavaRef.current.slice(5);
       const u = tolkaGava(trim);

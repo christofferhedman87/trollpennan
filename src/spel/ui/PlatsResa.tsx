@@ -1,6 +1,7 @@
 // B1.4: platsnamn, "Till ängen", ton-lager, intro-bubbla och skylt när ny plats väntar.
 import { START_PLATS } from "../platser.ts";
 import { mineUrl } from "../npc.ts";
+import { VaktarAptitBubbla, vaktarForPlats } from "../ang/vaktardjur.tsx";
 
 type Props = {
   plats: string;
@@ -32,6 +33,7 @@ export function PlatsResa({ plats, namn, ton, skylt, intro, hem }: Props) {
           <p>{intro.text}</p>
         </div>
       ) : null}
+      {vaktarForPlats(plats) ? <VaktarAptitBubbla plats={plats} /> : null}
     </>
   );
 }
