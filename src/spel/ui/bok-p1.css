@@ -26,7 +26,7 @@
   cursor:pointer;
   touch-action:manipulation;
 }
-.bok .uppdrag-remsa{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.bok .uppdrag-remsa{display:flex;flex-wrap:nowrap;align-items:center;gap:6px}
 .bok .ledtrad-framsteg{font-weight:600;white-space:nowrap}
 .bok .flik.pa{background:var(--color-moss-deep)}
 /* Platsnamn och "Till ängen" i en rad under HUD:en – låg över stjärnknappen (9×8 px) på 375 px. */
@@ -65,7 +65,7 @@ body .plats-namn,body .plats-hem{white-space:nowrap}
 .bok .bok-mitt .flikar .flik.pa{background:var(--color-moss-deep);color:var(--color-cream)}
 .bok .bok-mitt .kort-yta{padding:2px 8px 4px}
 .bok .bok-mitt .rutnat{grid-template-columns:1fr 1fr;gap:4px}
-.bok .bok-mitt .ord-kort{min-height:34px;padding:4px 8px;font-size:1rem;border-radius:12px;display:flex;align-items:center}
+.bok .bok-mitt .ord-kort{min-height:42px;padding:3px 8px;font-size:1rem;border-radius:18px;display:flex;align-items:center}
 
 /* V3: Skrivruta + Väck! sida vid sida längst ner i boken */
 .bok .skriv-rad{display:flex;align-items:center;gap:6px;padding:2px 8px;flex-shrink:0}
@@ -93,8 +93,8 @@ body .plats-namn,body .plats-hem{white-space:nowrap}
 }
 .bok-skarm.forsta-vy{background:transparent;backdrop-filter:none}
 .bok-skarm.forsta-vy .bok.forsta-skapelse,.bok.forsta-skapelse{max-height:55dvh;height:auto}
-.bok.forsta-skapelse .ord-kort{min-height:52px}
-.bok .forsta-val{margin:4px 10px 2px;font-size:1.05rem;font-weight:800;color:#3B2F2F}
+.bok.forsta-skapelse .ord-kort{min-height:42px}
+.bok .forsta-val{margin:1px 10px;font-size:0.95rem;line-height:1.15;font-weight:800;color:#3B2F2F}
 .bygg-skriv-knapp {
   min-height: 44px;
   min-width: 44px;
@@ -125,3 +125,4 @@ body .plats-namn,body .plats-hem{white-space:nowrap}
   position: relative;
   z-index: 1;
 }
+.bok .lages-knapp,.bok .ord-kort,.bok .kort{transition:transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),box-shadow 180ms ease}

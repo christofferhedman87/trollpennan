@@ -6,7 +6,7 @@ import { ideRad } from "../ideRad.ts";
 
 /** Remsan överst i Skapa-menyn: uppdraget som pågår, med givarens namn och (R6A-3) guidande förslag. Fritext är kvar.
  *  R9K: knapparna börjar bara meningen ("en kanin med …"); svaret (kravorden) står aldrig i idéraden. */
-export function UppdragsRemsa({ uppdrag, fyllForslag }: { uppdrag: Uppdrag | undefined; fyllForslag?: (fras: string) => void }) {
+export function UppdragsRemsa({ uppdrag, fyllForslag, visaVal = false }: { uppdrag: Uppdrag | undefined; fyllForslag?: (fras: string) => void; visaVal?: boolean }) {
   const lasText = uppdrag ? uppdragText(uppdrag) : "";
   const lasId = uppdrag?.id;
   // TTS-1: uppdraget läses upp en gång per spelomgång när remsan visas
@@ -20,20 +20,23 @@ export function UppdragsRemsa({ uppdrag, fyllForslag }: { uppdrag: Uppdrag | und
   const rad = ideRad(uppdrag);
   return (
     <>
-      <p className="uppdrag-remsa" data-testid="uppdrag-remsa" data-uppdrag={uppdrag.id}>
-        {namn ? <b>{namn}: </b> : null}
-        {uppdragText(uppdrag)}
+      <p className="uppdrag-remsa" data-testid="uppdrag-remsa" data-v2="aktivt-uppdrag-kort" data-uppdrag={uppdrag.id}>
+        <span className="uppdrag-remsa-text">
+          {namn ? <b>{namn}: </b> : null}
+          {uppdragText(uppdrag)}
+        </span>
         <button
           type="button"
           className="lyssna-knapp"
           data-p4="lyssna-uppdrag"
+          data-v2="lyssna-aktivt-uppdrag"
           aria-label={lasningJson.lyssna.aria_uppdrag}
           onClick={() => rostKo.lasUpp(uppdragText(uppdrag))}
         >
-          🔊 {lasningJson.lyssna.knapp}
+          🔊
         </button>
       </p>
-      {rad && fyllForslag ? (
+      {rad && fyllForslag && visaVal ? (
         <div className="uppdrag-val" data-testid="uppdrag-val" role="group" aria-label={rad.rubrik || undefined}>
           {rad.rubrik ? <span className="uppdrag-val-rubrik">{rad.rubrik}</span> : null}
           {rad.grupper.map((g, i) => (
