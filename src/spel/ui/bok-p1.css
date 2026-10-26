@@ -126,3 +126,21 @@ body .plats-namn,body .plats-hem{white-space:nowrap}
   z-index: 1;
 }
 .bok .lages-knapp,.bok .ord-kort,.bok .kort{transition:transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),box-shadow 180ms ease}
+
+/* S4: 3-zons matningsvy 375×812 — Zon A 58..126, Zon B 128..366 fri, Zon C 366..812 */
+[data-s4="vaktar-aptitbubbla"]{
+  position:fixed;top:58px;left:12px;right:12px;height:64px;max-height:68px;z-index:25;
+  background:#FFF6E5;border:2px solid #3B2F2F;border-radius:16px;box-shadow:0 4px 0 #E4CFA4;
+  display:flex;align-items:center;gap:8px;padding:4px 8px;box-sizing:border-box;
+}
+[data-s4="vaktar-aptitbubbla"] p{margin:0;flex:1;color:#3B2F2F;font-weight:800;font-size:14px;line-height:1.2}
+[data-s4="vaktar-aptitbubbla"] [data-s4-progress]{color:#3B2F2F;font-weight:800;font-size:14px;white-space:nowrap;flex:0 0 auto}
+[data-s4="vaktar-lyssna"],[data-s4="vaktar-stang"]{
+  width:44px;height:44px;min-width:44px;min-height:44px;flex:0 0 44px;padding:0;
+  border:2px solid #3B2F2F;border-radius:12px;background:#FFF6E5;color:#3B2F2F;font-weight:800;font-size:18px;
+}
+body:has([data-s4="vaktar-aptitbubbla"]) .plats-resa,
+body:has([data-s4="vaktar-aptitbubbla"]) .plats-intro,
+body:has([data-s4="vaktar-aptitbubbla"]) .tred-hint{display:none !important}
+body:has([data-s4="vaktar-aptitbubbla"]) .bok-skarm{background:transparent;backdrop-filter:none;pointer-events:none}
+body:has([data-s4="vaktar-aptitbubbla"]) .bok-skarm .bok{max-height:446px;height:446px;pointer-events:auto}

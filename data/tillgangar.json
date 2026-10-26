@@ -12918,6 +12918,14 @@
     "s-leksak-studsboll": { "fil": "/models/bulk/s-leksak-studsboll-cc0.glb", "licens": "CC0-1.0", "upphov": "Kenney", "kalla": "https://kenney.nl/assets" },
     "s-leksak-kudde": { "fil": "/models/bulk/s-leksak-kudde-cc0.glb", "licens": "CC0-1.0", "upphov": "Kenney", "kalla": "https://kenney.nl/assets" },
     "s-mat-honung": { "fil": "/models/bulk/s-mat-honung-cc0.glb", "licens": "CC0-1.0", "upphov": "Kenney", "kalla": "https://kenney.nl/assets" },
-    "s-mat-jordgubbe": { "fil": "/models/bulk/s-mat-jordgubbe-cc0.glb", "licens": "CC0-1.0", "upphov": "Kenney", "kalla": "https://kenney.nl/assets" }
+    "s-mat-jordgubbe": { "fil": "/models/bulk/s-mat-jordgubbe-cc0.glb", "licens": "CC0-1.0", "upphov": "Kenney", "kalla": "https://kenney.nl/assets" },
+    "s-vaktar-skattkista": {
+      "url": "/models/bulk/s-vaktar-skattkista-cc0.glb",
+      "fil": "/models/bulk/s-vaktar-skattkista-cc0.glb",
+      "licens": "CC0-1.0",
+      "upphov": "Kay Lousberg (KayKit)",
+      "kalla": "https://kaylousberg.itch.io",
+      "typ": "sak"
+    }
   }
 }
