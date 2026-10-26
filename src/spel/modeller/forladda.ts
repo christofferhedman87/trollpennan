@@ -2,6 +2,7 @@ import { useGLTF } from "@react-three/drei";
 
 const ko: string[] = [];
 const sedda = new Set<string>();
+const laddare = new Map<string, (url: string) => void>();
 const lyssnare = new Set<() => void>();
 let startade = 0;
 let forstaBildrutaKlar = false;
@@ -10,10 +11,11 @@ let timerId: ReturnType<typeof setTimeout> | null = null;
 const MAX_SAMTIDIGA = 2;
 
 /** Köar unika GLB-adresser. Anropar inte useGLTF.preload vid modulimport. */
-export function forladdaNarLedig(urlLista: Iterable<string>): void {
+export function forladdaNarLedig(urlLista: Iterable<string>, ladda?: (url: string) => void): void {
   for (const url of urlLista) {
     if (!url || sedda.has(url)) continue;
     sedda.add(url);
+    if (ladda) laddare.set(url, ladda);
     ko.push(url);
   }
   if (forstaBildrutaKlar) schemalagg();
@@ -35,7 +37,9 @@ function steg(): void {
     aktivt += 1;
     startade += 1;
     try {
-      useGLTF.preload(url);
+      const fn = laddare.get(url);
+      if (fn) fn(url);
+      else useGLTF.preload(url);
     } catch {
       /* tyst reserv */
     }

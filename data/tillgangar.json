@@ -12926,6 +12926,22 @@
       "upphov": "Kay Lousberg (KayKit)",
       "kalla": "https://kaylousberg.itch.io",
       "typ": "sak"
+    },
+    "s-solstjarna-plort": {
+      "url": "/models/bulk/s-solstjarna-plort-cc0.glb",
+      "fil": "/models/bulk/s-solstjarna-plort-cc0.glb",
+      "licens": "CC0-1.0",
+      "upphov": "Kenney",
+      "kalla": "https://kenney.nl/assets",
+      "typ": "sak"
+    },
+    "s-plort-kristall": {
+      "url": "/models/bulk/s-plort-kristall-cc0.glb",
+      "fil": "/models/bulk/s-plort-kristall-cc0.glb",
+      "licens": "CC0-1.0",
+      "upphov": "Kenney",
+      "kalla": "https://kenney.nl/assets",
+      "typ": "sak"
     }
   }
 }

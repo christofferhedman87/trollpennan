@@ -24,6 +24,7 @@ import { replik } from "../replik.ts";
 import * as rostKo from "../rostKo.ts";
 import { lastBygge } from "../ui/hjalp.ts";
 import { mataVaktardjur } from "../ang/vaktardjur.tsx";
+import { noteraSolGava, noteraSolSkapelse } from "../solstjarna.ts";
 import { BYGGSIDOR, TEXTER } from "../ui/spelData.ts";
 import type { SpelKarna } from "./typer.ts";
 
@@ -175,7 +176,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
         return;
       }
       useMinne.getState().uppdateraDjur(aktiv.uid, u.varelse);
-      belona(u, aktiv.uid, opt.hand);
+      belona(u, aktiv.uid, opt.hand); noteraSolSkapelse(u.varelse);
       if (geTraff(bas, u.varelse, ons)) uppfyll(aktiv, ons.tack, ons.stjarnor, aktiv.uid);
       else {
         ljud.nastan();
@@ -243,7 +244,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
     }
     const aktivtFore = aktivtSkrivUppdrag(useMinne.getState().uppdrag, platsNu());
     const uppRes = bengtsson.prova(raw);
-    belona(utfall, utfall.guld.length && opt.hand ? sista?.uid : undefined, opt.hand && uppRes !== "klar");
+    belona(utfall, utfall.guld.length && opt.hand ? sista?.uid : undefined, opt.hand && uppRes !== "klar"); noteraSolSkapelse(utfall.varelse);
     for (const m of utfall.meddelanden) visaBanner(m, "okand", "okand_ordbit");
     for (const o of utfall.varelse.overraskningar) visaBanner(o.text, "ovr", "overraskning");
     ljud.puff();
@@ -283,7 +284,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
       for (const n of extra.nya) {
         brygga.skapa(n, n === extra.nya[extra.nya.length - 1]);
         komIhagDjur(n);
-        belona(u, n.uid, opt.hand);
+        belona(u, n.uid, opt.hand); noteraSolSkapelse(u.varelse);
       }
     }
     if (varldRef.current === "gard") visaVarld("ang");
@@ -339,7 +340,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
       if (u.okanda.length) useMinne.getState().sparaOkanda(u.okanda);
       const taggar = [...new Set(u.gavor.flatMap((g) => g.taggar))];
       const favorit = taggar.includes(useMinne.getState().liv[uid]?.favorit ?? "");
-      const svar = geEgenGava(uid, taggar);
+      const svar = geEgenGava(uid, taggar); noteraSolGava(uid, trim);
       const p = brygga.platser().find((x) => x.uid === uid);
       visaBubbla(svar.text, p?.x ?? 0.5, p?.topp ?? 0.3, true, true);
       visaMossa({ gavaTaggar: taggar, favorit });
@@ -355,7 +356,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
         setBehover(null);
         return;
       }
-      belonaFlode(svar);
+      belonaFlode(svar); if (gavaRef.current) noteraSolGava(gavaRef.current, trim);
       if (!svar.okant) { setGavaTill(null); gavaRef.current = null; }
       rensaSkriv();
       return;

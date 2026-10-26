@@ -18,6 +18,7 @@ export function tom(): Data {
     ang: [],
     stjarnor: 0,
     solstjarnor: 0,
+    albumNiva: {},
     vaktardjur: {},
     ljudPa: true,
     rostPa: true,

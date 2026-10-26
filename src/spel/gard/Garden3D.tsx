@@ -7,6 +7,8 @@ import { fonsterAntalForBygge, takFargForBygge } from "../bygge.ts";
 import { brygga } from "../brygga.ts";
 import { KV, MILJO } from "../miljo.ts";
 import { useMinne } from "../minne.ts";
+import { GltfSak } from "../gltfDjur.tsx";
+import { GARDS_UPPGRADERINGAR, SolstjarnaPlopp } from "../solstjarna.ts";
 import { ByggeModell, DekorHobalar } from "./ByggModell.tsx";
 import { GardDjurLista } from "./GardDjur.tsx";
 import { Solkorn, VindGras } from "../ang/dekor.tsx";
@@ -70,6 +72,32 @@ class WebbGren extends Component<{ children: ReactNode }, { fel: boolean }> {
     if (this.state.fel) return <p className="garden-reserv">Gården vilar en stund.</p>;
     return this.props.children;
   }
+}
+
+const SOL_MODELL: Record<string, string> = {
+  "hage-soltak": "parasoll",
+  musikfontan: "fontan",
+  "kristall-lykta": "lykta",
+  "studsbolls-korg": "studsboll",
+};
+
+function SolGard() {
+  const sol = useMinne((s) => s.solstjarnor ?? 0);
+  const sidor = useMinne((s) => s.byggSidor);
+  return (
+    <group name="Soltak till hagen Musikfontän Kristall-lykta Studsbolls-korg">
+      <SolstjarnaPlopp />
+      {GARDS_UPPGRADERINGAR.map((u, i) =>
+        sidor.includes(u.id) || sidor.includes("solgard") || sol >= u.kostnad ? (
+          <group key={u.id} name={u.id} position={[-1.8 + i * 1.15, 0, -3.2]} userData={{ namn: u.namn }}>
+            <Suspense fallback={null}>
+              <GltfSak id={SOL_MODELL[u.id] ?? "lykta"} />
+            </Suspense>
+          </group>
+        ) : null,
+      )}
+    </group>
+  );
 }
 
 function ljusPos(v: readonly number[]): [number, number, number] {
@@ -152,6 +180,7 @@ function Scen({
       {garden.map((b) => (
         <ByggeModell key={b.uid} b={b} flyttar={flyttarUid !== null} />
       ))}
+      <SolGard />
       <GardDjurLista garden={garden} hagar={hagar} kanter={kanter} />
     </>
   );

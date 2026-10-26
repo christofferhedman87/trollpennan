@@ -188,13 +188,16 @@ async function main() {
       const hoppa = page.locator('[data-testid="intro-hoppa"]');
       if (await hoppa.count()) await hoppa.click();
       await page.waitForTimeout(350);
+      const stangBok = page.locator('[data-v3="bok-stang"]');
+      if (await stangBok.count()) await stangBok.click();
+      await page.waitForTimeout(350);
 
       // Öppna Meny -> Album för att kontrollera Slimepedia på 375×812
       const menyKnapp = page.locator('[data-testid="meny-knapp"]');
       if (await menyKnapp.count()) {
         await menyKnapp.click();
         await page.waitForTimeout(250);
-        const albumKnapp = page.locator('[data-testid="meny-album"]');
+        const albumKnapp = page.locator('[data-testid="album-knapp"], [data-testid="meny-album"]').first();
         if (await albumKnapp.count()) {
           await albumKnapp.click();
           await page.waitForTimeout(350);

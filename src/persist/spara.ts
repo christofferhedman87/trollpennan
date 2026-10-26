@@ -29,15 +29,50 @@ function vaktarKarta(raw: unknown): Record<string, number> {
   return ut;
 }
 
+type KroppPost = { niva?: string; favorit?: string };
+
+/** 1 vid mött djur, 2 vid ovanlig eller favorit, 3 vid legendarisk. */
+export function nivaAvKropp(post?: KroppPost | null): number {
+  if (!post) return 0;
+  if (post.niva === "legendarisk") return 3;
+  if (post.niva === "ovanlig" || post.niva === "favorit" || Boolean(post.favorit)) return 2;
+  return 1;
+}
+
+function albumKarta(): Record<string, number> {
+  const s = useMinne.getState();
+  const ut: Record<string, number> = {};
+  for (const [k, v] of Object.entries(s.albumNiva ?? {})) {
+    if (typeof v === "number" && Number.isFinite(v)) ut[k] = Math.max(0, Math.min(3, Math.floor(v)));
+  }
+  for (const [id, post] of Object.entries(s.albumKropp ?? {})) {
+    const n = Math.max(ut[id] ?? 0, nivaAvKropp(post));
+    if (n > 0) ut[id] = Math.min(3, n);
+  }
+  return ut;
+}
+
 export function lasSparat(): SparaData {
   const s = useMinne.getState();
   return {
     vaktardjur: vaktarKarta(s.vaktardjur),
-    albumNiva: {},
+    albumNiva: albumKarta(),
     solstjarnor: s.solstjarnor ?? 0,
     stjarnor: s.stjarnor,
     byggSidor: s.byggSidor,
   };
+}
+
+export function lasAlbumNiva(djurTyp: string): number {
+  return lasSparat().albumNiva?.[djurTyp] ?? 0;
+}
+
+export function sparaAlbumNiva(djurTyp: string, niva: number): number {
+  const n = Math.max(1, Math.min(3, Math.floor(niva)));
+  const nu = lasSparat().albumNiva ?? {};
+  const max = Math.max(nu[djurTyp] ?? 0, n);
+  useMinne.setState({ albumNiva: { ...nu, [djurTyp]: max } });
+  return max;
 }
 
 export function lasVaktarSteg(id: string): number {
