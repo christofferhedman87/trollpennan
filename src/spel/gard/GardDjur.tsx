@@ -6,6 +6,8 @@ import { brygga, type Sparad } from "../brygga.ts";
 import { harDjurGltf } from "../entiteter.ts";
 import { GltfDjur, type DjurSignal } from "../gltfDjur.tsx";
 import { sattUttryck } from "../tillbehor/AnsiktsUttryck.tsx";
+import { arAttraktionId, hittaNarmasteAttraktion, kompisNu, largoSkala, mumsa } from "../tillbehor/largo.ts";
+import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
 import { replik } from "../replik.ts";
 import type { SparatBygge } from "../bygge.ts";
@@ -52,6 +54,7 @@ function GardEtt({
   const nere = useRef<{ x: number; y: number } | null>(null);
   const antal = useRef(0);
   const fod = useRef(performance.now());
+  const [lx, ly, lz] = largoSkala(spec);
   useFrame(() => {
     const liv = useMinne.getState();
     sattUttryck(
@@ -105,7 +108,7 @@ function GardEtt({
         <sphereGeometry args={[0.46, 12, 8]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
-      <group ref={kropp} scale={0.48}>
+      <group ref={kropp} scale={[0.48 * lx, 0.48 * ly, 0.48 * lz]}>
         <Suspense fallback={<DjurForm spec={spec} signal={signal} index={index} />}>
           {harDjurGltf(spec.kropp) ? (
             <ModellGren spec={spec}>
@@ -174,17 +177,34 @@ export function GardDjurLista({
     for (const id of vandrare.current.keys()) if (!kvar.has(id)) vandrare.current.delete(id);
     const ut = rader.current;
     ut.length = 0;
+    const saker: { id: string; wx: number; wz: number }[] = [];
+    for (const d of lista) {
+      if (!arAttraktionId(d.spec.kropp)) continue;
+      const pv = vandrare.current.get(d.uid);
+      if (pv) saker.push({ id: d.spec.kropp, wx: pv.wx, wz: pv.wz });
+    }
     for (const d of lista) {
       let v = vandrare.current.get(d.uid);
       if (!v || v.hemUid !== d.hemUid || v.hageId !== d.tillatna.hageId || !sammaCeller(v.tillatnaCeller, d.tillatna.celler)) {
         v = skapaGardVandrare(d.uid, d.hemUid, d.tillatna.celler, d.tillatna.hageId, d.index);
         vandrare.current.set(d.uid, v);
       }
+      if (arAttraktionId(d.spec.kropp)) v.malPunkt = null;
+      else {
+        const nara = hittaNarmasteAttraktion([v.wx, v.wz], saker);
+        v.malPunkt = nara ? [nara.wx, nara.wz] : null;
+      }
       uppdateraGardVandrare(v, stegDt);
       const sig = signaler.current.get(d.uid);
       if (sig) {
         sig.current.ror = v.vantar <= 0 ? 1 : 0;
         if (sig.current.hopp > 0) sig.current.hopp = Math.max(0, sig.current.hopp - stegDt / 0.42);
+        if (v.malPunkt) {
+          sig.current.malPunkt = v.malPunkt;
+          const dist = Math.hypot(v.malPunkt[0] - v.wx, v.malPunkt[1] - v.wz);
+          if (dist > 0.18) sig.current.hopp = Math.max(sig.current.hopp, 0.35);
+          else if (mumsa(d.uid, v.malPunkt.join(","))) { sig.current.klapp = performance.now(); ljud.plopp(); }
+        } else sig.current.malPunkt = null;
       }
       const hopp = sig?.current.hopp ?? 0;
       const gung =
@@ -210,6 +230,21 @@ export function GardDjurLista({
         forflyttad: Number(v.forflyttad.toFixed(3)),
         iTillatenCell,
       });
+    }
+    for (let i = 0; i < lista.length; i++) {
+      const a = lista[i];
+      const va = a ? vandrare.current.get(a.uid) : undefined;
+      if (!a || !va || arAttraktionId(a.spec.kropp)) continue;
+      for (let j = i + 1; j < lista.length; j++) {
+        const b = lista[j];
+        const vb = b ? vandrare.current.get(b.uid) : undefined;
+        if (!b || !vb || arAttraktionId(b.spec.kropp) || Math.hypot(va.wx - vb.wx, va.wz - vb.wz) > 1.1) continue;
+        if (!kompisNu(a.uid, b.uid, klocka.current)) continue;
+        const sa = signaler.current.get(a.uid);
+        const sb = signaler.current.get(b.uid);
+        if (sa) sa.current.hopp = Math.max(sa.current.hopp, 0.45);
+        if (sb) sb.current.hopp = Math.max(sb.current.hopp, 0.45);
+      }
     }
     const rot = window.__gard3d;
     if (rot) rot.djur = ut;

@@ -10,6 +10,7 @@ import { GltfDjur, GltfSak, squashSkala, type DjurSignal } from "../gltfDjur.tsx
 import { arPlagg, arSak, fotKant, harDjurGltf, hoppHojd, malhojd, svavar, takSkala } from "../entiteter.ts";
 import { regelFor, ritSkala } from "../placering.ts";
 import { faestTillbehor, procAnkare } from "../tillbehor/index.ts";
+import { bollOffset, largoSkala, monteraLargoDel, rapportPos, skuttBeslut } from "../tillbehor/largo.ts";
 import { AnsiktsUttryck, sattUttryck } from "../tillbehor/AnsiktsUttryck.tsx";
 import { useMinne } from "../minne.ts";
 import { DjurEffekter } from "../effekter.tsx";
@@ -82,7 +83,7 @@ const OGA_MAT = new THREE.MeshBasicMaterial({ vertexColors: true });
 export function DjurForm({ spec, signal, index = 0 }: { spec: Sparad; signal?: { current: DjurSignal }; index?: number }) {
   const farg = djurFarg(spec);
   const pack = useMemo(() => byggPack({ kropp: spec.kropp, farg, krona: false, horn: false, monster: Boolean(spec.monster), monsterFarg: spec.monsterfarg ?? "#6D4C41" }), [farg, spec]);
-  const extra = useMemo(() => { const g = new THREE.Group(); faestTillbehor(g, spec.kropp, spec.tillbehor); return g; }, [spec]);
+  const extra = useMemo(() => { const g = new THREE.Group(); faestTillbehor(g, spec.kropp, spec.tillbehor); monteraLargoDel(g, spec, g.userData.ankare); return g; }, [spec]);
   const mat = useMemo(() => spec.glans ? new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: TOON_MAP, emissive: "#FFE082", emissiveIntensity: 0.4 }) : KROPP_MAT, [spec.glans]);
   const rok = useRef<THREE.Mesh>(null);
   const andas = useRef<THREE.Group>(null);
@@ -230,7 +231,8 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
     const bob = pause ? 0 : Math.sin(t * (flyg ? 2.4 : 1.6) + index) * (flyg ? 0.16 : sim ? 0.08 : 0.04);
     const s = skal.current * takSkala(spec.kropp, ritSpec.skala || 1) * synS;
     const kram = pause ? 1 : 1 - Math.sin(Math.min(1, kisa.current) * Math.PI) * 0.14;
-    g.scale.set((s * bred * sq.sxz) / Math.sqrt(kram), s * hojd * kram * sq.sy, (s * bred * sq.sxz) / Math.sqrt(kram));
+    const [lx, ly, lz] = largoSkala(spec);
+    g.scale.set((s * bred * sq.sxz * lx) / Math.sqrt(kram), s * hojd * kram * sq.sy * ly, (s * bred * sq.sxz * lz) / Math.sqrt(kram));
     const wx = Math.cos(t * 0.25 + index) * 0.22 * vand;
     const wz = Math.sin(t * 0.21 + index * 1.4) * 0.16 * vand;
     const spx = -Math.sin(t * 0.25 + index) * 0.22 * 0.25 * vand;
@@ -257,6 +259,22 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       g.position.y = y + bob + lyft;
       g.rotation.z = 0;
       g.rotation.y = snurr.current > 0 ? t * 7 : Math.atan2(spx, spz) * 0.35 * vand;
+    }
+    const off = bollOffset(spec.uid);
+    if (g.parent) g.parent.position.set(x + off.x, 0, z + off.z);
+    rapportPos(spec.uid, x + off.x + g.position.x, z + off.z + g.position.z, sak, spec.kropp);
+    if (!pause && !sak && !flyg && !sim) {
+      const bes = skuttBeslut(spec.uid, [x + off.x + g.position.x, z + off.z + g.position.z], d, t);
+      if (bes.mal) {
+        g.position.x = bes.wx - x - off.x;
+        g.position.z = bes.wz - z - off.z;
+        g.position.y += bes.hoppY;
+        g.rotation.y = bes.rotY;
+        signal.current.malPunkt = bes.mal;
+        if (bes.humor) signal.current.humör = bes.humor;
+        if (bes.plopp) { signal.current.klapp = performance.now(); ljud.plopp(); }
+      } else if (bes.kompishopp) { hopp.current = 0.45; g.rotation.y = bes.rotY; signal.current.malPunkt = null; }
+      else signal.current.malPunkt = null;
     }
     const gnist = puff.current;
     if (gnist) {

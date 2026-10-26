@@ -18,6 +18,7 @@ import { forladdaNarLedig } from "./modeller/forladda.ts";
 import { DjurModellGren } from "./modeller/StjarnPuffReserv.tsx";
 import { AnsiktsUttryck } from "./tillbehor/AnsiktsUttryck.tsx";
 import { faestPlaggKlon, faestTillbehor, type Ankare } from "./tillbehor/index.ts";
+import { monteraLargoDel } from "./tillbehor/largo.ts";
 
 /** Kodbyggd reserv om en GLB saknas. Komponenten skickas in utifrån så den här filen inte drar in hela ängen. */
 export type DjurHumör = "glad" | "hungrig" | "fortjust" | "somnig" | "busig";
@@ -417,6 +418,7 @@ const hslHex = (hsl: Hsl) => "#" + hslTillRgb(...hsl).map((v) => v.toString(16).
 
 function fastAnkare(rot: THREE.Object3D, spec: Sparad) {
   faestTillbehor(rot, spec.kropp, spec.tillbehor, "modell");
+  monteraLargoDel(rot, spec, rot.userData.ankare);
 }
 
 function kopplaMeshopt(loader: { setMeshoptDecoder: (d: unknown) => void }) {
