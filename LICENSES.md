@@ -1306,6 +1306,22 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | s-biom-svampkluster | /models/bulk/s-biom-svampkluster-cc0.glb | CC0-1.0 | Quaternius (Ultimate Nature Pack) | https://quaternius.com/packs/ultimatenature.html |
 | s-biom-nackros | /models/bulk/s-biom-nackros-cc0.glb | CC0-1.0 | Quaternius (Ultimate Nature Pack) | https://quaternius.com/packs/ultimatenature.html |
 | s-vaktar-skattkista | /models/bulk/s-vaktar-skattkista-cc0.glb | CC0-1.0 | Kay Lousberg (KayKit) | https://kaylousberg.itch.io |
+| s-djur-kanin-rund | /models/bulk/s-djur-kanin-rund-gobkit-cc0.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://opengameart.org/content/gobkit |
+| s-djur-hund-shiba | /models/bulk/s-djur-hund-shiba-quaternius-cc0.glb | CC0-1.0 | Quaternius (Ultimate Animated Animals) | https://quaternius.com/packs/ultimateanimatedanimals.html |
+| s-djur-hund-corgi | /models/bulk/s-djur-hund-corgi-gobkit-cc0.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://opengameart.org/content/gobkit |
+| s-djur-uggla-rund | /models/bulk/s-djur-uggla-rund-gobkit-cc0.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://opengameart.org/content/gobkit |
+| s-djur-kyckling-rund | /models/bulk/s-djur-kyckling-rund-quaternius-cc0.glb | CC0-1.0 | Quaternius (Cute Monsters) | https://quaternius.com/packs/cutemonsters.html |
+| s-djur-fisk-guldfisk | /models/bulk/s-djur-fisk-guldfisk-quaternius-cc0.glb | CC0-1.0 | Quaternius (Cute Fish) | https://quaternius.com/packs/cutefish.html |
+| s-djur-gris-rund | /models/bulk/s-djur-gris-rund-quaternius-cc0.glb | CC0-1.0 | Quaternius (Farm Animals) | https://quaternius.com/packs/farmanimal.html |
+| s-djur-ko-rund | /models/bulk/s-djur-ko-rund-quaternius-cc0.glb | CC0-1.0 | Quaternius (Ultimate Animated Animals) | https://quaternius.com/packs/ultimateanimatedanimals.html |
+| s-djur-hjort-rund | /models/bulk/s-djur-hjort-rund-quaternius-cc0.glb | CC0-1.0 | Quaternius (Ultimate Animated Animals) | https://quaternius.com/packs/ultimateanimatedanimals.html |
+| s-djur-panda-rund | /models/bulk/s-djur-panda-rund-quaternius-cc0.glb | CC0-1.0 | Quaternius (Cute Monsters) | https://quaternius.com/packs/cutemonsters.html |
+| s-djur-krabba-rund | /models/bulk/s-djur-krabba-rund-quaternius-cc0.glb | CC0-1.0 | Quaternius (Cute Monsters) | https://quaternius.com/packs/cutemonsters.html |
+| s-djur-vildsvin-rund | /models/bulk/s-djur-vildsvin-rund-gobkit-cc0.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://opengameart.org/content/gobkit |
+| s-djur-papegoja-rund | /models/bulk/s-djur-papegoja-rund-gobkit-cc0.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://opengameart.org/content/gobkit |
+| s-djur-ekorre-rund | /models/bulk/s-djur-ekorre-rund-gobkit-cc0.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd.) | https://opengameart.org/content/gobkit |
+| s-djur-haj-rund | /models/bulk/s-djur-haj-rund-quaternius-cc0.glb | CC0-1.0 | Quaternius (Cute Fish) | https://quaternius.com/packs/cutefish.html |
+| s-djur-dinosaurie-rund | /models/bulk/s-djur-dinosaurie-rund-quaternius-cc0.glb | CC0-1.0 | Quaternius (Animated Dinosaurs) | https://quaternius.com/packs/animateddinosaurs.html |
 
 ## Röster och tal
 

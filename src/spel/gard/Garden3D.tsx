@@ -9,6 +9,7 @@ import { KV, MILJO } from "../miljo.ts";
 import { useMinne } from "../minne.ts";
 import { ByggeModell, DekorHobalar } from "./ByggModell.tsx";
 import { GardDjurLista } from "./GardDjur.tsx";
+import { Solkorn, VindGras } from "../ang/dekor.tsx";
 import { MarkPlan } from "./MarkPlan.tsx";
 import { synkaTestSparning, varldTillNorm, type GardDjurSnap } from "./vandra.ts";
 import {
@@ -103,6 +104,9 @@ function Scen({
       />
       <ambientLight intensity={L.ambient.styrka} color={L.ambient.farg} />
       <hemisphereLight args={[L.hemi.himmel, L.hemi.mark, L.hemi.styrka]} />
+      <hemisphereLight args={["#FFF8E1", "#7CB342", 0.65]} />
+      <VindGras />
+      <Solkorn />
       <directionalLight
         color={L.nyckel.farg}
         intensity={L.nyckel.styrka}

@@ -1,0 +1,37 @@
+{
+  "viewport": {
+    "width": 375,
+    "height": 812
+  },
+  "s4": {
+    "dataFil": "data/vaktardjur.json",
+    "komponentFil": "src/spel/ang/vaktardjur.tsx",
+    "vaktardjurIds": [
+      "bamse-bum",
+      "kapten-plask",
+      "glitter-glim"
+    ],
+    "skala": 2.1,
+    "svallFaktor": 0.12,
+    "kravAntal": 3,
+    "models": [
+      "models/bulk/s-vaktar-skattkista-cc0.glb"
+    ],
+    "zonA": {
+      "minY": 54,
+      "maxY": 130
+    },
+    "zonBFriHojdPx": 220
+  },
+  "s5": {
+    "solstjarnaFil": "src/spel/solstjarna.ts",
+    "albumFil": "src/spel/ui/AlbumDialog.tsx",
+    "models": [
+      "models/bulk/s-solstjarna-plort-cc0.glb",
+      "models/bulk/s-plort-kristall-cc0.glb"
+    ],
+    "minKortBreddPx": 150,
+    "maxStapladeElement": 4,
+    "minKnappHojdPx": 44
+  }
+}

@@ -26,7 +26,7 @@
 .foralder-topp{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .foralder-topp h2{margin:0}
 .foralder-kryss{width:48px;height:48px;min-width:48px;min-height:48px;border:0;border-radius:14px;background:var(--color-moss);color:var(--color-cream);font-size:1.75rem;font-weight:700;line-height:1;flex:none}
-.hem-angen-knapp{min-height:44px;height:44px;padding:0 12px;border-radius:999px;background:var(--color-cream);color:var(--color-ink);border:2px solid var(--color-gold);font-weight:800;font-size:0.95rem;box-shadow:0 4px 0 var(--color-paper-deep);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.hem-angen-knapp{min-height:44px;min-width:44px;height:44px;padding:0 12px;border-radius:999px;background:#FFF6E5;color:#3B2F2F;border:2px solid #3B2F2F;font-weight:800;font-size:0.95rem;box-shadow:0 4px 0 #E4CFA4;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .vuxen-las{margin:0 0 12px;padding:12px;border-radius:16px;background:var(--color-cream);border:2px solid var(--color-gold)}
 .vuxen-las-fraga{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-weight:800;margin-bottom:8px}
 .vuxen-las input{width:72px;min-height:44px;padding:4px 8px;border-radius:12px;border:2px solid var(--color-ink);background:var(--color-paper);color:var(--color-ink);font:inherit;font-weight:800}
@@ -101,4 +101,23 @@ body:has(.banner, .bubbla) .tred-hint {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
+}
+/* S1: ogenomskinliga topp-piller, 0 % mörk scrim, kontrast mot både grottvalv och strand. */
+.hud .foralder-knapp,
+.hud [data-testid="stjarnor"],
+.hud .stjarna-hud,
+.hud .meny-knapp,
+.hud .hem-angen-knapp,
+.foralder-knapp,
+[data-testid="stjarnor"],
+.stjarna-hud,
+.meny-knapp,
+.hem-angen-knapp {
+  background: #FFF6E5;
+  color: #3B2F2F;
+  border: 2px solid #3B2F2F;
+  border-radius: 999px;
+  min-height: 44px;
+  min-width: 44px;
+  box-shadow: 0 4px 0 #E4CFA4;
 }

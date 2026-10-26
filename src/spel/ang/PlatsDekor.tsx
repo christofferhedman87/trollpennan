@@ -1,9 +1,10 @@
 // B1.3b: scenen för andra platser än ängen (Skogen, Sjön, Grottan …), helt ur data/platser.json.
 // Ängen ritas som förut i angen3d.tsx; här finns bara miljö (himmel, dis, ljus, mark), startobjekt och platsens skapelser.
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Component, Suspense, useEffect, useLayoutEffect, useMemo, useRef, type ReactNode } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { belysScen } from "../belys.ts";
 import { GltfSak } from "../gltfDjur.tsx";
 import { InstansModell } from "../kenneyNatur.tsx";
 import { KV, miljoFor } from "../miljo.ts";
@@ -45,6 +46,33 @@ class SakGren extends Component<{ children: ReactNode }, { fel: boolean }> {
   render() {
     return this.state.fel ? null : this.props.children;
   }
+}
+
+const BIOM_GLB: Record<string, string> = {
+  skogen: "/models/bulk/s-biom-svampkluster-cc0.glb",
+  sjon: "/models/bulk/s-biom-nackros-cc0.glb",
+  grottan: "/models/bulk/s-plort-kristall-cc0.glb",
+};
+
+function BiomModell({ url }: { url: string }) {
+  const gltf = useGLTF(url);
+  const klon = useMemo(() => {
+    belysScen(gltf.scene);
+    return gltf.scene.clone(true);
+  }, [gltf.scene]);
+  return <primitive object={klon} position={[1.15, 0, 0.4]} scale={1.2} />;
+}
+
+function BiomRekvisita({ plats }: { plats: string }) {
+  const url = BIOM_GLB[plats];
+  if (!url) return null;
+  return (
+    <SakGren>
+      <Suspense fallback={null}>
+        <BiomModell url={url} />
+      </Suspense>
+    </SakGren>
+  );
 }
 
 function loggaSaknas(plats: string, ord: string) {
@@ -111,6 +139,7 @@ export function PlatsDekor({ plats }: { plats: string }) {
         </group>
       ))}
       <DekorSkuggor rader={spridd} />
+      <BiomRekvisita plats={plats} />
       {spridd.map((rad, i) =>
         rad.url && rad.platser.length ? (
           <SakGren key={`${rad.url}-${i}`}>

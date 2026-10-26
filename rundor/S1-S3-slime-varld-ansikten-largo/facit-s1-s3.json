@@ -1,0 +1,71 @@
+{
+  "viewport": {
+    "width": 375,
+    "height": 812
+  },
+  "s1": {
+    "cacheKey": "trollpennan-slime-rim-v1",
+    "toonGolvet": 124,
+    "models": [
+      "models/bulk/s-biom-svampkluster-cc0.glb",
+      "models/bulk/s-biom-nackros-cc0.glb",
+      "models/bulk/s-plort-kristall-cc0.glb"
+    ],
+    "hudBorderHex": "#3B2F2F",
+    "hudBgHex": "#FFF6E5",
+    "minKnappPx": 44,
+    "mjukGeometriFil": "src/spel/mjukGeometri.ts"
+  },
+  "s2": {
+    "uttryckFil": "src/spel/tillbehor/AnsiktsUttryck.tsx",
+    "par": "uttryck",
+    "humorTillstand": [
+      "glad",
+      "fortjust",
+      "hungrig",
+      "somnig",
+      "busig"
+    ],
+    "minAnsiktePx": {
+      "bredd": 24,
+      "hojd": 14
+    },
+    "minBubblaGapPx": 16,
+    "rundDjurAntal": 15,
+    "models": [
+      "models/bulk/s-djur-kanin-rund-gobkit-cc0.glb",
+      "models/bulk/s-djur-hund-shiba-quaternius-cc0.glb",
+      "models/bulk/s-djur-hund-corgi-gobkit-cc0.glb",
+      "models/bulk/s-djur-uggla-rund-gobkit-cc0.glb",
+      "models/bulk/s-djur-kyckling-rund-quaternius-cc0.glb",
+      "models/bulk/s-djur-fisk-guldfisk-quaternius-cc0.glb",
+      "models/bulk/s-djur-gris-rund-quaternius-cc0.glb",
+      "models/bulk/s-djur-ko-rund-quaternius-cc0.glb",
+      "models/bulk/s-djur-hjort-rund-quaternius-cc0.glb",
+      "models/bulk/s-djur-panda-rund-quaternius-cc0.glb",
+      "models/bulk/s-djur-krabba-rund-quaternius-cc0.glb",
+      "models/bulk/s-djur-vildsvin-rund-gobkit-cc0.glb",
+      "models/bulk/s-djur-papegoja-rund-gobkit-cc0.glb",
+      "models/bulk/s-djur-ekorre-rund-gobkit-cc0.glb",
+      "models/bulk/s-djur-haj-rund-quaternius-cc0.glb",
+      "models/bulk/s-djur-dinosaurie-rund-quaternius-cc0.glb"
+    ]
+  },
+  "s3": {
+    "largoFil": "src/spel/tillbehor/largo.ts",
+    "kalibreringFil": "rundor/S1-S3-slime-varld-ansikten-largo/matt/kalibrering-s3.json",
+    "largoSkala": [
+      1.25,
+      1.18,
+      1.25
+    ],
+    "minLargoPx": 68,
+    "minUtstickPx": 12,
+    "models": [
+      "models/bulk/s-leksak-studsboll-cc0.glb",
+      "models/bulk/s-leksak-kudde-cc0.glb",
+      "models/bulk/s-mat-honung-cc0.glb",
+      "models/bulk/s-mat-jordgubbe-cc0.glb"
+    ]
+  }
+}

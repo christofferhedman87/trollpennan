@@ -60,15 +60,15 @@ export function Moln({ position, fart }: { position: [number, number, number]; f
   return (
       <group ref={ref} position={position} scale={0.48}>
       <mesh position={[0, 0, 0]}>
-        <sphereGeometry args={[1.05, 7, 5]} />
+        <sphereGeometry args={[1.05, 20, 16]} />
         <meshBasicMaterial color="#FFFFFF" />
       </mesh>
       <mesh position={[0.95, -0.12, 0.15]}>
-        <sphereGeometry args={[0.78, 6, 5]} />
+        <sphereGeometry args={[0.78, 20, 16]} />
         <meshBasicMaterial color="#FFFFFF" />
       </mesh>
       <mesh position={[-0.9, -0.18, 0.05]}>
-        <sphereGeometry args={[0.62, 6, 5]} />
+        <sphereGeometry args={[0.62, 20, 16]} />
         <meshBasicMaterial color="#E7F3FC" />
       </mesh>
     </group>
@@ -79,6 +79,7 @@ export function TradOchBlommor() {
   const stam = useRef<THREE.InstancedMesh>(null);
   const krona = useRef<THREE.InstancedMesh>(null);
   const topp = useRef<THREE.InstancedMesh>(null);
+  const sidoKrona = useRef<THREE.InstancedMesh>(null);
   const blom = useRef<THREE.InstancedMesh>(null);
   const mitt = useRef<THREE.InstancedMesh>(null);
   const stjalk = useRef<THREE.InstancedMesh>(null);
@@ -86,22 +87,27 @@ export function TradOchBlommor() {
     const m = new THREE.Matrix4();
     TRAD.forEach(([x, z, s], i) => {
       _blomQ.identity();
-      _blomP.set(x, 0.55, z);
+      _blomP.set(x, 0.5, z);
       _blomS.set(s, s, s);
       _blomM.compose(_blomP, _blomQ, _blomS);
       stam.current?.setMatrixAt(i, _blomM);
-      _blomP.set(x, 1.45, z);
-      _blomS.set(1.05 * s, 0.9 * s, 1.05 * s);
+      _blomP.set(x, 1.42, z);
+      _blomS.set(1.02 * s, 0.92 * s, 1.02 * s);
       _blomM.compose(_blomP, _blomQ, _blomS);
       krona.current?.setMatrixAt(i, _blomM);
-      _blomP.set(x + 0.15 * s, 1.95, z);
-      _blomS.set(0.72 * s, 0.62 * s, 0.72 * s);
+      _blomP.set(x + 0.12 * s, 1.92, z);
+      _blomS.set(0.9 * s, 0.78 * s, 0.9 * s);
       _blomM.compose(_blomP, _blomQ, _blomS);
       topp.current?.setMatrixAt(i, _blomM);
+      _blomP.set(x - 0.48 * s, 1.28, z + 0.06 * s);
+      _blomS.set(1.05 * s, 0.9 * s, 1.05 * s);
+      _blomM.compose(_blomP, _blomQ, _blomS);
+      sidoKrona.current?.setMatrixAt(i, _blomM);
     });
     if (stam.current) stam.current.instanceMatrix.needsUpdate = true;
     if (krona.current) krona.current.instanceMatrix.needsUpdate = true;
     if (topp.current) topp.current.instanceMatrix.needsUpdate = true;
+    if (sidoKrona.current) sidoKrona.current.instanceMatrix.needsUpdate = true;
     const c = new THREE.Color();
     BLOMMOR.forEach(([x, z, farg], i) => {
       m.makeTranslation(x, 0.28, z);
@@ -133,7 +139,7 @@ export function TradOchBlommor() {
       _blomP.set(x + svaj, 0.3 + Math.sin(t * 2.1 + i) * 0.02, z);
       _blomE.set(svaj * 0.4, t * 0.15 + i, svaj * 0.5);
       _blomQ.setFromEuler(_blomE);
-      _blomS.set(0.16, 0.13, 0.16);
+      _blomS.set(1.6, 1.3, 1.6);
       _blomM.compose(_blomP, _blomQ, _blomS);
       mesh.setMatrixAt(i, _blomM);
       if (nav) {
@@ -158,16 +164,20 @@ export function TradOchBlommor() {
   return (
     <>
       <instancedMesh ref={stam} args={[undefined, undefined, TRAD.length]}>
-        <cylinderGeometry args={[0.11, 0.16, 1.15, 5]} />
+        <cylinderGeometry args={[0.10, 0.16, 1.0, 14]} />
         <meshToonMaterial color="#8D6E63" gradientMap={TOON_MAP} />
       </instancedMesh>
       <instancedMesh ref={krona} args={[undefined, undefined, TRAD.length]}>
-        <sphereGeometry args={[0.85, 7, 6]} />
+        <sphereGeometry args={[0.88, 20, 16]} />
         <meshToonMaterial color="#7CB342" gradientMap={TOON_MAP} />
       </instancedMesh>
       <instancedMesh ref={topp} args={[undefined, undefined, TRAD.length]}>
-        <sphereGeometry args={[0.7, 6, 5]} />
+        <sphereGeometry args={[0.72, 20, 16]} />
         <meshToonMaterial color="#9CCC65" gradientMap={TOON_MAP} />
+      </instancedMesh>
+      <instancedMesh ref={sidoKrona} args={[undefined, undefined, TRAD.length]}>
+        <sphereGeometry args={[0.62, 20, 16]} />
+        <meshToonMaterial color="#A5D856" gradientMap={TOON_MAP} />
       </instancedMesh>
       <Granar />
       <instancedMesh ref={stjalk} args={[undefined, undefined, BLOMMOR.length]}>
@@ -175,7 +185,7 @@ export function TradOchBlommor() {
         <meshToonMaterial color="#7CB342" gradientMap={TOON_MAP} />
       </instancedMesh>
       <instancedMesh ref={blom} args={[undefined, undefined, BLOMMOR.length]}>
-        <sphereGeometry args={[1, 7, 5]} />
+        <sphereGeometry args={[0.10, 12, 10]} />
         <meshToonMaterial color="#ffffff" gradientMap={TOON_MAP} />
       </instancedMesh>
       <instancedMesh ref={mitt} args={[undefined, undefined, BLOMMOR.length]}>
@@ -187,25 +197,46 @@ export function TradOchBlommor() {
 }
 
 export function Granar() {
-  const ref = useRef<THREE.InstancedMesh>(null);
+  const kjol = useRef<THREE.InstancedMesh>(null);
+  const ovre = useRef<THREE.InstancedMesh>(null);
+  const topp = useRef<THREE.InstancedMesh>(null);
   useLayoutEffect(() => {
     const m = new THREE.Matrix4();
     const q = new THREE.Quaternion();
     const p = new THREE.Vector3();
-    const s = new THREE.Vector3();
+    const s = new THREE.Vector3(1, 1, 1);
     GRAN.forEach(([x, z], i) => {
-      p.set(x, 1.35, z);
-      s.set(1, 1.6, 1);
+      p.set(x, 0.68, z);
       m.compose(p, q, s);
-      ref.current?.setMatrixAt(i, m);
+      kjol.current?.setMatrixAt(i, m);
+      p.set(x, 1.42, z);
+      s.set(0.82, 0.88, 0.82);
+      m.compose(p, q, s);
+      ovre.current?.setMatrixAt(i, m);
+      p.set(x, 2.02, z);
+      s.set(1, 1, 1);
+      m.compose(p, q, s);
+      topp.current?.setMatrixAt(i, m);
     });
-    if (ref.current) ref.current.instanceMatrix.needsUpdate = true;
+    if (kjol.current) kjol.current.instanceMatrix.needsUpdate = true;
+    if (ovre.current) ovre.current.instanceMatrix.needsUpdate = true;
+    if (topp.current) topp.current.instanceMatrix.needsUpdate = true;
   }, []);
   return (
-    <instancedMesh ref={ref} args={[undefined, undefined, GRAN.length]}>
-      <coneGeometry args={[0.7, 2.2, 6]} />
-      <meshToonMaterial color="#3E7A32" gradientMap={TOON_MAP} />
-    </instancedMesh>
+    <>
+      <instancedMesh ref={kjol} args={[undefined, undefined, GRAN.length]}>
+        <coneGeometry args={[0.78, 1.36, 16]} />
+        <meshToonMaterial color="#2F6B32" gradientMap={TOON_MAP} />
+      </instancedMesh>
+      <instancedMesh ref={ovre} args={[undefined, undefined, GRAN.length]}>
+        <coneGeometry args={[0.56, 1.12, 16]} />
+        <meshToonMaterial color="#3E7A32" gradientMap={TOON_MAP} />
+      </instancedMesh>
+      <instancedMesh ref={topp} args={[undefined, undefined, GRAN.length]}>
+        <sphereGeometry args={[0.18, 14, 12]} />
+        <meshToonMaterial color="#8BC34A" gradientMap={TOON_MAP} />
+      </instancedMesh>
+    </>
   );
 }
 
@@ -242,13 +273,37 @@ export function Fjarilar() {
     <group ref={ref}>
       {FJARIL.map((b) => (
         <group key={b.f}>
-          <mesh position={[-0.08, 0, 0]} rotation={[0.2, 0.2, 0.7]}>
-            <coneGeometry args={[0.08, 0.18, 3]} />
-            <meshBasicMaterial color={b.f} />
-          </mesh>
-          <mesh position={[0.08, 0, 0]} rotation={[0.2, -0.2, -0.7]}>
-            <coneGeometry args={[0.08, 0.18, 3]} />
-            <meshBasicMaterial color={b.f} />
+          <group position={[-0.1, 0, 0]}>
+            <mesh position={[-0.02, 0, 0.03]} scale={[1.35, 0.14, 0.95]}>
+              <sphereGeometry args={[0.11, 18, 14]} />
+              <meshBasicMaterial color={b.f} />
+            </mesh>
+            <mesh position={[0.02, 0.02, 0.06]}>
+              <sphereGeometry args={[0.035, 12, 10]} />
+              <meshBasicMaterial color="#FFFDF7" />
+            </mesh>
+            <mesh position={[0.01, 0, -0.09]} scale={[1.15, 0.14, 0.85]}>
+              <sphereGeometry args={[0.08, 16, 12]} />
+              <meshBasicMaterial color={b.f} />
+            </mesh>
+          </group>
+          <group position={[0.1, 0, 0]}>
+            <mesh position={[0.02, 0, 0.03]} scale={[1.35, 0.14, 0.95]}>
+              <sphereGeometry args={[0.11, 18, 14]} />
+              <meshBasicMaterial color={b.f} />
+            </mesh>
+            <mesh position={[-0.02, 0.02, 0.06]}>
+              <sphereGeometry args={[0.035, 12, 10]} />
+              <meshBasicMaterial color="#FFFDF7" />
+            </mesh>
+            <mesh position={[-0.01, 0, -0.09]} scale={[1.15, 0.14, 0.85]}>
+              <sphereGeometry args={[0.08, 16, 12]} />
+              <meshBasicMaterial color={b.f} />
+            </mesh>
+          </group>
+          <mesh>
+            <sphereGeometry args={[0.04, 14, 12]} />
+            <meshBasicMaterial color="#3B2F2F" />
           </mesh>
         </group>
       ))}
@@ -426,8 +481,8 @@ export function Stenar() {
   }, []);
   return (
     <instancedMesh ref={ref} args={[undefined, undefined, STENAR.length]} castShadow receiveShadow>
-      <dodecahedronGeometry args={[1, 0]} />
-      <meshStandardMaterial color="#B0BEC5" flatShading roughness={0.95} />
+      <sphereGeometry args={[1, 20, 16]} />
+      <meshStandardMaterial color="#B0BEC5" roughness={0.95} />
     </instancedMesh>
   );
 }
@@ -512,16 +567,16 @@ export function FagelFlyg() {
   return (
     <group ref={ref} visible={false}>
       <mesh>
-        <sphereGeometry args={[0.16, 6, 4]} />
-        <meshStandardMaterial color="#FFB74D" flatShading />
+        <sphereGeometry args={[0.16, 20, 16]} />
+        <meshStandardMaterial color="#FFB74D" />
       </mesh>
-      <mesh ref={vL} position={[-0.18, 0, 0]}>
-        <boxGeometry args={[0.26, 0.035, 0.12]} />
-        <meshStandardMaterial color="#FFE0B2" flatShading />
+      <mesh ref={vL} position={[-0.2, 0, 0]} scale={[1.5, 0.18, 0.85]}>
+        <sphereGeometry args={[0.12, 20, 16]} />
+        <meshStandardMaterial color="#FFE0B2" />
       </mesh>
-      <mesh ref={vR} position={[0.18, 0, 0]}>
-        <boxGeometry args={[0.26, 0.035, 0.12]} />
-        <meshStandardMaterial color="#FFE0B2" flatShading />
+      <mesh ref={vR} position={[0.2, 0, 0]} scale={[1.5, 0.18, 0.85]}>
+        <sphereGeometry args={[0.12, 20, 16]} />
+        <meshStandardMaterial color="#FFE0B2" />
       </mesh>
     </group>
   );
@@ -662,7 +717,9 @@ function SkogHorisont({ farger }: { farger: [string, string, string] }) {
 
 export function Forgrund() {
   const buske = useRef<THREE.InstancedMesh>(null);
-  const svamp = useRef<THREE.InstancedMesh>(null);
+  const svampFot = useRef<THREE.InstancedMesh>(null);
+  const svampHatt = useRef<THREE.InstancedMesh>(null);
+  const svampPrick = useRef<THREE.InstancedMesh>(null);
   const sten = useRef<THREE.InstancedMesh>(null);
   const blom = useRef<THREE.InstancedMesh>(null);
   useLayoutEffect(() => {
@@ -689,13 +746,32 @@ export function Forgrund() {
       [1.2, 0.07, 2.9],
       [0.7, 0.06, 2.85],
     ];
-    svampar.forEach(([x, y, z], i) => {
-      p.set(x, y, z);
-      s.set(0.16, 0.1, 0.16);
+    const prickar: [number, number, number][] = [
+      [0.05, 0.05, 0.03],
+      [-0.045, 0.03, 0.04],
+      [0.01, 0.06, -0.045],
+    ];
+    let prickI = 0;
+    svampar.forEach(([x, , z], i) => {
+      p.set(x, 0.07, z);
+      s.set(1, 1, 1);
       m.compose(p, q, s);
-      svamp.current?.setMatrixAt(i, m);
+      svampFot.current?.setMatrixAt(i, m);
+      p.set(x, 0.16, z);
+      s.set(1.25, 0.72, 1.25);
+      m.compose(p, q, s);
+      svampHatt.current?.setMatrixAt(i, m);
+      for (const [dx, dy, dz] of prickar) {
+        p.set(x + dx, 0.16 + dy, z + dz);
+        s.set(1, 1, 1);
+        m.compose(p, q, s);
+        svampPrick.current?.setMatrixAt(prickI, m);
+        prickI += 1;
+      }
     });
-    if (svamp.current) svamp.current.instanceMatrix.needsUpdate = true;
+    if (svampFot.current) svampFot.current.instanceMatrix.needsUpdate = true;
+    if (svampHatt.current) svampHatt.current.instanceMatrix.needsUpdate = true;
+    if (svampPrick.current) svampPrick.current.instanceMatrix.needsUpdate = true;
     const stigar: [number, number][] = [
       [0.05, 3.25],
       [0.22, 2.85],
@@ -735,21 +811,118 @@ export function Forgrund() {
   return (
     <group>
       <instancedMesh ref={buske} args={[undefined, undefined, 5]}>
-        <sphereGeometry args={[1, 7, 5]} />
+        <sphereGeometry args={[1, 20, 16]} />
         <meshToonMaterial color="#43A047" gradientMap={TOON_MAP} />
       </instancedMesh>
-      <instancedMesh ref={svamp} args={[undefined, undefined, 3]}>
-        <sphereGeometry args={[1, 7, 5]} />
-        <meshToonMaterial color="#E57373" gradientMap={TOON_MAP} />
+      <instancedMesh ref={svampFot} args={[undefined, undefined, 3]}>
+        <cylinderGeometry args={[0.04, 0.055, 0.14, 12]} />
+        <meshToonMaterial color="#FFFDF7" gradientMap={TOON_MAP} />
+      </instancedMesh>
+      <instancedMesh ref={svampHatt} args={[undefined, undefined, 3]}>
+        <sphereGeometry args={[0.16, 20, 16]} />
+        <meshToonMaterial color="#FF5252" gradientMap={TOON_MAP} />
+      </instancedMesh>
+      <instancedMesh ref={svampPrick} args={[undefined, undefined, 9]}>
+        <sphereGeometry args={[0.028, 12, 10]} />
+        <meshToonMaterial color="#FFFDF7" gradientMap={TOON_MAP} />
       </instancedMesh>
       <instancedMesh ref={sten} args={[undefined, undefined, 7]}>
-        <sphereGeometry args={[1, 6, 4]} />
+        <sphereGeometry args={[1, 20, 16]} />
         <meshToonMaterial color="#B0A090" gradientMap={TOON_MAP} />
       </instancedMesh>
       <instancedMesh ref={blom} args={[undefined, undefined, 5]}>
-        <sphereGeometry args={[1, 6, 5]} />
+        <sphereGeometry args={[1, 20, 16]} />
         <meshToonMaterial vertexColors gradientMap={TOON_MAP} />
       </instancedMesh>
     </group>
+  );
+}
+
+/** 180 tuvor, en draw call. uTime svajar toppen. Fryser när __PAUSE_ANIM är sant. */
+export function VindGras({ antal = 180 }: { antal?: number }) {
+  const ref = useRef<THREE.InstancedMesh>(null);
+  const mat = useMemo(() => {
+    const m = new THREE.MeshToonMaterial({ color: "#7ED35C", gradientMap: TOON_MAP });
+    m.onBeforeCompile = (shader) => {
+      shader.uniforms.uTime = { value: 0 };
+      shader.vertexShader = shader.vertexShader
+        .replace("#include <common>", "#include <common>\nuniform float uTime;")
+        .replace(
+          "#include <begin_vertex>",
+          `vec3 transformed = vec3(position);
+          float fas = uTime * 1.7 + instanceMatrix[3].x * 1.4 + instanceMatrix[3].z;
+          float svaj = sin(fas) * max(position.y, 0.0) * 1.15;
+          transformed.x += svaj;
+          transformed.z += svaj * 0.4;`,
+        );
+      m.userData.uTime = shader.uniforms.uTime;
+    };
+    return m;
+  }, []);
+  useLayoutEffect(() => {
+    const mesh = ref.current;
+    if (!mesh) return;
+    const dummy = new THREE.Object3D();
+    for (let i = 0; i < antal; i++) {
+      const a = i * 2.399963;
+      const rad = 0.7 + (i % 11) * 0.38;
+      let x = Math.cos(a) * rad * 0.95;
+      let z = Math.sin(a) * rad * 0.62 + 0.15;
+      const dx = x - DAMM.x;
+      const dz = z - DAMM.z;
+      if (dx * dx + dz * dz < (DAMM.r + 0.25) * (DAMM.r + 0.25)) {
+        x += Math.cos(a) * 1.6;
+        z += 1.15;
+      }
+      dummy.position.set(x, 0.16, z);
+      dummy.rotation.set(0, i * 0.37, 0);
+      const h = 0.75 + (i % 5) * 0.12;
+      dummy.scale.set(0.85 + (i % 3) * 0.08, h, 0.85);
+      dummy.updateMatrix();
+      mesh.setMatrixAt(i, dummy.matrix);
+    }
+    mesh.instanceMatrix.needsUpdate = true;
+    mesh.count = antal;
+  }, [antal]);
+  useFrame((state) => {
+    const u = mat.userData.uTime as { value: number } | undefined;
+    if (!u) return;
+    u.value = (window as any).__PAUSE_ANIM === true ? 0 : state.clock.elapsedTime;
+  });
+  return (
+    <instancedMesh ref={ref} args={[undefined, undefined, antal]} frustumCulled={false}>
+      <coneGeometry args={[0.045, 0.32, 6]} />
+      <primitive object={mat} attach="material" />
+    </instancedMesh>
+  );
+}
+
+/** 35 svävande solkorn i en enda point-ritning. */
+export function Solkorn({ antal = 35 }: { antal?: number }) {
+  const geo = useMemo(() => {
+    const pos = new Float32Array(antal * 3);
+    for (let i = 0; i < antal; i++) {
+      const a = (i / antal) * Math.PI * 2 + i * 0.17;
+      const rad = 1.1 + (i % 6) * 0.55;
+      pos[i * 3] = Math.cos(a) * rad;
+      pos[i * 3 + 1] = 1.35 + (i % 5) * 0.62;
+      pos[i * 3 + 2] = Math.sin(a * 1.17) * rad * 0.62;
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    return g;
+  }, [antal]);
+  const ref = useRef<THREE.Points>(null);
+  useFrame((state) => {
+    const p = ref.current;
+    if (!p) return;
+    const paus = (window as any).__PAUSE_ANIM === true;
+    p.rotation.y = paus ? 0 : state.clock.elapsedTime * 0.08;
+    p.position.y = paus ? 0 : Math.sin(state.clock.elapsedTime * 0.35) * 0.08;
+  });
+  return (
+    <points ref={ref} geometry={geo} frustumCulled={false}>
+      <pointsMaterial color="#FFF3B0" size={0.07} transparent opacity={0.92} depthWrite={false} sizeAttenuation />
+    </points>
   );
 }

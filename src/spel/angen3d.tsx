@@ -10,7 +10,7 @@ import { KenneyNatur } from "./kenneyNatur.tsx";
 import { KV, MILJO } from "./miljo.ts";
 import { HINT, SNART } from "./ang/delat.ts";
 import { DAMM } from "./ang/damm.ts";
-import { Eldflugor, FagelFlyg, Fjarilar, Forgrund, Glitter, GrasTuvor, Horisont, Ljusflackar, Moln, Nackrosor, Ringar, Sond, Stenar, TradOchBlommor } from "./ang/dekor.tsx";
+import { Eldflugor, FagelFlyg, Fjarilar, Forgrund, Glitter, GrasTuvor, Horisont, Ljusflackar, Moln, Nackrosor, Ringar, Solkorn, Sond, Stenar, TradOchBlommor, VindGras } from "./ang/dekor.tsx";
 import { Byggnad, Skogsstig, SpokHus } from "./ang/byggnader.tsx";
 import { DjurIScen } from "./ang/djur.tsx";
 import { Bengtsson3D } from "./ang/Bengtsson3D.tsx";
@@ -73,7 +73,16 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
   const styr = useRef<OrbitStyr>(null);
   const plats = useMinne((s) => s.plats);
   // B1.3b: andra platser ritas helt ur data/platser.json; ängen (och sagan) som förut.
-  if (plats !== START_PLATS && !saga) return <PlatsScen plats={plats} />;
+  if (plats !== START_PLATS && !saga) {
+    return (
+      <>
+        <hemisphereLight args={["#FFF8E1", "#7CB342", 0.65]} />
+        <VindGras />
+        <Solkorn />
+        <PlatsScen plats={plats} />
+      </>
+    );
+  }
   return (
     <>
       <color attach="background" args={[himmel]} />
@@ -81,6 +90,7 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
       <Himmel natt={vis} />
       <ambientLight ref={amb} intensity={L.ambient.styrka} color={L.ambient.farg} />
       <hemisphereLight ref={hem} args={[L.hemi.himmel, L.hemi.mark, L.hemi.styrka]} />
+      <hemisphereLight args={["#FFF8E1", "#7CB342", 0.65]} />
       <directionalLight
         ref={dir}
         color={L.nyckel.farg}
@@ -110,6 +120,8 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
       <Moln position={[1.6, 6.6, -10]} fart={0.012} />
       <FagelFlyg />
       <SvajMark color={mark} natt={vis} />
+      <VindGras />
+      <Solkorn />
       <Horisont />
       <NaturGren>
         <Suspense fallback={null}>
