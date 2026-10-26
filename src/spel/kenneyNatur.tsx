@@ -1,8 +1,9 @@
 import { useGLTF } from "@react-three/drei";
-import { useLayoutEffect, useMemo, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { belysScen } from "./belys.ts";
 import { DAMM } from "./ang/damm.ts";
+import { forladdaNarLedig, forladdningsStatus, onBakgrundsForladdningKlar } from "./modeller/forladda.ts";
 
 const FARG: Record<string, string> = {
   grass: "#63c34a",
@@ -258,33 +259,39 @@ const URL = {
   orm: "/models/natur/plant_bush.glb",
 };
 
-for (const u of Object.values(URL)) useGLTF.preload(u);
+forladdaNarLedig(Object.values(URL));
 
 export function KenneyNatur() {
+  const [allaDetaljer, setAllaDetaljer] = useState(() => forladdningsStatus().forstaBildrutaKlar);
+  useEffect(() => onBakgrundsForladdningKlar(() => setAllaDetaljer(true)), []);
   return (
     <group>
       <Stall url={URL.ek} platser={EKAR} />
-      <Stall url={URL.tjock} platser={TJOCK} />
       <Stall url={URL.van} platser={VANLIG} />
       <Stall url={URL.gran} platser={GRAN} />
       <Stall url={URL.rod} platser={BLOM_R} />
       <Stall url={URL.gul} platser={BLOM_G} />
-      <Stall url={URL.lila} platser={BLOM_L} />
-      <Stall url={URL.svampr} platser={SVAMP_R} />
-      <Stall url={URL.svampt} platser={SVAMP_T} />
       <Stall url={URL.sten} platser={STEN_S} />
-      <Stall url={URL.stenl} platser={STEN_L} />
-      <Stall url={URL.gras} platser={GRAS} />
       <group position={[0, DAMM.y, 0]}>
         {/* B6.3 (G): näckrosorna ligger på vattnet, som nu ligger över markens svaj */}
         <Stall url={URL.lilja} platser={LILJA} />
-        <Stall url={URL.liljas} platser={LILJA_S} />
+        {allaDetaljer ? <Stall url={URL.liljas} platser={LILJA_S} /> : null}
       </group>
-      <Stall url={URL.stig} platser={STIG} />
-      <Stall url={URL.staket} platser={STAKET} />
-      <Stall url={URL.grind} platser={GRIND} />
-      <Stall url={URL.stubbe} platser={STUBBE} />
-      <Stall url={URL.orm} platser={ORM} />
+      {allaDetaljer ? (
+        <>
+          <Stall url={URL.tjock} platser={TJOCK} />
+          <Stall url={URL.lila} platser={BLOM_L} />
+          <Stall url={URL.svampr} platser={SVAMP_R} />
+          <Stall url={URL.svampt} platser={SVAMP_T} />
+          <Stall url={URL.stenl} platser={STEN_L} />
+          <Stall url={URL.gras} platser={GRAS} />
+          <Stall url={URL.stig} platser={STIG} />
+          <Stall url={URL.staket} platser={STAKET} />
+          <Stall url={URL.grind} platser={GRIND} />
+          <Stall url={URL.stubbe} platser={STUBBE} />
+          <Stall url={URL.orm} platser={ORM} />
+        </>
+      ) : null}
     </group>
   );
 }

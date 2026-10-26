@@ -13,6 +13,8 @@ import { belysScen } from "./belys.ts";
 const LJUSTINT = ljusTint(MILJO.ljus, MILJO.farg.ljusforstark);
 import type { Sparad } from "./brygga.ts";
 import { arPlagg, entitet, forladdaUrls, framVinkel, modellUrl as modellUrlAv, skalaFor } from "./entiteter.ts";
+import { forladdaNarLedig } from "./modeller/forladda.ts";
+import { DjurModellGren } from "./modeller/StjarnPuffReserv.tsx";
 import { faestPlaggKlon, faestTillbehor } from "./tillbehor/index.ts";
 
 /** Kodbyggd reserv om en GLB saknas. Komponenten skickas in utifrån så den här filen inte drar in hela ängen. */
@@ -405,15 +407,17 @@ function GltfInnehall({ klon, spec, fram }: { klon: THREE.Object3D; spec: Sparad
     <group rotation={[0, fram, 0]}>
       <primitive object={klon} />
       {glbPlagg.map((t) => (
-        <Suspense key={t.id} fallback={null}>
-          <GltfPlagg rot={klon} kropp={spec.kropp} id={t.id} farg={t.farg} />
-        </Suspense>
+        <DjurModellGren key={t.id} reserv={null}>
+          <Suspense fallback={null}>
+            <GltfPlagg rot={klon} kropp={spec.kropp} id={t.id} farg={t.farg} />
+          </Suspense>
+        </DjurModellGren>
       ))}
     </group>
   );
 }
 
-for (const url of forladdaUrls()) useGLTF.preload(url);
+forladdaNarLedig(forladdaUrls());
 
 export function GltfDjur({ spec, signal }: { spec: Sparad; signal: { current: DjurSignal } }) {
   const url = modellUrlAv(spec.kropp) ?? modellUrlAv("kanin")!;

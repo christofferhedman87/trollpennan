@@ -1,5 +1,6 @@
-import { OrbitControls } from "@react-three/drei";
+import { AdaptiveDpr, Bvh, OrbitControls, PerformanceMonitor } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import { startaBakgrundsForladdning } from "./modeller/forladda.ts";
 import { Component, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
 import { brygga } from "./brygga.ts";
@@ -176,6 +177,7 @@ export function Angen3D({ natt, saga = false, onGrind }: { natt: number; saga?: 
   const dragit = useMinne((s) => s.dragit);
   const plats = useMinne((s) => s.plats);
   const [prat, setPrat] = useState(false);
+  const [dpr, setDpr] = useState<[number, number] | number>([1, KV.dpr_max]);
   const dolj = useRef<number | null>(null);
   const rot = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -246,7 +248,7 @@ export function Angen3D({ natt, saga = false, onGrind }: { natt: number; saga?: 
     dolj.current = window.setTimeout(() => setPrat(false), 2400);
   }, [onGrind]);
   return (
-    <div ref={rot} className="angen-3d" data-testid="angen-3d" style={{ "--grad-m": KV.farggrad ? MILJO.farggrad.mattnad : 1, "--grad-k": KV.farggrad ? MILJO.farggrad.kontrast : 1, "--vinjett": MILJO.vinjett.styrka } as React.CSSProperties} data-djur={djur.length} data-byggen={garden.length} data-saga={saga ? "ja" : "nej"} data-plats={plats}>
+    <div ref={rot} className="angen-3d" data-testid="angen-3d" data-v9b-r3f="adaptive-bvh" data-v9b-dpr={Array.isArray(dpr) ? dpr.join("-") : String(dpr)} style={{ "--grad-m": KV.farggrad ? MILJO.farggrad.mattnad : 1, "--grad-k": KV.farggrad ? MILJO.farggrad.kontrast : 1, "--vinjett": MILJO.vinjett.styrka } as React.CSSProperties} data-djur={djur.length} data-byggen={garden.length} data-saga={saga ? "ja" : "nej"} data-plats={plats}>
       {!saga && !dragit ? (
         <p className="tred-hint" data-testid="tred-hint">
           {HINT}
@@ -264,7 +266,7 @@ export function Angen3D({ natt, saga = false, onGrind }: { natt: number; saga?: 
       <TredGren>
         <Canvas
           camera={{ position: [0, 4.15, 9.8], fov: 58, near: 0.1, far: 90 }}
-          dpr={[1, KV.dpr_max]}
+          dpr={dpr}
           shadows
           gl={{ antialias: true, toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1 }}
           onCreated={({ gl }) => {
@@ -272,11 +274,17 @@ export function Angen3D({ natt, saga = false, onGrind }: { natt: number; saga?: 
             requestAnimationFrame(() => {
               requestAnimationFrame(() => {
                 rot.current?.querySelector("[data-testid='ladd-3d']")?.setAttribute("data-klar", "ja");
+                startaBakgrundsForladdning();
               });
             });
           }}
         >
-          <Scen natt={natt} onSnart={onSnart} saga={saga} />
+          <PerformanceMonitor onDecline={() => setDpr(1)} onIncline={() => setDpr([1, KV.dpr_max])}>
+            <Bvh firstHitOnly>
+              <Scen natt={natt} onSnart={onSnart} saga={saga} />
+            </Bvh>
+          </PerformanceMonitor>
+          <AdaptiveDpr pixelated />
           <IdPass />
         </Canvas>
       </TredGren>
