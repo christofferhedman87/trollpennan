@@ -1,5 +1,5 @@
 /* P2-2 nedre knappraden (förslag A): Uppdrag (Bengtsson) och Skriv lika stora. Föräldraknappen får ett lås. */
-.hud-bot.tva{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hud-bot.tva{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 10px}
 .hud-bot.tva .npc-ikon{position:static;min-height:64px;border-radius:22px;justify-content:center;font-size:1.2rem;box-shadow:0 5px 0 var(--color-paper-deep)}
 .hud-bot.tva .bok-knapp{min-height:64px;border-radius:22px}
 .ang:has(.stall-chip.panel) .hud-bot.tva{grid-template-columns:1fr 1fr}
@@ -74,8 +74,8 @@
 body:has(.bok, .karta-lager, .meny-panel, .modal-bg) :is(.bubbla, .tred-hint) {
   display: none !important;
 }
-body:has(.banner, .bubbla) .tred-hint {
-  display: none;
+body:has(.banner, .bubbla, .coach, .plats-intro, .onska-bubbla) .tred-hint {
+  display: none !important;
 }
 .album-rutnat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 article.slimepedia-kort{display:flex;flex-direction:column;gap:6px;min-width:0;padding:6px}
@@ -85,6 +85,14 @@ article.slimepedia-kort{display:flex;flex-direction:column;gap:6px;min-width:0;p
 [data-s5="skriv-till-djuret"]{min-height:44px;width:100%;padding:4px 6px;border:0;border-radius:12px;background:#f2b632;color:#3b2f2f;font-size:12px;font-weight:800;white-space:nowrap}
 .sol-piller{display:inline-flex;align-items:center;min-height:28px;padding:2px 8px;border-radius:999px;background:#fff6e5;color:#3b2f2f;font-weight:800;font-size:14px;white-space:nowrap;pointer-events:none;border:2px solid #e7c98a}
 .sol-piller.guld{background:#ffe08a;border-color:#f2b632}
+body:has(.hud-bot.tva) .npc-figur[data-v6="bengtsson-medaljong"]:not([data-mine="automat"]) {
+  bottom: 12px;
+  left: 12px;
+  width: 64px;
+  height: 64px;
+  opacity: 0;
+  pointer-events: none;
+}
 .npc-figur[data-v6="bengtsson-medaljong"] {
   width: 64px;
   height: 64px;
@@ -128,4 +136,85 @@ article.slimepedia-kort{display:flex;flex-direction:column;gap:6px;min-width:0;p
   min-height: 44px;
   min-width: 44px;
   box-shadow: 0 4px 0 #E4CFA4;
+}
+.hud-bot.tva .npc-ikon[data-m1="hud-uppdrag"] {
+  min-height: 66px;
+  min-width: 0;
+  border-radius: 20px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  position: relative;
+  inset: auto;
+  background: linear-gradient(180deg, #FFFDF5 0%, #FFE8A3 100%);
+  border: 2.5px solid #FFB300;
+  box-shadow: 0 4px 0 #C68400, 0 8px 16px rgba(59, 47, 47, 0.16);
+  color: #3B2F2F;
+}
+.hud-bot.tva .npc-ikon[data-m1="hud-uppdrag"] img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #FFB300;
+  background: #FFFDF9;
+  flex-shrink: 0;
+  object-fit: cover;
+  object-position: top center;
+}
+.npc-nytt-badge {
+  position: absolute;
+  top: -6px;
+  right: -4px;
+  background: #FF6F00;
+  color: #FFFFFF;
+  border: 2px solid #FFFDF9;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  padding: 1px 6px;
+  font-weight: 900;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.hud-bot.tva .bok-knapp[data-m1="hud-skapa"] {
+  min-height: 66px;
+  min-width: 0;
+  border-radius: 20px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  background: linear-gradient(180deg, #D83A6F 0%, #C2185B 100%);
+  border: 2.5px solid #7B0D38;
+  box-shadow: 0 4px 0 #7B0D38, 0 8px 18px rgba(194, 24, 91, 0.28);
+  color: #FFFFFF;
+}
+.hud-kort-ikon {
+  font-size: 1.45rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.hud-kort-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+  text-align: left;
+  min-width: 0;
+}
+.hud-kort-over {
+  font-size: 0.72rem;
+  font-weight: 800;
+  opacity: 0.92;
+  white-space: nowrap;
+}
+.hud-kort-huvud {
+  font-size: 0.98rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.hud-bot.tva .bok-knapp[data-m1="hud-skapa"] .hud-kort-huvud {
+  font-size: 0.74rem;
+  letter-spacing: -0.02em;
 }
