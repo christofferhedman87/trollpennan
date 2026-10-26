@@ -51,13 +51,65 @@ export function ideRad(u: (Pick<Uppdrag, "krav" | "val"> & { id?: string }) | un
   return { rubrik: visarKravord(u.krav, u.val.rubrik) ? "" : u.val.rubrik, grupper };
 }
 
-/** Förslag som fyller boken. Frys-uppdraget namnger barnets första djur. */
-export function uppdragForslag(u: (Pick<Uppdrag, "krav" | "val"> & { id?: string }) | undefined, djurKropp?: string): string[] {
-  if (u?.id === "kanin-fryser") {
-    const djur = (djurKropp ?? forstaDjurKropp()).toLocaleLowerCase("sv");
-    return [`en ${djur} med halsduk`, `en ${djur} med mössa`, "en varm filt", "en sol"];
+const ETT_ORD = new Set<string>(
+  ((ordJson as { ord?: { id?: string; visa?: string; genus?: string }[] }).ord ?? [])
+    .filter((o) => o.genus === "n")
+    .flatMap((o) => [o.id, o.visa].filter((x): x is string => !!x)),
+);
+
+const HJALP_FORSLAG: Record<string, string[]> = {
+  "kanin-fryser": ["en varm halsduk", "en röd mössa", "en varm filt", "en sol"],
+  "regn-skydd": ["ett stort paraply", "ett gult tält", "en varm regnjacka", "ett litet hus"],
+  "sol-skugga": ["ett stort parasoll", "en gul solhatt", "ett grönt träd", "ett svalt tält"],
+  "magen-kurrar": ["en knaprig morot", "ett rött äpple", "en gul banan", "en grön broccoli"],
+  "regn-pa-nosen": ["ett varmt tält", "en mysig koja", "ett litet hus", "en grön grotta"],
+  "kalla-tassar": ["en varm tröja", "en mjuk mössa", "en röd filt", "ett varmt täcke"],
+  "trakig-eftermiddag": ["en studsande boll", "en rolig bok", "en snäll nallebjörn", "en gul gunga"],
+  "ljus-i-kvallen": ["en varm lykta", "en gul lampa", "en lysande ficklampa", "en fin nattlampa"],
+  "redo-for-fest": ["en hög cylinderhatt", "en fin klänning", "en röd keps", "en lila häxhatt"],
+  "leriga-tassar": ["ett varmt badkar", "en mjuk tvål", "en blå dusch", "en balja med vatten"],
+  "dags-att-vila": ["en mjuk säng", "en skön soffa", "en varm kudde", "en mjuk madrass"],
+  "badlangtan": ["ett stort badkar", "en blå pool", "en liten sjö", "en varm strand"],
+  "over-backen": ["en stark träbro", "en liten roddbåt", "en gul kanot", "en bred bro"],
+  "skugga-at-djuret": ["ett stort träd", "en grön palm", "ett svalt tält", "en mysig koja"],
+  "present-till-en-van": ["en röd blomma", "en spännande bok", "en mjuk nallebjörn", "en god kaka"],
+  "hitta-till-picknicken": ["en tydlig karta", "en blank kompass", "en gul skylt", "en hög vägskylt"],
+  "skog-magen-kurrar": ["en knaprig morot", "ett rött äpple", "en gul banan", "en grön broccoli"],
+  "skog-vila-benen": ["en mjuk stubbe", "en bred stock", "en skön stol", "en mjuk soffa"],
+  "skog-regnpaus": ["ett varmt tält", "en mysig koja", "ett litet hus", "en trygg grotta"],
+  "skog-varm-van": ["en varm tröja", "en röd mössa", "en mjuk filt", "ett varmt täcke"],
+  "skog-kvallsljus": ["en varm lykta", "en gul lampa", "en lysande ficklampa", "en fin nattlampa"],
+  "skog-over-backen": ["en stark träbro", "en liten båt", "en gul roddbåt", "en snabb kanot"],
+  "sjo-fruktpaus": ["ett rött äpple", "en gul banan", "en söt apelsin", "en grön vattenmelon"],
+  "sjo-skugga-pa-stranden": ["ett stort träd", "en grön palm", "ett svalt tält", "en mysig koja"],
+  "sjo-torr-overfart": ["en liten roddbåt", "en gul kanot", "en bred flotte", "en stor båt"],
+  "sjo-regn-vid-stranden": ["ett varmt tält", "en mysig koja", "ett litet hus", "en trygg grotta"],
+  "sjo-lys-vid-vattnet": ["en varm lykta", "en gul lampa", "en lysande ficklampa", "en fin nattlampa"],
+  "grotta-forsta-skenet": ["en varm lykta", "en gul lampa", "en lysande ficklampa", "en fin nattlampa"],
+  "grotta-varma-oron": ["en varm tröja", "en mjuk mössa", "en röd filt", "ett varmt täcke"],
+  "grotta-mjuk-vila": ["en mjuk säng", "en skön soffa", "en varm kudde", "en mjuk madrass"],
+};
+
+export function uppdragForslag(
+  u: { id?: string; exempel?: string[]; krav?: { ord: string[]; min?: number; djur?: boolean } } | null | undefined,
+  djurKropp?: string,
+): string[] {
+  if (!u) return [];
+  if (u.id && HJALP_FORSLAG[u.id]) return HJALP_FORSLAG[u.id]!;
+  const djur = djurKropp ?? "kanin";
+  const ord = u.krav?.ord ?? [];
+  const urKrav: string[] = [];
+  for (const o of ord.slice(0, 4)) {
+    if (["röd", "blå", "gul", "grön", "vit", "svart", "rosa", "lila", "brun", "orange", "stor", "liten", "pytteliten", "jättestor", "randig", "prickig", "rutig", "fluffig", "mjuk", "snabb", "långsam", "glad", "varm", "kall"].includes(o)) {
+      urKrav.push(`en ${o} ${djur}`);
+    } else if (["katt", "hund", "kanin", "bi", "fågel", "elefant", "giraff", "zebra", "tiger", "isbjörn", "lamm", "groda", "larv", "papegoja", "drake", "mus", "hare", "häst", "pingvin", "apa", "delfin", "uggla", "igelkott", "fisk", "anka", "kyckling"].includes(o)) {
+      urKrav.push(`${ETT_ORD.has(o) ? "ett" : "en"} ${o}`);
+    } else {
+      urKrav.push(`${ETT_ORD.has(o) ? "ett" : "en"} ${o}`);
+    }
   }
-  return (u?.val?.grupper ?? []).flatMap((g) => g.forslag.map((f) => f.fras)).slice(0, 4);
+  const ex = (u.exempel ?? []).filter((e) => !urKrav.includes(e));
+  return [...urKrav, ...ex].slice(0, 4);
 }
 
 /** Exempelraden i boken: uppdragets idéer, annars de allmänna exemplen utan dem som avslöjar svaret. */

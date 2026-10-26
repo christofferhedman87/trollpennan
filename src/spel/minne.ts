@@ -387,3 +387,4 @@ export const useMinne = create<Store>((set, get) => ({
 
 useMinne.subscribe((s) => spara(s));
 kopplaAng(() => useMinne.getState());
+if (typeof window !== "undefined") (window as unknown as { __trollMinne?: typeof useMinne }).__trollMinne = useMinne;
