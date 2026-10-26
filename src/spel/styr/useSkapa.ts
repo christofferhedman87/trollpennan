@@ -18,7 +18,7 @@ import { fyll } from "../fyll.ts";
 import { ALBUM, arSammansatt, BYGG_ORD, geEgenGava, komIhagDjur, noteraSkriv, poangAv, taggarFor } from "../liv.ts";
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
-import { arVarmePlagg, mossaPaFrysKanin } from "./mossaKanin.ts";
+import { arVarmePlagg, hjalpDjurPaAngen, mossaPaFrysKanin } from "./mossaKanin.ts";
 import { byggTraff, geTraff, kompisTraff, laggPa, nastanRad, ONSK, ONSK_BYGG, tillaggFras } from "../onska.ts";
 import { replik } from "../replik.ts";
 import * as rostKo from "../rostKo.ts";
@@ -30,14 +30,15 @@ import { BYGGSIDOR, TEXTER } from "../ui/spelData.ts";
 import type { SpelKarna } from "./typer.ts";
 
 function laggEllerVarma(v: Varelse, antal: number): { nya: Sparad[]; somnade: Sparad[] } {
+  const s = useMinne.getState();
+  const aktId = aktivtSkrivUppdrag(s.uppdrag, platsNu())?.id;
   const varm = mossaPaFrysKanin(v);
   const hatt = varm?.spec.tillbehor.some((t) => arVarmePlagg(t.id));
-  if (!varm || !hatt) return useMinne.getState().laggPaAng(v, antal);
-  const upp = useMinne.getState().uppdateraDjur(varm.uid, varm.spec);
+  const hjalp = varm && hatt ? varm : hjalpDjurPaAngen(v, aktId);
+  if (!hjalp) return s.laggPaAng(v, antal);
+  const upp = s.uppdateraDjur(hjalp.uid, hjalp.spec);
   const liv = upp ? useMinne.getState().liv[upp.uid] : undefined;
-  if (upp && liv && (liv.humor === "fryser" || useMinne.getState().uppdrag["kanin-fryser"] === "pagar" || liv.humor !== "glad")) {
-    useMinne.setState({ liv: { ...useMinne.getState().liv, [upp.uid]: { ...liv, humor: "glad" } } });
-  }
+  if (upp && liv) useMinne.setState({ liv: { ...useMinne.getState().liv, [upp.uid]: { ...liv, humor: "glad" } } });
   return { nya: upp ? [upp] : [], somnade: [] };
 }
 
@@ -201,6 +202,8 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
         const malDjur = platsDjur.at(-1) ?? st.ang.at(-1);
         const kladd = malDjur ? laggPa(malDjur, text) : null;
         if (malDjur && kladd && kladd.formel !== malDjur.formel && st.uppdateraDjur(malDjur.uid, kladd)) {
+          const aFore = aktivtSkrivUppdrag(st.uppdrag, aktivPlats);
+          if (bengtsson.prova(`${malDjur.kropp} med ${raw}`) === "klar" && aFore) visaBubbla(uppdragKlart(aFore), 0.5, 0.52, true, true, true, null);
           noteraSolSkapelse(kladd); brygga.glad(malDjur.uid); brygga.glitter(malDjur.uid); ljud.puff(); rensaSkriv(); setBokOpp(false); return;
         }
       }
@@ -241,7 +244,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
       });
     }
     const aktivtFore = aktivtSkrivUppdrag(useMinne.getState().uppdrag, platsNu());
-    const uppRes = bengtsson.prova(raw);
+    const uppRes = bengtsson.prova(sista && !raw.includes(sista.kropp) ? `${sista.kropp} med ${raw}` : raw);
     belona(utfall, utfall.guld.length && opt.hand ? sista?.uid : undefined, opt.hand && uppRes !== "klar"); noteraSolSkapelse(utfall.varelse);
     for (const m of utfall.meddelanden) visaBanner(m, "okand", "okand_ordbit");
     for (const o of utfall.varelse.overraskningar) visaBanner(o.text, "ovr", "overraskning");

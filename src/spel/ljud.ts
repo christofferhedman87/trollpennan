@@ -127,6 +127,9 @@ export const ljud = {
   nastan() {
     this.spel("nastan");
   },
+  klick() {
+    this.fil("klick");
+  },
   fil(namn: "pop" | "vakna" | "klick" | "landa" | "glitter") {
     this.logg.push(namn);
     if (this.logg.length > 40) this.logg.shift();
