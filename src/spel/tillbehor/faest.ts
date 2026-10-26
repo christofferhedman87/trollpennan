@@ -63,6 +63,7 @@ export function faestTillbehor(
   rum: "modell" | "mesh" = "mesh",
 ) {
   const a = rum === "modell" ? ankareFor(rot, kropp, "modell") : procAnkare(kropp);
+  rot.userData.ankare = a;
   const parent = a.ben ?? rot;
   for (const t of tillbehor) {
     const rad: TillbehorRad | null = tillbehorRad(t.id, kropp);
@@ -121,6 +122,7 @@ export function faestPlaggKlon(
   const cfg = plaggKonfig(plaggId);
   if (!cfg) return null;
   const a = ankareFor(rot, kropp, "modell");
+  rot.userData.ankare = a;
   const parent = (cfg.ankare === "huvudTopp" ? a.ben : null) ?? rot;
   taBortPar(rot, plaggId, cfg.par);
   const rotPos = rot.getWorldPosition(new THREE.Vector3());
@@ -150,6 +152,7 @@ export function faestPlaggKlon(
   const hallare = new THREE.Group();
   hallare.name = "tillbehor-" + plaggId;
   hallare.userData.plaggPar = cfg.par;
+  hallare.userData.plaggId = plaggId;
   hallare.add(klon);
   fastVarld(parent, rot, kropp, hallare, pos, 1);
   return hallare;

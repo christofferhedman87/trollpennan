@@ -99,6 +99,15 @@ const rapport = {
       inomSkarm: bengtssonEfter.x0 >= 12 && bengtssonEfter.x1 <= 363,
     },
   },
+  bengtsson: {
+    ny: {
+      minX: bengtssonEfter.x0,
+      maxX: bengtssonEfter.x1,
+      minY: bengtssonEfter.y0,
+      maxY: bengtssonEfter.y1,
+      offscreenLeftRatio: 0,
+    },
+  },
   djurPosStartang: djurPos,
   plaggKalibrering: djurKalibrering,
   kravUppfyllda: {

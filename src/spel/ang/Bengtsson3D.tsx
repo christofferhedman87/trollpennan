@@ -45,11 +45,15 @@ export function Bengtsson3D() {
     if (!gruppRef.current) return;
     const t = clock.getElapsedTime();
     gruppRef.current.position.y = Math.sin(t * 1.8) * 0.03;
-    gruppRef.current.rotation.y = 0.38 + Math.sin(t * 0.9) * 0.08;
+    gruppRef.current.rotation.y = 0.32 + Math.sin(t * 0.9) * 0.06;
   });
   return (
-    <group ref={gruppRef} name="bengtsson-3d" position={[-2.35, 0, 1.35]} scale={0.95} userData={{ trollNpc: "bengtsson" }} onClick={(e) => { e.stopPropagation(); window.dispatchEvent(new CustomEvent("troll-npc-klick")); }}>
+    <group ref={gruppRef} name="bengtsson-3d" position={[-1.45, 0, 1.50]} rotation={[0, 0.32, 0]} scale={1.0} userData={{ trollNpc: "bengtsson" }} onClick={(e) => { e.stopPropagation(); window.dispatchEvent(new CustomEvent("troll-npc-klick")); }}>
       <primitive object={klon} />
+      <mesh position={[0, 0.78, 0]} visible={false} onClick={(e) => { e.stopPropagation(); window.dispatchEvent(new CustomEvent("troll-npc-klick")); }}>
+        <cylinderGeometry args={[0.55, 0.55, 1.60, 12]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
     </group>
   );
 }

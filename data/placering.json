@@ -36,7 +36,7 @@
  "skarm_reserverat": [
   { "namn": "utgangar", "_om": "övre raden: stjärnor, platsens namn, 'Till ängen'", "x0": 0, "y0": 0, "x1": 375, "y1": 112 },
   { "namn": "guiden", "_om": "P2-2:s bubbla högst upp", "x0": 12, "y0": 112, "x1": 363, "y1": 150 },
-  { "namn": "bengtsson", "_om": ".npc-figur: left 4, bottom 74, höjd 30vh = 244 px; kroppen i bildens mitt", "x0": 30, "y0": 494, "x1": 140, "y1": 738 },
+  { "id": "bengtsson", "namn": "bengtsson", "_om": ".npc-figur: left 4, bottom 74, höjd 30vh = 244 px; kroppen i bildens mitt", "x": [18, 120], "y": [390, 555], "x0": 30, "y0": 494, "x1": 140, "y1": 738 },
   { "namn": "bengtsson-utrop", "_om": "P3a-fix: utropet (.npc-utrop, 30 × 30 px) högst upp till höger på Bengtssons knapp: left 4 + 0,671 × 244 − 30", "x0": 138, "y0": 494, "x1": 170, "y1": 528 },
   { "namn": "nedre-raden", "_om": "Pennans bok / Uppdrag + Skriv", "x0": 0, "y0": 744, "x1": 375, "y1": 812 }
  ],

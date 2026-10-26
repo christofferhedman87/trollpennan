@@ -1,12 +1,68 @@
 {
   "grupper": {
-    "huvud": { "ankare": "huvudTopp", "skala": 0.72, "upp": -0.04, "fram": 0.02, "ut": 0, "botten": true, "par": "hatt" },
-    "huvudBred": { "ankare": "huvudTopp", "skala": 0.92, "upp": -0.05, "fram": 0.02, "ut": 0, "botten": true, "par": "hatt" },
-    "hals": { "ankare": "hals", "skala": 0.55, "upp": -0.04, "fram": 0.1, "ut": 0, "botten": false, "par": "hals" },
-    "kropp": { "ankare": "rygg", "skala": 0.82, "upp": -0.12, "fram": 0, "ut": 0, "botten": false, "par": "kropp" },
-    "underkropp": { "ankare": "rygg", "skala": 0.75, "upp": -0.28, "fram": -0.04, "ut": 0, "botten": false, "par": "underkropp" },
-    "fot": { "ankare": "fot", "skala": 0.5, "upp": 0, "fram": 0.08, "ut": 0, "botten": true, "par": "fot" },
-    "hand": { "ankare": "hand", "skala": 0.48, "upp": 0, "fram": 0.08, "ut": 0.05, "botten": false, "par": "hand" },
+    "huvud": {
+      "ankare": "huvudTopp",
+      "skala": 0.72,
+      "upp": -0.04,
+      "fram": 0.02,
+      "ut": 0,
+      "botten": true,
+      "par": "hatt"
+    },
+    "huvudBred": {
+      "ankare": "huvudTopp",
+      "skala": 0.92,
+      "upp": -0.05,
+      "fram": 0.02,
+      "ut": 0,
+      "botten": true,
+      "par": "hatt"
+    },
+    "hals": {
+      "ankare": "hals",
+      "skala": 0.55,
+      "upp": -0.04,
+      "fram": 0.1,
+      "ut": 0,
+      "botten": false,
+      "par": "hals"
+    },
+    "kropp": {
+      "ankare": "rygg",
+      "skala": 0.82,
+      "upp": -0.12,
+      "fram": 0,
+      "ut": 0,
+      "botten": false,
+      "par": "kropp"
+    },
+    "underkropp": {
+      "ankare": "rygg",
+      "skala": 0.75,
+      "upp": -0.28,
+      "fram": -0.04,
+      "ut": 0,
+      "botten": false,
+      "par": "underkropp"
+    },
+    "fot": {
+      "ankare": "fot",
+      "skala": 0.5,
+      "upp": 0,
+      "fram": 0.08,
+      "ut": 0,
+      "botten": true,
+      "par": "fot"
+    },
+    "hand": {
+      "ankare": "hand",
+      "skala": 0.48,
+      "upp": 0,
+      "fram": 0.08,
+      "ut": 0.05,
+      "botten": false,
+      "par": "hand"
+    },
     "troja": {
       "modell": "troja",
       "ankare": "rygg",
@@ -19,6 +75,26 @@
       "par": "kropp",
       "fargbar": true,
       "standardFarg": "#E53935"
+    },
+    "halsduk": {
+      "ankare": "hals",
+      "skala": 1.05,
+      "djupSkala": 1.15,
+      "upp": -0.04,
+      "fram": 0.14,
+      "ut": 0,
+      "botten": false,
+      "par": "hals"
+    },
+    "filt": {
+      "ankare": "rygg",
+      "skala": 1.25,
+      "djupSkala": 1.25,
+      "upp": 0.02,
+      "fram": -0.02,
+      "ut": 0,
+      "botten": false,
+      "par": "rygg"
     }
   },
   "plagg": {
@@ -59,6 +135,10 @@
     "tofflor": "fot",
     "handske": "hand",
     "trollstav": "hand",
-    "vante": "hand"
+    "vante": "hand",
+    "mossa": "huvud",
+    "mössa": "huvud",
+    "halsduk": "halsduk",
+    "filt": "filt"
   }
 }

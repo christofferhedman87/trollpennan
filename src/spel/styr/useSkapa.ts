@@ -18,7 +18,7 @@ import { fyll } from "../fyll.ts";
 import { ALBUM, arSammansatt, BYGG_ORD, geEgenGava, komIhagDjur, noteraSkriv, poangAv, taggarFor } from "../liv.ts";
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
-import { mossaPaFrysKanin } from "./mossaKanin.ts";
+import { arVarmePlagg, mossaPaFrysKanin } from "./mossaKanin.ts";
 import { byggTraff, geTraff, kompisTraff, nastanRad, ONSK, ONSK_BYGG, tillaggFras } from "../onska.ts";
 import { replik } from "../replik.ts";
 import * as rostKo from "../rostKo.ts";
@@ -28,7 +28,7 @@ import type { SpelKarna } from "./typer.ts";
 
 function laggEllerVarma(v: Varelse, antal: number): { nya: Sparad[]; somnade: Sparad[] } {
   const varm = mossaPaFrysKanin(v);
-  const hatt = varm?.spec.tillbehor.some((t) => t.id === "alvmossa" || t.id === "mossa");
+  const hatt = varm?.spec.tillbehor.some((t) => arVarmePlagg(t.id));
   if (!varm || !hatt) return useMinne.getState().laggPaAng(v, antal);
   const upp = useMinne.getState().uppdateraDjur(varm.uid, varm.spec);
   const liv = upp ? useMinne.getState().liv[upp.uid] : undefined;
@@ -201,6 +201,9 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
       return;
     }
     if (utfall.typ === "behover_djur") {
+      if (text.includes("halsduk") && !text.includes(" med ") && useMinne.getState().ang.length > 0) {
+        return hanteraDjur(`${useMinne.getState().ang[0]!.kropp} med ${text}`, opt);
+      }
       const kan = kanInteRita(utfall, text); // B6.1 (F): känt ord utan modell → synlig banderoll, boken stängs
       if (kan) { visaBanner(kan, "okand", "okand_inget", KAN_INTE_RITA_MS); ljud.puff(); setBehover(null); setForslag(null); rensaSkriv(); setBokOpp(false); return; } // B6.3 (H): ≥ 5 s eller tryck
       useMinne.getState().sparaOkanda(utfall.okanda);
