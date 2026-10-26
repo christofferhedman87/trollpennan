@@ -45,6 +45,8 @@ export const OLAST_KARTA = PLATSDATA.olast_karta === true;
 export const PLATSER: Plats[] = [...PLATSDATA.platser].sort((a, b) => a.ordning - b.ordning);
 export const START_PLATS = "ang";
 export const TAK_PER_PLATS = 10;
+/** Synliga skapelser på ängen. Skogen, sjön och grottan behåller TAK_PER_PLATS. */
+export const MAX_SYNLIGA_DJUR = 16;
 
 export function platsMed(id: string, platser: Plats[] = PLATSER): Plats | undefined {
   return platser.find((p) => p.id === id);

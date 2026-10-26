@@ -5,7 +5,9 @@ import { byggMedId } from "../tolk/byggtolk.ts";
 import { brygga, type Sparad } from "./brygga.ts";
 import type { SparatBygge } from "./bygge.ts";
 import { BYGG } from "../tolk/byggtolk.ts";
-import { START_PLATS, TAK_PER_PLATS, mattUr, platsMed, upplast } from "./platser.ts";
+import { MAX_SYNLIGA_DJUR, START_PLATS, mattUr, platsMed, upplast } from "./platser.ts";
+
+export { MAX_SYNLIGA_DJUR };
 import { hamtaFranStall, flyttaTillStall, type StallUt } from "./stall.ts";
 import { arData, franSparning, kallaHitSpar, laggPaAngSpar, lasIn, spara, tom } from "./minneSparning.ts";
 
@@ -235,7 +237,7 @@ export const useMinne = create<Store>((set, get) => ({
       garden: get().garden.filter((x) => x.uid !== uid),
       lada: [...get().lada, { ...b, boende: [] }],
       hemma,
-      ang: [...get().ang, ...hemTillbaka].slice(-TAK_PER_PLATS),
+      ang: [...get().ang, ...hemTillbaka].slice(-MAX_SYNLIGA_DJUR),
     });
     for (const d of hemTillbaka) brygga.skapa(d);
     brygga.synkaGard();

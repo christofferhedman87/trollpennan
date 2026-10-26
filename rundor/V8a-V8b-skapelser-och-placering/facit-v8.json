@@ -1,0 +1,49 @@
+{
+  "runda": "V8a-V8b-skapelser-och-placering",
+  "basCommit": "d9068f2",
+  "del1_v8a": {
+    "maxSynligaDjur": 16,
+    "stallPaminnelseMinst": "Ängen är full! Den äldsta",
+    "antalOrd": {
+      "tio katter": 10,
+      "fem grodor": 5,
+      "10 hundar": 10,
+      "1 katt": 1
+    },
+    "ochMening": {
+      "en röd katt och en blå hund": [
+        { "kropp": "katt", "farg": "#E53935" },
+        { "kropp": "hund", "farg": "#1E88E5" }
+      ],
+      "en liten gris och en stor björn": [
+        { "kropp": "gris", "skala": 0.6 },
+        { "kropp": "bjorn", "skala": 1.45 }
+      ]
+    },
+    "mossaPaFrysandeKanin": {
+      "fraser": ["en kanin med mössa", "en röd mössa"],
+      "krav": "uppdaterar befintlig kanin på ängen (antal kaniner = 1, har mössa, humör = glad)"
+    }
+  },
+  "del2_v8b": {
+    "vy": { "bredd": 375, "hojd": 812 },
+    "smasaker": {
+      "ids": ["boll", "apple", "svamp", "stjarna", "nyckel"],
+      "minSkarmStorlekPx": 40,
+      "minSkarmAvstandPx": 40,
+      "maxOverlappAndel": 0
+    },
+    "byggnader": {
+      "sekvens": ["slott", "hus", "torn", "koja"],
+      "nyastFramst": true,
+      "maxSkymdAndel": 0.10
+    },
+    "sjukhus": {
+      "maxSkymdAndel": 0.10
+    },
+    "troja": {
+      "djur": ["kanin", "katt", "hund", "rav"],
+      "minPixelDiffAndel": 0.25
+    }
+  }
+}

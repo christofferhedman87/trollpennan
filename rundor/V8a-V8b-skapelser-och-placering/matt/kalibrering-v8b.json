@@ -1,0 +1,275 @@
+{
+  "tidpunkt": "2026-10-25T21:58:53.871Z",
+  "basCommit": "d9068f2",
+  "vy": {
+    "bredd": 375,
+    "hojd": 812,
+    "kameraAng": [
+      0,
+      4.15,
+      9.8
+    ]
+  },
+  "del1_smasaker": {
+    "modeller": {
+      "boll": {
+        "arSmasakNu": true,
+        "malhojd": 0.5,
+        "box3SkarmPxVidZ235": {
+          "w": 46,
+          "h": 60.8,
+          "maxSida": 60.8
+        },
+        "regelKroppPxNu": {
+          "w": 68.6,
+          "h": 92.2,
+          "maxSida": 92.2,
+          "z": 3.6,
+          "krymp": 1.25
+        },
+        "rekommenderadSiluettAndel": [
+          0.85,
+          0.85
+        ]
+      },
+      "apple": {
+        "arSmasakNu": true,
+        "malhojd": 0.4,
+        "box3SkarmPxVidZ235": {
+          "w": 38.8,
+          "h": 50.7,
+          "maxSida": 50.7
+        },
+        "regelKroppPxNu": {
+          "w": 67.2,
+          "h": 77.1,
+          "maxSida": 77.1,
+          "z": 3.6,
+          "krymp": 1.25
+        },
+        "rekommenderadSiluettAndel": [
+          0.85,
+          0.85
+        ]
+      },
+      "svamp": {
+        "arSmasakNu": false,
+        "malhojd": 1.2,
+        "box3SkarmPxVidZ235": {
+          "w": 101.6,
+          "h": 144.8,
+          "maxSida": 144.8
+        },
+        "regelKroppPxNu": {
+          "w": 121,
+          "h": 176.1,
+          "maxSida": 176.1,
+          "z": 3.6,
+          "krymp": 1
+        },
+        "rekommenderadSiluettAndel": [
+          0.85,
+          0.85
+        ]
+      },
+      "stjarna": {
+        "arSmasakNu": true,
+        "malhojd": 0.5,
+        "box3SkarmPxVidZ235": {
+          "w": 45.5,
+          "h": 53.3,
+          "maxSida": 53.3
+        },
+        "regelKroppPxNu": {
+          "w": 67.6,
+          "h": 79.6,
+          "maxSida": 79.6,
+          "z": 3.6,
+          "krymp": 1.25
+        },
+        "rekommenderadSiluettAndel": [
+          0.85,
+          0.85
+        ]
+      },
+      "nyckel": {
+        "arSmasakNu": true,
+        "malhojd": 0.5,
+        "box3SkarmPxVidZ235": {
+          "w": 44.7,
+          "h": 29.5,
+          "maxSida": 44.7
+        },
+        "regelKroppPxNu": {
+          "w": 107,
+          "h": 69.8,
+          "maxSida": 107,
+          "z": 3.6,
+          "krymp": 2
+        },
+        "rekommenderadSiluettAndel": [
+          0.85,
+          0.85
+        ]
+      },
+      "kaffekopp": {
+        "arSmasakNu": true,
+        "malhojd": 0.4,
+        "box3SkarmPxVidZ235": {
+          "w": 38.7,
+          "h": 44.3,
+          "maxSida": 44.3
+        },
+        "regelKroppPxNu": {
+          "w": 46.6,
+          "h": 54.4,
+          "maxSida": 54.4,
+          "z": 3.6,
+          "krymp": 1
+        },
+        "rekommenderadSiluettAndel": [
+          0.85,
+          0.85
+        ]
+      },
+      "puck": {
+        "arSmasakNu": true,
+        "malhojd": 0.3,
+        "box3SkarmPxVidZ235": {
+          "w": 33.8,
+          "h": 26.3,
+          "maxSida": 33.8
+        },
+        "regelKroppPxNu": {
+          "w": 44.2,
+          "h": 33.4,
+          "maxSida": 44.2,
+          "z": 3.6,
+          "krymp": 1
+        },
+        "rekommenderadSiluettAndel": [
+          0.85,
+          0.85
+        ]
+      }
+    },
+    "sekvensFemSmasakerNu": [
+      {
+        "kropp": "boll",
+        "x": 0.13,
+        "z": 1.65,
+        "krymp": 1,
+        "maxSidaPx": 55.2,
+        "skymdTackt": 0.355
+      },
+      {
+        "kropp": "apple",
+        "x": 0.38,
+        "z": 2.25,
+        "krymp": 1,
+        "maxSidaPx": 50,
+        "skymdTackt": 0.335
+      },
+      {
+        "kropp": "svamp",
+        "x": 0.63,
+        "z": -1.95,
+        "krymp": 1,
+        "maxSidaPx": 89.2,
+        "skymdTackt": 0.036
+      },
+      {
+        "kropp": "stjarna",
+        "x": 1,
+        "z": 3.6,
+        "krymp": 1,
+        "maxSidaPx": 63.7,
+        "skymdTackt": 0
+      },
+      {
+        "kropp": "nyckel",
+        "x": 0.13,
+        "z": 3.6,
+        "krymp": 2,
+        "maxSidaPx": 107,
+        "skymdTackt": 0
+      }
+    ]
+  },
+  "del2_byggnader": {
+    "sekvensFyraByggnaderNu": [
+      {
+        "steg": "slott",
+        "nyastZ": -3.3,
+        "aldreMaxZ": null,
+        "nyastFramstNu": true
+      },
+      {
+        "steg": "hus",
+        "nyastZ": -1.2,
+        "aldreMaxZ": -3.3,
+        "nyastFramstNu": true
+      },
+      {
+        "steg": "torn",
+        "nyastZ": -1.2,
+        "aldreMaxZ": -2.4,
+        "nyastFramstNu": true
+      },
+      {
+        "steg": "koja",
+        "nyastZ": -1.8,
+        "aldreMaxZ": -1.5,
+        "nyastFramstNu": false
+      }
+    ],
+    "sjukhusIAngSekvensNu": {
+      "z": -3.3,
+      "krymp": 1,
+      "skymdTacktNu": 0.139,
+      "kravMaxSkymd": 0.1
+    }
+  },
+  "del3_troja": {
+    "kanin": {
+      "nuvarandePixelDiffAndel": 0,
+      "kalibreradPixelDiffAndel": 0.3439,
+      "kalibreradParametrar": {
+        "skala": 1.48,
+        "djupSkala": 3.4,
+        "upp": -0.06,
+        "fram": 0.78
+      }
+    },
+    "katt": {
+      "nuvarandePixelDiffAndel": 0,
+      "kalibreradPixelDiffAndel": 0.2542,
+      "kalibreradParametrar": {
+        "skala": 1.48,
+        "djupSkala": 3.4,
+        "upp": -0.06,
+        "fram": 0.78
+      }
+    },
+    "hund": {
+      "nuvarandePixelDiffAndel": 0,
+      "kalibreradPixelDiffAndel": 0.2801,
+      "kalibreradParametrar": {
+        "skala": 1.48,
+        "djupSkala": 3.4,
+        "upp": -0.06,
+        "fram": 0.78
+      }
+    },
+    "rav": {
+      "nuvarandePixelDiffAndel": 0,
+      "kalibreradPixelDiffAndel": 0.3851,
+      "kalibreradParametrar": {
+        "skala": 1.48,
+        "djupSkala": 3.4,
+        "upp": -0.06,
+        "fram": 0.78
+      }
+    }
+  }
+}

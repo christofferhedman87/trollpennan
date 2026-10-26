@@ -70,8 +70,8 @@
    "pytte": "storlek-",
    "mini": "storlek-"
   },
-  "antal_tak": 6,
-  "antal_not": "Högst antal_tak djur per mening. 'tio katter' ger 6 katter och formeln säger ändå 'tio katter'.",
+  "antal_tak": 10,
+  "antal_not": "Högst antal_tak djur per mening. 'tio katter' ger 10 katter.",
   "blanda": {
    "efter_a": ["blandad", "blandat", "blandade", "korsad", "korsat", "korsade", "mixad", "mixat"],
    "fore": ["blandning", "korsning", "mix"],
@@ -236,9 +236,7 @@
   "osynlig": [
    "Ser du mig? Inte? Bra, då leker vi kurragömma!"
   ],
-  "sover": [
-   "Nu går jag och vilar i Ordboken. Kalla på mig när du vill!"
-  ]
+  "sover": "Den äldsta flyttade in i stallet så du kan hälsa på den där."
  },
  "overraskningar": [
   {

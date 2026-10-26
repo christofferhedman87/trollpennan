@@ -6,6 +6,12 @@ function slump(lista: string[]): string {
   return lista[Math.floor(Math.random() * lista.length)] ?? "";
 }
 
+function rader(v: string[] | string | undefined, fallback: string[]): string[] {
+  if (typeof v === "string") return v ? [v] : fallback;
+  if (v && v.length) return v;
+  return fallback;
+}
+
 function fyll(rad: string, v: Varelse): string {
   return rad.replaceAll("{beskrivning}", v.beskrivning).replaceAll("{formel}", v.formel);
 }
@@ -13,16 +19,16 @@ function fyll(rad: string, v: Varelse): string {
 export function replik(v: Varelse, slag: "hej" | "tryck" | "sover"): string {
   const r = ORD.repliker;
   if (slag === "hej") {
-    const lista = r.hej ?? [];
+    const lista = rader(r.hej, []);
     const medFormel = lista.find((s) => s.includes("{formel}"));
     return storMeningsStart(fyll(medFormel ?? slump(lista), v));
   }
-  let lista = r.hej ?? [];
-  if (slag === "sover") lista = r.sover ?? lista;
-  else if (v.kontur && v.alpha <= 0.3 && r.osynlig) lista = r.osynlig;
+  let lista = rader(r.hej, []);
+  if (slag === "sover" && r.sover) lista = Array.isArray(r.sover) ? r.sover : [r.sover];
+  else if (v.kontur && v.alpha <= 0.3 && r.osynlig) lista = rader(r.osynlig, lista);
   else if (v.formagor.length) {
     const nyckel = v.formagor[Math.floor(Math.random() * v.formagor.length)] ?? "";
-    lista = r[nyckel] ?? r.utan_formaga ?? lista;
-  } else lista = r.utan_formaga ?? lista;
+    lista = rader(r[nyckel], rader(r.utan_formaga, lista));
+  } else lista = rader(r.utan_formaga, lista);
   return storMeningsStart(fyll(slump(lista), v));
 }

@@ -185,6 +185,8 @@ export function lasToken(
   | { t: "funk"; v: Funk }
   | { t: "ord"; o: Ord }
   | null {
+  if (token === "1") return { t: "artikel" };
+  if (/^(?:10|[2-9])$/.test(token)) return { t: "antal", n: Number(token) };
   if (antalOrd[token] != null) return { t: "antal", n: antalOrd[token]! };
   if (artiklar.has(token)) return { t: "artikel" };
   if (forstarkning[token]) {

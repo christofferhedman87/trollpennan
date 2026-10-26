@@ -33,7 +33,7 @@ const R = RESERV as unknown as ReservData;
 export function tokensAv(raw: string): string[] {
   return raw
     .toLocaleLowerCase("sv")
-    .replace(/[^a-zåäö\s]/g, " ")
+    .replace(/[^a-zåäö0-9\s]/g, " ")
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, 60)
