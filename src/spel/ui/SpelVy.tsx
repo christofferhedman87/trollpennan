@@ -61,7 +61,6 @@ export function SpelVy() {
   const {
     visaOnskaHjalp, onskaDjur, andrar, vaknaText, onskaEx, onskaKort, onskaIds, ank, kort,
     hemliga, kvar, hittade, boDjur, menyHem, visa3d, agdaSidor, lastaSidor, byggSida,
-    stallKanin,
   } = k.vy;
   return (
     <main className="spel" onPointerDown={() => ljud.lasOpp()}>
@@ -74,15 +73,15 @@ export function SpelVy() {
         <Intro
           key={introNy}
           ljudPa={ljudPa}
-          onSteg={(fas) => {
-            if (fas >= 5) stallKanin();
-          }}
+          onSteg={() => undefined}
           onKlar={() => {
             sagaNu.aktiv = false;
-            stallKanin();
             useMinne.getState().sattIntro();
             introRef.current = false; rostKo.oppna();
             setIntro(false);
+            setPanel("spel");
+            setLage("skriv");
+            setBokOpp(true);
           }}
           onIde={(ex) => {
             vackIde(ex);

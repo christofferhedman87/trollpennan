@@ -101,7 +101,18 @@ export function Titel() {
   };
 
   return (
-    <div className="titel" data-testid="titel" role="dialog" aria-modal="true" aria-label={T.logga}>
+    <div
+      className="titel"
+      data-testid="titel"
+      role="dialog"
+      aria-modal="true"
+      aria-label={T.logga}
+      onPointerDown={(e) => {
+        e.stopPropagation();
+        ljud.lasOpp();
+      }}
+      onClick={(e) => e.stopPropagation()}
+    >
       <div className="titel-topp">
         <h1 className="titel-logga">
           <span className="titel-penna" aria-hidden />
@@ -112,7 +123,19 @@ export function Titel() {
       <div className="titel-knappar">
         {harVarld ? (
           <>
-            <button type="button" className="titel-fortsatt" data-testid="titel-fortsatt" onClick={borja}>
+            <button
+              type="button"
+              className="titel-fortsatt"
+              data-testid="titel-fortsatt"
+              onPointerDown={(e) => {
+                e.stopPropagation();
+                ljud.lasOpp();
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                borja();
+              }}
+            >
               <canvas ref={bild.ref} width={152} height={152} className={bild.klar ? "titel-bild klar" : "titel-bild"} aria-hidden />
               <span className="titel-fortsatt-text">
                 <span className="titel-fortsatt-rubrik">{T.fortsatt} ▸</span>
@@ -126,7 +149,19 @@ export function Titel() {
             </button>
           </>
         ) : (
-          <button type="button" className="titel-fortsatt titel-borja" data-testid="titel-borja" onClick={borja}>
+          <button
+            type="button"
+            className="titel-fortsatt titel-borja"
+            data-testid="titel-borja"
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              ljud.lasOpp();
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+              borja();
+            }}
+          >
             <span className="titel-fortsatt-rubrik">{T.borja} ▸</span>
           </button>
         )}

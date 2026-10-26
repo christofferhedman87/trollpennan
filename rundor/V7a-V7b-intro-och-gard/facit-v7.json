@@ -1,0 +1,30 @@
+{
+  "v7a": {
+    "max_intro_sek": 8.0,
+    "antal_intro_steg": 3,
+    "hoppa_text": "Hoppa över ⏭",
+    "hoppa_attr": "hoppa-over",
+    "min_knapp_bredd_px": 44,
+    "min_knapp_hojd_px": 44,
+    "gratis_djur_efter_intro": 0,
+    "oppnar_skriv_direkt": true
+  },
+  "v7b": {
+    "cc0_modeller": [
+      "/models/gard/v7-hus-tre-fonster-kenney-suburban.glb",
+      "/models/gard/v7-hus-modular-tre-fonster-kenney.glb",
+      "/models/gard/v7-hus-tvavaning-kenney-modular.glb",
+      "/models/gard/v7-hus-fantasy-quaternius-fix.glb",
+      "/models/gard/v7-lada-hus-quaternius-tre-fonster.glb",
+      "/models/gard/v7-fonster-modul-kenney.glb"
+    ],
+    "test_mening": "ett stort rött hus med blått tak och tre fönster",
+    "test_mening_utan_fonster": "ett rött hus utan fönster",
+    "forvantad_vagg_hex": "#e53935",
+    "forvantad_tak_hex": "#1e88e5",
+    "forvantade_fonster_noder": ["Window_1", "Window_2", "Window_3"],
+    "min_byggbok_top_px": 58,
+    "min_stang_knapp_px": 44,
+    "max_overlapp_px": 0
+  }
+}

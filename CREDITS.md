@@ -44,7 +44,7 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | kenney-city-kit-commercial | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-commercial | 5 |
 | kenney-city-kit-industrial | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-industrial | 5 |
 | kenney-city-kit-roads | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-roads | 5 |
-| kenney-city-kit-suburban | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-suburban | 4 |
+| kenney-city-kit-suburban | Kenney | CC0-1.0 | https://kenney.nl/assets/city-kit-suburban | 5 |
 | kenney-coaster-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/coaster-kit | 2 |
 | kenney-cube-pets | Kenney | CC0-1.0 | https://kenney.nl/assets/cube-pets | 13 |
 | kenney-factory-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/factory-kit | 5 |
@@ -61,7 +61,7 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | kenney-mini-market-2 | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-market | 2 |
 | kenney-mini-skate | Kenney | CC0-1.0 | https://kenney.nl/assets/mini-skate | 2 |
 | kenney-minigolf-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/minigolf-kit | 3 |
-| kenney-modular-buildings | Kenney | CC0-1.0 | https://kenney.nl/assets/modular-buildings | 2 |
+| kenney-modular-buildings | Kenney | CC0-1.0 | https://kenney.nl/assets/modular-buildings | 5 |
 | kenney-modular-cave-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/modular-cave-kit | 3 |
 | kenney-nature-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/nature-kit | 39 |
 | kenney-pirate-kit | Kenney | CC0-1.0 | https://kenney.nl/assets/pirate-kit | 12 |
@@ -85,7 +85,7 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | quaternius-cute-monsters | Quaternius | CC0-1.0 | https://quaternius.com/packs/cutemonsters.html | 6 |
 | quaternius-fantasy-props-megakit | Quaternius | CC0-1.0 | https://quaternius.itch.io/fantasy-props-megakit | 11 |
 | quaternius-farm-animals | Quaternius | CC0-1.0 | https://quaternius.com/packs/farmanimal.html | 2 |
-| quaternius-farm-buildings | Quaternius | CC0-1.0 | https://quaternius.com/packs/farmbuildings.html | 18 |
+| quaternius-farm-buildings | Quaternius | CC0-1.0 | https://quaternius.com/packs/farmbuildings.html | 20 |
 | quaternius-medieval-village-megakit | Quaternius | CC0-1.0 | https://quaternius.itch.io/medieval-village-megakit | 1 |
 | quaternius-ships | Quaternius | CC0-1.0 | https://quaternius.com/packs/ships.html | 4 |
 | quaternius-stylized-nature-megakit | Quaternius | CC0-1.0 | https://quaternius.itch.io/stylized-nature-megakit | 2 |
