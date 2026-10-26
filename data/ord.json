@@ -272,6 +272,11 @@
    "text": "Nu ser det ut som om elden flyger själv."
   }
  ],
+ "dansande": {
+  "former": ["dansande"],
+  "klass": "formaga",
+  "del": { "formaga": "studs" }
+ },
  "ord": [
   {
    "id": "kanin",
@@ -8135,6 +8140,17 @@
    "del": {
     "kropp": "kapybara"
    }
+  },
+  {
+   "id": "dansande",
+   "klass": "formaga",
+   "niva": "fritt",
+   "visa": "dansande",
+   "former": ["dansande"],
+   "bojning": { "u": "dansande", "n": "dansande", "pl": "dansande" },
+   "ordklass": "adjektiv",
+   "kalla": "hand",
+   "del": { "formaga": "studs", "glans": true }
   }
  ],
  "kollisioner": {},

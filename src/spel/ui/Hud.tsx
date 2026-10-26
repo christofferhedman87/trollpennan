@@ -25,9 +25,11 @@ type HudProps = {
   setMenyOpp: Dispatch<SetStateAction<boolean>>;
   setMenySaker: Dispatch<SetStateAction<boolean>>;
   setSenare: Dispatch<SetStateAction<boolean>>;
+  varld: Varld;
+  hemTillAngen: () => void;
 };
 
-export function Hud({ oppnaStjarnor, haller, setHaller, setForalder, stjarnor, hittatAntal, totalOrd, menyOpp, setMenyOpp, setMenySaker, setSenare }: HudProps) {
+export function Hud({ oppnaStjarnor, haller, setHaller, setForalder, stjarnor, hittatAntal, totalOrd, menyOpp, setMenyOpp, setMenySaker, setSenare, varld, hemTillAngen }: HudProps) {
   return (
         <div className="hud" ref={(el) => el?.setAttribute("data-testid", "topp-hud")}>
           <button
@@ -35,6 +37,7 @@ export function Hud({ oppnaStjarnor, haller, setHaller, setForalder, stjarnor, h
             className={haller ? "foralder-knapp haller" : "foralder-knapp"}
             aria-label="För vuxna, håll inne"
             data-testid="foralder-hall"
+            onClick={() => setForalder(true)}
             onContextMenu={(e) => e.preventDefault()}
             onPointerDown={(e) => {
               e.currentTarget.setPointerCapture(e.pointerId);
@@ -47,6 +50,18 @@ export function Hud({ oppnaStjarnor, haller, setHaller, setForalder, stjarnor, h
             <Lock className="prick-las" aria-hidden />
           </button>
           <HoldOppnare haller={haller} oppna={() => setForalder(true)} />
+          {varld !== "ang" ? (
+            <button
+              type="button"
+              className="hem-angen-knapp"
+              data-f5="hem-angen"
+              aria-label="Till Ängen"
+              ref={(el) => el?.setAttribute("data-testid", "hem-angen")}
+              onClick={hemTillAngen}
+            >
+              🏡 Till Ängen
+            </button>
+          ) : null}
           <button type="button" className="stjarna-hud" data-testid="stjarnor" data-v9a="hud-stjarnor" aria-label={fyll(FIR.stjarnor.har, { n: stjarnor })} onClick={oppnaStjarnor}>
             ⭐ {stjarnor}
             <span className="stjarna-fraga" aria-hidden="true">?</span>
@@ -94,6 +109,7 @@ type MenyPanelProps = {
   oppnaAlbum?: () => void;
   oppnaOrdbok?: () => void;
   setForalder: Dispatch<SetStateAction<boolean>>;
+  stangModaler: () => void;
 };
 
 function MenyIkon({ tecken }: { tecken: string }) {
@@ -104,7 +120,7 @@ function MenyIkon({ tecken }: { tecken: string }) {
   );
 }
 
-export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare, panel, varld, valjVarld, lasMeny, oppnaUppdrag, setBokOpp, oppnaKarta, setIntroNy, setIntro, menySaker, borjaOm, oppnaAlbum, oppnaOrdbok, setForalder }: MenyPanelProps) {
+export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare, panel, varld, valjVarld, lasMeny, oppnaUppdrag, setBokOpp, oppnaKarta, setIntroNy, setIntro, menySaker, borjaOm, oppnaAlbum, oppnaOrdbok, setForalder, stangModaler }: MenyPanelProps) {
   const ljudPa = useMinne((s) => s.ljudPa);
   const v2 = menyJson.v2;
   const stangMeny = () => {
@@ -124,7 +140,7 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
                 {TEXTER.demo.senare}
               </p>
             ) : null}
-            <button type="button" data-testid="flik-ang" className={panel === "spel" && varld === "ang" ? "pa" : ""} onClick={() => valjVarld("ang")}>
+            <button type="button" data-testid="flik-ang" className={panel === "spel" && varld === "ang" ? "pa" : ""} onClick={() => { stangModaler(); valjVarld("ang"); }}>
               <MenyIkon tecken={v2.ang.ikon} />
               <span>{TEXTER.flikar.angen}</span>
             </button>
@@ -133,7 +149,7 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
               data-testid="flik-gard"
               className={menyJson.oppen.gard ? (panel === "spel" && varld === "gard" ? "pa" : "") : "last"}
               {...(menyJson.oppen.gard ? {} : { "data-last": "ja" })}
-              onClick={menyJson.oppen.gard ? () => valjVarld("gard") : lasMeny}
+              onClick={menyJson.oppen.gard ? () => { stangModaler(); valjVarld("gard"); } : lasMeny}
             >
               <MenyIkon tecken={v2.gard.ikon} />
               <span>{v2.gard.text}</span>
@@ -145,17 +161,17 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
               hidden
               className={menyJson.oppen.byggbok ? (panel === "byggbok" ? "pa" : "") : "last"}
               {...(menyJson.oppen.byggbok ? {} : { "data-last": "ja" })}
-              onClick={menyJson.oppen.byggbok ? () => valjVarld("byggbok") : lasMeny}
+              onClick={menyJson.oppen.byggbok ? () => { stangModaler(); valjVarld("byggbok"); } : lasMeny}
             >
               <MenyIkon tecken={v2.byggbok.ikon} />
               <span>{TEXTER.flikar.byggboken}</span>
               {menyJson.oppen.byggbok ? null : <Lock aria-hidden />}
             </button>
-            <button type="button" data-testid="ut-pa-aventyr" onClick={() => { setMenyOpp(false); setBokOpp(false); oppnaKarta(); }}>
+            <button type="button" data-testid="ut-pa-aventyr" onClick={() => { stangModaler(); setMenyOpp(false); setBokOpp(false); oppnaKarta(); }}>
               <MenyIkon tecken={v2.aventyr.ikon} />
               <span>{v2.aventyr.text}</span>
             </button>
-            <button type="button" data-testid="uppdrag-knapp" onClick={oppnaUppdrag}>
+            <button type="button" data-testid="uppdrag-knapp" onClick={() => { stangModaler(); oppnaUppdrag(); }}>
               <MenyIkon tecken={v2.uppdrag.ikon} />
               <span>{v2.uppdrag.text}</span>
             </button>
@@ -168,6 +184,7 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
                 menyJson.oppen.album
                   ? () => {
                       stangMeny();
+                      stangModaler();
                       setBokOpp(false);
                       oppnaAlbum?.();
                     }
@@ -187,6 +204,7 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
                 menyJson.oppen.ordbok
                   ? () => {
                       stangMeny();
+                      stangModaler();
                       setBokOpp(false);
                       oppnaOrdbok?.();
                     }
@@ -202,6 +220,7 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
               type="button"
               data-testid="intro-meny"
               onClick={() => {
+                stangModaler();
                 setMenyOpp(false);
                 setIntroNy((n) => n + 1);
                 setIntro(true);
@@ -226,6 +245,7 @@ export function MenyPanel({ menyOpp, setMenyOpp, setMenySaker, setSenare, senare
               type="button"
               ref={(el) => el?.setAttribute("data-testid", "meny-foralder")}
               onClick={() => {
+                stangModaler();
                 setMenyOpp(false);
                 setForalder(true);
               }}

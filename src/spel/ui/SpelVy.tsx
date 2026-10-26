@@ -62,6 +62,13 @@ export function SpelVy() {
     visaOnskaHjalp, onskaDjur, andrar, vaknaText, onskaEx, onskaKort, onskaIds, ank, kort,
     hemliga, kvar, hittade, boDjur, menyHem, visa3d, agdaSidor, lastaSidor, byggSida, forstaSkapelse,
   } = k.vy;
+  const stangModaler = () => {
+    setBokOpp(false);
+    setKartaOpp(false);
+    setAlbumOpp(false);
+    setOrdbok(false);
+    setForalder(false);
+  };
   return (
     <main className="spel" onPointerDown={() => ljud.lasOpp()}>
       <LagringsInfo />
@@ -99,8 +106,8 @@ export function SpelVy() {
         <AngLager natt={natt} varld={varld} omrade={omrade} panel={panel} ang={ang} hemma={hemma} liv={liv} fotoMal={fotoMal} visaBanner={visaBanner} stangBanner={stangBanner} visaMossa={visaMossa} setFotoMal={setFotoMal} banners={banners} bubblor={bubblor} onskan={onskan} onskaOpp={onskaOpp} onskaSyns={onskaSyns} ank={ank} oppnaOnska={oppnaOnska} meny={meny} setMeny={setMeny} omUidRef={omUidRef} setLage={setLage} setBokOpp={setBokOpp} setLadaOpp={setLadaOpp} menyHem={menyHem} setBoUid={setBoUid} lada={lada} ladaOpp={ladaOpp} boUid={boUid} boDjur={boDjur} flyttaInDjur={flyttaInDjur} />
         {kartaOpp ? <KartaLager forstaRad={forstaRad} kartaText={kartaText} nuvarandePlats={varld === "gard" ? "garden" : platsUi.plats} stangKarta={() => { setKartaOpp(false); setKartaText(null); }} tryckPlats={(id) => { if (id === "garden") return tryckPlats(id); valjVarld("ang"); platsUi.resTill(id); setKartaOpp(false); setKartaText(null); setBokOpp(false); }} onLast={() => { setKartaOpp(false); bengtsson.visaFel(); }} oppna={oppna} /> : null}
         {omrade && !kartaOpp ? <OmradeHud tryckPlats={tryckPlats} bytFolje={bytFolje} /> : null}
-        {intro ? null : <Hud oppnaStjarnor={() => setStjarnInfo(true)} haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} />}
-        {intro ? null : <MenyPanel menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} senare={senare} panel={panel} varld={varld} valjVarld={valjVarld} lasMeny={lasMeny} oppnaUppdrag={oppnaUppdrag} setBokOpp={setBokOpp} oppnaKarta={oppnaKarta} setIntroNy={setIntroNy} setIntro={setIntro} menySaker={menySaker} borjaOm={borjaOm} oppnaAlbum={() => setAlbumOpp(true)} oppnaOrdbok={() => setOrdbok(true)} setForalder={setForalder} />}
+        {intro ? null : <Hud oppnaStjarnor={() => setStjarnInfo(true)} haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} varld={varld} hemTillAngen={() => { valjVarld("ang"); platsUi.resTill("ang"); }} />}
+        {intro ? null : <MenyPanel menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} senare={senare} panel={panel} varld={varld} valjVarld={(id) => { stangModaler(); valjVarld(id); }} lasMeny={lasMeny} oppnaUppdrag={() => { stangModaler(); oppnaUppdrag(); }} setBokOpp={setBokOpp} oppnaKarta={() => { stangModaler(); oppnaKarta(); }} setIntroNy={setIntroNy} setIntro={(v) => { stangModaler(); setIntro(v); }} menySaker={menySaker} borjaOm={borjaOm} oppnaAlbum={() => { stangModaler(); setAlbumOpp(true); }} oppnaOrdbok={() => { stangModaler(); setOrdbok(true); }} setForalder={(v) => { if (v === true) stangModaler(); setForalder(v); }} stangModaler={stangModaler} />}
         {varld === "ang" && !omrade && !bokOpp && !menyOpp && !intro && !overlayRef.current && (!visa3d ? bengtsson.synlig : platsUi.plats !== START_PLATS || bengtsson.mine === "automat") ? (
           <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
         ) : null}

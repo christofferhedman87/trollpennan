@@ -378,7 +378,7 @@ flex-wrap:wrap;gap:8px;display:flex}
 .nej{
 border:2px solid var(--color-ink);min-width:44px;min-height:52px;color:var(--color-ink);font-size:var(--text-kort);background:0 0;border-radius:16px;padding:0 16px;font-weight:800}
 .skarm{
-z-index:20;background:#2c241659;justify-content:center;align-items:flex-end;display:flex;position:fixed;inset:0}
+z-index:20;background:#2c241659;justify-content:center;align-items:flex-start;padding-top:8px;display:flex;position:fixed;inset:0}
 .ark{
 background:var(--color-paper);width:min(640px,100%);max-height:min(92dvh,900px);color:var(--color-ink);border-radius:24px 24px 0 0;padding:16px 16px 28px;overflow:auto}
 .ark h2,.formel-text{
@@ -808,11 +808,11 @@ display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap;margi
   background: var(--color-paper);
 }
 .v9a-huvud button {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
-  max-width: 44px;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  max-width: 48px;
   padding: 0;
   flex: none;
 }
