@@ -83,7 +83,7 @@ export function modellUrl(kropp: string): string | null {
 }
 
 export type StorlekKlass = { id: string; tak: number; zon: "bak"; kant?: number; rad?: "bortom"; max_halv?: number };
-const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak"; kant?: number; rad?: "bortom"; max_halv?: number }>; kategori: Record<string, string>; ids?: Record<string, string>; minsta?: { storlek: number; yta: number; max_forstoring: number; lutning?: number; ovanifran?: number }; smasak?: { malhojd: [number, number] }; syn?: { min_px: number; max_forstoring: number } };
+const STORLEK = storlekJson as unknown as { klasser: Record<string, { tak: number; zon: "bak"; kant?: number; rad?: "bortom"; max_halv?: number }>; kategori: Record<string, string>; ids?: Record<string, string>; minsta?: { storlek: number; yta: number; max_forstoring: number; lutning?: number; ovanifran?: number }; smasak?: { malhojd: [number, number]; ids?: string[] }; syn?: { min_px: number; max_forstoring: number } };
 
 /** B6.1 (E): storleksklassen för en sak ur data/storlek.json (via kategorin). Djur har aldrig någon klass. */
 export function storlekKlass(kropp: string): StorlekKlass | null {
@@ -163,11 +163,13 @@ export function arPlagg(id: string): boolean {
   return e?.typ === "tillbehor" && !!modellUrl(id);
 }
 
-/** P3a-fix: en småsak (storlek.json smasak: en sak med målhöjd i intervallet – koppen, pucken, saxen). */
+/** P3a-fix: en småsak. Antingen listad i storlek.json smasak.ids, eller en sak vars målhöjd ligger i smasak.malhojd. */
 export function arSmasak(kropp: string): boolean {
+  if (!arSak(kropp)) return false;
+  if (STORLEK.smasak?.ids?.includes(kropp)) return true;
   const sm = STORLEK.smasak?.malhojd;
   const mal = malhojd(kropp);
-  return !!sm && arSak(kropp) && mal >= sm[0] - 1e-9 && mal <= sm[1] + 1e-9;
+  return !!sm && mal >= sm[0] - 1e-9 && mal <= sm[1] + 1e-9;
 }
 
 /** R3G: skala för en modell. Djur: målhöjden är höjden. Saker: målhöjden gäller det största av höjden och 0,6 × längsta sidan,

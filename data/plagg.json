@@ -6,7 +6,20 @@
     "kropp": { "ankare": "rygg", "skala": 0.82, "upp": -0.12, "fram": 0, "ut": 0, "botten": false, "par": "kropp" },
     "underkropp": { "ankare": "rygg", "skala": 0.75, "upp": -0.28, "fram": -0.04, "ut": 0, "botten": false, "par": "underkropp" },
     "fot": { "ankare": "fot", "skala": 0.5, "upp": 0, "fram": 0.08, "ut": 0, "botten": true, "par": "fot" },
-    "hand": { "ankare": "hand", "skala": 0.48, "upp": 0, "fram": 0.08, "ut": 0.05, "botten": false, "par": "hand" }
+    "hand": { "ankare": "hand", "skala": 0.48, "upp": 0, "fram": 0.08, "ut": 0.05, "botten": false, "par": "hand" },
+    "troja": {
+      "modell": "troja",
+      "ankare": "rygg",
+      "skala": 1.48,
+      "djupSkala": 3.4,
+      "upp": -0.06,
+      "fram": 0.78,
+      "ut": 0,
+      "botten": false,
+      "par": "kropp",
+      "fargbar": true,
+      "standardFarg": "#E53935"
+    }
   },
   "plagg": {
     "alvmossa": "huvud",
@@ -33,7 +46,7 @@
     "pyjamas": "kropp",
     "regnjacka": "kropp",
     "skjorta": "kropp",
-    "troja": "kropp",
+    "troja": "troja",
     "byxor": "underkropp",
     "kjol": "underkropp",
     "gummistovel": "fot",

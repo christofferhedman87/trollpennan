@@ -54,6 +54,8 @@ export type PlaggKonfig = {
   ut: number;
   botten: boolean;
   par: string;
+  /** Extra djup (z) relativt xy-skalan. Saknas fältet är plagget lika djupt som brett. */
+  djupSkala?: number;
 };
 
 type PlaggRef = string | (Partial<PlaggKonfig> & { grupp?: string });
@@ -65,8 +67,21 @@ export function plaggKonfig(id: string): PlaggKonfig | null {
   const grupper = plaggJson.grupper as Record<string, PlaggKonfig>;
   if (typeof ref === "string") return grupper[ref] ?? null;
   const bas = ref.grupp ? grupper[ref.grupp] : undefined;
-  if (!bas) return null;
-  return { ...bas, ...ref };
+  if (bas) return { ...bas, ...ref };
+  // Egen rad utan grupp (troja i V8b): fyll ut, botten och par som kroppsplagg om de saknas.
+  if (ref.ankare && typeof ref.skala === "number") {
+    return {
+      ankare: ref.ankare,
+      skala: ref.skala,
+      upp: ref.upp ?? 0,
+      fram: ref.fram ?? 0,
+      ut: ref.ut ?? 0,
+      botten: ref.botten ?? false,
+      par: ref.par ?? "kropp",
+      djupSkala: ref.djupSkala,
+    };
+  }
+  return null;
 }
 
 /** Tillbehörets rad för ett djur: grundraden med djurets `overstyr` (faktor, plats, platsMesh) ovanpå. Null om id saknas. */

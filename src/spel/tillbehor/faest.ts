@@ -132,15 +132,20 @@ export function faestPlaggKlon(
   klon.updateMatrixWorld(true);
   const box0 = new THREE.Box3().setFromObject(klon);
   const sz = box0.getSize(new THREE.Vector3());
-  const maxDim = Math.max(0.001, sz.x, sz.y, sz.z);
-  const malMatt = Math.min(a.hojd * 0.55, Math.max(0.14, a.bredd * cfg.skala));
-  const s = malMatt / maxDim;
-  klon.scale.setScalar(s);
-  klon.position.set(
-    -((box0.min.x + box0.max.x) / 2) * s,
-    cfg.botten ? -box0.min.y * s : -((box0.min.y + box0.max.y) / 2) * s,
-    -((box0.min.z + box0.max.z) / 2) * s,
+  const rad0 = Math.max(0.001, sz.x, sz.y, sz.z);
+  // V8b: tröjan (djupSkala) får vara högre och djupare så den syns framifrån. Övriga plagg behåller P3b-2-måttet.
+  const malMatt = cfg.djupSkala
+    ? Math.min(a.hojd * 0.85, Math.max(0.24, a.bredd * cfg.skala))
+    : Math.min(a.hojd * 0.55, Math.max(0.14, a.bredd * cfg.skala));
+  const sc = malMatt / rad0;
+  const scZ = sc * (cfg.djupSkala ?? 1);
+  klon.scale.set(sc, sc, scZ);
+  const pc = new THREE.Vector3(
+    (box0.min.x + box0.max.x) / 2,
+    cfg.botten ? box0.min.y : (box0.min.y + box0.max.y) / 2,
+    (box0.min.z + box0.max.z) / 2,
   );
+  klon.position.set(-pc.x * sc, -pc.y * sc, -pc.z * scZ);
   if (farg) fargaKlon(klon, farg);
   const hallare = new THREE.Group();
   hallare.name = "tillbehor-" + plaggId;

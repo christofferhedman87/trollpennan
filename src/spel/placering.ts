@@ -14,7 +14,7 @@ import type { Sparad } from "./brygga.ts";
 import { arSak, arSmasak, ENTITETER, flyger, harModell, svavar, FOT_MARGINAL, fotKant, halvBredd, malhojd, simmar, storlekKlass, synSkala, takSkala } from "./entiteter.ts";
 import { START_PLATS, type Plats } from "./platser.ts";
 import { iVatten, KANT_MARGINAL, tillPlats, torrKropp } from "./platsYta.ts";
-import { KAMERA_ANG, KAMERA_PLATS, xSkala, type Kamera, type Ruta } from "./skarm.ts";
+import { KAMERA_ANG, KAMERA_PLATS, tacker, xSkala, type Kamera, type Ruta } from "./skarm.ts";
 import { framfor, sakRuta } from "./skymning.ts";
 
 export type Roll = "mark" | "vatten" | "luft" | "bak";
@@ -37,6 +37,9 @@ type Data = {
   krymp_min?: number;
   synlig_golv?: { storst_px: number; minst_px: number; yta_px: number };
   smasak_px?: number;
+  smasak_min_px?: number;
+  smasak_center_px?: number;
+  byggnad_max_skymd?: number;
   reserv_krymp?: number[];
   sakerhet?: number;
   smasak_vaxa?: number[];
@@ -52,8 +55,6 @@ const GOLV = PLACERING.synlig_golv;
 const KANT_PX = 8;
 /** reserv_krymp bara i spelets storlek (tak 10 per plats): med 30 i prestandaprovet vore det för dyrt */
 const RESERV_MAX = 16;
-/** P3a-fix (beslut C): en småsak når minst så här många px på den kortaste ledden (minus mätfelet). */
-const SMASAK_PX = (PLACERING.smasak_px ?? 0) - (PLACERING.matfel_px ?? 0);
 
 export function regelFor(plats?: Plats): PlatsRegel {
   return PLACERING.platser[plats?.id ?? START_PLATS] ?? PLACERING.platser.standard!;
@@ -213,7 +214,7 @@ export function dekorSkymd(plats: Plats | undefined, r: Ruta, c: Ruta, zFram: nu
   return huvud ? vh : vk;
 }
 
-type Satt = { /** huvudets fyllnad (huvud_fyllnad): skymd yta i huvudrutan delas med den */ fh: number; id: string; x: number; z: number; halv: number; djup: number; r: Ruta; /** kroppen själv (kärnan) i rutan r */ k: Ruta; tackt: number; huvud: number; grans: number; plan?: boolean; roll?: Roll };
+type Satt = { /** huvudets fyllnad (huvud_fyllnad): skymd yta i huvudrutan delas med den */ fh: number; id: string; x: number; z: number; halv: number; djup: number; r: Ruta; /** kroppen själv (kärnan) i rutan r */ k: Ruta; tackt: number; huvud: number; grans: number; plan?: boolean; roll?: Roll; /** småsak: fri siktlinje mot andra småsaker */ sma?: boolean };
 /**
  * P3a-fix (Arkitekten 09:16: regeln mäter som skärmen). Skärmprovet räknar huvudet som de synliga pixlarna i övre halvan av
  * kroppens siluett; regeln har bara rutan. Siluetten fyller bara en del av rutan (katten 0,53, bläckfisken 0,31 – mätt i
@@ -352,6 +353,8 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
   // P3a-fix (beslut B, budgetarna): den nya först, sedan byggnaderna (rollen bak), sedan de andra – var och en efter ålder.
   // Bara de egna kan då tränga undan en byggnad: ett nytt djur söver aldrig en byggnad (Doodle: slottet blev kvar utan ruta)
   const arBak = (d: Sparad) => rollFor(d, plats) === "bak";
+  const nyastBakUid = efterAlder.find(arBak)?.uid;
+  const byggMax = (P.byggnad_max_skymd ?? 0.1) - sak;
   const ordning = [...efterAlder.slice(0, 1), ...efterAlder.slice(1).filter(arBak), ...efterAlder.slice(1).filter((d) => !arBak(d))];
   const ut = new Map<string, Lage>();
   const steg = P.krymp_steg ?? 0.1;
@@ -364,17 +367,13 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
     let roll = roll0;
     let band = regel.band[roll] ?? regel.band.mark!;
     let rad = rader(band, roll);
-    const grans = efterAlder.indexOf(d0) < nyaAntal ? nyGrans : aldreGrans; // gränsen följer åldern, inte ordningen
+    let grans = efterAlder.indexOf(d0) < nyaAntal ? nyGrans : aldreGrans; // gränsen följer åldern, inte ordningen
     // småsaker (storlek.json smasak) står främst och når minst smasak_px på skärmen (beslut C)
     const sma = arSmasak(d0.kropp);
+    // En grupp som bara är småsaker får 0 % skymning. Nyaste byggnaden och sjukhuset högst byggnad_max_skymd.
+    if (sma && alla.every((x) => arSmasak(x.kropp))) grans = 0;
+    if (d0.uid === nyastBakUid || d0.kropp === "sjukhus") grans = Math.min(nyGrans, byggMax);
     const fh0 = huvudFyllnad(d0.kropp);
-    // kravet gäller den nya, tills den vuxit så mycket den får (en smal sak – spaden 15 px – står då i den största storleken)
-    const vaxMax = P.smasak_vaxa?.at(-1) ?? 1;
-    // en platt småsak (pucken, tallriken: höjden under halva bredden) mäts på den längsta ledden – annars blir pucken bredare
-    // än koppen (beslut C: rimlig mot koppen, verklig storlek ur modellmåtten)
-    const mmS = MODELLMATT[d0.kropp];
-    const platt = !!mmS && mmS[1]! < 0.5 * Math.max(mmS[0]!, mmS[2]!);
-    const smaKrav = (d: Sparad) => sma && nr === 0 && (d.skala || 1) / (d0.skala || 1) < vaxMax - 1e-9;
     const underFor = (d: Sparad) => {
       let perKropp = underMinne.get(d.kropp);
       if (!perKropp) underMinne.set(d.kropp, (perKropp = new Map()));
@@ -399,6 +398,9 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
         const ri2 = nr === 0 || sma ? ri : n - 1 - ri;
         const { z, y, xs } = rad[ri2]!;
         if (nr === 0 && nyZmax !== undefined && z > nyZmax + 1e-9) continue; // den nya byggnaden längre bak (Arkitekten 10:31 a)
+        // Äldre byggnad får inte stå närmare kameran än den nyaste byggnaden (högre z).
+        const nyastBak = roll === "bak" && d0.uid !== nyastBakUid ? satta.find((s) => s.roll === "bak" && !s.id.startsWith("fast:")) : undefined;
+        if (nyastBak && z > nyastBak.z + 1e-9) continue;
         const m = kroppMatt(d, z, plats, roll, vandDel);
         let m0: ReturnType<typeof kroppMatt> | null = null;
         const bredd = m.halv + m.vand[0] + (vick[roll] ?? 0);
@@ -442,7 +444,8 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
           // (siluett_andel, mätt med kalibrera.ts; ej mätta: _standard och mätfelet som förut)
           const [aw, ah, kand] = siluettAndel(d.kropp);
           const [rw, rh] = [(c.x1 - c.x0) * aw - (kand ? 0 : MATFEL), (c.y1 - c.y0) * ah - (kand ? 0 : MATFEL)];
-          if (GOLV && (Math.max(rw, rh) < GOLV.storst_px || Math.min(rw, rh) < GOLV.minst_px || rw * rh < GOLV.yta_px || (smaKrav(d) && (platt ? Math.max(rw, rh) : Math.min(rw, rh)) < SMASAK_PX))) {
+          const smaForLiten = sma && Math.max(c.x1 - c.x0, c.y1 - c.y0) < (P.smasak_min_px ?? 40);
+          if (smaForLiten || (GOLV && (Math.max(rw, rh) < GOLV.storst_px || Math.min(rw, rh) < GOLV.minst_px || rw * rh < GOLV.yta_px))) {
             golvFel = true;
             if (medStall && (!stall || stall.fel > 1)) stall = { lage: { x, y, z, roll, r, stall: true, vand: vandDel }, m, huvud: 0, tackt: 0, fel: 1, kost: 0 };
             continue;
@@ -472,10 +475,27 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
           dekorSkymd(plats, r, c, z, false); // ett svep: kropp och huvud (dekorUtK/dekorUtH)
           tackt += dekorUtK;
           huvud += dekorUtH / fh0;
+          // Småsaker står aldrig bakom HUD eller dekor.
+          if (sma && tackt > 0 && !medStall) continue;
           let kost = Math.max(0, tackt - grans) + Math.max(0, huvud - huvudMax);
           for (const s of satta) {
             if (kost > 0 && !medStall) break;
             if (s.r === TOM) continue;
+            if (sma && s.sma) {
+              const cx = (c.x0 + c.x1) / 2;
+              const cy = (c.y0 + c.y1) / 2;
+              const sx = (s.k.x0 + s.k.x1) / 2;
+              const sy = (s.k.y0 + s.k.y1) / 2;
+              if (
+                Math.hypot(cx - sx, cy - sy) < (P.smasak_center_px ?? 40) ||
+                tacker(s.k, c) > 0 ||
+                tacker(c, s.k) > 0 ||
+                tacker(s.r, r) > 0 ||
+                tacker(r, s.r) > 0 ||
+                varst(s.r, s.k, r, c, false) > 0 ||
+                varst(r, c, s.r, s.k, false) > 0
+              ) kost += 10;
+            }
             // P3a-fix: i samma rad (±0,05) räknas skymningen åt båda hållen – vilken som hamnar framför avgörs av vandringen
             // (skogen: kaninen bredvid hästen i samma rad syntes 83 %, regeln räknade ingen skymning)
             const samma = Math.abs(s.z - z) <= 0.05;
@@ -546,7 +566,8 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
     // står längre fram (Doodle 21 okt: det nya slottet i skogen hamnade längst bak). En småsak får växa (smasak_vaxa) tills
     // den når smasak_px.
     if (nr === 0 && krymp === 1 && !nyStorlek) {
-      const prova = [...(sma ? (P.smasak_vaxa ?? []) : []), ...[0.9, 0.8, 0.7, 0.6].filter((k) => k >= (P.krymp_min ?? 0.6) - 1e-9)];
+      const redanStor = sma && fynd ? Math.max((fynd.k ?? fynd.lage.r).x1 - (fynd.k ?? fynd.lage.r).x0, (fynd.k ?? fynd.lage.r).y1 - (fynd.k ?? fynd.lage.r).y0) >= (P.smasak_min_px ?? 40) - 1e-9 : false;
+      const prova = [...(sma && !redanStor ? (P.smasak_vaxa ?? []) : []), ...[0.9, 0.8, 0.7, 0.6].filter((k) => k >= (P.krymp_min ?? 0.6) - 1e-9)];
       for (const k2 of prova) {
         const f = sok(skalad(k2), false).fri;
         if (f && (!fynd || f.lage.z > fynd.lage.z + 1e-9)) [fynd, krymp] = [f, k2];
@@ -577,7 +598,7 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
       ut.set(d0.uid, kMin < 1 ? { ...st.lage, stall: true, krymp: kMin } : { ...st.lage, stall: true });
       // P3a-fix (beslut B): den som inte somnar ritas där – på skärmen räknas den då som skymmande för de äldre
       const syns = st.fel === 0 && st.lage.r !== TOM;
-      satta.push({ id: d0.uid, x: st.lage.x, z: st.lage.z, halv: st.m.halv, djup: st.m.djup, r: syns ? st.lage.r : TOM, k: syns ? st.lage.r : TOM, tackt: 0, huvud: 0, grans: 1, fh: fh0 });
+      satta.push({ id: d0.uid, x: st.lage.x, z: st.lage.z, halv: st.m.halv, djup: st.m.djup, r: syns ? st.lage.r : TOM, k: syns ? st.lage.r : TOM, tackt: 0, huvud: 0, grans: 1, fh: fh0, sma });
       return;
     }
     const lage = krymp !== 1 ? { ...fynd.lage, krymp } : fynd.lage;
@@ -592,7 +613,7 @@ function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, vandDel:
         s.tackt += varst(lage.r, fynd.k ?? lage.r, s.r, s.k, false);
         s.huvud += varst(lage.r, fynd.k ?? lage.r, s.r, s.k, true) / s.fh;
       }
-    satta.push({ id: d0.uid, x: lage.x, z: lage.z, halv: fynd.m.halv, djup: fynd.m.djup, r: lage.r, k: fynd.k ?? lage.r, tackt: fynd.tackt, huvud: fynd.huvud, grans, roll, fh: fh0 });
+    satta.push({ id: d0.uid, x: lage.x, z: lage.z, halv: fynd.m.halv, djup: fynd.m.djup, r: lage.r, k: fynd.k ?? lage.r, tackt: fynd.tackt, huvud: fynd.huvud, grans, roll, fh: fh0, sma });
   });
   // regelns egen räkning per synlig, när alla står (rundor/P3a-fix/kalibrera.ts jämför den med skärmprovets id-pass)
   for (const s of satta) {
