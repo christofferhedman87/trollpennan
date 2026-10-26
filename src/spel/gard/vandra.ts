@@ -1,4 +1,6 @@
 import type { Sparad } from "../brygga.ts";
+import { hittaNarmasteAttraktion, stegMotMalPunkt } from "../tillbehor/largo.ts";
+export { hittaNarmasteAttraktion, stegMotMalPunkt };
 import type { SparatBygge } from "../bygge.ts";
 import type { Hemdjur } from "../minne.ts";
 import {
@@ -38,6 +40,7 @@ export interface GardVandrare {
   fart: number;
   fro: number;
   forflyttad: number;
+  malPunkt?: [number, number] | null;
 }
 
 export interface GardBoende {
@@ -213,6 +216,19 @@ function snapHem(v: GardVandrare): void {
 export function uppdateraGardVandrare(v: GardVandrare, dt: number): GardVandrare {
   const stegDt = Math.min(Math.max(dt, 0), 0.1);
   const arTillaten = (c: CellPlats) => v.tillatnaCeller.some((t) => t.gx === c.gx && t.gz === c.gz);
+  const paus = typeof window !== "undefined" && window.__PAUSE_ANIM === true;
+  if (v.malPunkt && !paus) {
+    const foreX = v.wx;
+    const foreZ = v.wz;
+    const steg = stegMotMalPunkt([v.wx, v.wz], v.malPunkt, stegDt, v.forflyttad);
+    v.forflyttad += Math.hypot(steg.wx - foreX, steg.wz - foreZ);
+    v.wx = steg.wx;
+    v.wz = steg.wz;
+    v.rotY = steg.rotY;
+    v.cell = varldTillCell(v.wx, v.wz);
+    if (!arTillaten(v.cell)) snapHem(v);
+    return v;
+  }
   if (v.vantar > 0) {
     v.vantar -= stegDt;
     if (v.vantar <= 0) valjMal(v);

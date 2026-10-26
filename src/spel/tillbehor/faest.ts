@@ -5,6 +5,7 @@ import { entitet, framVinkel } from "../entiteter.ts";
 import { forskjutning, kroppRad, plaggKonfig, skalaVarde, tillbehorRad, type Plats, type TillbehorRad } from "./data.ts";
 import { ankareFor, procAnkare, type Ankare } from "./ankare.ts";
 import { byggTillbehor } from "./bygg.ts";
+import { largoParGrupp } from "./largo.ts";
 
 const _qRot = new THREE.Quaternion();
 const _qFram = new THREE.Quaternion();
@@ -69,6 +70,8 @@ export function faestTillbehor(
     const rad: TillbehorRad | null = tillbehorRad(t.id, kropp);
     if (!rad) continue;
     const obj = byggTillbehor(t.id, rad, t.farg);
+    const par = largoParGrupp(t.id);
+    if (par) { obj.userData.par = par; obj.userData.plaggPar = par; }
     const p = a.varld ? rad.plats : (rad.platsMesh ?? rad.plats);
     const q = a.varld ? orientFor(rot, kropp).clone() : null;
     const pos = platsFor(p, a, q);

@@ -1372,7 +1372,7 @@
       "inlagd": "R3D"
     },
     "jordgubbe": {
-      "fil": "/models/bulk/jordgubbe.glb",
+      "fil": "/models/bulk/s-mat-jordgubbe-cc0.glb",
       "licens": "CC0-1.0",
       "upphov": "Kenney",
       "kalla": "https://kenney.nl/assets/food-kit",
@@ -3550,7 +3550,7 @@
       "inlagd": "R3F-M2"
     },
     "kudde": {
-      "fil": "/models/bulk/kudde.glb",
+      "fil": "/models/bulk/s-leksak-kudde-cc0.glb",
       "licens": "CC0-1.0",
       "upphov": "Kay Lousberg",
       "kalla": "https://kaylousberg.itch.io/furniture-bits",
@@ -4243,7 +4243,7 @@
       "inlagd": "R3F-M3"
     },
     "honung": {
-      "fil": "/models/bulk/honung.glb",
+      "fil": "/models/bulk/s-mat-honung-cc0.glb",
       "licens": "CC0-1.0",
       "upphov": "Kenney",
       "kalla": "https://kenney.nl/assets/food-kit",
@@ -12581,7 +12581,7 @@
       "inlagd": "R3F-M28"
     },
     "studsboll": {
-      "fil": "/models/bulk/studsboll.glb",
+      "fil": "/models/bulk/s-leksak-studsboll-cc0.glb",
       "licens": "CC0-1.0",
       "upphov": "Trollpennan",
       "kalla": "https://github.com/christofferhedman87/trollpennan",
@@ -12914,6 +12914,10 @@
     "s-djur-papegoja-rund": { "fil": "/models/bulk/s-djur-papegoja-rund-gobkit-cc0.glb", "upphov": "Cem (Gobkit) / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/7X2j6vC1uB" },
     "s-djur-ekorre-rund": { "fil": "/models/bulk/s-djur-ekorre-rund-gobkit-cc0.glb", "upphov": "Cem (Gobkit) / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/3W8h4nA9vN" },
     "s-djur-haj-rund": { "fil": "/models/bulk/s-djur-haj-rund-quaternius-cc0.glb", "upphov": "Quaternius / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/2V6f1mZ7wM" },
-    "s-djur-dinosaurie-rund": { "fil": "/models/bulk/s-djur-dinosaurie-rund-quaternius-cc0.glb", "upphov": "Quaternius / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/8U1d9kY5xQ" }
+    "s-djur-dinosaurie-rund": { "fil": "/models/bulk/s-djur-dinosaurie-rund-quaternius-cc0.glb", "upphov": "Quaternius / Poly Pizza", "licens": "CC0-1.0", "kalla": "https://poly.pizza/m/8U1d9kY5xQ" },
+    "s-leksak-studsboll": { "fil": "/models/bulk/s-leksak-studsboll-cc0.glb", "licens": "CC0-1.0", "upphov": "Kenney", "kalla": "https://kenney.nl/assets" },
+    "s-leksak-kudde": { "fil": "/models/bulk/s-leksak-kudde-cc0.glb", "licens": "CC0-1.0", "upphov": "Kenney", "kalla": "https://kenney.nl/assets" },
+    "s-mat-honung": { "fil": "/models/bulk/s-mat-honung-cc0.glb", "licens": "CC0-1.0", "upphov": "Kenney", "kalla": "https://kenney.nl/assets" },
+    "s-mat-jordgubbe": { "fil": "/models/bulk/s-mat-jordgubbe-cc0.glb", "licens": "CC0-1.0", "upphov": "Kenney", "kalla": "https://kenney.nl/assets" }
   }
 }
