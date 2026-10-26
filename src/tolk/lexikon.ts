@@ -195,9 +195,10 @@ export function lasToken(
     const skala = led?.skala ?? (dir === "storlek+" ? 1.6 : 0.5);
     return { t: "boost", dir, skala, raw: token };
   }
+  // "och" före "som", så ordet alltid blir { t: "funk", v: "och" }.
+  if (funkOch.has(token)) return { t: "funk", v: "och" };
   if (funkSom.has(token)) return { t: "funk", v: "som" };
   if (funkMed.has(token)) return { t: "funk", v: "med" };
-  if (funkOch.has(token)) return { t: "funk", v: "och" };
   if (funkKan.has(token)) return { t: "funk", v: "kan" };
   // "och så" hanteras av anroparen innan enkelord.
   const o = formMap.get(token);

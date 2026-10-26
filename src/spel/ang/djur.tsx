@@ -20,7 +20,7 @@ import { AGG_KROPP, OrdAgg, ReservAgg } from "../ordagg.tsx";
 import { HumorIkon } from "./humorIkon.tsx";
 import { Ljusken } from "./ljusken.tsx";
 import type { Ljuskalla } from "../ljuskalla.ts";
-import { _mal, djurFarg, djurIStall, djurKrymp, djurPlats, djurVand, flygare, normDuk, simmare, synMatt } from "./delat.ts";
+import { _mal, djurFarg, djurIStall, djurKrymp, djurPlats, djurVand, flygare, normDuk, PLATTFORM_SAKER, simmare, synMatt } from "./delat.ts";
 import { sakLage } from "../landning.ts";
 import { torrKropp } from "../platsYta.ts";
 import { malTillDuk } from "../ui/hjalp.ts";
@@ -184,11 +184,13 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
   const synS = ritSkala(ritSpec, z, plats);
   const sak = arSak(spec.kropp);
   const medSaker = spec.tillbehor.map((t) => t.id).filter((id) => id !== spec.kropp && arSak(id) && !arPlagg(id));
+  const harPlattform = medSaker.some((id) => PLATTFORM_SAKER.has(id));
   const sakPos = (id: string, i: number): [number, number, number] => {
+    if (PLATTFORM_SAKER.has(id) && i === 0) return [0, 0, 0];
     const onskad: [number, number] = [(0.45 + malhojd(spec.kropp) * 0.35) * (i % 2 === 0 ? 1 : -1) * (spec.skala || 1), 0.2 + Math.floor(i / 2) * 0.3];
     const torr = plats && !sim ? (wx: number, wz: number) => torrKropp(plats, wx, wz, fotKant(id, 1)) : undefined;
-    const [ox, oz] = sakLage(x, z, onskad, torr);
-    return [ox, 0, oz];
+    const [wx, wz] = sakLage(x, z, onskad, torr);
+    return [wx - x, 0, wz - z];
   };
   useEffect(() => () => {
     if (upp.current) window.removeEventListener("pointerup", upp.current);
@@ -234,10 +236,11 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
     const kram = pause ? 1 : 1 - Math.sin(Math.min(1, kisa.current) * Math.PI) * 0.14;
     const [lx, ly, lz] = largoSkala(spec);
     g.scale.set((s * bred * sq.sxz * lx) / Math.sqrt(kram), s * hojd * kram * sq.sy * ly, (s * bred * sq.sxz * lz) / Math.sqrt(kram));
-    const wx = Math.cos(t * 0.25 + index) * 0.22 * vand;
-    const wz = Math.sin(t * 0.21 + index * 1.4) * 0.16 * vand;
-    const spx = -Math.sin(t * 0.25 + index) * 0.22 * 0.25 * vand;
-    const spz = Math.cos(t * 0.21 + index * 1.4) * 0.16 * 0.21 * vand;
+    const vRad = harPlattform ? vand * 0.08 : vand;
+    const wx = Math.cos(t * 0.25 + index) * 0.22 * vRad;
+    const wz = Math.sin(t * 0.21 + index * 1.4) * 0.16 * vRad;
+    const spx = -Math.sin(t * 0.25 + index) * 0.22 * 0.25 * vRad;
+    const spz = Math.cos(t * 0.21 + index * 1.4) * 0.16 * 0.21 * vRad;
     signal.current.ror = Math.hypot(spx, spz) * 10;
     if (flyg) {
       const loop = t * 0.85 + index;
@@ -255,9 +258,10 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       g.rotation.y = snurr.current > 0 ? t * 7 : 0;
       signal.current.ror = 0;
     } else {
-      g.position.x = sim ? Math.cos(t * 0.7 + index) * 0.22 * vand : wx;
-      g.position.z = sim ? Math.sin(t * 0.7 + index) * 0.16 * vand : wz;
-      g.position.y = y + bob + lyft;
+      g.position.x = sim ? Math.cos(t * 0.7 + index) * 0.22 * vRad : wx;
+      g.position.z = sim ? Math.sin(t * 0.7 + index) * 0.16 * vRad : wz;
+      const plattY = harPlattform && !flyg && !sim ? 0.14 : 0;
+      g.position.y = y + plattY + bob + lyft;
       g.rotation.z = 0;
       g.rotation.y = snurr.current > 0 ? t * 7 : Math.atan2(spx, spz) * 0.35 * vand;
     }

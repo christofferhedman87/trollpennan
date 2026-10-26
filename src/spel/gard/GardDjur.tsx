@@ -1,8 +1,10 @@
 import { useFrame, type ThreeEvent } from "@react-three/fiber";
 import { Suspense, useMemo, useRef } from "react";
 import type { Group } from "three";
+import { PLATTFORM_SAKER } from "../ang/delat.ts";
 import { DjurForm, ModellGren } from "../ang/djur.tsx";
 import { brygga, type Sparad } from "../brygga.ts";
+import { GltfSak } from "../gltfDjur.tsx";
 import { harDjurGltf } from "../entiteter.ts";
 import { GltfDjur, type DjurSignal } from "../gltfDjur.tsx";
 import { sattUttryck } from "../tillbehor/AnsiktsUttryck.tsx";
@@ -55,6 +57,7 @@ function GardEtt({
   const antal = useRef(0);
   const fod = useRef(performance.now());
   const [lx, ly, lz] = largoSkala(spec);
+  const platt = spec.tillbehor.map((t) => t.id).filter((id) => PLATTFORM_SAKER.has(id));
   useFrame(() => {
     const liv = useMinne.getState();
     sattUttryck(
@@ -119,6 +122,13 @@ function GardEtt({
           )}
         </Suspense>
       </group>
+      {platt.map((id, i) => (
+        <group key={id} position={i === 0 ? [0, 0, 0] : [i % 2 === 0 ? 0.55 : -0.55, 0, 0.25]}>
+          <ModellGren spec={{ ...spec, kropp: id }}>
+            <Suspense fallback={null}><GltfSak id={id} /></Suspense>
+          </ModellGren>
+        </group>
+      ))}
     </group>
   );
 }
@@ -216,7 +226,8 @@ export function GardDjurLista({
         nod.rotation.y = v.rotY;
       }
       const kropp = kroppar.current.get(d.uid)?.current;
-      if (kropp) kropp.position.y = gung;
+      const plattY = d.spec.tillbehor.some((t) => PLATTFORM_SAKER.has(t.id)) ? 0.14 : 0;
+      if (kropp) kropp.position.y = gung + plattY;
       const iTillatenCell = v.tillatnaCeller.some((c) => c.gx === v.cell.gx && c.gz === v.cell.gz);
       ut.push({
         uid: d.uid,
