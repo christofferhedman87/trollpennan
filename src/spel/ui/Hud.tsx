@@ -47,8 +47,8 @@ export function Hud({ oppnaStjarnor, haller, setHaller, setForalder, stjarnor, h
             <Lock className="prick-las" aria-hidden />
           </button>
           <HoldOppnare haller={haller} oppna={() => setForalder(true)} />
-          <button type="button" className="stjarna-hud" data-testid="stjarnor" aria-label={fyll(FIR.stjarnor.har, { n: stjarnor })} onClick={oppnaStjarnor}>
-            ★ {stjarnor}
+          <button type="button" className="stjarna-hud" data-testid="stjarnor" data-v9a="hud-stjarnor" aria-label={fyll(FIR.stjarnor.har, { n: stjarnor })} onClick={oppnaStjarnor}>
+            ⭐ {stjarnor}
             <span className="stjarna-fraga" aria-hidden="true">?</span>
           </button>
           <span className="dold" data-testid="framsteg">

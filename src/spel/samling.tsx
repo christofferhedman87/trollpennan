@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import omradenJson from "../../data/omraden.json" with { type: "json" };
 import foralderJson from "../../data/foralder-r6.json" with { type: "json" };
 import vildaJson from "../../data/vilda-djur.json" with { type: "json" };
+import { tolkaMedReserv } from "@/tolk/reserv.ts";
 import { ordLista } from "@/tolk/tolka.ts";
+import type { Sparad } from "./brygga.ts";
 import { fyll } from "./fyll.ts";
-import { ALBUM, BYGG_ORD, KROPPAR, SKATTER, gavaOrd, taBortFoto } from "./liv.ts";
+import { ALBUM, BYGG_ORD, KROPPAR, SKATTER, gavaOrd, sparaFoto, taBortFoto } from "./liv.ts";
 import { useMinne } from "./minne.ts";
+import { albumBild, PLATS_ANG, PLATS_AVENTYR, PLATS_GARD, platsVild } from "./v9aHjalp.ts";
 
 const OMR_NAMN = Object.fromEntries(
   (omradenJson as { omraden: { id: string; namn: string }[] }).omraden.map((o) => [o.id, o.namn]),
@@ -26,6 +29,34 @@ function nivaNamn(id: string) {
   return ALBUM.sallsynthet.nivaer.find((x) => x.id === id)?.namn ?? id;
 }
 
+function reservKanin(): Sparad | null {
+  const u = tolkaMedReserv("en röd kanin");
+  if (u.typ !== "skapad") return null;
+  return { ...u.varelse, uid: crypto.randomUUID(), skapad: Date.now() };
+}
+
+function taBildPaSkapelse(setFlik: (id: string) => void) {
+  const s = useMinne.getState();
+  const djur = s.ang.at(-1) ?? s.hemma.at(-1)?.spec ?? reservKanin();
+  if (!djur) return;
+  sparaFoto(djur);
+  setFlik("foton");
+}
+
+function AlbumMark({ bild, plats, children }: { bild: string; plats: string; children: ReactNode }) {
+  return (
+    <>
+      <span className="album-kort-bild" data-v9a="album-bild" aria-hidden="true">
+        {bild}
+      </span>
+      {children}
+      <span className="album-plats-tagg" data-v9a="album-plats">
+        {plats}
+      </span>
+    </>
+  );
+}
+
 export function AlbumVy({ stang }: { stang: () => void }) {
   const kropp = useMinne((s) => s.albumKropp);
   const van = useMinne((s) => s.van);
@@ -40,6 +71,11 @@ export function AlbumVy({ stang }: { stang: () => void }) {
   return (
     <div className="skarm" role="dialog" aria-label={ALBUM.texter.knapp} data-testid="album">
       <div className="ark sida album">
+        <div className="v9a-huvud">
+          <button type="button" className="stang-x stang" data-v9a="album-stang" aria-label="Stäng" onClick={stang}>
+            ×
+          </button>
+        </div>
         <h2>{ALBUM.texter.knapp}</h2>
         <p data-testid="album-framsteg">{fyll(ALBUM.texter.framsteg, tal)}</p>
         <div className="album-flikar">
@@ -49,26 +85,33 @@ export function AlbumVy({ stang }: { stang: () => void }) {
             </button>
           ))}
         </div>
+        {foton.length === 0 ? (
+          <button type="button" className="kort album-ta-bild" data-v9a="album-ta-bild" onClick={() => taBildPaSkapelse(setFlik)}>
+            📸 Ta bild på din skapelse
+          </button>
+        ) : null}
         {vald.id === "kroppar" ? (
           <div className="album-rutnat">
             {KROPPAR.map((id) => {
               const m = kropp[id];
               return (
                 <article key={id} className={m ? "album-ruta" : "album-ruta okand"} data-testid={`kropp-${id}`}>
-                  {m ? (
-                    <>
-                      <p className="album-stj" data-testid={`stjarnor-${id}`}>
-                        {stjarnor(m.niva)}
-                      </p>
-                      <p>{m.formel}</p>
-                      <p>
-                        {nivaNamn(m.niva)} · {ALBUM.texter.hjartan} {"♥".repeat(m.hjartan)}
-                      </p>
-                      <p>{m.favorit ? fyll(ALBUM.texter.favorit, { gava: gavaOrd(m.favorit) }) : ALBUM.texter.okand_favorit}</p>
-                    </>
-                  ) : (
-                    <p className="silhuett">?</p>
-                  )}
+                  <AlbumMark bild={albumBild(id, "djur")} plats={PLATS_ANG}>
+                    {m ? (
+                      <>
+                        <p className="album-stj" data-testid={`stjarnor-${id}`}>
+                          {stjarnor(m.niva)}
+                        </p>
+                        <p>{m.formel}</p>
+                        <p>
+                          {nivaNamn(m.niva)} · {ALBUM.texter.hjartan} {"♥".repeat(m.hjartan)}
+                        </p>
+                        <p>{m.favorit ? fyll(ALBUM.texter.favorit, { gava: gavaOrd(m.favorit) }) : ALBUM.texter.okand_favorit}</p>
+                      </>
+                    ) : (
+                      <p>{id}</p>
+                    )}
+                  </AlbumMark>
                 </article>
               );
             })}
@@ -81,8 +124,10 @@ export function AlbumVy({ stang }: { stang: () => void }) {
               const plats = OMR_NAMN[v.omrade] ?? v.omrade;
               return (
                 <article key={v.id} className={kand ? "album-ruta" : "album-ruta okand"} data-testid={`vild-${v.id}`}>
-                  {kand ? <p>{v.namn}</p> : <p className="silhuett">?</p>}
-                  {!kand ? <p>{borRad(plats)}</p> : null}
+                  <AlbumMark bild={albumBild(v.id, "djur")} plats={platsVild(v.omrade, plats)}>
+                    {kand ? <p>{v.namn}</p> : <p>{v.namn}</p>}
+                    {!kand ? <p>{borRad(plats)}</p> : null}
+                  </AlbumMark>
                 </article>
               );
             })}
@@ -94,14 +139,16 @@ export function AlbumVy({ stang }: { stang: () => void }) {
               const kand = skatter.includes(sk.id);
               return (
                 <article key={sk.id} className={kand ? "album-ruta" : "album-ruta okand"} data-testid={`skatt-${sk.id}`}>
-                  {kand ? (
-                    <>
+                  <AlbumMark bild={albumBild(sk.id, "skatt")} plats={PLATS_AVENTYR}>
+                    {kand ? (
+                      <>
+                        <p>{sk.namn}</p>
+                        <p>{sk.text}</p>
+                      </>
+                    ) : (
                       <p>{sk.namn}</p>
-                      <p>{sk.text}</p>
-                    </>
-                  ) : (
-                    <p className="silhuett">?</p>
-                  )}
+                    )}
+                  </AlbumMark>
                 </article>
               );
             })}
@@ -114,7 +161,9 @@ export function AlbumVy({ stang }: { stang: () => void }) {
               const ord = (b as { former?: string[] }).former?.[0] ?? b.id;
               return (
                 <article key={b.id} className={kand ? "album-ruta" : "album-ruta okand"} data-testid={`byggord-${b.id}`}>
-                  {kand ? <p>{ord}</p> : <p className="silhuett">?</p>}
+                  <AlbumMark bild={albumBild(b.id, "bygg")} plats={PLATS_GARD}>
+                    {kand ? <p>{ord}</p> : <p>{ord}</p>}
+                  </AlbumMark>
                 </article>
               );
             })}
@@ -124,11 +173,13 @@ export function AlbumVy({ stang }: { stang: () => void }) {
           <div className="album-rutnat" data-testid="foton">
             {foton.map((f) => (
               <article key={f.id} className="album-ruta" data-testid="foto-ruta">
-                <p className="album-stj">{stjarnor(f.niva)}</p>
-                <p>{f.formel}</p>
-                <button type="button" className="nej" onClick={() => taBortFoto(f.id)}>
-                  {ALBUM.texter.ta_bort}
-                </button>
+                <AlbumMark bild={albumBild(f.kropp, "foto")} plats={PLATS_ANG}>
+                  <p className="album-stj">{stjarnor(f.niva)}</p>
+                  <p>{f.formel}</p>
+                  <button type="button" className="nej" onClick={() => taBortFoto(f.id)}>
+                    {ALBUM.texter.ta_bort}
+                  </button>
+                </AlbumMark>
               </article>
             ))}
           </div>

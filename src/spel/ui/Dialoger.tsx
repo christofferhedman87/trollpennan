@@ -9,6 +9,7 @@ import stjarnorJson from "../../../data/stjarnor.json" with { type: "json" };
 import onskningarJson from "../../../data/onskningar.json" with { type: "json" };
 import { ALLA_UPPDRAG } from "../aventyr.ts";
 import { djurPris } from "./hjalp.ts";
+import * as rostKo from "../rostKo.ts";
 import type { Kalla } from "../rostKo.ts";
 import type { Banner, KopFraga, VisKort } from "./typer.ts";
 
@@ -195,9 +196,30 @@ export function StjarnDialog({ stjarnor, koptaAntal, stang, ordbok }: { stjarnor
   const kvar = SIDOR.sidor.length - koptaAntal;
   const pris = djurPris(koptaAntal);
   return (
-    <div className="skarm" role="dialog" aria-label={STJ.rubrik} data-testid="stjarn-info">
+    <div className="skarm" role="dialog" aria-label={STJ.rubrik} data-testid="stjarn-info" data-v9a="stjarn-ruta">
       <div className="ark">
-        <h2>★ {fyll(STJ.har, { n: stjarnor })}</h2>
+        <div className="v9a-huvud">
+          <button type="button" className="stang-x stang" data-v9a="stjarn-stang" aria-label="Stäng" onClick={stang}>
+            ×
+          </button>
+        </div>
+        <p className="stjarn-ikon" aria-hidden="true">
+          ⭐
+        </p>
+        <h2>⭐ {fyll(STJ.har, { n: stjarnor })}</h2>
+        <p>Stjärnor är belöningar. Du får dem när du hjälper djur och hittar ord. Sedan öppnar de nya sidor i Ordboken.</p>
+        <button
+          type="button"
+          className="lyssna-knapp"
+          data-v9a="stjarn-lyssna"
+          onClick={() =>
+            rostKo.lasUpp(
+              stjarnor < pris ? fyll(FIR.stjarnor.for_fa, { n: Math.max(1, Math.min(30, pris - stjarnor)) }) : "Nu tänds stjärnorna i boken.",
+            )
+          }
+        >
+          🔊 Lyssna
+        </button>
         <h3>{STJ.ger_rubrik}</h3>
         <ul>
           {STJ.ger.map((t) => (

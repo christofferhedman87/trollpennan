@@ -1,0 +1,57 @@
+{
+  "runda": "V9a-V9b-album-ordbok-prestanda",
+  "basCommit": "d9068f2",
+  "vy": { "bredd": 375, "hojd": 812 },
+  "del1_v9a": {
+    "album": {
+      "kravAnkare": [
+        "data-v9a=\"album-bild\"",
+        "data-v9a=\"album-plats\"",
+        "data-v9a=\"album-stang\"",
+        "data-v9a=\"album-ta-bild\""
+      ],
+      "tomFotoKnappText": "📸 Ta bild på din skapelse",
+      "minKlickytaPx": 44
+    },
+    "ordbok": {
+      "kravAnkare": [
+        "data-v9a=\"mina-hittade-ord\"",
+        "data-v9a=\"ordbok-kategori\"",
+        "data-v9a=\"ordbok-ord\"",
+        "data-v9a=\"ordbok-stang\""
+      ],
+      "rubrik": "Mina hittade ord",
+      "maxLastaHemligBrickor": 0,
+      "minKlickytaPx": 44
+    },
+    "stjarnruta": {
+      "kravAnkare": [
+        "data-v9a=\"stjarn-ruta\"",
+        "data-v9a=\"stjarn-lyssna\"",
+        "data-v9a=\"stjarn-stang\""
+      ],
+      "nyaRostfiler": 0,
+      "minKlickytaPx": 44
+    }
+  },
+  "del2_v9b": {
+    "forladda": {
+      "modul": "src/spel/modeller/forladda.ts",
+      "funktion": "forladdaNarLedig",
+      "maxSamtidigaIdle": 2,
+      "maxGlbVidKallstart1500ms": 12,
+      "synkronaPreloadLooparTillatna": 0
+    },
+    "r3f": {
+      "komponenter": ["AdaptiveDpr", "PerformanceMonitor", "Bvh"],
+      "dpr": [1, 1.5],
+      "firstHitOnly": true
+    },
+    "reserv": {
+      "modul": "src/spel/modeller/StjarnPuffReserv.tsx",
+      "komponent": "StjarnPuffReserv",
+      "maxPageError": 0,
+      "forbjudenText": "ERROR"
+    }
+  }
+}
