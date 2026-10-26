@@ -8,7 +8,8 @@ import { ALLA_UPPDRAG, NPC, TEXTER_AV, UPP, uppdragText } from "../aventyr.ts";
 import { aktivtSkrivUppdrag, nastaSkrivUppdrag } from "../uppdragsmotor.ts";
 import { useMinne } from "../minne.ts";
 import { exempelFor, uppdragForslag } from "../ideRad.ts";
-import { gavoRuta } from "./gavoRuta.ts";
+import { djurMedUid } from "../liv.ts";
+import { forsokDopaText, gavoRuta } from "./gavoRuta.ts";
 import { platsNu } from "./useBengtsson.ts";
 import { UppdragsRemsa } from "./UppdragsRemsa.tsx";
 import type { Sparad } from "../brygga.ts";
@@ -46,6 +47,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
   const [versaler, setVersaler] = useState(false);
   const [sjalvSkriv, setSjalvSkriv] = useState(false);
   const visaTangenter = panel === "byggbok" ? lage === "skriv" : (skaparVy === "skriv" && lage === "skriv" && sjalvSkriv);
+  const dopNamn = useMinne((s) => (gavaTill?.startsWith("egen:") ? djurMedUid(s, gavaTill.slice(5))?.smeknamn?.trim() : "") ?? "");
   const ideUpp = aktivtSkrivUppdrag(uppdragSpar, platsNu()) ?? nastaSkrivUppdrag(uppdragSpar, platsNu(), false);
   const aktivtUpp = panel === "uppdrag" ? (aktivtSkrivUppdrag(uppdragSpar, platsNu()) ?? nastaSkrivUppdrag(uppdragSpar, platsNu(), false)) : undefined;
   const uppRader = ALLA_UPPDRAG.filter((u) => (uppFlik === "klar" ? uppdragSpar[u.id] === "klar" : uppdragSpar[u.id] === "pagar" && u.id !== aktivtUpp?.id));
@@ -142,10 +144,22 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
             ) : null}
             {gavaTill ? (
               <div className="onska-remsa" data-testid="gava-remsa">
-                <p>
-                  {gavoRuta(gavaTill)}
-                </p>
-                {gavaTill.startsWith("egen:") ? <GavaStallKnapp uid={gavaTill.slice(5)} visaBanner={visaBanner} klar={stangBok} /> : null}
+                <p>{gavoRuta(gavaTill)}</p>
+                {gavaTill.startsWith("egen:") ? (
+                  <div className="gava-knapprad">
+                    <button type="button" className="kort dop-knapp" data-d3="dop-knapp" ref={(el) => el?.setAttribute("data-testid", "dop-knapp")} onClick={() => {
+                      const uid = gavaTill.slice(5);
+                      const rå = text.trim();
+                      if (!rå) { setSkaparVy("skriv"); setSjalvSkriv(true); setLage("skriv"); fyllExempel("heter "); return; }
+                      const dopa = forsokDopaText(rå, uid);
+                      const upp = dopa?.djur ?? useMinne.getState().bytSmeknamn(uid, rå);
+                      const visat = dopa?.namn ?? upp?.smeknamn;
+                      if (visat) visaBanner(`Nu heter djuret ${visat}!`, "ovr", "tapp");
+                      fyllExempel("");
+                    }}>🏷️ {dopNamn ? "Byt namn" : "Döp"}</button>
+                    <GavaStallKnapp uid={gavaTill.slice(5)} visaBanner={visaBanner} klar={stangBok} />
+                  </div>
+                ) : null}
               </div>
             ) : null}
             {!gavaTill && !andrar && varld === "ang" ? (

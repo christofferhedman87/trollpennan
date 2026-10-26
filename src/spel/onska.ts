@@ -103,6 +103,7 @@ export function laggPa(bas: Varelse, tillagg: string): Varelse | null {
   if (!fras) return null;
   const u = tolka(fras, { kalla: "skriv" });
   if (u.typ !== "skapad") return null;
+  if (bas.smeknamn && !u.varelse.smeknamn) u.varelse.smeknamn = bas.smeknamn;
   return u.varelse;
 }
 

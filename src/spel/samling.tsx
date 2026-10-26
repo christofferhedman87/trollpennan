@@ -97,6 +97,8 @@ export function AlbumVy({ stang }: { stang: () => void }) {
               const rad = `${niva >= 1 ? "★" : "☆"} ${niva >= 2 ? "★" : "☆"} ${niva >= 3 ? "★" : "☆"}`;
               return (
                 <article key={id} className={m ? "album-ruta slimepedia-kort" : "album-ruta okand slimepedia-kort"} data-testid={`kropp-${id}`} data-s5="slimepedia-kort">
+                  {m?.smeknamn ? <p className="album-smeknamn" data-d3="album-smeknamn">🏷️ {m.smeknamn}</p> : null}
+                  {m?.smeknamn && m.formel ? <p>{m.formel}</p> : null}
                   <SlimepediaKort id={id} bild={albumBild(id, "djur")} namn={id} plats={PLATS_ANG} albumNiva={niva} stang={stang} stjarnor={<p className="album-stj" data-testid={`stjarnor-${id}`}>{rad}</p>} />
                 </article>
               );
@@ -161,6 +163,7 @@ export function AlbumVy({ stang }: { stang: () => void }) {
               <article key={f.id} className="album-ruta" data-testid="foto-ruta">
                 <AlbumMark bild={albumBild(f.kropp, "foto")} plats={PLATS_ANG}>
                   <p className="album-stj">{stjarnor(f.niva)}</p>
+                  {f.smeknamn ? <p className="album-smeknamn" data-d3="album-smeknamn">🏷️ {f.smeknamn}</p> : null}
                   <p>{f.formel}</p>
                   <button type="button" className="nej" onClick={() => taBortFoto(f.id)}>
                     {ALBUM.texter.ta_bort}

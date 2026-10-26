@@ -22,6 +22,7 @@ import { arVarmePlagg, mossaPaFrysKanin } from "./mossaKanin.ts";
 import { byggTraff, geTraff, kompisTraff, laggPa, nastanRad, ONSK, ONSK_BYGG, tillaggFras } from "../onska.ts";
 import { replik } from "../replik.ts";
 import * as rostKo from "../rostKo.ts";
+import { forsokDopaText } from "../ui/gavoRuta.ts";
 import { lastBygge } from "../ui/hjalp.ts";
 import { mataVaktardjur } from "../ang/vaktardjur.tsx";
 import { noteraSolGava, noteraSolSkapelse } from "../solstjarna.ts";
@@ -152,17 +153,9 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
         useMinne.getState().hemma.find((h) => h.spec.uid === aktiv.uid)?.spec;
       const ons = ONSK.onskningar.find((o) => o.id === aktiv.id);
       const fras = bas ? tillaggFras(bas, raw) : null;
-      if (!bas || !fras || !ons) {
-        rensaSkriv();
-        return;
-      }
+      if (!bas || !fras || !ons) { rensaSkriv(); return; }
       const u = tolka(fras, { kalla: opt.hand ? "skriv" : "kort", inteGuld: opt.inteGuld });
-      if (u.typ === "sparr") {
-        rensaSkriv();
-        visaBanner(u.text, "sparr", "sparr");
-        ljud.puff();
-        return;
-      }
+      if (u.typ === "sparr") { rensaSkriv(); visaBanner(u.text, "sparr", "sparr"); ljud.puff(); return; }
       if (u.typ === "forslag") {
         setForslag({ token: u.token, text: u.text, forslag: u.forslag });
         setBehover(null);
@@ -191,12 +184,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
     const [huvud, ...fler] = delaOchMening(raw);
     const text = huvud && huvud.length > 0 ? huvud : raw;
     const utfall: Utfall = tolkaMedReserv(text, { kalla: opt.hand ? "skriv" : "kort", inteGuld: opt.inteGuld });
-    if (utfall.typ === "sparr") {
-      rensaSkriv();
-      visaBanner(utfall.text, "sparr", "sparr");
-      ljud.puff();
-      return;
-    }
+    if (utfall.typ === "sparr") { rensaSkriv(); visaBanner(utfall.text, "sparr", "sparr"); ljud.puff(); return; }
     if (utfall.typ === "forslag") {
       setForslag({ token: utfall.token, text: utfall.text, forslag: utfall.forslag });
       setBehover(null);
@@ -326,6 +314,8 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) {
     rensaVidHandling();
     if (platsUi.forsokSkriv(trim)) { rensaSkriv(); setBokOpp(false); return; }
     noteraSkriv(trim); mataVaktardjur(useMinne.getState().plats, trim);
+    const dopa = forsokDopaText(trim, gavaRef.current?.startsWith("egen:") ? gavaRef.current.slice(5) : null);
+    if (dopa) { visaBanner(`Nu heter djuret ${dopa.namn}!`, "ovr", "tapp"); ljud.puff(); brygga.glad(dopa.djur.uid); rensaSkriv(); setBokOpp(false); return; }
     if (gavaRef.current?.startsWith("egen:")) {
       const uid = gavaRef.current.slice(5);
       const u = tolkaGava(trim);

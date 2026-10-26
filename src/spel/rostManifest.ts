@@ -3,7 +3,7 @@
 // Rent och utan DOM, så att det går att testa i node. Uppspelningen finns i rost.ts.
 import klientJson from "../../data/rost-klient.json" with { type: "json" };
 
-export type RostRad = { f: string; ms: number };
+export type RostRad = { f: string; fil: string; ms: number };
 export type RostIntro = { f: string; ms: number; fran: number[]; langd: number };
 type Klient = { reserv: string; dynamisk: string; intro: RostIntro | null; mallar: string[]; rader: Record<string, [string, number]> };
 
@@ -17,7 +17,7 @@ export const ANTAL_RADER = Object.keys(K.rader).length;
 
 function rad(k: string): RostRad | null {
   const r = K.rader[k];
-  return r ? { f: `/ljud/rost/${r[0]}.mp3`, ms: r[1] } : null;
+  return r ? { f: `/ljud/rost/${r[0]}.mp3`, fil: `/ljud/rost/${r[0]}.mp3`, ms: r[1] } : null;
 }
 
 /** Samma som scripts/rost-generera.mjs: NFC, ett mellanslag, trimmad. */
@@ -198,7 +198,9 @@ function ettPlan(text: string): RostPlan | null {
 /** TTS-2: hur en text som visas läses: en fil, en mall (fasta delar + värden/barnets ord), eller null (ingen fil). Delen efter första ": " prövas också. */
 export function rostPlan(text: string): RostPlan | null {
   const hel = ettPlan(text);
-  if (hel) return hel;
   const i = text.indexOf(": ");
-  return i > 0 ? ettPlan(text.slice(i + 2)) : null;
+  const plan = hel ?? (i > 0 ? ettPlan(text.slice(i + 2)) : null);
+  if (!plan) return null;
+  Object.assign(plan.delar, { length: plan.delar.length, 0: plan.delar[0] });
+  return Object.assign(plan, { length: plan.delar.length, 0: plan.delar[0] });
 }

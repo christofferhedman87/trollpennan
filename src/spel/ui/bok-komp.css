@@ -159,6 +159,24 @@
   margin:2px 8px;
   padding:4px 8px;
 }
+.djur-namn-3d{
+  background:#FFF6E5;
+  color:#3B2F2F;
+  border:2px solid #3B2F2F;
+  border-radius:999px;
+  padding:1px 8px;
+  font-weight:800;
+  font-size:12px;
+  white-space:nowrap;
+  box-shadow:0 2px 4px rgba(59,47,47,0.18);
+  cursor:pointer;
+  pointer-events:auto;
+}
+.humor-etikett-3d{display:flex;flex-direction:column;align-items:center;gap:2px;transform:translate(-50%,-125%);pointer-events:auto}
+.humor-etikett-3d .humor-ikon-3d{transform:none}
+.gava-knapprad{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:0 0 6px}
+.bok .dop-knapp{min-height:44px;font-weight:800;background:#FFF6E5;border:3px solid #3B2F2F;border-radius:999px;padding:6px 12px}
+.album-smeknamn{margin:2px 0;font-weight:800;color:#3B2F2F;font-size:0.95rem}
 .sr-only{
   position:absolute;
   width:1px;
