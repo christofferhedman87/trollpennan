@@ -3,8 +3,9 @@ import { Suspense, useMemo, useRef } from "react";
 import type { Group } from "three";
 import { DjurForm, ModellGren } from "../ang/djur.tsx";
 import { brygga, type Sparad } from "../brygga.ts";
-import { harModell } from "../entiteter.ts";
+import { harDjurGltf } from "../entiteter.ts";
 import { GltfDjur, type DjurSignal } from "../gltfDjur.tsx";
+import { sattUttryck } from "../tillbehor/AnsiktsUttryck.tsx";
 import { useMinne } from "../minne.ts";
 import { replik } from "../replik.ts";
 import type { SparatBygge } from "../bygge.ts";
@@ -40,13 +41,28 @@ function GardEtt({
   signal,
   grupp,
   kropp,
+  index = 0,
 }: {
   spec: Sparad;
   signal: SignalRef;
   grupp: { current: Group | null };
   kropp: { current: Group | null };
+  index?: number;
 }) {
   const nere = useRef<{ x: number; y: number } | null>(null);
+  const antal = useRef(0);
+  const fod = useRef(performance.now());
+  useFrame(() => {
+    const liv = useMinne.getState();
+    sattUttryck(
+      signal,
+      (performance.now() - fod.current) / 1000,
+      signal.current.hopp > 0,
+      liv.liv[spec.uid]?.humor,
+      liv.sovande.some((d) => d.uid === spec.uid),
+      Boolean((spec as { extraKropp?: string }).extraKropp),
+    );
+  });
   const tryck = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     const start = nere.current;
@@ -55,7 +71,8 @@ function GardEtt({
     const dx = e.nativeEvent.clientX - start.x;
     const dy = e.nativeEvent.clientY - start.y;
     if (dx * dx + dy * dy > 24 * 24) return;
-    signal.current.klapp += 1;
+    antal.current += 1;
+    signal.current.klapp = performance.now();
     signal.current.hopp = 1;
     const g = grupp.current;
     const p = skarmPunkt(g?.position.x ?? e.point.x, (g?.position.y ?? 0) + 0.7, g?.position.z ?? e.point.z, e.camera);
@@ -65,7 +82,7 @@ function GardEtt({
       text: replik(spec, "tryck"),
       x: p.x,
       y: Math.max(0.12, p.y - 0.08),
-      klapp: signal.current.klapp,
+      klapp: antal.current,
     });
   };
   return (
@@ -89,13 +106,13 @@ function GardEtt({
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
       <group ref={kropp} scale={0.48}>
-        <Suspense fallback={<DjurForm spec={spec} />}>
-          {harModell(spec.kropp) ? (
+        <Suspense fallback={<DjurForm spec={spec} signal={signal} index={index} />}>
+          {harDjurGltf(spec.kropp) ? (
             <ModellGren spec={spec}>
-              <GltfDjur spec={spec} signal={signal} />
+              <GltfDjur spec={spec} signal={signal} index={index} />
             </ModellGren>
           ) : (
-            <DjurForm spec={spec} />
+            <DjurForm spec={spec} signal={signal} index={index} />
           )}
         </Suspense>
       </group>
@@ -202,7 +219,7 @@ export function GardDjurLista({
     <>
       {boende.map((d) => {
         const refs = hamta(d.uid);
-        return <GardEtt key={d.uid} spec={d.spec} signal={refs.signal} grupp={refs.grupp} kropp={refs.kropp} />;
+        return <GardEtt key={d.uid} spec={d.spec} signal={refs.signal} grupp={refs.grupp} kropp={refs.kropp} index={d.index} />;
       })}
     </>
   );

@@ -7,9 +7,11 @@ import { byggPack, forma } from "../djurmesh.ts";
 import { replik } from "../replik.ts";
 import { ljud } from "../ljud.ts";
 import { GltfDjur, GltfSak, squashSkala, type DjurSignal } from "../gltfDjur.tsx";
-import { arPlagg, arSak, fotKant, harModell, hoppHojd, malhojd, svavar, takSkala } from "../entiteter.ts";
+import { arPlagg, arSak, fotKant, harDjurGltf, hoppHojd, malhojd, svavar, takSkala } from "../entiteter.ts";
 import { regelFor, ritSkala } from "../placering.ts";
 import { faestTillbehor, procAnkare } from "../tillbehor/index.ts";
+import { AnsiktsUttryck, sattUttryck } from "../tillbehor/AnsiktsUttryck.tsx";
+import { useMinne } from "../minne.ts";
 import { DjurEffekter } from "../effekter.tsx";
 import { MILJO } from "../miljo.ts";
 import { synligKedja } from "../pekare.ts";
@@ -77,7 +79,7 @@ export function Formdel({ geo, color, position, scale, rotation, kontur = true, 
 const KROPP_MAT = new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: TOON_MAP });
 const OGA_MAT = new THREE.MeshBasicMaterial({ vertexColors: true });
 
-export function DjurForm({ spec }: { spec: Sparad }) {
+export function DjurForm({ spec, signal, index = 0 }: { spec: Sparad; signal?: { current: DjurSignal }; index?: number }) {
   const farg = djurFarg(spec);
   const pack = useMemo(() => byggPack({ kropp: spec.kropp, farg, krona: false, horn: false, monster: Boolean(spec.monster), monsterFarg: spec.monsterfarg ?? "#6D4C41" }), [farg, spec]);
   const extra = useMemo(() => { const g = new THREE.Group(); faestTillbehor(g, spec.kropp, spec.tillbehor); return g; }, [spec]);
@@ -107,6 +109,7 @@ export function DjurForm({ spec }: { spec: Sparad }) {
       <mesh geometry={pack.outline} material={KONTUR_MAT} renderOrder={1} />
       <mesh geometry={pack.geo} material={mat} castShadow renderOrder={2} />
       <mesh geometry={pack.ogon} material={OGA_MAT} renderOrder={3} />
+      <AnsiktsUttryck ankare={procAnkare(spec.kropp)} signal={signal} index={index} />
       <primitive object={extra} />
       {spec.kropp === "drake" ? (
         <mesh ref={rok} visible={false}><sphereGeometry args={[1, 6, 5]} /><meshBasicMaterial color="#F7FBFF" transparent opacity={0.4} depthWrite={false} /></mesh>
@@ -198,6 +201,8 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
     const pause = pausaAnim();
     if (fod.current < 0) { fod.current = t; ljud.fil("pop"); }
     const age = t - fod.current;
+    const liv = useMinne.getState();
+    sattUttryck(signal, age, hopp.current > 0, liv.liv[spec.uid]?.humor, liv.sovande.some((d) => d.uid === spec.uid), Boolean((spec as { extraKropp?: string }).extraKropp));
     if (!landad.current && age >= 0.38) { landad.current = true; ljud.fil("landa"); }
     let bred = 1;
     let hojd = 1;
@@ -308,7 +313,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       const bx = Math.min(0.78, Math.max(0.22, malPos.x));
       const by = Math.min(0.76, Math.max(0.18, malPos.y - 0.06));
       klapp.current += 1;
-      signal.current.klapp = klapp.current;
+      signal.current.klapp = performance.now();
       hopp.current = 1;
       kisa.current = 1;
       if (klapp.current >= 2) snurr.current = 1;
@@ -338,13 +343,13 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       </group>
       <group ref={grupp} position={[0, y, 0]}>
         <group ref={kroppRef} name="kropp" userData={{ trollUid: spec.uid }}>
-          {harModell(spec.kropp) ? (
-            <ModellGren spec={spec}><Suspense fallback={sak ? null : <DjurForm spec={spec} />}><GltfDjur spec={spec} signal={signal} /></Suspense></ModellGren>
-          ) : spec.kropp === AGG_KROPP ? <OrdAgg spec={spec} /> : <DjurForm spec={spec} />}
+          {harDjurGltf(spec.kropp) ? (
+            <ModellGren spec={spec}><Suspense fallback={sak ? null : <DjurForm spec={spec} signal={signal} index={Math.max(0, index)} />}><GltfDjur spec={spec} signal={signal} index={Math.max(0, index)} /></Suspense></ModellGren>
+          ) : spec.kropp === AGG_KROPP ? <OrdAgg spec={spec} /> : <DjurForm spec={spec} signal={signal} index={Math.max(0, index)} />}
         </group>
         <ReservAgg spec={spec} />
         <DjurEffekter varelse={spec} ankare={ankare} />
-        {sak ? null : <HumorIkon uid={spec.uid} hojd={malhojd(spec.kropp) + 0.22} />}
+        {sak ? null : <HumorIkon uid={spec.uid} hojd={malhojd(spec.kropp) + 0.42} signal={signal} />}
       </group>
       {ljus && ljus.vad === spec.kropp ? <Ljusken uid={spec.uid} kalla={ljus.kalla} hojd={y + malhojd(spec.kropp) * (spec.skala || 1) * 0.75} /> : null}
       {medSaker.map((id, i) => (

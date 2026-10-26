@@ -3,7 +3,7 @@
   "_om": "Sanningen om vilka djur som finns i 3D-ängen: modell (nyckel i tillgangar.json), måttet, färger, rörelse. En rad per kropp. Saknas ett fält gäller standarden i src/spel/entiteter.ts (inga fält per djur krävs för att ett nytt djur ska stå vänt mot kameran).",
   "entiteter": {
     "kanin": {
-      "typ": "djur", "kategori": "djur", "modell": "animal-bunny", "malhojd": 1,
+      "typ": "djur", "kategori": "djur", "modell": "animal-bunny", "rundModell": "s-djur-kanin-rund", "malhojd": 1,
       "palett": { "from": 25, "range": 22, "bodyL": 0.55 }, "art": "#F48FB1", "hopp": 0.55
     },
     "katt": {
@@ -11,7 +11,7 @@
       "palett": { "from": 0, "range": -1, "bodyL": 0.5 }, "art": "#64B5F6"
     },
     "hund": {
-      "typ": "djur", "kategori": "djur", "modell": "animal-dog", "malhojd": 1.05,
+      "typ": "djur", "kategori": "djur", "modell": "animal-dog", "rundModell": "s-djur-hund-shiba", "malhojd": 1.05,
       "palett": { "from": 25, "range": 22, "bodyL": 0.55 }, "art": "#FFD54F"
     },
     "drake": {
@@ -28,22 +28,22 @@
       "palett": { "from": 50, "range": 12, "bodyL": 0.55 }, "art": "#FFB74D", "rorelse": "flyg", "hopp": 0.32
     },
     "fisk": {
-      "typ": "djur", "kategori": "djur", "modell": "animal-fish", "malhojd": 0.7,
+      "typ": "djur", "kategori": "djur", "modell": "animal-fish", "rundModell": "s-djur-fisk-guldfisk", "malhojd": 0.7,
       "palett": { "from": 25, "range": 22, "bodyL": 0.55 }, "art": "#4FC3F7", "rorelse": "sim"
     },
     "groda": {
       "typ": "djur", "kategori": "djur", "modell": "groda", "malhojd": 0.85, "art": "#8BC34A",
       "hopp": 0.55, "material": { "4CAF50": "farg" }
     },
-    "gris": { "typ": "djur", "kategori": "djur", "modell": null, "art": "#F8BBD0" },
-    "dinosaurie": { "typ": "djur", "kategori": "djur", "modell": null, "art": "#80CBC4" },
+    "gris": { "typ": "djur", "kategori": "djur", "modell": null, "rundModell": "s-djur-gris-rund", "art": "#F8BBD0" },
+    "dinosaurie": { "typ": "djur", "kategori": "djur", "modell": null, "rundModell": "s-djur-dinosaurie-rund", "art": "#80CBC4" },
     "uggla": {
-      "typ": "djur", "kategori": "djur", "modell": "animal-chick", "malhojd": 0.8,
+      "typ": "djur", "kategori": "djur", "modell": "animal-chick", "rundModell": "s-djur-uggla-rund", "malhojd": 0.8,
       "palett": { "from": 50, "range": 12, "bodyL": 0.55 }, "art": "#BCAAA4", "rorelse": "flyg", "natt": "vaken"
     },
-    "ekorre": { "typ": "djur", "kategori": "djur", "modell": null, "art": "#FF8A65", "hopp": 0.55 },
+    "ekorre": { "typ": "djur", "kategori": "djur", "modell": null, "rundModell": "s-djur-ekorre-rund", "art": "#FF8A65", "hopp": 0.55 },
     "bäver": { "typ": "djur", "kategori": "djur", "modell": null, "art": "#A1887F", "rorelse": "sim" },
-    "haj": { "typ": "djur", "kategori": "djur", "modell": null, "art": "#CE93D8", "rorelse": "sim" },
+    "haj": { "typ": "djur", "kategori": "djur", "modell": null, "rundModell": "s-djur-haj-rund", "art": "#CE93D8", "rorelse": "sim" },
     "elefant": { "typ": "djur", "kategori": "djur", "modell": "elefant", "malhojd": 1.7, "palett": { "from": 25, "range": 22, "bodyL": 0.49 }, "art": "#C27138", "forladda": false, "ord": ["elefant"], "inlagd": "R3C" },
     "lejon": { "typ": "djur", "kategori": "djur", "modell": "lejon", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.49 }, "art": "#C27138", "forladda": false, "ord": ["lejon"], "inlagd": "R3C" },
     "zebra": { "typ": "djur", "kategori": "djur", "modell": "zebra", "malhojd": 1.3, "palett": { "from": 25, "range": 22, "bodyL": 0.49 }, "art": "#C27138", "forladda": false, "ord": ["zebra"], "inlagd": "R3C" },
@@ -54,8 +54,8 @@
     "orn": { "typ": "djur", "kategori": "djur", "modell": "orn", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.49 }, "art": "#C27138", "rorelse": "flyg", "forladda": false, "ord": ["örn"], "inlagd": "R3C" },
     "tyrannosaurus": { "typ": "djur", "kategori": "djur", "modell": "tyrannosaurus", "malhojd": 1.7, "palett": { "from": 25, "range": 22, "bodyL": 0.49 }, "art": "#C27138", "forladda": false, "ord": ["tyrannosaurus"], "inlagd": "R3C" },
     "giraff": { "typ": "djur", "kategori": "djur", "modell": "giraff", "malhojd": 2.1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["giraff"], "inlagd": "R3C" },
-    "panda": { "typ": "djur", "kategori": "djur", "modell": "panda", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["panda"], "inlagd": "R3C" },
-    "krabba": { "typ": "djur", "kategori": "djur", "modell": "krabba", "malhojd": 0.6, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "rorelse": "sim", "forladda": false, "ord": ["krabba"], "inlagd": "R3C" },
+    "panda": { "typ": "djur", "kategori": "djur", "modell": "panda", "rundModell": "s-djur-panda-rund", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["panda"], "inlagd": "R3C" },
+    "krabba": { "typ": "djur", "kategori": "djur", "modell": "krabba", "rundModell": "s-djur-krabba-rund", "malhojd": 0.6, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "rorelse": "sim", "forladda": false, "ord": ["krabba"], "inlagd": "R3C" },
     "delfin": { "typ": "djur", "kategori": "djur", "modell": "delfin", "malhojd": 1, "material": { "Top": "farg" }, "art": "#A1887F", "rorelse": "sim", "forladda": false, "ord": ["delfin"], "inlagd": "R3C" },
     "orm": { "typ": "djur", "kategori": "djur", "modell": "orm", "malhojd": 1, "material": { "Yellow": "farg" }, "art": "#A1887F", "forladda": false, "ord": ["orm"], "inlagd": "R3C" },
     "clownfisk": { "typ": "djur", "kategori": "djur", "modell": "clownfisk", "malhojd": 1, "material": { "Eyes": "farg" }, "art": "#A1887F", "rorelse": "sim", "forladda": false, "ord": ["clownfisk", "nemo"], "inlagd": "R3C" },
@@ -87,13 +87,13 @@
     "sten": { "typ": "natur", "kategori": "sten", "modell": "sten", "malhojd": 0.8, "art": "#B0BEC5", "forladda": false, "ord": ["sten"], "inlagd": "R3C" },
     "moln": { "typ": "natur", "kategori": "väder", "modell": "moln", "malhojd": 0.8, "art": "#E3F2FD", "forladda": false, "ord": ["moln"], "inlagd": "R3C" },
     "larv": { "typ": "djur", "kategori": "djur", "modell": "larv", "malhojd": 0.5, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["larv"], "inlagd": "R3D" },
-    "kyckling": { "typ": "djur", "kategori": "djur", "modell": "kyckling", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["kyckling"], "inlagd": "R3D" },
-    "ko": { "typ": "djur", "kategori": "djur", "modell": "ko", "malhojd": 1.3, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["ko"], "inlagd": "R3D" },
-    "hjort": { "typ": "djur", "kategori": "djur", "modell": "hjort", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["hjort"], "inlagd": "R3D" },
-    "vildsvin": { "typ": "djur", "kategori": "djur", "modell": "vildsvin", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["vildsvin"], "inlagd": "R3D" },
+    "kyckling": { "typ": "djur", "kategori": "djur", "modell": "kyckling", "rundModell": "s-djur-kyckling-rund", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["kyckling"], "inlagd": "R3D" },
+    "ko": { "typ": "djur", "kategori": "djur", "modell": "ko", "rundModell": "s-djur-ko-rund", "malhojd": 1.3, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["ko"], "inlagd": "R3D" },
+    "hjort": { "typ": "djur", "kategori": "djur", "modell": "hjort", "rundModell": "s-djur-hjort-rund", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["hjort"], "inlagd": "R3D" },
+    "vildsvin": { "typ": "djur", "kategori": "djur", "modell": "vildsvin", "rundModell": "s-djur-vildsvin-rund", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["vildsvin"], "inlagd": "R3D" },
     "koala": { "typ": "djur", "kategori": "djur", "modell": "koala", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["koala"], "inlagd": "R3D" },
     "apa": { "typ": "djur", "kategori": "djur", "modell": "apa", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["apa"], "inlagd": "R3D" },
-    "papegoja": { "typ": "djur", "kategori": "djur", "modell": "papegoja", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "rorelse": "flyg", "forladda": false, "ord": ["papegoja"], "inlagd": "R3D" },
+    "papegoja": { "typ": "djur", "kategori": "djur", "modell": "papegoja", "rundModell": "s-djur-papegoja-rund", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "rorelse": "flyg", "forladda": false, "ord": ["papegoja"], "inlagd": "R3D" },
     "isbjorn": { "typ": "djur", "kategori": "djur", "modell": "isbjorn", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["isbjörn"], "inlagd": "R3D" },
     "tiger": { "typ": "djur", "kategori": "djur", "modell": "tiger", "malhojd": 1, "palett": { "from": 25, "range": 22, "bodyL": 0.69 }, "art": "#DBA984", "forladda": false, "ord": ["tiger"], "inlagd": "R3D" },
     "ambulans": { "typ": "foremal", "kategori": "fordon", "modell": "ambulans", "malhojd": 1.2, "art": "#EF5350", "forladda": false, "ord": ["ambulans"], "inlagd": "R3D" },

@@ -17,6 +17,8 @@ export type Ankare = {
   ben: THREE.Object3D | null;
   /** true = positioner är i rotens världsrum och ska räknas om till förälderns lokala rum. */
   varld: boolean;
+  /** Enhetsvektor åt nosen (+z när djuret vetter mot kameran). */
+  fram: THREE.Vector3;
   /** Marknivå (världens y) under djuret. Saknas på rena mesh-ankare. */
   fotY?: number;
 };
@@ -40,6 +42,7 @@ export function procAnkare(kropp: string): Ankare {
     hojd: m.hojd,
     ben: null,
     varld: false,
+    fram: new THREE.Vector3(0, 0, 1),
   };
 }
 
@@ -77,7 +80,8 @@ const _max = new THREE.Vector3();
  */
 export function ankareFor(rot: THREE.Object3D, kropp: string, rum: "modell" | "mesh" = "modell"): Ankare {
   if (rum === "mesh") return { ...procAnkare(kropp), fotY: 0 };
-  const rad = kroppRad(kropp).modell;
+  let rad = kroppRad(kropp).modell;
+  if (!rad && rot.children.length > 0) rad = kroppRad("kanin").modell;
   if (!rad) return { ...procAnkare(kropp), fotY: 0 };
   const nod = rad.nod === "body" ? (hitta(rot, "body") ?? rot) : rot;
   const oldQ = rot.parent ? rot.parent.quaternion.clone() : null;
@@ -120,5 +124,5 @@ export function ankareFor(rot: THREE.Object3D, kropp: string, rum: "modell" | "m
   for (const n of NAMN) a[n] = punkt(rad.ankare[n]);
   const bredd = Math.min(w, h * rad.matt.bredd.hojd, rad.matt.bredd.tak ?? Infinity);
   if (rad.ref === "ben" && !ben) return { ...procAnkare(kropp), fotY: 0 };
-  return { ...a, bredd, hojd: h, ben: ben ?? (rad.nod === "body" ? nod : null), varld: true, fotY: _min.y };
+  return { ...a, bredd, hojd: h, ben: ben ?? (rad.nod === "body" ? nod : null), varld: true, fotY: _min.y, fram: new THREE.Vector3(0, 0, 1) };
 }
