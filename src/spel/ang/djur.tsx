@@ -6,7 +6,7 @@ import type { Plats } from "../platser.ts";
 import { byggPack, forma } from "../djurmesh.ts";
 import { replik } from "../replik.ts";
 import { ljud } from "../ljud.ts";
-import { GltfDjur, GltfSak, type DjurSignal } from "../gltfDjur.tsx";
+import { GltfDjur, GltfSak, squashSkala, type DjurSignal } from "../gltfDjur.tsx";
 import { arPlagg, arSak, fotKant, harModell, hoppHojd, malhojd, svavar, takSkala } from "../entiteter.ts";
 import { regelFor, ritSkala } from "../placering.ts";
 import { faestTillbehor, procAnkare } from "../tillbehor/index.ts";
@@ -21,6 +21,10 @@ import { _mal, djurFarg, djurIStall, djurKrymp, djurPlats, djurVand, flygare, no
 import { sakLage } from "../landning.ts";
 import { torrKropp } from "../platsYta.ts";
 import { malTillDuk } from "../ui/hjalp.ts";
+
+function pausaAnim(): boolean {
+  return typeof window !== "undefined" && window.__PAUSE_ANIM === true;
+}
 
 function StjarnPuff() {
   const g = useRef<THREE.Group>(null);
@@ -38,9 +42,7 @@ export class ModellGren extends Component<{ spec: Sparad; children: ReactNode },
   componentDidCatch() {
     window.dispatchEvent(new CustomEvent("trollpennan:model-fallback", { detail: { kropp: this.props.spec.kropp } }));
   }
-  static getDerivedStateFromError() {
-    return { fel: true };
-  }
+  static getDerivedStateFromError() { return { fel: true }; }
   render() {
     if (!this.state.fel) return this.props.children;
     return arSak(this.props.spec.kropp) ? <StjarnPuff /> : <DjurForm spec={this.props.spec} />;
@@ -58,38 +60,12 @@ export const TOON_MAP = (() => {
 })();
 const KONTUR_MAT = new THREE.MeshBasicMaterial({ color: MILJO.kontur.farg, side: THREE.BackSide });
 
-export function Formdel({
-  geo,
-  color,
-  position,
-  scale,
-  rotation,
-  kontur = true,
-  skugga = false,
-  glans = false,
-}: {
-  geo: THREE.BufferGeometry;
-  color: string;
-  position?: [number, number, number];
-  scale?: [number, number, number];
-  rotation?: [number, number, number];
-  kontur?: boolean;
-  skugga?: boolean;
-  glans?: boolean;
+export function Formdel({ geo, color, position, scale, rotation, kontur = true, skugga = false, glans = false }: {
+  geo: THREE.BufferGeometry; color: string; position?: [number, number, number]; scale?: [number, number, number];
+  rotation?: [number, number, number]; kontur?: boolean; skugga?: boolean; glans?: boolean;
 }) {
-  const mat = useMemo(
-    () =>
-      new THREE.MeshToonMaterial({
-        color,
-        gradientMap: TOON_MAP,
-        emissive: glans ? "#FFE082" : "#000000",
-        emissiveIntensity: glans ? 0.45 : 0,
-      }),
-    [color, glans],
-  );
-  useEffect(() => {
-    return () => mat.dispose();
-  }, [mat]);
+  const mat = useMemo(() => new THREE.MeshToonMaterial({ color, gradientMap: TOON_MAP, emissive: glans ? "#FFE082" : "#000000", emissiveIntensity: glans ? 0.45 : 0 }), [color, glans]);
+  useEffect(() => () => mat.dispose(), [mat]);
   return (
     <group position={position} scale={scale} rotation={rotation}>
       <mesh geometry={geo} material={mat} castShadow={skugga} />
@@ -103,49 +79,18 @@ const OGA_MAT = new THREE.MeshBasicMaterial({ vertexColors: true });
 
 export function DjurForm({ spec }: { spec: Sparad }) {
   const farg = djurFarg(spec);
-  const pack = useMemo(() => {
-    return byggPack({
-      kropp: spec.kropp,
-      farg,
-      krona: false,
-      // Hornet ritas av faestTillbehor så barnets färg syns. Inte en extra guldkon i meshen.
-      horn: false,
-      monster: Boolean(spec.monster),
-      monsterFarg: spec.monsterfarg ?? "#6D4C41",
-    });
-  }, [farg, spec]);
-  const extra = useMemo(() => {
-    const g = new THREE.Group();
-    faestTillbehor(g, spec.kropp, spec.tillbehor);
-    return g;
-  }, [spec]);
-  const mat = useMemo(() => {
-    if (!spec.glans) return KROPP_MAT;
-    return new THREE.MeshToonMaterial({
-      vertexColors: true,
-      gradientMap: TOON_MAP,
-      emissive: "#FFE082",
-      emissiveIntensity: 0.4,
-    });
-  }, [spec.glans]);
+  const pack = useMemo(() => byggPack({ kropp: spec.kropp, farg, krona: false, horn: false, monster: Boolean(spec.monster), monsterFarg: spec.monsterfarg ?? "#6D4C41" }), [farg, spec]);
+  const extra = useMemo(() => { const g = new THREE.Group(); faestTillbehor(g, spec.kropp, spec.tillbehor); return g; }, [spec]);
+  const mat = useMemo(() => spec.glans ? new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: TOON_MAP, emissive: "#FFE082", emissiveIntensity: 0.4 }) : KROPP_MAT, [spec.glans]);
   const rok = useRef<THREE.Mesh>(null);
   const andas = useRef<THREE.Group>(null);
-  useEffect(() => {
-    return () => {
-      pack.geo.dispose();
-      pack.outline.dispose();
-      pack.ogon.dispose();
-      if (mat !== KROPP_MAT) mat.dispose();
-    };
-  }, [pack, mat]);
+  useEffect(() => () => { pack.geo.dispose(); pack.outline.dispose(); pack.ogon.dispose(); if (mat !== KROPP_MAT) mat.dispose(); }, [pack, mat]);
   useFrame((state) => {
+    const a = andas.current;
+    if (pausaAnim()) { if (a) a.scale.set(1, 1, 1); return; }
     const t = state.clock.elapsedTime;
     forma(pack, t, spec.kropp);
-    const a = andas.current;
-    if (a) {
-      const b = 1 + Math.sin(t * 1.7) * 0.03;
-      a.scale.set(1, b, 1);
-    }
+    if (a) a.scale.set(1, 1 + Math.sin(t * 1.7) * 0.03, 1);
     const r = rok.current;
     if (!r) return;
     const cykel = t % 6.5;
@@ -155,8 +100,7 @@ export function DjurForm({ spec }: { spec: Sparad }) {
     const u = (cykel - 4.6) / 1.1;
     r.position.set(0.08, 0.95 + u * 0.45, 1.05);
     r.scale.setScalar(0.04 + u * 0.16);
-    const rm = r.material as THREE.MeshBasicMaterial;
-    rm.opacity = (1 - u) * 0.55;
+    (r.material as THREE.MeshBasicMaterial).opacity = (1 - u) * 0.55;
   });
   return (
     <group ref={andas}>
@@ -165,23 +109,16 @@ export function DjurForm({ spec }: { spec: Sparad }) {
       <mesh geometry={pack.ogon} material={OGA_MAT} renderOrder={3} />
       <primitive object={extra} />
       {spec.kropp === "drake" ? (
-        <mesh ref={rok} visible={false}>
-          <sphereGeometry args={[1, 6, 5]} />
-          <meshBasicMaterial color="#F7FBFF" transparent opacity={0.4} depthWrite={false} />
-        </mesh>
+        <mesh ref={rok} visible={false}><sphereGeometry args={[1, 6, 5]} /><meshBasicMaterial color="#F7FBFF" transparent opacity={0.4} depthWrite={false} /></mesh>
       ) : null}
     </group>
   );
 }
 
-
-
 export function Hjartan({ puls }: { puls: number }) {
   const grupp = useRef<THREE.Group>(null);
   const start = useRef(-10);
-  useEffect(() => {
-    if (puls > 0) start.current = performance.now();
-  }, [puls]);
+  useEffect(() => { if (puls > 0) start.current = performance.now(); }, [puls]);
   useFrame(() => {
     const g = grupp.current;
     if (!g) return;
@@ -194,10 +131,7 @@ export function Hjartan({ puls }: { puls: number }) {
     for (let i = 0; i < g.children.length; i++) {
       const m = g.children[i] as THREE.Mesh;
       const gnist = m.name === "gnist";
-      if (gnist && puls < 2) {
-        m.visible = false;
-        continue;
-      }
+      if (gnist && puls < 2) { m.visible = false; continue; }
       m.visible = true;
       const lokal = Math.max(0, t - i * 0.08);
       m.position.y = lokal * (gnist ? 0.5 : 0.28);
@@ -208,32 +142,20 @@ export function Hjartan({ puls }: { puls: number }) {
   return (
     <group ref={grupp} visible={false}>
       {[-0.28, 0.02, 0.3].map((x) => (
-        <mesh key={x} position={[x, 0, 0]}>
-          <sphereGeometry args={[0.16, 8, 6]} />
-          <meshBasicMaterial color="#F06292" transparent opacity={1} />
-        </mesh>
+        <mesh key={x} position={[x, 0, 0]}><sphereGeometry args={[0.16, 8, 6]} /><meshBasicMaterial color="#F06292" transparent opacity={1} /></mesh>
       ))}
-      {[
-        [-0.16, 0.08],
-        [0.18, -0.05],
-        [0.02, 0.16],
-        [-0.04, -0.12],
-      ].map(([x, z]) => (
-        <mesh key={`${x}${z}`} name="gnist" position={[x ?? 0, 0, z ?? 0]} visible={false}>
-          <sphereGeometry args={[0.045, 6, 5]} />
-          <meshBasicMaterial color="#FFE082" transparent opacity={1} />
-        </mesh>
+      {[[-0.16, 0.08], [0.18, -0.05], [0.02, 0.16], [-0.04, -0.12]].map(([x, z]) => (
+        <mesh key={`${x}${z}`} name="gnist" position={[x ?? 0, 0, z ?? 0]} visible={false}><sphereGeometry args={[0.045, 6, 5]} /><meshBasicMaterial color="#FFE082" transparent opacity={1} /></mesh>
       ))}
     </group>
   );
 }
 
-/** B4.1: `ljus` = platsens ljuskälla och vad i skapelsen som lyser (kroppen eller en sak den har med sig); bara de högst 4 senaste får den. */
 export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Sparad[]; plats?: Plats; ljus?: { kalla: Ljuskalla; vad: string } }) {
   const [x, y, z] = djurPlats(spec, alla, plats);
-  const krymp = djurKrymp(spec, alla, plats); // P3a: trångt (äldre) eller för stor för bilden → ritas mindre
-  const vand = djurVand(spec, alla, plats); // P3a: vandringens radie, mindre när det är trångt
-  const iStall = djurIStall(spec, alla, plats); // P3a: för prov (b66: den som inte fick plats står i stallet)
+  const krymp = djurKrymp(spec, alla, plats);
+  const vand = djurVand(spec, alla, plats);
+  const iStall = djurIStall(spec, alla, plats);
   const grupp = useRef<THREE.Group>(null);
   const kroppRef = useRef<THREE.Group>(null);
   const skal = useRef(0.2);
@@ -251,69 +173,59 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
   const [puls, setPuls] = useState(0);
   const index = alla.findIndex((d) => d.uid === spec.uid);
   const flyg = flygare(spec, plats, alla);
-  const sim = simmare(spec, plats, alla); // P3a-fix: simmar/flyger efter rollen regeln gav
+  const sim = simmare(spec, plats, alla);
   const ankare = useMemo(() => procAnkare(spec.kropp), [spec.kropp]);
-  const ritSpec = krymp !== 1 ? { ...spec, skala: (spec.skala || 1) * krymp } : spec; // P3a: samma mått som placeringsregeln, också när en småsak växer
-  const synS = ritSkala(ritSpec, z, plats); // P3a: platsens skala och minsta synliga storlek (samma som placeringsregeln räknar med)
+  const ritSpec = krymp !== 1 ? { ...spec, skala: (spec.skala || 1) * krymp } : spec;
+  const synS = ritSkala(ritSpec, z, plats);
   const sak = arSak(spec.kropp);
-  const medSaker = spec.tillbehor
-    .map((t) => t.id)
-    .filter((id) => id !== spec.kropp && arSak(id) && !arPlagg(id));
-  // P3: saken bredvid står på torr mark (inte i dammen): sidan, andra sidan eller framför
+  const medSaker = spec.tillbehor.map((t) => t.id).filter((id) => id !== spec.kropp && arSak(id) && !arPlagg(id));
   const sakPos = (id: string, i: number): [number, number, number] => {
     const onskad: [number, number] = [(0.45 + malhojd(spec.kropp) * 0.35) * (i % 2 === 0 ? 1 : -1) * (spec.skala || 1), 0.2 + Math.floor(i / 2) * 0.3];
     const torr = plats && !sim ? (wx: number, wz: number) => torrKropp(plats, wx, wz, fotKant(id, 1)) : undefined;
     const [ox, oz] = sakLage(x, z, onskad, torr);
     return [ox, 0, oz];
   };
-  useEffect(() => {
-    return () => {
-      if (upp.current) window.removeEventListener("pointerup", upp.current);
-      if (window.__tredMal) delete window.__tredMal[spec.uid];
-      if (window.__tredPos) delete window.__tredPos[spec.uid];
-    };
+  useEffect(() => () => {
+    if (upp.current) window.removeEventListener("pointerup", upp.current);
+    if (window.__tredMal) delete window.__tredMal[spec.uid];
+    if (window.__tredPos) delete window.__tredPos[spec.uid];
   }, [spec.uid]);
   useFrame((state, delta) => {
     const g = grupp.current;
     if (!g) return;
     const d = Math.min(delta, 0.1);
     const t = state.clock.elapsedTime;
-    if (fod.current < 0) {
-      fod.current = t;
-      ljud.fil("pop");
-    }
+    const pause = pausaAnim();
+    if (fod.current < 0) { fod.current = t; ljud.fil("pop"); }
     const age = t - fod.current;
-    if (!landad.current && age >= 0.38) {
-      landad.current = true;
-      ljud.fil("landa");
-    }
+    if (!landad.current && age >= 0.38) { landad.current = true; ljud.fil("landa"); }
     let bred = 1;
     let hojd = 1;
-    if (age < 0.4) {
+    if (pause) skal.current = 1;
+    else if (age < 0.4) {
       const u = age / 0.4;
       const pop = u < 0.5 ? u / 0.5 : 1 + Math.sin(((u - 0.5) / 0.5) * Math.PI) * 0.16;
       const squash = Math.sin(u * Math.PI) * 0.28;
-      skal.current = pop;
-      bred = 1 + squash;
-      hojd = 1 - squash * 1.15;
-    } else {
-      skal.current += (1 - skal.current) * Math.min(1, d * 6);
-    }
-    if (hopp.current > 0) hopp.current = Math.max(0, hopp.current - d * 2.2);
-    if (kisa.current > 0) kisa.current = Math.max(0, kisa.current - d * 1.5);
-    if (snurr.current > 0) snurr.current = Math.max(0, snurr.current - d * 0.55);
-    vila.current -= d;
+      skal.current = pop; bred = 1 + squash; hojd = 1 - squash * 1.15;
+    } else skal.current += (1 - skal.current) * Math.min(1, d * 6);
+    if (!pause) {
+      if (hopp.current > 0) hopp.current = Math.max(0, hopp.current - d * 2.2);
+      if (kisa.current > 0) kisa.current = Math.max(0, kisa.current - d * 1.5);
+      if (snurr.current > 0) snurr.current = Math.max(0, snurr.current - d * 0.55);
+      vila.current -= d;
+    } else { hopp.current = 0; kisa.current = 0; snurr.current = 0; }
     const hoppH = hoppHojd(spec.kropp);
     const kanHoppa = hoppH !== null;
-    if (vila.current <= 0 && hopp.current <= 0 && snurr.current <= 0) {
-      if (hoppH !== null) hopp.current = hoppH;
+    if (!pause && vila.current <= 0 && hopp.current <= 0 && snurr.current <= 0) {
+      if (hoppH !== null) { hopp.current = hoppH; ljud.plopp(); }
       vila.current = kanHoppa ? 3.1 + (index % 3) * 0.7 : 5;
     }
-    const lyft = Math.sin(hopp.current * Math.PI) * (snurr.current > 0 ? 0.85 : 0.45);
-    const bob = Math.sin(t * (flyg ? 2.4 : 1.6) + index) * (flyg ? 0.16 : sim ? 0.08 : 0.04);
-    const s = skal.current * takSkala(spec.kropp, ritSpec.skala || 1) * synS; // B6.1 (E): stora saker under taket; P3a: minsta synliga storlek
-    const kram = 1 - Math.sin(Math.min(1, kisa.current) * Math.PI) * 0.14;
-    g.scale.set((s * bred) / Math.sqrt(kram), s * hojd * kram, (s * bred) / Math.sqrt(kram));
+    const sq = squashSkala(t + index * 1.7, hopp.current);
+    const lyft = pause ? 0 : (snurr.current > 0 ? Math.sin(hopp.current * Math.PI) * 0.85 : sq.lyft);
+    const bob = pause ? 0 : Math.sin(t * (flyg ? 2.4 : 1.6) + index) * (flyg ? 0.16 : sim ? 0.08 : 0.04);
+    const s = skal.current * takSkala(spec.kropp, ritSpec.skala || 1) * synS;
+    const kram = pause ? 1 : 1 - Math.sin(Math.min(1, kisa.current) * Math.PI) * 0.14;
+    g.scale.set((s * bred * sq.sxz) / Math.sqrt(kram), s * hojd * kram * sq.sy, (s * bred * sq.sxz) / Math.sqrt(kram));
     const wx = Math.cos(t * 0.25 + index) * 0.22 * vand;
     const wz = Math.sin(t * 0.21 + index * 1.4) * 0.16 * vand;
     const spx = -Math.sin(t * 0.25 + index) * 0.22 * 0.25 * vand;
@@ -321,23 +233,16 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
     signal.current.ror = Math.hypot(spx, spz) * 10;
     if (flyg) {
       const loop = t * 0.85 + index;
-      g.position.x = Math.sin(loop) * 0.4;
-      g.position.z = Math.cos(loop) * 0.22;
-      g.position.y = y + bob + lyft + Math.sin(loop * 2) * 0.1;
-      g.rotation.z = Math.sin(loop) * 0.28;
+      g.position.set(Math.sin(loop) * 0.4, y + bob + lyft + Math.sin(loop * 2) * 0.1, Math.cos(loop) * 0.22);
+      g.rotation.z = pause ? 0 : Math.sin(loop) * 0.28;
       g.rotation.y = snurr.current > 0 ? t * 7 : Math.sin(t * 0.4 + index) * 0.14;
     } else if (svavar(spec.kropp)) {
-      g.position.x = Math.sin(t * 0.35 + index) * 0.12;
-      g.position.z = 0;
-      g.position.y = y + 0.18 + Math.sin(t * 1.4 + index) * 0.06;
+      g.position.set(Math.sin(t * 0.35 + index) * 0.12, y + 0.18 + Math.sin(t * 1.4 + index) * 0.06, 0);
       g.rotation.z = 0;
       g.rotation.y = snurr.current > 0 ? t * 7 : 0.35;
       signal.current.ror = 0;
     } else if (sak) {
-      // R3G: en sak står still (bara pop och hopp när barnet trycker).
-      g.position.x = 0;
-      g.position.z = 0;
-      g.position.y = y + lyft;
+      g.position.set(0, y + lyft, 0);
       g.rotation.z = 0;
       g.rotation.y = snurr.current > 0 ? t * 7 : 0;
       signal.current.ror = 0;
@@ -345,9 +250,8 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       g.position.x = sim ? Math.cos(t * 0.7 + index) * 0.22 * vand : wx;
       g.position.z = sim ? Math.sin(t * 0.7 + index) * 0.16 * vand : wz;
       g.position.y = y + bob + lyft;
-      const yaw = Math.atan2(spx, spz);
       g.rotation.z = 0;
-      g.rotation.y = snurr.current > 0 ? t * 7 : yaw * 0.35 * vand; // P3a: står den nästan stilla vrider den sig lika lite
+      g.rotation.y = snurr.current > 0 ? t * 7 : Math.atan2(spx, spz) * 0.35 * vand;
     }
     const gnist = puff.current;
     if (gnist) {
@@ -358,9 +262,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
         gnist.scale.setScalar(0.4 + u * 1.4);
         gnist.position.y = 0.4 + u * 0.8;
         for (let i = 0; i < gnist.children.length; i++) {
-          const m = gnist.children[i] as THREE.Mesh;
-          const mat = m.material as THREE.MeshBasicMaterial;
-          mat.opacity = 1 - u;
+          ((gnist.children[i] as THREE.Mesh).material as THREE.MeshBasicMaterial).opacity = 1 - u;
         }
       }
     }
@@ -369,30 +271,24 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       const syns = sim && hopp.current > 0.04;
       ring.visible = syns;
       if (syns) {
-        const u = 1 - hopp.current;
-        ring.scale.setScalar(0.45 + u * 1.6);
-        const mat = ring.material as THREE.MeshBasicMaterial;
-        mat.opacity = Math.max(0, hopp.current * 0.55);
+        ring.scale.setScalar(0.45 + (1 - hopp.current) * 1.6);
+        (ring.material as THREE.MeshBasicMaterial).opacity = Math.max(0, hopp.current * 0.55);
       }
     }
     if (t % 0.2 < d) {
       g.getWorldPosition(_mal);
-      (window.__tredPos ??= {})[spec.uid] = { x: Math.round(_mal.x * 100) / 100, z: Math.round(_mal.z * 100) / 100, y: Math.round(_mal.y * 100) / 100, sim, flyg, stall: iStall, k: krymp, syn: Math.round((synS / (regelFor(plats).skala ?? 1)) * 100) / 100 }; // B6.3, för prov; P3a: simmar/flyger/stallet
+      (window.__tredPos ??= {})[spec.uid] = { x: Math.round(_mal.x * 100) / 100, z: Math.round(_mal.z * 100) / 100, y: Math.round(_mal.y * 100) / 100, sim, flyg, stall: iStall, k: krymp, syn: Math.round((synS / (regelFor(plats).skala ?? 1)) * 100) / 100 };
       _mal.y += 1.2;
       _mal.project(state.camera);
       const rect = state.gl.domElement.getBoundingClientRect();
       const mal = (window.__tredMal ??= {});
-      mal[spec.uid] = {
-        x: Math.round(rect.left + ((_mal.x + 1) / 2) * rect.width),
-        y: Math.round(rect.top + ((1 - _mal.y) / 2) * rect.height),
-      };
+      mal[spec.uid] = { x: Math.round(rect.left + ((_mal.x + 1) / 2) * rect.width), y: Math.round(rect.top + ((1 - _mal.y) / 2) * rect.height) };
       const kr = kroppRef.current;
-      if (window.__tredSyn && kr) window.__tredSyn[spec.uid] = synMatt(kr, state.camera, rect); // B6.6, för prov
-      if (window.__tredBild?.uid === spec.uid && kr) window.__tredBild.ruta = synMatt(kr, state.camera, rect); // P3a: titelbilden
+      if (window.__tredSyn && kr) window.__tredSyn[spec.uid] = synMatt(kr, state.camera, rect);
+      if (window.__tredBild?.uid === spec.uid && kr) window.__tredBild.ruta = synMatt(kr, state.camera, rect);
     }
   });
   function ned(e: ThreeEvent<PointerEvent>) {
-    // R9H: osynlig träff (puff/plask) → låt nästa, närmaste synliga djur ta trycket
     if (!synligKedja(e.object)) return;
     e.stopPropagation();
     if (upp.current) window.removeEventListener("pointerup", upp.current);
@@ -417,24 +313,14 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       kisa.current = 1;
       if (klapp.current >= 2) snurr.current = 1;
       setPuls((n) => n + 1);
-      brygga.skicka({
-        typ: "tryck",
-        uid: spec.uid,
-        text: replik(spec, "tryck"),
-        x: bx,
-        y: by,
-        klapp: klapp.current,
-      });
+      brygga.skicka({ typ: "tryck", uid: spec.uid, text: replik(spec, "tryck"), x: bx, y: by, klapp: klapp.current });
     };
     upp.current = klar;
     window.addEventListener("pointerup", klar, { once: true });
   }
   return (
     <group position={[x, 0, z]} onPointerDown={ned} userData={{ trollDel: spec.uid }}>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.04, 0]}>
-        <circleGeometry args={[0.55, 12]} />
-        <meshBasicMaterial color="#2F4A22" transparent opacity={0.14} />
-      </mesh>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.04, 0]}><circleGeometry args={[0.55, 12]} /><meshBasicMaterial color="#2F4A22" transparent opacity={0.14} /></mesh>
       {sim ? (
         <mesh ref={plask} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.08, 0]} visible={false}>
           <ringGeometry args={[0.32, 0.46, 16]} />
@@ -452,17 +338,9 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       </group>
       <group ref={grupp} position={[0, y, 0]}>
         <group ref={kroppRef} name="kropp" userData={{ trollUid: spec.uid }}>
-        {harModell(spec.kropp) ? (
-          <ModellGren spec={spec}>
-            <Suspense fallback={sak ? null : <DjurForm spec={spec} />}>
-              <GltfDjur spec={spec} signal={signal} />
-            </Suspense>
-          </ModellGren>
-        ) : spec.kropp === AGG_KROPP ? (
-          <OrdAgg spec={spec} />
-        ) : (
-          <DjurForm spec={spec} />
-        )}
+          {harModell(spec.kropp) ? (
+            <ModellGren spec={spec}><Suspense fallback={sak ? null : <DjurForm spec={spec} />}><GltfDjur spec={spec} signal={signal} /></Suspense></ModellGren>
+          ) : spec.kropp === AGG_KROPP ? <OrdAgg spec={spec} /> : <DjurForm spec={spec} />}
         </group>
         <ReservAgg spec={spec} />
         <DjurEffekter varelse={spec} ankare={ankare} />
@@ -472,11 +350,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       {medSaker.map((id, i) => (
         <group key={id} position={sakPos(id, i)}>
           {ljus && ljus.vad === id ? <Ljusken uid={spec.uid} kalla={ljus.kalla} hojd={malhojd(id) * 0.75} /> : null}
-          <ModellGren spec={{ ...spec, kropp: id }}>
-            <Suspense fallback={null}>
-              <GltfSak id={id} />
-            </Suspense>
-          </ModellGren>
+          <ModellGren spec={{ ...spec, kropp: id }}><Suspense fallback={null}><GltfSak id={id} /></Suspense></ModellGren>
         </group>
       ))}
     </group>

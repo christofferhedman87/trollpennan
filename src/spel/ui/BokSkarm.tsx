@@ -37,16 +37,18 @@ type BokSkarmProps = {
   agdaSidor: SidaBygg[]; setByggSidaId: Dispatch<SetStateAction<string>>; setByggPuff: Dispatch<SetStateAction<string | null>>; byggFras: (fras: string) => void;
   kopRad: string | null; lastaSidor: SidaBygg[]; forsokKop: (slag: "djur" | "bygg", id: string, titel: string, pris: number) => void;
   setPanel?: Dispatch<SetStateAction<"spel" | "byggbok" | "uppdrag">>;
+  forstaSkapelse?: boolean;
 };
 
-export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop, setPanel }: BokSkarmProps) {
+export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop, setPanel, forstaSkapelse = false }: BokSkarmProps) {
   const [skaparVy, setSkaparVy] = useState<"skriv" | "gata" | "ideer">("skriv");
   const [versaler, setVersaler] = useState(false);
+  const [sjalvSkriv, setSjalvSkriv] = useState(false);
   const aktivtUpp = panel === "uppdrag" ? (aktivtSkrivUppdrag(uppdragSpar, platsNu()) ?? nastaSkrivUppdrag(uppdragSpar, platsNu(), false)) : undefined;
   const uppRader = ALLA_UPPDRAG.filter((u) => (uppFlik === "klar" ? uppdragSpar[u.id] === "klar" : uppdragSpar[u.id] === "pagar" && u.id !== aktivtUpp?.id));
   return (
-      <div className="bok-skarm" data-testid="bok-skarm" onClick={stangBok}>
-      <section className={andrar ? "bok andrar" : "bok"} data-andrar={andrar ? "ja" : "nej"} role="dialog" aria-label="Pennans bok" onClick={(e) => e.stopPropagation()}>
+      <div className={forstaSkapelse ? "bok-skarm forsta-vy" : "bok-skarm"} data-testid="bok-skarm" onClick={stangBok}>
+      <section className={andrar ? "bok andrar" : forstaSkapelse ? "bok forsta-skapelse" : "bok"} data-andrar={andrar ? "ja" : "nej"} role="dialog" aria-label="Pennans bok" onClick={(e) => e.stopPropagation()}>
         <header className="bok-huvud bok-topp">
           <h2
             ref={(el) => el?.setAttribute("data-testid", "bok-flik-skriv")}
@@ -72,7 +74,8 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
             data-testid="pennan"
             onClick={() => {
               setSkaparVy("skriv");
-              setLage((l) => (l === "skriv" ? "kort" : "skriv"));
+              if (forstaSkapelse) { setSjalvSkriv(true); setLage("skriv"); }
+              else setLage((l) => (l === "skriv" ? "kort" : "skriv"));
               setForslag(null);
             }}
           >
@@ -155,7 +158,8 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
                   <button type="button" role="tab" aria-selected={skaparVy === "gata"} className={skaparVy === "gata" ? "flik pa" : "flik"} data-v3="vy-flik-gata" ref={(el) => el?.setAttribute("data-testid", "bok-flik-gator")} onClick={() => setSkaparVy("gata")}>❓ Gåta</button>
                   <button type="button" role="tab" aria-selected={skaparVy === "ideer"} className={skaparVy === "ideer" ? "flik pa" : "flik"} data-v3="vy-flik-ideer" onClick={() => setSkaparVy("ideer")}>💡 Idéer</button>
                 </div>
-                {skaparVy === "skriv" && !aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? <Ledtradsyta funna={funna} kompakt /> : null}
+                {skaparVy === "skriv" && !aktivtSkrivUppdrag(uppdragSpar, platsNu()) && !forstaSkapelse ? <Ledtradsyta funna={funna} kompakt /> : null}
+                {forstaSkapelse && skaparVy === "skriv" ? <p className="forsta-val">✨ Välj ditt första djur:</p> : null}
                 {skaparVy === "gata" && !aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? (
                   <>
                     <p className="hemligt-forklaring" data-testid="hemligt-forklaring">{hemligt.forklaring}</p>
@@ -191,7 +195,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
                     </button>
                   ))}
                 </div>
-                <div className="kort-yta">
+                <div className="kort-yta" data-v3="ordkort">
                   <div className="rutnat">
                     {kort.map((ord) => {
                       const vald = val[ord.klass as Slot]?.id === ord.id;
@@ -230,9 +234,10 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
               className="remsa skriv-remsa"
               id="troll-ord"
               data-testid="remsa"
+              data-v3="skriv-remsa"
               role="textbox"
               aria-label="Skrivrutan"
-              onClick={() => { if (lage !== "skriv") setLage("skriv"); }}
+              onClick={() => { if (lage !== "skriv") setLage("skriv"); if (forstaSkapelse) setSjalvSkriv(true); }}
             >
               {text ? (
                 text
@@ -251,7 +256,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
               <span ref={(el) => el?.setAttribute("data-testid", "vack-knapp")}>{vaknaText}</span>
             </button>
             </div>
-            {lage === "skriv" ? (
+            {lage === "skriv" && (!forstaSkapelse || sjalvSkriv) ? (
               <div className="tangenter" data-testid="tangentbord">
                 {TANGENTBORD.rader.map((rad, radIdx) => (
                   <div className="rad" key={rad.join("")}>

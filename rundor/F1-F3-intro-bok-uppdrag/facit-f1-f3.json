@@ -1,0 +1,44 @@
+{
+  "rundor": ["F1", "F2", "F3"],
+  "viewport": { "width": 375, "height": 812 },
+  "f1": {
+    "introHudMaxCount": 0,
+    "introTopButtonsMinGapPx": 24,
+    "introButtonMinHeightPx": 44,
+    "introNextButtonMinHeightPx": 48,
+    "introFree3dRatioMin": 0.70,
+    "introBubbleBounds": { "minY": 520, "maxY": 760, "minBorderRadiusPx": 18 },
+    "spellWord": ["K", "A", "N", "I", "N"],
+    "forstaSkapelseMaxHeightPx": 446,
+    "forstaSkapelseMinTopPx": 366,
+    "upper3dScrimMaxAlpha": 0.0,
+    "forstaSkapelseAnimalCardsMin": 6,
+    "forstaSkapelseAnimalCardsMax": 8,
+    "forstaSkapelseCardMinHeightPx": 52,
+    "firstAnimalOrdkortStars": 1,
+    "models": [
+      "/models/bulk/f-trollpenna-magisk-cc0.glb",
+      "/models/bulk/f-magisk-stjarna-effekt-cc0.glb"
+    ]
+  },
+  "f2": {
+    "modeToggleMinHeightPx": 44,
+    "modeToggleMinWidthPx": 140,
+    "tabMinHeightPx": 44,
+    "spaceKeyMinHeightPx": 44,
+    "uppdragStripMaxHeightPx": 42,
+    "cardMinBorderRadiusPx": 18,
+    "springBezier": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+    "phraseBuildInput": "en kanin med …",
+    "phraseBuildClickCard": "halsduk",
+    "phraseBuildExpected": "en kanin med halsduk"
+  },
+  "f3": {
+    "dynamicAnimalBody": "katt",
+    "expectedMissionSubstring": "din katt fryser",
+    "acceptedWarmthWords": ["sol", "solen", "solsken", "värme", "mössa", "halsduk", "filt", "eld", "tröja", "luva"],
+    "solveInBookButtonMinHeightPx": 48,
+    "animalWishBubbleMinSizePx": 44,
+    "forbiddenAnimalCardsInGiftMode": ["kanin", "katt", "hund", "häst", "drake"]
+  }
+}

@@ -39,6 +39,7 @@ export const BLOMMOR = [
 
 declare global {
   interface Window {
+    __PAUSE_ANIM?: boolean;
     __tred?: {
       x: number;
       y: number;

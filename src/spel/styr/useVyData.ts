@@ -10,7 +10,7 @@ import { BYGGSIDOR, FIR, TEXTER } from "../ui/spelData.ts";
 import type { SpelKarna } from "./typer.ts";
 
 export function useVyData(k: Pick<SpelKarna, "t">) {
-  const { flik, varld, meny, boUid, byggSidaId, onskaOpp, onskaPos, onskaSyns, kartaOpp, omrade, gavaTill, angRef, funna, onskan, byggSidor, garden, ang, hemma, allaOrd } = k.t;
+  const { flik, varld, meny, boUid, byggSidaId, onskaOpp, onskaPos, onskaSyns, kartaOpp, omrade, gavaTill, angRef, funna, onskan, byggSidor, garden, ang, hemma, allaOrd, panel } = k.t;
 
   useEffect(() => {
     const rot = angRef.current;
@@ -80,10 +80,13 @@ export function useVyData(k: Pick<SpelKarna, "t">) {
       }
     : onskaAnkare(onskaPos.x, onskaPos.y);
 
-  const kort = allaOrd
+  const forstaSkapelse = panel === "spel" && varld === "ang" && !gavaTill && !andrar && ang.length === 0 && hemma.length === 0;
+  const START_DJUR = ["kanin", "katt", "hund", "häst", "gris", "drake", "groda", "fågel"];
+  const kortAlla = allaOrd
     .filter((o) => o.niva === "kort" && o.klass === flik)
     .slice()
     .sort((a, b) => Number(onskaIds.has(b.id)) - Number(onskaIds.has(a.id)));
+  const kort = forstaSkapelse && flik === "djur" ? kortAlla.filter((o) => START_DJUR.includes(o.id)).slice(0, 8) : kortAlla;
 
   const hemliga = allaOrd.filter((o) => o.niva === "fritt");
 
@@ -118,7 +121,7 @@ export function useVyData(k: Pick<SpelKarna, "t">) {
     const n = nya[0];
     if (n) komIhagDjur(n);
   }
-  return { visaOnskaHjalp, onskaDjur, andrar, vaknaText, onskaEx, onskaKort, onskaIds, i3d, ank, kort, hemliga, kvar, hittade, boBygge, boHem, boDjur, menyBygge, menyHem, visa3d, agdaSidor, lastaSidor, byggSida, stallKanin };
+  return { visaOnskaHjalp, onskaDjur, andrar, vaknaText, onskaEx, onskaKort, onskaIds, i3d, ank, kort, hemliga, kvar, hittade, boBygge, boHem, boDjur, menyBygge, menyHem, visa3d, agdaSidor, lastaSidor, byggSida, stallKanin, forstaSkapelse };
 }
 
 export type VyData = ReturnType<typeof useVyData>;

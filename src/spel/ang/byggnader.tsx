@@ -1,11 +1,9 @@
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
-import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { kontrast } from "../kit.ts";
 import type { SparatBygge } from "../bygge.ts";
 import { _mal, slag, usePennTryck } from "./delat.ts";
-import { Hanglas, Rok } from "./dekor.tsx";
 import { TOON_MAP } from "./djur.tsx";
 import { PLACERING } from "../placering.ts";
 
@@ -114,97 +112,24 @@ export function Byggnad({ b }: { b: SparatBygge }) {
   return <Hus position={[x, 0, z]} farg={farg} fonster={fonster} />;
 }
 
-export function SpokHus({ onSnart }: { onSnart: () => void }) {
+export function SpokHus({ onSnart: _onSnart }: { onSnart: () => void }) {
   const hus = useRef<THREE.Group>(null);
-  const glas = useRef<THREE.MeshBasicMaterial>(null);
-  const gung = useRef(0);
-  const former = useMemo(() => {
-    const vaggar = new THREE.BoxGeometry(1.25, 0.95, 1.05);
-    const tak = new THREE.ConeGeometry(0.98, 0.62, 4);
-    const kant = new THREE.BoxGeometry(1, 1, 1);
-    const acc = new THREE.BufferGeometry();
-    const delar: THREE.BufferGeometry[] = [];
-    const bx = 1.25;
-    const by = 0.95;
-    const bz = 1.05;
-    const t = 0.045;
-    const balk = (x: number, y: number, z: number, sx: number, sy: number, sz: number) => {
-      const g = kant.clone();
-      g.scale(sx, sy, sz);
-      g.translate(x, y, z);
-      delar.push(g);
-    };
-    const y0 = -by / 2;
-    const y1 = by / 2;
-    for (const [x, z] of [[-bx / 2, -bz / 2], [bx / 2, -bz / 2], [-bx / 2, bz / 2], [bx / 2, bz / 2]] as [number, number][]) {
-      balk(x, 0, z, t, by, t);
-    }
-    for (const y of [y0, y1]) {
-      balk(0, y, -bz / 2, bx, t, t);
-      balk(0, y, bz / 2, bx, t, t);
-      balk(-bx / 2, y, 0, t, t, bz);
-      balk(bx / 2, y, 0, t, t, bz);
-    }
-    const merged = mergeGeometries(delar, false) ?? acc;
-    return { vaggar, tak, kant: merged };
-  }, []);
-  const ned = usePennTryck(() => {
-    gung.current = 1;
-    onSnart();
-  });
   useFrame((state) => {
-    const t = state.clock.elapsedTime;
-    if (hus.current) {
-      const s = 1 + Math.sin(t * 1.4) * 0.03;
-      hus.current.scale.setScalar(s);
-    }
-    if (glas.current) glas.current.opacity = 0.32 + Math.sin(t * 1.3) * 0.06;
-    if (t % 0.2 < 0.05) {
-      const rot = hus.current;
-      if (!rot) return;
-      rot.getWorldPosition(_mal);
-      _mal.y += 0.9;
-      _mal.project(state.camera);
-      const rect = state.gl.domElement.getBoundingClientRect();
-      const tred = (window.__tred ??= { x: 0, y: 0, z: 0, zoom: 0 });
-      tred.husx = Math.round(rect.left + ((_mal.x + 1) / 2) * rect.width);
-      tred.husy = Math.round(rect.top + ((1 - _mal.y) / 2) * rect.height);
-      window.__tred = tred;
-    }
+    if (state.clock.elapsedTime % 0.2 >= 0.05) return;
+    const rot = hus.current;
+    if (!rot) return;
+    rot.getWorldPosition(_mal);
+    _mal.y += 0.9;
+    _mal.project(state.camera);
+    const rect = state.gl.domElement.getBoundingClientRect();
+    const tred = (window.__tred ??= { x: 0, y: 0, z: 0, zoom: 0 });
+    tred.husx = Math.round(rect.left + ((_mal.x + 1) / 2) * rect.width);
+    tred.husy = Math.round(rect.top + ((1 - _mal.y) / 2) * rect.height);
+    window.__tred = tred;
   });
   return (
-    <group name="spokhus" position={[SPOK.x, 0, SPOK.z]} scale={1.05} onPointerDown={ned}>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0.05]}>
-        <circleGeometry args={[1.15, 16]} />
-        <meshToonMaterial color="#C4A574" gradientMap={TOON_MAP} />
-      </mesh>
-      <group ref={hus}>
-        <mesh geometry={former.vaggar} position={[0, 0.58, 0]}>
-          <meshBasicMaterial ref={glas} color="#D6ECFF" transparent opacity={0.35} depthWrite={false} side={THREE.DoubleSide} />
-        </mesh>
-        <mesh geometry={former.kant} position={[0, 0.58, 0]}>
-          <meshBasicMaterial color="#F7FBFF" toneMapped={false} />
-        </mesh>
-        <mesh geometry={former.tak} position={[0, 1.28, 0]} rotation={[0, Math.PI / 4, 0]}>
-          <meshBasicMaterial color="#E3F2FD" transparent opacity={0.35} depthWrite={false} side={THREE.DoubleSide} />
-        </mesh>
-        <mesh position={[0.38, 1.55, 0]}>
-          <boxGeometry args={[0.16, 0.32, 0.16]} />
-          <meshBasicMaterial color="#EAF6FF" transparent opacity={0.45} />
-        </mesh>
-      </group>
-      <Rok />
-      <mesh position={[-0.78, 0.36, 0.4]}>
-        <boxGeometry args={[0.08, 0.55, 0.08]} />
-        <meshToonMaterial color="#8D6E63" gradientMap={TOON_MAP} />
-      </mesh>
-      <mesh position={[-0.78, 0.7, 0.42]}>
-        <boxGeometry args={[0.32, 0.22, 0.06]} />
-        <meshToonMaterial color="#A1887F" gradientMap={TOON_MAP} />
-      </mesh>
-      <group position={[-0.78, 0.7, 0.5]} scale={1.15}>
-        <Hanglas gung={gung} />
-      </group>
+    <group name="spokhus" position={[SPOK.x, 0, SPOK.z]}>
+      <group ref={hus} />
     </group>
   );
 }
@@ -258,9 +183,6 @@ export function Skogsstig({ onSnart }: { onSnart: () => void }) {
           <boxGeometry args={[1.15, 0.9, 0.3]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
         </mesh>
-        <group position={[0, 0.38, 0.1]} scale={0.9}>
-          <Hanglas gung={gung} />
-        </group>
       </group>
     </group>
   );
