@@ -27,14 +27,14 @@
     },
     {
       "id": "bengtsson",
-      "text": "Bengtsson vill be dig om något. Tryck på honom!",
+      "text": "Doktor Bengtsson vill be dig om något. Tryck på honom!",
       "pekar_pa": "testid:bengtsson-ikon|testid:npc-figur",
       "klart_nar": { "falt": "uppdrag", "minst": 1 }
     },
     {
       "id": "uppdraget",
-      "text": "Skriv det Bengtsson ber om i Pennans bok.",
-      "visa_text": "Tryck på Skriv och skriv det Bengtsson ber om!",
+      "text": "Skriv det Doktor Bengtsson ber om i Pennans bok.",
+      "visa_text": "Tryck på Skriv och skriv det Doktor Bengtsson ber om!",
       "pekar_pa": "testid:pennans-bok",
       "klart_nar": { "falt": "uppdrag", "varde": "klar", "minst": 1 }
     },

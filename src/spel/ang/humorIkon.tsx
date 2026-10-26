@@ -1,8 +1,6 @@
 // R9K: en liten humörikon ovanför varje djur i 3D (ängen och alla platser). Vilken ikon som visas står i data/humor.json
 // (`ikon` per humör); ingen kod per humör. Ikonen tar inga tryck, så trycket går till djuret som förut.
 import { Html } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
 import { HUMOR_IKON } from "../liv.ts";
 import { useMinne } from "../minne.ts";
 import type { DjurSignal } from "../gltfDjur.tsx";
@@ -10,17 +8,11 @@ import type { DjurSignal } from "../gltfDjur.tsx";
 export function HumorIkon({ uid, hojd, signal }: { uid: string; hojd: number; signal?: { current: DjurSignal } }) {
   const humor = useMinne((s) => s.liv[uid]?.humor);
   const ikon = humor ? HUMOR_IKON[humor] : undefined;
-  const el = useRef<HTMLSpanElement>(null);
-  useFrame(() => {
-    if (!el.current) return;
-    const jubel = signal?.current.humör === "fortjust";
-    el.current.style.visibility = jubel ? "hidden" : "visible";
-  });
+  void signal;
   if (!humor || !ikon) return null;
   return (
     <Html position={[0, hojd, 0]} center zIndexRange={[3, 0]} style={{ pointerEvents: "auto" }}>
       <span
-        ref={el}
         className="humor-ikon-3d"
         data-testid={`humor3d-${humor}`}
         data-uid={uid}

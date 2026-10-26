@@ -8,7 +8,7 @@ export function useDialogFokus() {
     const ater = new Map<HTMLElement, HTMLElement | null>();
     const synlig = (el: HTMLElement) => el.getClientRects().length > 0 && !el.closest("[inert]");
     const kontroller = (el: HTMLElement) => Array.from(el.querySelectorAll<HTMLElement>(
-      'button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), summary, [tabindex="0"]'
+      'button:not(:disabled), a[href], input:not(:disabled):not(.ord-input-ankare):not([tabindex="-1"]), select:not(:disabled), textarea:not(:disabled), summary, [tabindex="0"]'
     )).filter(synlig);
     const hitta = () => Array.from(document.querySelectorAll<HTMLElement>('[role="dialog"]')).filter(synlig).at(-1) ?? null;
     const synka = () => {

@@ -47,6 +47,7 @@ export function Bengtsson3D() {
     gruppRef.current.position.y = Math.sin(t * 1.8) * 0.03;
     gruppRef.current.rotation.y = 0.32 + Math.sin(t * 0.9) * 0.06;
   });
+  const D1_DOLJ_3D_BENGTSSON = true; if (D1_DOLJ_3D_BENGTSSON) return null;
   return (
     <group ref={gruppRef} name="bengtsson-3d" position={[-1.45, 0, 1.50]} rotation={[0, 0.32, 0]} scale={1.0} userData={{ trollNpc: "bengtsson" }} onClick={(e) => { e.stopPropagation(); window.dispatchEvent(new CustomEvent("troll-npc-klick")); }}>
       <primitive object={klon} />

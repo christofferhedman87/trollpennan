@@ -13722,12 +13722,12 @@
    "t": "och rullskridsko",
    "n": -16
   },
-  "9630f6a7": {
+  "64897216": {
    "f": "/ljud/rost/e6fd5454d3584d43.mp3",
    "ms": 4258,
    "r": "pennan",
    "id": "forsta-stunden.json:.steg[].text",
-   "t": "Bengtsson vill be dig om något. Tryck på honom!",
+   "t": "Doktor Bengtsson vill be dig om något. Tryck på honom!",
    "n": -16
   },
   "963789a8": {
@@ -16763,12 +16763,12 @@
    "t": "En tyst krigare helt i svart som gömmer sig i skuggorna.",
    "n": -16
   },
-  "baa6f4c9": {
+  "48e25714": {
    "f": "/ljud/rost/97e8a8fff61be583.mp3",
    "ms": 2952,
    "r": "pennan",
    "id": "forsta-stunden.json:.steg[].text",
-   "t": "Skriv det Bengtsson ber om i Pennans bok.",
+   "t": "Skriv det Doktor Bengtsson ber om i Pennans bok.",
    "n": -16
   },
   "baecf3ca": {

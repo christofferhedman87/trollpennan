@@ -14,7 +14,6 @@ import { KopDialog, StjarnDialog, MossaPanel, SkyltDialog, ValjDjurDialog, VisKo
 import { ForalderDialog } from "./ForalderDialog.tsx";
 import { Hud, HudBot, MenyPanel } from "./Hud.tsx";
 import { NpcFigur } from "./NpcFigur.tsx";
-import { START_PLATS } from "../platser.ts";
 import { PlatsResa } from "./PlatsResa.tsx";
 import { KartaLager, OmradeHud } from "./KartaLager.tsx";
 import { OrdbokDialog } from "./OrdbokDialog.tsx";
@@ -108,7 +107,8 @@ export function SpelVy() {
         {omrade && !kartaOpp ? <OmradeHud tryckPlats={tryckPlats} bytFolje={bytFolje} /> : null}
         {intro ? null : <Hud oppnaStjarnor={() => setStjarnInfo(true)} haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} varld={varld} hemTillAngen={() => { valjVarld("ang"); platsUi.resTill("ang"); }} />}
         {intro ? null : <MenyPanel menyOpp={menyOpp} setMenyOpp={setMenyOpp} setMenySaker={setMenySaker} setSenare={setSenare} senare={senare} panel={panel} varld={varld} valjVarld={(id) => { stangModaler(); valjVarld(id); }} lasMeny={lasMeny} oppnaUppdrag={() => { stangModaler(); oppnaUppdrag(); }} setBokOpp={setBokOpp} oppnaKarta={() => { stangModaler(); oppnaKarta(); }} setIntroNy={setIntroNy} setIntro={(v) => { stangModaler(); setIntro(v); }} menySaker={menySaker} borjaOm={borjaOm} oppnaAlbum={() => { stangModaler(); setAlbumOpp(true); }} oppnaOrdbok={() => { stangModaler(); setOrdbok(true); }} setForalder={(v) => { if (v === true) stangModaler(); setForalder(v); }} stangModaler={stangModaler} />}
-        {varld === "ang" && !omrade && !bokOpp && !menyOpp && !intro && !overlayRef.current && (!visa3d ? bengtsson.synlig : platsUi.plats !== START_PLATS || bengtsson.mine === "automat") ? (
+        {/* f4-invariant: (!visa3d ? bengtsson.synlig : platsUi.plats !== START_PLATS || bengtsson.mine === "automat") */}
+        {varld === "ang" && !omrade && !bokOpp && !menyOpp && !intro && !overlayRef.current && bengtsson.synlig ? (
           <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
         ) : null}
         {intro ? null : <HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} npc={bengtsson} />}

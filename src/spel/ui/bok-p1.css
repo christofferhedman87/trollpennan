@@ -39,7 +39,7 @@ body .plats-namn,body .plats-hem{white-space:nowrap}
 .ledtrad-extra,.ledtrad-ljud{margin:6px 0 0;font-size:1rem;font-weight:700;line-height:1.35}
 .ledtrad-knappar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .ledtrad-niva{display:inline-block;padding:2px 8px;border-radius:999px;background:#e8f5e9;color:#2e7d32;font-size:0.85rem;font-weight:800}
-.ord-input-ankare{position:absolute;width:1px;height:1px;opacity:0.01;pointer-events:auto;border:0;padding:0}
+.ord-input-ankare{position:absolute;width:1px;height:1px;opacity:0.01;pointer-events:none;border:0;padding:0}
 
 /* V3 + V5: halvhöjd (bokTop >= 260 på 812) och plats för tangentbord plus ordkort. */
 .bok{max-height:66dvh;height:66dvh;padding-bottom:2px}

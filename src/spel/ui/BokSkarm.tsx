@@ -61,6 +61,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
           </h2>
           <input
             type="text"
+            inputMode="none" tabIndex={-1} autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck={false}
             className="ord-input-ankare"
             aria-label="Skriv ord"
             value={text}
