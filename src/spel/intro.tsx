@@ -5,6 +5,8 @@ import { sagaNu } from "./saga.ts";
 import { rostIntro } from "./rostManifest.ts";
 import { IntroSkriv, type IntroSkrivData } from "./ui/IntroSkriv.tsx";
 import { useStart } from "./start.ts";
+import { ljud } from "./ljud.ts";
+import "./intro.css";
 
 type Scen = { fas: number; text: string; fran: number; ord?: number; ordklar?: boolean };
 
@@ -18,13 +20,15 @@ const INTRO = introJson as {
   scener: Scen[];
   /** P2: finns den slutar introt med att barnet skriver ordet själv. */
   skriv?: IntroSkrivData;
+  /** V7a: tre korta steg. `scener` (12) lämnas orörd så röstfilen fortfarande matchar. */
+  v7a?: { langd: number; scener: Scen[] };
 };
 
-// TTS-1: Trollpennans förgenererade röst (data/rost-manifest.json) med egna scentider; annars saga.mp3 och tiderna i intro.json
+// TTS-1: rostIntro(12) laddar /ljud/rost/c435a58d.mp3. Visningen styrs av v7a (högst 8 s).
 const ROST_INTRO = rostIntro(INTRO.scener.length);
-const SCENER: Scen[] = ROST_INTRO ? INTRO.scener.map((s, n) => ({ ...s, fran: ROST_INTRO.fran[n]! })) : INTRO.scener;
-const LANGD = ROST_INTRO ? ROST_INTRO.langd : INTRO.langd;
 const INTRO_LJUD = ROST_INTRO ? ROST_INTRO.f : INTRO.ljud;
+const V7A_SCENER: Scen[] = INTRO.v7a?.scener ?? INTRO.scener;
+const V7A_LANGD = INTRO.v7a?.langd ?? 7.5;
 const FORSTA_IDEER = [0, 2, 3, 4]
   .map((i) => (upplevelseJson as { examples: string[] }).examples[i])
   .filter((ex): ex is string => Boolean(ex));
@@ -55,7 +59,7 @@ export function Intro({
   const avslutaRef = useRef<() => void>(() => undefined);
   klarRef.current = onKlar;
   stegRef.current = onSteg;
-  const scen = SCENER[i] ?? SCENER[0]!;
+  const scen = V7A_SCENER[i] ?? V7A_SCENER[0]!;
   // P2-2: introt (klocka och röst) startar först när titelskärmen är stängd – trycket på "Börja" låser också upp ljudet
   const titelOppen = useStart((st) => st.titelOppen);
 
@@ -102,10 +106,10 @@ export function Intro({
       if (stop || done.current) return;
       const t = tid();
       let next = 0;
-      for (let n = 0; n < SCENER.length; n++) {
-        if (SCENER[n]!.fran <= t) next = n;
+      for (let n = 0; n < V7A_SCENER.length; n++) {
+        if (V7A_SCENER[n]!.fran <= t) next = n;
       }
-      const scenNu = SCENER[next]!;
+      const scenNu = V7A_SCENER[next]!;
       sagaNu.aktiv = true;
       sagaNu.t = t;
       sagaNu.fas = scenNu.fas;
@@ -119,8 +123,7 @@ export function Intro({
         iRef.current = next;
         setI(next);
       }
-      if (t >= LANGD) {
-        if (scenNu.fas >= 5) return;
+      if (t >= V7A_LANGD) {
         avsluta();
         return;
       }
@@ -182,7 +185,19 @@ export function Intro({
   const ordN = scen.fas === 2 ? (scen.ord ?? 0) : 0;
 
   return (
-    <div className="intro" data-testid="intro" data-fas={scen.fas} role="dialog" aria-label="Intro">
+    <div
+      className="intro"
+      data-testid="intro"
+      data-v7a="intro-rot"
+      data-fas={scen.fas}
+      role="dialog"
+      aria-label="Intro"
+      onPointerDown={(e) => {
+        e.stopPropagation();
+        ljud.lasOpp();
+      }}
+      onClick={(e) => e.stopPropagation()}
+    >
       {ordN > 0 ? (
         <p className="intro-ord" data-testid="intro-ord" data-n={ordN} data-klar={scen.ordklar ? "ja" : "nej"}>
           {INTRO.ord.slice(0, ordN).map((bok, n) => (
@@ -192,7 +207,21 @@ export function Intro({
           ))}
         </p>
       ) : null}
-      <button type="button" className="intro-hoppa" data-testid="intro-hoppa" onClick={() => avslutaRef.current()}>
+      <button
+        type="button"
+        className="intro-hoppa"
+        data-testid="intro-hoppa"
+        data-v7a="hoppa-over"
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          ljud.lasOpp();
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          ljud.lasOpp();
+          avslutaRef.current();
+        }}
+      >
         {INTRO.hoppa}
       </button>
       {hor ? (
