@@ -1,12 +1,10 @@
 // TTS: förgenererade MP3 via manifestet (hel text eller mall). Dynamisk text och reserv är tyst. Aldrig engelsk röst.
 import { useMinne } from "./minne.ts";
 import { DYNAMISK, RESERV, normalisera, rostFor, rostPlan, type RostDel } from "./rostManifest.ts";
-
 function rostPa(): boolean {
   const s = useMinne.getState();
   return (s.rostPa ?? true) && s.ljudPa;
 }
-
 type Logg = {
   text: string;
   fil: string | null;
@@ -30,17 +28,14 @@ let nuForst = false;
 const tonar = new Set<HTMLAudioElement>();
 /** TTS-3-fix: uttoningen när en banner avbryter en guiderad eller pratbubbla (ms). */
 export const TONA_MS = 150;
-
 function logg(l: Logg) {
   const w = window as unknown as { __rost?: Logg[] };
   (w.__rost ??= []).push(l);
 }
-
 function svenskRost(): SpeechSynthesisVoice | null {
   if (typeof speechSynthesis === "undefined") return null;
   return speechSynthesis.getVoices().find((v) => v.lang.toLowerCase().replace("_", "-").startsWith("sv")) ?? null;
 }
-
 function telefon(text: string, sv: SpeechSynthesisVoice, klar: () => void) {
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "sv-SE";
@@ -53,7 +48,6 @@ function telefon(text: string, sv: SpeechSynthesisVoice, klar: () => void) {
   u.onerror = klar;
   speechSynthesis.speak(u);
 }
-
 function spelaDelar(text: string, delar: RostDel[], _sv: SpeechSynthesisVoice | null) {
   const min = omgang;
   let i = 0;
@@ -81,7 +75,6 @@ function spelaDelar(text: string, delar: RostDel[], _sv: SpeechSynthesisVoice | 
   };
   steg();
 }
-
 /** D7: utrop som redan har 1 MP3 behålls. Annars en sammanhållen ersättning. Ingen telefonröst. */
 const SAMMAN: [RegExp, string][] = [
   [/^(?:Guldord!\s+Du skrev .+ alldeles själv!|Guldord!\s+.+\s+[–-]\s+och du stavade helt rätt!|Wow,\s+.+!\s+Ett guldord till boken!)$/iu, "Wow, du har skrivit ett guldord! Du får en stjärna!"],
@@ -105,6 +98,12 @@ const SAMMAN: [RegExp, string][] = [
   [/^.+ spinner och gnider sig mot dig!$/u, "Åh, den spinner och tycker så mycket om dig!"],
   [/^Nästan! .+ vill ha .+ — du gav .+\.$/u, "Nästan rätt! Titta noga på vad djuret önskar sig."],
   [/^.+ står på sidan .+\. Köp sidan för .+ ⭐ i boken!$/u, "Det ordet finns på en låst sida i boken. Samla stjärnor för att låsa upp den!"],
+  [/^På väg (?:hem )?till Ängen[….!]?$/iu, "Ängen"],
+  [/^På väg till (?:Glittrande )?skogen[….!]?$/iu, "Skogen"],
+  [/^På väg till (?:Dim)?sjön[….!]?$/iu, "Sjön"],
+  [/^På väg till (?:Kristall)?grottan[….!]?$/iu, "Grottan"],
+  [/^På väg till (?:Sol)?gården[….!]?$/iu, "Solgården"],
+  [/^Se hela dalen[!.]?$/iu, "Världskartan. Välj en plats på stigen! Alla vägar är öppna."],
 ];
 export function sammanhallenRostText(text: string): string {
   const t = text.trim();
@@ -112,7 +111,6 @@ export function sammanhallenRostText(text: string): string {
   for (const [re, till] of SAMMAN) if (re.test(t)) return till;
   return text;
 }
-
 function nasta() {
   upptagen = false; nu = null; nuText = null; nuForst = false;
   const rad = ko.shift();
@@ -144,7 +142,6 @@ function nasta() {
   klocka.klar(text);
   nasta();
 }
-
 function tonaUt(a: HTMLAudioElement) {
   tonar.add(a);
   const v0 = a.volume;
@@ -166,7 +163,6 @@ function tonaUt(a: HTMLAudioElement) {
   };
   steg();
 }
-
 /** TTS-3-fix: en banner kom medan en guiderad/pratbubbla/önskan läses – den tonas ut och bannerns röst börjar direkt. */
 function avbryt() {
   omgang++; // spelaDelar för den avbrutna fortsätter inte (ingen nästa del, ingen omstart)
@@ -176,7 +172,6 @@ function avbryt() {
   if (typeof speechSynthesis !== "undefined") speechSynthesis.cancel();
   nasta();
 }
-
 function stoppa() {
   ko.length = 0;
   omgang++;
@@ -189,13 +184,11 @@ function stoppa() {
   upptagen = false;
   if (typeof speechSynthesis !== "undefined") speechSynthesis.cancel();
 }
-
 /** Stoppar allt som läses och tömmer kön – barnet tryckte bort bannern, så dess klocka släpps också. */
 export function tystna() {
   klocka.slapp();
   stoppa();
 }
-
 /** Läs upp text som visas. enGang läses en gång per omgång. Högst fyra i kö. forst = bannern avbryter pågående uppläsning. */
 export function sag(text: string, enGang?: string, forst = false) {
   if (typeof window === "undefined" || !text.trim()) return;
@@ -229,17 +222,14 @@ export function sag(text: string, enGang?: string, forst = false) {
   if (!upptagen) nasta();
   else if (forst && !nuForst) avbryt();
 }
-
 /** Hur länge en text tar att läsa (ms) när den har fil eller mall, annars 0. */
 export function lasTid(text: string): number {
   return rostPlan(text)?.ms ?? 0;
 }
-
 /** TTS-2: hur länge ett barn behöver för att läsa texten själv (ms): 1,2 s + 60 ms per tecken, högst 12 s. */
 export function lasbarTid(text: string): number {
   return Math.min(12_000, 1200 + 60 * normalisera(text).length);
 }
-
 /** TTS-2: bannerns tid – max(bas, lästid, replikens längd + 1,5 s när ljudet är på). */
 export function bannerTid(text: string, bas: number): number {
   const las = Math.max(bas, lasbarTid(text));
@@ -247,12 +237,10 @@ export function bannerTid(text: string, bas: number): number {
   const ms = lasTid(text);
   return ms > 0 ? Math.max(las, ms + 1500) : las;
 }
-
 /** TTS-3: hur länge en banner väntar på att dess röst ska börja innan den vanliga tiden gäller (ms, räknat från visningen). */
 export const ROST_START_MS = 6000;
 /** TTS-3: efter rösten står bannern minst så här länge till (ms). */
 export const EFTER_ROST_MS = 1500;
-
 /** TTS-3: bannerns klocka. Utan röst gäller bannerTid från visningen. Med röst börjar tiden vid play och stängs tidigast vid max(start + lästid, slut + 1,5 s). */
 type Klocka = { text: string; las: number; ms: number; t0: number; start: number | null; timer: number; stang: () => void };
 let aktiv: Klocka | null = null;
@@ -290,7 +278,6 @@ const klocka = {
 function bannerTidMs(k: Klocka) {
   return k.ms > 0 && rostPa() ? Math.max(k.las, k.ms + EFTER_ROST_MS) : k.las;
 }
-
 /** TTS-3: startar bannerns klocka och anropar stang() när bannern ska gå. */
 export function bannerKlocka(text: string, bas: number, stang: () => void): number {
   klocka.slapp();
@@ -316,7 +303,6 @@ export function bannerKlocka(text: string, bas: number, stang: () => void): numb
   if (k.start !== null) klocka.spelar(t);
   return k.timer;
 }
-
 /** R1: spelare åt rostKo. Egen generation, rör inte sag-kön eller bannerns klocka. Loggar hörda rader synkront. */
 type UppMeta = { klass: string; kalla: string; fodd: number };
 let uppOmg = 0;
@@ -394,4 +380,18 @@ function spelaUppDelar(delar: RostDel[], _sv: SpeechSynthesisVoice | null, min: 
     } else steg(); // dynamisk del och DYNAMISK "tyst": ingen telefon, nästa del
   };
   steg();
+}
+
+const RESA_TEXT: Record<string, string> = {
+  ang: "På väg hem till Ängen…",
+  skogen: "På väg till Glittrande skogen…",
+  sjon: "På väg till Dimsjön…",
+  grottan: "På väg till Kristallgrottan…",
+  garden: "På väg till Gården…",
+};
+export function restext(id: string): string {
+  return RESA_TEXT[id] ?? "På väg hem till Ängen…";
+}
+export function hor(text: string): void {
+  sag(text, undefined, true);
 }

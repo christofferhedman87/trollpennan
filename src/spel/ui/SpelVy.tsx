@@ -3,6 +3,11 @@ import { LagringsInfo } from "../LagringsInfo";
 import { Angen3D } from "../angen3d.tsx";
 import { Intro } from "../intro.tsx";
 import { sagaNu } from "../saga.ts";
+import { useStart } from "../start.ts";
+import { VagvisareHud, type VagvisarePlatsId, type VagvisareSkarmPunkt } from "../ang/Vagvisare3D.tsx";
+import { ResOvergangV09 } from "./ResOvergangV09.tsx";
+import { useVagvisareResaV09 } from "./useVagvisareResaV09.ts";
+import "./plats-resa-v09.css";
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
 import * as rostKo from "../rostKo.ts";
@@ -20,12 +25,12 @@ import { OrdbokDialog } from "./OrdbokDialog.tsx";
 import { useSpel } from "./SpelKontext.ts";
 import { VYER, type VyPlatsNamn } from "./vyer.ts";
 
-function VyPlats({ plats }: { plats: VyPlatsNamn }) {
+function VyPlats({ plats, onValjPlats, onVagvisarePunkter }: { plats: VyPlatsNamn; onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void }) {
   const k = useSpel();
   return (
     <>
       {VYER.filter((v) => v.plats === plats && v.syns(k)).map(({ id, Vy }) => (
-        <Vy key={id} />
+        <Vy key={id} onValjPlats={onValjPlats} onVagvisarePunkter={onVagvisarePunkter} />
       ))}
     </>
   );
@@ -50,6 +55,10 @@ export function SpelVy() {
   const { stangBanner, visaBanner, visaMossa } = k.b;
   const { lasMeny, oppnaKarta, oppnaBygglage, oppnaUppdrag, valjVarld } = k.v;
   const { tryckPlats, bytFolje, bengtsson, platsUi } = k.a;
+  const titel = useStart((s) => s.titelOppen);
+  const saga = sagaNu.aktiv;
+  const aktivPlats: VagvisarePlatsId = varld === "gard" ? "garden" : platsUi.plats === "skogen" || platsUi.plats === "sjon" || platsUi.plats === "grottan" ? platsUi.plats : "ang";
+  const resa = useVagvisareResaV09({ varld, nuvarandePlats: platsUi.plats, valjVarld, resTill: platsUi.resTill, hem: platsUi.hem });
   const { stangBok, oppnaOnska } = k.o;
   const { utfor } = k.s;
   const { forsokKop, bekraftaKop, flyttaInDjur, borjaOm, sparaKopia, lasFil, lasInKopia } = k.g;
@@ -100,7 +109,7 @@ export function SpelVy() {
       ) : null}
       <section className={visa3d ? "ang tred" : "ang"} ref={angRef} aria-label={varld === "gard" ? TEXTER.flikar.garden : TEXTER.flikar.angen} inert={intro}>
         <div className="natt-bak" style={{ opacity: natt }} />
-        {visa3d ? <Angen3D natt={natt} saga={intro} onGrind={platsUi.tryckGrind} /> : null}
+        {visa3d ? <Angen3D natt={natt} saga={intro} onGrind={platsUi.tryckGrind} aktivPlats={aktivPlats} onValjPlats={resa.startaResa} onVagvisarePunkter={resa.setVagvisarePunkter} /> : null}
         {visa3d ? <PlatsResa plats={platsUi.plats} namn={platsUi.namn} ton={platsUi.ton} skylt={platsUi.skylt} intro={platsUi.intro} hem={platsUi.hem} /> : null}
         <AngLager natt={natt} varld={varld} omrade={omrade} panel={panel} ang={ang} hemma={hemma} liv={liv} fotoMal={fotoMal} visaBanner={visaBanner} stangBanner={stangBanner} visaMossa={visaMossa} setFotoMal={setFotoMal} banners={banners} bubblor={bubblor} onskan={onskan} onskaOpp={onskaOpp} onskaSyns={onskaSyns} ank={ank} oppnaOnska={oppnaOnska} meny={meny} setMeny={setMeny} omUidRef={omUidRef} setLage={setLage} setBokOpp={setBokOpp} setLadaOpp={setLadaOpp} menyHem={menyHem} setBoUid={setBoUid} lada={lada} ladaOpp={ladaOpp} boUid={boUid} boDjur={boDjur} flyttaInDjur={flyttaInDjur} />
         {kartaOpp ? <KartaLager forstaRad={forstaRad} kartaText={kartaText} nuvarandePlats={varld === "gard" ? "garden" : platsUi.plats} stangKarta={() => { setKartaOpp(false); setKartaText(null); }} tryckPlats={(id) => { if (id === "garden") return tryckPlats(id); valjVarld("ang"); platsUi.resTill(id); setKartaOpp(false); setKartaText(null); setBokOpp(false); }} onLast={() => { setKartaOpp(false); bengtsson.visaFel(); }} oppna={oppna} /> : null}
@@ -112,7 +121,9 @@ export function SpelVy() {
           <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
         ) : null}
         {intro ? null : <HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} npc={bengtsson} />}
-        <VyPlats plats="scen" />
+        <VyPlats plats="scen" onValjPlats={resa.startaResa} onVagvisarePunkter={resa.setVagvisarePunkter} />
+        <VagvisareHud punkter={resa.vagvisarePunkter} onValjPlats={resa.startaResa} dold={titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null} />
+        <ResOvergangV09 mal={resa.mal} paHoppaOver={resa.hoppaOver} />
       </section>
 
       {bokOpp ? <BokSkarm stangBok={stangBok} visaBanner={visaBanner} andrar={andrar} panel={panel} lage={lage} setLage={setLage} setForslag={setForslag} byggPuff={byggPuff} onskaOpp={onskaOpp} onskan={onskan} onskaSyns={onskaSyns} onskaDjur={onskaDjur} onskaEx={onskaEx} fyllExempel={fyllExempel} gavaTill={gavaTill} ang={ang} hemma={hemma} varld={varld} forslag={forslag} valjForslag={valjForslag} nejForslag={nejForslag} behover={behover} utfor={utfor} flik={flik} onskaKort={onskaKort} setFlik={setFlik} kort={kort} val={val} funna={funna} onskaIds={onskaIds} kortGang={kortGang} valjKort={valjKort} oppnaSkrivMig={oppnaSkrivMig} text={text} omrade={omrade} visaOnskaHjalp={visaOnskaHjalp} vaknaNu={vaknaNu} vaknaText={vaknaText} skrivTecken={skrivTecken} sudda={sudda} kanAngra={kanAngra} angraMening={angraMening} uppFlik={uppFlik} setUppFlik={setUppFlik} uppdragSpar={uppdragSpar} byggSida={byggSida} agdaSidor={agdaSidor} setByggSidaId={setByggSidaId} setByggPuff={setByggPuff} byggFras={byggFras} kopRad={kopRad} lastaSidor={lastaSidor} forsokKop={forsokKop} setPanel={setPanel} forstaSkapelse={forstaSkapelse} /> : null}

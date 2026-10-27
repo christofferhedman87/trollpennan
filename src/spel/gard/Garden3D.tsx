@@ -14,6 +14,7 @@ import { GardDjurLista } from "./GardDjur.tsx";
 import { Solkorn, VindGras } from "../ang/dekor.tsx";
 import { MarkPlan } from "./MarkPlan.tsx";
 import { useSagomiljo } from "../grafikKvalitet.ts";
+import { Vagvisare3D, VagvisareProjektor, type VagvisarePlatsId, type VagvisareSkarmPunkt } from "../ang/Vagvisare3D.tsx";
 import { synkaTestSparning, varldTillNorm, type GardDjurSnap } from "./vandra.ts";
 import {
   CELL_STORLEK,
@@ -111,12 +112,16 @@ function Scen({
   hagar,
   flyttarUid,
   setFlyttarUid,
+  onValjPlats,
+  onVagvisarePunkter,
 }: {
   garden: ReturnType<typeof useMinne.getState>["garden"];
   kanter: KantPlats[];
   hagar: SlutenHage[];
   flyttarUid: string | null;
   setFlyttarUid: (uid: string | null) => void;
+  onValjPlats?: (id: VagvisarePlatsId) => void;
+  onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void;
 }) {
   useSagomiljo(false);
   const L = MILJO.ljus;
@@ -184,11 +189,19 @@ function Scen({
       ))}
       <SolGard />
       <GardDjurLista garden={garden} hagar={hagar} kanter={kanter} />
+      {onValjPlats && onVagvisarePunkter ? (
+        <>
+          <VagvisareProjektor plats="garden" onPunkter={onVagvisarePunkter} />
+          <Suspense fallback={null}>
+            <Vagvisare3D plats="garden" onValjPlats={onValjPlats} />
+          </Suspense>
+        </>
+      ) : null}
     </>
   );
 }
 
-export function Garden3D() {
+export function Garden3D({ onValjPlats, onVagvisarePunkter }: { onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void } = {}) {
   if (typeof window !== "undefined") synkaTestSparning(useMinne, window.localStorage);
   const garden = useMinne((s) => s.garden);
   const hemma = useMinne((s) => s.hemma);
@@ -290,6 +303,8 @@ export function Garden3D() {
             hagar={hagar}
             flyttarUid={flyttarUid}
             setFlyttarUid={setFlyttarUid}
+            onValjPlats={onValjPlats}
+            onVagvisarePunkter={onVagvisarePunkter}
           />
         </Canvas>
       </WebbGren>
