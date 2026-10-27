@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Ord } from "@/tolk/typer.ts";
 import { BokKort } from "./BokKort.tsx";
-import { kortIkon } from "./hjalp.ts";
+import { kortDjurBas, kortIkon } from "./hjalp.ts";
 import type { Slot } from "./typer.ts";
 
 const KORT_PER_SIDA = 4;
@@ -47,6 +47,8 @@ export function StegKortValjare({ flik, setFlik, kort, val, onskaKort, onskaIds,
     synligaKort = visning.slice(visning.length - KORT_PER_SIDA);
   }
   const ga = (nasta: Slot) => { setFlik(nasta); setSida(0); };
+  const djurSrc = val.djur ? kortIkon(val.djur.id, "djur") : null;
+  const miniBas = djurSrc?.endsWith("/linje.png") && val.djur ? kortDjurBas(val.djur.id) : null;
 
   return (
     <>
@@ -71,7 +73,7 @@ export function StegKortValjare({ flik, setFlik, kort, val, onskaKort, onskaIds,
       ) : null}
       {val.djur ? (
         <div className="mini-preview-rad" data-c2="mini-preview">
-          {kortIkon(val.djur.id, "djur") ? <img className="mini-preview-djur" alt="" src={kortIkon(val.djur.id, "djur") ?? ""} /> : null}
+          {djurSrc ? <img className="mini-preview-djur" alt="" src={djurSrc} style={miniBas ? { backgroundColor: miniBas.farg, borderRadius: 4 } : undefined} /> : null}
           <span className="mini-preview-namn">{val.djur.visa}</span>
           {val.farg ? <span className="mini-preview-chip" data-c2="preview-farg">Vald färg: {val.farg.visa}</span> : null}
           {val.storlek ? <span className="mini-preview-chip" data-c2="preview-storlek">Storlek: {val.storlek.visa}</span> : null}

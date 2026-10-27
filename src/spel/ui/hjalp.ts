@@ -64,32 +64,24 @@ export function kanEtikett(o: Ord): string {
 }
 
 const KORT_IKON: Record<string, string> = {
-  kanin: "kanin",
-  katt: "katt",
-  kattunge: "katt",
-  kisse: "katt",
-  hund: "hund",
-  valp: "hund",
-  vovve: "hund",
-  drake: "drake",
-  häst: "hast",
-  ponny: "hast",
-  föl: "hast",
-  fågel: "fagel",
-  fisk: "fisk",
-  groda: "groda",
-  padda: "groda",
-  gris: "gris",
-  nöff: "gris",
-  nasse: "gris",
-  kulting: "gris",
-  dinosaurie: "dinosaurie",
-  dino: "dinosaurie",
-  uggla: "uggla",
-  ekorre: "ekorre",
-  bäver: "baver",
-  haj: "haj",
-  enhörning: "hast",
+  kanin: "kanin", katt: "katt", kattunge: "katt", kisse: "katt",
+  hund: "hund", valp: "hund", vovve: "hund", drake: "drake",
+  häst: "hast", ponny: "hast", föl: "hast", fågel: "fagel", fisk: "fisk",
+  groda: "groda", padda: "groda", gris: "gris", nöff: "gris", nasse: "gris", kulting: "gris",
+  dinosaurie: "dinosaurie", dino: "dinosaurie", uggla: "uggla", ekorre: "ekorre",
+  bäver: "baver", haj: "haj", enhörning: "hast",
+};
+
+/** Varma sagofärger som målas under linje.png via bas.png-masken. */
+export const DJUR_BAS_FARG: Record<string, string> = {
+  kanin: "#F3C68F", katt: "#E89A54", hund: "#C8874B", drake: "#5FB878", hast: "#B87A4B", fagel: "#5DA9E9",
+  fisk: "#4FC3F7", groda: "#66BB6A", gris: "#F48FB1", dinosaurie: "#7CB342", uggla: "#A1887F", ekorre: "#D87A3E",
+  baver: "#8D6E63", haj: "#6497B1",
+};
+
+const DJUR_V08_WEBP: Record<string, string> = {
+  kanin: "/ordkort/v08/illustrations/kanin.webp", katt: "/ordkort/v08/illustrations/katt.webp",
+  hund: "/ordkort/v08/illustrations/hund.webp", drake: "/ordkort/v08/illustrations/drake.webp",
 };
 
 const FARG_SVG: Record<string, string> = {
@@ -164,10 +156,17 @@ export function kortStorlekKlass(id: string): string {
   return "";
 }
 
+/** Tonad kroppsmask + sagofärg. Själva kortikonen är webp eller linje.png, aldrig rå bas.png. */
+export function kortDjurBas(id: string): { mask: string; farg: string } | null {
+  const mapp = KORT_IKON[id];
+  if (!mapp) return null;
+  return { mask: "/kit/kroppar/" + mapp + "/bas.png", farg: DJUR_BAS_FARG[mapp] ?? "#F3C68F" };
+}
+
 export function kortIkon(id: string, klass?: string): string | null {
   if (!klass || klass === "djur") {
     const mapp = KORT_IKON[id];
-    if (mapp) return `/kit/kroppar/${mapp}/bas.png`;
+    if (mapp) return DJUR_V08_WEBP[mapp] ?? `/kit/kroppar/${mapp}/linje.png`;
     if (klass === "djur") return null;
   }
   if ((!klass || klass === "farg") && FARG_SVG[id]) return FARG_SVG[id];
