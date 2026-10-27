@@ -305,7 +305,7 @@ async function korPlaywright() {
         );
       }
 
-      if (KOR_C4) {
+      if (KOR_C1) {
         await page.screenshot({ path: path.join(UT_MAPP, "c1-meningsbyggare-375x812.png") });
       }
 
