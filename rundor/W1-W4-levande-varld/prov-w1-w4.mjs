@@ -6,7 +6,22 @@ import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import * as THREE from "three";
+import { registerHooks } from "node:module";
+import { fileURLToPath } from "node:url";
 import ts from "typescript";
+
+registerHooks({
+  load(url, context, nextLoad) {
+    if (url.endsWith(".tsx")) {
+      const src = fs.readFileSync(fileURLToPath(url), "utf8");
+      const out = ts.transpileModule(src, {
+        compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX },
+      });
+      return { format: "module", shortCircuit: true, source: out.outputText };
+    }
+    return nextLoad(url, context);
+  },
+});
 import { chromium } from "playwright";
 
 import { belysScen } from "../../src/spel/belys.ts";
@@ -350,6 +365,7 @@ async function korPlaywright(fel, detalj) {
 
     await page.goto(`${basUrl}/?prov=1`, { waitUntil: "domcontentloaded", timeout: 20000 });
     await page.waitForTimeout(1000);
+    await page.waitForFunction(() => Boolean(window.__tred), null, { timeout: 12000 }).catch(() => {});
     await stangTitelOchIntro(page);
     await page.waitForTimeout(900);
 

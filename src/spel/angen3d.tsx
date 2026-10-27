@@ -7,10 +7,11 @@ import { brygga } from "./brygga.ts";
 import { useMinne } from "./minne.ts";
 import { malTillDuk } from "./ui/hjalp.ts";
 import { KenneyNatur } from "./kenneyNatur.tsx";
+import { HorisontVarld } from "./ang/HorisontVarld.tsx";
 import { KV, MILJO } from "./miljo.ts";
 import { HINT, SNART } from "./ang/delat.ts";
 import { DAMM } from "./ang/damm.ts";
-import { Eldflugor, FagelFlyg, Fjarilar, Forgrund, Glitter, GrasTuvor, Horisont, Ljusflackar, Moln, Nackrosor, Ringar, Solkorn, Sond, Stenar, TradOchBlommor, VindGras } from "./ang/dekor.tsx";
+import { Eldflugor, FagelFlyg, Fjarilar, Forgrund, Glitter, GrasTuvor, Ljusflackar, Moln, Nackrosor, Ringar, Solkorn, Sond, Stenar, TradOchBlommor, VindGras } from "./ang/dekor.tsx";
 import { Byggnad, Skogsstig, SpokHus } from "./ang/byggnader.tsx";
 import { DjurIScen } from "./ang/djur.tsx";
 import { Bengtsson3D } from "./ang/Bengtsson3D.tsx";
@@ -131,12 +132,12 @@ function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga
       <SvajMark color={mark} natt={vis} />
       <VindGras />
       <Solkorn />
-      <Horisont />
       <NaturGren>
         <Suspense fallback={null}>
           <KenneyNatur />
         </Suspense>
       </NaturGren>
+      <HorisontVarld />
       {!saga ? (
         <Suspense fallback={null}>
           <Bengtsson3D />
