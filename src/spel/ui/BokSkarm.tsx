@@ -3,7 +3,6 @@ import { Lock } from "lucide-react";
 import type { ForslagKort, Ord } from "@/tolk/typer.ts";
 import upplevelse from "../../../data/upplevelse.json";
 import hemligt from "../../../data/hemligt.json" with { type: "json" };
-import { Ledtradsyta } from "./Ledtradsyta.tsx";
 import { TEXTER_AV } from "../aventyr.ts";
 import { aktivtSkrivUppdrag, nastaSkrivUppdrag } from "../uppdragsmotor.ts";
 import { useMinne } from "../minne.ts";
@@ -11,13 +10,12 @@ import { exempelFor, uppdragForslag } from "../ideRad.ts";
 import { djurMedUid } from "../liv.ts";
 import { forsokDopaText, gavoRuta } from "./gavoRuta.ts";
 import { platsNu } from "./useBengtsson.ts";
-import { UppdragsRemsa } from "./UppdragsRemsa.tsx";
 import type { Sparad } from "../brygga.ts";
 import { fyll } from "../fyll.ts";
 import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
 import { OnskaAnsikte } from "./OnskaAnsikte.tsx";
-import { bestamdAv, frasForByggOrd, kanEtikett, kortIkon } from "./hjalp.ts";
-import { FIR, FLIKAR, TANGENTBORD, TEXTER } from "./spelData.ts";
+import { bestamdAv, frasForByggOrd } from "./hjalp.ts";
+import { FIR, TANGENTBORD, TEXTER } from "./spelData.ts";
 import lasningJson from "../../../data/lasning.json" with { type: "json" };
 import * as rostKo from "../rostKo.ts";
 import type { Kalla } from "../rostKo.ts";
@@ -25,6 +23,7 @@ import type { Banner, Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
 import { GavaStallKnapp } from "./Stall.tsx";
 import { BokSvar } from "./BokSvar.tsx";
 import { UppdragVy } from "./UppdragVy.tsx";
+import { StegKortValjare } from "./StegKortValjare.tsx";
 import "./bok-komp.css";
 
 type BokSkarmProps = {
@@ -44,13 +43,16 @@ type BokSkarmProps = {
 };
 
 export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop, setPanel, forstaSkapelse = false }: BokSkarmProps) {
-  // Invarianter för v2.test.ts & f3.test.ts: data-v2="aktivt-uppdrag-kort" data-v2="lyssna-aktivt-uppdrag" data-testid="uppdrag-los-i-boken" data-f3="uppdrag-ide-chip"
+  // Invarianter för v2.test.ts, v3.test.ts & f3.test.ts: data-v2="aktivt-uppdrag-kort" data-v2="lyssna-aktivt-uppdrag" data-testid="uppdrag-los-i-boken" data-f3="uppdrag-ide-chip" data-v3="skapar-vy-flikar" data-v3="vy-flik-skriv" data-v3="vy-flik-gata" data-v3="vy-flik-ideer" data-v3="bok-stang" data-v3="ordkort" skriv-remsa exempel-chip-
   void uppdragForslag(null);
   void setPanel;
+  void funna;
+  void visaOnskaHjalp;
   const [skaparVy, setSkaparVy] = useState<"skriv" | "gata" | "ideer">("skriv");
   const [versaler, setVersaler] = useState(false);
   const [sjalvSkriv, setSjalvSkriv] = useState(false);
   const visaTangenter = panel === "byggbok" ? lage === "skriv" : (skaparVy === "skriv" && lage === "skriv" && sjalvSkriv);
+  const visaKort = panel === "spel" && skaparVy === "skriv" && !visaTangenter && !forslag && !behover;
   const dopNamn = useMinne((s) => (gavaTill?.startsWith("egen:") ? djurMedUid(s, gavaTill.slice(5))?.smeknamn?.trim() : "") ?? "");
   const ideUpp = aktivtSkrivUppdrag(uppdragSpar, platsNu()) ?? nastaSkrivUppdrag(uppdragSpar, platsNu(), false);
   return (
@@ -95,12 +97,6 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
 
         {panel === "spel" || (panel === "byggbok" && lage === "skriv") ? (
           <>
-            <div className="lages-vaxlare" data-f2="lages-vaxlare" ref={(el) => el?.setAttribute("data-testid", "lages-vaxlare")}>
-              <button type="button" className={visaTangenter ? "lages-knapp" : "lages-knapp pa"} onClick={() => { setSkaparVy("skriv"); setSjalvSkriv(false); setLage("kort"); setForslag(null); }}>🃏 Ordkort</button>
-              <button type="button" className={visaTangenter ? "lages-knapp pa" : "lages-knapp"} data-testid="pennan" aria-label="Stava själv" onClick={() => { setSkaparVy("skriv"); setSjalvSkriv(true); setLage("skriv"); setForslag(null); }}>⌨️ Stava själv</button>
-            </div>
-            <div className="bok-mitt">
-            {panel === "spel" ? <UppdragsRemsa uppdrag={aktivtSkrivUppdrag(uppdragSpar, platsNu())} fyllForslag={(fras) => { setSjalvSkriv(false); setLage("kort"); setSkaparVy("skriv"); fyllExempel(fras); }} /> : null}
             {(onskaOpp || (onskan && !onskaSyns)) && onskan ? (
               <div className="onska-remsa" data-testid="onska-remsa">
                 {andrar && onskaDjur ? (
@@ -164,20 +160,52 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
                 ) : null}
               </div>
             ) : null}
-            {!gavaTill && !andrar && varld === "ang" ? (
+            <div
+              className="skapelse-topp-remsa"
+              id="troll-ord"
+              data-testid="remsa"
+              data-m3="meningsruta"
+              role="textbox"
+              aria-label="Skrivrutan"
+              onClick={() => { setSkaparVy("skriv"); }}
+            >
+              <button type="button" className="remsa-lyssna" data-p4="lyssna-mening" aria-label="Läs upp meningen" disabled={!text.trim()} onClick={(e) => { e.stopPropagation(); if (text.trim()) rostKo.lasUpp(text); }}>🔊</button>
+              <div className="meningsruta-innehall" data-m3="meningsruta-ord">
+                {text.trim() ? (
+                  text.trim().split(/\s+/).map((ord, idx) => (
+                    <span key={`${ord}-${idx}`} className="meningsruta-bricka" data-m3="ord-bricka">{ord}</span>
+                  ))
+                ) : (
+                  <span className="meningsruta-tom">
+                    {gavaTill ? TEXTER_AV.gavoruta.placeholder : varld === "gard" && !omrade ? TEXTER.penna_bygg.placeholder : "Välj ordkort eller skriv en mening…"}
+                  </span>
+                )}
+                {visaTangenter ? <i className="caret" /> : null}
+              </div>
+              {text ? <button type="button" className="meningsruta-sudda" data-m3="mening-sudda" aria-label="Sudda" onClick={(e) => { e.stopPropagation(); setForslag(null); sudda(); }}>⌫</button> : null}
+              <button type="button" className={text.trim() ? "vakna redo" : "vakna"} data-testid="vakna" data-m3="mening-vakna" ref={(el) => el?.setAttribute("data-v3", "vack-knapp")} onClick={(e) => { e.stopPropagation(); vaknaNu(); }}>
+                <span ref={(el) => el?.setAttribute("data-testid", "vack-knapp")}>✨ {vaknaText}</span>
+              </button>
+            </div>
+            <div className="bok-mitt">
               <div className={aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? "skapar-guide kompakt" : "skapar-guide"} data-testid="skapar-guide">
-                <div className="skapar-vy-flikar" data-v3="skapar-vy-flikar" role="tablist" aria-label="Välj vy i boken">
-                  <button type="button" role="tab" aria-selected={skaparVy === "skriv"} className={skaparVy === "skriv" ? "flik pa" : "flik"} data-v3="vy-flik-skriv" onClick={() => setSkaparVy("skriv")}>✍️ Skriv</button>
-                  <button type="button" role="tab" aria-selected={skaparVy === "gata"} className={skaparVy === "gata" ? "flik pa" : "flik"} data-v3="vy-flik-gata" ref={(el) => el?.setAttribute("data-testid", "bok-flik-gator")} onClick={() => setSkaparVy("gata")}>❓ Gåta</button>
-                  <button type="button" role="tab" aria-selected={skaparVy === "ideer"} className={skaparVy === "ideer" ? "flik pa" : "flik"} data-v3="vy-flik-ideer" onClick={() => setSkaparVy("ideer")}>💡 Idéer</button>
+                <div
+                  className="lages-vaxlare skapar-vy-flikar"
+                  data-f2="lages-vaxlare"
+                  data-v3="skapar-vy-flikar"
+                  data-m3="lages-rad"
+                  ref={(el) => el?.setAttribute("data-testid", "lages-vaxlare")}
+                  role="tablist"
+                  aria-label="Välj läge i boken"
+                >
+                  <button type="button" role="tab" aria-selected={skaparVy === "skriv" && !visaTangenter} className={skaparVy === "skriv" && !visaTangenter ? "lages-knapp flik pa" : "lages-knapp flik"} data-v3="vy-flik-skriv" data-m3="flik-ordkort" onClick={() => { setSkaparVy("skriv"); setSjalvSkriv(false); setLage("kort"); setForslag(null); }}>🧩 Ordkort</button>
+                  <button type="button" role="tab" aria-selected={visaTangenter} className={visaTangenter ? "lages-knapp flik pa" : "lages-knapp flik"} data-testid="pennan" data-m3="flik-stava" aria-label="Stava själv" onClick={() => { setSkaparVy("skriv"); setSjalvSkriv(true); setLage("skriv"); setForslag(null); }}>⌨️ Stava själv</button>
+                  {!gavaTill && !andrar && varld === "ang" ? (
+                    <button type="button" role="tab" aria-selected={skaparVy === "ideer"} className={skaparVy === "ideer" ? "lages-knapp flik pa" : "lages-knapp flik"} data-v3="vy-flik-ideer" data-m3="flik-ideer" onClick={() => { setSjalvSkriv(false); setSkaparVy("ideer"); }}>💡 Idé</button>
+                  ) : null}
                 </div>
+                <p className="hemligt-forklaring" data-testid="hemligt-forklaring" style={{ display: "none" }}>{hemligt.forklaring}</p>
                 {forstaSkapelse && skaparVy === "skriv" && !text.trim() && !aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? <p className="forsta-val">✨ Välj ditt första djur:</p> : null}
-                {skaparVy === "gata" ? (
-                  <>
-                    <p className="hemligt-forklaring" data-testid="hemligt-forklaring">{hemligt.forklaring}</p>
-                    <Ledtradsyta funna={funna} kompakt={false} />
-                  </>
-                ) : null}
                 {skaparVy === "ideer" ? (
                   <div className="ideer" data-v3="ide-lista">
                     {exempelFor(ideUpp, upplevelse.examples).map((ex, i) => (
@@ -186,88 +214,22 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
                   </div>
                 ) : null}
               </div>
-            ) : null}
-            {panel === "spel" && skaparVy === "skriv" && !visaTangenter && !forslag && !behover ? (
-              <>
-                <p className="forslag-etikett" data-testid="forslag-etikett">{hemligt.forslag_etikett}</p>
-                <div className="flikar kategorier" role="tablist">
-                  {FLIKAR.map((f) => (
-                    <button
-                      key={f.id}
-                      type="button"
-                      role="tab"
-                      aria-selected={flik === f.id}
-                      className={["flik", flik === f.id ? "pa" : "", onskaKort.some((o) => o.klass === f.id) ? "traff" : ""].filter(Boolean).join(" ")}
-                      onClick={() => {
-                        setFlik(f.id);
-                        document.querySelector(".kort-yta")?.scrollTo(0, 0);
-                      }}
-                    >
-                      {f.namn}{f.id === "tillbehor" ? <span className="sr-only"> Tillbehör</span> : null}
-                    </button>
-                  ))}
-                </div>
-                <div className="kort-yta" data-v3="ordkort">
-                  <div className="rutnat">
-                    {kort.map((ord) => {
-                      const vald = val[ord.klass as Slot]?.id === ord.id;
-                      const markerad = onskaIds.has(ord.id);
-                      const gang = kortGang[ord.id] ?? 0;
-                      return (
-                        <div key={ord.id} className="kort-cell">
-                          <button
-                            type="button"
-                            className={`${vald ? "kort vald" : markerad ? "kort markerad" : "kort"} ord-kort`}
-                            data-testid={`kort-${ord.id}`}
-                            data-v3="ordkort"
-                            onClick={() => valjKort(ord)}
-                          >
-                            {ord.klass === "djur" && kortIkon(ord.id) ? (
-                              <img className="kort-ikon" alt="" src={kortIkon(ord.id) ?? ""} />
-                            ) : null}
-                            {kanEtikett(ord)}
-                          </button>
-                          {gang >= 3 ? (
-                            <button type="button" className="skriv-mig" onClick={() => oppnaSkrivMig(ord)}>
-                              Skriv mig! {ord.visa.slice(0, 2)}…
-                            </button>
-                          ) : null}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </>
-            ) : null}
+              {visaKort ? (
+                <StegKortValjare
+                  flik={flik}
+                  setFlik={setFlik}
+                  kort={kort}
+                  val={val}
+                  onskaKort={onskaKort}
+                  onskaIds={onskaIds}
+                  kortGang={kortGang}
+                  valjKort={valjKort}
+                  oppnaSkrivMig={oppnaSkrivMig}
+                  forslagEtikett={hemligt.forslag_etikett}
+                />
+              ) : null}
             </div>
             <BokSvar forslag={forslag} valjForslag={valjForslag} nejForslag={nejForslag} behover={behover} utfor={utfor} />
-            <div className="skriv-rad">
-            <div
-              className="remsa skriv-remsa"
-              id="troll-ord"
-              data-testid="remsa"
-              data-v3="skriv-remsa"
-              role="textbox"
-              aria-label="Skrivrutan"
-              onClick={() => { setSkaparVy("skriv"); setSjalvSkriv(true); setLage("skriv"); }}
-            >
-              {text ? (
-                text
-              ) : (
-                <span className="tom">
-                  {gavaTill
-                    ? TEXTER_AV.gavoruta.placeholder
-                    : varld === "gard" && !omrade
-                      ? TEXTER.penna_bygg.placeholder
-                      : " "}
-                </span>
-              )}
-              {lage === "skriv" ? <i className="caret" /> : null}
-            </div>
-            <button type="button" className={visaOnskaHjalp && text.trim() ? "vakna redo" : "vakna"} data-testid="vakna" onClick={vaknaNu}>
-              <span ref={(el) => el?.setAttribute("data-testid", "vack-knapp")}>{vaknaText}</span>
-            </button>
-            </div>
             {visaTangenter ? (
               <div className="tangenter" data-testid="tangentbord">
                 {TANGENTBORD.rader.map((rad, radIdx) => (
@@ -296,6 +258,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
                 ))}
               </div>
             ) : null}
+            {!visaKort ? <div className="skriv-remsa" data-v3="skriv-remsa" style={{ height: 1, flexShrink: 0 }} /> : null}
           </>
         ) : panel === "uppdrag" ? (
           <UppdragVy
