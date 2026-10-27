@@ -1,0 +1,83 @@
+.tp-vagvisare-hud { position: fixed; inset: 0; z-index: 35; pointer-events: none; }
+.tp-vagvisare-hud button {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 44px;
+  max-width: 96px;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 1;
+  pointer-events: auto;
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  border: 2px solid #8d6c40;
+  background: rgba(255, 244, 217, 0.94);
+  color: #3b2614;
+  font-weight: 800;
+  font-size: 13px;
+  box-shadow: 0 4px 0 #b89862, 0 6px 14px rgba(0, 0, 0, 0.22);
+}
+.tp-vagvisare-hud button[data-plats="ang"] { max-width: 168px; }
+.tp-vagvisare-hud button:focus-visible { outline: 3px solid #234f9e; outline-offset: 3px; }
+.tp-resa-anim {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 18% 22%, #ffe7a8 0 8%, transparent 9%),
+    radial-gradient(circle at 80% 18%, #fff 0 5%, #ffe082 6%, transparent 10%),
+    linear-gradient(180deg, #f7d59a 0%, #f9e8c6 42%, #c5dd8a 78%, #7eae62 100%);
+}
+.tp-resa-kort {
+  width: min(320px, 100%);
+  text-align: center;
+  background: #fff9ec;
+  border-radius: 24px;
+  border: 3px solid #8d6c40;
+  padding: 28px 22px 22px;
+  box-shadow: 0 14px 35px #553d2350;
+}
+.tp-stig { margin: 0; font-size: 32px; animation: tp-steg 0.7s ease-in-out infinite alternate; }
+.tp-resa-kort h2 { margin: 8px 0 14px; color: #3b2614; font-size: 1.35rem; line-height: 1.25; }
+.tp-resa-steg { display: flex; justify-content: center; gap: 10px; height: 14px; margin: 0 0 16px; }
+.tp-resa-steg span {
+  width: 14px;
+  height: 10px;
+  border-radius: 8px 8px 4px 4px;
+  background: #c9894a;
+  animation: tp-steg 0.7s ease-in-out infinite alternate;
+}
+.tp-resa-steg span:nth-child(2) { animation-delay: 0.12s; }
+.tp-resa-steg span:nth-child(3) { animation-delay: 0.24s; }
+.tp-resa-steg span:nth-child(4) { animation-delay: 0.36s; }
+.tp-resa-anim button {
+  min-height: 48px;
+  min-width: 160px;
+  padding: 10px 18px;
+  border-radius: 16px;
+  border: 2px solid #8d6c40;
+  background: #fff4d9;
+  color: #3b2f2f;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+}
+@keyframes tp-steg { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+@media (prefers-reduced-motion: reduce) {
+  .tp-stig, .tp-resa-steg span { animation: none; }
+}
+@media (max-width: 899px) {
+  .bok-skarm { pointer-events: none; }
+  .bok-skarm > * { pointer-events: auto; }
+}

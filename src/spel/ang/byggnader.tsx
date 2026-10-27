@@ -162,28 +162,7 @@ export function Skogsstig({ onSnart }: { onSnart: () => void }) {
         <planeGeometry args={[0.42, 1.6]} />
         <meshToonMaterial color="#E6CBA0" gradientMap={TOON_MAP} />
       </mesh>
-      <group ref={grind} name="grind" position={[-0.7, 0, -2.15]} scale={1.05} onPointerDown={ned}>
-        <mesh position={[-0.38, 0.32, 0]}>
-          <boxGeometry args={[0.09, 0.64, 0.09]} />
-          <meshStandardMaterial color="#8D6E63" flatShading />
-        </mesh>
-        <mesh position={[0.38, 0.32, 0]}>
-          <boxGeometry args={[0.09, 0.64, 0.09]} />
-          <meshStandardMaterial color="#8D6E63" flatShading />
-        </mesh>
-        <mesh position={[0, 0.5, 0]}>
-          <boxGeometry args={[0.86, 0.07, 0.07]} />
-          <meshStandardMaterial color="#A1887F" flatShading />
-        </mesh>
-        <mesh position={[0, 0.26, 0]}>
-          <boxGeometry args={[0.86, 0.07, 0.07]} />
-          <meshStandardMaterial color="#A1887F" flatShading />
-        </mesh>
-        <mesh position={[0, 0.4, 0.08]}>
-          <boxGeometry args={[1.15, 0.9, 0.3]} />
-          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-        </mesh>
-      </group>
+      <group ref={grind} name="grind" position={[-0.7, 0, -2.15]} scale={1.05} onPointerDown={ned} />
     </group>
   );
 }
