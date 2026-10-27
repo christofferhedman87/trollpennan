@@ -28,15 +28,53 @@ type Del = { geo: THREE.BufferGeometry; mat: THREE.MeshStandardMaterial };
 
 function geoGrupp(geo: THREE.BufferGeometry, start: number, count: number) {
   const g = new THREE.BufferGeometry();
-  const pos = geo.getAttribute("position");
-  const nor = geo.getAttribute("normal");
-  const uv = geo.getAttribute("uv");
-  if (pos) g.setAttribute("position", pos.clone());
+  const g0 = geo;
+  const kalla = g0.getAttribute("position");
+  let pos = kalla ? kalla.clone() : null;
+  if (pos && !(pos.array instanceof Float32Array)) {
+    const f32 = new Float32Array(pos.count * pos.itemSize);
+    for (let i = 0; i < pos.count; i++) {
+      f32[i * 3] = pos.getX(i);
+      f32[i * 3 + 1] = pos.getY(i);
+      f32[i * 3 + 2] = pos.getZ(i);
+    }
+    pos = new THREE.BufferAttribute(f32, 3);
+  }
+  if (pos) g.setAttribute("position", pos);
+  const nor = g0.getAttribute("normal");
+  const uv = g0.getAttribute("uv");
   if (nor) g.setAttribute("normal", nor.clone());
   if (uv) g.setAttribute("uv", uv.clone());
-  const index = geo.getIndex();
+  const index = g0.getIndex();
   if (index) g.setIndex(Array.from(index.array.slice(start, start + count)));
   return g;
+}
+
+function slåIhopOfargade(delar: Del[]): Del[] {
+  if (!(delar.length > 1 && delar.every((d) => !d.mat.map))) return delar;
+  const bitar = delar.map((d) => {
+    const ug = d.geo.index ? d.geo.toNonIndexed() : d.geo;
+    return { pos: ug.getAttribute("position"), nor: ug.getAttribute("normal"), f: d.mat.color };
+  });
+  const n = bitar.reduce((s, b) => s + (b.pos?.count ?? 0), 0);
+  const pA = new Float32Array(n * 3), nA = new Float32Array(n * 3), cA = new Float32Array(n * 3);
+  let o = 0;
+  for (const b of bitar) {
+    if (!b.pos) continue;
+    for (let i = 0; i < b.pos.count; i++, o++) {
+      const j = o * 3;
+      pA[j] = b.pos.getX(i); pA[j + 1] = b.pos.getY(i); pA[j + 2] = b.pos.getZ(i);
+      if (b.nor) { nA[j] = b.nor.getX(i); nA[j + 1] = b.nor.getY(i); nA[j + 2] = b.nor.getZ(i); }
+      cA[j] = b.f.r; cA[j + 1] = b.f.g; cA[j + 2] = b.f.b;
+    }
+  }
+  const mergedGeo = new THREE.BufferGeometry();
+  mergedGeo.setAttribute("position", new THREE.BufferAttribute(pA, 3));
+  mergedGeo.setAttribute("normal", new THREE.BufferAttribute(nA, 3));
+  mergedGeo.setAttribute("color", new THREE.BufferAttribute(cA, 3));
+  const mergedMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.8, metalness: 0 });
+  belysScen(new THREE.Mesh(mergedGeo, mergedMat));
+  return [{ geo: mergedGeo, mat: mergedMat }];
 }
 
 function baka(scene: THREE.Object3D, farger?: Record<string, string>): Del[] {
@@ -70,7 +108,7 @@ function baka(scene: THREE.Object3D, farger?: Record<string, string>): Del[] {
       delar.push({ geo, mat });
     }
   });
-  return delar;
+  return slåIhopOfargade(delar);
 }
 
 /** x, z, höjd, rotation, y-sänkning (andel av höjden som grävs ner) */
@@ -78,7 +116,7 @@ type Plats = readonly [number, number, number, number, number];
 
 /** `vand` (R8-2b): varje instans vänds upp och ner med botten kvar på marken. */
 /** R9K: `farger` (materialnamn → färg, ur data/platser.json) går före standardfärgerna i FARG. */
-export function InstansModell({ url, platser, vand = false, farger }: { url: string; platser: readonly Plats[]; vand?: boolean; farger?: Record<string, string> }) {
+export function InstansModell({ url, platser, vand = false, farger, cull = false }: { url: string; platser: readonly Plats[]; vand?: boolean; farger?: Record<string, string>; cull?: boolean }) {
   const gltf = useGLTF(url);
   const fargNyckel = farger ? JSON.stringify(farger) : "";
   // eslint-disable-next-line react-hooks/exhaustive-deps -- fargNyckel bär innehållet i farger
@@ -103,8 +141,10 @@ export function InstansModell({ url, platser, vand = false, farger }: { url: str
       });
       mesh.count = platser.length;
       mesh.instanceMatrix.needsUpdate = true;
+      mesh.frustumCulled = cull;
+      if (cull) mesh.boundingSphere = null;
     }
-  }, [delar, platser, vand]);
+  }, [delar, platser, vand, cull]);
   return (
     <>
       {delar.map((d, i) => (
@@ -114,7 +154,7 @@ export function InstansModell({ url, platser, vand = false, farger }: { url: str
             refs.current[i] = n;
           }}
           args={[d.geo, d.mat, platser.length]}
-          frustumCulled={false}
+          frustumCulled={cull}
         />
       ))}
     </>
