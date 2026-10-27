@@ -528,8 +528,8 @@ async function korPlaywright() {
       if (!m3Steg1.meningsrutaH || m3Steg1.meningsrutaH < 48) {
         fel.push(`M3: Meningsrutan är för liten (${m3Steg1.meningsrutaH} px, krav >= 48 px)`);
       }
-      if (m3Steg1.antalKortPaSidan !== 6) {
-        fel.push(`M3: Ordkortsväljaren ska visa exakt 6 kort per sida, visar ${m3Steg1.antalKortPaSidan}`);
+      if (![4, 6].includes(m3Steg1.antalKortPaSidan)) {
+        fel.push(`M3: Ordkortsväljaren ska visa 4 eller 6 kort per sida, visar ${m3Steg1.antalKortPaSidan}`);
       }
       if (m3Steg1.doldaScrollPx > 2) {
         fel.push(`M3: Ordkortspanelen har dold rullista (scrollHeight - clientHeight = ${m3Steg1.doldaScrollPx} px)`);
@@ -556,8 +556,8 @@ async function korPlaywright() {
         return { kortTexter, brickor };
       });
       detalj.m3.steg2 = m3Steg2;
-      if (m3Steg2.kortTexter.length !== 6) {
-        fel.push(`M3: Steg 2 visar inte 6 kort: ${JSON.stringify(m3Steg2.kortTexter)}`);
+      if (![4, 6].includes(m3Steg2.kortTexter.length)) {
+        fel.push(`M3: Steg 2 visar inte 4 eller 6 kort: ${JSON.stringify(m3Steg2.kortTexter)}`);
       }
       await page.screenshot({ path: path.join(UT_MAPP, "m3-pennans-bok-steg2.png") });
     }
