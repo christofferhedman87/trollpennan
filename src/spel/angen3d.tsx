@@ -7,7 +7,6 @@ import { brygga } from "./brygga.ts";
 import { useMinne } from "./minne.ts";
 import { malTillDuk } from "./ui/hjalp.ts";
 import { KenneyNatur } from "./kenneyNatur.tsx";
-import { HorisontVarld } from "./ang/HorisontVarld.tsx";
 import { KV, MILJO } from "./miljo.ts";
 import { HINT, SNART } from "./ang/delat.ts";
 import { DAMM } from "./ang/damm.ts";
@@ -22,6 +21,10 @@ import { START_PLATS, platsMed } from "./platser.ts";
 import { SagaBoll, SagaKamera, SagaKanin, SagaLjus, SagaPenna, type OrbitStyr } from "./ang/saga.tsx";
 import { KameraFokus } from "./ang/fokus.tsx";
 import { Vagvisare3D, VagvisareProjektor, type VagvisarePlatsId, type VagvisareSkarmPunkt } from "./ang/Vagvisare3D.tsx";
+import { FlygKameraV09 } from "./ang/FlygKameraV09.tsx";
+import { VarldsIntegrationV09 } from "./ang/VarldsIntegrationV09.tsx";
+import { publiceraTredKamera } from "./ang/introFlygFas.ts";
+import { KAMERA_ANG } from "./skarm.ts";
 import { IdPass } from "./ang/idpass.tsx";
 import { forbattraModellMaterial, useSagomiljo } from "./grafikKvalitet.ts";
 
@@ -72,8 +75,15 @@ function VagvisareLager({ plats, onValj, onPunkter }: { plats: VagvisarePlatsId;
   );
 }
 
-function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisarePunkter }: { natt: number; onSnart: () => void; saga: boolean; aktivPlats?: VagvisarePlatsId; onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void }) {
+function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisarePunkter, vyFlygAktiv = false, resaMal = null }: { natt: number; onSnart: () => void; saga: boolean; aktivPlats?: VagvisarePlatsId; onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void; vyFlygAktiv?: boolean; resaMal?: VagvisarePlatsId | null }) {
   useSagomiljo(natt > 0.55);
+  useEffect(() => {
+    if (saga) {
+      if (!(window as unknown as { __tredKamera?: unknown }).__tredKamera) publiceraTredKamera(0, 14.5, 22, 0);
+      return;
+    }
+    publiceraTredKamera(KAMERA_ANG[0], KAMERA_ANG[1], KAMERA_ANG[2], 0);
+  }, [saga]);
   const scenGraf = useThree((s) => s.scene);
   const grafVarv = useRef(0);
   useFrame(() => {
@@ -104,6 +114,7 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
         <Solkorn />
         <PlatsScen plats={plats} />
         <VagvisareLager plats={aktivPlats} onValj={onValjPlats} onPunkter={onVagvisarePunkter} />
+        <FlygKameraV09 introAktiv={saga} vyFlygAktiv={vyFlygAktiv} resaMal={resaMal} />
       </>
     );
   }
@@ -151,7 +162,7 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
           <KenneyNatur />
         </Suspense>
       </NaturGren>
-      <HorisontVarld />
+      <VarldsIntegrationV09 introAktiv={saga} vyFlygAktiv={vyFlygAktiv} resaMal={resaMal} plats={aktivPlats} onValjPlats={onValjPlats} onPunkter={onVagvisarePunkter} />
       {!saga ? (
         <Suspense fallback={null}>
           <Bengtsson3D />
@@ -185,7 +196,7 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
       <SagaKanin />
       <OrbitControls
         ref={styr as never}
-        enabled={!saga}
+        enabled={!saga && !vyFlygAktiv && resaMal == null}
         enablePan={false}
         enableDamping
         dampingFactor={0.08}
@@ -203,12 +214,11 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
       <SagaKamera styr={styr} />
       <KameraRam styr={styr} />
       <KameraFokus styr={styr} plats={ANG_PLATS} />
-      <VagvisareLager plats={aktivPlats} onValj={onValjPlats} onPunkter={onVagvisarePunkter} />
     </>
   );
 }
 
-export function Angen3D({ natt, saga = false, onGrind, aktivPlats = "ang", onValjPlats, onVagvisarePunkter }: { natt: number; saga?: boolean; onGrind?: () => boolean; aktivPlats?: VagvisarePlatsId; onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void }) {
+export function Angen3D({ natt, saga = false, onGrind, aktivPlats = "ang", onValjPlats, onVagvisarePunkter, vyFlygAktiv = false, resaMal = null }: { natt: number; saga?: boolean; onGrind?: () => boolean; aktivPlats?: VagvisarePlatsId; onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void; vyFlygAktiv?: boolean; resaMal?: VagvisarePlatsId | null }) {
   const djur = useMinne((s) => s.ang);
   const garden = useMinne((s) => s.garden);
   const interagerat = useMinne((s) => s.dragit);
@@ -318,7 +328,7 @@ export function Angen3D({ natt, saga = false, onGrind, aktivPlats = "ang", onVal
         >
           <PerformanceMonitor onDecline={() => setDpr(1)} onIncline={() => setDpr([1, KV.dpr_max])}>
             <Bvh firstHitOnly>
-              <Scen natt={natt} onSnart={onSnart} saga={saga} aktivPlats={aktivPlats} onValjPlats={onValjPlats} onVagvisarePunkter={onVagvisarePunkter} />
+              <Scen natt={natt} onSnart={onSnart} saga={saga} aktivPlats={aktivPlats} onValjPlats={onValjPlats} onVagvisarePunkter={onVagvisarePunkter} vyFlygAktiv={vyFlygAktiv} resaMal={resaMal} />
             </Bvh>
           </PerformanceMonitor>
           <AdaptiveDpr pixelated />

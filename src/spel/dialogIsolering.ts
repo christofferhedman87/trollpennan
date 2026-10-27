@@ -13,7 +13,7 @@ export function skapaDialogIsolering() {
       for (const syskon of Array.from(parent.children)) {
         if (syskon === gren || !(syskon instanceof HTMLElement)) continue;
         // Vägvisaren och resan ligger ovanpå Pennans bok och ska gå att trycka på.
-        if (syskon.matches(".tp-vagvisare-hud, .tp-resa-anim")) continue;
+        if (syskon.matches?.(".tp-vagvisare-hud, .tp-resa-anim, .tp-flyg-hud")) continue;
         if (syskon.inert) continue;
         satta.add(syskon);
         syskon.inert = true;

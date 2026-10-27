@@ -486,6 +486,7 @@ async function korPlaywright(fel, detalj) {
       }
 
       // Testa färskt intro (introKlar: false) för AC-W11 + bild w4-intro-dalflygning-375x812.png
+      await page.close();
       const introPage = await context.newPage();
       await introPage.addInitScript(() => {
         localStorage.setItem(
@@ -499,6 +500,7 @@ async function korPlaywright(fel, detalj) {
       if (await startKnapp.isVisible().catch(() => false)) {
         await startKnapp.click({ force: true });
       }
+      await introPage.locator('[data-testid="ladd-3d"][data-klar="ja"]').waitFor({ state: "attached", timeout: 15000 });
       await introPage.waitForTimeout(250);
       const kamStart = await introPage.evaluate(() => window.__tredKamera ?? null);
       detalj.introKameraStart = kamStart;

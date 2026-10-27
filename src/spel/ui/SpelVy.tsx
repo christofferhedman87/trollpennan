@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import upplevelse from "../../../data/upplevelse.json";
 import { LagringsInfo } from "../LagringsInfo";
 import { Angen3D } from "../angen3d.tsx";
@@ -5,6 +6,8 @@ import { Intro } from "../intro.tsx";
 import { sagaNu } from "../saga.ts";
 import { useStart } from "../start.ts";
 import { VagvisareHud, type VagvisarePlatsId, type VagvisareSkarmPunkt } from "../ang/Vagvisare3D.tsx";
+import { DalFlygEtiketter, useVyFlygning, VyFlygKnapp } from "../ang/IntroFlygning.tsx";
+import { INTRO_FLYG_SLUT_SEK } from "../ang/introFlygFas.ts";
 import { ResOvergangV09 } from "./ResOvergangV09.tsx";
 import { useVagvisareResaV09 } from "./useVagvisareResaV09.ts";
 import "./plats-resa-v09.css";
@@ -57,6 +60,31 @@ export function SpelVy() {
   const { tryckPlats, bytFolje, bengtsson, platsUi } = k.a;
   const titel = useStart((s) => s.titelOppen);
   const saga = sagaNu.aktiv;
+  const vyFlyg = useVyFlygning(3000);
+  const introStartRef = useRef<number | null>(null);
+  const [introFlygAktiv, setIntroFlygAktiv] = useState(false);
+  useEffect(() => {
+    const visar = (intro || sagaNu.aktiv) && !titel;
+    if (!visar) {
+      introStartRef.current = null;
+      setIntroFlygAktiv(false);
+      return;
+    }
+    if (introStartRef.current == null) introStartRef.current = performance.now();
+    const kvar = () => {
+      const start = introStartRef.current;
+      if (start == null || (performance.now() - start) / 1000 >= 6) return false;
+      const kam = (window as unknown as { __tredKamera?: { t: number } }).__tredKamera;
+      return kam == null || (kam.t ?? 0) < INTRO_FLYG_SLUT_SEK;
+    };
+    setIntroFlygAktiv(kvar());
+    const id = window.setInterval(() => {
+      const pa = kvar();
+      setIntroFlygAktiv(pa);
+      if (!pa) window.clearInterval(id);
+    }, 80);
+    return () => window.clearInterval(id);
+  }, [intro, titel, saga]);
   const aktivPlats: VagvisarePlatsId = varld === "gard" ? "garden" : platsUi.plats === "skogen" || platsUi.plats === "sjon" || platsUi.plats === "grottan" ? platsUi.plats : "ang";
   const resa = useVagvisareResaV09({ varld, nuvarandePlats: platsUi.plats, valjVarld, resTill: platsUi.resTill, hem: platsUi.hem });
   const { stangBok, oppnaOnska } = k.o;
@@ -109,7 +137,7 @@ export function SpelVy() {
       ) : null}
       <section className={visa3d ? "ang tred" : "ang"} ref={angRef} aria-label={varld === "gard" ? TEXTER.flikar.garden : TEXTER.flikar.angen} inert={intro}>
         <div className="natt-bak" style={{ opacity: natt }} />
-        {visa3d ? <Angen3D natt={natt} saga={intro} onGrind={platsUi.tryckGrind} aktivPlats={aktivPlats} onValjPlats={resa.startaResa} onVagvisarePunkter={resa.setVagvisarePunkter} /> : null}
+        {visa3d ? <Angen3D natt={natt} saga={intro} onGrind={platsUi.tryckGrind} aktivPlats={aktivPlats} onValjPlats={resa.startaResa} onVagvisarePunkter={resa.setVagvisarePunkter} vyFlygAktiv={vyFlyg.aktiv} resaMal={resa.mal} /> : null}
         {visa3d ? <PlatsResa plats={platsUi.plats} namn={platsUi.namn} ton={platsUi.ton} skylt={platsUi.skylt} intro={platsUi.intro} hem={platsUi.hem} /> : null}
         <AngLager natt={natt} varld={varld} omrade={omrade} panel={panel} ang={ang} hemma={hemma} liv={liv} fotoMal={fotoMal} visaBanner={visaBanner} stangBanner={stangBanner} visaMossa={visaMossa} setFotoMal={setFotoMal} banners={banners} bubblor={bubblor} onskan={onskan} onskaOpp={onskaOpp} onskaSyns={onskaSyns} ank={ank} oppnaOnska={oppnaOnska} meny={meny} setMeny={setMeny} omUidRef={omUidRef} setLage={setLage} setBokOpp={setBokOpp} setLadaOpp={setLadaOpp} menyHem={menyHem} setBoUid={setBoUid} lada={lada} ladaOpp={ladaOpp} boUid={boUid} boDjur={boDjur} flyttaInDjur={flyttaInDjur} />
         {kartaOpp ? <KartaLager forstaRad={forstaRad} kartaText={kartaText} nuvarandePlats={varld === "gard" ? "garden" : platsUi.plats} stangKarta={() => { setKartaOpp(false); setKartaText(null); }} tryckPlats={(id) => { if (id === "garden") return tryckPlats(id); valjVarld("ang"); platsUi.resTill(id); setKartaOpp(false); setKartaText(null); setBokOpp(false); }} onLast={() => { setKartaOpp(false); bengtsson.visaFel(); }} oppna={oppna} /> : null}
@@ -122,7 +150,9 @@ export function SpelVy() {
         ) : null}
         {intro ? null : <HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} npc={bengtsson} />}
         <VyPlats plats="scen" onValjPlats={resa.startaResa} onVagvisarePunkter={resa.setVagvisarePunkter} />
-        <VagvisareHud punkter={resa.vagvisarePunkter} onValjPlats={resa.startaResa} dold={titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null} />
+        <VagvisareHud punkter={resa.vagvisarePunkter} onValjPlats={resa.startaResa} dold={titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null || vyFlyg.aktiv} />
+        <VyFlygKnapp aktiv={vyFlyg.aktiv} onStarta={() => { setBokOpp(false); vyFlyg.startaVyFlygning(); }} dold={titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null} />
+        <DalFlygEtiketter synlig={vyFlyg.aktiv || introFlygAktiv} />
         <ResOvergangV09 mal={resa.mal} paHoppaOver={resa.hoppaOver} />
       </section>
 
