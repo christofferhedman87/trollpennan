@@ -179,6 +179,9 @@ const RADER = [
   ["w3.resa:garden_ellips","På väg till Gården…","Gården"], ["w3.resa:garden_punkt","På väg till Gården.","Gården"],
   ["w3.resa:solgarden_ellips","På väg till Solgården…","Solgården"], ["w3.resa:solgarden_punkt","På väg till Solgården.","Solgården"],
   ["w3.resa:hoppa_over","Hoppa över resan","Ängen"], ["w4.flyg:se_hela_dalen","Se hela dalen","Världskartan. Välj en plats på stigen! Alla vägar är öppna."],
+  ["u1.stjarna:1","Du har fått en stjärna!"], ["u1.stjarna:2","Du har fått två stjärnor!"], ["u1.stjarna:3","Du har fått tre stjärnor!"], ["u1.stjarna:4","Du har fått fyra stjärnor!"], ["u1.stjarna:5","Du har fått fem stjärnor!"],
+  ["u1.mossa:1","Du har fått en stjärna från Mossa!"], ["u1.mossa:2","Du har fått två stjärnor från Mossa!"], ["u1.mossa:3","Du har fått tre stjärnor från Mossa!"], ["u1.mossa:4","Du har fått fyra stjärnor från Mossa!"], ["u1.mossa:5","Du har fått fem stjärnor från Mossa!"], ["u1.mossa:nya","Du har fått nya stjärnor från Mossa!"],
+  ["u1.karta:vacka_forst","Vad ska vi väcka först?"], ["u1.uppdrag:titta_i_boken","Titta i Uppdragsboken!"],
 ];
 
 export function rostKandidater(talare = "pennan") {
