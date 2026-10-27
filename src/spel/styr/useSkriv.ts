@@ -17,6 +17,8 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
   const angraStackRef = useRef<string[]>([]);
   const [kanAngra, setKanAngra] = useState(false);
   const foreLageRef = useRef(lage);
+  const bokOppRef = useRef(bokOpp);
+  bokOppRef.current = bokOpp;
 
   useEffect(() => {
     const fore = foreLageRef.current;
@@ -242,13 +244,8 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
   useEffect(() => {
     const ned = (e: KeyboardEvent) => {
       if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
-      const target = e.target instanceof HTMLElement ? e.target : null;
-      // Låt Enter och mellanslag aktivera fokuserade kontroller, inte skapa djur.
-      if (target?.closest('button, a, summary, input, textarea, select, [contenteditable="true"]')) {
-        if (e.key === "Enter" || e.key === " " || target.closest('input, textarea, select, [contenteditable="true"]')) return;
-      }
-      if (overlayRef.current) {
-        if (e.key === "Escape") {
+      if (e.key === "Escape") {
+        if (overlayRef.current) {
           setOrdbok(false);
           setForalder(false);
           setVisKort(null);
@@ -257,8 +254,16 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
           setAlbumOpp(false);
           setMossaOpp(false);
         }
+        // Stäng boken utan att röra textRef — barnets mening ska finnas kvar.
+        if (!overlayRef.current && bokOppRef.current) setBokOpp(false);
         return;
       }
+      const target = e.target instanceof HTMLElement ? e.target : null;
+      // Låt Enter och mellanslag aktivera fokuserade kontroller, inte skapa djur.
+      if (target?.closest('button, a, summary, input, textarea, select, [contenteditable="true"]')) {
+        if (e.key === "Enter" || e.key === " " || target.closest('input, textarea, select, [contenteditable="true"]')) return;
+      }
+      if (overlayRef.current) return;
       if (e.key === "Enter") {
         e.preventDefault();
         utforRef.current(textRef.current, { hand: handRef.current });

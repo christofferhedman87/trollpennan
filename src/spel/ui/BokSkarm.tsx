@@ -1,4 +1,4 @@
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { Lock } from "lucide-react";
 import type { ForslagKort, Ord } from "@/tolk/typer.ts";
 import upplevelse from "../../../data/upplevelse.json";
@@ -24,6 +24,7 @@ import { UppdragVy } from "./UppdragVy.tsx";
 import { SkapelseBar } from "./SkapelseBar.tsx";
 import { StegKortValjare } from "./StegKortValjare.tsx";
 import "./bok-komp.css";
+import "./bok-v08.css";
 
 type BokSkarmProps = {
   stangBok: () => void; visaBanner: (texten: string, slag: Banner["slag"], kalla: Kalla) => void; andrar: boolean; panel: "spel" | "byggbok" | "uppdrag";
@@ -52,10 +53,19 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
   const [sjalvSkriv, setSjalvSkriv] = useState(false);
   const visaTangenter = panel === "byggbok" ? lage === "skriv" : (skaparVy === "skriv" && lage === "skriv" && sjalvSkriv);
   const visaKort = panel === "spel" && skaparVy === "skriv" && !visaTangenter && !forslag && !behover && !gavaTill;
+  useEffect(() => {
+    const ned = (e: KeyboardEvent) => {
+      if (e.key !== "Escape" || e.metaKey || e.ctrlKey || e.altKey) return;
+      stangBok();
+    };
+    window.addEventListener("keydown", ned);
+    return () => window.removeEventListener("keydown", ned);
+  }, [stangBok]);
   const ideUpp = aktivtSkrivUppdrag(uppdragSpar, platsNu()) ?? nastaSkrivUppdrag(uppdragSpar, platsNu(), false);
   return (
       <div className={forstaSkapelse ? "bok-skarm forsta-vy" : "bok-skarm"} data-testid="bok-skarm" onClick={stangBok}>
       <section className={andrar ? "bok andrar" : forstaSkapelse ? "bok forsta-skapelse" : "bok"} data-andrar={andrar ? "ja" : "nej"} role="dialog" aria-label="Pennans bok" onClick={(e) => e.stopPropagation()}>
+        <div className="bok-grab" data-c4="sheet-grab" aria-hidden="true" />
         <header className="bok-huvud bok-topp">
           <h2
             ref={(el) => el?.setAttribute("data-testid", "bok-flik-skriv")}
