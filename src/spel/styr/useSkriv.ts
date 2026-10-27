@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ForslagKort, Ord } from "@/tolk/typer.ts";
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
@@ -8,15 +8,47 @@ import { bokstav, bytOrd, meningAv, taBortOrd, utanSparratSuffix } from "../ui/h
 import type { Slot, Val } from "../ui/typer.ts";
 import type { SpelKarna } from "./typer.ts";
 
+const ANGRA_MAX = 24;
+
 export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
   const { setText, setLage, setVal, setFlik, setHand, forslag, setForslag, behover, setBehover, setVisKort, setOrdbok, setForalder, setAlbumOpp, setMossaOpp, bokOpp, setBokOpp, setByggPuff, setKop, onskaOpp, setKopia, gavaTill, setGavaTill, textRef, handRef, overlayRef, gavaRef } = k.t;
   const { visaBanner } = k.b;
   const { utfor, utforRef } = k.s;
+  const angraStackRef = useRef<string[]>([]);
+  const [kanAngra, setKanAngra] = useState(false);
+
+  function sparaAngra(ny: string) {
+    const fore = textRef.current;
+    if (fore === ny) return;
+    const s = angraStackRef.current;
+    s.push(fore);
+    if (s.length > ANGRA_MAX) s.shift();
+    setKanAngra(true);
+  }
+
+  function tomAngra() {
+    angraStackRef.current = [];
+    setKanAngra(false);
+  }
+
+  function angraMening() {
+    const s = angraStackRef.current;
+    const foregaende = s.pop();
+    if (foregaende == null) {
+      setKanAngra(false);
+      return;
+    }
+    textRef.current = foregaende;
+    setText(foregaende);
+    setVal(valUrText(foregaende));
+    setKanAngra(s.length > 0);
+  }
 
   function byggFras(fras: string) {
     ljud.lasOpp();
     ljud.pling();
     setByggPuff(null);
+    tomAngra();
     textRef.current = fras;
     setText(fras);
     setHand(true);
@@ -26,7 +58,7 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
     utfor(fras, { hand: true });
   }
 
-  function vaknaNu() { rostKo.handling(); utfor(textRef.current, { hand: handRef.current }); }
+  function vaknaNu() { tomAngra(); rostKo.handling(); utfor(textRef.current, { hand: handRef.current }); }
 
   function skrivTecken(bit: string) {
     setBokOpp(true);
@@ -37,6 +69,7 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
       const rens = utanSparratSuffix(next);
       if (rens.traff) {
         next = rens.text;
+        sparaAngra(next);
         textRef.current = next;
         setLage("skriv");
         setHand(true);
@@ -49,6 +82,7 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
         return;
       }
     }
+    sparaAngra(next);
     textRef.current = next;
     setLage("skriv");
     setHand(true);
@@ -60,6 +94,7 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
 
   function sudda() {
     const next = textRef.current.slice(0, -1);
+    sparaAngra(next);
     textRef.current = next;
     setHand(true);
     handRef.current = true;
@@ -71,6 +106,7 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
   function valjKort(ord: Ord) {
     if (gavaRef.current) {
       const fras = `${ord.genus} ${ord.visa}`;
+      sparaAngra(fras);
       textRef.current = fras;
       setText(fras);
       setVal({ djur: ord });
@@ -89,12 +125,33 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
     setVal((prev) => {
       const bas = Object.keys(prev).length > 0 ? prev : valUrText(nuText);
       const next: Val = { ...bas };
-      if (next[slot]?.id === ord.id) delete next[slot];
+      const gammalt = next[slot];
+      if (gammalt?.id === ord.id) delete next[slot];
       else next[slot] = ord;
-      const grund = meningAv(next);
-      const mening = artikelMatch && grund && !/^(en|ett)\s+/i.test(grund)
-        ? `${artikelMatch[1]!.toLocaleLowerCase("sv")} ${grund}`
-        : grund;
+      let mening: string | null = null;
+      if (gammalt && gammalt.id !== ord.id) {
+        for (const k of [gammalt.visa, gammalt.id, ...gammalt.former]) {
+          const bytt = bytOrd(nuText, k, ord.visa);
+          if (bytt !== nuText) {
+            mening = bytt;
+            break;
+          }
+        }
+      }
+      if (mening == null) {
+        const grund = meningAv(next);
+        mening = artikelMatch && grund && !/^(en|ett)\s+/i.test(grund)
+          ? `${artikelMatch[1]!.toLocaleLowerCase("sv")} ${grund}`
+          : grund;
+      }
+      const djurVisa = next.djur?.visa ?? bas.djur?.visa;
+      if (djurVisa && mening && !mening.toLocaleLowerCase("sv").includes(djurVisa.toLocaleLowerCase("sv"))) {
+        const grund = meningAv(next);
+        mening = artikelMatch && grund && !/^(en|ett)\s+/i.test(grund)
+          ? `${artikelMatch[1]!.toLocaleLowerCase("sv")} ${grund}`
+          : grund;
+      }
+      sparaAngra(mening);
       textRef.current = mening;
       setText(mening);
       return next;
@@ -114,6 +171,7 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
     if (!forslag) return;
     rostKo.handling();
     const ny = bytOrd(textRef.current, forslag.token, kortet.visa);
+    tomAngra();
     textRef.current = ny;
     setText(ny);
     setForslag(null);
@@ -127,6 +185,7 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
     const token = forslag.token;
     useMinne.getState().sparaOkanda([token]);
     const ny = taBortOrd(textRef.current, token);
+    sparaAngra(ny);
     textRef.current = ny;
     setText(ny);
     setForslag(null);
@@ -137,6 +196,7 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
   function fyllExempel(ex: string) {
     ljud.lasOpp(); rostKo.handling();
     ljud.pling();
+    sparaAngra(ex);
     textRef.current = ex;
     setText(ex);
     setHand(false);
@@ -151,6 +211,7 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
   function vackIde(ex: string) {
     ljud.lasOpp();
     ljud.pling();
+    tomAngra();
     textRef.current = ex;
     setText(ex);
     setHand(true);
@@ -206,7 +267,7 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
     return () => window.removeEventListener("keydown", ned);
     // eslint-disable-next-line react-hooks/exhaustive-deps -- B6.1: tangentlyssnaren monteras en gång; skrivTecken/sudda når bara state via refs och set-funktioner
   }, []);
-  return { byggFras, vaknaNu, skrivTecken, sudda, valjKort, oppnaSkrivMig, valjForslag, nejForslag, fyllExempel, vackIde };
+  return { byggFras, vaknaNu, skrivTecken, sudda, valjKort, oppnaSkrivMig, valjForslag, nejForslag, fyllExempel, vackIde, angraMening, kanAngra };
 }
 
 export type Skriv = ReturnType<typeof useSkriv>;
