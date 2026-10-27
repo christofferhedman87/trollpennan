@@ -998,6 +998,14 @@
    "t": "+5 stjärnor från Mossa!",
    "n": -16
   },
+  "00de3931": {
+   "f": "/ljud/rost/ff800f930dc84504.mp3",
+   "ms": 2090,
+   "r": "pennan",
+   "id": "u1.talsprak.stjarna:5",
+   "t": "Du har fått fem stjärnor!",
+   "n": -16
+  },
   "00e39178": {
    "f": "/ljud/rost/59926e0980686910.mp3",
    "ms": 2952,
@@ -4499,6 +4507,14 @@
    "t": "prins",
    "n": -16
   },
+  "1d3c6950": {
+   "f": "/ljud/rost/326a08674759c4ba.mp3",
+   "ms": 2325,
+   "r": "pennan",
+   "id": "u1.talsprak.stjarna:3",
+   "t": "Du har fått tre stjärnor!",
+   "n": -16
+  },
   "1d49a8f8": {
    "f": "/ljud/rost/a5ebfaa495d7d998.mp3",
    "ms": 1149,
@@ -5057,6 +5073,14 @@
    "r": "pennan",
    "id": "varde:kalkon",
    "t": "kalkon",
+   "n": -16
+  },
+  "224d07d1": {
+   "f": "/ljud/rost/c98768a03871aa68.mp3",
+   "ms": 1985,
+   "r": "pennan",
+   "id": "u1.talsprak.stjarna:4",
+   "t": "Du har fått fyra stjärnor!",
    "n": -16
   },
   "2262f0fa": {
@@ -8285,6 +8309,14 @@
    "r": "bengtsson",
    "id": "bengtsson.json:resa-fran-soffan.klart",
    "t": "Vilken resa, och tofflorna är kvar!",
+   "n": -16
+  },
+  "3a78683b": {
+   "f": "/ljud/rost/bc420f6288befa18.mp3",
+   "ms": 2508,
+   "r": "pennan",
+   "id": "u1.talsprak.mossa:flera",
+   "t": "Du har fått nya stjärnor från Mossa!",
    "n": -16
   },
   "3a8dabc8": {
@@ -13284,6 +13316,14 @@
    "t": "larv",
    "n": -16
   },
+  "5fe2ad14": {
+   "f": "/ljud/rost/0262dede28b90a7b.mp3",
+   "ms": 2926,
+   "r": "pennan",
+   "id": "u1.talsprak.mossa:3",
+   "t": "Du har fått tre stjärnor från Mossa!",
+   "n": -16
+  },
   "5ff10d80": {
    "f": "/ljud/rost/412834d9d5182abb.mp3",
    "ms": 3944,
@@ -16967,6 +17007,14 @@
    "t": "en spräcklig padda",
    "n": -16
   },
+  "7c06245b": {
+   "f": "/ljud/rost/f972ec426a4238c7.mp3",
+   "ms": 3422,
+   "r": "pennan",
+   "id": "u1.talsprak.mossa:5",
+   "t": "Du har fått fem stjärnor från Mossa!",
+   "n": -16
+  },
   "7c0979c5": {
    "f": "/ljud/rost/6c912f3a9611b773.mp3",
    "ms": 1907,
@@ -18114,6 +18162,14 @@
    "t": "en plattfisk",
    "n": -16
   },
+  "8708c5b0": {
+   "f": "/ljud/rost/9412252e51447330.mp3",
+   "ms": 2821,
+   "r": "pennan",
+   "id": "u1.talsprak.mossa:2",
+   "t": "Du har fått två stjärnor från Mossa!",
+   "n": -16
+  },
   "870cfb1f": {
    "f": "/ljud/rost/edb308fdcaa49282.mp3",
    "ms": 1071,
@@ -19012,6 +19068,14 @@
    "t": "en kaffe",
    "n": -16
   },
+  "8e1b0e04": {
+   "f": "/ljud/rost/cc35d2d2bde55a2d.mp3",
+   "ms": 2821,
+   "r": "pennan",
+   "id": "u1.talsprak.mossa:1",
+   "t": "Du har fått en stjärna från Mossa!",
+   "n": -16
+  },
   "8e1cf5f2": {
    "f": "/ljud/rost/c5bbd89f1fdca1ea.mp3",
    "ms": 1202,
@@ -19274,6 +19338,14 @@
    "r": "pennan",
    "id": "varde:en sopskyffel",
    "t": "en sopskyffel",
+   "n": -16
+  },
+  "90bb9200": {
+   "f": "/ljud/rost/b62c7f87e1c5d4d5.mp3",
+   "ms": 1855,
+   "r": "pennan",
+   "id": "u1.talsprak.stjarna:1",
+   "t": "Du har fått en stjärna!",
    "n": -16
   },
   "90c47945": {
@@ -25585,6 +25657,14 @@
    "t": "en snowboard",
    "n": -16
   },
+  "c404dec1": {
+   "f": "/ljud/rost/fdcee7e84dffb43a.mp3",
+   "ms": 1672,
+   "r": "pennan",
+   "id": "u1.talsprak.coach",
+   "t": "Vad ska vi väcka först?",
+   "n": -16
+  },
   "c42a956f": {
    "f": "/ljud/rost/c63c97b5ae06d4fe.mp3",
    "ms": 1202,
@@ -27039,6 +27119,14 @@
    "t": "en regnbågsfärgad enhörning",
    "n": -16
   },
+  "cdad413b": {
+   "f": "/ljud/rost/b2ad0e9472296830.mp3",
+   "ms": 3344,
+   "r": "pennan",
+   "id": "u1.talsprak.mossa:4",
+   "t": "Du har fått fyra stjärnor från Mossa!",
+   "n": -16
+  },
   "cdae9ac6": {
    "f": "/ljud/rost/550e0da62c85cae5.mp3",
    "ms": 1489,
@@ -28066,6 +28154,14 @@
    "r": "pennan",
    "id": "mossa.json:.uppdrag[].text",
    "t": "Gården behöver fler blommor. Bygg tre stycken!",
+   "n": -16
+  },
+  "d5e1015a": {
+   "f": "/ljud/rost/a94f9965e5ffe485.mp3",
+   "ms": 2038,
+   "r": "pennan",
+   "id": "u1.talsprak.uppdragsbok",
+   "t": "Titta i Uppdragsboken!",
    "n": -16
   },
   "d5e92a7a": {
@@ -29134,6 +29230,14 @@
    "r": "pennan",
    "id": "varde:Fyrlampan",
    "t": "Fyrlampan",
+   "n": -16
+  },
+  "dd727e3c": {
+   "f": "/ljud/rost/57cca368e7655cfe.mp3",
+   "ms": 2038,
+   "r": "pennan",
+   "id": "u1.talsprak.stjarna:2",
+   "t": "Du har fått två stjärnor!",
    "n": -16
   },
   "dd78594d": {
