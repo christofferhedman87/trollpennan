@@ -40,7 +40,7 @@ function texter(k: Kalla): string[] {
 
 test("TTS-2: inställningarna – reserv tyst, telefonen bara för barnets ord, syntaxviruset har egen röst", () => {
   assert.equal(RESERV, "tyst");
-  assert.equal(DYNAMISK, "webblasare");
+  assert.equal(DYNAMISK, "tyst");
   assert.equal(R.roster.syntaxviruset?.id, "ZMs9a3j1SLzirC7aygJQ");
   assert.equal(R.talare.syntaxviruset, "syntaxviruset");
   const ider = Object.values(R.roster).map((r) => r.id);

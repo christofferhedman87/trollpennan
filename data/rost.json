@@ -79,7 +79,7 @@
     "licens": "ElevenLabs betald plan (Starter): kommersiell licens för ljud som skapats under abonnemanget, även efter att det upphört; ingen namnangivelse krävs",
     "kalla": "https://help.elevenlabs.io/hc/en-us/articles/13313564601361"
   },
-  "dynamisk": "webblasare",
+  "dynamisk": "tyst",
   "kallor": {
     "_om": "TTS-2: fasta texter som läses upp, i prioritetsordning (taket i generatorn tar de första först). 'falt' = reguljära uttryck för sökvägen i filen ('.a.b[]', listor som []). Text med {x} blir en mall: de fasta delarna får egna filer och {x} slås upp bland 'varden' (finns värdet inte är det barnets eget ord: 'dynamisk').",
     "lista": [
@@ -354,6 +354,7 @@
           "^\\.sidor\\[\\]\\.titel$"
         ]
       }
-    ]
+    ],
+    "kandidater": true
   }
 }
