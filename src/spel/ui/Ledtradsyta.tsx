@@ -44,7 +44,12 @@ export function Ledtradsyta({ funna, kompakt = false }: { funna: Record<string, 
   const led = LED[vald]!;
   const streck = `${led.forsta} ${Array.from({ length: Math.max(0, led.langd - 1) }, () => "_").join(" ")}`.trim();
   const framsteg = fyll(hemligt.hittade, { n: hittade.length, total: alla.length });
-  const lasText = steg >= 1 && stegData?.extraText ? `${led.gata} ${stegData.extraText}` : led.gata;
+  const renExtra = stegData?.extraText
+    ?.replace(/:\s*[^.!?]*_+(?:[^.!?]*)[.!?]?/u, ".")
+    .replace(/\b1 delar\b/u, "1 del")
+    .trim();
+  const talExtra = renExtra && !/[.!?]$/u.test(renExtra) ? `${renExtra}.` : renExtra;
+  const lasText = steg >= 1 && talExtra ? `${led.gata} ${talExtra}` : led.gata;
   return (
     <div className="ledtrad" data-testid="ledtrad" data-hemligt={vald} data-v3={kompakt ? "ledtrad-kompakt" : "ledtrad-full"} data-kompakt={kompakt ? "ja" : "nej"}>
       <b>
