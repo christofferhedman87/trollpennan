@@ -25,6 +25,7 @@ import { sakLage } from "../landning.ts";
 import { torrKropp } from "../platsYta.ts";
 import { malTillDuk } from "../ui/hjalp.ts";
 import { SolstjarnaPlopp } from "../solstjarna.ts";
+import { frigoraKontaktSkugga, skapaKontaktSkugga } from "../grafikKvalitet.ts";
 
 function pausaAnim(): boolean {
   return typeof window !== "undefined" && window.__PAUSE_ANIM === true;
@@ -180,6 +181,8 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
   const flyg = flygare(spec, plats, alla);
   const sim = simmare(spec, plats, alla);
   const ankare = useMemo(() => procAnkare(spec.kropp), [spec.kropp]);
+  const markSkugga = useMemo(() => skapaKontaktSkugga(0.55), []);
+  useEffect(() => () => frigoraKontaktSkugga(markSkugga), [markSkugga]);
   const ritSpec = krymp !== 1 ? { ...spec, skala: (spec.skala || 1) * krymp } : spec;
   const synS = ritSkala(ritSpec, z, plats);
   const sak = arSak(spec.kropp);
@@ -348,7 +351,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
   }
   return (
     <group position={[x, 0, z]} onPointerDown={ned} userData={{ trollDel: spec.uid }}>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.04, 0]}><circleGeometry args={[0.55, 12]} /><meshBasicMaterial color="#256D3B" transparent opacity={0.20} /></mesh>
+      <primitive object={markSkugga} dispose={null} />
       {sim ? (
         <mesh ref={plask} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.08, 0]} visible={false}>
           <ringGeometry args={[0.32, 0.46, 16]} />

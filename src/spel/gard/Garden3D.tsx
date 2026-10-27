@@ -13,6 +13,7 @@ import { ByggeModell, DekorHobalar } from "./ByggModell.tsx";
 import { GardDjurLista } from "./GardDjur.tsx";
 import { Solkorn, VindGras } from "../ang/dekor.tsx";
 import { MarkPlan } from "./MarkPlan.tsx";
+import { useSagomiljo } from "../grafikKvalitet.ts";
 import { synkaTestSparning, varldTillNorm, type GardDjurSnap } from "./vandra.ts";
 import {
   CELL_STORLEK,
@@ -117,6 +118,7 @@ function Scen({
   flyttarUid: string | null;
   setFlyttarUid: (uid: string | null) => void;
 }) {
+  useSagomiljo(false);
   const L = MILJO.ljus;
   return (
     <>

@@ -3,32 +3,39 @@
 // MeshBasicMaterial får `emissive` ("Cannot read properties of undefined (reading 'value')" i refreshMaterialUniforms).
 // Därför byts sådana material mot ett upplyst MeshStandardMaterial med samma textur och färg när modellen läses in,
 // samma sak som de härledda "-belyst.glb" i M12 gjorde i filen. Originalfilerna kan då användas direkt.
-// S1: upplysta standardmaterial får en delad Slime-glöd, och scenens nät mjukrundas en gång.
+// W1: Half-Lambert (dotNL * 0.52 + 0.48), varma skuggtoner och gyllene Fresnel. Ett delat shaderprogram.
 import * as THREE from "three";
 import { mjukrundaScen } from "./mjukGeometri.ts";
 
 const BYTT = new WeakMap<THREE.Material, THREE.Material>();
 const SLIME_KEY = "trollpennan-slime-rim-v1";
 
-/** Varm wrap-around half-Lambert, Fresnel-kantljus och solvarmt studsljus underifrån. Ett delat shaderprogram. */
+function klammaSaga(std: THREE.MeshStandardMaterial) {
+  std.roughness = Math.min(0.95, Math.max(0.45, std.roughness ?? 0.72));
+  std.metalness = Math.min(0.28, Math.max(0, std.metalness ?? 0.04));
+  std.envMapIntensity = 0.65;
+}
+
+/** Varm Half-Lambert, gyllene Fresnel-kantljus och solvarm skuggton. Ett delat shaderprogram. */
 export function appliceraSlimeGlod(m: THREE.MeshStandardMaterial) {
+  klammaSaga(m);
   if (m.userData.slimeGlod === true && m.customProgramCacheKey() === SLIME_KEY) return;
-  m.roughness = Math.min(Math.max(m.roughness ?? 0.62, 0.55), 0.72);
-  m.metalness = 0;
-  m.customProgramCacheKey = () => "trollpennan-slime-rim-v1";
+  m.customProgramCacheKey = () => SLIME_KEY;
   m.onBeforeCompile = (shader) => {
-    shader.fragmentShader = shader.fragmentShader
+    const ljus = THREE.ShaderChunk.lights_physical_pars_fragment
       .replace(
         "float dotNL = saturate( dot( geometryNormal, directLight.direction ) );",
-        "float dotNL = saturate( dot( geometryNormal, directLight.direction ) * 0.5 + 0.5 );\n\tdotNL *= dotNL;",
+        "float dotNL = saturate( dot( geometryNormal, directLight.direction ) );\n\tdotNL = dotNL * 0.52 + 0.48;",
       )
       .replace(
         "vec3 irradiance = dotNL * directLight.color;",
-        "vec3 irradiance = dotNL * directLight.color + vec3(1.0, 0.74, 0.40) * pow(saturate(-geometryNormal.y), 1.35) * 0.22;",
-      )
+        "vec3 irradiance = dotNL * directLight.color + (vec3(0.145, 0.427, 0.231) + vec3(0.306, 0.212, 0.161)) * (1.0 - dotNL) * 0.34;",
+      );
+    shader.fragmentShader = shader.fragmentShader
+      .replace("#include <lights_physical_pars_fragment>", ljus)
       .replace(
         "#include <opaque_fragment>",
-        "#include <opaque_fragment>\n\tfloat slimeNdv = saturate(1.0 - dot(normalize(normal), normalize(vViewPosition)));\n\tgl_FragColor.rgb += vec3(1.0, 0.96, 0.82) * smoothstep(0.55, 0.95, slimeNdv) * 0.28;",
+        "#include <opaque_fragment>\n\t#ifndef FLAT_SHADED\n\tfloat sagaFresnel = smoothstep(0.52, 0.94, 1.0 - max(dot(normalize(vNormal), normalize(vViewPosition)), 0.0));\n\tgl_FragColor.rgb += vec3(1.0, 0.92, 0.72) * sagaFresnel * 0.28;\n\t#endif",
       );
   };
   m.userData.slimeGlod = true;
@@ -45,6 +52,11 @@ function glodOm(material: THREE.Material | THREE.Material[]) {
 
 /** Upplyst motsvarighet till ett obelyst material (samma objekt tillbaka om det redan är upplyst). Delas per källmaterial. */
 export function belysMaterial(m: THREE.Material): THREE.Material {
+  const somStd = m as THREE.MeshStandardMaterial;
+  if (somStd.isMeshStandardMaterial) {
+    klammaSaga(somStd);
+    return m;
+  }
   const b = m as THREE.MeshBasicMaterial;
   if (!b.isMeshBasicMaterial) return m;
   const finns = BYTT.get(m);
@@ -64,6 +76,7 @@ export function belysMaterial(m: THREE.Material): THREE.Material {
     metalness: 0,
     roughness: 1,
   });
+  klammaSaga(ny);
   ny.userData = { ...b.userData, belystFran: "KHR_materials_unlit" };
   BYTT.set(m, ny);
   return ny;
