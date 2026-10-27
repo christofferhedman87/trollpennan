@@ -1,6 +1,6 @@
 # PROJECT.md – Trollpennan (kort projektkarta)
 
-**Uppdaterad 2026-10-27 av Arkitekten, mot `main` = `aa2470a` (#235, C4 mergad — hela Blockserie F #216–#220, S #221–#225, D #226–#228, M #229–#231 samt C #232–#235 klara; Blockserie R R1–R2 beställd).** Uppdatera efter varje sammanslagen runda (grindregel 1 i `build-round-gate`).
+**Uppdaterad 2026-10-27 av Arkitekten, mot `main` = `ac392c1` (#237, R2 mergad — hela Blockserie F #216–#220, S #221–#225, D #226–#228, M #229–#231, C #232–#235 samt R #236–#237 klara på `main`).** Uppdatera efter varje sammanslagen runda (grindregel 1 i `build-round-gate`).
 Granskning: https://trollpennan.christofferhedman87.workers.dev/ (byggs från `main`, Playwright 375×812). `trollpennan.grok.me` är gammal och ska inte användas.
 
 - **Plan för Blockserie F (`F1`–`F5`, 2026-10-26 — Första minuterna, UX i världsklass & 5 krokar till Blockserie S):** [`docs/blockserie-f-2026-10-26.md`](docs/blockserie-f-2026-10-26.md)
@@ -8,12 +8,13 @@ Granskning: https://trollpennan.christofferhedman87.workers.dev/ (byggs från `m
 - **Plan för Blockserie M (`M1`–`M3`, 2026-10-26 — NPF-anpassat & Visuellt Vackert Meny- och Navigationssystem på `375×812`):** [`rundor/M1-M3-npf-ux-menyer/GRIND.md`](rundor/M1-M3-npf-ux-menyer/GRIND.md)
 - **Plan för Blockserie C (`C1`–`C4`, 2026-10-27 — Copilots v0.8 Redesign *Trollpennan: Levande Ord*):** [`rundor/C1-C4-levande-ord/GRIND.md`](rundor/C1-C4-levande-ord/GRIND.md)
 - **Plan för Blockserie R (`R1`–`R2`, 2026-10-27 — Kompletta Röstinspelningar i ElevenLabs, Noll Web Speech TTS & 1-MP3-meningar):** [`rundor/R1-R2-kompletta-roster/GRIND.md`](rundor/R1-R2-kompletta-roster/GRIND.md)
-- **Fysiska specialistunderlag på disk (Blockserie F, S, D, M, C & R):**
+- **Plan för Blockserie W (`W1`–`W4`, 2026-10-27 — Copilots v0.9 *Levande Värld, Grafik, Vägvisare & Introflygning*):** `rundor/W1-W4-levande-varld/GRIND.md` (på `origin/arkitekt/w1-w4-bestallning`, `1251349`)
+- **Fysiska specialistunderlag på disk (Blockserie F, S, D, M, C, R & W):**
   - **Granskningschefen (Fynd 1–9 på `375×812`):** `/workspace/granskning/2026-10-26-forsta-minuterna/rapport.md`
-  - **Kodspanaren (`F1`–`F5`, `S1`–`S5`, `D1`–`D3`, `M1`–`M3`, `C1`–`C4`, `R1`–`R2`):** `/workspace/kod-inkorg/F1-F6/spaning.md`, `/workspace/slime-rancher-studie/teknik-och-loop.md`, `/workspace/kod-inkorg/D1-D3/spaning.md`, `/workspace/kod-inkorg/M1-M4/spaning.md`, `/workspace/kod-inkorg/c1-c4/spaning.md` & `/workspace/kod-inkorg/r1-r3-roster/spaning.md`
-  - **Game Art Director (Stilguide avsnitt 6–11 + Slime Rancher art & story):** `/workspace/trollpennan-nulage/stilguide.md` & `/workspace/slime-rancher-studie/art-och-story.md`
-  - **Modellspanaren (`f-*.glb` + `s-*.glb` CC0 1.0, ankarkalibrering, uttryck & Largos):** `/workspace/modell-inkorg/_blockserie-f/BLOCKSERIE-F.md`, `/workspace/slime-rancher-studie/modeller-och-uttryck.md`, `/workspace/modell-inkorg/_blockserie-s/` & `/workspace/modell-inkorg/S1-S5/manifest.json`
-  - **Critiquito (låsta acceptansmått på `375×812` & `320×568`):** `/workspace/slime-rancher-studie/ui-kritik-s.md`, `/workspace/trollpennan-nulage/npf-ux-feedback/ui-kritik-m.md`, `/workspace/trollpennan-nulage/kritik-c1-c4.md`, `rundor/C1-C4-levande-ord/GRIND.md` & `rundor/R1-R2-kompletta-roster/GRIND.md`
+  - **Kodspanaren (`F1`–`F5`, `S1`–`S5`, `D1`–`D3`, `M1`–`M3`, `C1`–`C4`, `R1`–`R2`, `W1`–`W4`):** `/workspace/kod-inkorg/F1-F6/spaning.md`, `/workspace/slime-rancher-studie/teknik-och-loop.md`, `/workspace/kod-inkorg/D1-D3/spaning.md`, `/workspace/kod-inkorg/M1-M4/spaning.md`, `/workspace/kod-inkorg/c1-c4/spaning.md`, `/workspace/kod-inkorg/r1-r3-roster/spaning.md` & `/workspace/kod-inkorg/w1-w4/spaning.md`
+  - **Game Art Director (Stilguide avsnitt 6–12 + Slime Rancher art & story):** `/workspace/trollpennan-nulage/stilguide.md` & `/workspace/slime-rancher-studie/art-och-story.md`
+  - **Modellspanaren (`f-*.glb`, `s-*.glb` & `w-*.glb` CC0 1.0, ankarkalibrering, uttryck, Largos, horisontbiomer & vägvisare):** `/workspace/modell-inkorg/_blockserie-f/BLOCKSERIE-F.md`, `/workspace/slime-rancher-studie/modeller-och-uttryck.md`, `/workspace/modell-inkorg/_blockserie-s/`, `/workspace/modell-inkorg/S1-S5/manifest.json`, `/workspace/modell-inkorg/w1-w4/RAPPORT.md` & `/workspace/modell-inkorg/w1-w4/manifest.json`
+  - **Critiquito (låsta acceptansmått på `375×812` & `320×568`):** `/workspace/slime-rancher-studie/ui-kritik-s.md`, `/workspace/trollpennan-nulage/npf-ux-feedback/ui-kritik-m.md`, `/workspace/trollpennan-nulage/kritik-c1-c4.md`, `/workspace/trollpennan-nulage/kritik-w1-w4.md`, `rundor/C1-C4-levande-ord/GRIND.md`, `rundor/R1-R2-kompletta-roster/GRIND.md` & `rundor/W1-W4-levande-varld/GRIND.md`
 - **Plan för Blockserie V (`V1`–`V9b`, 100 % klar 2026-10-26):** [`docs/blockserie-v-2026-10-25.md`](docs/blockserie-v-2026-10-25.md)
 - **Blockserien P1–P10 (klar t.o.m. P4c #203):** [`rundor/PREMIUM/BLOCKSERIE.md`](rundor/PREMIUM/BLOCKSERIE.md)
 - **Skriptkön och rundhistoriken:** [`rundor/KO.md`](rundor/KO.md)
@@ -23,7 +24,7 @@ Granskning: https://trollpennan.christofferhedman87.workers.dev/ (byggs från `m
 
 **Täckning** (Kelly topp-1000, `rundor/R3B-reservform/r3b-matt.mjs`; 18 okt → 21 okt): egen form för substantiv 1,3 → 9,6 %, adjektiv 1,9 → 2,1 % och verb 0,8 → 3,2 %. Något synligt (egen form eller ordägg) 0 → 95–97 %. Metod: `verification/tackning-2026-10-18.md`.
 
-## Vad som finns på `main` (`aa2470a`)
+## Vad som finns på `main` (`ac392c1`)
 | Del | Var |
 |---|---|
 | Ordtolkning, bisatser, smeknamn & svensk grammatik (`O1a` #190, `O1b` #191, `P3b-1` #199, `V4` #207, `V8a` #212, `D2` #227, `D3` #228) | `src/tolk/` (`tolka.ts`, `ochMening.ts`, `lexikon.ts`, `sparr.ts`, `avstand.ts`, `reserv.ts`, `v4-sprak.test.ts`), `src/spel/fyll.ts`, `data/ord.json`, `data/blocklist.json`, `data/kannetecken.json`, `data/orddelar.json` |
@@ -33,7 +34,7 @@ Granskning: https://trollpennan.christofferhedman87.workers.dev/ (byggs från `m
 | Samlade menyer, Fristående Uppdragslösare, Slimepedia-Album & Ordbok (`V2` #205, `V9a` #214, `S5` #225, `D3` #228, `M1`–`M2` #229–#230) | `src/spel/ui/Hud.tsx`, `src/spel/ui/UppdragVy.tsx`, `src/spel/samling.tsx`, `src/spel/ui/OrdbokDialog.tsx`, `src/spel/ui/ForalderDialog.tsx`, `src/spel/ui/BokSkarm.tsx` |
 | *Levande Ord* v0.8 skaparpanel i halvhöjd (`V3` #206, `V5` #208, `F2` #217, `D1` #226, `M3` #231, `C1`–`C4` #232–#235) | `src/spel/ui/BokSkarm.tsx`, `src/spel/ui/SkapelseBar.tsx`, `src/spel/ui/BokKort.tsx`, `src/spel/ui/StegKortValjare.tsx`, `src/spel/ui/GavoPanel.tsx`, `src/spel/ui/Ledtradsyta.tsx`, `src/spel/styr/useSkriv.ts`, `src/spel/ui/bok-p1.css`, `src/spel/ui/bok-komp.css`, `src/spel/ui/bok-v08.css` |
 | Gården i 3D & Solstjärnor (`G1a`–`G1c` #195–#197, `V7b` #211, `V8b` #213, `S5` #225) | `src/spel/gard/` (`Garden3D.tsx`, `ByggModell.tsx`, `GardDjur.tsx`, `MarkPlan.tsx`, `rutnat.ts`), `src/spel/solstjarna.ts`, `data/gard-3d.json`, `public/models/gard/` |
-| Röster (4 136 förgenererade ElevenLabs-MP3-filer i `-16 LUFS`, `pennan`/`bengtsson`/`syntaxviruset`) | `src/spel/rost.ts`, `src/spel/rostManifest.ts`, `src/spel/rostKo.ts`, `scripts/rost-kandidater.mjs`, `scripts/rost-generera.mjs`, `data/rost-takt.json`, `data/rost.json`, `data/rost-manifest.json`, `data/rost-klient.json`, `public/ljud/rost/`. |
+| Röster (`R1`–`R2` #236–#237: 4 136 förgenererade ElevenLabs-MP3-filer i `-16 LUFS`, noll Web Speech TTS, 1-MP3-prioritet, `pennan`/`bengtsson`/`syntaxviruset`) | `src/spel/rost.ts`, `src/spel/rostManifest.ts`, `src/spel/rostKo.ts`, `src/spel/ui/UppdragVy.tsx`, `src/spel/ui/Ledtradsyta.tsx`, `src/spel/ideRad.ts`, `scripts/rost-kandidater.mjs`, `scripts/rost-generera.mjs`, `data/rost-takt.json`, `data/rost.json`, `data/rost-manifest.json`, `data/rost-klient.json`, `public/ljud/rost/`. |
 
 ## Arkitekturregler
 1. **Data + tillgång = ingen ny kod per sak.** Ett nytt djur, föremål, plagg, byggnad, uppdrag eller ord är en datarad plus en tillgångsfil som läses av ett generellt system.
@@ -43,7 +44,7 @@ Granskning: https://trollpennan.christofferhedman87.workers.dev/ (byggs från `m
 5. **Bevis är bilder och prov som mäter det barnet ser på skärmen (`375×812`)**, inte bara antal i scenen.
 6. **Arbetsdelning & obligatoriska specialistbotar (`build-round-gate`):** Build skriver spelkoden. Arkitekten anropar alltid `Kodspanaren`, `Game Art Director`, `Modellspanaren` och `Critiquito` och levererar fysiska filsökvägar i `GRIND.md` före beställning. Doodle verifierar filerna fysiskt på disk, kör Build och mergar.
 
-## Läget 2026-10-27: Blockserie V (`#204`–`#215`), F (`#216`–`#220`), S (`#221`–`#225`), D (`#226`–`#228`), M (`#229`–`#231`) & C (`#232`–`#235`, `aa2470a`) 100 % mergade på `main` — Blockserie R (`R1`–`R2`) beställd
+## Läget 2026-10-27: Blockserie V (`#204`–`#215`), F (`#216`–`#220`), S (`#221`–`#225`), D (`#226`–`#228`), M (`#229`–`#231`), C (`#232`–`#235`) & R (`#236`–`#237`, `ac392c1`) 100 % mergade på `main`
 
 ### 1. Mergat i Blockserie V, F, S, D & M på `main` (`#204`–`#231`, 100 % klara)
 - **Blockserie V (`#204`–`#215`):** Sagobokskarta, samlade menyer, halvhöjdsbok, svensk grammatik, mobiltangentbord, 3D-Bengtsson, interaktivt intro, 3D-gård, ängstak 16, fri siktlinje, visuellt album och adaptiv 3D-mobilprestanda.
@@ -58,7 +59,7 @@ Granskning: https://trollpennan.christofferhedman87.workers.dev/ (byggs från `m
 - **#234 (`C3`, `edef234`)** – Dedikerat Gåvo- & Döpläge (`GavoPanel.tsx`) låst till mottagardjurets UID, `2×2` illustrerade gåvokort utan dubblettdjur, inline Döp-flöde (`Skuttis`) & förlustfri `Stava själv`-synk.
 - **#235 (`C4`, `aa2470a`)** – Nordiskt sagotema (`bok-v08.css` med `--tp-*` tokens), Bottom-Sheet-geometri på `375×812` (`sheetTop: 292 px`) & `320×568` (`sheetTop: 138 px`), `.bok-grab`, `:focus-visible` & `Escape`-stängning.
 
-### 3. Aktuell serie: Blockserie R (`R1`–`R2`: Kompletta Röstinspelningar i ElevenLabs — Noll Web Speech TTS & 1-MP3-meningar) i `rundor/R1-R2-kompletta-roster/` (Beställd på `origin/arkitekt/r1-r2-bestallning`)
+### 3. Mergat i Blockserie R (`R1`–`R2`: Kompletta Röstinspelningar i ElevenLabs — Noll Web Speech TTS & 1-MP3-meningar) på `main` (`#236`–`#237`, `ac392c1`, 100 % klar)
 
 - **Grindbevis (`build-round-gate`):** `rundor/R1-R2-kompletta-roster/GRIND.md`
 - **Kodspaning (totalinventering Lista A + B + C & arkitekturfynd):** `/workspace/kod-inkorg/r1-r3-roster/spaning.md`
@@ -67,5 +68,23 @@ Granskning: https://trollpennan.christofferhedman87.workers.dev/ (byggs från `m
 
 | # | Runda | Beställning | Innehåll (1 sammanhållet mål per runda) | Turtak | Status |
 |---|---|---|---|---|---|
-| 1 | **R1** | `rundor/R1-R2-kompletta-roster/BESTALLNING-R1.md` | **Röstmotor & Manifestuppslag (`src/spel/rostManifest.ts` & `src/spel/rost.ts`):** Emoji-/dubbelpunktsnormalisering i `normalisera`, 1-MP3-prioritet i `ettPlan` och `sammanhallenRostText`, backtracking i `ordSekvens`, `vardeDelar`-fallback för fria flerordsmeningar, flermeningsstöd i `rostPlan`, 9 nya sammanhållna ersättningsmeningar samt `dynamisk: "tyst"` (avveckling av Web Speech TTS). | 40 | **Beställd (`origin/arkitekt/r1-r2-bestallning`)** |
-| 2 | **R2** | `rundor/R1-R2-kompletta-roster/BESTALLNING-R2.md` | **Koppla in kompletta röster i `UppdragVy.tsx`, `Ledtradsyta.tsx`, `ideRad.ts` & UI-flöden på `375×812`:** `uppdragText(aktivtUpp, ang[0]?.kropp)` på `🔊` i `UppdragVy.tsx:93`, komplett neutrum (`ETT_ORD`) i `ideRad.ts`, understrecksfri `lasText` på steg 1 i `Ledtradsyta.tsx:47` och 3 bevisbilder i `/workspace/trollpennan-nulage/ko-27okt-r/`. | 40 | **Beställd (`origin/arkitekt/r1-r2-bestallning`)** |
+| 1 | **R1** | `rundor/R1-R2-kompletta-roster/BESTALLNING-R1.md` | **Röstmotor & Manifestuppslag (`src/spel/rostManifest.ts` & `src/spel/rost.ts`):** Emoji-/dubbelpunktsnormalisering i `normalisera`, 1-MP3-prioritet i `ettPlan` och `sammanhallenRostText`, backtracking i `ordSekvens`, `vardeDelar`-fallback för fria flerordsmeningar, flermeningsstöd i `rostPlan`, 9 nya sammanhållna ersättningsmeningar samt `dynamisk: "tyst"` (avveckling av Web Speech TTS). | 40 | **Klar & mergad som PR #236 (`9b84bc7`)** |
+| 2 | **R2** | `rundor/R1-R2-kompletta-roster/BESTALLNING-R2.md` | **Koppla in kompletta röster i `UppdragVy.tsx`, `Ledtradsyta.tsx`, `ideRad.ts` & UI-flöden på `375×812`:** `uppdragText(aktivtUpp, ang[0]?.kropp)` på `🔊` i `UppdragVy.tsx`, komplett neutrum (`ETT_ORD`) i `ideRad.ts`, understrecksfri `lasText` på steg 1 i `Ledtradsyta.tsx` och 3 bevisbilder i `/workspace/trollpennan-nulage/ko-27okt-r/`. | 40 | **Klar & mergad som PR #237 (`ac392c1`)** |
+
+### 4. Beställt i Blockserie W (`W1`–`W4`: Copilots v0.9 *Levande Värld, Grafik, Vägvisare & Introflygning*) ovanpå `main` (`ac392c1`)
+
+- **Beställningsgren (noll `src/`-ändringar):** `origin/arkitekt/w1-w4-bestallning` (`1251349`)
+- **Grindbevis (`build-round-gate`):** `rundor/W1-W4-levande-varld/GRIND.md`
+- **Kodspaning:** `/workspace/kod-inkorg/w1-w4/spaning.md`
+- **Stilguide (Avsnitt 12):** `/workspace/trollpennan-nulage/stilguide.md`
+- **Modellrapport & 19 okomprimerade `Float32Array` CC0-GLB-modeller:** `/workspace/modell-inkorg/w1-w4/RAPPORT.md`, `/workspace/modell-inkorg/w1-w4/manifest.json` & `public/models/bulk/w-*.glb`
+- **UI-kritik (`375×812` & `320×568`):** `/workspace/trollpennan-nulage/kritik-w1-w4.md`
+- **Copilots v0.9-leverans:** `/workspace/copilot-v09-leverans/Trollpennan_World_And_Graphics_v0.9/`
+- **Verifikationsskript (`--snabb`, `--steg=w1|w2|w3|w4|all` + Playwright `375×812` & `320×568`):** `rundor/W1-W4-levande-varld/prov-w1-w4.mjs`
+
+| # | Runda | Beställning | Innehåll (1 sammanhållet mål per runda) | Turtak | Status |
+|---|---|---|---|---|---|
+| 1 | **W1** | `rundor/W1-W4-levande-varld/BESTALLNING-W1.md` | **Mobiloptimerad Sagografik, Procedur-PMREM, Half-Lambert/Fresnel & Delade Kontaktskuggor:** `src/spel/grafikKvalitet.ts` (`useSagomiljo`, `forbattraModellMaterial`, delad `skapaKontaktSkugga`), Half-Lambert + gyllene Fresnel i `src/spel/belys.ts`, inkoppling i `angen3d.tsx`, `Garden3D.tsx` & `djur.tsx` (`calls <= 95, tris <= 120000`). | 40 | **Beställd på `origin/arkitekt/w1-w4-bestallning` (`1251349`)** |
+| 2 | **W2** | `rundor/W1-W4-levande-varld/BESTALLNING-W2.md` | **Rik Horisontvärld runt Ängen med 4 Riktade Biomer & Lågpoly-kullar (`r >= 5.2` till `r = 42`):** `Float32Array`-säkring i `kenneyNatur.tsx`, `src/spel/ang/HorisontVarld.tsx` (`skogen`, `sjon`, `grottan`, `garden` + sammanhängande horisontmarkplan & `w-kulle-cc0.glb`/`w-berg-cc0.glb`, noll `<sphereGeometry>`) och `window.__tredHorisont`. | 40 | **Beställd på `origin/arkitekt/w1-w4-bestallning` (`1251349`)** |
+| 3 | **W3** | `rundor/W1-W4-levande-varld/BESTALLNING-W3.md` | **Klickbara 3D-Vägvisare i Världen (`w-vagvisare-cc0.glb`, noll `<boxGeometry>`), Koordinatmatchad HUD & Illustrerad Resövergång:** `vagvisareProjektion.ts`, `Vagvisare3D.tsx` (2×2-band ovanför Pennans bok, `>= 44×44 px`, `0 px` överlapp), `resAdapterV09.ts`, `ResOvergangV09.tsx`, `useVagvisareResaV09.ts` & returskylt på alla 4 utflyktsplatser. | 45 | **Beställd på `origin/arkitekt/w1-w4-bestallning` (`1251349`)** |
+| 4 | **W4** | `rundor/W1-W4-levande-varld/BESTALLNING-W4.md` | **Introflygning över Hela Sagodalen (`0..2.4 s`), 5 Platsetiketter & `🦅 Se hela dalen`-knapp:** `introFlygFas.ts`, `IntroKameraV09.tsx`, `IntroFlygning.tsx`, `FlygKameraV09.tsx`, `VarldsIntegrationV09.tsx`, uppdaterad `KAM` i `saga.tsx`, krockfri `[data-w4="vy-flyg-knapp"]` (`top: 64px; right: 12px;`) och 5 bevisbilder i `/workspace/trollpennan-nulage/ko-27okt-w/`. | 45 | **Beställd på `origin/arkitekt/w1-w4-bestallning` (`1251349`)** |

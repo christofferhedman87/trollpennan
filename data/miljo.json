@@ -3,7 +3,12 @@
  "himmel": {
   "bakgrund": "#7EC8F2",
   "dag_topp": "#4FA9EC",
-  "dag_horisont": "#D6EBF5"
+  "dag_horisont": "#D6EBF5",
+  "horisont": "#718957",
+  "zenit": "#DCCB9B"
+ },
+ "dimma": {
+  "farg": "#8A8595"
  },
  "dis": {
   "farg": "#D6EBF5",

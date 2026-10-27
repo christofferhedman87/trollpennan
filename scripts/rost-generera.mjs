@@ -273,8 +273,8 @@ for (const r of texter) {
   const fil = path.join(UT, `${h}.mp3`);
   const k = nyckel(r.t);
   if (fs.existsSync(fil)) {
-    const g = gammal.rader?.[k]?.f === f ? gammal.rader[k] : null;
-    rader[k] = { f, ms: g ? g.ms : 0, r: r.talare, id: r.id, t: r.t, ...(r.tal ? { tal: r.tal } : {}), ...(g?.n !== undefined ? { n: g.n } : {}) };
+    const g = gammal.rader?.[k]?.f === f ? gammal.rader[k] : Object.values(gammal.rader ?? {}).find((x) => x.f === f) ?? null;
+    rader[k] = { f, ms: g?.ms ? g.ms : ms(fil), r: r.talare, id: r.id, t: r.t, ...(r.tal ? { tal: r.tal } : {}), n: g?.n ?? NIVA.lufs };
     continue;
   }
   if (TORR) {

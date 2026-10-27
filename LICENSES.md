@@ -1323,6 +1323,26 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | s-djur-haj-rund | /models/bulk/s-djur-haj-rund-quaternius-cc0.glb | CC0-1.0 | Quaternius (Cute Fish) | https://quaternius.com/packs/cutefish.html |
 | s-djur-dinosaurie-rund | /models/bulk/s-djur-dinosaurie-rund-quaternius-cc0.glb | CC0-1.0 | Quaternius (Animated Dinosaurs) | https://quaternius.com/packs/animateddinosaurs.html |
 
+| w-vagvisare | /models/bulk/w-vagvisare-cc0.glb | CC0-1.0 | Kenney (Nature Kit sign.glb, normaliserad & PBR-färgsatt) | https://kenney.nl/assets/nature-kit |
+| w-vagvisare-pil | /models/bulk/w-vagvisare-pil-cc0.glb | CC0-1.0 | Kenney (Survival Kit signpost.glb) | https://kenney.nl/assets/survival-kit |
+| w-grottport | /models/bulk/w-grottport-cc0.glb | CC0-1.0 | Kenney (Modular Cave Kit gate-rock.glb) | https://kenney.nl/assets/modular-cave-kit |
+| w-klippa-trappa | /models/bulk/w-klippa-trappa-cc0.glb | CC0-1.0 | Kenney (Nature Kit cliff-steps-rock.glb) | https://kenney.nl/assets/nature-kit |
+| w-klippa-block | /models/bulk/w-klippa-block-cc0.glb | CC0-1.0 | Kenney (Nature Kit rock-largec.glb) | https://kenney.nl/assets/nature-kit |
+| w-klippa-grotta | /models/bulk/w-klippa-grotta-cc0.glb | CC0-1.0 | Kenney (Nature Kit cliff-cave-rock.glb) | https://kenney.nl/assets/nature-kit |
+| w-klippa-hog | /models/bulk/w-klippa-hog-cc0.glb | CC0-1.0 | Kenney (Nature Kit rock-talla.glb) | https://kenney.nl/assets/nature-kit |
+| w-sten-stor | /models/bulk/w-sten-stor-cc0.glb | CC0-1.0 | Kenney (Nature Kit stone-largea.glb) | https://kenney.nl/assets/nature-kit |
+| w-sten-hog | /models/bulk/w-sten-hog-cc0.glb | CC0-1.0 | Kenney (Nature Kit stone-talla.glb) | https://kenney.nl/assets/nature-kit |
+| w-kristall-kluster | /models/bulk/w-kristall-kluster-cc0.glb | CC0-1.0 | Kenney (Space Kit rock-crystals.glb) | https://kenney.nl/assets/space-kit |
+| w-trabro | /models/bulk/w-trabro-cc0.glb | CC0-1.0 | Kenney (Nature Kit bridge-wood.glb) | https://kenney.nl/assets/nature-kit |
+| w-kanot | /models/bulk/w-kanot-cc0.glb | CC0-1.0 | Kenney (Nature Kit canoe.glb) | https://kenney.nl/assets/nature-kit |
+| w-stubbe-gammal | /models/bulk/w-stubbe-gammal-cc0.glb | CC0-1.0 | Kenney (Nature Kit stump-old.glb) | https://kenney.nl/assets/nature-kit |
+| w-gran-1 | /models/bulk/w-gran-1-cc0.glb | CC0-1.0 | Kenney (Nature Kit tree-pinesmalla.glb) | https://kenney.nl/assets/nature-kit |
+| w-lada | /models/bulk/w-lada-cc0.glb | CC0-1.0 | Quaternius (Ultimate Farm Buildings Pack barn.glb) | https://quaternius.com/packs/ultimatefarm.html |
+| w-lada-liten | /models/bulk/w-lada-liten-cc0.glb | CC0-1.0 | Quaternius (Ultimate Farm Buildings Pack smallbarn.glb) | https://quaternius.com/packs/ultimatefarm.html |
+| w-vaderkvarn | /models/bulk/w-vaderkvarn-cc0.glb | CC0-1.0 | Quaternius (Ultimate Farm Buildings Pack windmill.glb) | https://quaternius.com/packs/ultimatefarm.html |
+| w-kulle | /models/bulk/w-kulle-cc0.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd. hill001.glb) | https://opengameart.org/content/gobkit |
+| w-berg | /models/bulk/w-berg-cc0.glb | CC0-1.0 | Gobkit (Alsomind Tech Co., Ltd. mountain001.glb) | https://opengameart.org/content/gobkit |
+
 ## Röster och tal
 
 | Filer | Upphov | Licens | Källa |

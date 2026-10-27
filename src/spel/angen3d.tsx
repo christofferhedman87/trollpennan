@@ -1,5 +1,5 @@
 import { AdaptiveDpr, Bvh, OrbitControls, PerformanceMonitor } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { startaBakgrundsForladdning } from "./modeller/forladda.ts";
 import { Component, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
@@ -21,6 +21,7 @@ import { START_PLATS, platsMed } from "./platser.ts";
 import { SagaBoll, SagaKamera, SagaKanin, SagaLjus, SagaPenna, type OrbitStyr } from "./ang/saga.tsx";
 import { KameraFokus } from "./ang/fokus.tsx";
 import { IdPass } from "./ang/idpass.tsx";
+import { forbattraModellMaterial, useSagomiljo } from "./grafikKvalitet.ts";
 
 /** B6.3 (I): ängens zoner (dammen) ur data/platser.json – djur, figurer och saker hålls ur dammen, simmare i den. */
 const ANG_PLATS = platsMed(START_PLATS);
@@ -58,6 +59,14 @@ class TredGren extends Component<{ children: ReactNode }, { fel: boolean }> {
 
 
 function Scen({ natt, onSnart, saga }: { natt: number; onSnart: () => void; saga: boolean }) {
+  useSagomiljo(natt > 0.55);
+  const scenGraf = useThree((s) => s.scene);
+  const grafVarv = useRef(0);
+  useFrame(() => {
+    grafVarv.current += 1;
+    if (grafVarv.current !== 1 && grafVarv.current % 40 !== 0) return;
+    forbattraModellMaterial(scenGraf);
+  });
   const djur = useMinne((s) => s.ang);
   const garden = useMinne((s) => s.garden);
   const vis = saga ? 0 : 0 * natt;
