@@ -1,6 +1,6 @@
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { Suspense, useMemo, useRef } from "react";
+import { Suspense, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { SkeletonUtils } from "three-stdlib";
 import type { Sparad } from "../brygga.ts";
@@ -8,38 +8,41 @@ import { GltfDjur, squashSkala } from "../gltfDjur.tsx";
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
 import { sagaNatt, sagaNu } from "../saga.ts";
+import { KAMERA_ANG } from "../skarm.ts";
+import { arIntroFlygAktiv, kameraAgar, lasIntroKameraTid, publiceraTredKamera } from "./introFlygFas.ts";
 import { DjurForm } from "./djur.tsx";
 
 const PENNA_GLB = "/models/bulk/f-trollpenna-magisk-cc0.glb";
 const STJARNA_GLB = "/models/bulk/f-magisk-stjarna-effekt-cc0.glb";
 
-const KAM: readonly (readonly number[])[] = [
-  [0, 0.1, 5.5, 8.5, 0, 2.5, 0.2],
-  [2.2, 0, 4.5, 8.2, 0, 2.15, 0.45],
-  [5.74, 0, 3.6, 7.2, 0, 1.2, 0.2],
-  [8.2, 0, 3.4, 6.8, 0, 0.85, -0.1],
-  [10.1, 0, 2.95, 6.5, 0, 0.4, -0.35],
-  [13.8, 0, 2.9, 6.4, 0, 0.2, -0.35],
-  [18.75, 0, 2.85, 6.4, 0, 0.15, -0.35],
+type V3 = readonly [number, number, number];
+const PENNA_SLUT: V3 = [0.35, 1.2, 1.1];
+const STJARNA_SLUT: V3 = [0, 0.85, -0.35];
+const ANG_MAL: V3 = [0, 1.05, -0.15];
+const INTRO_KAM_SLUT = 7.5;
+
+const KAM: readonly (readonly [number, V3, V3])[] = [
+  [0.0, [0, 14.5, 22.0], [0, 0.5, -6.0]],
+  [2.4, [0, 3.05, 5.75], [0, 0.85, -0.5]],
+  [4.4, [0.45, 2.55, 6.2], PENNA_SLUT],
+  [6.1, [0.15, 2.25, 4.9], STJARNA_SLUT],
+  [7.5, KAMERA_ANG, ANG_MAL],
 ];
 
 function kameraVid(t: number, pos: THREE.Vector3, look: THREE.Vector3) {
   let i = 0;
   while (i < KAM.length - 2 && (KAM[i + 1]?.[0] ?? 0) < t) i += 1;
-  const a = KAM[i] ?? KAM[0]!;
+  const a = KAM[i] ?? KAM[0];
   const b = KAM[Math.min(KAM.length - 1, i + 1)] ?? a;
-  const span = (b[0] ?? 0) - (a[0] ?? 0) || 1;
-  const u = Math.min(1, Math.max(0, (t - (a[0] ?? 0)) / span));
-  pos.set(
-    (a[1] ?? 0) + ((b[1] ?? 0) - (a[1] ?? 0)) * u,
-    (a[2] ?? 0) + ((b[2] ?? 0) - (a[2] ?? 0)) * u,
-    (a[3] ?? 0) + ((b[3] ?? 0) - (a[3] ?? 0)) * u,
-  );
-  look.set(
-    (a[4] ?? 0) + ((b[4] ?? 0) - (a[4] ?? 0)) * u,
-    (a[5] ?? 0) + ((b[5] ?? 0) - (a[5] ?? 0)) * u,
-    (a[6] ?? 0) + ((b[6] ?? 0) - (a[6] ?? 0)) * u,
-  );
+  if (!a || !b) return;
+  const span = b[0] - a[0] || 1;
+  const u = Math.min(1, Math.max(0, (t - a[0]) / span));
+  const ap = a[1];
+  const bp = b[1];
+  const al = a[2];
+  const bl = b[2];
+  pos.set(ap[0] + (bp[0] - ap[0]) * u, ap[1] + (bp[1] - ap[1]) * u, ap[2] + (bp[2] - ap[2]) * u);
+  look.set(al[0] + (bl[0] - al[0]) * u, al[1] + (bl[1] - al[1]) * u, al[2] + (bl[2] - al[2]) * u);
 }
 
 export type OrbitStyr = { enabled: boolean; target: THREE.Vector3; update: () => void };
@@ -68,15 +71,28 @@ export function SagaKamera({ styr }: { styr: { current: OrbitStyr | null } }) {
   const pos = useRef(new THREE.Vector3());
   const look = useRef(new THREE.Vector3());
   const harDjur = useMinne((s) => s.ang.length > 0 || s.hemma.length > 0);
+  useEffect(() => {
+    return () => {
+      publiceraTredKamera(KAMERA_ANG[0], KAMERA_ANG[1], KAMERA_ANG[2], INTRO_KAM_SLUT);
+    };
+  }, []);
   useFrame((state) => {
     const cam = state.camera;
     const c = styr.current;
+    if (kameraAgar.flyg) return;
+    const t = sagaNu.aktiv ? lasIntroKameraTid(sagaNu.aktiv) : 0;
+    if (arIntroFlygAktiv(sagaNu.aktiv, t)) {
+      was.current = true;
+      if (c) c.enabled = false;
+      return;
+    }
     const styrd = sagaNu.aktiv || !harDjur;
     if (!styrd) {
       if (!was.current) return;
-      cam.position.set(0, 4.15, 9.8);
-      look.current.set(0, 1.05, -0.15);
+      cam.position.set(KAMERA_ANG[0], KAMERA_ANG[1], KAMERA_ANG[2]);
+      look.current.set(ANG_MAL[0], ANG_MAL[1], ANG_MAL[2]);
       cam.lookAt(look.current);
+      publiceraTredKamera(KAMERA_ANG[0], KAMERA_ANG[1], KAMERA_ANG[2], INTRO_KAM_SLUT);
       if (c) {
         c.target.copy(look.current);
         c.enabled = true;
@@ -87,13 +103,14 @@ export function SagaKamera({ styr }: { styr: { current: OrbitStyr | null } }) {
     }
     was.current = true;
     if (c) c.enabled = false;
-    if (sagaNu.aktiv) kameraVid(sagaNu.t, pos.current, look.current);
+    if (sagaNu.aktiv) kameraVid(t, pos.current, look.current);
     else {
       pos.current.set(0, 2.85, 6.4);
       look.current.set(0, 0.15, -0.35);
     }
     cam.position.copy(pos.current);
     cam.lookAt(look.current);
+    publiceraTredKamera(cam.position.x, cam.position.y, cam.position.z, sagaNu.aktiv ? t : 0);
     if (c) c.target.copy(look.current);
   }, -2);
   return null;
