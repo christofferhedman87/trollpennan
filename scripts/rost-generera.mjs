@@ -13,6 +13,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { utanSignatur } from "../src/spel/rostText.ts";
+import { rostKandidater } from "./rost-kandidater.mjs";
 
 const arg = (n, d) => {
   const i = process.argv.indexOf(`--${n}`);
@@ -154,6 +155,9 @@ async function samlaKallor() {
   for (const k of CFG.kallor?.lista ?? []) {
     if (k.varden) {
       rader.push(...(await varden()));
+      if (CFG.varden?.kandidater) {
+        rader.push(...rostKandidater(CFG.varden.talare ?? "pennan").map((r) => ({ ...r, t: normalisera(r.t), ...(r.tal ? { tal: normalisera(r.tal) } : {}) })));
+      }
       continue;
     }
     for (const { p, s } of strangar(k.fil)) {
@@ -183,7 +187,7 @@ const ms = (fil) => Math.round(1000 * Number(execFileSync("ffprobe", ["-v", "err
 function koda(ra, fil) {
   const tmp = path.join(os.tmpdir(), `rost-${process.pid}.mp3`);
   fs.writeFileSync(tmp, ra);
-  execFileSync("ffmpeg", ["-v", "error", "-y", "-i", tmp, "-ac", String(CFG.format.kanaler), "-b:a", `${CFG.format.kbps}k`, "-codec:a", "libmp3lame", fil]);
+  execFileSync("ffmpeg", ["-v", "error", "-y", "-i", tmp, "-ac", String(CFG.format.kanaler), "-b:a", "48k", "-codec:a", "libmp3lame", fil]);
   fs.rmSync(tmp);
 }
 
@@ -270,7 +274,7 @@ for (const r of texter) {
   const k = nyckel(r.t);
   if (fs.existsSync(fil)) {
     const g = gammal.rader?.[k]?.f === f ? gammal.rader[k] : null;
-    rader[k] = { f, ms: g ? g.ms : ms(fil), r: r.talare, id: r.id, t: r.t, ...(r.tal ? { tal: r.tal } : {}), ...(g?.n !== undefined ? { n: g.n } : {}) };
+    rader[k] = { f, ms: g ? g.ms : 0, r: r.talare, id: r.id, t: r.t, ...(r.tal ? { tal: r.tal } : {}), ...(g?.n !== undefined ? { n: g.n } : {}) };
     continue;
   }
   if (TORR) {
@@ -286,7 +290,7 @@ async function arbetare() {
   while (nasta < nya.length) {
     const r = nya[nasta++];
     if (stopp) continue;
-    if (anvant + (r.tal ?? r.t).length * 0.5 > TAK) {
+    if (anvant + (r.tal ?? r.t).length > TAK) {
       stopp = `taket ${TAK} krediter nått (${anvant} använda)`;
       continue;
     }
@@ -308,10 +312,13 @@ async function jamna(fil) {
   const ut = await kor(["-hide_banner", "-nostats", "-i", fil, "-af", `${af}:print_format=json`, "-f", "null", "-"]);
   const m = JSON.parse(ut.slice(ut.lastIndexOf("{"), ut.lastIndexOf("}") + 1));
   const tmp = `${fil}.tmp.mp3`;
-  const af2 = `${af}:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true`;
-  await kor(["-v", "error", "-y", "-i", fil, "-af", `${af2},aresample=44100`, "-ac", String(CFG.format.kanaler), "-b:a", `${CFG.format.kbps}k`, "-codec:a", "libmp3lame", tmp]);
+  const lin = Number.isFinite(Number(m.input_i)) && Number.isFinite(Number(m.target_offset));
+  const af2 = lin
+    ? `${af}:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true`
+    : af;
+  await kor(["-v", "error", "-y", "-i", fil, "-af", `${af2},apad=whole_dur=0.35,aresample=44100`, "-ac", String(CFG.format.kanaler), "-b:a", "48k", "-codec:a", "libmp3lame", tmp]);
   fs.renameSync(tmp, fil);
-  return Number(m.input_i);
+  return lin ? Number(m.input_i) : NIVA.lufs;
 }
 const ojamna = [...Object.values(rader), ...(intro ? [intro] : [])].filter((r) => r.n !== NIVA.lufs);
 if (TORR) behov.jamna = ojamna.length;

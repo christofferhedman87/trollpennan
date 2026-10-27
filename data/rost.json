@@ -354,6 +354,7 @@
           "^\\.sidor\\[\\]\\.titel$"
         ]
       }
-    ]
+    ],
+    "kandidater": true
   }
 }
