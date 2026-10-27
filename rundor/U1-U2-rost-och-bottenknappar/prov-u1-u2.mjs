@@ -466,9 +466,7 @@ async function matU3OchU4IBok(browser, basUrl) {
             version: 2,
             introSedd: true,
             dragit: true,
-            ang: arForsta
-              ? []
-              : [{ uid: "u-kanin-1", kropp: "kanin", farg: "#F3C68F", skala: 1, x: 0.5, y: 0.5 }],
+            ang: [],
             garden: [],
             stjarnor: 2,
             oppnadePlatser: ["skogen"],
@@ -484,6 +482,10 @@ async function matU3OchU4IBok(browser, basUrl) {
     await p.goto(basUrl, { waitUntil: "domcontentloaded" });
     await p.waitForFunction(() => Boolean(window.__troll), null, { timeout: 25000 });
     await p.waitForTimeout(1000);
+    if (!vy.forsta) {
+      await p.evaluate(() => window.__troll.vakna("en kanin"));
+      await p.waitForTimeout(900);
+    }
 
     // Öppna Pennans bok om den inte redan är öppen (i Första skapelse öppnas den direkt eller via pennans-bok)
     const bokSynlig = await p.locator(".bok").first().isVisible().catch(() => false);

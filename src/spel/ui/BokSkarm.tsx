@@ -61,6 +61,19 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
     window.addEventListener("keydown", ned);
     return () => window.removeEventListener("keydown", ned);
   }, [stangBok]);
+  useEffect(() => {
+    const syncVvh = () => {
+      const h = window.visualViewport?.height ?? window.innerHeight;
+      document.documentElement.style.setProperty("--vvh", `${Math.round(h)}px`);
+    };
+    syncVvh();
+    window.addEventListener("resize", syncVvh);
+    window.visualViewport?.addEventListener("resize", syncVvh);
+    return () => {
+      window.removeEventListener("resize", syncVvh);
+      window.visualViewport?.removeEventListener("resize", syncVvh);
+    };
+  }, []);
   const ideUpp = aktivtSkrivUppdrag(uppdragSpar, platsNu()) ?? nastaSkrivUppdrag(uppdragSpar, platsNu(), false);
   return (
       <div className={forstaSkapelse ? "bok-skarm forsta-vy" : "bok-skarm"} data-testid="bok-skarm" onClick={stangBok}>
