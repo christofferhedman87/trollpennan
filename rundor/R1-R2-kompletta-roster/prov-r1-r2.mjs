@@ -166,7 +166,7 @@ function korR1Kontroller(fel, detalj) {
   const behallExakt = [
     "Hej! Här kommer en kanin!",
     "Klart! ett hus står på gården.",
-    "+2 stjärnor!",
+    "Du har fått två stjärnor!",
     "Nu heter djuret Skuttis!",
     "Här får du en morot!",
   ];
@@ -177,6 +177,8 @@ function korR1Kontroller(fel, detalj) {
     }
   }
   const ersattMallar = [
+    ["+1 stjärna!", "Du har fått en stjärna!"],
+    ["+2 stjärnor!", "Du har fått två stjärnor!"],
     ["Nu heter djuret Kurt-Olof!", "Vilket fint namn! Det passar helt perfekt!"],
     ["Wiii! En lila kapybara bar dig över floden!", "Wiii! Du flög hela vägen över floden!"],
     ["Här får du en hemlig diamant!", "Varsågod! Vilken fin gåva!"],

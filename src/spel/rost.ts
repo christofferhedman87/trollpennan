@@ -98,15 +98,31 @@ const SAMMAN: [RegExp, string][] = [
   [/^.+ spinner och gnider sig mot dig!$/u, "Åh, den spinner och tycker så mycket om dig!"],
   [/^Nästan! .+ vill ha .+ — du gav .+\.$/u, "Nästan rätt! Titta noga på vad djuret önskar sig."],
   [/^.+ står på sidan .+\. Köp sidan för .+ ⭐ i boken!$/u, "Det ordet finns på en låst sida i boken. Samla stjärnor för att låsa upp den!"],
-  [/^På väg (?:hem )?till Ängen[….!]?$/iu, "Ängen"],
-  [/^På väg till (?:Glittrande )?skogen[….!]?$/iu, "Skogen"],
-  [/^På väg till (?:Dim)?sjön[….!]?$/iu, "Sjön"],
-  [/^På väg till (?:Kristall)?grottan[….!]?$/iu, "Grottan"],
-  [/^På väg till (?:Sol)?gården[….!]?$/iu, "Solgården"],
-  [/^Se hela dalen[!.]?$/iu, "Världskartan. Välj en plats på stigen! Alla vägar är öppna."],
+  [/^På väg (?:hem )?till Ängen[….!]?$/iu, "Ängen"], [/^På väg till (?:Glittrande )?skogen[….!]?$/iu, "Skogen"],
+  [/^På väg till (?:Dim)?sjön[….!]?$/iu, "Sjön"], [/^På väg till (?:Kristall)?grottan[….!]?$/iu, "Grottan"],
+  [/^På väg till (?:Sol)?gården[….!]?$/iu, "Solgården"], [/^Se hela dalen[!.]?$/iu, "Världskartan. Välj en plats på stigen! Alla vägar är öppna."],
 ];
+const NORD = ["", "en", "två", "tre", "fyra", "fem"];
+/** U1: korta etiketter blir hela meningar innan manifestet. Skärmtexten lämnas orörd. */
+export function tillTalsprak(text: string): string {
+  const s = text.trim();
+  const m = /^\+\s*(\d+)\s*stjärn(?:a|or)(\s+från\s+Mossa)?!?$/iu.exec(s);
+  if (m) {
+    const n = Number(m[1]), ord = NORD[n], svans = m[2] ? " från Mossa" : "";
+    if (ord) return `Du har fått ${ord} stjärn${n === 1 ? "a" : "or"}${svans}!`;
+    return svans ? "Du har fått nya stjärnor från Mossa!" : "Hurra! Du fick nya stjärnor!";
+  }
+  if (/^\d+\s*(?:⭐|★|stjärn(?:a|or))$/iu.test(s)) return "Nu tänds stjärnorna i boken.";
+  if (/^\d+\s*\/\s*\d+(?:\s+uppdrag)?$/iu.test(s) || /^Uppdragsbok!?$/u.test(s)) return "Titta i Uppdragsboken!";
+  if (/^Vad väcker vi först\?(?:\s*→)?$/u.test(s)) return "Vad ska vi väcka först?";
+  if (/^Till stallet!?$/u.test(s)) return "Djuret är i stallet. Du kan hämta ut det igen i menyn när du vill.";
+  if (/^(?:[a-zåäö]+\s*[–-]\s*)+_+$/iu.test(s)) {
+    const antalDelar = Math.max(1, Math.min(8, s.split(/[–-]/).length)); return `Ordet har ${antalDelar} ${antalDelar === 1 ? "del" : "delar"}.`;
+  }
+  return s;
+}
 export function sammanhallenRostText(text: string): string {
-  const t = text.trim();
+  const t = tillTalsprak(text.trim());
   if (rostFor(t) || rostFor(normalisera(t))) return t;
   for (const [re, till] of SAMMAN) if (re.test(t)) return till;
   return text;
@@ -173,22 +189,15 @@ function avbryt() {
   nasta();
 }
 function stoppa() {
-  ko.length = 0;
-  omgang++;
+  ko.length = 0; omgang++;
   for (const a of tonar) a.pause();
   tonar.clear();
   nu?.pause();
-  nu = null;
-  nuText = null;
-  nuForst = false;
-  upptagen = false;
+  nu = null; nuText = null; nuForst = false; upptagen = false;
   if (typeof speechSynthesis !== "undefined") speechSynthesis.cancel();
 }
 /** Stoppar allt som läses och tömmer kön – barnet tryckte bort bannern, så dess klocka släpps också. */
-export function tystna() {
-  klocka.slapp();
-  stoppa();
-}
+export function tystna() { klocka.slapp(); stoppa(); }
 /** Läs upp text som visas. enGang läses en gång per omgång. Högst fyra i kö. forst = bannern avbryter pågående uppläsning. */
 export function sag(text: string, enGang?: string, forst = false) {
   if (typeof window === "undefined" || !text.trim()) return;
@@ -222,10 +231,8 @@ export function sag(text: string, enGang?: string, forst = false) {
   if (!upptagen) nasta();
   else if (forst && !nuForst) avbryt();
 }
-/** Hur länge en text tar att läsa (ms) när den har fil eller mall, annars 0. */
-export function lasTid(text: string): number {
-  return rostPlan(text)?.ms ?? 0;
-}
+/** Hur länge den talade meningen tar (ms) när den har fil eller mall, annars 0. */
+export function lasTid(text: string): number { return rostPlan(sammanhallenRostText(text))?.ms ?? 0; }
 /** TTS-2: hur länge ett barn behöver för att läsa texten själv (ms): 1,2 s + 60 ms per tecken, högst 12 s. */
 export function lasbarTid(text: string): number {
   return Math.min(12_000, 1200 + 60 * normalisera(text).length);
@@ -389,9 +396,5 @@ const RESA_TEXT: Record<string, string> = {
   grottan: "På väg till Kristallgrottan…",
   garden: "På väg till Gården…",
 };
-export function restext(id: string): string {
-  return RESA_TEXT[id] ?? "På väg hem till Ängen…";
-}
-export function hor(text: string): void {
-  sag(text, undefined, true);
-}
+export function restext(id: string): string { return RESA_TEXT[id] ?? "På väg hem till Ängen…"; }
+export function hor(text: string): void { sag(text, undefined, true); }
