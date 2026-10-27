@@ -1,30 +1,58 @@
-# R2 – slutrapport (tillbehör som data)
+# RUNDAR2 — Blockserie R (kompletta röster)
 
-Körning: Build (grok-4.7-build-fast, medium) avbröts första gången av en omstart av boxen (14:21), andra körningen nådde max 30 turer utan commit. Patchen var då tillämpad och arken genererade. Granskning, bevis, commit och leverans gjordes av Doodle (executor). Ingen kod skrevs för hand; ingen ny mätning.
+## Levererat och verifierat
 
-`node -v`: v22.23.3 (alla bevis).
+Blockserie R ersätter webbläsarens tal med förinspelade ElevenLabs-röster och kopplar in dem där barnet lyssnar.
 
-## Bevis (verkliga utskrifter)
-- `r2-skapa-fastpunkter.mjs --kontroll`: KONTROLL OK (kördes efter att Builds ej verifierade handändring av `fastpunkter.json` återställts).
-- `typecheck:pages`: 0 fel. `build:pages`: grönt.
-- eslint (tillbehor, gltfDjur, angen3d, effekter): 0 fel, 6 varningar (4 angen3d, 2 gltfDjur; alla fanns före).
-- `data.test.ts`: 8/8. `test:product`: 83/83.
-- `r2-jamfor.mjs --bas 0add6b2`: fall 180, oavsiktliga avvikelser 0, avsiktliga ändringar 9.
-- `rg -o "kropp ===" src/spel | wc -l` = 36; träffar i `src/spel/tillbehor`: 0. `git diff origin/main --stat -- data/ord.json src/tolk public`: tomt.
-- Working tree == `ref/r2-integrera.patch` (byte-jämfört: package.json, angen3d, effekter, gltfDjur, hela `tillbehor/`; `tillbehorFaste.ts` borttagen).
-- DOM-tur `--jamfor fore1 fore2 efterR2`: exit 0, 28 stabila lägen av 28, 0 skiljer, 0 sidfel.
+**R1** (`9b84bc7`) ligger i röstmotorn. `sammanhallenRostText` tar en färdig inspelning före mallar och ersättningsmeningar. `rostPlan` slår upp hela meningar som en MP3, delar flermeningstext på punkt och pusslar fria fraser av ordinspelningar. `dynamisk` är `tyst` i `data/rost.json`, `data/rost-klient.json` och `DYNAMISK`. Manifestet har 4135 rader. `public/ljud/rost/` har 4136 MP3-filer och inga saknade filer för raderna. 101/101 `uppdragText`, 615/615 Bengtsson-förslag och 1363/1363 kandidatrader har en plan.
 
-## Ark (14 djur vardera, lästa)
-- 01 krona: sitter på huvudet på alla 14 (fisk/fågel/uggla/drake/haj rör sig, rutan avskuren).
-- 03 hatt: på huvudet på alla; landdjur tittar mot kameran.
-- 06 ryggsäck: syns som blått föremål på ryggen på alla; fågel och uggla små men inte längre som båge över huvudet.
-- 07 mantel: syns på alla utom att katt har kil/dålig (öppet fel); kanin nu synlig i lila.
-- 08 horn: på huvudet på kanin, hund, fisk, fågel, uggla, ekorre, gris, dino, bäver, haj, drake; groda något åt sidan; häst för högt (öppet fel).
-- 05 halsduk: synlig på fisk, häst, gris, dinosaurie, ekorre, bäver, haj; osynlig på kanin, katt, hund, fågel, uggla (öppet fel, som före).
-- Pixeljämförelse mot Arkitektens ark i main: 3,8–5,5 % pixlar skiljer (animation), ingen regression.
+**R2** kopplar samma uppslag till gränssnittet, i tre commits:
 
-## JSON-tal
-Inga ändringar ingår. Build hann göra ett ovalidererat försök på häst-horn (huvudTopp.d y 0,48→0,38 + horn.plats) men ingen bild togs efteråt; det återställdes och sparades som `/workspace/trollpennan-nulage/r2-hast-horn-trim-otestad.diff`.
+- `4160a49` — lyssna-knappen på det aktiva uppdraget läser `uppdragText(aktivtUpp, ang[0]?.kropp)`.
+- `694d9db` — `uppdragForslag` böjer neutrum som «ett» (`torn`, `tält`, `hus`, `bord`, `träd`, `äpple` med flera).
+- `0987884` — `Ledtradsyta` behåller understrecken i den synliga extratexten och skickar en rensad mening till `lasUpp`.
 
-## Inte bra / öppet
-katt-mantel: inte löst. Häst-horn (~0,2 för högt): inte löst. Halsduk på kanin/katt/hund/fågel/uggla: inte löst. Inte provat: skärmbilder på telefon (swiftshader).
+`node --experimental-strip-types rundor/R1-R2-kompletta-roster/prov-r1-r2.mjs --steg=alla --ut /workspace/trollpennan-nulage/ko-27okt-r`:
+
+```json
+{
+  "ok": true,
+  "antalFel": 0,
+  "fel": [],
+  "steg": "alla",
+  "snabb": false,
+  "antalManifestRader": 4135,
+  "antalMp3Filer": 4136,
+  "saknadeMp3": 0,
+  "dynamisk": "tyst",
+  "uppdragText1Mp3": "101/101",
+  "bengtssonForslag1Mp3": "615/615",
+  "kandidaterMedPlan": "1363/1363",
+  "uppdragForslagUtanFel": "101/101",
+  "ledtradarUtanTtsFel": "1137/1137",
+  "lyssnaGataSynlig": false,
+  "speechSynthesisCalls": 0,
+  "skarmbilder": [
+    "r2-uppdrag-lyssna-375x812.png",
+    "r2-bok-rost-375x812.png",
+    "r2-ledtrad-rost-375x812.png"
+  ]
+}
+```
+
+Skärmbilderna på 375×812 visar uppdraget «Det verkar som att din kanin fryser» med 🔊 och idébrickor (första brickan «en varm halsduk» är vald), Pennans bok med 2×2-ordkort där kanin är vald och har 🔊, samt fliken Stava själv med meningsraden och tangentbordet. `window.speechSynthesis.speak` anropades 0 gånger.
+
+`tsc`, `check:struktur` och `test:product` kördes inte i den här avslutningen.
+
+## Tre svagaste punkter
+
+1. `Ledtradsyta` är inte monterad i Pennans bok. `data-p4="lyssna-gata"` fanns inte när Stava själv öppnades (`lyssnaGataSynlig: false`). Rensningen av `kis – ___` är bevisad för 1137/1137 ord och steg i JSON, och barnet ser fortfarande understrecken i extratexten om ytan visas, men den här skärmbilden når inte knappen.
+2. Ersättningsmeningarna i `sammanhallenRostText` byter barnets egna ord mot en fast inspelning. Ett smeknamn läses som en generisk fras, så namnet hörs inte.
+3. Saknad plan blir tyst, och grenen för `speechSynthesis` finns kvar om `dynamisk` sätts tillbaka till `webblasare`. En MP3 ligger utanför manifestet (4136 filer, 4135 rader). Playwright räknar `speak`, och spelar inte upp och jämför vilken fil som valdes. Sådden i provet skriver `state.introKlar` i ett zustand-kuvert som lagringen inte läser, därför visade stjärnräknaren 0 och introt fick hoppas över i sidan.
+
+## Rekommendationer
+
+- Montera `Ledtradsyta` på Stava själv, eller på en gåtflik, så `🔊 Lyssna` finns i boken. Ta sedan om `r2-ledtrad-rost-375x812.png` med knappen synlig.
+- Låt smeknamn och andra egna ord pusslas av ordinspelningar, och reservera ersättningsmeningarna för fraser som verkligen saknar innehåll.
+- Jämna ut manifestet mot filerna och låt ett prov läsa `rostPlan(...).delar[0].f` för det aktiva uppdraget, en neutrumfras (`ett torn`) och en rensad ledtråd. Behåll `speak === 0` som spärr.
+- Skriv spelsparningen i provet som lagringen läser den (`introSedd`, `version: 2` på rotnivå), så stjärnor och djur är de som skärmbilden påstår.
