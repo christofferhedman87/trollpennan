@@ -92,9 +92,102 @@ const KORT_IKON: Record<string, string> = {
   enhörning: "hast",
 };
 
-export function kortIkon(id: string) {
-  const mapp = KORT_IKON[id];
-  return mapp ? `/kit/kroppar/${mapp}/bas.png` : null;
+const FARG_SVG: Record<string, string> = {
+  "blå": "/ordkort/v08/bla.svg",
+  "grön": "/ordkort/v08/gron.svg",
+  gul: "/ordkort/v08/gul.svg",
+  "röd": "/ordkort/v08/rod.svg",
+};
+
+const FARG_HEX: Record<string, string> = {
+  orange: "#FB8C00",
+  lila: "#8E24AA",
+  rosa: "#F48FB1",
+  svart: "#2B2B2B",
+  vit: "#FAFAFA",
+  "grå": "#9E9E9E",
+  brun: "#8D6E63",
+  turkos: "#26C6DA",
+  guld: "#FFC107",
+  silver: "#CFD8DC",
+};
+
+const SIZE_SVG = "/ikoner/v08/size.svg";
+const STORLEK = new Set(["stor", "liten", "jättestor", "pytteliten", "enorm", "minimal"]);
+const STOR_KLASS = new Set(["stor", "jättestor", "enorm"]);
+const LITEN_KLASS = new Set(["liten", "pytteliten", "minimal", "jätteliten"]);
+
+const MONSTER: Record<string, string> = {
+  prickig: "/kit/kroppar/kanin/prickar.png",
+  randig: "/kit/kroppar/kanin/rander.png",
+  glittrig: "/kit/kroppar/kanin/glitter.png",
+  "regnbågsfärgad": "/kit/kroppar/kanin/regnbage.png",
+};
+
+const TILLBEHOR: Record<string, string> = {
+  hatt: "/kit/tillbehor/hatt.png",
+  krona: "/kit/tillbehor/krona.png",
+  "glasögon": "/kit/tillbehor/glasogon.png",
+  halsduk: "/kit/tillbehor/halsduk.png",
+  rosett: "/kit/tillbehor/rosett.png",
+  horn: "/kit/tillbehor/horn.png",
+  "ryggsäck": "/kit/tillbehor/ryggsack.png",
+  mantel: "/kit/tillbehor/mantel.png",
+  "mössa": "/ordkort/v08/illustrations/mossa.webp",
+  mossa: "/ordkort/v08/illustrations/mossa.webp",
+};
+
+const FORMAGA: Record<string, string> = {
+  flyger: "/kit/formagor/vingar.png",
+  simmar: "/kit/formagor/fenor.png",
+  lyser: "/kit/formagor/aura.png",
+  "sprutar eld": "/kit/formagor/flammor.png",
+  "springer snabbt": "/kit/formagor/fartlinjer.png",
+  hoppar: "/kit/formagor/studs.png",
+};
+
+const GAVA_IKON: Record<string, string> = {
+  morot: "/ordkort/v08/illustrations/morot.webp",
+  "äpple": "/ordkort/v08/illustrations/apple.webp",
+  hus: "/ordkort/v08/illustrations/hus.webp",
+};
+
+/** Hex för glansig färgbricka när ordet inte har en egen v0.8-SVG. */
+export function kortFargHex(id: string): string | null {
+  return FARG_HEX[id] ?? null;
+}
+
+/** `stor` och `liten` ska synas som olika skala (UX-03). */
+export function kortStorlekKlass(id: string): string {
+  if (STOR_KLASS.has(id)) return "kort-ikon-stor";
+  if (LITEN_KLASS.has(id)) return "kort-ikon-liten";
+  return "";
+}
+
+export function kortIkon(id: string, klass?: string): string | null {
+  if (!klass || klass === "djur") {
+    const mapp = KORT_IKON[id];
+    if (mapp) return `/kit/kroppar/${mapp}/bas.png`;
+    if (klass === "djur") return null;
+  }
+  if ((!klass || klass === "farg") && FARG_SVG[id]) return FARG_SVG[id];
+  if (klass === "farg") return null;
+  if (!klass || klass === "storlek") {
+    if (STORLEK.has(id) || klass === "storlek") return SIZE_SVG;
+  }
+  if (!klass || klass === "monster") {
+    if (MONSTER[id]) return MONSTER[id];
+    if (klass === "monster") return "/ikoner/v08/paint.svg";
+  }
+  if (!klass || klass === "tillbehor") {
+    if (TILLBEHOR[id]) return TILLBEHOR[id];
+    if (klass === "tillbehor") return "/ikoner/v08/add.svg";
+  }
+  if (!klass || klass === "formaga") {
+    if (FORMAGA[id]) return FORMAGA[id];
+    if (klass === "formaga") return "/ikoner/v08/magic.svg";
+  }
+  return GAVA_IKON[id] ?? null;
 }
 
 export function meningAv(val: Val): string {

@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import type { Ord } from "@/tolk/typer.ts";
-import { kanEtikett, kortIkon } from "./hjalp.ts";
+import { BokKort } from "./BokKort.tsx";
+import { kortIkon } from "./hjalp.ts";
 import type { Slot } from "./typer.ts";
 
-const KORT_PER_SIDA = 6;
+const KORT_PER_SIDA = 4;
+/** De fyra v0.8-färgerna ska synas utan sidbyte (blå ligger annars på sida 2). */
+const FARG_SIDA_ETT = ["röd", "gul", "grön", "blå"];
 
 type StegKortValjareProps = {
   flik: Slot;
@@ -24,16 +27,24 @@ function stegAv(flik: Slot): 1 | 2 | 3 {
   return 3;
 }
 
+function ordnaKort(lista: Ord[]): Ord[] {
+  if (!lista.some((o) => o.klass === "farg")) return lista;
+  const tidiga = FARG_SIDA_ETT.map((id) => lista.find((o) => o.id === id)).filter((o): o is Ord => !!o);
+  const resten = lista.filter((o) => !FARG_SIDA_ETT.includes(o.id));
+  return [...tidiga, ...resten];
+}
+
 export function StegKortValjare({ flik, setFlik, kort, val, onskaKort, onskaIds, kortGang, valjKort, oppnaSkrivMig, forslagEtikett }: StegKortValjareProps) {
   void onskaKort;
   const steg = stegAv(flik);
   const [sida, setSida] = useState(0);
   useEffect(() => { setSida(0); }, [flik]);
-  const totalSidor = Math.max(1, Math.ceil(kort.length / KORT_PER_SIDA));
+  const visning = ordnaKort(kort);
+  const totalSidor = Math.max(1, Math.ceil(visning.length / KORT_PER_SIDA));
   const aktuellSida = Math.min(sida, totalSidor - 1);
-  let synligaKort = kort.slice(aktuellSida * KORT_PER_SIDA, (aktuellSida + 1) * KORT_PER_SIDA);
-  if (aktuellSida > 0 && synligaKort.length < KORT_PER_SIDA && kort.length >= KORT_PER_SIDA) {
-    synligaKort = kort.slice(kort.length - KORT_PER_SIDA);
+  let synligaKort = visning.slice(aktuellSida * KORT_PER_SIDA, (aktuellSida + 1) * KORT_PER_SIDA);
+  if (aktuellSida > 0 && synligaKort.length < KORT_PER_SIDA && visning.length >= KORT_PER_SIDA) {
+    synligaKort = visning.slice(visning.length - KORT_PER_SIDA);
   }
   const ga = (nasta: Slot) => { setFlik(nasta); setSida(0); };
 
@@ -48,7 +59,7 @@ export function StegKortValjare({ flik, setFlik, kort, val, onskaKort, onskaIds,
       {steg === 2 ? (
         <div className="steg-underflikar" role="tablist" aria-label="Färg, storlek och mönster">
           <button type="button" role="tab" aria-selected={flik === "farg"} className={flik === "farg" ? "steg-under aktiv" : "steg-under"} onClick={() => ga("farg")}>🎨 Färg</button>
-          <button type="button" role="tab" aria-selected={flik === "storlek"} className={flik === "storlek" ? "steg-under aktiv" : "steg-under"} onClick={() => ga("storlek")}>📏 Storlek</button>
+          <button type="button" role="tab" aria-selected={flik === "storlek"} className={flik === "storlek" ? "steg-under aktiv" : "steg-under"} data-m3="beskriv-kat-storlek" onClick={() => ga("storlek")}>📏 Storlek</button>
           <button type="button" role="tab" aria-selected={flik === "monster"} className={flik === "monster" ? "steg-under aktiv" : "steg-under"} onClick={() => ga("monster")}>✨ Mönster</button>
         </div>
       ) : null}
@@ -58,23 +69,29 @@ export function StegKortValjare({ flik, setFlik, kort, val, onskaKort, onskaIds,
           <button type="button" role="tab" aria-selected={flik === "formaga"} className={flik === "formaga" ? "steg-under aktiv" : "steg-under"} onClick={() => ga("formaga")}>⚡ Kraft</button>
         </div>
       ) : null}
+      {val.djur ? (
+        <div className="mini-preview-rad" data-c2="mini-preview">
+          {kortIkon(val.djur.id, "djur") ? <img className="mini-preview-djur" alt="" src={kortIkon(val.djur.id, "djur") ?? ""} /> : null}
+          <span className="mini-preview-namn">{val.djur.visa}</span>
+          {val.farg ? <span className="mini-preview-chip" data-c2="preview-farg">Vald färg: {val.farg.visa}</span> : null}
+          {val.storlek ? <span className="mini-preview-chip" data-c2="preview-storlek">Storlek: {val.storlek.visa}</span> : null}
+          {val.tillbehor || val.monster || val.formaga ? (
+            <span className="mini-preview-chip" data-c2="preview-extra">Med: {[val.monster?.visa, val.tillbehor?.visa, val.formaga?.visa].filter(Boolean).join(", ")}</span>
+          ) : null}
+        </div>
+      ) : null}
       <div className="kort-yta ordkort-panel" data-v3="ordkort" data-m3="kort-grid">
-        {synligaKort.map((ord) => {
-          const vald = val[ord.klass as Slot]?.id === ord.id;
-          const markerad = onskaIds.has(ord.id);
-          const gang = kortGang[ord.id] ?? 0;
-          return (
-            <div key={ord.id} className="kort-cell">
-              <button type="button" className={`${vald ? "kort vald" : markerad ? "kort markerad" : "kort"} ord-kort`} data-testid={`kort-${ord.id}`} onClick={() => valjKort(ord)}>
-                {ord.klass === "djur" && kortIkon(ord.id) ? <img className="kort-ikon" alt="" src={kortIkon(ord.id) ?? ""} /> : null}
-                <span>{kanEtikett(ord)}</span>
-              </button>
-              {gang >= 3 ? (
-                <button type="button" className="skriv-mig" onClick={() => oppnaSkrivMig(ord)}>Skriv mig! {ord.visa.slice(0, 2)}…</button>
-              ) : null}
-            </div>
-          );
-        })}
+        {synligaKort.map((ord) => (
+          <BokKort
+            key={ord.id}
+            ord={ord}
+            vald={val[ord.klass as Slot]?.id === ord.id}
+            markerad={onskaIds.has(ord.id)}
+            gang={kortGang[ord.id] ?? 0}
+            valjKort={valjKort}
+            oppnaSkrivMig={oppnaSkrivMig}
+          />
+        ))}
       </div>
       <div className="skriv-remsa steg-nav-remsa" data-v3="skriv-remsa" data-m3="kort-nav">
         <div className="kort-sid-nav">
