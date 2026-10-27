@@ -243,19 +243,50 @@ function korR2StatiskaKontroller(fel, detalj) {
   if (ledFel > 0) fel.push(`R2: ${ledFel} ord/steg i ledtradar.json saknar MP3-plan för lasText`);
 }
 
+async function vantaPaUrl(url, maxMs = 15000) {
+  const start = Date.now();
+  while (Date.now() - start < maxMs) {
+    try {
+      const svar = await fetch(url);
+      if (svar.ok) return true;
+    } catch {
+      // Vite har inte öppnat porten än
+    }
+    await new Promise((r) => setTimeout(r, 250));
+  }
+  return false;
+}
+
+async function forstaSynlig(locator) {
+  const n = await locator.count();
+  for (let i = 0; i < n; i++) {
+    const el = locator.nth(i);
+    if (await el.isVisible().catch(() => false)) return el;
+  }
+  return null;
+}
+
 async function korR2Playwright(fel, detalj) {
   if (utMapp) fs.mkdirSync(utMapp, { recursive: true });
   const port = 4189;
+  const url = `http://localhost:${port}/?prov=1`;
   const srv = spawn("npx", ["vite", "--port", String(port), "--strictPort"], {
     cwd: ROT,
     stdio: "ignore",
   });
-  await new Promise((r) => setTimeout(r, 1800));
-
-  const browser = await chromium.launch({ headless: true });
+  let browser;
+  const skarmNamn = [];
   try {
+    const uppe = await vantaPaUrl(url, 15000);
+    if (!uppe) {
+      fel.push(`R2: Vite svarade inte på ${url} inom 15 sekunder`);
+      return;
+    }
+
+    browser = await chromium.launch({ headless: true });
     const context = await browser.newContext({ viewport: { width: 375, height: 812 } });
     const page = await context.newPage();
+    page.setDefaultTimeout(8000);
 
     await page.addInitScript(() => {
       window.__speechSynthesisCalls = 0;
@@ -278,75 +309,125 @@ async function korR2Playwright(fel, detalj) {
       );
     });
 
-    await page.goto(`http://localhost:${port}/?prov=1`, { waitUntil: "networkidle" });
-    await page.waitForTimeout(500);
+    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 20000 });
+    await page
+      .locator('[data-testid="intro-hoppa"], button:has-text("Hoppa över"), [data-testid="stang-bok"], [data-m1="hud-uppdrag"]')
+      .first()
+      .waitFor({ state: "visible", timeout: 15000 });
 
-    // 1. Öppna UppdragVy och testa 🔊 på aktivt uppdrag + idébricka
-    const uppdragKnapp = page.locator('[data-testid="uppdrag-knapp"]');
-    if ((await uppdragKnapp.count()) > 0) {
-      await uppdragKnapp.click();
-      await page.waitForTimeout(350);
-      const lyssnaAktivt = page.locator('[data-v2="lyssna-aktivt-uppdrag"]').first();
-      if ((await lyssnaAktivt.count()) > 0) {
-        await lyssnaAktivt.click();
-        await page.waitForTimeout(200);
+    await page.evaluate(() => {
+      const st = window.__trollMinne?.getState?.();
+      if (st?.sattIntro) st.sattIntro();
+    });
+    const hoppaOver = page.locator('[data-testid="intro-hoppa-over"], button:has-text("Hoppa över")');
+    if ((await hoppaOver.count()) > 0 && (await hoppaOver.first().isVisible())) {
+      await hoppaOver.first().click();
+    }
+    await page.waitForTimeout(450);
+
+    const sparaSkarm = async (namn) => {
+      if (!utMapp) return;
+      await page.screenshot({ path: path.join(utMapp, namn) });
+      skarmNamn.push(namn);
+    };
+
+    // 1. UppdragVy: stäng boken om den redan är öppen, öppna uppdrag, lyssna + första idébrickan
+    const stangBok = page.locator('[data-testid="stang-bok"]');
+    const uppdragIkon = page.locator('[data-m1="hud-uppdrag"], [data-testid="bengtsson-ikon"]');
+    const lyssnaAktivt = page.locator('[data-v2="lyssna-aktivt-uppdrag"]');
+    if (!(await forstaSynlig(lyssnaAktivt))) {
+      const stang = await forstaSynlig(stangBok);
+      if (stang) {
+        await stang.click();
+        await page.waitForTimeout(400);
       }
-      if (utMapp) {
-        await page.screenshot({ path: path.join(utMapp, "r2-uppdrag-lyssna-375x812.png") });
-      }
-      const stangUppdrag = page.locator('[data-testid="stang-uppdrag"]');
-      if ((await stangUppdrag.count()) > 0) {
-        await stangUppdrag.click();
-        await page.waitForTimeout(250);
+      const ikon = await forstaSynlig(uppdragIkon);
+      if (ikon) {
+        await ikon.click();
+        await page.waitForTimeout(500);
       }
     }
+    const lyssnaKnapp = await forstaSynlig(lyssnaAktivt);
+    if (lyssnaKnapp) {
+      await lyssnaKnapp.click();
+      await page.waitForTimeout(200);
+    } else {
+      fel.push('R2: hittade inte [data-v2="lyssna-aktivt-uppdrag"]');
+    }
+    const forslagKort = await forstaSynlig(page.locator('[data-m2="uppdrag-forslag-kort"]'));
+    if (forslagKort) {
+      await forslagKort.click();
+      await page.waitForTimeout(200);
+    } else {
+      fel.push('R2: hittade inte [data-m2="uppdrag-forslag-kort"]');
+    }
+    await sparaSkarm("r2-uppdrag-lyssna-375x812.png");
+    const stangEfter = await forstaSynlig(stangBok);
+    if (stangEfter) {
+      await stangEfter.click();
+      await page.waitForTimeout(350);
+    }
 
-    // 2. Öppna Pennans bok och testa 🔊 på ordkort + meningsrad
-    const skrivKnapp = page.locator('[data-testid="skriv-knapp"]');
-    if ((await skrivKnapp.count()) > 0) {
+    // 2. Pennans bok: 2×2-ordkort, kanin + 🔊
+    const skrivKnapp = await forstaSynlig(page.locator('[data-v2="skriv-knapp"], [data-testid="pennans-bok"]'));
+    if (skrivKnapp) {
       await skrivKnapp.click();
-      await page.waitForTimeout(350);
+      await page.waitForTimeout(400);
+    } else {
+      fel.push('R2: hittade inte [data-v2="skriv-knapp"]');
     }
-    const kortLyssna = page.locator('[data-c2="kort-lyssna"]').first();
-    if ((await kortLyssna.count()) > 0) {
+    const flikOrdkort = await forstaSynlig(page.locator('[data-m3="flik-ordkort"]'));
+    if (flikOrdkort) {
+      await flikOrdkort.click();
+      await page.waitForTimeout(250);
+    } else {
+      fel.push('R2: hittade inte [data-m3="flik-ordkort"]');
+    }
+    const kanin = await forstaSynlig(page.locator('[data-testid="kort-kanin"]'));
+    if (kanin) {
+      await kanin.click();
+      await page.waitForTimeout(200);
+    } else {
+      fel.push('R2: hittade inte [data-testid="kort-kanin"]');
+    }
+    const kortLyssna = await forstaSynlig(
+      page.locator('[data-testid="kort-kanin"] [data-c2="kort-lyssna"], [data-c2="kort-lyssna"]'),
+    );
+    if (kortLyssna) {
       await kortLyssna.click();
       await page.waitForTimeout(200);
+    } else {
+      fel.push('R2: hittade inte [data-c2="kort-lyssna"]');
     }
-    if (utMapp) {
-      await page.screenshot({ path: path.join(utMapp, "r2-bok-rost-375x812.png") });
-    }
+    await sparaSkarm("r2-bok-rost-375x812.png");
 
-    // 3. Växla till Stava själv och testa Ledtradsyta 🔊 Lyssna
-    const flikStava = page.locator('[data-testid="flik-stava"]');
-    if ((await flikStava.count()) > 0) {
+    // 3. Stava själv. Lyssna-gåta finns bara om Ledtradsyta är monterad.
+    const flikStava = await forstaSynlig(page.locator('[data-m3="flik-stava"], [data-testid="pennan"]'));
+    if (flikStava) {
       await flikStava.click();
       await page.waitForTimeout(300);
-      const lyssnaGata = page.locator('[data-p4="lyssna-gata"]').first();
-      if ((await lyssnaGata.count()) > 0) {
-        await lyssnaGata.click();
-        await page.waitForTimeout(200);
-      }
-      const nastaLedtrad = page.locator('[data-p4="nasta-ledtrad"]').first();
-      if ((await nastaLedtrad.count()) > 0) {
-        await nastaLedtrad.click();
-        await page.waitForTimeout(200);
-        if ((await lyssnaGata.count()) > 0) {
-          await lyssnaGata.click();
-          await page.waitForTimeout(200);
-        }
-      }
-      if (utMapp) {
-        await page.screenshot({ path: path.join(utMapp, "r2-ledtrad-rost-375x812.png") });
-      }
+    } else {
+      fel.push('R2: hittade inte [data-m3="flik-stava"]');
     }
+    const lyssnaGata = await forstaSynlig(page.locator('[data-p4="lyssna-gata"]'));
+    if (lyssnaGata) {
+      await lyssnaGata.click();
+      await page.waitForTimeout(200);
+    }
+    detalj.lyssnaGataSynlig = Boolean(lyssnaGata);
+    await sparaSkarm("r2-ledtrad-rost-375x812.png");
 
     const ttsCalls = await page.evaluate(() => window.__speechSynthesisCalls ?? 0);
     detalj.speechSynthesisCalls = ttsCalls;
+    detalj.skarmbilder = skarmNamn;
     if (ttsCalls > 0) {
       fel.push(`R2: window.speechSynthesis.speak anropades ${ttsCalls} gånger (ska vara 0)`);
     }
+  } catch (e) {
+    fel.push(`R2: Playwright avbröts: ${e instanceof Error ? e.message : String(e)}`);
+    detalj.skarmbilder = skarmNamn;
   } finally {
-    await browser.close();
+    if (browser) await browser.close();
     srv.kill("SIGTERM");
   }
 }

@@ -205,8 +205,19 @@ function ettPlan(text: string): RostPlan | null {
   return null;
 }
 
-/** TTS-2: hur en text som visas läses: en fil, en mall (fasta delar + värden/barnets ord), eller null (ingen fil). Delen efter första ": " prövas också. */
-export function rostPlan(text: string): RostPlan | null {
+/** Stavelseledtråden visas med understreck. Rösten ska läsa den fasta meningen, inte råa streck. */
+function lasbarLedtrad(text: string): string | null {
+  if (!/_|1 delar/u.test(text)) return null;
+  const alt = text
+    .replace(/:\s*[^.!?]*_+[^.!?]*[.!?]?/gu, ".")
+    .replace(/\b1 delar\b/gu, "1 del")
+    .replace(/([.!?])\.+(?=\s|$)/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+  return alt === text ? null : alt;
+}
+
+function planera(text: string): RostPlan | null {
   const hel = ettPlan(text);
   const i = text.indexOf(": ");
   let plan = hel ?? (i > 0 ? ettPlan(text.slice(i + 2)) : null);
@@ -227,4 +238,12 @@ export function rostPlan(text: string): RostPlan | null {
   if (!plan) return null;
   Object.assign(plan.delar, { length: plan.delar.length, 0: plan.delar[0] });
   return Object.assign(plan, { length: plan.delar.length, 0: plan.delar[0] });
+}
+
+/** TTS-2: hur en text som visas läses: en fil, en mall (fasta delar + värden/barnets ord), eller null (ingen fil). Delen efter första ": " prövas också. */
+export function rostPlan(text: string): RostPlan | null {
+  const direkt = planera(text);
+  if (direkt) return direkt;
+  const alt = lasbarLedtrad(text);
+  return alt ? planera(alt) : null;
 }

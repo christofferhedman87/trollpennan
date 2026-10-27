@@ -90,7 +90,7 @@ export function UppdragVy({
                 className="lyssna-knapp"
                 data-v2="lyssna-aktivt-uppdrag"
                 aria-label={`Lyssna på uppdraget: ${aktivtUpp.titel}`}
-                onClick={() => { ljud.klick(); hor(`${aktivtUpp.titel}. ${aktivtUpp.beskrivning}`); }}
+                onClick={() => { ljud.klick(); hor(uppdragText(aktivtUpp, ang[0]?.kropp)); }}
               >
                 🔊
               </button>

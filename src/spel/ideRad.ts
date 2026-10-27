@@ -51,11 +51,12 @@ export function ideRad(u: (Pick<Uppdrag, "krav" | "val"> & { id?: string }) | un
   return { rubrik: visarKravord(u.krav, u.val.rubrik) ? "" : u.val.rubrik, grupper };
 }
 
-const ETT_ORD = new Set<string>(
-  ((ordJson as { ord?: { id?: string; visa?: string; genus?: string }[] }).ord ?? [])
-    .filter((o) => o.genus === "n")
+const ETT_ORD = new Set<string>([
+  ...((ordJson as { ord?: { id?: string; visa?: string; genus?: string }[] }).ord ?? [])
+    .filter((o) => o.genus === "n" || o.genus === "ett")
     .flatMap((o) => [o.id, o.visa].filter((x): x is string => !!x)),
-);
+  "torn", "tält", "hus", "bord", "träd", "äpple", "bi", "får", "lamm", "föl",
+]);
 
 const HJALP_FORSLAG: Record<string, string[]> = {
   "kanin-fryser": ["en varm halsduk", "en röd mössa", "en varm filt", "en sol"],
