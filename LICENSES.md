@@ -1328,3 +1328,9 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | Filer | Upphov | Licens | Källa |
 |---|---|---|---|
 | public/ljud/rost/*.mp3 | ElevenLabs, röstbiblioteket: Bengt – Calm and Soft (Doktor Bengtsson), Elin (Trollpennan) och Kim – Svenska (Syntaxviruset, TTS-2) | ElevenLabs betald plan (Starter): kommersiell licens för ljud som skapats under abonnemanget, även efter att det upphört; ingen namnangivelse krävs | https://help.elevenlabs.io/hc/en-us/articles/13313564601361 |
+
+## UI-ikoner och ordkortsillustrationer (v0.8 Levande Ord)
+
+| Filer | Upphov | Licens | Källa |
+|---|---|---|---|
+| public/ikoner/v08/*.svg (19 st), public/ordkort/v08/*.svg (4 st), public/ordkort/v08/illustrations/*.webp (8 st) | Christoffers/Copilots interna designpaket v0.8 (2026-10-27) | Intern projektlicens (Trollpennan) | Trollpennan_Redesign_ImplementationReady_v0.8.zip (03_VISUAL_DESIGN) |

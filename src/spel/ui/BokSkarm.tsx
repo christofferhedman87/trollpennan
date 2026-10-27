@@ -3,7 +3,6 @@ import { Lock } from "lucide-react";
 import type { ForslagKort, Ord } from "@/tolk/typer.ts";
 import upplevelse from "../../../data/upplevelse.json";
 import hemligt from "../../../data/hemligt.json" with { type: "json" };
-import { TEXTER_AV } from "../aventyr.ts";
 import { aktivtSkrivUppdrag, nastaSkrivUppdrag } from "../uppdragsmotor.ts";
 import { useMinne } from "../minne.ts";
 import { exempelFor, uppdragForslag } from "../ideRad.ts";
@@ -23,6 +22,7 @@ import type { Banner, Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
 import { GavaStallKnapp } from "./Stall.tsx";
 import { BokSvar } from "./BokSvar.tsx";
 import { UppdragVy } from "./UppdragVy.tsx";
+import { SkapelseBar } from "./SkapelseBar.tsx";
 import { StegKortValjare } from "./StegKortValjare.tsx";
 import "./bok-komp.css";
 
@@ -34,7 +34,7 @@ type BokSkarmProps = {
   behover: { text: string; djur: { id: string; visa: string }[] } | null; utfor: (raw: string, opt: { hand: boolean; inteGuld?: string[] }) => void;
   flik: Slot; onskaKort: Ord[]; setFlik: Dispatch<SetStateAction<Slot>>; kort: Ord[]; val: Partial<Record<Slot, Ord>>; onskaIds: Set<string>;
   funna: Record<string, unknown>; kortGang: Record<string, number>; valjKort: (ord: Ord) => void; oppnaSkrivMig: (ord: Ord) => void; text: string;
-  omrade: string | null; visaOnskaHjalp: boolean; vaknaNu: () => void; vaknaText: string; skrivTecken: (bit: string) => void; sudda: () => void;
+  omrade: string | null; visaOnskaHjalp: boolean; vaknaNu: () => void; vaknaText: string; skrivTecken: (bit: string) => void; sudda: () => void; kanAngra: boolean; angraMening: () => void;
   uppFlik: "pagar" | "klar"; setUppFlik: Dispatch<SetStateAction<"pagar" | "klar">>; uppdragSpar: Record<string, "pagar" | "klar">; byggSida: SidaBygg;
   agdaSidor: SidaBygg[]; setByggSidaId: Dispatch<SetStateAction<string>>; setByggPuff: Dispatch<SetStateAction<string | null>>; byggFras: (fras: string) => void;
   kopRad: string | null; lastaSidor: SidaBygg[]; forsokKop: (slag: "djur" | "bygg", id: string, titel: string, pris: number) => void;
@@ -42,8 +42,8 @@ type BokSkarmProps = {
   forstaSkapelse?: boolean;
 };
 
-export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop, setPanel, forstaSkapelse = false }: BokSkarmProps) {
-  // Invarianter för v2.test.ts, v3.test.ts & f3.test.ts: data-v2="aktivt-uppdrag-kort" data-v2="lyssna-aktivt-uppdrag" data-testid="uppdrag-los-i-boken" data-f3="uppdrag-ide-chip" data-v3="skapar-vy-flikar" data-v3="vy-flik-skriv" data-v3="vy-flik-gata" data-v3="vy-flik-ideer" data-v3="bok-stang" data-v3="ordkort" skriv-remsa exempel-chip-
+export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, kanAngra, angraMening, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop, setPanel, forstaSkapelse = false }: BokSkarmProps) {
+  // Invarianter för v2.test.ts, v3.test.ts & f3.test.ts: data-v2="aktivt-uppdrag-kort" data-v2="lyssna-aktivt-uppdrag" data-testid="uppdrag-los-i-boken" data-f3="uppdrag-ide-chip" data-v3="skapar-vy-flikar" data-v3="vy-flik-skriv" data-v3="vy-flik-gata" data-v3="vy-flik-ideer" data-v3="bok-stang" data-v3="ordkort" skriv-remsa exempel-chip- data-m3="meningsruta"
   void uppdragForslag(null);
   void setPanel;
   void funna;
@@ -160,33 +160,22 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
                 ) : null}
               </div>
             ) : null}
-            <div
-              className="skapelse-topp-remsa"
-              id="troll-ord"
-              data-testid="remsa"
-              data-m3="meningsruta"
-              role="textbox"
-              aria-label="Skrivrutan"
-              onClick={() => { setSkaparVy("skriv"); }}
-            >
-              <button type="button" className="remsa-lyssna" data-p4="lyssna-mening" aria-label="Läs upp meningen" disabled={!text.trim()} onClick={(e) => { e.stopPropagation(); if (text.trim()) rostKo.lasUpp(text); }}>🔊</button>
-              <div className="meningsruta-innehall" data-m3="meningsruta-ord">
-                {text.trim() ? (
-                  text.trim().split(/\s+/).map((ord, idx) => (
-                    <span key={`${ord}-${idx}`} className="meningsruta-bricka" data-m3="ord-bricka">{ord}</span>
-                  ))
-                ) : (
-                  <span className="meningsruta-tom">
-                    {gavaTill ? TEXTER_AV.gavoruta.placeholder : varld === "gard" && !omrade ? TEXTER.penna_bygg.placeholder : "Välj ordkort eller skriv en mening…"}
-                  </span>
-                )}
-                {visaTangenter ? <i className="caret" /> : null}
-              </div>
-              {text ? <button type="button" className="meningsruta-sudda" data-m3="mening-sudda" aria-label="Sudda" onClick={(e) => { e.stopPropagation(); setForslag(null); sudda(); }}>⌫</button> : null}
-              <button type="button" className={text.trim() ? "vakna redo" : "vakna"} data-testid="vakna" data-m3="mening-vakna" ref={(el) => el?.setAttribute("data-v3", "vack-knapp")} onClick={(e) => { e.stopPropagation(); vaknaNu(); }}>
-                <span ref={(el) => el?.setAttribute("data-testid", "vack-knapp")}>✨ {vaknaText}</span>
-              </button>
-            </div>
+            <SkapelseBar
+              text={text}
+              gavaTill={gavaTill}
+              varld={varld}
+              omrade={omrade}
+              vaknaText={vaknaText}
+              visaTangenter={visaTangenter}
+              sudda={() => { setForslag(null); sudda(); }}
+              vaknaNu={vaknaNu}
+              kanAngra={kanAngra}
+              angraMening={angraMening}
+              setFlik={setFlik}
+              setLage={setLage}
+              setSkaparVy={setSkaparVy}
+              setSjalvSkriv={setSjalvSkriv}
+            />
             <div className="bok-mitt">
               <div className={aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? "skapar-guide kompakt" : "skapar-guide"} data-testid="skapar-guide">
                 <div
