@@ -4660,6 +4660,15 @@
    "t": "Jag är mindre än en hjort och hanen har små horn.",
    "n": -16
   },
+  "1edb2919": {
+   "f": "/ljud/rost/29197d31e38a7468.mp3",
+   "ms": 1202,
+   "r": "pennan",
+   "id": "w3.resa:garden_ellips",
+   "t": "På väg till Gården…",
+   "tal": "Gården",
+   "n": -16
+  },
   "1ee7db79": {
    "f": "/ljud/rost/8046f7b1ff5fa63a.mp3",
    "ms": 3291,
@@ -4901,6 +4910,15 @@
    "r": "bengtsson",
    "id": "bengtsson.json:hitta-till-picknicken.text",
    "t": "Ditt djur har glömt vägen till picknicken! Vad kan visa rätt håll?",
+   "n": -16
+  },
+  "20dd83d0": {
+   "f": "/ljud/rost/453078de62fa5e2d.mp3",
+   "ms": 1071,
+   "r": "pennan",
+   "id": "w3.resa:ang_ellips",
+   "t": "På väg hem till Ängen…",
+   "tal": "Ängen",
    "n": -16
   },
   "20dfd591": {
@@ -5715,6 +5733,15 @@
    "t": "en elefant",
    "n": -16
   },
+  "270d95b1": {
+   "f": "/ljud/rost/29197d31e38a7468.mp3",
+   "ms": 1202,
+   "r": "pennan",
+   "id": "w3.resa:garden_punkt",
+   "t": "På väg till Gården.",
+   "tal": "Gården",
+   "n": -16
+  },
   "271f8819": {
    "f": "/ljud/rost/8b1c3b2a399fb65a.mp3",
    "ms": 3605,
@@ -5978,6 +6005,15 @@
    "id": "bengtsson.borjan:skog-hitta-riktningen",
    "t": "en uggla med.",
    "tal": "en uggla med",
+   "n": -16
+  },
+  "290ff068": {
+   "f": "/ljud/rost/453078de62fa5e2d.mp3",
+   "ms": 1071,
+   "r": "pennan",
+   "id": "w3.resa:ang_punkt",
+   "t": "På väg hem till Ängen.",
+   "tal": "Ängen",
    "n": -16
   },
   "292a2c74": {
@@ -6503,6 +6539,15 @@
    "tal": "en kanin med mössa",
    "n": -16
   },
+  "2cfe4190": {
+   "f": "/ljud/rost/3b8d237e31b86bde.mp3",
+   "ms": 914,
+   "r": "pennan",
+   "id": "w4.flyg:dimsjon",
+   "t": "Dimsjön",
+   "tal": "Sjön",
+   "n": -16
+  },
   "2d01b14d": {
    "f": "/ljud/rost/d5feeb4c23433963.mp3",
    "ms": 1280,
@@ -7013,6 +7058,15 @@
    "r": "pennan",
    "id": "varde:ponny",
    "t": "ponny",
+   "n": -16
+  },
+  "30e39673": {
+   "f": "/ljud/rost/f00d912abf938b4a.mp3",
+   "ms": 1149,
+   "r": "pennan",
+   "id": "w3.resa:skogen_punkt",
+   "t": "På väg till Glittrande skogen.",
+   "tal": "Skogen",
    "n": -16
   },
   "30f09187": {
@@ -7687,6 +7741,15 @@
    "t": "räv",
    "n": -16
   },
+  "36453ccf": {
+   "f": "/ljud/rost/453078de62fa5e2d.mp3",
+   "ms": 1071,
+   "r": "pennan",
+   "id": "w3.resa:hoppa_over",
+   "t": "Hoppa över resan",
+   "tal": "Ängen",
+   "n": -16
+  },
   "364cb591": {
    "f": "/ljud/rost/8445336ad99e64c5.mp3",
    "ms": 5381,
@@ -7981,6 +8044,15 @@
    "r": "pennan",
    "id": "gava.form:säng:sängar",
    "t": "sängar",
+   "n": -16
+  },
+  "38b1430b": {
+   "f": "/ljud/rost/f00d912abf938b4a.mp3",
+   "ms": 1149,
+   "r": "pennan",
+   "id": "w3.resa:skogen_ellips",
+   "t": "På väg till Glittrande skogen…",
+   "tal": "Skogen",
    "n": -16
   },
   "38bb0975": {
@@ -9418,6 +9490,15 @@
    "t": "studsar",
    "n": -16
   },
+  "425cb6cf": {
+   "f": "/ljud/rost/feb8a4348a9fce5d.mp3",
+   "ms": 1567,
+   "r": "pennan",
+   "id": "w3.resa:solgarden_punkt",
+   "t": "På väg till Solgården.",
+   "tal": "Solgården",
+   "n": -16
+  },
   "426206c7": {
    "f": "/ljud/rost/60087534fad604a2.mp3",
    "ms": 1620,
@@ -10556,6 +10637,15 @@
    "r": "pennan",
    "id": "varde:en konstnär",
    "t": "en konstnär",
+   "n": -16
+  },
+  "4a2a6367": {
+   "f": "/ljud/rost/feb8a4348a9fce5d.mp3",
+   "ms": 1567,
+   "r": "pennan",
+   "id": "w3.resa:solgarden_ellips",
+   "t": "På väg till Solgården…",
+   "tal": "Solgården",
    "n": -16
   },
   "4a385c37": {
@@ -16514,6 +16604,15 @@
    "t": "med filt",
    "n": -16
   },
+  "796fff50": {
+   "f": "/ljud/rost/c7ca3749f6401ab2.mp3",
+   "ms": 1097,
+   "r": "pennan",
+   "id": "w4.flyg:kristallgrottan",
+   "t": "Kristallgrottan",
+   "tal": "Grottan",
+   "n": -16
+  },
   "7973982e": {
    "f": "/ljud/rost/b6757ab21d0a4fab.mp3",
    "ms": 4075,
@@ -19305,6 +19404,15 @@
    "t": "och kalashatt",
    "n": -16
   },
+  "91bf70a3": {
+   "f": "/ljud/rost/c7ca3749f6401ab2.mp3",
+   "ms": 1097,
+   "r": "pennan",
+   "id": "w3.resa:grottan_ellips",
+   "t": "På väg till Kristallgrottan…",
+   "tal": "Grottan",
+   "n": -16
+  },
   "91ca3781": {
    "f": "/ljud/rost/93d21309df35d7d2.mp3",
    "ms": 2456,
@@ -20170,6 +20278,15 @@
    "r": "pennan",
    "id": "onskningar.json:.onskningar[].text",
    "t": "Jag vill vara gul som solen.",
+   "n": -16
+  },
+  "998d1d3b": {
+   "f": "/ljud/rost/c7ca3749f6401ab2.mp3",
+   "ms": 1097,
+   "r": "pennan",
+   "id": "w3.resa:grottan_punkt",
+   "t": "På väg till Kristallgrottan.",
+   "tal": "Grottan",
    "n": -16
   },
   "9995659d": {
@@ -24753,6 +24870,15 @@
    "t": "saft",
    "n": -16
   },
+  "be2b71b5": {
+   "f": "/ljud/rost/81e5e8a32e4c584f.mp3",
+   "ms": 6348,
+   "r": "pennan",
+   "id": "w4.flyg:se_hela_dalen",
+   "t": "Se hela dalen",
+   "tal": "Världskartan. Välj en plats på stigen! Alla vägar är öppna.",
+   "n": -16
+  },
   "be3542f5": {
    "f": "/ljud/rost/d71f5575f60bd710.mp3",
    "ms": 2586,
@@ -27135,6 +27261,15 @@
    "r": "bengtsson",
    "id": "uppdrag.json:bavern.klart",
    "t": "Dammen är klar! Du får bada där när du vill.",
+   "n": -16
+  },
+  "cf8eb2c0": {
+   "f": "/ljud/rost/f00d912abf938b4a.mp3",
+   "ms": 1149,
+   "r": "pennan",
+   "id": "w3.resa:glittrande_skogen",
+   "t": "Glittrande skogen",
+   "tal": "Skogen",
    "n": -16
   },
   "cf9fdf8f": {
@@ -31781,6 +31916,15 @@
    "t": "med skridsko",
    "n": -16
   },
+  "f43bd2f3": {
+   "f": "/ljud/rost/3b8d237e31b86bde.mp3",
+   "ms": 914,
+   "r": "pennan",
+   "id": "w3.resa:sjon_punkt",
+   "t": "På väg till Dimsjön.",
+   "tal": "Sjön",
+   "n": -16
+  },
   "f44ae744": {
    "f": "/ljud/rost/74d5def6966fad2f.mp3",
    "ms": 1489,
@@ -31907,6 +32051,15 @@
    "r": "pennan",
    "id": "varde:en pappa",
    "t": "en pappa",
+   "n": -16
+  },
+  "f57012b6": {
+   "f": "/ljud/rost/453078de62fa5e2d.mp3",
+   "ms": 1071,
+   "r": "pennan",
+   "id": "w3.resa:till_angen",
+   "t": "Till Ängen",
+   "tal": "Ängen",
    "n": -16
   },
   "f58ab789": {
@@ -32836,6 +32989,15 @@
    "r": "pennan",
    "id": "bengtsson.val:ordet-pa:stol",
    "t": "en katt på en stol",
+   "n": -16
+  },
+  "fc6e3f8b": {
+   "f": "/ljud/rost/3b8d237e31b86bde.mp3",
+   "ms": 914,
+   "r": "pennan",
+   "id": "w3.resa:sjon_ellips",
+   "t": "På väg till Dimsjön…",
+   "tal": "Sjön",
    "n": -16
   },
   "fc821618": {

@@ -172,6 +172,13 @@ const RADER = [
   ["kombo:en_rosa_räv","en rosa räv"], ["kombo:en_lila_räv","en lila räv"], ["kombo:en_vit_räv","en vit räv"], ["kombo:en_svart_räv","en svart räv"], ["kombo:en_guld_räv","en guld räv"], ["kombo:en_blå_uggla","en blå uggla"], ["kombo:en_gul_uggla","en gul uggla"], ["kombo:en_grön_uggla","en grön uggla"],
   ["kombo:en_rosa_uggla","en rosa uggla"], ["kombo:en_lila_uggla","en lila uggla"], ["kombo:en_vit_uggla","en vit uggla"], ["kombo:en_svart_uggla","en svart uggla"], ["kombo:en_guld_uggla","en guld uggla"], ["kombo:en_röd_groda","en röd groda"], ["kombo:en_rosa_groda","en rosa groda"], ["kombo:en_lila_groda","en lila groda"],
   ["kombo:en_vit_groda","en vit groda"], ["kombo:en_svart_groda","en svart groda"], ["kombo:en_guld_groda","en guld groda"],
+  ["w3.resa:ang_ellips","På väg hem till Ängen…","Ängen"], ["w3.resa:ang_punkt","På väg hem till Ängen.","Ängen"], ["w3.resa:till_angen","Till Ängen","Ängen"],
+  ["w3.resa:skogen_ellips","På väg till Glittrande skogen…","Skogen"], ["w3.resa:skogen_punkt","På väg till Glittrande skogen.","Skogen"], ["w3.resa:glittrande_skogen","Glittrande skogen","Skogen"],
+  ["w3.resa:sjon_ellips","På väg till Dimsjön…","Sjön"], ["w3.resa:sjon_punkt","På väg till Dimsjön.","Sjön"], ["w4.flyg:dimsjon","Dimsjön","Sjön"],
+  ["w3.resa:grottan_ellips","På väg till Kristallgrottan…","Grottan"], ["w3.resa:grottan_punkt","På väg till Kristallgrottan.","Grottan"], ["w4.flyg:kristallgrottan","Kristallgrottan","Grottan"],
+  ["w3.resa:garden_ellips","På väg till Gården…","Gården"], ["w3.resa:garden_punkt","På väg till Gården.","Gården"],
+  ["w3.resa:solgarden_ellips","På väg till Solgården…","Solgården"], ["w3.resa:solgarden_punkt","På väg till Solgården.","Solgården"],
+  ["w3.resa:hoppa_over","Hoppa över resan","Ängen"], ["w4.flyg:se_hela_dalen","Se hela dalen","Världskartan. Välj en plats på stigen! Alla vägar är öppna."],
 ];
 
 export function rostKandidater(talare = "pennan") {
