@@ -11,11 +11,22 @@ import type { SpelKarna } from "./typer.ts";
 const ANGRA_MAX = 24;
 
 export function useSkriv(k: Pick<SpelKarna, "t" | "b" | "s">) {
-  const { setText, setLage, setVal, setFlik, setHand, forslag, setForslag, behover, setBehover, setVisKort, setOrdbok, setForalder, setAlbumOpp, setMossaOpp, bokOpp, setBokOpp, setByggPuff, setKop, onskaOpp, setKopia, gavaTill, setGavaTill, textRef, handRef, overlayRef, gavaRef } = k.t;
+  const { setText, lage, setLage, setVal, setFlik, setHand, forslag, setForslag, behover, setBehover, setVisKort, setOrdbok, setForalder, setAlbumOpp, setMossaOpp, bokOpp, setBokOpp, setByggPuff, setKop, onskaOpp, setKopia, gavaTill, setGavaTill, textRef, handRef, overlayRef, gavaRef } = k.t;
   const { visaBanner } = k.b;
   const { utfor, utforRef } = k.s;
   const angraStackRef = useRef<string[]>([]);
   const [kanAngra, setKanAngra] = useState(false);
+  const foreLageRef = useRef(lage);
+
+  useEffect(() => {
+    const fore = foreLageRef.current;
+    foreLageRef.current = lage;
+    const byte = (fore === "skriv" && lage === "kort") || (fore === "kort" && lage === "skriv");
+    if (!byte) return;
+    // AC05 / UX-08: Stava själv <-> Ordkort får aldrig radera textRef.
+    const bevarad = textRef.current;
+    if (bevarad.trim()) setVal(valUrText(bevarad));
+  }, [lage, setVal, textRef]);
 
   function sparaAngra(ny: string) {
     const fore = textRef.current;
