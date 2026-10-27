@@ -353,7 +353,7 @@ async function korPlaywright() {
 
       const antalDjurFore = await page.evaluate(() => {
         const st = window.__trollMinne?.getState?.();
-        return Array.isArray(st?.egnaDjur) ? st.egnaDjur.length : 0;
+        return Array.isArray(st?.ang) ? st.ang.length : 0;
       });
       await page.locator('[data-testid="ord-input"]').fill("en blå kanin");
       await page.waitForTimeout(150);
@@ -368,7 +368,7 @@ async function korPlaywright() {
       await page.waitForTimeout(950);
       const antalDjurEfter = await page.evaluate(() => {
         const st = window.__trollMinne?.getState?.();
-        return Array.isArray(st?.egnaDjur) ? st.egnaDjur.length : 0;
+        return Array.isArray(st?.ang) ? st.ang.length : 0;
       });
 
       detalj.c1 = {
@@ -530,7 +530,7 @@ async function korPlaywright() {
       // Stäng boken om öppen och hämta en kanin på ängen (eller skapa en om ingen finns)
       let kaninUid = await page.evaluate(() => {
         const st = window.__trollMinne?.getState?.();
-        const k = (st?.egnaDjur || []).find((d) => d.kropp === "kanin") || (st?.egnaDjur || [])[0];
+        const lista = Array.isArray(st?.ang) ? st.ang : []; const k = lista.find((d) => d.kropp === "kanin") || lista[0];
         return k?.uid || null;
       });
       if (!kaninUid) {
@@ -541,14 +541,14 @@ async function korPlaywright() {
         await page.waitForTimeout(900);
         kaninUid = await page.evaluate(() => {
           const st = window.__trollMinne?.getState?.();
-          const k = (st?.egnaDjur || []).find((d) => d.kropp === "kanin") || (st?.egnaDjur || [])[0];
+          const lista = Array.isArray(st?.ang) ? st.ang : []; const k = lista.find((d) => d.kropp === "kanin") || lista[0];
           return k?.uid || null;
         });
       }
 
       const djurForeGava = await page.evaluate(() => {
         const st = window.__trollMinne?.getState?.();
-        return (st?.egnaDjur || []).length;
+        return Array.isArray(st?.ang) ? st.ang.length : 0;
       });
 
       // Öppna gåvoläge för kaninUid via troll-gava-klick
@@ -578,13 +578,14 @@ async function korPlaywright() {
       await page.locator('[data-d3="dop-knapp"], [data-testid="dop-knapp"]').first().click();
       await page.waitForTimeout(250);
 
+      await page.screenshot({ path: path.join(UT_MAPP, "c3-gavolage-375x812.png") });
       if (KOR_C4) {
         await page.screenshot({ path: path.join(UT_MAPP, "c3-gavopanel-skuttis-375x812.png") });
       }
 
       const skuttisSparad = await page.evaluate((uid) => {
         const ra = localStorage.getItem("trollpennan-v2") || "";
-        const djur = (window.__trollMinne?.getState?.()?.egnaDjur || []).find((d) => d.uid === uid);
+        const lista = Array.isArray(window.__trollMinne?.getState?.()?.ang) ? window.__trollMinne.getState().ang : []; const djur = lista.find((d) => d.uid === uid);
         return {
           smeknamn: djur?.smeknamn || null,
           iLocalStorage: ra.includes("Skuttis"),
@@ -608,7 +609,7 @@ async function korPlaywright() {
 
       const djurEfterGava = await page.evaluate(() => {
         const st = window.__trollMinne?.getState?.();
-        return (st?.egnaDjur || []).length;
+        return Array.isArray(st?.ang) ? st.ang.length : 0;
       });
       if (djurEfterGava !== djurForeGava) {
         fel.push(
