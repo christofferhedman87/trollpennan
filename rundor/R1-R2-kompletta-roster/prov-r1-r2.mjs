@@ -137,23 +137,23 @@ function korR1Kontroller(fel, detalj) {
   }
 
   // 7. Emoji- & dubbelpunktsnormalisering, flermeningssträngar + fria flerordsmeningar i Pennans bok
-  const emojiPlan = rostPlan("✨ Vakna!");
+  const emojiPlan = rostPlan("✨ Uppdrag klart!");
   if (!emojiPlan || emojiPlan.dynamisk || emojiPlan.delar.length !== 1) {
-    fel.push(`R1: rostPlan('✨ Vakna!') misslyckades: ${JSON.stringify(emojiPlan)}`);
+    fel.push(`R1: rostPlan('✨ Uppdrag klart!') misslyckades: ${JSON.stringify(emojiPlan)}`);
   }
-  const dubbelPunktPlan = rostPlan("Hatt eller mössa.. En kanin fryser om öronen!");
+  const dubbelPunktPlan = rostPlan("Det verkar som att din kanin fryser.. Se om du kan skriva fram något som värmer.");
   if (!dubbelPunktPlan || dubbelPunktPlan.dynamisk || dubbelPunktPlan.delar.length !== 1) {
     fel.push(`R1: rostPlan med dubbelpunkt ('..') misslyckades: ${JSON.stringify(dubbelPunktPlan)}`);
   }
-  const flerMeningPlan = rostPlan("En liten gnagare med långa öron. Ordet har 2 delar.");
+  const flerMeningPlan = rostPlan("Min mamma är en katt. Ordet har 2 delar.");
   if (!flerMeningPlan || flerMeningPlan.dynamisk || flerMeningPlan.delar.length !== 2) {
     fel.push(`R1: Flermeningssträng ('<gåta> Ordet har 2 delar.') misslyckades: ${JSON.stringify(flerMeningPlan)}`);
   }
   const friaMeningar = [
     "en halsduk",
-    "två små gröna grodor med hatt",
-    "en stor blå kanin med röd mössa",
-    "tre glada katter som hoppar",
+    "två små gröna groda med hatt",
+    "en stor blå kanin med hatt",
+    "en stor röd katt som hoppar",
   ];
   for (const m of friaMeningar) {
     const p = rostPlan(m);
@@ -178,8 +178,8 @@ function korR1Kontroller(fel, detalj) {
   }
   const ersattMallar = [
     ["Nu heter djuret Kurt-Olof!", "Vilket fint namn! Det passar helt perfekt!"],
-    ["Wiii! En lila kapybara bar dig över floden!", "Wiii! Du kom säkert hela vägen över floden!"],
-    ["Här får du en hemlig diamant!", "Varsågod! Hoppas att du tycker om din gåva!"],
+    ["Wiii! En lila kapybara bar dig över floden!", "Wiii! Du flög hela vägen över floden!"],
+    ["Här får du en hemlig diamant!", "Varsågod! Vilken fin gåva!"],
   ];
   for (const [inText, forvantad] of ersattMallar) {
     const ut = sammanhallenRostText(inText);

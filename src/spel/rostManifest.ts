@@ -20,9 +20,14 @@ function rad(k: string): RostRad | null {
   return r ? { f: `/ljud/rost/${r[0]}.mp3`, fil: `/ljud/rost/${r[0]}.mp3`, ms: r[1] } : null;
 }
 
-/** Samma som scripts/rost-generera.mjs: NFC, ett mellanslag, trimmad. */
+/** NFC och ett mellanslag som generatorn, plus ledande emoji/listsymboler bort (`+` behålls) och ihopslagna dubbelpunkter. */
 export function normalisera(t: string): string {
-  return t.normalize("NFC").replace(/\s+/g, " ").trim();
+  return t
+    .normalize("NFC")
+    .replace(/^[\s\p{Emoji_Presentation}\p{Extended_Pictographic}\uFE0F\u200D★☆•▸▶]+/gu, "")
+    .replace(/\s+/g, " ")
+    .replace(/([.!?])\.+(?=\s|$)/g, "$1")
+    .trim();
 }
 
 /** FNV-1a 32 bit över UTF-16, 8 hex-tecken (samma som generatorn). */
@@ -60,7 +65,15 @@ function rostForNormaliserad(text: string): RostRad | null {
     const alt = rad(nyckel(n.replaceAll("Doktor Bengtsson", "Bengtsson"))); if (alt) return alt;
   }
   const lag = sankMeningsStart(n);
-  if (lag !== n) return rad(nyckel(lag));
+  if (lag !== n) {
+    const lagRad = rad(nyckel(lag));
+    if (lagRad) return lagRad;
+  }
+  // "en kanin med mössa." ligger med punkt så att mallen inte äter hela värdet.
+  if (!/[.!?]$/.test(n)) {
+    const medPunkt = rad(nyckel(`${n}.`)) ?? (lag !== n ? rad(nyckel(`${lag}.`)) : null);
+    if (medPunkt) return medPunkt;
+  }
   return null;
 }
 
@@ -99,23 +112,22 @@ function mallar(): Mall[] {
   });
   return MALLAR;
 }
-/** Hela värdet som fil, eller uppdelat i kända bitar. Versal meningsstart provas som gemen. */
+/** Hela värdet som fil, eller uppdelat i kända bitar. Längre prefix först, men backa om resten inte går. */
 function ordSekvens(text: string): { f: string; ms: number }[] | null {
   const ord = text.split(" ");
-  const ut: { f: string; ms: number }[] = [];
-  for (let i = 0; i < ord.length; ) {
-    let j = ord.length;
-    for (; j > i; j--) {
+  const sok = (i: number): { f: string; ms: number }[] | null => {
+    if (i >= ord.length) return [];
+    for (let j = ord.length; j > i; j--) {
+      if (i === 0 && j === ord.length) continue;
       const r = rad(nyckel(ord.slice(i, j).join(" ")));
-      if (r && !(i === 0 && j === ord.length)) {
-        ut.push(r);
-        break;
-      }
+      if (!r) continue;
+      const rest = sok(j);
+      if (rest) return [r, ...rest];
     }
-    if (j === i) return null;
-    i = j;
-  }
-  return ut.length > 1 ? ut : null;
+    return null;
+  };
+  const ut = sok(0);
+  return ut && ut.length > 1 ? ut : null;
 }
 
 /** Dela på " och " / " med " när hela värdet inte är en fil ("Ett rött hus" + "blir det."). */
@@ -153,15 +165,9 @@ function vardeDelar(varde: string): { f: string; ms: number }[] | null {
   return delaLed(n);
 }
 function ettPlan(text: string): RostPlan | null {
-  text = kaninFryserNeutral(normalisera(text));
-  const hel = rad(nyckel(text));
+  const hel = rostForNormaliserad(text);
   if (hel) return { delar: [hel], ms: hel.ms, dynamisk: false };
-  const lag = sankMeningsStart(normalisera(text));
-  if (lag !== normalisera(text)) {
-    const r = rad(nyckel(lag));
-    if (r) return { delar: [r], ms: r.ms, dynamisk: false };
-  }
-  const t = normalisera(text);
+  const t = kaninFryserNeutral(normalisera(text));
   for (const mall of mallar()) {
     const m = mall.re.exec(t);
     if (!m) continue;
@@ -192,6 +198,10 @@ function ettPlan(text: string): RostPlan | null {
     }
     return { delar, ms, dynamisk };
   }
+  const fria = vardeDelar(t);
+  if (fria && fria.length > 0) {
+    return { delar: fria, ms: fria.reduce((s, d) => s + d.ms, 0), dynamisk: false };
+  }
   return null;
 }
 
@@ -199,7 +209,21 @@ function ettPlan(text: string): RostPlan | null {
 export function rostPlan(text: string): RostPlan | null {
   const hel = ettPlan(text);
   const i = text.indexOf(": ");
-  const plan = hel ?? (i > 0 ? ettPlan(text.slice(i + 2)) : null);
+  let plan = hel ?? (i > 0 ? ettPlan(text.slice(i + 2)) : null);
+  if (!plan) {
+    const bitar = normalisera(text).split(/(?<=[.!?])\s+/).filter(Boolean);
+    if (bitar.length >= 2) {
+      const planer = bitar.map((b) => ettPlan(b));
+      if (planer.every((p) => p !== null)) {
+        const klara = planer as RostPlan[];
+        plan = {
+          delar: klara.flatMap((p) => p.delar),
+          ms: klara.reduce((s, p) => s + p.ms, 0),
+          dynamisk: klara.some((p) => p.dynamisk),
+        };
+      }
+    }
+  }
   if (!plan) return null;
   Object.assign(plan.delar, { length: plan.delar.length, 0: plan.delar[0] });
   return Object.assign(plan, { length: plan.delar.length, 0: plan.delar[0] });

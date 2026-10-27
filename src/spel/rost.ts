@@ -1,9 +1,6 @@
-// TTS-1/TTS-2: uppläsning av texter som visas. Förgenererade filer via manifestet (laddas först när de spelas): en hel text,
-// eller en mall där de fasta delarna och kända värden ("en kanin", tal, namn) är filer. Barnets egna ord (dynamisk text)
-// läses med telefonens svenska röst om den finns, annars läses den meningen inte. Fasta texter utan fil: 'reserv' i
-// data/rost.json ('tyst' = ingen telefonröst, de genereras i stället). Aldrig en engelsk röst. Ingen kod per replik.
+// TTS: förgenererade MP3 via manifestet (hel text eller mall). Dynamisk text och reserv är tyst. Aldrig engelsk röst.
 import { useMinne } from "./minne.ts";
-import { DYNAMISK, RESERV, normalisera, rostPlan, type RostDel } from "./rostManifest.ts";
+import { DYNAMISK, RESERV, normalisera, rostFor, rostPlan, type RostDel } from "./rostManifest.ts";
 
 function rostPa(): boolean {
   const s = useMinne.getState();
@@ -20,8 +17,7 @@ type Logg = {
   kalla?: string;
   fodd?: number;
 };
-/** TTS-3: kön. forst = bannerns röst – den går före allt annat i kön, och en guiderad/pratbubbla/önskan som redan läses
- *  avbryts (tonas ut på TONA_MS) så att bannerns röst börjar direkt. Den avbrutna läses inte om (texten står kvar). */
+/** TTS-3: kön. forst = bannerns röst går före och tonar ut pågående uppläsning (TONA_MS). Avbruten text läses inte om. */
 const ko: { text: string; forst: boolean }[] = [];
 const engang = new Set<string>();
 let nu: HTMLAudioElement | null = null;
@@ -81,29 +77,39 @@ function spelaDelar(text: string, delar: RostDel[], _sv: SpeechSynthesisVoice | 
       } catch {
         steg();
       }
-    } else steg();
+    } else steg(); // dynamisk del och DYNAMISK "tyst": ingen telefon, nästa del
   };
   steg();
 }
 
-/** D7: vanliga utrop läses som en sammanhållen inspelning. Bannern behåller barnets egen text. */
+/** D7: utrop som redan har 1 MP3 behålls. Annars en sammanhållen ersättning. Ingen telefonröst. */
+const SAMMAN: [RegExp, string][] = [
+  [/^(?:Guldord!\s+Du skrev .+ alldeles själv!|Guldord!\s+.+\s+[–-]\s+och du stavade helt rätt!|Wow,\s+.+!\s+Ett guldord till boken!)$/iu, "Wow, du har skrivit ett guldord! Du får en stjärna!"],
+  [/^(?:Nytt ord i boken:\s*.+!|Du hittade .+!)$/iu, "Titta! Du hittade ett helt nytt ord till boken!"],
+  [/^(?:Hej!\s+Här kommer .+|Se!\s+.+\s+vaknar\.|Titta,\s+.+\s+är här!)$/iu, "Titta, det du skrev vaknar till liv!"],
+  [/^(?:Nu står .+ på gården!|Tadaa!\s+Här är .+!|Klart!\s+.+\s+står på gården\.|Wow,\s+.+!\s+Snyggt bygge!)$/iu, "Tadaa! Snyggt bygge, nu står det på gården!"],
+  [/^\+\d+\s+stjärnor!$/iu, "Hurra! Du fick nya stjärnor!"],
+  [/^Nu heter (?:djuret|du) .+!$/u, "Vilket fint namn! Det passar helt perfekt!"],
+  [/^Wiii! .+ bar dig över floden!$/u, "Wiii! Du flög hela vägen över floden!"],
+  [/^(?:Här får du|Varsågod) .+!$/u, "Varsågod! Vilken fin gåva!"],
+  [/^.+ följer med dig!$/u, "Nu följer din vän med dig på äventyr!"],
+  [/^.+ går hem till gården\.$/u, "Din vän går hem till gården och vilar."],
+  [/ (?:flyttar in i|tycker om sitt nya hem!)/u, "Titta! Djuret flyttar in i sitt nya hem!"],
+  [/ vill hellre bo någon annanstans\./u, "Djuret vill hellre bo någon annanstans. Prova ett annat hem!"],
+  [/^Plask! .+ simmade med dig ända ut till ön!$/u, "Plask! Ni simmade ända ut till ön!"],
+  [/^Dunk! .+ rullade bort stenen!$/u, "Dunk! Stenen rullade bort så vägen blev fri!"],
+  [/ lyser upp hela grottan\./u, "Hela grottan lyser upp. Oj, vad det glittrar!"],
+  [/^Det här ordet har jag aldrig sett!/u, "Det här ordet har jag aldrig sett! Det blev ett mystiskt ägg!"],
+  [/^.+ följer efter dig!$/u, "Nu följer din vän med dig på äventyret!"],
+  [/^.+ blev jätteglad och skuttar runt!$/u, "Titta så glad den blev! Den skuttar runt av lycka!"],
+  [/^.+ spinner och gnider sig mot dig!$/u, "Åh, den spinner och tycker så mycket om dig!"],
+  [/^Nästan! .+ vill ha .+ — du gav .+\.$/u, "Nästan rätt! Titta noga på vad djuret önskar sig."],
+  [/^.+ står på sidan .+\. Köp sidan för .+ ⭐ i boken!$/u, "Det ordet finns på en låst sida i boken. Samla stjärnor för att låsa upp den!"],
+];
 export function sammanhallenRostText(text: string): string {
-  const s = text.trim();
-  if (/^(?:Guldord!\s+Du skrev .+ alldeles själv!|Guldord!\s+.+\s+[–-]\s+och du stavade helt rätt!|Wow,\s+.+!\s+Ett guldord till boken!)$/i.test(s)) {
-    return "Wow, du har skrivit ett guldord! Du får en stjärna!";
-  }
-  if (/^(?:Nytt ord i boken:\s*.+!|Du hittade .+!)$/i.test(s)) {
-    return "Titta! Du hittade ett helt nytt ord till boken!";
-  }
-  if (/^(?:Hej!\s+Här kommer .+|Se!\s+.+\s+vaknar\.|Titta,\s+.+\s+är här!)$/i.test(s)) {
-    return "Titta, det du skrev vaknar till liv!";
-  }
-  if (/^(?:Nu står .+ på gården!|Tadaa!\s+Här är .+!|Klart!\s+.+\s+står på gården\.|Wow,\s+.+!\s+Snyggt bygge!)$/i.test(s)) {
-    return "Tadaa! Snyggt bygge, nu står det på gården!";
-  }
-  if (/^\+\d+\s+stjärnor!$/i.test(s)) {
-    return "Hurra! Du fick nya stjärnor!";
-  }
+  const t = text.trim();
+  if (rostFor(t) || rostFor(normalisera(t))) return t;
+  for (const [re, till] of SAMMAN) if (re.test(t)) return till;
   return text;
 }
 
@@ -190,9 +196,7 @@ export function tystna() {
   stoppa();
 }
 
-/** Läs upp en text som visas. enGang = nyckel som bara läses en gång per spelomgång (t.ex. uppdragets id). Högst fyra i kö.
- *  forst (TTS-3) = bannerns röst: läggs före pratbubblor/önskan i kön och avbryter en guiderad/pratbubbla som läses (TTS-3-fix).
- *  Blir kön för lång tas den äldsta som inte är forst bort. */
+/** Läs upp text som visas. enGang läses en gång per omgång. Högst fyra i kö. forst = bannern avbryter pågående uppläsning. */
 export function sag(text: string, enGang?: string, forst = false) {
   if (typeof window === "undefined" || !text.trim()) return;
   if (!lyssnar) {
@@ -236,8 +240,7 @@ export function lasbarTid(text: string): number {
   return Math.min(12_000, 1200 + 60 * normalisera(text).length);
 }
 
-/** TTS-2: bannerns tid – max(bas, lästid, replikens längd ur manifestet + 1,5 s när ljudet är på), så att barnet hinner
- *  läsa medan rösten läser och bannern aldrig försvinner mitt i repliken. */
+/** TTS-2: bannerns tid – max(bas, lästid, replikens längd + 1,5 s när ljudet är på). */
 export function bannerTid(text: string, bas: number): number {
   const las = Math.max(bas, lasbarTid(text));
   if (typeof window === "undefined" || !rostPa()) return las;
@@ -250,10 +253,7 @@ export const ROST_START_MS = 6000;
 /** TTS-3: efter rösten står bannern minst så här länge till (ms). */
 export const EFTER_ROST_MS = 1500;
 
-/** TTS-3: bannerns klocka. Bara en banner syns åt gången, så det finns högst en klocka. Utan röst (ljud av, ingen fil och
- *  tyst reserv, kön tappade repliken) gäller den vanliga tiden: bannerTid() från visningen. Med röst börjar tiden när rösten
- *  faktiskt spelar (play/playing) och bannern stängs tidigast vid max(start + lästid, slut + 1,5 s). Startar rösten inte
- *  inom ROST_START_MS gäller den vanliga tiden. Ett tryck (tystna) släpper klockan – bannern stängs då av trycket. */
+/** TTS-3: bannerns klocka. Utan röst gäller bannerTid från visningen. Med röst börjar tiden vid play och stängs tidigast vid max(start + lästid, slut + 1,5 s). */
 type Klocka = { text: string; las: number; ms: number; t0: number; start: number | null; timer: number; stang: () => void };
 let aktiv: Klocka | null = null;
 const klocka = {
@@ -291,8 +291,7 @@ function bannerTidMs(k: Klocka) {
   return k.ms > 0 && rostPa() ? Math.max(k.las, k.ms + EFTER_ROST_MS) : k.las;
 }
 
-/** TTS-3: startar bannerns klocka och anropar stang() när bannern ska gå. Returnerar ett timer-id (för clearTimeout i
- *  anroparen, som förut); klockan själv släpps av nästa banner eller av ett tryck (tystna). */
+/** TTS-3: startar bannerns klocka och anropar stang() när bannern ska gå. */
 export function bannerKlocka(text: string, bas: number, stang: () => void): number {
   klocka.slapp();
   const t = normalisera(text);
@@ -392,7 +391,7 @@ function spelaUppDelar(delar: RostDel[], _sv: SpeechSynthesisVoice | null, min: 
       } catch {
         steg();
       }
-    } else steg();
+    } else steg(); // dynamisk del och DYNAMISK "tyst": ingen telefon, nästa del
   };
   steg();
 }

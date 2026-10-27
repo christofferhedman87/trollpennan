@@ -79,16 +79,18 @@ Use these skills: building-games, controls. Install them first if missing.
        if (rostFor(t) || rostFor(normalisera(t))) return t;
        ```
        (Importera `normalisera` från `./rostManifest.ts`). Detta garanterar att varje mening som redan har en exakt 1-MP3-inspelning i `K.rader` (t.ex. `"Hej! Här kommer en kanin!"`, `"Klart! ett rött hus står på gården."`, `"+2 stjärnor!"`, `"Nu heter djuret Skuttis!"`, `"Här får du en morot!"`) läses upp med sin exakta, sammanhållna MP3-inspelning istället för att bytas ut mot en generisk mening!
-     - Behåll de 5 befintliga ersättningsreglerna från D3 och lägg till följande 9 sammanhållna ersättningsregler för öppna `{djur}`/`{ord}`-mallar (när barnet skrivit egna ord/namn som inte har en exakt 1-MP3-rad i `K.rader`, t.ex. `"Nu heter djuret Kurt-Olof!"`):
+     - Behåll de befintliga ersättningsreglerna från D3 och lägg till de sammanhållna 1-MP3-ersättningsreglerna i `spaning.md` Avsnitt 4.3 för öppna `{djur}`/`{ord}`-mallar (när barnet skrivit egna ord/namn som inte har en exakt 1-MP3-rad i `K.rader`, t.ex. `"Nu heter djuret Kurt-Olof!"`):
        - `/^Nu heter (?:djuret|du) .+!$/u` -> `"Vilket fint namn! Det passar helt perfekt!"`
-       - `/^Wiii! .+ bar dig över floden!$/u` -> `"Wiii! Du kom säkert hela vägen över floden!"`
-       - `/^Här får du .+!$/u` -> `"Varsågod! Hoppas att du tycker om din gåva!"`
-       - `/^.+ följer med dig!$/u` -> `"Titta, du har fått en ny följeslagare!"`
-       - `/^.+ följer efter dig!$/u` -> `"Nu följer din vän med dig på äventyret!"`
-       - `/^.+ blev jätteglad och skuttar runt!$/u` -> `"Titta så glad den blev! Den skuttar runt av lycka!"`
-       - `/^.+ spinner och gnider sig mot dig!$/u` -> `"Åh, den spinner och tycker så mycket om dig!"`
-       - `/^Nästan! .+ vill ha .+ — du gav .+\.$/u` -> `"Nästan rätt! Titta noga på vad djuret önskar sig."`
-       - `/^.+ står på sidan .+\. Köp sidan för .+ ⭐ i boken!$/u` -> `"Det ordet finns på en låst sida i boken. Samla stjärnor för att låsa upp den!"`
+       - `/^Wiii! .+ bar dig över floden!$/u` -> `"Wiii! Du flög hela vägen över floden!"`
+       - `/^(?:Här får du|Varsågod) .+!$/u` -> `"Varsågod! Vilken fin gåva!"`
+       - `/^.+ följer med dig!$/u` -> `"Nu följer din vän med dig på äventyr!"`
+       - `/^.+ går hem till gården\.$/u` -> `"Din vän går hem till gården och vilar."`
+       - `/ (?:flyttar in i|tycker om sitt nya hem!)/u` -> `"Titta! Djuret flyttar in i sitt nya hem!"`
+       - `/ vill hellre bo någon annanstans\./u` -> `"Djuret vill hellre bo någon annanstans. Prova ett annat hem!"`
+       - `/^Plask! .+ simmade med dig ända ut till ön!$/u` -> `"Plask! Ni simmade ända ut till ön!"`
+       - `/^Dunk! .+ rullade bort stenen!$/u` -> `"Dunk! Stenen rullade bort så vägen blev fri!"`
+       - `/ lyser upp hela grottan\./u` -> `"Hela grottan lyser upp. Oj, vad det glittrar!"`
+       - `/^Det här ordet har jag aldrig sett!/u` -> `"Det här ordet har jag aldrig sett! Det blev ett mystiskt ägg!"`
    - **Stäng av Web Speech TTS (`window.speechSynthesis` / `telefon`) i `spelaPlan`:**
      - I `spelaPlan`: när `"dynamisk" in d` och `DYNAMISK === "tyst"`, anropa aldrig `telefon(d.dynamisk, ...)` utan gå direkt vidare till `nasta()`.
 
