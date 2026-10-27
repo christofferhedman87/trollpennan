@@ -269,3 +269,15 @@
 .bok .kort-pil-knapp,.bok .steg-pil-knapp{min-height:30px;height:30px;padding:2px 8px;border-radius:10px;border:2px solid #D9C3A0;background:#FFF6E5;color:#3B2F2F;font-weight:800;font-size:0.76rem;white-space:nowrap;cursor:pointer}
 .bok .steg-pil-knapp.nasta{background:#FFB300;border-color:#3B2F2F}
 .bok .kort-sida-info{font-weight:800;font-size:0.75rem;color:#3B2F2F;white-space:nowrap}
+.bok .gavo-panel{display:flex;flex-direction:column;gap:6px;margin:4px 8px 2px;padding:8px;border-radius:16px;border:2px solid #E4CFA4;background:linear-gradient(180deg,#FFF6E5 0%,#FFE8C2 100%);flex-shrink:0}
+.bok .gava-mottagare{display:flex;align-items:center;gap:8px;min-height:48px}
+.bok .gava-portratt{width:48px;height:48px;border-radius:14px;object-fit:contain;background:#FFFDF8;border:2px solid #3B2F2F;flex-shrink:0}
+.bok .gava-mottagare p{margin:0;font-weight:800;font-size:0.95rem;line-height:1.2;color:#3B2F2F}
+.bok .gava-mottagare-info{display:block;margin-top:2px;font-size:0.78rem;font-weight:700;color:#5A4636}
+.bok .gavo-kort-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.bok .gavo-kort{display:flex;align-items:center;gap:8px;min-height:52px;padding:4px 8px;border-radius:16px;border:2px solid #D7C297;background:#FFFDF8;box-shadow:0 3px 0 #D7C297;color:#3B2F2F;font-weight:800;font-size:0.95rem;text-align:left;cursor:pointer}
+.bok .gavo-kort img{width:36px;height:36px;object-fit:contain;flex-shrink:0}
+.bok .gavo-kort.vald{border-color:#3B2F2F;background:#FFF1C9;box-shadow:0 3px 0 #E0A800}
+.bok .gavo-snabbnamn{min-height:44px;padding:4px 12px;border-radius:999px;border:2px solid #3B2F2F;background:#FFF;font-weight:800;color:#3B2F2F;cursor:pointer}
+.bok .ideer .kort{display:flex;align-items:center;gap:8px}
+.bok .ide-kort-ikon{width:32px;height:32px;object-fit:contain;flex-shrink:0;border-radius:8px}

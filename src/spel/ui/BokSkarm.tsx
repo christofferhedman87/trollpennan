@@ -6,20 +6,19 @@ import hemligt from "../../../data/hemligt.json" with { type: "json" };
 import { aktivtSkrivUppdrag, nastaSkrivUppdrag } from "../uppdragsmotor.ts";
 import { useMinne } from "../minne.ts";
 import { exempelFor, uppdragForslag } from "../ideRad.ts";
-import { djurMedUid } from "../liv.ts";
-import { forsokDopaText, gavoRuta } from "./gavoRuta.ts";
+import { valUrText } from "../useSkriv.ts";
 import { platsNu } from "./useBengtsson.ts";
 import type { Sparad } from "../brygga.ts";
 import { fyll } from "../fyll.ts";
 import type { Hemdjur, Lage, OnskaSpar } from "../minne.ts";
 import { OnskaAnsikte } from "./OnskaAnsikte.tsx";
-import { bestamdAv, frasForByggOrd } from "./hjalp.ts";
+import { bestamdAv, frasForByggOrd, kortIkon } from "./hjalp.ts";
 import { FIR, TANGENTBORD, TEXTER } from "./spelData.ts";
 import lasningJson from "../../../data/lasning.json" with { type: "json" };
 import * as rostKo from "../rostKo.ts";
 import type { Kalla } from "../rostKo.ts";
 import type { Banner, Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
-import { GavaStallKnapp } from "./Stall.tsx";
+import { GavoPanel } from "./GavoPanel.tsx";
 import { BokSvar } from "./BokSvar.tsx";
 import { UppdragVy } from "./UppdragVy.tsx";
 import { SkapelseBar } from "./SkapelseBar.tsx";
@@ -43,7 +42,7 @@ type BokSkarmProps = {
 };
 
 export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, setForslag, byggPuff, onskaOpp, onskan, onskaSyns, onskaDjur, onskaEx, fyllExempel, gavaTill, ang, varld, forslag, valjForslag, nejForslag, behover, utfor, flik, onskaKort, setFlik, kort, val, onskaIds, funna, kortGang, valjKort, oppnaSkrivMig, text, omrade, visaOnskaHjalp, vaknaNu, vaknaText, skrivTecken, sudda, kanAngra, angraMening, uppFlik, setUppFlik, uppdragSpar, byggSida, agdaSidor, setByggSidaId, setByggPuff, byggFras, kopRad, lastaSidor, forsokKop, setPanel, forstaSkapelse = false }: BokSkarmProps) {
-  // Invarianter för v2.test.ts, v3.test.ts & f3.test.ts: data-v2="aktivt-uppdrag-kort" data-v2="lyssna-aktivt-uppdrag" data-testid="uppdrag-los-i-boken" data-f3="uppdrag-ide-chip" data-v3="skapar-vy-flikar" data-v3="vy-flik-skriv" data-v3="vy-flik-gata" data-v3="vy-flik-ideer" data-v3="bok-stang" data-v3="ordkort" skriv-remsa exempel-chip- data-m3="meningsruta"
+  // Invarianter för v2.test.ts, v3.test.ts & f3.test.ts: data-v2="aktivt-uppdrag-kort" data-v2="lyssna-aktivt-uppdrag" data-testid="uppdrag-los-i-boken" data-f3="uppdrag-ide-chip" data-v3="skapar-vy-flikar" data-v3="vy-flik-skriv" data-v3="vy-flik-gata" data-v3="vy-flik-ideer" data-v3="bok-stang" data-v3="ordkort" skriv-remsa exempel-chip- data-m3="meningsruta" data-d3="dop-knapp"
   void uppdragForslag(null);
   void setPanel;
   void funna;
@@ -52,8 +51,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
   const [versaler, setVersaler] = useState(false);
   const [sjalvSkriv, setSjalvSkriv] = useState(false);
   const visaTangenter = panel === "byggbok" ? lage === "skriv" : (skaparVy === "skriv" && lage === "skriv" && sjalvSkriv);
-  const visaKort = panel === "spel" && skaparVy === "skriv" && !visaTangenter && !forslag && !behover;
-  const dopNamn = useMinne((s) => (gavaTill?.startsWith("egen:") ? djurMedUid(s, gavaTill.slice(5))?.smeknamn?.trim() : "") ?? "");
+  const visaKort = panel === "spel" && skaparVy === "skriv" && !visaTangenter && !forslag && !behover && !gavaTill;
   const ideUpp = aktivtSkrivUppdrag(uppdragSpar, platsNu()) ?? nastaSkrivUppdrag(uppdragSpar, platsNu(), false);
   return (
       <div className={forstaSkapelse ? "bok-skarm forsta-vy" : "bok-skarm"} data-testid="bok-skarm" onClick={stangBok}>
@@ -141,24 +139,16 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
               </div>
             ) : null}
             {gavaTill ? (
-              <div className="onska-remsa" data-testid="gava-remsa">
-                <p>{gavoRuta(gavaTill)}</p>
-                {gavaTill.startsWith("egen:") ? (
-                  <div className="gava-knapprad">
-                    <button type="button" className="kort dop-knapp" data-d3="dop-knapp" ref={(el) => el?.setAttribute("data-testid", "dop-knapp")} onClick={() => {
-                      const uid = gavaTill.slice(5);
-                      const rå = text.trim();
-                      if (!rå) { setSkaparVy("skriv"); setSjalvSkriv(true); setLage("skriv"); fyllExempel("heter "); return; }
-                      const dopa = forsokDopaText(rå, uid);
-                      const upp = dopa?.djur ?? useMinne.getState().bytSmeknamn(uid, rå);
-                      const visat = dopa?.namn ?? upp?.smeknamn;
-                      if (visat) visaBanner(`Nu heter djuret ${visat}!`, "ovr", "tapp");
-                      fyllExempel("");
-                    }}>🏷️ {dopNamn ? "Byt namn" : "Döp"}</button>
-                    <GavaStallKnapp uid={gavaTill.slice(5)} visaBanner={visaBanner} klar={stangBok} />
-                  </div>
-                ) : null}
-              </div>
+              <GavoPanel
+                gavaTill={gavaTill}
+                text={text}
+                fyllExempel={fyllExempel}
+                visaBanner={visaBanner}
+                stangBok={stangBok}
+                setSkaparVy={setSkaparVy}
+                setSjalvSkriv={setSjalvSkriv}
+                setLage={setLage}
+              />
             ) : null}
             <SkapelseBar
               text={text}
@@ -197,9 +187,15 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
                 {forstaSkapelse && skaparVy === "skriv" && !text.trim() && !aktivtSkrivUppdrag(uppdragSpar, platsNu()) ? <p className="forsta-val">✨ Välj ditt första djur:</p> : null}
                 {skaparVy === "ideer" ? (
                   <div className="ideer" data-v3="ide-lista">
-                    {exempelFor(ideUpp, upplevelse.examples).map((ex, i) => (
-                      <button type="button" className="kort" key={ex.visa} data-v3={`exempel-chip-${i}`} ref={(el) => el?.setAttribute("data-testid", `exempel-chip-${i}`)} onClick={() => { if (ideUpp && !uppdragSpar[ideUpp.id]) useMinne.getState().sattUppdrag(ideUpp.id, "pagar"); fyllExempel(ex.fyll); setSjalvSkriv(false); setLage("kort"); setSkaparVy("skriv"); }}>{ex.visa}</button>
-                    ))}
+                    {exempelFor(ideUpp, upplevelse.examples).map((ex, i) => {
+                      const ikon = kortIkon(valUrText(ex.fyll).djur?.id ?? "", "djur") ?? "/ikoner/v08/idea.svg";
+                      return (
+                        <button type="button" className="kort" key={ex.visa} data-v3={`exempel-chip-${i}`} ref={(el) => el?.setAttribute("data-testid", `exempel-chip-${i}`)} onClick={() => { if (ideUpp && !uppdragSpar[ideUpp.id]) useMinne.getState().sattUppdrag(ideUpp.id, "pagar"); fyllExempel(ex.fyll); setSjalvSkriv(false); setLage("kort"); setSkaparVy("skriv"); }}>
+                          <img className="ide-kort-ikon" alt="" src={ikon} />
+                          {ex.visa}
+                        </button>
+                      );
+                    })}
                   </div>
                 ) : null}
               </div>
