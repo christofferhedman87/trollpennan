@@ -13,6 +13,7 @@ import { ByggeModell, DekorHobalar } from "./ByggModell.tsx";
 import { GardDjurLista } from "./GardDjur.tsx";
 import { Solkorn, VindGras } from "../ang/dekor.tsx";
 import { MarkPlan } from "./MarkPlan.tsx";
+import { SolgardInramning } from "./SolgardInramning.tsx";
 import { useSagomiljo } from "../grafikKvalitet.ts";
 import type { VagvisarePlatsId, VagvisareSkarmPunkt } from "../ang/Vagvisare3D.tsx";
 import { synkaTestSparning, varldTillNorm, type GardDjurSnap } from "./vandra.ts";
@@ -57,6 +58,9 @@ export type Gard3dDiag = {
   kanter: KantPlats[];
   hagar: SlutenHage[];
   djur: GardDjurSnap[];
+  inramningAntal?: number;
+  calls?: number;
+  tris?: number;
 };
 
 if (typeof window !== "undefined") synkaTestSparning(useMinne, window.localStorage);
@@ -159,7 +163,7 @@ function Scen({
         shadow-bias={-0.0004}
       />
       <directionalLight color={L.fyll.farg} position={[-4, 3, 2]} intensity={L.fyll.styrka} />
-      <Bounds fit clip observe margin={0.86} maxDuration={0.01}>
+      <Bounds fit observe margin={0.86} maxDuration={0.01}>
         <mesh visible={false} rotation={[-Math.PI / 2, 0, 0]}>
           <planeGeometry args={[GARD_BREDD * CELL_STORLEK, GARD_DJUP * CELL_STORLEK]} />
         </mesh>
@@ -182,6 +186,9 @@ function Scen({
           setFlyttarUid(null);
         }}
       />
+      <Suspense fallback={null}>
+        <SolgardInramning />
+      </Suspense>
       <Suspense fallback={null}>
         <DekorHobalar />
       </Suspense>
@@ -272,6 +279,9 @@ export function Garden3D({ onValjPlats, onVagvisarePunkter }: { onValjPlats?: (i
       kanter,
       hagar,
       djur: Array.isArray(tidigare?.djur) ? tidigare.djur : [],
+      inramningAntal: tidigare?.inramningAntal ?? 33,
+      calls: tidigare?.calls,
+      tris: tidigare?.tris,
     };
     return () => {
       const nu = window.__gard3d;

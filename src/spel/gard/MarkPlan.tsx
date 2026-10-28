@@ -180,9 +180,13 @@ export function MarkPlan({
   const djup = GARD_DJUP * CELL_STORLEK;
   return (
     <group>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow raycast={ingenTraff}>
-        <circleGeometry args={[16, 40]} />
-        <meshStandardMaterial color="#7dce6a" roughness={1} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.02, 0]} receiveShadow raycast={ingenTraff}>
+        <circleGeometry args={[28, 48]} />
+        <meshStandardMaterial color="#69b84f" roughness={0.95} />
+      </mesh>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.005, 0]} receiveShadow raycast={ingenTraff}>
+        <circleGeometry args={[8.8, 40]} />
+        <meshStandardMaterial color="#76c45a" roughness={0.92} />
       </mesh>
       <mesh
         rotation={[-Math.PI / 2, 0, 0]}
@@ -190,8 +194,8 @@ export function MarkPlan({
         receiveShadow
         raycast={ingenTraff}
       >
-        <planeGeometry args={[bredd + 0.4, djup + 0.4]} />
-        <meshStandardMaterial color="#e6c27a" roughness={0.9} />
+        <planeGeometry args={[bredd + 0.52, djup + 0.52]} />
+        <meshStandardMaterial color="#d9a760" roughness={0.88} />
       </mesh>
       <mesh
         rotation={[-Math.PI / 2, 0, 0]}
