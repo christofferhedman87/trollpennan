@@ -80,9 +80,14 @@ function harYta(m: THREE.Material): m is THREE.Material & { roughness: number } 
 }
 
 const FONSTER_NODER = ["Window_1", "Window_2", "Window_3", "Window_Side"] as const;
+const TALT_DUK_MAT = new Set(["colorred", "fabric", "cloth", "canvas", "tent"]);
 
 function arVaggNamn(namn: string): boolean {
   return /^(walls|vagg|vägg|plaster|lightred|darkred|wood|body)$/i.test(namn);
+}
+
+function arTaltDuk(namn: string): boolean {
+  return TALT_DUK_MAT.has(namn.toLowerCase());
 }
 
 function arTakNamn(namn: string): boolean {
@@ -128,7 +133,7 @@ export function egnaMaterial(
       k.userData = { ...m.userData, egenKopia: true };
       const namn = k.name || o.name;
       if (harFarg(k)) {
-        if (fargHex && arVaggNamn(namn)) k.color.set(fargHex);
+        if (fargHex && (arVaggNamn(namn) || arTaltDuk(namn) || arTaltDuk(k.name) || arTaltDuk(o.name))) k.color.set(fargHex);
         else if (takFargHex && arTakNamn(namn)) k.color.set(takFargHex);
         else if (fargHex && !harWalls && idx === 0 && !arTakNamn(namn) && !arOrordNamn(namn)) k.color.set(fargHex);
       }
@@ -176,19 +181,25 @@ export function slappMaterial(rot: THREE.Object3D): void {
   });
 }
 
-/** Höjd `malhojd`, bredd och djup högst 0,92, botten på y=0, centrerad i XZ. */
-export function passaByggnad(rot: THREE.Object3D, malhojd: number): void {
+/** Höjd `malhojd * skala`, bredd högst `maxBredd`, botten på y=0, centrerad i XZ. */
+export function passaByggnad(rot: THREE.Object3D, malhojd: number, maxBredd = 1.75, skala = 1): void {
+  rot.scale.setScalar(1);
+  rot.position.set(0, 0, 0);
   rot.updateMatrixWorld(true);
   BOX.setFromObject(rot);
+  if (BOX.isEmpty()) return;
   BOX.getSize(STORLEK);
   const h = Math.max(STORLEK.y, 1e-4);
   const w = Math.max(STORLEK.x, 1e-4);
   const d = Math.max(STORLEK.z, 1e-4);
-  const s = Math.min(malhojd / h, 0.92 / Math.max(w, d));
+  const s = Math.min((malhojd * skala) / h, (maxBredd * Math.max(1, skala * 0.88)) / Math.max(w, d));
+  rot.scale.setScalar(s);
+  rot.updateMatrixWorld(true);
+  BOX.setFromObject(rot);
   const cx = (BOX.min.x + BOX.max.x) / 2;
   const cz = (BOX.min.z + BOX.max.z) / 2;
-  rot.scale.setScalar(s);
-  rot.position.set(-cx * s, -BOX.min.y * s, -cz * s);
+  rot.position.set(-cx, -BOX.min.y, -cz);
+  rot.updateMatrixWorld(true);
 }
 
 export function skuggaUtanTraff(rot: THREE.Object3D, klickbar = false): void {

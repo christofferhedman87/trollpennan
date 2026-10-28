@@ -1,9 +1,9 @@
 import { useGLTF } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
-import { Component, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
-import { forladdaNarLedig } from "../modeller/forladda.ts";
+import { useFrame, useThree } from "@react-three/fiber";
+import { Component, Suspense, useEffect, useMemo, useRef, type ReactNode } from "react";
+import { Box3, Vector3 } from "three";
+import { forladdaNarLedig, kopplaMeshopt } from "../modeller/forladda.ts";
 import { StjarnPuffReserv } from "../modeller/StjarnPuffReserv.tsx";
-import type { Object3D } from "three";
 import gard3d from "../../../data/gard-3d.json" with { type: "json" };
 import { fonsterAntalForBygge, takFargForBygge, type SparatBygge } from "../bygge.ts";
 import { belysScen } from "../belys.ts";
@@ -24,7 +24,8 @@ import {
   type ReservSlag,
 } from "./modellPrep.ts";
 import { ReservForm, StaketReserv } from "./ReservForm.tsx";
-
+const SKARM_BOX = new Box3();
+const SKARM_P = new Vector3();
 const FILER = new Set<string>([gard3d.staket.enkelFil, gard3d.staket.grindFil]);
 for (const rad of Object.values(gard3d.byggnader)) if (rad.fil) FILER.add(rad.fil);
 for (const d of gard3d.dekor) FILER.add(d.fil);
@@ -52,6 +53,8 @@ function KlonadScen({
   fonsterAntal = null,
   uid = null,
   klickbar = false,
+  maxBredd = 1.75,
+  skala = 1,
 }: {
   url: string;
   malhojd: number;
@@ -61,17 +64,23 @@ function KlonadScen({
   fonsterAntal?: number | null;
   uid?: string | null;
   klickbar?: boolean;
+  maxBredd?: number;
+  skala?: number;
 }) {
-  const gltf = useGLTF(url);
-  const [scen, setScen] = useState<Object3D | null>(null);
-  useEffect(() => {
+  const gltf = useGLTF(url, false, true, kopplaMeshopt);
+  const { camera, gl } = useThree();
+  const skarmNyckel = useRef("");
+  const scen = useMemo(() => {
     belysScen(gltf.scene);
     const k = gltf.scene.clone(true);
-    // Staket behåller lokal z = -0.5. Bara byggnader och höbalar passas in.
-    if (passa) passaByggnad(k, malhojd);
+    if (passa) passaByggnad(k, malhojd, maxBredd, skala);
     egnaMaterial(k, fargHex, takFargHex, fonsterAntal);
+    skuggaUtanTraff(k, klickbar);
+    return k;
+  }, [gltf.scene, malhojd, maxBredd, skala, fargHex, passa, takFargHex, fonsterAntal, klickbar]);
+  useEffect(() => {
     if (uid && window.__gard3d) {
-      const diag = inspekteraHus3D(k);
+      const diag = inspekteraHus3D(scen);
       const gard = window.__gard3d;
       window.__gard3d = {
         ...gard,
@@ -82,16 +91,52 @@ function KlonadScen({
                 wallsColorHex: diag.wallsColorHex ?? x.wallsColorHex,
                 roofColorHex: diag.roofColorHex ?? x.roofColorHex,
                 synligaFonsterNoder: diag.wallsColorHex ? diag.synligaFonsterNoder : x.synligaFonsterNoder,
+                reservAktiv: false,
               }
             : x,
         ),
       };
     }
-    skuggaUtanTraff(k, klickbar);
-    setScen(k);
-    return () => slappMaterial(k);
-  }, [gltf.scene, malhojd, fargHex, passa, takFargHex, fonsterAntal, uid, klickbar]);
-  if (!scen) return null;
+    return () => slappMaterial(scen);
+  }, [scen, uid]);
+  useFrame(() => {
+    if (!uid || !window.__gard3d) return;
+    scen.updateWorldMatrix(true, true);
+    SKARM_BOX.setFromObject(scen);
+    if (SKARM_BOX.isEmpty()) return;
+    const rect = gl.domElement.getBoundingClientRect();
+    if (rect.width < 2 || rect.height < 2) return;
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+    for (const x of [SKARM_BOX.min.x, SKARM_BOX.max.x]) {
+      for (const y of [SKARM_BOX.min.y, SKARM_BOX.max.y]) {
+        for (const z of [SKARM_BOX.min.z, SKARM_BOX.max.z]) {
+          SKARM_P.set(x, y, z).project(camera);
+          const px = rect.left + (SKARM_P.x * 0.5 + 0.5) * rect.width;
+          const py = rect.top + (-SKARM_P.y * 0.5 + 0.5) * rect.height;
+          if (px < minX) minX = px;
+          if (px > maxX) maxX = px;
+          if (py < minY) minY = py;
+          if (py > maxY) maxY = py;
+        }
+      }
+    }
+    const width = maxX - minX;
+    const height = maxY - minY;
+    const nyckel = `${minX.toFixed(1)}|${minY.toFixed(1)}|${width.toFixed(1)}|${height.toFixed(1)}`;
+    if (nyckel === skarmNyckel.current) return;
+    skarmNyckel.current = nyckel;
+    const gard = window.__gard3d;
+    if (!gard) return;
+    window.__gard3d = {
+      ...gard,
+      byggen: gard.byggen.map((x) =>
+        x.uid === uid ? { ...x, reservAktiv: false, skarmBox: { x: minX, y: minY, width, height } } : x,
+      ),
+    };
+  });
   return <primitive object={scen} />;
 }
 
@@ -161,7 +206,6 @@ function TryckYta({
     </group>
   );
 }
-
 function slagFor(reserv: string | undefined): ReservSlag {
   if (reserv && arReserv(reserv)) return reserv;
   return "hus";
@@ -188,7 +232,7 @@ function StaketBit({ b, flyttar }: { b: SparatBygge; flyttar: boolean }) {
             <group position={[v.wx, 0, v.wz]} rotation={[0, v.rotY, 0]}>
               <Suspense fallback={<StaketReserv farg={farg} />}>
                 <ModellGren reserv={<StaketReserv farg={farg} />}>
-                  <KlonadScen url={fil} malhojd={0} fargHex={b.fargHex} passa={false} klickbar />
+                  <KlonadScen url={fil} malhojd={0} fargHex={farg} passa={false} klickbar />
                 </ModellGren>
               </Suspense>
             </group>
@@ -202,13 +246,14 @@ function StaketBit({ b, flyttar }: { b: SparatBygge; flyttar: boolean }) {
 function HusBit({ b, flyttar }: { b: SparatBygge; flyttar: boolean }) {
   const rad = byggRad(b.bygg);
   const hojd = rad?.malhojd ?? 1;
-  const farg = b.fargHex ?? rad?.farg ?? "#E57373";
+  const farg = b.fargHex ?? rad?.farg ?? "#D84315";
+  const skala = (rad as { skala?: number } | undefined)?.skala ?? 1;
+  const rotY = (rad as { rotY?: number } | undefined)?.rotY ?? 0;
   const slag = slagFor(rad?.reserv);
   const cell = xyTillCell(b.x, b.y);
   const { wx, wz } = cellTillVarld(cell.gx, cell.gz);
   const reserv = <ReservForm slag={slag} farg={farg} hojd={hojd} />;
   const storlekSkala = b.storlekId === "liten" ? 0.78 : b.storlekId === "stor" ? 1.28 : 1;
-  if (!rad?.fil) return null;
   return (
     <TryckYta
       uid={b.uid}
@@ -218,20 +263,35 @@ function HusBit({ b, flyttar }: { b: SparatBygge; flyttar: boolean }) {
       flyttar={flyttar}
     >
       <group position={[wx, 0, wz]} scale={storlekSkala}>
-        <Suspense fallback={reserv}>
-          <ModellGren reserv={reserv}>
-            <KlonadScen
-              url={rad.fil}
-              malhojd={hojd}
-              fargHex={b.fargHex}
-              takFargHex={takFargForBygge(b)}
-              fonsterAntal={fonsterAntalForBygge(b)}
-              uid={b.uid}
-              klickbar
-              passa
-            />
-          </ModellGren>
-        </Suspense>
+        <mesh position={[0, 0.012, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow raycast={() => undefined}>
+          <circleGeometry args={[0.74, 24]} />
+          <meshBasicMaterial color="#245832" transparent opacity={0.34} depthWrite={false} />
+        </mesh>
+        <mesh position={[0, 0.035, 0]} receiveShadow castShadow raycast={() => undefined}>
+          <cylinderGeometry args={[0.58, 0.64, 0.07, 24]} />
+          <meshStandardMaterial color="#E6C79C" roughness={0.85} metalness={0.02} />
+        </mesh>
+        <group position={[0, 0.06, 0]} rotation={[0, rotY, 0]}>
+          {rad?.fil ? (
+            <ModellGren reserv={reserv}>
+              <Suspense fallback={reserv}>
+                <KlonadScen
+                  url={rad.fil}
+                  malhojd={hojd}
+                  fargHex={farg}
+                  takFargHex={takFargForBygge(b)}
+                  fonsterAntal={fonsterAntalForBygge(b)}
+                  uid={b.uid}
+                  skala={skala}
+                  klickbar
+                  passa
+                />
+              </Suspense>
+            </ModellGren>
+          ) : (
+            reserv
+          )}
+        </group>
       </group>
     </TryckYta>
   );

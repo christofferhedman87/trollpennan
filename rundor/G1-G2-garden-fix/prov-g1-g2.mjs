@@ -241,7 +241,8 @@ async function korG2Statiska() {
 // ============================================================================
 async function korPlaywright() {
   const { chromium } = await import("playwright");
-  const { PNG } = await import("pngjs");
+  const { createRequire } = await import("node:module");
+  const { PNG } = createRequire(import.meta.url)(path.join(ROT, "node_modules/playwright-core/lib/utilsBundle.js"));
   fs.mkdirSync(utMapp, { recursive: true });
 
   const port = 4280 + Math.floor(Math.random() * 400);
