@@ -133,7 +133,10 @@ function Scen({
         zoom={48}
         near={-40}
         far={80}
-        onUpdate={(c) => c.lookAt(0, 0.15, 0.25)}
+        onUpdate={(c) => {
+          c.position.set(10, 12, 10);
+          c.lookAt(0, 0.15, 0.25);
+        }}
       />
       <ambientLight intensity={L.ambient.styrka} color={L.ambient.farg} />
       <hemisphereLight args={[L.hemi.himmel, L.hemi.mark, L.hemi.styrka]} />
@@ -156,29 +159,29 @@ function Scen({
         shadow-bias={-0.0004}
       />
       <directionalLight color={L.fyll.farg} position={[-4, 3, 2]} intensity={L.fyll.styrka} />
-      <Bounds fit clip margin={0.86} maxDuration={0}>
+      <Bounds fit clip observe margin={0.86} maxDuration={0.01}>
         <mesh visible={false} rotation={[-Math.PI / 2, 0, 0]}>
           <planeGeometry args={[GARD_BREDD * CELL_STORLEK, GARD_DJUP * CELL_STORLEK]} />
         </mesh>
-        <MarkPlan
-          garden={garden}
-          hagar={hagar}
-          kanter={kanter}
-          flyttarUid={flyttarUid}
-          onValj={(e) => {
-            if (!flyttarUid) return;
-            const b = garden.find((x) => x.uid === flyttarUid);
-            if (!b) return;
-            e.stopPropagation();
-            const cell = varldTillCell(e.point.x, e.point.z);
-            const pos = arKantBygge(b.bygg)
-              ? kantTillXy(varldTillKant(e.point.x, e.point.z))
-              : cellTillXy(cell.gx, cell.gz);
-            brygga.skicka({ typ: "byggd", uid: flyttarUid, x: pos.x, y: pos.y });
-            setFlyttarUid(null);
-          }}
-        />
       </Bounds>
+      <MarkPlan
+        garden={garden}
+        hagar={hagar}
+        kanter={kanter}
+        flyttarUid={flyttarUid}
+        onValj={(e) => {
+          if (!flyttarUid) return;
+          const b = garden.find((x) => x.uid === flyttarUid);
+          if (!b) return;
+          e.stopPropagation();
+          const cell = varldTillCell(e.point.x, e.point.z);
+          const pos = arKantBygge(b.bygg)
+            ? kantTillXy(varldTillKant(e.point.x, e.point.z))
+            : cellTillXy(cell.gx, cell.gz);
+          brygga.skicka({ typ: "byggd", uid: flyttarUid, x: pos.x, y: pos.y });
+          setFlyttarUid(null);
+        }}
+      />
       <Suspense fallback={null}>
         <DekorHobalar />
       </Suspense>
