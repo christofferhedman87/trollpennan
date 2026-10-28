@@ -279,7 +279,7 @@ export function Garden3D({ onValjPlats, onVagvisarePunkter }: { onValjPlats?: (i
       kanter,
       hagar,
       djur: Array.isArray(tidigare?.djur) ? tidigare.djur : [],
-      inramningAntal: tidigare?.inramningAntal ?? 33,
+      inramningAntal: tidigare?.inramningAntal ?? 20,
       calls: tidigare?.calls,
       tris: tidigare?.tris,
     };
