@@ -99,7 +99,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
               setLage("skriv");
               fyllExempel(e.target.value);
             }}
-            ref={(el) => el?.setAttribute("data-testid", "ord-input")}
+            ref={(el) => el?.setAttribute("data-testid", "ord-input")} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); vaknaNu(); } }}
           />
           {panel === "byggbok" ? (
             <button type="button" className="bygg-skriv-knapp" data-v7b="bygg-skriv-knapp" onClick={() => setLage(lage === "skriv" ? "kort" : "skriv")}>

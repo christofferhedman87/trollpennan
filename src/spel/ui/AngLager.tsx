@@ -73,7 +73,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
         <div className="ang-lager" ref={lagerRef}>
           <div className="natt" data-testid="natt" data-styrka={natt.toFixed(2)} />
           {varld === "gard" && !omrade ? (
-            <div className="lykta" data-testid="lykta" aria-hidden>
+            <div className="lykta" data-testid="lykta" hidden aria-hidden style={{ display: "none" }}>
               <span className="lykta-stolpe" />
               <span className="lykta-hus" />
               <span className="lykta-ljus" style={{ opacity: natt }} />

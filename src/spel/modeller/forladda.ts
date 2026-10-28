@@ -1,4 +1,10 @@
 import { useGLTF } from "@react-three/drei";
+import { MeshoptDecoder } from "three-stdlib";
+
+export const kopplaMeshopt = (loader: { setMeshoptDecoder?: (d: unknown) => void }) => {
+  const d = typeof MeshoptDecoder === "function" ? (MeshoptDecoder as () => unknown)() : MeshoptDecoder;
+  loader.setMeshoptDecoder?.(d);
+};
 
 const ko: string[] = [];
 const sedda = new Set<string>();
@@ -39,7 +45,7 @@ function steg(): void {
     try {
       const fn = laddare.get(url);
       if (fn) fn(url);
-      else useGLTF.preload(url);
+      else useGLTF.preload(url, false, true, kopplaMeshopt);
     } catch {
       /* tyst reserv */
     }

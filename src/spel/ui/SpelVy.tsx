@@ -150,8 +150,8 @@ export function SpelVy() {
         ) : null}
         {intro ? null : <HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} npc={bengtsson} />}
         <VyPlats plats="scen" onValjPlats={resa.startaResa} onVagvisarePunkter={resa.setVagvisarePunkter} />
-        <VagvisareHud punkter={resa.vagvisarePunkter} onValjPlats={resa.startaResa} dold={titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null || vyFlyg.aktiv} />
-        <VyFlygKnapp aktiv={vyFlyg.aktiv} onStarta={() => { setBokOpp(false); vyFlyg.startaVyFlygning(); }} dold={titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null} />
+        <VagvisareHud punkter={resa.vagvisarePunkter} onValjPlats={resa.startaResa} dold={varld === "gard" || titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null || vyFlyg.aktiv} />
+        <VyFlygKnapp aktiv={vyFlyg.aktiv} onStarta={() => { setBokOpp(false); vyFlyg.startaVyFlygning(); }} dold={varld === "gard" || titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null} />
         <DalFlygEtiketter synlig={vyFlyg.aktiv || introFlygAktiv} />
         <ResOvergangV09 mal={resa.mal} paHoppaOver={resa.hoppaOver} />
       </section>

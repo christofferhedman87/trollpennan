@@ -14,7 +14,7 @@ import { GardDjurLista } from "./GardDjur.tsx";
 import { Solkorn, VindGras } from "../ang/dekor.tsx";
 import { MarkPlan } from "./MarkPlan.tsx";
 import { useSagomiljo } from "../grafikKvalitet.ts";
-import { Vagvisare3D, VagvisareProjektor, type VagvisarePlatsId, type VagvisareSkarmPunkt } from "../ang/Vagvisare3D.tsx";
+import type { VagvisarePlatsId, VagvisareSkarmPunkt } from "../ang/Vagvisare3D.tsx";
 import { synkaTestSparning, varldTillNorm, type GardDjurSnap } from "./vandra.ts";
 import {
   CELL_STORLEK,
@@ -51,6 +51,8 @@ export type Gard3dDiag = {
     synligaFonsterNoder: string[];
     storlekId: "liten" | "stor" | null;
     formel: string;
+    reservAktiv?: boolean;
+    skarmBox?: { x: number; y: number; width: number; height: number };
   }[];
   kanter: KantPlats[];
   hagar: SlutenHage[];
@@ -112,16 +114,12 @@ function Scen({
   hagar,
   flyttarUid,
   setFlyttarUid,
-  onValjPlats,
-  onVagvisarePunkter,
 }: {
   garden: ReturnType<typeof useMinne.getState>["garden"];
   kanter: KantPlats[];
   hagar: SlutenHage[];
   flyttarUid: string | null;
   setFlyttarUid: (uid: string | null) => void;
-  onValjPlats?: (id: VagvisarePlatsId) => void;
-  onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void;
 }) {
   useSagomiljo(false);
   const L = MILJO.ljus;
@@ -135,11 +133,14 @@ function Scen({
         zoom={48}
         near={-40}
         far={80}
-        onUpdate={(c) => c.lookAt(0, 0, 0)}
+        onUpdate={(c) => {
+          c.position.set(10, 12, 10);
+          c.lookAt(0, 0.15, 0.25);
+        }}
       />
       <ambientLight intensity={L.ambient.styrka} color={L.ambient.farg} />
       <hemisphereLight args={[L.hemi.himmel, L.hemi.mark, L.hemi.styrka]} />
-      <hemisphereLight args={["#FFF8E1", "#7CB342", 0.65]} />
+      <hemisphereLight args={["#FFF8E1", "#7CB342", 0.38]} />
       <VindGras />
       <Solkorn />
       <directionalLight
@@ -158,7 +159,7 @@ function Scen({
         shadow-bias={-0.0004}
       />
       <directionalLight color={L.fyll.farg} position={[-4, 3, 2]} intensity={L.fyll.styrka} />
-      <Bounds fit clip observe margin={1.1} maxDuration={0}>
+      <Bounds fit clip observe margin={0.86} maxDuration={0.01}>
         <mesh visible={false} rotation={[-Math.PI / 2, 0, 0]}>
           <planeGeometry args={[GARD_BREDD * CELL_STORLEK, GARD_DJUP * CELL_STORLEK]} />
         </mesh>
@@ -189,14 +190,6 @@ function Scen({
       ))}
       <SolGard />
       <GardDjurLista garden={garden} hagar={hagar} kanter={kanter} />
-      {onValjPlats && onVagvisarePunkter ? (
-        <>
-          <VagvisareProjektor plats="garden" onPunkter={onVagvisarePunkter} />
-          <Suspense fallback={null}>
-            <Vagvisare3D plats="garden" onValjPlats={onValjPlats} />
-          </Suspense>
-        </>
-      ) : null}
     </>
   );
 }
@@ -249,13 +242,15 @@ export function Garden3D({ onValjPlats, onVagvisarePunkter }: { onValjPlats?: (i
   }, [garden, flyttarUid]);
 
   useEffect(() => {
-    const tidigare = window.__gard3d?.djur;
+    const tidigare = window.__gard3d;
+    const fore = tidigare?.byggen ?? [];
     window.__gard3d = {
       aktiv: true,
       celler: { bredd: GARD_BREDD, djup: GARD_DJUP },
       byggen: garden.map((b) => {
         const fonsterAntal = fonsterAntalForBygge(b);
         const takFargHex = takFargForBygge(b);
+        const gammal = fore.find((x) => x.uid === b.uid);
         return {
           uid: b.uid,
           bygg: b.bygg,
@@ -264,17 +259,19 @@ export function Garden3D({ onValjPlats, onVagvisarePunkter }: { onValjPlats?: (i
           modellFil: gard3dJson.byggnader[b.bygg as keyof typeof gard3dJson.byggnader]?.fil ?? null,
           fargHex: b.fargHex,
           takFargHex,
-          wallsColorHex: (b.fargHex ?? "#e53935").toLowerCase(),
-          roofColorHex: (takFargHex ?? b.fargHex ?? "#8d6e63").toLowerCase(),
+          wallsColorHex: gammal?.wallsColorHex ?? (b.fargHex ?? "#e53935").toLowerCase(),
+          roofColorHex: gammal?.roofColorHex ?? (takFargHex ?? b.fargHex ?? "#8d6e63").toLowerCase(),
           fonsterAntal,
-          synligaFonsterNoder: (["Window_1", "Window_2", "Window_3", "Window_Side"] as const).filter((_, i) => fonsterAntal >= i + 1),
+          synligaFonsterNoder: gammal?.synligaFonsterNoder ?? (["Window_1", "Window_2", "Window_3", "Window_Side"] as const).filter((_, i) => fonsterAntal >= i + 1),
           storlekId: b.storlekId ?? null,
           formel: b.formel,
+          reservAktiv: gammal?.reservAktiv,
+          skarmBox: gammal?.skarmBox,
         };
       }),
       kanter,
       hagar,
-      djur: Array.isArray(tidigare) ? tidigare : [],
+      djur: Array.isArray(tidigare?.djur) ? tidigare.djur : [],
     };
     return () => {
       const nu = window.__gard3d;
@@ -303,8 +300,6 @@ export function Garden3D({ onValjPlats, onVagvisarePunkter }: { onValjPlats?: (i
             hagar={hagar}
             flyttarUid={flyttarUid}
             setFlyttarUid={setFlyttarUid}
-            onValjPlats={onValjPlats}
-            onVagvisarePunkter={onVagvisarePunkter}
           />
         </Canvas>
       </WebbGren>
