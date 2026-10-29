@@ -1,4 +1,5 @@
 import { bestamdBygg, fargHexFor, type ByggeTolk } from "../tolk/byggtolk.ts";
+import type { ByggForm } from "../tolk/byggform.ts";
 
 export type ByggDelSpar = {
   id: string;
@@ -19,12 +20,15 @@ export type SparatBygge = {
   material: string | null;
   delar: ByggDelSpar[];
   storlekId?: "liten" | "stor" | null;
+  /** Block 2 (En värld): hur byggnaden ser ut ("som ser ut som ett slott") och vad den gör (flygande, lysande …). */
+  form?: ByggForm | null;
+  egenskaper?: string[];
   x: number;
   y: number;
   boende: string[];
 };
 
-export function franTolk(b: ByggeTolk, formel: string, x: number, y: number): SparatBygge {
+export function franTolk(b: ByggeTolk & { form?: ByggForm | null; egenskaper?: string[] }, formel: string, x: number, y: number): SparatBygge {
   const farg = b.adj.find((a) => a.klass === "farg");
   const monster = b.adj.find((a) => a.klass === "monster");
   const sid = b.adj.find((a) => a.klass === "storlek")?.id;
@@ -46,6 +50,8 @@ export function franTolk(b: ByggeTolk, formel: string, x: number, y: number): Sp
       material: d.material,
     })),
     storlekId,
+    form: b.form ?? null,
+    egenskaper: b.egenskaper ?? [],
     x,
     y,
     boende: [],

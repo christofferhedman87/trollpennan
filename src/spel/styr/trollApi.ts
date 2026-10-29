@@ -64,7 +64,7 @@ export function skapaTrollApi(k: SpelKarna) {
           text: textRef.current,
           stjarnor: s.stjarnor,
           onskan: s.onskan,
-          garden: s.garden.map((g) => ({ uid: g.uid, formel: g.formel, bygg: g.bygg, x: g.x, y: g.y, boende: g.boende, delar: g.delar })),
+          garden: s.garden.map((g) => ({ uid: g.uid, formel: g.formel, bygg: g.bygg, x: g.x, y: g.y, boende: g.boende, delar: g.delar, form: g.form ?? null, egenskaper: g.egenskaper ?? [] })),
           lada: s.lada.map((g) => g.formel),
           hemma: s.hemma.map((h) => ({ formel: h.spec.formel, hem: h.hem })),
           koptaSidor: s.koptaSidor,

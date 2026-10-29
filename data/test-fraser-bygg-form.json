@@ -1,0 +1,883 @@
+{
+ "_om": "Block 2 (En värld): byggformeln – funktion + form + egenskaper (src/tolk/byggform.ts). Varje rad: barnets mening, formeln spelet visar och vad varje bygge blir. form = slag:id (bygg = byggord, djur/sak = entitet). Granskad för hand 2026-10-29.",
+ "fraser": [
+  {
+   "fras": "ett stall som ser ut som ett slott",
+   "formel": "ett stall som ser ut som ett slott",
+   "byggen": [
+    {
+     "bygg": "stall",
+     "form": "bygg:slott",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett slottsstall",
+   "formel": "ett slottsstall",
+   "byggen": [
+    {
+     "bygg": "stall",
+     "form": "bygg:slott",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en lada formad som en ko",
+   "formel": "en lada som ser ut som en ko",
+   "byggen": [
+    {
+     "bygg": "lada",
+     "form": "djur:ko",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett flygande hus av moln med två torn",
+   "formel": "ett flygande hus av moln med två torn",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [
+      "flygande"
+     ],
+     "material": "moln",
+     "delar": {
+      "torn": 2
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett hus som kan flyga",
+   "formel": "ett flygande hus",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [
+      "flygande"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus som är upp och ner",
+   "formel": "ett hus upp och ner",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [
+      "upp_och_ner"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett rosa stall som ser ut som ett slott med tre torn",
+   "formel": "ett rosa stall som ser ut som ett slott med tre torn",
+   "byggen": [
+    {
+     "bygg": "stall",
+     "form": "bygg:slott",
+     "egenskaper": [],
+     "material": null,
+     "delar": {
+      "torn": 3
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett svamphus",
+   "formel": "ett svamphus",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "bygg:svamp",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett kohus",
+   "formel": "ett kohus",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "djur:ko",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett drakslott",
+   "formel": "ett drakslott",
+   "byggen": [
+    {
+     "bygg": "slott",
+     "form": "djur:drake",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus som ser ut som ett äpple",
+   "formel": "ett hus som ser ut som ett äpple",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "sak:apple",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "två hus som ser ut som svampar",
+   "formel": "två hus som ser ut som svampar",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "bygg:svamp",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett stall som ser ut som ett slott och ett hus som ser ut som en svamp",
+   "formel": "ett stall som ser ut som ett slott och ett hus som ser ut som en svamp",
+   "byggen": [
+    {
+     "bygg": "stall",
+     "form": "bygg:slott",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    },
+    {
+     "bygg": "hus",
+     "form": "bygg:svamp",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus med vingar",
+   "formel": "ett hus med vingar",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [],
+     "material": null,
+     "delar": {
+      "vingar": 2
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett mysigt hus med en skorsten",
+   "formel": "ett mysigt hus med en skorsten",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [
+      "mysig"
+     ],
+     "material": null,
+     "delar": {
+      "skorsten": 1
+     }
+    }
+   ]
+  },
+  {
+   "fras": "en hage",
+   "formel": "en hage",
+   "byggen": [
+    {
+     "bygg": "hage",
+     "form": null,
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hönshus med hjul",
+   "formel": "ett hönshus med hjul",
+   "byggen": [
+    {
+     "bygg": "hönshus",
+     "form": null,
+     "egenskaper": [],
+     "material": null,
+     "delar": {
+      "hjul": 2
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett hus som är rosa och glittrigt",
+   "formel": "ett rosa glittrigt hus",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en magisk väderkvarn",
+   "formel": "en magisk väderkvarn",
+   "byggen": [
+    {
+     "bygg": "väderkvarn",
+     "form": null,
+     "egenskaper": [
+      "magisk"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett stall som liknar en stor rosa gris",
+   "formel": "ett stort rosa stall som ser ut som en gris",
+   "byggen": [
+    {
+     "bygg": "stall",
+     "form": "djur:gris",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus i form av en tekanna",
+   "formel": "ett hus som ser ut som en tekanna",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "sak:tekanna",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "tre lysande torn",
+   "formel": "tre lysande torn",
+   "byggen": [
+    {
+     "bygg": "torn",
+     "form": null,
+     "egenskaper": [
+      "lysande"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus som dansar",
+   "formel": "ett dansande hus",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [
+      "dansande"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en lada",
+   "formel": "en lada",
+   "byggen": [
+    {
+     "bygg": "lada",
+     "form": null,
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hönshus",
+   "formel": "ett hönshus",
+   "byggen": [
+    {
+     "bygg": "hönshus",
+     "form": null,
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en väderkvarn som snurrar",
+   "formel": "en snurrande väderkvarn",
+   "byggen": [
+    {
+     "bygg": "väderkvarn",
+     "form": null,
+     "egenskaper": [
+      "snurrande"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en hage med en flagga",
+   "formel": "en hage med en flagga",
+   "byggen": [
+    {
+     "bygg": "hage",
+     "form": null,
+     "egenskaper": [],
+     "material": null,
+     "delar": {
+      "flagga": 1
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett hus med två balkonger och en trappa",
+   "formel": "ett hus med två balkonger och en trappa",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [],
+     "material": null,
+     "delar": {
+      "balkong": 2,
+      "trappa": 1
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett slott med tre kupoler",
+   "formel": "ett slott med tre kupoler",
+   "byggen": [
+    {
+     "bygg": "slott",
+     "form": null,
+     "egenskaper": [],
+     "material": null,
+     "delar": {
+      "kupol": 3
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett hus som ser ut som en drake",
+   "formel": "ett hus som ser ut som en drake",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "djur:drake",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett stall som ser ut som en häst",
+   "formel": "ett stall som ser ut som en häst",
+   "byggen": [
+    {
+     "bygg": "stall",
+     "form": "djur:häst",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus som ser ut som en banan",
+   "formel": "ett hus som ser ut som en banan",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "sak:banan",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus som ser ut som ett slott med fyra torn av godis",
+   "formel": "ett hus som ser ut som ett slott med fyra torn av godis",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "bygg:slott",
+     "egenskaper": [],
+     "material": null,
+     "delar": {
+      "torn": 4
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett varmt hus",
+   "formel": "ett varmt hus",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [
+      "varm"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett varmt hus åt kaninerna",
+   "formel": "ett varmt hus",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [
+      "varm"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en flygande lada med vingar",
+   "formel": "en flygande lada med vingar",
+   "byggen": [
+    {
+     "bygg": "lada",
+     "form": null,
+     "egenskaper": [
+      "flygande"
+     ],
+     "material": null,
+     "delar": {
+      "vingar": 2
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett glittrigt slott som kan flyga",
+   "formel": "ett flygande glittrigt slott",
+   "byggen": [
+    {
+     "bygg": "slott",
+     "form": null,
+     "egenskaper": [
+      "flygande"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett stort rött stall med två fönster",
+   "formel": "ett stort rött stall med två fönster",
+   "byggen": [
+    {
+     "bygg": "stall",
+     "form": null,
+     "egenskaper": [],
+     "material": null,
+     "delar": {
+      "fönster": 2
+     }
+    }
+   ]
+  },
+  {
+   "fras": "ett blått hus som ser ut som en fisk",
+   "formel": "ett blått hus som ser ut som en fisk",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "djur:fisk",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en sjungande fontän",
+   "formel": "en sjungande fontän",
+   "byggen": [
+    {
+     "bygg": "fontän",
+     "form": null,
+     "egenskaper": [
+      "sjungande"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett lysande slott av is",
+   "formel": "ett lysande slott av is",
+   "byggen": [
+    {
+     "bygg": "slott",
+     "form": null,
+     "egenskaper": [
+      "lysande"
+     ],
+     "material": "is",
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus som lyser",
+   "formel": "ett lysande hus",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [
+      "lysande"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett dansande hus med hjul",
+   "formel": "ett dansande hus med hjul",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [
+      "dansande"
+     ],
+     "material": null,
+     "delar": {
+      "hjul": 2
+     }
+    }
+   ]
+  },
+  {
+   "fras": "två flygande hus",
+   "formel": "två flygande hus",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [
+      "flygande"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en lada som är formad som en gris",
+   "formel": "en lada som ser ut som en gris",
+   "byggen": [
+    {
+     "bygg": "lada",
+     "form": "djur:gris",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus format som ett hjärta",
+   "formel": "ett hus som ser ut som ett hjärta",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "sak:hjarta",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus som ser ut som en sko",
+   "formel": "ett hus som ser ut som en sko",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "sak:sko",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus som ser ut som en båt",
+   "formel": "ett hus som ser ut som en båt",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "sak:bat",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett svampslott",
+   "formel": "ett svampslott",
+   "byggen": [
+    {
+     "bygg": "slott",
+     "form": "bygg:svamp",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett kattslott",
+   "formel": "ett kattslott",
+   "byggen": [
+    {
+     "bygg": "slott",
+     "form": "djur:katt",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett äpplehus",
+   "formel": "ett äpplehus",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "sak:apple",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hönshus som ser ut som ett ägg",
+   "formel": "ett hönshus som ser ut som ett ägg",
+   "byggen": [
+    {
+     "bygg": "hönshus",
+     "form": "sak:agg",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett torn som ser ut som en raket",
+   "formel": "ett torn som ser ut som en raket",
+   "byggen": [
+    {
+     "bygg": "torn",
+     "form": "sak:raket",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett tält som ser ut som en glass",
+   "formel": "ett tält som ser ut som en glass",
+   "byggen": [
+    {
+     "bygg": "tält",
+     "form": "sak:glass",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus av choklad som ser ut som en tårta",
+   "formel": "ett hus av choklad som ser ut som en tårta",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": "sak:tarta",
+     "egenskaper": [],
+     "material": "choklad",
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett pepparkakshus med tre fönster",
+   "formel": "ett pepparkakshus med tre fönster",
+   "byggen": [
+    {
+     "bygg": "pepparkakshus",
+     "form": null,
+     "egenskaper": [],
+     "material": null,
+     "delar": {
+      "fönster": 3
+     }
+    }
+   ]
+  },
+  {
+   "fras": "en magisk hage",
+   "formel": "en magisk hage",
+   "byggen": [
+    {
+     "bygg": "hage",
+     "form": null,
+     "egenskaper": [
+      "magisk"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett hus som är jättestort",
+   "formel": "ett jättestort hus",
+   "byggen": [
+    {
+     "bygg": "hus",
+     "form": null,
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en koja som ser ut som en båt",
+   "formel": "en koja som ser ut som en båt",
+   "byggen": [
+    {
+     "bygg": "koja",
+     "form": "sak:bat",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "ett trädhus som kan flyga",
+   "formel": "ett flygande trädhus",
+   "byggen": [
+    {
+     "bygg": "trädhus",
+     "form": null,
+     "egenskaper": [
+      "flygande"
+     ],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en rosa hage formad som ett hjärta",
+   "formel": "en rosa hage som ser ut som ett hjärta",
+   "byggen": [
+    {
+     "bygg": "hage",
+     "form": "sak:hjarta",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  },
+  {
+   "fras": "en gunga som ser ut som en drake",
+   "formel": "en gunga som ser ut som en drake",
+   "byggen": [
+    {
+     "bygg": "gunga",
+     "form": "djur:drake",
+     "egenskaper": [],
+     "material": null,
+     "delar": {}
+    }
+   ]
+  }
+ ]
+}

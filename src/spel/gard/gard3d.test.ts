@@ -50,8 +50,8 @@ function ring(gx: number, gz: number): KantPlats[] {
   ];
 }
 
-test("alla 36 byggord finns i gard-3d och filer samt CC0-id stämmer", () => {
-  assert.equal(byggData.bygg_ord.length, 36);
+test("alla 40 byggord finns i gard-3d och filer samt CC0-id stämmer", () => {
+  assert.equal(byggData.bygg_ord.length, 40);
   assert.equal(GARD_BREDD, 6);
   assert.equal(GARD_DJUP, 10);
   assert.equal(CELL_STORLEK, 1);
