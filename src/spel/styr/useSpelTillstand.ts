@@ -36,7 +36,8 @@ export function useSpelTillstand() {
   const [senare, setSenare] = useState(false);
   const [varld, setVarld] = useState<Varld>("ang");
   const [panel, setPanel] = useState<"spel" | "byggbok" | "uppdrag">("spel");
-  const [meny, setMeny] = useState<{ uid: string; x: number; y: number } | null>(null);
+  /** `t` = när menyn öppnades (performance.now), så att klicket från fingret som öppnade den kan sväljas. */
+  const [meny, setMeny] = useState<{ uid: string; x: number; y: number; t?: number } | null>(null);
   const [boUid, setBoUid] = useState<string | null>(null);
   const [ladaOpp, setLadaOpp] = useState(false);
   const [byggSidaId, setByggSidaId] = useState("start");

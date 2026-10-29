@@ -178,6 +178,10 @@ export function TryckYta({
   };
   return (
     <group
+      // Block 3: klicket efter ett tryck får inte falla igenom till det som står bakom bygget i bilden.
+      onClick={(e) => {
+        if (!flyttar) e.stopPropagation();
+      }}
       onPointerDown={(e) => {
         if (flyttar) return;
         e.stopPropagation();

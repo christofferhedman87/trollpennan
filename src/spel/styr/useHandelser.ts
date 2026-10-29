@@ -89,7 +89,7 @@ export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
     }
     if (h.typ === "byggLang") {
       ljud.boing();
-      setMeny({ uid: h.uid, x: h.x, y: h.y });
+      setMeny({ uid: h.uid, x: h.x, y: h.y, t: performance.now() });
       setBoUid(null);
       return;
     }

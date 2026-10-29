@@ -13,7 +13,7 @@ const ingen = () => undefined;
 
 function Toon({ farg, ...rest }: { farg: string; children: React.ReactNode; position?: [number, number, number]; rotation?: [number, number, number]; scale?: number | [number, number, number] }) {
   return (
-    <mesh castShadow raycast={ingen} {...rest}>
+    <mesh raycast={ingen} {...rest}>
       {rest.children}
       <meshToonMaterial color={farg} gradientMap={TOON_MAP} />
     </mesh>

@@ -7,7 +7,7 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 | 0 Grund och verktyg | Klar | #250, #251 | Planen, statusfilen, besluten, baslinjen och skills (Modellspanaren och Trollpennan-runda) är föreslagna |
 | 1 En dal | Klar | se git-logg | `src/spel/dal/` (Hemdalen, tomter, DalKamera, byggVal). 16 tomter runt ängen (`data/dalen.json`). Gårdens byggen står på tomterna, och äldre sparfiler får lediga tomter automatiskt. Ett finger panorerar och två zoomar. Kameran glider till nya byggen. Tryck på en ledig tomt så hamnar nästa bygge där. Flytta via byggmenyn genom att trycka på en tomt. Gården som resmål (stig, skylt och flygetikett) är borttagen, och "Gården" i meny och karta leder till tomterna. Djur som flyttat in syns på ängen tills block 4 |
 | 2 Byggformeln | Klar | se git-logg | `src/tolk/byggform.ts`, 62 formfraser i `data/test-fraser-bygg-form.json`, 4 nya byggord (lada, hönshus, hage, väderkvarn), 5 nya delar (vingar, hjul, kupol, balkong, trappa) och 9 egenskaper. Kopplad till skapandet. Form och egenskaper sparas på bygget (`SparatBygge.form/egenskaper`) men ritas först i block 3. Ordlåset är borttaget (beslut B) |
-| 3 Formsystemet | Ej påbörjad | – | Kräver block 2 |
+| 3 Formsystemet | Klar | se git-logg | `src/spel/dal/` (ritplan, Stomme, Byggdelar, Byggverk). Formen blir stomme: byggord, djur (även riggade Quaternius-djur med SkeletonUtils och alfa-rättning) eller sak. Dörr, fönster och hö sätts på former. Delarna torn, flagga, kupol, skorsten, vingar, hjul, balkong och trappa är moduler. Material (is, glas, godis, moln, kristall, guld …) blir skal. Egenskaperna svävar, dansar, snurrar, upp och ner, gnistor, noter, rök och lyser. Nya byggen får en byggstuds. Byggmenyns släppklick sväljs. Tomterna ritas instansierat. 12 byggen + djur = 136 ritanrop |
 | 4 Byggnaderna lever | Ej påbörjad | – | |
 | 5 Bygga i världen | Ej påbörjad | – | Kräver block 1 |
 | 6 Modellskörd | Ej påbörjad | – | Christoffer skapar Poly Pizza-nyckel (beslut C). Börja med GitHub, Quaternius, OpenGameArt och KayKit |
@@ -16,8 +16,10 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 | 9 Städning | Ej påbörjad | – | |
 
 ## Nästa steg
-1. Block 3: formsystemet. Formen (`SparatBygge.form`) ska ritas som stomme (byggord → gard-3d-modell, djur/sak → entitetens modell). Dörren läggs alltid på framsidan, delarna (torn, flagga, kupol, vingar, hjul …) blir moduler, och material och egenskaper blir skal och rörelser. Lägg det i `src/spel/dal/` och ersätt `ByggeModell` på tomterna.
-2. Kvar från block 1: boken öppnas i ordkortsläge när man trycker på en tomt (borde vara skrivläge eller byggordkort, block 5). Gamla `Garden3D` tas bort i block 9.
+1. Block 5: bygga i världen. Ta fram byggordkort i Pennans bok (byggord, former, material, delar och egenskaper som kort, så att barnet kan bygga utan att stava), öppna boken i byggläge när man trycker på en tomt, och lägg kameran närmare vid fokus på bakre tomter (främre byggen skymmer dem idag).
+2. Block 4: djuren går hem till sitt bygge på kvällen (`hemma` ritas idag på ängen).
+3. Block 6: modellskörd. Börja med GitHub-källorna (Kenney starter kits) och Quaternius.
+4. Kvar: staket, mur och port ritas fortfarande som inhägnad med gamla ByggeModell. Gamla `Garden3D` tas bort i block 9.
 
 ## Baslinje (2026-10-29, live `34490f7`, 375×812, tom äng efter introt)
 - 109 draw calls och 34 354 trianglar. Det är redan över W1:s riktmärke på ≤95 draw calls (stigar, skyltar och horisontmodeller). Block 1 och 3 behöver instansiering och sammanslagna geometrier för att hålla budgeten. Ny budget för en full dal (15 byggen och 20 djur): ≤140 draw calls och ≤150 000 trianglar. Bildtakten går inte att mäta i molnmiljön (programvarurendering).

@@ -16,7 +16,23 @@ const STL = new THREE.Vector3();
 type FargMat = THREE.Material & { color?: THREE.Color; emissive?: THREE.Color; emissiveIntensity?: number; roughness?: number; metalness?: number; flatShading?: boolean };
 
 /** Materialets skal på vilken modell som helst. Godis får randiga pastellfärger, kristall och is glimmar. */
+/** Quaternius-djur har alphaMode MASK med färgens alfa 0 (vertexfärger bär färgen): utan rättning klipps allt bort. */
+function synligaMaterial(rot: THREE.Object3D): void {
+  rot.traverse((o) => {
+    if (!(o instanceof THREE.Mesh)) return;
+    for (const m of (Array.isArray(o.material) ? o.material : [o.material]) as THREE.Material[]) {
+      if (m.opacity < 0.05) {
+        m.opacity = 1;
+        m.alphaTest = 0;
+        m.transparent = false;
+        m.needsUpdate = true;
+      }
+    }
+  });
+}
+
 function skal(rot: THREE.Object3D, plan: Ritplan): void {
+  synligaMaterial(rot);
   const mat = plan.material;
   const lysande = plan.egenskaper.has("lysande") || plan.egenskaper.has("magisk");
   if (!mat && !lysande) return;
@@ -55,7 +71,7 @@ function skal(rot: THREE.Object3D, plan: Ritplan): void {
 }
 
 /** Former (djur, saker) står med framsidan mot kameran och är ofta långa bakåt: bredden och höjden styr storleken,
- *  djupet får vara lite större. Riggade djur mäts exakt (precise), annars blir rutan bindningsposens. */
+ *  djupet får vara lite större (som djuren i gltfDjur mäts de med Box3 utan precise). */
 function uppdateraSkelett(g: THREE.Object3D): void {
   g.updateMatrixWorld(true);
   g.traverse((o) => {
@@ -70,19 +86,21 @@ function passaForm(g: THREE.Object3D, plan: Ritplan & { url: string }): void {
   uppdateraSkelett(g);
   let riggad = false;
   g.traverse((o) => {
-    if ((o as THREE.SkinnedMesh).isSkinnedMesh) riggad = true;
+    if (!(o as THREE.SkinnedMesh).isSkinnedMesh) return;
+    riggad = true;
+    // Som gltfDjur: riggade kroppars avgränsning räknas från bindningsposen och kan klippas bort i bild.
+    o.frustumCulled = false;
   });
-  BOX.setFromObject(g, true);
+  BOX.setFromObject(g);
   if (BOX.isEmpty()) return;
   BOX.getSize(STL);
-  if (typeof window !== "undefined") ((window as unknown as { __formMatt?: Record<string, number[]> }).__formMatt ??= {})[plan.url] = [STL.x, STL.y, STL.z];
   // Riggade djur (Quaternius) har ett djup i rutan som inte syns (benens bindningspose): bara bredd och höjd styr,
   // och modellens egen origo (mellan fötterna) står mitt på tomten.
   const djup = riggad ? Infinity : (plan.maxBredd * 1.25) / Math.max(STL.z, 1e-4);
   const s = Math.min(plan.malhojd / Math.max(STL.y, 1e-4), plan.maxBredd / Math.max(STL.x, 1e-4), djup);
   g.scale.setScalar(s);
   uppdateraSkelett(g);
-  BOX.setFromObject(g, true);
+  BOX.setFromObject(g);
   g.position.set(-(BOX.min.x + BOX.max.x) / 2, -BOX.min.y, riggad ? 0 : -(BOX.min.z + BOX.max.z) / 2);
   uppdateraSkelett(g);
 }
@@ -101,8 +119,12 @@ export function Stomme({ plan, onMatt }: { plan: Ritplan & { url: string }; onMa
     egnaMaterial(k, plan.farg ?? (plan.arForm ? null : plan.standardFarg), plan.takFarg, plan.arForm ? 0 : (plan.fonster ?? 3));
     skal(k, plan);
     skuggaUtanTraff(k, true);
+    // Byggena kastar ingen skugga i skuggpasset (det dubblar ritanropen); den mjuka skuggfläcken under tomten räcker.
+    k.traverse((o) => {
+      o.castShadow = false;
+    });
     uppdateraSkelett(g);
-    BOX.setFromObject(g, plan.arForm);
+    BOX.setFromObject(g);
     BOX.getSize(STL);
     // Formens djup räknas högst som dess bredd, så att dörren sitter på kroppen och inte långt framför den.
     const djup = plan.arForm ? Math.min(STL.z, Math.max(STL.x, 0.8)) : STL.z;
