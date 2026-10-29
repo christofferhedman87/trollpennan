@@ -77,7 +77,7 @@ function VagvisareLager({ plats, onValj, onPunkter }: { plats: VagvisarePlatsId;
   );
 }
 
-function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisarePunkter, vyFlygAktiv = false, resaMal = null }: { natt: number; onSnart: () => void; saga: boolean; aktivPlats?: VagvisarePlatsId; onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void; vyFlygAktiv?: boolean; resaMal?: VagvisarePlatsId | null }) {
+function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisarePunkter, vyFlygAktiv = false, resaMal = null, dalEtiketter = false }: { natt: number; onSnart: () => void; saga: boolean; aktivPlats?: VagvisarePlatsId; onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void; vyFlygAktiv?: boolean; resaMal?: VagvisarePlatsId | null; dalEtiketter?: boolean }) {
   useSagomiljo(natt > 0.55);
   useEffect(() => {
     if (saga) {
@@ -169,7 +169,7 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
           <KenneyNatur />
         </Suspense>
       </NaturGren>
-      <VarldsIntegrationV09 introAktiv={saga} vyFlygAktiv={vyFlygAktiv} resaMal={resaMal} plats={aktivPlats} onValjPlats={onValjPlats} onPunkter={onVagvisarePunkter} />
+      <VarldsIntegrationV09 introAktiv={saga} vyFlygAktiv={vyFlygAktiv} resaMal={resaMal} plats={aktivPlats} onValjPlats={onValjPlats} onPunkter={onVagvisarePunkter} dalEtiketter={dalEtiketter} />
       {!saga ? (
         <Suspense fallback={null}>
           <Bengtsson3D />
@@ -225,7 +225,7 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
   );
 }
 
-export function Angen3D({ natt, saga = false, onGrind, aktivPlats = "ang", onValjPlats, onVagvisarePunkter, vyFlygAktiv = false, resaMal = null }: { natt: number; saga?: boolean; onGrind?: () => boolean; aktivPlats?: VagvisarePlatsId; onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void; vyFlygAktiv?: boolean; resaMal?: VagvisarePlatsId | null }) {
+export function Angen3D({ natt, saga = false, onGrind, aktivPlats = "ang", onValjPlats, onVagvisarePunkter, vyFlygAktiv = false, resaMal = null, dalEtiketter = false }: { natt: number; saga?: boolean; onGrind?: () => boolean; aktivPlats?: VagvisarePlatsId; onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void; vyFlygAktiv?: boolean; resaMal?: VagvisarePlatsId | null; dalEtiketter?: boolean }) {
   const djur = useMinne((s) => s.ang);
   const garden = useMinne((s) => s.garden);
   const interagerat = useMinne((s) => s.dragit);
@@ -335,7 +335,7 @@ export function Angen3D({ natt, saga = false, onGrind, aktivPlats = "ang", onVal
         >
           <PerformanceMonitor onDecline={() => setDpr(1)} onIncline={() => setDpr([1, KV.dpr_max])}>
             <Bvh firstHitOnly>
-              <Scen natt={natt} onSnart={onSnart} saga={saga} aktivPlats={aktivPlats} onValjPlats={onValjPlats} onVagvisarePunkter={onVagvisarePunkter} vyFlygAktiv={vyFlygAktiv} resaMal={resaMal} />
+              <Scen natt={natt} onSnart={onSnart} saga={saga} aktivPlats={aktivPlats} onValjPlats={onValjPlats} onVagvisarePunkter={onVagvisarePunkter} vyFlygAktiv={vyFlygAktiv} resaMal={resaMal} dalEtiketter={dalEtiketter} />
             </Bvh>
           </PerformanceMonitor>
           <IdPass />
