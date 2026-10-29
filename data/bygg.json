@@ -965,6 +965,160 @@
     "flagga"
    ],
    "ritning": "Hög kvarn med fyra vingar som snurrar i vinden."
+  },
+  {
+   "id": "kyrka",
+   "genus": "en",
+   "former": [
+    "kyrka",
+    "kyrkan",
+    "kyrkor",
+    "kyrkorna"
+   ],
+   "typ": "byggnad",
+   "sida": "saga",
+   "hem": null,
+   "standardfarg": "#ECEFF1",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "torn",
+    "flagga"
+   ],
+   "ritning": "Kyrka med högt torn och klocka."
+  },
+  {
+   "id": "smedja",
+   "genus": "en",
+   "former": [
+    "smedja",
+    "smedjan",
+    "smedjor",
+    "smedjorna"
+   ],
+   "typ": "byggnad",
+   "sida": "saga",
+   "hem": null,
+   "standardfarg": "#8D6E63",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "torn",
+    "flagga"
+   ],
+   "ritning": "Smedja med städ och rykande ässja."
+  },
+  {
+   "id": "marknad",
+   "genus": "en",
+   "former": [
+    "marknad",
+    "marknaden",
+    "marknader",
+    "marknaderna"
+   ],
+   "typ": "byggnad",
+   "sida": "saga",
+   "hem": null,
+   "standardfarg": "#FFCC80",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "torn",
+    "flagga"
+   ],
+   "ritning": "Marknadsstånd med randiga tak."
+  },
+  {
+   "id": "värdshus",
+   "genus": "ett",
+   "former": [
+    "värdshus",
+    "värdshuset",
+    "värdshus",
+    "värdshusen"
+   ],
+   "typ": "byggnad",
+   "sida": "saga",
+   "hem": null,
+   "standardfarg": "#BCAAA4",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "torn",
+    "flagga"
+   ],
+   "ritning": "Mysigt värdshus med skylt."
+  },
+  {
+   "id": "gruva",
+   "genus": "en",
+   "former": [
+    "gruva",
+    "gruvan",
+    "gruvor",
+    "gruvorna"
+   ],
+   "typ": "byggnad",
+   "sida": "saga",
+   "hem": null,
+   "standardfarg": "#795548",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "torn",
+    "flagga"
+   ],
+   "ritning": "Gruvingång i en kulle med räls."
+  },
+  {
+   "id": "vattenkvarn",
+   "genus": "en",
+   "former": [
+    "vattenkvarn",
+    "vattenkvarnen",
+    "vattenkvarnar",
+    "vattenkvarnarna"
+   ],
+   "typ": "byggnad",
+   "sida": "saga",
+   "hem": null,
+   "standardfarg": "#A1887F",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "torn",
+    "flagga"
+   ],
+   "ritning": "Kvarn med ett stort hjul som snurrar i vattnet."
+  },
+  {
+   "id": "sågverk",
+   "genus": "ett",
+   "former": [
+    "sågverk",
+    "sågverket",
+    "sågverk",
+    "sågverken"
+   ],
+   "typ": "byggnad",
+   "sida": "saga",
+   "hem": null,
+   "standardfarg": "#A1887F",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "torn",
+    "flagga"
+   ],
+   "ritning": "Sågverk med stockar och en stor såg."
   }
  ],
  "delar": [

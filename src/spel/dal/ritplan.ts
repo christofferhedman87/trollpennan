@@ -30,6 +30,8 @@ export type Ritplan = {
   reserv: ReservSlag;
   farg: string | null;
   standardFarg: string;
+  /** Modellen har egna färger (KayKit): färgas bara om barnet nämner en färg. */
+  egenFarg: boolean;
   takFarg: string | null;
   fonster: number | null;
   /** Formen är inget hus (djur, sak eller svamp …): dörr och fönster läggs på framsidan så att man ser att man kan bo där. */
@@ -91,6 +93,7 @@ export function ritplan(b: SparatBygge): Ritplan {
     reserv,
     farg: b.fargHex ?? null,
     standardFarg: (form?.slag === "bygg" ? byggRad(form.id)?.farg : undefined) ?? bas?.farg ?? ord?.standardfarg ?? BYGGDATA.farger.torntak,
+    egenFarg: Boolean(((form?.slag === "bygg" ? byggRad(form.id) : bas) as { egenFarg?: boolean } | undefined)?.egenFarg),
     takFarg: b.delar.find((d) => d.id === "tak")?.fargHex ?? null,
     fonster: fon ? fon.antal : null,
     arForm,

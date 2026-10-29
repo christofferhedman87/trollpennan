@@ -35,6 +35,7 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | kaykit-furniture-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/furniture-bits | 11 |
 | kaykit-halloween-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/halloween-bits | 5 |
 | kaykit-holiday-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/holiday-bits | 12 |
+| kaykit-medieval-hexagon | Kay Lousberg | CC0-1.0 | https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0 | 14 |
 | kaykit-resource-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/resource-bits | 11 |
 | kaykit-restaurant-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/restaurant-bits | 17 |
 | kaykit-rpg-tools-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/rpg-tools-bits | 25 |
