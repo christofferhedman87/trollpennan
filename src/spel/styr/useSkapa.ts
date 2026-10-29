@@ -5,7 +5,7 @@ import { brygga, type Sparad } from "../brygga.ts"; import { bestamdHem, franTol
 import { fyll } from "../fyll.ts"; import { ALBUM, arSammansatt, BYGG_ORD, geEgenGava, komIhagDjur, noteraSkriv, poangAv, taggarFor } from "../liv.ts"; import { ljud } from "../ljud.ts"; import { useMinne } from "../minne.ts";
 import { arVarmePlagg, hjalpDjurPaAngen, mossaPaFrysKanin } from "./mossaKanin.ts"; import { byggTraff, geTraff, kompisTraff, laggPa, nastanRad, ONSK, ONSK_BYGG, tillaggFras } from "../onska.ts"; import { replik } from "../replik.ts"; import * as rostKo from "../rostKo.ts";
 import { forsokDopaText } from "../ui/gavoRuta.ts"; import { mataVaktardjur } from "../ang/vaktardjur.tsx"; import { noteraSolGava, noteraSolSkapelse } from "../solstjarna.ts";
-import { TEXTER } from "../ui/spelData.ts"; import { dalStyr } from "../dal/dalStyr.ts"; import { ledigTomt, tomtKarta, TOMTER } from "../dal/tomter.ts"; import { byggaPaAngen } from "../dal/byggVal.ts"; import type { SpelKarna } from "./typer.ts";
+import { TEXTER } from "../ui/spelData.ts"; import { dalStyr } from "../dal/dalStyr.ts"; import { DALEN, ledigTomt, tomtKarta, TOMTER } from "../dal/tomter.ts"; import { byggaPaAngen } from "../dal/byggVal.ts"; import type { SpelKarna } from "./typer.ts";
 
 function laggEllerVarma(v: Varelse, antal: number): { nya: Sparad[]; somnade: Sparad[] } { const s = useMinne.getState(); const aktId = aktivtSkrivUppdrag(s.uppdrag, platsNu())?.id; const varm = mossaPaFrysKanin(v);
   const hatt = varm?.spec.tillbehor.some((t) => arVarmePlagg(t.id)); const hjalp = varm && hatt ? varm : hjalpDjurPaAngen(v, aktId); if (!hjalp) return s.laggPaAng(v, antal); const upp = s.uppdateraDjur(hjalp.uid, hjalp.spec);
@@ -24,7 +24,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
     dalStyr.valj(null);
   }
   function fokusPaBygge(uid: string) {
-    const t = tomtKarta(useMinne.getState().garden).get(uid); const p = t == null ? undefined : TOMTER[t]; if (p) dalStyr.fokusera(p.x, p.z);
+    const t = tomtKarta(useMinne.getState().garden).get(uid); const p = t == null ? undefined : TOMTER[t]; if (p) dalStyr.fokusera(p.x, p.z, p.z < -1 ? DALEN.kamera.vy_bak : DALEN.kamera.vy_fram);
   }
   function hanteraBygg(utfall: Extract<ByggFormUtfall, { typ: "bygge" }>, mening = "") { useMinne.getState().sparaOkanda(utfall.okanda); rostKo.handling(); rensaVidHandling(); // Beslut B (2026-10-29): kreativiteten låses aldrig – alla byggord fungerar, Byggboken ger ord att jaga.
 

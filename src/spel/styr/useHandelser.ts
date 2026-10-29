@@ -14,7 +14,7 @@ import type { SpelKarna } from "./typer.ts";
 export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
   const { setLage, setHand, setVisKort, setMossaOpp, setHalsning, setFotoMal, setMeny, setBoUid, setOnskaPos, setOnskaSyns, setGavaTill, textRef, handRef, overlayRef, onskaSkrivRef, gavaRef, paHandelse, visaOnskaRef } = k.t;
   const { visaBubbla, visaBanner } = k.b;
-  const { setBokOpp } = k.t;
+  const { setBokOpp, setPanel } = k.t;
   const { bengtsson } = k.a;
 
   paHandelse.current = (h) => {
@@ -82,7 +82,8 @@ export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
       ljud.boing();
       dalStyr.valj(h.tomt);
       setMeny(null);
-      setLage("skriv");
+      setPanel("byggbok");
+      setLage("kort");
       setBokOpp(true);
       visaBanner(TEXTER.tomt_hjalp, "ovr", "tapp");
       return;
