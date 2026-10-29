@@ -1,4 +1,5 @@
 import { bestamdHem } from "../bygge.ts";
+import { useDal } from "../dal/utbyggnad.ts";
 import { fyll } from "../fyll.ts";
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
@@ -72,7 +73,8 @@ export function useGard(k: Pick<SpelKarna, "t" | "b" | "v" | "s">) {
   }
 
   function sparaKopia() {
-    const blob = new Blob([JSON.stringify(exportera(), null, 2)], { type: "application/json" });
+    // Block 9: köpt mark (Kvarnbacken, Sjöstranden) följer med kopian.
+    const blob = new Blob([JSON.stringify({ ...exportera(), dal: { utbyggnader: useDal.getState().utbyggnader } }, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -103,6 +105,7 @@ export function useGard(k: Pick<SpelKarna, "t" | "b" | "v" | "s">) {
       setKopia(null);
       return;
     }
+    useDal.getState().ersatt((kopia as { dal?: { utbyggnader?: unknown } }).dal?.utbyggnader);
     ljud.satt(useMinne.getState().effektPa && useMinne.getState().ljudPa);
     setLage(useMinne.getState().startLage);
     rensaSkriv();

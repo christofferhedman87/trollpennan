@@ -38,6 +38,18 @@ Granskning: https://trollpennan.christofferhedman87.workers.dev/ (byggs från `m
 | Gården i 3D & Solstjärnor (`G1a`–`G1c` #195–#197, `V7b` #211, `V8b` #213, `S5` #225) | `src/spel/gard/` (`Garden3D.tsx`, `ByggModell.tsx`, `GardDjur.tsx`, `MarkPlan.tsx`, `rutnat.ts`), `src/spel/solstjarna.ts`, `data/gard-3d.json`, `public/models/gard/` |
 | Röster (`R1`–`R2` #236–#237 & `W3`–`W4` #240–#241: 4 153 förgenererade ElevenLabs-MP3-filer i `-16 LUFS`, noll Web Speech TTS, 1-MP3-prioritet, `pennan`/`bengtsson`/`syntaxviruset`) | `src/spel/rost.ts`, `src/spel/rostManifest.ts`, `src/spel/rostKo.ts`, `src/spel/ui/UppdragVy.tsx`, `src/spel/ui/Ledtradsyta.tsx`, `src/spel/ideRad.ts`, `scripts/rost-kandidater.mjs`, `scripts/rost-generera.mjs`, `data/rost-takt.json`, `data/rost.json`, `data/rost-manifest.json`, `data/rost-klient.json`, `public/ljud/rost/`. |
 
+## En värld (Block 0–9, 2026-10-29) – Ängen och Gården är en Sagodal
+| Del | Var |
+|---|---|
+| Byggformeln: funktion + form ("som ser ut som", "slottsstall") + material + färg + delar + egenskaper | `src/tolk/byggform.ts`, `data/bygg.json` (form, egenskaper), `data/test-fraser-bygg-form.json` |
+| Hemdalen: 16 tomter runt ängen, kamera (dra/nyp), köpt mark (Kvarnbacken ★5, Sjöstranden ★8) | `src/spel/dal/` (Hemdalen, tomter, DalKamera, utbyggnad), `data/dalen.json` |
+| Formsystemet i 3D: stomme ur valfri modell, dörr/fönster/hö, moduler, materialskal, egenskaper, byggställning och studs | `src/spel/dal/` (ritplan, Stomme, Byggdelar, Byggverk, Stallning) |
+| Byggnaderna lever: djuren bor vid sitt hem, går in på kvällen, Zzz och ljus, hjärtan i hagen | `src/spel/dal/Boende.tsx`, `boende.ts` |
+| Byggboken: Byggidéer och Bygg själv (kort i fyra steg, meningen växer) | `src/spel/dal/ByggKomponist.tsx`, `byggbok.ts` |
+| Byggönskningar (var tredje önskan), även form och egenskaper | `src/spel/onska.ts`, `data/onskningar-bygg.json` |
+| KayKit Medieval Hexagon (CC0): slott, kyrka, värdshus, marknad, smedja, gruva, vattenkvarn, sågverk, väderkvarn, brunn, torn och byggställningar | `public/models/gard/k-*-kaykit.glb` |
+| Status och nästa steg | `docs/en-varld/STATUS.md` · röster som väntar: `docs/en-varld/nya-repliker.md` |
+
 ## Arkitekturregler
 1. **Data + tillgång = ingen ny kod per sak.** Ett nytt djur, föremål, plagg, byggnad, uppdrag eller ord är en datarad plus en tillgångsfil som läses av ett generellt system.
 2. **En renderväg:** R3F (`phaser` är helt borttaget sedan PR #198).

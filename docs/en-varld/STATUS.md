@@ -13,12 +13,14 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 | 6 Modellskörd | Första skörden klar | se git-logg | 14 byggnader ur KayKit Medieval Hexagon Pack (CC0, git clone från GitHub) i `public/models/gard/k-*-kaykit.glb`, 726–5 659 trianglar och en primitiv var (ett ritanrop). Nya modeller för slott, torn, väderkvarn och brunn. Sju nya byggord: kyrka, smedja, marknad, värdshus, gruva, vattenkvarn och sågverk. `egenFarg` i gard-3d.json betyder att modellen behåller sina egna färger om barnet inte nämner någon. Kvar: fler former och sagobyggnader (svamphus, pumpahus, tekannehus) från Poly Pizza, som Grok kan ta på söndag. Kenneys City Builder-kit (moderna hus) passade inte stilen |
 | 7 Slime Rancher-magi | Första delen klar | se git-logg | Utbyggnader (beslut B): åtta tomter är öppna från start. Kvarnbacken (vänster, ★5) och Sjöstranden (höger, ★8) köps genom att trycka på deras skylt eller på en låst tomt (`src/spel/dal/utbyggnad.ts`). Köpen sparas i `localStorage["trollpennan-dal-v1"]` och ingår inte i "Spara en kopia" än. Nya byggen får först en byggnadsställning i tre steg (KayKit building_stage A–C) och studsar sedan fram. Kvar: rörelse vid platserna i fjärran (kvarnvingar, segel, kristallglitter) |
 | 8 Uppdrag, Byggboken och röster | Klar (första versionen) | se git-logg | Var tredje önskan är nu en byggönskan (den fanns men valdes aldrig). Sex nya önskningar använder byggformeln: "ett hus som ser ut som jag", flygande hus, slottsstall, frukthus, dansande hus och något som lyser (`onska.ts`: krav form, form_som_djuret och egenskap). Byggboken visar önskans exempel först. En aktiv byggönskan går före regeln för småsaker. Röster: 12 nya repliker finns i `nya-repliker.md` (beslut D) |
-| 9 Städning | Ej påbörjad | – | |
+| 9 Städning | Klar | se git-logg | Garden3D och MarkPlan är borttagna, och `window.__gard3d` är flyttad till `gard/gard3dDiag.ts`. Köpt mark följer med "Spara en kopia" och "Läs in en kopia". PROJECT.md har en sektion om En värld. Alla prov är gröna utom det kända tidtestet P3a i molnmiljön |
 
 ## Nästa steg
-1. Block 9: städning. Ta bort Garden3D och den gamla gårdsvägen, se till att köpta utbyggnader följer med i "Spara en kopia", uppdatera PROJECT.md och gör en slutlig skärmbildsserie.
+**Blockserien En värld är klar (2026-10-29).** Kvar att göra senare:
+1. Skapamenyns nya design (från en annan chatt) implementeras härnäst.
 2. Till Grok (söndag): fler formmodeller från Poly Pizza via `trollpennan-modellspanare`-rutinen.
-3. Kvar: köpta utbyggnader ska med i "Spara en kopia" (lagring.ts). Staket, mur och port ritas fortfarande som inhägnad med gamla ByggeModell. Gamla `Garden3D` tas bort i block 9.
+3. Generera ElevenLabs-röster för `nya-repliker.md` och ta bort raderna ur `data/rost.json` → `vantar_rost`.
+4. Mindre: staket, mur och port ritas som inhägnad med gamla ByggeModell. Stora former kan skymma bakre tomter. Solstjärnor i ladan, djur som lockas av hönshus och damm samt rörelse vid platserna i fjärran är inte gjorda.
 
 ## Baslinje (2026-10-29, live `34490f7`, 375×812, tom äng efter introt)
 - 109 draw calls och 34 354 trianglar. Det är redan över W1:s riktmärke på ≤95 draw calls (stigar, skyltar och horisontmodeller). Block 1 och 3 behöver instansiering och sammanslagna geometrier för att hålla budgeten. Ny budget för en full dal (15 byggen och 20 djur): ≤140 draw calls och ≤150 000 trianglar. Bildtakten går inte att mäta i molnmiljön (programvarurendering).
