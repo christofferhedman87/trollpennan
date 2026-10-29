@@ -21,6 +21,9 @@
     "kantOrd": ["staket", "mur", "port"]
   },
   "byggnader": {
+    "hönshus": { "fil": "/models/gard/honshus-quaternius.glb", "tillgangId": "gard-honshus", "skala": 1.2, "malhojd": 1.2, "reserv": "hus", "farg": "#F5DEB3" },
+    "hage": { "fil": "/models/gard/hage-fence-3x3-kenney-suburban.glb", "tillgangId": "gard-hage-3x3", "skala": 1.0, "malhojd": 0.6, "reserv": "hus", "farg": "#A1887F" },
+    "väderkvarn": { "fil": "/models/bulk/vaderkvarn.glb", "tillgangId": "vaderkvarn", "malhojd": 2.4, "reserv": "torn", "farg": "#FFF3E0" },
     "stall": { "fil": "/models/gard/stall-fantasy-quaternius.glb", "tillgangId": "gard-stall-fantasy", "skala": 1.35, "malhojd": 1.55, "reserv": "hus", "farg": "#B71C1C" },
     "hus": { "fil": "/models/gard/v7-hus-tre-fonster-kenney-suburban.glb", "tillgangId": "gard-v7-hus-suburban", "celler": [1, 1], "skala": 1.45, "rotY": 0, "malhojd": 1.65, "reserv": "hus", "farg": "#D32F2F" },
     "stuga": { "fil": "/models/gard/v7-hus-modular-tre-fonster-kenney.glb", "tillgangId": "gard-v7-hus-modular", "celler": [1, 1], "skala": 1.35, "rotY": 0, "malhojd": 1.45, "reserv": "hus", "farg": "#C62828" },

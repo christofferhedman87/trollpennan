@@ -850,6 +850,121 @@
    "kit_nyckel": "bygg/bro",
    "efterled": "bro",
    "monster": "regnbåge"
+  },
+  {
+   "id": "lada",
+   "genus": "en",
+   "former": [
+    "lada",
+    "ladan",
+    "lador",
+    "ladorna"
+   ],
+   "typ": "djurhem",
+   "sida": "djurhem",
+   "hem": {
+    "kroppar": [
+     "ko",
+     "häst",
+     "gris",
+     "får",
+     "get",
+     "åsna",
+     "kalv",
+     "lamm"
+    ],
+    "platser": 4
+   },
+   "standardfarg": "#C62828",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "flagga"
+   ],
+   "ritning": "Röd lada med vita kanter och stor dubbeldörr."
+  },
+  {
+   "id": "hönshus",
+   "genus": "ett",
+   "former": [
+    "hönshus",
+    "hönshuset",
+    "hönshus",
+    "hönshusen"
+   ],
+   "typ": "djurhem",
+   "sida": "djurhem",
+   "hem": {
+    "kroppar": [
+     "höna",
+     "kyckling",
+     "tupp",
+     "anka",
+     "gås"
+    ],
+    "platser": 3
+   },
+   "standardfarg": "#F5DEB3",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "flagga"
+   ],
+   "ritning": "Litet hus på ben med en ramp upp till dörren."
+  },
+  {
+   "id": "hage",
+   "genus": "en",
+   "former": [
+    "hage",
+    "hagen",
+    "hagar",
+    "hagarna"
+   ],
+   "typ": "djurhem",
+   "sida": "djurhem",
+   "hem": {
+    "kroppar": [
+     "häst",
+     "ko",
+     "får",
+     "gris",
+     "get",
+     "kanin",
+     "åsna",
+     "lamm",
+     "kalv"
+    ],
+    "platser": 4
+   },
+   "standardfarg": "#A1887F",
+   "delar": [
+    "flagga"
+   ],
+   "ritning": "Fyrkantig inhägnad med staket och grind. Djuren i hagen trivs."
+  },
+  {
+   "id": "väderkvarn",
+   "genus": "en",
+   "former": [
+    "väderkvarn",
+    "väderkvarnen",
+    "väderkvarnar",
+    "väderkvarnarna"
+   ],
+   "typ": "byggnad",
+   "sida": "djurhem",
+   "hem": null,
+   "standardfarg": "#FFF3E0",
+   "delar": [
+    "fönster",
+    "dörr",
+    "tak",
+    "flagga"
+   ],
+   "ritning": "Hög kvarn med fyra vingar som snurrar i vinden."
   }
  ],
  "delar": [
@@ -924,6 +1039,66 @@
    ],
    "max": 4,
    "ritning": "Stång + liten vimpel som fladdrar, i delens färg (standard röd)."
+  },
+  {
+   "id": "vingar",
+   "genus": "en",
+   "former": [
+    "vinge",
+    "vingen",
+    "vingar",
+    "vingarna"
+   ],
+   "max": 2,
+   "ritning": "Två fjäderlätta vingar på sidorna. Byggnaden svävar lite."
+  },
+  {
+   "id": "hjul",
+   "genus": "ett",
+   "former": [
+    "hjul",
+    "hjulet",
+    "hjul",
+    "hjulen"
+   ],
+   "max": 4,
+   "ritning": "Runda hjul under byggnaden, som en vagn."
+  },
+  {
+   "id": "kupol",
+   "genus": "en",
+   "former": [
+    "kupol",
+    "kupolen",
+    "kupoler",
+    "kupolerna"
+   ],
+   "max": 3,
+   "ritning": "Rund kupol på taket."
+  },
+  {
+   "id": "balkong",
+   "genus": "en",
+   "former": [
+    "balkong",
+    "balkongen",
+    "balkonger",
+    "balkongerna"
+   ],
+   "max": 3,
+   "ritning": "Liten balkong med räcke under ett fönster."
+  },
+  {
+   "id": "trappa",
+   "genus": "en",
+   "former": [
+    "trappa",
+    "trappan",
+    "trappor",
+    "trapporna"
+   ],
+   "max": 2,
+   "ritning": "Trappa upp till dörren."
   }
  ],
  "material": [
@@ -1019,6 +1194,179 @@
   ],
   "och": [
    "och"
+  ]
+ },
+ "form": {
+  "_om": "Block 2 (En värld): byggnadens form. Funktionen (byggordet) säger vad byggnaden gör, formen hur den ser ut. Formen kan vara ett annat byggord, ett djur eller en sak med modell: 'ett stall som ser ut som ett slott', 'ett slottsstall', 'en lada formad som en ko'. src/tolk/byggform.ts läser fraserna härifrån.",
+  "fraser": [
+   [
+    "som",
+    "ser",
+    "ut",
+    "som"
+   ],
+   [
+    "som",
+    "liknar"
+   ],
+   [
+    "som",
+    "är",
+    "formad",
+    "som"
+   ],
+   [
+    "som",
+    "är",
+    "format",
+    "som"
+   ],
+   [
+    "som",
+    "är",
+    "formade",
+    "som"
+   ],
+   [
+    "formad",
+    "som"
+   ],
+   [
+    "format",
+    "som"
+   ],
+   [
+    "formade",
+    "som"
+   ],
+   [
+    "i",
+    "form",
+    "av"
+   ]
+  ],
+  "visa": "som ser ut som",
+  "fog": [
+   "s"
+  ]
+ },
+ "egenskaper": {
+  "_om": "Block 2 (En värld): egenskaper som gör byggnaden levande (block 3 ritar dem). 'former' = [en-form, ett-form, plural]; 'andra' = ord som betyder samma (verbformer efter 'som'/'som kan', synonymer). Formeln visar ordet i rätt form framför byggordet, utom 'efter' som står efter.",
+  "lista": [
+   {
+    "id": "flygande",
+    "former": [
+     "flygande",
+     "flygande",
+     "flygande"
+    ],
+    "andra": [
+     "svävande",
+     "flyger",
+     "flyga",
+     "svävar",
+     "sväva"
+    ]
+   },
+   {
+    "id": "dansande",
+    "former": [
+     "dansande",
+     "dansande",
+     "dansande"
+    ],
+    "andra": [
+     "dansar",
+     "dansa",
+     "studsande",
+     "studsar",
+     "hoppande",
+     "hoppar",
+     "gungande",
+     "gungar"
+    ]
+   },
+   {
+    "id": "snurrande",
+    "former": [
+     "snurrande",
+     "snurrande",
+     "snurrande"
+    ],
+    "andra": [
+     "snurrar",
+     "snurra"
+    ]
+   },
+   {
+    "id": "lysande",
+    "former": [
+     "lysande",
+     "lysande",
+     "lysande"
+    ],
+    "andra": [
+     "lyser",
+     "lysa",
+     "självlysande",
+     "glödande",
+     "glöder",
+     "blinkande",
+     "blinkar"
+    ]
+   },
+   {
+    "id": "sjungande",
+    "former": [
+     "sjungande",
+     "sjungande",
+     "sjungande"
+    ],
+    "andra": [
+     "sjunger",
+     "sjunga"
+    ]
+   },
+   {
+    "id": "magisk",
+    "former": [
+     "magisk",
+     "magiskt",
+     "magiska"
+    ],
+    "andra": []
+   },
+   {
+    "id": "varm",
+    "former": [
+     "varm",
+     "varmt",
+     "varma"
+    ],
+    "andra": []
+   },
+   {
+    "id": "mysig",
+    "former": [
+     "mysig",
+     "mysigt",
+     "mysiga"
+    ],
+    "andra": []
+   },
+   {
+    "id": "upp_och_ner",
+    "former": [
+     "upp och ner",
+     "upp och ner",
+     "upp och ner"
+    ],
+    "andra": [
+     "uppochner",
+     "uppochned"
+    ],
+    "efter": true
+   }
   ]
  }
 }

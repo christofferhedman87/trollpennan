@@ -6,7 +6,7 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 |---|---|---|---|
 | 0 Grund och verktyg | Klar | #250, #251 | Planen, statusfilen, besluten, baslinjen och skills (Modellspanaren och Trollpennan-runda) är föreslagna |
 | 1 En dal | Nästa | – | Fast vinkel + dra/nyp (beslut A) |
-| 2 Byggformeln | Ej påbörjad | – | Kan starta direkt (ren logik) |
+| 2 Byggformeln | Klar | se git-logg | `src/tolk/byggform.ts`, 62 formfraser i `data/test-fraser-bygg-form.json`, 4 nya byggord (lada, hönshus, hage, väderkvarn), 5 nya delar (vingar, hjul, kupol, balkong, trappa) och 9 egenskaper. Kopplad till skapandet. Form och egenskaper sparas på bygget (`SparatBygge.form/egenskaper`) men ritas först i block 3. Ordlåset är borttaget (beslut B) |
 | 3 Formsystemet | Ej påbörjad | – | Kräver block 2 |
 | 4 Byggnaderna lever | Ej påbörjad | – | |
 | 5 Bygga i världen | Ej påbörjad | – | Kräver block 1 |
@@ -16,8 +16,7 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 | 9 Städning | Ej påbörjad | – | |
 
 ## Nästa steg
-1. Block 2: kartlägg `src/tolk/byggtolk.ts` och skriv de 60 testmeningarna först (ren logik, kan gå parallellt).
-2. Block 1: panorering och zoom på ängen, tomter och flytt av gårdens byggen till ängen med sparmigrering.
+1. Block 1: tomter runt ängen (`src/spel/dal/`), byggen ritas på tomterna i ängsscenen, panorering med ett finger och zoom med två (bara på ängen), byggmeningar fungerar på ängen och Gårdens skylt och kartkort tas bort.
 
 ## Baslinje (2026-10-29, live `34490f7`, 375×812, tom äng efter introt)
 - 109 draw calls och 34 354 trianglar. Det är redan över W1:s riktmärke på ≤95 draw calls (stigar, skyltar och horisontmodeller). Block 1 och 3 behöver instansiering och sammanslagna geometrier för att hålla budgeten. Ny budget för en full dal (15 byggen och 20 djur): ≤140 draw calls och ≤150 000 trianglar. Bildtakten går inte att mäta i molnmiljön (programvarurendering).
