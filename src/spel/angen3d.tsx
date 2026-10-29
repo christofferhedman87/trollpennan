@@ -214,7 +214,7 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
         enableDamping
         dampingFactor={0.08}
         maxPolarAngle={1.42}
-        minPolarAngle={1.1}
+        minPolarAngle={0.85}
         minDistance={DALEN.kamera.avstand[0]}
         maxDistance={DALEN.kamera.avstand[1]}
         target={[0, 1.05, -0.15]}

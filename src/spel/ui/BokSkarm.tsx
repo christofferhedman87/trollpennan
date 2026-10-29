@@ -1,4 +1,5 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import { ByggKomponist } from "../dal/ByggKomponist.tsx";
 import { Lock } from "lucide-react";
 import type { ForslagKort, Ord } from "@/tolk/typer.ts";
 import upplevelse from "../../../data/upplevelse.json";
@@ -286,6 +287,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
         ) : (
           <div className="byggbok-wrap" data-testid="byggbok">
             <div className="kort-yta byggbok">
+              <ByggKomponist byggFras={byggFras} />
               {onskan?.kalla === "bygg" ? (
                 <p className="onska-text">
                   ★ {fyll(FIR.onskan.fran_bengtsson, { text: onskan.text })}

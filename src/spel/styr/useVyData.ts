@@ -121,9 +121,11 @@ export function useVyData(k: Pick<SpelKarna, "t">) {
 
   const visa3d = varld === "ang" && !omrade && !kartaOpp;
 
-  const agdaSidor = BYGGSIDOR.sidor.filter((s) => byggSidor.includes(s.id));
+  // Beslut B (En värld): alla byggord är fria; bara Solgårdens specialbyggen köps med stjärnor.
+  const arFri = (id: string) => id !== "solgard";
+  const agdaSidor = BYGGSIDOR.sidor.filter((s) => arFri(s.id) || byggSidor.includes(s.id));
 
-  const lastaSidor = BYGGSIDOR.sidor.filter((s) => s.kostnad > 0 && !byggSidor.includes(s.id));
+  const lastaSidor = BYGGSIDOR.sidor.filter((s) => s.kostnad > 0 && !arFri(s.id) && !byggSidor.includes(s.id));
 
   const byggSida = agdaSidor.find((s) => s.id === byggSidaId) ?? agdaSidor[0] ?? BYGGSIDOR.sidor[0]!;
 

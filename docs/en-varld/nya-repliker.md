@@ -4,5 +4,6 @@ Varje rad läggs här när en ny barnriktad text skrivs in i data-filerna. Chris
 
 | Klar | Röst | Datafil och nyckel | Text |
 |---|---|---|---|
-| | pennan | data/texter-gard.json `tomt_hjalp` | Skriv vad du vill bygga här! |
+| | pennan | data/texter-gard.json `tomt_hjalp` | Vad ska stå här? Välj i boken eller skriv själv! |
+| | pennan | data/dalen.json `byggbok` (rubriker, steg, knapp) | ✨ Byggidéer · 🔨 Bygg själv · 1. Vad? · 2. Ser ut som … · 3. Av … · 4. Med … · Bygg! |
 | | pennan | data/texter-gard.json `flytta_hjalp` (ändrad) | Tryck på tomten där du vill ha den. |

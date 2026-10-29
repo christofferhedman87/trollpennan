@@ -27,10 +27,12 @@
   "flytta_glod": "#80DEEA"
  },
  "kamera": {
-  "x": [-4.8, 4.8],
-  "z": [-5.6, 2.0],
+  "x": [-6.0, 6.0],
+  "z": [-7.0, 2.0],
   "avstand": [5.5, 16],
-  "fokus_ms": 900
+  "fokus_ms": 900,
+  "vy_bak": { "avstand": 9.5, "polar": 0.92 },
+  "vy_fram": { "avstand": 10.4, "polar": 1.27 }
  },
  "smasaker_pa_angen": [
   "träd",
@@ -92,5 +94,83 @@
   "material_blandning": 0.8,
   "svav_hojd": 0.55,
   "studs_ms": 750
+ },
+ "byggbok": {
+  "_om": "Block 5 (bygga i världen): Byggbokens idéer och 'Bygg själv'. Barnet väljer kort steg för steg och ser meningen växa ord för ord; byggtolken (src/tolk/byggform.ts) böjer orden rätt. Alla barnriktade texter här.",
+  "rubrik_ideer": "✨ Byggidéer",
+  "rubrik_sjalv": "🔨 Bygg själv",
+  "steg": [
+   "1. Vad?",
+   "2. Ser ut som …",
+   "3. Av …",
+   "4. Med …"
+  ],
+  "bygg_knapp": "Bygg!",
+  "ingen": "–",
+  "ideer": [
+   "ett stall som ser ut som ett slott",
+   "ett hus som ser ut som ett äpple",
+   "en lada formad som en ko",
+   "ett flygande hus av moln",
+   "ett rosa hus av godis med tre torn",
+   "ett hus som ser ut som en katt",
+   "ett slott av is med en flagga",
+   "ett hus som är upp och ner"
+  ],
+  "funktioner": [
+   ["🏠", "ett hus"],
+   ["🐴", "ett stall"],
+   ["🛖", "en lada"],
+   ["🐔", "ett hönshus"],
+   ["🌾", "en hage"],
+   ["🏰", "ett slott"],
+   ["🗼", "ett torn"],
+   ["🪵", "en koja"]
+  ],
+  "former": [
+   ["🏰", "ett slott"],
+   ["🍄", "en svamp"],
+   ["🍎", "ett äpple"],
+   ["🐮", "en ko"],
+   ["🐱", "en katt"],
+   ["🐲", "en drake"],
+   ["🎂", "en tårta"],
+   ["⛵", "en båt"],
+   ["👟", "en sko"],
+   ["🐷", "en gris"]
+  ],
+  "material": [
+   ["🪵", "trä"],
+   ["🪨", "sten"],
+   ["🧊", "is"],
+   ["🍭", "godis"],
+   ["☁️", "moln"],
+   ["🍫", "choklad"],
+   ["💎", "kristall"],
+   ["🥇", "guld"]
+  ],
+  "farger": [
+   "röd",
+   "rosa",
+   "blå",
+   "gul",
+   "grön",
+   "lila"
+  ],
+  "delar": [
+   ["🏯", "två torn"],
+   ["🚩", "en flagga"],
+   ["🔵", "en kupol"],
+   ["🪽", "vingar"],
+   ["🛞", "fyra hjul"],
+   ["🏭", "en skorsten"]
+  ],
+  "egenskaper": [
+   ["🕊️", "flygande"],
+   ["💃", "dansande"],
+   ["🌀", "snurrande"],
+   ["💡", "lysande"],
+   ["✨", "magisk"]
+  ]
  }
 }

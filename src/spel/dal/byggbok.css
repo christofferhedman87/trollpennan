@@ -1,0 +1,22 @@
+/* Block 5: Byggidéer och Bygg själv i Byggboken. Text minst 18 px, tryckytor minst 44 px (projektregler). */
+.bygg-komponist { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.bygg-komponist h3 { margin: 4px 0 0; font-size: 1.125rem; font-weight: 800; color: var(--color-ink); }
+.bygg-ideer { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scroll-snap-type: x mandatory; }
+.bygg-ideer .bygg-ide { flex: 0 0 auto; max-width: 15rem; min-height: 52px; font-size: 1.125rem; scroll-snap-align: start; white-space: normal; }
+.bygg-mening {
+  margin: 0; padding: 10px 12px; min-height: 52px; border-radius: 16px; background: var(--color-cream);
+  border: 2px dashed var(--color-moss); font-size: 1.25rem; font-weight: 800; color: var(--color-ink); line-height: 1.25;
+}
+.bok .bygg-komponist .steg-piller-rad { display: flex; gap: 6px; flex-wrap: wrap; padding: 0; }
+.bok .bygg-komponist .steg-piller { flex: 1 1 40%; min-height: 44px; font-size: 1.125rem; white-space: normal; }
+.bok .bygg-val .kort { min-height: 48px; font-size: 1.125rem; color: var(--color-ink); }
+.bok .bygg-komponist .kort.vald { background: var(--color-moss); color: var(--color-cream); border-color: var(--color-ink); }
+.bygg-knapp {
+  min-height: 52px; border: 0; border-radius: 16px; background: var(--color-moss); color: var(--color-cream);
+  font-size: 1.25rem; font-weight: 800; cursor: pointer;
+}
+.bygg-knapp:active { background: var(--color-moss-deep); }
+/* Den låsta Solgården tar en rad längst ner i stället för en stor ruta, så att korten får plats. */
+.bok .byggbok-wrap .last-rad { display: flex; flex-direction: row; justify-content: center; padding: 4px 8px; min-height: 0; flex-shrink: 0; }
+.bok .byggbok-wrap .last-ikon { display: inline-flex; flex-direction: row; align-items: center; gap: 6px; min-height: 44px; padding: 4px 12px; font-size: 1.125rem; }
+.bok .byggbok-wrap .last-ikon svg { width: 20px; height: 20px; }

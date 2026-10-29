@@ -6,13 +6,14 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { sagaNu } from "../saga.ts";
 import type { OrbitStyr } from "../ang/saga.tsx";
-import { dalStyr } from "./dalStyr.ts";
+import { dalStyr, type Vy } from "./dalStyr.ts";
 import { DALEN, klampaMal } from "./tomter.ts";
 
 const mjuk = (u: number) => u * u * (3 - 2 * u);
 const _d = new THREE.Vector3();
 
-type Glid = { id: number; t0: number; fran: THREE.Vector3; till: THREE.Vector3 };
+type Glid = { id: number; t0: number; fran: THREE.Vector3; till: THREE.Vector3; vy: Vy | null; franVy: THREE.Spherical };
+const _sf = new THREE.Spherical();
 
 export function DalKamera({ styr, aktiv }: { styr: { current: OrbitStyr | null }; aktiv: boolean }) {
   const glid = useRef<Glid | null>(null);
@@ -23,7 +24,7 @@ export function DalKamera({ styr, aktiv }: { styr: { current: OrbitStyr | null }
         const f = dalStyr.lage().fokus;
         if (f && f.id !== sedd.current) {
           sedd.current = f.id;
-          glid.current = { id: f.id, t0: -1, fran: new THREE.Vector3(), till: new THREE.Vector3(f.x, 0, f.z) };
+          glid.current = { id: f.id, t0: -1, fran: new THREE.Vector3(), till: new THREE.Vector3(f.x, 0, f.z), vy: f.vy, franVy: new THREE.Spherical() };
         }
       }),
     [],
@@ -39,6 +40,7 @@ export function DalKamera({ styr, aktiv }: { styr: { current: OrbitStyr | null }
       if (g.t0 < 0) {
         g.t0 = t;
         g.fran.copy(c.target);
+        g.franVy.setFromVector3(_d.copy(camera.position).sub(c.target));
         const [x, z] = klampaMal(g.till.x, g.till.z);
         g.till.set(x, c.target.y, z);
       }
@@ -46,6 +48,11 @@ export function DalKamera({ styr, aktiv }: { styr: { current: OrbitStyr | null }
       _d.copy(g.fran).lerp(g.till, mjuk(u)).sub(c.target);
       c.target.add(_d);
       camera.position.add(_d);
+      if (g.vy) {
+        const k = mjuk(u);
+        _sf.set(g.franVy.radius + (g.vy.avstand - g.franVy.radius) * k, g.franVy.phi + (g.vy.polar - g.franVy.phi) * k, g.franVy.theta);
+        camera.position.copy(c.target).add(_d.setFromSpherical(_sf));
+      }
       c.update();
       if (u >= 1) glid.current = null;
       return;

@@ -3,9 +3,10 @@
 // - flyttar: uid för bygget som barnet flyttar; nästa tryck på en tomt flyttar dit.
 // - vald: tomten barnet tryckt på; nästa bygge hamnar där.
 type Lyssnare = () => void;
+export type Vy = { avstand: number; polar: number };
 const lyssnare = new Set<Lyssnare>();
 const lage = {
-  fokus: null as { x: number; z: number; id: number } | null,
+  fokus: null as { x: number; z: number; id: number; vy: Vy | null } | null,
   flyttar: null as string | null,
   vald: null as number | null,
 };
@@ -22,9 +23,10 @@ export const dalStyr = {
       lyssnare.delete(f);
     };
   },
-  fokusera(x: number, z: number) {
+  /** `vy`: kamerans avstånd och lutning vid målet (bakre tomter ses mer uppifrån, annars skyms de av byggen framför). */
+  fokusera(x: number, z: number, vy: Vy | null = null) {
     fokusId += 1;
-    lage.fokus = { x, z, id: fokusId };
+    lage.fokus = { x, z, id: fokusId, vy };
     meddela();
   },
   flytta(uid: string | null) {

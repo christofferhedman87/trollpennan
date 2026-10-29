@@ -49,7 +49,7 @@
   "bo": "Vem ska bo här?"
  },
  "flytta_hjalp": "Tryck på tomten där du vill ha den.",
- "tomt_hjalp": "Skriv vad du vill bygga här!",
+ "tomt_hjalp": "Vad ska stå här? Välj i boken eller skriv själv!",
  "bygg_om_hjalp": "Skriv hur den ska se ut nu.",
  "lada": {
   "rubrik": "Lådan",
