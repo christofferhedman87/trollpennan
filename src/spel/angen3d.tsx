@@ -1,7 +1,7 @@
 import { Bvh, OrbitControls, PerformanceMonitor } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { startaBakgrundsForladdning } from "./modeller/forladda.ts";
-import { Component, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { Component, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
 import { brygga } from "./brygga.ts";
 import { useMinne } from "./minne.ts";
@@ -96,10 +96,8 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
     if (grafVarv.current !== 1 && grafVarv.current % 40 !== 0) return;
     forbattraModellMaterial(scenGraf);
   });
-  const angDjur = useMinne((s) => s.ang);
-  const hemma = useMinne((s) => s.hemma);
-  // Block 1 (En värld): djur som flyttat in i ett bygge finns kvar i dalen (block 4 låter dem gå hem på kvällen).
-  const djur = useMemo(() => (hemma.length ? [...angDjur, ...hemma.map((h) => h.spec)] : angDjur), [angDjur, hemma]);
+  // Block 4: djur som flyttat in i ett bygge ritas vid sitt hem i Hemdalen (dal/Boende.tsx), inte bland djuren på ängen.
+  const djur = useMinne((s) => s.ang);
   // `vis` styr introts natt (sagaNatt i Himmel/SagaLjus). Kvällen utanför introt sköts av KvallsLjus och `kvall`.
   const vis = 0;
   const kvall = saga ? 0 : kvallsTon(natt);
@@ -196,7 +194,7 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
       <Eldflugor natt={saga ? vis : natt} />
       <SpokHus onSnart={onSnart} />
       <Skogsstig onSnart={onSnart} />
-      {!saga ? <Hemdalen /> : null}
+      {!saga ? <Hemdalen natt={natt} /> : null}
       {djur.map((spec) => (
         <DjurIScen key={spec.uid} spec={spec} alla={djur} plats={ANG_PLATS} />
       ))}
