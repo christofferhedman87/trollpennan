@@ -36,8 +36,8 @@ type AngLagerProps = {
   onskaSyns: boolean;
   ank: { x: number; y: number; vanster: boolean; };
   oppnaOnska: () => void;
-  meny: { uid: string; x: number; y: number; } | null;
-  setMeny: Dispatch<SetStateAction<{ uid: string; x: number; y: number; } | null>>;
+  meny: { uid: string; x: number; y: number; t?: number } | null;
+  setMeny: Dispatch<SetStateAction<{ uid: string; x: number; y: number; t?: number } | null>>;
   omUidRef: RefObject<string | null>;
   setLage: Dispatch<SetStateAction<Lage>>;
   setBokOpp: Dispatch<SetStateAction<boolean>>;
@@ -52,6 +52,20 @@ type AngLagerProps = {
 };
 
 export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal, visaBanner, stangBanner, visaMossa, setFotoMal, banners, bubblor, onskan, onskaOpp, onskaSyns, ank, oppnaOnska, meny, setMeny, omUidRef, setLage, setBokOpp, setLadaOpp, menyHem, setBoUid, lada, ladaOpp, boUid, boDjur, flyttaInDjur }: AngLagerProps) {
+  // Byggmenyn öppnas under fingret vid långtryck. Klicket när just det fingret släpps får inte trycka på en knapp i
+  // menyn (förut hamnade bygget i lådan av sig självt): ett klick vars tryck började innan menyn öppnades sväljs.
+  const senasteNed = useRef(0);
+  useEffect(() => {
+    const ned = () => {
+      senasteNed.current = performance.now();
+    };
+    window.addEventListener("pointerdown", ned, true);
+    return () => window.removeEventListener("pointerdown", ned, true);
+  }, []);
+  const menyKlick = (fn: () => void) => () => {
+    if (meny?.t != null && senasteNed.current < meny.t) return;
+    fn();
+  };
   // B6.1: tackbubblan (och andra pratbubblor) får aldrig ligga över "Guldord!"-banderollen eller över varandra.
   const lagerRef = useRef<HTMLDivElement>(null);
   const harBubblor = bubblor.length > 0;
@@ -152,46 +166,46 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
             </button>
           ) : null}
           {meny ? (
-            <div className="bygg-meny" style={dukStil(meny.x, Math.min(meny.y, 0.62))} data-testid="bygg-meny">
+            <div className="bygg-meny" style={dukStil(Math.min(0.7, Math.max(0.3, meny.x)), Math.min(0.55, meny.y))} data-testid="bygg-meny">
               <button
                 type="button"
-                onClick={() => {
+                onClick={menyKlick(() => {
                   brygga.flyttaBygg(meny.uid);
                   setMeny(null);
                   visaBanner(TEXTER.flytta_hjalp, "ovr", "tapp");
-                }}
+                })}
               >
                 {TEXTER.meny.flytta}
               </button>
               <button
                 type="button"
-                onClick={() => {
+                onClick={menyKlick(() => {
                   omUidRef.current = meny.uid;
                   setMeny(null);
                   setLage("skriv");
                   setBokOpp(true);
                   visaBanner(TEXTER.bygg_om_hjalp, "ovr", "tapp");
-                }}
+                })}
               >
                 {TEXTER.meny.bygg_om}
               </button>
               <button
                 type="button"
-                onClick={() => {
+                onClick={menyKlick(() => {
                   useMinne.getState().tillLada(meny.uid);
                   setMeny(null);
                   setLadaOpp(true);
-                }}
+                })}
               >
                 {TEXTER.meny.lada}
               </button>
               {menyHem ? (
                 <button
                   type="button"
-                  onClick={() => {
+                  onClick={menyKlick(() => {
                     setBoUid(meny.uid);
                     setMeny(null);
-                  }}
+                  })}
                 >
                   {TEXTER.meny.bo}
                 </button>

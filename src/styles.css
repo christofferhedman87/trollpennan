@@ -243,7 +243,7 @@ width:auto;max-width:none;transform:none !important}
 .bygg-meny,.lada-panel,.lada-knapp{
 pointer-events:auto;z-index:4;position:absolute}
 .bygg-meny{
-flex-direction:column;gap:6px;min-width:11rem;display:flex;transform:translate(-8%,8px)}
+flex-direction:column;gap:6px;min-width:11rem;display:flex;transform:translate(-50%,24px)}
 .bygg-meny button,.lada-panel button,.lada-knapp,.ljud-knapp{
 background:var(--color-cream);min-width:44px;min-height:44px;color:var(--color-ink);text-align:left;border:0;border-radius:12px;padding:8px 12px;font-size:1.125rem;font-weight:800}
 .lada-knapp{
