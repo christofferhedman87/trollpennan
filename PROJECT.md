@@ -3,6 +3,7 @@
 **Uppdaterad 2026-10-27 av Arkitekten, mot `main` = `d53f79f` (#241, W4 mergad — hela Blockserie F #216–#220, S #221–#225, D #226–#228, M #229–#231, C #232–#235, R #236–#237 samt W #238–#241 klara på `main`).** Uppdatera efter varje sammanslagen runda (grindregel 1 i `build-round-gate`).
 Granskning: https://trollpennan.christofferhedman87.workers.dev/ (byggs från `main`, Playwright 375×812). `trollpennan.grok.me` är gammal och ska inte användas.
 
+- **Plan för En värld (Block 0–9, 2026-10-29 — Ängen och Gården blir en Sagodal, byggnader formas lika fritt som djur):** [`docs/plan-en-varld-2026-10-29.md`](docs/plan-en-varld-2026-10-29.md) · status: [`docs/en-varld/STATUS.md`](docs/en-varld/STATUS.md)
 - **Plan för Blockserie F (`F1`–`F5`, 2026-10-26 — Första minuterna, UX i världsklass & 5 krokar till Blockserie S):** [`docs/blockserie-f-2026-10-26.md`](docs/blockserie-f-2026-10-26.md)
 - **Plan för Blockserie S (`S1`–`S5`, 2026-10-26 — Slime Rancher-magi, Biomer, Ansiktsuttryck, Largos & Väktardjur):** [`docs/blockserie-s-slime-rancher.md`](docs/blockserie-s-slime-rancher.md)
 - **Plan för Blockserie M (`M1`–`M3`, 2026-10-26 — NPF-anpassat & Visuellt Vackert Meny- och Navigationssystem på `375×812`):** [`rundor/M1-M3-npf-ux-menyer/GRIND.md`](rundor/M1-M3-npf-ux-menyer/GRIND.md)
