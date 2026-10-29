@@ -26,3 +26,26 @@ test("Block 5: varje kombination av kort i Byggboken blir ett bygge", () => {
   for (const [, egenskap] of BYGGBOK.egenskaper) assert.equal(tolkaByggFormel(raFras({ ...START_VAL, egenskap })).typ, "bygge", egenskap);
   for (const idé of BYGGBOK.ideer) assert.equal(tolkaByggFormel(idé).typ, "bygge", idé);
 });
+
+test("Block 8: byggönskningar med form och egenskaper uppfylls av rätt meningar, och exemplen fungerar", async () => {
+  const { ONSK_BYGG, byggTraff } = await import("../onska.ts");
+  const ons = (id: string) => ONSK_BYGG.onskningar.find((o) => o.id === id)!;
+  const traff = (fras: string, id: string, kropp?: string) => {
+    const u = tolkaByggFormel(fras);
+    return u.typ === "bygge" && !!byggTraff(u.byggen, ons(id), kropp);
+  };
+  assert.ok(traff("ett hus som ser ut som en kanin", "som-jag", "kanin"));
+  assert.ok(!traff("ett hus som ser ut som en katt", "som-jag", "kanin"));
+  assert.ok(traff("ett flygande hus", "flygande-hus"));
+  assert.ok(traff("ett hus med vingar", "flygande-hus"));
+  assert.ok(traff("ett hus av moln", "flygande-hus"));
+  assert.ok(!traff("ett hus", "flygande-hus"));
+  assert.ok(traff("ett slottsstall", "slottsstall"));
+  assert.ok(traff("ett hus som ser ut som ett äpple", "frukthus"));
+  assert.ok(traff("ett hus som dansar", "dansande-hus"));
+  assert.ok(traff("ett magiskt slott", "lysande"));
+  for (const o of ONSK_BYGG.onskningar) {
+    if (o.krav.hem_for_djuret || o.krav.bara_for) continue;
+    for (const ex of o.exempel) assert.ok(traff(ex.replace("{djur}", "en kanin"), o.id, "kanin"), `${o.id}: ${ex}`);
+  }
+});

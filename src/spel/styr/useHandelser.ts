@@ -7,7 +7,7 @@ import { nattvaken } from "../entiteter.ts";
 import { MOSSA, djurMedUid, gavoInbjudanVidTryck, kvallStyrka, oppnaMossaLista, replikHumor, ugglaRad, vackRad, visningsTid } from "../liv.ts";
 import { ljud } from "../ljud.ts";
 import { type OnskaSpar, useMinne } from "../minne.ts";
-import { valjDjurOnska } from "../onska.ts";
+import { valjByggOnska, valjDjurOnska } from "../onska.ts";
 import { malTillDuk } from "../ui/hjalp.ts";
 import { TEXTER } from "../ui/spelData.ts";
 import { onskaFarKomma } from "../uppdragsmotor.ts";
@@ -147,9 +147,11 @@ export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
     }
     if (!forsta || Date.now() - forsta.skapad < 30000) return;
     const undvik = new Set(s.seddOnska);
-    const djurO = valjDjurOnska(forsta, undvik);
-    if (!djurO) return;
-    const spar: OnskaSpar = { id: djurO.id, kalla: "djur", uid: forsta.uid, text: djurO.text, typ: djurO.typ };
+    // Block 8 (En värld): var tredje önskan handlar om att bygga – Gården finns ju i dalen nu.
+    const byggO = s.seddOnska.length % 3 === 2 ? valjByggOnska(forsta.kropp, undvik) : null;
+    const djurO = byggO ? null : valjDjurOnska(forsta, undvik);
+    if (!byggO && !djurO) return;
+    const spar: OnskaSpar = byggO ? { id: byggO.id, kalla: "bygg", uid: forsta.uid, text: byggO.text } : { id: djurO!.id, kalla: "djur", uid: forsta.uid, text: djurO!.text, typ: djurO!.typ };
     s.sattOnska(spar);
     s.settOnska(spar.id);
     s.noteraOnska();

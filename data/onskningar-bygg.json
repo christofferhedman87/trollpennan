@@ -1,5 +1,5 @@
 {
- "_om": "Önskningar som handlar om Gården. Samma system och regler som data/onskningar.json (runda 3) men barnet uppfyller dem genom att bygga på Gården. Visas bara när Gården är upplåst. Blanda in dem bland de vanliga önskningarna (ungefär var tredje).",
+ "_om": "Önskningar som handlar om Gården. Samma system och regler som data/onskningar.json (runda 3) men barnet uppfyller dem genom att bygga på Gården. Gården finns i Hemdalen på ängen (En värld): var tredje önskan är en byggönskan (styr/useHandelser.ts).",
  "passar": "Uppfylld när barnet bygger något som matchar 'krav' efter att önskan visats. bygg = byggordets id (eller efterled för sammansättningar), farg = färgord-id för byggnaden, material = material-id, del_min = minst så många av delen, antal_min = minst så många av byggordet i meningen, typ = byggordets typ, hem_for_djuret = ett hem där just det här djuret kan bo (djuret flyttar in automatiskt), bara_for = visa önskan bara för dessa kroppar, eller_bygg = alternativa byggord.",
  "onskningar": [
   {
@@ -312,6 +312,105 @@
    ],
    "tack": "Gnägg! Det luktar hö och sommar.",
    "stjarnor": 2
+  },
+  {
+   "id": "som-jag",
+   "text": "Jag vill bo i ett hus som ser ut som jag!",
+   "krav": {
+    "form_som_djuret": true
+   },
+   "exempel": [
+    "ett hus som ser ut som {djur}",
+    "ett stall som ser ut som {djur}"
+   ],
+   "tack": "Ett hus som ser ut precis som jag! Det är det finaste jag sett.",
+   "stjarnor": 3
+  },
+  {
+   "id": "flygande-hus",
+   "text": "Tänk om mitt hus kunde flyga! Kan du bygga ett sådant?",
+   "krav": {
+    "egenskap": [
+     "flygande"
+    ]
+   },
+   "exempel": [
+    "ett flygande hus",
+    "ett hus med vingar",
+    "ett hus av moln"
+   ],
+   "tack": "Det flyger! Nu kan jag vinka till fåglarna.",
+   "stjarnor": 3
+  },
+  {
+   "id": "slottsstall",
+   "text": "Jag vill ha ett stall som ser ut som ett slott!",
+   "krav": {
+    "bygg": [
+     "stall"
+    ],
+    "form": [
+     "slott"
+    ]
+   },
+   "exempel": [
+    "ett stall som ser ut som ett slott",
+    "ett slottsstall"
+   ],
+   "tack": "Ett slottsstall! Nu känner jag mig som en kung.",
+   "stjarnor": 3
+  },
+  {
+   "id": "frukthus",
+   "text": "Jag vill bo inne i en frukt. Ett hus som ser ut som ett äpple kanske?",
+   "krav": {
+    "form": [
+     "apple",
+     "banan",
+     "paron",
+     "melon",
+     "citron",
+     "apelsin",
+     "jordgubbe"
+    ]
+   },
+   "exempel": [
+    "ett hus som ser ut som ett äpple",
+    "ett hus som ser ut som en banan"
+   ],
+   "tack": "Mmm, det luktar gott i mitt nya hus!",
+   "stjarnor": 3
+  },
+  {
+   "id": "dansande-hus",
+   "text": "Kan du bygga ett hus som dansar? Jag älskar att dansa!",
+   "krav": {
+    "egenskap": [
+     "dansande"
+    ]
+   },
+   "exempel": [
+    "ett dansande hus",
+    "ett hus som dansar"
+   ],
+   "tack": "Huset dansar! Kom, vi dansar tillsammans!",
+   "stjarnor": 3
+  },
+  {
+   "id": "lysande",
+   "text": "Jag är lite mörkrädd. Kan du bygga något som lyser?",
+   "krav": {
+    "egenskap": [
+     "lysande",
+     "magisk"
+    ]
+   },
+   "exempel": [
+    "ett lysande hus",
+    "ett magiskt slott"
+   ],
+   "tack": "Nu är det ljust och mysigt. Tack!",
+   "stjarnor": 3
   }
  ]
 }
