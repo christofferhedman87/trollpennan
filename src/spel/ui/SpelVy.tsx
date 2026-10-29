@@ -85,6 +85,8 @@ export function SpelVy() {
     }, 80);
     return () => window.clearInterval(id);
   }, [intro, titel, saga]);
+  // Dialoger utom Pennans bok: där ska skyltknapparna synas och gå att trycka på (W3, se dialogIsolering.ts).
+  const dialogOppen = overlayRef.current;
   const aktivPlats: VagvisarePlatsId = varld === "gard" ? "garden" : platsUi.plats === "skogen" || platsUi.plats === "sjon" || platsUi.plats === "grottan" ? platsUi.plats : "ang";
   const resa = useVagvisareResaV09({ varld, nuvarandePlats: platsUi.plats, valjVarld, resTill: platsUi.resTill, hem: platsUi.hem });
   const { stangBok, oppnaOnska } = k.o;
@@ -150,8 +152,11 @@ export function SpelVy() {
         ) : null}
         {intro ? null : <HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} npc={bengtsson} />}
         <VyPlats plats="scen" onValjPlats={resa.startaResa} onVagvisarePunkter={resa.setVagvisarePunkter} />
-        <VagvisareHud punkter={resa.vagvisarePunkter} onValjPlats={resa.startaResa} dold={varld === "gard" || titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null || vyFlyg.aktiv} />
-        <VyFlygKnapp aktiv={vyFlyg.aktiv} onStarta={() => { setBokOpp(false); vyFlyg.startaVyFlygning(); }} dold={varld === "gard" || titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null} />
+        {/* Skyltknapparna och "Se hela dalen" ligger i ett eget lager över allt annat. De göms därför när en dialog är öppen,
+            annars ritas de ovanpå t.ex. Ordboken utan att gå att trycka på. */}
+        <VagvisareHud punkter={resa.vagvisarePunkter} onValjPlats={resa.startaResa} dold={dialogOppen || varld === "gard" || titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null || vyFlyg.aktiv} />
+        {/* Flygturen går över Sagodalen från Ängen. På andra platser täcker knappen platskortets lyssna- och stängknappar. */}
+        <VyFlygKnapp aktiv={vyFlyg.aktiv} onStarta={() => { setBokOpp(false); vyFlyg.startaVyFlygning(); }} dold={dialogOppen || aktivPlats !== "ang" || varld === "gard" || titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null} />
         <DalFlygEtiketter synlig={vyFlyg.aktiv || introFlygAktiv} />
         <ResOvergangV09 mal={resa.mal} paHoppaOver={resa.hoppaOver} />
       </section>

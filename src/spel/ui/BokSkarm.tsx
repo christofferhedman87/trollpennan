@@ -80,10 +80,7 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
       <section className={andrar ? "bok andrar" : forstaSkapelse ? "bok forsta-skapelse" : "bok"} data-andrar={andrar ? "ja" : "nej"} role="dialog" aria-label="Pennans bok" onClick={(e) => e.stopPropagation()}>
         <div className="bok-grab" data-c4="sheet-grab" aria-hidden="true" />
         <header className="bok-huvud bok-topp">
-          <h2
-            ref={(el) => el?.setAttribute("data-testid", "bok-flik-skriv")}
-            onClick={() => { setSkaparVy("skriv"); setLage("skriv"); }}
-          >
+          <h2 ref={(el) => el?.setAttribute("data-testid", "bok-flik-skriv")}>
             {panel === "byggbok" ? TEXTER.flikar.byggboken : panel === "uppdrag" ? "📋 Uppdrag" : "Pennans bok"}
           </h2>
           <input
@@ -197,13 +194,13 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
                   data-v3="skapar-vy-flikar"
                   data-m3="lages-rad"
                   ref={(el) => el?.setAttribute("data-testid", "lages-vaxlare")}
-                  role="tablist"
+                  role="group"
                   aria-label="Välj läge i boken"
                 >
-                  <button type="button" role="tab" aria-selected={skaparVy === "skriv" && !visaTangenter} className={skaparVy === "skriv" && !visaTangenter ? "lages-knapp flik pa" : "lages-knapp flik"} data-v3="vy-flik-skriv" data-m3="flik-ordkort" onClick={() => { setSkaparVy("skriv"); setSjalvSkriv(false); setLage("kort"); setForslag(null); }}>🧩 Ordkort</button>
-                  <button type="button" role="tab" aria-selected={visaTangenter} className={visaTangenter ? "lages-knapp flik pa" : "lages-knapp flik"} data-testid="pennan" data-m3="flik-stava" aria-label="Stava själv" onClick={() => { setSkaparVy("skriv"); setSjalvSkriv(true); setLage("skriv"); setForslag(null); }}>⌨️ Stava själv</button>
+                  <button type="button" aria-pressed={skaparVy === "skriv" && !visaTangenter} className={skaparVy === "skriv" && !visaTangenter ? "lages-knapp flik pa" : "lages-knapp flik"} data-v3="vy-flik-skriv" data-m3="flik-ordkort" onClick={() => { setSkaparVy("skriv"); setSjalvSkriv(false); setLage("kort"); setForslag(null); }}>🧩 Ordkort</button>
+                  <button type="button" aria-pressed={visaTangenter} className={visaTangenter ? "lages-knapp flik pa" : "lages-knapp flik"} data-testid="pennan" data-m3="flik-stava" aria-label="Stava själv" onClick={() => { setSkaparVy("skriv"); setSjalvSkriv(true); setLage("skriv"); setForslag(null); }}>⌨️ Stava själv</button>
                   {!gavaTill && !andrar && varld === "ang" ? (
-                    <button type="button" role="tab" aria-selected={skaparVy === "ideer"} className={skaparVy === "ideer" ? "lages-knapp flik pa" : "lages-knapp flik"} data-v3="vy-flik-ideer" data-m3="flik-ideer" onClick={() => { setSjalvSkriv(false); setSkaparVy("ideer"); }}>💡 Idé</button>
+                    <button type="button" aria-pressed={skaparVy === "ideer"} className={skaparVy === "ideer" ? "lages-knapp flik pa" : "lages-knapp flik"} data-v3="vy-flik-ideer" data-m3="flik-ideer" onClick={() => { setSjalvSkriv(false); setSkaparVy("ideer"); }}>💡 Idé</button>
                   ) : null}
                 </div>
                 <p className="hemligt-forklaring" data-testid="hemligt-forklaring" style={{ display: "none" }}>{hemligt.forklaring}</p>

@@ -287,3 +287,7 @@
 .bok .gavo-snabbnamn{min-height:44px;padding:4px 12px;border-radius:999px;border:2px solid #3B2F2F;background:#FFF;font-weight:800;color:#3B2F2F;cursor:pointer}
 .bok .ideer .kort{display:flex;align-items:center;gap:8px}
 .bok .ide-kort-ikon{width:32px;height:32px;object-fit:contain;flex-shrink:0;border-radius:8px}
+/* Bläddringen stannar vid första och sista sidan; inaktiva pilar ska synas som inaktiva. Vakna! är inaktiv även när
+   meningen är tom, och då ska muspekaren inte visa "vänta" (det är bara medan pennan skapar). */
+.bok .kort-pil-knapp:disabled{opacity:0.45;cursor:default}
+.bok .skapelse-topp-remsa .vakna:disabled:not([aria-busy="true"]){cursor:default}

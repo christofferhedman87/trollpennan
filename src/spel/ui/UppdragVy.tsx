@@ -73,8 +73,8 @@ export function UppdragVy({
   return (
     <div className="uppdragbok uppdrag-vy-m2" data-testid="uppdragbok" data-m2="uppdrag-vy">
       <div className="flikar uppdrag-flikar">
-        <button type="button" className={uppFlik === "pagar" ? "flik aktiv" : "flik"} data-testid="flik-pagar" onClick={() => setUppFlik("pagar")}>{pagarRubrik}</button>
-        <button type="button" className={arKlara ? "flik aktiv" : "flik"} data-testid="flik-klara" onClick={() => setUppFlik("klara")}>{klaraRubrik}</button>
+        <button type="button" className={uppFlik === "pagar" ? "flik aktiv" : "flik"} aria-pressed={uppFlik === "pagar"} data-testid="flik-pagar" onClick={() => setUppFlik("pagar")}>{pagarRubrik}</button>
+        <button type="button" className={arKlara ? "flik aktiv" : "flik"} aria-pressed={arKlara} data-testid="flik-klara" onClick={() => setUppFlik("klara")}>{klaraRubrik}</button>
       </div>
       {uppFlik === "pagar" && aktivtUpp ? (
         <>
@@ -130,22 +130,22 @@ export function UppdragVy({
               className="vakna uppdrag-svara-knapp"
               data-m2="uppdrag-svara"
               ref={(el) => el?.setAttribute("data-testid", "vakna")}
+              disabled={!text.trim()}
               onClick={() => vaknaNu()}
             >
               ✨ Gör det!
             </button>
           </div>
-          <div className="uppdrag-svarslage" data-m2="uppdrag-svarslage" role="tablist" aria-label="Svarsläge">
-            <button type="button" role="tab" aria-selected={svarsLage === "forslag"} className={svarsLage === "forslag" ? "flik aktiv" : "flik"} data-m2="lage-forslag" onClick={() => { ljud.klick(); setSvarsLage("forslag"); }}>
+          <div className="uppdrag-svarslage" data-m2="uppdrag-svarslage" role="group" aria-label="Svarsläge">
+            <button type="button" aria-pressed={svarsLage === "forslag"} className={svarsLage === "forslag" ? "flik aktiv" : "flik"} data-m2="lage-forslag" onClick={() => { ljud.klick(); setSvarsLage("forslag"); }}>
               💡 Förslag
             </button>
-            <button type="button" role="tab" aria-selected={svarsLage === "ordkort"} className={svarsLage === "ordkort" ? "flik aktiv" : "flik"} data-m2="lage-ordkort" onClick={() => { ljud.klick(); setSvarsLage("ordkort"); }}>
+            <button type="button" aria-pressed={svarsLage === "ordkort"} className={svarsLage === "ordkort" ? "flik aktiv" : "flik"} data-m2="lage-ordkort" onClick={() => { ljud.klick(); setSvarsLage("ordkort"); }}>
               🧩 Ordkort
             </button>
             <button
               type="button"
-              role="tab"
-              aria-selected={svarsLage === "tangentbord"}
+              aria-pressed={svarsLage === "tangentbord"}
               className={svarsLage === "tangentbord" ? "flik aktiv" : "flik"}
               data-m2="lage-tangentbord"
               data-v2="aktivt-uppdrag-skapa"
@@ -166,9 +166,9 @@ export function UppdragVy({
           ) : null}
           {svarsLage === "ordkort" ? (
             <div className="uppdrag-ordkort-yta" data-m2="uppdrag-ordkort">
-              <div className="flikar kategorier uppdrag-kategorier" role="tablist" aria-label="Ordkategorier">
+              <div className="flikar kategorier uppdrag-kategorier" role="group" aria-label="Ordkategorier">
                 {KATEGORIER.map((f) => (
-                  <button key={f.id} type="button" role="tab" aria-selected={flik === f.id} className={flik === f.id ? "flik aktiv" : "flik"} onClick={() => { ljud.klick(); setFlik(f.id); setKortSida(0); }}>
+                  <button key={f.id} type="button" aria-pressed={flik === f.id} className={flik === f.id ? "flik aktiv" : "flik"} onClick={() => { ljud.klick(); setFlik(f.id); setKortSida(0); }}>
                     {f.namn}
                   </button>
                 ))}
@@ -184,9 +184,9 @@ export function UppdragVy({
                 })}
               </div>
               <div className="uppdrag-sidor">
-                <button type="button" disabled={nuSida <= 0} onClick={() => { ljud.klick(); setKortSida(Math.max(0, nuSida - 1)); }}>◀ Fler</button>
+                <button type="button" aria-label="Föregående sida med ordkort" disabled={nuSida <= 0} onClick={() => { ljud.klick(); setKortSida(Math.max(0, nuSida - 1)); }}>◀ Fler</button>
                 <span>Sida {nuSida + 1}/{sidor}</span>
-                <button type="button" disabled={nuSida >= sidor - 1} onClick={() => { ljud.klick(); setKortSida(nuSida + 1); }}>Fler ▶</button>
+                <button type="button" aria-label="Nästa sida med ordkort" disabled={nuSida >= sidor - 1} onClick={() => { ljud.klick(); setKortSida(nuSida + 1); }}>Fler ▶</button>
               </div>
             </div>
           ) : null}

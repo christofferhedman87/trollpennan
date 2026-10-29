@@ -42,10 +42,8 @@ export function StegKortValjare({ flik, setFlik, kort, val, onskaKort, onskaIds,
   const visning = ordnaKort(kort);
   const totalSidor = Math.max(1, Math.ceil(visning.length / KORT_PER_SIDA));
   const aktuellSida = Math.min(sida, totalSidor - 1);
-  let synligaKort = visning.slice(aktuellSida * KORT_PER_SIDA, (aktuellSida + 1) * KORT_PER_SIDA);
-  if (aktuellSida > 0 && synligaKort.length < KORT_PER_SIDA && visning.length >= KORT_PER_SIDA) {
-    synligaKort = visning.slice(visning.length - KORT_PER_SIDA);
-  }
+  // Sista sidan visar bara de kort som är kvar. Förut fylldes den på med kort från förra sidan, så samma kort syntes två gånger.
+  const synligaKort = visning.slice(aktuellSida * KORT_PER_SIDA, (aktuellSida + 1) * KORT_PER_SIDA);
   const ga = (nasta: Slot) => { setFlik(nasta); setSida(0); };
   const djurSrc = val.djur ? kortIkon(val.djur.id, "djur") : null;
   const miniBas = djurSrc?.endsWith("/linje.png") && val.djur ? kortDjurBas(val.djur.id) : null;
@@ -53,22 +51,22 @@ export function StegKortValjare({ flik, setFlik, kort, val, onskaKort, onskaIds,
   return (
     <>
       <p className="forslag-etikett" data-testid="forslag-etikett">{forslagEtikett}</p>
-      <div className="steg-piller-rad" data-m3="steg-piller" role="tablist" aria-label="Steg i boken">
-        <button type="button" role="tab" aria-selected={steg === 1} className={steg === 1 ? "steg-piller aktiv" : "steg-piller"} data-m3="steg-1" onClick={() => ga("djur")}>1. Välj djur 🐾</button>
-        <button type="button" role="tab" aria-selected={steg === 2} className={steg === 2 ? "steg-piller aktiv" : "steg-piller"} data-m3="steg-2" onClick={() => ga("farg")}>2. Färg &amp; Storlek 🎨</button>
-        <button type="button" role="tab" aria-selected={steg === 3} className={steg === 3 ? "steg-piller aktiv" : "steg-piller"} data-m3="steg-3" onClick={() => ga("tillbehor")}>3. Kläder &amp; Kraft 🎩</button>
+      <div className="steg-piller-rad" data-m3="steg-piller" role="group" aria-label="Steg i boken">
+        <button type="button" aria-pressed={steg === 1} className={steg === 1 ? "steg-piller aktiv" : "steg-piller"} data-m3="steg-1" onClick={() => ga("djur")}>1. Välj djur 🐾</button>
+        <button type="button" aria-pressed={steg === 2} className={steg === 2 ? "steg-piller aktiv" : "steg-piller"} data-m3="steg-2" onClick={() => ga("farg")}>2. Färg &amp; Storlek 🎨</button>
+        <button type="button" aria-pressed={steg === 3} className={steg === 3 ? "steg-piller aktiv" : "steg-piller"} data-m3="steg-3" onClick={() => ga("tillbehor")}>3. Kläder &amp; Kraft 🎩</button>
       </div>
       {steg === 2 ? (
-        <div className="steg-underflikar" role="tablist" aria-label="Färg, storlek och mönster">
-          <button type="button" role="tab" aria-selected={flik === "farg"} className={flik === "farg" ? "steg-under aktiv" : "steg-under"} onClick={() => ga("farg")}>🎨 Färg</button>
-          <button type="button" role="tab" aria-selected={flik === "storlek"} className={flik === "storlek" ? "steg-under aktiv" : "steg-under"} data-m3="beskriv-kat-storlek" onClick={() => ga("storlek")}>📏 Storlek</button>
-          <button type="button" role="tab" aria-selected={flik === "monster"} className={flik === "monster" ? "steg-under aktiv" : "steg-under"} onClick={() => ga("monster")}>✨ Mönster</button>
+        <div className="steg-underflikar" role="group" aria-label="Färg, storlek och mönster">
+          <button type="button" aria-pressed={flik === "farg"} className={flik === "farg" ? "steg-under aktiv" : "steg-under"} onClick={() => ga("farg")}>🎨 Färg</button>
+          <button type="button" aria-pressed={flik === "storlek"} className={flik === "storlek" ? "steg-under aktiv" : "steg-under"} data-m3="beskriv-kat-storlek" onClick={() => ga("storlek")}>📏 Storlek</button>
+          <button type="button" aria-pressed={flik === "monster"} className={flik === "monster" ? "steg-under aktiv" : "steg-under"} onClick={() => ga("monster")}>✨ Mönster</button>
         </div>
       ) : null}
       {steg === 3 ? (
-        <div className="steg-underflikar" role="tablist" aria-label="Kläder och kraft">
-          <button type="button" role="tab" aria-selected={flik === "tillbehor"} className={flik === "tillbehor" ? "steg-under aktiv" : "steg-under"} onClick={() => ga("tillbehor")}>🎩 Kläder<span className="sr-only"> Tillbehör</span></button>
-          <button type="button" role="tab" aria-selected={flik === "formaga"} className={flik === "formaga" ? "steg-under aktiv" : "steg-under"} onClick={() => ga("formaga")}>⚡ Kraft</button>
+        <div className="steg-underflikar" role="group" aria-label="Kläder och kraft">
+          <button type="button" aria-pressed={flik === "tillbehor"} className={flik === "tillbehor" ? "steg-under aktiv" : "steg-under"} onClick={() => ga("tillbehor")}>🎩 Kläder<span className="sr-only"> Tillbehör</span></button>
+          <button type="button" aria-pressed={flik === "formaga"} className={flik === "formaga" ? "steg-under aktiv" : "steg-under"} onClick={() => ga("formaga")}>⚡ Kraft</button>
         </div>
       ) : null}
       {val.djur ? (
@@ -97,9 +95,9 @@ export function StegKortValjare({ flik, setFlik, kort, val, onskaKort, onskaIds,
       </div>
       <div className="skriv-remsa steg-nav-remsa" data-v3="skriv-remsa" data-m3="kort-nav">
         <div className="kort-sid-nav">
-          <button type="button" className="kort-pil-knapp" data-m3="sida-bak" onClick={() => setSida((s) => (s - 1 + totalSidor) % totalSidor)}>◀ Fler</button>
-          <span className="kort-sida-info" data-m3="sida-info">Sida {aktuellSida + 1}/{totalSidor}</span>
-          <button type="button" className="kort-pil-knapp" data-m3="sida-fram" onClick={() => setSida((s) => (s + 1) % totalSidor)}>Fler ▶</button>
+          <button type="button" className="kort-pil-knapp" data-m3="sida-bak" disabled={aktuellSida === 0} aria-label="Föregående sida med ordkort" onClick={() => setSida(Math.max(0, aktuellSida - 1))}>◀ Fler</button>
+          <span className="kort-sida-info" data-m3="sida-info" role="status" aria-live="polite" aria-atomic="true">Sida {aktuellSida + 1}/{totalSidor}</span>
+          <button type="button" className="kort-pil-knapp" data-m3="sida-fram" disabled={aktuellSida >= totalSidor - 1} aria-label="Nästa sida med ordkort" onClick={() => setSida(Math.min(totalSidor - 1, aktuellSida + 1))}>Fler ▶</button>
         </div>
         <div className="kort-steg-nav">
           {steg > 1 ? (

@@ -384,7 +384,8 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
           <ModellGren spec={{ ...spec, kropp: id }}><Suspense fallback={null}><GltfSak id={id} /></Suspense></ModellGren>
         </group>
       ))}
-      {index === 0 ? <SolstjarnaPlopp /> : null}
+      {/* Belöningen visas vid det nyaste djuret (det som nyss skapades), inte vid det äldsta på ängen. */}
+      {index === alla.length - 1 ? <SolstjarnaPlopp /> : null}
     </group>
   );
 }

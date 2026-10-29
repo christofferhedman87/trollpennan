@@ -97,12 +97,15 @@ void main() {
 }
 `;
 
-export function Himmel({ natt }: { natt: number }) {
+/** `natt` styr introts natthimmel (sagaNatt). `kvall` (0..kvall.djup) tonar dagshimlen mot kvällsfärgerna i data/miljo.json. */
+export function Himmel({ natt, kvall = 0 }: { natt: number; kvall?: number }) {
   const mesh = useRef<THREE.Mesh>(null);
   const dagTop = useMemo(() => new THREE.Color(MILJO.himmel.dag_topp), []);
   const dagHor = useMemo(() => new THREE.Color(MILJO.himmel.dag_horisont), []);
   const nattTop = useMemo(() => new THREE.Color("#1A2344"), []);
   const nattHor = useMemo(() => new THREE.Color("#3A4A72"), []);
+  const kvallTop = useMemo(() => new THREE.Color(MILJO.kvall.himmel_topp), []);
+  const kvallHor = useMemo(() => new THREE.Color(MILJO.kvall.himmel_horisont), []);
   const top = useRef(new THREE.Color("#7EC8F2"));
   const hor = useRef(new THREE.Color("#A9CDE6"));
   const uniforms = useMemo(
@@ -115,9 +118,15 @@ export function Himmel({ natt }: { natt: number }) {
   useFrame(({ camera }) => {
     const m = mesh.current;
     if (m) m.position.copy(camera.position);
-    const t = Math.min(1, sagaNatt(natt) ?? natt);
-    top.current.copy(dagTop).lerp(nattTop, t);
-    hor.current.copy(dagHor).lerp(nattHor, t);
+    const saga = sagaNatt(natt);
+    if (saga == null && kvall > 0) {
+      top.current.copy(dagTop).lerp(kvallTop, Math.min(1, kvall));
+      hor.current.copy(dagHor).lerp(kvallHor, Math.min(1, kvall));
+    } else {
+      const t = Math.min(1, saga ?? natt);
+      top.current.copy(dagTop).lerp(nattTop, t);
+      hor.current.copy(dagHor).lerp(nattHor, t);
+    }
     uniforms.uTop.value.copy(top.current);
     uniforms.uHor.value.copy(hor.current);
   });

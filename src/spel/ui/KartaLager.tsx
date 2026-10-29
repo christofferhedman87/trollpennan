@@ -205,7 +205,7 @@ export function KartaLager({ kartaText, tryckPlats, stangKarta, nuvarandePlats }
   const nu = nuvarandePlats ?? "ang";
   const gardAktiv = nu === "garden";
   return (
-    <div className="karta-lager" data-testid="karta">
+    <div className="karta-lager" data-testid="karta" role="dialog" aria-modal="true" aria-label={OMR.karta.rubrik}>
       <div className="karta-topp" data-v1="varldskarta-topp">
         <div className="karta-rubrik">
           <h2>{OMR.karta.rubrik}</h2>
@@ -219,7 +219,7 @@ export function KartaLager({ kartaText, tryckPlats, stangKarta, nuvarandePlats }
         >
           🔊 Lyssna
         </button>
-        <button type="button" className="karta-stang" data-v1="karta-stang" data-f5="modal-stang" aria-label="Stäng karta" ref={(el) => el?.setAttribute("data-testid", "modal-stang")} onClick={() => stangKarta?.()}>
+        <button type="button" className="karta-stang" data-v1="karta-stang" data-f5="modal-stang" data-dialog-close aria-label="Stäng karta" ref={(el) => el?.setAttribute("data-testid", "modal-stang")} onClick={() => stangKarta?.()}>
           ×
         </button>
       </div>
