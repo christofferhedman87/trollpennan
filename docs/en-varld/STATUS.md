@@ -4,26 +4,29 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 
 | Block | Status | PR | Anteckning |
 |---|---|---|---|
-| 0 Grund och verktyg | Pågår | – | Planen och statusfilen är skrivna, och skills Modellspanaren och Trollpennan-runda är föreslagna. Baslinjemätningen återstår |
-| 1 En dal | Väntar på beslut A | – | |
+| 0 Grund och verktyg | Klar | #250, #251 | Planen, statusfilen, besluten, baslinjen och skills (Modellspanaren och Trollpennan-runda) är föreslagna |
+| 1 En dal | Nästa | – | Fast vinkel + dra/nyp (beslut A) |
 | 2 Byggformeln | Ej påbörjad | – | Kan starta direkt (ren logik) |
 | 3 Formsystemet | Ej påbörjad | – | Kräver block 2 |
 | 4 Byggnaderna lever | Ej påbörjad | – | |
 | 5 Bygga i världen | Ej påbörjad | – | Kräver block 1 |
-| 6 Modellskörd | Ej påbörjad | – | Väntar delvis på beslut C (Poly Pizza-nyckel) |
+| 6 Modellskörd | Ej påbörjad | – | Christoffer skapar Poly Pizza-nyckel (beslut C). Börja med GitHub, Quaternius, OpenGameArt och KayKit |
 | 7 Slime Rancher-magi | Ej påbörjad | – | |
-| 8 Uppdrag, Byggboken och röster | Väntar på beslut B och D | – | |
+| 8 Uppdrag, Byggboken och röster | Ej påbörjad | – | Kreativitet fri, stjärnor köper mark (B). Röster: lista i docs/en-varld/nya-repliker.md (D) |
 | 9 Städning | Ej påbörjad | – | |
 
 ## Nästa steg
-1. Mät baslinjen på ängen (draw calls, trianglar och bildtakt i 375×812) och skriv den här.
-2. Starta block 2: kartlägg `src/tolk/byggtolk.ts` och skriv de 60 testmeningarna först.
+1. Block 2: kartlägg `src/tolk/byggtolk.ts` och skriv de 60 testmeningarna först (ren logik, kan gå parallellt).
+2. Block 1: panorering och zoom på ängen, tomter och flytt av gårdens byggen till ängen med sparmigrering.
+
+## Baslinje (2026-10-29, live `34490f7`, 375×812, tom äng efter introt)
+- 109 draw calls och 34 354 trianglar. Det är redan över W1:s riktmärke på ≤95 draw calls (stigar, skyltar och horisontmodeller). Block 1 och 3 behöver instansiering och sammanslagna geometrier för att hålla budgeten. Ny budget för en full dal (15 byggen och 20 djur): ≤140 draw calls och ≤150 000 trianglar. Bildtakten går inte att mäta i molnmiljön (programvarurendering).
 
 ## Beslut
-- A. Kamera: obesvarat
-- B. Byggboken: obesvarat
-- C. Poly Pizza-nyckel: obesvarat
-- D. Röster: obesvarat
+- A. Kamera: fast vinkel med panorering (dra) och zoom (nyp) inom dalen (2026-10-29)
+- B. Byggboken: kreativiteten låses aldrig. Former, material, färger och delar är fria, och stjärnor köper mark, utbyggnader och specialbyggnader. projektregler.md är uppdaterad (2026-10-29)
+- C. Poly Pizza: Christoffer skapar en gratis API-nyckel. Den används bara vid körning (miljövariabel) och läggs aldrig i repot
+- D. Röster: nya repliker samlas i `docs/en-varld/nya-repliker.md` för Christoffer eller Grok att generera med ElevenLabs
 
 ## Fakta för den som fortsätter
 - Live: https://trollpennan.christofferhedman87.workers.dev/ (Cloudflare bygger från `main`; byggen från andra grenar fallerar alltid direkt, och det är inget kodfel).
