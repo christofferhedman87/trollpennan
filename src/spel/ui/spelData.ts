@@ -23,6 +23,7 @@ export const TEXTER = texterJson as {
   byggt: string[];
   meny: { flytta: string; bygg_om: string; lada: string; bo: string };
   flytta_hjalp: string;
+  tomt_hjalp: string;
   bygg_om_hjalp: string;
   lada: { rubrik: string; tom: string; ta_fram: string; full: string };
   bo: { valj: string; flyttar_in: string[]; full: string; passar_inte: string; ingen: string };

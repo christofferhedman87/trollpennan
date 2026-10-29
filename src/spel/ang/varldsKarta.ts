@@ -42,7 +42,7 @@ export const STOLPAR: Record<Stolpe, XZ> = {
 export const RESMAL: readonly Resmal[] = [
   // Skogsstigen går genom grinden i staketet (Skogsstig i byggnader.tsx, tryckGrind leder också till skogen).
   { id: "skogen", stolpe: "vanster", ovre: true, stig: [[-0.7, -2.3], [-0.8, -4.0], [-1.3, -7.0], [-2.0, -10.4], [-2.5, -12.4]], mal: [-2.9, -14.2] },
-  { id: "garden", stolpe: "vanster", ovre: false, stig: [[-1.45, -2.85], [-2.0, -4.3], [-2.4, -6.2], [-2.8, -7.8]], mal: [-3.2, -9.2] },
+  // Block 1 (En värld): Gården är ingen egen plats längre – den finns i Hemdalen runt ängen (src/spel/dal/).
   { id: "grottan", stolpe: "hoger", ovre: true, stig: [[0.6, -2.6], [0.75, -4.4], [1.2, -8.0], [1.75, -11.0], [2.1, -12.7]], mal: [2.4, -14.4] },
   { id: "sjon", stolpe: "hoger", ovre: false, stig: [[1.45, -2.9], [1.95, -4.4], [2.2, -6.4], [2.3, -8.4]], mal: [2.6, -9.8] },
 ];

@@ -1,4 +1,5 @@
 import { useGLTF } from "@react-three/drei";
+import { naraTomt } from "./dal/tomter.ts";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { belysScen } from "./belys.ts";
@@ -191,7 +192,12 @@ const BUSKE: Plats[] = [
   [1.55, 2.55, 0.75, 1.1, 0.15],
   [-0.35, 2.9, 0.6, 0.8, 0.1],
 ];
-const EKAR: Plats[] = [...TRAD, ...BUSKE];
+// Block 1 (En värld): träd och buskar som står på en tomt i Hemdalen tas bort, så att byggena får plats.
+const fri = (p: Plats[]): Plats[] => p.filter(([x, z]) => !naraTomt(x, z));
+const EKAR: Plats[] = fri([...TRAD, ...BUSKE]);
+const VANLIG_FRI = fri(VANLIG);
+const GRAN_FRI = fri(GRAN);
+const TJOCK_FRI = fri(TJOCK);
 const BLOM_R: Plats[] = [
   [-1.35, 1.55, 0.38, 0.2, 0],
   [-1.05, 1.75, 0.34, 1.1, 0],
@@ -307,8 +313,8 @@ export function KenneyNatur() {
   return (
     <group>
       <Stall url={URL.ek} platser={EKAR} />
-      <Stall url={URL.van} platser={VANLIG} />
-      <Stall url={URL.gran} platser={GRAN} />
+      <Stall url={URL.van} platser={VANLIG_FRI} />
+      <Stall url={URL.gran} platser={GRAN_FRI} />
       <Stall url={URL.rod} platser={BLOM_R} />
       <Stall url={URL.gul} platser={BLOM_G} />
       <Stall url={URL.sten} platser={STEN_S} />
@@ -319,7 +325,7 @@ export function KenneyNatur() {
       </group>
       {allaDetaljer ? (
         <>
-          <Stall url={URL.tjock} platser={TJOCK} />
+          <Stall url={URL.tjock} platser={TJOCK_FRI} />
           <Stall url={URL.lila} platser={BLOM_L} />
           <Stall url={URL.svampr} platser={SVAMP_R} />
           <Stall url={URL.svampt} platser={SVAMP_T} />

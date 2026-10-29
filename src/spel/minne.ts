@@ -4,6 +4,7 @@ import type { Varelse } from "../tolk/typer.ts";
 import { byggMedId } from "../tolk/byggtolk.ts";
 import { brygga, type Sparad } from "./brygga.ts";
 import type { SparatBygge } from "./bygge.ts";
+import { tomtKarta } from "./dal/tomter.ts";
 import { BYGG } from "../tolk/byggtolk.ts";
 import { MAX_SYNLIGA_DJUR, START_PLATS, mattUr, platsMed, upplast } from "./platser.ts";
 
@@ -109,6 +110,8 @@ export type Store = Data & {
   kopBygg: (id: string, pris: number) => boolean;
   laggByggen: (lista: SparatBygge[]) => SparatBygge[];
   flyttaBygge: (uid: string, x: number, y: number) => void;
+  /** Block 1: flytta bygget till en tomt i dalen; står ett annat bygge där byter de plats. */
+  sattTomt: (uid: string, tomt: number) => void;
   bytBygge: (uid: string, nasta: SparatBygge) => void;
   tillLada: (uid: string) => void;
   franLada: (uid: string) => boolean;
@@ -225,10 +228,16 @@ export const useMinne = create<Store>((set, get) => ({
     });
     brygga.synkaGard();
   },
+  sattTomt: (uid, tomt) => {
+    const karta = tomtKarta(get().garden);
+    const fran = karta.get(uid);
+    const dar = [...karta.entries()].find(([, t]) => t === tomt)?.[0];
+    set({ garden: get().garden.map((b) => (b.uid === uid ? { ...b, tomt } : b.uid === dar ? { ...b, tomt: fran ?? null } : { ...b, tomt: karta.get(b.uid) ?? null })) });
+  },
   bytBygge: (uid, nasta) => {
     const byggda = nasta.bygg.startsWith("skatt:") ? get().byggda : [...new Set([...get().byggda, nasta.bygg])];
     set({
-      garden: get().garden.map((b) => (b.uid === uid ? { ...nasta, uid, x: b.x, y: b.y, boende: b.boende } : b)),
+      garden: get().garden.map((b) => (b.uid === uid ? { ...nasta, uid, x: b.x, y: b.y, tomt: b.tomt, boende: b.boende } : b)),
       byggda,
     });
     brygga.synkaGard();

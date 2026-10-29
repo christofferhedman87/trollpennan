@@ -2,6 +2,8 @@ import { avBro } from "../avbro.ts";
 import { TEXTER_AV } from "../aventyr.ts";
 import { allaMina } from "../avflode.ts";
 import { brygga } from "../brygga.ts";
+import { dalStyr } from "../dal/dalStyr.ts";
+import { ledigTomt, TOMTER } from "../dal/tomter.ts";
 import { useMinne } from "../minne.ts";
 import { aktivtSkrivUppdrag, nastaSkrivUppdrag } from "../uppdragsmotor.ts";
 import { TEXTER } from "../ui/spelData.ts";
@@ -21,7 +23,14 @@ export function useVarld(k: Pick<SpelKarna, "t" | "b">) {
       document.querySelector("[data-testid=demo-senare]")?.scrollIntoView({ block: "nearest" });
     });
   }
-  function visaVarld(p: Varld) {
+  function visaVarld(onskad: Varld) {
+    // Block 1 (En värld): Gården finns i Hemdalen på ängen. Allt som förr bytte till Gården visar ängen
+    // och låter kameran glida till tomterna.
+    const p: Varld = "ang";
+    if (onskad === "gard") {
+      const t = TOMTER[ledigTomt(useMinne.getState().garden) ?? 0] ?? TOMTER[0];
+      if (t) dalStyr.fokusera(t.x, t.z);
+    }
     varldRef.current = p;
     setVarld(p);
     setPanel("spel");
@@ -64,10 +73,8 @@ export function useVarld(k: Pick<SpelKarna, "t" | "b">) {
     setKartaOpp(false);
     setMenyOpp(false);
     setMeny(null);
-    varldRef.current = "gard";
-    setVarld("gard");
     if (omradeRef.current) lamnaAv();
-    else brygga.visa("gard");
+    visaVarld("gard");
     setPanel("byggbok");
     setLage("kort");
     setForslag(null);

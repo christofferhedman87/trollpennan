@@ -1,7 +1,7 @@
 import { Bvh, OrbitControls, PerformanceMonitor } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { startaBakgrundsForladdning } from "./modeller/forladda.ts";
-import { Component, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { Component, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
 import { brygga } from "./brygga.ts";
 import { useMinne } from "./minne.ts";
@@ -11,7 +11,10 @@ import { KV, MILJO } from "./miljo.ts";
 import { HINT, SNART } from "./ang/delat.ts";
 import { DAMM } from "./ang/damm.ts";
 import { Eldflugor, FagelFlyg, Fjarilar, Forgrund, Glitter, GrasTuvor, Ljusflackar, Moln, Nackrosor, Ringar, Solkorn, Sond, Stenar, TradOchBlommor, VindGras } from "./ang/dekor.tsx";
-import { Byggnad, Skogsstig, SpokHus } from "./ang/byggnader.tsx";
+import { Skogsstig, SpokHus } from "./ang/byggnader.tsx";
+import { Hemdalen } from "./dal/Hemdalen.tsx";
+import { DalKamera } from "./dal/DalKamera.tsx";
+import { DALEN } from "./dal/tomter.ts";
 import { DjurIScen } from "./ang/djur.tsx";
 import { Bengtsson3D } from "./ang/Bengtsson3D.tsx";
 import { Himmel, SvajMark } from "./ang/himmel.tsx";
@@ -93,8 +96,10 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
     if (grafVarv.current !== 1 && grafVarv.current % 40 !== 0) return;
     forbattraModellMaterial(scenGraf);
   });
-  const djur = useMinne((s) => s.ang);
-  const garden = useMinne((s) => s.garden);
+  const angDjur = useMinne((s) => s.ang);
+  const hemma = useMinne((s) => s.hemma);
+  // Block 1 (En värld): djur som flyttat in i ett bygge finns kvar i dalen (block 4 låter dem gå hem på kvällen).
+  const djur = useMemo(() => (hemma.length ? [...angDjur, ...hemma.map((h) => h.spec)] : angDjur), [angDjur, hemma]);
   // `vis` styr introts natt (sagaNatt i Himmel/SagaLjus). Kvällen utanför introt sköts av KvallsLjus och `kvall`.
   const vis = 0;
   const kvall = saga ? 0 : kvallsTon(natt);
@@ -191,9 +196,7 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
       <Eldflugor natt={saga ? vis : natt} />
       <SpokHus onSnart={onSnart} />
       <Skogsstig onSnart={onSnart} />
-      {garden.map((b) => (
-        <Byggnad key={b.uid} b={b} />
-      ))}
+      {!saga ? <Hemdalen /> : null}
       {djur.map((spec) => (
         <DjurIScen key={spec.uid} spec={spec} alla={djur} plats={ANG_PLATS} />
       ))}
@@ -204,20 +207,22 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
       <OrbitControls
         ref={styr as never}
         enabled={!saga && !vyFlygAktiv && resaMal == null}
-        enablePan={false}
+        enableRotate={false}
+        enablePan
+        screenSpacePanning={false}
+        panSpeed={1.1}
         enableDamping
         dampingFactor={0.08}
         maxPolarAngle={1.42}
         minPolarAngle={1.1}
-        minAzimuthAngle={-1.05}
-        maxAzimuthAngle={1.05}
-        minDistance={6}
-        maxDistance={14}
+        minDistance={DALEN.kamera.avstand[0]}
+        maxDistance={DALEN.kamera.avstand[1]}
         target={[0, 1.05, -0.15]}
-        rotateSpeed={0.7}
         zoomSpeed={0.75}
-        touches={{ ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN }}
+        touches={{ ONE: THREE.TOUCH.PAN, TWO: THREE.TOUCH.DOLLY_PAN }}
+        mouseButtons={{ LEFT: THREE.MOUSE.PAN, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.PAN }}
       />
+      <DalKamera styr={styr} aktiv={!saga && !vyFlygAktiv && resaMal == null} />
       <SagaKamera styr={styr} />
       <KameraRam styr={styr} />
       <KameraFokus styr={styr} plats={ANG_PLATS} />

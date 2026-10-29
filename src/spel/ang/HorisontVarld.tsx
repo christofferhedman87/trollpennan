@@ -194,7 +194,7 @@ function DalEtiketter({ synlig }: { synlig: boolean }) {
   const mal = useMemo(() => ({ current: gl.domElement.parentElement as HTMLElement }), [gl]);
   return (
     <>
-      {DAL_ETIKETTER.map((e) => {
+      {DAL_ETIKETTER.filter((e) => e.id !== "garden").map((e) => {
         const pos = DAL_ETIKETT_POS[e.id];
         return (
           <Html key={e.id} position={[pos[0], pos[1], pos[2]]} center portal={mal} zIndexRange={[4, 0]} style={{ pointerEvents: "none" }}>
@@ -210,7 +210,7 @@ function HorisontScen({ onValj }: { onValj?: ValjPlats }) {
   return (
     <>
       {ZONER.map((grupp) => (
-        <group key={grupp.zon} userData={{ "data-w2-zon": grupp.zon }} onClick={tryckPa(grupp.zon, onValj)}>
+        <group key={grupp.zon} userData={{ "data-w2-zon": grupp.zon }} onClick={grupp.zon === "garden" ? undefined : tryckPa(grupp.zon, onValj)}>
           <ModellRader rader={grupp.rader} />
           {grupp.zon === "sjon" ? <SjoVatten /> : null}
           <Traffyta id={grupp.zon} onValj={onValj} />

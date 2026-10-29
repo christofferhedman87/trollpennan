@@ -70,7 +70,8 @@ export function SagaKamera({ styr }: { styr: { current: OrbitStyr | null } }) {
   const was = useRef(false);
   const pos = useRef(new THREE.Vector3());
   const look = useRef(new THREE.Vector3());
-  const harDjur = useMinne((s) => s.ang.length > 0 || s.hemma.length > 0);
+  // Block 1: ett bygge i Hemdalen räknas också – då kan barnet panorera dit.
+  const harDjur = useMinne((s) => s.ang.length > 0 || s.hemma.length > 0 || s.garden.length > 0);
   useEffect(() => {
     return () => {
       publiceraTredKamera(KAMERA_ANG[0], KAMERA_ANG[1], KAMERA_ANG[2], INTRO_KAM_SLUT);

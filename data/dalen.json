@@ -1,0 +1,56 @@
+{
+ "_om": "Block 1 (En värld): Hemdalen – ängen i mitten och byggtomter runt omkring, där Gårdens byggen nu står. Tomterna fylls i ordningen nedan (närmast ängen först). Kameran kan panoreras med ett finger och zoomas med två, inom gränserna. Färgerna här enligt R8 (inga färger i scenkoden).",
+ "tomter": [
+  { "x": -3.5, "z": 0.4 },
+  { "x": 3.5, "z": 0.4 },
+  { "x": -3.5, "z": 2.7 },
+  { "x": 3.5, "z": 2.7 },
+  { "x": -5.7, "z": 0.4 },
+  { "x": 5.7, "z": 0.4 },
+  { "x": -5.7, "z": 2.7 },
+  { "x": 5.7, "z": 2.7 },
+  { "x": -5.8, "z": -1.9 },
+  { "x": 5.8, "z": -1.9 },
+  { "x": -6.0, "z": -4.3 },
+  { "x": 6.0, "z": -4.3 },
+  { "x": -4.3, "z": -6.9 },
+  { "x": 4.6, "z": -6.9 },
+  { "x": -6.6, "z": -6.9 },
+  { "x": 6.9, "z": -6.9 }
+ ],
+ "tomt": {
+  "radie": 0.95,
+  "fri_natur": 1.6,
+  "mark": "#E6C79C",
+  "kant": "#B98A57",
+  "ledig_glod": "#FFF59D",
+  "flytta_glod": "#80DEEA"
+ },
+ "kamera": {
+  "x": [
+   -4.8,
+   4.8
+  ],
+  "z": [
+   -5.6,
+   2.0
+  ],
+  "avstand": [
+   5.5,
+   16
+  ],
+  "fokus_ms": 900
+ },
+ "smasaker_pa_angen": [
+  "träd",
+  "blomma",
+  "buske",
+  "svamp",
+  "gran",
+  "palm",
+  "äppelträd",
+  "bänk",
+  "lykta"
+ ],
+ "_om_smasaker": "Byggord som på ängen blir en sak bland djuren (som förut) när meningen saknar form, material, delar och egenskaper. 'en blomma' = sak på ängen, 'en blomma av glas' eller 'ett träd som ser ut som en drake' = bygge på en tomt."
+}
