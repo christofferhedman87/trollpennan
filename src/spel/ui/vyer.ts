@@ -1,6 +1,5 @@
 import type { ComponentType } from "react";
 import type { VagvisarePlatsId, VagvisareSkarmPunkt } from "../ang/Vagvisare3D.tsx";
-import { Garden3D } from "../gard/Garden3D.tsx";
 import type { SpelKarna } from "../styr/typer.ts";
 
 export type VyPlatsNamn = "scen" | "over";
@@ -14,11 +13,5 @@ export type VyDef = {
   syns: (k: SpelKarna) => boolean;
   Vy: ComponentType<VyProps>;
 };
-export const VYER: VyDef[] = [
-  {
-    id: "garden3d",
-    plats: "scen",
-    syns: (k) => k.t.varld === "gard" && !k.t.omrade && !k.t.kartaOpp,
-    Vy: Garden3D,
-  },
-];
+// Block 9 (En värld): Gårdens egen 3D-vy är borta – Gården finns i Hemdalen på ängen (src/spel/dal/).
+export const VYER: VyDef[] = [];

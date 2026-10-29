@@ -15,8 +15,18 @@ function las(): string[] {
   }
 }
 
-export const useDal = create<{ utbyggnader: string[]; kop: (id: string) => void }>((set, get) => ({
+export const useDal = create<{ utbyggnader: string[]; kop: (id: string) => void; ersatt: (lista: unknown) => void }>((set, get) => ({
   utbyggnader: las(),
+  /** Läs in en kopia ("Spara en kopia" i föräldrasidan): ersätter de köpta utbyggnaderna. */
+  ersatt: (lista) => {
+    const utbyggnader = Array.isArray(lista) ? lista.filter((x): x is string => typeof x === "string" && UTBYGGNAD.lista.some((u) => u.id === x)) : [];
+    set({ utbyggnader });
+    try {
+      globalThis.localStorage?.setItem(NYCKEL, JSON.stringify({ utbyggnader }));
+    } catch {
+      /* privat läge */
+    }
+  },
   kop: (id) => {
     const utbyggnader = [...new Set([...get().utbyggnader, id])];
     set({ utbyggnader });

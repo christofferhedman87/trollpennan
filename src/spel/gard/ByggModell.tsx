@@ -1,3 +1,4 @@
+import type {} from "./gard3dDiag.ts";
 import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Component, Suspense, useEffect, useMemo, useRef, type ReactNode } from "react";
