@@ -10,14 +10,16 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 | 3 Formsystemet | Klar | se git-logg | `src/spel/dal/` (ritplan, Stomme, Byggdelar, Byggverk). Formen blir stomme: byggord, djur (även riggade Quaternius-djur med SkeletonUtils och alfa-rättning) eller sak. Dörr, fönster och hö sätts på former. Delarna torn, flagga, kupol, skorsten, vingar, hjul, balkong och trappa är moduler. Material (is, glas, godis, moln, kristall, guld …) blir skal. Egenskaperna svävar, dansar, snurrar, upp och ner, gnistor, noter, rök och lyser. Nya byggen får en byggstuds. Byggmenyns släppklick sväljs. Tomterna ritas instansierat. 12 byggen + djur = 136 ritanrop |
 | 4 Byggnaderna lever | Klar (första versionen) | se git-logg | Djur som flyttat in (byggmenyn, "Vem ska bo här?") bor vid sitt hem (`src/spel/dal/Boende.tsx`, `boende.ts`). På dagen strövar de runt bygget, i hagen inne i stängslet. På kvällen går de in genom dörren, ljuset tänds och Zzz svävar över taket. I hagen somnar de där de står, och glada hjärtan stiger ur hagen på dagen. Kvar: Solstjärnor i ladan och djur som lockas av hönshus, fågelholk och damm |
 | 5 Bygga i världen | Klar (första versionen) | se git-logg | Byggboken öppnas när man trycker på en tomt. Den har ✨ Byggidéer (åtta tokiga meningar) och 🔨 Bygg själv, där barnet väljer kort i fyra steg (Vad?, Ser ut som …, Av …, Med …) och ser meningen växa rätt böjd innan hon trycker Bygg! (`src/spel/dal/byggbok.ts`, `ByggKomponist.tsx`). Alla byggsidor är fria utom Solgården. Bakre tomter visas mer uppifrån (`kamera.vy_bak`). Kvar: stora former (katt, gris) kan skymma tomter bakom |
-| 6 Modellskörd | Ej påbörjad | – | Christoffer skapar Poly Pizza-nyckel (beslut C). Börja med GitHub, Quaternius, OpenGameArt och KayKit |
+| 6 Modellskörd | Första skörden klar | se git-logg | 14 byggnader ur KayKit Medieval Hexagon Pack (CC0, git clone från GitHub) i `public/models/gard/k-*-kaykit.glb`, 726–5 659 trianglar och en primitiv var (ett ritanrop). Nya modeller för slott, torn, väderkvarn och brunn. Sju nya byggord: kyrka, smedja, marknad, värdshus, gruva, vattenkvarn och sågverk. `egenFarg` i gard-3d.json betyder att modellen behåller sina egna färger om barnet inte nämner någon. Kvar: fler former och sagobyggnader (svamphus, pumpahus, tekannehus) från Poly Pizza, som Grok kan ta på söndag. Kenneys City Builder-kit (moderna hus) passade inte stilen |
 | 7 Slime Rancher-magi | Ej påbörjad | – | |
 | 8 Uppdrag, Byggboken och röster | Ej påbörjad | – | Kreativitet fri, stjärnor köper mark (B). Röster: lista i docs/en-varld/nya-repliker.md (D) |
 | 9 Städning | Ej påbörjad | – | |
 
 ## Nästa steg
-1. Block 6: modellskörd. Det finns ingen Poly Pizza-nyckel (beslut C ändrat 2026-10-29). Använd GitHub (Kenney starter kits) och Quaternius. Det som inte går att hämta härifrån kan Grok ta på söndag.
-2. Kvar: staket, mur och port ritas fortfarande som inhägnad med gamla ByggeModell. Gamla `Garden3D` tas bort i block 9.
+1. Block 7: Slime Rancher-magi. Utbyggnader av dalen för stjärnor (beslut B), rörelse vid platserna i fjärran och byggnadsställningar (KayKit `building_stage_A–C`) som byggeffekt.
+2. Block 8: bygguppdrag från Doktor Bengtsson. Nya repliker listas i `nya-repliker.md`.
+3. Till Grok (söndag): fler formmodeller från Poly Pizza via `trollpennan-modellspanare`-rutinen.
+4. Kvar: staket, mur och port ritas fortfarande som inhägnad med gamla ByggeModell. Gamla `Garden3D` tas bort i block 9.
 
 ## Baslinje (2026-10-29, live `34490f7`, 375×812, tom äng efter introt)
 - 109 draw calls och 34 354 trianglar. Det är redan över W1:s riktmärke på ≤95 draw calls (stigar, skyltar och horisontmodeller). Block 1 och 3 behöver instansiering och sammanslagna geometrier för att hålla budgeten. Ny budget för en full dal (15 byggen och 20 djur): ≤140 draw calls och ≤150 000 trianglar. Bildtakten går inte att mäta i molnmiljön (programvarurendering).

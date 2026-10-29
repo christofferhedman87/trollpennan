@@ -14,7 +14,7 @@ function plan(fras: string) {
 
 test("Block 3: formen väljer stommens modell – byggord, djur och sak", () => {
   const slott = plan("ett stall som ser ut som ett slott");
-  assert.match(slott.url ?? "", /slott/);
+  assert.match(slott.url ?? "", /castle|slott/);
   assert.equal(slott.arForm, false, "ett slott är en byggnad, dörr finns i modellen");
   const ko = plan("en lada formad som en ko");
   assert.match(ko.url ?? "", /ko/);

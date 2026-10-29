@@ -116,7 +116,7 @@ export function Stomme({ plan, onMatt }: { plan: Ritplan & { url: string }; onMa
     g.add(k);
     if (plan.arForm) passaForm(g, plan);
     else passaByggnad(g, plan.malhojd, plan.maxBredd, plan.skala);
-    egnaMaterial(k, plan.farg ?? (plan.arForm ? null : plan.standardFarg), plan.takFarg, plan.arForm ? 0 : (plan.fonster ?? 3));
+    egnaMaterial(k, plan.farg ?? (plan.arForm || plan.egenFarg ? null : plan.standardFarg), plan.takFarg, plan.arForm ? 0 : (plan.fonster ?? 3));
     skal(k, plan);
     skuggaUtanTraff(k, true);
     // Byggena kastar ingen skugga i skuggpasset (det dubblar ritanropen); den mjuka skuggfläcken under tomten räcker.
