@@ -5,7 +5,7 @@ import { brygga, type Sparad } from "../brygga.ts"; import { bestamdHem, franTol
 import { fyll } from "../fyll.ts"; import { ALBUM, arSammansatt, BYGG_ORD, geEgenGava, komIhagDjur, noteraSkriv, poangAv, taggarFor } from "../liv.ts"; import { ljud } from "../ljud.ts"; import { useMinne } from "../minne.ts";
 import { arVarmePlagg, hjalpDjurPaAngen, mossaPaFrysKanin } from "./mossaKanin.ts"; import { byggTraff, geTraff, kompisTraff, laggPa, nastanRad, ONSK, ONSK_BYGG, tillaggFras } from "../onska.ts"; import { replik } from "../replik.ts"; import * as rostKo from "../rostKo.ts";
 import { forsokDopaText } from "../ui/gavoRuta.ts"; import { mataVaktardjur } from "../ang/vaktardjur.tsx"; import { noteraSolGava, noteraSolSkapelse } from "../solstjarna.ts";
-import { TEXTER } from "../ui/spelData.ts"; import type { SpelKarna } from "./typer.ts";
+import { TEXTER } from "../ui/spelData.ts"; import { dalStyr } from "../dal/dalStyr.ts"; import { ledigTomt, tomtKarta, TOMTER } from "../dal/tomter.ts"; import { byggaPaAngen } from "../dal/byggVal.ts"; import type { SpelKarna } from "./typer.ts";
 
 function laggEllerVarma(v: Varelse, antal: number): { nya: Sparad[]; somnade: Sparad[] } { const s = useMinne.getState(); const aktId = aktivtSkrivUppdrag(s.uppdrag, platsNu())?.id; const varm = mossaPaFrysKanin(v);
   const hatt = varm?.spec.tillbehor.some((t) => arVarmePlagg(t.id)); const hjalp = varm && hatt ? varm : hjalpDjurPaAngen(v, aktId); if (!hjalp) return s.laggPaAng(v, antal); const upp = s.uppdateraDjur(hjalp.uid, hjalp.spec);
@@ -16,21 +16,32 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
   const { bengtsson, gaIn, belonaFlode, platsUi } = k.a; const { uppfyll, belona } = k.be; function rensaSkriv() { setText("");
     textRef.current = ""; setVal({}); setHand(false); setForslag(null);
     setBehover(null); }
+  /** Block 1: nya byggen får tomter (den barnet tryckt på först, sedan lediga i ordning). */
+  function geTomter(gjorda: ReturnType<typeof franTolk>[], om: string | null) {
+    const lista: { uid: string; tomt?: number | null }[] = useMinne.getState().garden.filter((g) => g.uid !== om);
+    const vald = dalStyr.lage().vald;
+    for (const [i, g] of gjorda.entries()) { g.tomt = ledigTomt(lista, i === 0 ? vald : null); lista.push(g); }
+    dalStyr.valj(null);
+  }
+  function fokusPaBygge(uid: string) {
+    const t = tomtKarta(useMinne.getState().garden).get(uid); const p = t == null ? undefined : TOMTER[t]; if (p) dalStyr.fokusera(p.x, p.z);
+  }
   function hanteraBygg(utfall: Extract<ByggFormUtfall, { typ: "bygge" }>, mening = "") { useMinne.getState().sparaOkanda(utfall.okanda); rostKo.handling(); rensaVidHandling(); // Beslut B (2026-10-29): kreativiteten låses aldrig – alla byggord fungerar, Byggboken ger ord att jaga.
 
     const om = omUidRef.current; const ensam = utfall.byggen.length === 1 ? utfall.byggen[0] : undefined; const bef = !om && ensam && ensam.antal === 1 ? useMinne.getState().garden.find((x) => x.bygg === ensam.bygg) : undefined; const harAttr = !!ensam && (ensam.adj.length > 0 || ensam.delar.length > 0 || !!ensam.material);
-    const uppdatera = !!bef && harAttr; const behov = om ? Math.max(0, utfall.byggen.length - 1) : uppdatera ? 0 : utfall.byggen.length; const lediga = BYGG.max_pa_garden - useMinne.getState().garden.length; if (behov > lediga) {
+    const former = ensam ? BYGG.bygg_ord.find((x) => x.id === ensam.bygg)?.former ?? [] : []; const bestamd = !!ensam && (ensam.ord === former[1] || ensam.ord === former[3]); // Block 1: "gör huset rött" ändrar huset som står; "ett rött hus" bygger ett nytt
+    const uppdatera = !!bef && harAttr && bestamd; const behov = om ? Math.max(0, utfall.byggen.length - 1) : uppdatera ? 0 : utfall.byggen.length; const lediga = BYGG.max_pa_garden - useMinne.getState().garden.length; if (behov > lediga) {
       visaBanner(TEXTER.lada.full, "ovr", "tapp"); return; }
     visaPlatsRen("gard"); let gjorda: ReturnType<typeof franTolk>[] = []; if (uppdatera && bef) { const tolkad = tolkaByggMening(mening || utfall.formel, bef.bygg);
       if (tolkad) { const uppdaterad = appliceraByggMening(bef, tolkad); useMinne.getState().bytBygge(bef.uid, uppdaterad); gjorda = [uppdaterad];
       }
     }
     if (!gjorda.length) { const redan = useMinne.getState().garden.map((p) => ({ x: p.x, y: p.y, bygg: p.bygg, antal: p.antal })); gjorda = utfall.byggen.map((b) => { const pos = arKantBygge(b.bygg) ? ledigKantPlats(redan) : ledigCellPlats(redan);
-        redan.push({ x: pos.x, y: pos.y, bygg: b.bygg, antal: b.antal }); return franTolk(b, formelByggForm(b), pos.x, pos.y); }); if (om && gjorda[0]) {
+        redan.push({ x: pos.x, y: pos.y, bygg: b.bygg, antal: b.antal }); return franTolk(b, formelByggForm(b), pos.x, pos.y); }); geTomter(gjorda, om); if (om && gjorda[0]) {
         useMinne.getState().bytBygge(om, gjorda[0]); if (gjorda.length > 1) useMinne.getState().laggByggen(gjorda.slice(1)); omUidRef.current = null; } else {
         useMinne.getState().laggByggen(gjorda); }
     }
-    const visat = useMinne.getState().garden.find((g) => g.uid === gjorda[0]?.uid) ?? gjorda[0]; if (visat) { const mall = TEXTER.byggt.find((r) => r.startsWith("Klart!") && r.includes("{formel}")) ?? TEXTER.byggt[0]!; const klarText = fyll(mall, { formel: visat.formel });
+    const visat = useMinne.getState().garden.find((g) => g.uid === gjorda[0]?.uid) ?? gjorda[0]; if (visat) { fokusPaBygge(visat.uid); const mall = TEXTER.byggt.find((r) => r.startsWith("Klart!") && r.includes("{formel}")) ?? TEXTER.byggt[0]!; const klarText = fyll(mall, { formel: visat.formel });
       visaBanner(klarText, "ovr", "tapp"); ljud.uppfylld(); }
     setByggPuff(null); const aktiv = useMinne.getState().onskan; if (aktiv?.kalla === "bygg") { const ons = ONSK_BYGG.onskningar.find((o) => o.id === aktiv.id);
       const djur = useMinne.getState().ang.find((a) => a.uid === aktiv.uid) ?? useMinne.getState().hemma.find((h) => h.spec.uid === aktiv.uid)?.spec; const traff = ons ? byggTraff(utfall.byggen, ons, djur?.kropp) : null;
@@ -129,14 +140,12 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
       belonaFlode(svar); if (gavaRef.current) noteraSolGava(gavaRef.current, trim); if (!svar.okant) { setGavaTill(null); gavaRef.current = null; }
       rensaSkriv(); return;
     }
-    if (varldRef.current === "gard" && !vantarRef.current && !omradeRef.current) { const bygg = tolkaByggFormel(trim);
-      if (bygg.typ === "forslag") { setForslag({ token: bygg.token, text: bygg.text, forslag: bygg.forslag });
-        setBehover(null); return;
-      }
-      if (bygg.typ === "bygge") { hanteraBygg(bygg, trim);
+    // Block 1 (En värld): djur och byggen skrivs i samma bok på ängen. Byggen hamnar på en tomt i Hemdalen.
+    if (!vantarRef.current && !omradeRef.current) { const bygg = tolkaByggFormel(trim);
+      if (byggaPaAngen(bygg, trim) && bygg.typ === "bygge") { hanteraBygg(bygg, trim);
         return; }
-      const sista = useMinne.getState().garden.at(-1); if (sista) {
-        const extra = tolkaByggMening(trim, sista.bygg); if (extra) {
+      const om = omUidRef.current ? useMinne.getState().garden.find((g) => g.uid === omUidRef.current) : undefined; if (om) {
+        const extra = tolkaByggMening(trim, om.bygg); if (extra) {
           hanteraBygg({ typ: "bygge", formel: extra.formel, byggen: [{ ...extra.tolk, form: null, egenskaper: [] }], okanda: [] }, trim); return;
         }
       }

@@ -165,6 +165,12 @@ function TryckYta({
     },
     [],
   );
+  const rorelse = useRef<((ev: PointerEvent) => void) | null>(null);
+  const slutaLyssna = () => {
+    if (rorelse.current) window.removeEventListener("pointermove", rorelse.current);
+    rorelse.current = null;
+  };
+  useEffect(() => slutaLyssna, []);
   const lang = () => {
     const p = skarmPunkt(punkt[0], punkt[1], punkt[2], camera);
     brygga.skicka({ typ: "byggLang", uid, x: p.x, y: p.y });
@@ -180,10 +186,23 @@ function TryckYta({
         skickad.current = false;
         if (timer.current != null) window.clearTimeout(timer.current);
         timer.current = window.setTimeout(lang, 400);
+        // Block 1 (En värld): ett finger som drar panorerar dalen – då blir det inget långtryck och ingen meny.
+        const sx = e.nativeEvent.clientX;
+        const sy = e.nativeEvent.clientY;
+        slutaLyssna();
+        rorelse.current = (ev: PointerEvent) => {
+          if ((ev.clientX - sx) ** 2 + (ev.clientY - sy) ** 2 <= 24 * 24) return;
+          nere.current = false;
+          if (timer.current != null) window.clearTimeout(timer.current);
+          timer.current = null;
+          slutaLyssna();
+        };
+        window.addEventListener("pointermove", rorelse.current);
       }}
       onPointerUp={(e) => {
         if (flyttar) return;
         e.stopPropagation();
+        slutaLyssna();
         if (!nere.current) return;
         nere.current = false;
         if (timer.current != null) window.clearTimeout(timer.current);
@@ -197,6 +216,7 @@ function TryckYta({
         else brygga.skicka({ typ: "hemTryck", uid, text: formel, x: p.x, y: p.y });
       }}
       onPointerCancel={() => {
+        slutaLyssna();
         nere.current = false;
         if (timer.current != null) window.clearTimeout(timer.current);
         timer.current = null;
@@ -209,6 +229,34 @@ function TryckYta({
 function slagFor(reserv: string | undefined): ReservSlag {
   if (reserv && arReserv(reserv)) return reserv;
   return "hus";
+}
+
+/** Block 1 (En värld): staket, mur och port på en tomt i dalen blir en inhägnad runt tomten. */
+const RING: readonly [number, number, number][] = [-0.42, 0.42].flatMap((d) => [
+  [d, -0.85, 0],
+  [d, 0.85, 0],
+  [-0.85, d, Math.PI / 2],
+  [0.85, d, Math.PI / 2],
+] as [number, number, number][]);
+
+function StaketRing({ b, flyttar, pos }: { b: SparatBygge; flyttar: boolean; pos: { wx: number; wz: number } }) {
+  const fil = staketFil(b);
+  const farg = b.fargHex ?? "#ffffff";
+  return (
+    <TryckYta uid={b.uid} formel={b.formel} boende={b.boende.length} punkt={[pos.wx, 0.4, pos.wz]} flyttar={flyttar}>
+      <group position={[pos.wx, 0, pos.wz]}>
+        {RING.map(([x, z, r]) => (
+          <group key={`${x},${z}`} position={[x, 0, z]} rotation={[0, r, 0]} scale={[0.85, 1, 1]}>
+            <Suspense fallback={<StaketReserv farg={farg} />}>
+              <ModellGren reserv={<StaketReserv farg={farg} />}>
+                <KlonadScen url={fil} malhojd={0} fargHex={farg} passa={false} klickbar />
+              </ModellGren>
+            </Suspense>
+          </group>
+        ))}
+      </group>
+    </TryckYta>
+  );
 }
 
 function StaketBit({ b, flyttar }: { b: SparatBygge; flyttar: boolean }) {
@@ -243,7 +291,7 @@ function StaketBit({ b, flyttar }: { b: SparatBygge; flyttar: boolean }) {
   );
 }
 
-function HusBit({ b, flyttar }: { b: SparatBygge; flyttar: boolean }) {
+function HusBit({ b, flyttar, pos }: { b: SparatBygge; flyttar: boolean; pos?: { wx: number; wz: number } }) {
   const rad = byggRad(b.bygg);
   const hojd = rad?.malhojd ?? 1;
   const farg = b.fargHex ?? rad?.farg ?? "#D84315";
@@ -251,7 +299,7 @@ function HusBit({ b, flyttar }: { b: SparatBygge; flyttar: boolean }) {
   const rotY = (rad as { rotY?: number } | undefined)?.rotY ?? 0;
   const slag = slagFor(rad?.reserv);
   const cell = xyTillCell(b.x, b.y);
-  const { wx, wz } = cellTillVarld(cell.gx, cell.gz);
+  const { wx, wz } = pos ?? cellTillVarld(cell.gx, cell.gz);
   const reserv = <ReservForm slag={slag} farg={farg} hojd={hojd} />;
   const storlekSkala = b.storlekId === "liten" ? 0.78 : b.storlekId === "stor" ? 1.28 : 1;
   return (
@@ -297,9 +345,10 @@ function HusBit({ b, flyttar }: { b: SparatBygge; flyttar: boolean }) {
   );
 }
 
-export function ByggeModell({ b, flyttar }: { b: SparatBygge; flyttar: boolean }) {
-  if (arKantBygge(b.bygg)) return <StaketBit b={b} flyttar={flyttar} />;
-  return <HusBit b={b} flyttar={flyttar} />;
+/** `pos` = världsläge på en tomt i dalen (block 1); utan `pos` ritas bygget i Gårdens rutnät som förut. */
+export function ByggeModell({ b, flyttar, pos }: { b: SparatBygge; flyttar: boolean; pos?: { wx: number; wz: number } }) {
+  if (arKantBygge(b.bygg)) return pos ? <StaketRing b={b} flyttar={flyttar} pos={pos} /> : <StaketBit b={b} flyttar={flyttar} />;
+  return <HusBit b={b} flyttar={flyttar} pos={pos} />;
 }
 
 export function DekorHobalar() {

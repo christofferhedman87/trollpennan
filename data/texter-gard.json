@@ -48,7 +48,8 @@
   "lada": "Lägg i lådan",
   "bo": "Vem ska bo här?"
  },
- "flytta_hjalp": "Dra dit du vill ha den.",
+ "flytta_hjalp": "Tryck på tomten där du vill ha den.",
+ "tomt_hjalp": "Skriv vad du vill bygga här!",
  "bygg_om_hjalp": "Skriv hur den ska se ut nu.",
  "lada": {
   "rubrik": "Lådan",

@@ -1,4 +1,5 @@
 import type { Varelse } from "@/tolk/typer.ts";
+import { dalStyr } from "./dal/dalStyr.ts";
 
 export type Sparad = Varelse & { uid: string; skapad: number };
 export type Plats = "ang" | "gard";
@@ -11,7 +12,8 @@ export type Handelse =
   | { typ: "byggLang"; uid: string; x: number; y: number }
   | { typ: "byggd"; uid: string; x: number; y: number }
   | { typ: "hemTryck"; uid: string; text: string; x: number; y: number }
-  | { typ: "mossa"; x: number; y: number };
+  | { typ: "mossa"; x: number; y: number }
+  | { typ: "tomt"; tomt: number; x: number; y: number };
 
 export type Skapare = {
   skapa: (v: Sparad, mitt?: boolean) => void;
@@ -80,7 +82,9 @@ export const brygga = {
     scener.gard?.synka?.();
   },
   flyttaBygg(uid: string) {
-    scener.gard?.flytta?.(uid);
+    // Block 1 (En värld): på ängen flyttas byggen mellan tomter (dal/dalStyr.ts); Gårdens scen finns kvar tills block 9.
+    if (scener.gard?.flytta) scener.gard.flytta(uid);
+    else dalStyr.flytta(uid);
   },
   lyssna(fn: Lyssnare) {
     lyssnare.add(fn);

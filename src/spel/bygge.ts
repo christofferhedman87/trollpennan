@@ -23,6 +23,8 @@ export type SparatBygge = {
   /** Block 2 (En värld): hur byggnaden ser ut ("som ser ut som ett slott") och vad den gör (flygande, lysande …). */
   form?: ByggForm | null;
   egenskaper?: string[];
+  /** Block 1 (En värld): tomten i Hemdalen (data/dalen.json). Saknas = får första lediga tomt. */
+  tomt?: number | null;
   x: number;
   y: number;
   boende: string[];

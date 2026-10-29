@@ -52,5 +52,5 @@ export function tolkaByggMening(mening: string, fallbackBygg = "hus"): ByggMenin
 /** Skriver meningens färg, storlek och delar över ett hus som redan står. */
 export function appliceraByggMening(befintligt: SparatBygge, tolkad: ByggMeningTolk): SparatBygge {
   const ny = franTolk(tolkad.tolk, tolkad.formel, befintligt.x, befintligt.y);
-  return { ...ny, uid: befintligt.uid, x: befintligt.x, y: befintligt.y, boende: befintligt.boende };
+  return { ...ny, uid: befintligt.uid, x: befintligt.x, y: befintligt.y, tomt: befintligt.tomt, boende: befintligt.boende };
 }

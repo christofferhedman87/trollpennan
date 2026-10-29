@@ -4,4 +4,5 @@ Varje rad läggs här när en ny barnriktad text skrivs in i data-filerna. Chris
 
 | Klar | Röst | Datafil och nyckel | Text |
 |---|---|---|---|
-| | | | *(inga ännu)* |
+| | pennan | data/texter-gard.json `tomt_hjalp` | Skriv vad du vill bygga här! |
+| | pennan | data/texter-gard.json `flytta_hjalp` (ändrad) | Tryck på tomten där du vill ha den. |

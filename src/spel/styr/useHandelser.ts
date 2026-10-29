@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { brygga } from "../brygga.ts";
+import { dalStyr } from "../dal/dalStyr.ts";
 import { nattvaken } from "../entiteter.ts";
 import { MOSSA, djurMedUid, gavoInbjudanVidTryck, kvallStyrka, oppnaMossaLista, replikHumor, ugglaRad, vackRad, visningsTid } from "../liv.ts";
 import { ljud } from "../ljud.ts";
@@ -12,7 +13,8 @@ import type { SpelKarna } from "./typer.ts";
 
 export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
   const { setLage, setHand, setVisKort, setMossaOpp, setHalsning, setFotoMal, setMeny, setBoUid, setOnskaPos, setOnskaSyns, setGavaTill, textRef, handRef, overlayRef, onskaSkrivRef, gavaRef, paHandelse, visaOnskaRef } = k.t;
-  const { visaBubbla } = k.b;
+  const { visaBubbla, visaBanner } = k.b;
+  const { setBokOpp } = k.t;
   const { bengtsson } = k.a;
 
   paHandelse.current = (h) => {
@@ -73,6 +75,16 @@ export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
       const b = useMinne.getState().garden.find((g) => g.uid === h.uid);
       if (b) visaBubbla(b.formel, h.x, Math.max(0.12, h.y - 0.08), false, true, true);
       setMeny(null);
+      return;
+    }
+    if (h.typ === "tomt") {
+      // Block 1 (En värld): tryck på en ledig tomt – nästa bygge hamnar där.
+      ljud.boing();
+      dalStyr.valj(h.tomt);
+      setMeny(null);
+      setLage("skriv");
+      setBokOpp(true);
+      visaBanner(TEXTER.tomt_hjalp, "ovr", "tapp");
       return;
     }
     if (h.typ === "byggLang") {
