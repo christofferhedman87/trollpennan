@@ -4,21 +4,29 @@ import * as THREE from "three";
 import { KAMERA_ANG } from "../skarm.ts";
 import type { VagvisarePlatsId } from "./Vagvisare3D.tsx";
 import { kameraAgar, publiceraTredKamera } from "./introFlygFas.ts";
+import { resmalFor } from "./varldsKarta.ts";
 
 const VY_SEK = 3;
 const UPP_ANDEL = 0.78;
 const RESA_SEK = 0.38;
 const ANG_MAL = new THREE.Vector3(0, 1.05, -0.15);
-const OVER_POS = new THREE.Vector3(0, 14.5, 22);
-const OVER_MAL = new THREE.Vector3(0, 0.5, -6);
+// "Se hela dalen": platserna ligger i en solfjäder bakom ängen (varldsKarta.ts), så kameran står närmare än introts start.
+const OVER_POS = new THREE.Vector3(0, 11.5, 13.5);
+const OVER_MAL = new THREE.Vector3(0, 0.3, -7.5);
 const ANG_POS = new THREE.Vector3(KAMERA_ANG[0], KAMERA_ANG[1], KAMERA_ANG[2]);
 const RESA: Record<VagvisarePlatsId, THREE.Vector3> = {
-  skogen: new THREE.Vector3(-1.2, 3.2, 6.2),
-  grottan: new THREE.Vector3(1.2, 3.3, 6.0),
-  sjon: new THREE.Vector3(1.6, 3.1, 6.4),
-  garden: new THREE.Vector3(-1.6, 3.1, 6.4),
+  skogen: new THREE.Vector3(-0.9, 3.0, 5.6),
+  grottan: new THREE.Vector3(0.8, 3.1, 5.4),
+  sjon: new THREE.Vector3(1.3, 2.9, 6.0),
+  garden: new THREE.Vector3(-1.3, 2.9, 6.0),
   ang: new THREE.Vector3(0, 3.2, 6.6),
 };
+
+/** Vid resan vänder sig kameran mot platsen i fjärran (varldsKarta.ts), så att det känns som att man går dit. */
+function resaBlick(mal: VagvisarePlatsId): THREE.Vector3 {
+  const r = mal === "ang" ? undefined : resmalFor(mal);
+  return r ? new THREE.Vector3(r.mal[0], 1.0, r.mal[1]) : ANG_MAL.clone();
+}
 
 function mjuk(s: number): number {
   const c = Math.min(1, Math.max(0, s));
@@ -36,6 +44,7 @@ export function FlygKameraV09({ introAktiv, vyFlygAktiv, resaMal }: { introAktiv
   const t0 = useRef<number | null>(null);
   const fran = useRef(new THREE.Vector3());
   const malBlick = useRef(new THREE.Vector3());
+  const blickMal = useRef(new THREE.Vector3());
   const foreFlyg = useRef(false);
   const foreResa = useRef<VagvisarePlatsId | null>(null);
 
@@ -84,14 +93,16 @@ export function FlygKameraV09({ introAktiv, vyFlygAktiv, resaMal }: { introAktiv
     }
 
     const mal = resaMal ? RESA[resaMal] : null;
-    if (!mal) return;
+    if (!mal || !resaMal) return;
     if (nyResa || t0.current == null) {
       t0.current = nu;
       fran.current.copy(cam.position);
+      blickMal.current.copy(resaBlick(resaMal));
     }
     const u = mjuk((nu - (t0.current ?? nu)) / RESA_SEK);
     cam.position.lerpVectors(fran.current, mal, u);
-    cam.lookAt(ANG_MAL);
+    malBlick.current.copy(ANG_MAL).lerp(blickMal.current, u);
+    cam.lookAt(malBlick.current);
     publiceraTredKamera(cam.position.x, cam.position.y, cam.position.z, nu - (t0.current ?? nu));
   }, -1);
 

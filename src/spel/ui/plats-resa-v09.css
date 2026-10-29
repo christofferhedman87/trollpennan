@@ -83,7 +83,7 @@
 }
 .tp-flyg-hud { position: fixed; top: 64px; right: 12px; z-index: 36; }
 body:has(.coach) .tp-flyg-hud { top: 10px; right: 68px; }
-body:has(.tp-flyg-etiketter) .coach { opacity: 0; }
+body:has(.tp-dal-etikett) .coach { opacity: 0; }
 .tp-flyg-hud button {
   min-width: 44px; min-height: 44px; padding: 6px 12px; border-radius: 999px;
   border: 2px solid #8d6c40; background: rgba(255, 248, 228, 0.94); color: #3b2614;
@@ -92,14 +92,12 @@ body:has(.tp-flyg-etiketter) .coach { opacity: 0; }
 }
 .tp-flyg-hud button:disabled { cursor: default; }
 .tp-flyg-hud button:focus-visible { outline: 3px solid #234f9e; outline-offset: 3px; }
-.tp-flyg-etiketter { position: fixed; inset: 0; z-index: 24; pointer-events: none; }
-.tp-flyg-etiketter span {
-  position: absolute; transform: translate(-50%, -50%); pointer-events: none; white-space: nowrap;
+/* Platsnamnen i flygvyn sitter fast i platserna i 3D (HorisontVarld: DalEtiketter), inte på fasta skärmprocent. */
+.tp-dal-etikett {
+  display: inline-block; pointer-events: none; white-space: nowrap;
   border-radius: 999px; background: #fff8e9eb; color: #463521; border: 1.5px solid #d9b372;
-  font-weight: 700; font-size: 12px; line-height: 1.2; padding: 6px 9px;
-}
-@media (max-width: 340px) {
-  .tp-flyg-etiketter span { font-size: 10px; padding: 4px 7px; }
+  font-weight: 800; font-size: 15px; line-height: 1.2; padding: 6px 10px;
+  box-shadow: 0 3px 0 #d9b37288;
 }
 
 /* Skyltknapparna (z 35) låg ovanpå guidens pratbubbla (z 30) och banderollerna, så texten gick inte att läsa.

@@ -50,16 +50,3 @@ export function VyFlygKnapp({ aktiv, onStarta, dold }: { aktiv: boolean; onStart
     </div>
   );
 }
-
-export function DalFlygEtiketter({ synlig }: { synlig: boolean }) {
-  if (!synlig) return null;
-  return (
-    <div className="tp-flyg-etiketter">
-      {DAL_ETIKETTER.map((e) => (
-        <span key={e.id} data-w4="flyg-etikett" data-plats={e.id} style={{ left: `${e.xProcent}%`, top: `${e.yProcent}%` }}>
-          {e.namn}
-        </span>
-      ))}
-    </div>
-  );
-}
