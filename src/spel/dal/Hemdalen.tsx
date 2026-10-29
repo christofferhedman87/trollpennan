@@ -6,6 +6,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { brygga } from "../brygga.ts";
 import { ByggeModell } from "../gard/ByggModell.tsx";
+import { arKantBygge } from "../gard/rutnat.ts";
+import { Byggverk } from "./Byggverk.tsx";
 import { skarmPunkt } from "../gard/modellPrep.ts";
 import { useMinne } from "../minne.ts";
 import { usePennTryck } from "../ang/delat.ts";
@@ -85,6 +87,9 @@ export function Hemdalen() {
   const karta = useMemo(() => tomtKarta(garden), [garden]);
   const lage = useDalLage();
   const upptagna = useMemo(() => new Set(karta.values()), [karta]);
+  // Byggen som finns när dalen visas första gången har redan vuxit fram; bara nya får byggstudsen.
+  const kanda = useRef<Set<string> | null>(null);
+  kanda.current ??= new Set(garden.map((b) => b.uid));
   return (
     <group name="hemdalen">
       {TOMTER.map((t, i) => (
@@ -93,7 +98,10 @@ export function Hemdalen() {
       {garden.map((b) => {
         const i = karta.get(b.uid);
         const t = i == null ? undefined : TOMTER[i];
-        return t ? <ByggeModell key={b.uid} b={b} flyttar={lage.flyttar != null} pos={{ wx: t.x, wz: t.z }} /> : null;
+        if (!t) return null;
+        const pos = { wx: t.x, wz: t.z };
+        if (arKantBygge(b.bygg)) return <ByggeModell key={b.uid} b={b} flyttar={lage.flyttar != null} pos={pos} />;
+        return <Byggverk key={b.uid} b={b} pos={pos} flyttar={lage.flyttar != null} ny={!kanda.current!.has(b.uid)} />;
       })}
     </group>
   );

@@ -31,7 +31,7 @@ for (const rad of Object.values(gard3d.byggnader)) if (rad.fil) FILER.add(rad.fi
 for (const d of gard3d.dekor) FILER.add(d.fil);
 forladdaNarLedig(FILER);
 
-class ModellGren extends Component<{ children: ReactNode; reserv: ReactNode }, { fel: boolean }> {
+export class ModellGren extends Component<{ children: ReactNode; reserv: ReactNode }, { fel: boolean }> {
   state = { fel: false };
   static getDerivedStateFromError() {
     return { fel: true };
@@ -140,7 +140,7 @@ function KlonadScen({
   return <primitive object={scen} />;
 }
 
-function TryckYta({
+export function TryckYta({
   uid,
   formel,
   boende,

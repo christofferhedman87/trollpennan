@@ -27,18 +27,9 @@
   "flytta_glod": "#80DEEA"
  },
  "kamera": {
-  "x": [
-   -4.8,
-   4.8
-  ],
-  "z": [
-   -5.6,
-   2.0
-  ],
-  "avstand": [
-   5.5,
-   16
-  ],
+  "x": [-4.8, 4.8],
+  "z": [-5.6, 2.0],
+  "avstand": [5.5, 16],
   "fokus_ms": 900
  },
  "smasaker_pa_angen": [
@@ -52,5 +43,54 @@
   "bänk",
   "lykta"
  ],
- "_om_smasaker": "Byggord som på ängen blir en sak bland djuren (som förut) när meningen saknar form, material, delar och egenskaper. 'en blomma' = sak på ängen, 'en blomma av glas' eller 'ett träd som ser ut som en drake' = bygge på en tomt."
+ "_om_smasaker": "Byggord som på ängen blir en sak bland djuren (som förut) när meningen saknar form, material, delar och egenskaper. 'en blomma' = sak på ängen, 'en blomma av glas' eller 'ett träd som ser ut som en drake' = bygge på en tomt.",
+ "bygg": {
+  "_om": "Block 3 (formsystemet): färger och mått för byggdelar, materialskal och egenskaper. Alla mått i meter (tomtens skala). Färg från barnets mening vinner alltid.",
+  "max_bredd": 1.75,
+  "form_hojd": {
+   "bygg": 1.1,
+   "djur": 1.35,
+   "sak": 1.25,
+   "minst": 1.3
+  },
+  "storlek": {
+   "pytteliten": 0.6,
+   "jätteliten": 0.6,
+   "liten": 0.78,
+   "stor": 1.28,
+   "jättestor": 1.5,
+   "enorm": 1.6
+  },
+  "farger": {
+   "torn": "#ECEFF1",
+   "torntak": "#E53935",
+   "flagga": "#FF5252",
+   "stang": "#8D6E63",
+   "kupol": "#FFD54F",
+   "skorsten": "#A1887F",
+   "rok": "#ECEFF1",
+   "dorr": "#6D4C41",
+   "dorrkarm": "#FFF3E0",
+   "fonster": "#FFF59D",
+   "hjul": "#5D4037",
+   "nav": "#FFCA28",
+   "vinge": "#FFFFFF",
+   "balkong": "#FFF8E1",
+   "trappa": "#BCAAA4",
+   "hö": "#FFE082",
+   "not": "#7E57C2",
+   "gnista": "#FFF59D",
+   "moln": "#FFFFFF"
+  },
+  "godis": [
+   "#F48FB1",
+   "#FFF59D",
+   "#80DEEA",
+   "#CE93D8",
+   "#A5D6A7"
+  ],
+  "material_blandning": 0.8,
+  "svav_hojd": 0.55,
+  "studs_ms": 750
+ }
 }
