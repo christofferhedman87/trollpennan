@@ -36,7 +36,7 @@ Historiska regler finns i `recovery/pre-cloudflare/projektregler.md` och gäller
 - Ingen tidspress: önskningar går aldrig ut, djur blir aldrig ledsna, stjärnor försvinner aldrig.
 - Inga butiker med riktiga pengar, inga erbjudanden, inga nedräkningar, inga "kom tillbaka i morgon"-lås.
 - Djurord fungerar alltid, oavsett vilka sidor som är köpta. Bokens sidor ger mål och ledtrådar, inte behörighet.
-- Undantag från runda 4: byggord utanför Startbygget kräver att sidan i Byggboken är köpt. Ett låst byggord får alltid ett vänligt svar som säger var ordet finns och vad sidan kostar. Aldrig fel-ljud.
+- Kreativiteten låses aldrig (beslut 2026-10-29, ersätter undantaget från runda 4): alla byggord, former, material, färger och delar fungerar alltid. Stjärnor köper mark, utbyggnader av dalen och specialbyggnader, aldrig rätten att skriva ett ord. Plan: `docs/plan-en-varld-2026-10-29.md`.
 
 ## Språk
 - Korrekt svensk stavning och böjning. Böjningar ur SALDO (Språkbanken, CC BY 4.0), angivet i `ord.json`.
