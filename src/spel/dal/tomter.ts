@@ -11,8 +11,9 @@ type MedTomt = { uid: string; tomt?: number | null };
 
 const giltig = (t: number | null | undefined): t is number => typeof t === "number" && Number.isInteger(t) && t >= 0 && t < TOMTER.length;
 
-/** uid → tomtindex för alla byggen (högst en per tomt). Byggen utan plats när alla tomter är tagna saknas i kartan. */
-export function tomtKarta(byggen: readonly MedTomt[]): Map<string, number> {
+/** uid → tomtindex för alla byggen (högst en per tomt). Byggen utan plats fyller först öppna tomter, sedan låsta
+ *  (ett bygge från en äldre sparfil får aldrig försvinna). Byggen utan plats när alla tomter är tagna saknas. */
+export function tomtKarta(byggen: readonly MedTomt[], oppna: ReadonlySet<number> | null = null): Map<string, number> {
   const karta = new Map<string, number>();
   const tagna = new Set<number>();
   for (const b of byggen) {
@@ -23,7 +24,8 @@ export function tomtKarta(byggen: readonly MedTomt[]): Map<string, number> {
   }
   for (const b of byggen) {
     if (karta.has(b.uid)) continue;
-    const ledig = TOMTER.findIndex((_, i) => !tagna.has(i));
+    let ledig = TOMTER.findIndex((_, i) => !tagna.has(i) && (!oppna || oppna.has(i)));
+    if (ledig < 0) ledig = TOMTER.findIndex((_, i) => !tagna.has(i));
     if (ledig < 0) break;
     karta.set(b.uid, ledig);
     tagna.add(ledig);
@@ -31,12 +33,19 @@ export function tomtKarta(byggen: readonly MedTomt[]): Map<string, number> {
   return karta;
 }
 
-/** Första lediga tomt (eller `onskad` om den är ledig), annars null. */
-export function ledigTomt(byggen: readonly MedTomt[], onskad: number | null = null): number | null {
-  const tagna = new Set(tomtKarta(byggen).values());
-  if (giltig(onskad) && !tagna.has(onskad)) return onskad;
-  const i = TOMTER.findIndex((_, k) => !tagna.has(k));
+/** Första lediga öppna tomt (eller `onskad` om den är ledig och öppen), annars null. */
+export function ledigTomt(byggen: readonly MedTomt[], onskad: number | null = null, oppna: ReadonlySet<number> | null = null): number | null {
+  const tagna = new Set(tomtKarta(byggen, oppna).values());
+  const fri = (i: number) => !tagna.has(i) && (!oppna || oppna.has(i));
+  if (giltig(onskad) && fri(onskad)) return onskad;
+  const i = TOMTER.findIndex((_, k) => fri(k));
   return i < 0 ? null : i;
+}
+
+/** Antal lediga öppna tomter. */
+export function antalLediga(byggen: readonly MedTomt[], oppna: ReadonlySet<number> | null = null): number {
+  const tagna = new Set(tomtKarta(byggen, oppna).values());
+  return TOMTER.filter((_, i) => !tagna.has(i) && (!oppna || oppna.has(i))).length;
 }
 
 /** Är (x, z) för nära en tomt för att natur (träd, buskar) ska stå där? */

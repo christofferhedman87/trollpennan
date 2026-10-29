@@ -6,7 +6,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 
 | Licens | Namn | Namnangivelse krävs | Antal tillgångar |
 |---|---|---|---|
-| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1189 |
+| CC0-1.0 | Creative Commons Zero 1.0 | nej | 1192 |
 | CC-BY-3.0 | Creative Commons Attribution 3.0 | **ja** | 1 |
 
 ## Per paket
@@ -27,7 +27,7 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | kaykit-furniture-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/furniture-bits | 11 |
 | kaykit-halloween-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/halloween-bits | 5 |
 | kaykit-holiday-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/holiday-bits | 12 |
-| kaykit-medieval-hexagon | Kay Lousberg | CC0-1.0 | https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0 | 14 |
+| kaykit-medieval-hexagon | Kay Lousberg | CC0-1.0 | https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0 | 17 |
 | kaykit-resource-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/resource-bits | 11 |
 | kaykit-restaurant-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/restaurant-bits | 17 |
 | kaykit-rpg-tools-bits | Kay Lousberg | CC0-1.0 | https://kaylousberg.itch.io/rpg-tools-bits | 25 |
@@ -1292,6 +1292,9 @@ Genereras av `node scripts/modell-inlagg.mjs licenser` ur `data/tillgangar.json`
 | gard-k-watermill | /models/gard/k-watermill-kaykit.glb | CC0-1.0 | Kay Lousberg (KayKit Medieval Hexagon Pack) | https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0 |
 | gard-k-well | /models/gard/k-well-kaykit.glb | CC0-1.0 | Kay Lousberg (KayKit Medieval Hexagon Pack) | https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0 |
 | gard-k-windmill | /models/gard/k-windmill-kaykit.glb | CC0-1.0 | Kay Lousberg (KayKit Medieval Hexagon Pack) | https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0 |
+| gard-k-stage-a | /models/gard/k-stage-a-kaykit.glb | CC0-1.0 | Kay Lousberg (KayKit Medieval Hexagon Pack) | https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0 |
+| gard-k-stage-b | /models/gard/k-stage-b-kaykit.glb | CC0-1.0 | Kay Lousberg (KayKit Medieval Hexagon Pack) | https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0 |
+| gard-k-stage-c | /models/gard/k-stage-c-kaykit.glb | CC0-1.0 | Kay Lousberg (KayKit Medieval Hexagon Pack) | https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0 |
 | gard-hobal | /models/gard/hobal-kenney-hay-bale.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/graveyard-kit |
 | gard-hobal-bunt | /models/gard/hobal-kenney-hay-bale-bundled.glb | CC0-1.0 | Kenney | https://kenney.nl/assets/graveyard-kit |
 | bengtsson | /models/bulk/bengtsson.glb | CC0-1.0 | Kenney (Blocky Characters); omfärgning och tillbehör: Trollpennan | https://kenney.nl/assets/blocky-characters |

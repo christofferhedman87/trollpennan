@@ -99,7 +99,16 @@
   ],
   "material_blandning": 0.8,
   "svav_hojd": 0.55,
-  "studs_ms": 750
+  "studs_ms": 750,
+  "stallning": {
+   "filer": [
+    "/models/gard/k-stage-a-kaykit.glb",
+    "/models/gard/k-stage-b-kaykit.glb",
+    "/models/gard/k-stage-c-kaykit.glb"
+   ],
+   "ms": 1350,
+   "hojd": 1.3
+  }
  },
  "byggbok": {
   "_om": "Block 5 (bygga i världen): Byggbokens idéer och 'Bygg själv'. Barnet väljer kort steg för steg och ser meningen växa ord för ord; byggtolken (src/tolk/byggform.ts) böjer orden rätt. Alla barnriktade texter här.",
@@ -190,5 +199,47 @@
   "ljus": "#FFD180",
   "zzz": "#5C6BC0",
   "hjarta": "#F06292"
+ },
+ "utbyggnader": {
+  "_om": "Block 7 (beslut B): stjärnor köper mark. Tomterna i 'oppna_fran_start' är fria; resten öppnas i grupper. Ett bygge som redan står på en tomt låser aldrig (äldre sparfiler). Texterna är barnriktade.",
+  "oppna_fran_start": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "lista": [
+   {
+    "id": "backen",
+    "namn": "Kvarnbacken",
+    "tomter": [
+     8,
+     10,
+     12,
+     14
+    ],
+    "pris": 5
+   },
+   {
+    "id": "stranden",
+    "namn": "Sjöstranden",
+    "tomter": [
+     9,
+     11,
+     13,
+     15
+    ],
+    "pris": 8
+   }
+  ],
+  "text_kopt": "Hurra! {namn} är din. Nu kan du bygga där!",
+  "text_for_lite": "{namn} kostar ★ {pris}. Uppfyll önskningar så får du fler stjärnor!",
+  "text_full": "Alla dina tomter är fulla. Tryck på en låst tomt för att få mer mark!",
+  "las_farg": "#8D6E63",
+  "pris_farg": "#FFB300"
  }
 }

@@ -12,6 +12,9 @@
     }
   },
   "tillgangar": {
+    "gard-k-stage-a": {"fil": "/models/gard/k-stage-a-kaykit.glb", "licens": "CC0-1.0", "upphov": "Kay Lousberg (KayKit)", "kalla": "https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0", "paket": "kaykit-medieval-hexagon", "bytes": 17812, "stil": "nära", "inlagd": "En värld block 7"},
+    "gard-k-stage-b": {"fil": "/models/gard/k-stage-b-kaykit.glb", "licens": "CC0-1.0", "upphov": "Kay Lousberg (KayKit)", "kalla": "https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0", "paket": "kaykit-medieval-hexagon", "bytes": 19356, "stil": "nära", "inlagd": "En värld block 7"},
+    "gard-k-stage-c": {"fil": "/models/gard/k-stage-c-kaykit.glb", "licens": "CC0-1.0", "upphov": "Kay Lousberg (KayKit)", "kalla": "https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0", "paket": "kaykit-medieval-hexagon", "bytes": 24008, "stil": "nära", "inlagd": "En värld block 7"},
     "gard-k-blacksmith": {"fil": "/models/gard/k-blacksmith-kaykit.glb", "licens": "CC0-1.0", "upphov": "Kay Lousberg (KayKit)", "kalla": "https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0", "paket": "kaykit-medieval-hexagon", "trianglar": 2410, "bytes": 36680, "stil": "nära", "inlagd": "En värld block 6"},
     "gard-k-castle": {"fil": "/models/gard/k-castle-kaykit.glb", "licens": "CC0-1.0", "upphov": "Kay Lousberg (KayKit)", "kalla": "https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0", "paket": "kaykit-medieval-hexagon", "trianglar": 5659, "bytes": 78516, "stil": "nära", "inlagd": "En värld block 6"},
     "gard-k-church": {"fil": "/models/gard/k-church-kaykit.glb", "licens": "CC0-1.0", "upphov": "Kay Lousberg (KayKit)", "kalla": "https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0", "paket": "kaykit-medieval-hexagon", "trianglar": 1601, "bytes": 28228, "stil": "nära", "inlagd": "En värld block 6"},
