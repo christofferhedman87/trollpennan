@@ -4,6 +4,7 @@ import { allaMina } from "../avflode.ts";
 import { brygga } from "../brygga.ts";
 import { dalStyr } from "../dal/dalStyr.ts";
 import { ledigTomt, TOMTER } from "../dal/tomter.ts";
+import { oppnaTomter, useDal } from "../dal/utbyggnad.ts";
 import { useMinne } from "../minne.ts";
 import { aktivtSkrivUppdrag, nastaSkrivUppdrag } from "../uppdragsmotor.ts";
 import { TEXTER } from "../ui/spelData.ts";
@@ -28,7 +29,7 @@ export function useVarld(k: Pick<SpelKarna, "t" | "b">) {
     // och låter kameran glida till tomterna.
     const p: Varld = "ang";
     if (onskad === "gard") {
-      const t = TOMTER[ledigTomt(useMinne.getState().garden) ?? 0] ?? TOMTER[0];
+      const t = TOMTER[ledigTomt(useMinne.getState().garden, null, oppnaTomter(useDal.getState().utbyggnader)) ?? 0] ?? TOMTER[0];
       if (t) dalStyr.fokusera(t.x, t.z);
     }
     varldRef.current = p;

@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { brygga } from "../brygga.ts";
 import { dalStyr } from "../dal/dalStyr.ts";
+import { oppnaTomter, useDal, utbyggnadFor, UTBYGGNAD } from "../dal/utbyggnad.ts";
+import { fyll } from "../fyll.ts";
 import { nattvaken } from "../entiteter.ts";
 import { MOSSA, djurMedUid, gavoInbjudanVidTryck, kvallStyrka, oppnaMossaLista, replikHumor, ugglaRad, vackRad, visningsTid } from "../liv.ts";
 import { ljud } from "../ljud.ts";
@@ -78,6 +80,22 @@ export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
       return;
     }
     if (h.typ === "tomt") {
+      // Block 7: en låst tomt köps med stjärnor (hela utbyggnaden), annars en vänlig puff om hur man får stjärnor.
+      if (!oppnaTomter(useDal.getState().utbyggnader).has(h.tomt)) {
+        const u = utbyggnadFor(h.tomt);
+        if (!u) return;
+        const s = useMinne.getState();
+        if (s.stjarnor >= u.pris) {
+          useMinne.setState({ stjarnor: s.stjarnor - u.pris });
+          useDal.getState().kop(u.id);
+          ljud.uppfylld();
+          visaBanner(fyll(UTBYGGNAD.text_kopt, { namn: u.namn }), "ovr", "tapp");
+        } else {
+          ljud.boing();
+          visaBanner(fyll(UTBYGGNAD.text_for_lite, { namn: u.namn, pris: u.pris }), "ovr", "tapp");
+        }
+        return;
+      }
       // Block 1 (En värld): tryck på en ledig tomt – nästa bygge hamnar där.
       ljud.boing();
       dalStyr.valj(h.tomt);

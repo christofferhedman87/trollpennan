@@ -12,6 +12,7 @@ import { Byggdelar } from "./Byggdelar.tsx";
 import { BYGGDATA, ritplan } from "./ritplan.ts";
 import { DALEN } from "./tomter.ts";
 import { Stomme, type Matt } from "./Stomme.tsx";
+import { Stallning } from "./Stallning.tsx";
 
 const mjukStuds = (u: number) => (u >= 1 ? 1 : 1 + Math.sin(u * Math.PI * 1.5) * (1 - u) * 0.35 - (1 - u) ** 3);
 
@@ -41,9 +42,10 @@ export function Byggverk({ b, pos, flyttar, ny }: { b: SparatBygge; pos: { wx: n
     if (plan.egenskaper.has("snurrande")) k.rotation.y += dt * 0.7;
     let s = plan.storlek;
     if (start.current != null) {
+      // Block 7: först byggnadsställningen (Stallning.tsx), sedan studsar bygget fram.
       if (start.current < 0) start.current = t;
-      const u = (t - start.current) / (BYGGDATA.studs_ms / 1000);
-      s *= Math.max(0.05, mjukStuds(Math.min(1, u)));
+      const u = (t - start.current - BYGGDATA.stallning.ms / 1000) / (BYGGDATA.studs_ms / 1000);
+      s *= u < 0 ? 0.0001 : Math.max(0.05, mjukStuds(Math.min(1, u)));
       if (u >= 1) start.current = null;
     }
     g.position.y = y;
@@ -59,6 +61,11 @@ export function Byggverk({ b, pos, flyttar, ny }: { b: SparatBygge; pos: { wx: n
           <circleGeometry args={[DALEN.tomt.radie * 0.85, 24]} />
           <meshToonMaterial color={DALEN.tomt.kant} gradientMap={TOON_MAP} transparent opacity={0.35} depthWrite={false} />
         </mesh>
+        {ny ? (
+          <Suspense fallback={null}>
+            <Stallning start={start} />
+          </Suspense>
+        ) : null}
         <group ref={lyft}>
           <group ref={kropp} rotation={uppochner ? [Math.PI, 0, 0] : [0, 0, 0]} position={uppochner ? [0, matt[1], 0] : [0, 0, 0]}>
             <group position={[0, 0.06, 0]}>

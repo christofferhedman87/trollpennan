@@ -5,7 +5,7 @@ import { brygga, type Sparad } from "../brygga.ts"; import { bestamdHem, franTol
 import { fyll } from "../fyll.ts"; import { ALBUM, arSammansatt, BYGG_ORD, geEgenGava, komIhagDjur, noteraSkriv, poangAv, taggarFor } from "../liv.ts"; import { ljud } from "../ljud.ts"; import { useMinne } from "../minne.ts";
 import { arVarmePlagg, hjalpDjurPaAngen, mossaPaFrysKanin } from "./mossaKanin.ts"; import { byggTraff, geTraff, kompisTraff, laggPa, nastanRad, ONSK, ONSK_BYGG, tillaggFras } from "../onska.ts"; import { replik } from "../replik.ts"; import * as rostKo from "../rostKo.ts";
 import { forsokDopaText } from "../ui/gavoRuta.ts"; import { mataVaktardjur } from "../ang/vaktardjur.tsx"; import { noteraSolGava, noteraSolSkapelse } from "../solstjarna.ts";
-import { TEXTER } from "../ui/spelData.ts"; import { dalStyr } from "../dal/dalStyr.ts"; import { DALEN, ledigTomt, tomtKarta, TOMTER } from "../dal/tomter.ts"; import { byggaPaAngen } from "../dal/byggVal.ts"; import type { SpelKarna } from "./typer.ts";
+import { TEXTER } from "../ui/spelData.ts"; import { dalStyr } from "../dal/dalStyr.ts"; import { antalLediga, DALEN, ledigTomt, tomtKarta, TOMTER } from "../dal/tomter.ts"; import { oppnaTomter, useDal, UTBYGGNAD } from "../dal/utbyggnad.ts"; import { byggaPaAngen } from "../dal/byggVal.ts"; import type { SpelKarna } from "./typer.ts";
 
 function laggEllerVarma(v: Varelse, antal: number): { nya: Sparad[]; somnade: Sparad[] } { const s = useMinne.getState(); const aktId = aktivtSkrivUppdrag(s.uppdrag, platsNu())?.id; const varm = mossaPaFrysKanin(v);
   const hatt = varm?.spec.tillbehor.some((t) => arVarmePlagg(t.id)); const hjalp = varm && hatt ? varm : hjalpDjurPaAngen(v, aktId); if (!hjalp) return s.laggPaAng(v, antal); const upp = s.uppdateraDjur(hjalp.uid, hjalp.spec);
@@ -20,7 +20,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
   function geTomter(gjorda: ReturnType<typeof franTolk>[], om: string | null) {
     const lista: { uid: string; tomt?: number | null }[] = useMinne.getState().garden.filter((g) => g.uid !== om);
     const vald = dalStyr.lage().vald;
-    for (const [i, g] of gjorda.entries()) { g.tomt = ledigTomt(lista, i === 0 ? vald : null); lista.push(g); }
+    const oppna = oppnaTomter(useDal.getState().utbyggnader); for (const [i, g] of gjorda.entries()) { g.tomt = ledigTomt(lista, i === 0 ? vald : null, oppna); lista.push(g); }
     dalStyr.valj(null);
   }
   function fokusPaBygge(uid: string) {
@@ -30,8 +30,8 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
 
     const om = omUidRef.current; const ensam = utfall.byggen.length === 1 ? utfall.byggen[0] : undefined; const bef = !om && ensam && ensam.antal === 1 ? useMinne.getState().garden.find((x) => x.bygg === ensam.bygg) : undefined; const harAttr = !!ensam && (ensam.adj.length > 0 || ensam.delar.length > 0 || !!ensam.material);
     const former = ensam ? BYGG.bygg_ord.find((x) => x.id === ensam.bygg)?.former ?? [] : []; const bestamd = !!ensam && (ensam.ord === former[1] || ensam.ord === former[3]); // Block 1: "gör huset rött" ändrar huset som står; "ett rött hus" bygger ett nytt
-    const uppdatera = !!bef && harAttr && bestamd; const behov = om ? Math.max(0, utfall.byggen.length - 1) : uppdatera ? 0 : utfall.byggen.length; const lediga = BYGG.max_pa_garden - useMinne.getState().garden.length; if (behov > lediga) {
-      visaBanner(TEXTER.lada.full, "ovr", "tapp"); return; }
+    const uppdatera = !!bef && harAttr && bestamd; const behov = om ? Math.max(0, utfall.byggen.length - 1) : uppdatera ? 0 : utfall.byggen.length; const oppna = oppnaTomter(useDal.getState().utbyggnader); const lediga = Math.min(BYGG.max_pa_garden - useMinne.getState().garden.length, antalLediga(useMinne.getState().garden, oppna)); if (behov > lediga) {
+      visaBanner(UTBYGGNAD.text_full, "ovr", "tapp"); return; }
     visaPlatsRen("gard"); let gjorda: ReturnType<typeof franTolk>[] = []; if (uppdatera && bef) { const tolkad = tolkaByggMening(mening || utfall.formel, bef.bygg);
       if (tolkad) { const uppdaterad = appliceraByggMening(bef, tolkad); useMinne.getState().bytBygge(bef.uid, uppdaterad); gjorda = [uppdaterad];
       }

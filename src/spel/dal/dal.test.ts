@@ -40,3 +40,17 @@ test("Block 1: på ängen blir byggmeningar byggen, djur vinner och små naturor
   for (const f of ja) assert.ok(byggaPaAngen(tolkaByggFormel(f), f), f);
   for (const f of nej) assert.ok(!byggaPaAngen(tolkaByggFormel(f), f), f);
 });
+
+test("Block 7: låsta tomter fylls inte av nya byggen men gamla byggen får alltid plats", async () => {
+  const { oppnaTomter, utbyggnadFor } = await import("./utbyggnad.ts");
+  const oppna = oppnaTomter([]);
+  assert.equal(oppna.size, 8);
+  const atta = Array.from({ length: 8 }, (_, i) => ({ uid: `b${i}`, tomt: i }));
+  assert.equal(ledigTomt(atta, null, oppna), null, "fullt på startmarken");
+  assert.equal(ledigTomt(atta, 9, oppna), null, "en låst tomt går inte att välja");
+  assert.equal(ledigTomt(atta, null, oppnaTomter(["backen"])), 8, "Kvarnbacken köpt");
+  const gamla = Array.from({ length: 12 }, (_, i) => ({ uid: `g${i}` }));
+  assert.equal(tomtKarta(gamla, oppna).size, 12, "en gammal sparfil med tolv byggen visar alla");
+  assert.equal(utbyggnadFor(13)?.id, "stranden");
+  assert.equal(utbyggnadFor(3), undefined);
+});
