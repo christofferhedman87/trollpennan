@@ -92,5 +92,15 @@
   "fri_x": 1.1,
   "fri_z": 0.35,
   "fokus": { "in_ms": 600, "stanna_ms": 900, "ut_ms": 800, "narmare": 0.3, "mot": 0.55 }
+ },
+ "kvall": {
+  "_om": "Kvällen på ängen (data/dygn.json: 'tona himlen mot #5C6BC0 och ängen 25 % mörkare'). djup = hur långt mot natt kvällen går (0 = dag, 1 = full natt); barnet ska fortfarande se allt, så kvällen stannar vid en varm skymning. ljus_kvar = ljusstyrka vid full kväll i förhållande till dagen.",
+  "djup": 0.6,
+  "himmel_topp": "#5C6BC0",
+  "himmel_horisont": "#F2B48C",
+  "nyckel_farg": "#FFB377",
+  "fyll_farg": "#9FA8DA",
+  "dis_farg": "#C9B8D8",
+  "ljus_kvar": 0.55
  }
 }

@@ -1,4 +1,4 @@
-import { AdaptiveDpr, Bvh, OrbitControls, PerformanceMonitor } from "@react-three/drei";
+import { Bvh, OrbitControls, PerformanceMonitor } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { startaBakgrundsForladdning } from "./modeller/forladda.ts";
 import { Component, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
@@ -27,6 +27,8 @@ import { publiceraTredKamera } from "./ang/introFlygFas.ts";
 import { KAMERA_ANG } from "./skarm.ts";
 import { IdPass } from "./ang/idpass.tsx";
 import { forbattraModellMaterial, useSagomiljo } from "./grafikKvalitet.ts";
+import { KvallsLjus } from "./ang/kvall.tsx";
+import { kvallsTon } from "./ang/kvallTon.ts";
 
 /** B6.3 (I): ängens zoner (dammen) ur data/platser.json – djur, figurer och saker hålls ur dammen, simmare i den. */
 const ANG_PLATS = platsMed(START_PLATS);
@@ -93,7 +95,9 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
   });
   const djur = useMinne((s) => s.ang);
   const garden = useMinne((s) => s.garden);
-  const vis = saga ? 0 : 0 * natt;
+  // `vis` styr introts natt (sagaNatt i Himmel/SagaLjus). Kvällen utanför introt sköts av KvallsLjus och `kvall`.
+  const vis = 0;
+  const kvall = saga ? 0 : kvallsTon(natt);
   const himmel = MILJO.himmel.bakgrund;
   const mark = "#ffffff";
   const L = MILJO.ljus;
@@ -122,10 +126,9 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
     <>
       <color attach="background" args={[himmel]} />
       <fog attach="fog" args={[MILJO.dis.farg, MILJO.dis.nara, MILJO.dis.fjarran]} />
-      <Himmel natt={vis} />
+      <Himmel natt={vis} kvall={kvall} />
       <ambientLight ref={amb} intensity={L.ambient.styrka} color={L.ambient.farg} />
       <hemisphereLight ref={hem} args={[L.hemi.himmel, L.hemi.mark, L.hemi.styrka]} />
-      <hemisphereLight args={["#FFF8E1", "#7CB342", 0.65]} />
       <directionalLight
         ref={dir}
         color={L.nyckel.farg}
@@ -140,10 +143,14 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
         shadow-camera-right={8}
         shadow-camera-top={8}
         shadow-camera-bottom={-8}
+        shadow-bias={-0.00012}
+        shadow-normalBias={0.025}
+        shadow-radius={3}
       />
       <directionalLight ref={fyll} color={L.fyll.farg} position={[-6, 3, 4]} intensity={L.fyll.styrka} />
       <directionalLight ref={kantL} color={L.kant.farg} position={[-2, 4, -5]} intensity={L.kant.styrka} />
       <SagaLjus natt={vis} amb={amb} hem={hem} dir={dir} sol={sol} fyll={fyll} kant={kantL} />
+      <KvallsLjus natt={natt} aktiv={!saga} hem={hem} dir={dir} fyll={fyll} kant={kantL} />
       <mesh position={[-1.5, 5.5, -6]}>
         <sphereGeometry args={[0.42, 8, 6]} />
         <meshBasicMaterial ref={sol} color="#FFE082" />
@@ -181,7 +188,7 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
       <Ringar />
       <Glitter />
       <Fjarilar />
-      <Eldflugor natt={vis} />
+      <Eldflugor natt={saga ? vis : natt} />
       <SpokHus onSnart={onSnart} />
       <Skogsstig onSnart={onSnart} />
       {garden.map((b) => (
@@ -315,9 +322,9 @@ export function Angen3D({ natt, saga = false, onGrind, aktivPlats = "ang", onVal
           camera={{ position: [0, 4.15, 9.8], fov: 58, near: 0.1, far: 90 }}
           dpr={dpr}
           shadows
-          gl={{ antialias: true, toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1 }}
+          gl={{ antialias: true, powerPreference: "high-performance", toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1 }}
           onCreated={({ gl }) => {
-            gl.shadowMap.type = THREE.PCFShadowMap;
+            gl.shadowMap.type = THREE.PCFShadowMap; // three 0.186: PCFSoftShadowMap är borttagen; mjukheten styrs av shadow-radius på ljuset
             requestAnimationFrame(() => {
               requestAnimationFrame(() => {
                 rot.current?.querySelector("[data-testid='ladd-3d']")?.setAttribute("data-klar", "ja");
@@ -331,7 +338,6 @@ export function Angen3D({ natt, saga = false, onGrind, aktivPlats = "ang", onVal
               <Scen natt={natt} onSnart={onSnart} saga={saga} aktivPlats={aktivPlats} onValjPlats={onValjPlats} onVagvisarePunkter={onVagvisarePunkter} vyFlygAktiv={vyFlygAktiv} resaMal={resaMal} />
             </Bvh>
           </PerformanceMonitor>
-          <AdaptiveDpr pixelated />
           <IdPass />
         </Canvas>
       </TredGren>

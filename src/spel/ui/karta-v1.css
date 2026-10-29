@@ -163,3 +163,9 @@
   .karta-lager .karta-stang,
   .karta-lager .plats-lyssna { transition: none; }
 }
+
+/* Kortet för Ängen har klassen "ang", samma som själva ängen (section.ang i styles.css). Ängens regler träffade därför
+   kortet: 2D-dekoren i .ang::after (blommor, näckrosblad, ljusprickar) ritades ovanpå kortets text, och ängens gröna
+   bakgrund syntes som gröna hörn runt kortet. */
+.karta-lager .ang::after { content: none; }
+.karta-lager .plats-kort.ang { background: none; }

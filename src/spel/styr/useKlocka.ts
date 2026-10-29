@@ -22,7 +22,8 @@ export function useKlocka(k: Pick<SpelKarna, "t" | "b">) {
         useMinne.setState(del);
         if (typeof del.dygnMs === "number") synkaVisning(del.dygnMs);
       }
-      setNatt(kvallStyrka(visningsTid()));
+      // Avrundat till 1/50: hela spelet renderas om när värdet ändras, och under skymningen ändrades det var 200:e ms.
+      setNatt(Math.round(kvallStyrka(visningsTid()) * 50) / 50);
       const fas = fasAv(visningsTid());
       if (dt > 0 && fas !== senFas) {
         senFas = fas;

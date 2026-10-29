@@ -1,5 +1,5 @@
 import { Html, useGLTF } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { createElement, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Group } from "three";
 import { sparaAlbumNiva, sparaStjarnor } from "../persist/spara.ts";
@@ -52,10 +52,19 @@ type Plopp = { id: number; stjarnor: 1 | 2; arFavorit: boolean; etikett: string 
 let ko: Plopp[] = [];
 const lyssnare = new Set<() => void>();
 let ploppId = 1;
+/** Bågen tar ~1 s. Därefter tas etiketten bort, annars ligger "+1 ★" kvar i scenen resten av spelpasset. */
+const PLOPP_MS = 1800;
 
 function publicera(p: Omit<Plopp, "id">) {
-  ko = [...ko, { ...p, id: ploppId++ }].slice(-4);
+  const id = ploppId++;
+  ko = [...ko, { ...p, id }].slice(-4);
   lyssnare.forEach((f) => f());
+  if (typeof window === "undefined") return;
+  window.setTimeout(() => {
+    if (!ko.some((x) => x.id === id)) return;
+    ko = ko.filter((x) => x.id !== id);
+    lyssnare.forEach((f) => f());
+  }, PLOPP_MS);
 }
 
 export function belonaSolstjarna(djurTyp: string, sakTyp: string, harAdjektivEllerVerb: boolean, arLargo: boolean) {
@@ -105,6 +114,9 @@ function PloppMesh({ url, synlig }: { url: string; synlig: boolean }) {
 
 function Bage({ etikett, guld, children }: { etikett: string; guld: boolean; children?: ReactNode }) {
   const ref = useRef<Group>(null);
+  // Gårdens kamera är ortografisk. Där multiplicerar drei distanceFactor med kamerans zoom (~40), så etiketten
+  // blev hundratals gånger för stor och täckte hela gården. Avståndsskalning behövs bara med perspektivkamera.
+  const ortografisk = useThree((st) => (st.camera as { isOrthographicCamera?: boolean }).isOrthographicCamera === true);
   useFrame((_, dt) => {
     const g = ref.current;
     if (!g) return;
@@ -114,7 +126,7 @@ function Bage({ etikett, guld, children }: { etikett: string; guld: boolean; chi
     g.position.set((t - 0.5) * 1.35, 0.25 + 4.2 * t * (1 - t), 0.1);
     if (!pause) g.rotation.y = t * Math.PI * 2;
   });
-  return nod("group", { ref }, children, createElement(Html, { center: true, distanceFactor: 7, position: [0, 0.55, 0] },
+  return nod("group", { ref }, children, createElement(Html, { center: true, distanceFactor: ortografisk ? undefined : 7, position: [0, 0.55, 0] },
     createElement("span", { "data-s5": "solstjarna-piller", className: guld ? "sol-piller guld" : "sol-piller" }, etikett)));
 }
 

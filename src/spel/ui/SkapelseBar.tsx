@@ -51,6 +51,10 @@ export function SkapelseBar({
 }: SkapelseBarProps) {
   const [casting, setCasting] = useState(false);
   const castingRef = useRef(false);
+  const castingTimerRef = useRef<number | null>(null);
+  useEffect(() => () => {
+    if (castingTimerRef.current !== null) window.clearTimeout(castingTimerRef.current);
+  }, []);
   const [aktivtOrdIdx, setAktivtOrdIdx] = useState<number | null>(null);
   const [expanderadMening, setExpanderadMening] = useState(false);
   const [magiskFas, setMagiskFas] = useState<"idle" | "word-selected" | "ready">("idle");
@@ -90,11 +94,17 @@ export function SkapelseBar({
     if (castingRef.current || !text.trim()) return;
     castingRef.current = true;
     setCasting(true);
-    vaknaNu();
-    window.setTimeout(() => {
-      castingRef.current = false;
-      setCasting(false);
-    }, 450);
+    try {
+      vaknaNu();
+    } finally {
+      // Spärren släpps även om vaknaNu kastar, och en gammal timer städas innan en ny startas.
+      if (castingTimerRef.current !== null) window.clearTimeout(castingTimerRef.current);
+      castingTimerRef.current = window.setTimeout(() => {
+        castingRef.current = false;
+        setCasting(false);
+        castingTimerRef.current = null;
+      }, 450);
+    }
   }
 
   function onOrdKlick(ord: string, slot: Slot | "artikel" | "bindeord", idx: number) {
@@ -111,8 +121,8 @@ export function SkapelseBar({
       id="troll-ord"
       data-testid="remsa"
       data-m3="meningsruta"
-      role="textbox"
-      aria-label="Skrivrutan"
+      role="group"
+      aria-label="Din mening och skrivverktyg"
       onClick={() => { setSkaparVy("skriv"); }}
     >
       <button type="button" className="remsa-lyssna" data-p4="lyssna-mening" aria-label="Läs upp meningen" disabled={!text.trim()} onClick={(e) => { e.stopPropagation(); if (text.trim()) rostKo.lasUpp(text); }}>🔊</button>
@@ -160,7 +170,7 @@ export function SkapelseBar({
       ) : null}
       <button type="button" className="meningsruta-angra" data-c1="mening-angra" aria-label="Ångra senaste ordval" disabled={!kanAngra} onClick={(e) => { e.stopPropagation(); angraMening(); }}>↶</button>
       {text ? <button type="button" className="meningsruta-sudda" data-m3="mening-sudda" aria-label="Sudda" onClick={(e) => { e.stopPropagation(); sudda(); }}>⌫</button> : null}
-      <button type="button" className={text.trim() ? "vakna redo" : "vakna"} data-testid="vakna" data-m3="mening-vakna" disabled={casting} aria-busy={casting} ref={(el) => el?.setAttribute("data-v3", "vack-knapp")} onClick={(e) => { e.stopPropagation(); onVakna(); }}>
+      <button type="button" className={text.trim() ? "vakna redo" : "vakna"} data-testid="vakna" data-m3="mening-vakna" disabled={casting || !text.trim()} aria-busy={casting} ref={(el) => el?.setAttribute("data-v3", "vack-knapp")} onClick={(e) => { e.stopPropagation(); onVakna(); }}>
         <span ref={(el) => el?.setAttribute("data-testid", "vack-knapp")}>✨ {vaknaText}</span>
       </button>
       <div className="magisk-status-rad" role="status" aria-live="polite" data-c1="magisk-status" data-fas={fas}>{statusText}</div>

@@ -24,7 +24,7 @@ function rad(k: string): RostRad | null {
 export function normalisera(t: string): string {
   return t
     .normalize("NFC")
-    .replace(/^[\s\p{Emoji_Presentation}\p{Extended_Pictographic}\uFE0F\u200D★☆•▸▶]+/gu, "")
+    .replace(/^(?:[\s\p{Emoji_Presentation}\p{Extended_Pictographic}★☆•▸▶]|\uFE0F|\u200D)+/gu, "")
     .replace(/\s+/g, " ")
     .replace(/([.!?])\.+(?=\s|$)/g, "$1")
     .trim();

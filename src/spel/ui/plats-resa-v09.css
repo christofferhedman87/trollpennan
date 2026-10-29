@@ -101,3 +101,10 @@ body:has(.tp-flyg-etiketter) .coach { opacity: 0; }
 @media (max-width: 340px) {
   .tp-flyg-etiketter span { font-size: 10px; padding: 4px 7px; }
 }
+
+/* Skyltknapparna (z 35) låg ovanpå guidens pratbubbla (z 30) och banderollerna, så texten gick inte att läsa.
+   Med guiden synlig flyttas knapparna ner under den; medan en banderoll visas (några sekunder) tonas de bort. */
+.tp-vagvisare-hud button { transition: opacity 0.2s ease, translate 0.25s ease; }
+body:has(.coach-bubbla) .tp-vagvisare-hud button { translate: 0 84px; }
+body:has(.banderoller .banner) .tp-vagvisare-hud button { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .tp-vagvisare-hud button { transition: none; } }

@@ -14,5 +14,8 @@ function visit(dir) {
  }
 }
 visit(root);
-if (count > 1000) throw new Error("För många filer för drag-and-drop.");
+// Spelet publiceras som Cloudflare Worker med statiska tillgångar (wrangler.jsonc). Gränsen där är 20 000 filer per
+// version på gratisplanen (25 MiB per fil, kontrolleras ovan). Den gamla gränsen 1 000 gällde drag-and-drop och fick bygget att alltid falla.
+const MAX_FILER = 20000;
+if (count > MAX_FILER) throw new Error(`För många filer för Cloudflare (${count} > ${MAX_FILER}).`);
 console.log(JSON.stringify({ status: "BUILD_OUTPUT_CHECKED", files: count, bytes }));
