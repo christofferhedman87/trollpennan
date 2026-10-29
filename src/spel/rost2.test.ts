@@ -50,10 +50,13 @@ test("TTS-2: inställningarna – reserv tyst, telefonen bara för barnets ord, 
 test("TTS-2: varje fast text i kallor har fil, och varje mall har filer för alla sina fasta delar", () => {
   const saknas: string[] = [];
   let n = 0;
+  // Beslut D (En värld): texter som väntar på ElevenLabs-röst listas i data/rost.json (vantar_rost) och hoppas över.
+  const vantar = new Set((rostJson as { vantar_rost?: string[] }).vantar_rost ?? []);
   for (const k of R.kallor.lista) {
     if (k.varden) continue;
     for (const t of texter(k)) {
       n++;
+      if (vantar.has(t)) continue;
       if (!t.includes("{")) {
         const r = rostFor(t) ? MANIFEST.rader[nyckel(t)] : null;
         if (!r) saknas.push(`${k.fil}: ${t}`);

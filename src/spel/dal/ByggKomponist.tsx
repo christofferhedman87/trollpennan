@@ -1,6 +1,9 @@
 // Block 5 (bygga i världen): Byggboken får "Byggidéer" (tokiga färdiga meningar) och "Bygg själv", där barnet
 // väljer kort i fyra steg och ser meningen växa ord för ord innan den byggs. Läsning först, skrivning när hon vill.
 import { useState } from "react";
+import { useMinne } from "../minne.ts";
+import { ordMedId } from "../../tolk/lexikon.ts";
+import { ONSK_BYGG } from "../onska.ts";
 import { BYGGBOK, START_VAL, byggMening, type ByggVal } from "./byggbok.ts";
 import "./byggbok.css";
 
@@ -20,11 +23,18 @@ export function ByggKomponist({ byggFras }: { byggFras: (fras: string) => void }
   const satt = (del: Partial<ByggVal>) => setVal((v) => ({ ...v, ...del }));
   const vaxla = <K extends keyof ByggVal>(k: K, varde: ByggVal[K]) => satt({ [k]: val[k] === varde ? null : varde } as Partial<ByggVal>);
   const mening = byggMening(val);
+  // Block 8: en byggönskan visar sina egna exempel först bland idéerna.
+  const onskan = useMinne((st) => st.onskan);
+  const djur = useMinne((st) => (onskan ? (st.ang.find((a) => a.uid === onskan.uid) ?? st.hemma.find((h) => h.spec.uid === onskan.uid)?.spec) : undefined));
+  const djurOrd = djur ? ordMedId(djur.kropp) : undefined;
+  const djurFras = djurOrd ? `${djurOrd.genus === "n" ? "ett" : "en"} ${djurOrd.visa}` : "";
+  const onskeIdeer = onskan?.kalla === "bygg" ? (ONSK_BYGG.onskningar.find((o) => o.id === onskan.id)?.exempel ?? []).map((e) => e.replace("{djur}", djurFras)).filter((e) => !e.includes("{")) : [];
+  const ideer = [...new Set([...onskeIdeer, ...BYGGBOK.ideer])];
   return (
     <div className="bygg-komponist" data-dal="bygg-komponist">
       <h3>{BYGGBOK.rubrik_ideer}</h3>
       <div className="bygg-ideer">
-        {BYGGBOK.ideer.map((f) => (
+        {ideer.map((f) => (
           <button key={f} type="button" className="kort bygg-ide" data-dal="bygg-ide" onClick={() => byggFras(f)}>
             {f}
           </button>

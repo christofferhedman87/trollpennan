@@ -287,12 +287,12 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
         ) : (
           <div className="byggbok-wrap" data-testid="byggbok">
             <div className="kort-yta byggbok">
-              <ByggKomponist byggFras={byggFras} />
               {onskan?.kalla === "bygg" ? (
                 <p className="onska-text">
                   ★ {fyll(FIR.onskan.fran_bengtsson, { text: onskan.text })}
                 </p>
               ) : null}
+              <ByggKomponist byggFras={byggFras} />
               <h2>{byggSida.titel}</h2>
               <p className="bygg-beskriv">{byggSida.beskrivning}</p>
               {agdaSidor.length > 1 ? (

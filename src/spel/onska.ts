@@ -28,6 +28,12 @@ export type ByggKrav = {
   hem_for_djuret?: boolean;
   bara_for?: string[];
   eller_bygg?: string[];
+  /** Block 8: formens id (byggord eller entitet: "slott", "apple") – "ser ut som". */
+  form?: string[];
+  /** Block 8: formen ska vara djuret som önskar ("ett hus som ser ut som jag"). */
+  form_som_djuret?: boolean;
+  /** Block 8: byggets egenskaper (flygande räknas också för vingar eller moln). */
+  egenskap?: string[];
 };
 
 export type ByggOnska = {
@@ -59,6 +65,14 @@ export function gePassar(v: Varelse, o: DjurOnska): boolean {
 export function matchBygg(b: ByggeTolk, krav: ByggKrav, kropp?: string): boolean {
   const bo = byggMedId(b.bygg);
   if (!bo) return false;
+  const fb = b as ByggeTolk & { form?: { id: string } | null; egenskaper?: string[] };
+  if (krav.form?.length && !(fb.form && krav.form.includes(fb.form.id))) return false;
+  if (krav.form_som_djuret && !(fb.form && kropp && fb.form.id === kropp)) return false;
+  if (krav.egenskap?.length) {
+    const har = new Set(fb.egenskaper ?? []);
+    if (b.delar.some((d) => d.del === "vingar" && d.antal > 0) || b.material === "moln") har.add("flygande");
+    if (!krav.egenskap.some((e) => har.has(e))) return false;
+  }
   if (krav.hem_for_djuret) {
     if (!kropp || !bo.hem?.kroppar.includes(kropp)) return false;
   }
@@ -175,8 +189,9 @@ export function valjByggOnska(kropp: string, undvik: Set<string>): ByggOnska | n
     if (undvik.has(o.id)) return false;
     const bara = o.krav.bara_for;
     if (bara?.length && !bara.includes(kropp)) return false;
+    if (o.krav.form_som_djuret && !kropp) return false;
     if (o.krav.hem_for_djuret) {
-      return ["hus", "stuga", "koja", "tält", "träd", "damm", "slott", "stall", "hundkoja", "fågelholk", "trädhus", "gran", "äppelträd", "palm", "torn"].some(
+      return ["hus", "stuga", "koja", "tält", "träd", "damm", "slott", "stall", "hundkoja", "fågelholk", "trädhus", "gran", "äppelträd", "palm", "torn", "lada", "hönshus", "hage"].some(
         (id) => byggMedId(id)?.hem?.kroppar.includes(kropp),
       );
     }

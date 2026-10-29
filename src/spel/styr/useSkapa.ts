@@ -26,6 +26,12 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
   function fokusPaBygge(uid: string) {
     const t = tomtKarta(useMinne.getState().garden).get(uid); const p = t == null ? undefined : TOMTER[t]; if (p) dalStyr.fokusera(p.x, p.z, p.z < -1 ? DALEN.kamera.vy_bak : DALEN.kamera.vy_fram);
   }
+  /** Block 8: kroppen på djuret som önskar (för "ett hus som ser ut som jag" och hem åt djuret). */
+  function djurMedUidKropp(uid: string | undefined): string | undefined {
+    if (!uid) return undefined;
+    const s = useMinne.getState();
+    return (s.ang.find((a) => a.uid === uid) ?? s.hemma.find((h) => h.spec.uid === uid)?.spec)?.kropp;
+  }
   function hanteraBygg(utfall: Extract<ByggFormUtfall, { typ: "bygge" }>, mening = "") { useMinne.getState().sparaOkanda(utfall.okanda); rostKo.handling(); rensaVidHandling(); // Beslut B (2026-10-29): kreativiteten låses aldrig – alla byggord fungerar, Byggboken ger ord att jaga.
 
     const om = omUidRef.current; const ensam = utfall.byggen.length === 1 ? utfall.byggen[0] : undefined; const bef = !om && ensam && ensam.antal === 1 ? useMinne.getState().garden.find((x) => x.bygg === ensam.bygg) : undefined; const harAttr = !!ensam && (ensam.adj.length > 0 || ensam.delar.length > 0 || !!ensam.material);
@@ -142,7 +148,8 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
     }
     // Block 1 (En värld): djur och byggen skrivs i samma bok på ängen. Byggen hamnar på en tomt i Hemdalen.
     if (!vantarRef.current && !omradeRef.current) { const bygg = tolkaByggFormel(trim);
-      if (byggaPaAngen(bygg, trim) && bygg.typ === "bygge") { hanteraBygg(bygg, trim);
+      const aktivBygg = useMinne.getState().onskan; const onsB = aktivBygg?.kalla === "bygg" ? ONSK_BYGG.onskningar.find((o) => o.id === aktivBygg.id) : undefined; const onskadBygg = bygg.typ === "bygge" && !!onsB && !!byggTraff(bygg.byggen, onsB, djurMedUidKropp(aktivBygg?.uid));
+      if ((byggaPaAngen(bygg, trim) || onskadBygg) && bygg.typ === "bygge") { hanteraBygg(bygg, trim);
         return; }
       const om = omUidRef.current ? useMinne.getState().garden.find((g) => g.uid === omUidRef.current) : undefined; if (om) {
         const extra = tolkaByggMening(trim, om.bygg); if (extra) {

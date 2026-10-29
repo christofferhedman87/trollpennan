@@ -208,7 +208,8 @@ export function normFras(s: string) {
 }
 
 export function exempelFor(o: OnskaSpar): string[] {
-  if (o.kalla === "bygg") return ONSK_BYGG.onskningar.find((x) => x.id === o.id)?.exempel ?? [];
+  // Block 8: "{djur}" i en byggönskans exempel visas aldrig rått (Byggboken fyller i djurets namn).
+  if (o.kalla === "bygg") return (ONSK_BYGG.onskningar.find((x) => x.id === o.id)?.exempel ?? []).filter((e) => !e.includes("{"));
   return ONSK.onskningar.find((x) => x.id === o.id)?.exempel ?? [];
 }
 
