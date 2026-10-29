@@ -8,6 +8,7 @@ import { brygga } from "../brygga.ts";
 import { ByggeModell } from "../gard/ByggModell.tsx";
 import { arKantBygge } from "../gard/rutnat.ts";
 import { Byggverk } from "./Byggverk.tsx";
+import { Boende } from "./Boende.tsx";
 import { skarmPunkt } from "../gard/modellPrep.ts";
 import { useMinne } from "../minne.ts";
 import { usePennTryck } from "../ang/delat.ts";
@@ -113,7 +114,7 @@ function Tomtplattor({ ledig, flyttar, vald }: { ledig: (i: number) => boolean; 
   );
 }
 
-export function Hemdalen() {
+export function Hemdalen({ natt = 0 }: { natt?: number }) {
   const garden = useMinne((s) => s.garden);
   const karta = useMemo(() => tomtKarta(garden), [garden]);
   const lage = useDalLage();
@@ -124,6 +125,7 @@ export function Hemdalen() {
   return (
     <group name="hemdalen">
       <Tomtplattor ledig={(i) => !upptagna.has(i)} flyttar={lage.flyttar} vald={lage.vald} />
+      <Boende natt={natt} />
       {garden.map((b) => {
         const i = karta.get(b.uid);
         const t = i == null ? undefined : TOMTER[i];

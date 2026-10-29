@@ -31,8 +31,14 @@
   "z": [-7.0, 2.0],
   "avstand": [5.5, 16],
   "fokus_ms": 900,
-  "vy_bak": { "avstand": 9.5, "polar": 0.92 },
-  "vy_fram": { "avstand": 10.4, "polar": 1.27 }
+  "vy_bak": {
+   "avstand": 9.5,
+   "polar": 0.92
+  },
+  "vy_fram": {
+   "avstand": 10.4,
+   "polar": 1.27
+  }
  },
  "smasaker_pa_angen": [
   "träd",
@@ -172,5 +178,17 @@
    ["💡", "lysande"],
    ["✨", "magisk"]
   ]
+ },
+ "boende": {
+  "_om": "Block 4: djur som bor i ett bygge. somn = kvällsstyrkan (useKlocka natt) där de börjar gå hem och där de har somnat. Radier i meter runt tomtens mitt; fram = hur långt fram (mot kameran) de strövar framför bygget.",
+  "skala": 0.62,
+  "somn": [0.5, 0.8],
+  "fart": 0.28,
+  "runt_radie": 1.05,
+  "hage_radie": 0.55,
+  "fram": 0.35,
+  "ljus": "#FFD180",
+  "zzz": "#5C6BC0",
+  "hjarta": "#F06292"
  }
 }

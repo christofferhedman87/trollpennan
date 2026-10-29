@@ -41,7 +41,7 @@ function sammaCeller(a: CellPlats[], b: CellPlats[]): boolean {
   return true;
 }
 
-function GardEtt({
+export function GardEtt({
   spec,
   signal,
   grupp,
