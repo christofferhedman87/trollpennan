@@ -18,6 +18,7 @@ import { flygGnistor, stjarnregn } from "./gnistor.ts";
 import { useForhandArk } from "./useForhandArk.ts";
 import { nyGata, type IdeLapp } from "./gataLapp.ts";
 import { useArkLapp } from "../../skapa/arkLapp.ts";
+import { platsLapp } from "../../skapa/platsLapp.ts";
 import { forhand } from "../../skapa/forhand.ts";
 import { useMinne } from "../../minne.ts";
 import { START_PLATS } from "../../platser.ts";
@@ -44,7 +45,7 @@ export function SkapaArk() {
     // Boken öppnar alltid i startläget (föräldrasidan: tangenterna först, eller Ordhjälpen först).
     setVy(useMinne.getState().startLage === "kort" ? "hjalp" : "skriv");
     // Öppnas boken tom och utan lapp frågar Pennan vad barnet vill trolla fram.
-    if (!textRef.current.trim() && !gavaTill && !onskan && !useArkLapp.getState().lapp) rostKo.lasUpp(UI.rost.oppna ?? "");
+    if (!textRef.current.trim() && !gavaTill && !onskan && !useArkLapp.getState().lapp && !platsLapp(plats)) rostKo.lasUpp(UI.rost.oppna ?? "");
     const ned = (e: KeyboardEvent) => {
       if (e.key === "Escape" && !e.metaKey && !e.ctrlKey && !e.altKey) stangBok();
     };
