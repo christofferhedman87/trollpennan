@@ -15,6 +15,7 @@ const tempmapp = await mkdtemp(join(tmpdir(), "trollpennan-backup-"));
 const falt = [
   "startLage", "startLageVald", "ljudPa", "rostPa", "effektPa", "plats", "platsSkapelser",
   "oppnadePlatser", "seddaIntro", "stall", "gataId", "lasnivaVal", "solstjarnor", "albumNiva", "vaktardjur", "ang", "stjarnor",
+  "garden", "lada", "hemma", "albumKropp", "foton", "seddaNiva",
 ];
 const urval = (data) => Object.fromEntries(falt.map((namn) => [namn, data[namn]]));
 const browser = await chromium.launch({
@@ -49,6 +50,7 @@ async function avlas() {
     return {
       data: JSON.parse(JSON.stringify(Object.fromEntries(nycklar.map((namn) => [namn, s[namn]])))),
       dal: JSON.parse(localStorage.getItem("trollpennan-dal-v1") ?? '{"utbyggnader":[]}'),
+      skapa: JSON.parse(localStorage.getItem("trollpennan-skapa-v1") ?? '{"bokstavsljud":true}'),
     };
   }, falt);
 }
@@ -71,6 +73,13 @@ try {
     const store = window.__trollMinne;
     const grund = store.getState().ang[0];
     const djur = (uid) => ({ ...grund, uid, skapad: 123, smeknamn: `Provkanin ${uid}` });
+    const bygge = (uid) => ({
+      uid, bygg: "stall", formel: "ett blått stall som ser ut som ett slott", ord: "stall", antal: 1,
+      fargId: "bla", fargHex: "#0000ff", monster: null, material: "tra", x: .2, y: .4, tomt: 2,
+      delar: [{ id: "fonster", antal: 2, fargHex: "#ffff00", material: "glas" }], boende: ["backup-hemma"],
+      storlekId: "stor", egenskaper: ["lyser"],
+      form: { slag: "bygg", id: "slott", ord: "slott", genus: "ett", plural: "slott", hur: "bisats" },
+    });
     store.setState({
       ang: [djur("backup-ang")], stjarnor: 17, introSedd: true,
       startLage: "kort", startLageVald: true, ljudPa: true, rostPa: false, effektPa: true,
@@ -80,12 +89,20 @@ try {
       oppnadePlatser: ["skogen", "sjon", "grottan"], seddaIntro: ["skogen", "sjon", "grottan"],
       stall: [djur("backup-stall")], gataId: "lodjur", lasnivaVal: 3, solstjarnor: 12,
       albumNiva: { kanin: 3 }, vaktardjur: { skogen: { matad: 3, vackt: true } },
+      garden: [bygge("backup-stallet")], lada: [{ ...bygge("backup-ladan"), boende: [], tomt: null }],
+      hemma: [{ spec: djur("backup-hemma"), hem: "backup-stallet" }],
+      albumKropp: { kanin: { formel: "en blå kanin", poang: 5, niva: "guld", favorit: "morot", hjartan: 3, smeknamn: "Blåis" } },
+      foton: [{ id: "backup-foto", formel: "en blå kanin", kropp: "kanin", niva: "guld", poang: 5, smeknamn: "Blåis" }],
+      seddaNiva: ["guld"],
     });
     return JSON.parse(JSON.stringify(Object.fromEntries(nycklar.map((namn) => [namn, store.getState()[namn]]))));
   }, falt);
-  logg("Syntetiska skapelser på alla platser, stall, framsteg, läsnivå 3 och köpt mark förberedda.");
+  logg("Syntetiska skapelser på alla platser, byggen, boende, album, framsteg, läsnivå 3 och köpt mark förberedda.");
 
   await vuxen();
+  const bokstavsknappar = page.locator('[data-dal="bokstavsljud"] button');
+  await bokstavsknappar.nth(1).click();
+  assert.equal(await bokstavsknappar.nth(1).getAttribute("class"), "pa", "bokstavsljud av är valt före export");
   const nedladdning = page.waitForEvent("download");
   await page.getByTestId("spara-kopia").click();
   const fil = await nedladdning;
@@ -97,6 +114,7 @@ try {
   assert.equal(kopia.version, 2, "filformatet är fortsatt v2");
   assert.deepEqual(urval(kopia), forvantat, "den nedladdade filen innehåller de tidigare utelämnade fälten");
   assert.deepEqual(kopia.dal, { utbyggnader: ["backen"] }, "köpt mark finns i samma kopia");
+  assert.deepEqual(kopia.skapa, { bokstavsljud: false }, "förälderns bokstavsljud finns i samma kopia");
   await bild("backup-nedladdad");
   logg("Riktig JSON-fil nedladdad och kontrollerad.");
 
@@ -105,6 +123,7 @@ try {
     window.__troll.aterstall();
     window.__trollMinne.setState({ introSedd: true, ljudPa: false, rostPa: false, effektPa: false });
     localStorage.removeItem("trollpennan-dal-v1");
+    localStorage.removeItem("trollpennan-skapa-v1");
   });
   await page.reload({ timeout: 120000 });
   await redo();
@@ -112,8 +131,14 @@ try {
   assert.deepEqual(tomt.data.ang, []);
   assert.deepEqual(tomt.data.stall, []);
   assert.deepEqual(tomt.data.platsSkapelser, {});
+  assert.deepEqual(tomt.data.garden, []);
+  assert.deepEqual(tomt.data.lada, []);
+  assert.deepEqual(tomt.data.hemma, []);
+  assert.deepEqual(tomt.data.albumKropp, {});
+  assert.deepEqual(tomt.data.foton, []);
   assert.equal(tomt.data.solstjarnor, 0);
   assert.deepEqual(tomt.dal.utbyggnader, []);
+  assert.deepEqual(tomt.skapa, { bokstavsljud: true });
   logg("Den syntetiska världen och marken är tömda även efter omladdning.");
 
   await vuxen();
@@ -125,6 +150,8 @@ try {
   const aterlast = await avlas();
   assert.deepEqual(aterlast.data, forvantat, "alla kontrollerade fält återställs via riktig import");
   assert.deepEqual(aterlast.dal, kopia.dal, "köpt mark återställs");
+  assert.deepEqual(aterlast.skapa, kopia.skapa, "bokstavsljud återställs");
+  assert.equal(await bokstavsknappar.nth(1).getAttribute("class"), "pa", "bokstavsljud av visas som valt efter import");
   assert.equal(await page.locator('[data-p4="lasniva-3"]').getAttribute("class"), "pa", "läsnivå 3 visas som vald i vuxenvyn");
   await bild("backup-aterlast");
 
@@ -133,8 +160,30 @@ try {
   const omlast = await avlas();
   assert.deepEqual(omlast.data, forvantat, "återlästa skapelser och framsteg bevaras efter omladdning");
   assert.deepEqual(omlast.dal, kopia.dal, "återläst mark bevaras efter omladdning");
+  assert.deepEqual(omlast.skapa, kopia.skapa, "återläst bokstavsljud bevaras efter omladdning");
+
+  await vuxen();
+  assert.equal(await bokstavsknappar.nth(1).getAttribute("class"), "pa", "bokstavsljud av visas som valt efter omladdning");
+  // Ett felaktigt val får inte ändra världen eller något av de separata sparområdena.
+  await page.getByTestId("kopia-fil").setInputFiles({ name: "ogiltig-kopia.json", mimeType: "application/json", buffer: Buffer.from(JSON.stringify({ ...kopia, skapa: { bokstavsljud: "false" } })) });
+  await page.getByTestId("backup-rad").waitFor({ state: "visible" });
+  assert.equal(await page.getByTestId("backup-fraga").count(), 0, "felaktigt bokstavsljud avvisas före importbekräftelsen");
+  assert.deepEqual(await avlas(), omlast, "avvisad import lämnar hela världen och inställningarna orörda");
+
+  // Äldre v2-kopior saknar skapa och får den definierade standarden på, även i en profil där valet var av.
+  const aldre = { ...kopia };
+  delete aldre.skapa;
+  await page.getByTestId("kopia-fil").setInputFiles({ name: "aldre-kopia.json", mimeType: "application/json", buffer: Buffer.from(JSON.stringify(aldre)) });
+  await page.getByTestId("backup-fraga").waitFor({ state: "visible" });
+  await page.getByTestId("backup-ja").click();
+  await page.getByTestId("backup-fraga").waitFor({ state: "hidden" });
+  assert.deepEqual((await avlas()).skapa, { bokstavsljud: true }, "äldre kopia får standarden bokstavsljud på");
+  assert.equal(await bokstavsknappar.nth(0).getAttribute("class"), "pa");
+  await page.reload({ timeout: 120000 });
+  await redo();
+  assert.deepEqual(await avlas(), { ...omlast, skapa: { bokstavsljud: true } }, "äldre kopias värld och standardval består efter omladdning");
   assert.deepEqual(sidfel, [], "inga JavaScript-fel i sidan");
-  logg("BACKUPPROVET GRÖNT: filnedladdning, tömning, UI-import och omladdning bevarar världen och marken.");
+  logg("BACKUPPROVET GRÖNT: filnedladdning, tömning, UI-import och omladdning bevarar världen, marken och bokstavsljud; äldre och ogiltiga val provade.");
 } catch (e) {
   await bild("backup-fel").catch(() => {});
   console.error("BACKUPPROVET RÖTT:", e);

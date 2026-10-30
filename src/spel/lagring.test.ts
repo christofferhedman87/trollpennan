@@ -32,6 +32,17 @@ import { tom } from "./minneSparning.ts";
 import { exportera } from "./ui/hjalp.ts";
 import type { Sparad } from "./brygga.ts";
 import type { SparatBygge } from "./bygge.ts";
+import { skapaInstFranKopia } from "./skapa/installning.ts";
+
+test("kopia: bokstavsljud bevarar av/på och äldre kopior har en definierad standard", () => {
+  for (const bokstavsljud of [false, true]) {
+    assert.deepEqual(skapaInstFranKopia(JSON.parse(JSON.stringify({ bokstavsljud }))), { bokstavsljud });
+  }
+  assert.deepEqual(skapaInstFranKopia(undefined), { bokstavsljud: true });
+  for (const raw of [null, false, [], {}, { bokstavsljud: "false" }, { bokstavsljud: 0 }]) {
+    assert.equal(skapaInstFranKopia(raw), null, "felaktig inställning ska avvisas före import");
+  }
+});
 
 const kopiaDjur = (uid: string): Sparad => ({
   uid, skapad: 123, kropp: "kanin", formel: "en blå kanin", beskrivning: "en blå kanin",

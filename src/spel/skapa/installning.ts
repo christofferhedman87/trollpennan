@@ -6,6 +6,14 @@ import { useMinne } from "../minne.ts";
 const NYCKEL = "trollpennan-skapa-v1";
 type Inst = { bokstavsljud: boolean };
 
+/** Äldre spelkopior saknar Skapa-inställningar och får samma standard som en ny profil. */
+export function skapaInstFranKopia(raw: unknown): Inst | null {
+  if (raw === undefined) return { bokstavsljud: true };
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+  const bokstavsljud = (raw as { bokstavsljud?: unknown }).bokstavsljud;
+  return typeof bokstavsljud === "boolean" ? { bokstavsljud } : null;
+}
+
 function las(): Inst {
   try {
     const raw = typeof window !== "undefined" ? window.localStorage.getItem(NYCKEL) : null;
