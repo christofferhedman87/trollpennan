@@ -1,6 +1,6 @@
 // Nya Skapa 6.2: Pennans bok som ett ark nedtill. Ängen syns ovanför, och ett tryck på ängen stänger arket.
 // Arket öppnar med tangenterna (skriva själv är förstahandsvalet); Ordhjälpen är ett aktivt val.
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import uiJson from "../../../../data/skapa-ui.json" with { type: "json" };
 import * as rostKo from "../../rostKo.ts";
 import { nyIde } from "../../skapa/idetarning.ts";
@@ -19,6 +19,7 @@ import { useForhandArk } from "./useForhandArk.ts";
 import { nyGata, type IdeLapp } from "./gataLapp.ts";
 import { useArkLapp } from "../../skapa/arkLapp.ts";
 import { platsLapp } from "../../skapa/platsLapp.ts";
+import { kanTrollas } from "../../skapa/kanTrollas.ts";
 import { forhand } from "../../skapa/forhand.ts";
 import { useMinne } from "../../minne.ts";
 import "./skapa.css";
@@ -61,7 +62,9 @@ export function SkapaArk() {
     return () => window.clearTimeout(id);
   }, [penna]);
 
-  const redo = (remsa.redo || (!!gavaTill && !!(remsa.ord.length || remsa.skriv))) && !remsa.fraga;
+  const tillDjur = k.t.onskaSkrivRef.current && onskan?.kalla === "djur" && onskan.typ === "ge" ? (k.vy.onskaDjur ?? null) : undefined;
+  const redo = useMemo(() => (remsa.redo || kanTrollas(text, tillDjur, remsa.brickor.filter((b) => b.klass === "agg").map((b) => b.t)) || (!!gavaTill && !!(remsa.ord.length || remsa.skriv))) && !remsa.fraga,
+    [text, tillDjur, gavaTill, remsa.redo, remsa.fraga, remsa.brickor, remsa.ord.length, remsa.skriv]);
   const tryckPenna = () => {
     if (trollar.current) return;
     if (!redo || !lagerRef.current) {

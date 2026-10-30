@@ -8,6 +8,7 @@ import { chromium } from "playwright";
 const adress = process.argv[2] ?? "http://127.0.0.1:4173/";
 const rot = process.env.TROLLPENNAN_REPO ?? process.cwd();
 const bilder = process.env.QA_SCREENSHOTS;
+const provaCoach = process.env.QA_COACH === "tre-djur";
 if (bilder) await mkdir(bilder, { recursive: true });
 const onskningar = JSON.parse(await readFile(join(rot, "data/onskningar.json"), "utf8")).onskningar;
 const onskan = onskningar.find((o) => o.id === "lila"); // längsta befintliga önsketexten inklusive Bengtssons inledning
@@ -39,15 +40,15 @@ try {
     const page = await ctx.newPage();
     page.setDefaultTimeout(45000);
     page.on("pageerror", (e) => sidfel.push(e.message));
-    await page.addInitScript(() => {
+    await page.addInitScript((coach) => {
       localStorage.setItem("trollpennan-v2", JSON.stringify({
-        version: 2, introSedd: true, startLage: "skriv", startLageVald: true, egnaDjur: 5, dragit: true,
+        version: 2, introSedd: true, startLage: "skriv", startLageVald: true, egnaDjur: coach ? 2 : 5, dragit: !coach,
         ang: [{ uid: "bubbel-kanin", skapad: Date.now() - 60000, kropp: "kanin", formel: "en kanin", beskrivning: "en kanin", skala: 1, alpha: 1, formagor: [], tillbehor: [], overraskningar: [] }],
         garden: [], stjarnor: 17, dal: { utbyggnader: [] }, ljudPa: false, rostPa: false, effektPa: false,
         plats: "ang", platsSkapelser: {}, oppnadePlatser: ["skogen", "sjon", "grottan"], seddaIntro: ["skogen", "sjon", "grottan"],
-        forstaKarta: false, onskan: null, onskaVid: Date.now() + 3600000, uppdrag: {},
+        forstaKarta: false, onskan: null, onskaVid: Date.now() + 3600000, uppdrag: coach ? { "kanin-fryser": "klar" } : {},
       }));
-    });
+    }, provaCoach);
     try {
       await page.goto(adress);
       await page.waitForFunction(() => !!window.__troll && !!window.__trollMinne, null, { timeout: 120000 });
@@ -62,6 +63,10 @@ try {
         if (plats !== "ang") await skylt.waitFor({ state: "visible" });
         await page.waitForTimeout(600);
         const skyltFore = plats === "ang" ? null : await skylt.boundingBox();
+        if (provaCoach && plats === "ang") {
+          await page.getByTestId("coach").waitFor({ state: "visible" });
+          assert.equal(await page.getByTestId("coach").getAttribute("data-steg"), "tre-djur");
+        }
         await page.evaluate((id) => window.__troll.onska(id, false), onskan.id);
         const bubbla = page.getByTestId("onska-bubbla");
         await bubbla.waitFor({ state: "visible" });
@@ -74,6 +79,7 @@ try {
         assert.ok(d.remsaRyms, `${namn}: Väktarens text ryms efter önskan`);
         assert.ok(!d.skylt || !d.remsa || !skar(d.skylt, d.remsa), `${namn}: skylt och Väktare står fria: ${JSON.stringify(d)}`);
         for (const hinder of d.hinder) assert.ok(!skar(d.bubbla, hinder), `${namn}: önskan skär ${hinder.vad}: ${JSON.stringify(d)}`);
+        if (provaCoach) await page.getByTestId("coach").waitFor({ state: "hidden" });
         await bubbla.click();
         await page.getByTestId("onska-remsa").waitFor({ state: "visible" });
         assert.ok((await page.locator(".sk-lapp-text").textContent()).includes(onskan.text));
@@ -82,6 +88,7 @@ try {
         await page.getByTestId("bok-skarm").waitFor({ state: "hidden" });
         await page.evaluate(() => window.__trollMinne.getState().sattOnska(null));
         await page.getByTestId("onska-bubbla").waitFor({ state: "hidden" });
+        if (provaCoach && plats === "ang") await page.getByTestId("coach").waitFor({ state: "visible" });
         if (plats !== "ang") {
           await page.waitForTimeout(900);
           const skyltEfter = await skylt.boundingBox();
