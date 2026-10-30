@@ -99,6 +99,9 @@ async function provaHem(page, lage) {
   const avst = Math.hypot(efter.dal.x - tomt.x, efter.dal.z - tomt.z);
   // Kamerans mål klampas till dalen; tomterna ligger inom den men intill kanten kan målet hamna några decimeter ifrån.
   assert.ok(avst <= 1.2, `${namn}: kameran har glidit till husets tomt (mål ${efter.dal.x?.toFixed(2)},${efter.dal.z?.toFixed(2)} mot tomt ${tomt.x},${tomt.z}; avstånd ${avst.toFixed(2)})`);
+  const synligt = await page.evaluate(({ uid, tomt }) => ({ byggverk: window.__byggverk?.[uid], punkt: window.__tomter?.[tomt], w: innerWidth, h: innerHeight }), { uid: hus.uid, tomt: hus.tomt });
+  assert.ok(synligt.byggverk?.s > 0, `${namn}: huset ritas i Hemdalens scen`);
+  assert.ok(synligt.punkt && synligt.punkt.x > 0 && synligt.punkt.x < synligt.w && synligt.punkt.y > 0 && synligt.punkt.y < synligt.h, `${namn}: husets tomt är i bild: ${JSON.stringify(synligt)}`);
   const sparat = await page.evaluate(() => JSON.parse(localStorage.getItem("trollpennan-v2")).garden.map((g) => g.uid));
   assert.deepEqual(sparat, efter.garden.map((g) => g.uid), `${namn}: huset finns i den riktiga lokala sparningen`);
   await bild(page, `${namn}-hemdalen`);
@@ -106,7 +109,8 @@ async function provaHem(page, lage) {
   // En färdig glidning upprepas inte: till Skogen och hem utan bygge lämnar kameran i fred.
   await resMedKartan(page, "skogen");
   await page.getByTestId("pennans-bok").waitFor({ state: "visible" });
-  await page.evaluate(() => window.__trollMinne.getState().oppnaPlats("ang"));
+  await page.locator('.tp-vagvisare-hud button[data-plats="ang"]').click();
+  await page.waitForFunction(() => window.__trollMinne.getState().plats === "ang");
   await page.waitForFunction(() => window.__dalKamera?.aktiv === true, null, { timeout: 30000 });
   await page.waitForTimeout(800);
   const hem2 = await tillstand(page);

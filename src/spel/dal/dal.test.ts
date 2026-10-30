@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { tolkaByggFormel } from "../../tolk/byggform.ts";
 import { byggaPaAngen } from "./byggVal.ts";
+import { dalStyr } from "./dalStyr.ts";
 import { DALEN, TOMTER, klampaMal, ledigTomt, naraTomt, tomtKarta } from "./tomter.ts";
 
 test("Block 1: tomterna ligger utanför ängens mitt, dammen, skyltarna och stigarna och krockar inte", () => {
@@ -254,4 +255,28 @@ test("mark: två olika köp och efterföljande vanlig autosparning bevarar båda
   const igen = lasOm(lagring);
   assert.equal(igen.stjarnor, 6);
   assert.deepEqual(igen.dal, { utbyggnader: ["backen", "stranden"] });
+});
+
+test("kameran tar väntande fokus en gång; val och flytt väcker inte ett gammalt fokus efter återbesök", () => {
+  dalStyr.fokusera(-3.5, 0.4);
+  const vantande = dalStyr.lage().fokus;
+  assert.ok(vantande);
+  assert.equal(dalStyr.taFokus(), vantande, "fokus väntar medan scenen saknas");
+  assert.equal(dalStyr.taFokus(), null, "en ny mottagare får inte samma fokus igen");
+  const mottagna: unknown[] = [];
+  const sluta = dalStyr.lyssna(() => {
+    const f = dalStyr.taFokus();
+    if (f) mottagna.push(f);
+  });
+  try {
+    dalStyr.valj(null);
+    dalStyr.flytta(null);
+    assert.deepEqual(mottagna, [], "andra meddelanden spelar inte upp ett konsumerat fokus");
+    dalStyr.fokusera(3.5, 0.4);
+    assert.equal(mottagna.length, 1, "nästa riktiga fokus levereras");
+    assert.notEqual(mottagna[0], vantande);
+    assert.equal(dalStyr.taFokus(), null);
+  } finally {
+    sluta();
+  }
 });
