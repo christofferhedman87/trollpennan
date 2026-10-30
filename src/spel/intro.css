@@ -188,6 +188,13 @@
 .intro .intro-bild[data-bild="3"] img {
   transform-origin: 49% 76%;
 }
+/* Bild 5 och 6 (stående): figurerna står i underkant med förlängd himmel ovanför, så zoomen utgår från dem. */
+@media (orientation: portrait) {
+  .intro .intro-bild[data-bild="5"] img,
+  .intro .intro-bild[data-bild="6"] img {
+    transform-origin: 50% 78%;
+  }
+}
 @keyframes intro-kenburns {
   from { transform: scale(1); }
   to { transform: scale(1.08); }
@@ -243,4 +250,16 @@
 @media (prefers-reduced-motion: reduce) {
   .intro .intro-bild img { animation: none; }
   .intro .intro-bild { transition: none; }
+}
+
+/* Introts slut: hela introt bleknar bort över ängen (INTRO_UTTONING_MS i intro.tsx). */
+.intro {
+  transition: opacity 0.7s ease;
+}
+.intro.tonar-ut {
+  opacity: 0;
+  pointer-events: none;
+}
+.intro.tonar-ut * {
+  pointer-events: none !important;
 }

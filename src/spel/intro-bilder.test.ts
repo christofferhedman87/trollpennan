@@ -49,3 +49,11 @@ test("Delningsbilderna: og.jpg 1200×630 och x-banner.jpg 1200×264", () => {
   assert.deepEqual(matt("public/og.jpg"), [1200, 630]);
   assert.deepEqual(matt("public/x-banner.jpg"), [1200, 264]);
 });
+
+test("Introt: ängen ritas inte bakom introts bilder, och introt tonar ut i stället för att försvinna", () => {
+  const vy = las("src/spel/ui/SpelVy.tsx");
+  assert.match(vy, /pausad=\{intro\}/);
+  assert.match(vy, /tonarUt=\{!intro\}/);
+  assert.match(las("src/spel/angen3d.tsx"), /frameloop=\{pausad \? "demand" : "always"\}/);
+  assert.match(las("src/spel/intro.css"), /\.intro\.tonar-ut \{\s*opacity: 0;/);
+});

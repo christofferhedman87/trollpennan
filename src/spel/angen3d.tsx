@@ -60,6 +60,24 @@ class NaturGren extends Component<{ children: ReactNode }, { fel: boolean }> {
   }
 }
 
+/** Under introt ritas ängen bara en bild var PAUS_RITA_MS (frameloop "demand"): nya modeller och shaders hinner
+ *  förberedas, så att ängen inte hackar när introt tonar ut. När ängen börjar ritas igen ska nästa bildruta inte få
+ *  hela pausen som delta (djur och kamera skulle hoppa): getDelta() nollställer klockans "senaste tid". */
+const PAUS_RITA_MS = 1500;
+function PausKlocka({ pausad }: { pausad: boolean }) {
+  const clock = useThree((s) => s.clock);
+  const invalidate = useThree((s) => s.invalidate);
+  useEffect(() => {
+    if (!pausad) {
+      clock.getDelta();
+      return;
+    }
+    const id = window.setInterval(() => invalidate(), PAUS_RITA_MS);
+    return () => window.clearInterval(id);
+  }, [pausad, clock, invalidate]);
+  return null;
+}
+
 class TredGren extends Component<{ children: ReactNode }, { fel: boolean }> {
   state = { fel: false };
   static getDerivedStateFromError() {
@@ -236,7 +254,7 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
   );
 }
 
-export function Angen3D({ natt, saga = false, onGrind, aktivPlats = "ang", onValjPlats, onVagvisarePunkter, vyFlygAktiv = false, resaMal = null, dalEtiketter = false }: { natt: number; saga?: boolean; onGrind?: () => boolean; aktivPlats?: VagvisarePlatsId; onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void; vyFlygAktiv?: boolean; resaMal?: VagvisarePlatsId | null; dalEtiketter?: boolean }) {
+export function Angen3D({ natt, saga = false, pausad = false, onGrind, aktivPlats = "ang", onValjPlats, onVagvisarePunkter, vyFlygAktiv = false, resaMal = null, dalEtiketter = false }: { natt: number; saga?: boolean; /** Introts bilder täcker ängen helt: rita ingenting (sparar batteri och processor). */ pausad?: boolean; onGrind?: () => boolean; aktivPlats?: VagvisarePlatsId; onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void; vyFlygAktiv?: boolean; resaMal?: VagvisarePlatsId | null; dalEtiketter?: boolean }) {
   const djur = useMinne((s) => s.ang);
   const garden = useMinne((s) => s.garden);
   const interagerat = useMinne((s) => s.dragit);
@@ -326,6 +344,7 @@ export function Angen3D({ natt, saga = false, onGrind, aktivPlats = "ang", onVal
       ) : null}
       <TredGren>
         <Canvas
+          frameloop={pausad ? "demand" : "always"}
           camera={{ position: [0, 4.15, 9.8], fov: 58, near: 0.1, far: 90 }}
           dpr={dpr}
           shadows
@@ -346,6 +365,7 @@ export function Angen3D({ natt, saga = false, onGrind, aktivPlats = "ang", onVal
             </Bvh>
           </PerformanceMonitor>
           <IdPass />
+          <PausKlocka pausad={pausad} />
         </Canvas>
       </TredGren>
       <div className="vinjett" aria-hidden />
