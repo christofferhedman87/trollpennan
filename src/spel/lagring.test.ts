@@ -62,7 +62,7 @@ function kopiaVarld(): Required<Data> {
   return {
     version: 2, startLage: "kort", startLageVald: true, funna: { kanin: { guld: true } }, kortGang: { kanin: 4 },
     onskelista: ["månkatt"], sovande: [kopiaDjur("sovande")], formler: [{ text: "en blå kanin", spec: kopiaDjur("formel") }],
-    ang: [kopiaDjur("angen")], stjarnor: 17, ljudPa: true, rostPa: false, effektPa: true,
+    ang: [kopiaDjur("angen")], stjarnor: 17, dal: { utbyggnader: ["backen"] }, ljudPa: true, rostPa: false, effektPa: true,
     koptaSidor: ["skog"], byggSidor: ["start", "solgarden"], snart: { katt: ["dansar"] },
     garden: [kopiaBygge("stallet")], lada: [{ ...kopiaBygge("ladan"), boende: [], tomt: null }],
     hemma: [{ spec: kopiaDjur("hemma"), hem: "stallet" }],

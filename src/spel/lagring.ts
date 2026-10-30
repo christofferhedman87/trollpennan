@@ -3,6 +3,7 @@ export type LagringsStatus = "ok" | "otillganglig" | "skadad";
 let status: LagringsStatus = "ok";
 let skyddaOriginal = false;
 export function markeraSkadad() { skyddaOriginal = true; meddela("skadad"); }
+export function markeraLasfel() { skyddaOriginal = true; meddela("otillganglig"); }
 export function tillatSkrivning() { skyddaOriginal = false; meddela("ok"); }
 const lyssnare = new Set<() => void>();
 export const lagringsStatus = () => status;
@@ -18,8 +19,7 @@ export function lasLokalt(hamta: () => LokalLagring): unknown {
   } catch {
     // Ett läsfel får inte följas av att en tillfälligt tom värld skriver över originalet.
     // Spärren gäller resten av sidvisningen, tills explicit import eller återställning tillåter skrivning.
-    skyddaOriginal = true;
-    meddela("otillganglig");
+    markeraLasfel();
     return null;
   }
 }

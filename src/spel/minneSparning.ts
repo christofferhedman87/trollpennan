@@ -1,4 +1,5 @@
-import { arBygge, arDjur, lasLokalt, markeraSkadad, normalisera, objekt, skrivLokalt } from "./lagring.ts";
+import { arBygge, arDjur, lagringsStatus, lasLokalt, markeraSkadad, normalisera, objekt, skrivLokalt, type LokalLagring } from "./lagring.ts";
+import { arDal, dalFranSparning, lasAldreMark } from "./dal/markSparning.ts";
 import type { Varelse } from "../tolk/typer.ts";
 import type { Sparad } from "./brygga.ts";
 import type { Data, Store } from "./minne.ts";
@@ -17,6 +18,7 @@ export function tom(): Data {
     formler: [],
     ang: [],
     stjarnor: 0,
+    dal: { utbyggnader: [] },
     solstjarnor: 0,
     albumNiva: {},
     vaktardjur: {},
@@ -68,19 +70,26 @@ export function tom(): Data {
   };
 }
 
-export function lasIn(): Data {
-  if (typeof window === "undefined") return tom();
-  try {
-    return franSparning(lasLokalt(() => window.localStorage));
-  } catch {
-    return tom();
-  }
+export function lasIn(hamta?: () => LokalLagring): Data {
+  if (!hamta && typeof window === "undefined") return tom();
+  const lagring = hamta ?? (() => window.localStorage);
+  const raw = lasLokalt(lagring);
+  const data = franSparning(raw);
+  // Ett närvarande huvudfält är auktoritativt, också när den äldre nyckeln är skadad.
+  // Efter läsfel eller skadad värld migreras ingenting och skrivskyddet lämnas aktivt.
+  if ((objekt(raw) && Object.hasOwn(raw, "dal")) || lagringsStatus() !== "ok") return data;
+  const dal = lasAldreMark(lagring);
+  return dal ? { ...data, dal } : data;
 }
 
 /** Sparning → Data. Saknade fält får standardvärden. `{ introSedd }` eller `{ introSett }` utan version accepteras. */
 export function franSparning(raw: unknown): Data {
   try {
     const bas = tom();
+    if (objekt(raw) && Object.hasOwn(raw, "dal") && !arDal(raw.dal)) {
+      markeraSkadad();
+      return bas;
+    }
     if (objekt(raw) && raw.version === undefined && typeof raw.introSett === "boolean") {
       raw = {
         version: 2,
@@ -113,6 +122,7 @@ export function franSparning(raw: unknown): Data {
       rostPa,
       effektPa,
       stjarnor: typeof p.stjarnor === "number" ? p.stjarnor : 0,
+      dal: arDal(p.dal) ? dalFranSparning(p.dal) : { utbyggnader: [] },
       oppna: Array.isArray(p.oppna) ? (p.oppna as string[]) : [],
       foljeUid: typeof p.foljeUid === "string" ? p.foljeUid : null,
       hjartan: p.hjartan && typeof p.hjartan === "object" ? (p.hjartan as Record<string, number>) : {},
@@ -155,8 +165,8 @@ export function franSparning(raw: unknown): Data {
   }
 }
 
-export function spara(d: Store) {
-  if (typeof window === "undefined") return;
+export function spara(d: Store): boolean {
+  if (typeof window === "undefined") return false;
   const {
     registrera: _a,
     sparaOkanda: _b,
@@ -207,11 +217,12 @@ export function spara(d: Store) {
     bytSmeknamn: _bt,
     ...data
   } = d;
-  skrivLokalt(() => window.localStorage, { ...data, version: 2 });
+  return skrivLokalt(() => window.localStorage, { ...data, version: 2 });
 }
 
 export function arData(v: unknown): v is Partial<Data> {
   if (!objekt(v) || !normalisera(v, tom())) return false;
+  if (v.dal !== undefined && !arDal(v.dal)) return false;
   if (v.startLage !== undefined && v.startLage !== "kort" && v.startLage !== "skriv") return false;
   for (const k of ["ang", "sovande", "stall"]) if (v[k] !== undefined && (!Array.isArray(v[k]) || !(v[k] as unknown[]).every(arDjur))) return false;
   for (const k of ["garden", "lada"]) if (v[k] !== undefined && (!Array.isArray(v[k]) || !(v[k] as unknown[]).every(arBygge))) return false;

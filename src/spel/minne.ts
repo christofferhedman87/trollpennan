@@ -38,6 +38,8 @@ export type Data = {
   formler: { text: string; spec: Sparad }[];
   ang: Sparad[];
   stjarnor: number;
+  /** Mark sparas atomärt tillsammans med stjärnorna. Äldre lokal mark läses vid migrering. */
+  dal: { utbyggnader: string[] };
   ljudPa: boolean;
   rostPa: boolean;
   effektPa: boolean;
@@ -393,6 +395,17 @@ export const useMinne = create<Store>((set, get) => ({
   },
 }));
 
-useMinne.subscribe((s) => spara(s));
+// En redan varaktigt sparad state publiceras utan en andra identisk skrivning.
+// Andra (även nästlade) stateändringar har annan identitet och sparas som vanligt.
+let redanSparad: Store | null = null;
+export function publiceraSparat(del: Pick<Data, "stjarnor" | "dal">): boolean {
+  const nasta = { ...useMinne.getState(), ...del };
+  if (!spara(nasta)) return false;
+  redanSparad = nasta;
+  try { useMinne.setState(nasta, true); } finally { redanSparad = null; }
+  return true;
+}
+
+useMinne.subscribe((s) => { if (s !== redanSparad) spara(s); });
 kopplaAng(() => useMinne.getState());
 if (typeof window !== "undefined") (window as unknown as { __trollMinne?: typeof useMinne }).__trollMinne = useMinne;

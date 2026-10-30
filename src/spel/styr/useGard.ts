@@ -1,5 +1,4 @@
 import { bestamdHem } from "../bygge.ts";
-import { useDal } from "../dal/utbyggnad.ts";
 import { fyll } from "../fyll.ts";
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
@@ -74,8 +73,8 @@ export function useGard(k: Pick<SpelKarna, "t" | "b" | "v" | "s">) {
   }
 
   function sparaKopia() {
-    // Separat sparad mark och förälderns bokstavsljud följer med samma v2-kopia.
-    const blob = new Blob([JSON.stringify({ ...exportera(), dal: { utbyggnader: useDal.getState().utbyggnader }, skapa: { bokstavsljud: useSkapaInst.getState().bokstavsljud } }, null, 2)], { type: "application/json" });
+    // Huvudmodellen innehåller marken; separat sparat bokstavsljud kompletterar samma v2-kopia.
+    const blob = new Blob([JSON.stringify({ ...exportera(), skapa: { bokstavsljud: useSkapaInst.getState().bokstavsljud } }, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -107,7 +106,6 @@ export function useGard(k: Pick<SpelKarna, "t" | "b" | "v" | "s">) {
       setKopia(null);
       return;
     }
-    useDal.getState().ersatt((kopia as { dal?: { utbyggnader?: unknown } }).dal?.utbyggnader);
     useSkapaInst.getState().sattBokstavsljud(skapa.bokstavsljud);
     ljud.satt(useMinne.getState().effektPa && useMinne.getState().ljudPa);
     setLage(useMinne.getState().startLage);

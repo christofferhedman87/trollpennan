@@ -87,8 +87,7 @@ export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
         if (!u) return;
         const s = useMinne.getState();
         if (s.stjarnor >= u.pris) {
-          useMinne.setState({ stjarnor: s.stjarnor - u.pris });
-          useDal.getState().kop(u.id);
+          if (!useDal.getState().kop(u.id)) return; // Befintlig lagringsinformation visas om sparningen nekas.
           ljud.uppfylld();
           visaBanner(fyll(UTBYGGNAD.text_kopt, { namn: u.namn }), "ovr", "tapp");
         } else {
