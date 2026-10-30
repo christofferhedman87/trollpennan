@@ -1,5 +1,6 @@
 /** Dalöversikten under introts första 2,4 sekunder. Ett kameraägarskap åt gången. */
 import { sagaNu } from "../saga.ts";
+import { useStart } from "../start.ts";
 
 export const INTRO_FLYG_SLUT_SEK = 2.4;
 
@@ -16,9 +17,7 @@ export type TredKamera = { x: number; y: number; z: number; t: number };
 let startMs: number | null = null;
 
 export function lasIntroKameraTid(introAktiv: boolean): number {
-  const scenEjKlar =
-    typeof document !== "undefined" &&
-    document.querySelector('[data-testid="ladd-3d"]')?.getAttribute("data-klar") !== "ja";
+  const scenEjKlar = !useStart.getState().angRedo;
   if (!introAktiv || sagaNu.t <= 0 || scenEjKlar) {
     startMs = null;
     return 0;

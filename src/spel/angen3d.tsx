@@ -29,6 +29,7 @@ import { FlygKameraV09 } from "./ang/FlygKameraV09.tsx";
 import { VarldsIntegrationV09 } from "./ang/VarldsIntegrationV09.tsx";
 import { publiceraTredKamera } from "./ang/introFlygFas.ts";
 import { KAMERA_ANG } from "./skarm.ts";
+import { useStart } from "./start.ts";
 import { IdPass } from "./ang/idpass.tsx";
 import { forbattraModellMaterial, useSagomiljo } from "./grafikKvalitet.ts";
 import { KvallsLjus } from "./ang/kvall.tsx";
@@ -62,6 +63,9 @@ class TredGren extends Component<{ children: ReactNode }, { fel: boolean }> {
   state = { fel: false };
   static getDerivedStateFromError() {
     return { fel: true };
+  }
+  componentDidCatch() {
+    useStart.getState().redo(); // utan 3D ska försidan ändå släppa fram spelet
   }
   render() {
     return this.state.fel ? null : this.props.children;
@@ -318,10 +322,6 @@ export function Angen3D({ natt, saga = false, onGrind, aktivPlats = "ang", onVal
           {SNART}
         </p>
       ) : null}
-      <div className="ladd-3d" data-testid="ladd-3d">
-        <h1>Trollpennan</h1>
-        <span className="ladd-penna" aria-hidden />
-      </div>
       <TredGren>
         <Canvas
           camera={{ position: [0, 4.15, 9.8], fov: 58, near: 0.1, far: 90 }}
@@ -332,7 +332,7 @@ export function Angen3D({ natt, saga = false, onGrind, aktivPlats = "ang", onVal
             gl.shadowMap.type = THREE.PCFShadowMap; // three 0.186: PCFSoftShadowMap är borttagen; mjukheten styrs av shadow-radius på ljuset
             requestAnimationFrame(() => {
               requestAnimationFrame(() => {
-                rot.current?.querySelector("[data-testid='ladd-3d']")?.setAttribute("data-klar", "ja");
+                useStart.getState().redo(); // försidan (index.html) väntar på första bilden
                 startaBakgrundsForladdning();
               });
             });
