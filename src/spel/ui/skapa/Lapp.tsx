@@ -15,6 +15,7 @@ import { GavaStallKnapp } from "../Stall.tsx";
 import { uppdragText } from "../../aventyr.ts";
 import { dalStyr } from "../../dal/dalStyr.ts";
 import { useArkLapp } from "../../skapa/arkLapp.ts";
+import { platsLapp } from "../../skapa/platsLapp.ts";
 import { aktivtUppdrag, BENGTSSON_BILD } from "../../skapa/uppdragLapp.ts";
 import type { IdeLapp } from "./gataLapp.ts";
 
@@ -46,6 +47,7 @@ export function Lapp({ ide }: { ide: IdeLapp | null }) {
   const { remsa } = k.sk;
   const arkLapp = useArkLapp((s) => s.lapp);
   const spar = useMinne((s) => s.uppdrag);
+  const plats = useMinne((s) => s.plats);
   if (gavaTill) return <GavoLapp key={gavaTill} gavaTill={gavaTill} />;
   if (arkLapp === "uppdrag") {
     const u = aktivtUppdrag(spar);
@@ -85,7 +87,9 @@ export function Lapp({ ide }: { ide: IdeLapp | null }) {
       </LappRam>
     );
   }
-  return null;
+  // Barnets valda sammanhang ovan går alltid före platsens vanliga skrivinbjudan.
+  const lapp = platsLapp(plats);
+  return lapp ? <LappRam bild={ikon("ui", "karta")} fran={lapp.fran} text={lapp.text} las={lapp.text} /> : null;
 }
 
 /** Gåva till ett djur ("egen:<uid>" eller ett vilt djur). Döp-knappen och snabbnamnen från förra boken finns kvar. */

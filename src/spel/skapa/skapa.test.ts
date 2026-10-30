@@ -11,6 +11,9 @@ import { delaText, justera, platta, tillText, type MOrd } from "./mening.ts";
 import { harVad, meningsbrickor } from "./meningsbrickor.ts";
 import { kollaOrd } from "./ordKoll.ts";
 import { skrivGuldTecken, type Spok } from "./guldchans.ts";
+import { platsLapp } from "./platsLapp.ts";
+import { platsMed } from "../platser.ts";
+import { rostFor } from "../rostManifest.ts";
 
 const skrivet = (s: string, k: MOrd["k"] = "skriv"): MOrd[] => (s ? s.split(" ").map((t) => ({ t, k })) : []);
 const text = (o: MOrd[]) => o.map((x) => x.t).join(" ");
@@ -166,4 +169,19 @@ test("Skapa D: idétärningen skriver aldrig, men läser upp en riktig mening", 
   assert.equal(ideText(["stall", "lila", "slott"]), "ett lila stall som ser ut som ett slott");
   assert.equal(ideText(["hus", "godis", "torn"]), "ett hus av godis med torn");
   assert.equal(ideKort(["lada", "svamp", "dansande"]).length, 3);
+});
+
+test("Skapa: utflyktens platslapp återanvänder rätt plats och befintlig inspelad inbjudan", () => {
+  for (const [id, namn] of [["skogen", "Skogen"], ["sjon", "Sjön"], ["grottan", "Grottan"]] as const) {
+    const lapp = platsLapp(id);
+    assert.ok(lapp, `${namn} har en platslapp`);
+    assert.equal(lapp.fran, namn);
+    const intro = platsMed(id)?.intro as { text: string };
+    assert.equal(lapp.text, intro.text, "ingen ny eller hopsatt text som kräver en annan röstfil");
+    assert.ok(rostFor(lapp.text)?.fil, `${namn}: den exakta lapptexten finns i klientens röstmanifest`);
+  }
+});
+
+test("Skapa: Ängen och okända platser får ingen utflyktslapp", () => {
+  for (const id of ["ang", "garden", "saknas", ""]) assert.equal(platsLapp(id), null);
 });
