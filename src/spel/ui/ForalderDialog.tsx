@@ -1,6 +1,7 @@
 import { useState, type Dispatch, type RefObject, type SetStateAction } from "react";
 import lasningJson from "../../../data/lasning.json" with { type: "json" };
 import { fyll } from "../fyll.ts";
+import { ForalderLagring } from "./ForalderLagring.tsx";
 import { ArkivVal } from "./ArkivVal.tsx";
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
@@ -58,7 +59,6 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
             ) : null}
             {upplast ? (
             <>
-            <p className="kredit" data-testid="groda-kredit">Groda: "Frog" av jeremy (CC BY 3.0)</p>
             <ForalderLiv />
             <h3>{SKAPA_UI.foralder.startlage_rubrik}</h3>
             <div className="valj-lage">
@@ -138,6 +138,7 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
               {effektPa ? lasningJson.ljud.effekt_pa : lasningJson.ljud.effekt_av}
             </button>
             </div>
+            <ForalderLagring />
             <h3>{TEXTER.backup.rubrik}</h3>
             <p>{TEXTER.backup.spara_hjalp}</p>
             <button type="button" className="kort" data-testid="spara-kopia" onClick={sparaKopia}>
@@ -199,7 +200,8 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
                 </div>
               </div>
             ) : null}
-            <p />
+            <h3>{TEXTER.backup.tack_till}</h3>
+            <p className="kredit" data-testid="groda-kredit">{TEXTER.backup.groda_kredit}</p>
             <button
               type="button"
               className="stang"

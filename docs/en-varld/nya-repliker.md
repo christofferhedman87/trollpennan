@@ -56,3 +56,16 @@ Föräldratexter, ingen ny barnreplik eller inspelning krävs:
 - `data/texter-gard.json backup.arkiv_nej`: Tillbaka
 - `data/texter-gard.json backup.arkiv_fel`: Det gick inte att spara eller återställa kopian. Din gamla värld har inte tagits bort från arkivet. Frigör utrymme och spara en nedladdad kopia innan du försöker igen.
 - `data/texter-gard.json borja_om.fraga`: Din värld sparas i arkivet innan en ny värld börjar. Vill du börja om?
+
+## T-14/T-35: lagringsinformation och tack
+
+Föräldratexter, ingen ny barnreplik. Befintlig grod-attribution bevaras ordagrant längst ner:
+
+- `data/texter-gard.json backup.skydd_rubrik`: Skydda den sparade världen
+- `data/texter-gard.json backup.skydd_hjalp`: Världen sparas bara på den här enheten. Webbläsaren kan radera lokala data efter ett uppehåll, även om spelet har bett om beständig lagring. Spara regelbundet en nedladdad kopia.
+- `data/texter-gard.json backup.hemskarm`: På iPad eller iPhone: öppna spelet i Safari, tryck på Dela och välj Lägg till på hemskärmen. Starta sedan med Trollpennans ikon. Det kan minska risken för rensning men ersätter inte en nedladdad kopia.
+- `data/texter-gard.json backup.senaste`: Senaste kopia: {datum}
+- `data/texter-gard.json backup.ingen_kopia`: Ingen nedladdad kopia är registrerad på den här enheten.
+- `data/texter-gard.json backup.datum_hjalp`: Datumet visar när nedladdningen startades. Kontrollera att filen finns i Hämtade filer och spara den på en trygg plats.
+- `data/texter-gard.json backup.tack_till`: Tack till
+- `data/texter-gard.json backup.groda_kredit`: Groda: "Frog" av jeremy (CC BY 3.0)

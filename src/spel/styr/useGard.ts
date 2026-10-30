@@ -1,3 +1,4 @@
+import { markeraKopia } from "../lagringsSkydd.ts";
 import { borjaOmMedKopia, laddaOmRent } from "../start.ts";
 import { bestamdHem } from "../bygge.ts";
 import { fyll } from "../fyll.ts";
@@ -74,6 +75,7 @@ export function useGard(k: Pick<SpelKarna, "t" | "b" | "v" | "s">) {
     a.href = url;
     a.download = "trollpennan-kopia.json";
     a.click();
+    markeraKopia();
     URL.revokeObjectURL(url);
   }
 
