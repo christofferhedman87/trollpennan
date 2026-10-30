@@ -70,8 +70,6 @@ export function SagaKamera({ styr }: { styr: { current: OrbitStyr | null } }) {
   const was = useRef(false);
   const pos = useRef(new THREE.Vector3());
   const look = useRef(new THREE.Vector3());
-  // Block 1: ett bygge i Hemdalen räknas också – då kan barnet panorera dit.
-  const harDjur = useMinne((s) => s.ang.length > 0 || s.hemma.length > 0 || s.garden.length > 0);
   useEffect(() => {
     return () => {
       publiceraTredKamera(KAMERA_ANG[0], KAMERA_ANG[1], KAMERA_ANG[2], INTRO_KAM_SLUT);
@@ -87,7 +85,9 @@ export function SagaKamera({ styr }: { styr: { current: OrbitStyr | null } }) {
       if (c) c.enabled = false;
       return;
     }
-    const styrd = sagaNu.aktiv || !harDjur;
+    // Kameran styrs bara medan introt pågår. Förut låstes den också tills barnet skapat sitt första djur eller bygge
+    // (en närmare, fast vy), men barnet ska kunna panorera och zooma direkt när introt är slut (2026-10-30).
+    const styrd = sagaNu.aktiv;
     if (!styrd) {
       if (!was.current) return;
       cam.position.set(KAMERA_ANG[0], KAMERA_ANG[1], KAMERA_ANG[2]);
@@ -104,11 +104,7 @@ export function SagaKamera({ styr }: { styr: { current: OrbitStyr | null } }) {
     }
     was.current = true;
     if (c) c.enabled = false;
-    if (sagaNu.aktiv) kameraVid(t, pos.current, look.current);
-    else {
-      pos.current.set(0, 2.85, 6.4);
-      look.current.set(0, 0.15, -0.35);
-    }
+    kameraVid(t, pos.current, look.current);
     cam.position.copy(pos.current);
     cam.lookAt(look.current);
     publiceraTredKamera(cam.position.x, cam.position.y, cam.position.z, sagaNu.aktiv ? t : 0);
