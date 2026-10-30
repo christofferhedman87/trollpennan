@@ -6,6 +6,7 @@ import { useMinne } from "../minne.ts";
 import { platsText } from "../platsText.ts";
 import * as rostKo from "../rostKo.ts";
 import { nyId } from "../ui/hjalp.ts";
+import { kvittoTyst } from "../skapa/kvitto.ts";
 import type { Banner } from "../ui/typer.ts";
 import { useStallBanner } from "../ui/useStallBanner.ts";
 import type { SpelKarna } from "./typer.ts";
@@ -25,6 +26,7 @@ export function useBannrar(k: Pick<SpelKarna, "t">) {
     setBubblor([]);
   }
   function visaBanner(texten: string, slag: Banner["slag"], kalla: rostKo.Kalla, ms?: number) {
+    if (kvittoTyst(kalla, texten)) return;
     if (arNyHandling(kalla)) setBubblor([]);
     rostKo.anmal({ text: platsText(texten, varldRef.current), kalla, banner: { slag, ms } });
   }

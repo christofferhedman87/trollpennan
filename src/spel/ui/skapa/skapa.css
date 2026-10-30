@@ -245,3 +245,19 @@
   .sk-lager *, .sk-lager *::before, .sk-lager *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
 }
 .sk-lager .ord-input-ankare { position: absolute; width: 1px; height: 1px; opacity: .01; pointer-events: none; border: 0; padding: 0; }
+/* Trolla-ögonblicket (6.11) */
+.sk-flyg { position: fixed; z-index: 30; width: 30px; height: 30px; pointer-events: none; }
+.sk-stjarnregn { position: fixed; z-index: 30; width: 26px; height: 26px; pointer-events: none; }
+/* Kvittot (6.11) */
+.sk-kvitto {
+  position: fixed; z-index: 45; left: 14px; right: 14px; top: 74px; max-width: 520px; margin: 0 auto; text-align: left; font: inherit; font-family: var(--font-sans);
+  background: var(--tp-klister); color: var(--tp-blck); border: var(--tp-kant); border-radius: 22px; box-shadow: var(--tp-skugga-stor);
+  padding: 12px 14px; display: grid; gap: 8px; animation: sk-in 500ms var(--tp-fjader); cursor: pointer;
+}
+.sk-kvitto-rad { margin: 0; font-size: 1.25rem; line-height: 1.3; font-weight: 500; }
+.sk-kvitto-rad .mening { font-weight: 700; }
+.sk-kvitto-rad .gul { background: linear-gradient(transparent 58%, rgba(248, 200, 56, .85) 58%); border-radius: 2px; }
+.sk-kvitto-beloning { display: flex; gap: 8px; flex-wrap: wrap; }
+.sk-kvitto-chip { display: inline-flex; align-items: center; gap: 6px; border: 2.5px solid var(--tp-blck); border-radius: 999px; padding: 2px 12px 2px 6px; font-weight: 600; font-size: var(--tp-text-ui); background: var(--tp-papper); }
+.sk-kvitto-chip img { width: 26px; height: 26px; }
+.sk-kvitto-chip.guld { background: var(--tp-guld); }

@@ -14,6 +14,11 @@ import { Pennan } from "./Pennan.tsx";
 import { Svarsrad } from "./Svarsrad.tsx";
 import { Tangenter } from "./Tangenter.tsx";
 import { Trollremsa } from "./Trollremsa.tsx";
+import { flygGnistor, stjarnregn } from "./gnistor.ts";
+import { useForhandArk } from "./useForhandArk.ts";
+import { forhand } from "../../skapa/forhand.ts";
+import { useMinne } from "../../minne.ts";
+import { START_PLATS } from "../../platser.ts";
 import "./skapa.css";
 
 const UI = uiJson as unknown as { ark: Record<string, string>; rost: Record<string, string> };
@@ -21,12 +26,16 @@ const UI = uiJson as unknown as { ark: Record<string, string>; rost: Record<stri
 export function SkapaArk() {
   const k = useSpel();
   const { stangBok } = k.o;
-  const { textRef, gavaTill, onskan } = k.t;
+  const { textRef, gavaTill, onskan, text, varld, omrade } = k.t;
   const { remsa, vy, setVy, trolla, avslutaOrd, puff } = k.sk;
   const [flik, setFlik] = useState<Fraga>("vad");
   const [ide, setIde] = useState<string[] | null>(null);
   const [penna, setPenna] = useState<{ lage: "vilar" | "puttar" | "blinka" | "trollar"; n: number }>({ lage: "vilar", n: 0 });
   const arkRef = useRef<HTMLElement>(null);
+  const lagerRef = useRef<HTMLDivElement>(null);
+  const trollar = useRef(false);
+  const plats = useMinne((s) => s.plats);
+  useForhandArk(arkRef, text, varld === "ang" && !omrade && plats === START_PLATS);
 
   useEffect(() => {
     // Öppnas boken tom och utan lapp frågar Pennan vad barnet vill trolla fram.
@@ -46,9 +55,27 @@ export function SkapaArk() {
 
   const redo = (remsa.redo || (!!gavaTill && !!(remsa.ord.length || remsa.skriv))) && !remsa.fraga;
   const tryckPenna = () => {
-    const svar = trolla();
-    if (svar === "tom") setPenna((p) => ({ lage: "puttar", n: p.n + 1 }));
-    else if (svar === "ok") setPenna((p) => ({ lage: "trollar", n: p.n + 1 }));
+    if (trollar.current) return;
+    if (!redo || !lagerRef.current) {
+      const svar = trolla();
+      if (svar === "tom") setPenna((p) => ({ lage: "puttar", n: p.n + 1 }));
+      return;
+    }
+    // 6.11: Pennan trollar, meningen läses upp och orden flyger som gnistor in i ringen. Sedan blir skapelsen verklig.
+    trollar.current = true;
+    setPenna((p) => ({ lage: "trollar", n: p.n + 1 }));
+    rostKo.lasUpp([remsa.ord.map((o) => o.t).join(" "), remsa.skriv].filter(Boolean).join(" "));
+    const mal = forhand.lage().ringSkarm;
+    const ms = flygGnistor(lagerRef.current, mal);
+    window.setTimeout(() => {
+      forhand.trolla();
+      stjarnregn(mal);
+      window.setTimeout(() => {
+        trollar.current = false;
+        const svar = trolla();
+        if (svar === "tom") setPenna((p) => ({ lage: "puttar", n: p.n + 1 }));
+      }, ms ? 450 : 0);
+    }, ms);
   };
   const klar = () => {
     if (remsa.skriv.trim()) avslutaOrd();
@@ -61,7 +88,7 @@ export function SkapaArk() {
   };
 
   return (
-    <div className="sk-lager" data-testid="bok-skarm">
+    <div className="sk-lager" data-testid="bok-skarm" ref={lagerRef}>
       <button type="button" className="sk-stang-yta" aria-label={UI.ark.stang_aria} tabIndex={-1} onClick={stangBok} />
       <section className="sk-ark" ref={arkRef} role="dialog" aria-label={UI.ark.aria} data-vy={vy}>
         <div className="sk-topp">
