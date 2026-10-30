@@ -40,7 +40,9 @@ async function bild(namn) {
 async function vuxen() {
   await page.evaluate(() => window.__troll.foralder(true));
   await page.getByTestId("foralder").waitFor({ state: "visible" });
-  await page.getByTestId("foralder-svar").fill("7");
+  const tal = (await page.locator(".vuxen-las-fraga").innerText()).match(/(\d+)\s*×\s*(\d+)/);
+  assert.ok(tal);
+  await page.getByTestId("foralder-svar").fill(String(+tal[1] * +tal[2]));
   await page.getByTestId("foralder-oppna").click();
   await page.getByTestId("spara-kopia").waitFor({ state: "visible" });
 }

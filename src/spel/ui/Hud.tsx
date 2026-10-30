@@ -38,19 +38,28 @@ export function Hud({ oppnaStjarnor, haller, setHaller, setForalder, stjarnor, h
         className={haller ? "sk-hud-rund foralder-knapp haller" : "sk-hud-rund foralder-knapp"}
         aria-label={UI.hud.vuxna_aria}
         data-testid="foralder-hall"
-        onClick={() => setForalder(true)}
+        onKeyDown={(e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setHaller(true); } }}
+        onKeyUp={(e) => { if (e.key === " " || e.key === "Enter") setHaller(false); }}
+        onBlur={() => setHaller(false)}
         onContextMenu={(e) => e.preventDefault()}
         onPointerDown={(e) => {
+          if (!e.isPrimary || e.button !== 0) return;
           e.currentTarget.setPointerCapture(e.pointerId);
           setHaller(true);
         }}
         onPointerUp={() => setHaller(false)}
         onPointerCancel={() => setHaller(false)}
+        onLostPointerCapture={() => setHaller(false)}
+        onPointerLeave={() => setHaller(false)}
+        onPointerMove={(e) => {
+          const r = e.currentTarget.getBoundingClientRect();
+          if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) setHaller(false);
+        }}
       >
         <span className="ring" />
         <img alt="" src={ikon("ui", "las")} />
       </button>
-      <HoldOppnare haller={haller} oppna={() => setForalder(true)} />
+      <HoldOppnare haller={haller} oppna={() => { setHaller(false); setForalder(true); }} />
       {varld !== "ang" ? (
         <button type="button" className="hem-angen-knapp" data-f5="hem-angen" data-w3="vagvisare-knapp" data-plats="ang" aria-label="Till Ängen" ref={(el) => el?.setAttribute("data-testid", "hem-angen")} onClick={hemTillAngen}>
           <img alt="" src={ikon("ui", "hem")} />

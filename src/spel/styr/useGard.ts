@@ -1,3 +1,4 @@
+import { borjaOmMedKopia, laddaOmRent } from "../start.ts";
 import { bestamdHem } from "../bygge.ts";
 import { fyll } from "../fyll.ts";
 import { ljud } from "../ljud.ts";
@@ -59,17 +60,10 @@ export function useGard(k: Pick<SpelKarna, "t" | "b" | "v" | "s">) {
   }
 
   function borjaOm() {
-    const rensa = () => {
-      const bort: string[] = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        const k = localStorage.key(i);
-        if (k?.startsWith("trollpennan")) bort.push(k);
-      }
-      for (const k of bort) localStorage.removeItem(k);
-    };
-    rensa();
-    window.addEventListener("pagehide", rensa);
-    window.location.reload();
+    try {
+      if (!borjaOmMedKopia(window.localStorage)) { setForalderRad(TEXTER.backup.arkiv_fel); return; }
+      laddaOmRent(window.localStorage);
+    } catch { setForalderRad(TEXTER.backup.arkiv_fel); }
   }
 
   function sparaKopia() {
