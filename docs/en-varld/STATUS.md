@@ -100,3 +100,7 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 - Skapamenyns utseende (Pennans bok) designas om i en annan chatt. Den implementeras efter den här blockserien, så lägg ingen kraft på menyns estetik nu.
 - Live: https://trollpennan.christofferhedman87.workers.dev/ (Cloudflare bygger från `main`; byggen från andra grenar fallerar alltid direkt, och det är inget kodfel).
 - Nåbara modellkällor från molnmiljön (2026-10-29): git clone från GitHub, raw.githubusercontent.com, quaternius.com, drive.google.com, opengameart.org och itch.io. Blockerade: poly.pizza (Cloudflare), kenney.nl (403), codeload.github.com och api.github.com för repon utanför sessionen.
+
+## T-14/T-35, E3/G4 (PR #287)
+
+Manifest/ikoner och best-effort persist vid start, utan blockerad start eller ny överföring. Föräldrar får ärliga Safari-/hemskärmsråd och tidpunkt för senaste startade nedladdning; grodlicensen bevaras under Tack till längst ner. Alla sju grindar gröna,553/553. UI persist true/false/fel/saknas och verklig kopienedladdning/korrekt licensordning gröna,375×812 och812×375; interna bilder granskade. Oberoende Codex-granskare godkände2f3a40e. Merge/live återstår. Svagaste punkter: fysisk Safari-långtid, faktisk iPad-hemskärmsinstallation, ingen garanti att föräldern behåller en nedladdad fil. Ingen ny röst krävs för föräldratexterna.

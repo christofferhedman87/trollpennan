@@ -62,7 +62,7 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 
 ## Täckning och leveranslogg
 
-- E3/G4 samordnar T-14 och den oberoende T-35 eftersom båda gäller föräldrasidans information. Webmanifest och rasteriserade kopior av befintlig favicon till hemskärmsikoner, best-effort `navigator.storage.persist()` utan väntan vid start, ärliga Safari-/hemskärmsråd samt tidpunkt för senaste startade kopienedladdning. Ingen garanti att en fil behållits eller att Safari aldrig rensar. Grodlicensen ligger ordagrant kvar sist under Tack till. Baslinje: manifest saknas och licensordningen röda. Två rena nya lagringsprov gröna; alla sju grindar gröna, 553/553. Skärmprov och oberoende slutgranskning återstår. Tre svagaste punkter: fysisk iPad/långt uppehåll, faktisk hemskärmsinstallation på fysisk enhet och nya föräldratexter är bara lästa visuellt i molnets browser.
+- E3/G4 samordnar T-14 och den oberoende T-35 eftersom båda gäller föräldrasidans information. Webmanifest och rasteriserade kopior av befintlig favicon till hemskärmsikoner, best-effort `navigator.storage.persist()` utan väntan vid start, ärliga Safari-/hemskärmsråd samt tidpunkt för senaste startade kopienedladdning. Ingen garanti att en fil behållits eller att Safari aldrig rensar. Grodlicensen ligger ordagrant kvar sist under Tack till. Baslinje: manifest saknas och licensordningen röda. Två rena nya lagringsprov gröna; alla sju grindar gröna, 553/553. `prov-bestandig-lagring.mjs` grönt för persist=true/false/fel/saknas, samt verklig föräldraöppning, nedladdning/kopiedatum och licensordning i375×812 och812×375. Interna bilder granskade. Oberoende `/root/t12_t13_review` godkände exakt2f3a40e605bbc902192d7de25f6f05cfcd724ad4 utan blockerare. Provets relativa request-URL:er och väntan på försidan rättades; spelkoden9a1d361 är oförändrad sedan sju gröna grindar; lint grönt igen. Tre svagaste punkter: fysisk iPad/långt uppehåll, faktisk hemskärmsinstallation på fysisk enhet och nya föräldratexter är bara lästa visuellt i molnets browser.
 
 - Plan-PR #285 är mergad som `161a234`. Christoffers B1–B8 och granskningsmandat finns i GitHub. Cloudflare grönt på main (check 124369472890); alla sex serverade start-/spel-filer är byteidentiska med det tidigare verifierade bygget, vilket stämmer med en ren dokumentändring.
 - E1/E2: T-12 kort klick reproducerat rött; T-13 avsaknad av beständigt arkiv och radering trots kvotfel reproducerade röda. Nu hållning med släpp/leave/cancel/blur-städning och Space/Enter-stöd, tvåsiffrig multiplikation, arkiv-före-radering och återställning som bevarar både gamla och nuvarande världar. Arkiv rensas aldrig automatiskt. Oberoende granskaren hittade att trasig JSON/dal inuti en råsträng accepterades; detta är rättat med befintlig ren `arData` och negativa oförändrad-lagring-prov. Testid-baslinjen ändras avsiktligt enbart när fem oskyddade titelkontroller tas bort. Slutgrindar gröna (551/551 produkttester). `prov-foraldersparr.mjs` och `prov-arkiv.mjs` gröna i375×812 och812×375; interna bilder granskade. I arkivprovet behövde den nya fliken gå klart genom verkligt intro innan låset gick att hålla; det är provets synkronisering som rättades, inga force-klick. Oberoende granskare `/root/t12_t13_review` godkände exakt `c7473c76a4e0c1cb2ba7301eff904bd7488896f2`, inga kvarstående blockerare. Kod91d3a9d är oförändrad sedan alla sju grindar; sista commit ändrar bara detta UI-prov, lint grönt igen. Befintliga `prov-backup.mjs` och `prov-lagringsfel.mjs` gröna, inklusive hel värld, mark/bokstavsljud, äldre/ogiltiga kopior och nekad lagring. #286 mergad som06f057e; Cloudflare grönt check124373728361, alla sex serverade filer byteidentiska med lokalt bygge (SHA-256). Tre svagaste punkter: iPad/Safari-långtid återstår (T-14), inga fysiska tangentbords-/touchassistansprov, alla lokala arkiv kan försvinna om webbläsardata rensas (nedladdade kopior behövs).
@@ -84,7 +84,7 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 | T-11 | C3 | Planerad |
 | T-12 | E1 | Verifierad + oberoende granskad, PR #286, kod 91d3a9d/prov c7473c7; publicerad som06f057e, Cloudflare124373728361 och6/6SHA-256 gröna |
 | T-13 | E2 | Verifierad + oberoende granskad, PR #286; arkiv/nekad lagring/trasigt innehåll samt ny flik båda vyer; publicerad som06f057e, Cloudflare124373728361 och6/6SHA-256 gröna |
-| T-14 | E3 | Implementerad i E3/G4; sju grindar gröna (553/553), browserprov pågår; fysisk Safari-långtid kvar |
+| T-14 | E3 | Verifierad kod + oberoende granskad i #287, 9a1d361/prov2f3a40e; fysisk Safari-långtid kvar |
 | T-15 | B3 | Planerad; B1 godkänt |
 | T-16 | D3 | Planerad |
 | T-17 | D0/D3 | Planerad; B5 godkänt |
@@ -105,7 +105,7 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 | T-32 | G1 | Planerad |
 | T-33 | G3 | Planerad |
 | T-34 | G3 | Planerad |
-| T-35 | E3/G4 | Implementerad; ordningsprov rött på baslinjen, skärmprov pågår |
+| T-35 | E3/G4 | Verifierad + oberoende granskad i #287, båda skärmformat; väntar merge/live |
 
 ## Fortsätt här — gäller både Codex och Claude
 
