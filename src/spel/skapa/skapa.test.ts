@@ -10,6 +10,7 @@ import { arFrasStart } from "./lexikon.ts";
 import { delaText, justera, platta, tillText, type MOrd } from "./mening.ts";
 import { harVad, meningsbrickor } from "./meningsbrickor.ts";
 import { kollaOrd } from "./ordKoll.ts";
+import { skrivGuldTecken, type Spok } from "./guldchans.ts";
 
 const skrivet = (s: string, k: MOrd["k"] = "skriv"): MOrd[] => (s ? s.split(" ").map((t) => ({ t, k })) : []);
 const text = (o: MOrd[]) => o.map((x) => x.t).join(" ");
@@ -129,6 +130,35 @@ test("Skapa B: prefixhjälpen och önskans kort", () => {
   assert.ok(o.some((k) => k.slot === "form" && k.id === "äpple"));
   const h = hyllaMedOnskan("djur", o);
   assert.equal(h.find((s) => s.id === "kan")!.kort[0]!.id, "sprutar eld");
+});
+
+test("Skapa B: önskans flerordskort går att skriva klart i guldchansen", () => {
+  const onskade = onskeKort(["en drake som sprutar eld", "en kanin som springer snabbt"]);
+  for (const fras of ["sprutar eld", "springer snabbt", "kanin"]) {
+    const valt = fras === "kanin" ? kort("djur", fras) : onskade.find((k) => k.visa === fras);
+    assert.ok(valt, `kortet ${fras} går att välja`);
+    let s: Spok = { ord: valt.visa, tokenI: 3, buf: "", fel: 0 };
+    for (let i = 0; i < fras.length; i++) {
+      s = skrivGuldTecken(s, fras[i]!.toLocaleUpperCase("sv"));
+      assert.equal(s.buf, fras.slice(0, i + 1));
+      assert.equal(s.buf === s.ord, i === fras.length - 1, "guldchansen blir klar först efter sista bokstaven");
+    }
+    assert.equal(s.fel, 0);
+    assert.equal(s.tokenI, 3, "kortets plats i meningen bevaras");
+  }
+});
+
+test("Skapa B: guldchansen väntar på rätt mellanrum utan att hoppa över bokstäver", () => {
+  let s: Spok = { ord: "sprutar eld", tokenI: 3, buf: "sprutar", fel: 0 };
+  s = skrivGuldTecken(s, "e");
+  assert.equal(s.buf, "sprutar", "andra ordet kan inte börja innan mellanrummet");
+  s = skrivGuldTecken(s, " ");
+  assert.equal(s.buf, "sprutar ");
+  s = skrivGuldTecken(s, " ");
+  assert.equal(s.buf, "sprutar ", "ett extra mellanrum förbrukar ingen bokstav");
+  for (const b of "eld") s = skrivGuldTecken(s, b);
+  assert.equal(s.buf, "sprutar eld");
+  assert.equal(s.fel, 2);
 });
 
 test("Skapa D: idétärningen skriver aldrig, men läser upp en riktig mening", () => {

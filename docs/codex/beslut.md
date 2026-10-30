@@ -1,0 +1,10 @@
+# Beslut
+
+2026-10-30, baslinje `7d83937`.
+
+- Användarens nya uppdrag medger självständiga, testade kodförbättringar på separata branches och PR:er, även merge när grindar och skydd tillåter. Cloudflare-kopplingen ändras inte. Miljökonfiguration sparas som utkast; publicering av miljön görs i miljöinställningarna.
+- Utvecklingsmiljön använder den befintliga statiska Pages-klienten och Node 24. Ingen databas, nytt konto, API-nyckel eller nytt beroende behövs för lokalt spel. Befintlig checkout används utan extra worktree.
+- Första kodblocket rättar endast flerordsguldchansen. Hela frasen behåller sina tokenpositioner; först när alla tecken är skrivna markeras de som barnets egna ord. Sparformat, orddata och befintlig tolk ändras inte.
+- Backupförlusten hanteras separat. Samtliga avsedda sparfält ska följa med exporten, med typkontroll av fullständighet. Importens validering och äldre v2-kopior ska bevaras; ingen destruktiv migrering införs.
+- Det dokumenterade P3a-prestandaprovet har verifierats som ett kvarstående fel: 8 av 9 delprov passerade, men placeringens CPU-median var 60,5 ms mot gränsen 50 ms. Testet och gränsen ändras inte för att göra resultatet grönt.
+- Git HTTPS-läsning och push utan skrivning fungerade. GitHub-API och produktionsadressen nekades av nätverkspolicyn. De exakta värdarna har lagts till i miljöutkastet; API-behörighet, PR/merge och produktionspublicering får inte påstås verifierade innan de faktiskt går att kontrollera.

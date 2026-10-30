@@ -22,11 +22,11 @@ import type { SpelKarna } from "./typer.ts";
 import { tackFor } from "../skapa/tack.ts";
 import { tystaBannrar, useKvitto } from "../skapa/kvitto.ts";
 import { useSkrivTangentbord } from "./useSkrivTangentbord.ts";
+import { skrivGuldTecken, type Spok } from "../skapa/guldchans.ts";
 
 const ANGRA_MAX = 24;
 const UI = uiJson as unknown as { puffar: Record<string, string>; tider_ms: Record<string, number> };
 export type SkrivVy = "skriv" | "hjalp";
-type Spok = { ord: string; tokenI: number; buf: string; fel: number };
 
 export function useSkriv(k: Pick<SpelKarna, "t" | "s">) {
   const { text, setText, setVal, setHand, forslag, setForslag, behover, setBehover, bokOpp, setBokOpp, onskaOpp, gavaTill, setGavaTill, textRef, handRef, gavaRef, setByggPuff } = k.t;
@@ -168,22 +168,13 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "s">) {
     setBokOpp(true);
     ljud.lasOpp();
     setSistaTangent(Date.now());
-    if (bit === " ") {
-      ljud.pling();
-      if (spokRef.current) return;
-      avslutaOrd();
-      return;
-    }
-    const b = bokstav(bit);
-    if (!b) return;
     const s = spokRef.current;
     if (s) {
-      const ratt = s.ord[s.buf.length];
-      if (!ratt || b.toLocaleLowerCase("sv") !== ratt) return void setSpok({ ...s, fel: s.fel + 1 });
+      const steg = skrivGuldTecken(s, bit);
+      if (steg.buf === s.buf) return void setSpok(steg);
       ljud.pling();
-      sagBokstav(ratt);
-      const buf = s.buf + ratt;
-      if (buf !== s.ord) return void setSpok({ ...s, buf });
+      if (bit !== " ") sagBokstav(bit);
+      if (steg.buf !== s.ord) return void setSpok(steg);
       // Guldchansen klar: kortordet blir barnets eget guldord.
       const { ord, skriv } = nu();
       const ny = ord.map((o, i) => (i >= s.tokenI && i < s.tokenI + s.ord.split(" ").length ? { ...o, k: "skriv" as const } : o));
@@ -193,6 +184,13 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "s">) {
       puffa(fyll(UI.puffar.guldord ?? "", { ord: s.ord }));
       return;
     }
+    if (bit === " ") {
+      ljud.pling();
+      avslutaOrd();
+      return;
+    }
+    const b = bokstav(bit);
+    if (!b) return;
     ljud.pling();
     sagBokstav(b);
     setVy("skriv");

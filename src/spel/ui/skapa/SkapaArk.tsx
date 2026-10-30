@@ -110,9 +110,11 @@ export function SkapaArk() {
             {puff.text}
           </p>
         ) : null}
-        <Lapp ide={ide} />
-        <Trollremsa oppnaVad={() => oppnaHjalp("vad")} />
-        <Svarsrad />
+        <div className="sk-innehall">
+          <Lapp ide={ide} />
+          <Trollremsa oppnaVad={() => oppnaHjalp("vad")} />
+          <Svarsrad />
+        </div>
         {vy === "skriv" ? (
           <>
             <Hjalprad
