@@ -18,7 +18,7 @@ Varje block levereras med separat branch och PR, kritisk granskning, samtliga ob
 - **Klart när:** en syntetisk värld med djur på alla platser, stalldjur, byggen och boende, mark, stjärnor, album, Väktardjur, ljudval och läsnivå överlever export → JSON → import → omladdning. Äldre kopior accepteras med dokumenterade standardvärden; ogiltig kopia ändrar inte världen.
 - **Risk / beroende / storlek:** M, kräver noggrann datagranskning. **Sparning:** behåll v2; inget borttagande eller destruktiv migrering. **Resurser:** inga nya. **Mått:** bevarade fält och objektidentiteter före/efter; komplettera block 1 oberoende.
 
-## 3. Trygg start och köp vid lagringsfel — planerat
+## 3. Trygg start och köp vid lagringsfel — 3a verifierad (#276), 3b förberett
 
 - **Barnets upplevelse / ändring:** Spelet startar med vänlig befintlig lagringsinformation även om lagring nekas. Ett markköp får inte förbruka bestående stjärnor utan motsvarande mark. Undersök gemensam transaktion eller säker återställning innan implementation.
 - **Filer:** `start.ts`, `lagring.ts`, `dal/utbyggnad.ts`, `styr/useHandelser.ts` och befintliga lagringsprov.
@@ -88,70 +88,25 @@ Den här sektionen är aktuell; paus- och återstartshistoriken nedanför beskri
 - **Block 1, #274:** slutverifierat på `6384fc4`. Alla sju obligatoriska grindar gröna, inklusive 73/73 produkttestfiler (P3a grönt i denna körning, gränsen oförändrad). Browser: båda flerordsfraserna, Mellanslag, sudda över ordgränsen, rotation, synlig skrivyta, Trolla, uppfylld önskan och sparat guld; liggande stavningssvar nåbart. Enord, fel tangent, Nej tack, stäng/öppna, Ångra och Ta bort passerar utan sidfel. Både mellanslagsfelet och kvarhängande spökfras vid Ångra är röda före rättningen och gröna efter.
 - **Block 2, #275:** slutverifierat på `d427815` (staplat på block 1). Samma fulla grindar gröna, 73/73 produkttestfiler. Riktig JSON-nedladdning → tömd syntetisk profil → filval/bekräftelse → omladdning bevarar skapelser på alla platser, stall, byggen/boende/låda, album, framsteg, mark, läsnivå och ljudval inklusive separat bokstavsljud. Ogiltigt bokstavsljud ändrar inget; äldre v2-kopia utan det fältet får standarden på. Lagringsmotorn stöder fortsatt v1/v2; UI-filväljaren kräver fortsatt v2.
 - **Gemensam startregression:** riktig titel, intro via Hoppa över, skärmtangenter, egen grön kanin och återöppning efter reload passerar i 375×812, 812×375 och 1280×800. Inga sidfel, konsolfel eller externa anrop i dessa avgränsade flöden.
-- **Merge/produktion:** #274 är mergad till `main` som `697ad74`. #275 är slutverifierad och förbereds nu för merge. Cloudflare-publicering kontrolleras separat och uppdateras här efteråt.
+- **Merge/produktion:** #274 och #275 är mergade till `main` (`697ad74`, därefter `dd8699e`). Cloudflare för `dd8699e` är grönt; live-index och båda JS-delarna är byteidentiska med det verifierade backupbygget (SHA-256 jämförd). Separata produktionsflöden körs därefter.
 - **Nästa:** block 3 delas i 3a (säker start och läsfelsskydd, ingen formatändring) och 3b (atomärt markköp med testad bakåtkompatibel v2-migrering). Därefter block 4.
+
+### Block 3: aktuell status
+
+- Aktuell branch: `codex/block-03a-lagringsstart`, från `main` = `dd8699e`. Säker sessionsgetter används vid modulstart och i titeln; huvudlagringens läsfel spärrar automatisk överskrivning. En ytterligare oskyddad lokal getter i GardDjur-starten är skyddad. Ingen formatändring i 3a.
+- **3a, #276:** oberoende kodgranskning utan blockerare och samtliga obligatoriska grindar gröna på `0a1a460`, 73/73 produkttestfiler. Riktade läsfelsregressioner var röda på baslinjen och gröna efter. Browserprovet passerar nekad sessionsgetter i stående/liggande, nekad lokal getter samt tillfälligt getItem-fel. Riktig titel visas; lagringsinformationen är synlig; vanliga stateändringar och ogiltig import lämnar originalet orört; giltig UI-import häver skrivskyddet och överlever reload. Inga sidfel eller sidrullning. Förberedd för merge; ingen formatändring.
+- 3b är förberett och granskat separat: mark och stjärnor i samma v2-skrivning, lokal äldre mark migreras utan att den gamla nyckeln ändras, filimport använder endast filens mark. Det återstår att applicera, köra fulla grindar och browserprova köp/backup. Underlaget finns tillfälligt i `/workspace/work/trollpennan-qa/block-03b.patch`; ingen 3b-leverans har gjorts ännu.
 
 Tre svagaste kvarstående punkter: svenskt bokstavsuttal behöver inspelningar; fysisk mobilprestanda är inte uppmätt; utflykterna saknar ännu ängens förhandsvisning. Inget barntest har gjorts. En spelvan sjuåring får nu ett fungerande nästa steg: skriv klart önskans fras och se djuret förändras, eller skapa ett hem. Viljan att fortsätta över flera spelpass är fortfarande en hypotes.
 
-### Återupptaget 2026-10-30 efter raderad chatt
+## Fortsätt här — Codex eller Claude Code
 
-- Codex fortsätter från `8b999e5` på `codex/block-02-backup`; den sparade granskningen återanvänds. `main` är fortfarande `7d83937`. Ingen merge har gjorts i denna fortsättning ännu.
-- Första fulla körningen: typecheck, typecheck:pages, check:struktur, lint (0 fel, 18 varningar), test:product (73/73 testfiler), build:pages och check:pages-output passerar. P3a passerade i just denna körning; dess tidigare maskinberoende fel och gräns är oförändrade.
-- Slutliga browserprov pågår. Oberoende kodgranskning hittade två kvarstående luckor inom acceptansen: Ångra/ta bort kan lämna en aktiv guldchans knuten till gamla tokenpositioner, och bokstavsljudet i `trollpennan-skapa-v1` saknas i backup-wrappern. Dessa rättas och får regressioner före ny slutverifiering.
-- GitHub-plugin, autentiserad Git HTTPS och produktionshosten är nu åtkomliga. Produktion svarar HTTP 200; Cloudflare-bygget för baslinjen är grönt. Detta intygar inte publicering av de nya ändringarna.
-- Arbetsloggar och interna skärmbilder ligger i `/workspace/work/trollpennan-qa/`. De är tillfälliga; bestående status sparas i detta befintliga dokument och kod på GitHub.
+1. Läs `AGENTS.md`, `projektregler.md`, aktuell Skapa-/En värld-status och denna plans Leveransläge. Granskningen är redan gjord; börja vid nästa oavslutade block. Betygen avser baslinjen, inte barntest.
+2. Kontrollera `git status` och hämta aktuella `origin/main` utan reset eller force-push. Bevara lokalt arbete. Använd befintlig checkout, inget extra worktree behövs. PR #247 är äldre gårdsinramning och ingår inte här.
+3. Aktuellt vid denna commit: #274/#275 mergade och live; #276 är färdigtestad för merge. Nästa kodblock är 3b:s atomära markköp; först därefter block 4, skrivmagi på utflykter. 3b får inte intygas levererat utifrån enbart scratch-prov.
+4. Node 24, befintlig låst installation. `npm ci` bara om beroenden saknas/lockfil ändrats. Statisk klient: `npm run build:pages`, `npm run check:pages-output`, sedan `node node_modules/vite/bin/vite.js preview --config vite.pages.config.ts --port 4173 --strictPort`. Ingen databas, nytt konto eller hemlighet behövs.
+5. Kör obligatoriska grindar: typecheck, typecheck:pages, check:struktur, lint, test:product, build:pages och check:pages-output. Testid-baslinjen ändras bara avsiktligt; P3a:s maskinberoende CPU-gräns ändras inte för att få grönt.
+6. Browser: `CHROMIUM=/usr/bin/chromium node scripts/prov-lagringsfel.mjs`, `scripts/prov-backup.mjs`, `scripts/prov-guldchans.mjs` eller `scripts/prov-forsta-skapelsen.mjs` enligt berörd funktion. Samtliga använder syntetiska isolerade profiler. `QA_SCREENSHOTS` är bara agentens egen kontroll, inga publicerade bilder. Röda flerords-baslinjen kan återprovas med `scripts/vite.guldchans-baslinje.config.mjs` på port 4183; ett annat fel än det interna mellanslaget är inte bevis på den regressionen.
+7. Spara löpande kod och denna befintliga status på GitHub. Varje avgränsat block får egen PR och kritisk granskning. Följ mandatet för testad merge, kringgå inga skydd. Behåll Cloudflare-integrationen och kontrollera dess main-bygge och serverade filer separat från merge.
 
-### Tidigare pausläge 2026-10-30
-
-Användaren begärde att allt säkras inför kvotpaus. Ingen merge eller produktionspublicering har gjorts.
-
-- Block 1: `codex/block-01-guldchans`. De båda flerordsfallen passerade i browser före den sista layoutjusteringen. Typkontroller, lint, struktur, build/output gröna; produktprov 72/73 testfiler, endast känt P3a rött. Sista layouten behöver ett slutfört browserprov (inklusive stavningssvar/rotation) och rött guld-baslinjefall; markera inte detta som klart innan resultaten kontrollerats.
-- Block 2: `codex/block-02-backup` är en separat staplad branch på block 1; patchen är applicerad och committad. Patchen har 45/45 riktade tester och typecheck:pages gröna i en temporär källkopia. Riktig filnedladdning mot den gamla versionen reproducerade de 13 saknade fälten. Fulla grindar och UI-import/omladdning efter applicering återstår. Läsnivå 3 bevaras genom befintliga franSparning efter arData-validering. Filformatet är fortsatt v2; v1 stöds i lagringsmotorn men inte i befintlig UI-filväljare.
-- Kör vid fortsättning: läs denna plan och beslut.md, kontrollera git status och brancher, installera bara vid behov, bygg Pages, starta preview, kör CHROMIUM=/usr/bin/chromium node scripts/prov-guldchans.mjs och scripts/prov-backup.mjs, samt obligatoriska grindar. Använd syntetisk browserlagring. Återställ inte koden för att göra tester gröna.
-- Installations-/startinstruktioner och domäntilläggen api.github.com och trollpennan.christofferhedman87.workers.dev är bekräftat sparade i miljöutkastet, inte tillämpade/publicerade. Git HTTPS fungerar, API och produktionshost nekades av proxyn. När inställningarna sparats: testa åtkomsten igen, skapa separata PR:er (block 2 har block 1 som bas tills block 1 mergats), kontrollera CI och publicering. Begär inte en ny GitHub-token utan ny diagnos.
-- Arbetsloggar i /tmp och helpers i /workspace/.setup är kompletterande; GitHub-branches och dessa dokument är den bestående källan. Skärmbilder ska inte skickas till användaren eller läggas i PR.
-
-### Börja här — Codex eller Claude Code
-
-Senaste samlade arbetsläget finns på **codex/block-02-backup**. Den innehåller block 1, block 2, båda browserproven och dessa dokument. Bas: main 7d8393729291d2e9fd31eabc448a2899204b21a8. Kodcommits: d0552d7 (block 1) och 1dd0404 (block 2). Båda är medvetet WIP, inte godkända för merge ännu.
-
-1. Läs projektregler.md och AGENTS.md, sedan granskning.md, denna plan och beslut.md. Läs även aktuella Skapa-/En värld-statusfiler. Återanvänd kartläggningen; gör inte om hela granskningen. Betygen är provisoriska expertbedömningar, inte barntest.
-2. Kontrollera git status och bevara eventuellt lokalt arbete. Hämta origin och välj codex/block-02-backup (följ origin-branchen om lokal branch saknas). Använd befintlig checkout; skapa inte ett extra worktree om användaren inte ber om det. Ingen reset/force push behövs.
-3. Använd Node 24 (testat: 24.19.0, npm 11.9.0). Kör npm ci om beroenden saknas/lockfil ändrats. Behåll proxy, TLS- och integritetskontroller. Den statiska klienten kräver ingen databas, hemlighet eller extern backend.
-4. Bygg och starta från reporoten:
-
-```bash
-npm ci
-npm run build:pages
-npm run check:pages-output
-node node_modules/vite/bin/vite.js preview --config vite.pages.config.ts --port 4173 --strictPort
-```
-
-Starta därefter proven i en separat terminal:
-
-```bash
-CHROMIUM=/usr/bin/chromium node scripts/prov-guldchans.mjs
-CHROMIUM=/usr/bin/chromium node scripts/prov-backup.mjs
-CHROMIUM=/usr/bin/chromium node scripts/prov-forsta-skapelsen.mjs
-```
-
-CHROMIUM kan utelämnas om Playwrights egen browser är installerad. QA_SCREENSHOTS kan sättas till en lokal mapp för egen kontroll; inga bilder ska skickas till användaren eller PR. Proven använder enbart syntetisk lagring. Den generella startregressionens ursprungliga version passerade i tre viewportar; den sparade portabla versionen är syntaxkontrollerad men ska köras igen. Den sista layoutversionens guldprov och det applicerade backup-blocket är ännu inte intygade som färdigverifierade.
-
-5. För det återstående röda guld-baslinjefallet: starta Vite med scripts/vite.guldchans-baslinje.config.mjs på port 4183 och kör guldprovet mot http://127.0.0.1:4183/. Konfigurationen ersätter bara hooken med originalet från 7d83937 utan att skriva om checkouten. Ett fel vid det interna mellanslaget väntas; ett annat fel är inte bevis på regressionen. Om det gamla Git-objektet saknas, hämta den exakta committen från origin. Stoppa bara de servrar/browserinstanser du själv startar.
-6. Kör samtliga obligatoriska grindar på den slutliga koden:
-
-```bash
-npm run typecheck
-npm run typecheck:pages
-npm run check:struktur
-npm run lint
-npm run test:product
-npm run build:pages
-npm run check:pages-output
-```
-
-P3a:s CPU-test har fallerat på baslinjen och båda tidigare fullkörningarna; övriga 72 av 73 testfiler passerade. Kontrollera att eventuellt kvarstående fel fortfarande är samma och inga andra tillkommit. Ändra inte gränsen eller testid-baslinjen för att få grönt. Slutliga browserprov måste verkligen slutföras; öppet portnummer eller PID räcker inte.
-
-7. Återtesta GitHub-API/produktionsåtkomst först efter relevant nätverksändring. Miljöutkastet innehåller erforderliga värdar men är inte tillämpat eller publicerat. Git-push fungerar separat från API. Skapa PR för block 1 mot main och PR för block 2 mot block 1 (byt bas till main efter första merge). Följ mandatet för testad merge; kringgå inget branchskydd. Behåll Cloudflare-integrationen, verifiera publiceringen separat och uppdatera statusen här.
-
-Tre återstående svagheter vid pausen: slutliga UI-regressioner är inte färdigbekräftade, P3a:s gamla prestandakrav fallerar, och CI/produktion/PR-åtkomst är inte verifierad. Ingen förbättring av långsiktigt spelintresse eller fysisk mobil-FPS har uppmätts. Efter säker leverans av block 1–2 fortsätter planen med lagringsfel och skrivmagi på utflykter, utifrån faktiskt spelutfall.
+Tillfälliga lokala loggar/bilder ligger i `/workspace/work/trollpennan-qa/`. GitHub är den bestående källan. Tidigare pauslägen och återstartsinstruktioner finns i Git-historiken; rotens gamla HANDOFF/RUNDA-filer gäller inte.

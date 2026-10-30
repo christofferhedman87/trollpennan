@@ -8,7 +8,7 @@ import { createPortal } from "react-dom";
 import { FORSTA, senastRad } from "../forstaStunden.ts";
 import { useMinne } from "../minne.ts";
 import { ljud } from "../ljud.ts";
-import { angraBorjaOm, borjaOmMedKopia, harKopia, laddaOmRent, useStart, ANGRA_NYCKEL } from "../start.ts";
+import { angraBorjaOm, borjaOmMedKopia, harKopia, laddaOmRent, sessionLagring, useStart, ANGRA_NYCKEL } from "../start.ts";
 import { forsidaEl, slappForsida } from "./forsida.ts";
 import "./titel-p2.css";
 
@@ -84,7 +84,7 @@ export function Titel() {
   const sista = useMinne((s) => s.ang.at(-1)?.uid ?? null);
   const rad = useMinne((s) => senastRad(s as unknown as Record<string, unknown>));
   const [fraga, setFraga] = useState(false);
-  const [kopia] = useState(() => harKopia(window.sessionStorage));
+  const [kopia] = useState(() => harKopia(sessionLagring()));
   const [forsida] = useState(forsidaEl);
   const [sent, setSent] = useState(false);
   const redo = angRedo || sent;
@@ -117,13 +117,19 @@ export function Titel() {
     slappForsida(stang); // försidan tonar ut över den levande ängen, sedan börjar introt
   };
   const borjaOm = () => {
-    borjaOmMedKopia(window.localStorage, window.sessionStorage);
+    borjaOmMedKopia(window.localStorage, sessionLagring());
     laddaOmRent(window.localStorage);
   };
   const angra = () => {
-    const raw = window.sessionStorage.getItem(ANGRA_NYCKEL);
-    if (!angraBorjaOm(window.localStorage, window.sessionStorage) || !raw) return;
-    laddaOmRent(window.localStorage, (JSON.parse(raw) as { data: Record<string, string> }).data);
+    const session = sessionLagring();
+    if (!session) return;
+    try {
+      const raw = session.getItem(ANGRA_NYCKEL);
+      if (!raw || !angraBorjaOm(window.localStorage, session)) return;
+      laddaOmRent(window.localStorage, (JSON.parse(raw) as { data: Record<string, string> }).data);
+    } catch {
+      // Sessionsminnet kan nekas även efter att Ångra-knappen visats. Världen lämnas då orörd.
+    }
   };
 
   return (

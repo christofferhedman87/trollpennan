@@ -11,17 +11,23 @@ export const ANGRA_NYCKEL = "trollpennan-angra";
 /** Prov (Playwright, navigator.webdriver) ser titelskärmen bara om de ber om den, så att äldre prov går som förut. */
 export const PROV_NYCKEL = "p2-titel-prov";
 
+/** Även själva webbläsargettern kan nekas, före det första anropet till getItem. */
+export function sessionLagring(hamta: () => Storage = () => window.sessionStorage): Storage | null {
+  try { return hamta(); } catch { return null; }
+}
+
 export function visaTitelVidStart(webdriver: boolean, session: Pick<Storage, "getItem"> | null): boolean {
-  if (!webdriver) return true;
+  // Utan åtkomst till provflaggan väljer vi den riktiga starten, inte ett dolt testflöde.
+  if (!webdriver || !session) return true;
   try {
     return session?.getItem(PROV_NYCKEL) === "1";
   } catch {
-    return false;
+    return true;
   }
 }
 
 export const useStart = create<{ titelOppen: boolean; stang: () => void; angRedo: boolean; redo: () => void }>((set) => ({
-  titelOppen: typeof window !== "undefined" && visaTitelVidStart(navigator.webdriver === true, window.sessionStorage),
+  titelOppen: typeof window !== "undefined" && visaTitelVidStart(navigator.webdriver === true, sessionLagring()),
   stang: () => set({ titelOppen: false }),
   /** 3D-ängen har ritat sin första bild (eller 3D gick inte att starta). Försidan väntar på den. */
   angRedo: false,
