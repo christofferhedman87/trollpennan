@@ -10,7 +10,7 @@ export function useOnska(k: Pick<SpelKarna, "t" | "v">) {
     uppdragSpar, onskaSkrivRef, setOnskaOpp, setOnskaSyns, varldRef, setBokOpp, setPanel,
     setByggPuff, setMenyOpp, setLage, setFlik,
   } = k.t;
-  const { kanskeForstaGard, oppnaBygglage } = k.v;
+  const { kanskeForstaGard } = k.v;
   // R9D: när Bengtssons uppdrag startar tas en djurönskan bort, så att boken bara visar ett uppdrag och förslagen hör till det
   const pagarId = aktivtSkrivUppdrag(uppdragSpar)?.id;
   useEffect(() => {

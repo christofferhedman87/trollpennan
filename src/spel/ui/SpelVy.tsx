@@ -19,6 +19,7 @@ import { TEXTER } from "./spelData.ts";
 import { AngLager } from "./AngLager.tsx";
 import { BokSkarm } from "./BokSkarm.tsx";
 import { SkapaArk } from "./skapa/SkapaArk.tsx";
+import { Kvitto } from "./skapa/Kvitto.tsx";
 import { KopDialog, StjarnDialog, MossaPanel, SkyltDialog, ValjDjurDialog, VisKortBygg, VisKortDjur } from "./Dialoger.tsx";
 import { ForalderDialog } from "./ForalderDialog.tsx";
 import { Hud, HudBot, MenyPanel } from "./Hud.tsx";
@@ -151,17 +152,18 @@ export function SpelVy() {
         {varld === "ang" && !omrade && !bokOpp && !menyOpp && !intro && !overlayRef.current && bengtsson.synlig ? (
           <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
         ) : null}
-        {intro ? null : <HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} npc={bengtsson} />}
+        {intro || (bokOpp && panel === "spel") ? null : <HudBot varld={varld} omrade={omrade} kartaOpp={kartaOpp} oppnaBygglage={oppnaBygglage} setPanel={setPanel} setBokOpp={setBokOpp} npc={bengtsson} />}
         <VyPlats plats="scen" onValjPlats={resa.startaResa} onVagvisarePunkter={resa.setVagvisarePunkter} />
         {/* På Ängen står namnen på skyltarna i 3D (Stigar.tsx). Knappen "Till Ängen" på de andra platserna ligger i ett eget lager
             över allt annat och göms när en dialog är öppen, annars ritas den ovanpå t.ex. Ordboken utan att gå att trycka på. */}
         <VagvisareHud punkter={resa.vagvisarePunkter} onValjPlats={resa.startaResa} dold={aktivPlats === "ang" || dialogOppen || varld === "gard" || titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null || vyFlyg.aktiv} />
         {/* Flygturen går över Sagodalen från Ängen. På andra platser täcker knappen platskortets lyssna- och stängknappar. */}
-        <VyFlygKnapp aktiv={vyFlyg.aktiv} onStarta={() => { setBokOpp(false); vyFlyg.startaVyFlygning(); }} dold={dialogOppen || aktivPlats !== "ang" || varld === "gard" || titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null} />
+        <VyFlygKnapp aktiv={vyFlyg.aktiv} onStarta={() => { setBokOpp(false); vyFlyg.startaVyFlygning(); }} dold={dialogOppen || (bokOpp && panel === "spel") || aktivPlats !== "ang" || varld === "gard" || titel || intro || saga || menyOpp || foralder || albumOpp || kartaOpp || panel !== "spel" || Boolean(platsUi.intro) || resa.mal !== null} />
         <ResOvergangV09 mal={resa.mal} paHoppaOver={resa.hoppaOver} />
       </section>
 
       {bokOpp && panel === "spel" ? <SkapaArk /> : null}
+      {!bokOpp ? <Kvitto /> : null}
       {bokOpp && panel !== "spel" ? <BokSkarm stangBok={stangBok} visaBanner={visaBanner} andrar={andrar} panel={panel} lage={lage} setLage={setLage} setForslag={setForslag} byggPuff={byggPuff} onskaOpp={onskaOpp} onskan={onskan} onskaSyns={onskaSyns} onskaDjur={onskaDjur} onskaEx={onskaEx} fyllExempel={fyllExempel} gavaTill={gavaTill} ang={ang} hemma={hemma} varld={varld} forslag={forslag} valjForslag={valjForslag} nejForslag={nejForslag} behover={behover} utfor={utfor} flik={flik} onskaKort={onskaKort} setFlik={setFlik} kort={kort} val={val} funna={funna} onskaIds={onskaIds} kortGang={kortGang} valjKort={valjKort} oppnaSkrivMig={oppnaSkrivMig} text={text} omrade={omrade} visaOnskaHjalp={visaOnskaHjalp} vaknaNu={vaknaNu} vaknaText={vaknaText} skrivTecken={skrivTecken} sudda={sudda} kanAngra={kanAngra} angraMening={angraMening} uppFlik={uppFlik} setUppFlik={setUppFlik} uppdragSpar={uppdragSpar} byggSida={byggSida} agdaSidor={agdaSidor} setByggSidaId={setByggSidaId} setByggPuff={setByggPuff} byggFras={byggFras} kopRad={kopRad} lastaSidor={lastaSidor} forsokKop={forsokKop} setPanel={setPanel} forstaSkapelse={forstaSkapelse} /> : null}
 
       {skylt ? <SkyltDialog skylt={skylt} setSkylt={setSkylt} /> : null}

@@ -12,6 +12,7 @@ import { HINT, SNART } from "./ang/delat.ts";
 import { DAMM } from "./ang/damm.ts";
 import { Eldflugor, FagelFlyg, Fjarilar, Forgrund, Glitter, GrasTuvor, Ljusflackar, Moln, Nackrosor, Ringar, Solkorn, Sond, Stenar, TradOchBlommor, VindGras } from "./ang/dekor.tsx";
 import { Skogsstig, SpokHus } from "./ang/byggnader.tsx";
+import { Trollring } from "./ang/Trollring.tsx";
 import { Hemdalen } from "./dal/Hemdalen.tsx";
 import { DalKamera } from "./dal/DalKamera.tsx";
 import { DALEN } from "./dal/tomter.ts";
@@ -195,6 +196,7 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
       <SpokHus onSnart={onSnart} />
       <Skogsstig onSnart={onSnart} />
       {!saga ? <Hemdalen natt={natt} /> : null}
+      {!saga ? <Trollring /> : null}
       {djur.map((spec) => (
         <DjurIScen key={spec.uid} spec={spec} alla={djur} plats={ANG_PLATS} />
       ))}
