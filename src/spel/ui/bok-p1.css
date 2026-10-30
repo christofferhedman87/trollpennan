@@ -152,9 +152,12 @@ body:has([data-s4="vaktar-aptitbubbla"]) .bok-skarm .bok{max-height:446px;height
 @media (orientation: landscape) and (max-height: 600px) {
   body:has(.sk-lager) [data-s4="vaktar-aptitbubbla"] { right: calc(min(400px, 52%) + 12px); }
   body:has(.sk-lager):has([data-s4="vaktar-aptitbubbla"]) .sk-penn-ora { top: 130px; }
-  body:has(.sk-lager) .tp-vagvisare-hud button { opacity: 0; pointer-events: none; }
   /* Den smalare remsan rymmer Väktarens text (högst ca 50 tecken) genom lite mindre typ och högst tre rader; 🔊 läser upp hela. */
   body:has(.sk-lager) [data-s4="vaktar-aptitbubbla"] p,
   body:has(.sk-lager) [data-s4="vaktar-aptitbubbla"] [data-s4-progress] { font-size: clamp(11px, 1.9vw, 14px); line-height: 1.15; }
   body:has(.sk-lager) [data-s4="vaktar-aptitbubbla"] p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
 }
+
+/* Block 4b: medan en bok- eller menypanel är öppen står returskylten inte kvar ovanför arket (stående likaväl som liggande):
+   där ligger trollringen och hologrammet på utflykterna, och skylten täckte dem. Barnet stänger boken för att resa. */
+body:has(.sk-lager) .tp-vagvisare-hud button { opacity: 0; pointer-events: none; }

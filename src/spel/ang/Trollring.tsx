@@ -11,7 +11,6 @@ import { harDjurGltf, malhojd, takSkala } from "../entiteter.ts";
 import { ritSkala } from "../placering.ts";
 import { platsMed, START_PLATS } from "../platser.ts";
 
-const ANG = platsMed(START_PLATS);
 import { Byggverk } from "../dal/Byggverk.tsx";
 import { forhand } from "../skapa/forhand.ts";
 import { DjurForm, ModellGren } from "./djur.tsx";
@@ -20,12 +19,42 @@ import { gorHolo, HOLO_TID } from "./holoMaterial.ts";
 const _v = new THREE.Vector3();
 const _a = new THREE.Vector3();
 const _b = new THREE.Vector3();
+const _box = new THREE.Box3();
+const _hx = [0, 0, 0, 0, 0, 0, 0, 0].map(() => new THREE.Vector3());
+/** Bara dev och prov (aldrig för barn): hologrammets ruta på skärmen i CSS-px, för att provet ska kunna se att det syns. */
+const PROV = import.meta.env.DEV || (typeof navigator !== "undefined" && navigator.webdriver === true);
+let provRam = 0;
+function provHologram(g: THREE.Group, camera: THREE.Camera, gl: THREE.WebGLRenderer) {
+  provRam += 1;
+  if (provRam % 6 !== 0) return;
+  _box.setFromObject(g);
+  if (_box.isEmpty()) return;
+  const r = gl.domElement.getBoundingClientRect();
+  const { min, max } = _box;
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  [0, 1].forEach((i) => [0, 1].forEach((j) => [0, 1].forEach((k) => {
+    const p = _hx[i * 4 + j * 2 + k]!.set(i ? max.x : min.x, j ? max.y : min.y, k ? max.z : min.z).project(camera);
+    const sx = r.left + ((p.x + 1) / 2) * r.width;
+    const sy = r.top + ((1 - p.y) / 2) * r.height;
+    x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy);
+  })));
+  const l = forhand.lage();
+  (window as unknown as { __trollholo?: unknown }).__trollholo = {
+    plats: l.plats, nyckel: l.nyckel, kropp: l.spec?.typ === "djur" ? l.spec.spec.kropp : null, y: l.holoY, krymp: l.krymp,
+    x0: Math.round(x0), y0: Math.round(y0), x1: Math.round(x1), y1: Math.round(y1), skala: Math.round(g.scale.y * 1000) / 1000,
+  };
+}
 
-/** Ungefärlig höjd i meter på det som förhandsvisas. */
-function hojdFor(spec: ReturnType<typeof forhand.lage>["spec"]): number {
+/** En flygare svävar i förhandsvisningen över ringen, men högst så här högt (m): luftbandet ligger på 1,6–2,4 m, och högre än så
+ *  ryms inte mellan HUD:en och arket i stående. Fisken (strax över vattnet) och marken påverkas inte. */
+const HOLO_MAX_Y = 1.1;
+const synY = (holoY: number) => Math.min(holoY, HOLO_MAX_Y);
+
+/** Ungefärlig höjd i meter på det som förhandsvisas, räknat från marken (en fågel i luften står högre: `holoY`). */
+function hojdFor(spec: ReturnType<typeof forhand.lage>["spec"], holoY = 0): number {
   if (!spec) return 1;
   if (spec.typ === "bygg") return 2.2;
-  return Math.max(0.6, malhojd(spec.spec.kropp) * (spec.spec.skala || 1) * 1.15);
+  return synY(holoY) + Math.max(0.6, malhojd(spec.spec.kropp) * (spec.spec.skala || 1) * 1.15);
 }
 const LIGG = new THREE.Euler(-Math.PI / 2, 0, 0);
 
@@ -64,10 +93,11 @@ function Ring({ r }: { r: number }) {
   );
 }
 
-function HoloDjur({ spec, z }: { spec: Parameters<typeof GltfDjur>[0]["spec"]; z: number }) {
+function HoloDjur({ spec, z, plats, krymp }: { spec: Parameters<typeof GltfDjur>[0]["spec"]; z: number; plats: string; krymp: number }) {
   const signal = useRef<DjurSignal>({ klapp: 0, ror: 0 });
-  // Samma storlek som djuret får på ängen (djur.tsx: takSkala × ritSkala).
-  const s = takSkala(spec.kropp, spec.skala || 1) * ritSkala(spec, z, ANG);
+  // Samma storlek som djuret får på sin plats (djur.tsx: krymp först, sedan takSkala × ritSkala för platsen).
+  const rit = krymp !== 1 ? { ...spec, skala: (spec.skala || 1) * krymp } : spec;
+  const s = takSkala(spec.kropp, rit.skala || 1) * ritSkala(rit, z, platsMed(plats));
   return <group scale={s}>{harDjurGltf(spec.kropp) ? (
     <ModellGren spec={spec}>
       <Suspense fallback={<DjurForm spec={spec} signal={signal} />}>
@@ -86,9 +116,14 @@ function Hologram() {
   const solid = useRef({ value: 0 });
   const studs = useRef({ id: l.studs, t: -1 });
   const blixt = useRef(l.blixt);
+  // Hur långt ner HUD:en når (Väktarens remsa på utflykterna): hologrammet skalas så att det ryms under den.
+  const hud = useRef({ n: 0, botten: 90 });
   useEffect(() => {
     solid.current.value = 0;
   }, [l.nyckel]);
+  useEffect(() => {
+    if (PROV && !l.spec) (window as unknown as { __trollholo?: unknown }).__trollholo = null;
+  }, [l.spec]);
   useFrame(({ clock, camera, gl }) => {
     const g = grupp.current;
     if (!g) return;
@@ -113,20 +148,29 @@ function Hologram() {
     let pass = 1;
     if (ring) {
       const rr = gl.domElement.getBoundingClientRect();
+      if (hud.current.n++ % 10 === 0) {
+        const remsa = document.querySelector('[data-s4="vaktar-aptitbubbla"]');
+        hud.current.botten = remsa ? Math.max(90, remsa.getBoundingClientRect().bottom + 14) : 90;
+      }
       const y0 = -_a.set(ring.x, 0, ring.z).project(camera).y;
-      const y1 = -_b.set(ring.x, hojdFor(forhand.lage().spec), ring.z).project(camera).y;
+      const y1 = -_b.set(ring.x, hojdFor(forhand.lage().spec, forhand.lage().holoY), ring.z).project(camera).y;
       const behov = ((y0 - y1) / 2) * rr.height;
-      const plats = ((y0 + 1) / 2) * rr.height - 90;
-      if (behov > 0 && plats > 0) pass = Math.max(0.55, Math.min(1, plats / behov));
+      const plats = ((y0 + 1) / 2) * rr.height - hud.current.botten;
+      // Minst 0,55 som förut; är det trångt under en remsa får det gå ner till 0,4 så att hela skapelsen ändå syns.
+      const minst = hud.current.botten > 90 ? 0.4 : 0.55;
+      if (behov > 0 && plats > 0) pass = Math.max(minst, Math.min(1, plats / behov));
     }
     g.scale.set(sx * pass, sy * pass, sx * pass);
-    g.position.y = l.spec?.typ === "djur" ? 0.08 + Math.sin(t * 2.4) * 0.04 : 0;
+    if (PROV) provHologram(g, camera, gl);
+    // Höjden över ringen ur platsens regel: 0 på marken och ängen, ca 0,16 på vattnet, 1,6–2,4 för en fågel i luften.
+    // Höjden skalas med resten, så att en fågel i luften krymper mot ringen i stället för att sväva kvar ovanför.
+    g.position.y = l.spec?.typ === "djur" ? (synY(l.holoY) + 0.08 + Math.sin(t * 2.4) * 0.04) * pass : 0;
   });
   if (!l.spec || !l.ring) return null;
   return (
     <group ref={grupp}>
       {l.spec.typ === "djur" ? (
-        <HoloDjur key={l.nyckel} spec={l.spec.spec} z={l.ring.z} />
+        <HoloDjur key={l.nyckel} spec={l.spec.spec} z={l.ring.z} plats={l.plats} krymp={l.krymp} />
       ) : (
         <group position={[-l.ring.x, 0, -l.ring.z]}>
           <Byggverk key={l.nyckel} b={l.spec.bygge} pos={{ wx: l.ring.x, wz: l.ring.z }} flyttar={false} ny={false} />
@@ -164,11 +208,12 @@ function ArkKamera() {
         if (Math.abs(sx - w / 2) > w * 0.22) mx = sx - w / 2 - Math.sign(sx - w / 2) * w * 0.22;
       }
       forhand.sattRingSkarm({ x: r.left + sx - cur.current.x, y: r.top + sy - cur.current.y });
-      (window as unknown as { __trollring?: unknown }).__trollring = { x: Math.round(r.left + sx - cur.current.x), y: Math.round(r.top + sy - cur.current.y), dy: Math.round(cur.current.y), dx: Math.round(cur.current.x), wx: l.ring.x, wz: l.ring.z };
+      (window as unknown as { __trollring?: unknown }).__trollring = { plats: l.plats, x: Math.round(r.left + sx - cur.current.x), y: Math.round(r.top + sy - cur.current.y), dy: Math.round(cur.current.y), dx: Math.round(cur.current.x), wx: l.ring.x, wz: l.ring.z };
     }
     const k = 1 - Math.exp(-dt * 6);
     cur.current.x += (mx - cur.current.x) * k;
     cur.current.y += (my - cur.current.y) * k;
+    if (PROV) (window as unknown as { __trollvy?: unknown }).__trollvy = { aktiv: !!cam.view?.enabled, x: Math.round(cur.current.x), y: Math.round(cur.current.y), oppen: l.oppen, calls: gl.info.render.calls, tris: gl.info.render.triangles };
     if (Math.abs(cur.current.x) < 0.5 && Math.abs(cur.current.y) < 0.5 && !mx && !my) {
       if (cam.view?.enabled) cam.clearViewOffset();
       cur.current.x = 0;
@@ -181,12 +226,13 @@ function ArkKamera() {
   return null;
 }
 
-export function Trollring() {
+/** `plats` = platsen scenen visar. Ringen och hologrammet ritas bara när förhandsvisningen gäller just den platsen. */
+export function Trollring({ plats = START_PLATS }: { plats?: string }) {
   const l = useForhand();
   return (
     <>
       <ArkKamera />
-      {l.oppen && l.ring ? (
+      {l.oppen && l.ring && l.plats === plats ? (
         <group position={[l.ring.x, 0, l.ring.z]}>
           <Suspense fallback={null}>
             <Ring r={l.ring.r} />

@@ -9,8 +9,9 @@ import { byggaPaAngen } from "../dal/byggVal.ts";
 import { dalStyr } from "../dal/dalStyr.ts";
 import { DALEN, ledigTomt, TOMTER } from "../dal/tomter.ts";
 import { placera } from "../placering.ts";
-import { platsMed, START_PLATS } from "../platser.ts";
+import { platsMed, START_PLATS, type Plats } from "../platser.ts";
 import type { ForhandSpec } from "./forhand.ts";
+import { platsForhand } from "./platsForhand.ts";
 
 const ANG = platsMed(START_PLATS);
 let standard: Varelse | null = null;
@@ -21,7 +22,15 @@ function standardDjur(): Varelse | null {
   return standard;
 }
 
-export type Forhand = { spec: ForhandSpec; nyckel: string; ring: { x: number; z: number; r: number } | null };
+export type Forhand = {
+  spec: ForhandSpec;
+  nyckel: string;
+  ring: { x: number; z: number; r: number } | null;
+  /** Bara utflykter: platsen, hologrammets höjd över marken och krympning ur platsens placeringsregel. */
+  plats?: string;
+  y?: number;
+  krymp?: number;
+};
 
 function djurRing(v: Varelse, ang: readonly Sparad[]): { x: number; z: number; r: number } | null {
   const holo: Sparad = { ...v, uid: "forhand", skapad: Number.MAX_SAFE_INTEGER };
@@ -53,4 +62,25 @@ export function forhandFor(text: string, ang: readonly Sparad[], garden: readonl
   if (p && oppna.has(vald!)) return { spec: null, nyckel: `t:${vald}`, ring: { x: p.x, z: p.z, r: DALEN.tomt.radie * 1.15 } };
   const s = standardDjur();
   return { spec: null, nyckel: "", ring: s ? djurRing(s, ang) : null };
+}
+
+/**
+ * Utflykten (Skogen, Sjön, Grottan): samma tolk som Trolla och samma beslut som det verkliga skapandet (tak, sövning,
+ * placeringsregel), men platsens egen lista. Ett tomtbygge hör till Hemdalen och får inget bygghologram här: ringen
+ * står tom där ett djur skulle landa. Inget i minnet ändras.
+ */
+export function forhandForPlats(text: string, plats: Plats | undefined, lista: readonly Sparad[], sovande: readonly Sparad[]): Forhand {
+  const tomt = (v: Varelse | null): Forhand => {
+    const p = v && platsForhand(plats, v, lista, sovande);
+    return { spec: null, nyckel: `${plats?.id}:`, ring: p ? p.ring : null, plats: plats?.id, y: p?.y ?? 0, krymp: p?.krymp ?? 1 };
+  };
+  const trim = text.trim();
+  if (!trim) return tomt(standardDjur());
+  const b = tolkaByggFormel(trim);
+  if (b.typ === "bygge" && byggaPaAngen(b, trim) && b.byggen[0]) return tomt(standardDjur());
+  const u = tolkaMedReserv(trim, { kalla: "kort" });
+  if (u.typ !== "skapad") return tomt(standardDjur());
+  const p = platsForhand(plats, u.varelse, lista, sovande);
+  if (!p) return tomt(standardDjur());
+  return { spec: { typ: "djur", spec: p.spec }, nyckel: `${plats?.id}:d:${u.varelse.formel}`, ring: p.ring, plats: plats?.id, y: p.y, krymp: p.krymp };
 }
