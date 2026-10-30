@@ -85,7 +85,15 @@ Varje block levereras med separat branch och PR, kritisk granskning, samtliga ob
 
 Block 1 och 2 är implementerade på separata branches men behöver den slutverifiering som anges nedan. Inga block i denna plan är härmed intygade som mergade eller publicerade. För varje färdigt block kompletteras status med PR, exakt testutfall, tre svagaste kvarstående punkter och produktionsstatus. Om GitHub-/Cloudflare-åtkomst saknas fortsätter oberoende lokal implementation och validering; push/merge/publicering markeras då uttryckligen som ej genomförd eller ej verifierad.
 
-### Pausläge 2026-10-30
+### Återupptaget 2026-10-30 efter raderad chatt
+
+- Codex fortsätter från `8b999e5` på `codex/block-02-backup`; den sparade granskningen återanvänds. `main` är fortfarande `7d83937`. Ingen merge har gjorts i denna fortsättning ännu.
+- Första fulla körningen: typecheck, typecheck:pages, check:struktur, lint (0 fel, 18 varningar), test:product (73/73 testfiler), build:pages och check:pages-output passerar. P3a passerade i just denna körning; dess tidigare maskinberoende fel och gräns är oförändrade.
+- Slutliga browserprov pågår. Oberoende kodgranskning hittade två kvarstående luckor inom acceptansen: Ångra/ta bort kan lämna en aktiv guldchans knuten till gamla tokenpositioner, och bokstavsljudet i `trollpennan-skapa-v1` saknas i backup-wrappern. Dessa rättas och får regressioner före ny slutverifiering.
+- GitHub-plugin, autentiserad Git HTTPS och produktionshosten är nu åtkomliga. Produktion svarar HTTP 200; Cloudflare-bygget för baslinjen är grönt. Detta intygar inte publicering av de nya ändringarna.
+- Arbetsloggar och interna skärmbilder ligger i `/workspace/work/trollpennan-qa/`. De är tillfälliga; bestående status sparas i detta befintliga dokument och kod på GitHub.
+
+### Tidigare pausläge 2026-10-30
 
 Användaren begärde att allt säkras inför kvotpaus. Ingen merge eller produktionspublicering har gjorts.
 
