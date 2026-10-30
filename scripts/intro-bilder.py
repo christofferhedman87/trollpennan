@@ -15,16 +15,19 @@ import io
 import sys
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
 ROT = Path(__file__).resolve().parent.parent
 INTRO = ROT / "public" / "intro"
 FORSIDA = ROT / "public" / "forsida"
 MAL_BYTE = 200_000
 
-# Bildens fokus i sidled (andel av bredden) för det stående utsnittet: Trollpennan och djuren, i bild 3 spiralens mitt.
-# Måste stämma med --fokus-x i intro.css (där samma tal styr Ken Burns-zoomens mittpunkt i liggande läge).
-FOKUS = [0.55, 0.44, 0.48, 0.50, 0.48, 0.50]
+# Bildens fokus i sidled (andel av bredden) för det stående utsnittet: Trollpennan och djuren, i bild 3 spiralens mitt
+# (bokstäverna står där, se .intro-ord i intro.css: 76 % ner i bilden, så bild 3 måste fylla hela höjden).
+FOKUS = [0.55, 0.44, 0.48, 0.50, 0.495, 0.48]
+# Stående: hur stor del av bildens bredd som ska synas. None = vanligt 9:16-utsnitt i full höjd. Ett tal = bredare
+# utsnitt (alla figurer med) som läggs i underkant, och himlen ovanför förlängs mjukt uppåt (där textrutan står).
+BREDD = [None, None, None, None, 0.52, 0.68]
 
 
 def spara_webp(bild: Image.Image, mal: Path) -> tuple[int, int]:
@@ -37,6 +40,25 @@ def spara_webp(bild: Image.Image, mal: Path) -> tuple[int, int]:
     raise AssertionError
 
 
+def forlang_himmel(utsnitt: Image.Image, W: int = 1080, H: int = 1920) -> Image.Image:
+    """Ett brett utsnitt i underkant av en stående bild; ovanför förlängs bildens övre del (himlen) mjukt uppåt."""
+    bild = utsnitt.resize((W, round(utsnitt.height * W / utsnitt.width)), Image.LANCZOS)
+    ledigt = H - bild.height
+    # Himlen: bildens översta remsa (ren himmel) sträckt uppåt och kraftigt suddad (moln blir mjuka färgfält).
+    remsa = max(8, bild.height // 14)
+    topp = bild.crop((0, 0, W, remsa))
+    sko = bild.height // 5  # så högt upp i bilden som skarven tonas
+    himmel = topp.resize((W, ledigt + sko), Image.BICUBIC).filter(ImageFilter.GaussianBlur(40))
+    ut = Image.new("RGB", (W, H))
+    ut.paste(himmel, (0, 0))
+    # Mjuk skarv: bildens övre kant tonas in över den förlängda himlen (som räcker ner förbi hela tonen).
+    mask = Image.new("L", bild.size, 255)
+    for y in range(sko):
+        mask.paste(round(255 * (y / sko) ** 1.5), (0, y, W, y + 1))
+    ut.paste(bild, (0, ledigt), mask)
+    return ut
+
+
 def intro(filer: list[str]) -> None:
     assert len(filer) == 6, "sex bilder, i scenernas ordning"
     INTRO.mkdir(parents=True, exist_ok=True)
@@ -45,9 +67,11 @@ def intro(filer: list[str]) -> None:
         w, h = im.size
         ligg = im.resize((1920, round(1920 * h / w)), Image.LANCZOS)
         q1, s1 = spara_webp(ligg, INTRO / f"{n}-liggande.webp")
-        bw = round(h * 9 / 16)
+        andel = BREDD[n - 1]
+        bw = round(h * 9 / 16) if andel is None else round(w * andel)
         x0 = min(max(0, round(fx * w - bw / 2)), w - bw)
-        stå = im.crop((x0, 0, x0 + bw, h)).resize((1080, 1920), Image.LANCZOS)
+        utsnitt = im.crop((x0, 0, x0 + bw, h))
+        stå = utsnitt.resize((1080, 1920), Image.LANCZOS) if andel is None else forlang_himmel(utsnitt)
         q2, s2 = spara_webp(stå, INTRO / f"{n}-staende.webp")
         print(f"{n}: liggande q{q1} {s1 / 1000:.0f} kB, stående q{q2} {s2 / 1000:.0f} kB (utsnitt x {x0}–{x0 + bw})")
 

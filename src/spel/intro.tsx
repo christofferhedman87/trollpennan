@@ -41,11 +41,14 @@ const FORSTA_IDEER = [0, 2, 3, 4]
 
 export function Intro({
   ljudPa,
+  tonarUt = false,
   onKlar,
   onSteg,
   onIde,
 }: {
   ljudPa: boolean;
+  /** Introt är slut och bleknar bort över ängen; inget går att trycka på. */
+  tonarUt?: boolean;
   onKlar: () => void;
   onSteg: (fas: number) => void;
   onIde: (ex: string) => void;
@@ -210,11 +213,12 @@ export function Intro({
 
   return (
     <div
-      className="intro"
+      className={tonarUt ? "intro tonar-ut" : "intro"}
       data-testid="intro"
       data-v7a="intro-rot"
       data-fas={scen.fas}
-      role="dialog"
+      role={tonarUt ? undefined : "dialog"}
+      aria-hidden={tonarUt || undefined}
       aria-label="Intro"
       onPointerDown={(e) => {
         e.stopPropagation();

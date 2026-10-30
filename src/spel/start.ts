@@ -3,6 +3,9 @@ import { create } from "zustand";
 
 type Lagring = Pick<Storage, "getItem" | "setItem" | "removeItem" | "key" | "length">;
 
+/** Så länge introt tonar ut över ängen när det är slut (samma tid som .intro.tonar-ut i intro.css). */
+export const INTRO_UTTONING_MS = 700;
+
 /** Nyckeln i sessionStorage där den gamla världen ligger efter "Börja om" (finns kvar tills fliken stängs). */
 export const ANGRA_NYCKEL = "trollpennan-angra";
 /** Prov (Playwright, navigator.webdriver) ser titelskärmen bara om de ber om den, så att äldre prov går som förut. */

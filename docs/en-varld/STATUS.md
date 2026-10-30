@@ -34,7 +34,10 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 - Textrutan ligger högst upp mot himlen. Nästa ligger längst ner, i liggande läge nere till höger. K-A-N-I-N står i spiralens mitt i bild 3 (76 % ner i bilden, med egen formel för skärmar bredare än 16:9), och zoomen i bild 3 utgår från den punkten.
 - `public/og.jpg` (1200×630) och `public/x-banner.jpg` (1200×264) är gjorda av försidans bakgrund och logga, utan annan text. `index.html` har nu og- och twitter-taggar som pekar på og.jpg. Förut fanns inga på den statiska sidan.
 - Export: `python3 scripts/intro-bilder.py intro 1.png … 6.png` och `python3 scripts/intro-bilder.py dela`. PNG-originalen (cirka 9 MB styck) ligger hos Christoffer och är inte incheckade.
-- Kvar: introts sista steg (skriv katt) och ängen efter introt är oförändrade. Det kan bli ett hopp i stil när den sista bilden tonar bort. En mjuk uttoning av hela introt vid slutet är inte gjord.
+- Ängen ritas inte medan introts bilder täcker den: `Angen3D pausad` ger `frameloop="demand"` och en bild var 1,5 s, så att modeller och shaders ändå förbereds. När introt är slut börjar den ritas igen, utan hopp i klockan. Mätt i molnmiljön: 2–3 bildrutor per sekund blev 1 under introt, och Hoppa över svarade på 1,7 s i stället för 2,4 s.
+- Introts slut: hela introt bleknar bort över ängen på 0,7 s (`INTRO_UTTONING_MS`), medan spelet redan bytt läge under (ängen ritas och Pennans bok öppnas). Vid `prefers-reduced-motion` försvinner det direkt.
+- Stående bild 5 och 6 visar ett bredare utsnitt i underkant (52 och 68 % av bredden), så att alla figurer kommer med. Himlen ovanför, där textrutan står, är förlängd mjukt uppåt (`BREDD` i `scripts/intro-bilder.py`). Zoomen i de bilderna utgår från figurerna.
+- Kvar: i stående bild 6 hamnar kaninen och katten i kanten när bilden zoomat in, men ansiktena syns.
 
 ## Parallaxbakgrund (2026-10-30)
 - Ängens 3D-kullar (`w-kulle-cc0.glb` ×7) och 3D-berg (`w-berg-cc0.glb` ×3) i `HorisontVarld.tsx` är ersatta av tre målade lager: berg (z −50), kullar (z −33) och trädrad (z −22) i `src/spel/ang/Parallax.tsx`. Marken ut mot horisonten (ringen) är kvar.

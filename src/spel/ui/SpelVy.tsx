@@ -4,7 +4,7 @@ import { LagringsInfo } from "../LagringsInfo";
 import { Angen3D } from "../angen3d.tsx";
 import { Intro } from "../intro.tsx";
 import { sagaNu } from "../saga.ts";
-import { useStart } from "../start.ts";
+import { INTRO_UTTONING_MS, useStart } from "../start.ts";
 import { VagvisareHud, type VagvisarePlatsId, type VagvisareSkarmPunkt } from "../ang/Vagvisare3D.tsx";
 import { useVyFlygning } from "../ang/IntroFlygning.tsx";
 import { INTRO_FLYG_SLUT_SEK } from "../ang/introFlygFas.ts";
@@ -61,6 +61,20 @@ export function SpelVy() {
   const { oppnaKarta, oppnaBygglage, valjVarld } = k.v;
   const { tryckPlats, bytFolje, bengtsson, platsUi } = k.a;
   const titel = useStart((s) => s.titelOppen);
+  // Introt tonar ut över ängen i stället för att försvinna: spelet byter läge direkt (ängen börjar ritas, Pennans bok
+  // öppnas under), medan introt ligger kvar och bleknar i INTRO_UTTONING_MS.
+  const [introUt, setIntroUt] = useState(false);
+  const utTimer = useRef<number | null>(null);
+  const tonaUtIntro = () => {
+    const snabbt = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (snabbt) return;
+    setIntroUt(true);
+    if (utTimer.current) window.clearTimeout(utTimer.current);
+    utTimer.current = window.setTimeout(() => setIntroUt(false), INTRO_UTTONING_MS);
+  };
+  useEffect(() => () => {
+    if (utTimer.current) window.clearTimeout(utTimer.current);
+  }, []);
   const saga = sagaNu.aktiv;
   const vyFlyg = useVyFlygning(3000);
   const introStartRef = useRef<number | null>(null);
@@ -113,12 +127,14 @@ export function SpelVy() {
         <h2>{upplevelse.sceneTitle}</h2>
         {ang.length ? <ul>{ang.map(a => <li key={a.uid}>{a.formel}</li>)}</ul> : <p>{upplevelse.sceneEmpty}</p>}
       </section>
-      {intro ? (
+      {intro || introUt ? (
         <Intro
           key={introNy}
           ljudPa={ljudPa}
+          tonarUt={!intro}
           onSteg={() => undefined}
           onKlar={() => {
+            tonaUtIntro();
             sagaNu.aktiv = false;
             useMinne.getState().sattIntro();
             introRef.current = false; rostKo.oppna();
@@ -128,6 +144,7 @@ export function SpelVy() {
             setBokOpp(true);
           }}
           onIde={(ex) => {
+            tonaUtIntro();
             vackIde(ex);
             sagaNu.aktiv = false;
             useMinne.getState().sattIntro();
@@ -138,7 +155,7 @@ export function SpelVy() {
       ) : null}
       <section className={visa3d ? "ang tred" : "ang"} ref={angRef} aria-label={varld === "gard" ? TEXTER.flikar.garden : TEXTER.flikar.angen} inert={intro}>
         <div className="natt-bak" style={{ opacity: natt }} />
-        {visa3d ? <Angen3D natt={natt} saga={intro} onGrind={platsUi.tryckGrind} aktivPlats={aktivPlats} onValjPlats={resa.startaResa} onVagvisarePunkter={resa.setVagvisarePunkter} vyFlygAktiv={vyFlyg.aktiv} resaMal={resa.mal} dalEtiketter={vyFlyg.aktiv || introFlygAktiv} /> : null}
+        {visa3d ? <Angen3D natt={natt} saga={intro} pausad={intro} onGrind={platsUi.tryckGrind} aktivPlats={aktivPlats} onValjPlats={resa.startaResa} onVagvisarePunkter={resa.setVagvisarePunkter} vyFlygAktiv={vyFlyg.aktiv} resaMal={resa.mal} dalEtiketter={vyFlyg.aktiv || introFlygAktiv} /> : null}
         {visa3d ? <PlatsResa plats={platsUi.plats} namn={platsUi.namn} ton={platsUi.ton} skylt={platsUi.skylt} intro={platsUi.intro} hem={platsUi.hem} /> : null}
         <AngLager natt={natt} varld={varld} omrade={omrade} panel={panel} ang={ang} hemma={hemma} liv={liv} fotoMal={fotoMal} visaBanner={visaBanner} stangBanner={stangBanner} visaMossa={visaMossa} setFotoMal={setFotoMal} banners={banners} bubblor={bubblor} onskan={onskan} onskaOpp={onskaOpp} onskaSyns={onskaSyns} ank={ank} oppnaOnska={oppnaOnska} meny={meny} setMeny={setMeny} omUidRef={omUidRef} setLage={setLage} setBokOpp={setBokOpp} setLadaOpp={setLadaOpp} menyHem={menyHem} setBoUid={setBoUid} lada={lada} ladaOpp={ladaOpp} boUid={boUid} boDjur={boDjur} flyttaInDjur={flyttaInDjur} />
         {kartaOpp ? <KartaLager forstaRad={forstaRad} kartaText={kartaText} nuvarandePlats={varld === "gard" ? "garden" : platsUi.plats} stangKarta={() => { setKartaOpp(false); setKartaText(null); }} tryckPlats={(id) => { if (id === "garden") return tryckPlats(id); valjVarld("ang"); platsUi.resTill(id); setKartaOpp(false); setKartaText(null); setBokOpp(false); }} onLast={() => { setKartaOpp(false); bengtsson.visaFel(); }} oppna={oppna} /> : null}
