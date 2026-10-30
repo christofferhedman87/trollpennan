@@ -31,18 +31,25 @@ try {
     assert.equal(await page.getByTestId("titel-angra").count(), 0, "ingen oskyddad import på försidan");
     await page.getByTestId("titel-fortsatt").click();
     await page.getByTestId("titel").waitFor({ state: "hidden" });
+    console.log(`T-13 ${viewport.width}: öppnar föräldrasidan`);
     await vuxen(page);
     await page.getByTestId("borja-om").click();
     await page.getByTestId("borja-ja").click();
     await page.getByTestId("titel-borja").waitFor();
+    console.log(`T-13 ${viewport.width}: ny värld startad, arkivet finns`);
     assert.ok(await page.evaluate(() => Object.keys(localStorage).some((k) => k.startsWith("trollpennan-arkiv-"))));
     await page.close(); // sessionskopian försvinner; den beständiga kopian måste gå att återställa ändå
     const ny = await context.newPage(); ny.setDefaultTimeout(45000);
     await ny.goto(adress, { timeout: 120000 });
     await ny.waitForFunction(() => !!window.__troll);
-    const hoppa = ny.getByTestId("intro-hoppa");
-    if (await hoppa.isVisible()) await hoppa.click();
-    await ny.keyboard.press("Escape");
+    if (await ny.evaluate(() => !window.__trollMinne.getState().introSedd)) {
+      await ny.getByTestId("intro-hoppa").waitFor();
+      await ny.getByTestId("intro-hoppa").click();
+      await ny.getByTestId("intro-hoppa").waitFor({ state: "hidden" });
+      await ny.getByTestId("stang-bok").waitFor();
+      await ny.getByTestId("stang-bok").click();
+    }
+    console.log(`T-13 ${viewport.width}: ny flik och intro klara`);
     await vuxen(ny);
     const val = ny.locator('[data-arkiv="lista"] > button'); await val.first().click();
     await ny.locator('[data-arkiv="fraga"] button').first().click();
