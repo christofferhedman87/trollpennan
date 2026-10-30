@@ -13,6 +13,7 @@ import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { chromium } from "playwright";
+import { matHologramRitanrop } from "./prov-holo-ritanrop.mjs";
 
 const adress = process.argv[2] ?? "http://127.0.0.1:4173/";
 const bildmapp = process.env.QA_SCREENSHOTS;
@@ -79,7 +80,7 @@ const diag = (page) => page.evaluate(() => {
   const r = (s) => { const e = document.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0 && getComputedStyle(e).opacity !== "0" ? { left: b.left, top: b.top, right: b.right, bottom: b.bottom } : null; };
   return {
     ring: window.__trollring ?? null, holo: window.__trollholo ?? null, vy: window.__trollvy ?? null, W: innerWidth, H: innerHeight,
-    ark: a ? { left: a.left, top: a.top } : null, remsa: r('[data-s4="vaktar-aptitbubbla"]'), skylt: r(".tp-vagvisare-hud button"), calls: window.__trollvy?.calls ?? null,
+    ark: a ? { left: a.left, top: a.top } : null, remsa: r('[data-s4="vaktar-aptitbubbla"]'), skylt: r(".tp-vagvisare-hud button"), calls: window.__trollvy?.calls ?? null, holoCalls: window.__holoRitanrop?.senast ?? null,
   };
 });
 const skar = (a, b) => !!a && !!b && Math.min(a.right, b.right) - Math.max(a.left, b.left) > 2 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 2;
@@ -134,9 +135,11 @@ async function provaPlats(page, id, lage, liggande) {
     else if (roll === "vatten" && id === "sjon") assert.ok(d.holo.y > 0 && d.holo.y < 0.5, `${namn}: ${text}: fisken ligger strax över vattenytan: ${d.holo.y}`);
     else if (roll === "mark") assert.equal(d.holo.y, 0, `${namn}: ${text}: marken har höjd 0`);
     kontrolleraSynlig(d, `${namn}: ${text}`, liggande);
-    // Ritanrop: hologrammet jämförs med den tomma ringen i samma scen och format (renderarens egen räknare, bara med boken öppen).
+    // Samma shader mäts i verkliga WebGL-anrop. Totalskillnaden mot tom ring är bara en skillnad mellan vyer:
+    // ringens läge flyttar kameran, och bakgrundsmodeller kan ha hunnit laddas under skrivandet.
     logg(`${namn}: ${text}: ritanrop tom ring ${callsTom}, med hologram ${d.calls}; ring ${d.ring.x},${d.ring.y} (${d.ring.wx},${d.ring.wz}); hologram ${d.holo.x0},${d.holo.y0}–${d.holo.x1},${d.holo.y1} y ${d.holo.y} skala ${d.holo.skala}`);
-    assert.ok(d.calls == null || callsTom == null || d.calls - callsTom <= 30, `${namn}: ${text}: hologrammet kostar högst 30 extra ritanrop (${callsTom} → ${d.calls})`);
+    logg(`${namn}: ${text}: hologrammets egna WebGL-ritanrop ${d.holoCalls}`);
+    assert.ok(d.holoCalls > 0 && d.holoCalls <= 30, `${namn}: ${text}: hologrammet kostar högst 30 egna ritanrop (${d.holoCalls})`);
     assert.ok(d.calls == null || d.calls <= 140, `${namn}: ${text}: högst 140 ritanrop med boken öppen (${d.calls})`);
     await bild(page, `${namn}-${text.replace(/^en /, "")}`);
     await sudda(page, text.length);
@@ -219,6 +222,7 @@ try {
     const namn = `${lage}-${id}`;
     const context = await browser.newContext({ viewport, deviceScaleFactor: 1, reducedMotion: "reduce" });
     const page = await context.newPage();
+    await matHologramRitanrop(page);
     page.setDefaultTimeout(45000);
     page.on("pageerror", (e) => sidfel.push(`${namn}: ${e.message}`));
     await page.addInitScript(() => {
