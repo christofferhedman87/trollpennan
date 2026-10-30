@@ -33,6 +33,8 @@ const STEG2 = ROST_INTRO?.fran[2] ?? 5.74;
 const STEG3 = ROST_INTRO?.fran[10] ?? 13.8;
 void V7A_SCENER;
 void V7A_LANGD;
+/** Introts bilder (Christoffers Firefly-bilder, scripts/intro-bilder.py): en per fas 0–5, stående och liggande. */
+const BILDER = 6;
 const FORSTA_IDEER = [0, 2, 3, 4]
   .map((i) => (upplevelseJson as { examples: string[] }).examples[i])
   .filter((ex): ex is string => Boolean(ex));
@@ -220,6 +222,17 @@ export function Intro({
       }}
       onClick={(e) => e.stopPropagation()}
     >
+      <div className="intro-bilder" aria-hidden>
+        {Array.from({ length: BILDER }, (_, n) => (
+          // Bara den här och nästa bild laddas; en bild som visats ligger kvar så att övertoningen blir mjuk.
+          n <= Math.max(scen.fas, 0) + 1 ? (
+            <picture key={n} className={n === scen.fas ? "intro-bild aktiv" : "intro-bild"} data-bild={n + 1}>
+              <source media="(orientation: portrait)" srcSet={`/intro/${n + 1}-staende.webp`} />
+              <img src={`/intro/${n + 1}-liggande.webp`} alt="" decoding="async" fetchPriority={n === 0 ? "high" : "low"} />
+            </picture>
+          ) : null
+        ))}
+      </div>
       <p
         className="intro-ord"
         data-testid="intro-ord"
