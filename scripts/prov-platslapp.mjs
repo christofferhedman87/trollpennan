@@ -55,20 +55,38 @@ async function nabar(locator, namn) {
   const geometri = await locator.evaluate((el) => {
     const r = el.getBoundingClientRect();
     let x0 = 0, y0 = 0, x1 = innerWidth, y1 = innerHeight;
+    // Ett fixed element klipps inte av förfädernas overflow så länge ingen förfader gör sig till dess containing block
+    // (transform, filter, perspective, contain, will-change); det gäller t.ex. Trolla-knappen i liggande läge.
+    const skaparBlock = (css) => css.transform !== "none" || css.filter !== "none" || css.perspective !== "none"
+      || /(paint|layout|strict|content)/.test(css.contain) || /(transform|filter|perspective)/.test(css.willChange);
+    let fri = getComputedStyle(el).position === "fixed";
     for (let p = el.parentElement; p; p = p.parentElement) {
       const css = getComputedStyle(p), b = p.getBoundingClientRect();
-      if (/(auto|scroll|hidden|clip)/.test(css.overflowX)) { x0 = Math.max(x0, b.left); x1 = Math.min(x1, b.right); }
-      if (/(auto|scroll|hidden|clip)/.test(css.overflowY)) { y0 = Math.max(y0, b.top); y1 = Math.min(y1, b.bottom); }
+      if (!fri) {
+        if (/(auto|scroll|hidden|clip)/.test(css.overflowX)) { x0 = Math.max(x0, b.left); x1 = Math.min(x1, b.right); }
+        if (/(auto|scroll|hidden|clip)/.test(css.overflowY)) { y0 = Math.max(y0, b.top); y1 = Math.min(y1, b.bottom); }
+      }
+      if (fri && skaparBlock(css)) fri = false; // Härifrån och uppåt är det förfaderns ruta som klipper.
+      else if (!fri && css.position === "fixed") fri = true; // Själv fixed: ytterligare förfäder klipper den inte.
     }
     const traff = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+    // Fasta överlägg med pointer-events:none (Väktarens remsa, returskylten) syns inte för elementFromPoint, så de provas geometriskt:
+    // inget synligt överlägg får skära elementets ruta, annars är det dolt för barnet fast det går att trycka på.
+    const tackt = [...document.querySelectorAll('[data-s4="vaktar-aptitbubbla"], .tp-vagvisare-hud button, .banderoller .banner')]
+      .filter((o) => !el.contains(o) && !o.contains(el))
+      .map((o) => ({ o, b: o.getBoundingClientRect(), css: getComputedStyle(o) }))
+      .filter(({ b, css }) => b.width > 0 && b.height > 0 && css.visibility !== "hidden" && css.display !== "none" && Number(css.opacity) > 0.05)
+      .filter(({ b }) => Math.min(r.right, b.right) - Math.max(r.left, b.left) > 2 && Math.min(r.bottom, b.bottom) - Math.max(r.top, b.top) > 2)
+      .map(({ o, b }) => `${o.getAttribute("data-s4") || o.getAttribute("data-plats") || o.className}@${Math.round(b.left)},${Math.round(b.top)},${Math.round(b.right)},${Math.round(b.bottom)}`);
     return {
+      tackt,
       ruta: { left: r.left, top: r.top, right: r.right, bottom: r.bottom, width: r.width, height: r.height },
       klipp: { x0, y0, x1, y1 },
       hel: r.width > 0 && r.height > 0 && r.left >= x0 - 3 && r.right <= x1 + 3 && r.top >= y0 - 3 && r.bottom <= y1 + 3,
       knappTraff: el.tagName !== "BUTTON" || traff === el || el.contains(traff),
     };
   });
-  assert.ok(geometri.hel && geometri.knappTraff, `${namn} är synlig och nåbar efter vanlig rullning: ${JSON.stringify(geometri)}`);
+  assert.ok(geometri.hel && geometri.knappTraff && geometri.tackt.length === 0, `${namn} är synlig och nåbar efter vanlig rullning: ${JSON.stringify(geometri)}`);
 }
 
 async function skriv(page, text) {
@@ -178,8 +196,10 @@ async function provaPrioritet(page, fall, namn) {
     assert.equal(await lappText(page), onska.text, "uttrycklig önskan går före platslappen");
     assert.notEqual(await page.locator(".sk-lapp-text small").textContent(), platser.get("skogen").namn);
   } else if (fall === "gava") {
+    // Prov-API:t geGava öppnar själv boken med gåvolappen (precis som "Ge gåva" gör), så ingen extra knapptryckning på Skriv.
+    // Gåvoflödet provas alltså via prov-API:t och inte via djurets egen meny; prioriteten mot platslappen är densamma.
     await page.evaluate(() => window.__troll.geGava("platslapp-kanin"));
-    await boka(page);
+    await page.getByTestId("bok-skarm").waitFor({ state: "visible" });
     await page.getByTestId("gava-remsa").waitFor({ state: "visible" });
     assert.match(await page.locator(".sk-lapp-text small").textContent(), /^Present till /, "gåvan går före platslappen");
     assert.match(await lappText(page), /Vad vill du ge/, "gåvans befintliga fråga visas");
