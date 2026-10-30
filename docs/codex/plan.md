@@ -62,6 +62,8 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 
 ## Täckning och leveranslogg
 
+- A1 T-01/T-02/T-31: röda UI-baslinjer för Trolla-tangenten, falsk skrivmarkör i hjälp och vad-luckans modebyte. Gemensam Trolla-handling för skärmtangent, Enter och Penna; separat inmatningsknapp i remsan; vad-lucka väljer tangenter + vänlig datatext. Typecheck grönt; fulla grindar, skärmprov och oberoende granskning återstår. Inget sparformat ändras. Ändrade barntexter samlade i nya-repliker.md; godkända inspelningar för nya texter återstår.
+
 - Plan-PR #285 är mergad som `161a234`. Christoffers B1–B8 och granskningsmandat finns i GitHub. Cloudflare grönt på main (check 124369472890); alla sex serverade start-/spel-filer är byteidentiska med det tidigare verifierade bygget, vilket stämmer med en ren dokumentändring.
 - E1/E2: T-12 kort klick reproducerat rött; T-13 avsaknad av beständigt arkiv och radering trots kvotfel reproducerade röda. Nu hållning med släpp/leave/cancel/blur-städning och Space/Enter-stöd, tvåsiffrig multiplikation, arkiv-före-radering och återställning som bevarar både gamla och nuvarande världar. Arkiv rensas aldrig automatiskt. Oberoende granskaren hittade att trasig JSON/dal inuti en råsträng accepterades; detta är rättat med befintlig ren `arData` och negativa oförändrad-lagring-prov. Testid-baslinjen ändras avsiktligt enbart när fem oskyddade titelkontroller tas bort. Slutgrindar gröna (551/551 produkttester). `prov-foraldersparr.mjs` och `prov-arkiv.mjs` gröna i375×812 och812×375; interna bilder granskade. I arkivprovet behövde den nya fliken gå klart genom verkligt intro innan låset gick att hålla; det är provets synkronisering som rättades, inga force-klick. Oberoende granskare `/root/t12_t13_review` godkände exakt `c7473c76a4e0c1cb2ba7301eff904bd7488896f2`, inga kvarstående blockerare. Kod91d3a9d är oförändrad sedan alla sju grindar; sista commit ändrar bara detta UI-prov, lint grönt igen. Befintliga filkopie-/lagringsfelprov körs före merge. Tre svagaste punkter: iPad/Safari-långtid återstår (T-14), inga fysiska tangentbords-/touchassistansprov, alla lokala arkiv kan försvinna om webbläsardata rensas (nedladdade kopior behövs).
 
@@ -69,8 +71,8 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 
 | T-id | Huvudblock | Status / kvarvarande acceptans |
 |---|---|---|
-| T-01 | A1 | Planerad |
-| T-02 | A1 | Planerad |
+| T-01 | A1 | Implementerad; tangent-/Enter-/Penna-prov väntar ombygge, baslinjen röd |
+| T-02 | A1 | Implementerad; baslinjen röd (falsk markör), browseromprov väntar |
 | T-03 | A0/A2/B | Planerad; kräver alla 133 måls hjälpvägar |
 | T-04 | A0/A2 | Planerad |
 | T-05 | B0/B1 | Planerad; ≥455 ja/nej-fixtures |
@@ -99,7 +101,7 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 | T-28 | F5 | Planerad |
 | T-29 | G1 | Planerad |
 | T-30 | G2 | Planerad; B8 godkänt |
-| T-31 | A1 | Planerad |
+| T-31 | A1 | Implementerad; vad-luckans modebyte rött på baslinjen, browseromprov väntar |
 | T-32 | G1 | Planerad |
 | T-33 | G3 | Planerad |
 | T-34 | G3 | Planerad |

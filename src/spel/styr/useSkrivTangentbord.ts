@@ -1,5 +1,6 @@
 // Nya Skapa: det fysiska tangentbordet (dator) skriver i Pennans bok precis som skärmtangenterna.
-// Enter = klar (eller Trolla när skrivbrickan är tom), Backspace = sudda, Escape stänger boken utan att sudda.
+// Enter = Trolla i boken, Backspace = sudda, Escape stänger boken utan att sudda.
+import { trollaMedKnapp } from "../skapa/trollaKontroll.ts";
 import { useEffect, useRef, type RefObject } from "react";
 import type { SpelTillstand } from "./useSpelTillstand.ts";
 
@@ -40,13 +41,13 @@ export function useSkrivTangentbord(t: SpelTillstand, op: Op) {
       if (!iArket && target?.closest('button, a, summary, input, textarea, select, [contenteditable="true"]')) {
         if (e.key === "Enter" || e.key === " " || target.closest('input, textarea, select, [contenteditable="true"]')) return;
       }
-      if (iArket && e.key === "Enter" && target?.closest("button")) return;
+      if (iArket && e.key === "Enter" && target?.closest("button") && !target.closest(".sk-tangent, .sk-penn-knapp")) return;
       // Gåvan skrivs i Pennans bok, så den räknas inte som en dialog här.
       if (overlayRef.current && !(gavaRef.current && o.bokOppRef.current)) return;
       if (e.key === "Enter") {
         e.preventDefault();
-        if (o.nu().trim()) o.avslutaOrd();
-        else if (o.bokOppRef.current) o.trolla();
+        if (e.repeat) return;
+        if (o.bokOppRef.current) trollaMedKnapp(o.trolla);
         else setBokOpp(true);
         return;
       }

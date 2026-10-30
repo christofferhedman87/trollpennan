@@ -56,3 +56,15 @@ Föräldratexter, ingen ny barnreplik eller inspelning krävs:
 - `data/texter-gard.json backup.arkiv_nej`: Tillbaka
 - `data/texter-gard.json backup.arkiv_fel`: Det gick inte att spara eller återställa kopian. Din gamla värld har inte tagits bort från arkivet. Frigör utrymme och spara en nedladdad kopia innan du försöker igen.
 - `data/texter-gard.json borja_om.fraga`: Din värld sparas i arkivet innan en ny värld börjar. Vill du börja om?
+
+## A1: T-01/T-02/T-31, samma skrivhandling
+
+| Klar | Röst | Datafil och nyckel | Text |
+|---|---|---|---|
+| | pennan | data/skapa-ui.json tangentbord.klar (ändrad) | Trolla! |
+| | pennan | data/skapa-ui.json ark.tom_hjalp | Välj ett kort, eller tryck här och skriv själv! |
+| | pennan | data/skapa-ui.json ark.skriv_aria | Skriv själv |
+| | pennan | data/skapa-ui.json ark.vad_lucka (tidigare hårdkodad) | vad? |
+| | pennan | data/skapa-ui.json ark.skriv_vad | Skriv vad det är! |
+
+Befintliga korrekta inspelningar återanvänds genom exakt textmatchning där de finns. Nya texter inväntar godkänd inspelning; ingen ny rösttäckning påstås.

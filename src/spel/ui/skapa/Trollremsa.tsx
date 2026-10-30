@@ -11,12 +11,12 @@ import { useSpel } from "../SpelKontext.ts";
 const UI = uiJson as unknown as { ark: Record<string, string> };
 const FARG: Record<string, string> = { vad: "var(--tp-vad)", hurdan: "var(--tp-hurdan)", har: "var(--tp-har)", gor: "var(--tp-gor)" };
 
-export function Trollremsa({ oppnaVad }: { oppnaVad: () => void }) {
+export function Trollremsa() {
   const { sk } = useSpel();
-  const { remsa, spok, kanAngra, angraMening, taBortBricka, rorelse } = sk;
+  const { remsa, spok, kanAngra, angraMening, taBortBricka, rorelse, vy, setVy, puffa } = sk;
   const [vald, setVald] = useState<number | null>(null);
   const [anim, setAnim] = useState(rorelse);
-  const skrivRef = useRef<HTMLSpanElement>(null);
+  const skrivRef = useRef<HTMLButtonElement>(null);
   useLayoutEffect(() => {
     if (!remsa.skriv && !spok?.ord) return;
     // Håll det barnet skriver synligt även när önskelappen behöver rulla undan i liggande läge.
@@ -37,7 +37,7 @@ export function Trollremsa({ oppnaVad }: { oppnaVad: () => void }) {
   const lasText = [remsa.ord.map((o) => o.t).join(" "), spok ? spok.buf : remsa.skriv].filter(Boolean).join(" ");
   const tom = !b.length && !remsa.skriv && !spok;
   return (
-    <div className="sk-remsa" data-testid="remsa" role="group" aria-label={UI.ark.aria} aria-live="polite">
+    <div className="sk-remsa" data-testid="remsa" role="group" aria-label={UI.ark.aria} aria-live="polite" onClick={(e) => { if (e.target === e.currentTarget) setVy("skriv"); }}>
       {b.map((x, i) => (
         <span key={`${x.i}-${x.t}`} style={{ display: "contents" }}>
           <OrdBricka
@@ -56,19 +56,19 @@ export function Trollremsa({ oppnaVad }: { oppnaVad: () => void }) {
             }}
           />
           {i === sistaAdj ? (
-            <button type="button" className="sk-ord tom" onClick={oppnaVad} style={{ "--k": "var(--tp-vad)" } as CSSProperties}>
+            <button type="button" className="sk-ord tom" onClick={() => { setVy("skriv"); puffa(UI.ark.skriv_vad); }} style={{ "--k": "var(--tp-vad)" } as CSSProperties}>
               <img className="sk-markor" alt="" src={ikon("ordklass", "vad")} />
-              vad?
+              {UI.ark.vad_lucka}
             </button>
           ) : null}
         </span>
       ))}
-      <span ref={skrivRef} key={spok?.fel ?? 0} className={`sk-skrivbricka${remsa.skriv || spok ? "" : " vilar"}${spok?.fel ? " skaka" : ""}`} data-dal="skrivbricka">
+      <button type="button" onClick={() => setVy("skriv")} aria-label={UI.ark.skriv_aria} ref={skrivRef} key={spok?.fel ?? 0} className={`sk-skrivbricka${remsa.skriv || spok ? "" : " vilar"}${spok?.fel ? " skaka" : ""}`} data-dal="skrivbricka">
         {spok ? spok.buf : remsa.skriv}
-        <i className="sk-blink" />
+        {vy === "skriv" ? <i className="sk-blink" aria-hidden="true" /> : null}
         {spok ? <span className="sk-spok">{spok.ord.slice(spok.buf.length)}</span> : null}
-        {tom ? <span className="sk-uppmaning">{UI.ark.tom}</span> : null}
-      </span>
+        {tom ? <span className="sk-uppmaning">{vy === "hjalp" ? UI.ark.tom_hjalp : UI.ark.tom}</span> : null}
+      </button>
       <span className="sk-remsa-verktyg">
         <button type="button" className="sk-rund" aria-label={UI.ark.lyssna_aria} data-p4="lyssna-mening" disabled={!lasText} onClick={() => rostKo.lasUpp(lasText)}>
           <img alt="" src={ikon("ui", "lyssna")} />

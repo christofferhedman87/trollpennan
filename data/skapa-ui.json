@@ -19,6 +19,10 @@
     "trolla": "Trolla!",
     "trolla_aria": "Trolla fram det du skrivit",
     "tom": "Skriv vad du vill trolla fram!",
+    "tom_hjalp": "Välj ett kort, eller tryck här och skriv själv!",
+    "skriv_aria": "Skriv själv",
+    "vad_lucka": "vad?",
+    "skriv_vad": "Skriv vad det är!",
     "lyssna_aria": "Läs upp det jag skrivit",
     "angra_aria": "Ångra",
     "ta_bort_aria": "Ta bort {ord}"
@@ -38,7 +42,7 @@
 
   "tangentbord": {
     "mellanslag": "mellanslag",
-    "klar": "klar",
+    "klar": "Trolla!",
     "skift_aria": "Stor bokstav",
     "sudda_aria": "Sudda",
     "vokaler": "aeiouyåäö"
