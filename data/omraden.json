@@ -12,7 +12,16 @@
    "stor": "är jättestort"
   },
   "inget_djur": "Inget av dina djur {kan} än. Skriv ett nytt djur som {kan}!",
-  "hem": "Hem till gården"
+  "hem": "Hem till gården",
+  "_om_varldskarta": "Världskartan (2026-10-30, KartaLager.tsx). {namn} är platsens namn.",
+  "las_upp": "Världskartan. Välj en plats på stigen! Alla vägar är öppna.",
+  "lyssna": "Lyssna",
+  "lyssna_pa": "Lyssna på {namn}",
+  "stang": "Stäng",
+  "stang_aria": "Stäng kartan",
+  "har_ar_du": "Här är du",
+  "besokt": "Du har varit här",
+  "ny": "Ny plats att upptäcka"
  },
  "omraden": [
   {

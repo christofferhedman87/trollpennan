@@ -28,6 +28,7 @@ import { MinBok } from "./MinBok.tsx";
 import { NpcFigur } from "./NpcFigur.tsx";
 import { PlatsResa } from "./PlatsResa.tsx";
 import { KartaLager, OmradeHud } from "./KartaLager.tsx";
+import { forladdaVarldskartan } from "../varldskarta.ts";
 import { OrdbokDialog } from "./OrdbokDialog.tsx";
 import { useSpel } from "./SpelKontext.ts";
 import { VYER, type VyPlatsNamn } from "./vyer.ts";
@@ -61,6 +62,11 @@ export function SpelVy() {
   const { oppnaKarta, oppnaBygglage, valjVarld } = k.v;
   const { tryckPlats, bytFolje, bengtsson, platsUi } = k.a;
   const titel = useStart((s) => s.titelOppen);
+  const angRedo = useStart((s) => s.angRedo);
+  // Världskartans bilder hämtas i bakgrunden när ängen syns, så att kartan öppnas direkt.
+  useEffect(() => {
+    if (angRedo) forladdaVarldskartan();
+  }, [angRedo]);
   // Introt tonar ut över ängen i stället för att försvinna: spelet byter läge direkt (ängen börjar ritas, Pennans bok
   // öppnas under), medan introt ligger kvar och bleknar i INTRO_UTTONING_MS.
   const [introUt, setIntroUt] = useState(false);

@@ -1,0 +1,10 @@
+{
+ "_om": "Skrivs av scripts/varldskarta-bild.py. Kartbladets mått i px (största bilden).",
+ "bredd": 2549,
+ "hojd": 2154,
+ "bredder": [
+  1024,
+  1600,
+  2400
+ ]
+}

@@ -5,21 +5,20 @@ import platserJson from "../../../data/platser.json" with { type: "json" };
 
 const IDS = ["ang", "garden", "skogen", "sjon", "grottan"] as const;
 
+// 2026-10-30: kartan är en målad bild med platserna ovanpå (KartaLager.tsx). De gamla kortens ankare
+// (plats-illustration, plats-ordbricka, plats-ang) försvann med korten; de övriga lever kvar på nya element.
 const ANKARE = [
   'data-v1="karta-stang"',
   'data-v1="karta-lyssna"',
   'data-v1="varldskarta-stig"',
-  'data-v1="plats-ang"',
-  'data-v1="plats-illustration"',
   'data-v1="har-ar-du"',
-  'data-v1="plats-ordbricka"',
   'data-v1="plats-framsteg"',
   'data-v1="plats-lyssna"',
   'data-testid="karta"',
-  'data-testid="plats-garden"',
   'data-testid="karta-text"',
   'data-testid="hem-knapp"',
   'data-testid="byt-folje"',
+  'data-f5="modal-stang"',
   "data-testid={`plats-${o.id}`}",
 ];
 
@@ -48,6 +47,7 @@ test("V1: varldskarta har fem platser med lockelse, röst och tre ordbrickor", (
 test("V1: KartaLager har V1-ankare och bakåtkompatibla data-testid", () => {
   const kalla = fs.readFileSync("src/spel/ui/KartaLager.tsx", "utf8");
   for (const ankare of ANKARE) assert.ok(kalla.includes(ankare), ankare);
-  assert.equal(kalla.split("PLATSER.map((o) =>").length - 1, 1);
+  // En knapp per plats i stigens ordning (ang, garden, skogen, sjon, grottan) ur samma lista.
+  assert.equal(kalla.split("KARTPLATSER.map((o) =>").length - 1, 1);
   assert.equal(kalla.split("data-testid={`plats-${o.id}`}").length - 1, 1);
 });
