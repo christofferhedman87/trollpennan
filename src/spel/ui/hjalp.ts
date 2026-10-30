@@ -3,7 +3,7 @@ import { bubblaVanster } from "./bubbla.ts";
 import { BYGG, materialMed, type ByggeTolk } from "../../tolk/byggtolk.ts";
 import { ordLista } from "../../tolk/tolka.ts";
 import type { Ord } from "../../tolk/typer.ts";
-import { useMinne, type OnskaSpar } from "../minne.ts";
+import { useMinne, type Data, type OnskaSpar } from "../minne.ts";
 import { ONSK, ONSK_BYGG } from "../onska.ts";
 import { BYGGSIDOR, FLIKAR, LED, SIDOR } from "./spelData.ts";
 import type { Slot, Val } from "./typer.ts";
@@ -339,6 +339,7 @@ export function exportera() {
   return {
     version: 2 as const,
     startLage: s.startLage,
+    startLageVald: s.startLageVald,
     funna: s.funna,
     kortGang: s.kortGang,
     onskelista: s.onskelista,
@@ -347,6 +348,8 @@ export function exportera() {
     ang: s.ang,
     stjarnor: s.stjarnor,
     ljudPa: s.ljudPa,
+    rostPa: s.rostPa,
+    effektPa: s.effektPa,
     koptaSidor: s.koptaSidor,
     byggSidor: s.byggSidor,
     snart: s.snart,
@@ -382,5 +385,15 @@ export function exportera() {
     byggda: s.byggda,
     introSedd: s.introSedd,
     dragit: s.dragit,
-  };
+    plats: s.plats,
+    platsSkapelser: s.platsSkapelser,
+    oppnadePlatser: s.oppnadePlatser,
+    seddaIntro: s.seddaIntro,
+    stall: s.stall,
+    gataId: s.gataId,
+    lasnivaVal: s.lasnivaVal,
+    solstjarnor: s.solstjarnor ?? 0,
+    albumNiva: s.albumNiva ?? {},
+    vaktardjur: s.vaktardjur ?? {},
+  } satisfies Required<Data>;
 }

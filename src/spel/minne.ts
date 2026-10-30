@@ -1,4 +1,4 @@
-import { normalisera, tillatSkrivning } from "./lagring.ts";
+import { tillatSkrivning } from "./lagring.ts";
 import { create } from "zustand";
 import type { Varelse } from "../tolk/typer.ts";
 import { byggMedId } from "../tolk/byggtolk.ts";
@@ -383,8 +383,7 @@ export const useMinne = create<Store>((set, get) => ({
   },
   importera: (raw) => {
     if (!arData(raw)) return false;
-    const nasta = normalisera(raw, tom());
-    if (!nasta) return false;
+    const nasta = franSparning(raw);
     tillatSkrivning();
     brygga.tom();
     set(nasta);

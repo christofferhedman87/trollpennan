@@ -25,3 +25,102 @@ test("trasigt bygge avvisas", () => assert.equal(arBygge({ uid:'a', bygg:'hus', 
 test("giltigt bygge accepteras", () => assert.equal(arBygge({ uid:'a', bygg:'hus', formel:'hus', ord:'hus', x:.5, y:.5, antal:1, delar:[], boende:[] }), true));
 
 test("korrupt original skrivs inte över", () => { lasLokalt(() => ({ getItem: () => '{', setItem() {} })); let skrivet = false; assert.equal(skrivLokalt(() => ({ getItem: () => null, setItem() { skrivet = true; } }), bas), false); assert.equal(skrivet, false); tillatSkrivning(); });
+
+// Kopians tur genom JSON och import måste bevara hela den skapade världen, även utanför ängen.
+import { useMinne, type Data } from "./minne.ts";
+import { tom } from "./minneSparning.ts";
+import { exportera } from "./ui/hjalp.ts";
+import type { Sparad } from "./brygga.ts";
+import type { SparatBygge } from "./bygge.ts";
+
+const kopiaDjur = (uid: string): Sparad => ({
+  uid, skapad: 123, kropp: "kanin", formel: "en blå kanin", beskrivning: "en blå kanin",
+  farg: "#0000ff", monster: "prickig", monsterfarg: "#ffffff", skala: 1.2, alpha: 1,
+  kontur: true, glans: true, formagor: ["hoppar"], tillbehor: [{ id: "hatt", farg: "#ffff00", glans: false }],
+  overraskningar: [{ effekt: "glitter", text: "Glittrande öron!" }], smeknamn: `Kanin ${uid}`,
+});
+const kopiaBygge = (uid: string): SparatBygge => ({
+  uid, bygg: "stall", formel: "ett blått stall som ser ut som ett slott", ord: "stall", antal: 1,
+  fargId: "bla", fargHex: "#0000ff", monster: null, material: "tra", x: .2, y: .4, tomt: 2,
+  delar: [{ id: "fonster", antal: 2, fargHex: "#ffff00", material: "glas" }], boende: ["hemma"],
+  storlekId: "stor", egenskaper: ["lyser"],
+  form: { slag: "bygg", id: "slott", ord: "slott", genus: "ett", plural: "slott", hur: "bisats" },
+});
+
+function kopiaVarld(): Required<Data> {
+  return {
+    version: 2, startLage: "kort", startLageVald: true, funna: { kanin: { guld: true } }, kortGang: { kanin: 4 },
+    onskelista: ["månkatt"], sovande: [kopiaDjur("sovande")], formler: [{ text: "en blå kanin", spec: kopiaDjur("formel") }],
+    ang: [kopiaDjur("angen")], stjarnor: 17, ljudPa: true, rostPa: false, effektPa: true,
+    koptaSidor: ["skog"], byggSidor: ["start", "solgarden"], snart: { katt: ["dansar"] },
+    garden: [kopiaBygge("stallet")], lada: [{ ...kopiaBygge("ladan"), boende: [], tomt: null }],
+    hemma: [{ spec: kopiaDjur("hemma"), hem: "stallet" }],
+    onskan: { id: "kull", kalla: "djur", uid: "angen", text: "Jag vill springa!", typ: "ge" },
+    seddOnska: ["kull"], sidaKlar: ["start"], forstaGard: false, onskaVid: 6, oppna: ["skogen"],
+    foljeUid: "angen", hjartan: { kanin: 2 }, van: ["vildkanin"], uppdrag: { skog: "klar", sjo: "pagar" },
+    fyr: true, forstaKarta: false, klarOmraden: ["skogen"], dygnMs: 4321,
+    liv: { angen: { humor: "glad", humorMs: 10, humorLangd: 20, favorit: "morot", favoritHittad: true, hjartan: 3 } },
+    albumKropp: { kanin: { formel: "en blå kanin", poang: 5, niva: "guld", favorit: "morot", hjartan: 3, smeknamn: "Blåis" } },
+    foton: [{ id: "foto1", formel: "en blå kanin", kropp: "kanin", niva: "guld", poang: 5, smeknamn: "Blåis" }],
+    seddaNiva: ["guld"], mossaLista: [{ id: "skriva", klar: true }], mossaDag: 2, mossaExtra: true,
+    mossaRakn: { onskan: 2, hemligt: 3, guld: 4 }, ordFrek: { kanin: 7 }, onskanAntal: 5, egnaDjur: 8,
+    skatterHitta: ["skogskista"], byggda: ["stall"], introSedd: true, dragit: true, plats: "skogen",
+    platsSkapelser: { skogen: [kopiaDjur("skog")], sjon: [kopiaDjur("sjo")], grottan: [kopiaDjur("grotta")] },
+    oppnadePlatser: ["skogen", "sjon", "grottan"], seddaIntro: ["skogen", "sjon"], stall: [kopiaDjur("stall")],
+    gataId: "lodjur", lasnivaVal: 3, solstjarnor: 12, albumNiva: { kanin: 3 }, vaktardjur: { skogen: { matad: 3, vackt: true } },
+  } satisfies Required<Data>;
+}
+
+test("kopia: alla skapelser, framsteg och inställningar överlever JSON och import", (t) => {
+  const original = useMinne.getState();
+  t.after(() => useMinne.setState(original, true));
+  const varld = kopiaVarld();
+  useMinne.setState(varld);
+  const kopia = JSON.parse(JSON.stringify(exportera())) as Required<Data>;
+  assert.deepEqual(kopia, varld, "exporten måste innehålla hela världen, inklusive valfria framstegsfält");
+  useMinne.setState(tom());
+  assert.equal(useMinne.getState().importera(kopia), true);
+  assert.deepEqual(exportera(), varld, "importen återställer skapelser på alla platser samt inställningar");
+  assert.equal(typeof useMinne.getState().registrera, "function", "store-metoder får inte ersättas");
+});
+
+test("kopia: äldre v1/v2-kopior får standardfält utan att förlora sina djur eller stjärnor", (t) => {
+  const original = useMinne.getState();
+  t.after(() => useMinne.setState(original, true));
+  useMinne.setState(kopiaVarld());
+  for (const version of [1, 2]) {
+    const aldre = { version, ang: [kopiaDjur("aldre")], garden: [], stjarnor: 4, introSedd: true };
+    assert.equal(useMinne.getState().importera(JSON.parse(JSON.stringify(aldre))), true);
+    assert.deepEqual(exportera(), { ...tom(), ...aldre, version: 2 });
+  }
+});
+
+test("kopia: saknade valfria framstegsfält exporteras med befintliga standardvärden", (t) => {
+  const original = useMinne.getState();
+  t.after(() => useMinne.setState(original, true));
+  useMinne.setState({ ...tom(), solstjarnor: undefined, albumNiva: undefined, vaktardjur: undefined });
+  const kopia = JSON.parse(JSON.stringify(exportera())) as Required<Data>;
+  assert.equal(kopia.solstjarnor, 0);
+  assert.deepEqual(kopia.albumNiva, {});
+  assert.deepEqual(kopia.vaktardjur, {});
+  assert.equal(useMinne.getState().importera(kopia), true);
+});
+
+test("kopia: ogiltig version, trasiga skapelser och prototypdata ändrar inte världen", (t) => {
+  const original = useMinne.getState();
+  t.after(() => useMinne.setState(original, true));
+  const varld = kopiaVarld();
+  useMinne.setState(varld);
+  const fore = useMinne.getState();
+  for (const kopia of [
+    null,
+    { ...varld, version: 3 },
+    { ...varld, ang: [{}] },
+    { ...varld, stjarnor: "många" },
+    { ...varld, ...JSON.parse('{"__proto__":{"skadad":true}}') },
+  ]) {
+    assert.equal(useMinne.getState().importera(kopia), false);
+    assert.equal(useMinne.getState(), fore, "avvisad import ska lämna store orörd");
+  }
+  assert.deepEqual(exportera(), varld);
+});
