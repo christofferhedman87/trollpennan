@@ -38,6 +38,9 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
     const former = ensam ? BYGG.bygg_ord.find((x) => x.id === ensam.bygg)?.former ?? [] : []; const bestamd = !!ensam && (ensam.ord === former[1] || ensam.ord === former[3]); // Block 1: "gör huset rött" ändrar huset som står; "ett rött hus" bygger ett nytt
     const uppdatera = !!bef && harAttr && bestamd; const behov = om ? Math.max(0, utfall.byggen.length - 1) : uppdatera ? 0 : utfall.byggen.length; const oppna = oppnaTomter(useDal.getState().utbyggnader); const lediga = Math.min(BYGG.max_pa_garden - useMinne.getState().garden.length, antalLediga(useMinne.getState().garden, oppna)); if (behov > lediga) {
       visaBanner(UTBYGGNAD.text_full, "ovr", "tapp"); return; }
+    // Block 4b: byggnader hör till Hemdalen på ängen. Skrivs bygget på en utflykt reser spelet hem (samma resa som returskylten) så att
+    // huset syns; kameran glider sedan till tomten (dalStyr-fokus, som DalKamera tar emot när Hemdalen ritas).
+    if (platsNu() !== "ang") platsUi.hem();
     visaPlatsRen("gard"); let gjorda: ReturnType<typeof franTolk>[] = []; if (uppdatera && bef) { const tolkad = tolkaByggMening(mening || utfall.formel, bef.bygg);
       if (tolkad) { const uppdaterad = appliceraByggMening(bef, tolkad); useMinne.getState().bytBygge(bef.uid, uppdaterad); gjorda = [uppdaterad];
       }
