@@ -7,6 +7,9 @@ export type Vy = { avstand: number; polar: number };
 const lyssnare = new Set<Lyssnare>();
 const lage = {
   fokus: null as { x: number; z: number; id: number; vy: Vy | null } | null,
+  /** Id för det senaste fokus som kameran tagit emot. Ett fokus som sattes medan Hemdalen inte fanns i scenen (barnet byggde
+   *  från en utflykt) ligger kvar och tas av kameran när Hemdalen ritas. */
+  konsumerat: 0,
   flyttar: null as string | null,
   vald: null as number | null,
 };
@@ -28,6 +31,13 @@ export const dalStyr = {
     fokusId += 1;
     lage.fokus = { x, z, id: fokusId, vy };
     meddela();
+  },
+  /** Ta ett väntande fokus en gång, även om kameran monterats om eller andra dalval meddelas efteråt. */
+  taFokus() {
+    const f = lage.fokus;
+    if (!f || f.id <= lage.konsumerat) return null;
+    lage.konsumerat = f.id;
+    return f;
   },
   flytta(uid: string | null) {
     lage.flyttar = uid;
