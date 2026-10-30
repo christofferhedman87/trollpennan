@@ -14,6 +14,8 @@ import { skrivGuldTecken, type Spok } from "./guldchans.ts";
 import { platsLapp } from "./platsLapp.ts";
 import { platsMed } from "../platser.ts";
 import { rostFor } from "../rostManifest.ts";
+import { kanTrollas } from "./kanTrollas.ts";
+import { tolkaMedReserv } from "../../tolk/reserv.ts";
 
 const skrivet = (s: string, k: MOrd["k"] = "skriv"): MOrd[] => (s ? s.split(" ").map((t) => ({ t, k })) : []);
 const text = (o: MOrd[]) => o.map((x) => x.t).join(" ");
@@ -23,6 +25,28 @@ const kort = (typ: "djur" | "bygg", id: string, sektion?: string) => {
   return k;
 };
 const brickor = (s: string, k: MOrd["k"] = "skriv") => meningsbrickor(skrivet(s, k)).map((b) => `${b.t}:${b.klass}${b.guld ? "*" : ""}${b.boj ? `!${b.boj}` : ""}`).join(" ");
+
+test("Pennan vaknar för ett ordägg, även utan ett känt Vad", () => {
+  assert.equal(harVad(meningsbrickor(skrivet("en månskrutt"))), false);
+  assert.equal(kanTrollas("en månskrutt "), true);
+  assert.equal(kanTrollas("månskrutt"), true);
+  assert.equal(kanTrollas("en grön kanin"), true);
+});
+
+test("Pennan vaknar för önskans tillägg utan djurord, med samma djur som Trolla använder", () => {
+  const u = tolkaMedReserv("en kanin", { kalla: "kort" });
+  assert.equal(u.typ, "skapad");
+  if (u.typ !== "skapad") return;
+  const fore = JSON.stringify(u.varelse);
+  for (const svar of ["lila", "med halsduk", "sprutar eld"]) assert.equal(kanTrollas(svar, u.varelse), true, svar);
+  assert.equal(kanTrollas("lila"), false, "fri färg saknar ett Vad");
+  assert.equal(kanTrollas("lila", null), false, "ett försvunnet måldjur ger ingen falsk förhandsklar mening");
+  assert.equal(JSON.stringify(u.varelse), fore, "tilläggsberäkningen ändrar inte djuret");
+});
+
+test("Tomt och ett olöst stavningsförslag gör inte Pennan redo", () => {
+  for (const s of ["", "   ", "en kanim", "en"]) assert.equal(kanTrollas(s), false, JSON.stringify(s));
+});
 
 test("Skapa A: en grön drake skriven för hand ger tre brickor i rätt färg, två guld", () => {
   assert.equal(brickor("en grön drake"), "en:smaord grön:hurdan* drake:vad*");
