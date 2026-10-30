@@ -48,6 +48,11 @@ test("Tomt och ett olöst stavningsförslag gör inte Pennan redo", () => {
   for (const s of ["", "   ", "en kanim", "en"]) assert.equal(kanTrollas(s), false, JSON.stringify(s));
 });
 
+test("Barnets aktiva Behåll-val räknas som ordägg, utan att ett olöst förslag rättas tyst", () => {
+  assert.equal(kanTrollas("en kanim"), false, "ett olöst förslag väntar på svar");
+  assert.equal(kanTrollas("en kanim", undefined, ["kanim"]), true, "Behåll kanim ger en trollbar äggmening");
+});
+
 test("Skapa A: en grön drake skriven för hand ger tre brickor i rätt färg, två guld", () => {
   assert.equal(brickor("en grön drake"), "en:smaord grön:hurdan* drake:vad*");
   assert.equal(brickor("en grön drake", "kort"), "en:smaord grön:hurdan drake:vad");

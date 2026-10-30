@@ -63,8 +63,8 @@ export function SkapaArk() {
   }, [penna]);
 
   const tillDjur = k.t.onskaSkrivRef.current && onskan?.kalla === "djur" && onskan.typ === "ge" ? (k.vy.onskaDjur ?? null) : undefined;
-  const redo = useMemo(() => (remsa.redo || kanTrollas(text, tillDjur) || (!!gavaTill && !!(remsa.ord.length || remsa.skriv))) && !remsa.fraga,
-    [text, tillDjur, gavaTill, remsa.redo, remsa.fraga, remsa.ord.length, remsa.skriv]);
+  const redo = useMemo(() => (remsa.redo || kanTrollas(text, tillDjur, remsa.brickor.filter((b) => b.klass === "agg").map((b) => b.t)) || (!!gavaTill && !!(remsa.ord.length || remsa.skriv))) && !remsa.fraga,
+    [text, tillDjur, gavaTill, remsa.redo, remsa.fraga, remsa.brickor, remsa.ord.length, remsa.skriv]);
   const tryckPenna = () => {
     if (trollar.current) return;
     if (!redo || !lagerRef.current) {

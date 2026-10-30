@@ -5,11 +5,11 @@ import type { Varelse } from "../../tolk/typer.ts";
 import { tillaggFras } from "../onska.ts";
 
 /** undefined = fri skrivning; djur = samma bas som önska-ge använder; null = önskans djur saknas. */
-export function kanTrollas(text: string, tillDjur?: Varelse | null): boolean {
+export function kanTrollas(text: string, tillDjur?: Varelse | null, ordagg: readonly string[] = []): boolean {
   if (!text.trim() || tillDjur === null) return false;
   if (tillDjur) {
     const fras = tillaggFras(tillDjur, text);
     return !!fras && tolka(fras, { kalla: "kort" }).typ === "skapad";
   }
-  return tolkaMedReserv(text, { kalla: "kort" }).typ === "skapad";
+  return tolkaMedReserv(text, { kalla: "kort", behall: [...ordagg] }).typ === "skapad";
 }
