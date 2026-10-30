@@ -1,5 +1,7 @@
 # Status: En värld (plan: ../plan-en-varld-2026-10-29.md)
 
+> **Ny aktiv beställning 2026-10-30:** åtgärda T-01–T-35 enligt [gemensam plan](../codex/plan.md) och [fullständigt underlag](../codex/granskning.md). Befintliga levererade block nedan bevaras. Ansvar här: värld, trygg sparning, målreaktioner och kart-/skyltlayout. Baslinje 2c761d3: alla sju grindar gröna, 546/546. Inga nya T-punkter är ännu levererade; produktbeslut B1–B8 och oberoende Codex-granskare är godkända. Första kodsteget är E1:s hållspärr, därefter A1.
+
 Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen först och fortsätter vid **Nästa steg**.
 
 | Block | Status | PR | Anteckning |
