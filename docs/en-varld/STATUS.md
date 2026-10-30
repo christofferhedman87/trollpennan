@@ -28,6 +28,14 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 - Den gamla ladd-skylten (`.ladd-3d`) och Suspense-skylten (`.laddar`) är borta. Introts kamera väntar på `angRedo` i stället för `data-klar`. Liggande: logga, rad och knapp i en kolumn till vänster, så att djuren i bilden syns.
 - `#forsida` måste stå efter `#root`: dialogFokus isolerar allt utom den sista synliga dialogen.
 
+## Introts bilder och delningsbilder (2026-10-30)
+- Introt visar nu Christoffers sex Firefly-bilder, en per fas (0–5) i `data/intro.json`, ovanpå ängen. De gamla `public/intro/1–6.jpg` användes aldrig i koden och är borttagna. Bilderna ligger som `public/intro/{n}-staende.webp` (1080×1920, utsnitt kring fokus) och `{n}-liggande.webp` (1920×1080), 113–197 kB styck. Bara den aktuella och nästa bild laddas.
+- Bilderna tonar över i varandra (0,9 s) och zoomar långsamt (Ken Burns, 16 s). Vid `prefers-reduced-motion` blir det varken zoom eller övertoning. Timingen mot rösten är oförändrad, eftersom bilden bara följer `scen.fas`.
+- Textrutan ligger högst upp mot himlen. Nästa ligger längst ner, i liggande läge nere till höger. K-A-N-I-N står i spiralens mitt i bild 3 (76 % ner i bilden, med egen formel för skärmar bredare än 16:9), och zoomen i bild 3 utgår från den punkten.
+- `public/og.jpg` (1200×630) och `public/x-banner.jpg` (1200×264) är gjorda av försidans bakgrund och logga, utan annan text. `index.html` har nu og- och twitter-taggar som pekar på og.jpg. Förut fanns inga på den statiska sidan.
+- Export: `python3 scripts/intro-bilder.py intro 1.png … 6.png` och `python3 scripts/intro-bilder.py dela`. PNG-originalen (cirka 9 MB styck) ligger hos Christoffer och är inte incheckade.
+- Kvar: introts sista steg (skriv katt) och ängen efter introt är oförändrade. Det kan bli ett hopp i stil när den sista bilden tonar bort. En mjuk uttoning av hela introt vid slutet är inte gjord.
+
 ## Parallaxbakgrund (2026-10-30)
 - Ängens 3D-kullar (`w-kulle-cc0.glb` ×7) och 3D-berg (`w-berg-cc0.glb` ×3) i `HorisontVarld.tsx` är ersatta av tre målade lager: berg (z −50), kullar (z −33) och trädrad (z −22) i `src/spel/ang/Parallax.tsx`. Marken ut mot horisonten (ringen) är kvar.
 - Bilderna (Firefly, magenta bakgrund) skärs ut med `python3 scripts/parallax-lager.py [--granska MAPP]`. Originalen ligger i `kallfiler/parallax/` (inte i bygget) och resultatet i `public/parallax/*.webp`: berg 64 kB, kullar 135 kB och trädrad 176 kB. Skriptet tar bort magenta med mjuka kanter och rosa ton (despill) och skyddar blommorna. Det beskär också tomrummet ovanför motivet och skriver måtten till `src/spel/ang/parallaxLager.json`.
