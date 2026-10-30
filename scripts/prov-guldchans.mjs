@@ -51,6 +51,69 @@ async function kontrolleraSkrivyta(page, aktiv = ".sk-skrivbricka") {
   });
 }
 
+async function provaEnord() {
+  const handlingar = ["guld", "nej", "stang", "angra", "ta-bort"].filter((h) => !process.env.QA_HANDLING || h === process.env.QA_HANDLING);
+  assert.ok(handlingar.length, "QA_HANDLING är guld, nej, stang, angra eller ta-bort om det anges");
+  for (const handling of handlingar) {
+    const context = await browser.newContext({ viewport: { width: 375, height: 812 }, deviceScaleFactor: 1, reducedMotion: "reduce" });
+    const page = await context.newPage();
+    page.setDefaultTimeout(45000);
+    page.on("pageerror", (e) => sidfel.push(`enord-${handling}: ${e.message}`));
+    await page.addInitScript(() => localStorage.setItem("trollpennan-v2", JSON.stringify({
+      version: 2, introSedd: true, ljudPa: false, rostPa: false, effektPa: false, kortGang: { kanin: 2 },
+    })));
+    try {
+      await page.goto(adress);
+      await page.waitForFunction(() => !!window.__troll);
+      await page.evaluate(() => window.__troll.vakna("en drake"));
+      await page.waitForFunction(() => window.__troll.state().ang.length > 0);
+      await page.getByTestId("pennans-bok").click();
+      await page.locator("[data-dal=ordhjalp]").click();
+      await page.getByTestId("kort-kanin").click();
+      const kanin = page.locator('[data-testid="remsa"] [data-klass="vad"]');
+      assert.equal(await kanin.getAttribute("data-guld"), "nej");
+      if (handling === "nej") {
+        await page.getByRole("button", { name: "Nej tack", exact: true }).click();
+      } else {
+        await page.getByRole("button", { name: "Ja, jag skriver!", exact: true }).click();
+        await page.locator(".sk-spok").waitFor();
+        if (handling === "guld") {
+          await skriv(page, "m");
+          assert.equal(await page.locator(".sk-spok").textContent(), "kanin", "fel tangent förbrukar ingen bokstav");
+          assert.equal(await kanin.getAttribute("data-guld"), "nej", "fel tangent ger inget guld");
+          await skriv(page, "kanin");
+        } else if (handling === "stang") {
+          await skriv(page, "ka");
+          await page.getByTestId("stang-bok").click();
+          await page.getByTestId("bok-skarm").waitFor({ state: "hidden" });
+          await page.getByTestId("pennans-bok").click();
+        } else if (handling === "angra") {
+          await page.getByRole("button", { name: "Ångra", exact: true }).click();
+        } else {
+          await kanin.click();
+          await page.getByRole("button", { name: "Ta bort kanin", exact: true }).click();
+        }
+      }
+      await page.locator(".sk-spok").waitFor({ state: "hidden", timeout: 8000 });
+      if (handling === "angra" || handling === "ta-bort") {
+        assert.equal(await kanin.count(), 0, "borttaget kort återkommer inte som guld");
+        assert.equal(await page.locator('[data-testid="remsa"] [data-guld="ja"]').count(), 0);
+      } else {
+        assert.equal(await kanin.getAttribute("data-guld"), handling === "guld" ? "ja" : "nej", "avböjd eller avbruten guldchans behåller kortets källa");
+        await page.getByTestId("vakna").click();
+        await page.getByTestId("bok-skarm").waitFor({ state: "hidden" });
+        assert.equal(await page.evaluate(() => !!window.__troll.state().funna.kanin?.guld), handling === "guld", "bara det färdigskrivna ordet registreras som guld");
+      }
+      logg(`enord-${handling}: kanin, fel tangent och kortets källa kontrollerade`);
+    } catch (e) {
+      await bild(page, `enord-${handling}-fel`).catch(() => {});
+      throw e;
+    } finally {
+      await context.close();
+    }
+  }
+}
+
 async function prova(namn, viewport, onskan, fras) {
   // Minska rörelse via appens tillgänglighetsläge: en studsande ledtrådstangent blir annars aldrig stabil
   // nog för Playwrights normala klickkontroll på molnmaskinens programvarurenderare.
@@ -158,10 +221,12 @@ try {
     ["staende", { width: 375, height: 812 }, "modig", "sprutar eld"],
     ["liggande", { width: 812, height: 375 }, "kull", "springer snabbt"],
   ].filter(([namn]) => !process.env.QA_LAGE || namn === process.env.QA_LAGE);
-  assert.ok(fall.length, "QA_LAGE är staende eller liggande om det anges");
+  const enord = !process.env.QA_LAGE || process.env.QA_LAGE === "enord";
+  assert.ok(fall.length || enord, "QA_LAGE är staende, liggande eller enord om det anges");
   for (const f of fall) await prova(...f);
+  if (enord) await provaEnord();
   assert.deepEqual(sidfel, [], "inga JavaScript-fel i sidan");
-  console.log(`GULDCHANSPROVET GRÖNT: ${fall.map(([namn, , , fras]) => `${fras} ${namn}`).join(", ")}, minskad rörelse.`);
+  console.log(`GULDCHANSPROVET GRÖNT: ${[...fall.map(([namn, , , fras]) => `${fras} ${namn}`), ...(enord ? ["enord, fel tangent, nej tack, stäng, ångra och ta bort"] : [])].join(", ")}, minskad rörelse.`);
 } catch (e) {
   console.error("GULDCHANSPROVET RÖTT:", e);
   process.exitCode = 1;

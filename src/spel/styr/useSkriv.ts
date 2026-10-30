@@ -96,6 +96,8 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "s">) {
   /** Den enda vägen in i texten: ord + skrivbricka → text, källorna sparas, en fråga om ett ord som försvunnit stängs. */
   function satt(ord: MOrd[], skriv: string, angra = true) {
     const ny = tillText(ord, skriv);
+    // Spökfrasens position gäller bara meningen där barnet började skriva den.
+    if (spokRef.current && ny !== textRef.current) avbrytGuld();
     if (angra && ny !== textRef.current) sparaAngra();
     metaRef.current = platta(ord);
     textRef.current = ny;
@@ -109,6 +111,7 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "s">) {
     const s = angraRef.current;
     const fore = s.pop();
     if (!fore) return setKanAngra(false);
+    avbrytGuld();
     metaRef.current = fore.meta;
     textRef.current = fore.text;
     setText(fore.text);
@@ -284,6 +287,7 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "s">) {
     rostKo.lasUpp(fyll((uiJson as { rost: Record<string, string> }).rost.guldchans_start ?? "", { ord: b.t }));
   }
   function avbrytGuld() {
+    spokRef.current = null;
     setSpok(null);
   }
 
