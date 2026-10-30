@@ -1,7 +1,7 @@
 // P2-2: titelskärmen (förslag A) – när den visas, "Börja om med en ny värld" med ångra inom sessionen, texterna i data.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { ANGRA_NYCKEL, PROV_NYCKEL, angraBorjaOm, borjaOmMedKopia, harKopia, spelNycklar, visaTitelVidStart } from "./start.ts";
+import { ANGRA_NYCKEL, PROV_NYCKEL, angraBorjaOm, borjaOmMedKopia, harKopia, spelNycklar, sessionLagring, visaTitelVidStart } from "./start.ts";
 import { FORSTA } from "./forstaStunden.ts";
 import introJson from "../../data/intro.json" with { type: "json" };
 
@@ -34,13 +34,24 @@ const varld = () => {
   return l;
 };
 
-test("P2-2: titelskärmen visas alltid för barn, för prov bara när de ber om den", () => {
+test("P2-2: titelskärmen visas för barn och vid nekad lagring, i vanliga prov bara med flagga", () => {
   assert.equal(visaTitelVidStart(false, null), true);
-  assert.equal(visaTitelVidStart(true, null), false);
+  assert.equal(visaTitelVidStart(true, null), true, "nekad lagring visar den riktiga titeln");
   const s = new Minne();
   assert.equal(visaTitelVidStart(true, s), false);
   s.setItem(PROV_NYCKEL, "1");
   assert.equal(visaTitelVidStart(true, s), true);
+});
+
+test("start: nekad sessionsgetter och nekad läsning kraschar inte eller hoppar över titeln", () => {
+  const nekad = { get sessionStorage(): Storage { throw new Error("SecurityError"); } };
+  const session = sessionLagring(() => nekad.sessionStorage);
+  assert.equal(session, null);
+  assert.equal(visaTitelVidStart(false, session), true);
+  assert.equal(visaTitelVidStart(true, session), true);
+  assert.equal(harKopia(session), false);
+  assert.equal(visaTitelVidStart(true, { getItem() { throw new Error("SecurityError"); } }), true);
+  assert.equal(harKopia({ getItem() { throw new Error("SecurityError"); } }), false);
 });
 
 test("P2-2: börja om tömmer bara spelets nycklar och sparar en kopia i sessionen", () => {

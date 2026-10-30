@@ -1,9 +1,9 @@
 /** Ren, testbar lagringsgräns. Inga nätverksanrop eller beroenden. */
 export type LagringsStatus = "ok" | "otillganglig" | "skadad";
 let status: LagringsStatus = "ok";
-let skyddaSkadad = false;
-export function markeraSkadad() { skyddaSkadad = true; meddela("skadad"); }
-export function tillatSkrivning() { skyddaSkadad = false; meddela("ok"); }
+let skyddaOriginal = false;
+export function markeraSkadad() { skyddaOriginal = true; meddela("skadad"); }
+export function tillatSkrivning() { skyddaOriginal = false; meddela("ok"); }
 const lyssnare = new Set<() => void>();
 export const lagringsStatus = () => status;
 export function lyssnaLagring(fn: () => void) { lyssnare.add(fn); return () => { lyssnare.delete(fn); }; }
@@ -15,10 +15,16 @@ export function lasLokalt(hamta: () => LokalLagring): unknown {
     const text = store.getItem("trollpennan-v2") ?? store.getItem("trollpennan:v2") ?? store.getItem("trollpennan-v1") ?? store.getItem("trollpennan-spel");
     if (!text) return null;
     try { return JSON.parse(text); } catch { markeraSkadad(); return null; }
-  } catch { meddela("otillganglig"); return null; }
+  } catch {
+    // Ett läsfel får inte följas av att en tillfälligt tom värld skriver över originalet.
+    // Spärren gäller resten av sidvisningen, tills explicit import eller återställning tillåter skrivning.
+    skyddaOriginal = true;
+    meddela("otillganglig");
+    return null;
+  }
 }
 export function skrivLokalt(hamta: () => LokalLagring, data: unknown): boolean {
-  if (skyddaSkadad) return false;
+  if (skyddaOriginal) return false;
   try { hamta().setItem("trollpennan-v2", JSON.stringify(data)); meddela("ok"); return true; }
   catch { meddela("otillganglig"); return false; }
 }

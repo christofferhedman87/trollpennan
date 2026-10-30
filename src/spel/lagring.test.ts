@@ -135,3 +135,46 @@ test("kopia: ogiltig version, trasiga skapelser och prototypdata ändrar inte v�
   }
   assert.deepEqual(exportera(), varld);
 });
+
+
+test("lagring: nekad getter skyddar ett läsbart original mot senare automatisk skrivning", () => {
+  const original = JSON.stringify({ ...bas, stjarnor: 17 });
+  let sparat = original;
+  const frisk = { getItem: () => sparat, setItem(_k: string, v: string) { sparat = v; } };
+  const nekad = { get localStorage(): typeof frisk { throw new Error("SecurityError"); } };
+  assert.equal(lasLokalt(() => nekad.localStorage), null);
+  assert.equal(lagringsStatus(), "otillganglig");
+  assert.equal(skrivLokalt(() => frisk, bas), false);
+  assert.equal(sparat, original);
+});
+
+test("lagring: ett övergående getItem-fel lämnar skrivspärren aktiv även efter lyckad läsning", () => {
+  const original = JSON.stringify({ ...bas, stjarnor: 17 });
+  let sparat = original;
+  let nekar = true;
+  const lagring = {
+    getItem() { if (nekar) throw new Error("SecurityError"); return sparat; },
+    setItem(_k: string, v: string) { sparat = v; },
+  };
+  assert.equal(lasLokalt(() => lagring), null);
+  nekar = false;
+  assert.deepEqual(lasLokalt(() => lagring), JSON.parse(original));
+  assert.equal(skrivLokalt(() => lagring, bas), false);
+  assert.equal(sparat, original);
+  assert.equal(lagringsStatus(), "otillganglig");
+});
+
+test("lagring: giltig explicit import släpper spärren efter läsfel, ogiltig import behåller den", (t) => {
+  const fore = useMinne.getState();
+  t.after(() => useMinne.setState(fore, true));
+  let sparat = JSON.stringify({ ...bas, stjarnor: 17 });
+  const frisk = { getItem: () => sparat, setItem(_k: string, v: string) { sparat = v; } };
+  lasLokalt(() => { throw new Error("SecurityError"); });
+  assert.equal(useMinne.getState().importera({ version: 3, ang: [], garden: [], stjarnor: 23 }), false);
+  assert.equal(skrivLokalt(() => frisk, bas), false, "avvisad import öppnar inte för automatisk sparning");
+  const kopia = { version: 2, ang: [], garden: [], stjarnor: 23, introSedd: true };
+  assert.equal(useMinne.getState().importera(kopia), true);
+  assert.equal(skrivLokalt(() => frisk, exportera()), true);
+  assert.equal(JSON.parse(sparat).stjarnor, 23);
+  assert.equal(lagringsStatus(), "ok");
+});

@@ -29,7 +29,11 @@ import type { CellPlats, KantPlats, SlutenHage } from "./rutnat.ts";
 type HoppSignal = DjurSignal & { hopp: number };
 type SignalRef = { current: HoppSignal };
 
-if (typeof window !== "undefined") synkaTestSparning(useMinne, window.localStorage);
+if (typeof window !== "undefined") {
+  try { synkaTestSparning(useMinne, window.localStorage); } catch {
+    // Nekad lokal lagring får inte hindra själva spelet från att starta.
+  }
+}
 
 function sammaCeller(a: CellPlats[], b: CellPlats[]): boolean {
   if (a.length !== b.length) return false;
