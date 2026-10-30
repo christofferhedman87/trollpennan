@@ -1,0 +1,203 @@
+{
+  "_om": "Nya Skapa (Pennans bok, skriv först). Alla texter barnet ser eller hör i Skapa-arket, HUD:en, Min bok och Uppdrag. {klamrar} fylls i med fyll(). Texter med <b> får fetstil i UI:t och läses upp utan taggar. Hjälporden för byggen och tidsgränserna ligger också här, så att de kan justeras utan kod.",
+  "version": 1,
+
+  "hud": {
+    "skriv": "Skriv",
+    "skriv_aria": "Skriv i Pennans bok",
+    "uppdrag": "Uppdrag",
+    "min_bok": "Min bok",
+    "karta_aria": "Karta",
+    "dalen_aria": "Se hela dalen",
+    "vuxna_aria": "För vuxna, håll inne",
+    "stjarnor_aria": "Du har {n} stjärnor"
+  },
+
+  "ark": {
+    "aria": "Pennans bok",
+    "stang_aria": "Stäng",
+    "trolla": "Trolla!",
+    "trolla_aria": "Trolla fram det du skrivit",
+    "tom": "Skriv vad du vill trolla fram!",
+    "lyssna_aria": "Läs upp det jag skrivit",
+    "angra_aria": "Ångra",
+    "ta_bort_aria": "Ta bort {ord}"
+  },
+
+  "hjalprad": {
+    "ide": "Idé",
+    "ide_aria": "Ge mig en idé",
+    "ordhjalp": "Ordhjälp",
+    "hor": "Hör",
+    "tips_tom": "Skriv ett djur eller ett hus.",
+    "tips_skriver": "<b>Mellanslag</b> när ordet är klart.",
+    "tips_klar": "Skriv mer, eller <b>trolla</b>!",
+    "tips_fast": "Behöver du hjälp? Tryck på <b>Ordhjälp</b>.",
+    "tips_spok": "Skriv <b>{ord}</b>. Spökbokstäverna visar vägen."
+  },
+
+  "tangentbord": {
+    "mellanslag": "mellanslag",
+    "klar": "klar",
+    "skift_aria": "Stor bokstav",
+    "sudda_aria": "Sudda",
+    "vokaler": "aeiouyåäö"
+  },
+
+  "fragor": {
+    "skriv": "Skriv",
+    "vad": "Vad?",
+    "hurdan": "Hurdan?",
+    "har": "Har",
+    "gor": "Gör"
+  },
+
+  "sektioner": {
+    "djur": "Djur",
+    "hus": "Hus",
+    "natur": "Natur",
+    "lek": "Lek",
+    "farg": "Färg",
+    "storlek": "Storlek",
+    "monster": "Mönster",
+    "material": "Material",
+    "form": "Ser ut som",
+    "kansla": "Känsla",
+    "klader": "Kläder",
+    "delar": "Delar",
+    "kan": "Kan",
+    "gor": "Gör"
+  },
+
+  "hylla": {
+    "skriv_fler": "Skriv fler!",
+    "fler_antal": "+{n}",
+    "fler_alla": "alla ord",
+    "prefix": "Hjälpord som börjar på",
+    "prefix_tomt": "Inga hjälpord börjar på <b>{p}</b>. Skriv vidare, du klarar det!",
+    "lyssna_hall": "Håll inne för att lyssna"
+  },
+
+  "svar": {
+    "menade": "Menade du {ord}?",
+    "behall": "Behåll mitt ord",
+    "boj": "Det heter <b>{ratt}</b> här, för det är <b>{artikel} {ord}</b>.",
+    "guldchans": "Skriv <b>{ord}</b> själv, så blir det ett guldord!",
+    "guldchans_ja": "Ja, jag skriver!",
+    "guldchans_nej": "Nej tack",
+    "behover": "Vem ska ha {sak}?"
+  },
+
+  "puffar": {
+    "valj_forst": "Skriv vad du vill trolla fram först. Ett djur, ett hus eller något helt eget!",
+    "svara_forst": "Pennan undrar vilket ord du menade. Tryck på ett av orden.",
+    "agg": "Pennan kan inte rita {ord} än. Den gör ett ordägg och sparar ordet!",
+    "guldord": "Guldord! Du skrev {ord} själv.",
+    "skrivord": "Skrivord! {ord} finns bara för den som skriver det.",
+    "full": "Din mening är redan full av trolldom! Tryck på pennan.",
+    "sparr": "Det ordet kan Trollpennan inte."
+  },
+
+  "ide": {
+    "rubrik": "Idé från tärningen",
+    "fraga": "Kan du skriva det här?",
+    "lyssna_aria": "Hör idén"
+  },
+
+  "lapp": {
+    "onskan_fran": "{djur} önskar sig",
+    "uppdrag_fran": "Uppdrag från Doktor Bengtsson",
+    "gava_fran": "Present till {djur}",
+    "tomt_fran": "Här ska det byggas",
+    "dop": "Döp",
+    "byt_namn": "Byt namn",
+    "lyssna_aria": "Lyssna"
+  },
+
+  "kvitto": {
+    "trollade": "Du trollade fram {mening}!",
+    "stjarna_en": "+{n} stjärna",
+    "stjarna_flera": "+{n} stjärnor",
+    "guld": "{n} ord skrev du själv"
+  },
+
+  "min_bok": {
+    "rubrik": "Min bok",
+    "album": "Djuralbum",
+    "album_rakna": "{n} djur",
+    "ordjakten": "Ordjakten",
+    "ordjakten_rakna": "{n} skrivord",
+    "guldord": "Guldord",
+    "guldord_rakna": "{n} guldord",
+    "mark": "Mark",
+    "mark_rakna": "Köp tomter",
+    "stallet": "Stallet",
+    "ladan": "Lådan",
+    "ladan_rakna": "{n} saker",
+    "intro": "Se introt",
+    "ljud_pa": "Ljud: på",
+    "ljud_av": "Ljud: av"
+  },
+
+  "uppdrag_ark": {
+    "rubrik": "Uppdrag",
+    "svara": "Svara med pennan",
+    "klart": "Klart",
+    "beloning_en": "{n} stjärna",
+    "beloning_flera": "{n} stjärnor"
+  },
+
+  "foralder": {
+    "startlage_rubrik": "När Pennans bok öppnas",
+    "startlage_skriv": "Tangenterna först (rekommenderas)",
+    "startlage_kort": "Ordhjälpen först",
+    "ljuda_rubrik": "Säg bokstaven vid varje tangent",
+    "ljuda_pa": "På",
+    "ljuda_av": "Av"
+  },
+
+  "rost": {
+    "oppna": "Vad vill du trolla fram?",
+    "ordhjalp": "Ordhjälp",
+    "skriv_fler": "Skriv själv! Det finns många fler.",
+    "guldchans_start": "Skriv {ord}."
+  },
+
+  "hjalpord": {
+    "_om": "Vilka ord som finns som bildkort i Ordhjälpen. Djurorden (djur, färg, storlek, mönster, förmåga, tillbehör) styrs av niva: \"kort\" i ord.json. Byggorden har ingen nivå i bygg.json, så urvalet står här. Alla andra ord fungerar ändå när barnet skriver dem (beslut B: kreativiteten låses aldrig).",
+    "hus": ["hus", "stuga", "slott", "torn", "stall", "lada", "hundkoja", "tält"],
+    "natur": ["träd", "blomma", "buske", "svamp", "damm", "gran"],
+    "lek": ["gunga", "rutschkana", "studsmatta"],
+    "material": ["trä", "sten", "is", "godis"],
+    "form": ["slott", "svamp"],
+    "kansla": ["magisk"],
+    "delar": ["fönster", "dörr", "torn", "flagga"],
+    "gor": ["flygande", "snurrande"]
+  },
+
+  "idetarning": {
+    "_om": "Bildgåtor för tärningen. Varje rad är ord-id:n; tärningen visar bilderna och läser upp meningen, men skriver ingenting åt barnet.",
+    "ideer": [
+      ["drake", "grön", "krona", "sprutar eld"],
+      ["kanin", "rosa", "prickig", "hoppar"],
+      ["hus", "godis", "torn"],
+      ["stall", "lila", "slott"],
+      ["fisk", "stor", "glasögon", "flyger"],
+      ["katt", "blå", "mantel", "lyser"],
+      ["lada", "svamp", "dansande"],
+      ["träd", "guld", "magisk"],
+      ["häst", "vit", "horn", "flyger"],
+      ["groda", "gul", "krona"]
+    ]
+  },
+
+  "tider_ms": {
+    "_om": "Tidsgränser i Skapa-arket.",
+    "fast_puls": 7000,
+    "spok_ledtrad": 3500,
+    "hall_lyssna": 450,
+    "kvitto": 5600,
+    "puff": 2600,
+    "holo_omritning": 180
+  }
+}

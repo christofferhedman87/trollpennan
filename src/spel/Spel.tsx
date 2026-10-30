@@ -30,7 +30,7 @@ export function Spel() {
   const g = useGard({ t, b, v, s });
   useHandelser({ t, b, a });
   useKlocka({ t, b });
-  const sk = useSkriv({ t, b, s });
+  const sk = useSkriv({ t, s });
   useEffect(() => {
     const api = skapaTrollApi(k);
     if (import.meta.env.DEV || navigator.webdriver === true) window.__troll = api; // TTS-3: bara i dev och när ett prov styr webbläsaren – aldrig för barn

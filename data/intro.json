@@ -7,12 +7,12 @@
   "ord": ["K", "A", "N", "I", "N"],
   "langd": 15.2,
   "skriv": {
-    "_om": "P2: introts sista scen. Barnet skriver ordet själv (nästa bokstav lyser på tangentbordet, bara rätt bokstav skrivs in) och trycker Vakna!. Hjälp mig visar idéknapparna som förut. Ändra ordet här, ingen kod.",
+    "_om": "P2: introts sista scen. Barnet skriver ordet själv (nästa bokstav lyser på tangentbordet, bara rätt bokstav skrivs in) och trycker Trolla! (beslut H, nya Skapa). Hjälp mig visar idéknapparna som förut. Ändra ordet här, ingen kod.",
     "ord": "katt",
     "fras": "en katt",
     "uppmaning": "Skriv katt!",
     "ljud": ["k", "a", "tt"],
-    "vakna": "Vakna!",
+    "vakna": "Trolla!",
     "hjalp": "Hjälp mig",
     "tillbaka": "Jag vill skriva"
   },

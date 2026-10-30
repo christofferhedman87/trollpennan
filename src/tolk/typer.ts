@@ -166,4 +166,6 @@ export type Utfall =
 export type TolkaOpts = {
   kalla?: "kort" | "skriv";
   inteGuld?: string[];
+  /** Nya Skapa: ord som barnet valt att behålla ("Behåll mitt ord"). Reservkedjan gör ordägg av dem utan att fråga igen. */
+  behall?: string[];
 };

@@ -18,17 +18,18 @@ Historiska regler finns i `recovery/pre-cloudflare/projektregler.md` och gäller
 - Spelaren är Dagny, 7 år. Hon läser böcker flytande, kan skriva på en telefon och älskar Minecraft och Slime Rancher. Barn 2026 är vana spelare och kräsna.
 - Telefon i första hand: **375×812 stående**. Spelet ska också fungera liggande och på dator.
 - Kärnan: det man skriver blir levande. Skrivandet är spelets verb och ett försprång, aldrig ett prov.
+- **Skriva själv är förstahandsvalet** (beslut 2026-10-29). Pennans bok öppnar med tangenterna, och hjälp (Ordhjälp, bildkort) visas bara när barnet själv ber om den. Spelet uppmuntrar barnet att skriva: egna ord blir guld, de coolaste orden finns bara för den som skriver, och hjälpen knuffar tillbaka mot tangenterna. Design: `docs/skapa/SPEC-skapa.md`.
 
 ## Arbetssätt
 - Varje runda gör det prompten ber om, och inget annat. Lägg inte till system som inte efterfrågas.
 - `attachments/karna.md` och `data/*.json` beskriver produktkontrakten. Nya ord, böjningar och texter får införas enligt beställningen, med regressionstester och korrekt svenska.
-- Svenska texter som barnet ser kommer från datafilerna (`ord.json`, `onskningar.json`, `sidor.json`, `ledtradar.json`, `firande.json`). Skriv inte egna i koden; behövs en ny text, lägg den i rätt fil och lista den.
+- Svenska texter som barnet ser kommer från datafilerna (`ord.json`, `onskningar.json`, `sidor.json`, `ledtradar.json`, `firande.json`, `skapa-ui.json`). Skriv inte egna i koden; behövs en ny text, lägg den i rätt fil och lista den.
 - Att testerna går igenom är inget bevis. Visa skärmen.
 
 ## Inga övningar, ingen skam
 - Inga uppgifter av typen "tryck på rätt svar". Inga röda kryss, inga liv, inga "fel"-ljud och inga poängavdrag.
 - Ett ord som inte fungerar ger en vänlig puff och sparas. En felstavning ger "Menade du …?". Rätta aldrig tyst.
-- Skrivandet belönas alltid: hemliga ord, fler förmågor, guldord. Det krävs aldrig, och ordkort räcker för att spela.
+- Skrivandet belönas alltid: skrivord, fler förmågor, guldord. Det är förstahandsvalet men krävs aldrig för att komma vidare: hjälporden räcker för att spela (alla önskningar och ordinarie uppdrag går att lösa med dem), medan de coolaste orden kräver att man skriver. Uppdrag som kräver egna ord är extra och ger mer stjärnor, aldrig ett lås.
 - Barnet ska aldrig vänta mer än 5 sekunder utan att något händer eller går att göra.
 
 ## Spelloopen (från runda 3)
