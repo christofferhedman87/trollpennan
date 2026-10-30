@@ -1,5 +1,7 @@
 import { useState, type Dispatch, type RefObject, type SetStateAction } from "react";
 import lasningJson from "../../../data/lasning.json" with { type: "json" };
+import { fyll } from "../fyll.ts";
+import { ArkivVal } from "./ArkivVal.tsx";
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
 import type { Lage } from "../minne.ts";
@@ -35,6 +37,7 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
   const rostPa = useMinne((s) => s.rostPa);
   const effektPa = useMinne((s) => s.effektPa);
   const lasnivaVal = useMinne((s) => s.lasnivaVal);
+  const [tal] = useState(() => [10 + Math.floor(Math.random() * 90), 10 + Math.floor(Math.random() * 90)]);
   const [lasSvar, setLasSvar] = useState("");
   const [upplast, setUpplast] = useState(false);
   return (
@@ -47,10 +50,10 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
             {!upplast ? (
               <div className="vuxen-las">
                 <label className="vuxen-las-fraga">
-                  Vuxenlås: Vad är 3 + 4?
+                  {fyll(TEXTER.backup.vuxenlas, { a: tal[0], b: tal[1] })}
                   <input type="text" inputMode="numeric" autoComplete="off" value={lasSvar} onChange={(e) => setLasSvar(e.target.value)} ref={(el) => el?.setAttribute("data-testid", "foralder-svar")} />
                 </label>
-                <button type="button" className="kort" ref={(el) => el?.setAttribute("data-testid", "foralder-oppna")} onClick={() => { if (lasSvar.trim() === "7") setUpplast(true); }}>Öppna</button>
+                <button type="button" className="kort" ref={(el) => el?.setAttribute("data-testid", "foralder-oppna")} onClick={() => { if (Number(lasSvar.trim()) === tal[0] * tal[1]) setUpplast(true); }}>Öppna</button>
               </div>
             ) : null}
             {upplast ? (
@@ -178,6 +181,7 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
               ))}
             </ul>
             <SaknadeOrd />
+            <ArkivVal />
             <h3>{TEXTER.borja_om.knapp}</h3>
             <button type="button" className="farlig" data-testid="borja-om" data-v2="foralder-borja-om" style={{ width: "100%" }} onClick={() => { setSaker(true); requestAnimationFrame(() => requestAnimationFrame(() => document.querySelector("[data-testid=borja-fraga]")?.scrollIntoView({ block: "end" }))); }}>
               {TEXTER.borja_om.knapp}

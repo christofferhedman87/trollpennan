@@ -27,17 +27,7 @@ export const TEXTER = texterJson as {
   bygg_om_hjalp: string;
   lada: { rubrik: string; tom: string; ta_fram: string; full: string };
   bo: { valj: string; flyttar_in: string[]; full: string; passar_inte: string; ingen: string };
-  backup: {
-    rubrik: string;
-    spara: string;
-    spara_hjalp: string;
-    las_in: string;
-    las_in_fraga: string;
-    las_in_ja: string;
-    las_in_nej: string;
-    klart: string;
-    fel: string;
-  };
+  backup: typeof texterJson.backup;
   borja_om: { knapp: string; fraga: string; ja: string };
   klapp: { en: string[]; mer: string[] };
   demo: { senare: string };

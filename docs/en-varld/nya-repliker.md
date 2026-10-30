@@ -41,3 +41,18 @@ Tills filerna finns läser webbläsarens talsyntes texterna (`rostKo.lasUpp`, `s
 | | pennan | data/skapa-ui.json `puffar.skrivord` | Skrivord! {ord} finns bara för den som skriver det. |
 | | pennan | data/skapa-ui.json `puffar.sparr` | Det ordet kan Trollpennan inte. |
 | | pennan | data/skapa-ui.json `fragor` (flikarna) | Skriv · Vad? · Hurdan? · Har · Gör |
+
+## T-12/T-13: trygg föräldraspärr och återställning
+
+Föräldratexter, ingen ny barnreplik eller inspelning krävs:
+
+- `data/texter-gard.json backup.vuxenlas`: Vuxenlås: Vad är {a} × {b}?
+- `data/texter-gard.json backup.arkiv_rubrik`: Tidigare världar
+- `data/texter-gard.json backup.arkiv_hjalp`: Innan du börjar om sparas hela världen här i minst 30 dagar på den här enheten. Spara också en nedladdad kopia. Webbläsaren kan radera lokala data.
+- `data/texter-gard.json backup.arkiv_tom`: Inga tidigare världar sparade än.
+- `data/texter-gard.json backup.arkiv_knapp`: Återställ världen från {datum}
+- `data/texter-gard.json backup.arkiv_fraga`: Återställa den här världen? Din nuvarande värld sparas också i arkivet först.
+- `data/texter-gard.json backup.arkiv_ja`: Ja, återställ världen
+- `data/texter-gard.json backup.arkiv_nej`: Tillbaka
+- `data/texter-gard.json backup.arkiv_fel`: Det gick inte att spara eller återställa kopian. Din gamla värld har inte tagits bort från arkivet. Frigör utrymme och spara en nedladdad kopia innan du försöker igen.
+- `data/texter-gard.json borja_om.fraga`: Din värld sparas i arkivet innan en ny värld börjar. Vill du börja om?
