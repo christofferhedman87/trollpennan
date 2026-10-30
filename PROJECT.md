@@ -1,5 +1,7 @@
 # PROJECT.md – Trollpennan (kort projektkarta)
 
+**Aktuellt Codex-arbete 2026-10-30:** [`docs/codex/plan.md`](docs/codex/plan.md) innehåller rättningar, verifiering och nästa steg för Codex/Claude Code. Guldchansen (#274) och full backup (#275) har egna PR:er; följ Leveransläge där för merge och produktion. Den äldre projektöversikten nedan är historisk där nyare statusfiler säger annat.
+
 **Uppdaterad 2026-10-27 av Arkitekten, mot `main` = `d53f79f` (#241, W4 mergad — hela Blockserie F #216–#220, S #221–#225, D #226–#228, M #229–#231, C #232–#235, R #236–#237 samt W #238–#241 klara på `main`).** Uppdatera efter varje sammanslagen runda (grindregel 1 i `build-round-gate`).
 Granskning: https://trollpennan.christofferhedman87.workers.dev/ (byggs från `main`, Playwright 375×812). `trollpennan.grok.me` är gammal och ska inte användas.
 

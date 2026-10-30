@@ -4,14 +4,14 @@
 
 Varje block levereras med separat branch och PR, kritisk granskning, samtliga obligatoriska grindar samt relevant visuell kontroll i 375×812 och liggande. Ingen omskrivning av testid-baslinjen utan avsiktlig granskad ändring. Sparformat och gamla världar bevaras; en eventuell ny migrering bryts ut och testas före leverans. Cloudflare-integrationen behålls. Merge och produktionspublicering redovisas var för sig.
 
-## 1. Guldchans som går att skriva färdigt — implementerat, slutverifiering återstår
+## 1. Guldchans som går att skriva färdigt — verifierad, PR #274
 
 - **Barnets upplevelse / ändring:** Hela **springer snabbt** eller **sprutar eld** går att skriva med tydligt nästa tecken; Mellanslag fungerar mitt i frasen. Enstaka ord, ångra, avbryt och behåll-kort fungerar fortsatt.
 - **Filer:** `styr/useSkriv.ts`, `ui/skapa/{SkapaArk,Tangenter,Trollremsa,Svarsrad}.tsx`, `ui/skapa/skapa.css`, `skapa/`, befintliga Skapa-prov och `scripts/prov-guldchans.mjs`.
 - **Klart när:** regressionen är röd på baslinjen och grön efter rättning; båda flerordsfraserna och ett enordsfall slutförs; fel tangent ändrar inte frasen; guld registreras enligt befintligt kontrakt. Browserprova önskekort, synligt mellanslagstips och efterföljande Trolla. Aktiv skriv-/spökbricka, hjälptext och svarsknappar ska vara läsbara utan överlapp även i liggande läge och efter rotation.
 - **Risk / beroende / storlek:** S. Textkälla och frasposition får inte blandas ihop. **Sparning:** oförändrat format. **Resurser:** befintlig grafik och ljud. **Mått:** antal slutförda referensfraser och bevarade textkällor, inga påhittade barnmått.
 
-## 2. Backup som bevarar hela världen — implementerat, slutverifiering återstår, P1
+## 2. Backup som bevarar hela världen — verifierad, PR #275, P1
 
 - **Barnets upplevelse / ändring:** En sparad kopia återställer samtliga skapelser och framsteg, även bortom ängen. Samordna exportens fält med den auktoritativa sparmodellen; behåll datavalidering och äldre kopior.
 - **Filer:** `ui/hjalp.ts`, `minneSparning.ts`, `minne.ts`, `styr/useGard.ts`, lagrings- och exportprov.
@@ -83,7 +83,15 @@ Varje block levereras med separat branch och PR, kritisk granskning, samtliga ob
 
 ## Leveransläge
 
-Block 1 och 2 är implementerade på separata branches men behöver den slutverifiering som anges nedan. Inga block i denna plan är härmed intygade som mergade eller publicerade. För varje färdigt block kompletteras status med PR, exakt testutfall, tre svagaste kvarstående punkter och produktionsstatus. Om GitHub-/Cloudflare-åtkomst saknas fortsätter oberoende lokal implementation och validering; push/merge/publicering markeras då uttryckligen som ej genomförd eller ej verifierad.
+Den här sektionen är aktuell; paus- och återstartshistoriken nedanför beskriver äldre lägen.
+
+- **Block 1, #274:** slutverifierat på `6384fc4`. Alla sju obligatoriska grindar gröna, inklusive 73/73 produkttestfiler (P3a grönt i denna körning, gränsen oförändrad). Browser: båda flerordsfraserna, Mellanslag, sudda över ordgränsen, rotation, synlig skrivyta, Trolla, uppfylld önskan och sparat guld; liggande stavningssvar nåbart. Enord, fel tangent, Nej tack, stäng/öppna, Ångra och Ta bort passerar utan sidfel. Både mellanslagsfelet och kvarhängande spökfras vid Ångra är röda före rättningen och gröna efter.
+- **Block 2, #275:** slutverifierat på `d427815` (staplat på block 1). Samma fulla grindar gröna, 73/73 produkttestfiler. Riktig JSON-nedladdning → tömd syntetisk profil → filval/bekräftelse → omladdning bevarar skapelser på alla platser, stall, byggen/boende/låda, album, framsteg, mark, läsnivå och ljudval inklusive separat bokstavsljud. Ogiltigt bokstavsljud ändrar inget; äldre v2-kopia utan det fältet får standarden på. Lagringsmotorn stöder fortsatt v1/v2; UI-filväljaren kräver fortsatt v2.
+- **Gemensam startregression:** riktig titel, intro via Hoppa över, skärmtangenter, egen grön kanin och återöppning efter reload passerar i 375×812, 812×375 och 1280×800. Inga sidfel, konsolfel eller externa anrop i dessa avgränsade flöden.
+- **Merge/produktion:** båda PR:erna är ännu utkast när denna dokumentationscommit skrivs. Merge och Cloudflare-publicering kontrolleras separat och uppdateras här efteråt.
+- **Nästa:** block 3 delas i 3a (säker start och läsfelsskydd, ingen formatändring) och 3b (atomärt markköp med testad bakåtkompatibel v2-migrering). Därefter block 4.
+
+Tre svagaste kvarstående punkter: svenskt bokstavsuttal behöver inspelningar; fysisk mobilprestanda är inte uppmätt; utflykterna saknar ännu ängens förhandsvisning. Inget barntest har gjorts. En spelvan sjuåring får nu ett fungerande nästa steg: skriv klart önskans fras och se djuret förändras, eller skapa ett hem. Viljan att fortsätta över flera spelpass är fortfarande en hypotes.
 
 ### Återupptaget 2026-10-30 efter raderad chatt
 

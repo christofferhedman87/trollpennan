@@ -2,6 +2,8 @@
 
 2026-10-30. Baslinje: `main` = `7d8393729291d2e9fd31eabc448a2899204b21a8` (#273). Följ `projektregler.md`, aktuell Skapa-spec och statusfilerna; äldre problem i specifikationens nulägesavsnitt är inte automatiskt aktuella fel. `attachments/karna.md` saknas i denna checkout.
 
+Fynden och betygen nedan avser baslinjen. Aktuell rättnings-, test-, PR- och produktionsstatus finns i [plan.md](plan.md) → Leveransläge; baslinjebetygen höjs inte automatiskt efter en kodrättning.
+
 ## Underlag och begränsningar
 
 Här skiljs **reproducerat** (exekverbart prov), **kod** (läsbar implementation), **status** (projektets dokumenterade kvarstående begränsning) och **förslag** (professionell bedömning). Inga verkliga barn har testat i denna granskning. Ingen retention, lärandeeffekt eller bildtakt på fysisk mobil är uppmätt. Betygen nedan är provisoriska expertbedömningar av underlaget, inte användarresultat. Browserprov och kvalitetsgrindar redovisas nedan; ett lokalt godkänt prov är inte bevis på merge eller produktionspublicering.
