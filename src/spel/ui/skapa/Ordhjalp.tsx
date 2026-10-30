@@ -11,6 +11,11 @@ import { kortIkon } from "../hjalp.ts";
 import type { Fraga } from "../../skapa/lexikon.ts";
 import { meningGenus, meningTyp } from "../../skapa/meningsbrickor.ts";
 import { useSpel } from "../SpelKontext.ts";
+import { useArkLapp } from "../../skapa/arkLapp.ts";
+import { ordFranForm } from "../../../tolk/lexikon.ts";
+import { ONSK_BYGG } from "../../onska.ts";
+import { uppdragForslag } from "../../ideRad.ts";
+import { aktivtUppdrag } from "../../skapa/uppdragLapp.ts";
 import { Fet } from "./Hjalprad.tsx";
 import { Ordkort } from "./Ordkort.tsx";
 
@@ -31,7 +36,20 @@ export function Ordhjalp({ flik, setFlik }: { flik: Fraga; setFlik: (f: Fraga) =
   const hoppar = useRef(false);
   const typ = meningTyp(remsa.brickor);
   const genus = meningGenus(remsa.brickor);
-  const onskade = useMemo(() => (k.vy.visaOnskaHjalp ? onskeKort(k.vy.onskaEx) : []), [k.vy.visaOnskaHjalp, k.vy.onskaEx]);
+  const arkLapp = useArkLapp((s) => s.lapp);
+  const spar = useMinne((s) => s.uppdrag);
+  const { onskan, ang } = k.t;
+  // 7.6: korten som löser önskan eller uppdraget glöder (och läggs till om de inte är hjälpord).
+  const onskade = useMemo(() => {
+    const ex: string[] = k.vy.visaOnskaHjalp ? [...k.vy.onskaEx] : [];
+    const djur = k.vy.onskaDjur?.kropp;
+    if (k.vy.visaOnskaHjalp && onskan?.kalla === "bygg" && djur) {
+      const g = ordFranForm(djur)?.genus === "n" ? "ett" : "en";
+      for (const e of ONSK_BYGG.onskningar.find((o) => o.id === onskan.id)?.exempel ?? []) if (e.includes("{djur}")) ex.push(fyll(e, { djur: `${g} ${djur}` }));
+    }
+    if (arkLapp === "uppdrag") ex.push(...uppdragForslag(aktivtUppdrag(spar), ang[0]?.kropp));
+    return onskeKort(ex);
+  }, [k.vy.visaOnskaHjalp, k.vy.onskaEx, k.vy.onskaDjur, onskan, arkLapp, spar, ang]);
   const onskadeNycklar = useMemo(() => new Set(onskade.map((x) => x.nyckel)), [onskade]);
   const del = useMemo(() => hyllaMedOnskan(typ, onskade), [typ, onskade]);
   const prefix = remsa.skriv.trim().toLocaleLowerCase("sv");
@@ -40,9 +58,9 @@ export function Ordhjalp({ flik, setFlik }: { flik: Fraga; setFlik: (f: Fraga) =
   const fylld = (f: Fraga) => remsa.brickor.some((b) => b.klass === f && b.kalla !== "auto");
   const [, rita] = useState(0);
 
-  const hoppaTill = (f: Fraga, mjukt = true) => {
+  const hoppaTill = (f: Fraga, mjukt = true, sektion?: string) => {
     const h = hyllRef.current;
-    const el = h?.querySelector<HTMLElement>(`[data-start="${f}"]`);
+    const el = h?.querySelector<HTMLElement>(sektion ? `[data-sektion="${sektion}"]` : `[data-start="${f}"]`);
     if (!h || !el) return;
     hoppar.current = true;
     h.scrollTo({ left: el.offsetLeft - 14, behavior: mjukt ? "smooth" : "auto" });
@@ -50,6 +68,7 @@ export function Ordhjalp({ flik, setFlik }: { flik: Fraga; setFlik: (f: Fraga) =
   };
   useEffect(() => {
     if (prefix) hyllRef.current?.scrollTo({ left: 0 });
+    else if (arkLapp === "tomt" && flik === "vad") hoppaTill("vad", false, "hus");
     else hoppaTill(flik, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps -- bara när hyllan visas eller typen byts
   }, [typ, prefix === ""]);

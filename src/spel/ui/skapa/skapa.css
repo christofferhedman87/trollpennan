@@ -261,3 +261,20 @@
 .sk-kvitto-chip { display: inline-flex; align-items: center; gap: 6px; border: 2.5px solid var(--tp-blck); border-radius: 999px; padding: 2px 12px 2px 6px; font-weight: 600; font-size: var(--tp-text-ui); background: var(--tp-papper); }
 .sk-kvitto-chip img { width: 26px; height: 26px; }
 .sk-kvitto-chip.guld { background: var(--tp-guld); }
+/* Menyark: Uppdrag (6.13) och Min bok (6.12) */
+.sk-meny { gap: 12px; padding-top: 4px; }
+.sk-meny-rubrik { margin: 0 0 0 58px; font-size: var(--tp-text-rubrik); font-weight: 700; line-height: 1.1; }
+.sk-upp-kort { display: grid; grid-template-columns: 64px 1fr 44px; gap: 10px; align-items: center; background: var(--tp-papper); color: var(--tp-blck); border: var(--tp-kant); border-radius: 22px; padding: 10px; box-shadow: var(--tp-skugga); }
+.sk-upp-kort .sk-lapp-bild { width: 64px; height: 64px; }
+.sk-upp-kort p { margin: 0; font-size: 1.2rem; line-height: 1.3; font-weight: 500; }
+.sk-upp-kort b { display: block; font-size: 1rem; color: #6A5A88; font-weight: 600; margin-bottom: 2px; }
+.sk-stor-knapp {
+  min-height: 60px; border-radius: 20px; border: 4px solid var(--tp-blck); background: var(--tp-rosa); color: #fff; box-shadow: var(--tp-skugga-stor);
+  font-size: 1.35rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; text-shadow: 0 2px 0 var(--tp-blck);
+}
+.sk-stor-knapp img { width: 40px; height: 40px; }
+.sk-upp-lista { display: grid; gap: 8px; }
+.sk-upp-rad { display: grid; grid-template-columns: 30px 1fr; column-gap: 10px; align-items: center; min-height: 52px; padding: 6px 12px; border-radius: 16px; background: rgba(255, 255, 255, .08); border: 2px solid rgba(255, 255, 255, .15); font-size: var(--tp-text-ui); line-height: 1.25; }
+.sk-upp-rad img { width: 30px; height: 30px; grid-row: span 2; }
+.sk-upp-rad span:last-child { grid-column: 2; font-size: 1rem; color: var(--tp-guld); font-weight: 600; }
+.sk-upp-rad .klar { color: var(--tp-har) !important; }

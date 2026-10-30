@@ -47,6 +47,10 @@ export function forhandFor(text: string, ang: readonly Sparad[], garden: readonl
       return { spec: { typ: "djur", spec }, nyckel: `d:${u.varelse.formel}`, ring: djurRing(u.varelse, ang) };
     }
   }
+  // Tryckte barnet på en tomt visar den tomma ringen tomten.
+  const vald = dalStyr.lage().vald;
+  const p = vald == null ? null : TOMTER[vald];
+  if (p && oppna.has(vald!)) return { spec: null, nyckel: `t:${vald}`, ring: { x: p.x, z: p.z, r: DALEN.tomt.radie * 1.15 } };
   const s = standardDjur();
   return { spec: null, nyckel: "", ring: s ? djurRing(s, ang) : null };
 }
