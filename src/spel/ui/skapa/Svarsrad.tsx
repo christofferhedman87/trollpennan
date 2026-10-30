@@ -1,5 +1,6 @@
 // Nya Skapa 6.8: svarsraden ligger alltid ovanför tangenterna och skyms aldrig. Högst en sak åt gången:
 // Menade du …? → böjningshjälp → Pennan behöver … → guldchansen.
+import { useLayoutEffect, useRef } from "react";
 import uiJson from "../../../../data/skapa-ui.json" with { type: "json" };
 import { fyll } from "../../fyll.ts";
 import { stavningsFeedback } from "../../lasniva.ts";
@@ -15,6 +16,20 @@ export function Svarsrad() {
   const { forslag, behover } = k.t;
   const { utfor } = k.s;
   const { remsa, valjForslag, nejForslag, rattaBojning, erbjud, setErbjud, startaGuld, spok } = k.sk;
+  const svarRef = useRef<HTMLDivElement>(null);
+  const bi = remsa.brickor.findIndex((b) => b.boj);
+  const skriverGuld = !!spok;
+  useLayoutEffect(() => {
+    if (skriverGuld || !svarRef.current) return;
+    const visa = () => {
+      if (window.matchMedia("(orientation: landscape) and (max-height: 600px)").matches) {
+        svarRef.current?.scrollIntoView({ block: "start", inline: "nearest", behavior: "instant" });
+      }
+    };
+    visa();
+    window.addEventListener("resize", visa);
+    return () => window.removeEventListener("resize", visa);
+  }, [forslag, behover, erbjud, bi, skriverGuld]);
   if (spok) return null;
   if (forslag && forslag.forslag.length) {
     const f0 = forslag.forslag[0]!.visa;
@@ -22,7 +37,7 @@ export function Svarsrad() {
     const n = fb?.rattPrefix?.length ?? 0;
     const [fore, efter] = (UI.svar.menade ?? "{ord}").split("{ord}");
     return (
-      <div className="sk-svar" data-testid="forslag" aria-live="polite">
+      <div ref={svarRef} className="sk-svar" data-testid="forslag" aria-live="polite">
         <p>
           {fore}
           <span className="sk-jamfor">
@@ -43,12 +58,11 @@ export function Svarsrad() {
       </div>
     );
   }
-  const bi = remsa.brickor.findIndex((b) => b.boj);
   if (bi >= 0) {
     const b = remsa.brickor[bi]!;
     const h = huvudord(remsa.brickor, bi);
     return (
-      <div className="sk-svar" data-dal="boj" aria-live="polite">
+      <div ref={svarRef} className="sk-svar" data-dal="boj" aria-live="polite">
         <p>
           <Fet text={fyll(UI.svar.boj ?? "", { ratt: b.boj!, artikel: h?.genus ?? "", ord: h?.t ?? "" })} />
         </p>
@@ -60,7 +74,7 @@ export function Svarsrad() {
   }
   if (behover) {
     return (
-      <div className="sk-svar" data-testid="behover" aria-live="polite">
+      <div ref={svarRef} className="sk-svar" data-testid="behover" aria-live="polite">
         <p>{behover.text}</p>
         {behover.djur.map((d) => (
           <button key={d.id} type="button" className="sk-knapp" data-testid={`prova-${d.id}`} onClick={() => utfor(d.id, { hand: false })}>
@@ -73,7 +87,7 @@ export function Svarsrad() {
   }
   if (erbjud) {
     return (
-      <div className="sk-svar" data-dal="guldchans" aria-live="polite">
+      <div ref={svarRef} className="sk-svar" data-dal="guldchans" aria-live="polite">
         <p>
           <Fet text={fyll(UI.svar.guldchans ?? "", { ord: erbjud.visa })} />
         </p>

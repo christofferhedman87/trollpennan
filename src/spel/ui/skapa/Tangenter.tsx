@@ -56,7 +56,7 @@ export function Tangenter({ klar }: { klar: () => void }) {
         </div>
       ))}
       <div className="sk-tangent-rad">
-        <button type="button" className="sk-tangent mellan" data-testid="mellanslag" aria-label="Mellanslag" onClick={() => skrivTecken(" ")}>
+        <button key={fel?.t === " " ? fel.n : "mellanslag"} type="button" className={["sk-tangent mellan", tips === " " ? "tips" : "", fel?.t === " " ? "fel" : ""].filter(Boolean).join(" ")} data-testid="mellanslag" aria-label={UI.tangentbord.mellanslag} onClick={() => tryck(" ")}>
           {UI.tangentbord.mellanslag}
         </button>
         <button type="button" className="sk-tangent klar" data-dal="klar" onClick={klar}>

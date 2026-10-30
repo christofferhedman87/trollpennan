@@ -1,6 +1,6 @@
 // Nya Skapa 6.3: meningen som ordbrickor i barnets ordning. Färg och märke visar frågan ordet svarar på,
 // guld visar ord som barnet skrev själv. Tryck på en bricka = läs upp och visa ×. Lyssna läser exakt det som står.
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import uiJson from "../../../../data/skapa-ui.json" with { type: "json" };
 import { fyll } from "../../fyll.ts";
 import * as rostKo from "../../rostKo.ts";
@@ -16,6 +16,15 @@ export function Trollremsa({ oppnaVad }: { oppnaVad: () => void }) {
   const { remsa, spok, kanAngra, angraMening, taBortBricka, rorelse } = sk;
   const [vald, setVald] = useState<number | null>(null);
   const [anim, setAnim] = useState(rorelse);
+  const skrivRef = useRef<HTMLSpanElement>(null);
+  useLayoutEffect(() => {
+    if (!remsa.skriv && !spok?.ord) return;
+    // Håll det barnet skriver synligt även när önskelappen behöver rulla undan i liggande läge.
+    const visa = () => skrivRef.current?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" });
+    visa();
+    window.addEventListener("resize", visa);
+    return () => window.removeEventListener("resize", visa);
+  }, [remsa.skriv, spok?.ord, spok?.buf]);
   useEffect(() => {
     setAnim(rorelse);
     const id = window.setTimeout(() => setAnim({ ny: null, bojda: [], id: 0 }), 760);
@@ -54,7 +63,7 @@ export function Trollremsa({ oppnaVad }: { oppnaVad: () => void }) {
           ) : null}
         </span>
       ))}
-      <span key={spok?.fel ?? 0} className={`sk-skrivbricka${remsa.skriv || spok ? "" : " vilar"}${spok?.fel ? " skaka" : ""}`} data-dal="skrivbricka">
+      <span ref={skrivRef} key={spok?.fel ?? 0} className={`sk-skrivbricka${remsa.skriv || spok ? "" : " vilar"}${spok?.fel ? " skaka" : ""}`} data-dal="skrivbricka">
         {spok ? spok.buf : remsa.skriv}
         <i className="sk-blink" />
         {spok ? <span className="sk-spok">{spok.ord.slice(spok.buf.length)}</span> : null}

@@ -19,6 +19,7 @@
 }
 @keyframes sk-ark-upp { from { transform: translateY(100%); } }
 .sk-topp { position: relative; height: 22px; }
+.sk-innehall { display: contents; }
 .sk-stang {
   position: absolute; left: 0; top: -26px; width: 48px; height: 48px; border-radius: 50%; border: var(--tp-kant); background: var(--tp-klister);
   box-shadow: var(--tp-skugga); display: grid; place-items: center; padding: 0;
@@ -233,6 +234,14 @@
   .sk-penn-knapp { width: 64px; height: 64px; } .sk-penn-knapp img { width: 56px; height: 56px; }
   .sk-penn-etikett { margin-top: 0; }
   .sk-remsa { min-height: 64px; }
+  /* Lappen får rulla undan; skrivbrickan, hjälpen och tangenterna ska förbli läsbara. */
+  .sk-ark[data-vy="skriv"] { overflow: hidden; }
+  .sk-ark[data-vy="skriv"] .sk-innehall {
+    display: flex; flex-direction: column; gap: 10px; flex: 1 1 0; min-height: 0;
+    overflow-y: auto; overscroll-behavior: contain; padding: 4px 2px 10px; margin: 0 -2px;
+  }
+  .sk-ark[data-vy="skriv"] .sk-innehall > *, .sk-tangenter, .sk-hjalprad { flex-shrink: 0; }
+  .sk-ark[data-vy="skriv"] .sk-remsa { align-content: flex-start; }
   .sk-tangenter { gap: 5px; }
   .sk-tangent { height: 38px; }
   .sk-hjalprad { min-height: 44px; }
