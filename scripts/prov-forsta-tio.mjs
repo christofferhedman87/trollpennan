@@ -100,6 +100,10 @@ try {
 
       assert.ok(await page.getByTestId("pennans-bok").isEnabled(), "barnet kan skriva medan nästa önskan väntar");
       await page.getByTestId("onska-bubbla").waitFor({ state: "visible", timeout: 180000 });
+      await page.waitForTimeout(700);
+      const onskeruta = await page.getByTestId("onska-bubbla").boundingBox();
+      assert.ok(onskeruta && onskeruta.y >= 0 && onskeruta.y + onskeruta.height <= f.viewport.height, "hela naturliga önskan är i bild");
+      assert.equal(await page.getByTestId("coach").count(), 0, "guiden pausar när önskan har fokus");
       const o = await page.evaluate(() => window.__trollMinne.getState().onskan);
       const onska = onskningar.find((x) => x.id === o?.id);
       assert.ok(onska?.exempel?.[0], `naturlig önskan ${o?.id} har skrivsvar`);
