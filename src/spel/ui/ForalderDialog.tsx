@@ -5,6 +5,8 @@ import { useMinne } from "../minne.ts";
 import type { Lage } from "../minne.ts";
 import { ForalderLiv } from "../samling.tsx";
 import { SaknadeOrd } from "./SaknadeOrd.tsx";
+import skapaUi from "../../../data/skapa-ui.json" with { type: "json" };
+import { useSkapaInst } from "../skapa/installning.ts";
 import { LJUD_AV, LJUD_PA, TEXTER } from "./spelData.ts";
 
 type ForalderDialogProps = {
@@ -25,7 +27,11 @@ type ForalderDialogProps = {
   setForalder: Dispatch<SetStateAction<boolean>>;
 };
 
+const SKAPA_UI = skapaUi as unknown as { foralder: Record<string, string> };
+
 export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef, lasFil, foralderRad, kopia, lasInKopia, setKopia, onskelista, setSaker, saker, borjaOm, setForalder }: ForalderDialogProps) {
+  const bokstavsljud = useSkapaInst((x) => x.bokstavsljud);
+  const sattBokstavsljud = useSkapaInst((x) => x.sattBokstavsljud);
   const rostPa = useMinne((s) => s.rostPa);
   const effektPa = useMinne((s) => s.effektPa);
   const lasnivaVal = useMinne((s) => s.lasnivaVal);
@@ -51,19 +57,8 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
             <>
             <p className="kredit" data-testid="groda-kredit">Groda: "Frog" av jeremy (CC BY 3.0)</p>
             <ForalderLiv />
-            <h3>Startläge</h3>
-            <p>Så här börjar pennan nästa gång den öppnas.</p>
+            <h3>{SKAPA_UI.foralder.startlage_rubrik}</h3>
             <div className="valj-lage">
-              <button
-                type="button"
-                className={startLage === "kort" ? "pa" : ""}
-                onClick={() => {
-                  useMinne.getState().sattStart("kort");
-                  setLage("kort");
-                }}
-              >
-                Ordkort
-              </button>
               <button
                 type="button"
                 className={startLage === "skriv" ? "pa" : ""}
@@ -72,7 +67,26 @@ export function ForalderDialog({ startLage, setLage, ljudPa, sparaKopia, filRef,
                   setLage("skriv");
                 }}
               >
-                Skriv själv
+                {SKAPA_UI.foralder.startlage_skriv}
+              </button>
+              <button
+                type="button"
+                className={startLage === "kort" ? "pa" : ""}
+                onClick={() => {
+                  useMinne.getState().sattStart("kort");
+                  setLage("kort");
+                }}
+              >
+                {SKAPA_UI.foralder.startlage_kort}
+              </button>
+            </div>
+            <h3>{SKAPA_UI.foralder.ljuda_rubrik}</h3>
+            <div className="valj-lage" data-dal="bokstavsljud">
+              <button type="button" className={bokstavsljud ? "pa" : ""} onClick={() => sattBokstavsljud(true)}>
+                {SKAPA_UI.foralder.ljuda_pa}
+              </button>
+              <button type="button" className={bokstavsljud ? "" : "pa"} onClick={() => sattBokstavsljud(false)}>
+                {SKAPA_UI.foralder.ljuda_av}
               </button>
             </div>
             <h3>Läsnivå</h3>

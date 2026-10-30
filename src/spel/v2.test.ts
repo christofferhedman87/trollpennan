@@ -23,17 +23,17 @@ test("V2: Coach visar visa_text och anmäler fortfarande steg.text", () => {
   assert.match(coach, /rostKo\.anmal\(\{ text/);
 });
 
-test("V2: menyn har ikoner, ljudknapp, Skriv och dold Börja om", () => {
+test("V2 (nya Skapa, fas E): HUD:en har Skriv, Min bok har ljudknappen och inga ikoner är emoji", () => {
   const hud = las("src/spel/ui/Hud.tsx");
-  for (const krav of ['data-v2="meny-ikon"', 'data-v2="meny-ljud"', 'data-v2="skriv-knapp"']) {
-    assert.equal(hud.includes(krav), true, krav);
-  }
-  assert.match(hud, /data-testid="meny-borja"[\s\S]{0,40}hidden/);
+  const bok = las("src/spel/ui/MinBok.tsx");
+  assert.equal(hud.includes('data-v2="skriv-knapp"'), true);
+  assert.equal(bok.includes('data-v2="meny-ljud"'), true);
   assert.equal(hud.includes('data-last="ja"'), false);
+  assert.doesNotMatch(hud + bok, /[🪄📋🔒⭐]/u);
 });
 
 test("V2: Uppdragsboken har aktivt kort och Lyssna", () => {
-  const bok = las("src/spel/ui/BokSkarm.tsx");
+  const bok = las("src/spel/ui/skapa/UppdragArk.tsx");
   assert.equal(bok.includes('data-v2="aktivt-uppdrag-kort"'), true);
   assert.equal(bok.includes('data-v2="lyssna-aktivt-uppdrag"'), true);
 });

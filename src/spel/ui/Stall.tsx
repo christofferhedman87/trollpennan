@@ -76,13 +76,13 @@ export function GavaStallKnapp({ uid, visaBanner, klar }: { uid: string; visaBan
 }
 
 /** Menyknappen "Stallet" och listan; "Hämta ut" lägger djuret på platsen barnet är på. */
-export function StallMeny({ stang }: { stang: () => void }) {
+export function StallMeny({ stang, bara = false }: { stang: () => void; bara?: boolean }) {
   const stall = useMinne((s) => s.stall);
-  const [oppen, setOppen] = useState(false);
+  const [oppen, setOppen] = useState(bara);
   const [full, setFull] = useState(false);
   return (
     <>
-      <button type="button" data-testid="meny-stall" aria-expanded={oppen} onClick={() => { setOppen((v) => !v); setFull(false); }}>
+      <button type="button" data-testid="meny-stall" aria-expanded={oppen} hidden={bara} onClick={() => { setOppen((v) => !v); setFull(false); }}>
         <span className="meny-ikon" data-v2="meny-ikon" aria-hidden="true">{menyJson.v2.stall.ikon}</span>
         <span>
           {TEXTER.stall.meny} {stall.length ? `(${stall.length})` : ""}
