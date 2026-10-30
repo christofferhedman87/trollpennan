@@ -8,7 +8,7 @@ Varje runda, varje plan och varje beslut ska kunna svara på: *ökar detta andel
 
 Cloudflare Pages är inte ett krav. Publicering sker som statiskt bygge (`npm run build:pages`) på valfri plattform. React/R3F och Phaser bevaras tills ett byte har motiverats och verifierats.
 
-Bevis per runda är högst 8 numrerade skärmbilder. Inga nya checkpoint- eller överlämningsdokument. Rör inte `recovery/`.
+Skärmbilder är till för agentens egen kontroll, inte bevis till Christoffer (beslut 2026-10-30, se Bevis i varje runda). Inga nya checkpoint- eller överlämningsdokument. Rör inte `recovery/`.
 
 Historiska regler finns i `recovery/pre-cloudflare/projektregler.md` och gäller inte före detta mandat.
 
@@ -24,7 +24,7 @@ Historiska regler finns i `recovery/pre-cloudflare/projektregler.md` och gäller
 - Varje runda gör det prompten ber om, och inget annat. Lägg inte till system som inte efterfrågas.
 - `attachments/karna.md` och `data/*.json` beskriver produktkontrakten. Nya ord, böjningar och texter får införas enligt beställningen, med regressionstester och korrekt svenska.
 - Svenska texter som barnet ser kommer från datafilerna (`ord.json`, `onskningar.json`, `sidor.json`, `ledtradar.json`, `firande.json`, `skapa-ui.json`). Skriv inte egna i koden; behövs en ny text, lägg den i rätt fil och lista den.
-- Att testerna går igenom är inget bevis. Visa skärmen.
+- Att testerna går igenom är inget bevis. Titta själv på skärmen (skärmbild) innan du säger att något är klart.
 
 ## Inga övningar, ingen skam
 - Inga uppgifter av typen "tryck på rätt svar". Inga röda kryss, inga liv, inga "fel"-ljud och inga poängavdrag.
@@ -63,7 +63,7 @@ Historiska regler finns i `recovery/pre-cloudflare/projektregler.md` och gäller
 - Ängen syns direkt vid start. Ladda bara de kroppar som behövs.
 
 ## Bevis i varje runda
-- Högst 8 numrerade skärmbilder i 375×812 för det rundan ber om.
+- Skärmbilder (beslut 2026-10-30): ta dem bara för att själv kontrollera arbetet, normalt i 375×812 och ett liggande läge. Fler storlekar bara när ändringen gäller layout som skiljer sig mellan dem. Skicka inga skärmbilder till Christoffer och lägg inga i PR:er eller sammanfattningar; han kollar själv i spelet. Ta inte om samma bilder i varv efter varv för små justeringar.
 - Inga nya checkpoint- eller överlämningsdokument. Rör inte `recovery/`.
 - En lista över det som inte är gjort, och dina tre svagaste punkter, ärligt.
 - Parsertesterna i `src/tolk` och fraserna i `data/test-fraser.json` ska gå igenom. Rör du `ord.json`, kör testerna igen.
