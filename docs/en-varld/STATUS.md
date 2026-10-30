@@ -28,6 +28,10 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 - Den gamla ladd-skylten (`.ladd-3d`) och Suspense-skylten (`.laddar`) är borta. Introts kamera väntar på `angRedo` i stället för `data-klar`. Liggande: logga, rad och knapp i en kolumn till vänster, så att djuren i bilden syns.
 - `#forsida` måste stå efter `#root`: dialogFokus isolerar allt utom den sista synliga dialogen.
 
+## Kameran efter introt (2026-10-30)
+- `SagaKamera` (ang/saga.tsx) styrde kameran också efter introt så länge världen var tom (`sagaNu.aktiv || !harDjur`). Kameran stod då i en fast närbild, och panorering och zoom var avstängda tills första djuret eller bygget fanns. Nu styr den bara medan introt pågår, och kameran får vanlig startvy och vanliga gränser direkt.
+- Regressionsprov: `npm run prov:kamera` (Playwright mot `vite preview` på port 4173; `CHROMIUM=…` om Playwrights version inte stämmer med den installerade webbläsaren). Provet spelar introt till slut och med Hoppa över, i stående och liggande läge, stänger Pennans bok och kontrollerar dragning och zoom. Det var rött före ändringen och är grönt efter. Provet ingår inte i grindarna, eftersom det kräver en webbläsare.
+
 ## Introts bilder och delningsbilder (2026-10-30)
 - Introt visar nu Christoffers sex Firefly-bilder, en per fas (0–5) i `data/intro.json`, ovanpå ängen. De gamla `public/intro/1–6.jpg` användes aldrig i koden och är borttagna. Bilderna ligger som `public/intro/{n}-staende.webp` (1080×1920, utsnitt kring fokus) och `{n}-liggande.webp` (1920×1080), 113–197 kB styck. Bara den aktuella och nästa bild laddas.
 - Bilderna tonar över i varandra (0,9 s) och zoomar långsamt (Ken Burns, 16 s). Vid `prefers-reduced-motion` blir det varken zoom eller övertoning. Timingen mot rösten är oförändrad, eftersom bilden bara följer `scen.fas`.
