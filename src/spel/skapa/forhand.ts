@@ -2,6 +2,7 @@
 // kameran. Ingen React-state i scenloopen: scenen läser `lage` varje bildruta, UI:t skriver hit.
 import type { Sparad } from "../brygga.ts";
 import type { SparatBygge } from "../bygge.ts";
+import { START_PLATS } from "../platser.ts";
 
 export type ForhandSpec = { typ: "djur"; spec: Sparad } | { typ: "bygg"; bygge: SparatBygge } | null;
 type Lyssnare = () => void;
@@ -14,6 +15,11 @@ const lage = {
   nyckel: "",
   /** Var ringen ligger (världskoordinater). Samma plats som Trolla använder. */
   ring: null as { x: number; z: number; r: number } | null,
+  /** Platsen ringen och hologrammet gäller (ängen eller en utflykt). Scenen ritar bara sin egen plats. */
+  plats: START_PLATS,
+  /** Hologrammets höjd över ringen och krympning, ur platsens placeringsregel (ängen: 0 och 1). */
+  holoY: 0,
+  krymp: 1,
   /** Arkets överkant i CSS-px (null = stängt). Kameran förskjuter bilden så att ringen syns ovanför. */
   arkKant: null as number | null,
   /** Liggande: arkets vänsterkant i CSS-px. */
@@ -44,6 +50,11 @@ export const forhand = {
     if (!pa) {
       lage.spec = null;
       lage.nyckel = "";
+      // En utflyktsring får inte ligga kvar som ängens nästa första ring; ängens egen ring bevaras som förut.
+      if (lage.plats !== START_PLATS) lage.ring = null;
+      lage.plats = START_PLATS;
+      lage.holoY = 0;
+      lage.krymp = 1;
       lage.arkKant = null;
       lage.arkVanster = null;
       lage.ringSkarm = null;
@@ -51,13 +62,19 @@ export const forhand = {
     meddela();
   },
   /** brygga.forhandsvisa: byt hologram. `nyckel` = tolkningens formel; samma nyckel ritar inte om. */
-  visa(spec: ForhandSpec, nyckel: string, ring: { x: number; z: number; r: number } | null) {
-    const ringByt = JSON.stringify(ring) !== JSON.stringify(lage.ring);
+  visa(spec: ForhandSpec, nyckel: string, ring: { x: number; z: number; r: number } | null, extra: { plats?: string; y?: number; krymp?: number } = {}) {
+    const plats = extra.plats ?? START_PLATS;
+    const y = extra.y ?? 0;
+    const krymp = extra.krymp ?? 1;
+    const ringByt = JSON.stringify(ring) !== JSON.stringify(lage.ring) || plats !== lage.plats || y !== lage.holoY || krymp !== lage.krymp;
     if (nyckel === lage.nyckel && !ringByt) return;
     if (nyckel !== lage.nyckel) lage.studs += 1;
     lage.spec = spec;
     lage.nyckel = nyckel;
     lage.ring = ring;
+    lage.plats = plats;
+    lage.holoY = y;
+    lage.krymp = krymp;
     meddela();
   },
   sattArkKant(topp: number | null, vanster: number | null = null) {

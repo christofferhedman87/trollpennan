@@ -21,6 +21,7 @@ import { SagaPenna } from "./saga.tsx";
 import { KameraRam } from "./kamera.tsx";
 import type { OrbitStyr } from "./saga.tsx";
 import { VaktarDjur, vaktarForPlats } from "./vaktardjur.tsx";
+import { Trollring } from "./Trollring.tsx";
 
 
 /** Kameran börjar närmare platsens dekor (ängen har egen start). */
@@ -199,6 +200,7 @@ export function PlatsScen({ plats }: { plats: string }) {
         <DjurIScen key={spec.uid} spec={spec} alla={djur} plats={platsData} ljus={kalla && lysande?.has(spec.uid) ? { kalla, vad: lysande.get(spec.uid)! } : undefined} />
       ))}
       <SagaPenna />
+      <Trollring plats={plats} />
       <OrbitControls
         ref={styr as never}
         enablePan={false}

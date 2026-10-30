@@ -21,7 +21,6 @@ import { useArkLapp } from "../../skapa/arkLapp.ts";
 import { platsLapp } from "../../skapa/platsLapp.ts";
 import { forhand } from "../../skapa/forhand.ts";
 import { useMinne } from "../../minne.ts";
-import { START_PLATS } from "../../platser.ts";
 import "./skapa.css";
 
 const UI = uiJson as unknown as { ark: Record<string, string>; rost: Record<string, string> };
@@ -39,7 +38,7 @@ export function SkapaArk() {
   const lagerRef = useRef<HTMLDivElement>(null);
   const trollar = useRef(false);
   const plats = useMinne((s) => s.plats);
-  useForhandArk(arkRef, text, varld === "ang" && !omrade && plats === START_PLATS);
+  useForhandArk(arkRef, text, varld === "ang" && !omrade, plats);
 
   useEffect(() => {
     // Boken öppnar alltid i startläget (föräldrasidan: tangenterna först, eller Ordhjälpen först).
