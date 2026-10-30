@@ -164,11 +164,11 @@ body:has(.sk-lager) .tp-vagvisare-hud button { opacity: 0; pointer-events: none;
 
 /* Block 5a: önskan växer nedåt under HUD och remsa. Den gamla förankringen på 30 % sköt långa texter ur bild. */
 .bubbla.onska, .bubbla.onska.vanster, .bubbla.onska.hoger {
-  top: 130px !important; left: 50% !important; right: auto !important; bottom: auto !important;
+  top: 146px !important; left: 50% !important; right: auto !important; bottom: auto !important;
   width: calc(100% - 24px); max-width: 42rem; box-sizing: border-box; transform: translateX(-50%) !important;
 }
 @media (orientation: landscape) and (max-height: 600px) {
-  .bubbla.onska { max-width: none; }
+  .bubbla.onska, .bubbla.onska.vanster, .bubbla.onska.hoger { top: 130px !important; max-width: none; }
   /* Returskylten får en egen yta bredvid Väktaren; den behöver inte trängas under den breda önskan. */
   body:has(.bubbla.onska) [data-s4="vaktar-aptitbubbla"] { right: 192px; }
   body:has(.bubbla.onska) .tp-vagvisare-hud button[data-plats="ang"] {

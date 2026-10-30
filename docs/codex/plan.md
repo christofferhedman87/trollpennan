@@ -1,6 +1,6 @@
 # Utvecklingsplan för Trollpennan
 
-> **Aktuellt 2026-10-30:** 4a, #279 och 4b-1 (#280) är mergade och live. 4b-2 är mergad och verifierad live som #282 (`675e5ee`), som ersätter #281 efter rebase utan force-push. Codex arbetar nu med block 5a: önskebubblans dokumenterade layoutfel, egen gren `codex/block-05a-onskebubbla`. Nästa steg och verifiering finns nedan.
+> **Aktuellt 2026-10-30:** 4a, #279 och 4b-1 (#280) är mergade och live. 4b-2 är mergad och verifierad live som #282 (`675e5ee`), som ersätter #281 efter rebase utan force-push. Codex arbetar nu med block 5a: önskebubblans dokumenterade layoutfel, egen gren `codex/block-05a-onskebubbla`, utkast-PR #283. Nästa steg och verifiering finns nedan.
 
 2026-10-30. Baslinje `main` = `7d83937` (#273). Underlag: [granskning.md](granskning.md), aktuella produktregler och Skapa-/En värld-status. Planen ersätter inte deras produktkontrakt. Storlek: S = liten avgränsad ändring, M = flera sammanhängande komponenter, L = delas i mindre PR:er före implementation. Betyg och möjliga förbättringar i granskningen är inte barntestresultat.
 
@@ -41,7 +41,7 @@ Varje block levereras med separat branch och PR, kritisk granskning, samtliga ob
 - **Klart när:** dokumenterade syntetiska sjuårs- och tioårsscenarier når egen skapelse, en önskan och nästa val med synliga knappar; inga hjälpord visas oombett; inget kreativt ord låses. Verifiera även okänt och felstavat ord.
 - **Risk / beroende / storlek:** M; kräver aktuella browserfynd, inte en ny menyomskrivning. **Sparning:** befintliga intro- och framstegsflaggor behålls. **Resurser:** befintlig konst och röster. **Mått:** steg, blockerande interaktioner och uppmätt tid i syntetiska scenarier, tydligt skilt från riktiga barntest.
 
-- **5a, konkreta browserfynd:** `scripts/prov-onskebubbla.mjs` blev rött på `675e5ee`: 375×812 Skogen, önskan börjar på y112 och Väktarens remsa slutar y122; 812×375 Ängen, den längsta befintliga önskan ligger y−117…112. Rättningen låter önskan växa nedåt under HUD/remsa med oförändrad text och typstorlek. I låg liggande vy får returskylten egen yta bredvid Väktaren. Samma synlighetsprov ska gå grönt i fem format med verkliga klick, ingen dold överlappning eller force-klick. Fulla grindar körs; visuellt omprov återstår.
+- **5a, konkreta browserfynd:** `scripts/prov-onskebubbla.mjs` blev rött på `675e5ee`: 375×812 Skogen, önskan börjar på y112 och Väktarens remsa slutar y122; 812×375 Ängen, den längsta befintliga önskan ligger y−117…112. Rättningen låter önskan växa nedåt under HUD/remsa med oförändrad text och typstorlek. I låg liggande vy får returskylten egen yta bredvid Väktaren. Samma synlighetsprov ska gå grönt i fem format med verkliga klick, ingen dold överlappning eller force-klick. Första CSS-versionen passerade alla sju grindar (542/542) men browserprovet fann också en högre coachremsa på stående Ängen (slut y134). Därför är toppen nu y146 i höga vyer och y130 i låg liggande vy. Riktade omprov för 375×812 Ängen och 812×375 Skogen är gröna, med hela längsta önskan, fria huvudknappar och riktig hemresa; fulla 20-fallsprovet körs. Ingen text, fontstorlek eller röst har ändrats.
 
 ## 6. Konsekvent svensk ljudhjälp — planerat, tillgångsberoende
 
