@@ -18,17 +18,21 @@ const _sf = new THREE.Spherical();
 export function DalKamera({ styr, aktiv }: { styr: { current: OrbitStyr | null }; aktiv: boolean }) {
   const glid = useRef<Glid | null>(null);
   const sedd = useRef(0);
-  useEffect(
-    () =>
-      dalStyr.lyssna(() => {
-        const f = dalStyr.lage().fokus;
-        if (f && f.id !== sedd.current) {
-          sedd.current = f.id;
-          glid.current = { id: f.id, t0: -1, fran: new THREE.Vector3(), till: new THREE.Vector3(f.x, 0, f.z), vy: f.vy, franVy: new THREE.Spherical() };
-        }
-      }),
-    [],
-  );
+  useEffect(() => {
+    const ta = () => {
+      const f = dalStyr.lage().fokus;
+      if (f && f.id !== sedd.current) {
+        sedd.current = f.id;
+        dalStyr.konsumera(f.id);
+        glid.current = { id: f.id, t0: -1, fran: new THREE.Vector3(), till: new THREE.Vector3(f.x, 0, f.z), vy: f.vy, franVy: new THREE.Spherical() };
+      }
+    };
+    // Ett fokus som sattes medan Hemdalen inte ritades (bygge från en utflykt) väntar här när scenen visas igen. Ett som redan
+    // använts (konsumerat) glider kameran inte till en gång till bara för att scenen byggs om.
+    const vantande = dalStyr.lage().fokus;
+    if (vantande && vantande.id > dalStyr.lage().konsumerat) ta();
+    return dalStyr.lyssna(ta);
+  }, []);
   useFrame(({ camera, clock }) => {
     const c = styr.current;
     // För prov: kamerans mål och om dalkameran är aktiv.
