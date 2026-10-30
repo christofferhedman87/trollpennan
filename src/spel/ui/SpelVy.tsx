@@ -146,7 +146,8 @@ export function SpelVy() {
         {intro ? null : <Hud oppnaStjarnor={() => setStjarnInfo(true)} haller={haller} setHaller={setHaller} setForalder={setForalder} stjarnor={stjarnor} hittatAntal={hittatAntal} totalOrd={totalOrd} varld={varld} hemTillAngen={() => { valjVarld("ang"); platsUi.resTill("ang"); }} oppnaKarta={() => { stangModaler(); setMenyOpp(false); oppnaKarta(); }} seDalen={vyFlygDold || vyFlyg.aktiv ? undefined : () => { setBokOpp(false); setMenyOpp(false); vyFlyg.startaVyFlygning(); }} />}
         {intro || !menyOpp ? null : <MinBok stang={() => setMenyOpp(false)} oppnaAlbum={() => { setMenyOpp(false); stangModaler(); setAlbumOpp(true); }} oppnaOrdbok={() => { setMenyOpp(false); stangModaler(); setOrdbok(true); }} oppnaMark={() => { setMenyOpp(false); stangModaler(); oppnaBygglage(); }} oppnaLada={() => { setMenyOpp(false); stangModaler(); setLadaOpp(true); }} seIntro={() => { setMenyOpp(false); stangModaler(); setIntroNy((n) => n + 1); setIntro(true); }} />}
         {/* f4-invariant: (!visa3d ? bengtsson.synlig : platsUi.plats !== START_PLATS || bengtsson.mine === "automat") */}
-        {varld === "ang" && !omrade && !bokOpp && !menyOpp && !intro && !overlayRef.current && bengtsson.synlig ? (
+        {/* Nya Skapa (fas E): på ängen är Bengtsson Uppdrag-knappen i HudBotten; den svävande medaljongen visas bara på andra platser. */}
+        {varld === "ang" && aktivPlats !== "ang" && !omrade && !bokOpp && !menyOpp && !intro && !overlayRef.current && bengtsson.synlig ? (
           <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
         ) : null}
         {intro || bokOpp || menyOpp ? null : <HudBotten pahemma={!omrade && !kartaOpp} oppnaSkriv={() => { setPanel("spel"); setBokOpp(true); }} oppnaMinBok={() => { stangModaler(); setMenyOpp(true); }} minBokOpp={menyOpp} npc={aktivPlats === "ang" && varld === "ang" ? bengtsson : undefined} />}
