@@ -67,19 +67,6 @@ const GARD: ModellRad[] = [
   },
 ];
 
-const KULLAR: ModellRad[] = [
-  {
-    url: "/models/bulk/w-kulle-cc0.glb",
-    farger: { grass: "#6d9256", default: "#6d9256", material: "#6d9256" },
-    platser: [[-18, -0.25, -18, 14, 0.4], [0, -0.3, -23, 18, 1.2], [18, -0.25, -17, 15, 2.1], [-22, -0.25, -5, 13, 0.8], [22, -0.25, -5, 12, 1.7], [-11, -0.25, -21, 16, 2.6], [11, -0.25, -20, 16, 0.2]],
-  },
-  {
-    url: "/models/bulk/w-berg-cc0.glb",
-    farger: { material: "#7d8794" },
-    platser: [[14, -0.3, -24, 18, 0.5], [-15, -0.3, -25, 17, 1.9], [2, -0.35, -28, 20, 1.1]],
-  },
-];
-
 const ZONER: readonly ZonRad[] = [
   { zon: "skogen", rader: SKOG },
   { zon: "sjon", rader: SJO },
@@ -87,7 +74,7 @@ const ZONER: readonly ZonRad[] = [
   { zon: "garden", rader: GARD },
 ];
 
-const HORISONT_URLS = [...ZONER.flatMap((z) => z.rader.map((r) => r.url)), ...KULLAR.map((r) => r.url)];
+const HORISONT_URLS = ZONER.flatMap((z) => z.rader.map((r) => r.url));
 
 function somPlats(rader: readonly Rad[]): [number, number, number, number, number][] {
   return rader.map(([x, y, z, skala, rot]) => {
@@ -117,6 +104,7 @@ function ModellRader({ rader }: { rader: readonly ModellRad[] }) {
   );
 }
 
+/** Marken ut mot horisonten. Kullarna och bergen bakom är målade lager (Parallax.tsx), inte modeller. */
 function HorisontKullar() {
   return (
     <group userData={{ "data-w2-zon": "kullar" }}>
@@ -124,7 +112,6 @@ function HorisontKullar() {
         <ringGeometry args={[4.8, 46, 64]} />
         <meshStandardMaterial color="#68b04c" roughness={0.95} metalness={0} />
       </mesh>
-      <ModellRader rader={KULLAR} />
     </group>
   );
 }
