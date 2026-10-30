@@ -1,6 +1,6 @@
 # Åtgärdsplan T-01–T-35 för Codex och Claude Code
 
-> **Aktuellt 2026-10-30:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. Nästa arbete: **E1/E2 trygg föräldraspärr och återställning (T-12/T-13), därefter A1 (T-01/T-02/T-31)**. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1.
+> **Aktuellt 2026-10-30:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. T-12/T-13 är verifierade och oberoende granskade i PR #286, ännu inte mergade. Nästa arbete: **E3 (T-14), därefter A1 (T-01/T-02/T-31)**. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1.
 
 ## Mandat och statusord
 
@@ -63,9 +63,9 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 ## Täckning och leveranslogg
 
 - Plan-PR #285 är mergad som `161a234`. Christoffers B1–B8 och granskningsmandat finns i GitHub. Cloudflare grönt på main (check 124369472890); alla sex serverade start-/spel-filer är byteidentiska med det tidigare verifierade bygget, vilket stämmer med en ren dokumentändring.
-- E1/E2: T-12 kort klick reproducerat rött; T-13 avsaknad av beständigt arkiv och radering trots kvotfel reproducerade röda. Nu hållning med släpp/leave/cancel/blur-städning och Space/Enter-stöd, tvåsiffrig multiplikation, arkiv-före-radering och återställning som bevarar både gamla och nuvarande världar. Arkiv rensas aldrig automatiskt. Oberoende granskaren hittade att trasig JSON/dal inuti en råsträng accepterades; detta är rättat med befintlig ren `arData` och negativa oförändrad-lagring-prov. Testid-baslinjen ändras avsiktligt enbart när fem oskyddade titelkontroller tas bort. Slutgrindar gröna (551 produkttester), browserprov pågår.
+- E1/E2: T-12 kort klick reproducerat rött; T-13 avsaknad av beständigt arkiv och radering trots kvotfel reproducerade röda. Nu hållning med släpp/leave/cancel/blur-städning och Space/Enter-stöd, tvåsiffrig multiplikation, arkiv-före-radering och återställning som bevarar både gamla och nuvarande världar. Arkiv rensas aldrig automatiskt. Oberoende granskaren hittade att trasig JSON/dal inuti en råsträng accepterades; detta är rättat med befintlig ren `arData` och negativa oförändrad-lagring-prov. Testid-baslinjen ändras avsiktligt enbart när fem oskyddade titelkontroller tas bort. Slutgrindar gröna (551/551 produkttester). `prov-foraldersparr.mjs` och `prov-arkiv.mjs` gröna i375×812 och812×375; interna bilder granskade. I arkivprovet behövde den nya fliken gå klart genom verkligt intro innan låset gick att hålla; det är provets synkronisering som rättades, inga force-klick. Oberoende granskare `/root/t12_t13_review` godkände exakt `c7473c76a4e0c1cb2ba7301eff904bd7488896f2`, inga kvarstående blockerare. Kod91d3a9d är oförändrad sedan alla sju grindar; sista commit ändrar bara detta UI-prov, lint grönt igen. Befintliga filkopie-/lagringsfelprov körs före merge. Tre svagaste punkter: iPad/Safari-långtid återstår (T-14), inga fysiska tangentbords-/touchassistansprov, alla lokala arkiv kan försvinna om webbläsardata rensas (nedladdade kopior behövs).
 
-E1/E2 (T-12/T-13) är implementerade och verifieras; övriga punkter är planerade. Ingen ny T-punkt är ännu publicerad. Kolumnen uppdateras med kod-SHA, röda/gröna prov, faktisk granskare, PR/merge och publiceringsbevis när arbete görs. Ett gemensamt block kan ge delresultat men stänger inte automatiskt hela punkten.
+E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är planerade. Ingen ny T-punkt är ännu publicerad. Kolumnen uppdateras med kod-SHA, röda/gröna prov, faktisk granskare, PR/merge och publiceringsbevis när arbete görs. Ett gemensamt block kan ge delresultat men stänger inte automatiskt hela punkten.
 
 | T-id | Huvudblock | Status / kvarvarande acceptans |
 |---|---|---|
@@ -80,8 +80,8 @@ E1/E2 (T-12/T-13) är implementerade och verifieras; övriga punkter är planera
 | T-09 | D1 | Planerad |
 | T-10 | D2 | Planerad |
 | T-11 | C3 | Planerad |
-| T-12 | E1 | Implementerad; browserprov och oberoende slutgranskning pågår |
-| T-13 | E2 | Implementerad; 12 riktade Node-prov gröna, browserflöde och slutgranskning pågår |
+| T-12 | E1 | Verifierad + oberoende granskad, PR #286, kod 91d3a9d/prov c7473c7; väntar merge/live |
+| T-13 | E2 | Verifierad + oberoende granskad, PR #286; arkiv/nekad lagring/trasigt innehåll samt ny flik båda vyer; väntar merge/live |
 | T-14 | E3 | Planerad; ingen kod kan garantera Safaris beständighet |
 | T-15 | B3 | Planerad; B1 godkänt |
 | T-16 | D3 | Planerad |
