@@ -17,7 +17,7 @@
  "tred_hint": "Dra för att titta runt",
  "borja_om": {
   "knapp": "Börja om",
-  "fraga": "Vill du börja om? Alla djur och byggen försvinner.",
+  "fraga": "Din värld sparas i arkivet innan en ny värld börjar. Vill du börja om?",
   "ja": "Ja, börja om"
  },
  "klapp": {
@@ -84,7 +84,16 @@
   "las_in_ja": "Ja, byt",
   "las_in_nej": "Avbryt",
   "klart": "Klart! Kopian är inläst.",
-  "fel": "Den filen gick inte att läsa. Inget har ändrats."
+  "fel": "Den filen gick inte att läsa. Inget har ändrats.",
+  "vuxenlas": "Vuxenlås: Vad är {a} × {b}?",
+  "arkiv_rubrik": "Tidigare världar",
+  "arkiv_hjalp": "Innan du börjar om sparas hela världen här i minst 30 dagar på den här enheten. Spara också en nedladdad kopia. Webbläsaren kan radera lokala data.",
+  "arkiv_tom": "Inga tidigare världar sparade än.",
+  "arkiv_knapp": "Återställ världen från {datum}",
+  "arkiv_fraga": "Återställa den här världen? Din nuvarande värld sparas också i arkivet först.",
+  "arkiv_ja": "Ja, återställ världen",
+  "arkiv_nej": "Tillbaka",
+  "arkiv_fel": "Det gick inte att spara eller återställa kopian. Din gamla värld har inte tagits bort från arkivet. Frigör utrymme och spara en nedladdad kopia innan du försöker igen."
  },
  "stall": {
   "meny": "Stallet",

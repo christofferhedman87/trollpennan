@@ -83,7 +83,9 @@ try {
         // Bara ett explicit, validerat filval får häva skrivskyddet. Samma föräldra-UI som i backup-provet.
         await page.evaluate(() => window.__troll.foralder(true));
         await page.getByTestId("foralder").waitFor({ state: "visible" });
-        await page.getByTestId("foralder-svar").fill("7");
+        const tal = (await page.locator(".vuxen-las-fraga").innerText()).match(/(\d+)\s*×\s*(\d+)/);
+  assert.ok(tal);
+  await page.getByTestId("foralder-svar").fill(String(+tal[1] * +tal[2]));
         await page.getByTestId("foralder-oppna").click();
         const filinput = page.getByTestId("kopia-fil");
         const kopia = { version: 2, ang: [], garden: [], stjarnor: 23, introSedd: true, ljudPa: false, rostPa: false, effektPa: false };

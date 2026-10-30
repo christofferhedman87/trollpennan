@@ -62,7 +62,10 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 
 ## Täckning och leveranslogg
 
-Alla punkter är **planerade**, inget i den nya granskningen är ännu implementerat eller publicerat. Kolumnen uppdateras med kod-SHA, röda/gröna prov, faktisk granskare, PR/merge och publiceringsbevis när arbete görs. Ett gemensamt block kan ge delresultat men stänger inte automatiskt hela punkten.
+- Plan-PR #285 är mergad som `161a234`. Christoffers B1–B8 och granskningsmandat finns i GitHub. Cloudflare grönt på main (check 124369472890); alla sex serverade start-/spel-filer är byteidentiska med det tidigare verifierade bygget, vilket stämmer med en ren dokumentändring.
+- E1/E2: T-12 kort klick reproducerat rött; T-13 avsaknad av beständigt arkiv och radering trots kvotfel reproducerade röda. Nu hållning med släpp/leave/cancel/blur-städning och Space/Enter-stöd, tvåsiffrig multiplikation, arkiv-före-radering och återställning som bevarar både gamla och nuvarande världar. Arkiv rensas aldrig automatiskt. Oberoende granskaren hittade att trasig JSON/dal inuti en råsträng accepterades; detta är rättat med befintlig ren `arData` och negativa oförändrad-lagring-prov. Testid-baslinjen ändras avsiktligt enbart när fem oskyddade titelkontroller tas bort. Slutgrindar gröna (551 produkttester), browserprov pågår.
+
+E1/E2 (T-12/T-13) är implementerade och verifieras; övriga punkter är planerade. Ingen ny T-punkt är ännu publicerad. Kolumnen uppdateras med kod-SHA, röda/gröna prov, faktisk granskare, PR/merge och publiceringsbevis när arbete görs. Ett gemensamt block kan ge delresultat men stänger inte automatiskt hela punkten.
 
 | T-id | Huvudblock | Status / kvarvarande acceptans |
 |---|---|---|
@@ -77,8 +80,8 @@ Alla punkter är **planerade**, inget i den nya granskningen är ännu implement
 | T-09 | D1 | Planerad |
 | T-10 | D2 | Planerad |
 | T-11 | C3 | Planerad |
-| T-12 | E1 | Planerad; B3 godkänt |
-| T-13 | E2 | Planerad; B3 godkänt |
+| T-12 | E1 | Implementerad; browserprov och oberoende slutgranskning pågår |
+| T-13 | E2 | Implementerad; 12 riktade Node-prov gröna, browserflöde och slutgranskning pågår |
 | T-14 | E3 | Planerad; ingen kod kan garantera Safaris beständighet |
 | T-15 | B3 | Planerad; B1 godkänt |
 | T-16 | D3 | Planerad |

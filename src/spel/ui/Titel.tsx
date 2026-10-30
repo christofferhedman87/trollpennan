@@ -1,14 +1,10 @@
-// P2-2 (förslag A, Christoffers val 2026-10-20): titelskärm över den levande ängen. Har barnet en värld: "Fortsätt" med
-// bild på senaste djuret och raden om vad som hände sist, och en diskret "Börja om med en ny värld" med bekräftelse.
-// Nytt barn: bara "Börja". Efter "Börja om" ligger den gamla världen kvar i sessionStorage och kan tas tillbaka så länge
-// den nya världen är tom (ångra skriver aldrig över en värld barnet hunnit börja på).
-// 2026-10-30: titeln ritas i försidan (#forsida i index.html, se forsida.ts) och visar knapparna när ängen är redo.
+// T-13: försidan erbjuder bara Börja/Fortsätt. Återställning finns bakom föräldraspärren.
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { FORSTA, senastRad } from "../forstaStunden.ts";
 import { useMinne } from "../minne.ts";
 import { ljud } from "../ljud.ts";
-import { angraBorjaOm, borjaOmMedKopia, harKopia, laddaOmRent, sessionLagring, useStart, ANGRA_NYCKEL } from "../start.ts";
+import { useStart } from "../start.ts";
 import { forsidaEl, slappForsida } from "./forsida.ts";
 import "./titel-p2.css";
 
@@ -83,16 +79,10 @@ export function Titel() {
   const harVarld = useMinne((s) => s.introSedd || s.ang.length > 0);
   const sista = useMinne((s) => s.ang.at(-1)?.uid ?? null);
   const rad = useMinne((s) => senastRad(s as unknown as Record<string, unknown>));
-  const [fraga, setFraga] = useState(false);
-  const [kopia] = useState(() => harKopia(sessionLagring()));
   const [forsida] = useState(forsidaEl);
   const [sent, setSent] = useState(false);
   const redo = angRedo || sent;
   const bild = useDjurBild(oppen && harVarld && redo ? sista : null);
-  const nejRef = useRef<HTMLButtonElement>(null);
-  useEffect(() => {
-    if (fraga) nejRef.current?.focus();
-  }, [fraga]);
   useEffect(() => {
     if (!oppen || angRedo) return;
     const t = window.setTimeout(() => setSent(true), SENAST_KNAPPAR_MS);
@@ -115,21 +105,6 @@ export function Titel() {
   const borja = () => {
     ljud.lasOpp();
     slappForsida(stang); // försidan tonar ut över den levande ängen, sedan börjar introt
-  };
-  const borjaOm = () => {
-    borjaOmMedKopia(window.localStorage, sessionLagring());
-    laddaOmRent(window.localStorage);
-  };
-  const angra = () => {
-    const session = sessionLagring();
-    if (!session) return;
-    try {
-      const raw = session.getItem(ANGRA_NYCKEL);
-      if (!raw || !angraBorjaOm(window.localStorage, session)) return;
-      laddaOmRent(window.localStorage, (JSON.parse(raw) as { data: Record<string, string> }).data);
-    } catch {
-      // Sessionsminnet kan nekas även efter att Ångra-knappen visats. Världen lämnas då orörd.
-    }
   };
 
   return (
@@ -175,9 +150,6 @@ export function Titel() {
                     </span>
                     <span className="titel-pil" aria-hidden />
                   </button>
-                  <button type="button" className="titel-borja-om" data-testid="titel-borja-om" onClick={() => setFraga(true)}>
-                    {T.borja_om}
-                  </button>
                 </>
               ) : (
                 <button
@@ -197,26 +169,9 @@ export function Titel() {
                   <span className="titel-pil" aria-hidden />
                 </button>
               )}
-              {kopia && !harVarld ? (
-                <button type="button" className="titel-borja-om" data-testid="titel-angra" onClick={angra}>
-                  {T.angra}
-                </button>
-              ) : null}
             </div>
           ) : null}
-          {fraga ? (
-            <div className="titel-fraga-bak" data-testid="titel-fraga" role="alertdialog" aria-modal="true" aria-label={T.fraga} onKeyDown={(e) => e.key === "Escape" && setFraga(false)}>
-              <div className="titel-fraga">
-                <p>{T.fraga}</p>
-                <button ref={nejRef} type="button" className="titel-nej" data-testid="titel-nej" onClick={() => setFraga(false)}>
-                  {T.nej}
-                </button>
-                <button type="button" className="titel-ja" data-testid="titel-ja" onClick={borjaOm}>
-                  {T.ja}
-                </button>
-              </div>
-            </div>
-          ) : null}
+
         </div>,
         nere,
       )}
