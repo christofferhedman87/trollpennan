@@ -19,10 +19,12 @@ const platser = new Map(platsdata.platser.map((p) => [p.id, p]));
 const onska = onskningar.onskningar.find((o) => o.id === "modig");
 const uppdrag = bengtsson.uppdrag.find((u) => u.omrade === "skogen" && !u.final && u.typ === "skriv");
 assert.ok(onska && uppdrag, "befintlig önskan och skogsuppdrag finns för prioritetstesten");
+// Tredje värdet begränsar vilka fall ett extra format körs för (det smalare liggande formatet provas på Skogen, där Väktarens remsa finns).
 const lagen = [
   ["staende", { width: 375, height: 812 }],
   ["liggande", { width: 812, height: 375 }],
-].filter(([namn]) => !process.env.QA_LAGE || namn === process.env.QA_LAGE);
+  ["liggande-smal", { width: 667, height: 375 }, ["skogen"]],
+].filter(([namn]) => !process.env.QA_LAGE || namn === process.env.QA_LAGE || (process.env.QA_LAGE === "liggande" && namn.startsWith("liggande")));
 const fallen = ["skogen", "sjon", "grottan", "ang", "onskan", "gava", "uppdrag"]
   .filter((namn) => !process.env.QA_FALL || namn === process.env.QA_FALL);
 assert.ok(lagen.length && fallen.length, "QA_LAGE och QA_FALL måste matcha ett dokumenterat provfall");
@@ -124,7 +126,24 @@ async function kontrolleraFriLapp(page, id, namn) {
   await nabar(page.locator(".sk-lapp").getByRole("button", { name: ui.lapp.lyssna_aria, exact: true }), `${namn}: Lyssna`);
   await nabar(page.locator(".sk-tangenter"), `${namn}: tangenterna`);
   await nabar(page.getByTestId("vakna"), `${namn}: Trolla`);
+  await kontrolleraRemsa(page, namn);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true, "ingen sidrullning");
+}
+
+// Väktarens remsa (om den visas) ska rymma sin egen text och stanna inom skärmen, annars läcker den över HUD:en.
+async function kontrolleraRemsa(page, namn) {
+  const remsa = page.locator('[data-s4="vaktar-aptitbubbla"]');
+  if (!(await remsa.count())) return;
+  const m = await remsa.evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    const ut = [...el.querySelectorAll("*")].filter((e) => {
+      const b = e.getBoundingClientRect();
+      return b.width > 0 && b.height > 0 && getComputedStyle(e).display !== "none" && (b.top < r.top - 1 || b.bottom > r.bottom + 1 || b.right > r.right + 1 || b.left < r.left - 1);
+    }).map((e) => e.tagName);
+    const p = el.querySelector("p");
+    return { ut, rymmer: !p || p.scrollHeight <= p.clientHeight + 1, inom: r.left >= 0 && r.right <= innerWidth && r.bottom <= innerHeight };
+  });
+  assert.ok(m.ut.length === 0 && m.rymmer && m.inom, `${namn}: Väktarens remsa rymmer sin text: ${JSON.stringify(m)}`);
 }
 
 async function kontrolleraOppningsrost(page, id) {
@@ -220,7 +239,8 @@ async function provaPrioritet(page, fall, namn) {
 }
 
 try {
-  for (const [lage, viewport] of lagen) for (const fall of fallen) {
+  for (const [lage, viewport, baraFall] of lagen) for (const fall of fallen) {
+    if (baraFall && !baraFall.includes(fall)) continue;
     const namn = `${lage}-${fall}`;
     const context = await browser.newContext({ viewport, deviceScaleFactor: 1, reducedMotion: "reduce" });
     const page = await context.newPage();
