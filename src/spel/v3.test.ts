@@ -5,22 +5,18 @@ import { test } from "node:test";
 
 const las = (fil: string) => fs.readFileSync(fil, "utf8");
 
-test("V3: skrivfönstret har tre vyflikar, stäng, ordkort och idéer", () => {
-  const bok = las("src/spel/ui/BokSkarm.tsx");
-  for (const krav of [
-    'data-v3="skapar-vy-flikar"',
-    'data-v3="vy-flik-skriv"',
-    'data-v3="vy-flik-gata"',
-    'data-v3="vy-flik-ideer"',
-    'data-v3="bok-stang"',
-    'data-v3="ordkort"',
-    "skriv-remsa",
-    "exempel-chip-",
-    'data-v2="aktivt-uppdrag-kort"',
-    'data-v2="lyssna-aktivt-uppdrag"',
-  ]) {
-    assert.equal(bok.includes(krav), true, krav);
-  }
+// Nya Skapa (docs/skapa/SPEC-skapa.md 9.7): flikarna Ordkort/Stava själv/Idé är ersatta av skriv först + Ordhjälp.
+test("V3 (nya Skapa): boken öppnar med tangenterna, Ordhjälpen har frågeflikar och Idé finns i hjälpraden", () => {
+  const ark = las("src/spel/ui/skapa/SkapaArk.tsx");
+  const hjalp = las("src/spel/ui/skapa/Ordhjalp.tsx");
+  const rad = las("src/spel/ui/skapa/Hjalprad.tsx");
+  assert.match(ark, /vy === "skriv" \?/);
+  assert.match(ark, /<Tangenter /);
+  assert.match(ark, /data-v3="bok-stang"/);
+  assert.match(hjalp, /role="tablist"/);
+  assert.match(hjalp, /data-flik=\{f\.id\}/);
+  assert.match(rad, /data-dal="ide"/);
+  assert.match(rad, /data-dal="ordhjalp"/);
 });
 
 test("V3: ledtrådsytan kan vara kompakt under Skriv", () => {

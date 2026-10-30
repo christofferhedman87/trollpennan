@@ -33,7 +33,7 @@ test("V9a stjärnruta har lyssna, stäng och platshållare", () => {
   const h = las("src/spel/ui/Hud.tsx");
   for (const a of ["stjarn-ruta", "stjarn-lyssna", "stjarn-stang"]) assert.ok(d.includes(`data-v9a="${a}"`), a);
   assert.ok(h.includes('data-v9a="hud-stjarnor"'));
-  assert.ok(h.includes("⭐ {stjarnor}"));
+  assert.ok(h.includes('ikon("ui", "stjarna")') && h.includes("{stjarnor}"), "nya Skapa: stjärnan är en SVG-ikon");
   assert.ok(d.includes("data-testid=\"stjarn-nasta\""));
   assert.ok(d.includes("data-testid=\"stjarn-ordbok\""));
   assert.ok(d.includes("data-dialog-close"));

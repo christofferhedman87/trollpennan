@@ -39,13 +39,11 @@ test("P4c: meny.json öppnar verktygen utan hårdkodat data-last", () => {
   assert.equal(menyJson.oppen.byggbok, true);
   assert.equal(menyJson.oppen.album, true);
   assert.equal(menyJson.oppen.ordbok, true);
+  // Nya Skapa (fas E): hamburgermenyn är borta. Karta ligger uppe till höger; album, ordbok, mark, stall och låda i Min bok.
   const hud = fs.readFileSync("src/spel/ui/Hud.tsx", "utf8");
+  const bok = fs.readFileSync("src/spel/ui/MinBok.tsx", "utf8");
   assert.equal(hud.includes('data-last="ja"'), false);
-  for (const id of ["flik-ang", "flik-gard", "flik-byggbok", "album-knapp", "ut-pa-aventyr", "uppdrag-knapp", "ordbok", "demo-senare"]) {
-    assert.equal(hud.includes(`data-testid="${id}"`), true, id);
-  }
-  assert.match(hud, /menyJson\.oppen\.gard/);
-  assert.match(hud, /menyJson\.oppen\.byggbok/);
-  assert.match(hud, /menyJson\.oppen\.album/);
-  assert.match(hud, /menyJson\.oppen\.ordbok/);
+  assert.equal(bok.includes('data-last="ja"'), false);
+  assert.equal(hud.includes('data-testid="ut-pa-aventyr"'), true);
+  for (const id of ["album", "ordjakten", "guldord", "mark", "stall", "lada"]) assert.match(bok, new RegExp(`id: "${id}"`), id);
 });

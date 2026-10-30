@@ -17,7 +17,7 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 
 ## Nästa steg
 **Blockserien En värld är klar (2026-10-29).** Kvar att göra senare:
-1. Skapamenyns nya design (från en annan chatt) implementeras härnäst.
+1. Skapamenyns nya design är implementerad (fas A–E, se `docs/skapa/STATUS.md`).
 2. Till Grok (söndag): fler formmodeller från Poly Pizza via `trollpennan-modellspanare`-rutinen.
 3. Generera ElevenLabs-röster för `nya-repliker.md` och ta bort raderna ur `data/rost.json` → `vantar_rost`.
 4. Mindre: staket, mur och port ritas som inhägnad med gamla ByggeModell. Stora former kan skymma bakre tomter. Solstjärnor i ladan, djur som lockas av hönshus och damm samt rörelse vid platserna i fjärran är inte gjorda.
