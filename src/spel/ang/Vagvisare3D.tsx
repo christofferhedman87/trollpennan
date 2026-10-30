@@ -1,12 +1,13 @@
 import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import * as THREE from "three";
 import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
 import { belysScen } from "../belys.ts";
 import { forladdaNarLedig } from "../modeller/forladda.ts";
 import { projiceraVagvisare, type SkarmPunkt } from "./vagvisareProjektion.ts";
+import { undvikBubblor } from "./vagvisareUndvik.ts";
 
 const GLB = "/models/bulk/w-vagvisare-cc0.glb";
 const kopplaMeshopt = (loader: { setMeshoptDecoder?: (d: typeof MeshoptDecoder) => void }) => {
@@ -122,12 +123,45 @@ export function VagvisareProjektor({ plats, onPunkter }: { plats: VagvisarePlats
   return null;
 }
 
+/** Skyltarna får aldrig täcka en pratbubbla (önskan, tack, repliker): ligger en skylt på en bubbla flyttas den ner under
+ *  den (vagvisareUndvik.ts). Mäts med verkliga rutor, eftersom bubblans höjd beror på texten och skärmens bredd. */
+const MATA_MS = 200;
+/** Skylten får inte hamna lägre än så, annars hamnar den över Skriv och Min bok. */
+const LAGST = 0.64;
+
 export function VagvisareHud({ punkter, onValjPlats, dold }: { punkter: VagvisareSkarmPunkt[]; onValjPlats: (id: VagvisarePlatsId) => void; dold?: boolean }) {
-  if (dold || punkter.length === 0 || typeof document === "undefined") return null;
+  const rot = useRef<HTMLDivElement>(null);
+  const [flytt, setFlytt] = useState<Record<string, number>>({});
+  const flyttRef = useRef(flytt);
+  flyttRef.current = flytt;
+  const synlig = !dold && punkter.length > 0;
+  useEffect(() => {
+    if (!synlig) return;
+    const mata = () => {
+      const knappar = rot.current?.querySelectorAll<HTMLButtonElement>("button[data-plats]");
+      if (!knappar) return;
+      const bubblor = [...document.querySelectorAll<HTMLElement>(".bubbla")].map((e) => e.getBoundingClientRect());
+      const nytt: Record<string, number> = {};
+      knappar.forEach((k) => {
+        const id = k.dataset.plats ?? "";
+        const nu = flyttRef.current[id] ?? 0;
+        const r = k.getBoundingClientRect();
+        // Skyltens egen plats utan den undanflyttning som redan är gjord (marginTop flyttar rutan lika mycket).
+        const dy = undvikBubblor({ left: r.left, right: r.right, top: r.top - nu, bottom: r.bottom - nu }, bubblor, window.innerHeight * LAGST);
+        if (dy) nytt[id] = dy;
+      });
+      const lika = Object.keys(nytt).length === Object.keys(flyttRef.current).length && Object.entries(nytt).every(([id, dy]) => flyttRef.current[id] === dy);
+      if (!lika) setFlytt(nytt);
+    };
+    mata();
+    const id = window.setInterval(mata, MATA_MS);
+    return () => window.clearInterval(id);
+  }, [synlig, punkter]);
+  if (!synlig || typeof document === "undefined") return null;
   return createPortal(
-    <div className="tp-vagvisare-hud" aria-label="Vägvisare i världen">
+    <div className="tp-vagvisare-hud" aria-label="Vägvisare i världen" ref={rot}>
       {punkter.map((p) => (
-        <button key={p.id} type="button" data-w3="vagvisare-knapp" data-plats={p.id} style={{ left: `${p.x}px`, top: `${p.y}px` }} onClick={() => onValjPlats(p.id)}>
+        <button key={p.id} type="button" data-w3="vagvisare-knapp" data-plats={p.id} style={{ left: `${p.x}px`, top: `${p.y}px`, marginTop: flytt[p.id] ? `${flytt[p.id]}px` : undefined }} onClick={() => onValjPlats(p.id)}>
           {p.ikon} {p.namn}
         </button>
       ))}
