@@ -1,0 +1,538 @@
+/* Världskartan (2026-10-30, KartaLager.tsx). Målad karta på pergament; skyltar, knappar och pjäsen ligger i ett
+   eget lager ovanpå och räknar ut sina lägen ur vyns CSS-variabler (--tx, --ty, --s, --bw, --bh), så att de behåller
+   sin storlek när kartan zoomas. Färgerna följer titelskärmen: plommon, rosa och guld. */
+.karta-lager.vk {
+  --plommon: #3b1a3a;
+  --rosa: #ef4f76;
+  --guld: #ffd54a;
+  --gradde: #fff6e5;
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  grid-template: "topp" auto "vy" minmax(0, 1fr) "fot" auto / minmax(0, 1fr);
+  gap: 8px;
+  padding: max(10px, env(safe-area-inset-top)) 12px max(12px, calc(env(safe-area-inset-bottom) + 8px));
+  overflow: hidden;
+  color: var(--plommon);
+  font-family: var(--font-display, "Fredoka", sans-serif);
+  background: url(/karta/pergament.webp) center / 384px repeat, #ecd7b4;
+  animation: vk-in 0.35s ease-out both;
+}
+/* Pergamentet mörknar lite mot kanterna, som ett gammalt papper */
+.karta-lager.vk::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, rgba(120, 70, 20, 0) 55%, rgba(120, 70, 20, 0.22) 100%);
+}
+.karta-lager.vk *,
+.karta-lager.vk *::before,
+.karta-lager.vk *::after {
+  box-sizing: border-box;
+}
+@keyframes vk-in {
+  from { opacity: 0; }
+}
+
+/* ---------------------------------------------------------------- rubrik */
+.vk-topp {
+  grid-area: topp;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  text-align: center;
+}
+/* Banderoll i titelskärmens rosa med plommonkant och kluvna ändar */
+.vk-rubrik {
+  margin: 0;
+  padding: 7px 34px 8px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--gradde);
+  text-shadow: 0 2px 0 #a3214a;
+  background: linear-gradient(180deg, #ff8aa7 0%, var(--rosa) 55%, #d8375f 100%);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 50%, 100% 100%, 0 100%, 14px 50%);
+  filter: drop-shadow(0 3px 0 var(--plommon));
+}
+.vk-hjalp {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.vk-meddelande {
+  margin: 0;
+  max-width: 34rem;
+  padding: 8px 14px;
+  border: 3px solid var(--plommon);
+  border-radius: 16px;
+  background: var(--gradde);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* ---------------------------------------------------------------- kartvyn */
+.vk-vy {
+  grid-area: vy;
+  position: relative;
+  z-index: 1;
+  margin: 0 -12px;
+  overflow: hidden;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  opacity: 0;
+}
+.vk-vy[data-klar="ja"] {
+  opacity: 1;
+}
+.vk-blad {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--bw);
+  height: var(--bh);
+  transform: translate(var(--tx), var(--ty)) scale(var(--s));
+  transform-origin: 0 0;
+}
+/* Mjuk skugga under bladet: bladet ligger på pergamentet */
+.vk-blad::before {
+  content: "";
+  position: absolute;
+  inset: 3% 2.5% 1.5%;
+  border-radius: 3%;
+  box-shadow: 0 10px 26px rgba(80, 45, 10, 0.38);
+}
+.vk-veckla {
+  position: absolute;
+  inset: 0;
+  animation: vk-veckla 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes vk-veckla {
+  from { clip-path: inset(0 47% 0 47%); transform: scale(0.94); opacity: 0.4; }
+  60% { opacity: 1; }
+  to { clip-path: inset(0 0 0 0); transform: none; }
+}
+.vk-bild {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+/* Stigen: Dimsjöns streckade gren i stigens sandfärg och glittret som vandrar uppför stigen */
+.vk-stig {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.vk-gren-kant,
+.vk-gren {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 10 30;
+}
+.vk-gren-kant {
+  stroke: rgba(96, 60, 24, 0.45);
+  stroke-width: 22;
+}
+.vk-gren {
+  stroke: #fbe2a4;
+  stroke-width: 15;
+}
+.vk-glitter-sken {
+  fill: rgba(255, 222, 110, 0.55);
+}
+.vk-glitter-karna {
+  fill: #fffbe8;
+}
+
+/* Molnen, gnistorna och skimret */
+.vk-liv {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.vk-moln {
+  position: absolute;
+  max-width: none;
+  left: 0;
+  opacity: 0;
+  -webkit-user-drag: none;
+}
+.vk-moln-1 {
+  top: -3%;
+  width: 21%;
+  animation: vk-moln 95s linear -30s infinite;
+}
+.vk-moln-2 {
+  top: 33%;
+  width: 15%;
+  animation: vk-moln-2 130s linear -85s infinite;
+}
+@keyframes vk-moln {
+  0% { transform: translateX(-110%); opacity: 0; }
+  7%, 93% { opacity: 0.92; }
+  100% { transform: translateX(480%); opacity: 0; }
+}
+@keyframes vk-moln-2 {
+  0% { transform: translateX(-110%) scaleX(-1); opacity: 0; }
+  7%, 93% { opacity: 0.75; }
+  100% { transform: translateX(670%) scaleX(-1); opacity: 0; }
+}
+.vk-gnista {
+  position: absolute;
+  width: calc(var(--k) * 1.3%);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background: #fff6d8;
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+  filter: drop-shadow(0 0 2px #d6b8ff);
+  animation: vk-gnista 2.6s ease-in-out infinite;
+}
+@keyframes vk-gnista {
+  0%, 100% { opacity: 0; transform: scale(0.3) rotate(0); }
+  50% { opacity: 1; transform: scale(1) rotate(45deg); }
+}
+.vk-skimmer {
+  position: absolute;
+  width: 6%;
+  height: 0.9%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 70%);
+  animation: vk-skimmer 4.6s ease-in-out infinite;
+}
+@keyframes vk-skimmer {
+  0%, 100% { opacity: 0; transform: translateX(-35%) scaleX(0.6); }
+  50% { opacity: 0.85; transform: translateX(35%) scaleX(1); }
+}
+
+/* ---------------------------------------------------------------- platserna */
+.vk-platser {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+  z-index: 1;
+}
+/* Ankaret är platsens mitt på kartan. Ringen (64 px) står på ankaret och skylten under den (data-lage="under")
+   eller över den ("over"). data-sida="vanster": skylten sträcker sig åt vänster från ringen (nära högra kanten). */
+.vk-plats {
+  position: absolute;
+  left: calc(var(--tx) + var(--x) * var(--s) * var(--bw));
+  top: calc(var(--ty) + var(--y) * var(--s) * var(--bh));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  translate: -50% -32px;
+  animation: vk-pop 0.4s cubic-bezier(0.2, 1.4, 0.4, 1) 0.4s both;
+}
+.vk-plats[data-lage="over"] {
+  translate: -50% calc(-100% + 32px);
+}
+.vk-plats[data-sida="vanster"] {
+  align-items: flex-end;
+  translate: calc(-100% + 32px) -32px;
+}
+.vk-plats[data-sida="vanster"][data-lage="over"] {
+  translate: calc(-100% + 32px) calc(-100% + 32px);
+}
+.vk-plats:nth-child(2) { animation-delay: 0.47s; }
+.vk-plats:nth-child(3) { animation-delay: 0.54s; }
+.vk-plats:nth-child(4) { animation-delay: 0.61s; }
+.vk-plats:nth-child(5) { animation-delay: 0.68s; }
+@keyframes vk-pop {
+  from { opacity: 0; transform: scale(0.6); }
+}
+.vk-plats-knapp {
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+  gap: 2px;
+  min-width: 64px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+.vk-plats[data-lage="over"] .vk-plats-knapp {
+  flex-direction: column-reverse;
+}
+.vk-ring {
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 64px;
+  flex: none;
+}
+/* Guldring som andas: här kan man trycka */
+.vk-ring::before,
+.vk-ring::after {
+  content: "";
+  position: absolute;
+  inset: 11px;
+  border-radius: 50%;
+}
+.vk-ring::before {
+  border: 4px solid var(--guld);
+  box-shadow: 0 0 0 2.5px rgba(59, 26, 58, 0.8), inset 0 0 0 2px rgba(59, 26, 58, 0.35), 0 0 16px 4px rgba(255, 226, 120, 0.7);
+  background: radial-gradient(circle, rgba(255, 240, 180, 0.3), rgba(255, 240, 180, 0) 70%);
+}
+.vk-ring::after {
+  border: 3px solid rgba(255, 220, 110, 0.9);
+  animation: vk-andas 2.4s ease-out infinite;
+}
+@keyframes vk-andas {
+  0% { transform: scale(0.85); opacity: 0.9; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+.vk-plats[data-aktiv="ja"] .vk-ring::before,
+.vk-plats[data-aktiv="ja"] .vk-ring::after {
+  opacity: 0;
+}
+/* Träskylten */
+.vk-skylt {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 11px 5px;
+  border: 3px solid var(--plommon);
+  border-radius: 11px;
+  color: var(--gradde);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.15;
+  white-space: nowrap;
+  text-shadow: 0 2px 0 #4f2a10;
+  background:
+    repeating-linear-gradient(176deg, rgba(255, 255, 255, 0.07) 0 2px, rgba(0, 0, 0, 0) 2px 9px),
+    linear-gradient(180deg, #a86a32 0%, #8a5326 100%);
+  box-shadow: inset 0 2px 0 rgba(255, 220, 170, 0.35), 0 4px 0 rgba(59, 26, 58, 0.6), 0 7px 12px rgba(40, 20, 0, 0.28);
+  transition: transform 0.15s ease;
+}
+.vk-plats-knapp:active .vk-skylt {
+  transform: translateY(2px);
+}
+.vk-framsteg::before {
+  font-size: 0.95rem;
+  text-shadow: none;
+}
+.vk-framsteg[data-besokt="ja"]::before {
+  content: "⭐";
+}
+.vk-framsteg[data-besokt="nej"]::before {
+  content: "✨";
+}
+/* Lyssna: en rund bricka på skyltens högra ände (synlig 38 px, tryckyta 64 px). Alltid till höger, så att två
+   närliggande platsers brickor aldrig hamnar ovanpå varandra. */
+.vk-lyssna {
+  position: absolute;
+  top: 49px;
+  left: calc(100% - 18px);
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  pointer-events: auto;
+  font-size: 1.05rem;
+  -webkit-tap-highlight-color: transparent;
+}
+.vk-plats[data-lage="over"] .vk-lyssna {
+  top: -15px;
+}
+.vk-lyssna > span {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 3px solid var(--plommon);
+  border-radius: 50%;
+  background: var(--gradde);
+  box-shadow: 0 3px 0 rgba(59, 26, 58, 0.6);
+}
+.vk-lyssna:active > span {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(59, 26, 58, 0.6);
+}
+.vk-plats-knapp:focus-visible,
+.vk-lyssna:focus-visible,
+.vk-knapp:focus-visible {
+  outline: none;
+}
+.vk-plats-knapp:focus-visible .vk-skylt,
+.vk-lyssna:focus-visible > span,
+.vk-knapp:focus-visible {
+  box-shadow: 0 0 0 3px var(--gradde), 0 0 0 7px #2f7cf6;
+}
+/* Målet för en resa lyser upp */
+.vk-plats[data-mal="ja"] .vk-skylt {
+  background: linear-gradient(180deg, #ff8aa7 0%, var(--rosa) 55%, #d8375f 100%);
+  text-shadow: 0 2px 0 #a3214a;
+}
+
+/* ---------------------------------------------------------------- "Du är här": Trollpennan som spelpjäs */
+.vk-markor {
+  position: absolute;
+  left: calc(var(--tx) + var(--mx) * var(--s) * var(--bw));
+  top: calc(var(--ty) + var(--my) * var(--s) * var(--bh));
+  width: 0;
+  height: 0;
+  z-index: 2;
+  pointer-events: none;
+  animation: vk-pop 0.45s cubic-bezier(0.2, 1.4, 0.4, 1) 0.75s both;
+}
+.vk-markor-skugga {
+  position: absolute;
+  left: -20px;
+  top: 18px;
+  width: 40px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(40, 20, 0, 0.45), rgba(40, 20, 0, 0) 70%);
+}
+.vk-markor-bild {
+  position: absolute;
+  max-width: none;
+  left: -29px;
+  top: -33px;
+  width: 58px;
+  height: 58px;
+  border: 4px solid var(--guld);
+  border-radius: 50%;
+  object-fit: cover;
+  background: #8fc7ff;
+  box-shadow: 0 0 0 3px var(--plommon), 0 6px 10px rgba(40, 20, 0, 0.35);
+  animation: vk-hopp 1.5s ease-in-out infinite;
+}
+@keyframes vk-hopp {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.vk-vy[data-resa] .vk-markor-bild {
+  animation-duration: 0.3s;
+}
+
+/* Kompassrosen i pergamentet under kartan (stående): ren dekoration, kartan täcker den när den zoomas */
+.vk-kompass {
+  position: absolute;
+  z-index: 0;
+  left: 18px;
+  bottom: calc(max(12px, env(safe-area-inset-bottom) + 8px) + 84px);
+  width: 76px;
+  height: 76px;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------- knapparna längst ner */
+.vk-fot {
+  grid-area: fot;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.vk-knapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 64px;
+  min-width: 64px;
+  padding: 0 22px;
+  border: 3px solid var(--plommon);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 0 var(--plommon);
+  -webkit-tap-highlight-color: transparent;
+}
+.vk-knapp:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--plommon);
+}
+.vk-lyssna-alla {
+  background: var(--gradde);
+  color: var(--plommon);
+}
+.vk-stang {
+  color: #fff;
+  text-shadow: 0 2px 0 #a3214a;
+  background: linear-gradient(180deg, #ff8aa7 0%, var(--rosa) 55%, #d8375f 100%);
+}
+
+/* ---------------------------------------------------------------- liggande: rubriken till vänster, knapparna till höger */
+@media (orientation: landscape) {
+  .karta-lager.vk {
+    grid-template: "topp vy fot" minmax(0, 1fr) / minmax(184px, 1fr) auto minmax(150px, 1fr);
+    gap: 10px;
+    padding: max(10px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  }
+  .vk-vy {
+    margin: 0;
+    height: 100%;
+    aspect-ratio: 2549 / 2154;
+    max-width: calc(100vw - 380px);
+  }
+  .vk-topp {
+    align-self: start;
+    justify-items: start;
+    text-align: left;
+  }
+  .vk-rubrik {
+    font-size: 1.125rem;
+    padding: 6px 22px 7px 16px;
+    white-space: nowrap;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 50%, 100% 100%, 0 100%, 0 50%);
+  }
+  .vk-fot {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .vk-knapp {
+    padding: 0 18px;
+  }
+  .vk-kompass {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .karta-lager.vk,
+  .vk-veckla,
+  .vk-plats,
+  .vk-markor,
+  .vk-markor-bild,
+  .vk-ring::after {
+    animation: none;
+  }
+}

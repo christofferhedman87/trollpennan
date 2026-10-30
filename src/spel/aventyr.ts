@@ -86,6 +86,15 @@ export const OMR = omradenJson as {
     kan_text: Record<string, string>;
     inget_djur: string;
     hem: string;
+    /** Världskartan (KartaLager.tsx). {namn} = platsens namn. */
+    las_upp: string;
+    lyssna: string;
+    lyssna_pa: string;
+    stang: string;
+    stang_aria: string;
+    har_ar_du: string;
+    besokt: string;
+    ny: string;
   };
   omraden: Omrade[];
 };
