@@ -49,7 +49,7 @@ async function avlas() {
     const s = window.__trollMinne.getState();
     return {
       data: JSON.parse(JSON.stringify(Object.fromEntries(nycklar.map((namn) => [namn, s[namn]])))),
-      dal: JSON.parse(localStorage.getItem("trollpennan-dal-v1") ?? '{"utbyggnader":[]}'),
+      dal: JSON.parse(JSON.stringify(s.dal)),
       skapa: JSON.parse(localStorage.getItem("trollpennan-skapa-v1") ?? '{"bokstavsljud":true}'),
     };
   }, falt);
@@ -114,6 +114,8 @@ try {
   assert.equal(kopia.version, 2, "filformatet är fortsatt v2");
   assert.deepEqual(urval(kopia), forvantat, "den nedladdade filen innehåller de tidigare utelämnade fälten");
   assert.deepEqual(kopia.dal, { utbyggnader: ["backen"] }, "köpt mark finns i samma kopia");
+  assert.deepEqual(await page.evaluate(() => JSON.parse(localStorage.getItem("trollpennan-v2")).dal), kopia.dal, "marken finns nu i huvudlagringen");
+  assert.deepEqual(await page.evaluate(() => JSON.parse(localStorage.getItem("trollpennan-dal-v1"))), kopia.dal, "lokal legacy-migrering lämnar den äldre marknyckeln orörd");
   assert.deepEqual(kopia.skapa, { bokstavsljud: false }, "förälderns bokstavsljud finns i samma kopia");
   await bild("backup-nedladdad");
   logg("Riktig JSON-fil nedladdad och kontrollerad.");
@@ -150,6 +152,7 @@ try {
   const aterlast = await avlas();
   assert.deepEqual(aterlast.data, forvantat, "alla kontrollerade fält återställs via riktig import");
   assert.deepEqual(aterlast.dal, kopia.dal, "köpt mark återställs");
+  assert.equal(await page.evaluate(() => localStorage.getItem("trollpennan-dal-v1")), null, "filimport skriver inte tillbaka äldre lokal mark");
   assert.deepEqual(aterlast.skapa, kopia.skapa, "bokstavsljud återställs");
   assert.equal(await bokstavsknappar.nth(1).getAttribute("class"), "pa", "bokstavsljud av visas som valt efter import");
   assert.equal(await page.locator('[data-p4="lasniva-3"]').getAttribute("class"), "pa", "läsnivå 3 visas som vald i vuxenvyn");

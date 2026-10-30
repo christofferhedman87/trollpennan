@@ -347,6 +347,7 @@ export function exportera() {
     formler: s.formler,
     ang: s.ang,
     stjarnor: s.stjarnor,
+    dal: s.dal,
     ljudPa: s.ljudPa,
     rostPa: s.rostPa,
     effektPa: s.effektPa,

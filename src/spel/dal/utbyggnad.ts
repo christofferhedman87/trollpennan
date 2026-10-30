@@ -1,42 +1,30 @@
-// Block 7 (beslut B): stjärnor köper mark. Dalen börjar med åtta öppna tomter; fler öppnas i grupper för stjärnor,
-// som utbyggnaderna av ranchen i Slime Rancher. Köpen sparas lokalt i en egen nyckel (inga servrar).
+// Stjärnor och köpt mark sparas i samma atomära v2-skrivning. useDal är kvar som UI-fasad.
 import { create } from "zustand";
 import dalenJson from "../../../data/dalen.json" with { type: "json" };
+import { publiceraSparat, useMinne } from "../minne.ts";
+import { arDal, dalFranSparning } from "./markSparning.ts";
 
 export const UTBYGGNAD = dalenJson.utbyggnader;
-const NYCKEL = "trollpennan-dal-v1";
 
-function las(): string[] {
-  try {
-    const v = JSON.parse(globalThis.localStorage?.getItem(NYCKEL) ?? "null") as { utbyggnader?: unknown } | null;
-    return Array.isArray(v?.utbyggnader) ? v.utbyggnader.filter((x): x is string => typeof x === "string") : [];
-  } catch {
-    return [];
-  }
-}
-
-export const useDal = create<{ utbyggnader: string[]; kop: (id: string) => void; ersatt: (lista: unknown) => void }>((set, get) => ({
-  utbyggnader: las(),
-  /** Läs in en kopia ("Spara en kopia" i föräldrasidan): ersätter de köpta utbyggnaderna. */
+export const useDal = create<{ utbyggnader: string[]; kop: (id: string) => boolean; ersatt: (lista: unknown) => void }>(() => ({
+  utbyggnader: useMinne.getState().dal.utbyggnader,
+  /** Kompatibilitet för befintliga anrop: ersätter endast i huvudmodellen, aldrig äldre lokal mark. */
   ersatt: (lista) => {
-    const utbyggnader = Array.isArray(lista) ? lista.filter((x): x is string => typeof x === "string" && UTBYGGNAD.lista.some((u) => u.id === x)) : [];
-    set({ utbyggnader });
-    try {
-      globalThis.localStorage?.setItem(NYCKEL, JSON.stringify({ utbyggnader }));
-    } catch {
-      /* privat läge */
-    }
+    const raw = { utbyggnader: lista };
+    if (arDal(raw)) useMinne.setState({ dal: dalFranSparning(raw) });
   },
   kop: (id) => {
-    const utbyggnader = [...new Set([...get().utbyggnader, id])];
-    set({ utbyggnader });
-    try {
-      globalThis.localStorage?.setItem(NYCKEL, JSON.stringify({ utbyggnader }));
-    } catch {
-      /* privat läge: köpet gäller tills sidan laddas om */
-    }
+    const s = useMinne.getState();
+    const u = UTBYGGNAD.lista.find((rad) => rad.id === id);
+    if (!u || s.dal.utbyggnader.includes(id) || !Number.isFinite(s.stjarnor) || s.stjarnor < u.pris) return false;
+    // Ingen mutation, signal eller debitering sker innan den enda hållbara skrivningen lyckats.
+    return publiceraSparat({ stjarnor: s.stjarnor - u.pris, dal: { utbyggnader: [...s.dal.utbyggnader, id] } });
   },
 }));
+
+useMinne.subscribe((s) => {
+  if (s.dal.utbyggnader !== useDal.getState().utbyggnader) useDal.setState({ utbyggnader: s.dal.utbyggnader });
+});
 
 /** Öppna tomter: startmarken och köpta utbyggnader. */
 export function oppnaTomter(utbyggnader: readonly string[]): Set<number> {
