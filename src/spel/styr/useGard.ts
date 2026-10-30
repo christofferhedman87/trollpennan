@@ -4,6 +4,7 @@ import { fyll } from "../fyll.ts";
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
 import * as rostKo from "../rostKo.ts";
+import { skapaInstFranKopia, useSkapaInst } from "../skapa/installning.ts";
 import { arKopia, exportera } from "../ui/hjalp.ts";
 import { FIR, SIDOR, TEXTER } from "../ui/spelData.ts";
 import type { SpelKarna } from "./typer.ts";
@@ -73,8 +74,8 @@ export function useGard(k: Pick<SpelKarna, "t" | "b" | "v" | "s">) {
   }
 
   function sparaKopia() {
-    // Block 9: köpt mark (Kvarnbacken, Sjöstranden) följer med kopian.
-    const blob = new Blob([JSON.stringify({ ...exportera(), dal: { utbyggnader: useDal.getState().utbyggnader } }, null, 2)], { type: "application/json" });
+    // Separat sparad mark och förälderns bokstavsljud följer med samma v2-kopia.
+    const blob = new Blob([JSON.stringify({ ...exportera(), dal: { utbyggnader: useDal.getState().utbyggnader }, skapa: { bokstavsljud: useSkapaInst.getState().bokstavsljud } }, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -86,7 +87,7 @@ export function useGard(k: Pick<SpelKarna, "t" | "b" | "v" | "s">) {
   async function lasFil(fil: File) {
     try {
       const json: unknown = JSON.parse(await fil.text());
-      if (!arKopia(json)) {
+      if (!arKopia(json) || !skapaInstFranKopia(json.skapa)) {
         setForalderRad(TEXTER.backup.fel);
         setKopia(null);
         return;
@@ -100,12 +101,14 @@ export function useGard(k: Pick<SpelKarna, "t" | "b" | "v" | "s">) {
   }
 
   function lasInKopia() {
-    if (!arKopia(kopia) || !useMinne.getState().importera(kopia)) {
+    const skapa = arKopia(kopia) ? skapaInstFranKopia(kopia.skapa) : null;
+    if (!skapa || !useMinne.getState().importera(kopia)) {
       setForalderRad(TEXTER.backup.fel);
       setKopia(null);
       return;
     }
     useDal.getState().ersatt((kopia as { dal?: { utbyggnader?: unknown } }).dal?.utbyggnader);
+    useSkapaInst.getState().sattBokstavsljud(skapa.bokstavsljud);
     ljud.satt(useMinne.getState().effektPa && useMinne.getState().ljudPa);
     setLage(useMinne.getState().startLage);
     rensaSkriv();
