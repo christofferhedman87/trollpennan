@@ -31,6 +31,68 @@
   --text-kort: 1.375rem;
 }
 
+/* Nya Skapa (docs/skapa/SPEC-skapa.md 8.1): designvariabler för Pennans bok, HUD:en, Min bok och Uppdrag.
+   Allt i Skapa ska använda dessa, inga hårdkodade färger. */
+:root {
+  /* Bläck och klistermärke: samma plommonkontur som konstkitet (public/kit) */
+  --tp-blck: #2A1A3A;          /* all kontur, all mörk text */
+  --tp-klister: #FFFDF7;       /* kort, knappar, remsan */
+  --tp-papper: #FFF1D6;        /* lappar, små verktygsknappar */
+
+  /* Pennans färger (logon och maskoten Pennan) */
+  --tp-penna: #6A5AF9;         /* fokusring, markerat ord, länkar */
+  --tp-rosa: #F8589A;          /* Trolla!, Skriv-knappen i HUD:en */
+  --tp-guld: #F8C838;          /* guldord, stjärnor, Idé, Skriv-fliken */
+  --tp-guld-m: #D99A12;
+
+  /* Arket: "bläcknatt" med svag stjärnstruktur (public/ui/skapa/ark-stjarnor.svg) */
+  --tp-natt: #34276E;
+  --tp-natt-djup: #261C55;
+  --tp-text-ljus: #FFFFFF;
+  --tp-text-dov: #CFC6F2;
+
+  /* Ordklasskoden: färg + form (Montessoris grammatiksymboler) + fråga.
+     Samma färg på fliken, kortet och ordet i meningen. */
+  --tp-vad: #FFD23F;           /* substantiv, stor triangel, "Vad?" */
+  --tp-hurdan: #7CC8FF;        /* adjektiv, liten triangel, "Hurdan?" */
+  --tp-har: #6EE0A8;           /* med + sak, halvmåne, "Har" */
+  --tp-gor: #FF8C7A;           /* verb, cirkel, "Gör" */
+  --tp-smaord: #CFC6F2;        /* en, ett, med, som, av, stav */
+  --tp-vokal-bg: #FFE3EE;      /* vokaltangenter */
+  --tp-vokal: #B0174F;
+
+  /* Form och rörelse */
+  --tp-kant: 3px solid var(--tp-blck);
+  --tp-skugga: 0 4px 0 var(--tp-blck);        /* hård leksaksskugga, aldrig mjuk grå */
+  --tp-skugga-stor: 0 6px 0 var(--tp-blck);
+  --tp-radie-ark: 30px;
+  --tp-radie-remsa: 22px;
+  --tp-radie-kort: 18px;
+  --tp-radie-flik: 16px;
+  --tp-radie-ord: 13px;
+  --tp-fjader: cubic-bezier(.34, 1.56, .64, 1);  /* pop, studs */
+  --tp-mjuk: cubic-bezier(.2, .9, .2, 1);        /* ark, kamera */
+  --tp-tid-snabb: 160ms;
+  --tp-tid: 260ms;
+  --tp-tid-ark: 420ms;
+  --tp-tid-kamera: 650ms;
+
+  /* Typografi: Fredoka (finns i public/typsnitt). Enstaviga a och g = skolans bokstavsformer. */
+  --tp-text-ord: 1.375rem;     /* 22 px: ord i meningen, ordkort */
+  --tp-text-ui: 1.125rem;      /* 18 px: minsta text i spelet */
+  --tp-text-tangent: 1.4rem;
+  --tp-text-rubrik: 1.6rem;
+
+  /* Mått */
+  --tp-tryckyta: 44px;         /* minsta tryckyta */
+  --tp-kort-b: 98px;
+  --tp-kort-h: 104px;
+  --tp-tangent-h: 50px;
+  --tp-penna-d: 84px;          /* Trolla-pennan */
+  --tp-skapa-d: 104px;         /* Skriv-knappen i HUD:en */
+}
+
+
 @layer base {
   button:not(:disabled),
   [role="button"]:not(:disabled) {

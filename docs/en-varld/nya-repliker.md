@@ -22,3 +22,22 @@ Varje rad läggs här när en ny barnriktad text skrivs in i data-filerna. Texte
 | | djur | data/onskningar-bygg.json `dansande-hus.tack` | Huset dansar! Kom, vi dansar tillsammans! |
 | | bengtsson/djur | data/onskningar-bygg.json `lysande.text` | Jag är lite mörkrädd. Kan du bygga något som lyser? |
 | | djur | data/onskningar-bygg.json `lysande.tack` | Nu är det ljust och mysigt. Tack! |
+
+## Nya Skapa (Pennans bok, skriv först), 2026-10-29
+
+Tills filerna finns läser webbläsarens talsyntes texterna (`rostKo.lasUpp`, `skapa/installning.ts`). Beslut G: bokstavsljud, alltså ljudet och inte bokstavens namn.
+
+| Klar | Röst | Datafil och nyckel | Text |
+|---|---|---|---|
+| | pennan | 29 bokstavsljud a–ö (ny mapp, t.ex. `public/ljud/bokstav/a.mp3`) | /a/ /b/ /k/ … /ö/: ljudet, kort och tydligt |
+| | pennan | data/skapa-ui.json `rost.oppna` | Vad vill du trolla fram? |
+| | pennan | data/skapa-ui.json `rost.ordhjalp` | Ordhjälp |
+| | pennan | data/skapa-ui.json `rost.skriv_fler` | Skriv själv! Det finns många fler. |
+| | pennan | data/skapa-ui.json `rost.guldchans_start` | Skriv {ord}. |
+| | pennan | data/skapa-ui.json `puffar.valj_forst` | Skriv vad du vill trolla fram först. Ett djur, ett hus eller något helt eget! |
+| | pennan | data/skapa-ui.json `puffar.svara_forst` | Pennan undrar vilket ord du menade. Tryck på ett av orden. |
+| | pennan | data/skapa-ui.json `puffar.agg` | Pennan kan inte rita {ord} än. Den gör ett ordägg och sparar ordet! |
+| | pennan | data/skapa-ui.json `puffar.guldord` | Guldord! Du skrev {ord} själv. |
+| | pennan | data/skapa-ui.json `puffar.skrivord` | Skrivord! {ord} finns bara för den som skriver det. |
+| | pennan | data/skapa-ui.json `puffar.sparr` | Det ordet kan Trollpennan inte. |
+| | pennan | data/skapa-ui.json `fragor` (flikarna) | Skriv · Vad? · Hurdan? · Har · Gör |

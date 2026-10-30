@@ -173,7 +173,8 @@ export function tolkaMedReserv(raw: string, opts: TolkaOpts = {}): Utfall {
     const i = kvar.indexOf(u.token);
     const plats = platsAv(kvar, i < 0 ? 0 : i);
     const kand = R.forslag.ej_om_kand && ["kategori_ord", "lemma"].includes(kategoriFor(u.token, plats).steg);
-    const bra = kand ? [] : trovardiga(u.token, plats, u.forslag);
+    const behallen = opts.behall?.includes(u.token) ?? false;
+    const bra = kand || behallen ? [] : trovardiga(u.token, plats, u.forslag);
     if (bra.length) {
       return {
         typ: "forslag",

@@ -1,0 +1,247 @@
+/* Nya Skapa: Pennans bok (docs/skapa/SPEC-skapa.md avsnitt 6 och 8). Bygger på prototypens referens-CSS
+   (docs/skapa, stil/skapa-referens.css i paketet). Alla klasser börjar med sk- så att de inte krockar med
+   spelets äldre .kort, .flik och .ark. Färger och mått kommer från --tp-* i src/styles.css. */
+
+.sk-lager { position: fixed; inset: 0; z-index: 16; pointer-events: none; font-family: var(--font-sans); }
+.sk-lager button { font: inherit; touch-action: manipulation; cursor: pointer; }
+.sk-lager img { display: block; max-width: 100%; }
+.sk-lager :focus-visible { outline: 3px solid var(--tp-guld); outline-offset: 3px; }
+.sk-stang-yta { position: absolute; inset: 0; pointer-events: auto; background: transparent; border: 0; padding: 0; }
+
+/* ------------------------------------------------------------------ Arket */
+.sk-ark {
+  position: absolute; left: 0; right: 0; bottom: 0; pointer-events: auto; color: var(--tp-text-ljus);
+  background-color: var(--tp-natt); background-image: url("/ui/skapa/ark-stjarnor.svg"); background-size: 160px 160px;
+  border-top: 4px solid var(--tp-blck); border-radius: var(--tp-radie-ark) var(--tp-radie-ark) 0 0;
+  padding: 0 14px max(14px, calc(env(safe-area-inset-bottom, 0px) + 10px)); display: flex; flex-direction: column; gap: 10px;
+  box-shadow: 0 -6px 0 rgba(42, 26, 58, .18); animation: sk-ark-upp var(--tp-tid-ark) var(--tp-mjuk);
+  max-width: 560px; margin: 0 auto;
+}
+@keyframes sk-ark-upp { from { transform: translateY(100%); } }
+.sk-topp { position: relative; height: 22px; }
+.sk-stang {
+  position: absolute; left: 0; top: -26px; width: 48px; height: 48px; border-radius: 50%; border: var(--tp-kant); background: var(--tp-klister);
+  box-shadow: var(--tp-skugga); display: grid; place-items: center; padding: 0;
+}
+.sk-stang img { width: 26px; height: 26px; }
+
+/* Pennan: Trolla-örat uppe till höger */
+.sk-penn-ora { position: absolute; right: -2px; top: -52px; display: flex; align-items: center; gap: 8px; z-index: 2; }
+.sk-penn-knapp {
+  width: var(--tp-penna-d); height: var(--tp-penna-d); border-radius: 50%; border: 4px solid var(--tp-blck); background: #8A80C4; padding: 0;
+  display: grid; place-items: center; box-shadow: 0 6px 0 var(--tp-blck); transition: background 250ms, transform 150ms;
+}
+.sk-penn-knapp img { width: 74px; height: 74px; pointer-events: none; }
+.sk-penn-knapp.redo { background: var(--tp-rosa); animation: sk-penn-redo 1.8s ease-in-out infinite; }
+@keyframes sk-penn-redo { 0%, 100% { transform: rotate(0) } 10% { transform: rotate(-8deg) } 20% { transform: rotate(6deg) } 30% { transform: rotate(0) } }
+.sk-penn-knapp:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--tp-blck); }
+.sk-penn-knapp.puttar { animation: sk-putta 420ms; }
+.sk-penn-knapp.blinka { animation: sk-pulsa 700ms ease-in-out 2; }
+@keyframes sk-putta { 30% { transform: translateX(-5px) rotate(-6deg) } 60% { transform: translateX(5px) rotate(6deg) } }
+.sk-penn-etikett {
+  margin-top: 30px; font-weight: 700; font-size: 1.2rem; color: #fff; background: rgba(255, 255, 255, .14); border: 2.5px solid rgba(255, 255, 255, .3);
+  border-radius: 999px; padding: 2px 12px; transition: background 250ms;
+}
+.sk-penn-etikett.redo { background: var(--tp-rosa); border-color: var(--tp-blck); box-shadow: 0 3px 0 var(--tp-blck); text-shadow: 0 2px 0 var(--tp-blck); }
+
+/* ------------------------------------------------------------------ Lappen */
+.sk-lapp {
+  display: grid; grid-template-columns: 52px 1fr 44px; align-items: center; gap: 10px; margin-top: 6px;
+  background: var(--tp-papper); color: var(--tp-blck); border: var(--tp-kant); border-radius: 20px; padding: 8px;
+  box-shadow: var(--tp-skugga); position: relative; transform: rotate(-.6deg);
+}
+.sk-lapp::after { content: ""; position: absolute; left: 24px; bottom: -11px; width: 18px; height: 18px; background: var(--tp-papper);
+  border-right: var(--tp-kant); border-bottom: var(--tp-kant); transform: rotate(45deg); border-bottom-right-radius: 4px; }
+.sk-lapp.utan-bild { grid-template-columns: 1fr 44px; }
+.sk-lapp-bild { width: 52px; height: 52px; border-radius: 50%; border: 2.5px solid var(--tp-blck); background: #FFE9B8; overflow: hidden; display: grid; place-items: center; }
+.sk-lapp-bild img { width: 100%; height: 100%; object-fit: contain; }
+.sk-lapp-bild.portratt img { object-fit: cover; object-position: 50% 0; transform: scale(2.1); transform-origin: 50% 10%; }
+.sk-lapp-text { margin: 0; font-size: var(--tp-text-ui); line-height: 1.3; font-weight: 500; }
+.sk-lapp-text small { display: block; font-size: 1rem; color: #6A5A88; font-weight: 500; }
+.sk-lapp-extra { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+.sk-ide-rad { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.sk-ide-bit { position: relative; width: 44px; height: 44px; border-radius: 12px; border: 2.5px solid var(--tp-blck); background: var(--tp-klister); display: grid; place-items: center; }
+.sk-ide-bit img { width: 36px; height: 36px; }
+.sk-ide-bit.klar { background: var(--tp-har); }
+.sk-ide-bit.klar::after { content: ""; position: absolute; right: -7px; top: -7px; width: 20px; height: 20px; border-radius: 50%; background: var(--tp-klister) url("/ikoner/skapa/ui/bock.svg") center/13px no-repeat; border: 2px solid var(--tp-blck); }
+
+/* Små runda verktygsknappar (lyssna, ångra) */
+.sk-rund {
+  width: 44px; height: 44px; border-radius: 50%; border: 2.5px solid var(--tp-blck); background: var(--tp-papper);
+  display: grid; place-items: center; padding: 0; flex: none;
+}
+.sk-rund img { width: 22px; height: 22px; }
+.sk-rund[disabled] { opacity: .3; }
+
+/* ------------------------------------------------------------------ Trollremsan */
+.sk-remsa {
+  position: relative; min-height: 100px; max-height: 152px; overflow-y: auto; background: var(--tp-klister); color: var(--tp-blck);
+  border: var(--tp-kant); border-radius: var(--tp-radie-remsa); box-shadow: var(--tp-skugga);
+  padding: 8px 56px 8px 10px; display: flex; flex-wrap: wrap; align-content: center; align-items: center; gap: 6px 4px;
+}
+.sk-remsa-verktyg { position: absolute; right: 5px; top: 4px; bottom: 4px; display: flex; flex-direction: column; justify-content: space-between; gap: 4px; }
+.sk-ord {
+  position: relative; display: inline-flex; align-items: center; gap: 4px; min-height: 40px; padding: 1px 9px 1px 7px;
+  border-radius: var(--tp-radie-ord); border: 2.5px solid var(--tp-blck); font-size: var(--tp-text-ord); font-weight: 600; line-height: 1.1; color: var(--tp-blck);
+  background: var(--k, var(--tp-klister)); box-shadow: 0 2.5px 0 var(--tp-blck); white-space: nowrap;
+}
+.sk-ord .sk-markor { width: 15px; height: 15px; flex: none; }
+.sk-ord.smaord { background: transparent; border-color: transparent; box-shadow: none; padding: 1px 1px; color: #4E4270; font-weight: 500; }
+.sk-ord.smaord.boj { border-color: var(--tp-hurdan); background: #E7F4FF; padding: 1px 7px; }
+.sk-ord.vantar { background: #FFF6D6; border-style: dashed; border-color: var(--tp-guld-m); box-shadow: none; }
+.sk-ord.tom { background: transparent; border-style: dashed; box-shadow: none; color: #8A7A2A; border-color: #C9A21D; animation: sk-tom-puls 1.6s ease-in-out infinite; }
+@keyframes sk-tom-puls { 50% { background: rgba(255, 210, 63, .25); } }
+.sk-ord.ny { animation: sk-ord-in 460ms var(--tp-fjader); }
+@keyframes sk-ord-in { 0% { transform: translateY(-26px) scale(.6); opacity: 0 } 100% { transform: none; opacity: 1 } }
+.sk-ord.bojs { animation: sk-bojs 700ms var(--tp-fjader); }
+@keyframes sk-bojs { 0% { transform: rotateX(0) } 40% { transform: rotateX(90deg); background: #fff } 100% { transform: rotateX(0) } }
+.sk-ord.guld { background: linear-gradient(110deg, #F8C838 0%, #FFE58A 35%, #F8C838 60%, #F2B214 100%); background-size: 220% 100%; animation: sk-glans 2.4s linear infinite; }
+.sk-ord.guld::after { content: ""; position: absolute; top: -9px; right: -7px; width: 20px; height: 20px; background: url("/ikoner/skapa/ui/guldord.svg") center/contain no-repeat; }
+@keyframes sk-glans { to { background-position: -220% 0; } }
+.sk-ord.fraga { background: #FFE4C7; border-style: dashed; animation: sk-vicka 1.2s ease-in-out infinite; }
+.sk-ord.fraga::after, .sk-ord.boj::after { content: "?"; position: absolute; top: -10px; right: -8px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--tp-blck); font-size: .9rem; display: grid; place-items: center; color: var(--tp-blck); }
+.sk-ord.fraga::after { background: var(--tp-gor); }
+.sk-ord.boj { border-style: dashed; animation: sk-vicka 1.4s ease-in-out infinite; }
+.sk-ord.boj::after { background: var(--tp-hurdan); }
+@keyframes sk-vicka { 25% { transform: rotate(-3deg) } 75% { transform: rotate(3deg) } }
+.sk-ord.agg { background: var(--tp-papper); }
+.sk-ord.agg img { width: 22px; height: 22px; }
+.sk-ord.vald { outline: 3px solid var(--tp-penna); outline-offset: 2px; }
+.sk-ta-bort { position: absolute; top: -14px; right: -14px; width: 32px; height: 32px; border-radius: 50%; border: 2.5px solid var(--tp-blck); background: var(--tp-klister); padding: 0; display: grid; place-items: center; z-index: 1; }
+.sk-ta-bort img { width: 16px; height: 16px; }
+.sk-skrivbricka {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 1px 9px; border-radius: var(--tp-radie-ord); border: 2.5px dashed var(--tp-guld-m);
+  font-size: var(--tp-text-ord); font-weight: 600; color: var(--tp-blck); background: #FFF6D6; letter-spacing: .02em; white-space: nowrap;
+}
+.sk-skrivbricka.vilar { border-color: transparent; background: transparent; padding-left: 2px; padding-right: 2px; }
+.sk-skrivbricka .sk-spok { color: rgba(42, 26, 58, .24); }
+.sk-skrivbricka .sk-blink { width: 2px; height: 26px; background: var(--tp-penna); margin-left: 2px; animation: sk-blink 1s steps(2) infinite; }
+.sk-skrivbricka.skaka { animation: sk-skaka 380ms; }
+.sk-uppmaning { color: #7A6E96; font-weight: 500; margin-left: 8px; letter-spacing: 0; white-space: normal; font-size: 1.25rem; line-height: 1.2; }
+@keyframes sk-skaka { 25% { transform: translateX(-4px) } 75% { transform: translateX(4px) } }
+@keyframes sk-blink { 50% { opacity: 0; } }
+
+/* ------------------------------------------------------------------ Svarsraden */
+.sk-svar {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: rgba(255, 255, 255, .1); border: 2px dashed rgba(248, 200, 56, .6);
+  border-radius: 18px; padding: 8px 10px; animation: sk-in 360ms var(--tp-fjader);
+}
+@keyframes sk-in { from { transform: translateY(-14px) scale(.95); opacity: 0; } }
+.sk-svar p { margin: 0; font-size: var(--tp-text-ui); line-height: 1.3; font-weight: 500; flex: 1 1 160px; }
+.sk-svar b { color: #fff; font-weight: 700; }
+.sk-jamfor { font-weight: 700; letter-spacing: .03em; }
+.sk-jamfor .ratt { color: var(--tp-har); }
+.sk-jamfor .rest { color: #FFB49E; text-decoration: underline wavy; }
+.sk-knapp {
+  min-height: 44px; padding: 0 14px; border-radius: 14px; border: var(--tp-kant); background: var(--tp-klister); color: var(--tp-blck);
+  font-weight: 600; font-size: var(--tp-text-ui); box-shadow: 0 3px 0 var(--tp-blck); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+}
+.sk-knapp img { width: 26px; height: 26px; }
+.sk-knapp.guld { background: var(--tp-guld); }
+.sk-knapp.dov { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .4); box-shadow: none; }
+.sk-knapp.pulsa { animation: sk-pulsa 1.4s ease-in-out infinite; }
+@keyframes sk-pulsa { 50% { transform: scale(1.07); box-shadow: 0 0 0 5px rgba(248, 200, 56, .55), 0 3px 0 var(--tp-blck); } }
+
+/* ------------------------------------------------------------------ Hjälpraden */
+.sk-hjalprad { display: flex; align-items: center; gap: 8px; min-height: 48px; }
+.sk-tips { flex: 1; margin: 0; font-size: var(--tp-text-ui); line-height: 1.25; color: var(--tp-text-dov); min-width: 0; }
+.sk-tips b { color: #fff; font-weight: 600; }
+
+/* ------------------------------------------------------------------ Tangenterna */
+.sk-tangenter { display: grid; gap: 7px; }
+.sk-tangent-rad { display: flex; gap: 4px; justify-content: center; }
+.sk-tangent {
+  flex: 1 1 0; max-width: 40px; height: var(--tp-tangent-h); border-radius: 11px; border: 2.5px solid var(--tp-blck); background: var(--tp-klister); color: var(--tp-blck);
+  font-size: var(--tp-text-tangent); font-weight: 600; box-shadow: 0 3px 0 var(--tp-blck); padding: 0; display: grid; place-items: center; min-width: 0;
+}
+.sk-tangent:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--tp-blck); }
+.sk-tangent.bred { max-width: none; flex: 1.6 1 0; font-size: var(--tp-text-ui); }
+.sk-tangent.mellan { flex: 5 1 0; max-width: none; font-size: var(--tp-text-ui); }
+.sk-tangent.klar { flex: 2 1 0; max-width: none; background: var(--tp-har); font-size: var(--tp-text-ui); }
+.sk-tangent img { width: 26px; height: 26px; pointer-events: none; }
+.sk-tangent.vokal { background: var(--tp-vokal-bg); color: var(--tp-vokal); }
+.sk-tangent.tips { background: #FFF2B8; box-shadow: 0 0 0 4px var(--tp-guld), 0 3px 0 var(--tp-blck); animation: sk-studs 1.2s ease-in-out infinite; }
+.sk-tangent.fel { animation: sk-skaka 300ms; }
+.sk-tangent.skift-pa { background: var(--tp-guld); }
+@keyframes sk-studs { 50% { transform: scale(1.12); } }
+
+/* ------------------------------------------------------------------ Ordhjälpen */
+.sk-flikar { display: flex; gap: 5px; }
+.sk-flik {
+  flex: 1 1 0; min-width: 0; min-height: 58px; padding: 3px 1px 2px; border-radius: var(--tp-radie-flik); border: 2.5px solid rgba(255, 255, 255, .18);
+  background: rgba(255, 255, 255, .08); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  font-weight: 600; font-size: var(--tp-text-ui); line-height: 1.05; letter-spacing: -.015em; color: #fff; position: relative; white-space: nowrap;
+}
+.sk-flik img { width: 22px; height: 22px; flex: none; }
+.sk-flik[aria-selected="true"] { background: var(--k); color: var(--tp-blck); border-color: var(--tp-blck); box-shadow: 0 3px 0 var(--tp-blck); }
+.sk-flik.skriv-flik { border-color: rgba(248, 200, 56, .7); color: var(--tp-guld); }
+.sk-flik .fylld { position: absolute; top: -7px; right: -5px; width: 18px; height: 18px; border-radius: 50%; background: var(--tp-guld) url("/ikoner/skapa/ui/bock.svg") center/12px no-repeat; border: 2px solid var(--tp-blck); }
+.sk-hylla-ram { position: relative; margin: 0 -14px; }
+.sk-hylla-ram::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 28px; pointer-events: none; background: linear-gradient(90deg, transparent, var(--tp-natt)); }
+.sk-hylla {
+  position: relative;
+  display: grid; grid-auto-flow: column; grid-template-rows: repeat(2, var(--tp-kort-h)); gap: 8px; overflow-x: auto; overflow-y: hidden;
+  padding: 10px 14px 8px; scroll-snap-type: x proximity; scroll-padding-left: 14px; scrollbar-width: none; overscroll-behavior-x: contain;
+}
+.sk-hylla::-webkit-scrollbar { display: none; }
+.sk-sektion {
+  grid-row: span 2; width: 66px; scroll-snap-align: start; border-radius: 18px; border: 2px dashed rgba(255, 255, 255, .28);
+  display: grid; align-content: center; justify-items: center; gap: 6px; padding: 6px 2px; text-align: center;
+}
+.sk-sektion img { width: 40px; height: 40px; }
+.sk-sektion span { font-size: 1.125rem; font-weight: 600; line-height: 1.1; color: #fff; }
+.sk-sektion .liten { width: 18px; height: 18px; }
+.sk-prefix { scroll-snap-align: start; grid-row: span 2; width: 104px; border-radius: 18px; background: rgba(248, 200, 56, .16); border: 2px solid var(--tp-guld); display: grid; place-items: center; text-align: center; padding: 6px; font-size: 1.125rem; line-height: 1.2; font-weight: 500; }
+.sk-prefix.bred { width: 230px; }
+.sk-prefix b { display: block; font-size: 1.5rem; color: var(--tp-guld); }
+.sk-kort {
+  position: relative; width: var(--tp-kort-b); height: var(--tp-kort-h); border-radius: var(--tp-radie-kort); border: var(--tp-kant); background: var(--tp-klister); color: var(--tp-blck);
+  box-shadow: var(--tp-skugga); padding: 6px 4px; display: grid; grid-template-rows: 1fr auto; justify-items: center; align-items: center;
+  scroll-snap-align: start; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; transition: transform 160ms, background 200ms;
+}
+.sk-kort img.sk-kort-bild { width: 58px; height: 58px; object-fit: contain; pointer-events: none; }
+.sk-kort .sk-kort-ord { font-size: var(--tp-text-ord); font-weight: 600; line-height: 1.05; text-align: center; max-width: 92px; overflow-wrap: anywhere; }
+.sk-kort .sk-kort-ord.lang { font-size: var(--tp-text-ui); }
+.sk-kort:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--tp-blck); }
+.sk-kort[aria-pressed="true"] { background: var(--k); transform: translateY(-3px); box-shadow: 0 7px 0 var(--tp-blck); }
+.sk-kort[aria-pressed="true"]::before { content: ""; position: absolute; top: -9px; left: -7px; width: 24px; height: 24px; border-radius: 50%; background: var(--tp-klister) url("/ikoner/skapa/ui/bock.svg") center/16px no-repeat; border: 2.5px solid var(--tp-blck); }
+.sk-kort.onskad { box-shadow: 0 0 0 4px var(--tp-guld), 0 0 18px 4px rgba(248, 200, 56, .8), var(--tp-skugga); }
+.sk-kort.onskad::after { content: ""; position: absolute; top: -10px; right: -8px; width: 28px; height: 28px; background: url("/ikoner/skapa/ui/stjarna.svg") center/contain no-repeat; animation: sk-studs 1.6s ease-in-out infinite; }
+.sk-skriv-mig { position: absolute; top: -10px; right: -8px; width: 30px; height: 30px; border-radius: 50%; background: var(--tp-guld); border: 2.5px solid var(--tp-blck); display: grid; place-items: center; z-index: 1; }
+.sk-skriv-mig img { width: 20px; height: 20px; }
+.sk-kort .sk-lyssnar { position: absolute; inset: -5px; border-radius: 22px; border: 4px solid var(--tp-hurdan); clip-path: inset(0 100% 0 0); animation: sk-lyssna 450ms linear forwards; pointer-events: none; }
+@keyframes sk-lyssna { to { clip-path: inset(0 0 0 0); } }
+.sk-kort.skriv-fler { background: transparent; border: 3px dashed var(--tp-guld); color: #fff; box-shadow: none; }
+.sk-kort.skriv-fler .sk-kort-ord { font-size: var(--tp-text-ui); }
+.sk-kort.skriv-fler small { display: block; font-size: 1rem; color: var(--tp-guld); font-weight: 600; }
+.sk-kort.skriv-fler img.sk-kort-bild { width: 44px; height: 44px; }
+
+/* ------------------------------------------------------------------ Puffen */
+.sk-puff {
+  position: absolute; z-index: 3; left: 50%; bottom: calc(100% + 64px); transform: translateX(-50%); width: max-content; max-width: calc(100% - 28px);
+  background: var(--tp-blck); color: #fff; border-radius: 18px; padding: 10px 16px; font-size: var(--tp-text-ui); line-height: 1.35;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, .25); text-align: center; animation: sk-in 400ms var(--tp-fjader); pointer-events: none;
+}
+
+/* ------------------------------------------------------------------ Liggande: arket blir en panel till höger */
+@media (orientation: landscape) and (max-height: 600px) {
+  .sk-ark { left: auto; right: 0; top: 0; width: min(400px, 52%); max-width: none; margin: 0; border-radius: var(--tp-radie-ark) 0 0 var(--tp-radie-ark); border-top: 0; border-left: 4px solid var(--tp-blck); padding-top: 10px; gap: 7px; overflow-y: auto; overflow-x: visible; animation-name: sk-ark-in; }
+  @keyframes sk-ark-in { from { transform: translateX(100%); } }
+  .sk-topp { height: 0; position: static; }
+  .sk-stang { position: fixed; left: auto; right: calc(min(400px, 52%) + 12px); top: auto; bottom: 14px; }
+  .sk-penn-ora { position: fixed; right: calc(min(400px, 52%) + 8px); top: 70px; flex-direction: column-reverse; gap: 6px; }
+  .sk-penn-knapp { width: 64px; height: 64px; } .sk-penn-knapp img { width: 56px; height: 56px; }
+  .sk-penn-etikett { margin-top: 0; }
+  .sk-remsa { min-height: 64px; }
+  .sk-tangenter { gap: 5px; }
+  .sk-tangent { height: 38px; }
+  .sk-hjalprad { min-height: 44px; }
+  .sk-hylla { grid-template-rows: repeat(2, 96px); }
+  .sk-kort { height: 96px; }
+  .sk-puff { bottom: auto; top: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-lager *, .sk-lager *::before, .sk-lager *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+}
+.sk-lager .ord-input-ankare { position: absolute; width: 1px; height: 1px; opacity: .01; pointer-events: none; border: 0; padding: 0; }

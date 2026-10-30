@@ -39,9 +39,9 @@ export function useOnska(k: Pick<SpelKarna, "t" | "v">) {
     const ex = exempelFor(o);
     const traff = kortForExempel(ex, ordLista());
     if (o.kalla === "bygg") {
+      // Nya Skapa: byggönskan skrivs i samma bok som allt annat, med önskan som lapp.
       onskaSkrivRef.current = false;
-      oppnaBygglage();
-      setOnskaOpp(true);
+      setPanel("spel");
       return;
     }
     setPanel("spel");
