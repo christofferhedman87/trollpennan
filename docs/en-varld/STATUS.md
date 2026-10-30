@@ -44,7 +44,7 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 - **Prov:** `scripts/prov-platslapp.mjs` provar nu geometriskt att inget synligt överlägg skär lappens text, Lyssna, tangenterna, den färdiga meningen eller Trolla, hanterar fixed-element rätt i klippberäkningen och kontrollerar att remsan rymmer sin text. Rött utan CSS-rättningen (remsan skär lappen), grönt med, i stående, liggande 812×375 och liggande 667×375 (Skogen).
 
 ## Förhandsvisning på utflykterna och byggnadernas hemresa (2026-10-30, block 4b)
-- **4b-1:** Pennans bok visar trollringen och hologrammet även på Skogen, Sjön och Grottan, med platsens egna regler (tak, sövning, roll/höjd, krympning) och utan att något sparas. Returskylten tonas bort medan boken är öppen även stående. Detaljer, mått och prov: `docs/codex/plan.md` (Block 4) och `scripts/prov-platsforhand.mjs`.
+- **4b-1, #280 (slutgranskad av Codex, merge nästa):** Pennans bok visar trollringen och hologrammet även på Skogen, Sjön och Grottan, med platsens egna regler (tak, sövning, roll/höjd, krympning) och utan att något sparas. Returskylten tonas bort medan boken är öppen även stående. Detaljer, mått och prov: `docs/codex/plan.md` (Block 4) och `scripts/prov-platsforhand.mjs`.
 - **4b-2 (utkast, ej webbläsarprovad):** ett hus skrivet på en utflykt reser hem till Hemdalen och kameran glider till tomten (`useSkapa.hanteraBygg`, `dalStyr.konsumera`, `DalKamera`). Prov: `scripts/prov-bygg-hem.mjs`.
 
 ## Världskartan (2026-10-30)
