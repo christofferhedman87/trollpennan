@@ -8,7 +8,7 @@ try {
   for (const viewport of (process.env.QA_KREDIT ? [{ width: 375, height: 812 }, { width: 812, height: 375 }] : [{ width: 375, height: 812 }])) {
   for (const svar of (process.env.QA_KREDIT ? [true] : [true, false, "fel", "saknas"])) {
     const context = await browser.newContext({ viewport });
-    const page = await context.newPage(); const fel = []; page.on("pageerror", (e) => fel.push(e.message));
+    const page = await context.newPage(); page.setDefaultTimeout(45000); const fel = []; page.on("pageerror", (e) => fel.push(e.message));
     await page.addInitScript((svar) => {
       localStorage.setItem("trollpennan-v2", JSON.stringify({ version: 2, introSedd: true, ang: [], stjarnor: 17, ljudPa: false, rostPa: false, effektPa: false }));
       window.qaPersist = 0;
@@ -17,6 +17,7 @@ try {
     await page.goto(process.argv[2] ?? "http://127.0.0.1:4173/", { timeout: 120000 });
     await page.getByTestId("pennans-bok").waitFor();
     if (process.env.QA_KREDIT) {
+      await page.getByTestId("foralder-hall").hover();
       const las = await page.getByTestId("foralder-hall").boundingBox(); assert.ok(las);
       await page.mouse.move(las.x + las.width / 2, las.y + las.height / 2); await page.mouse.down();
       await page.getByTestId("foralder-svar").waitFor(); await page.mouse.up();
@@ -39,9 +40,9 @@ try {
     }
     assert.equal(await page.locator('link[rel="manifest"]').count(), 1, "manifest saknas");
     const href = await page.locator('link[rel="manifest"]').getAttribute("href"); assert.ok(href, "manifest saknas");
-    const res = await page.request.get(href); assert.equal(res.status(), 200);
+    const res = await page.request.get(new URL(href, page.url()).href); assert.equal(res.status(), 200);
     const m = await res.json(); assert.equal(m.start_url, "/"); assert.equal(m.display, "standalone"); assert.ok(m.icons.length);
-    for (const i of m.icons) assert.equal((await page.request.get(i.src)).status(), 200, `manifestikon ${i.src}`);
+    for (const i of m.icons) assert.equal((await page.request.get(new URL(i.src, page.url()).href)).status(), 200, `manifestikon ${i.src}`);
     if (svar !== "saknas") await page.waitForFunction(() => window.qaPersist === 1);
     assert.equal(await page.evaluate(() => window.__trollMinne.getState().stjarnor), 17);
     assert.deepEqual(fel, []); console.log(`Grönt T-14: persist=${svar}`); await context.close();
