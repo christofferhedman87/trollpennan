@@ -11,7 +11,7 @@ Varje block levereras med separat branch och PR, kritisk granskning, samtliga ob
 - **Klart när:** regressionen är röd på baslinjen och grön efter rättning; båda flerordsfraserna och ett enordsfall slutförs; fel tangent ändrar inte frasen; guld registreras enligt befintligt kontrakt. Browserprova önskekort, synligt mellanslagstips och efterföljande Trolla. Aktiv skriv-/spökbricka, hjälptext och svarsknappar ska vara läsbara utan överlapp även i liggande läge och efter rotation.
 - **Risk / beroende / storlek:** S. Textkälla och frasposition får inte blandas ihop. **Sparning:** oförändrat format. **Resurser:** befintlig grafik och ljud. **Mått:** antal slutförda referensfraser och bevarade textkällor, inga påhittade barnmått.
 
-## 2. Backup som bevarar hela världen — förberett, P1
+## 2. Backup som bevarar hela världen — implementerat, slutverifiering återstår, P1
 
 - **Barnets upplevelse / ändring:** En sparad kopia återställer samtliga skapelser och framsteg, även bortom ängen. Samordna exportens fält med den auktoritativa sparmodellen; behåll datavalidering och äldre kopior.
 - **Filer:** `ui/hjalp.ts`, `minneSparning.ts`, `minne.ts`, `styr/useGard.ts`, lagrings- och exportprov.
@@ -83,14 +83,59 @@ Varje block levereras med separat branch och PR, kritisk granskning, samtliga ob
 
 ## Leveransläge
 
-Block 1 är under implementation. Inga block i denna plan är härmed intygade som mergade eller publicerade. För varje färdigt block kompletteras status med PR, exakt testutfall, tre svagaste kvarstående punkter och produktionsstatus. Om GitHub-/Cloudflare-åtkomst saknas fortsätter oberoende lokal implementation och validering; push/merge/publicering markeras då uttryckligen som ej genomförd eller ej verifierad.
+Block 1 och 2 är implementerade på separata branches men behöver den slutverifiering som anges nedan. Inga block i denna plan är härmed intygade som mergade eller publicerade. För varje färdigt block kompletteras status med PR, exakt testutfall, tre svagaste kvarstående punkter och produktionsstatus. Om GitHub-/Cloudflare-åtkomst saknas fortsätter oberoende lokal implementation och validering; push/merge/publicering markeras då uttryckligen som ej genomförd eller ej verifierad.
 
 ### Pausläge 2026-10-30
 
 Användaren begärde att allt säkras inför kvotpaus. Ingen merge eller produktionspublicering har gjorts.
 
 - Block 1: `codex/block-01-guldchans`. De båda flerordsfallen passerade i browser före den sista layoutjusteringen. Typkontroller, lint, struktur, build/output gröna; produktprov 72/73 testfiler, endast känt P3a rött. Sista layouten behöver ett slutfört browserprov (inklusive stavningssvar/rotation) och rött guld-baslinjefall; markera inte detta som klart innan resultaten kontrollerats.
-- Block 2: `codex/block-02-backup` förbereds som separat staplad branch på block 1. Patchen har 45/45 riktade tester och typecheck:pages gröna i en temporär källkopia. Riktig filnedladdning mot den gamla versionen reproducerade de 13 saknade fälten. Fulla grindar och UI-import/omladdning efter applicering återstår. Läsnivå 3 bevaras genom befintliga franSparning efter arData-validering. Filformatet är fortsatt v2; v1 stöds i lagringsmotorn men inte i befintlig UI-filväljare.
+- Block 2: `codex/block-02-backup` är en separat staplad branch på block 1; patchen är applicerad och committad. Patchen har 45/45 riktade tester och typecheck:pages gröna i en temporär källkopia. Riktig filnedladdning mot den gamla versionen reproducerade de 13 saknade fälten. Fulla grindar och UI-import/omladdning efter applicering återstår. Läsnivå 3 bevaras genom befintliga franSparning efter arData-validering. Filformatet är fortsatt v2; v1 stöds i lagringsmotorn men inte i befintlig UI-filväljare.
 - Kör vid fortsättning: läs denna plan och beslut.md, kontrollera git status och brancher, installera bara vid behov, bygg Pages, starta preview, kör CHROMIUM=/usr/bin/chromium node scripts/prov-guldchans.mjs och scripts/prov-backup.mjs, samt obligatoriska grindar. Använd syntetisk browserlagring. Återställ inte koden för att göra tester gröna.
 - Installations-/startinstruktioner och domäntilläggen api.github.com och trollpennan.christofferhedman87.workers.dev är bekräftat sparade i miljöutkastet, inte tillämpade/publicerade. Git HTTPS fungerar, API och produktionshost nekades av proxyn. När inställningarna sparats: testa åtkomsten igen, skapa separata PR:er (block 2 har block 1 som bas tills block 1 mergats), kontrollera CI och publicering. Begär inte en ny GitHub-token utan ny diagnos.
 - Arbetsloggar i /tmp och helpers i /workspace/.setup är kompletterande; GitHub-branches och dessa dokument är den bestående källan. Skärmbilder ska inte skickas till användaren eller läggas i PR.
+
+### Börja här — Codex eller Claude Code
+
+Senaste samlade arbetsläget finns på **codex/block-02-backup**. Den innehåller block 1, block 2, båda browserproven och dessa dokument. Bas: main 7d8393729291d2e9fd31eabc448a2899204b21a8. Kodcommits: d0552d7 (block 1) och 1dd0404 (block 2). Båda är medvetet WIP, inte godkända för merge ännu.
+
+1. Läs projektregler.md och AGENTS.md, sedan granskning.md, denna plan och beslut.md. Läs även aktuella Skapa-/En värld-statusfiler. Återanvänd kartläggningen; gör inte om hela granskningen. Betygen är provisoriska expertbedömningar, inte barntest.
+2. Kontrollera git status och bevara eventuellt lokalt arbete. Hämta origin och välj codex/block-02-backup (följ origin-branchen om lokal branch saknas). Använd befintlig checkout; skapa inte ett extra worktree om användaren inte ber om det. Ingen reset/force push behövs.
+3. Använd Node 24 (testat: 24.19.0, npm 11.9.0). Kör npm ci om beroenden saknas/lockfil ändrats. Behåll proxy, TLS- och integritetskontroller. Den statiska klienten kräver ingen databas, hemlighet eller extern backend.
+4. Bygg och starta från reporoten:
+
+```bash
+npm ci
+npm run build:pages
+npm run check:pages-output
+node node_modules/vite/bin/vite.js preview --config vite.pages.config.ts --port 4173 --strictPort
+```
+
+Starta därefter proven i en separat terminal:
+
+```bash
+CHROMIUM=/usr/bin/chromium node scripts/prov-guldchans.mjs
+CHROMIUM=/usr/bin/chromium node scripts/prov-backup.mjs
+CHROMIUM=/usr/bin/chromium node scripts/prov-forsta-skapelsen.mjs
+```
+
+CHROMIUM kan utelämnas om Playwrights egen browser är installerad. QA_SCREENSHOTS kan sättas till en lokal mapp för egen kontroll; inga bilder ska skickas till användaren eller PR. Proven använder enbart syntetisk lagring. Den generella startregressionens ursprungliga version passerade i tre viewportar; den sparade portabla versionen är syntaxkontrollerad men ska köras igen. Den sista layoutversionens guldprov och det applicerade backup-blocket är ännu inte intygade som färdigverifierade.
+
+5. För det återstående röda guld-baslinjefallet: starta Vite med scripts/vite.guldchans-baslinje.config.mjs på port 4183 och kör guldprovet mot http://127.0.0.1:4183/. Konfigurationen ersätter bara hooken med originalet från 7d83937 utan att skriva om checkouten. Ett fel vid det interna mellanslaget väntas; ett annat fel är inte bevis på regressionen. Om det gamla Git-objektet saknas, hämta den exakta committen från origin. Stoppa bara de servrar/browserinstanser du själv startar.
+6. Kör samtliga obligatoriska grindar på den slutliga koden:
+
+```bash
+npm run typecheck
+npm run typecheck:pages
+npm run check:struktur
+npm run lint
+npm run test:product
+npm run build:pages
+npm run check:pages-output
+```
+
+P3a:s CPU-test har fallerat på baslinjen och båda tidigare fullkörningarna; övriga 72 av 73 testfiler passerade. Kontrollera att eventuellt kvarstående fel fortfarande är samma och inga andra tillkommit. Ändra inte gränsen eller testid-baslinjen för att få grönt. Slutliga browserprov måste verkligen slutföras; öppet portnummer eller PID räcker inte.
+
+7. Återtesta GitHub-API/produktionsåtkomst först efter relevant nätverksändring. Miljöutkastet innehåller erforderliga värdar men är inte tillämpat eller publicerat. Git-push fungerar separat från API. Skapa PR för block 1 mot main och PR för block 2 mot block 1 (byt bas till main efter första merge). Följ mandatet för testad merge; kringgå inget branchskydd. Behåll Cloudflare-integrationen, verifiera publiceringen separat och uppdatera statusen här.
+
+Tre återstående svagheter vid pausen: slutliga UI-regressioner är inte färdigbekräftade, P3a:s gamla prestandakrav fallerar, och CI/produktion/PR-åtkomst är inte verifierad. Ingen förbättring av långsiktigt spelintresse eller fysisk mobil-FPS har uppmätts. Efter säker leverans av block 1–2 fortsätter planen med lagringsfel och skrivmagi på utflykter, utifrån faktiskt spelutfall.
