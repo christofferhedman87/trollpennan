@@ -1,2 +1,10 @@
 <!doctype html>
-<html lang="sv"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#2F6A3A"><title>Trollpennan</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/mobile-b03.css"></head><body><div id="root"></div><script type="module" src="/src/pages-main.tsx"></script></body></html>
+<html lang="sv"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#4da8fd"><title>Trollpennan</title><link rel="icon" href="/favicon.svg">
+<link rel="preload" as="image" href="/forsida/logga.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="/forsida/bakgrund-staende.webp" type="image/webp" media="(orientation: portrait)" fetchpriority="high">
+<link rel="preload" as="image" href="/forsida/bakgrund-liggande.webp" type="image/webp" media="(orientation: landscape)" fetchpriority="high">
+<link rel="stylesheet" href="/mobile-b03.css"></head><body>
+<div id="root"></div>
+<!-- Försidan: det enda lagret som syns från första bildrutan tills barnet trycker Börja/Fortsätt. Efter #root: titeln ska vara sista dialogen i sidan (dialogFokus.ts) (src/spel/ui/forsida.ts) -->
+<div id="forsida" class="forsida" data-testid="forsida"><div class="forsida-bild" aria-hidden="true"></div><div class="forsida-gnistor" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="forsida-topp"><img class="forsida-logga" src="/forsida/logga.webp" alt="Trollpennan" width="1000" height="368" decoding="async" fetchpriority="high"></div><div class="forsida-nere"><div class="forsida-laddar" role="status" aria-label="Laddar"><span>a</span><span>b</span><span>c</span></div></div></div>
+<script type="module" src="/src/pages-main.tsx"></script></body></html>

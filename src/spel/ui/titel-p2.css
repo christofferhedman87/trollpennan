@@ -1,28 +1,122 @@
-/* P2-2 titelskärm, förslag A (rundor/P2-start/val/A-angen-lever.jpg). Egen fil: styles.css rörs inte. */
-.titel{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;justify-content:space-between;pointer-events:auto;
-  background:linear-gradient(180deg,rgba(255,246,229,0) 0,rgba(255,246,229,0) 40%,rgba(246,231,200,.92) 66%,var(--color-paper) 80%);
-  padding:max(84px, calc(env(safe-area-inset-top) + 74px)) 22px max(26px, env(safe-area-inset-bottom));color:var(--color-ink)}
-.titel-topp{display:grid;justify-items:center;gap:10px}
-.titel-logga{margin:0;display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:700;font-size:clamp(2.4rem,13vw,3.2rem);line-height:1;
-  color:var(--color-berry);-webkit-text-stroke:2px var(--color-cream);paint-order:stroke fill;text-shadow:0 5px 0 #8a2338,0 9px 14px rgba(0,0,0,.25)}
-.titel-penna{display:inline-block;flex:none;width:15px;height:50px;border-radius:7px 7px 2px 2px;background:linear-gradient(#f48fb1 0 70%,var(--color-gold) 70%);transform:rotate(28deg)}
-.titel-under{margin:0;padding:4px 14px;border-radius:999px;background:#fff6e5dd;font-size:1.2rem;font-weight:700}
-.titel-knappar{display:grid;gap:12px}
-.titel-fortsatt{min-height:96px;border:0;border-radius:24px;background:var(--color-berry);color:#fff;box-shadow:0 6px 0 #8a2338;
-  display:flex;align-items:center;gap:14px;padding:12px 16px;text-align:left;font-family:inherit;touch-action:manipulation}
-.titel-fortsatt:active{transform:translateY(2px);box-shadow:0 4px 0 #8a2338}
-.titel-borja{justify-content:center}
-.titel-bild{display:none;width:76px;height:76px;flex:none;border-radius:18px;border:3px solid var(--color-gold);background:#9fd77a}
+/* Försidan och titeln (2026-10-30). #forsida står i index.html och syns från första bildrutan: bakgrund (stående eller
+   liggande), logga och laddningsbokstäver. Titeln (Titel.tsx) lägger sin rad och sina knappar i den när ängen är redo.
+   Bilderna är Christoffers från Adobe Firefly, komprimerade till WebP i public/forsida/. */
+.forsida{--plommon:#3b1a3a;--rosa:#ef4f76;position:fixed;inset:0;z-index:2000;overflow:hidden;display:flex;flex-direction:column;
+  align-items:center;justify-content:space-between;gap:12px;color:var(--plommon);background:#7cc4f5;font-family:var(--font-display,"Fredoka",sans-serif);
+  padding:max(40px, calc(env(safe-area-inset-top) + 28px)) 20px max(22px, calc(env(safe-area-inset-bottom) + 14px));
+  -webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;transition:opacity .45s ease}
+/* Den suddiga miniatyren (300 byte) syns direkt, den skarpa bilden läggs över när den kommit */
+.forsida-bild{position:absolute;inset:-2%;z-index:0;background-size:cover;background-position:50% 50%;
+  background-image:url(/forsida/bakgrund-staende.webp),url("data:image/webp;base64,UklGRjYBAABXRUJQVlA4ICoBAACwCACdASoSACAAPrVKnkmnJCKhMAgA4BaJbACdMoR6f6rw87hvT7Yn6ge4DMY/2A9/+7mfXYItAVl/uzb04ZQwnOQDYikaUsb4hrw4Q+AA/pTr+spH+g7JTkwtY0mVWTUfcb9osk79AOtvSi/RHJIc+h5+Tpc7sf0/05P28eMTsr5n8o2/QWyfEQl4bHq96ILQ7Wlh98p8IT3leMZERlj20Z62LsdZzTUyqWbSf8Nqscd2fPa7vTpmRyPL404EfrIN4x8eW2uP40Ch8dXJ7gXatVEezL/dzZjRQvnyaVRKzLmlk8dF7btPOMF/LlWelyDdDs6O56XTvrQUnTPT1aXLb8qJ7zpmEt+kVTxllN0yy9MOMIhhuJ2R0KzOXBslrjJ8ENND5nwAAAAA");
+  animation:forsida-in 2.6s cubic-bezier(.2,.7,.3,1) both}
+@media (orientation: landscape){
+  .forsida-bild{background-image:url(/forsida/bakgrund-liggande.webp),url("data:image/webp;base64,UklGRjQBAABXRUJQVlA4ICgBAABQBwCdASogABIAPrVInUmnJCKhMAgA4BaJbACdMoR2fxm5FGgwnJSuYgFU2txUL8Ra9Zoj96yU61polPNkVh3Nb0H4AP7onW49hJge7w7OFnOkpfIAJckNN1gZ/REON3mvP5gvvZ1hmUZyXW1EfH0P4K4z+tkWRvn/qy1ewn5UP67ouQ1MF2Ybdp98aURyGd+nB60aj5vxZ6bTLezofTyUzhjMVoGzICRyzDviTDZRteLJatXX2ObL0MqeCZq2OFx6gEk6vfkJuj2yE0czXexm4uymE2jBz9Bu9NxAE/ufUOqVljviWByp5+wXjJ9X0kPq+kiVwe4OKb0MLx2mD9GjT6L122ZjsYx96zJqkd2gRQw8ZWeulQX5uqGjlQX5up37BnQGCcgAAA==")}
+}
+@keyframes forsida-in{from{transform:scale(1.07)}to{transform:none}}
+/* Gnistor som blinkar i himlen, som bokstavsmagin i bilden */
+.forsida-gnistor{position:absolute;inset:0;z-index:1;pointer-events:none}
+.forsida-gnistor i{position:absolute;width:18px;height:18px;background:#fff8d2;clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);
+  filter:drop-shadow(0 0 6px #ffd84d);opacity:0;animation:gnista 3.2s ease-in-out infinite}
+.forsida-gnistor i:nth-child(1){left:12%;top:31%;animation-delay:.2s}
+.forsida-gnistor i:nth-child(2){left:84%;top:27%;width:14px;height:14px;animation-delay:1.1s}
+.forsida-gnistor i:nth-child(3){left:47%;top:58%;width:22px;height:22px;animation-delay:.6s}
+.forsida-gnistor i:nth-child(4){left:70%;top:9%;width:12px;height:12px;animation-delay:2s}
+.forsida-gnistor i:nth-child(5){left:26%;top:52%;width:12px;height:12px;animation-delay:1.6s}
+.forsida-gnistor i:nth-child(6){left:58%;top:47%;width:16px;height:16px;animation-delay:2.5s}
+@keyframes gnista{0%,100%{opacity:0;transform:scale(.3) rotate(0)}45%{opacity:1;transform:scale(1) rotate(20deg)}70%{opacity:0;transform:scale(.6) rotate(45deg)}}
+
+.forsida-topp{position:relative;z-index:2;display:grid;justify-items:center;gap:6px;width:100%}
+.forsida-logga{display:block;width:min(92vw,560px);height:auto;filter:drop-shadow(0 10px 18px rgba(40,40,90,.28));
+  animation:logga-in .9s cubic-bezier(.2,1.5,.4,1) .15s both,logga-svav 3.4s ease-in-out 1.1s infinite alternate}
+@keyframes logga-in{from{opacity:0;transform:scale(.7) translateY(-14px)}to{opacity:1;transform:none}}
+@keyframes logga-svav{from{transform:translateY(0) rotate(0)}to{transform:translateY(-7px) rotate(-.6deg)}}
+.titel-under{margin:0;padding:6px 18px;border-radius:999px;background:rgba(255,250,238,.92);color:var(--plommon);font-size:1.2rem;font-weight:600;
+  box-shadow:0 3px 0 rgba(59,26,58,.25),0 8px 18px rgba(30,60,120,.18);animation:upp .6s ease-out both}
+
+.forsida-nere{position:relative;z-index:2;width:min(100%,420px);display:grid;justify-items:center}
+/* Laddning: tre lysande bokstäver som hoppar i tur och ordning */
+.forsida-laddar{display:flex;gap:14px;padding:12px 26px 10px;border-radius:999px;background:rgba(255,250,238,.88);border:3px solid rgba(59,26,58,.85);
+  box-shadow:0 4px 0 rgba(59,26,58,.5),0 10px 24px rgba(30,60,20,.22);margin-bottom:8vh}
+.forsida-laddar span{display:block;font-size:2.1rem;font-weight:700;line-height:1;color:#ffd23f;-webkit-text-stroke:5px var(--plommon);paint-order:stroke fill;
+  text-shadow:0 0 14px rgba(255,200,40,.9);
+  animation:bokstav 1.2s ease-in-out infinite}
+.forsida-laddar span:nth-child(2){animation-delay:.15s}
+.forsida-laddar span:nth-child(3){animation-delay:.3s}
+@keyframes bokstav{0%,60%,100%{transform:translateY(0) scale(1)}30%{transform:translateY(-12px) scale(1.15)}}
+.forsida[data-redo] .forsida-laddar{display:none}
+
+/* Titelns knappar */
+.titel{width:100%;display:grid}
+.titel-knappar{display:grid;gap:12px;width:100%;animation:upp .55s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes upp{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+.titel-fortsatt{position:relative;overflow:hidden;width:100%;min-height:88px;display:flex;align-items:center;gap:14px;padding:12px 14px 12px 16px;
+  border:4px solid var(--plommon);border-radius:30px;color:#fff;text-align:left;font-family:inherit;touch-action:manipulation;cursor:pointer;
+  background:linear-gradient(180deg,#ff8aa7 0%,var(--rosa) 52%,#d8375f 100%);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(150,20,60,.35),0 7px 0 var(--plommon),0 16px 26px rgba(30,40,20,.35);
+  transition:transform .12s ease,box-shadow .12s ease}
+/* Glans som på loggans bokstäver */
+.titel-fortsatt::before{content:"";position:absolute;left:22px;right:46%;top:6px;height:10px;border-radius:999px;background:linear-gradient(90deg,rgba(255,255,255,.55),rgba(255,255,255,0));pointer-events:none}
+.titel-fortsatt:active{transform:translateY(5px);box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(150,20,60,.35),0 2px 0 var(--plommon),0 6px 12px rgba(30,40,20,.3)}
+.titel-borja{justify-content:center;min-height:92px}
+/* Knappen själv står still (lätt att träffa); pilen knuffar framåt */
+.titel-pil{animation:knuff 1.6s ease-in-out 1s infinite}
+.titel-borja::after{content:"";position:absolute;top:0;bottom:0;width:38%;left:-45%;transform:skewX(-20deg);pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);animation:glans 3.2s ease-in-out 1.2s infinite}
+@keyframes knuff{0%,60%,100%{translate:0}30%{translate:5px}}
+@keyframes glans{0%,55%{left:-45%}85%,100%{left:120%}}
+.titel-bild{display:none;width:72px;height:72px;flex:none;border-radius:20px;border:3px solid #ffd54a;background:#9fd77a;box-shadow:0 3px 0 rgba(59,26,58,.4)}
 .titel-bild.klar{display:block}
-.titel-fortsatt-text{display:grid;gap:2px}
-.titel-fortsatt-rubrik{font-family:var(--font-display);font-size:1.9rem;font-weight:700}
-.titel-rad{font-size:1rem;font-weight:600;line-height:1.3}
-.titel-borja-om{justify-self:center;min-height:44px;padding:0 14px;border:0;background:none;color:var(--color-ink);opacity:.8;
-  font-family:inherit;font-size:1rem;font-weight:700;text-decoration:underline;text-underline-offset:3px}
-.titel-fraga-bak{position:absolute;inset:0;display:grid;place-items:center;padding:20px;background:rgba(40,30,30,.45)}
-.titel-fraga{width:100%;max-width:340px;display:grid;gap:12px;padding:22px 18px 18px;border-radius:24px;background:var(--color-cream);box-shadow:0 8px 0 var(--color-paper-deep)}
-.titel-fraga p{margin:0 0 4px;font-size:1.3rem;font-weight:700;line-height:1.35;text-align:center}
-.titel-nej{min-height:60px;border:0;border-radius:18px;background:var(--color-moss-deep);color:#fff;font-family:var(--font-display);font-size:1.35rem;font-weight:700;box-shadow:0 4px 0 #1e4a2d}
-.titel-ja{min-height:52px;border:3px solid var(--color-berry);border-radius:18px;background:var(--color-cream);color:var(--color-berry);font-family:inherit;font-size:1.1rem;font-weight:700}
+.titel-fortsatt-text{display:grid;gap:2px;flex:1;min-width:0}
+.titel-fortsatt-rubrik{font-size:2rem;font-weight:700;line-height:1.05;letter-spacing:.01em;
+  text-shadow:0 3px 0 #a3214a,0 0 1px #a3214a}
+.titel-borja .titel-fortsatt-rubrik{font-size:2.5rem}
+.titel-rad{font-family:var(--font-sans);font-size:1.125rem;font-weight:600;line-height:1.25;color:#fff4f6;text-shadow:0 1px 0 #a3214a}
+.titel-pil{flex:none;width:46px;height:46px;border-radius:50%;background:#fff6e5;box-shadow:inset 0 -3px 0 #f2c7a0,0 2px 0 rgba(59,26,58,.35);position:relative}
+.titel-pil::after{content:"";position:absolute;left:18px;top:13px;border:10px solid transparent;border-left:15px solid var(--rosa);border-right:0}
+.titel-borja .titel-pil{margin-left:6px}
+.titel-borja-om{justify-self:center;min-height:48px;padding:0 20px;border:3px solid rgba(59,26,58,.85);border-radius:999px;cursor:pointer;
+  background:rgba(255,250,238,.9);color:var(--plommon);font-family:var(--font-sans);font-size:1.125rem;font-weight:700;box-shadow:0 3px 0 rgba(59,26,58,.5)}
+.titel-borja-om:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(59,26,58,.5)}
+
+.titel-fraga-bak{position:fixed;inset:0;z-index:3;display:grid;place-items:center;padding:20px;background:rgba(40,20,45,.5);animation:upp .25s ease-out both}
+.titel-fraga{width:100%;max-width:340px;display:grid;gap:12px;padding:22px 18px 18px;border:4px solid var(--plommon);border-radius:26px;background:var(--color-cream,#fff6e5);
+  box-shadow:0 8px 0 var(--plommon)}
+.titel-fraga p{margin:0 0 4px;font-size:1.3rem;font-weight:700;line-height:1.35;text-align:center;color:var(--plommon)}
+.titel-nej{min-height:60px;border:0;border-radius:18px;background:var(--color-moss-deep,#2f6a3a);color:#fff;font-family:inherit;font-size:1.35rem;font-weight:700;box-shadow:0 4px 0 #1e4a2d}
+.titel-ja{min-height:52px;border:3px solid var(--color-berry,#c93a5a);border-radius:18px;background:transparent;color:var(--color-berry,#c93a5a);font-family:inherit;font-size:1.125rem;font-weight:700}
+
+/* Barnet tryckte Börja/Fortsätt: försidan tonar bort över ängen */
+.forsida.lamnar{opacity:0;pointer-events:none}
+.forsida-logga{transition:scale .45s ease-in}
+.forsida.lamnar .forsida-logga{scale:1.1}
+
+/* Liggande telefon: allt i en kolumn till vänster (logga i himlen, knappen nere bland blommorna), djuren i mitten syns */
+@media (orientation: landscape) and (max-height: 600px){
+  .forsida{align-items:flex-start;gap:8px;
+    padding:max(12px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(14px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left))}
+  .forsida-topp{justify-items:start;width:auto}
+  .forsida-logga{width:min(40vw,330px);max-height:30vh;object-fit:contain;object-position:left}
+  .titel-under{margin-left:6px;font-size:1.125rem}
+  .forsida-nere{width:min(38vw,320px);justify-items:start}
+  .forsida-laddar{margin:0 0 6px}
+  .titel-fortsatt{min-height:70px;gap:10px;padding:8px 10px 8px 12px;border-radius:26px}
+  .titel-borja{min-height:74px}
+  .titel-fortsatt-rubrik{font-size:1.75rem}
+  .titel-borja .titel-fortsatt-rubrik{font-size:2.1rem}
+  .titel-bild{width:54px;height:54px;border-radius:16px}
+  .titel-pil{width:40px;height:40px}
+  .titel-pil::after{left:15px;top:10px}
+  .titel-knappar{gap:8px}
+}
+/* Stor skärm (dator, surfplatta): luftigare */
+@media (min-width: 900px) and (min-height: 601px){
+  .forsida{padding-top:6vh;padding-bottom:7vh}
+  .forsida-nere{width:min(100%,460px)}
+}
+@media (prefers-reduced-motion: reduce){
+  .forsida *, .forsida *::before, .forsida *::after{animation:none!important}
+  .forsida{transition:none}
+}
+
 /* Titeln är ensam på skärmen: ängen lever bakom, men spelets knappar, introts text och tipsen väntar tills den stängs */
-body:has(.titel) :is(.hud, .hud-bot, .intro, .tred-hint, .banner, .npc-figur, .coach){visibility:hidden}
+body:has(.forsida) :is(.hud, .hud-bot, .intro, .tred-hint, .banner, .npc-figur, .coach){visibility:hidden}

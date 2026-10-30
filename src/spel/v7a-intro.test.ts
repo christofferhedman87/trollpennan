@@ -55,3 +55,16 @@ test("V7a: SpelVy öppnar skrivläget utan stallKanin", () => {
   assert.match(vy, /setLage\("skriv"\)/);
   assert.match(vy, /setBokOpp\(true\)/);
 });
+
+test("Försidan: ett enda laddlager från första bildrutan, bilderna är WebP", () => {
+  const html = las("index.html");
+  assert.match(html, /id="forsida"/);
+  assert.ok(html.indexOf('id="forsida"') > html.indexOf('id="root"'), "titeln ska vara sista dialogen (dialogFokus)");
+  assert.doesNotMatch(las("src/spel/angen3d.tsx"), /ladd-3d/);
+  assert.doesNotMatch(las("src/pages-main.tsx"), /fallback=\{<main/);
+  for (const f of ["logga", "bakgrund-staende", "bakgrund-liggande"]) {
+    const b = fs.readFileSync(`public/forsida/${f}.webp`);
+    assert.equal(b.subarray(8, 12).toString(), "WEBP", f);
+    assert.ok(b.length < 200_000, `${f} är ${b.length} byte`);
+  }
+});

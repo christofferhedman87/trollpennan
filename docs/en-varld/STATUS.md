@@ -22,6 +22,12 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 3. Generera ElevenLabs-röster för `nya-repliker.md` och ta bort raderna ur `data/rost.json` → `vantar_rost`.
 4. Mindre: staket, mur och port ritas som inhägnad med gamla ByggeModell. Stora former kan skymma bakre tomter. Solstjärnor i ladan, djur som lockas av hönshus och damm samt rörelse vid platserna i fjärran är inte gjorda.
 
+## Försidan (2026-10-30)
+- Laddning och titel är ett enda lager: `#forsida` i `index.html` syns från första bildrutan med Christoffers Firefly-bilder (`public/forsida/`, WebP: bakgrund stående 114 kB, liggande 133 kB, logga 59 kB; originalen var 16 MB PNG). En suddig miniatyr ligger inbakad i CSS:en tills den skarpa bilden kommit.
+- Medan spelet laddar hoppar tre lysande bokstäver (a b c). Titeln (`Titel.tsx`) lägger raden och knapparna i försidan när ängen ritat sin första bild (`useStart.angRedo`, senast efter 10 s). Börja/Fortsätt tonar ut försidan över ängen, sedan börjar introt.
+- Den gamla ladd-skylten (`.ladd-3d`) och Suspense-skylten (`.laddar`) är borta. Introts kamera väntar på `angRedo` i stället för `data-klar`. Liggande: logga, rad och knapp i en kolumn till vänster, så att djuren i bilden syns.
+- `#forsida` måste stå efter `#root`: dialogFokus isolerar allt utom den sista synliga dialogen.
+
 ## Baslinje (2026-10-29, live `34490f7`, 375×812, tom äng efter introt)
 - 109 draw calls och 34 354 trianglar. Det är redan över W1:s riktmärke på ≤95 draw calls (stigar, skyltar och horisontmodeller). Block 1 och 3 behöver instansiering och sammanslagna geometrier för att hålla budgeten. Ny budget för en full dal (15 byggen och 20 djur): ≤140 draw calls och ≤150 000 trianglar. Bildtakten går inte att mäta i molnmiljön (programvarurendering).
 

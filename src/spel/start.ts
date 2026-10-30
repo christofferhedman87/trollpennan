@@ -17,9 +17,12 @@ export function visaTitelVidStart(webdriver: boolean, session: Pick<Storage, "ge
   }
 }
 
-export const useStart = create<{ titelOppen: boolean; stang: () => void }>((set) => ({
+export const useStart = create<{ titelOppen: boolean; stang: () => void; angRedo: boolean; redo: () => void }>((set) => ({
   titelOppen: typeof window !== "undefined" && visaTitelVidStart(navigator.webdriver === true, window.sessionStorage),
   stang: () => set({ titelOppen: false }),
+  /** 3D-ängen har ritat sin första bild (eller 3D gick inte att starta). Försidan väntar på den. */
+  angRedo: false,
+  redo: () => set({ angRedo: true }),
 }));
 
 /** Alla spelets nycklar i localStorage (samma urval som menyns "Börja om"). */

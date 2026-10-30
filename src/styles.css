@@ -133,14 +133,6 @@ content:"";width:18px;height:86px;border-radius:8px 8px 3px 3px;background:linea
 .ang.tred::after{display:none}
 .angen-3d canvas{filter:saturate(var(--grad-m,1)) contrast(var(--grad-k,1))}
 .vinjett{position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at 50% 55%,transparent 58%,rgba(20,40,10,var(--vinjett,0)) 100%)}
-.ladd-3d{
-position:absolute;inset:0;z-index:4;display:grid;place-items:center;align-content:center;gap:16px;
-background:linear-gradient(180deg,#7ec8f2 0 42%,#fff4dc 42% 58%,#8fd16a 58% 100%);color:var(--color-ink)}
-.ladd-3d h1{font-family:var(--font-display);margin:0;font-size:2.2rem}
-.ladd-penna{
-width:16px;height:78px;border-radius:8px 8px 2px 2px;background:linear-gradient(#f48fb1,#f48fb1 72%,#f2b632 72%);
-transform:rotate(24deg);animation:penna 1.1s ease-in-out infinite}
-.ladd-3d[data-klar="ja"]{display:none}
 .ang{
 --duk-x:0;--duk-y:0;--duk-w:1;--duk-h:.55;background:#7dce6a;flex:1 1 auto;height:100%;min-height:0;position:relative;overflow:hidden}
 .ang::after{

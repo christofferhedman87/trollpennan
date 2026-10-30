@@ -2,14 +2,19 @@
 // bild på senaste djuret och raden om vad som hände sist, och en diskret "Börja om med en ny värld" med bekräftelse.
 // Nytt barn: bara "Börja". Efter "Börja om" ligger den gamla världen kvar i sessionStorage och kan tas tillbaka så länge
 // den nya världen är tom (ångra skriver aldrig över en värld barnet hunnit börja på).
+// 2026-10-30: titeln ritas i försidan (#forsida i index.html, se forsida.ts) och visar knapparna när ängen är redo.
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { FORSTA, senastRad } from "../forstaStunden.ts";
 import { useMinne } from "../minne.ts";
 import { ljud } from "../ljud.ts";
 import { angraBorjaOm, borjaOmMedKopia, harKopia, laddaOmRent, useStart, ANGRA_NYCKEL } from "../start.ts";
+import { forsidaEl, slappForsida } from "./forsida.ts";
 import "./titel-p2.css";
 
 const T = FORSTA.titel;
+/** Visar knapparna även om ängen dröjer (barnet ska aldrig bara vänta). */
+const SENAST_KNAPPAR_MS = 10000;
 
 /** Kopierar ett utsnitt kring djuret ur 3D-duken. Måste ske i en animationsram direkt efter att scenen ritats.
  *  P3a: utsnittet är djurets egen ritade kropp (window.__tredBild, mätt i djur.tsx) med en smal marginal, inte en fast
@@ -74,21 +79,42 @@ function useDjurBild(uid: string | null) {
 export function Titel() {
   const oppen = useStart((s) => s.titelOppen);
   const stang = useStart((s) => s.stang);
+  const angRedo = useStart((s) => s.angRedo);
   const harVarld = useMinne((s) => s.introSedd || s.ang.length > 0);
   const sista = useMinne((s) => s.ang.at(-1)?.uid ?? null);
   const rad = useMinne((s) => senastRad(s as unknown as Record<string, unknown>));
   const [fraga, setFraga] = useState(false);
   const [kopia] = useState(() => harKopia(window.sessionStorage));
-  const bild = useDjurBild(oppen && harVarld ? sista : null);
+  const [forsida] = useState(forsidaEl);
+  const [sent, setSent] = useState(false);
+  const redo = angRedo || sent;
+  const bild = useDjurBild(oppen && harVarld && redo ? sista : null);
   const nejRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (fraga) nejRef.current?.focus();
   }, [fraga]);
-  if (!oppen) return null;
+  useEffect(() => {
+    if (!oppen || angRedo) return;
+    const t = window.setTimeout(() => setSent(true), SENAST_KNAPPAR_MS);
+    return () => window.clearTimeout(t);
+  }, [oppen, angRedo]);
+  // Laddningsbokstäverna tonar bort och knapparna tonar fram (titel-p2.css, [data-redo])
+  useEffect(() => {
+    if (forsida && oppen && redo) forsida.dataset.redo = "ja";
+  }, [forsida, oppen, redo]);
+  // Utan titel (prov) eller utan försida: släpp fram spelet så fort ängen är redo
+  useEffect(() => {
+    if (!forsida && oppen) stang();
+    else if (!oppen && angRedo) slappForsida();
+  }, [forsida, oppen, angRedo, stang]);
+  if (!oppen || !forsida) return null;
+  const topp = forsida.querySelector(".forsida-topp");
+  const nere = forsida.querySelector(".forsida-nere");
+  if (!topp || !nere) return null;
 
   const borja = () => {
     ljud.lasOpp();
-    stang();
+    slappForsida(stang); // försidan tonar ut över den levande ängen, sedan börjar introt
   };
   const borjaOm = () => {
     borjaOmMedKopia(window.localStorage, window.sessionStorage);
@@ -101,89 +127,93 @@ export function Titel() {
   };
 
   return (
-    <div
-      className="titel"
-      data-testid="titel"
-      role="dialog"
-      aria-modal="true"
-      aria-label={T.logga}
-      onPointerDown={(e) => {
-        e.stopPropagation();
-        ljud.lasOpp();
-      }}
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div className="titel-topp">
-        <h1 className="titel-logga">
-          <span className="titel-penna" aria-hidden />
-          {T.logga}
-        </h1>
-        <p className="titel-under">{T.under}</p>
-      </div>
-      <div className="titel-knappar">
-        {harVarld ? (
-          <>
-            <button
-              type="button"
-              className="titel-fortsatt"
-              data-testid="titel-fortsatt"
-              onPointerDown={(e) => {
-                e.stopPropagation();
-                ljud.lasOpp();
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                borja();
-              }}
-            >
-              <canvas ref={bild.ref} width={152} height={152} className={bild.klar ? "titel-bild klar" : "titel-bild"} aria-hidden />
-              <span className="titel-fortsatt-text">
-                <span className="titel-fortsatt-rubrik">{T.fortsatt} ▸</span>
-                <span className="titel-rad" data-testid="titel-rad">
-                  {rad}
-                </span>
-              </span>
-            </button>
-            <button type="button" className="titel-borja-om" data-testid="titel-borja-om" onClick={() => setFraga(true)}>
-              {T.borja_om}
-            </button>
-          </>
-        ) : (
-          <button
-            type="button"
-            className="titel-fortsatt titel-borja"
-            data-testid="titel-borja"
-            onPointerDown={(e) => {
-              e.stopPropagation();
-              ljud.lasOpp();
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-              borja();
-            }}
-          >
-            <span className="titel-fortsatt-rubrik">{T.borja} ▸</span>
-          </button>
-        )}
-        {kopia && !harVarld ? (
-          <button type="button" className="titel-borja-om" data-testid="titel-angra" onClick={angra}>
-            {T.angra}
-          </button>
-        ) : null}
-      </div>
-      {fraga ? (
-        <div className="titel-fraga-bak" data-testid="titel-fraga" role="alertdialog" aria-modal="true" aria-label={T.fraga} onKeyDown={(e) => e.key === "Escape" && setFraga(false)}>
-          <div className="titel-fraga">
-            <p>{T.fraga}</p>
-            <button ref={nejRef} type="button" className="titel-nej" data-testid="titel-nej" onClick={() => setFraga(false)}>
-              {T.nej}
-            </button>
-            <button type="button" className="titel-ja" data-testid="titel-ja" onClick={borjaOm}>
-              {T.ja}
-            </button>
-          </div>
-        </div>
-      ) : null}
-    </div>
+    <>
+      {createPortal(<p className="titel-under">{T.under}</p>, topp)}
+      {createPortal(
+        <div
+          className="titel"
+          data-testid="titel"
+          role="dialog"
+          aria-modal="true"
+          aria-label={T.logga}
+          aria-busy={!redo}
+          onPointerDown={(e) => {
+            e.stopPropagation();
+            ljud.lasOpp();
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {redo ? (
+            <div className="titel-knappar">
+              {harVarld ? (
+                <>
+                  <button
+                    type="button"
+                    className="titel-fortsatt"
+                    data-testid="titel-fortsatt"
+                    onPointerDown={(e) => {
+                      e.stopPropagation();
+                      ljud.lasOpp();
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      borja();
+                    }}
+                  >
+                    <canvas ref={bild.ref} width={152} height={152} className={bild.klar ? "titel-bild klar" : "titel-bild"} aria-hidden />
+                    <span className="titel-fortsatt-text">
+                      <span className="titel-fortsatt-rubrik">{T.fortsatt}</span>
+                      <span className="titel-rad" data-testid="titel-rad">
+                        {rad}
+                      </span>
+                    </span>
+                    <span className="titel-pil" aria-hidden />
+                  </button>
+                  <button type="button" className="titel-borja-om" data-testid="titel-borja-om" onClick={() => setFraga(true)}>
+                    {T.borja_om}
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  className="titel-fortsatt titel-borja"
+                  data-testid="titel-borja"
+                  onPointerDown={(e) => {
+                    e.stopPropagation();
+                    ljud.lasOpp();
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    borja();
+                  }}
+                >
+                  <span className="titel-fortsatt-rubrik">{T.borja}</span>
+                  <span className="titel-pil" aria-hidden />
+                </button>
+              )}
+              {kopia && !harVarld ? (
+                <button type="button" className="titel-borja-om" data-testid="titel-angra" onClick={angra}>
+                  {T.angra}
+                </button>
+              ) : null}
+            </div>
+          ) : null}
+          {fraga ? (
+            <div className="titel-fraga-bak" data-testid="titel-fraga" role="alertdialog" aria-modal="true" aria-label={T.fraga} onKeyDown={(e) => e.key === "Escape" && setFraga(false)}>
+              <div className="titel-fraga">
+                <p>{T.fraga}</p>
+                <button ref={nejRef} type="button" className="titel-nej" data-testid="titel-nej" onClick={() => setFraga(false)}>
+                  {T.nej}
+                </button>
+                <button type="button" className="titel-ja" data-testid="titel-ja" onClick={borjaOm}>
+                  {T.ja}
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </div>,
+        nere,
+      )}
+    </>
   );
 }
