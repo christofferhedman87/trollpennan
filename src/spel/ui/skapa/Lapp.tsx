@@ -12,17 +12,22 @@ import { forsokDopaText, gavoRuta } from "../gavoRuta.ts";
 import { bestamdAv } from "../hjalp.ts";
 import { useSpel } from "../SpelKontext.ts";
 import { GavaStallKnapp } from "../Stall.tsx";
+import { uppdragText } from "../../aventyr.ts";
+import { dalStyr } from "../../dal/dalStyr.ts";
+import { useArkLapp } from "../../skapa/arkLapp.ts";
+import { aktivtUppdrag, BENGTSSON_BILD } from "../../skapa/uppdragLapp.ts";
+import type { IdeLapp } from "./gataLapp.ts";
 
 const UI = uiJson as unknown as { lapp: Record<string, string>; ide: Record<string, string> };
 const SNABB_NAMN = ["Skuttis", "Misse", "Blixten"] as const;
 
-function LappRam({ bild, fran, text, las, children }: { bild: string | null; fran: string; text: string; las: string; children?: ReactNode }) {
+function LappRam({ bild, fran, text, las, children, portratt = false }: { bild: string | null; fran: string; text: string; las: string; children?: ReactNode; portratt?: boolean }) {
   useEffect(() => {
     if (las) rostKo.lasUpp(las);
   }, [las]);
   return (
     <div className={bild ? "sk-lapp" : "sk-lapp utan-bild"} data-dal="lapp">
-      {bild ? <span className="sk-lapp-bild"><img alt="" src={bild} /></span> : null}
+      {bild ? <span className={portratt ? "sk-lapp-bild portratt" : "sk-lapp-bild"}><img alt="" src={bild} /></span> : null}
       <p className="sk-lapp-text">
         <small>{fran}</small>
         {text}
@@ -35,11 +40,20 @@ function LappRam({ bild, fran, text, las, children }: { bild: string | null; fra
   );
 }
 
-export function Lapp({ ide }: { ide: string[] | null }) {
+export function Lapp({ ide }: { ide: IdeLapp | null }) {
   const k = useSpel();
-  const { gavaTill, onskan } = k.t;
+  const { gavaTill, onskan, ang } = k.t;
   const { remsa } = k.sk;
+  const arkLapp = useArkLapp((s) => s.lapp);
+  const spar = useMinne((s) => s.uppdrag);
   if (gavaTill) return <GavoLapp key={gavaTill} gavaTill={gavaTill} />;
+  if (arkLapp === "uppdrag") {
+    const u = aktivtUppdrag(spar);
+    if (u) {
+      const text = uppdragText(u, ang[0]?.kropp);
+      return <LappRam bild={BENGTSSON_BILD} portratt fran={UI.lapp.uppdrag_fran ?? ""} text={text} las={text} />;
+    }
+  }
   if (k.vy.visaOnskaHjalp && onskan) {
     const djur = k.vy.onskaDjur;
     const namn = djur ? bestamdAv(djur.kropp, true) : "";
@@ -49,13 +63,20 @@ export function Lapp({ ide }: { ide: string[] | null }) {
       </div>
     );
   }
+  if (arkLapp === "tomt") {
+    const t = dalStyr.lage().vald;
+    return <LappRam bild={kortBild("hage")} fran={UI.lapp.tomt_fran ?? ""} text={fyll(UI.lapp.tomt_text ?? "", { n: t != null ? t + 1 : "" })} las={fyll(UI.lapp.tomt_text ?? "", { n: t != null ? t + 1 : "" })} />;
+  }
+  if (ide?.slag === "gata") {
+    return <LappRam bild={ikon("ui", "agg")} fran={UI.lapp.gata_fran ?? ""} text={`${ide.gata} ${ide.streck}`} las={ide.gata} />;
+  }
   if (ide) {
     const har = new Set(remsa.brickor.map((b) => b.id).filter(Boolean));
-    const text = ideText(ide);
+    const text = ideText(ide.ide);
     return (
       <LappRam bild={null} fran={UI.ide.rubrik ?? ""} text={UI.ide.fraga ?? ""} las={text}>
         <div className="sk-ide-rad">
-          {ideKort(ide).map((kort) => (
+          {ideKort(ide.ide).map((kort) => (
             <span key={kort.nyckel} className={har.has(kort.id) ? "sk-ide-bit klar" : "sk-ide-bit"}>
               <img alt="" src={kort.bild} />
             </span>

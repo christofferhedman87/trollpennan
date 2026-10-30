@@ -21,7 +21,6 @@ import type { Kalla } from "../rostKo.ts";
 import type { Banner, Forslag, SidaBygg, Slot, Varld } from "./typer.ts";
 import { GavoPanel } from "./GavoPanel.tsx";
 import { BokSvar } from "./BokSvar.tsx";
-import { UppdragVy } from "./UppdragVy.tsx";
 import { SkapelseBar } from "./SkapelseBar.tsx";
 import { StegKortValjare } from "./StegKortValjare.tsx";
 import "./bok-komp.css";
@@ -266,24 +265,6 @@ export function BokSkarm({ stangBok, visaBanner, andrar, panel, lage, setLage, s
             ) : null}
             {!visaKort ? <div className="skriv-remsa" data-v3="skriv-remsa" style={{ height: 1, flexShrink: 0 }} /> : null}
           </>
-        ) : panel === "uppdrag" ? (
-          <UppdragVy
-            uppFlik={uppFlik}
-            setUppFlik={(f) => setUppFlik(f === "klara" ? "klar" : "pagar")}
-            uppdragSpar={uppdragSpar}
-            ang={ang}
-            text={text}
-            kort={kort}
-            flik={flik}
-            setFlik={setFlik}
-            val={val}
-            valjKort={valjKort}
-            fyllExempel={fyllExempel}
-            skrivTecken={skrivTecken}
-            sudda={sudda}
-            vaknaNu={vaknaNu}
-            setLage={(l) => setLage(l === "stavar" ? "skriv" : l)}
-          />
         ) : (
           <div className="byggbok-wrap" data-testid="byggbok">
             <div className="kort-yta byggbok">

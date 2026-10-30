@@ -12,6 +12,7 @@ import { malTillDuk } from "../ui/hjalp.ts";
 import { TEXTER } from "../ui/spelData.ts";
 import { onskaFarKomma } from "../uppdragsmotor.ts";
 import type { SpelKarna } from "./typer.ts";
+import { useArkLapp } from "../skapa/arkLapp.ts";
 
 export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
   const { setLage, setHand, setVisKort, setMossaOpp, setHalsning, setFotoMal, setMeny, setBoUid, setOnskaPos, setOnskaSyns, setGavaTill, textRef, handRef, overlayRef, onskaSkrivRef, gavaRef, paHandelse, visaOnskaRef } = k.t;
@@ -100,10 +101,10 @@ export function useHandelser(k: Pick<SpelKarna, "t" | "b" | "a">) {
       ljud.boing();
       dalStyr.valj(h.tomt);
       setMeny(null);
-      setPanel("byggbok");
-      setLage("kort");
+      // Nya Skapa (fas D): tomten öppnar Pennans bok med lappen "Här ska det byggas".
+      useArkLapp.getState().satt("tomt");
+      setPanel("spel");
       setBokOpp(true);
-      visaBanner(TEXTER.tomt_hjalp, "ovr", "tapp");
       return;
     }
     if (h.typ === "byggLang") {

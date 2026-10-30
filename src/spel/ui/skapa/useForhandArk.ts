@@ -37,7 +37,7 @@ export function useForhandArk(arkRef: RefObject<HTMLElement | null>, text: strin
       const forra = forhand.lage().ring;
       forhand.visa(f.spec, f.nyckel, f.ring);
       // Ett bygge hamnar på en tomt som kanske inte syns: kameran glider dit (samma som efter Trolla).
-      if (f.spec?.typ === "bygg" && f.ring && (forra?.x !== f.ring.x || forra?.z !== f.ring.z)) dalStyr.fokusera(f.ring.x, f.ring.z, f.ring.z < -1 ? DALEN.kamera.vy_bak : DALEN.kamera.vy_fram);
+      if ((f.spec?.typ === "bygg" || f.nyckel.startsWith("t:")) && f.ring && (forra?.x !== f.ring.x || forra?.z !== f.ring.z)) dalStyr.fokusera(f.ring.x, f.ring.z, f.ring.z < -1 ? DALEN.kamera.vy_bak : DALEN.kamera.vy_fram);
     }, MS);
     return () => window.clearTimeout(t);
   }, [text, paAngen]);

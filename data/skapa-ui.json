@@ -109,6 +109,8 @@
     "uppdrag_fran": "Uppdrag från Doktor Bengtsson",
     "gava_fran": "Present till {djur}",
     "tomt_fran": "Här ska det byggas",
+    "gata_fran": "Hemligt ord",
+    "tomt_text": "Tomt {n}. Skriv vad som ska stå här!",
     "dop": "Döp",
     "byt_namn": "Byt namn",
     "lyssna_aria": "Lyssna"

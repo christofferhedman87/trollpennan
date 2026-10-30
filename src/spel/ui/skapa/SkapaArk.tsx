@@ -16,6 +16,8 @@ import { Tangenter } from "./Tangenter.tsx";
 import { Trollremsa } from "./Trollremsa.tsx";
 import { flygGnistor, stjarnregn } from "./gnistor.ts";
 import { useForhandArk } from "./useForhandArk.ts";
+import { nyGata, type IdeLapp } from "./gataLapp.ts";
+import { useArkLapp } from "../../skapa/arkLapp.ts";
 import { forhand } from "../../skapa/forhand.ts";
 import { useMinne } from "../../minne.ts";
 import { START_PLATS } from "../../platser.ts";
@@ -29,7 +31,8 @@ export function SkapaArk() {
   const { textRef, gavaTill, onskan, text, varld, omrade } = k.t;
   const { remsa, vy, setVy, trolla, avslutaOrd, puff } = k.sk;
   const [flik, setFlik] = useState<Fraga>("vad");
-  const [ide, setIde] = useState<string[] | null>(null);
+  const [ide, setIde] = useState<IdeLapp | null>(null);
+  const ideNr = useRef(0);
   const [penna, setPenna] = useState<{ lage: "vilar" | "puttar" | "blinka" | "trollar"; n: number }>({ lage: "vilar", n: 0 });
   const arkRef = useRef<HTMLElement>(null);
   const lagerRef = useRef<HTMLDivElement>(null);
@@ -38,13 +41,18 @@ export function SkapaArk() {
   useForhandArk(arkRef, text, varld === "ang" && !omrade && plats === START_PLATS);
 
   useEffect(() => {
+    // Boken öppnar alltid i startläget (föräldrasidan: tangenterna först, eller Ordhjälpen först).
+    setVy(useMinne.getState().startLage === "kort" ? "hjalp" : "skriv");
     // Öppnas boken tom och utan lapp frågar Pennan vad barnet vill trolla fram.
-    if (!textRef.current.trim() && !gavaTill && !onskan) rostKo.lasUpp(UI.rost.oppna ?? "");
+    if (!textRef.current.trim() && !gavaTill && !onskan && !useArkLapp.getState().lapp) rostKo.lasUpp(UI.rost.oppna ?? "");
     const ned = (e: KeyboardEvent) => {
       if (e.key === "Escape" && !e.metaKey && !e.ctrlKey && !e.altKey) stangBok();
     };
     window.addEventListener("keydown", ned);
-    return () => window.removeEventListener("keydown", ned);
+    return () => {
+      window.removeEventListener("keydown", ned);
+      useArkLapp.getState().satt(null);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- en gång när arket öppnas
   }, []);
   useEffect(() => {
@@ -110,8 +118,10 @@ export function SkapaArk() {
             <Hjalprad
               oppnaHjalp={() => oppnaHjalp()}
               ide={() => {
-                const ny = nyIde(ide);
-                setIde(ny);
+                // Varannan gång en bildgåta, varannan en gåta om ett hemligt ord. Tärningen skriver aldrig åt barnet.
+                ideNr.current += 1;
+                const gata = ideNr.current % 2 === 0 ? nyGata() : null;
+                setIde(gata ?? { slag: "bild", ide: nyIde(ide?.slag === "bild" ? ide.ide : null) });
               }}
             />
             <Tangenter klar={klar} />
