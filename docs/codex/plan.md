@@ -1,3 +1,125 @@
+# Åtgärdsplan T-01–T-35 för Codex och Claude Code
+
+> **Aktuellt 2026-10-30:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. Nästa arbete: **E1:s hållspärr (T-12), därefter A1 (T-01/T-02/T-31)**; produktbeslut beroende delar väntar på svar.
+
+## Mandat och statusord
+
+Christoffer har beställt hela granskningen. Bevara sparformat v2, testad markmigrering, sparade världar, Cloudflare och befintliga användbara tillgångar. Inga nya beroenden, hemligheter, checkpointdokument eller ändringar i `recovery/`. Svenska namn och texter från data. Befintliga statusdokument är gemensamt arbetsminne; nästa agent ska inte behöva chatten eller lokala scratch-filer.
+
+**Planerad → pågår → implementerad → verifierad → granskad → mergad → publicerad.** En punkt stängs först när alla dess acceptanskrav är verifierade och leveransen kontrollerad. Delresultat markeras uttryckligen. Fysiska iPad-/barntest, godkänd uppläsning och Christoffers textgranskning får aldrig ersättas av automation eller påstås gjorda.
+
+## Beslut och stoppgränser
+
+B1–B8 har ställts som ett samlat valpaket; svar väntas. Rekommendationerna i underlaget är förslag, inte godkännanden. Spara svaret i [beslut.md](beslut.md) och uppdatera berörda regler när det kommer.
+
+| Beslut | Rekommendation | Berörda block |
+|---|---|---|
+| B1 | Väktarens dröm avgör vilka svar som räknas; vänlig nästan-ledtråd | B3 |
+| B2 | Barnets uttryckligen skrivna ledsen/arg tillåts; inga självalstrade negativa behov | C4 |
+| B3 | Slumpad tvåsiffrig multiplikation och minst 30 dagars lokalt arkiv | E1:s räknespärr, E2 |
+| B4 | Christoffer läser de 91 uppdragen i omgångar före `granskad:true` | B4/BC |
+| B5 | Pausa Mossa tills hon introduceras | D1/D3 |
+| B6 | Skogen/Sjön/Grottan; Vad?/Hurdan?/Vad har den?/Vad gör den? | D3/F3 |
+| B7 | Byggidéer i Pennans bok; avveckla separat Byggbok | F1 |
+| B8 | Dokumenterat 44 px-undantag för bokstavstangenter + bokstavsförstoring vid tryck | G2 |
+
+Underlaget kräver: **”Före merge granskar den andra agenten diffen (Codex granskar Claudes PR och tvärtom)”** för P1. Claude kan inte anropas här. Christoffer har därför tillfrågats om Claude ska granska färdiga P1-PR:er eller om en oberoende Codex-granskare får ersätta detta. Tills svaret finns: implementera, prova och spara konkreta PR:er, men merga inte P1. Detta blockerar inte planering eller oberoende implementation. Ingen låtsad Claude-granskning.
+
+## Arbetsblock och ordning
+
+Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avgränsad etapp/punkt får egen branch och PR med T-id. Arbeta E → A → B/C → D → F → G. E3 kan göras oberoende. D/F:s grund kan förberedas efter A. Avsluta A–C före den äldre planens block 7–11; gammalt block 6 om ljud samordnas med D. Ta nästa oberoende del om ett beslut saknas.
+
+| Block | Lösning och avgränsning | Beroenden | Storlek / huvudsakligt prov |
+|---|---|---|---|
+| E1 · T-12 | Håll 3 sekunder med synlig progress, avbryt vid släpp/leave/cancel/unmount; separat slumpad räknespärr | Räknevalet väntar B3; hållspärren oberoende | S · kort klick/avbruten hållning öppnar inte, full hållning öppnar |
+| E2 · T-13 | All återställning bakom föräldraspärr; daterat beständigt arkiv, säker återställning även efter ny flik | B3, E1 | M · arkivfel får aldrig tömma världen; gamla och upprepade återställningar |
+| E3 · T-14 | Manifest, försök till persistent storage, ärlig hemskärms-/kopieinformation och senaste nedladdade kopia | Oberoende | S · nekat/ej stött persist påverkar inte sparning; manuellt iPad-långtidstest kvar |
+| A0 · T-03/T-04 | Ren `bokMal`: aktivt uppdrag/önskan/gåva/tomt/plats i gemensam prioritetsordning | Befintliga flöden | M · prioritets- och livscykelprov, inget nytt parallellt måltillstånd |
+| A1 · T-01/T-02/T-31 | Samma Trolla-väg för tangenter/Enter/Penna; klickbar tom remsa i hjälp; vad-lucka behåller skrivläget | Oberoende | M · faktiska klick, tom mening, textbevarande och egen text → skapelse |
+| A2 · T-03/T-04/T-24/T-26 | Målanpassade kort/tips/idéer, separerad gåta, panoreringstips endast i fri värld | A0; T-03 slutverifieras med B | M · alla 91+42 mål får minst två fungerande hjälpvägar; riktiga kontextbyten |
+| B0 · T-05 | Delad ren betydelsemotor: kravgrupper, antal, olika subjekt, taggar/böjningar; saknat krav från data | A0 | L · actual parser + `data/test-uppdragssvar.json`, minst 3 ja/2 nej per uppdrag |
+| B1 · T-05/T-18 | Gå igenom samtliga 91 uppdrag och matcha mål, krav, förslag och nästan-text | B0; B4 för mänsklig textgranskning | L · 455+ fixtures, inga godkända enstaka ord för sammansatta krav |
+| B2 · T-06 | Kroppsdelsriktiga önskningar; stäng boken och visa tack/ledtråd även vid miss | B0, A0 | M · kall kanin + strumpor ja, hatt nej, synlig reaktion och kvarstående önskan |
+| B3 · T-15 | Väktardröm med samma betydelsekrav, nästan-hint och avsändare | B0, B1-beslut | S · uggla nej, honungskaka ja |
+| C1 · T-07 | Behåll relationer i tolk, formel och faktisk placering; valfria bakåtkompatibla fält | Oberoende; B för uppdragen | L · på/under/i/vid/bredvid/med, gammal v2 och export/import |
+| C2 · T-08 | Bevara böjning, plural, artiklar och barnets formel; säker hantering av känd gammal vingform | C1 | M · referensfraser/idéer/önskeexempel; inget tyst textbyte |
+| C3 · T-11 | Å/ä/ö-kandidater före sällsynta ordträffar; samma explicita stavningsval för byggord | Oberoende | M · hast→häst, rott→rött; behåll ger aldrig automatisk rättning |
+| C4 · T-20 | Känslor och vardagsverb med datauttryck/rörelser; monster/t-rex/lekplats får form | B2, valfria fält med standardvärden | L · explicit ledsen katt, dansar/sover etc; gamla världar och kopior |
+| BC · T-19/T-18 | Berättelsebehov i stället för grammatikprov; riktiga relationer krävs | B0, C1; B4 för granskad-flagga | M · alla fyra omskrivna uppdrag har ja/nej och synligt rimligt resultat |
+| D0 · T-17 | En meddelandekö med prioritet/livscykel/avsändare, kopplad till befintlig röstkö | A0 | M · kvitto → djursvar → uppdragstack → guide, inget tappat/dubbelt budskap |
+| D1 · T-09 | Humörtyp+uid styr faktisk inbjudan, separat djurmeny; ikon över huvudet | D0, A0 | M · boll öppnar lekhandling, inte gåva; sov/utflykt ger rätt handling |
+| D2 · T-10 | Verkligt måldjur, uppdragstillstånd och kamerafokus synligt ovanför boken | A0, B0, D0 | M · kall häst visas kall och synlig, glad efter lösning; v2/kopior |
+| D3 · T-16/T-17/T-23 | Namn/porträtt på avsändare, korrekt önskelapp, pausad Mossa och gemensam dataordlista | D0, B5/B6 | M · text/ljud samma ord, kontextmedveten textkontroll; röstlista uppdateras |
+| F1 · T-21 | Byggidéer integreras i Pennans bok; mark köps i verkliga dalen; rätt Solstjärnor | A, B7 | M · varje bygg-/markknapp gör vad den heter, fria ord fortsatt fria |
+| F2 · T-22 | Tom Låda har riktig tomvy; Ordjakten/Guldord öppnar respektive innehåll | Oberoende | S · varje Min bok-ruta öppnar rätt panel och räknare |
+| F3 · T-25 | Fyra riktiga frågor, korrekta kategorier och separat skrivknapp | A2, B6 | S · frågetecken, horn/kroppsdelar, rubrikkort och fokus |
+| F4 · T-27 | Låg liggande bok med kompakt läsbar lapp, fast remsa och hel kortrad | A1/A2, D | M · 375×812, 812×375 och 667×375, även stavning/guld |
+| F5 · T-28 | Platsspecifika tips och geometriskt reservutrymme för Väktare/returskylt | A2, D2 | M · nya djur och skylt skymmer inte Väktaren i båda vyer |
+| G1 · T-29/T-32 | Ingen skakning vid felslag; kvitto anger verkliga guldord | A1 | S · eget ord/hjälpord/flerordsfras och positiv fortsättning |
+| G2 · T-30 | Tangentpopup och dokumenterat beslutat undantag, övriga mål ≥44 px | B8 | S · pointer cancel/leave, popup i skärm, annan UI oförminskad |
+| G3 · T-33/T-34 | Verkliga kartplatser, stora högtalare/fylld karta; läsbara världsskyltar från start | B6 för namn | M · karta/alias, 44 px, projection och riktiga skyltklick |
+| G4 · T-35 | Fullständigt bevarade licenser sist under Tack till | Oberoende | S · föräldrasidans ordning och åtkomlig attribution |
+
+## Täckning och leveranslogg
+
+Alla punkter är **planerade**, inget i den nya granskningen är ännu implementerat eller publicerat. Kolumnen uppdateras med kod-SHA, röda/gröna prov, faktisk granskare, PR/merge och publiceringsbevis när arbete görs. Ett gemensamt block kan ge delresultat men stänger inte automatiskt hela punkten.
+
+| T-id | Huvudblock | Status / kvarvarande acceptans |
+|---|---|---|
+| T-01 | A1 | Planerad |
+| T-02 | A1 | Planerad |
+| T-03 | A0/A2/B | Planerad; kräver alla 133 måls hjälpvägar |
+| T-04 | A0/A2 | Planerad |
+| T-05 | B0/B1 | Planerad; ≥455 ja/nej-fixtures |
+| T-06 | B2 | Planerad |
+| T-07 | C1 | Planerad; faktisk värld och gamla v2/kopior |
+| T-08 | C2 | Planerad |
+| T-09 | D1 | Planerad |
+| T-10 | D2 | Planerad |
+| T-11 | C3 | Planerad |
+| T-12 | E1 | Planerad; B3 väntas för räknevalet |
+| T-13 | E2 | Planerad; B3 väntas |
+| T-14 | E3 | Planerad; ingen kod kan garantera Safaris beständighet |
+| T-15 | B3 | Planerad; B1 väntas |
+| T-16 | D3 | Planerad |
+| T-17 | D0/D3 | Planerad; B5 väntas |
+| T-18 | B1/BC | Planerad; mänsklig läsning B4 krävs före `granskad:true` |
+| T-19 | BC | Planerad; B+C först |
+| T-20 | C4 | Planerad; B2 väntas |
+| T-21 | F1 | Planerad; B7 väntas |
+| T-22 | F2 | Planerad |
+| T-23 | D3 | Planerad; B6 väntas |
+| T-24 | A2 | Planerad |
+| T-25 | F3 | Planerad; B6 väntas |
+| T-26 | A2 | Planerad |
+| T-27 | F4 | Planerad |
+| T-28 | F5 | Planerad |
+| T-29 | G1 | Planerad |
+| T-30 | G2 | Planerad; B8 väntas |
+| T-31 | A1 | Planerad |
+| T-32 | G1 | Planerad |
+| T-33 | G3 | Planerad |
+| T-34 | G3 | Planerad |
+| T-35 | G4 | Planerad |
+
+## Fortsätt här — gäller både Codex och Claude
+
+1. Läs AGENTS/regler och befintliga Skapa-/En värld-statusar, sedan denna aktiva plan och det fullständiga underlaget i `granskning.md`. Läs `beslut.md`; använd inte förslag som beslut. Bevara redan levererade gamla block.
+2. `git status`, `git fetch origin` och utgå från aktuella `origin/main`; ingen reset eller force-push. PR #247 ingår inte. Kontrollera öppna T-id-PR:er före ny branch så arbete inte dubbleras. Planens ursprungsbaslinje är 2c761d3.
+3. Första kodsteget är E1:s oberoende 3-sekundershållning, därefter A1. Ta B3-delen när beslut finns. Skriv först ett reproducerbart rött UI-prov mot baslinjen, rätta, gör samma prov grönt. P1 lämnas fullt verifierat i PR för föreskriven andragranskare om inget annat godkänts.
+4. Alla kodblock kör sju grindar: `typecheck`, `typecheck:pages`, `check:struktur`, `lint`, `test:product`, `build:pages`, `check:pages-output`. Testid ändras bara avsiktligt; känd P3a-tidströskel höjs aldrig. Nya Node-prov läggs i befintliga `test:product`. `npm ci` kördes grönt på baslinjen; upprepa vid saknade/ändrade beroenden.
+5. Förhandsvisa bygget: `node node_modules/vite/bin/vite.js preview --config vite.pages.config.ts --port 4173 --strictPort`. Browserprov med `TROLLPENNAN_REPO=<repo>` och `CHROMIUM=<chromium>`. Använd verkliga klick, inga force-klick. Kontrollera stående/liggande och vid F4 även 667×375. Spara aldrig skärmbilder i GitHub eller svar.
+6. Valfria sparfält får säkra standardvärden. Prova gammal v2, export/import/omladdning och felaktig kopia utan mutation. Arkiv måste skrivas före återställning; lagringsfel får inte radera något.
+7. Samma PR uppdaterar denna täckning och berörd STATUS samt alla ändrade repliker i `docs/en-varld/nya-repliker.md`. Röst saknas tills rätt inspelning faktiskt finns; inga nya kostnader/tjänster antas.
+8. Kritisk granskning enligt beslutad P1-regel före merge. Kontrollera Cloudflare **på main** och SHA-256 på de serverade filerna mot motsvarande lokala bygge. Branch-checkens omedelbara Cloudflare-fel är känt. Redovisa merge och publicering separat.
+9. Avsluta varje block med kvarvarande arbete och tre svagaste punkter. Nästa agent uppdaterar samma filer; skapa inga nya överlämningsdokument. Alla prov och nödvändiga instruktioner ska vara committade i GitHub.
+
+**Svagaste punkter just nu:** 1) B1–B8 och P1-granskarval väntar på användaren. 2) T-18 kan förberedas men kräver Christoffers faktiska textläsning; nya röster kräver godkända inspelningar. 3) Safari långtidslagring, fysisk mobilprestanda och barns upplevelse kan inte bevisas i molnets syntetiska prov.
+
+---
+
+# Historik: tidigare block 1–5 och äldre fortsättningsförslag
+
 # Utvecklingsplan för Trollpennan
 
 > **Aktuellt 2026-10-30: övertagandet och block 1–5 är levererade.** #280, #282 (ersätter #281), #283 och #284 är mergade och verifierade live. Senaste verifierade spelkod på main är `a5c6b4d` (#284). Alla sju slutgrindar är gröna, 546/546 produkttester; Cloudflare och serverade filer är kontrollerade separat. Nästa agent börjar vid "Fortsätt här", bevarar de dokumenterade avgränsningarna och gör inte om levererade block.
@@ -132,7 +254,7 @@ Tre svagaste kvarstående punkter: inga riktiga barntester; ingen mätning på f
   - **Codex fortsättning:** #281:s enda ändringscommit är rebasad på `origin/main` (`3f092b5`) i nya grenen `codex/block-04b2-bygghem`. Originalgrenen lämnas orörd, eftersom force-push är förbjuden; ersättnings-PR #282 är öppen och #281 är stängd med länk dit. Hemreseprovet kördes först mot 4b-1-bygget och blev rött exakt efter att huset skapats: `plats` blev inte `ang` inom 15 s. Inget force-klick. Kodgranskningen fann även att ett redan konsumerat fokus kunde spelas upp vid andra dalmeddelanden efter ommontering; fokus tas nu atomärt en gång med `taFokus`, med regression för val/flytt och nästa riktiga fokus. Samtliga grindar och alla fyra browserfall har passerat; kritisk slutgranskning utan blockerare. Ingen ändring i sparformat, markmigrering eller Cloudflare-koppling. Mergad som `675e5ee`; Cloudflare grönt (check 124270183132), och index, mobile-b03.css samt båda index-/Spel-delarnas JS och CSS är byteidentiska med det lokala main-bygget (SHA-256).
 - Regressioner som återstår för helt block 4: gåva/önskan/uppdrag med förhandsvisning öppen på utflykt (4a-provets prioritetsfall är gröna men tittar inte på ringen), samt fysisk mobilprestanda (molnets programvarurendering är inte mobil-FPS).
 
-## Fortsätt här — Codex eller Claude Code
+## Historisk fortsättning efter block 1–5 (ersatt av den aktiva planen överst)
 
 1. Läs `AGENTS.md`, `projektregler.md`, aktuell Skapa-/En värld-status och denna plans Leveransläge. Granskningen är redan gjord; börja vid nästa oavslutade block. Betygen avser baslinjen, inte barntest.
 2. Kontrollera `git status` och hämta aktuella `origin/main` utan reset eller force-push. Bevara lokalt arbete. Använd befintlig checkout, inget extra worktree behövs. PR #247 är äldre gårdsinramning och ingår inte här.
