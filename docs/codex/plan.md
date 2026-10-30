@@ -1,6 +1,6 @@
 # Åtgärdsplan T-01–T-35 för Codex och Claude Code
 
-> **Aktuellt 2026-10-30:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. Nästa arbete: **E1:s hållspärr (T-12), därefter A1 (T-01/T-02/T-31)**; produktbeslut beroende delar väntar på svar.
+> **Aktuellt 2026-10-30:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. Nästa arbete: **E1/E2 trygg föräldraspärr och återställning (T-12/T-13), därefter A1 (T-01/T-02/T-31)**. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1.
 
 ## Mandat och statusord
 
@@ -10,7 +10,7 @@ Christoffer har beställt hela granskningen. Bevara sparformat v2, testad markmi
 
 ## Beslut och stoppgränser
 
-B1–B8 har ställts som ett samlat valpaket; svar väntas. Rekommendationerna i underlaget är förslag, inte godkännanden. Spara svaret i [beslut.md](beslut.md) och uppdatera berörda regler när det kommer.
+**Christoffer godkände hela B1–B8-paketet 2026-10-30**, se [beslut.md](beslut.md). B4 är godkänt arbetssätt, inte ett godkännande av ännu olästa uppdragstexter.
 
 | Beslut | Rekommendation | Berörda block |
 |---|---|---|
@@ -23,7 +23,7 @@ B1–B8 har ställts som ett samlat valpaket; svar väntas. Rekommendationerna i
 | B7 | Byggidéer i Pennans bok; avveckla separat Byggbok | F1 |
 | B8 | Dokumenterat 44 px-undantag för bokstavstangenter + bokstavsförstoring vid tryck | G2 |
 
-Underlaget kräver: **”Före merge granskar den andra agenten diffen (Codex granskar Claudes PR och tvärtom)”** för P1. Claude kan inte anropas här. Christoffer har därför tillfrågats om Claude ska granska färdiga P1-PR:er eller om en oberoende Codex-granskare får ersätta detta. Tills svaret finns: implementera, prova och spara konkreta PR:er, men merga inte P1. Detta blockerar inte planering eller oberoende implementation. Ingen låtsad Claude-granskning.
+Underlaget kräver fyra ögon för P1. **Christoffer tillåter uttryckligen en oberoende Codex-agent som andra granskare**, så fullständigt provade och granskade P1-PR:er kan mergas här. Granskaren får diff, acceptanskrav och provresultat; fynd rättas före merge. Ingen Codex-granskning anges som utförd av Claude.
 
 ## Arbetsblock och ordning
 
@@ -31,7 +31,7 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 
 | Block | Lösning och avgränsning | Beroenden | Storlek / huvudsakligt prov |
 |---|---|---|---|
-| E1 · T-12 | Håll 3 sekunder med synlig progress, avbryt vid släpp/leave/cancel/unmount; separat slumpad räknespärr | Räknevalet väntar B3; hållspärren oberoende | S · kort klick/avbruten hållning öppnar inte, full hållning öppnar |
+| E1 · T-12 | Håll 3 sekunder med synlig progress, avbryt vid släpp/leave/cancel/unmount; separat slumpad räknespärr | B3 godkänt | S · kort klick/avbruten hållning öppnar inte, full hållning öppnar |
 | E2 · T-13 | All återställning bakom föräldraspärr; daterat beständigt arkiv, säker återställning även efter ny flik | B3, E1 | M · arkivfel får aldrig tömma världen; gamla och upprepade återställningar |
 | E3 · T-14 | Manifest, försök till persistent storage, ärlig hemskärms-/kopieinformation och senaste nedladdade kopia | Oberoende | S · nekat/ej stött persist påverkar inte sparning; manuellt iPad-långtidstest kvar |
 | A0 · T-03/T-04 | Ren `bokMal`: aktivt uppdrag/önskan/gåva/tomt/plats i gemensam prioritetsordning | Befintliga flöden | M · prioritets- och livscykelprov, inget nytt parallellt måltillstånd |
@@ -77,25 +77,25 @@ Alla punkter är **planerade**, inget i den nya granskningen är ännu implement
 | T-09 | D1 | Planerad |
 | T-10 | D2 | Planerad |
 | T-11 | C3 | Planerad |
-| T-12 | E1 | Planerad; B3 väntas för räknevalet |
-| T-13 | E2 | Planerad; B3 väntas |
+| T-12 | E1 | Planerad; B3 godkänt |
+| T-13 | E2 | Planerad; B3 godkänt |
 | T-14 | E3 | Planerad; ingen kod kan garantera Safaris beständighet |
-| T-15 | B3 | Planerad; B1 väntas |
+| T-15 | B3 | Planerad; B1 godkänt |
 | T-16 | D3 | Planerad |
-| T-17 | D0/D3 | Planerad; B5 väntas |
+| T-17 | D0/D3 | Planerad; B5 godkänt |
 | T-18 | B1/BC | Planerad; mänsklig läsning B4 krävs före `granskad:true` |
 | T-19 | BC | Planerad; B+C först |
-| T-20 | C4 | Planerad; B2 väntas |
-| T-21 | F1 | Planerad; B7 väntas |
+| T-20 | C4 | Planerad; B2 godkänt |
+| T-21 | F1 | Planerad; B7 godkänt |
 | T-22 | F2 | Planerad |
-| T-23 | D3 | Planerad; B6 väntas |
+| T-23 | D3 | Planerad; B6 godkänt |
 | T-24 | A2 | Planerad |
-| T-25 | F3 | Planerad; B6 väntas |
+| T-25 | F3 | Planerad; B6 godkänt |
 | T-26 | A2 | Planerad |
 | T-27 | F4 | Planerad |
 | T-28 | F5 | Planerad |
 | T-29 | G1 | Planerad |
-| T-30 | G2 | Planerad; B8 väntas |
+| T-30 | G2 | Planerad; B8 godkänt |
 | T-31 | A1 | Planerad |
 | T-32 | G1 | Planerad |
 | T-33 | G3 | Planerad |
@@ -106,7 +106,7 @@ Alla punkter är **planerade**, inget i den nya granskningen är ännu implement
 
 1. Läs AGENTS/regler och befintliga Skapa-/En värld-statusar, sedan denna aktiva plan och det fullständiga underlaget i `granskning.md`. Läs `beslut.md`; använd inte förslag som beslut. Bevara redan levererade gamla block.
 2. `git status`, `git fetch origin` och utgå från aktuella `origin/main`; ingen reset eller force-push. PR #247 ingår inte. Kontrollera öppna T-id-PR:er före ny branch så arbete inte dubbleras. Planens ursprungsbaslinje är 2c761d3.
-3. Första kodsteget är E1:s oberoende 3-sekundershållning, därefter A1. Ta B3-delen när beslut finns. Skriv först ett reproducerbart rött UI-prov mot baslinjen, rätta, gör samma prov grönt. P1 lämnas fullt verifierat i PR för föreskriven andragranskare om inget annat godkänts.
+3. Första kodsteget är E1/E2:s föräldraspärr och säkra arkiv, därefter A1. Skriv först ett reproducerbart rött UI-prov mot baslinjen, rätta, gör samma prov grönt. P1 lämnas fullt verifierat i PR för föreskriven andragranskare om inget annat godkänts.
 4. Alla kodblock kör sju grindar: `typecheck`, `typecheck:pages`, `check:struktur`, `lint`, `test:product`, `build:pages`, `check:pages-output`. Testid ändras bara avsiktligt; känd P3a-tidströskel höjs aldrig. Nya Node-prov läggs i befintliga `test:product`. `npm ci` kördes grönt på baslinjen; upprepa vid saknade/ändrade beroenden.
 5. Förhandsvisa bygget: `node node_modules/vite/bin/vite.js preview --config vite.pages.config.ts --port 4173 --strictPort`. Browserprov med `TROLLPENNAN_REPO=<repo>` och `CHROMIUM=<chromium>`. Använd verkliga klick, inga force-klick. Kontrollera stående/liggande och vid F4 även 667×375. Spara aldrig skärmbilder i GitHub eller svar.
 6. Valfria sparfält får säkra standardvärden. Prova gammal v2, export/import/omladdning och felaktig kopia utan mutation. Arkiv måste skrivas före återställning; lagringsfel får inte radera något.
@@ -114,7 +114,7 @@ Alla punkter är **planerade**, inget i den nya granskningen är ännu implement
 8. Kritisk granskning enligt beslutad P1-regel före merge. Kontrollera Cloudflare **på main** och SHA-256 på de serverade filerna mot motsvarande lokala bygge. Branch-checkens omedelbara Cloudflare-fel är känt. Redovisa merge och publicering separat.
 9. Avsluta varje block med kvarvarande arbete och tre svagaste punkter. Nästa agent uppdaterar samma filer; skapa inga nya överlämningsdokument. Alla prov och nödvändiga instruktioner ska vara committade i GitHub.
 
-**Svagaste punkter just nu:** 1) B1–B8 och P1-granskarval väntar på användaren. 2) T-18 kan förberedas men kräver Christoffers faktiska textläsning; nya röster kräver godkända inspelningar. 3) Safari långtidslagring, fysisk mobilprestanda och barns upplevelse kan inte bevisas i molnets syntetiska prov.
+**Svagaste punkter just nu:** 1) Betydelsekrav och relationer berör många flöden och kräver gemensam regression. 2) T-18 kan förberedas men kräver Christoffers faktiska textläsning; nya röster kräver godkända inspelningar. 3) Safari långtidslagring, fysisk mobilprestanda och barns upplevelse kan inte bevisas i molnets syntetiska prov.
 
 ---
 

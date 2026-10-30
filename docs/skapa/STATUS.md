@@ -1,6 +1,6 @@
 # Status: Nya Skapa (spec: SPEC-skapa.md)
 
-> **Ny aktiv beställning 2026-10-30:** åtgärda T-01–T-35 enligt [gemensam plan](../codex/plan.md) och [fullständigt underlag](../codex/granskning.md). Befintliga levererade block nedan bevaras. Ansvar här: Pennans bok: A/B/C, D:s avsändare och F:s layout. Baslinje 2c761d3: alla sju grindar gröna, 546/546. Inga nya T-punkter är ännu levererade; produktbeslut B1–B8 och P1-granskarval väntas. Första kodsteget är E1:s hållspärr, därefter A1.
+> **Ny aktiv beställning 2026-10-30:** åtgärda T-01–T-35 enligt [gemensam plan](../codex/plan.md) och [fullständigt underlag](../codex/granskning.md). Befintliga levererade block nedan bevaras. Ansvar här: Pennans bok: A/B/C, D:s avsändare och F:s layout. Baslinje 2c761d3: alla sju grindar gröna, 546/546. Inga nya T-punkter är ännu levererade; produktbeslut B1–B8 och oberoende Codex-granskare är godkända. Första kodsteget är E1:s hållspärr, därefter A1.
 
 Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först.
 

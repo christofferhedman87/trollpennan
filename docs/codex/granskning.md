@@ -1,4 +1,4 @@
-> **Aktivt underlag 2026-10-30.** Christoffers uppladdade granskning av `2c761d3`, återgiven oförändrad nedan. SHA-256 för originalfilen: `f316e52b4d930a41e7d4b12ca7a241f829f8923f15b734aa786a9edd17206306`. Genomförande och täckning finns i [plan.md](plan.md). Beslut B1–B8 och P1-granskning inväntar svar; inget sådant beslut antas av denna kopiering.
+> **Aktivt underlag 2026-10-30.** Christoffers uppladdade granskning av `2c761d3`, återgiven oförändrad nedan. SHA-256 för originalfilen: `f316e52b4d930a41e7d4b12ca7a241f829f8923f15b734aa786a9edd17206306`. Genomförande och täckning finns i [plan.md](plan.md). Christoffer har därefter godkänt B1–B8 och oberoende Codex-granskare, se beslut.md.
 
 # Trollpennan: granskning och åtgärdsplan
 

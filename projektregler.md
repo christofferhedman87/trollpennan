@@ -34,7 +34,7 @@ Historiska regler finns i `recovery/pre-cloudflare/projektregler.md` och gäller
 
 ## Spelloopen (från runda 3)
 - Djur önskar sig saker, barnet uppfyller önskan genom att skriva, får stjärnor och köper sidor i boken som ger nya ord att jaga.
-- Ingen tidspress: önskningar går aldrig ut, djur blir aldrig ledsna, stjärnor försvinner aldrig.
+- Ingen tidspress: önskningar går aldrig ut, spelet gör aldrig djuren ledsna av sig självt, stjärnor försvinner aldrig.
 - Inga butiker med riktiga pengar, inga erbjudanden, inga nedräkningar, inga "kom tillbaka i morgon"-lås.
 - Djurord fungerar alltid, oavsett vilka sidor som är köpta. Bokens sidor ger mål och ledtrådar, inte behörighet.
 - Kreativiteten låses aldrig (beslut 2026-10-29, ersätter undantaget från runda 4): alla byggord, former, material, färger och delar fungerar alltid. Stjärnor köper mark, utbyggnader av dalen och specialbyggnader, aldrig rätten att skriva ett ord. Plan: `docs/plan-en-varld-2026-10-29.md`.
@@ -58,6 +58,7 @@ Historiska regler finns i `recovery/pre-cloudflare/projektregler.md` och gäller
 ## Bild och layout
 - All konst läses via `kit.json`, enligt kontraktet i `karna.md`. Platshållare följer samma kontrakt.
 - Text minst 18 px (ordkort minst 22 px), tryckytor minst 44 px, inget viktigt under kanten och ingen sidrullning i spelet.
+- Beslutat undantag B8 (2026-10-30): bokstavstangenter får vara smalare än 44 px på telefon, med förstorad bokstav vid tryck. Övriga tryckytor följer fortsatt 44 px.
 - Använd telefonens skärm fullt ut. Inga stora tomma ytor.
 - Djuren ska vara stora nog att se ansiktet (se `data/beteenden.json`, storlek) och röra sig som sin sort: flygare i luften, simmare i dammen.
 - Ängen syns direkt vid start. Ladda bara de kroppar som behövs.
@@ -85,6 +86,16 @@ Historiska regler finns i `recovery/pre-cloudflare/projektregler.md` och gäller
 
 ## Liv och samlande (från runda 6)
 - Spelets dag och kväll går bara när spelet är öppet. Inget stängs och inget missas.
-- Djurens humör är alltid snälla. Inga behov som blir sämre om man inte spelar, inga ledsna djur, inga hjärtan som minskar.
+- Djurens humör är alltid snälla. Inga behov som blir sämre om man inte spelar, inga automatiskt ledsna eller arga djur, inga hjärtan som minskar. Barnet får uttryckligen skriva känslor som ledsen eller arg, och då ska uttrycket synas (B2, 2026-10-30).
 - Mossas uppdrag går inte ut och kräver aldrig att man kommer tillbaka en viss dag.
 - Albumet och föräldrasidans räknare sparas bara lokalt. Ingen spårning.
+
+## Principer från åtgärdsgranskningen (2026-10-30)
+- Samma kontroll har samma betydelse oavsett inmatningssätt.
+- Något som ser tryckbart ut ger synlig återkoppling inom en sekund.
+- Hjälp, idéer och tips följer samma aktuella mål.
+- Logiska svar bedöms efter betydelse, med både ja- och nej-prov.
+- Barnets ord står kvar; rättning sker bara genom ett uttryckligt val.
+- Ett tillfälligt meddelande i taget, med tydlig avsändare.
+- Samma sak har samma namn i en gemensam dataordlista.
+- Destruktiva val ligger bakom föräldraspärren och en beständig kopia.
