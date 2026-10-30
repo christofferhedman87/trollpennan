@@ -1,0 +1,15 @@
+{
+ "_om": "Skrivs av scripts/parallax-lager.py. Bildernas mått i px efter beskärning.",
+ "berg": {
+  "bredd": 2048,
+  "hojd": 442
+ },
+ "kullar": {
+  "bredd": 2048,
+  "hojd": 403
+ },
+ "tradrad": {
+  "bredd": 2048,
+  "hojd": 529
+ }
+}

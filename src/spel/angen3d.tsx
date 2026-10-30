@@ -19,6 +19,7 @@ import { DALEN } from "./dal/tomter.ts";
 import { DjurIScen } from "./ang/djur.tsx";
 import { Bengtsson3D } from "./ang/Bengtsson3D.tsx";
 import { Himmel, SvajMark } from "./ang/himmel.tsx";
+import { Parallax } from "./ang/Parallax.tsx";
 import { KameraRam } from "./ang/kamera.tsx";
 import { PlatsScen } from "./ang/PlatsDekor.tsx";
 import { START_PLATS, platsMed } from "./platser.ts";
@@ -135,6 +136,7 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
       <color attach="background" args={[himmel]} />
       <fog attach="fog" args={[MILJO.dis.farg, MILJO.dis.nara, MILJO.dis.fjarran]} />
       <Himmel natt={vis} kvall={kvall} />
+      <Parallax natt={saga ? 0 : natt} />
       <ambientLight ref={amb} intensity={L.ambient.styrka} color={L.ambient.farg} />
       <hemisphereLight ref={hem} args={[L.hemi.himmel, L.hemi.mark, L.hemi.styrka]} />
       <directionalLight

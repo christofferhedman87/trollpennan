@@ -19,6 +19,7 @@ Visa namnangivelsen "Groda: 'Frog' av jeremy (CC BY 3.0)" i spelets föräldra- 
 | Tillgång | Upphov | Licens | Källa |
 |---|---|---|---|
 | Doktor Bengtsson, åtta miner (`public/npc/bengtsson/*.webp`), Syntaxviruset, fem miner (`public/npc/syntax/*.webp`), biljett, sjö, solros (`public/npc/ovrigt/*.webp`) | Christoffers egna bilder, AI-genererade (Christoffer har bekräftat att ursprunget inte spelar roll) | Egna, ingen tredjepartslicens, ingen namnangivelse | Christoffer, OneDrive Troll/Bengtsson (16 PNG, 848x1264, utan genomskinlighet). Frilagda och omgjorda till WebP med `rundor/R6A-2-klicka-bengtsson/mat/npc-bild.py`; filerna beskrivs i `data/npc.json` (`kalla`). `LICENSES.md` genereras bara ur modellmanifestet (`data/tillgangar.json`) och innehåller därför inte bilderna. |
+| Försidan (`public/forsida/*.webp`: bakgrund stående och liggande, logga) och ängens bakgrundslager (`public/parallax/*.webp`: berg, kullar, trädrad) | Christoffers egna bilder, gjorda i Adobe Firefly | Egna, ingen tredjepartslicens, ingen namnangivelse | Christoffer, 2026-10-30. Lagren skärs ut ur originalen i `kallfiler/parallax/` med `scripts/parallax-lager.py`. |
 
 <!-- R3C:start (genereras av scripts/modell-inlagg.mjs, redigera inte för hand) -->
 

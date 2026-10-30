@@ -28,6 +28,14 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 - Den gamla ladd-skylten (`.ladd-3d`) och Suspense-skylten (`.laddar`) är borta. Introts kamera väntar på `angRedo` i stället för `data-klar`. Liggande: logga, rad och knapp i en kolumn till vänster, så att djuren i bilden syns.
 - `#forsida` måste stå efter `#root`: dialogFokus isolerar allt utom den sista synliga dialogen.
 
+## Parallaxbakgrund (2026-10-30)
+- Ängens 3D-kullar (`w-kulle-cc0.glb` ×7) och 3D-berg (`w-berg-cc0.glb` ×3) i `HorisontVarld.tsx` är ersatta av tre målade lager: berg (z −50), kullar (z −33) och trädrad (z −22) i `src/spel/ang/Parallax.tsx`. Marken ut mot horisonten (ringen) är kvar.
+- Bilderna (Firefly, magenta bakgrund) skärs ut med `python3 scripts/parallax-lager.py [--granska MAPP]`. Originalen ligger i `kallfiler/parallax/` (inte i bygget) och resultatet i `public/parallax/*.webp`: berg 64 kB, kullar 135 kB och trädrad 176 kB. Skriptet tar bort magenta med mjuka kanter och rosa ton (despill) och skyddar blommorna. Det beskär också tomrummet ovanför motivet och skriver måtten till `src/spel/ang/parallaxLager.json`.
+- Alla tre lagren ritas i ett enda ritanrop: en canvas-atlas, en geometri och ett MeshBasicMaterial (förmultiplicerad alfa, `toneMapped=false`, `depthWrite=false`). Bilden speglas i sidled, så att skarvarna inte syns. Lagren tonas mot scenens dimma, och kvällen mörknar dem. Trädradens gräsremsa tonas ut mot marken.
+- Mätt i 375×812, median efter 25 s i mittvyn: 136 → 135 ritanrop och 54 473 → 54 263 trianglar (liggande 130 → 129). Data: +374 kB bilder och −31 kB modeller. Bilderna laddas först när ängen ritat sin första bild (`angRedo`), så försidan påverkas inte.
+- Kamerans `far` är höjd från 90 till 150 på ängen, annars klipps bergens hörn i liggande läge.
+- Kvar: platserna (Skogen, Sjön och Grottan) har fortfarande den gamla platta `Horisont` i `dekor.tsx`. Vill vi ha egna lager där behövs nya bilder. Kullarnas målade väderkvarn syns två gånger i bred liggande vy på grund av speglingen. `w-kulle-cc0.glb` och `w-berg-cc0.glb` ligger kvar i `public/models/bulk/` men laddas inte.
+
 ## Baslinje (2026-10-29, live `34490f7`, 375×812, tom äng efter introt)
 - 109 draw calls och 34 354 trianglar. Det är redan över W1:s riktmärke på ≤95 draw calls (stigar, skyltar och horisontmodeller). Block 1 och 3 behöver instansiering och sammanslagna geometrier för att hålla budgeten. Ny budget för en full dal (15 byggen och 20 djur): ≤140 draw calls och ≤150 000 trianglar. Bildtakten går inte att mäta i molnmiljön (programvarurendering).
 
