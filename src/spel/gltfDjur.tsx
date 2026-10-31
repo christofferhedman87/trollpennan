@@ -9,6 +9,7 @@ import { djurGltfUrl, entitet, forladdaUrls, framVinkel, modellUrl as modellUrlA
 import { forladdaNarLedig } from "./modeller/forladda.ts";
 import type { DjurSignal } from "./modeller/djurSignal.ts";
 import { fargaKlon } from "./modeller/gltfFarg.ts";
+import { materialAlpha } from "./modeller/materialAlpha.ts";
 import { GltfInnehall } from "./modeller/gltfPlagg.tsx";
 import { fastAnkare, fargaOm, ingenKulling, klippNamn, metallNoll, slimePaKlon, tryggKlipp } from "./modeller/gltfVerktyg.ts";
 export { squashSkala } from "./modeller/djurSignal.ts";
@@ -166,7 +167,7 @@ export function GltfSak({ id, vand = false, farger, farg, glans = false, alpha =
     if (farg || glans) fargaKlon(c, { kropp: id, farg: farg ?? null, glans, monster: null, monsterfarg: null });
     if (alpha < 1) c.traverse((o) => {
       if (!(o instanceof THREE.Mesh)) return;
-      const byt = (m: THREE.Material) => { const k = m.clone(); k.transparent = true; k.opacity *= alpha; k.depthWrite = false; return k; };
+      const byt = (m: THREE.Material) => { const k = m.clone(); k.transparent = true; k.opacity = materialAlpha(m) * alpha; k.depthWrite = false; return k; };
       o.material = Array.isArray(o.material) ? o.material.map(byt) : byt(o.material);
     });
     metallNoll(c);

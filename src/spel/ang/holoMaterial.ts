@@ -2,6 +2,7 @@
 // röras), blir 80 % genomskinliga och får en ljusblå fresnelkant och svaga ljuslinjer som rör sig uppåt.
 // Samma teknik som slime-glöden i belys.ts (onBeforeCompile), egen programnyckel.
 import * as THREE from "three";
+import { materialAlpha } from "../modeller/materialAlpha.ts";
 
 export const HOLO_TID = { value: 0 };
 const NYCKEL = "trollpennan-holo-v1";
@@ -9,6 +10,7 @@ const KANT = new THREE.Color("#7CC8FF");
 
 function holoAv(m: THREE.Material, solid: { value: number }): THREE.Material {
   const k = m.clone();
+  k.opacity = materialAlpha(m);
   k.transparent = true;
   k.depthWrite = true;
   const harNormal = !(k as THREE.MeshBasicMaterial).isMeshBasicMaterial;

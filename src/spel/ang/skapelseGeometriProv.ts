@@ -1,6 +1,7 @@
 // Enbart passiv avläsning för dev/webdriver. Ändrar inga modeller eller speltillstånd.
 import * as THREE from "three";
 import { synligModellRuta } from "../modeller/synligRuta.ts";
+import { materialAlpha } from "../modeller/materialAlpha.ts";
 const PROV = import.meta.env.DEV || (typeof navigator !== "undefined" && navigator.webdriver);
 const box = new THREE.Box3(), v = new THREE.Vector3(), inv = new THREE.Matrix4();
 type Nod = { id: string; nod: THREE.Object3D | null };
@@ -17,7 +18,7 @@ export function matSkapelseProv(uid: string, rot: THREE.Object3D, kropp: THREE.O
     nod.traverseVisible((o) => {
       if (!(o instanceof THREE.Mesh)) return;
       const material = Array.isArray(o.material) ? o.material : [o.material];
-      if (material.some((m) => m.visible && m.opacity > 0)) mesh++;
+      if (material.some((m) => m.visible && materialAlpha(m) > 0)) mesh++;
       for (const m of material) if ("color" in m && m.color instanceof THREE.Color) farger.add(m.color.getHexString());
     });
     const lokal = new THREE.Box3();

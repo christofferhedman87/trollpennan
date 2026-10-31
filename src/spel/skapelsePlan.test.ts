@@ -13,6 +13,9 @@ import { faestPlaggKlon, faestTillbehor } from "./tillbehor/faest.ts";
 import { kladesExemplar } from "./tillbehor/exemplar.ts";
 import { kroppMatt, placeraMedMinne } from "./placering.ts";
 import type { Sparad } from "./brygga.ts";
+import { friHoloYta } from "./ang/holoYta.ts";
+import { synligModellRuta } from "./modeller/synligRuta.ts";
+import { gorHolo } from "./ang/holoMaterial.ts";
 
 (globalThis as { self?: unknown }).self ??= globalThis;
 const loader = new GLTFLoader();
@@ -143,6 +146,52 @@ test("Legacy-plattformen följer första fria saken även efter ett plagg", () =
   const v = varelse("en katt med en hatt och en sten");
   for (const t of v.tillbehor) delete t.relation;
   assert.ok(skapelsePlan(v).kropp[1] > 0);
+});
+
+test("Fria saker står kvar på marken även när kroppen står på/i en sak", () => {
+  for (const text of ["en katt på en sten med en boll", "en katt i en låda bredvid ett äpple"]) {
+    const p = skapelsePlan(varelse(text));
+    assert.ok(p.kropp[1] > 0);
+    assert.equal(p.saker.at(-1)!.position[1], 0);
+  }
+});
+
+test("Hologrammet använder ytan ovanför låga kontroller och Ängens liggande yta", () => {
+  const p = friHoloYta({ left: 8, right: 367, top: 90, bottom: 353.5 }, [
+    { left: 187.594, right: 363, top: 313.5, bottom: 397.5 },
+    { left: 14, right: 62, top: 339.5, bottom: 387.5 },
+    { left: 72, right: 145.906, top: 341.5, bottom: 385.5 },
+  ]);
+  assert.deepEqual(p, { left: 8, right: 367, top: 90, bottom: 305.5 });
+  const l = friHoloYta({ left: 8, right: 244, top: 90, bottom: 367 }, [
+    { left: 12, right: 116, top: 12, bottom: 104 },
+  ]);
+  assert.ok(l && l.left === 8 && l.right === 244 && l.top >= 112 && l.bottom === 367);
+});
+
+test("Skinnade modellmått följer aktuell skala utan minne av förra bildrutan", async () => {
+  const djur = await stall("fisk");
+  let skinn = 0; djur.ytter.traverse((n) => { if (n instanceof THREE.SkinnedMesh) skinn++; });
+  assert.ok(skinn > 0, "provet använder en verkligt skinnad modell");
+  const fore = synligModellRuta(djur.ytter).getSize(new THREE.Vector3());
+  assert.ok(fore.length() > 0.1, "provet mäter den synliga fisken");
+  djur.ytter.scale.setScalar(0.1);
+  const liten = synligModellRuta(djur.ytter).getSize(new THREE.Vector3());
+  for (const axel of ["x", "y", "z"] as const) assert.ok(Math.abs(liten[axel] - fore[axel] * 0.1) < 0.001, axel);
+  djur.ytter.updateMatrixWorld(true); // renderersteget mellan två bildrutor
+  djur.ytter.scale.setScalar(1);
+  const ater = synligModellRuta(djur.ytter).getSize(new THREE.Vector3());
+  assert.ok(ater.distanceTo(fore) < 0.001);
+});
+
+test("Opak GLB med opacity=0 syns även som hologram; avsiktlig transparens bevaras", () => {
+  for (const [transparent, opacity, vantat] of [[false, 0, 1], [true, 0.4, 0.4], [true, 0, 0]] as const) {
+    const m = new THREE.MeshStandardMaterial({ transparent, opacity });
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(), m), rot = new THREE.Group(); rot.add(mesh);
+    gorHolo(rot, { value: 0 });
+    assert.equal(mesh.material.opacity, vantat); assert.equal(m.opacity, opacity);
+    assert.notEqual(mesh.material, m);
+  }
 });
 
 test("Flera verkliga hattar ligger inom hela placeringsrutan", async () => {

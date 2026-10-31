@@ -3,11 +3,12 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Sparad } from "../brygga.ts";
 import { GltfDjur, GltfSak, type DjurSignal } from "../gltfDjur.tsx";
-import { harDjurGltf, harModell } from "../entiteter.ts";
+import { harDjurGltf, harModell, framVinkel, entitet } from "../entiteter.ts";
 import { AGG_KROPP, OrdAgg } from "../ordagg.tsx";
 import { skapelsePlan, modellMatt } from "../skapelsePlan.ts";
 import { DjurForm, ModellGren } from "./djurForm.tsx";
 import { matSkapelseProv } from "./skapelseGeometriProv.ts";
+import { materialAlpha } from "../modeller/materialAlpha.ts";
 import type { Ljuskalla } from "../ljuskalla.ts";
 import { Ljusken } from "./ljusken.tsx";
 
@@ -23,7 +24,7 @@ function FriTillbehor({ t, alpha }: { t: TillbehorSpec; alpha: number }) {
     g.position.set(-(b.min.x + b.max.x) * g.scale.x / 2, -b.min.y * g.scale.y, -(b.min.z + b.max.z) * g.scale.z / 2);
     g.traverse((o) => {
       if (!(o instanceof THREE.Mesh)) return;
-      const byt = (m: THREE.Material) => { const k = m.clone(); k.opacity *= alpha; k.transparent = alpha < 1 || k.transparent; k.depthWrite = alpha >= 1; return k; };
+      const byt = (m: THREE.Material) => { const k = m.clone(); k.opacity = materialAlpha(m) * alpha; k.transparent = alpha < 1 || k.transparent; k.depthWrite = alpha >= 1; return k; };
       o.material = Array.isArray(o.material) ? o.material.map(byt) : byt(o.material);
     });
     return g;
@@ -48,7 +49,7 @@ export function SammansattDjur({ spec, signal, index = 0, holo = false, ljus }: 
         : spec.kropp === AGG_KROPP ? <OrdAgg spec={spec} /> : <DjurForm spec={spec} signal={signal} index={index} />}
     </group>
     {plan.saker.map((d, i) => <group key={`${d.index}-${d.exemplar}`} ref={(nod) => { saker.current[i] = nod; }} position={d.position} scale={d.skala}>
-      <ModellGren spec={{ ...spec, kropp: d.t.id }}><Suspense fallback={null}>{harModell(d.t.id) ? <GltfSak id={d.t.id} farg={d.t.farg} glans={d.t.glans} alpha={d.alpha} /> : <FriTillbehor t={d.t} alpha={d.alpha} />}</Suspense></ModellGren>
+      <ModellGren spec={{ ...spec, kropp: d.t.id }}><Suspense fallback={null}>{harModell(d.t.id) ? <group rotation={[0, framVinkel(entitet(d.t.id)?.framAxel), 0]}><GltfSak id={d.t.id} farg={d.t.farg} glans={d.t.glans} alpha={d.alpha} /></group> : <FriTillbehor t={d.t} alpha={d.alpha} />}</Suspense></ModellGren>
       {ljus?.vad === d.t.id ? <Ljusken uid={spec.uid} kalla={ljus.kalla} hojd={0.5} /> : null}
     </group>)}
   </group>;

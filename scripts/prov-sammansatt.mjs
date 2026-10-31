@@ -10,6 +10,7 @@ const fraser = [
   { text: "en katt under ett bord", relation: "under", id: "bord", antal: 1 },
   { text: "en katt på en sten", relation: "på", id: "sten", antal: 1 },
   { text: "en katt i en låda", relation: "i", id: "kartong", antal: 1 },
+  { text: "en katt bredvid en cykel", relation: "bredvid", id: "cykel", antal: 1, vand: true },
   { text: "en katt bredvid en boll", relation: "bredvid", id: "boll", antal: 1 },
   { text: "en katt med två röda äpplen", relation: "med", id: "apple", antal: 2 },
   { text: "en kanin med två strumpor", relation: "plagg", id: "strumpa", antal: 2 },
@@ -35,6 +36,7 @@ function geometri(g, p) {
   if (["bredvid", "med"].includes(p.relation)) {
     for (const sak of saker) assert.ok(sak.lokal.min[0] > k.max[0] || sak.lokal.max[0] < k.min[0], "separata saker står bredvid kroppen");
   }
+  if (p.vand) assert.ok(o.max[0] - o.min[0] > o.max[2] - o.min[2], "cykelns framaxel stämmer med placeringsmåtten");
   if (p.relation === "plagg") assert.ok(saker[0].lokal.min.reduce((s, x, i) => s + Math.abs(x - saker[1].lokal.min[i]), 0) > 0.03, "flera plagg har skilda fästpunkter");
 }
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || "/usr/bin/chromium", args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader"] });
@@ -69,15 +71,27 @@ try {
       if (process.env.QA_HOLO !== "0") {
         await page.waitForFunction(({ id, antal, relation }) => { const g = window.__holoGeometri; return g && g.kropp.mesh > 0 && (relation === "plagg" ? g.plagg : g.saker).filter((s) => s.id === id && s.mesh > 0).length === antal; }, p);
         await page.waitForFunction(() => !document.querySelector(".sk-ark")?.classList.contains("sk-ark--trollar"));
+        await page.evaluate(async () => {
+          const start = performance.now(); let fore = null, stilla = 0;
+          while (performance.now() - start < 5000) {
+            await new Promise(requestAnimationFrame); const nu = window.__trollvy;
+            stilla = fore && nu && Math.abs(nu.x - fore.x) + Math.abs(nu.y - fore.y) < 0.5 ? stilla + 1 : 0;
+            if (stilla >= 12) return; fore = nu ? { x: nu.x, y: nu.y } : null;
+          }
+          throw new Error("kameran kom inte till vila");
+        });
         if (bilder) await page.screenshot({ path: `${bilder}/holo-${viewport.width}-${skapade.length}.png` });
         const holo = await page.evaluate(() => window.__holoGeometri);
-        if (process.env.QA_MATT) console.log("Holo-ruta", await page.evaluate(() => window.__trollholo));
+        if (process.env.QA_MATT) console.log("Holo-ruta", await page.evaluate(() => ({ holo:window.__trollholo, ring:window.__trollring, vy:window.__trollvy, rutor:Object.fromEntries(["canvas", ".sk-ark", ".sk-penn-ora", ".sk-stang", ".sk-gata"].map((s)=>[s, document.querySelector(s)?.getBoundingClientRect().toJSON()])) })));
         geometri(holo, p);
         const rutor = [holo.kropp, ...holo.saker, ...holo.plagg].map((x) => x.skarm);
         assert.ok(Math.max(Math.max(...rutor.map((r) => r.x1)) - Math.min(...rutor.map((r) => r.x0)), Math.max(...rutor.map((r) => r.y1)) - Math.min(...rutor.map((r) => r.y0))) >= 64, "förhandsvisningen går att urskilja");
+        const ark = await page.locator(".sk-ark").boundingBox();
+        const hinder = await page.locator(".sk-penn-ora, .sk-stang, .sk-gata").evaluateAll((list) => list.map((e) => e.getBoundingClientRect().toJSON()));
         for (const ruta of rutor) {
-          assert.ok(ruta.x0 >= 0 && ruta.x1 <= viewport.width, "hela hologrammet ryms i sidled");
-          assert.ok(ruta.y0 >= 90 && ruta.y1 <= (await page.locator(".sk-ark").boundingBox()).y, "hela hologrammet är ovanför boken och under HUD");
+          assert.ok(ruta.x0 >= 0 && ruta.x1 <= (viewport.width > viewport.height ? ark.x : viewport.width), "hela hologrammet ryms framför boken i sidled");
+          assert.ok(ruta.y0 >= 90 && ruta.y1 <= (viewport.width > viewport.height ? viewport.height : ark.y), "hela hologrammet ryms mellan HUD och bokkant");
+          for (const h of hinder) assert.ok(Math.max(0, Math.min(ruta.x1, h.right) - Math.max(ruta.x0, h.left)) * Math.max(0, Math.min(ruta.y1, h.bottom) - Math.max(ruta.y0, h.top)) <= 1, "hologrammet undviker verkliga kontrollrutor");
         }
       }
       await page.getByTestId("vakna").click(); await page.getByTestId("bok-skarm").waitFor({ state: "hidden" });

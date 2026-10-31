@@ -85,13 +85,13 @@ export function byggSkapelsePlan(spec: Spec, matt = modellMatt): SkapelsePlan {
   const ruta: Ruta3 = { min: [...kroppRuta.min], max: [...kroppRuta.max] };
   ruta.min[1] += kropp[1]; ruta.max[1] += kropp[1];
   for (const d of saker.filter((d) => regler.get(d)!.lage !== "bredvid")) forena(ruta, delRuta(matt(d.t.id), d.position, d.skala));
-  // Lediga saker placeras utanför hela den redan byggda gruppen, på kroppens golvnivå.
+  // Lediga saker placeras utanför hela den redan byggda gruppen, på marken.
   let hoger = ruta.max[0], vanster = ruta.min[0];
   for (const [i, d] of valj("bredvid").entries()) {
     const halv = matt(d.t.id)[0] * d.skala / 2, g = regler.get(d)!.glipa;
     if (i % 2 === 0) { d.position[0] = hoger + g + halv; hoger += 2 * halv + g; }
     else { d.position[0] = vanster - g - halv; vanster -= 2 * halv + g; }
-    d.position[1] = kropp[1];
+    d.position[1] = 0;
     forena(ruta, delRuta(matt(d.t.id), d.position, d.skala));
   }
   return { kropp, saker, ruta, bunden: stod.length + inuti.length + under.length > 0 };
