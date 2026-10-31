@@ -1,7 +1,8 @@
 // Avgränsat granskningsprov, ingen ny obligatorisk grind.
 // node --experimental-strip-types scripts/prov-siffermask.mjs [baslinje] [kandidat]
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, realpathSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 import vm from "node:vm";
 import ts from "typescript";
@@ -12,6 +13,7 @@ import { BLOCK, ORD } from "../src/tolk/data.ts";
 
 const baslinje = process.argv[2] ?? "c87821808eea87c64eaf4bf82631425cd3c03bca";
 const kandidat = process.argv[3] ?? "3f8c4d29d5bdfac8393461e57beec796d6bd1ad2";
+assert.equal(realpathSync(process.cwd()), realpathSync(fileURLToPath(new URL("../", import.meta.url))), "kör från samma reporot som skriptet, så att kod och git-kontroller gäller samma källa");
 const git = (...args) => execFileSync("git", args, { encoding:"utf8" }).trimEnd();
 git("merge-base", "--is-ancestor", kandidat, "HEAD");
 assert.equal(readFileSync("src/tolk/sparr.ts", "utf8").trimEnd(), git("show", `${kandidat}:src/tolk/sparr.ts`), "kandidatens spärrkod används");
