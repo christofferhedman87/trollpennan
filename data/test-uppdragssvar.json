@@ -33,7 +33,9 @@
    ],
    "nej": [
     "en hund med en bok",
-    "en blå katt"
+    "en blå katt",
+    "en kall tröja",
+    "en hund med en kall tröja"
    ]
   },
   "tva-farger": {
@@ -65,12 +67,16 @@
    "ja": [
     "en varm tröja och en kall glass",
     "en hund med tröja och en glass",
-    "en filt och en snöhög"
+    "en filt och en snöhög",
+    "en katt med en varm tröja och kall glass"
    ],
    "nej": [
     "en varm tröja",
     "en kall glass",
-    "en kall tröja"
+    "en kall tröja",
+    "två kalla tröjor",
+    "två varma glassar",
+    "en katt med en kall tröja och kall glass"
    ]
   }
  }

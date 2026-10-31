@@ -12,7 +12,7 @@ test("T05: varje migrerat uppdrag har minst tre ja och två nej genom spelets ri
   assert.equal(migrerade.length, Object.keys(prov.uppdrag).length, "inget migrerat uppdrag får sakna svarsprov");
   for (const u of migrerade) {
     const p = (prov.uppdrag as Record<string, { ja: string[]; nej: string[] }>)[u.id]!;
-    assert.ok(p.ja.length >= 3 && p.nej.length >= 2, u.id);
+    assert.ok(new Set(p.ja).size >= 3 && new Set(p.nej).size >= 2, u.id);
     assert.ok(u.hjalp && u.hjalp.length >= 2 && u.nastan, u.id);
     for (const [ok, fraser] of [[true, [...p.ja, ...u.hjalp!, ...u.val!.grupper.flatMap((g) => g.forslag.map((f) => f.fras))]], [false, p.nej]] as const) {
       for (const fras of fraser) assert.equal(bedomUppdragsSvar(u.krav!, fras).ok, ok, `${u.id}: ${fras}`);

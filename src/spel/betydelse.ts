@@ -7,6 +7,7 @@ import { tolkaMedReserv } from "../tolk/reserv.ts";
 import type { Varelse } from "../tolk/typer.ts";
 import { taggarAv } from "./taggar.ts";
 import type { TolkadSkapelse } from "./krav.ts";
+import { medTemperatur, temperaturer } from "./temperatur.ts";
 type Entitet = { typ: string; ord?: string[]; rorelse?: string };
 const ENT = entiteterJson.entiteter as Record<string, Entitet>;
 const E = egenJson as typeof egenJson & { sak?: Record<string, string[]> };
@@ -47,13 +48,20 @@ export function betydelseFranText(text: string): TolkadSkapelse[] {
     const u = tolkaMedReserv(del, { kalla: "kort", noteraBlandning: false });
     if (u.typ !== "skapad" || u.varelse.kropp === "agg") return [];
     const v = u.varelse;
+    const temperatur = temperaturer(del, v);
     // Riktiga medföljande modeller är också saker. Räkna dem var för sig när
     // uppdraget ber om två saker, men gör aldrig ett påklätt djur till två djur.
-    const saker = v.tillbehor.filter((t) => ENT[t.id]?.typ !== "djur").map((t) => betydelseAv({
+    const saker = v.tillbehor.filter((t) => ENT[t.id]?.typ !== "djur").map((t) => medTemperatur(betydelseAv({
       ...v, kropp: t.id, farg: t.farg, monster: null, monsterfarg: null,
       formagor: [], tillbehor: [], skala: 1, alpha: 1, kontur: false,
       glans: t.glans, formel: "", reserv: [],
-    }, u.antal));
-    return [betydelseAv(v, u.antal), ...saker];
+    }, u.antal), temperatur.get(t.id)));
+    const huvud = medTemperatur(betydelseAv({ ...v, tillbehor: [] }, u.antal), temperatur.get(v.kropp));
+    const taggar = new Set(huvud.taggar);
+    for (const sak of saker) for (const t of sak.taggar) {
+      if (t !== "farg" && !t.startsWith("farg:") && !t.startsWith("kropp:")) taggar.add(t);
+    }
+    for (const t of v.tillbehor) taggar.add(`tillbehor:${t.id}`);
+    return [{ ...huvud, taggar }, ...saker];
   });
 }
