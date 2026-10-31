@@ -2,7 +2,7 @@
 import type { TillbehorSpec } from "../../tolk/typer.ts";
 import type { Matt, Ruta3 } from "../skapelsePlan.ts";
 import { kladesExemplar, exemplarOffset } from "./exemplar.ts";
-import { plaggKonfig, tillbehorRad, skalaVarde } from "./data.ts";
+import { plaggKonfig, tillbehorRad, tillbehorDelar, skalaVarde } from "./data.ts";
 const RADIE: Record<string, number> = { cyl: 0.57, kon: 0.29, ring: 0.3, kub: 0.87, sfar: 0.5, mantel: 1.53 };
 
 export function kladesRuta(kropp: string, tillbehor: TillbehorSpec[], m: Matt): Ruta3 {
@@ -13,7 +13,7 @@ export function kladesRuta(kropp: string, tillbehor: TillbehorSpec[], m: Matt): 
     let r = h * (cfg?.djupSkala ? 0.85 : 0.55);
     if (!cfg && rad) {
       const k = skalaVarde(rad.skala, b, h);
-      r = Math.max(...rad.delar.map((d) => (Math.hypot(...d.pos) + (RADIE[d.form] ?? 1.53) * Math.max(...d.skala.map(Math.abs))) * k));
+      r = Math.max(...tillbehorDelar(rad, t.farg).map((d) => (Math.hypot(...d.pos) + (RADIE[d.form] ?? 1.53) * Math.max(...d.skala.map(Math.abs))) * k));
     }
     const x = Math.abs(cfg?.ut ?? 0) * b + r + Math.abs(off[0]);
     const z = Math.abs(cfg?.fram ?? 0) * b + r;

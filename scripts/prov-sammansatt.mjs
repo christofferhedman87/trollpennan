@@ -24,13 +24,14 @@ function geometri(g, p) {
   assert.ok(g.kropp.mesh > 0 && saker.every((s) => s.mesh > 0));
   const k = g.kropp.lokal, o = saker[0].lokal;
   if (process.env.QA_MATT) console.log(JSON.stringify({text:p.text,kropp:k,saker:saker.map((s)=>s.lokal)}));
-  if (p.relation === "under") {
-    assert.ok(k.max[1] < o.min[1] + (o.max[1] - o.min[1]) * 0.78 - 0.02, "djurets huvud är under bordsskivan");
+  if (p.relation === "under") for (const sak of saker) {
+    const o = sak.lokal;
+    assert.ok(k.max[1] < o.min[1] + (o.max[1] - o.min[1]) * 0.78 - 0.02, "djurets huvud är under varje bordsskiva");
     assert.ok(k.min[0] > o.min[0] && k.max[0] < o.max[0], "djuret ryms mellan bordets ytterkanter");
     assert.ok(k.min[2] > o.min[2] && k.max[2] < o.max[2]);
   }
   if (p.relation === "på") assert.ok(k.min[1] >= o.max[1] - 0.05 && k.min[1] <= o.max[1] + 0.13, "tassarna vilar på stenen");
-  if (p.relation === "i") for (const i of [0,1,2]) assert.ok(k.min[i] > o.min[i] && k.max[i] < o.max[i], "djurets hela kropp är i lådan");
+  if (p.relation === "i") for (const sak of saker) for (const i of [0,1,2]) assert.ok(k.min[i] > sak.lokal.min[i] && k.max[i] < sak.lokal.max[i], "djurets hela kropp är i varje behållare");
   if (["bredvid", "med"].includes(p.relation)) {
     for (const sak of saker) assert.ok(sak.lokal.min[0] > k.max[0] || sak.lokal.max[0] < k.min[0], "separata saker står bredvid kroppen");
   }
@@ -72,7 +73,9 @@ try {
         const holo = await page.evaluate(() => window.__holoGeometri);
         if (process.env.QA_MATT) console.log("Holo-ruta", await page.evaluate(() => window.__trollholo));
         geometri(holo, p);
-        for (const ruta of [holo.kropp, ...holo.saker, ...holo.plagg].map((x) => x.skarm)) {
+        const rutor = [holo.kropp, ...holo.saker, ...holo.plagg].map((x) => x.skarm);
+        assert.ok(Math.max(Math.max(...rutor.map((r) => r.x1)) - Math.min(...rutor.map((r) => r.x0)), Math.max(...rutor.map((r) => r.y1)) - Math.min(...rutor.map((r) => r.y0))) >= 64, "förhandsvisningen går att urskilja");
+        for (const ruta of rutor) {
           assert.ok(ruta.x0 >= 0 && ruta.x1 <= viewport.width, "hela hologrammet ryms i sidled");
           assert.ok(ruta.y0 >= 90 && ruta.y1 <= (await page.locator(".sk-ark").boundingBox()).y, "hela hologrammet är ovanför boken och under HUD");
         }

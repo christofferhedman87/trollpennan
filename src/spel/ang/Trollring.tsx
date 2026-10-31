@@ -209,10 +209,13 @@ function ArkKamera() {
       // Ringens läge utan nuvarande förskjutning.
       const sx = (_v.x * 0.5 + 0.5) * w + cur.current.x;
       const sy = (-_v.y * 0.5 + 0.5) * h + cur.current.y;
-      const friYta = bokHoloYta(r, l.spec?.typ === "djur" && l.spec.spec.tillbehor.length > 0);
+      const sammansatt = l.spec?.typ === "djur" && l.spec.spec.tillbehor.length > 0;
+      const friYta = bokHoloYta(r, sammansatt);
       if (friYta) {
         mx = sx - ((friYta.left + friYta.right) / 2 - r.left);
-        my = sy - (friYta.bottom - 12 - r.top);
+        // En sammansättning har även markyta framför ringen, som behöver rum nedåt.
+        const ringY = sammansatt ? friYta.top + (friYta.bottom - friYta.top) * 0.65 : friYta.bottom - 12;
+        my = sy - (ringY - r.top);
       } else if (w > h && l.arkVanster != null) {
         mx = sx - (l.arkVanster - r.left) / 2;
         my = Math.max(0, sy - h * 0.7);

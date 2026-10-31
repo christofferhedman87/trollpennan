@@ -146,8 +146,8 @@ test("Legacy-plattformen följer första fria saken även efter ett plagg", () =
 });
 
 test("Flera verkliga hattar ligger inom hela placeringsrutan", async () => {
-  for (const antal of [2, 10]) {
-    const v = varelse(`en katt med ${antal === 2 ? "två" : "tio"} hattar`), p = skapelsePlan(v), djur = await stall(v.kropp);
+  for (const [antal, fras] of [[2, "två hattar"], [10, "tio hattar"], [2, "två lila hattar"]] as const) {
+    const v = varelse(`en katt med ${fras}`), p = skapelsePlan(v), djur = await stall(v.kropp);
     faestTillbehor(djur.nod, v.kropp, v.tillbehor, "modell"); djur.ytter.updateMatrixWorld(true);
     const b = new THREE.Box3().setFromObject(djur.ytter);
     for (const [i, axel] of ["x", "y", "z"].entries()) {
