@@ -20,11 +20,19 @@ Branch `claude/g1-guldchans-kvitto`, app oförändrad sedan `179bcfe`; slutligt 
 - Iakttaget, inte orsakat av #301 (D0/T-17): i flerordsfallet visas djurets pratbubbla samtidigt som kvittot med samma replik; i 812 täcker kvittot delvis byggen och målremsan; ”Du skrev: ”en som sprutar eld”” läser lite konstigt (C2/BC).
 - Mergad som `82ebaade7301b0d159e8a22552960b7fce26b166`. Main-Cloudflare **Workers Builds: trollpennan** check `124563857841` är grön på exakt denna commit; alla **sju** serverade filer är SHA-256-identiska med bygget, inklusive ändrad Spel-CSS. `index.html` hämtades med omdirigeringen till `/` följd. Resultatet finns i [kommentaren i #301](https://github.com/christofferhedman87/trollpennan/pull/301#issuecomment-6544863846).
 
+### B1 · första försöket (pågår, inte godkänt eller levererat)
+
+Branch `codex/b1-angen` utgår från färsk `origin/main 82ebaad`. Första kandidaten `93d9f00` omfattar enbart `kanin-fryser`, inte hela Ängen eller B1. Fristående Codex-granskare `/root/granskning_b1_kanin` avvisade exakt den kandidaten: giltiga varma plagg nekades, fel relationer och värmeläckage godkändes, nya start-/tacktexter saknar ljud (reserv är tyst), och dynamiskt djurbyte kan ge exempelvis ”din bi” och öron på en fisk. Granskaren bekräftade att de granskade hjälp- och idéfraserna tolkas utan okända ord och har faktiska modeller eller procedurform, och att text/hash stämmer med källgranskningen. **Ingen slutapproval finns.**
+
+App-/provhuvud `167065597acd547a5c20750fb1fbde419952ec76` prövar separata egna taggar och tillåtna relationer: riktade Node-prov och granskarens ursprungliga motexempel är gröna. Granskaren jämförde dessutom 240 uttryck i B0 före/efter; svar och ursprungliga taggar var identiska (avtryck `5a86280701f134038f536dbbb000a01cf9cc013a189222428cdbc675c54f8003`), utan anspråk på full täckning. Däremot tappar tolken fortfarande relationen i ”en mössa under en kanin”, som felaktigt godkänns. `relationer` tillåter dessutom en fristående sak utan relation och räcker inte för att kräva de obligatoriska småorden i andra uppdrag. Åtgärda med riktiga tolk-/relationsprov, utan att försämra befintliga B0-fall. Ljud och dynamisk text ovan återstår också; påstå inte att nya texter har röst. Tre föreslagna hjälpfraser är provade; övriga 84 uppdrag är inte migrerade.
+
+Baslinje-UI `scripts/prov-b1-kanin.mjs` på 82ebaad är rött i 375×812: lägerelden läggs till på samma kanin och det gamla uppdraget blir felaktigt `klar`. En tidigare körning hade felaktig förväntan på ny skapelse och räknas inte. Slutprov, båda vyer, bildläsning och exakt sista apphuvudets oberoende slutgranskning återstår. På första kandidaten passerade typecheck, typecheck:pages, check:struktur och lint; produktgrinden avbröts efter att P3a och de två nya röstfallen fallerat. Den utgör inte en fullständig slutkörning. `build:pages` och `check:pages-output` på 1670655 är gröna. Kör samtliga sju grindar igen på slutkoden; 50 ms-gränsen får inte ändras. Ingen merge eller B1-publicering har skett.
+
 ### Textpaket 02 och resten av serien
 
 **Christoffers godkända granskning av alla 85 återstående uppdrag är sparad oförändrad i `docs/en-varld/textpaket-02-granskad.md`**, SHA-256 `1687e568520fff417a98edfe5135d2d860fb450d94d7191f6e75dfd50002e539`. Detta är källgranskningen, inte ett nytt checkpointdokument. Ingen ny uppladdning eller godkännandefråga krävs. Använd i B1/BC, men kontrollera varje förslag mot faktisk tolk och modeller; flagga/hashlås bara exakt granskad text. Inget annat block väntar på detta.
 
-Efter #301 (levererad): följ blockplanen; B1 först. Torr kontroll 2026-10-31: 239 av 255 föreslagna hjälpfraser i Textpaket 02 ger redan riktiga modeller; 16 fastnar på okända ord (långhalsad, lång, gunga, utanför, ”vid sjön”, eko/ropar/hör) och måste lösas i B1 innan flagga/hashlås. Orörda: B1 (85 uppdrag), B3, C3, C4, BC, D0–D3, F1, F3, F5, F6/T-36, G2 och G3. Delvis: C1d och resten av C2b. F6 ska visa alla synliga djur, hem/flyttbekräftelse, skäl för fel hustyp och verklig tomorsak. **Före slutgranskningen av hela blockserien: stoppa och meddela Christoffer.** Han väljer Claude/Codex och sätter ansträngning=max. Ingen sådan slutgranskning har påbörjats.
+Efter #301 (levererad): följ blockplanen; B1 först. Torr kontroll 2026-10-31: 239 av 255 föreslagna hjälpfraser i Textpaket 02 ger redan riktiga modeller; 16 fastnar på okända ord (långhalsad, lång, gunga, utanför, ”vid sjön”, eko/ropar/hör) och måste lösas i B1 innan flagga/hashlås. Ej levererade: B1 (85 uppdrag, första försöket ovan), B3, C3, C4, BC, D0–D3, F1, F3, F5, F6/T-36, G2 och G3. Delvis: C1d och resten av C2b. F6 ska visa alla synliga djur, hem/flyttbekräftelse, skäl för fel hustyp och verklig tomorsak. **Före slutgranskningen av hela blockserien: stoppa och meddela Christoffer.** Han väljer Claude/Codex och sätter ansträngning=max. Ingen sådan slutgranskning har påbörjats.
 
 Tre svagaste punkter: molnets programvaru-GPU kräver provmätning i sidan för korta meddelanden; den dubbla repliken bubbla+kvitto kvarstår till D0; stora B/C/D/F/G-delar återstår; fysisk Safari/iPad, barns faktiska upplevelse och nya röstinspelningar är inte verifierade.
 
@@ -249,7 +257,7 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 | T-02 | A1 | Verifierad/granskad #288,20UI-fall båda vyer och44px-yta; publicerad f425a41, CF124383463197/6SHA-256 gröna |
 | T-03 | A0/A2/B | A0/A2 publicerad #289/eec3b27; delresultat tills B/C verifierar alla 157 mål och den äldre gåvohyllan |
 | T-04 | A0/A2 | Publicerad #289/eec3b27; målanpassat tips/Idé, sju grindar och faktisk kontextkontroll gröna |
-| T-05 | B0/B1 | B0 #290 publicerad fbfe48f;560/560, fyra UI-fall, CF124411312834/6SHA gröna;85uppdrag och455+total-fixtures återstår |
+| T-05 | B0/B1 | B0 #290 publicerad fbfe48f;560/560, fyra UI-fall, CF124411312834/6SHA gröna;B1-kandidat för ett uppdrag pågår utan slutgodkännande; 85 uppdrag och 455+ total-fixtures återstår före leverans |
 | T-06 | B2 | Publicerad #295/bdadc09, 585/585, båda vyer/legacy och main-CF/SHA gröna. T17/D2/F5 fortsätter separat |
 | T-07 | C1 | C1a/C1b/C1c publicerade (#291/#294/#297); #297 main ed0449c, 638/638 och CF124493270814/10SHA gröna. Sekundära djur C1d återstår |
 | T-08 | C2 | C2a och C1c publicerade. C2b-1 #298: skrivna siffror når tolken, spärren håller; 2 hattar grönt i båda vyer; oberoende Claude-underagent granskade. Full korpus/migration återstår |
@@ -262,7 +270,7 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 | T-15 | B3 | Planerad; B1 godkänt |
 | T-16 | D3 | Planerad |
 | T-17 | D0/D3 | Planerad; B5 godkänt |
-| T-18 | B1/BC | Sex flaggor/hashlås publicerade #299/0e6fe9b, CF124530012914/6SHA gröna. Textpaket 02:s 85 texter godkända som underlag; tolk-/modellkontroll och införande i B1/BC återstår |
+| T-18 | B1/BC | Sex flaggor/hashlås publicerade #299/0e6fe9b, CF124530012914/6SHA gröna. Textpaket 02:s 85 texter godkända som underlag; första uppdragets tolk-/modellkontroll pågår utan slutgodkännande; införande i B1/BC återstår före leverans |
 | T-19 | BC | Planerad; B+C först |
 | T-20 | C4 | Planerad; B2 godkänt |
 | T-21 | F1 | Planerad; B7 godkänt |
