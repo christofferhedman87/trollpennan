@@ -15,6 +15,14 @@ try {
       const page = await context.newPage(); page.setDefaultTimeout(45000);
       const fel = []; page.on("pageerror", (e) => fel.push(e.message));
       await page.addInitScript(() => {
+        window.__qaBanners = [];
+        document.addEventListener("DOMContentLoaded", () => {
+          let fore = "";
+          new MutationObserver(() => {
+            const nu = document.querySelector(".banderoller")?.textContent ?? "";
+            if (nu !== fore) { window.__qaBanners.push({ t: performance.now(), text: nu }); fore = nu; }
+          }).observe(document.body, { subtree: true, childList: true, characterData: true });
+        }, { once: true });
         localStorage.setItem("trollpennan-v2", JSON.stringify({ version: 2, introSedd: true, ang: [], garden: [], stjarnor: 17, ljudPa: false, rostPa: false, effektPa: false }));
         localStorage.setItem("trollpennan-skapa-v1", '{"bokstavsljud":false}');
       });
@@ -40,7 +48,7 @@ try {
       await page.waitForFunction((n) => window.__trollMinne.getState().ang.length === n + 1, fore.antal);
       assert.equal(await page.evaluate((id) => window.__trollMinne.getState().uppdrag[id], id), "pagar", "en nära miss får aldrig räknas som färdigt uppdrag");
       await page.getByText(ledtrad, { exact: false }).first().waitFor({ state: "visible" }).catch(async (e) => {
-        console.log(JSON.stringify(await page.evaluate(() => ({ text: document.body.innerText, rost: window.__rost }))));
+        console.log(JSON.stringify(await page.evaluate(() => ({ text: document.body.innerText, rost: window.__rost, banners: window.__qaBanners }))));
         if (process.env.QA_SCREENSHOTS) { await mkdir(process.env.QA_SCREENSHOTS, { recursive: true }); await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/saknad-ledtrad-${viewport.width}.png` }); }
         throw e;
       });

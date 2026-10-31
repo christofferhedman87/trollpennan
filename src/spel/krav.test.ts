@@ -6,6 +6,10 @@ import { SKRIV } from "./aventyr.ts";
 import { betydelseFranText } from "./betydelse.ts";
 import { bedomKrav, type KravGrupp } from "./krav.ts";
 import { bedomUppdragsSvar, kravUppfylltTolkat } from "./uppdragsmotor.ts";
+import { kvittotack } from "./skapa/tack.ts";
+import { hamtaUppdragsSvar, noteraUppdragsSvar, tystaBannrar, type UppdragsSvar } from "./skapa/kvitto.ts";
+import { ONSK } from "./onska.ts";
+import type { OnskaSpar } from "./minne.ts";
 
 test("T05: varje migrerat uppdrag har minst tre ja och två nej genom spelets riktiga tolk", () => {
   const migrerade = SKRIV.filter((u) => u.krav?.betydelse);
@@ -28,6 +32,28 @@ test("T05: olika individer, antal och kroppsfärg binds till sina verkliga subje
   const k: KravGrupp = { id: "rod", nagon_av: ["farg:röd"], subjekt: "djur", beskrivning: "en röd vän" };
   assert.equal(bedomKrav({ grupper: [], olika: [k, k], djur: 2 }, betydelseFranText("två röda katter")).ok, true);
   assert.equal(bedomKrav({ grupper: [], olika: [k, k], djur: 2 }, betydelseFranText("en röd katt")).ok, false);
+  const storlek = SKRIV.find((u) => u.id === "stor-och-liten")!.krav!;
+  assert.deepEqual(bedomUppdragsSvar(storlek, "två små dinosaurier").saknas, ["en stor vän"]);
+  assert.deepEqual(bedomUppdragsSvar(krav, "två röda katter").saknas, ["en blå vän"]);
+});
+
+test("T05: kvittot visar det faktiska försöket och bevarar önsketackets prioritet", () => {
+  const svar: UppdragsSvar = { id: "tva-farger", resultat: "fel", nastan: SKRIV.find((u) => u.id === "tva-farger")!.nastan! };
+  assert.equal(kvittotack(null, null, svar), svar.nastan);
+  assert.equal(kvittotack(null, null, { ...svar, resultat: "klar" }), null);
+  const onskan = { id: ONSK.onskningar[0]!.id, uid: "prov", kalla: "djur", typ: ONSK.onskningar[0]!.typ, text: ONSK.onskningar[0]!.text } as OnskaSpar;
+  assert.equal(kvittotack(onskan, null, svar), ONSK.onskningar[0]!.tack);
+  assert.equal(kvittotack(onskan, onskan, null), null, "en obesvarad ge-önskan får inte en annan pågående quests ledtråd");
+});
+
+test("T05: bara den pågående Trolla-handlingens verkliga bedömning följer med", () => {
+  const svar: UppdragsSvar = { id: "tva-farger", resultat: "fel", nastan: "prov" };
+  tystaBannrar(true); noteraUppdragsSvar(svar); tystaBannrar(false);
+  assert.equal(hamtaUppdragsSvar(), svar);
+  tystaBannrar(true); tystaBannrar(false);
+  assert.equal(hamtaUppdragsSvar(), null, "nästa handling kan vara en önskan utan uppdragsförsök");
+  noteraUppdragsSvar(svar);
+  assert.equal(hamtaUppdragsSvar(), null, "direktanrop utanför Trolla får inte lämna ett gammalt kvittosvar");
 });
 
 test("T05: matchningen kan flytta ett tidigare val och lämnar tolkning och krav orörda", () => {

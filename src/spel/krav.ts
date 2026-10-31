@@ -23,7 +23,7 @@ function passar(s: TolkadSkapelse, g: KravGrupp): boolean {
 }
 
 /** Bipartit matchning: ett djur får inte räknas som båda vännerna. Ingen girig ordningsfälla. */
-function olikaMatchar(grupper: KravGrupp[], skapelser: readonly TolkadSkapelse[]): boolean {
+function olikaSaknas(grupper: KravGrupp[], skapelser: readonly TolkadSkapelse[]): KravGrupp[] {
   const individer = skapelser.flatMap((s) => Array.from({ length: Math.min(grupper.length, Math.max(0, Math.floor(s.antal))) }, () => s));
   const agare = new Map<number, number>();
   function hitta(g: number, sedda: Set<number>): boolean {
@@ -35,7 +35,7 @@ function olikaMatchar(grupper: KravGrupp[], skapelser: readonly TolkadSkapelse[]
     }
     return false;
   }
-  return grupper.every((_, i) => hitta(i, new Set()));
+  return grupper.filter((_, i) => !hitta(i, new Set()));
 }
 
 export function bedomKrav(krav: BetydelseKrav, skapelser: readonly TolkadSkapelse[]): KravSvar {
@@ -44,7 +44,7 @@ export function bedomKrav(krav: BetydelseKrav, skapelser: readonly TolkadSkapels
   if (skapelser.filter((s) => s.djur).reduce((n, s) => n + s.antal, 0) < antal && krav.antal_text) saknas.push(krav.antal_text);
   // Behåll också booleskt fel om datan av misstag saknar antaltext.
   const antalOk = skapelser.filter((s) => s.djur).reduce((n, s) => n + s.antal, 0) >= antal;
-  const olikaOk = !krav.olika?.length || olikaMatchar(krav.olika, skapelser);
-  if (!olikaOk) for (const g of krav.olika ?? []) if (!saknas.includes(g.beskrivning)) saknas.push(g.beskrivning);
-  return { ok: antalOk && olikaOk && saknas.length === 0, saknas };
+  const omatchade = olikaSaknas(krav.olika ?? [], skapelser);
+  for (const g of omatchade) if (!saknas.includes(g.beskrivning)) saknas.push(g.beskrivning);
+  return { ok: antalOk && saknas.length === 0, saknas };
 }

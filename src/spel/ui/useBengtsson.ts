@@ -6,7 +6,8 @@ import { arFinal, mattUr, milstolpeNadd, platsMed } from "../platser.ts";
 import npcJson from "../../../data/npc.json" with { type: "json" };
 import { klarUppdrag, type FlodeSvar } from "../avflode.ts";
 import { useMinne } from "../minne.ts";
-import type { Kalla } from "../rostKo.ts";
+import { anmal, type Kalla } from "../rostKo.ts";
+import { noteraUppdragsSvar, skaparKvitto } from "../skapa/kvitto.ts";
 import { NPC_DEL, mineVararMs, valjMine } from "../npc.ts";
 
 const NPC_ID = "bengtsson";
@@ -106,13 +107,16 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaUppdragsbok }: Hjal
     const u = aktivtSkrivUppdrag(useMinne.getState().uppdrag, platsNu());
     if (!u?.krav) return "ingen";
     if (kravUppfylltTolkat(u.krav, raw, !u.krav.djur || blevDjur(raw))) {
+      noteraUppdragsSvar({ id: u.id, resultat: "klar", nastan: null });
       belonaFlode(klarUppdrag(u.id));
       klartVid.current = Date.now();
       blinka("klar_nyss");
       return "klar";
     }
     const fel = NPC_DEL[NPC_ID]?.repliker?.fel ?? [];
-    if (u.nastan) visaBanner(u.nastan, "ovr", "nastan");
+    noteraUppdragsSvar({ id: u.id, resultat: "fel", nastan: u.nastan ?? null });
+    if (u.nastan && skaparKvitto()) anmal({ text: u.nastan, kalla: "nastan" });
+    else if (u.nastan) visaBanner(u.nastan, "ovr", "nastan");
     else if (fel.length) visaBanner(fel[felNr.current++ % fel.length]!, "ovr", "bengtsson_fel");
     blinka("fel");
     return "fel";
