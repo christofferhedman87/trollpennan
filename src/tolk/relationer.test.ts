@@ -70,3 +70,15 @@ test("T-08: en överhoppad upprepad sak får inte beskriva nästa sak", () => {
     if (u.typ === "skapad") assert.ok(u.varelse.formel.endsWith(nastaSak!), "nästa sak får inget av föregående saks adjektiv");
   }
 });
+
+test("B1: omvänt placerade föremål behåller läget i båda tolkarna", () => {
+  for (const tolk of [tolka, tolkaMedReserv]) for (const [text, relation] of [
+    ["en mössa under en kanin", "på"],
+    ["en mössa bredvid en kanin", "bredvid"],
+    ["en mössa vid en kanin", "vid"],
+  ] as const) {
+    const u = tolk(text, { noteraBlandning: false });
+    assert.equal(u.typ, "skapad", text);
+    if (u.typ === "skapad") assert.equal(u.varelse.tillbehor.find((t) => t.id === "alvmossa")?.relation, relation, text);
+  }
+});

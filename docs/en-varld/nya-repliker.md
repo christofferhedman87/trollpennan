@@ -332,3 +332,7 @@ Textpaket 02, godkänt av Christoffer och sparat i `textpaket-02-granskad.md`:
 - Nästan: Din skapelse får stanna! Jag letar efter något varmt att ha på sig, som mössa eller halsduk.
 - Hjälp: en kanin med mössa; en hund med halsduk; en katt med tröja.
 - Idéernas ändrade etikett: Fler varma kläder.
+
+**Till Grok (Christoffers besked 2026-10-31):** inspelningar och implementation saknas för uppdragets start och tack ovan. Nuvarande röstreserv är tyst för dessa rader; de är inte upplästa ännu. Grok genererar och implementerar dem senare i kväll. Kontrollera även eventuell dynamisk djurvariant när dess slutliga formulering är fastställd. Befintliga inspelningar bevaras.
+
+- `data/bengtsson.json`, `kanin-fryser.text_bengtsson_annat_djur.text`: Brr! Ditt djur fryser. Kan du skriva fram något varmt att ha på sig? (visas när det första djuret inte är en kanin; separat omarkerad text, ingår inte i Textpaket 02:s hashlås). **Till Grok:** även denna startreplik saknar inspelning.

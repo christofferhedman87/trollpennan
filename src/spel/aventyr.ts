@@ -65,6 +65,7 @@ export type Uppdrag = {
   klart: string;
   /** Utkast i givarens röst (R6A). Visas i spelet när givare är satt; text/klart är de ursprungliga texterna. */
   text_bengtsson?: string;
+  text_bengtsson_annat_djur?: { text: string; granskad: false };
   klart_bengtsson?: string;
   /** false = Copilot har inte granskat texten. */
   granskad?: boolean;
@@ -261,11 +262,11 @@ function bytFrysDjur(bas: string, djur: string): string {
 }
 
 /** Texten som visas för uppdraget: givarens (Bengtsson) när den finns, annars den ursprungliga. */
-export function uppdragText(u: Pick<Uppdrag, "givare" | "text" | "text_bengtsson"> & { id?: string }, malDjur?: string): string {
+export function uppdragText(u: Pick<Uppdrag, "givare" | "text" | "text_bengtsson" | "text_bengtsson_annat_djur"> & { id?: string }, malDjur?: string): string {
   const bas = u.givare && u.text_bengtsson ? u.text_bengtsson : u.text;
   if (u.id !== "kanin-fryser") return bas;
   const djur = (malDjur ?? forstaDjurKropp()).toLocaleLowerCase("sv");
-  return djur && djur !== "kanin" ? bytFrysDjur(bas, djur) : bas;
+  return djur && djur !== "kanin" ? u.text_bengtsson_annat_djur?.text ?? bytFrysDjur(bas, djur) : bas;
 }
 
 export function uppdragKlart(u: Pick<Uppdrag, "givare" | "klart" | "klart_bengtsson"> & { id?: string }, s = hamtaAng(), malDjur?: string): string {
