@@ -22,6 +22,22 @@ try {
     const page = await context.newPage(); page.setDefaultTimeout(60000);
     const fel = []; page.on("pageerror", (e) => fel.push(e.message));
     await page.addInitScript(() => {
+      // Kvittot kan ha hunnit löpa ut när ett senare protokollanrop ska läsa det.
+      // Fånga den faktiska texten medan hela knappen syns och har fri träffyta.
+      window.__relationsKvitto = null;
+      const lasKvitto = () => {
+        const e = document.querySelector('[data-dal="kvitto"]');
+        if (!e) return;
+        const r = e.getBoundingClientRect();
+        if (r.width <= 0 || r.height <= 0 || r.top < 0 || r.left < 0 || r.bottom > innerHeight || r.right > innerWidth || getComputedStyle(e).opacity === "0") return;
+        if (!e.contains(document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2))) return;
+        window.__relationsKvitto = e.innerText;
+      };
+      addEventListener("DOMContentLoaded", () => new MutationObserver(() => {
+        lasKvitto(); requestAnimationFrame(lasKvitto);
+      }).observe(document.body, { childList: true, subtree: true, attributes: true }));
+    });
+    await page.addInitScript(() => {
       if (sessionStorage.getItem("relationer-prov")) return;
       sessionStorage.setItem("relationer-prov", "1");
       localStorage.setItem("trollpennan-v2", JSON.stringify({ version: 2, introSedd: true, startLage: "skriv", startLageVald: true,
@@ -42,7 +58,7 @@ try {
         else await page.keyboard.type(bit);
       }
       assert.equal(await page.getByTestId("ord-input").inputValue(), text, "exakt egen text före Trolla");
-      const fore = await page.evaluate(() => window.__trollMinne.getState().ang.map((d) => d.uid));
+      const fore = await page.evaluate(() => { window.__relationsKvitto = null; return window.__trollMinne.getState().ang.map((d) => d.uid); });
       await page.getByTestId("vakna").click();
       await page.waitForFunction((gamla) => window.__trollMinne.getState().ang.some((d) => !gamla.includes(d.uid)), fore);
       await page.getByTestId("bok-skarm").waitFor({ state: "hidden" });
@@ -52,16 +68,16 @@ try {
       if (id) assert.equal(d.tillbehor.find((t) => t.id === id)?.relation, relation);
       else assert.ok(d.formagor.includes("vingar"));
       const kvitto = page.locator('[data-dal="kvitto"]');
-      await kvitto.waitFor();
-      assert.ok((await kvitto.innerText()).includes(text));
+      await page.waitForFunction((t) => window.__relationsKvitto?.includes(t), text, { timeout: 15000 });
       if (bilder && (relation === "under" || !id)) await page.screenshot({ path: `${bilder}/${viewport.width}-${relation || "vingar"}.png` });
-      await kvitto.click();
-      skapade.push(d);
+      // Kvittot stänger sig med lästid. Försök inte klicka ett kvitto som hinner gå ut mellan två protokollanrop.
+      await kvitto.waitFor({ state: "hidden", timeout: 15000 });
+      skapade.push(JSON.parse(JSON.stringify(d)));
       console.log("Grönt egen formel", viewport.width, text, d.uid);
     }
     await page.reload();
     await page.getByTestId("pennans-bok").waitFor();
-    const efter = await page.evaluate(() => window.__trollMinne.getState().ang);
+    const efter = await page.evaluate(() => { const s = window.__trollMinne.getState(); return [...s.ang, ...s.sovande]; });
     for (const d of skapade) assert.deepEqual(efter.find((x) => x.uid === d.uid), d, "formel/relation bevaras vid riktig omladdning");
     assert.deepEqual(fel, []);
     console.log("Grönt omladdning", viewport.width, skapade.length);

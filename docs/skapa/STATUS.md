@@ -21,6 +21,14 @@ Kodgranskningen hittade en ny adjektivläcka mellan tillbehör och nästa sak sa
 Befintliga antal/upprepningsfel hör till nästa C2-del: ”med två strumpor” får ännu inte tillbehörets eget antal, och flera identiska saker slås ännu ihop. De beteendena markeras öppna och låses inte av de nya proven. T-07:s synliga placering är fortfarande C1c, och T-08 är fortsatt delresultat.
 
 
+
+## C1b: kodgranskad och provad i boken, fortsatt delresultat
+
+Appkod `e61cbd3` har sju gröna grindar, 572/572, och inga kvarvarande kodblockerare enligt oberoende Codex-granskare. Riktiga inmatnings-/Trolla-prov är gröna för sju fraser i vardera 375×812 och 812×375, med samtliga sex relationer, plural och ”med vingar”. Faktiska skapelser har rätt formel och relationsfält; alla sju i varje vy bevaras efter riktig omladdning. V2-export/import täcker även utflykter, sovande, sparade formler, äldre kopior och avvisad ogiltig relation utan mutation.
+
+Browserprovet samlar kvittots text medan hela knappen faktiskt syns och har fri träffyta, innan dess vanliga lästid löper ut; inga timers eller appdata ändras för att hålla ett kvitto kvar. Det rättar ett provfel där senare läs-/klickanrop hann vänta på ett redan utgånget kvitto. Slutlig ren körning med denna synkronisering och samordning med A2 inväntas före slutgodkännande/merge. T-07:s fysiska placering och T-08:s antal, upprepade saker och övriga böjningar är öppna i C1c/C2. Inga granskad-flaggor ändras.
+
+
 ## C1b pågår: relation och egen formel, T-07/T-08
 
 På `codex/t07-t08-egen-formel`, ovanpå C1a #291: tolkens semantiska led behåller nu de sex relationerna med/på/under/i/vid/bredvid, tillbehörets skrivna artikel och ordform. Formeln kan säga ”en katt under ett bord”, ”med strumpor” och ”med vingar”. Valfritt validerat `TillbehorSpec.relation` bevaras i v2; äldre skapelser utan fältet godtas med befintlig placering. Riktiga export/import-prov täcker ängen, utflykten, sovande och sparad formel samt avvisad ogiltig relation utan mutation.
