@@ -102,8 +102,11 @@ test("TTS-2: mallar spelas som delar – kända värden är filer, barnets eget 
   const eget = rostPlan(mall.m.replace(/\{\w+\}/, "en zorbleflax"));
   assert.ok(eget && eget.dynamisk, "okänt ord ska vara dynamiskt");
   assert.deepEqual(eget.delar[0], { dynamisk: "en zorbleflax" });
-  const med = rostPlan(mall.m.replace(/\{\w+\}/, "en kanin med mössa"));
-  assert.ok(med && !med.dynamisk && med.delar.length >= 3, "'en kanin med mössa' = 'en kanin' + 'med mössa' som filer");
+  // R-A: 'en kanin med mössa' har nu en egen hel inspelning (hjälpfras), så den delas inte längre; 'en katt med mössa' gör det.
+  const med = rostPlan(mall.m.replace(/\{\w+\}/, "en katt med mössa"));
+  assert.ok(med && !med.dynamisk && med.delar.length >= 3, "'en katt med mössa' = 'en katt' + 'med mössa' som filer");
+  const hel = rostPlan(mall.m.replace(/\{\w+\}/, "en kanin med mössa"));
+  assert.ok(hel && !hel.dynamisk && hel.delar.length === 2, "'en kanin med mössa' spelas som en hel fil efter mallens fasta del");
   const blandat = rostPlan(mall.m.replace(/\{\w+\}/, "en kanin med zorbleflax"));
   assert.ok(blandat?.dynamisk && "dynamisk" in blandat.delar[0]!, "går värdet inte att dela helt läses hela värdet som barnets ord");
   assert.equal(rostPlan("Det här står inte i någon data."), null, "okänd fast text har ingen plan (tyst)");

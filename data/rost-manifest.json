@@ -239,7 +239,7 @@
    "f": "/ljud/rost/02a97ae6aec8f5c8.mp3",
    "ms": 2090,
    "r": "pennan",
-   "id": "bengtsson.val:rod-kompis:drake",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en röd drake",
    "n": -16
   },
@@ -427,6 +427,14 @@
    "t": "och pyjamas",
    "n": -16
   },
+  "39953956": {
+   "f": "/ljud/rost/3352b820d9e48053.mp3",
+   "ms": 2038,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-stor-simmare.klart",
+   "t": "Oj, vilken stor vän som kom till sjön!",
+   "n": -16
+  },
   "40411363": {
    "f": "/ljud/rost/7006eb6a3f63de8b.mp3",
    "ms": 1332,
@@ -490,6 +498,14 @@
    "r": "pennan",
    "id": "kombo:en_svart_groda",
    "t": "en svart groda",
+   "n": -16
+  },
+  "52774347": {
+   "f": "/ljud/rost/96fb96faba097c29.mp3",
+   "ms": 4258,
+   "r": "pennan",
+   "id": "onskningar-bygg.json:.onskningar[].text",
+   "t": "Jag vill bo i ett hus som ser ut som jag!",
    "n": -16
   },
   "52844811": {
@@ -825,7 +841,7 @@
    "f": "/ljud/rost/b68ff39d4dfee968.mp3",
    "ms": 1855,
    "r": "pennan",
-   "id": "bengtsson.val:trakig-eftermiddag:bok",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en katt med en bok",
    "n": -16
   },
@@ -867,6 +883,14 @@
    "r": "pennan",
    "id": "varde:en sovsäck",
    "t": "en sovsäck",
+   "n": -16
+  },
+  "99400555": {
+   "f": "/ljud/rost/1516b0f10790bc37.mp3",
+   "ms": 6348,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter två saker: något som värmer och något som kyler.",
    "n": -16
   },
   "99580961": {
@@ -954,7 +978,7 @@
    "f": "/ljud/rost/cebb2ad8ff6a0ac1.mp3",
    "ms": 1515,
    "r": "pennan",
-   "id": "bengtsson.val:gron-kompis:groda",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en grön groda",
    "n": -16
   },
@@ -1406,6 +1430,14 @@
    "t": "rymdvarelse",
    "n": -16
   },
+  "04611c6e": {
+   "f": "/ljud/rost/3267109b312833bf.mp3",
+   "ms": 4545,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-tva-farger.text",
+   "t": "Skapa två vänner vid sjön: en röd som tomaten och en blå som himlen!",
+   "n": -16
+  },
   "046b3fb1": {
    "f": "/ljud/rost/f0f418a8cba44861.mp3",
    "ms": 3944,
@@ -1634,7 +1666,7 @@
    "f": "/ljud/rost/0b522ca60127a498.mp3",
    "ms": 1332,
    "r": "pennan",
-   "id": "ideRad:vit-som-sno",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en vit kanin",
    "n": -16
   },
@@ -1762,7 +1794,7 @@
    "f": "/ljud/rost/230e5ed985977869.mp3",
    "ms": 1515,
    "r": "pennan",
-   "id": "bengtsson.val:pytteliten-kompis:mus",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en liten mus",
    "n": -16
   },
@@ -1794,7 +1826,7 @@
    "f": "/ljud/rost/71aaff15e9191c12.mp3",
    "ms": 1332,
    "r": "pennan",
-   "id": "bengtsson.val:grotta-gul-van:mus",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en gul mus",
    "n": -16
   },
@@ -2061,6 +2093,14 @@
    "r": "pennan",
    "id": "ledtradar.delfin.gata_latt",
    "t": "Jag är ett havsdäggdjur med fenor och ofta en lång, smal nos.",
+   "n": -16
+  },
+  "096f7b36": {
+   "f": "/ljud/rost/44269e58679597a9.mp3",
+   "ms": 5564,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en mjuk sovplats, som en säng eller madrass.",
    "n": -16
   },
   "09715509": {
@@ -2545,6 +2585,14 @@
    "t": "en fe",
    "n": -16
   },
+  "0c70d66b": {
+   "f": "/ljud/rost/fb15574dc3d2830e.mp3",
+   "ms": 6687,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter något varmt att ha på sig, som mössa eller halsduk.",
+   "n": -16
+  },
   "0c7c89e6": {
    "f": "/ljud/rost/c952e3c21d8e90d8.mp3",
    "ms": 1802,
@@ -2918,7 +2966,7 @@
    "f": "/ljud/rost/1f3b52e150518c1a.mp3",
    "ms": 1515,
    "r": "pennan",
-   "id": "bengtsson.val:dags-att-vila:säng",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en hund i en säng",
    "n": -16
   },
@@ -2968,6 +3016,14 @@
    "r": "pennan",
    "id": "ledtradar.json:.ledtradar.konstnär.gata",
    "t": "Han har en palett med färger och målar tavlor.",
+   "n": -16
+  },
+  "1015b178": {
+   "f": "/ljud/rost/98594d17ab984090.mp3",
+   "ms": 4598,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en vän som är gul eller kan lysa.",
    "n": -16
   },
   "101dc36d": {
@@ -3122,11 +3178,19 @@
    "t": "glittrar",
    "n": -16
   },
+  "115036c1": {
+   "f": "/ljud/rost/270837b7b144ba3e.mp3",
+   "ms": 1672,
+   "r": "pennan",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
+   "t": "en katt med tröja",
+   "n": -16
+  },
   "1171f51a": {
    "f": "/ljud/rost/1893b605ecdce9c3.mp3",
    "ms": 5094,
    "r": "pennan",
-   "id": "bengtsson.val:skog-stor-och-liten:räv",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en stor räv och en liten kanin",
    "n": -16
   },
@@ -3431,7 +3495,7 @@
    "f": "/ljud/rost/8d77845687fb5bb3.mp3",
    "ms": 1437,
    "r": "pennan",
-   "id": "bengtsson.val:skog-rod-van:uggla",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en röd uggla",
    "n": -16
   },
@@ -3791,7 +3855,7 @@
    "f": "/ljud/rost/bf637b264f58f7c7.mp3",
    "ms": 3605,
    "r": "pennan",
-   "id": "bengtsson.val:tva-farger:fisk",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en röd fisk och en blå fisk",
    "n": -16
   },
@@ -3799,7 +3863,7 @@
    "f": "/ljud/rost/3cbd251e092a8b97.mp3",
    "ms": 2116,
    "r": "pennan",
-   "id": "bengtsson.val:present-till-en-van:blomma",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en kanin med en blomma",
    "n": -16
   },
@@ -3831,7 +3895,7 @@
    "f": "/ljud/rost/eeb1103dcb459940.mp3",
    "ms": 1384,
    "r": "pennan",
-   "id": "bengtsson.val:sjo-bla-van:anka",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en blå anka",
    "n": -16
   },
@@ -4323,6 +4387,14 @@
    "t": "Min näsa är så lång att jag kan duscha mig med den. Vem är jag?",
    "n": -16
   },
+  "1b0cc81e": {
+   "f": "/ljud/rost/faa4da853ea19753.mp3",
+   "ms": 4676,
+   "r": "pennan",
+   "id": "onskningar-bygg.json:.onskningar[].tack",
+   "t": "Ett hus som ser ut precis som jag! Det är det finaste jag sett.",
+   "n": -16
+  },
   "1b1a0fe7": {
    "f": "/ljud/rost/8db73f37312b5079.mp3",
    "ms": 1254,
@@ -4415,7 +4487,7 @@
    "f": "/ljud/rost/fb4faca7274870e8.mp3",
    "ms": 1802,
    "r": "pennan",
-   "id": "bengtsson.val:jattestor-van:drake",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en jättestor drake",
    "n": -16
   },
@@ -4441,6 +4513,14 @@
    "r": "pennan",
    "id": "varde:en komet",
    "t": "en komet",
+   "n": -16
+  },
+  "1ca54da5": {
+   "f": "/ljud/rost/94c92c01db2261af.mp3",
+   "ms": 5146,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en sittplats, som en stubbe eller stock.",
    "n": -16
   },
   "1cc687d6": {
@@ -4749,6 +4829,14 @@
    "t": "hundkojor",
    "n": -16
   },
+  "1fad6827": {
+   "f": "/ljud/rost/26ecc71c3252f2b7.mp3",
+   "ms": 4127,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-vila-benen.text",
+   "t": "En vän är trött i benen. Kan du ordna något att sitta på i skogen?",
+   "n": -16
+  },
   "1fb4aee3": {
    "f": "/ljud/rost/814b2974ac7ad424.mp3",
    "ms": 1097,
@@ -4763,6 +4851,14 @@
    "r": "pennan",
    "id": "ledtradar.json:.ledtradar.kappa.gata",
    "t": "En lång jacka utan ärmar, som en mantel.",
+   "n": -16
+  },
+  "1fd6afc9": {
+   "f": "/ljud/rost/b14d7871a6b32587.mp3",
+   "ms": 4493,
+   "r": "pennan",
+   "id": "onskningar-bygg.json:.onskningar[].tack",
+   "t": "Ett slottsstall! Nu känner jag mig som en kung.",
    "n": -16
   },
   "1fe132ed": {
@@ -4891,7 +4987,7 @@
    "f": "/ljud/rost/48037c47cfd79575.mp3",
    "ms": 3892,
    "r": "pennan",
-   "id": "bengtsson.val:skog-stor-och-liten:uggla",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en stor uggla och en liten hund",
    "n": -16
   },
@@ -5412,6 +5508,14 @@
    "t": "Hoppsan, ditt djur har rullat i lera! Hur får vi bort kladdet?",
    "n": -16
   },
+  "24d7635c": {
+   "f": "/ljud/rost/3102c0eff37033e7.mp3",
+   "ms": 4676,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter ljus, som en lykta eller ficklampa.",
+   "n": -16
+  },
   "24dcce28": {
    "f": "/ljud/rost/976b78c9ddb337bf.mp3",
    "ms": 1489,
@@ -5536,7 +5640,7 @@
    "f": "/ljud/rost/b51cba1add20d2e7.mp3",
    "ms": 1750,
    "r": "pennan",
-   "id": "bengtsson.val:magen-kurrar:äpple",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en häst med ett äpple",
    "n": -16
   },
@@ -5828,6 +5932,14 @@
    "r": "pennan",
    "id": "bengtsson.val:grotta-ben-som-vilar:soffa",
    "t": "en mus bredvid en soffa",
+   "n": -16
+  },
+  "277b0eac": {
+   "f": "/ljud/rost/e73ee7281da13617.mp3",
+   "ms": 5433,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter två vänner: en grön och en gul.",
    "n": -16
   },
   "27a4f9cf": {
@@ -6168,6 +6280,14 @@
    "t": "simmar",
    "n": -16
   },
+  "2a7dcdb6": {
+   "f": "/ljud/rost/9d568a55e13ad3b8.mp3",
+   "ms": 4362,
+   "r": "pennan",
+   "id": "onskningar-bygg.json:.onskningar[].text",
+   "t": "Jag är lite mörkrädd. Kan du bygga något som lyser?",
+   "n": -16
+  },
   "2a81481a": {
    "f": "/ljud/rost/f1b4981e1a136c06.mp3",
    "ms": 2952,
@@ -6252,7 +6372,7 @@
    "f": "/ljud/rost/77021a4ad0c12b9b.mp3",
    "ms": 1698,
    "r": "pennan",
-   "id": "bengtsson.val:gron-kompis:larv",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en grön larv",
    "n": -16
   },
@@ -7060,6 +7180,14 @@
    "t": "Den är lindad i vita tygremsor och har vilat i pyramiden i tusen år.",
    "n": -16
   },
+  "307c0be7": {
+   "f": "/ljud/rost/4ff02ce054959e62.mp3",
+   "ms": 5198,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en blå vän, som en blå fisk.",
+   "n": -16
+  },
   "30acbbde": {
    "f": "/ljud/rost/28f6008a81246b0b.mp3",
    "ms": 1620,
@@ -7074,6 +7202,14 @@
    "r": "pennan",
    "id": "hemligt.json:.alla_hittade",
    "t": "Du har hittat alla hemliga djur!",
+   "n": -16
+  },
+  "30ce9dd4": {
+   "f": "/ljud/rost/9d6fd5f82d3aacdd.mp3",
+   "ms": 4859,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-liten-upptackare.text",
+   "t": "Det finns ett pyttelitet hål i grottan! Kan du skapa en vän som får plats?",
    "n": -16
   },
   "30cf19af": {
@@ -7501,6 +7637,14 @@
    "t": "en vattenmelon",
    "n": -16
   },
+  "34043a63": {
+   "f": "/ljud/rost/c72c65755fa07011.mp3",
+   "ms": 3579,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-stor-simmare.text",
+   "t": "Jag vill träffa en riktigt stor vän vid sjön. Kan du skapa en?",
+   "n": -16
+  },
   "340ca71c": {
    "f": "/ljud/rost/692d09df167b9cf1.mp3",
    "ms": 784,
@@ -7753,7 +7897,7 @@
    "f": "/ljud/rost/0ad10d231248322f.mp3",
    "ms": 1672,
    "r": "pennan",
-   "id": "ideRad:pytteliten-kompis",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en liten kanin",
    "n": -16
   },
@@ -8612,7 +8756,7 @@
    "f": "/ljud/rost/983e700d7ea63093.mp3",
    "ms": 1489,
    "r": "pennan",
-   "id": "bengtsson.val:grotta-liten-upptackare:mus",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en pytteliten mus",
    "n": -16
   },
@@ -9486,7 +9630,7 @@
    "f": "/ljud/rost/fa7de344f83a522f.mp3",
    "ms": 2952,
    "r": "pennan",
-   "id": "bengtsson.val:sjo-tva-storlekar:groda",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en stor groda och en liten fisk",
    "n": -16
   },
@@ -10261,6 +10405,14 @@
    "t": "en sågblad",
    "n": -16
   },
+  "478bf618": {
+   "f": "/ljud/rost/aebd0172863ed09a.mp3",
+   "ms": 2743,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].klart_bengtsson_annat_djur.text",
+   "t": "Så skönt! Nu kan ditt djur sluta huttra.",
+   "n": -16
+  },
   "4799bbde": {
    "f": "/ljud/rost/7158c46ac2c76523.mp3",
    "ms": 1384,
@@ -10692,7 +10844,7 @@
    "f": "/ljud/rost/dda31b3748d8a8b8.mp3",
    "ms": 1907,
    "r": "pennan",
-   "id": "bengtsson.val:skog-magen-kurrar:äpple",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en get med ett äpple",
    "n": -16
   },
@@ -10750,6 +10902,14 @@
    "r": "pennan",
    "id": "onskningar.json:.onskningar[].tack",
    "t": "Kom, vi simmar ett varv runt dammen!",
+   "n": -16
+  },
+  "4abef497": {
+   "f": "/ljud/rost/d271673c83351036.mp3",
+   "ms": 6504,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en liten vän, som en myra eller en pytteliten mus.",
    "n": -16
   },
   "4ad43b84": {
@@ -10836,7 +10996,7 @@
    "f": "/ljud/rost/b2851bc1f7766918.mp3",
    "ms": 5433,
    "r": "pennan",
-   "id": "bengtsson.val:skog-stor-och-liten:varg",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en stor varg och en liten igelkott",
    "n": -16
   },
@@ -11094,6 +11254,14 @@
    "r": "pennan",
    "id": "varde:forskare",
    "t": "forskare",
+   "n": -16
+  },
+  "4d18368b": {
+   "f": "/ljud/rost/a76fb6117f12a58c.mp3",
+   "ms": 2038,
+   "r": "pennan",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
+   "t": "en hund med halsduk",
    "n": -16
   },
   "4d342d2c": {
@@ -11358,6 +11526,14 @@
    "r": "pennan",
    "id": "bengtsson.val:leriga-tassar:svamp",
    "t": "en apa med en svamp",
+   "n": -16
+  },
+  "4ed46a46": {
+   "f": "/ljud/rost/790d3bcda94bd85e.mp3",
+   "ms": 4023,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-kvallsljus.text",
+   "t": "Det blir mörkt mellan träden! Kan du ge en vän något som lyser?",
    "n": -16
   },
   "4ee38a0e": {
@@ -11777,6 +11953,14 @@
    "t": "varg",
    "n": -16
   },
+  "52ce87a6": {
+   "f": "/ljud/rost/b9a5616ebe22d1ee.mp3",
+   "ms": 2220,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-tva-storlekar.klart",
+   "t": "Olika stora vänner vid samma glada sjö!",
+   "n": -16
+  },
   "52cfb67b": {
    "f": "/ljud/rost/12d1668479d36688.mp3",
    "ms": 1332,
@@ -11981,7 +12165,7 @@
    "f": "/ljud/rost/ab9264eced3310ff.mp3",
    "ms": 3892,
    "r": "pennan",
-   "id": "bengtsson.val:grotta-stor-och-liten:kanin",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en stor kanin och en liten mus",
    "n": -16
   },
@@ -12021,7 +12205,7 @@
    "f": "/ljud/rost/e756f84c09881bc8.mp3",
    "ms": 1149,
    "r": "pennan",
-   "id": "varde:en fågel",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en fågel",
    "n": -16
   },
@@ -12122,6 +12306,14 @@
    "tal": "Gamla bävern bygger en ny damm på ön men har slut på pinnar. Kan du hjälpa honom?",
    "n": -16
   },
+  "55b3b3d8": {
+   "f": "/ljud/rost/6c7a02e114c35ab3.mp3",
+   "ms": 1985,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-tva-farger.klart",
+   "t": "Vilket färgglatt kompispar vid sjön!",
+   "n": -16
+  },
   "55d380c1": {
    "f": "/ljud/rost/61999cc58eaeb7e6.mp3",
    "ms": 3605,
@@ -12136,6 +12328,14 @@
    "r": "pennan",
    "id": "ord.form:ryggsäck:ryggsäcken",
    "t": "ryggsäcken",
+   "n": -16
+  },
+  "55e31add": {
+   "f": "/ljud/rost/d935be86b9d32231.mp3",
+   "ms": 5616,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en liten vän, som en pytteliten igelkott.",
    "n": -16
   },
   "55fad88b": {
@@ -12571,6 +12771,14 @@
    "t": "oranget",
    "n": -16
   },
+  "5a174261": {
+   "f": "/ljud/rost/2a37e39d9f15e81f.mp3",
+   "ms": 1437,
+   "r": "pennan",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
+   "t": "en stor giraff",
+   "n": -16
+  },
   "5a24d074": {
    "f": "/ljud/rost/9b15e6da69e537e0.mp3",
    "ms": 1097,
@@ -12593,6 +12801,14 @@
    "r": "pennan",
    "id": "varde:en sandjägare",
    "t": "en sandjägare",
+   "n": -16
+  },
+  "5a344939": {
+   "f": "/ljud/rost/dd3803462f547731.mp3",
+   "ms": 3605,
+   "r": "bengtsson",
+   "id": "bengtsson.json:rod-kompis.text",
+   "t": "Jag vill träffa en röd vän, lika röd som en tomat!",
    "n": -16
   },
   "5a4140b7": {
@@ -12777,6 +12993,14 @@
    "r": "pennan",
    "id": "gava.med:morot",
    "t": "med morot",
+   "n": -16
+  },
+  "5badcc57": {
+   "f": "/ljud/rost/ee1fa156097c7487.mp3",
+   "ms": 4911,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-forsta-skenet.text",
+   "t": "Här inne i grottan är det mörkt! Kan du ge en vän något som lyser?",
    "n": -16
   },
   "5baf452c": {
@@ -13056,7 +13280,7 @@
    "f": "/ljud/rost/dd962f449a6e3064.mp3",
    "ms": 2168,
    "r": "pennan",
-   "id": "bengtsson.val:skog-liten-van:igelkott",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en pytteliten igelkott",
    "n": -16
   },
@@ -13216,7 +13440,7 @@
    "f": "/ljud/rost/8c3e66c2ef5c5525.mp3",
    "ms": 1933,
    "r": "pennan",
-   "id": "bengtsson.val:sjo-fruktpaus:apelsin",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en groda med en apelsin",
    "n": -16
   },
@@ -13442,6 +13666,14 @@
    "r": "bengtsson",
    "id": "bengtsson.json:grotta-stor-och-liten.text",
    "t": "Två vänner vill bo här inne. En är stor som en björn. En är pytte, som en myra!",
+   "n": -16
+  },
+  "60c822f3": {
+   "f": "/ljud/rost/835a21abe2d33873.mp3",
+   "ms": 5198,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en viloplats, som en säng eller soffa.",
    "n": -16
   },
   "60d68cfd": {
@@ -13845,6 +14077,14 @@
    "t": "en gondol",
    "n": -16
   },
+  "63b48de7": {
+   "f": "/ljud/rost/48a5ca9ff35e70ed.mp3",
+   "ms": 3109,
+   "r": "bengtsson",
+   "id": "bengtsson.json:pytteliten-kompis.text",
+   "t": "Jag vill träffa en riktigt liten vän. Kan du skapa en?",
+   "n": -16
+  },
   "63ca1bb4": {
    "f": "/ljud/rost/8e4673789f1331c0.mp3",
    "ms": 1019,
@@ -13993,7 +14233,7 @@
    "f": "/ljud/rost/fa4def04b960596a.mp3",
    "ms": 1672,
    "r": "pennan",
-   "id": "bengtsson.val:magen-kurrar:banan",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en apa med en banan",
    "n": -16
   },
@@ -14099,6 +14339,14 @@
    "r": "pennan",
    "id": "onskningar.json:.onskningar[].tack",
    "t": "Hör upp, alla djur! Här kommer kungen!",
+   "n": -16
+  },
+  "663a5dbd": {
+   "f": "/ljud/rost/2e9bdfd17cc9026e.mp3",
+   "ms": 3788,
+   "r": "pennan",
+   "id": "onskningar-bygg.json:.onskningar[].text",
+   "t": "Jag vill ha ett stall som ser ut som ett slott!",
    "n": -16
   },
   "6649b7c7": {
@@ -14794,6 +15042,14 @@
    "t": "Han har pensel och hink och gör väggen blå eller röd.",
    "n": -16
   },
+  "6b687c2b": {
+   "f": "/ljud/rost/3c57f61045ab60ea.mp3",
+   "ms": 6348,
+   "r": "pennan",
+   "id": "onskningar-bygg.json:.onskningar[].text",
+   "t": "Jag vill bo inne i en frukt. Ett hus som ser ut som ett äpple kanske?",
+   "n": -16
+  },
   "6b70ddc9": {
    "f": "/ljud/rost/10ccadd79361cdcd.mp3",
    "ms": 2090,
@@ -14824,6 +15080,14 @@
    "r": "pennan",
    "id": "ord.json:.overraskningar[].text",
    "t": "Det regnar små stjärnor runt mig!",
+   "n": -16
+  },
+  "6c0b8e60": {
+   "f": "/ljud/rost/5ecb74f6c11fa8f3.mp3",
+   "ms": 2403,
+   "r": "bengtsson",
+   "id": "bengtsson.json:kanin-fryser.klart",
+   "t": "Så skönt! Nu kan öronen sluta huttra.",
    "n": -16
   },
   "6c0d3373": {
@@ -14942,7 +15206,7 @@
    "f": "/ljud/rost/ab206652f0c4a9e0.mp3",
    "ms": 2090,
    "r": "pennan",
-   "id": "bengtsson.val:rod-kompis:fågel",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en röd fågel",
    "n": -16
   },
@@ -15182,7 +15446,7 @@
    "f": "/ljud/rost/535abe26ec027e0d.mp3",
    "ms": 1620,
    "r": "pennan",
-   "id": "bengtsson.val:jattestor-van:elefant",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en stor elefant",
    "n": -16
   },
@@ -15230,7 +15494,7 @@
    "f": "/ljud/rost/104a1fe77f401ffd.mp3",
    "ms": 2743,
    "r": "pennan",
-   "id": "bengtsson.val:ordet-pa:sten",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en groda på en sten",
    "n": -16
   },
@@ -15272,6 +15536,14 @@
    "r": "bengtsson",
    "id": "bengtsson.json:varmt-och-kallt.klart",
    "t": "Vilken fin motsatsblandning!",
+   "n": -16
+  },
+  "6f26333e": {
+   "f": "/ljud/rost/0954654eb489d7dc.mp3",
+   "ms": 5381,
+   "r": "pennan",
+   "id": "onskningar-bygg.json:.onskningar[].text",
+   "t": "Kan du bygga ett hus som dansar? Jag älskar att dansa!",
    "n": -16
   },
   "6f2e88ea": {
@@ -16059,6 +16331,14 @@
    "t": "trollkarlshattarna",
    "n": -16
   },
+  "752c7d2b": {
+   "f": "/ljud/rost/ed65dcb25bf3ea4d.mp3",
+   "ms": 4833,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en röd vän, till exempel en röd drake.",
+   "n": -16
+  },
   "7535ed0d": {
    "f": "/ljud/rost/f9e5352fb880ac68.mp3",
    "ms": 1489,
@@ -16148,6 +16428,14 @@
    "t": "en mjuk mössa",
    "n": -16
   },
+  "75d3d9c9": {
+   "f": "/ljud/rost/94e8b4891ee3d397.mp3",
+   "ms": 5616,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter frukt, som ett äpple, en banan eller en melon.",
+   "n": -16
+  },
   "75dbde16": {
    "f": "/ljud/rost/ce5ce9d9d50e6f21.mp3",
    "ms": 2116,
@@ -16210,6 +16498,14 @@
    "r": "bengtsson",
    "id": "bengtsson.json:skog-stor-och-liten.klart",
    "t": "Olika storlek, lika välkomna på fikat!",
+   "n": -16
+  },
+  "760e470f": {
+   "f": "/ljud/rost/87a24d8b25c19e06.mp3",
+   "ms": 3840,
+   "r": "bengtsson",
+   "id": "bengtsson.json:ljus-i-kvallen.text",
+   "t": "Ditt djur vill se bättre i kvällsmörkret! Kan du ge det en lampa?",
    "n": -16
   },
   "76616a54": {
@@ -16825,7 +17121,7 @@
    "f": "/ljud/rost/273a108c4d4aed49.mp3",
    "ms": 4127,
    "r": "pennan",
-   "id": "bengtsson.val:sjo-tva-storlekar:anka",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en stor anka och en liten anka",
    "n": -16
   },
@@ -17043,7 +17339,7 @@
    "f": "/ljud/rost/4cea33a66da96612.mp3",
    "ms": 2351,
    "r": "pennan",
-   "id": "bengtsson.val:skog-vila-benen:stock",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en räv på en stock",
    "n": -16
   },
@@ -18747,6 +19043,14 @@
    "t": "Mu! Nu vaknar bondgårdens djur i boken.",
    "n": -16
   },
+  "8be712ad": {
+   "f": "/ljud/rost/a0f2ea7746f50361.mp3",
+   "ms": 7184,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter mat till det hungriga djuret, som en morot eller ett äpple.",
+   "n": -16
+  },
   "8bf29659": {
    "f": "/ljud/rost/fda09ea166589fc1.mp3",
    "ms": 1254,
@@ -18823,7 +19127,7 @@
    "f": "/ljud/rost/e987e3e5bb8bbda0.mp3",
    "ms": 1489,
    "r": "pennan",
-   "id": "ideRad:kalla-tassar",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en varm tröja",
    "n": -16
   },
@@ -19092,6 +19396,14 @@
    "t": "Klart! ett stall står på gården.",
    "n": -16
   },
+  "8e2ef572": {
+   "f": "/ljud/rost/e13620da88c28e3a.mp3",
+   "ms": 5381,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter något som lyser, som en lykta eller lampa.",
+   "n": -16
+  },
   "8e3815e0": {
    "f": "/ljud/rost/7d6c78f77160102b.mp3",
    "ms": 1332,
@@ -19298,6 +19610,14 @@
    "r": "pennan",
    "id": "varde:och keps",
    "t": "och keps",
+   "n": -16
+  },
+  "904fd0a7": {
+   "f": "/ljud/rost/014a809855cd35e0.mp3",
+   "ms": 1567,
+   "r": "pennan",
+   "id": "varde:ett klippblock",
+   "t": "ett klippblock",
    "n": -16
   },
   "9053585d": {
@@ -19954,7 +20274,7 @@
    "f": "/ljud/rost/7ba9268a21184cdc.mp3",
    "ms": 2456,
    "r": "pennan",
-   "id": "bengtsson.val:ordet-pa:stubbe",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en kanin på en stubbe",
    "n": -16
   },
@@ -20283,7 +20603,7 @@
    "f": "/ljud/rost/d29a3a44a288035a.mp3",
    "ms": 2952,
    "r": "pennan",
-   "id": "bengtsson.val:tva-farger:katt",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en röd katt och en blå hund",
    "n": -16
   },
@@ -20437,7 +20757,7 @@
    "f": "/ljud/rost/a794413e1120352c.mp3",
    "ms": 3474,
    "r": "pennan",
-   "id": "bengtsson.val:grotta-stor-och-liten:mus",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en stor mus och en liten hund",
    "n": -16
   },
@@ -20617,6 +20937,14 @@
    "t": "turkos",
    "n": -16
   },
+  "9b7972d2": {
+   "f": "/ljud/rost/79afdb265932ec02.mp3",
+   "ms": 5198,
+   "r": "bengtsson",
+   "id": "bengtsson.json:kanin-fryser.text",
+   "t": "Brr! Din kanin fryser om öronen. Kan du skriva fram något varmt att ha på sig?",
+   "n": -16
+  },
   "9b84b009": {
    "f": "/ljud/rost/00032e93c715adf8.mp3",
    "ms": 2743,
@@ -20639,6 +20967,14 @@
    "r": "pennan",
    "id": "varde:ett spöke",
    "t": "ett spöke",
+   "n": -16
+  },
+  "9c20d8bf": {
+   "f": "/ljud/rost/76f2bcc6d3f58b87.mp3",
+   "ms": 2821,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-stor-och-liten.text",
+   "t": "Skapa två skogsvänner: en stor och en liten!",
    "n": -16
   },
   "9c2e908e": {
@@ -21074,6 +21410,14 @@
    "t": "Jag har bästa utsikten på hela gården.",
    "n": -16
   },
+  "a0d8a1fe": {
+   "f": "/ljud/rost/b816224216c68ed5.mp3",
+   "ms": 3474,
+   "r": "pennan",
+   "id": "onskningar-bygg.json:.onskningar[].tack",
+   "t": "Mmm, det luktar gott i mitt nya hus!",
+   "n": -16
+  },
   "a0e6c9d6": {
    "f": "/ljud/rost/a064748365aaec3a.mp3",
    "ms": 1567,
@@ -21110,7 +21454,7 @@
    "f": "/ljud/rost/8851ae114c15f584.mp3",
    "ms": 1280,
    "r": "pennan",
-   "id": "ideRad:solgul-van",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en gul kanin",
    "n": -16
   },
@@ -21370,6 +21714,14 @@
    "t": "Vilken färgglad liten samling!",
    "n": -16
   },
+  "a3bcba04": {
+   "f": "/ljud/rost/ffd357c5f8fa2b29.mp3",
+   "ms": 5016,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en sittplats, som en sten eller stol.",
+   "n": -16
+  },
   "a3cdb724": {
    "f": "/ljud/rost/fd554ac24c6562a4.mp3",
    "ms": 1515,
@@ -21558,7 +21910,7 @@
    "f": "/ljud/rost/ef6ffe656dd8c099.mp3",
    "ms": 1202,
    "r": "pennan",
-   "id": "bygg:stall",
+   "id": "varde:ett stall",
    "t": "ett stall",
    "n": -16
   },
@@ -21584,6 +21936,14 @@
    "r": "pennan",
    "id": "bygg.form:gran:granarna",
    "t": "granarna",
+   "n": -16
+  },
+  "a55b7e1d": {
+   "f": "/ljud/rost/d492ac2f538209f6.mp3",
+   "ms": 1489,
+   "r": "bengtsson",
+   "id": "bengtsson.json:vit-som-sno.klart",
+   "t": "Vilken fin, vit vän!",
    "n": -16
   },
   "a56fa99c": {
@@ -21814,7 +22174,7 @@
    "f": "/ljud/rost/854cc1ca09dbca9e.mp3",
    "ms": 3762,
    "r": "pennan",
-   "id": "bengtsson.val:stor-och-liten:hund",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en stor hund och en liten katt",
    "n": -16
   },
@@ -21854,7 +22214,7 @@
    "f": "/ljud/rost/32f60598a21d47ec.mp3",
    "ms": 2220,
    "r": "pennan",
-   "id": "bengtsson.val:dags-att-vila:fåtölj",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en kanin i en fåtölj",
    "n": -16
   },
@@ -21880,6 +22240,14 @@
    "r": "pennan",
    "id": "varde:en generator",
    "t": "en generator",
+   "n": -16
+  },
+  "a773e187": {
+   "f": "/ljud/rost/02349cbbe9eee03f.mp3",
+   "ms": 4833,
+   "r": "pennan",
+   "id": "onskningar-bygg.json:.onskningar[].text",
+   "t": "Tänk om mitt hus kunde flyga! Kan du bygga ett sådant?",
    "n": -16
   },
   "a77a8803": {
@@ -22124,6 +22492,14 @@
    "t": "en sjöjungfru",
    "n": -16
   },
+  "a9216342": {
+   "f": "/ljud/rost/7acb6590574009d5.mp3",
+   "ms": 5512,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter två vänner: en röd och en blå.",
+   "n": -16
+  },
   "a9280c8f": {
    "f": "/ljud/rost/f2ecbc0368b7fe6b.mp3",
    "ms": 3892,
@@ -22292,6 +22668,14 @@
    "t": "en rödbeta",
    "n": -16
   },
+  "a9fee1e8": {
+   "f": "/ljud/rost/abc254fd7a701fed.mp3",
+   "ms": 3657,
+   "r": "bengtsson",
+   "id": "bengtsson.json:vit-som-sno.text",
+   "t": "Jag vill träffa en vit vän, lika vit som snö. Kan du skapa en?",
+   "n": -16
+  },
   "a9ff36fb": {
    "f": "/ljud/rost/92faa6d1d04c7851.mp3",
    "ms": 1698,
@@ -22416,7 +22800,7 @@
    "f": "/ljud/rost/8e9cb59a48512012.mp3",
    "ms": 1985,
    "r": "pennan",
-   "id": "bengtsson.val:magen-kurrar:morot",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en kanin med en morot",
    "n": -16
   },
@@ -22848,7 +23232,7 @@
    "f": "/ljud/rost/a256765a54a6ba97.mp3",
    "ms": 1802,
    "r": "pennan",
-   "id": "bengtsson.val:dags-att-vila:soffa",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en katt på en soffa",
    "n": -16
   },
@@ -23042,6 +23426,14 @@
    "r": "pennan",
    "id": "varde:marsvin",
    "t": "marsvin",
+   "n": -16
+  },
+  "b0653dfe": {
+   "f": "/ljud/rost/6654ddc0a44b0de6.mp3",
+   "ms": 3239,
+   "r": "pennan",
+   "id": "onskningar-bygg.json:.onskningar[].tack",
+   "t": "Nu är det ljust och mysigt. Tack!",
    "n": -16
   },
   "b06914c1": {
@@ -23444,6 +23836,14 @@
    "t": "Nu lyser fyren igen! Båtarna hittar hem tack vare dig.",
    "n": -16
   },
+  "b3267143": {
+   "f": "/ljud/rost/861fa2dfbd36271d.mp3",
+   "ms": 3056,
+   "r": "pennan",
+   "id": "onskningar-bygg.json:.onskningar[].tack",
+   "t": "Det flyger! Nu kan jag vinka till fåglarna.",
+   "n": -16
+  },
   "b327635b": {
    "f": "/ljud/rost/3f09ffed8fef4af8.mp3",
    "ms": 1855,
@@ -23508,6 +23908,14 @@
    "t": "Jag vill ha samma färg som himlen när det skymmer. Lila kanske, eller mörkblå?",
    "n": -16
   },
+  "b38ed531": {
+   "f": "/ljud/rost/3178682b4ebd1af8.mp3",
+   "ms": 5042,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en röd vän, som en röd kanin.",
+   "n": -16
+  },
   "b3a26459": {
    "f": "/ljud/rost/1240e8930d85d4fd.mp3",
    "ms": 1149,
@@ -23522,6 +23930,14 @@
    "r": "pennan",
    "id": "varde:får",
    "t": "får",
+   "n": -16
+  },
+  "b3ddccee": {
+   "f": "/ljud/rost/bfee7f2f6d1cf6ba.mp3",
+   "ms": 5460,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en vän som kan flyga. Vingar kan hjälpa.",
    "n": -16
   },
   "b3dfb355": {
@@ -23672,7 +24088,7 @@
    "f": "/ljud/rost/46e53da7e457c925.mp3",
    "ms": 2116,
    "r": "pennan",
-   "id": "bengtsson.val:present-till-en-van:nallebjörn",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en hund med en nallebjörn",
    "n": -16
   },
@@ -23809,7 +24225,7 @@
    "f": "/ljud/rost/7683ad575223514f.mp3",
    "ms": 2220,
    "r": "pennan",
-   "id": "bengtsson.val:skog-kvallsljus:lykta",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en kanin med en lykta",
    "n": -16
   },
@@ -23865,7 +24281,7 @@
    "f": "/ljud/rost/bf5f0db9add20d92.mp3",
    "ms": 1933,
    "r": "pennan",
-   "id": "bengtsson.val:pytteliten-kompis:larv",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en pytteliten larv",
    "n": -16
   },
@@ -24003,6 +24419,14 @@
    "r": "pennan",
    "id": "varde:en läkare",
    "t": "en läkare",
+   "n": -16
+  },
+  "b72648ba": {
+   "f": "/ljud/rost/f1c219a4d1932e97.mp3",
+   "ms": 3291,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-stor-och-liten.text",
+   "t": "Skapa två vänner i grottan: en stor och en liten!",
    "n": -16
   },
   "b735441e": {
@@ -24163,6 +24587,14 @@
    "r": "pennan",
    "id": "gava.form:honung:honungen",
    "t": "honungen",
+   "n": -16
+  },
+  "b845666d": {
+   "f": "/ljud/rost/d921a7b7e9bf6700.mp3",
+   "ms": 1855,
+   "r": "pennan",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
+   "t": "en hund med strumpor",
    "n": -16
   },
   "b8476d4c": {
@@ -24355,6 +24787,14 @@
    "r": "pennan",
    "id": "ledtradar.json:.ledtradar.makaonfjäril.gata",
    "t": "Gula vingar med svarta ränder och små svansar längst bak har jag.",
+   "n": -16
+  },
+  "b977a54f": {
+   "f": "/ljud/rost/fbec47835fc2cd3d.mp3",
+   "ms": 6531,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en stor vän, som en elefant eller jättestor drake.",
    "n": -16
   },
   "b97d4aa9": {
@@ -24658,7 +25098,7 @@
    "f": "/ljud/rost/9aec771d96ade1cb.mp3",
    "ms": 1620,
    "r": "pennan",
-   "id": "bengtsson.val:rod-kompis:fisk",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en röd fisk",
    "n": -16
   },
@@ -25521,6 +25961,14 @@
    "t": "pingvin",
    "n": -16
   },
+  "c31e52f0": {
+   "f": "/ljud/rost/978aef9c92774e23.mp3",
+   "ms": 3709,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-sittpaus.text",
+   "t": "En vän vill sitta och titta på allt som glimmar! Vad kan den sitta på?",
+   "n": -16
+  },
   "c322ad05": {
    "f": "/ljud/rost/76c434343a8ef7fb.mp3",
    "ms": 1149,
@@ -25665,6 +26113,14 @@
    "t": "Vad ska vi väcka först?",
    "n": -16
   },
+  "c41481ed": {
+   "f": "/ljud/rost/4a316b4425df6f35.mp3",
+   "ms": 3788,
+   "r": "bengtsson",
+   "id": "bengtsson.json:skog-liten-van.text",
+   "t": "Kan du skapa en liten vän som får plats bredvid min minsta kaffekopp?",
+   "n": -16
+  },
   "c42a956f": {
    "f": "/ljud/rost/c63c97b5ae06d4fe.mp3",
    "ms": 1202,
@@ -25798,7 +26254,7 @@
    "f": "/ljud/rost/bccc60b04e04b910.mp3",
    "ms": 1489,
    "r": "pennan",
-   "id": "bengtsson.val:vit-som-sno:lamm",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "ett vitt lamm",
    "n": -16
   },
@@ -25850,6 +26306,14 @@
    "r": "pennan",
    "id": "varde:en näckros",
    "t": "en näckros",
+   "n": -16
+  },
+  "c555d626": {
+   "f": "/ljud/rost/1e42ee3e4550ea50.mp3",
+   "ms": 5094,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en stor vän, som en jättestor fisk.",
    "n": -16
   },
   "c55a1008": {
@@ -26285,6 +26749,14 @@
    "t": "Hon är mammas mamma och bakar bullar till dig.",
    "n": -16
   },
+  "c7e67c33": {
+   "f": "/ljud/rost/cb13a155467db68c.mp3",
+   "ms": 4963,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en grön vän, som en grön groda.",
+   "n": -16
+  },
   "c7e7bc2e": {
    "f": "/ljud/rost/f887fadccbccf9a2.mp3",
    "ms": 862,
@@ -26457,7 +26929,7 @@
    "f": "/ljud/rost/2f3db5946f999723.mp3",
    "ms": 1907,
    "r": "pennan",
-   "id": "bengtsson.val:grotta-liten-upptackare:groda",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en pytteliten groda",
    "n": -16
   },
@@ -26561,7 +27033,7 @@
    "f": "/ljud/rost/ff2b365d64d2ef9f.mp3",
    "ms": 1698,
    "r": "pennan",
-   "id": "bengtsson.val:sjo-bla-van:fisk",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en blå fisk",
    "n": -16
   },
@@ -26585,7 +27057,7 @@
    "f": "/ljud/rost/ef62bec03e3fb4a1.mp3",
    "ms": 1567,
    "r": "pennan",
-   "id": "bengtsson.val:gron-kompis:drake",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en grön drake",
    "n": -16
   },
@@ -26725,12 +27197,28 @@
    "t": "ett slott",
    "n": -16
   },
+  "caf9e1b7": {
+   "f": "/ljud/rost/0a0954ef110b6b14.mp3",
+   "ms": 4598,
+   "r": "bengtsson",
+   "id": "bengtsson.json:grotta-tva-farger.text",
+   "t": "Skapa två vänner i grottan: en grön som gräset och en gul som solen!",
+   "n": -16
+  },
   "cb18d7ea": {
    "f": "/ljud/rost/ed4633cb36b8dde1.mp3",
    "ms": 1202,
    "r": "pennan",
    "id": "varde:en murslev",
    "t": "en murslev",
+   "n": -16
+  },
+  "cb361145": {
+   "f": "/ljud/rost/d46226126332d7e9.mp3",
+   "ms": 5146,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter två vänner: en stor och en liten.",
    "n": -16
   },
   "cb3de90c": {
@@ -26987,7 +27475,7 @@
    "f": "/ljud/rost/8772cb0881fccbb2.mp3",
    "ms": 1672,
    "r": "pennan",
-   "id": "bengtsson.val:sjo-bla-van:groda",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en blå groda",
    "n": -16
   },
@@ -27269,6 +27757,14 @@
    "r": "pennan",
    "id": "ledtradar.json:.ledtradar.kolibri.gata",
    "t": "En pytteliten fågel som svävar på stället och har tusen vingslag i sekunden.",
+   "n": -16
+  },
+  "cf214a2b": {
+   "f": "/ljud/rost/69d7752e3a02f46a.mp3",
+   "ms": 1515,
+   "r": "bengtsson",
+   "id": "bengtsson.json:gron-kompis.klart",
+   "t": "Vilken härligt grön kompis!",
    "n": -16
   },
   "cf3103dd": {
@@ -27593,6 +28089,14 @@
    "t": "sex",
    "n": -16
   },
+  "d22ee2de": {
+   "f": "/ljud/rost/9f03f9fe45559a15.mp3",
+   "ms": 1802,
+   "r": "bengtsson",
+   "id": "bengtsson.json:rod-kompis.klart",
+   "t": "Vilken härlig röd färgklick!",
+   "n": -16
+  },
   "d242a318": {
    "f": "/ljud/rost/5028659e26ea52b1.mp3",
    "ms": 1202,
@@ -27623,6 +28127,14 @@
    "r": "pennan",
    "id": "ny_sida:sagan",
    "t": "Ny sida i boken: Sagosidan!",
+   "n": -16
+  },
+  "d2656229": {
+   "f": "/ljud/rost/5f2f42f8f1d221f1.mp3",
+   "ms": 5146,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en liten vän, som en pytteliten mus.",
    "n": -16
   },
   "d26e274a": {
@@ -27830,7 +28342,7 @@
    "f": "/ljud/rost/836a556742d8d8ea.mp3",
    "ms": 1437,
    "r": "pennan",
-   "id": "bengtsson.val:skog-rod-van:räv",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en röd räv",
    "n": -16
   },
@@ -27902,7 +28414,7 @@
    "f": "/ljud/rost/be71a0a98168d711.mp3",
    "ms": 1437,
    "r": "pennan",
-   "id": "bengtsson.val:vit-som-sno:gås",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en vit gås",
    "n": -16
   },
@@ -28469,6 +28981,14 @@
    "tal": "en katt bredvid",
    "n": -16
   },
+  "d88188e2": {
+   "f": "/ljud/rost/3185f1c707214c1e.mp3",
+   "ms": 5669,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en present, som en blomma, bok eller leksak.",
+   "n": -16
+  },
   "d886639c": {
    "f": "/ljud/rost/5efd1d357076349b.mp3",
    "ms": 1802,
@@ -28914,7 +29434,7 @@
    "f": "/ljud/rost/c2849b40d5bf9610.mp3",
    "ms": 2038,
    "r": "pennan",
-   "id": "bengtsson.val:sjo-fruktpaus:äpple",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en kanin med ett äpple",
    "n": -16
   },
@@ -29092,7 +29612,7 @@
    "f": "/ljud/rost/f070fb4f59f6ab25.mp3",
    "ms": 1567,
    "r": "pennan",
-   "id": "bengtsson.val:solgul-van:kyckling",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en gul kyckling",
    "n": -16
   },
@@ -29728,6 +30248,14 @@
    "t": "kottarna",
    "n": -16
   },
+  "e18888d5": {
+   "f": "/ljud/rost/de765e1e669ba531.mp3",
+   "ms": 6400,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter något som lyser, som en lykta eller ficklampa.",
+   "n": -16
+  },
   "e18ef308": {
    "f": "/ljud/rost/4636399c96c5fb7c.mp3",
    "ms": 1802,
@@ -30033,6 +30561,14 @@
    "t": "råtta",
    "n": -16
   },
+  "e49a5f9f": {
+   "f": "/ljud/rost/ae0847685187b441.mp3",
+   "ms": 3762,
+   "r": "pennan",
+   "id": "onskningar-bygg.json:.onskningar[].tack",
+   "t": "Huset dansar! Kom, vi dansar tillsammans!",
+   "n": -16
+  },
   "e4aa4d0b": {
    "f": "/ljud/rost/35e4002ad82d282a.mp3",
    "ms": 836,
@@ -30141,7 +30677,7 @@
    "f": "/ljud/rost/17deaf85e4961d32.mp3",
    "ms": 1933,
    "r": "pennan",
-   "id": "ideRad:rod-kompis",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en röd kanin",
    "n": -16
   },
@@ -30421,7 +30957,7 @@
    "f": "/ljud/rost/8f028513c31079bc.mp3",
    "ms": 1620,
    "r": "pennan",
-   "id": "bengtsson.val:sjo-stor-simmare:fisk",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en stor fisk",
    "n": -16
   },
@@ -30487,6 +31023,14 @@
    "r": "pennan",
    "id": "bengtsson.val:atbar-regnbage:äpple",
    "t": "en apa med ett rött äpple, en gul banan och grön broccoli",
+   "n": -16
+  },
+  "e856b525": {
+   "f": "/ljud/rost/622954e9910af19e.mp3",
+   "ms": 5381,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en vit vän, som en vit kanin.",
    "n": -16
   },
   "e861287c": {
@@ -30567,6 +31111,14 @@
    "r": "pennan",
    "id": "varde:brevbärare",
    "t": "brevbärare",
+   "n": -16
+  },
+  "e8c6dc27": {
+   "f": "/ljud/rost/0b623cc63cac5e42.mp3",
+   "ms": 1620,
+   "r": "pennan",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
+   "t": "en liten myra",
    "n": -16
   },
   "e8c933ca": {
@@ -30994,6 +31546,14 @@
    "t": "panda",
    "n": -16
   },
+  "ebfe2f80": {
+   "f": "/ljud/rost/9a7b5dd4e1969e8b.mp3",
+   "ms": 3474,
+   "r": "bengtsson",
+   "id": "bengtsson.json:gron-kompis.text",
+   "t": "Jag vill träffa en grön vän, lika grön som gräset!",
+   "n": -16
+  },
   "ec0c35c4": {
    "f": "/ljud/rost/302c947e2702d8aa.mp3",
    "ms": 653,
@@ -31038,7 +31598,7 @@
    "f": "/ljud/rost/a8f67123a599660b.mp3",
    "ms": 1489,
    "r": "pennan",
-   "id": "bengtsson.val:solgul-van:hund",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en gul hund",
    "n": -16
   },
@@ -31192,6 +31752,14 @@
    "r": "pennan",
    "id": "varde:en servitör",
    "t": "en servitör",
+   "n": -16
+  },
+  "edb57575": {
+   "f": "/ljud/rost/26d257951dd9931f.mp3",
+   "ms": 7654,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter något som värmer. Strumpor, en tröja eller en halsduk kan hjälpa.",
    "n": -16
   },
   "edc4cba6": {
@@ -31418,6 +31986,14 @@
    "t": "en biograf",
    "n": -16
   },
+  "efd89517": {
+   "f": "/ljud/rost/dee65636ea87855c.mp3",
+   "ms": 3056,
+   "r": "bengtsson",
+   "id": "bengtsson.json:jattestor-van.text",
+   "t": "Jag vill träffa en riktigt stor vän. Kan du skapa en?",
+   "n": -16
+  },
   "efda6e77": {
    "f": "/ljud/rost/614046715a391d57.mp3",
    "ms": 7523,
@@ -31488,6 +32064,14 @@
    "r": "bengtsson",
    "id": "bengtsson.json:tva-farger.text",
    "t": "Jag vill se två vänner: en i tomatens färg och en i himlens färg!",
+   "n": -16
+  },
+  "f0b6e45d": {
+   "f": "/ljud/rost/88ba2e925f3c720c.mp3",
+   "ms": 6452,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter mat till en skogsgäst, som en morot eller ett äpple.",
    "n": -16
   },
   "f0dff1c1": {
@@ -31574,7 +32158,7 @@
    "f": "/ljud/rost/66476879f5cc84e9.mp3",
    "ms": 3370,
    "r": "pennan",
-   "id": "bengtsson.val:sjo-tva-storlekar:fisk",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en stor fisk och en liten fisk",
    "n": -16
   },
@@ -32105,7 +32689,7 @@
    "f": "/ljud/rost/1d18b9bc7e7133e3.mp3",
    "ms": 1802,
    "r": "pennan",
-   "id": "bengtsson.val:ljus-i-kvallen:lykta",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en hund med en lykta",
    "n": -16
   },
@@ -32125,6 +32709,14 @@
    "t": "Doktor Bengtsson",
    "n": -16
   },
+  "f5447c5a": {
+   "f": "/ljud/rost/214bec0215466fdb.mp3",
+   "ms": 3344,
+   "r": "bengtsson",
+   "id": "bengtsson.json:sjo-tva-storlekar.text",
+   "t": "Skapa två vänner vid sjön: en stor och en liten!",
+   "n": -16
+  },
   "f5539151": {
    "f": "/ljud/rost/1c06bfc15a1cc2b8.mp3",
    "ms": 1437,
@@ -32137,7 +32729,7 @@
    "f": "/ljud/rost/a3b4006c3b6affdf.mp3",
    "ms": 1332,
    "r": "pennan",
-   "id": "bengtsson.val:grotta-gul-van:groda",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en gul groda",
    "n": -16
   },
@@ -32358,6 +32950,14 @@
    "t": "Vem kan få samma färg som gräset på ängen?",
    "n": -16
   },
+  "f76c985a": {
+   "f": "/ljud/rost/e3a5df9804969659.mp3",
+   "ms": 4911,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].text_bengtsson_annat_djur.text",
+   "t": "Brr! Ditt djur fryser. Kan du skriva fram något varmt att ha på sig?",
+   "n": -16
+  },
   "f7705dbd": {
    "f": "/ljud/rost/b1d5bd44434244e9.mp3",
    "ms": 4545,
@@ -32508,6 +33108,14 @@
    "r": "pennan",
    "id": "onskningar:kull",
    "t": "som springer snabbt",
+   "n": -16
+  },
+  "f868f5ac": {
+   "f": "/ljud/rost/d9755b0bae72f1b5.mp3",
+   "ms": 5251,
+   "r": "bengtsson",
+   "id": "bengtsson.json:.uppdrag[].nastan",
+   "t": "Din skapelse får stanna! Jag letar efter en gul vän, som en gul mus eller groda.",
    "n": -16
   },
   "f86cdc44": {
@@ -33091,7 +33699,7 @@
    "f": "/ljud/rost/b03e37c832d4d370.mp3",
    "ms": 2325,
    "r": "pennan",
-   "id": "bengtsson.val:ordet-pa:stol",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
    "t": "en katt på en stol",
    "n": -16
   },
@@ -33294,6 +33902,14 @@
    "r": "bengtsson",
    "id": "bengtsson.json:skog-rod-van.klart",
    "t": "Vilken fin färgklick bland allt det gröna!",
+   "n": -16
+  },
+  "fe0f3915": {
+   "f": "/ljud/rost/95f8f4b679b33ead.mp3",
+   "ms": 1855,
+   "r": "pennan",
+   "id": "bengtsson.json:.uppdrag[].hjalp[]",
+   "t": "en kanin med mössa",
    "n": -16
   },
   "fe22ae4c": {
