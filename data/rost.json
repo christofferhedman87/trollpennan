@@ -36,7 +36,8 @@
     "syntaxviruset": "syntaxviruset"
   },
   "uttal": {
-    "Här på ängen": "Här, på ängen"
+    "Här på ängen": "Här, på ängen",
+    "Din skapelse får stanna! Jag letar efter en liten vän, som en pytteliten igelkott.": "Din skapelse får stanna! Jag letar efter en liten vän, som en pytteliten iggelkott."
   },
   "uttal_stam": {
     "_om": "TTS-3: stammen byts i alla böjningar och sammansättningar innan texten skickas till röstmotorn (ekorre, ekorren, Ekorrens, ekorrarna, Silverekorren …), med versal när stammen börjar med versal. Christoffers val: prov 07 \"Ehkorren\". Ersätter de exakta orden \"Ekorren\"/\"ekorren\" i uttal (#165).",
@@ -46,7 +47,26 @@
     "_om": "TTS-3: nyckel (manifestets) → försök nr. Ett nytt försök för en rad vars uttal inte blev rätt (kontrolleras med faster-whisper). Bara den raden görs om.",
     "11adcf01": 2,
     "45c0c436": 2,
-    "4113b1d6": 4
+    "4113b1d6": 4,
+    "277b0eac": 1,
+    "75d3d9c9": 1,
+    "307c0be7": 2,
+    "e18888d5": 1,
+    "b977a54f": 2,
+    "b3ddccee": 1,
+    "04611c6e": 1,
+    "c7e67c33": 1,
+    "b845666d": 1,
+    "4d18368b": 1,
+    "f0b6e45d": 1,
+    "55e31add": 1,
+    "760e470f": 1,
+    "55b3b3d8": 1,
+    "9c20d8bf": 1,
+    "478bf618": 1,
+    "6c0b8e60": 1,
+    "9b7972d2": 1,
+    "1fd6afc9": 1
   },
   "reserv": "tyst",
   "ljudniva": {
