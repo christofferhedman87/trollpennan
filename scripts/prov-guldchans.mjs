@@ -33,13 +33,26 @@ async function kontrolleraSkrivyta(page, aktiv = ".sk-skrivbricka") {
     const ruta = (s) => document.querySelector(s).getBoundingClientRect();
     const ord = ruta(selektor);
     const remsa = ruta(".sk-remsa");
-    const innehall = ruta(".sk-innehall");
     const hjalp = ruta(".sk-hjalprad");
     const tips = ruta(".sk-tips");
     const tangenter = ruta(".sk-tangenter");
-    const sida = matchMedia("(orientation: landscape) and (max-height: 600px)").matches;
-    return ord.top >= Math.max(0, remsa.top, sida ? innehall.top : 0) - 1
-      && ord.bottom <= Math.min(innerHeight, remsa.bottom, sida ? innehall.bottom : innerHeight) + 1
+    const aktivt = document.querySelector(selektor);
+    // T-27 flyttade remsan ovanför sammanhangsytan. Prova verkliga klippande
+    // föräldrar, aldrig ett syskons ruta som om den fortfarande innehöll remsan.
+    const inomKlipp = (el) => {
+      const r = el.getBoundingClientRect();
+      if (r.top < -1 || r.bottom > innerHeight + 1 || r.left < -1 || r.right > innerWidth + 1) return false;
+      for (let p = el.parentElement; p; p = p.parentElement) {
+        const css = getComputedStyle(p); const q = p.getBoundingClientRect();
+        if (/hidden|auto|scroll|clip/.test(css.overflowY) && (r.top < q.top - 1 || r.bottom > q.bottom + 1)) return false;
+        if (/hidden|auto|scroll|clip/.test(css.overflowX) && (r.left < q.left - 1 || r.right > q.right + 1)) return false;
+      }
+      return true;
+    };
+    return document.querySelector(".sk-remsa").contains(aktivt)
+      && ord.top >= Math.max(0, remsa.top) - 1
+      && ord.bottom <= Math.min(innerHeight, remsa.bottom) + 1
+      && [aktivt, ...[".sk-remsa", ".sk-hjalprad", ".sk-tips", ".sk-tangenter"].map((s) => document.querySelector(s))].every(inomKlipp)
       && hjalp.bottom <= tangenter.top + 1 && tips.bottom <= hjalp.bottom + 1;
   }, aktiv, { timeout: 8000 }).catch(async (e) => {
     const rutor = await page.evaluate((selektor) => Object.fromEntries([selektor, ".sk-remsa", ".sk-innehall", ".sk-hjalprad", ".sk-tips", ".sk-tangenter"].map((s) => {
