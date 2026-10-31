@@ -63,7 +63,7 @@ function maskeringar(w: string): string[] {
     pos.forEach((p, b) => { if (m & (1 << b)) a[p] = MASK[a[p]!]!; });
     ut.add(a.join(""));
   }
-  for (let i = 1; i < w.length; i++) for (const d of ["2", "6", "8", "9", "22"]) ut.add(w.slice(0, i) + d + w.slice(i));
+  for (let i = 1; i < w.length; i++) for (const d of ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "22"]) ut.add(w.slice(0, i) + d + w.slice(i));
   return [...ut];
 }
 
