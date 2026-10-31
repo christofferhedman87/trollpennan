@@ -12,14 +12,11 @@ import type { Fraga } from "../../skapa/lexikon.ts";
 import { meningGenus, meningTyp } from "../../skapa/meningsbrickor.ts";
 import { useSpel } from "../SpelKontext.ts";
 import { useArkLapp } from "../../skapa/arkLapp.ts";
-import { ordFranForm } from "../../../tolk/lexikon.ts";
-import { ONSK_BYGG } from "../../onska.ts";
-import { uppdragForslag } from "../../ideRad.ts";
-import { aktivtUppdrag } from "../../skapa/uppdragLapp.ts";
+import { useBokMal } from "../../skapa/useBokMal.ts";
 import { Fet } from "./Hjalprad.tsx";
 import { Ordkort } from "./Ordkort.tsx";
 
-const UI = uiJson as unknown as { fragor: Record<string, string>; hylla: Record<string, string>; rost: Record<string, string>; sektioner: Record<string, string> };
+const UI = uiJson as unknown as { fragor: Record<string, string>; hylla: Record<string, string>; rost: Record<string, string>; sektioner: Record<string, string>; bokmal: { rubriker: Record<string, string>; byt_rubrik: string; byt_text: string; byt_ja: string; byt_nej: string } };
 const FRAGOR: { id: Fraga; farg: string }[] = [
   { id: "vad", farg: "var(--tp-vad)" },
   { id: "hurdan", farg: "var(--tp-hurdan)" },
@@ -37,19 +34,15 @@ export function Ordhjalp({ flik, setFlik }: { flik: Fraga; setFlik: (f: Fraga) =
   const typ = meningTyp(remsa.brickor);
   const genus = meningGenus(remsa.brickor);
   const arkLapp = useArkLapp((s) => s.lapp);
-  const spar = useMinne((s) => s.uppdrag);
-  const { onskan, ang } = k.t;
+  const mal = useBokMal();
+  const [byta, setByta] = useState<string | null>(null);
+  useEffect(() => setByta(null), [k.t.text, mal.id]);
+  const prova = (fras: string) => {
+    if (remsa.skriv.trim() || remsa.brickor.some((b) => b.kalla === "skriv")) setByta(fras);
+    else fyllExempel(fras);
+  };
   // 7.6: korten som löser önskan eller uppdraget glöder (och läggs till om de inte är hjälpord).
-  const onskade = useMemo(() => {
-    const ex: string[] = k.vy.visaOnskaHjalp ? [...k.vy.onskaEx] : [];
-    const djur = k.vy.onskaDjur?.kropp;
-    if (k.vy.visaOnskaHjalp && onskan?.kalla === "bygg" && djur) {
-      const g = ordFranForm(djur)?.genus === "n" ? "ett" : "en";
-      for (const e of ONSK_BYGG.onskningar.find((o) => o.id === onskan.id)?.exempel ?? []) if (e.includes("{djur}")) ex.push(fyll(e, { djur: `${g} ${djur}` }));
-    }
-    if (arkLapp === "uppdrag") ex.push(...uppdragForslag(aktivtUppdrag(spar), ang[0]?.kropp));
-    return onskeKort(ex);
-  }, [k.vy.visaOnskaHjalp, k.vy.onskaEx, k.vy.onskaDjur, onskan, arkLapp, spar, ang]);
+  const onskade = useMemo(() => onskeKort(mal.slag === "fri" ? [] : mal.losningar), [mal.slag, mal.losningar]);
   const onskadeNycklar = useMemo(() => new Set(onskade.map((x) => x.nyckel)), [onskade]);
   const del = useMemo(() => hyllaMedOnskan(typ, onskade), [typ, onskade]);
   const prefix = remsa.skriv.trim().toLocaleLowerCase("sv");
@@ -68,10 +61,11 @@ export function Ordhjalp({ flik, setFlik }: { flik: Fraga; setFlik: (f: Fraga) =
   };
   useEffect(() => {
     if (prefix) hyllRef.current?.scrollTo({ left: 0 });
+    else if (mal.slag !== "fri" && mal.losningar.length) { hyllRef.current?.scrollTo({ left: 0 }); setFlik("vad"); }
     else if (arkLapp === "tomt" && flik === "vad") hoppaTill("vad", false, "hus");
     else hoppaTill(flik, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps -- bara när hyllan visas eller typen byts
-  }, [typ, prefix === ""]);
+  }, [typ, prefix === "", mal.id]);
 
   const valj = (kort: HyllKort) => {
     laggHjalpKort(kort);
@@ -112,6 +106,11 @@ export function Ordhjalp({ flik, setFlik }: { flik: Fraga; setFlik: (f: Fraga) =
 
   return (
     <>
+      {byta ? <div className="sk-mal-fraga" role="dialog" aria-modal="true" aria-label={UI.bokmal.byt_rubrik} onKeyDown={(e) => { e.stopPropagation(); if (e.key === "Escape") { e.preventDefault(); setByta(null); } }}>
+        <p>{UI.bokmal.byt_text}</p><p><b>{byta}</b></p>
+        <button type="button" className="sk-knapp" onClick={() => { fyllExempel(byta); setByta(null); }}>{UI.bokmal.byt_ja}</button>
+        <button type="button" className="sk-knapp" autoFocus data-dialog-close onClick={() => setByta(null)}>{UI.bokmal.byt_nej}</button>
+      </div> : null}
       <div className="sk-flikar" role="tablist" aria-label={UI.hylla.lyssna_hall}>
         <button type="button" role="tab" aria-selected={false} className="sk-flik skriv-flik" data-testid="pennan" onClick={() => { setVy("skriv"); rostKo.lasUpp(UI.fragor.skriv ?? ""); }}>
           <img alt="" src={ikon("ui", "tangentbord")} />
@@ -146,6 +145,19 @@ export function Ordhjalp({ flik, setFlik }: { flik: Fraga; setFlik: (f: Fraga) =
             if (aktiv !== flik) setFlik(aktiv);
           }}
         >
+          {mal.slag !== "fri" && mal.losningar.length ? <>
+            <div className="sk-sektion sk-mal-rubrik" data-start="vad" data-sektion="mal">
+              <h3>{UI.bokmal.rubriker[mal.slag]}</h3>
+            </div>
+            {mal.losningar.slice(0, 4).map((fras) => {
+              const kort = onskeKort([fras]);
+              const bild = kort.find((x) => x.fraga === "vad") ?? kort.find((x) => x.fraga === "har") ?? kort[0];
+              return <button key={fras} type="button" className="sk-kort sk-mal-losning" data-mal="losning" onClick={() => prova(fras)}>
+                <img className="sk-kort-bild" alt="" src={bild?.bild ?? ikon("ui", "ordhjalp")} />
+                <span>{fras}</span>
+              </button>;
+            })}
+          </> : null}
           {prefix ? (
             prefixLista.length ? (
               <>

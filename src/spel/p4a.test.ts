@@ -146,7 +146,7 @@ test("P4a: äldre sparning utan rostPa ärver ljudPa", () => {
 
 test("P4a: Lyssna- och ljudknapparna finns som data-p4", () => {
   // Nya Skapa (fas E): Menade du läses upp när svarsraden visas; lyssna-onska sitter på lappen, lyssna-mening på remsan.
-  const ui = ["Ledtradsyta.tsx", "UppdragsRemsa.tsx", "skapa/Lapp.tsx", "skapa/Trollremsa.tsx", "ForalderDialog.tsx"]
+  const ui = ["Ledtradsyta.tsx", "UppdragsRemsa.tsx", "skapa/Lapp.tsx", "skapa/LappRam.tsx", "skapa/Trollremsa.tsx", "ForalderDialog.tsx"]
     .map((fil) => fs.readFileSync(`src/spel/ui/${fil}`, "utf8"))
     .join("\n");
   for (const attr of ["lyssna-gata", "lyssna-uppdrag", "lyssna-onska", "lyssna-mening", "rost-knapp", "effekt-knapp"]) {

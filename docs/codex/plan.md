@@ -1,7 +1,32 @@
 # Åtgärdsplan T-01–T-35 för Codex och Claude Code
 
-> **Aktuellt 2026-10-31:** uppdraget omfattar samtliga 35 fynd i [granskning.md](granskning.md). E1/E2 (#286), E3/G4 (#287) och A1 (#288) är publicerade och görs inte om. B0:s första sex uppdrag är publicerade i #290 som fbfe48f (main-Cloudflare 124411312834 och 6/6 SHA-256 gröna); 85 uppdrag återstår. A0/A2/F4 i #289 slutverifieras. Dess hologramregression hittade ett befintligt grafikfel även på main; den separata rättningen finns i #293. Beteendebevarande tolkdelning finns i #291. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1. Denna aktiva plan går före historiken längre ner.
+> **Aktuellt 2026-10-31:** uppdraget omfattar samtliga 35 fynd i [granskning.md](granskning.md). E1/E2 (#286), E3/G4 (#287) och A1 (#288) är publicerade och görs inte om. B0:s första sex uppdrag är publicerade i #290 som fbfe48f (main-Cloudflare 124411312834 och 6/6 SHA-256 gröna); 85 uppdrag återstår. A0/A2/F4 (#289, main `eec3b27`) är publicerade och verifierade med Cloudflare/SHA-256. Dess hologramregression hittade ett befintligt grafikfel även på main; den separata rättningen är publicerad i #293. Beteendebevarande tolkdelning #291 är publicerad som `f69c3e9`. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1. Denna aktiva plan går före historiken längre ner.
 
+## A2: publicerad och verifierad
+
+Den gemensamma målmodulen, målkort med uttryckligt textbyte, separat Gåta, fri-världstips och boklayouten finns i #289. #289 är mergad som `eec3b27` och publicerad: main-Cloudflare `124442039491` grön och alla sex serverade start-/spel-filer byteidentiska med det provade bygget (SHA-256). Oberoende Codex-granskare slutgodkände exakt `60d5c4c`; senare ändringar är enbart dokumentation. T-03 är delresultat: täckningen av alla 157 mål och den äldre gåvohyllan återstår i B/C/D. Barnets text och sparformat v2 ändras inte av layouten.
+
+Kritisk granskning hittade och rättade verklig klippning av remsa/X, rotation, Väktaröverlapp, avsaknad av världsyta i 375×667, CSS-kaskad, för bred hjälphylla, klippt Idé/stavningssvar och dold guldinstruktion. Idé och svar rullas fram, guldskrivandet prioriteras med befintlig instruktion, och nya ord/vald bricka hålls hela i remsan. Senaste guldprovet med föregående Idé är grönt i 375×667: Idé/Gåta ändrar inte ordet, Mellanslag/sudda fungerar, hela frasen blir guld och önskan uppfylls/sparas. Hela layoutprovet är också grönt i 375×667, inklusive hjälp/full lapp/stavning och 44 px-X. Interna bilder granskade.
+
+Hologrammet passar sin faktiska modellruta mellan HUD och bokkontroller. Den separata shaderfixen #293 är publicerad; förhandsvisningen ändrar inga sparpositioner. Skogens hela hologramflöden i 375×667, 667×375 och datorfallback 1280×720 är gröna, liksom Sjön/Grottan i 812×375: fyra modeller, stenens 90 bildrutor med 1–1 egna ritanrop, rotation, skapande och sparinvarians. Standardtelefonens tidigare bok-/guld-/platsprov är gröna. Alla sju slutgrindar på sista appkoden `60d5c4c` är gröna, 565/565 produkttester och 18 befintliga lintvarningar. Slutgranskaren hittade att markering av en äldre bricka höll nya bokstäver utanför raden. Verkligt markera→fortsätt skriva-prov är rött på `ca538799`; fortsatt inmatning lämnar nu markeringen före nästa bildruta. Hela det utökade layoutprovet är grönt i 375×812, 812×375, 667×375 och 375×667. De nya bokstäverna är helt synliga även efter markering; interna bilder granskade. Första skapelsen är grön på `ca538799` i stående, liggande och datorvy: verkliga skärmtryck, sparning och omladdning utan sidrullning, konsolfel eller externa anrop. Enda senare appändringen är markeringsrensningen, som det utökade provet täcker.
+
+Geometriprovet har valfri `QA_TANGENTER=fysiska`: riktiga ASCII-tangenter och faktiska skärmtryck på å/ä/ö, med exakt läsback efter inmatning/radering. Standardläget behåller samtliga skärmtryck. Synlighets- och ritanropsgränser är oförändrade. Tre svagaste punkter: semantik/gåvohjälp för 157 mål återstår; fysisk Safari/hårdvara är inte provad; nya godkända inspelningar återstår. En sjuåring kan skriva, be om en idé och återgå till sin text, men äldre målsvar kan fortfarande frustrera tills B/C är klart.
+
+C1a #291 och C1b #294 samordnas därefter. C1b:s appkod `e61cbd3` har 572/572 och kritisk kodgranskning; sju fraser och omladdning är gröna i vardera huvudvyn. Fysisk placering och C2:s antal/upprepade saker är öppna. Textpaket 01 i #292 väntar fortfarande på Christoffers faktiska läsning; inga `granskad`-flaggor är ändrade.
+
+## C1b: slutverifierade ord och relationer inför merge
+
+#294 är samordnad med `origin/main f69c3e9` genom vanlig merge. Appändringarna från `e61cbd3` behåller de sex relationerna med/på/under/i/vid/bredvid, tillbehörets artikel, adjektiv och skrivna ordform samt ”med vingar”. Ett valfritt validerat relationsfält följer v2; äldre kopior och ogiltig relation utan mutation är provade genom faktisk export/import, även för utflykter, sovande och sparade formler.
+
+Oberoende Codex-granskare slutgodkände `ad1cc35` efter rättade adjektivläckor och relation vid sammansatt tillbehör. Appkod `e61cbd3` har alla sju grindar gröna, 572/572. Rena slut-UI-prov har sju verkligt skrivna och skapade fraser i vardera 375×812 och 812×375; alla sju i varje vy bevaras efter riktig omladdning. Baslinjen var röd: ”en katt under ett bord” skapades som ”en katt med bord”. Kvittot läses bara när det verkligen är helt synligt och har fri träffyta, med oförändrad normal lästid. Den senare samordningen tar in A2:s granskade UI-rättningar; C1b:s tolk-/lagringsändringar är oförändrade. Alla sju slutgrindar på samordnade `16de11b` är gröna, 572/572. Oberoende Codex-granskare slutgodkände exakt `16de11b3372421a6a3c732d810b53842eb491420`. Nästa steg är merge och main-Cloudflare/SHA-256.
+
+T-07/T-08 är fortfarande delresultat. Fysisk placering hör till C1c; tillbehörsantal, identiska saker och övriga böjningar hör till C2. Inga `granskad`-flaggor eller fasta barnrepliker ändras. Tre svagaste punkter: relationsdata syns ännu inte som rätt fysisk placering; antal och identiska saker återstår; fysisk Safari/svensk hårdvara är inte provad.
+
+## C1a: publicerad beteendebevarande uppdelning
+
+#291 är samordnad med `origin/main eec3b27` genom vanlig merge, utan C1b eller språkändringar. Appkod `eb4b3ad`: alla sju slutgrindar gröna, 565/565 produkttester. Samma 1 726 fraser ger fortfarande byteidentiska fulla utfall för båda tolkarna, SHA-256 `aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3`. De sex tolkmodulerna är fortsatt identiska med godkända `d2a5d29`. Ett mellanprov på `bc97600` föll på känt P3a-tidstest (50,2 ms); gränsen är oförändrad och slutomgången är helt grön.
+
+Riktigt första-skapelsen-prov på det frysta `0e656bf`-bygget är grönt i stående, liggande och datorvy: skapelsen sparas och återkommer efter omladdning, utan sidrullning, konsolfel eller externa anrop. Den senare samordningen tar in A2:s fullständigt provade UI-rättning; tolkmodulerna ändras inte. T-07/T-08 är öppna; funktionsändringen finns separat i #294. Oberoende Codex-granskare slutgodkände `eb4b3ad`. #291 är mergad som `f69c3e9` och publicerad: main-Cloudflare `124443122813` grön och alla sex serverade start-/spel-filer byteidentiska med det provade bygget (SHA-256). Tre svagaste punkter: detta förarbete rättar inga språkfel; fysiska relationer/antal återstår; fysisk svensk hårdvara/Safari är inte provad.
 
 
 ## B2 · T-06: önskans betydelse och synligt svar (pågår)
@@ -16,8 +41,7 @@ Tre svagaste punkter: verklig UI-koppling/utflykt måste slutprovas; T-17:s geme
 
 Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var 40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.
 
-Kod `9a1b211`: faktisk shader-regression röd före och grön efter; alla sju grindar gröna, 561/561. Provet täcker delat original, materialarray, 200 materialpass och samma solid-uniform vid Trolla. `prov-platsforhand.mjs` är rött mot baslinjen (90 nollvärden) och grönt i hela Grottan-flödet i 375×812 och 812×375: stenens egna WebGL-anrop är 1–1 i var och en av 90 bildrutor, och även rotation, sparinvarians, skapande samt platsbyte är gröna. Interna bilder granskade, blå och linjerad sten. Inga mätgränser lättade. Oberoende slutgodkännande och main-Cloudflare/SHA-kontroll återstår före publicering. Tre svagaste punkter: molnets mjukvarurendering säger inget om fysisk mobilprestanda; Safari/GPU-variationer är inte provade; nya shader-varianter behöver fortsatt samma mätning.
-
+Kod `9a1b211`: faktisk shader-regression röd före och grön efter; alla sju grindar gröna, 561/561. Provet täcker delat original, materialarray, 200 materialpass och samma solid-uniform vid Trolla. `prov-platsforhand.mjs` är rött mot baslinjen (90 nollvärden) och grönt i hela Grottan-flödet i 375×812 och 812×375: stenens egna WebGL-anrop är 1–1 i var och en av 90 bildrutor, och även rotation, sparinvarians, skapande samt platsbyte är gröna. Interna bilder granskade, blå och linjerad sten. Inga mätgränser lättade. Oberoende Codex-granskare slutgodkände exakt `6c0cb00`. #293 är mergad som `d743ad7` och publicerad: main-Cloudflare `124422225436` grön, alla sex serverade start-/spel-filer byteidentiska med det lokala bygget (SHA-256). Tre svagaste punkter: molnets mjukvarurendering säger inget om fysisk mobilprestanda; Safari/GPU-variationer är inte provade; nya shader-varianter behöver fortsatt samma mätning.
 
 ## Mandat och statusord
 
@@ -53,7 +77,7 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 | E3 · T-14 | Manifest, försök till persistent storage, ärlig hemskärms-/kopieinformation och senaste nedladdade kopia | Oberoende | S · nekat/ej stött persist påverkar inte sparning; manuellt iPad-långtidstest kvar |
 | A0 · T-03/T-04 | Ren `bokMal`: aktivt uppdrag/önskan/gåva/tomt/plats i gemensam prioritetsordning | Befintliga flöden | M · prioritets- och livscykelprov, inget nytt parallellt måltillstånd |
 | A1 · T-01/T-02/T-31 | Samma Trolla-väg för tangenter/Enter/Penna; klickbar tom remsa i hjälp; vad-lucka behåller skrivläget | Oberoende | M · faktiska klick, tom mening, textbevarande och egen text → skapelse |
-| A2 · T-03/T-04/T-24/T-26 | Målanpassade kort/tips/idéer, separerad gåta, panoreringstips endast i fri värld | A0; T-03 slutverifieras med B | M · alla 91+42 mål får minst två fungerande hjälpvägar; riktiga kontextbyten |
+| A2 · T-03/T-04/T-24/T-26 | Målanpassade kort/tips/idéer, separerad gåta, panoreringstips endast i fri värld | A0; T-03 slutverifieras med B | M · alla 91+42+24 mål får minst två fungerande hjälpvägar; riktiga kontextbyten |
 | B0 · T-05 | Delad ren betydelsemotor: kravgrupper, antal, olika subjekt, taggar/böjningar; saknat krav från data | A0 | L · actual parser + `data/test-uppdragssvar.json`, minst 3 ja/2 nej per uppdrag |
 | B1 · T-05/T-18 | Gå igenom samtliga 91 uppdrag och matcha mål, krav, förslag och nästan-text | B0; B4 för mänsklig textgranskning | L · 455+ fixtures, inga godkända enstaka ord för sammansatta krav |
 | B2 · T-06 | Kroppsdelsriktiga önskningar; stäng boken och visa tack/ledtråd även vid miss | B0, A0 | M · kall kanin + strumpor ja, hatt nej, synlig reaktion och kvarstående önskan |
@@ -85,32 +109,60 @@ De första sex uppdragen har minst tre distinkta ja/två distinkta nej var, egna
 
 UI-provet hittade två verkliga återkopplingsfel: den gamla röstkön strök nästan-ledtråden, och efter prioritetsrättningen ersatte albumrepliken den efter444ms. Senastefe06419 återanvänder kvittot: bara den aktuella Trolla-handlingens verkliga bedömning följer med, önsketack prioriteras och befintlig lästidsregel ger barnet tid att läsa. En obesvarad ge-önskan får inte en annan pågående quests ledtråd. Ingen global meddelandekö byggs om här; T-17 återstår.
 
-Alla sju slutgrindar gröna påfe06419,560/560 produkttester och18befintliga lintvarningar. `prov-uppdragsbetydelse.mjs` grönt i375×812 och812×375, både flyg- och tvåfärgsuppdrag: nära miss → bevarad skapelse och synlig ledtråd → verkligt rätt svar, korrekt antal djur och belöning. Interna bilder granskade. Sju nya Node-prov täcker fixtures, subjekt/antal, temperatur/storlek, matchning, önskeprioritet, försökslivscykel och torr lagring. Oberoende granskning har följt och verifierat rättningarna; slutbesked inväntas före merge. Kodens sparformat och testid-baslinje är oförändrade.
+Alla sju slutgrindar gröna påfe06419,560/560 produkttester och18befintliga lintvarningar. `prov-uppdragsbetydelse.mjs` grönt i375×812 och812×375, både flyg- och tvåfärgsuppdrag: nära miss → bevarad skapelse och synlig ledtråd → verkligt rätt svar, korrekt antal djur och belöning. Interna bilder granskade. Sju nya Node-prov täcker fixtures, subjekt/antal, temperatur/storlek, matchning, önskeprioritet, försökslivscykel och torr lagring. Oberoende Codex-granskare slutgodkände exaktfe064194455583c28aef668e2a60a4dc7123c934. #290 är publicerad somfbfe48f; main-Cloudflare124411312834 och6/6SHA-256 gröna. Kodens sparformat och testid-baslinje är oförändrade.
 
 Tre svagaste punkter:85uppdrag/önskeregioner återstår; övriga samtidiga meddelanden och kvitto för uppdaterade djur i platsSkapelser måste rättas före motsvarande B1-flöden; Christoffers faktiska textläsning, godkända nya inspelningar och fysisk hårdvara är inte ersatta av molnprov. En sjuåring kan nu förstå varför en ensam röd vän inte löser uppdraget och direkt försöka skapa den blå vännen; övriga äldre uppdrag kan fortfarande frustrera tills B1/BC är klart.
 
+## C1a · T-07/T-08: gör tolken möjlig att ändra säkert (pågår)
+
+B1:s relationsuppdrag behöver C1. Före språkändringarna delas därför `tolka.ts`(1192rader) i sex moduler: tillstånd, semantisering, blandning, skapelsebygge, formel och befintlig publik fasad. Det följer PROJECT:s krav att ändrade kodfiler håller högst400rader. Alla namn/signaturer i den publika fasaden behålls. Ingen språkregel, barntext, sparning eller placering ändras i detta delsteg; T-07/T-08 stängs inte.
+
+`codex/t07-t08-tolkmoduler` utgår från origin/mainf425a41 i separat arbetskatalog. Ett differentialprov på1726fraser från aktuella test-/uppdrags-/önske-/idédata och ordformer ger byteidentiska kompletta utfall från både tolka och tolkaMedReserv före/efter(SHA-256aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3). Samtliga sex filer är107–310rader och den virtuella TypeScript-kontrollen har0fynd. Sju grindar gröna påd2a5d29; oberoende Codex-granskare godkände även20abab1 och fann70/70AST-delar oförändrade. Nu samordnad med publiceradeB0/mainfbfe48f utan kodkonflikt; samma1726-utfall och sju grindar körs igen. A2:s slutliga huvud behöver samordnas före C1a-leveransen, därefter UI/publicering. Efter detta: C1:s verkliga relation/formel/placering och C2:s böjningar, sedan B1/BC:s återstående85uppdrag med ja/nej-data. Rättningar i B0/A2 får inte tappas när main samordnas.
+
+### Återskapa C1a:s jämförelse utan scratchfiler
+
+Kör med Node24 eller senare. Skapa två tillfälliga, fristående worktrees (inga återställningar av egna grenar):
+
+```sh
+git worktree add --detach /tmp/trollpennan-fore 5b6f29b
+git worktree add --detach /tmp/trollpennan-efter d2a5d29
+node --experimental-strip-types scripts/prov-tolkmoduler.mjs /tmp/trollpennan-fore /tmp/trollpennan-fore.json
+node --experimental-strip-types scripts/prov-tolkmoduler.mjs /tmp/trollpennan-efter /tmp/trollpennan-efter.json /tmp/trollpennan-fore.json
+cmp /tmp/trollpennan-fore.json /tmp/trollpennan-efter.json
+sha256sum /tmp/trollpennan-fore.json /tmp/trollpennan-efter.json
+```
+
+Förväntat:1726fraser, båda SHA-256aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3. Före-commiten har A2:s aktuella frasdata; efter-commiten har den oförändrade tolken uppdelad. Fjärde argumentet låser samma fraser i efter-körningen. Inga nya beroenden eller npm-installationer behövs för de rena tolkarna. En senare ändring av språkregler jämförs med avsiktliga nya ja/nej-krav och får naturligtvis inte påstås byteidentisk.
+
 ## Täckning och leveranslogg
+
+- A0/A2+F4 i #289: samma framräknade mål styr lapp, tips, första målsektion och Idé. De nya målkorten kräver uttryckligt byte när egna ord finns; Ångra återställer originalet. Separat Gåta och panoreringstips endast i fri värld. Röda baslinjer för de fyra bokfynden, verklig klippning, Väktaröverlapp, Penna/Stäng och rotation är reproducerade. Kritisk bild-/kodgranskning rättade smal skrivyta, dialogisolering och geometrin. De åtta skärpta liggande platsfallen var gröna på b5834a0, inklusive667×375; alla sju grindar och guldflödena (stående/liggande med rotation samt fem enordsval) var gröna på5b6f29b. Därefter hittade granskaren en verklig klippning av ordbrickans32px-X i den nya rullraden. Senaste9617f47 ger den en hel44px-yta inuti brickan, rullar fram markerad bricka och lägger guldbadgen inom raden. Nya geometriprov omfattar faktisk markering/borttagning och hela Mellanslag/Trolla. Nya sju grindar och skärmprov körs före slutgodkännande/merge. Testid-baslinjen är oförändrad; inga sparfält ändras.
+
+- T-03 är fortsatt delresultat: betydelsen och minst två fungerande lösningar för alla157mål verifieras i B/C. Gåvohjälpens äldre separata hylla behöver samma skyddade bytesväg i B/D. Tre svagaste punkter i A2: kvarvarande äldre hjälpförslags betydelse/gåvoväg; vissa bildfallbackar och568×320 som inte provats; fysisk svensk hårdvara och nya godkända inspelningar som återstår. Bilderna används endast internt.
+
+- B0 #290 är publicerad somfbfe48f(main-Cloudflare124411312834 och6SHA gröna) och har sex migrerade uppdrag med ja/nej-data och konkreta ledtrådar;85återstår, T-05/T-18 stängs inte. Oberoende fynd om temperaturer, djurstorlek och utebliven ledtråd rättas före merge. Senastefe06419 använder faktisk bedömning under samma Trolla-transaktion till kvittot; önsketack prioriteras, kvittot får befintlig lästidsregel och saknas innehåller verkligt omatchade grupper. Alla sju grindar gröna,560/560, slutliga fyra verkliga UI-fall körs. Inför B1: kvittots ändrat-kontroll måste också omfatta uppdaterade djur i platsSkapelser innan bannerundertryckning används där. Inga granskad-flaggor ändrade.
+
+- C1a #291 (`codex/t07-t08-tolkmoduler`) är ett beteendebevarande förarbete för400-radersregeln:1192raders tolk delas i sex moduler på107–310rader, med samma publika fasad.1726fraser ger byteidentiska kompletta utfall före/efter för både tolka och tolkaMedReserv; alla sju grindar gröna. Inga språkregler/formler/relationer/placeringar ändrade ännu. T-07/T-08 står kvar öppna. Samordning mot publicerade A2/B0, kritisk granskning och verkligt UI återstår före merge. C1:s relationer behövs för B1/BC:s sammansatta uppdrag.
 
 - E3/G4 samordnar T-14 och den oberoende T-35 eftersom båda gäller föräldrasidans information. Webmanifest och rasteriserade kopior av befintlig favicon till hemskärmsikoner, best-effort `navigator.storage.persist()` utan väntan vid start, ärliga Safari-/hemskärmsråd samt tidpunkt för senaste startade kopienedladdning. Ingen garanti att en fil behållits eller att Safari aldrig rensar. Grodlicensen ligger ordagrant kvar sist under Tack till. Baslinje: manifest saknas och licensordningen röda. Två rena nya lagringsprov gröna; alla sju grindar gröna, 553/553. `prov-bestandig-lagring.mjs` grönt för persist=true/false/fel/saknas, samt verklig föräldraöppning, nedladdning/kopiedatum och licensordning i375×812 och812×375. Interna bilder granskade. Oberoende `/root/t12_t13_review` godkände exakt2f3a40e605bbc902192d7de25f6f05cfcd724ad4 utan blockerare. Provets relativa request-URL:er och väntan på försidan rättades; spelkoden9a1d361 är oförändrad sedan sju gröna grindar; lint grönt igen. Tre svagaste punkter: fysisk iPad/långt uppehåll, faktisk hemskärmsinstallation på fysisk enhet och nya föräldratexter är bara lästa visuellt i molnets browser.
 
 - A1 T-01/T-02/T-31: röda UI-baslinjer för Trolla-tangenten, falsk skrivmarkör i hjälp och vad-luckans modebyte. Gemensam Trolla-handling för skärmtangent, Enter och Penna; separat inmatningsknapp i remsan; vad-lucka väljer tangenter + vänlig datatext. Alla sju grindar gröna på rättad spelkod,553/553. Oberoende granskaren hittade för smal tom skrivknapp och Enter-fokusfällor i ordbricka/skrivyta/vad-lucka; rättat med minst44px, respekt för role=button och fokus till skrivytan när fysisk skrivning börjar. Enter på en ordbricka reproducerades också rött (skapade ett djur). UI-provet utökas med faktisk keyboard.type, vanlig brickaktivering och geometrimätning; `prov-bok-kontroller.mjs` grönt för18huvudfall (9 i varje vy): Trolla-tangent, Enter efter egna tangenter, faktisk fysisk ASCII-inmatning efter remsklick, Penna, tom mening, textbevarande vid hjälpbyte, vad-lucka, fysisk text efter vad-lucka och Enter på ordbricka utan skapelse. Ytterligare tom-hjälpyta-prov gröna i båda vyer (20fall totalt); interna bilder granskade. Playwright `keyboard.type` skickar å/ä/ö via insertText utan keydown; därför används ASCII för de fysiska proven medan skärmtangenterna provar häst. Exakt text avläses föreEnter. Oberoende `/root/t12_t13_review` godkände484e4a814c223eeeeb9cc8ada5ba927991cf0d73 utan blockerare. Efter det endast tilläggsprov/dokument; lint grönt igen. Svagaste punkter: fysisk svensk hårdvara/IME inte provad, låg liggande uppdragslapp T-27 kvar, nya repliker inväntar godkänd inspelning. En sjuåring får nu samma respons från de tre Trolla-vägarna; uppdragsbetydelsen kan fortfarande frustrera tills B är klart. Inget sparformat ändras. Ändrade barntexter samlade i nya-repliker.md; godkända inspelningar för nya texter återstår.
 
-
 - Plan-PR #285 är mergad som `161a234`. Christoffers B1–B8 och granskningsmandat finns i GitHub. Cloudflare grönt på main (check 124369472890); alla sex serverade start-/spel-filer är byteidentiska med det tidigare verifierade bygget, vilket stämmer med en ren dokumentändring.
 - E1/E2: T-12 kort klick reproducerat rött; T-13 avsaknad av beständigt arkiv och radering trots kvotfel reproducerade röda. Nu hållning med släpp/leave/cancel/blur-städning och Space/Enter-stöd, tvåsiffrig multiplikation, arkiv-före-radering och återställning som bevarar både gamla och nuvarande världar. Arkiv rensas aldrig automatiskt. Oberoende granskaren hittade att trasig JSON/dal inuti en råsträng accepterades; detta är rättat med befintlig ren `arData` och negativa oförändrad-lagring-prov. Testid-baslinjen ändras avsiktligt enbart när fem oskyddade titelkontroller tas bort. Slutgrindar gröna (551/551 produkttester). `prov-foraldersparr.mjs` och `prov-arkiv.mjs` gröna i375×812 och812×375; interna bilder granskade. I arkivprovet behövde den nya fliken gå klart genom verkligt intro innan låset gick att hålla; det är provets synkronisering som rättades, inga force-klick. Oberoende granskare `/root/t12_t13_review` godkände exakt `c7473c76a4e0c1cb2ba7301eff904bd7488896f2`, inga kvarstående blockerare. Kod91d3a9d är oförändrad sedan alla sju grindar; sista commit ändrar bara detta UI-prov, lint grönt igen. Befintliga `prov-backup.mjs` och `prov-lagringsfel.mjs` gröna, inklusive hel värld, mark/bokstavsljud, äldre/ogiltiga kopior och nekad lagring. #286 mergad som06f057e; Cloudflare grönt check124373728361, alla sex serverade filer byteidentiska med lokalt bygge (SHA-256). Tre svagaste punkter: iPad/Safari-långtid återstår (T-14), inga fysiska tangentbords-/touchassistansprov, alla lokala arkiv kan försvinna om webbläsardata rensas (nedladdade kopior behövs).
 
-E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är planerade. T-12/T-13 är publicerade; övriga punkter är öppna. Kolumnen uppdateras med kod-SHA, röda/gröna prov, faktisk granskare, PR/merge och publiceringsbevis när arbete görs. Ett gemensamt block kan ge delresultat men stänger inte automatiskt hela punkten.
+E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återstående block är öppna. Kolumnen uppdateras med kod-SHA, röda/gröna prov, faktisk granskare, PR/merge och publiceringsbevis när arbete görs. Ett gemensamt block kan ge delresultat men stänger inte automatiskt hela punkten.
 
 | T-id | Huvudblock | Status / kvarvarande acceptans |
 |---|---|---|
-| T-01 | A1 | Verifierad/granskad #288, kod62c3001/prov484e4a8 + tom-hjälpyta; väntar merge/live |
-| T-02 | A1 | Verifierad/granskad #288,20UI-fall båda vyer och44px-yta; väntar merge/live |
-| T-03 | A0/A2/B | Planerad; kräver alla 133 måls hjälpvägar |
-| T-04 | A0/A2 | Planerad |
-| T-05 | B0/B1 | B0 #290 verifierad: sex uppdrag och fyra UI-fall,560/560;85uppdrag och455+total-fixtures återstår |
-| T-06 | B2 | Planerad |
-| T-07 | C1 | Planerad; faktisk värld och gamla v2/kopior |
-| T-08 | C2 | Planerad |
+| T-01 | A1 | Verifierad/granskad #288, kod62c3001/prov484e4a8 + tom-hjälpyta; publicerad f425a41, CF124383463197/6SHA-256 gröna |
+| T-02 | A1 | Verifierad/granskad #288,20UI-fall båda vyer och44px-yta; publicerad f425a41, CF124383463197/6SHA-256 gröna |
+| T-03 | A0/A2/B | A0/A2 publicerad #289/eec3b27; delresultat tills B/C verifierar alla 157 mål och den äldre gåvohyllan |
+| T-04 | A0/A2 | Publicerad #289/eec3b27; målanpassat tips/Idé, sju grindar och faktisk kontextkontroll gröna |
+| T-05 | B0/B1 | B0 #290 publicerad fbfe48f;560/560, fyra UI-fall, CF124411312834/6SHA gröna;85uppdrag och455+total-fixtures återstår |
+| T-06 | B2 | B2 påbörjad på codex/t06-onskesvar; röda/gröna regionala/situationella svar, UI-arbete pågår |
+| T-07 | C1 | C1a förarbete verifierat #291; C1b ord/relationer verifierade #294; faktisk placering återstår i C1c |
+| T-08 | C2 | C1b bevarar artikel/ordform och med vingar; C2 antal, identiska saker och oregelbundna böjningar återstår |
 | T-09 | D1 | Planerad |
 | T-10 | D2 | Planerad |
 | T-11 | C3 | Planerad |
@@ -126,14 +178,14 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 | T-21 | F1 | Planerad; B7 godkänt |
 | T-22 | F2 | Planerad |
 | T-23 | D3 | Planerad; B6 godkänt |
-| T-24 | A2 | Planerad |
+| T-24 | A2 | Publicerad #289/eec3b27; tipset tas ur DOM vid upptagen vy och avaktiveras efter faktisk panorering/zoom |
 | T-25 | F3 | Planerad; B6 godkänt |
-| T-26 | A2 | Planerad |
-| T-27 | F4 | Planerad |
+| T-26 | A2 | Publicerad #289/eec3b27; gemensamt mål, separat Gåta och textbevarande Idé |
+| T-27 | A2/F4 | Publicerad #289/eec3b27; hela geometri-/stavnings-/markeringsflödet grönt i fyra telefonformat |
 | T-28 | F5 | Planerad |
 | T-29 | G1 | Planerad |
 | T-30 | G2 | Planerad; B8 godkänt |
-| T-31 | A1 | Verifierad/granskad #288, även efterföljande fysisk text+Enter; väntar merge/live |
+| T-31 | A1 | Verifierad/granskad #288, även efterföljande fysisk text+Enter; publicerad f425a41, CF124383463197/6SHA-256 gröna |
 | T-32 | G1 | Planerad |
 | T-33 | G3 | Planerad |
 | T-34 | G3 | Planerad |
@@ -143,7 +195,7 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 
 1. Läs AGENTS/regler och befintliga Skapa-/En värld-statusar, sedan denna aktiva plan och det fullständiga underlaget i `granskning.md`. Läs `beslut.md`; använd inte förslag som beslut. Bevara redan levererade gamla block.
 2. `git status`, `git fetch origin` och utgå från aktuella `origin/main`; ingen reset eller force-push. PR #247 ingår inte. Kontrollera öppna T-id-PR:er före ny branch så arbete inte dubbleras. Planens ursprungsbaslinje är 2c761d3.
-3. E1–E3 är publicerade; A1 är verifierat och granskat i#288. Fortsätt därefter i påbörjade#289 (A0/A2), inte vid gamla E1. Skriv först ett reproducerbart rött UI-prov mot baslinjen, rätta, gör samma prov grönt. P1 lämnas fullt verifierat i PR för föreskriven andragranskare om inget annat godkänts.
+3. E1–E3/G4, A1, A0/A2/F4, B0:s sex pilotuppdrag och shaderfixen är publicerade. C1a #291 är också publicerad. Slutför samordnade #294 (ord/relationer), med main-Cloudflare/SHA. Fortsätt B2:s påbörjade önskesvar, C1c/C2 och resterande B1/BC-data. B1 behöver relationerna. Textpaket 01 i #292 väntar på Christoffers faktiska läsning; sätt inga granskad-flaggor utan svar. Reproducera rött, rätta, prova grönt och låt beslutad oberoende granskare läsa P1 före merge.
 4. Alla kodblock kör sju grindar: `typecheck`, `typecheck:pages`, `check:struktur`, `lint`, `test:product`, `build:pages`, `check:pages-output`. Testid ändras bara avsiktligt; känd P3a-tidströskel höjs aldrig. Nya Node-prov läggs i befintliga `test:product`. `npm ci` kördes grönt på baslinjen; upprepa vid saknade/ändrade beroenden.
 5. Förhandsvisa bygget: `node node_modules/vite/bin/vite.js preview --config vite.pages.config.ts --port 4173 --strictPort`. Browserprov med `TROLLPENNAN_REPO=<repo>` och `CHROMIUM=<chromium>`. Använd verkliga klick, inga force-klick. Kontrollera stående/liggande och vid F4 även 667×375. Spara aldrig skärmbilder i GitHub eller svar.
 6. Valfria sparfält får säkra standardvärden. Prova gammal v2, export/import/omladdning och felaktig kopia utan mutation. Arkiv måste skrivas före återställning; lagringsfel får inte radera något.

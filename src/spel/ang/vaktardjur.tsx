@@ -1,3 +1,4 @@
+import { useArkLapp } from "../skapa/arkLapp.ts";
 import { useGLTF } from "@react-three/drei";
 import { useFrame, type ThreeEvent } from "@react-three/fiber";
 import { Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
@@ -107,7 +108,8 @@ export function VaktarDjur({ plats }: { plats: string }) {
   const klick = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
     window.dispatchEvent(new CustomEvent("trollpennan:vaktar-oppna", { detail: plats }));
-    document.querySelector<HTMLButtonElement>(".bok-knapp:not(.bygg)")?.click();
+    useArkLapp.getState().satt("vaktare");
+    document.querySelector<HTMLButtonElement>('[data-testid="pennans-bok"]')?.click();
   };
   return (
     <group position={trippel(v.position)}>

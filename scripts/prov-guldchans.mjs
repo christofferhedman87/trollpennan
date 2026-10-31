@@ -33,13 +33,27 @@ async function kontrolleraSkrivyta(page, aktiv = ".sk-skrivbricka") {
     const ruta = (s) => document.querySelector(s).getBoundingClientRect();
     const ord = ruta(selektor);
     const remsa = ruta(".sk-remsa");
-    const innehall = ruta(".sk-innehall");
     const hjalp = ruta(".sk-hjalprad");
     const tips = ruta(".sk-tips");
     const tangenter = ruta(".sk-tangenter");
-    const sida = matchMedia("(orientation: landscape) and (max-height: 600px)").matches;
-    return ord.top >= Math.max(0, remsa.top, sida ? innehall.top : 0) - 1
-      && ord.bottom <= Math.min(innerHeight, remsa.bottom, sida ? innehall.bottom : innerHeight) + 1
+    const aktivt = document.querySelector(selektor);
+    // T-27 flyttade remsan ovanför sammanhangsytan. Prova verkliga klippande
+    // föräldrar, aldrig ett syskons ruta som om den fortfarande innehöll remsan.
+    const inomKlipp = (el) => {
+      const r = el.getBoundingClientRect();
+      if (r.top < -1 || r.bottom > innerHeight + 1 || r.left < -1 || r.right > innerWidth + 1) return false;
+      for (let p = el.parentElement; p; p = p.parentElement) {
+        const css = getComputedStyle(p); const q = p.getBoundingClientRect();
+        if (/hidden|auto|scroll|clip/.test(css.overflowY) && (r.top < q.top - 1 || r.bottom > q.bottom + 1)) return false;
+        if (/hidden|auto|scroll|clip/.test(css.overflowX) && (r.left < q.left - 1 || r.right > q.right + 1)) return false;
+      }
+      return true;
+    };
+    if (document.querySelector(".sk-spok") && (tips.width <= 0 || tips.height <= 0)) return false;
+    return document.querySelector(".sk-remsa").contains(aktivt)
+      && ord.top >= Math.max(0, remsa.top) - 1
+      && ord.bottom <= Math.min(innerHeight, remsa.bottom) + 1
+      && [aktivt, ...[".sk-remsa", ".sk-hjalprad", ".sk-tips", ".sk-tangenter", '[data-dal="klar"]', '[data-testid="mellanslag"]'].map((s) => document.querySelector(s))].every(inomKlipp)
       && hjalp.bottom <= tangenter.top + 1 && tips.bottom <= hjalp.bottom + 1;
   }, aktiv, { timeout: 8000 }).catch(async (e) => {
     const rutor = await page.evaluate((selektor) => Object.fromEntries([selektor, ".sk-remsa", ".sk-innehall", ".sk-hjalprad", ".sk-tips", ".sk-tangenter"].map((s) => {
@@ -136,12 +150,23 @@ async function prova(namn, viewport, onskan, fras) {
       const id = `${namn}-${onskan}`;
       await page.evaluate((o) => window.__troll.onska(o, true), onskan);
       await page.getByTestId("bok-skarm").waitFor({ state: "visible" });
+      if (namn === "kort-ide") await page.locator("[data-dal=ide]").click();
       await page.locator("[data-dal=ordhjalp]").click();
       await page.getByTestId("kort-drake").click();
       await page.locator('[data-flik="gor"]').click();
       await page.getByTestId(`kort-${fras}`).click();
       await page.getByRole("button", { name: "Ja, jag skriver!", exact: true }).click();
       logg(`${id}: guldchansen öppen`);
+      if (namn === "kort-ide") {
+        await page.locator(".sk-spok").waitFor();
+        assert.equal(await page.locator(".sk-ide-rad").count(), 0, "den gamla idén tar paus under aktiv guldskrivning");
+        for (const knapp of [page.locator("[data-dal=ide]"), page.getByRole("button", { name: "Gåta", exact: true })]) {
+          await knapp.click();
+          await page.locator(".sk-puff").waitFor();
+          assert.equal(await page.locator(".sk-spok").textContent(), fras, "idéhjälpen ändrar inte det påbörjade guldordet");
+          assert.equal(await page.locator(".sk-ide-rad").count(), 0);
+        }
+      }
       const [forsta, andra] = fras.split(" ");
       await skriv(page, forsta);
       logg(`${id}: första ordet skrivet`);
@@ -220,9 +245,10 @@ try {
   const fall = [
     ["staende", { width: 375, height: 812 }, "modig", "sprutar eld"],
     ["liggande", { width: 812, height: 375 }, "kull", "springer snabbt"],
-  ].filter(([namn]) => !process.env.QA_LAGE || namn === process.env.QA_LAGE);
+    ["kort-ide", { width: 375, height: 667 }, "kull", "springer snabbt"],
+  ].filter(([namn]) => process.env.QA_LAGE ? namn === process.env.QA_LAGE : namn !== "kort-ide");
   const enord = !process.env.QA_LAGE || process.env.QA_LAGE === "enord";
-  assert.ok(fall.length || enord, "QA_LAGE är staende, liggande eller enord om det anges");
+  assert.ok(fall.length || enord, "QA_LAGE är staende, liggande, kort-ide eller enord om det anges");
   for (const f of fall) await prova(...f);
   if (enord) await provaEnord();
   assert.deepEqual(sidfel, [], "inga JavaScript-fel i sidan");

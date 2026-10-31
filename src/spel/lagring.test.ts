@@ -178,3 +178,27 @@ test("lagring: giltig explicit import släpper spärren efter läsfel, ogiltig i
   assert.equal(JSON.parse(sparat).stjarnor, 23);
   assert.equal(lagringsStatus(), "ok");
 });
+
+test("T-07: valfri relation överlever faktisk export/import och gammal v2 accepteras", (t) => {
+  const original = useMinne.getState();
+  t.after(() => useMinne.setState(original, true));
+  const varld = kopiaVarld();
+  for (const d of [varld.ang[0]!, varld.platsSkapelser.skogen![0]!, varld.sovande[0]!, varld.formler[0]!.spec]) {
+    d.tillbehor = [{ id: "bord", farg: null, glans: false, relation: "under" }];
+  }
+  useMinne.setState(varld);
+  const kopia = JSON.parse(JSON.stringify(exportera()));
+  useMinne.setState(tom());
+  assert.equal(useMinne.getState().importera(kopia), true);
+  assert.deepEqual(exportera(), varld);
+  const aldre = kopiaDjur("aldre");
+  aldre.tillbehor = [{ id: "hatt", farg: null, glans: false }];
+  assert.equal(useMinne.getState().importera({ version: 2, ang: [aldre], garden: [], stjarnor: 17 }), true);
+  assert.deepEqual(useMinne.getState().ang[0]!.tillbehor, aldre.tillbehor);
+  const fore = useMinne.getState();
+  for (const relation of ["ovanpå", "", 3, null, {}, ["under"]]) {
+    const fel = { ...aldre, tillbehor: [{ id: "bord", relation }] };
+    assert.equal(useMinne.getState().importera({ version: 2, ang: [fel], garden: [], stjarnor: 17 }), false);
+    assert.equal(useMinne.getState(), fore, "ogiltig relation får inte ändra världen");
+  }
+});

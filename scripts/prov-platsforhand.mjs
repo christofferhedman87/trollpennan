@@ -3,7 +3,8 @@
 // Ingen riktig profil eller sparfil används (syntetiska isolerade profiler). Kör mot en förhandsvisning av build:pages:
 //   npm run build:pages && npx vite preview --config vite.pages.config.ts --port 4173 --strictPort
 //   TROLLPENNAN_REPO=. CHROMIUM=/sökväg/till/chrome node scripts/prov-platsforhand.mjs [url]
-// QA_PLATS=skogen|sjon|grottan och QA_LAGE=staende|liggande begränsar körningen. QA_SCREENSHOTS=mapp sparar bilder för egen kontroll.
+// QA_TANGENTER=fysiska använder riktiga ASCII-tangenter och skärmknappar för å/ä/ö; standard är alla skärmknappar.
+// QA_PLATS=skogen|sjon|grottan och QA_LAGE=staende|liggande|smal|kort|dator begränsar körningen. QA_SCREENSHOTS=mapp sparar bilder för egen kontroll.
 //
 // Provet kräver per plats och format: en tom ring där ett djur skulle landa; hologram för kanin, fisk, fågel och sak med ringen och
 // hologrammet helt i bild och inte under arket (stående: ovanför arkets överkant, liggande: vänster om arket); höjden följer rollen
@@ -21,7 +22,10 @@ if (bildmapp) await mkdir(bildmapp, { recursive: true });
 const lagen = [
   ["staende", { width: 375, height: 812 }],
   ["liggande", { width: 812, height: 375 }],
-].filter(([namn]) => !process.env.QA_LAGE || namn === process.env.QA_LAGE);
+  ["smal", { width: 667, height: 375 }],
+  ["kort", { width: 375, height: 667 }],
+  ["dator", { width: 1280, height: 720 }],
+].filter(([namn]) => process.env.QA_LAGE ? namn === process.env.QA_LAGE : ["staende", "liggande"].includes(namn));
 const platser = ["skogen", "sjon", "grottan"].filter((p) => !process.env.QA_PLATS || p === process.env.QA_PLATS);
 assert.ok(lagen.length && platser.length, "QA_LAGE och QA_PLATS måste matcha ett provfall");
 // [mening, förväntad roll]. Fisken ligger i vattnet på Sjön men på marken i Skogen/Grottan om platsen saknar vatten.
@@ -59,13 +63,27 @@ async function oppnaBok(page) {
   await page.getByTestId("bok-skarm").waitFor({ state: "visible" });
 }
 async function skriv(page, text) {
-  for (const b of text) {
+  const fore = await page.getByTestId("ord-input").inputValue();
+  if (process.env.QA_TANGENTER === "fysiska") {
+    await page.locator('[data-dal="skrivbricka"]').click();
+    for (const bit of text.split(/([åäö])/)) {
+      if (!bit) continue;
+      if (/^[åäö]$/.test(bit)) await page.locator(".sk-tangenter").getByRole("button", { name: bit, exact: true }).click();
+      else await page.keyboard.type(bit);
+    }
+  } else for (const b of text) {
     if (b === " ") await page.getByTestId("mellanslag").click();
     else await page.locator(".sk-tangenter").getByRole("button", { name: b, exact: true }).click();
   }
+  assert.equal(await page.getByTestId("ord-input").inputValue(), fore + text, "exakt text före förhandsvisningen");
 }
 async function sudda(page, antal) {
-  for (let i = 0; i < antal; i++) await page.getByTestId("radera").click();
+  const fore = await page.getByTestId("ord-input").inputValue();
+  if (process.env.QA_TANGENTER === "fysiska") {
+    await page.locator('[data-dal="skrivbricka"]').click();
+    for (let i = 0; i < antal; i++) await page.keyboard.press("Backspace");
+  } else for (let i = 0; i < antal; i++) await page.getByTestId("radera").click();
+  assert.equal(await page.getByTestId("ord-input").inputValue(), fore.slice(0, -antal), "exakt radering efter förhandsvisningen");
 }
 // Det skapandet rör: djurlistorna, de sovande, stall, hem, tomter, stjärnor och mark. (Övriga fält, t.ex. räknare för skrivna ord,
 // ändras av vanliga tangenttryck och hör inte till förhandsvisningen.)
@@ -80,6 +98,7 @@ const diag = (page) => page.evaluate(() => {
   const r = (s) => { const e = document.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0 && getComputedStyle(e).opacity !== "0" ? { left: b.left, top: b.top, right: b.right, bottom: b.bottom } : null; };
   return {
     ring: window.__trollring ?? null, holo: window.__trollholo ?? null, vy: window.__trollvy ?? null, W: innerWidth, H: innerHeight,
+    overlag: [".sk-penn-knapp", ".sk-penn-etikett", ".sk-stang", ".sk-gata", ".sk-gata-inline"].map(r).filter(Boolean),
     ark: a ? { left: a.left, top: a.top } : null, remsa: r('[data-s4="vaktar-aptitbubbla"]'), skylt: r(".tp-vagvisare-hud button"), calls: window.__trollvy?.calls ?? null, holoCalls: window.__holoRitanrop?.senast ?? null,
   };
 });
@@ -91,6 +110,7 @@ function kontrolleraSynlig(d, namn, liggande) {
   assert.ok(ring && ark, `${namn}: ringen finns`);
   const ringOK = ring.x > 8 && ring.x < W - 8 && ring.y > 8 && ring.y < H - 8 && (liggande ? ring.x < ark.left - 8 : ring.y < ark.top - 8);
   assert.ok(ringOK, `${namn}: ringens mitt är i bild och inte under arket: ${JSON.stringify({ ring, ark, W, H })}`);
+  for (const o of d.overlag) assert.ok(!(ring.x > o.left && ring.x < o.right && ring.y > o.top && ring.y < o.bottom), `${namn}: ringens mitt täcks inte av bokkontroller`);
   if (!holo) return;
   const hel = holo.x0 >= -2 && holo.y0 >= -2 && holo.x1 <= W + 2 && holo.y1 <= H + 2;
   assert.ok(hel, `${namn}: hologrammet ryms i bild: ${JSON.stringify(holo)}`);
@@ -98,6 +118,7 @@ function kontrolleraSynlig(d, namn, liggande) {
   assert.ok(holo.y1 - holo.y0 >= 20 && holo.x1 - holo.x0 >= 12, `${namn}: hologrammet har synlig storlek: ${JSON.stringify(holo)}`);
   const ruta = { left: holo.x0, top: holo.y0, right: holo.x1, bottom: holo.y1 };
   assert.ok(!skar(ruta, d.remsa), `${namn}: Väktarens remsa täcker inte hologrammet: ${JSON.stringify({ ruta, remsa: d.remsa })}`);
+  for (const o of d.overlag) assert.ok(!skar(ruta, o), `${namn}: bokkontroller täcker inte hologrammet: ${JSON.stringify({ ruta, o })}`);
   assert.ok(!skar(ruta, d.skylt), `${namn}: returskylten täcker inte hologrammet: ${JSON.stringify({ ruta, skylt: d.skylt })}`);
 }
 
@@ -262,7 +283,7 @@ try {
       logg(`${namn}: börjar med isolerad syntetisk profil`);
       await page.goto(adress, { timeout: 120000 });
       await redo(page);
-      await provaPlats(page, id, lage, lage === "liggande");
+      await provaPlats(page, id, lage, viewport.width > viewport.height);
       logg(`${namn}: grönt`);
     } catch (e) {
       await bild(page, `${namn}-fel`).catch(() => {});
