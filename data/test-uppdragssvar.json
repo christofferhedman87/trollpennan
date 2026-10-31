@@ -1,0 +1,77 @@
+{
+ "_om": "Betydelseprov för migrerade uppdrag. Minst tre ja och två nej var. Återstående uppdrag flyttas i B1/BC.",
+ "uppdrag": {
+  "vingar-i-luften": {
+   "ja": [
+    "en fågel",
+    "en hund som flyger",
+    "en katt med vingar"
+   ],
+   "nej": [
+    "en hund",
+    "en röd katt",
+    "en hund med en bildbok"
+   ]
+  },
+  "solgul-van": {
+   "ja": [
+    "en gul kyckling",
+    "en kanin som lyser",
+    "en gul hund"
+   ],
+   "nej": [
+    "en hund",
+    "en blå katt",
+    "en hund med en gul hatt"
+   ]
+  },
+  "kalla-tassar": {
+   "ja": [
+    "en hund med strumpor",
+    "en varm tröja",
+    "en kanin med halsduk"
+   ],
+   "nej": [
+    "en hund med en bok",
+    "en blå katt"
+   ]
+  },
+  "tva-farger": {
+   "ja": [
+    "en röd katt och en blå hund",
+    "en röd kanin och en blå häst",
+    "en röd fisk och en blå fisk"
+   ],
+   "nej": [
+    "en röd katt",
+    "två röda katter",
+    "en stor hund",
+    "en röd katt med blå hatt"
+   ]
+  },
+  "stor-och-liten": {
+   "ja": [
+    "en stor hund och en liten katt",
+    "en jättestor kanin och en pytteliten häst",
+    "en stor fisk och en liten fisk"
+   ],
+   "nej": [
+    "en stor hund",
+    "två stora katter",
+    "en liten katt"
+   ]
+  },
+  "varmt-och-kallt": {
+   "ja": [
+    "en varm tröja och en kall glass",
+    "en hund med tröja och en glass",
+    "en filt och en snöhög"
+   ],
+   "nej": [
+    "en varm tröja",
+    "en kall glass",
+    "en kall tröja"
+   ]
+  }
+ }
+}

@@ -104,3 +104,7 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 ## T-14/T-35, E3/G4 (PR #287)
 
 Manifest/ikoner och best-effort persist vid start, utan blockerad start eller ny överföring. Föräldrar får ärliga Safari-/hemskärmsråd och tidpunkt för senaste startade nedladdning; grodlicensen bevaras under Tack till längst ner. Alla sju grindar gröna,553/553. UI persist true/false/fel/saknas och verklig kopienedladdning/korrekt licensordning gröna,375×812 och812×375; interna bilder granskade. Oberoende Codex-granskare godkände2f3a40e. Merge/live återstår. Svagaste punkter: fysisk Safari-långtid, faktisk iPad-hemskärmsinstallation, ingen garanti att föräldern behåller en nedladdad fil. Ingen ny röst krävs för föräldratexterna.
+
+## B0 · T-05, sex uppdrag (pågår)
+
+`codex/t05-betydelsegrund` bygger ren betydelsebedömning med spelets tolk, antal och skilda individer. Första sex uppdrag har ja/nej-fixtures och konkreta ledtrådar;85 återstår i B1/BC. Rena prov gröna; grindar, UI, oberoende granskning och publicering kvar. Inga sparfält eller granskad-flaggor ändras. Nästa: verifiera första Trolla-flödena, leverera B0 och migrera övriga uppdrag med minst455fixtures totalt. B4 är fortfarande Christoffers faktiska textläsning.

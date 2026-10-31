@@ -1,13 +1,15 @@
 // R6A-2: den generella kontrollen "räcker det barnet skrev för uppdraget?" (ren, ingen React, ingen Zustand).
 // Kravet är data (data/bengtsson.json `krav`): ett nytt uppdrag är en datarad, ingen kod.
 import bengtssonJson from "../../data/bengtsson.json" with { type: "json" };
+import { bedomKrav, type BetydelseKrav, type KravSvar } from "./krav.ts";
+import { betydelseFranText } from "./betydelse.ts";
 import ordJson from "../../data/ord.json" with { type: "json" };
 import { ALLA_UPPDRAG, SKRIV, type Uppdrag } from "./aventyr.ts";
 import { arFinal } from "./platser.ts";
 
 export const TAKT = bengtssonJson.takt;
 
-export type Krav = { ord: string[]; min?: number; djur?: boolean };
+export type Krav = { ord: string[]; min?: number; djur?: boolean; betydelse?: BetydelseKrav };
 export type Status = Record<string, "pagar" | "klar">;
 
 /** Orden i en text, små bokstäver, utan skiljetecken. */
@@ -48,12 +50,18 @@ export function kravTraffar(krav: Krav, text: string): string[] {
 }
 
 export function kravUppfyllt(krav: Krav, text: string): boolean {
-  return kravTraffar(krav, text).length >= (krav.min ?? 1);
+  return bedomUppdragsSvar(krav, text).ok;
+}
+
+/** Migrerade uppdrag använder bara den faktiska tolkningen; ordlistan är reserv för övriga. */
+export function bedomUppdragsSvar(krav: Krav, text: string): KravSvar {
+  if (krav.betydelse) return bedomKrav(krav.betydelse, betydelseFranText(text));
+  return { ok: kravTraffar(krav, text).length >= (krav.min ?? 1), saknas: [] };
 }
 
 /** B1.2: som kravUppfyllt, men ett krav med `djur: true` kräver också att det barnet skapade är ett djur. */
 export function kravUppfylltTolkat(krav: Krav, text: string, harDjur: boolean): boolean {
-  return kravUppfyllt(krav, text) && (!krav.djur || harDjur);
+  return kravUppfyllt(krav, text) && (!!krav.betydelse || !krav.djur || harDjur);
 }
 
 /** Skriv-uppdragen på en plats; `final`-uppdrag bara när finalOk. */

@@ -192,7 +192,7 @@ export function tolkaMedReserv(raw: string, opts: TolkaOpts = {}): Utfall {
   const heltOkanda = u.typ === "skapad" || u.typ === "behover_djur" ? u.okanda.filter((o) => tokens.includes(o)) : [];
   const ord = tokens.filter((t, i) => (heltOkanda.includes(t) || bort.includes(t)) && tokens.indexOf(t) === i);
   if (!ord.length) {
-    if (u.typ === "skapad") noteraBlandning(raw);
+    if (u.typ === "skapad" && opts.noteraBlandning !== false) noteraBlandning(raw);
     return u;
   }
   const max = R.agg.max_totalt;

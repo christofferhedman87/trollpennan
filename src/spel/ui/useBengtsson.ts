@@ -112,7 +112,8 @@ export function useBengtsson({ visaBanner, belonaFlode, oppnaUppdragsbok }: Hjal
       return "klar";
     }
     const fel = NPC_DEL[NPC_ID]?.repliker?.fel ?? [];
-    if (fel.length) visaBanner(fel[felNr.current++ % fel.length]!, "ovr", "bengtsson_fel");
+    if (u.nastan) visaBanner(u.nastan, "ovr", "bengtsson_fel");
+    else if (fel.length) visaBanner(fel[felNr.current++ % fel.length]!, "ovr", "bengtsson_fel");
     blinka("fel");
     return "fel";
   }

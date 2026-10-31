@@ -51,3 +51,7 @@ Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först
 ## A1 T-01/T-02/T-31 (2026-10-31, PR #288)
 
 Trolla-tangenten, Enter och Pennan använder samma synliga handling/animation. Tom mening ger puff. Hjälpens skrivyta är en riktig knapp (minst44px), har korrekt tomtext och ingen falsk markör; vad-luckan behåller tangenterna och uppmuntrar egen text. Fysisk skrivning får skrivfokus; Enter på ordbrickan lyssnar och skapar inte ett djur. Alla sju grindar gröna,553/553;20kontrollfall gröna i375×812/812×375, interna bilder granskade. Oberoende Codex-granskare godkände484e4a8; efter det endast prov/dokument, lint grönt igen. Merge/live återstår. Tre svagaste punkter: fysisk svensk hårdvara/IME, låg liggande lapp (T-27), godkända nya repliker. Nästa är den påbörjade gemensamma målmodulen A0/A2 i#289.
+
+## B0 · T-05, sex uppdrag (pågår)
+
+`codex/t05-betydelsegrund` bygger ren betydelsebedömning med spelets tolk, antal och skilda individer. Första sex uppdrag har ja/nej-fixtures och konkreta ledtrådar;85 återstår i B1/BC. Rena prov gröna; grindar, UI, oberoende granskning och publicering kvar. Inga sparfält eller granskad-flaggor ändras. Nästa: verifiera första Trolla-flödena, leverera B0 och migrera övriga uppdrag med minst455fixtures totalt. B4 är fortfarande Christoffers faktiska textläsning.

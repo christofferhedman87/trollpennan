@@ -81,3 +81,45 @@ Föräldratexter, ingen ny barnreplik. Befintlig grod-attribution bevaras ordagr
 | | pennan | data/skapa-ui.json ark.skriv_vad | Skriv vad det är! |
 
 Befintliga korrekta inspelningar återanvänds genom exakt textmatchning där de finns. Nya texter inväntar godkänd inspelning; ingen ny rösttäckning påstås.
+
+## B0 · T-05: sex betydelsekontrollerade uppdrag
+
+Inga nya inspelningar påstås finnas. Fullständiga nya barntexter i `data/bengtsson.json`:
+
+- `solgul-van.nastan`: Din skapelse får stanna! Jag letar efter en vän som är gul eller kan lysa.
+- `solgul-van.hjalp[0]`: en gul kyckling
+- `solgul-van.hjalp[1]`: en kanin som lyser
+- `solgul-van.hjalp[2]`: en gul hund
+- `solgul-van.krav.betydelse.solsken.beskrivning`: en vän som är gul eller lyser
+- `solgul-van.krav.betydelse.antal_text`: en vän
+- `vingar-i-luften.nastan`: Din skapelse får stanna! Jag letar efter en vän som kan flyga. Vingar kan hjälpa.
+- `vingar-i-luften.hjalp[0]`: en fågel
+- `vingar-i-luften.hjalp[1]`: en hund som flyger
+- `vingar-i-luften.hjalp[2]`: en katt med vingar
+- `vingar-i-luften.krav.betydelse.flyga.beskrivning`: en vän som kan flyga
+- `vingar-i-luften.krav.betydelse.antal_text`: en vän
+- `kalla-tassar.nastan`: Din skapelse får stanna! Jag letar efter något som värmer. Strumpor, en tröja eller en halsduk kan hjälpa.
+- `kalla-tassar.hjalp[0]`: en hund med strumpor
+- `kalla-tassar.hjalp[1]`: en varm tröja
+- `kalla-tassar.hjalp[2]`: en kanin med halsduk
+- `kalla-tassar.krav.betydelse.varme.beskrivning`: något som värmer
+- `tva-farger.nastan`: Din skapelse får stanna! Jag letar efter två vänner: en röd och en blå.
+- `tva-farger.hjalp[0]`: en röd katt och en blå hund
+- `tva-farger.hjalp[1]`: en röd kanin och en blå häst
+- `tva-farger.hjalp[2]`: en röd fisk och en blå fisk
+- `tva-farger.krav.betydelse.rod.beskrivning`: en röd vän
+- `tva-farger.krav.betydelse.bla.beskrivning`: en blå vän
+- `tva-farger.krav.betydelse.antal_text`: två vänner
+- `stor-och-liten.nastan`: Din skapelse får stanna! Jag letar efter två vänner: en stor och en liten.
+- `stor-och-liten.hjalp[0]`: en stor hund och en liten katt
+- `stor-och-liten.hjalp[1]`: en jättestor kanin och en pytteliten häst
+- `stor-och-liten.hjalp[2]`: en stor fisk och en liten fisk
+- `stor-och-liten.krav.betydelse.stor.beskrivning`: en stor vän
+- `stor-och-liten.krav.betydelse.liten.beskrivning`: en liten vän
+- `stor-och-liten.krav.betydelse.antal_text`: två vänner
+- `varmt-och-kallt.nastan`: Din skapelse får stanna! Jag letar efter två saker: något som värmer och något som kyler.
+- `varmt-och-kallt.hjalp[0]`: en varm tröja och en kall glass
+- `varmt-och-kallt.hjalp[1]`: en hund med tröja och en glass
+- `varmt-och-kallt.hjalp[2]`: en filt och en snöhög
+- `varmt-och-kallt.krav.betydelse.varmt.beskrivning`: något som värmer
+- `varmt-och-kallt.krav.betydelse.kallt.beskrivning`: något som kyler
