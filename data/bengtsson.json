@@ -255,7 +255,7 @@
      "antal_text": "en vän"
     }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -337,7 +337,7 @@
      "antal_text": "en vän"
     }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -1023,7 +1023,7 @@
      ]
     }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -1855,7 +1855,7 @@
      ]
     }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -2004,7 +2004,7 @@
      ]
     }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -2395,7 +2395,7 @@
      ]
     }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
