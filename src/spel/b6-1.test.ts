@@ -5,6 +5,7 @@ import { test } from "node:test";
 import * as THREE from "three";
 import entJson from "../../data/entiteter.json" with { type: "json" };
 import { SKRIV } from "./aventyr.ts";
+import { GRANSKADE_UPPDRAG } from "./textgranskning.ts";
 import { belysMaterial, belysScen } from "./belys.ts";
 import { forbattraModellMaterial } from "./grafikKvalitet.ts";
 import { gorHolo } from "./ang/holoMaterial.ts";
@@ -105,7 +106,7 @@ test("B6.1 (C): färguppdragen säger rakt ut vilken sak färgen finns på – i
   for (const u of SKRIV) assert.doesNotMatch(u.text_bengtsson ?? "", /lån(a|ar)\b.*färg|varsin färg/i, `${u.id}: "${u.text_bengtsson}"`);
   for (const id of ["tva-farger", "sjo-tva-farger", "grotta-tva-farger", "sol-och-gras"]) {
     const u = SKRIV.find((x) => x.id === id)!;
-    assert.equal(u.granskad, false, `${id} är ett Copilot-utkast`);
+    assert.equal(u.granskad, id in GRANSKADE_UPPDRAG, `${id}: granskad bara efter Christoffers läsgodkännande (B4)`);
     assert.match(u.text_bengtsson!, /en (vän )?i (tomatens|himlens|solens|gräsets) färg/i, id);
   }
 });
