@@ -12,7 +12,7 @@ import { ordFranForm } from "../src/tolk/lexikon.ts";
 import { BLOCK, ORD } from "../src/tolk/data.ts";
 
 const baslinje = process.argv[2] ?? "c87821808eea87c64eaf4bf82631425cd3c03bca";
-const kandidat = process.argv[3] ?? "fd990c3908841978a0769c0efd267cea3abce9d3";
+const kandidat = process.argv[3] ?? "53c756fdc5e61521eb348e90954232b25f42350c";
 assert.equal(realpathSync(process.cwd()), realpathSync(fileURLToPath(new URL("../", import.meta.url))), "kör från samma reporot som skriptet, så att kod och git-kontroller gäller samma källa");
 const git = (...args) => execFileSync("git", args, { encoding:"utf8" }).trimEnd();
 git("merge-base", "--is-ancestor", kandidat, "HEAD");
