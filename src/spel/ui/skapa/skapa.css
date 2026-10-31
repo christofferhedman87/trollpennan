@@ -81,6 +81,7 @@
   padding: 8px 56px 8px 10px; display: flex; flex-wrap: wrap; align-content: center; align-items: center; gap: 6px 4px;
 }
 .sk-remsa-verktyg { position: absolute; right: 5px; top: 4px; bottom: 4px; display: flex; flex-direction: column; justify-content: space-between; gap: 4px; }
+.sk-remsa-ord { display: contents; }
 .sk-ord {
   position: relative; display: inline-flex; align-items: center; gap: 4px; min-height: 40px; padding: 1px 9px 1px 7px;
   border-radius: var(--tp-radie-ord); border: 2.5px solid var(--tp-blck); font-size: var(--tp-text-ord); font-weight: 600; line-height: 1.1; color: var(--tp-blck);
@@ -364,6 +365,8 @@ button.sk-skrivbricka:focus-visible { outline: 3px solid var(--tp-penna); outlin
   .sk-gata { display: none; }
   .sk-boklayout { height: 100%; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); grid-template-rows: 60px minmax(0, 1fr); gap: 6px; }
   .sk-boklayout > .sk-remsa { grid-column: 1 / -1; grid-row: 1; order: 0; min-height: 60px; max-height: 60px; padding: 4px 104px 4px 8px; align-content: center; }
+  .sk-remsa-ord { display: flex; align-items: center; gap: 4px; width: 100%; height: 48px; min-width: 0; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+  .sk-remsa-ord .sk-ord, .sk-remsa-ord .sk-skrivbricka { flex-shrink: 0; }
   .sk-remsa-verktyg { flex-direction: row; top: 6px; right: 6px; bottom: auto; width: 92px; height: 44px; gap: 4px; }
   .sk-innehall, .sk-ark[data-vy="skriv"] .sk-innehall { grid-column: 1; grid-row: 2; display: flex; flex-direction: column; min-height: 0; min-width: 0; gap: 5px; padding: 0 2px 6px 0; margin: 0; overflow-y: auto; }
   .sk-inmatning { grid-column: 2; grid-row: 2; display: flex; flex-direction: column; min-width: 0; min-height: 0; gap: 6px; }
