@@ -122,7 +122,9 @@
         "en röd fisk",
         "en röd fågel",
         "en mörkröd hund",
-        "en ljusröd hund"
+        "en ljusröd hund",
+        "en röd liten hund",
+        "en rödvit hund"
       ],
       "nej": [
         "en räv",
@@ -130,7 +132,11 @@
         "en blå katt med en röd hatt",
         "en röd mössa på en hund",
         "en röd mössa bredvid en hund",
-        "en hund och en röd mössa"
+        "en hund och en röd mössa",
+        "en röd varm mössa på en hund",
+        "en röd stor jacka bredvid en hund",
+        "en hund och en röd liten mössa",
+        "en rödvit mössa på en hund"
       ]
     },
     "gron-kompis": {

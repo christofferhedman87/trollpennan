@@ -144,3 +144,24 @@ test("B1: sakens färg flyttas inte till djuret", () => {
     if (u.typ === "skapad") assert.equal(u.varelse.farg, null, text);
   }
 });
+
+
+test("B1: färgförled binds till rätt sak eller mönster", () => {
+  for (const tolk of [tolka, tolkaMedReserv]) {
+    const plagg = tolk("en rödvit mössa på en hund", { noteraBlandning: false });
+    assert.equal(plagg.typ, "skapad");
+    if (plagg.typ === "skapad") {
+      assert.equal(plagg.varelse.farg, null);
+      assert.equal(plagg.skrivenKroppsFarg, undefined);
+      assert.equal(plagg.varelse.tillbehor[0]?.farg, "#FAFAFA");
+      assert.ok(plagg.varelse.formel.includes("rödvit mössa"), "sammansättningens färger står kvar i korrekt svensk form");
+    }
+    const monster = tolk("en rödprickig katt", { noteraBlandning: false });
+    assert.equal(monster.typ, "skapad");
+    if (monster.typ === "skapad") {
+      assert.equal(monster.varelse.farg, null);
+      assert.equal(monster.varelse.monsterfarg, "#E53935");
+      assert.equal(monster.skrivenKroppsFarg, undefined);
+    }
+  }
+});

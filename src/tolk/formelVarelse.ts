@@ -1,6 +1,6 @@
 // T-07/T-08: oförändrad tolklogik, uppdelad före språkändringarna.
 import { ORD } from "./data.ts";
-import { arPluralForm, boj, pluralOrd } from "./lexikon.ts";
+import { arPluralForm, boj, ordFranForm, pluralOrd } from "./lexikon.ts";
 import type { Ord } from "./typer.ts";
 import { type Bygg, singularYta, ytaMedForm } from "./tolktillstand.ts";
 
@@ -85,7 +85,9 @@ export function formelAv(b: Bygg): string {
     const antalText = t.antal ? t.antalOrd ?? String(t.antal) : "";
     const artikel = t.antal ? [bestamd ? t.artikel : "", antalText].filter(Boolean).join(" ") : bestamd ? t.artikel : t.artikel && !plural ? (genus === "n" ? "ett" : "en") : "";
     const namn = (t.antal ?? 1) > 1 && !arPluralForm(t.ord, t.form ?? t.ord.visa) ? pluralOrd(t.ord) : t.form ?? t.ord.visa;
-    const fras = [artikel, ...(t.egenskaper ?? []), f, namn].filter(Boolean).join(" ");
+    const egenskaper = [...(t.egenskaper ?? [])];
+    const forled = f && ordFranForm(egenskaper.at(-1) ?? "")?.klass === "farg" ? egenskaper.pop() : undefined;
+    const fras = [artikel, ...egenskaper, forled ? `${forled}${f}` : f, namn].filter(Boolean).join(" ");
     const relation = t.relation ?? "med";
     delar.push(relation === forra ? "och" : relation, fras);
     forra = relation;

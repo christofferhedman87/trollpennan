@@ -58,6 +58,20 @@ function omvandRelation(sem: Sem[], index: number, huvud: Sem): Relation | "omva
   return undefined;
 }
 
+/** Hoppa över beskrivningar, men bind färgen till nästa faktiska sak eller kropp. */
+function nastaFargmalArSak(sem: Sem[], i: number, ensamSak: Ord | null): boolean {
+  for (const s of sem.slice(i + 1)) {
+    if (s.t === "artikel" || s.t === "antal" || s.t === "boost" || s.t === "led") continue;
+    if (s.t === "funk") { if (s.v === "och") continue; return false; }
+    if (s.t === "komp") return s.suffix.kind === "tillbehor";
+    if (s.t !== "ord") return false;
+    if (s.o.klass === "foremal" || s.o.klass === "tillbehor") return s.o !== ensamSak;
+    if ((s.o.klass === "formaga" || s.o.klass === "monster") && s.o.efter === "med") return true;
+    if (s.o.klass === "djur") return false;
+  }
+  return false;
+}
+
 export function sattDjur(b: Bygg, o: Ord, form: string) {
   b.djur = o;
   b.djurForm = form;
@@ -217,7 +231,19 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       continue;
     }
     if (s.t === "led") {
-      applyForled(b, s.key, s.del);
+      const farg = s.del.farg ? forledTillOrd(s.key) : null;
+      const nasta = sem[i + 1];
+      if (farg?.klass === "farg" && nasta?.t === "ord" && nasta.o.klass === "monster") {
+        b.monsterfarg = s.del.farg ?? null;
+        markera(b, farg.id, false);
+      } else if (farg?.klass === "farg" && nastaFargmalArSak(sem, i, ensamSak)) {
+        b.vantande = farg;
+        if (nasta?.t === "ord" && nasta.o.klass === "farg") sakEgenskaper.push(farg.visa);
+        markera(b, farg.id, false);
+      } else {
+        applyForled(b, s.key, s.del);
+        if (farg?.klass === "farg" && !b.skrivenKroppsFarg) b.skrivenKroppsFarg = farg.id;
+      }
       continue;
     }
     if (s.t === "okand") {
@@ -284,7 +310,7 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
     }
     markera(b, o.id, true);
     if (o.klass === "farg") {
-      if (mode === "med" || nastaArSak(sem, i, ensamSak)) b.vantande = o;
+      if (mode === "med" || nastaFargmalArSak(sem, i, ensamSak)) b.vantande = o;
       else if (!b.fargOrd) {
         b.fargOrd = o;
         b.skrivenKroppsFarg = o.id;
@@ -304,7 +330,7 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       continue;
     }
     if (o.klass === "monster" || o.klass === "formaga" || o.klass === "egenskap") {
-      if (mode === "med" && b.vantande && (o.klass === "monster" || o.klass === "formaga")) {
+      if (b.vantande && (mode === "med" || o.efter === "med") && (o.klass === "monster" || o.klass === "formaga")) {
         if (o.klass === "monster") b.monsterfarg = b.vantande.del?.farg ?? null;
         b.vantande = null;
       }
