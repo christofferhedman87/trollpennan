@@ -69,3 +69,15 @@ Föräldratexter, ingen ny barnreplik. Befintlig grod-attribution bevaras ordagr
 - `data/texter-gard.json backup.datum_hjalp`: Datumet visar när nedladdningen startades. Kontrollera att filen finns i Hämtade filer och spara den på en trygg plats.
 - `data/texter-gard.json backup.tack_till`: Tack till
 - `data/texter-gard.json backup.groda_kredit`: Groda: "Frog" av jeremy (CC BY 3.0)
+
+## A1: T-01/T-02/T-31, samma skrivhandling
+
+| Klar | Röst | Datafil och nyckel | Text |
+|---|---|---|---|
+| | pennan | data/skapa-ui.json tangentbord.klar (ändrad) | Trolla! |
+| | pennan | data/skapa-ui.json ark.tom_hjalp | Välj ett kort, eller tryck här och skriv själv! |
+| | pennan | data/skapa-ui.json ark.skriv_aria | Skriv själv |
+| | pennan | data/skapa-ui.json ark.vad_lucka (tidigare hårdkodad) | vad? |
+| | pennan | data/skapa-ui.json ark.skriv_vad | Skriv vad det är! |
+
+Befintliga korrekta inspelningar återanvänds genom exakt textmatchning där de finns. Nya texter inväntar godkänd inspelning; ingen ny rösttäckning påstås.

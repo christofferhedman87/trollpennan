@@ -1,6 +1,6 @@
 # Åtgärdsplan T-01–T-35 för Codex och Claude Code
 
-> **Aktuellt 2026-10-30:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. T-12/T-13 är mergade och publicerade (#286, main06f057e). Nästa arbete: **E3 (T-14), därefter A1 (T-01/T-02/T-31)**. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1.
+> **Aktuellt 2026-10-31:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. T-12/T-13 är mergade och publicerade (#286, main06f057e). A1 T-01/T-02/T-31 är verifierat och oberoende granskat i #288, ännu inte mergat. Nästa arbete: **A0/A2 i #289**, som redan har röda baslinjeprov och sparad målgrund. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1.
 
 ## Mandat och statusord
 
@@ -64,6 +64,9 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 
 - E3/G4 samordnar T-14 och den oberoende T-35 eftersom båda gäller föräldrasidans information. Webmanifest och rasteriserade kopior av befintlig favicon till hemskärmsikoner, best-effort `navigator.storage.persist()` utan väntan vid start, ärliga Safari-/hemskärmsråd samt tidpunkt för senaste startade kopienedladdning. Ingen garanti att en fil behållits eller att Safari aldrig rensar. Grodlicensen ligger ordagrant kvar sist under Tack till. Baslinje: manifest saknas och licensordningen röda. Två rena nya lagringsprov gröna; alla sju grindar gröna, 553/553. `prov-bestandig-lagring.mjs` grönt för persist=true/false/fel/saknas, samt verklig föräldraöppning, nedladdning/kopiedatum och licensordning i375×812 och812×375. Interna bilder granskade. Oberoende `/root/t12_t13_review` godkände exakt2f3a40e605bbc902192d7de25f6f05cfcd724ad4 utan blockerare. Provets relativa request-URL:er och väntan på försidan rättades; spelkoden9a1d361 är oförändrad sedan sju gröna grindar; lint grönt igen. Tre svagaste punkter: fysisk iPad/långt uppehåll, faktisk hemskärmsinstallation på fysisk enhet och nya föräldratexter är bara lästa visuellt i molnets browser.
 
+- A1 T-01/T-02/T-31: röda UI-baslinjer för Trolla-tangenten, falsk skrivmarkör i hjälp och vad-luckans modebyte. Gemensam Trolla-handling för skärmtangent, Enter och Penna; separat inmatningsknapp i remsan; vad-lucka väljer tangenter + vänlig datatext. Alla sju grindar gröna på rättad spelkod,553/553. Oberoende granskaren hittade för smal tom skrivknapp och Enter-fokusfällor i ordbricka/skrivyta/vad-lucka; rättat med minst44px, respekt för role=button och fokus till skrivytan när fysisk skrivning börjar. Enter på en ordbricka reproducerades också rött (skapade ett djur). UI-provet utökas med faktisk keyboard.type, vanlig brickaktivering och geometrimätning; `prov-bok-kontroller.mjs` grönt för18huvudfall (9 i varje vy): Trolla-tangent, Enter efter egna tangenter, faktisk fysisk ASCII-inmatning efter remsklick, Penna, tom mening, textbevarande vid hjälpbyte, vad-lucka, fysisk text efter vad-lucka och Enter på ordbricka utan skapelse. Ytterligare tom-hjälpyta-prov gröna i båda vyer (20fall totalt); interna bilder granskade. Playwright `keyboard.type` skickar å/ä/ö via insertText utan keydown; därför används ASCII för de fysiska proven medan skärmtangenterna provar häst. Exakt text avläses föreEnter. Oberoende `/root/t12_t13_review` godkände484e4a814c223eeeeb9cc8ada5ba927991cf0d73 utan blockerare. Efter det endast tilläggsprov/dokument; lint grönt igen. Svagaste punkter: fysisk svensk hårdvara/IME inte provad, låg liggande uppdragslapp T-27 kvar, nya repliker inväntar godkänd inspelning. En sjuåring får nu samma respons från de tre Trolla-vägarna; uppdragsbetydelsen kan fortfarande frustrera tills B är klart. Inget sparformat ändras. Ändrade barntexter samlade i nya-repliker.md; godkända inspelningar för nya texter återstår.
+
+
 - Plan-PR #285 är mergad som `161a234`. Christoffers B1–B8 och granskningsmandat finns i GitHub. Cloudflare grönt på main (check 124369472890); alla sex serverade start-/spel-filer är byteidentiska med det tidigare verifierade bygget, vilket stämmer med en ren dokumentändring.
 - E1/E2: T-12 kort klick reproducerat rött; T-13 avsaknad av beständigt arkiv och radering trots kvotfel reproducerade röda. Nu hållning med släpp/leave/cancel/blur-städning och Space/Enter-stöd, tvåsiffrig multiplikation, arkiv-före-radering och återställning som bevarar både gamla och nuvarande världar. Arkiv rensas aldrig automatiskt. Oberoende granskaren hittade att trasig JSON/dal inuti en råsträng accepterades; detta är rättat med befintlig ren `arData` och negativa oförändrad-lagring-prov. Testid-baslinjen ändras avsiktligt enbart när fem oskyddade titelkontroller tas bort. Slutgrindar gröna (551/551 produkttester). `prov-foraldersparr.mjs` och `prov-arkiv.mjs` gröna i375×812 och812×375; interna bilder granskade. I arkivprovet behövde den nya fliken gå klart genom verkligt intro innan låset gick att hålla; det är provets synkronisering som rättades, inga force-klick. Oberoende granskare `/root/t12_t13_review` godkände exakt `c7473c76a4e0c1cb2ba7301eff904bd7488896f2`, inga kvarstående blockerare. Kod91d3a9d är oförändrad sedan alla sju grindar; sista commit ändrar bara detta UI-prov, lint grönt igen. Befintliga `prov-backup.mjs` och `prov-lagringsfel.mjs` gröna, inklusive hel värld, mark/bokstavsljud, äldre/ogiltiga kopior och nekad lagring. #286 mergad som06f057e; Cloudflare grönt check124373728361, alla sex serverade filer byteidentiska med lokalt bygge (SHA-256). Tre svagaste punkter: iPad/Safari-långtid återstår (T-14), inga fysiska tangentbords-/touchassistansprov, alla lokala arkiv kan försvinna om webbläsardata rensas (nedladdade kopior behövs).
 
@@ -71,8 +74,8 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 
 | T-id | Huvudblock | Status / kvarvarande acceptans |
 |---|---|---|
-| T-01 | A1 | Planerad |
-| T-02 | A1 | Planerad |
+| T-01 | A1 | Verifierad/granskad #288, kod62c3001/prov484e4a8 + tom-hjälpyta; väntar merge/live |
+| T-02 | A1 | Verifierad/granskad #288,20UI-fall båda vyer och44px-yta; väntar merge/live |
 | T-03 | A0/A2/B | Planerad; kräver alla 133 måls hjälpvägar |
 | T-04 | A0/A2 | Planerad |
 | T-05 | B0/B1 | Planerad; ≥455 ja/nej-fixtures |
@@ -84,7 +87,7 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 | T-11 | C3 | Planerad |
 | T-12 | E1 | Verifierad + oberoende granskad, PR #286, kod 91d3a9d/prov c7473c7; publicerad som06f057e, Cloudflare124373728361 och6/6SHA-256 gröna |
 | T-13 | E2 | Verifierad + oberoende granskad, PR #286; arkiv/nekad lagring/trasigt innehåll samt ny flik båda vyer; publicerad som06f057e, Cloudflare124373728361 och6/6SHA-256 gröna |
-| T-14 | E3 | Verifierad kod + oberoende granskad i #287, 9a1d361/prov2f3a40e; fysisk Safari-långtid kvar |
+| T-14 | E3 | Kod publicerad f1e38d3 (#287), CF124377043349/6SHA-256 gröna; fysisk Safari-långtid kvar |
 | T-15 | B3 | Planerad; B1 godkänt |
 | T-16 | D3 | Planerad |
 | T-17 | D0/D3 | Planerad; B5 godkänt |
@@ -101,17 +104,17 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 | T-28 | F5 | Planerad |
 | T-29 | G1 | Planerad |
 | T-30 | G2 | Planerad; B8 godkänt |
-| T-31 | A1 | Planerad |
+| T-31 | A1 | Verifierad/granskad #288, även efterföljande fysisk text+Enter; väntar merge/live |
 | T-32 | G1 | Planerad |
 | T-33 | G3 | Planerad |
 | T-34 | G3 | Planerad |
-| T-35 | E3/G4 | Verifierad + oberoende granskad i #287, båda skärmformat; väntar merge/live |
+| T-35 | E3/G4 | Publicerad f1e38d3 (#287), båda vyer, CF124377043349/6SHA-256 gröna |
 
 ## Fortsätt här — gäller både Codex och Claude
 
 1. Läs AGENTS/regler och befintliga Skapa-/En värld-statusar, sedan denna aktiva plan och det fullständiga underlaget i `granskning.md`. Läs `beslut.md`; använd inte förslag som beslut. Bevara redan levererade gamla block.
 2. `git status`, `git fetch origin` och utgå från aktuella `origin/main`; ingen reset eller force-push. PR #247 ingår inte. Kontrollera öppna T-id-PR:er före ny branch så arbete inte dubbleras. Planens ursprungsbaslinje är 2c761d3.
-3. Första kodsteget är E1/E2:s föräldraspärr och säkra arkiv, därefter A1. Skriv först ett reproducerbart rött UI-prov mot baslinjen, rätta, gör samma prov grönt. P1 lämnas fullt verifierat i PR för föreskriven andragranskare om inget annat godkänts.
+3. E1–E3 är publicerade; A1 är verifierat och granskat i#288. Fortsätt därefter i påbörjade#289 (A0/A2), inte vid gamla E1. Skriv först ett reproducerbart rött UI-prov mot baslinjen, rätta, gör samma prov grönt. P1 lämnas fullt verifierat i PR för föreskriven andragranskare om inget annat godkänts.
 4. Alla kodblock kör sju grindar: `typecheck`, `typecheck:pages`, `check:struktur`, `lint`, `test:product`, `build:pages`, `check:pages-output`. Testid ändras bara avsiktligt; känd P3a-tidströskel höjs aldrig. Nya Node-prov läggs i befintliga `test:product`. `npm ci` kördes grönt på baslinjen; upprepa vid saknade/ändrade beroenden.
 5. Förhandsvisa bygget: `node node_modules/vite/bin/vite.js preview --config vite.pages.config.ts --port 4173 --strictPort`. Browserprov med `TROLLPENNAN_REPO=<repo>` och `CHROMIUM=<chromium>`. Använd verkliga klick, inga force-klick. Kontrollera stående/liggande och vid F4 även 667×375. Spara aldrig skärmbilder i GitHub eller svar.
 6. Valfria sparfält får säkra standardvärden. Prova gammal v2, export/import/omladdning och felaktig kopia utan mutation. Arkiv måste skrivas före återställning; lagringsfel får inte radera något.

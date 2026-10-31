@@ -1,5 +1,6 @@
 // Nya Skapa: det fysiska tangentbordet (dator) skriver i Pennans bok precis som skärmtangenterna.
-// Enter = klar (eller Trolla när skrivbrickan är tom), Backspace = sudda, Escape stänger boken utan att sudda.
+// Enter = Trolla i boken, Backspace = sudda, Escape stänger boken utan att sudda.
+import { trollaMedKnapp } from "../skapa/trollaKontroll.ts";
 import { useEffect, useRef, type RefObject } from "react";
 import type { SpelTillstand } from "./useSpelTillstand.ts";
 
@@ -37,16 +38,16 @@ export function useSkrivTangentbord(t: SpelTillstand, op: Op) {
       const target = e.target instanceof HTMLElement ? e.target : null;
       // I Pennans bok är mellanslag alltid ett mellanslag (fokus står ofta på stängknappen), Enter trycker på knappen.
       const iArket = !!target?.closest(".sk-lager") && !target.closest("input, textarea, select");
-      if (!iArket && target?.closest('button, a, summary, input, textarea, select, [contenteditable="true"]')) {
+      if (!iArket && target?.closest('button, [role="button"], a, summary, input, textarea, select, [contenteditable="true"]')) {
         if (e.key === "Enter" || e.key === " " || target.closest('input, textarea, select, [contenteditable="true"]')) return;
       }
-      if (iArket && e.key === "Enter" && target?.closest("button")) return;
+      if (iArket && e.key === "Enter" && target?.closest('button, [role="button"], a, summary') && !target.closest('.sk-tangent, .sk-penn-knapp, .sk-ark[data-vy="skriv"] .sk-skrivbricka')) return;
       // Gåvan skrivs i Pennans bok, så den räknas inte som en dialog här.
       if (overlayRef.current && !(gavaRef.current && o.bokOppRef.current)) return;
       if (e.key === "Enter") {
         e.preventDefault();
-        if (o.nu().trim()) o.avslutaOrd();
-        else if (o.bokOppRef.current) o.trolla();
+        if (e.repeat) return;
+        if (o.bokOppRef.current) trollaMedKnapp(o.trolla);
         else setBokOpp(true);
         return;
       }
@@ -57,6 +58,8 @@ export function useSkrivTangentbord(t: SpelTillstand, op: Op) {
       }
       if (e.key === " " || /^[a-zA-ZåäöÅÄÖ]$/.test(e.key)) {
         e.preventDefault();
+        // När barnet börjar skriva flyttas fokus till skrivytan; Enter där betyder sedan Trolla.
+        if (e.key !== " ") target?.closest(".sk-ark")?.querySelector<HTMLButtonElement>('[data-dal="skrivbricka"]')?.focus({ preventScroll: true });
         o.skrivTecken(e.key === " " ? " " : e.key.toLocaleLowerCase("sv"));
       }
     };

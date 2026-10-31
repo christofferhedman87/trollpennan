@@ -19,6 +19,7 @@ import { useForhandArk } from "./useForhandArk.ts";
 import { nyGata, type IdeLapp } from "./gataLapp.ts";
 import { useArkLapp } from "../../skapa/arkLapp.ts";
 import { platsLapp } from "../../skapa/platsLapp.ts";
+import { kopplaTrollaKnapp } from "../../skapa/trollaKontroll.ts";
 import { kanTrollas } from "../../skapa/kanTrollas.ts";
 import { forhand } from "../../skapa/forhand.ts";
 import { useMinne } from "../../minne.ts";
@@ -30,7 +31,7 @@ export function SkapaArk() {
   const k = useSpel();
   const { stangBok } = k.o;
   const { textRef, gavaTill, onskan, text, varld, omrade } = k.t;
-  const { remsa, vy, setVy, trolla, avslutaOrd, puff } = k.sk;
+  const { remsa, vy, setVy, trolla, puff } = k.sk;
   const [flik, setFlik] = useState<Fraga>("vad");
   const [ide, setIde] = useState<IdeLapp | null>(null);
   const ideNr = useRef(0);
@@ -88,10 +89,9 @@ export function SkapaArk() {
       }, ms ? 450 : 0);
     }, ms);
   };
-  const klar = () => {
-    if (remsa.skriv.trim()) avslutaOrd();
-    else if (remsa.harVad) setPenna((p) => ({ lage: "blinka", n: p.n + 1 }));
-  };
+  const tryckPennaRef = useRef(tryckPenna);
+  tryckPennaRef.current = tryckPenna;
+  useEffect(() => kopplaTrollaKnapp(() => tryckPennaRef.current()), []);
   const oppnaHjalp = (f?: Fraga) => {
     if (f) setFlik(f);
     setVy("hjalp");
@@ -115,7 +115,7 @@ export function SkapaArk() {
         ) : null}
         <div className="sk-innehall">
           <Lapp ide={ide} />
-          <Trollremsa oppnaVad={() => oppnaHjalp("vad")} />
+          <Trollremsa />
           <Svarsrad />
         </div>
         {vy === "skriv" ? (
@@ -129,7 +129,7 @@ export function SkapaArk() {
                 setIde(gata ?? { slag: "bild", ide: nyIde(ide?.slag === "bild" ? ide.ide : null) });
               }}
             />
-            <Tangenter klar={klar} />
+            <Tangenter klar={tryckPenna} />
           </>
         ) : (
           <Ordhjalp flik={flik} setFlik={setFlik} />

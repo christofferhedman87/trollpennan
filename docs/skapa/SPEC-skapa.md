@@ -192,14 +192,14 @@ Under remsan i skrivläge: `[🎲 Idé]  tipstext  [Ordhjälp]`.
 
 ### 6.6 Tangentbordet
 
-- Data som i dag: `data/tangentbord.json`. Tre bokstavsrader, sedan `[mellanslag][klar]`.
+- Data som i dag: `data/tangentbord.json`. Tre bokstavsrader, sedan `[mellanslag][Trolla!]`.
 - **Vokalerna** (a e i o u y å ä ö) har rosa botten och mörkrosa bokstav.
 - Tangenter 50 px höga, radie 11, kant 2,5, skugga 3 px. Skift visar *stor bokstav* för nästa tangent och släpper sedan.
 - **Bokstavsljud:** varje tangent säger sin bokstav (ljudet, inte namnet). Föräldern kan stänga av det.
 - **Mellanslag:** avslutar ordet, utom när det påbörjade ordet är början på ett flerordsuttryck (*sprutar* → *sprutar eld*), då läggs mellanslaget till i ordet.
-- **Klar:** avslutar ordet. Finns ett Vad och skrivbrickan är tom, blinkar Pennan (barnet ska trycka på Pennan själv, inte Klar).
+- **Trolla!:** avslutar påbörjat ord och använder samma skapande och animation som Pennan. Tom mening ger en vänlig puff.
 - **Sudda (⌫):** tar bort en bokstav. Är skrivbrickan tom flyttas det sista ordet tillbaka in i brickan så att barnet kan rätta det.
-- Det fysiska tangentbordet på dator fungerar likadant (Enter = Klar, eller Trolla om brickan är tom och det finns ett Vad).
+- Det fysiska tangentbordet på dator fungerar likadant: Enter = Trolla, även när sista ordet ännu inte avslutats. Andra fokuserade knappar behåller vanlig tangentbordsaktivering.
 
 ### 6.7 Ordhjälpen
 
