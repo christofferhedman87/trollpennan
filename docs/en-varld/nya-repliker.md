@@ -389,3 +389,22 @@ Starttexterna och nästan-replikerna nedan saknar sammanhängande `rostPlan`; de
 | | bengtsson | `data/bengtsson.json` `jattestor-van.nastan` | Din skapelse får stanna! Jag letar efter en stor vän, som en elefant eller jättestor drake. |
 
 Hjälpfraserna `en liten myra` och `en stor giraff` har ingen hel inspelning men har en sammansatt `rostPlan`; Grok kan komplettera med hela fraser om en sammanhängande inläsning önskas. De fyra övriga hjälpfraserna har hela inspelningar.
+
+### B1: färg och storlek i Skogen, Sjön och Grottan — inspelningar till Grok
+
+Sex uppdrag ur Textpaket 02: `skog-rod-van`, `sjo-bla-van`, `grotta-gul-van`, `skog-liten-van`, `grotta-liten-upptackare` och `sjo-stor-simmare`. Rader utan hel inspelning nedan; de fyra start-/tacktexterna finns också i `data/rost.json` → `vantar_rost`. Nästan-replikerna har ännu ingen källa i `kallor`; Grok lägger till rätt källa och genomför inspelning/implementation när TTS-arbetet görs.
+
+| Klar | Röst | Datafil och nyckel | Text |
+|---|---|---|---|
+| | bengtsson | `data/bengtsson.json` `skog-rod-van.nastan` | Din skapelse får stanna! Jag letar efter en röd vän, som en röd kanin. |
+| | bengtsson | `data/bengtsson.json` `sjo-bla-van.nastan` | Din skapelse får stanna! Jag letar efter en blå vän, som en blå fisk. |
+| | bengtsson | `data/bengtsson.json` `grotta-gul-van.nastan` | Din skapelse får stanna! Jag letar efter en gul vän, som en gul mus eller groda. |
+| | bengtsson | `data/bengtsson.json` `skog-liten-van.text_bengtsson` | Kan du skapa en liten vän som får plats bredvid min minsta kaffekopp? |
+| | bengtsson | `data/bengtsson.json` `skog-liten-van.nastan` | Din skapelse får stanna! Jag letar efter en liten vän, som en pytteliten igelkott. |
+| | bengtsson | `data/bengtsson.json` `grotta-liten-upptackare.text_bengtsson` | Det finns ett pyttelitet hål i grottan! Kan du skapa en vän som får plats? |
+| | bengtsson | `data/bengtsson.json` `grotta-liten-upptackare.nastan` | Din skapelse får stanna! Jag letar efter en liten vän, som en pytteliten mus. |
+| | bengtsson | `data/bengtsson.json` `sjo-stor-simmare.text_bengtsson` | Jag vill träffa en riktigt stor vän vid sjön. Kan du skapa en? |
+| | bengtsson | `data/bengtsson.json` `sjo-stor-simmare.klart_bengtsson` | Oj, vilken stor vän som kom till sjön! |
+| | bengtsson | `data/bengtsson.json` `sjo-stor-simmare.nastan` | Din skapelse får stanna! Jag letar efter en stor vän, som en jättestor fisk. |
+
+Hjälpfraserna `en liten uggla`, `en jättestor anka` och `en stor gås` har ingen hel inspelning men en sammansatt `rostPlan`; Grok kan komplettera med hela fraser om en sammanhängande inläsning önskas. Övriga femton hjälpfraser och de fem oförändrade start-/tacktexterna har hela inspelningar.

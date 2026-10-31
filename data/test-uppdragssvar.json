@@ -214,6 +214,108 @@
         "en stor röd boll bredvid en hund",
         "en liten drake"
       ]
+    },
+    "skog-rod-van": {
+      "ja": [
+        "en röd kanin",
+        "en röd räv",
+        "en röd uggla",
+        "en mörkröd katt",
+        "en röd hund med en blå mössa",
+        "två röda rävar"
+      ],
+      "nej": [
+        "en räv",
+        "en röd boll bredvid en hund",
+        "en hund med en röd mössa",
+        "en röd mössa på en räv",
+        "en röd sten"
+      ]
+    },
+    "sjo-bla-van": {
+      "ja": [
+        "en blå fisk",
+        "en blå anka",
+        "en blå groda",
+        "en ljusblå fisk",
+        "en mörkblå anka",
+        "en blå kanin med en röd mössa"
+      ],
+      "nej": [
+        "en fisk",
+        "en blå boll bredvid en anka",
+        "en anka med en blå mössa",
+        "en blå båt",
+        "en blå mössa på en groda"
+      ]
+    },
+    "grotta-gul-van": {
+      "ja": [
+        "en gul kanin",
+        "en gul mus",
+        "en gul groda",
+        "en gul katt med en grön mössa",
+        "tre gula möss"
+      ],
+      "nej": [
+        "en kyckling",
+        "en mus med en gul mössa",
+        "en gul sten bredvid en mus",
+        "en gul lykta",
+        "en gul mössa på en groda"
+      ]
+    },
+    "skog-liten-van": {
+      "ja": [
+        "en liten kanin",
+        "en pytteliten igelkott",
+        "en liten uggla",
+        "en myra",
+        "små kaniner",
+        "en stor mössa på en liten hund"
+      ],
+      "nej": [
+        "en hund med en liten mössa",
+        "en liten sten bredvid en hund",
+        "en stor myra",
+        "en liten sten",
+        "en uggla"
+      ]
+    },
+    "grotta-liten-upptackare": {
+      "ja": [
+        "en pytteliten mus",
+        "en liten kanin",
+        "en pytteliten groda",
+        "en mus",
+        "små grodor"
+      ],
+      "nej": [
+        "en liten sten",
+        "en hund med en liten mössa",
+        "en stor mus",
+        "en kanin",
+        "en liten lykta bredvid en hund"
+      ]
+    },
+    "sjo-stor-simmare": {
+      "ja": [
+        "en stor fisk",
+        "en jättestor anka",
+        "en stor gås",
+        "en enorm fisk",
+        "en blåval",
+        "en stor katt",
+        "en liten mössa på en stor anka"
+      ],
+      "nej": [
+        "en fisk",
+        "en hund med en stor boll",
+        "en stor sten bredvid en anka",
+        "en liten blåval",
+        "en stor båt",
+        "en stor mössa på en anka"
+      ]
     }
   }
 }

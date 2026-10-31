@@ -20,6 +20,24 @@ test("B1: storleken gäller ett djur och uttrycklig storlek väger tyngre än ar
   for (const fras of ["en stor elefant", "en jättestor drake", "en jättelik hund", "ett jättelikt lamm", "två jättelika katter", "en drake", "en stor giraff", "en elefant", "en blåval", "en stor myra", "en liten mössa på en stor hund"]) assert.equal(bedomUppdragsSvar(stor, fras).ok, true, fras);
 });
 
+test("B1: färg och storlek i Skogen, Sjön och Grottan gäller själva djuret", () => {
+  const krav = (id: string) => SKRIV.find((u) => u.id === id)!.krav!;
+  const nej: Record<string, string[]> = {
+    "skog-rod-van": ["en röd boll bredvid en hund", "en hund med en röd mössa", "en räv"],
+    "sjo-bla-van": ["en blå boll bredvid en anka", "en anka med en blå mössa", "en fisk"],
+    "grotta-gul-van": ["en gul sten bredvid en mus", "en mus med en gul mössa", "en kyckling"],
+    "skog-liten-van": ["en hund med en liten mössa", "en liten sten bredvid en hund", "en stor myra"],
+    "grotta-liten-upptackare": ["en liten sten", "en hund med en liten mössa", "en stor mus"],
+    "sjo-stor-simmare": ["en hund med en stor boll", "en stor sten bredvid en anka", "en liten blåval"],
+  };
+  for (const [id, fraser] of Object.entries(nej)) for (const fras of fraser) assert.equal(bedomUppdragsSvar(krav(id), fras).ok, false, `${id}: ${fras}`);
+  // Christoffers godkända hjälpfraser ska alltid räcka (Textpaket 02).
+  for (const u of SKRIV.filter((x) => x.id in nej)) {
+    assert.equal(u.krav!.djur, true, `${u.id}: platsuppdrag kräver fortfarande ett djur`);
+    for (const fras of u.hjalp ?? []) assert.equal(bedomUppdragsSvar(u.krav!, fras).ok, true, `${u.id}: ${fras}`);
+  }
+});
+
 test("T05: varje migrerat uppdrag har minst tre ja och två nej genom spelets riktiga tolk", () => {
   const migrerade = SKRIV.filter((u) => u.krav?.betydelse);
   assert.equal(migrerade.length, Object.keys(prov.uppdrag).length, "inget migrerat uppdrag får sakna svarsprov");
