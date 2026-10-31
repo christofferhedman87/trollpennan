@@ -21,6 +21,8 @@ export type Ankare = {
   fram: THREE.Vector3;
   /** Marknivå (världens y) under djuret. Saknas på rena mesh-ankare. */
   fotY?: number;
+  /** Uttrycket är syskon till modellklonen: spara dess punkt i förälderns rum när ankaret mäts. */
+  uttryck?: { punkt: THREE.Vector3; hojd: number };
 };
 
 const NAMN = ["huvudTopp", "ansikte", "ogonL", "ogonR", "mun", "hals", "rygg"] as const;
@@ -124,5 +126,8 @@ export function ankareFor(rot: THREE.Object3D, kropp: string, rum: "modell" | "m
   for (const n of NAMN) a[n] = punkt(rad.ankare[n]);
   const bredd = Math.min(w, h * rad.matt.bredd.hojd, rad.matt.bredd.tak ?? Infinity);
   if (rad.ref === "ben" && !ben) return { ...procAnkare(kropp), fotY: 0 };
-  return { ...a, bredd, hojd: h, ben: ben ?? (rad.nod === "body" ? nod : null), varld: true, fotY: _min.y, fram: new THREE.Vector3(0, 0, 1) };
+  const foralder = rot.parent?.matrixWorld ?? new THREE.Matrix4();
+  const uttrycksPunkt = a.huvudTopp.clone().applyMatrix4(foralder.clone().invert());
+  const hojd = h / Math.max(1e-6, new THREE.Vector3().setFromMatrixScale(foralder).y);
+  return { ...a, bredd, hojd: h, ben: ben ?? (rad.nod === "body" ? nod : null), varld: true, fotY: _min.y, fram: new THREE.Vector3(0, 0, 1), uttryck: { punkt: uttrycksPunkt, hojd } };
 }

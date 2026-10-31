@@ -47,10 +47,11 @@ function geometri(g, p) {
   if (p.relation === "plagg") assert.ok(saker[0].lokal.min.reduce((s, x, i) => s + Math.abs(x - saker[1].lokal.min[i]), 0) > 0.03, "flera plagg har skilda fästpunkter");
 }
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || "/usr/bin/chromium", args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader"] });
+let provSida = null, provText = "";
 try {
   for (const viewport of [{ width: 375, height: 812 }, { width: 812, height: 375 }].filter((v) => !process.env.QA_LAGE || String(v.width) === process.env.QA_LAGE)) {
     const context = await browser.newContext({ viewport, reducedMotion: "reduce" });
-    const page = await context.newPage(); page.setDefaultTimeout(60000);
+    const page = await context.newPage(); provSida = page; page.setDefaultTimeout(60000);
     const fel = [], konsolfel = [], modellfel = [];
     await page.exposeFunction("__qaModellFel", (id) => { modellfel.push(id); });
     page.on("pageerror", (e) => fel.push(e.message)); page.on("console", (m) => { if (m.type() === "error") konsolfel.push(m.text()); });
@@ -67,6 +68,7 @@ try {
     const alla = () => page.evaluate(() => { const s = window.__trollMinne.getState(); return [...s.ang, ...s.sovande, ...s.hemma.map((h) => h.spec), ...Object.values(s.platsSkapelser).flat(), ...s.garden]; });
     const skapade = [];
     for (const p of fraser.filter((p) => process.env.QA_FALL ? process.env.QA_FALL.split("|").includes(p.text) : !p.extra)) {
+      provText = p.text;
       await page.getByTestId("pennans-bok").click(); await page.getByTestId("tangentbord").waitFor();
       await page.locator('[data-dal="skrivbricka"]').click();
       for (const del of p.text.split(/([åäö])/)) {
@@ -79,6 +81,7 @@ try {
       const fore = new Set((await alla()).map((d) => d.uid));
       if (process.env.QA_HOLO !== "0") {
         await page.waitForFunction(({ id, antal, relation, text }) => { const g = window.__holoGeometri; return g && g.uid === "forhand" && g.formel === text && g.kropp.modeller.includes(g.kroppId) && g.kropp.mesh > 0 && (relation === "plagg" ? g.plagg : g.saker).filter((s) => s.id === id && s.mesh > 0).length === antal; }, p);
+        if (process.env.QA_MATT) console.log("MODELLMÅTT", JSON.stringify(await page.evaluate(() => window.__holoGeometri)));
         await page.waitForFunction(() => !document.querySelector(".sk-ark")?.classList.contains("sk-ark--trollar"));
         await page.evaluate(() => { window.__qaHoloVanta = { senaste: null, antal: 0 }; });
         await page.waitForFunction(({ text, extra }) => {
@@ -127,4 +130,13 @@ try {
     console.log("Grönt antal/formel efter omladdning", viewport.width, skapade.length);
     await context.close();
   }
+} catch (e) {
+  if (provSida && !provSida.isClosed()) {
+    console.error("Aktuellt delprov", provText, await provSida.evaluate(() => {
+      const g = window.__holoGeometri;
+      return { holo:window.__trollholo, vy:window.__trollvy, geometri:g && { uid:g.uid, formel:g.formel, kroppId:g.kroppId, kropp:{mesh:g.kropp.mesh,modeller:g.kropp.modeller,skarm:g.kropp.skarm}, plagg:g.plagg.map((p)=>({id:p.id,mesh:p.mesh,skarm:p.skarm})), saker:g.saker.map((p)=>({id:p.id,mesh:p.mesh,skarm:p.skarm})) } };
+    }).catch(() => "diagnostik saknas"));
+    if (bilder) await provSida.screenshot({path:`${bilder}/fel-${provSida.viewportSize().width}.png`}).catch(() => {});
+  }
+  throw e;
 } finally { await browser.close(); }

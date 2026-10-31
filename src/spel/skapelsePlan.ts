@@ -6,7 +6,7 @@ import type { Relation, TillbehorSpec } from "../tolk/typer.ts";
 import { barsPaKropp } from "./tillbehor/bars.ts";
 import { kladesRuta } from "./tillbehor/kladesRuta.ts";
 export { barsPaKropp } from "./tillbehor/bars.ts";
-import { TILLBEHOR } from "./tillbehor/data.ts";
+import { TILLBEHOR, plaggKonfig } from "./tillbehor/data.ts";
 import { arPlagg, arSak, malhojd } from "./entiteter.ts";
 
 export type Vektor = [number, number, number];
@@ -28,7 +28,7 @@ for (const o of ordJson.ord) {
 const cache = new WeakMap<Spec, SkapelsePlan>();
 
 
-export const friSak = (t: TillbehorSpec) => (arSak(t.id) || !!TILLBEHOR[t.id]) && !((arPlagg(t.id) || !!TILLBEHOR[t.id]) && barsPaKropp(t));
+export const friSak = (t: TillbehorSpec) => (arSak(t.id) || !!TILLBEHOR[t.id]) && !((arPlagg(t.id) || !!TILLBEHOR[t.id] || !!plaggKonfig(t.id)) && barsPaKropp(t));
 export function modellMatt(id: string): Matt {
   const m = MATT[id];
   return m ? [m[0]!, m[1]!, m[2]!, m[3]] : [malhojd(id), malhojd(id), malhojd(id)];

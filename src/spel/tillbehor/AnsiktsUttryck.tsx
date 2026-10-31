@@ -37,7 +37,6 @@ function kors() {
 
 export function AnsiktsUttryck({
   ankare,
-  klon,
   signal,
   index = 0,
 }: {
@@ -46,7 +45,6 @@ export function AnsiktsUttryck({
   signal?: { current: DjurSignal };
   index?: number;
 }) {
-  void klon;
   const rot = useRef<THREE.Group>(null);
   const par = useRef<THREE.Mesh>(null);
   const stj = useRef<THREE.Group>(null);
@@ -58,14 +56,17 @@ export function AnsiktsUttryck({
     const livlig = h === "fortjust" || h === "busig";
     const lugn = h === "glad" || h === "hungrig" || h === "somnig";
     const bob = Math.sin(t * (livlig ? 3.4 : 1.7) + index) * (livlig ? 0.04 : 0.018);
-    g.position.set(ankare.huvudTopp.x, ankare.huvudTopp.y + Math.max(0.14, ankare.hojd * 0.12) + bob, ankare.huvudTopp.z);
+    const punkt = ankare.uttryck?.punkt ?? ankare.huvudTopp;
+    const hojd = ankare.uttryck?.hojd ?? ankare.hojd;
+    g.position.set(punkt.x, punkt.y + Math.max(0.14, hojd * 0.12) + bob, punkt.z);
     g.rotation.y = t * (livlig ? 0.9 : 0.28);
     const s = Math.min(0.055, Math.max(0.035, (livlig ? 0.05 : 0.04) * (lugn ? 1 + Math.sin(t * 2.2) * 0.08 : 1)));
     par.current?.scale.setScalar(s);
     if (stj.current) stj.current.rotation.z = t * (livlig ? 1.5 : 0.4);
   });
   if (!ankare) return null;
-  const p: [number, number, number] = [ankare.huvudTopp.x, ankare.huvudTopp.y + Math.max(0.14, ankare.hojd * 0.12), ankare.huvudTopp.z];
+  const punkt = ankare.uttryck?.punkt ?? ankare.huvudTopp, hojd = ankare.uttryck?.hojd ?? ankare.hojd;
+  const p: [number, number, number] = [punkt.x, punkt.y + Math.max(0.14, hojd * 0.12), punkt.z];
   return (
     <group ref={rot} position={p} userData={{ plaggPar: "uttryck", par: "uttryck" }}>
       <mesh ref={par} geometry={GEO.par} material={ROSA} scale={0.045} />

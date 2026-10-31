@@ -10,6 +10,7 @@ import type { Varelse } from "../tolk/typer.ts";
 import { djurGltfUrl, entitet, framVinkel, modellUrl, skalaFor } from "./entiteter.ts";
 import { byggSkapelsePlan, skapelsePlan, type Vektor } from "./skapelsePlan.ts";
 import { faestPlaggKlon, faestTillbehor } from "./tillbehor/faest.ts";
+import { ankareFor } from "./tillbehor/ankare.ts";
 import { kladesExemplar } from "./tillbehor/exemplar.ts";
 import { kroppMatt, placeraMedMinne } from "./placering.ts";
 import type { Sparad } from "./brygga.ts";
@@ -91,6 +92,11 @@ test("Äldre v2 behåller med och implicit första plattform utan mutation", () 
   assert.equal(byggSkapelsePlan(varelse("en katt med en sten")).kropp[1], 0, "uttryckligt med betyder bredvid");
 });
 
+test("En filt som bärs är ett enda plagg, och bredvid ger en fri filt", () => {
+  assert.equal(skapelsePlan(varelse("en kanin med en filt")).saker.length, 0);
+  assert.equal(skapelsePlan(varelse("en kanin bredvid en filt")).saker.length, 1);
+});
+
 test("Två GLB-strumpor har skilda fästpunkter och lämnar originalmodellen orörd", async () => {
   const v = varelse("en kanin med två strumpor"), djur = await stall(v.kropp), scen = await ladda("strumpa");
   const fore = new THREE.Box3().setFromObject(scen).toJSON();
@@ -99,6 +105,19 @@ test("Två GLB-strumpor har skilda fästpunkter och lämnar originalmodellen or�
   const a = new THREE.Box3().setFromObject(noder[0]!), b = new THREE.Box3().setFromObject(noder[1]!);
   assert.ok(Math.abs(a.getCenter(new THREE.Vector3()).x - b.getCenter(new THREE.Vector3()).x) > 0.03);
   assert.deepEqual(new THREE.Box3().setFromObject(scen).toJSON(), fore);
+});
+
+test("Uttrycket följer huvudet efter plaggmontering i en flyttad och skalad skapelse", async () => {
+  const djur = await stall("kanin"), ytter = new THREE.Group();
+  ytter.position.set(0.375, 0, 3.6); ytter.scale.setScalar(0.167); ytter.add(djur.ytter); ytter.updateMatrixWorld(true);
+  faestPlaggKlon(djur.nod, "kanin", "strumpa", await ladda("strumpa"));
+  const a = djur.nod.userData.ankare;
+  const punkt = a.uttryck?.punkt ?? a.huvudTopp;
+  const varld = punkt.clone().applyMatrix4(djur.nod.parent!.matrixWorld);
+  assert.ok(varld.distanceTo(a.huvudTopp) < 0.001, "huvudankaret får inte läggas till en andra gång");
+  ytter.position.set(-0.5, 0.4, -2); ytter.scale.setScalar(0.5); ytter.updateMatrixWorld(true);
+  const nytt = ankareFor(djur.nod, "kanin");
+  assert.ok(nytt.uttryck!.punkt.distanceTo(punkt) < 0.001, "lokal position följer modellen när yttergruppen flyttas");
 });
 
 test("Upprepade procedurhattar ersätter inte varandra", async () => {
