@@ -54,6 +54,8 @@
  "lada": {
   "rubrik": "Lådan",
   "tom": "Lådan är tom.",
+  "tom_hjalp": "Här hamnar byggen som du lägger undan. Håll fingret på ett bygge och välj Lägg i lådan.",
+  "stang": "Stäng",
   "ta_fram": "Ställ ut",
   "full": "Gården är full! Lägg något i lådan först."
  },

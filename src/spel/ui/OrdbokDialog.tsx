@@ -1,4 +1,5 @@
-import type { Dispatch, RefObject, SetStateAction } from "react";
+import { useEffect, type Dispatch, type RefObject, type SetStateAction } from "react";
+import uiJson from "../../../data/skapa-ui.json" with { type: "json" };
 import type { Ord } from "@/tolk/typer.ts";
 import type { Sparad } from "../brygga.ts";
 import { fyll } from "../fyll.ts";
@@ -11,6 +12,9 @@ import * as rostKo from "../rostKo.ts";
 import type { Kalla } from "../rostKo.ts";
 import { olastaOrd, ordbokKategorier } from "../v9aHjalp.ts";
 import type { Banner, VisKort } from "./typer.ts";
+import { raknaOrd, useOrdbokStart } from "./ordRakning.ts";
+
+const T = (uiJson as unknown as { ordbok: Record<string, string> }).ordbok;
 
 type OrdbokDialogProps = {
   hittatAntal: number;
@@ -39,6 +43,16 @@ type OrdbokDialogProps = {
 export function OrdbokDialog({ hittatAntal, totalOrd, stjarnor, kopRad, koptaSidor, funna, sidOpp, forsokKop, setSidOpp, textRef, setText, setHand, setLage, setOrdbok, kvar, hittade, hemliga, formler, setVisKort, sovande, visaBanner }: OrdbokDialogProps) {
   const kategorier = ordbokKategorier(funna);
   const ord = olastaOrd(hittade, funna);
+  const start = useOrdbokStart((s) => s.start);
+  const rakning = raknaOrd(funna);
+  // Min bok väljer startdelen för en öppning; nästa öppning från en annan väg visar hela Ordboken.
+  useEffect(() => () => useOrdbokStart.getState().satt("alla"), []);
+  const rubrik = start === "guldord" ? T.guldord_rubrik : start === "ordjakten" ? T.ordjakten_rubrik : T.rubrik;
+  const del = start === "guldord"
+    ? { id: "ordbok-guldord", ord: rakning.guldord, text: rakning.guldord.length ? fyll(T.guldord_text ?? "", { n: rakning.guldord.length }) : T.guldord_tom }
+    : start === "ordjakten"
+      ? { id: "ordbok-ordjakten", ord: rakning.skrivord, text: rakning.skrivord.length ? fyll(T.ordjakten_text ?? "", { n: rakning.skrivord.length, kvar: rakning.skrivordKvar }) : T.ordjakten_tom }
+      : null;
   function lasOrd(ordText: string) {
     textRef.current = ordText;
     setText(ordText);
@@ -48,14 +62,26 @@ export function OrdbokDialog({ hittatAntal, totalOrd, stjarnor, kopRad, koptaSid
     rostKo.lasUpp(ordText);
   }
   return (
-        <div className="skarm" role="dialog" aria-label="Ordboken" data-testid="ordbok-sida">
+        <div className="skarm" role="dialog" aria-label={rubrik} data-testid="ordbok-sida" data-start={start}>
           <div className="ark sida">
             <div className="v9a-huvud">
               <button type="button" className="stang-x stang" data-v9a="ordbok-stang" data-f5="modal-stang" aria-label="Stäng" ref={(el) => el?.setAttribute("data-testid", "modal-stang")} onClick={() => setOrdbok(false)}>
                 ×
               </button>
             </div>
-            <h2>Ordboken</h2>
+            <h2>{rubrik}</h2>
+            {del ? (
+              <section className="ordbok-hittade-topp" data-testid={del.id}>
+                <p data-testid="ordbok-del-text">{del.text}</p>
+                <ul className="ord-lista">
+                  {del.ord.map((o) => (
+                    <li key={o} className={start === "guldord" ? "guld" : ""}>
+                      {o}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
             <p data-testid="hittat">{fyll(FIR.framsteg.text, { n: hittatAntal, total: totalOrd })}</p>
             <section className="ordbok-hittade-topp" data-v9a="mina-hittade-ord">
               <h3>🌟 Mina hittade ord</h3>
