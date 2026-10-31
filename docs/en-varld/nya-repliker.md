@@ -322,3 +322,13 @@ Nya barntexter. Webbläsarens talsyntes läser dem tills inspelning finns.
 - `data/skapa-ui.json kvitto.guld` (ändrad): {n} guldord: {ord}
 
 Orden kommer från samma guldmarkering som understrykningen. Ett flerordsuttryck som ”sprutar eld” visas som ett guldord. Ingen ny inspelning påstås finnas.
+
+## B1 · T-05/T-18: kaninens varma kläder
+
+Textpaket 02, godkänt av Christoffer och sparat i `textpaket-02-granskad.md`:
+
+- Uppdrag: Brr! Din kanin fryser om öronen. Kan du skriva fram något varmt att ha på sig?
+- Tack: Så skönt! Nu kan öronen sluta huttra.
+- Nästan: Din skapelse får stanna! Jag letar efter något varmt att ha på sig, som mössa eller halsduk.
+- Hjälp: en kanin med mössa; en hund med halsduk; en katt med tröja.
+- Idéernas ändrade etikett: Fler varma kläder.

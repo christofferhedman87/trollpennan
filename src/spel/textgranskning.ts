@@ -5,7 +5,9 @@
 // "Jag har läst och godkänner dessa sex". Fingeravtrycket är SHA-256 av
 // JSON.stringify([text_bengtsson, klart_bengtsson, nastan, hjalp]) utan mellanslag.
 
+// Textpaket 02: docs/en-varld/textpaket-02-granskad.md (SHA-256 1687e568…e539).
 export const GRANSKADE_UPPDRAG: Readonly<Record<string, string>> = {
+  "kanin-fryser": "0f238cbe17d651ead76f1acccfdd462e43acbc849f264c5f19e9373944af5f50",
   "vingar-i-luften": "836377d238dbb0028886c531a4bde6edf0da10a18cc95e7c9b79bffcee0e319a",
   "solgul-van": "91f0fe652814181f1f2ab349ac1b14800c4c905ace3aacb10ce4b164727cca11",
   "kalla-tassar": "04a9d7c1283ae97a9c06f9563df7b9fca374b0b382eaf773af9f889bf5fdb923",

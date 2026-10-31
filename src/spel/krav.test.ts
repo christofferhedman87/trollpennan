@@ -103,3 +103,13 @@ test("T08: två föremål som delar modell behåller sin egen temperatur", () =>
   assert.equal(bedomUppdragsSvar(krav, "en varm filt med en kall filt").ok, true);
   assert.equal(bedomUppdragsSvar(krav, "en katt med två kalla filtar").ok, false);
 });
+
+test("B1: kaninens värmeuppdrag söker varma kläder, inte eld eller kalla plagg", () => {
+  const krav = SKRIV.find((u) => u.id === "kanin-fryser")!.krav!;
+  for (const fras of ["en kanin med mössa", "en hund med halsduk", "en katt med tröja"]) {
+    assert.equal(bedomUppdragsSvar(krav, fras).ok, true, fras);
+  }
+  for (const fras of ["en kanin vid en lägereld", "en katt med en kall mössa", "en blå katt"]) {
+    assert.equal(bedomUppdragsSvar(krav, fras).ok, false, fras);
+  }
+});
