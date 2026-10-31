@@ -34,7 +34,7 @@
   .sk-lager .sk-ark:has(.sk-svar) .sk-hjalprad { display: none; }
   .sk-lager .sk-svar { margin: 0; padding: 6px; gap: 4px; }
   .sk-lager .sk-ark[data-vy="hjalp"] .sk-boklayout { grid-template-rows: 60px auto minmax(0, 1fr); }
-  .sk-lager .sk-ark:has(.sk-ide-rad) .sk-tips { display: none; }
+  .sk-lager .sk-ark:has(.sk-ide-rad):not(:has(.sk-spok)) .sk-tips { display: none; }
   .sk-lager .sk-hylla-ram { min-width: 0; min-height: 0; flex: 1; }
   .sk-lager .sk-hylla { height: 100%; box-sizing: border-box; grid-template-rows: minmax(0, 1fr); }
   .sk-lager .sk-sektion, .sk-lager .sk-prefix { grid-row: auto; }

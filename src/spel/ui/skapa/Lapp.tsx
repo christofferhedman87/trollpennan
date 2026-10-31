@@ -31,7 +31,7 @@ export function Lapp({ ide }: { ide: IdeLapp | null }) {
   let lapp: ReactNode = l ? <LappRam {...l} las={l.text} kompakt={kompakt} /> : null;
   if (mal.slag === "gava" && k.t.gavaTill) lapp = <GavoLapp key={k.t.gavaTill} gavaTill={k.t.gavaTill} kompakt={kompakt} />;
   else if (mal.slag === "onskan") lapp = <div data-testid="onska-remsa" style={{ display: "contents" }}>{lapp}</div>;
-  return <>{lapp}{ide && !svar ? <IdeRam ide={ide} kompakt={lag} /> : null}</>;
+  return <>{lapp}{ide && !svar && !k.sk.spok ? <IdeRam ide={ide} kompakt={lag} /> : null}</>;
 }
 
 function IdeRam({ ide, kompakt }: { ide: IdeLapp; kompakt: boolean }) {
