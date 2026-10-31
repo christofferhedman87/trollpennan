@@ -1,6 +1,6 @@
 # Status: En värld (plan: ../plan-en-varld-2026-10-29.md)
 
-> **Aktuellt 2026-10-31:** alla T-01–T-35 följer [gemensam plan](../codex/plan.md). E1/E2 (#286), E3/G4 (#287), A1 (#288) och B0:s första sex uppdrag (#290, main fbfe48f) är publicerade med gröna main-Cloudflare-checkar och SHA-256-bevis. A0/A2/F4 i #289 slutverifieras. En befintlig överskrivning av hologrammets shader rättas separat i #293. Tolkens beteendebevarande uppdelning finns i #291. B1–B8 och oberoende Codex-granskare är godkända. T-03/T-05/T-07/T-08/T-18 är fortsatt partiella eller öppna; inga granskad-flaggor ändras utan Christoffers faktiska textläsning.
+> **Aktuellt 2026-10-31:** alla T-01–T-35 följer [gemensam plan](../codex/plan.md). E1/E2 (#286), E3/G4 (#287), A1 (#288) och B0:s första sex uppdrag (#290, main fbfe48f) är publicerade med gröna main-Cloudflare-checkar och SHA-256-bevis. A0/A2/F4 (#289, main `eec3b27`) är publicerade och verifierade med Cloudflare/SHA-256. Hologrammets separata shaderfix #293 är också publicerad. Tolkens beteendebevarande uppdelning finns i #291. B1–B8 och oberoende Codex-granskare är godkända. T-03/T-05/T-07/T-08/T-18 är fortsatt partiella eller öppna; inga granskad-flaggor ändras utan Christoffers faktiska textläsning.
 
 Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen först och fortsätter vid **Nästa steg**.
 
@@ -17,9 +17,9 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 | 8 Uppdrag, Byggboken och röster | Klar (första versionen) | se git-logg | Var tredje önskan är nu en byggönskan (den fanns men valdes aldrig). Sex nya önskningar använder byggformeln: "ett hus som ser ut som jag", flygande hus, slottsstall, frukthus, dansande hus och något som lyser (`onska.ts`: krav form, form_som_djuret och egenskap). Byggboken visar önskans exempel först. En aktiv byggönskan går före regeln för småsaker. Röster: 12 nya repliker finns i `nya-repliker.md` (beslut D) |
 | 9 Städning | Klar | se git-logg | Garden3D och MarkPlan är borttagna, och `window.__gard3d` är flyttad till `gard/gard3dDiag.ts`. Köpt mark följer med "Spara en kopia" och "Läs in en kopia". PROJECT.md har en sektion om En värld. Alla prov är gröna utom det kända tidtestet P3a i molnmiljön |
 
-## A2: slutverifiering före merge
+## A2: publicerad och verifierad
 
-Den gemensamma målmodulen, målkort med uttryckligt textbyte, separat Gåta, fri-världstips och boklayouten finns i #289. T-03 är delresultat: täckningen av alla 157 mål och den äldre gåvohyllan återstår i B/C/D. Barnets text och sparformat v2 ändras inte av layouten.
+Den gemensamma målmodulen, målkort med uttryckligt textbyte, separat Gåta, fri-världstips och boklayouten finns i #289. #289 är mergad som `eec3b27` och publicerad: main-Cloudflare `124442039491` grön och alla sex serverade start-/spel-filer byteidentiska med det provade bygget (SHA-256). Oberoende Codex-granskare slutgodkände exakt `60d5c4c`; senare ändringar är enbart dokumentation. T-03 är delresultat: täckningen av alla 157 mål och den äldre gåvohyllan återstår i B/C/D. Barnets text och sparformat v2 ändras inte av layouten.
 
 Kritisk granskning hittade och rättade verklig klippning av remsa/X, rotation, Väktaröverlapp, avsaknad av världsyta i 375×667, CSS-kaskad, för bred hjälphylla, klippt Idé/stavningssvar och dold guldinstruktion. Idé och svar rullas fram, guldskrivandet prioriteras med befintlig instruktion, och nya ord/vald bricka hålls hela i remsan. Senaste guldprovet med föregående Idé är grönt i 375×667: Idé/Gåta ändrar inte ordet, Mellanslag/sudda fungerar, hela frasen blir guld och önskan uppfylls/sparas. Hela layoutprovet är också grönt i 375×667, inklusive hjälp/full lapp/stavning och 44 px-X. Interna bilder granskade.
 
@@ -28,6 +28,12 @@ Hologrammet passar sin faktiska modellruta mellan HUD och bokkontroller. Den sep
 Geometriprovet har valfri `QA_TANGENTER=fysiska`: riktiga ASCII-tangenter och faktiska skärmtryck på å/ä/ö, med exakt läsback efter inmatning/radering. Standardläget behåller samtliga skärmtryck. Synlighets- och ritanropsgränser är oförändrade. Tre svagaste punkter: semantik/gåvohjälp för 157 mål återstår; fysisk Safari/hårdvara är inte provad; nya godkända inspelningar återstår. En sjuåring kan skriva, be om en idé och återgå till sin text, men äldre målsvar kan fortfarande frustrera tills B/C är klart.
 
 C1a #291 och C1b #294 samordnas därefter. C1b:s appkod `e61cbd3` har 572/572 och kritisk kodgranskning; sju fraser och omladdning är gröna i vardera huvudvyn. Fysisk placering och C2:s antal/upprepade saker är öppna. Textpaket 01 i #292 väntar fortfarande på Christoffers faktiska läsning; inga `granskad`-flaggor är ändrade.
+
+## C1a: slutverifierat efter publicerat A2
+
+#291 är samordnad med `origin/main eec3b27` genom vanlig merge, utan C1b eller språkändringar. Appkod `eb4b3ad`: alla sju slutgrindar gröna, 565/565 produkttester. Samma 1 726 fraser ger fortfarande byteidentiska fulla utfall för båda tolkarna, SHA-256 `aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3`. De sex tolkmodulerna är fortsatt identiska med godkända `d2a5d29`. Ett mellanprov på `bc97600` föll på känt P3a-tidstest (50,2 ms); gränsen är oförändrad och slutomgången är helt grön.
+
+Riktigt första-skapelsen-prov på det frysta `0e656bf`-bygget är grönt i stående, liggande och datorvy: skapelsen sparas och återkommer efter omladdning, utan sidrullning, konsolfel eller externa anrop. Den senare samordningen tar in A2:s fullständigt provade UI-rättning; tolkmodulerna ändras inte. T-07/T-08 är öppna; funktionsändringen finns separat i #294. Nästa steg: oberoende slutgodkännande, merge och main-Cloudflare/SHA-256. Tre svagaste punkter: detta förarbete rättar inga språkfel; fysiska relationer/antal återstår; fysisk svensk hårdvara/Safari är inte provad.
 
 ## Steg 0: hologrammets shader bevaras, 2026-10-31
 
@@ -123,13 +129,9 @@ Kod `9a1b211`: faktisk shader-regression röd före och grön efter; alla sju gr
 
 Manifest/ikoner och best-effort persist vid start, utan blockerad start eller ny överföring. Föräldrar får ärliga Safari-/hemskärmsråd och tidpunkt för senaste startade nedladdning; grodlicensen bevaras under Tack till längst ner. Alla sju grindar gröna,553/553. UI persist true/false/fel/saknas och verklig kopienedladdning/korrekt licensordning gröna,375×812 och812×375; interna bilder granskade. Oberoende Codex-granskare godkände2f3a40e. Publicerad somf1e38d3, CF124377043349 och6/6SHA-256 gröna. Svagaste punkter: fysisk Safari-långtid, faktisk iPad-hemskärmsinstallation, ingen garanti att föräldern behåller en nedladdad fil. Ingen ny röst krävs för föräldratexterna.
 
-## Aktiva PR:er 2026-10-31
+## Fortsatt arbete 2026-10-31
 
-A2/F4 [#289](https://github.com/christofferhedman87/trollpennan/pull/289), senaste9617f47: gemensamt mål, skyddade nya målkort, Idé/Gåta, fri-världstips och liggande bok. Röd verklig klippning/rotation/markerad X har lett till rättningar; nya slutgrindar och geometriprov inklusive borttagning körs. T-03 är partiell (157 mål och äldre gåvohylla kvar). Inget sparformat eller testid-baslinje ändrat.
-
-B0 [#290](https://github.com/christofferhedman87/trollpennan/pull/290), senastefe06419: sex betydelsekontrollerade uppdrag,85 kvar. Tolkade egenskaper, antal/skilda individer, temperatur-/storleksöverstyrning och faktiska uppdragsförsök i kvittot. Alla sju grindar gröna,560/560; fyra UI-fall är gröna. Publicerad via#290 somfbfe48f, main-Cloudflare124411312834 och6/6SHA-256 gröna. T-05/T-18 är fortsatt öppna. Före utflyktsmålen måste ändrade djur i platsSkapelser också få kvitto.
-
-C1a [#291](https://github.com/christofferhedman87/trollpennan/pull/291): oförändrad tolk delas till107–310rader per modul;1726 kompletta före/efter-utfall byteidentiska och sju grindar gröna. T-07/T-08 är ännu öppna. Nästa agent samordnar mot origin/main efter A2/B0, granskar och provar innan fortsatt relation/formel/placering och återstående uppdragsdata. Ingen force-push.
+#289/#290/#293 är publicerade och görs inte om. Samordnade C1a #291 har gröna slutgrindar och inväntar slutgranskning/merge; C1b #294 är separat provad med 572/572 och sju fraser plus omladdning i båda vyer. B2 förbereds på `codex/t06-onskesvar`: regional värme, situationsriktiga exempel och synligt önskesvar, även för djur i platsSkapelser. Ingen av dessa PR:er stänger ännu hela T-03/T-05/T-07/T-08/T-18. Följ den gemensamma planen för återstående block.
 
 ## B0 slutverifiering, kod fe06419
 
