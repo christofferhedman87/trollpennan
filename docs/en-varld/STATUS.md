@@ -58,7 +58,7 @@ Reproducera skymningens röda baslinje med bygge på `e8ef8fd` och slutgrenens `
 
 T-07/T-08 är delresultat: sekundära djur återstår i C1d; full formelkorpus, äldre vingform, värmehjälpens fulla formeluppdatering och cirka 200 barnmeningar/täckningsmått i C2b/C3/C4. Bredare friläggning av måldjur efter skapande under HUD är D2/F5; där ingår även små ensamma förhandsdjur i trånga lägen och äldre djur/ikoner vid bok/HUD. Det räknas inte som löst av C1c. Tre svagaste punkter: full semantik/formelkorpus är inte färdig; fysisk bild-/mobilprestanda och Safari är inte bevisade; faktisk text- och röstgranskning återstår.
 
-## C2b-1 · T-08: sifferantal utan falska spärrträffar (förberedd)
+## C2b-1 · T-08: sifferantal utan falska spärrträffar (pausad i utkast #298)
 
 Branch `codex/t08-c2b1-siffror`, utkast #298, app `3f8c4d2`, bas `origin/main c878218`. Det fristående sifferledet i ”en katt med 2 hattar” blev tomt och okänt i spärrens ordformsbedömning. Erkända heltalsantal vars spärrnormalisering saknar bokstäver behandlas nu som avskiljare. Siffror som kan maskera bokstäver behåller sin tidigare kontroll. Spärrlista och normalisering är oförändrade.
 

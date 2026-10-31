@@ -258,7 +258,7 @@ T-06:s kvitto för ett tillägg eller en ändring använder nu `skapa-ui.json �
 
 ## Textgranskning 01: sex publicerade pilotuppdrag
 
-B4: Christoffer läser dessa faktiska barntexter före granskad:true. Underlaget är publicerade mainfbfe48f(#290). Alla sex flaggor är fortfarandefalse. Krav/prov är gröna; det ersätter inte den mänskliga textläsningen. Dessa sex texter kan godkännas separat medan övriga85 förbereds i B1/BC.
+B4: Christoffer har läst och godkänt exakt dessa sex texter 2026-10-31, från d9f2752ce441847d6d6ca02cb0237e254380127e. Själva barntexterna nedan är oförändrade. Alla sex dataflaggor är fortfarande false vid den begärda pausen; nästa agent kan sätta dem efter kontroll mot det godkända underlaget, utan ny godkännandefråga. Övriga 85 texter och nya röstinspelningar omfattas inte. Se beslut.md och pausrutan i plan.md.
 
 ### vingar-i-luften
 
