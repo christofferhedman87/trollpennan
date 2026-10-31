@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import prov from "../../data/test-antal-och-bojning.json" with { type: "json" };
 import { tolka } from "./tolka.ts";
+import { tolkaMedReserv } from "./reserv.ts";
 import { arSparrat } from "./sparr.ts";
 import { BLOCK } from "./data.ts";
 
@@ -105,4 +106,25 @@ test("T08: en fristående siffra mellan ordhalvor öppnar aldrig det som spärra
   }
   assert.ok(antal > 3000, `för få delade varianter provade: ${antal}`);
   assert.deepEqual(luckor.slice(0, 12), [], `${luckor.length} delade varianter kom förbi spärren`);
+});
+
+// Main spärrade sammansättningar som "idiotkatt" när ordet delades i led. En siffra inne i ordet ("idiot2katt")
+// får inte göra det till ett okänt ord som kläcks som ägg.
+test("T08: en siffra i en sammansättning öppnar aldrig det som spärrades utan siffror", () => {
+  let antal = 0;
+  const luckor: string[] = [];
+  for (const term of [...BLOCK.ord, ...BLOCK.stammar]) {
+    const w = term.toLocaleLowerCase("sv");
+    for (const djur of ["katt", "hund", "häst", "drake", "fisk", "gris"]) {
+      for (let d = 0; d <= 9; d++) {
+        for (const v of [`${w}${d}${djur}`, `${djur}${d}${w}`, `en katt med ${w}${d}${djur}`]) {
+          if (tolka(v.replace(/[0-9]/g, ""), { kalla: "skriv", noteraBlandning: false }).typ !== "sparr") continue;
+          antal++;
+          if (tolka(v, { kalla: "skriv", noteraBlandning: false }).typ !== "sparr" || tolkaMedReserv(v, { kalla: "skriv", noteraBlandning: false }).typ !== "sparr") luckor.push(v);
+        }
+      }
+    }
+  }
+  assert.ok(antal > 3000, `för få sammansättningar provade: ${antal}`);
+  assert.deepEqual(luckor.slice(0, 12), [], `${luckor.length} sammansättningar med siffra kom förbi spärren`);
 });
