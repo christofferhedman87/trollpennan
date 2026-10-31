@@ -316,6 +316,86 @@
         "en stor båt",
         "en stor mössa på en anka"
       ]
+    },
+    "skog-stor-och-liten": {
+      "ja": [
+        "en stor räv och en liten kanin",
+        "en stor varg och en liten igelkott",
+        "en stor uggla och en liten hund",
+        "en elefant och en mus",
+        "en stor räv och två små kaniner"
+      ],
+      "nej": [
+        "en stor sten och en liten kanin",
+        "en stor räv med en liten mössa",
+        "en räv och en kanin",
+        "två stora rävar",
+        "en stor liten räv"
+      ]
+    },
+    "sjo-tva-storlekar": {
+      "ja": [
+        "en stor fisk och en liten fisk",
+        "en stor anka och en liten anka",
+        "en stor groda och en liten fisk",
+        "en jättestor gås och en pytteliten anka",
+        "en blåval och en liten fisk"
+      ],
+      "nej": [
+        "en stor båt och en liten fisk",
+        "en stor fisk bredvid en liten sten",
+        "en stor fisk",
+        "en fisk och en anka",
+        "en stor fisk med en liten hatt"
+      ]
+    },
+    "grotta-stor-och-liten": {
+      "ja": [
+        "en stor hund och en liten katt",
+        "en stor kanin och en liten mus",
+        "en stor mus och en liten hund",
+        "en mus och en elefant",
+        "en liten katt och en stor hund"
+      ],
+      "nej": [
+        "en stor sten och en liten mus",
+        "en stor hund med en liten mössa",
+        "en hund och en katt",
+        "en stor hund",
+        "en stor lykta och en liten mus"
+      ]
+    },
+    "sjo-tva-farger": {
+      "ja": [
+        "en röd fisk och en blå katt",
+        "en röd anka och en blå kanin",
+        "en röd groda och en blå gås",
+        "en ljusblå fisk och en mörkröd anka",
+        "två röda fiskar och en blå anka"
+      ],
+      "nej": [
+        "en röd boll och en blå fisk",
+        "en röd fisk med en blå mössa",
+        "en röd och blå fisk",
+        "en röd fisk",
+        "en fisk och en anka"
+      ]
+    },
+    "grotta-tva-farger": {
+      "ja": [
+        "en grön groda och en gul mus",
+        "en grön kanin och en gul katt",
+        "en grön hund och en gul kanin",
+        "en mörkgrön groda och en gul kanin",
+        "en gul mus och en grön katt"
+      ],
+      "nej": [
+        "en grön sten och en gul mus",
+        "en grön groda med en gul mössa",
+        "en grön och gul katt",
+        "en groda och en kyckling",
+        "en grön groda"
+      ]
     }
   }
 }

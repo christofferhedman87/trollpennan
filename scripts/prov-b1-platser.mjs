@@ -7,8 +7,11 @@ import { chromium } from "playwright";
 const adress = process.argv[2] ?? "http://127.0.0.1:4173/";
 const bilder = process.env.QA_SCREENSHOTS;
 const FALL = [
-  { id: "sjo-stor-simmare", plats: "sjon", miss: "en stor sten bredvid en anka", missKropp: "anka", ratt: "en stor fisk", rattKropp: "fisk", kvitto: "Jag letar efter en stor vän", koll: (v) => v.skala >= 1.3 },
-  { id: "skog-rod-van", plats: "skogen", miss: "en röd boll bredvid en räv", missKropp: "rav", ratt: "en röd räv", rattKropp: "rav", kvitto: "Jag letar efter en röd vän", koll: (v) => /^#E53935$/i.test(v.farg ?? "") },
+  { id: "sjo-stor-simmare", plats: "sjon", miss: "en stor sten bredvid en anka", missKropp: "anka", ratt: "en stor fisk", rattKropp: "fisk", kvitto: "Jag letar efter en stor vän", koll: ([v]) => v.kropp === "fisk" && v.skala >= 1.3 },
+  { id: "skog-rod-van", plats: "skogen", miss: "en röd boll bredvid en räv", missKropp: "rav", ratt: "en röd räv", rattKropp: "rav", kvitto: "Jag letar efter en röd vän", koll: ([v]) => v.kropp === "rav" && /^#E53935$/i.test(v.farg ?? "") },
+  // Två vänner: storleken på ett plagg räknas inte; varsin storlek ska sitta på varsitt djur.
+  { id: "grotta-stor-och-liten", plats: "grottan", miss: "en stor hund med en liten mössa", missKropp: "hund", ratt: "en stor hund och en liten katt", kvitto: "Jag letar efter två vänner: en stor och en liten",
+    koll: (nya) => nya.some((v) => v.kropp === "hund" && v.skala >= 1.3) && nya.some((v) => v.kropp === "katt" && v.skala <= 0.75) },
 ].filter((f) => !process.env.QA_FALL || f.id === process.env.QA_FALL);
 assert.ok(FALL.length, "QA_FALL måste välja ett verkligt fall");
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || "/opt/pw-browsers/chromium", args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader"] });
@@ -89,8 +92,9 @@ try {
       await page.waitForFunction((id) => window.__trollMinne.getState().uppdrag[id] === "klar", f.id);
       const klar = await skapelser();
       const slut = await page.evaluate(() => ({ stjarnor: window.__trollMinne.getState().stjarnor, ang: window.__trollMinne.getState().ang.length }));
-      assert.equal(klar.length, 2); assert.equal(klar[0].uid, miss[0].uid, "nära missen finns kvar");
-      assert.equal(klar[1].kropp, f.rattKropp); assert.ok(f.koll(klar[1]), "färgen/storleken sparas på djuret");
+      assert.equal(klar[0].uid, miss[0].uid, "nära missen finns kvar");
+      const nya = klar.slice(miss.length);
+      assert.ok(nya.length >= 1 && f.koll(nya), `färgen/storleken sparas på rätt djur: ${JSON.stringify(nya.map((v) => [v.kropp, v.skala, v.farg]))}`);
       assert.ok(slut.stjarnor > fore.stjarnor); assert.equal(slut.ang, fore.ang, "ängen orörd");
       if (bilder) await page.screenshot({ path: `${bilder}/${f.id}-ratt-${viewport.width}.png` });
       if (cdp) await cdp.detach();
