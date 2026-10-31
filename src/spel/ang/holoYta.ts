@@ -53,5 +53,5 @@ export function passaHolo(projicera: (skala: number) => SkarmRuta, yta: HoloYta,
   if (ryms(onskad)) return onskad;
   let lag = 0, hog = onskad;
   for (let i = 0; i < 10; i++) { const mitt = (lag + hog) / 2; if (ryms(mitt)) lag = mitt; else hog = mitt; }
-  return Math.max(0.1, lag * 0.98);
+  return lag * 0.98;
 }

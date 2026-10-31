@@ -129,6 +129,7 @@ function Hologram() {
   }, [l.nyckel]);
   useEffect(() => {
     if (PROV && !l.spec) (window as unknown as { __trollholo?: unknown }).__trollholo = null;
+    return () => { if (PROV) (window as unknown as { __trollholo?: unknown }).__trollholo = null; };
   }, [l.spec]);
   useFrame(({ clock, camera, gl }) => {
     const g = grupp.current;

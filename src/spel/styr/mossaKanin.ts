@@ -29,7 +29,7 @@ function sammaPlagg(a: TillbehorSpec, b: TillbehorSpec): boolean {
 function fristaendePlagg(v: Varelse): TillbehorSpec[] {
   const u = tolka(`en kanin med ${v.formel}`, { kalla: "kort", noteraBlandning: false });
   const t = u.typ === "skapad" ? u.varelse.tillbehor : [];
-  return t.length ? t.map((t, i) => i === 0 ? { ...t, farg: t.farg ?? v.farg, glans: t.glans || v.glans } : t) : [{ id: normPlagg(v.kropp), farg: v.farg, glans: v.glans }, ...v.tillbehor];
+  return t.length ? t.map((t, i) => i === 0 ? { ...t, farg: t.farg ?? v.farg } : t) : [{ id: normPlagg(v.kropp), farg: v.farg, glans: v.glans }, ...v.tillbehor];
 }
 
 /**

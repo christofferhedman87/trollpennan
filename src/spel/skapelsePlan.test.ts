@@ -205,6 +205,9 @@ test("En liten sammansatt förhandsbild förstoras bara inom den fria ytan", () 
   const perspektiv = (s: number) => ({ x0:81 - 100 * s / (1 - 0.3 * s), x1:81 + 100 * s / (1 - 0.3 * s), y0:280 - 200 * s / (1 - 0.3 * s), y1:280 + 20 * s / (1 - 0.3 * s) });
   const s = passaHolo(perspektiv, yta, 72), synlig = perspektiv(s);
   assert.ok(s < 1 && synlig.x0 >= yta.left && synlig.x1 <= yta.right && synlig.y0 >= yta.top && synlig.y1 <= yta.bottom, "även en stor ruta med perspektiv ryms efter faktisk projektion");
+  const enorm = (s: number) => ({ x0:81 - 10000 * s, x1:81 + 10000 * s, y0:280 - 10000 * s, y1:280 + 10000 * s });
+  const litenSkala = passaHolo(enorm, yta);
+  assert.ok(litenSkala > 0 && litenSkala < 0.1 && enorm(litenSkala).y1 <= yta.bottom, "inget skalgolv får trycka en extrem ruta under kontrollerna");
 });
 
 test("Skinnade modellmått följer aktuell skala utan minne av förra bildrutan", async () => {

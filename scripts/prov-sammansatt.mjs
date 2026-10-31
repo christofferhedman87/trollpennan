@@ -77,6 +77,7 @@ try {
     assert.ok(valda.length > 0, "QA_FALL måste välja minst ett faktiskt provfall");
     for (const p of valda) {
       provText = p.text;
+      console.log("Provar", viewport.width, p.text);
       const varldFore = JSON.parse(JSON.stringify(await alla()));
       await page.waitForFunction(() => !!window.__tredScen);
       const ritadeFore = skapade.length === 0 ? await ritadeLagen() : null;
@@ -145,7 +146,10 @@ try {
       if (skapade.length === 0 && process.env.QA_HOLO !== "0") {
         assert.ok(Object.keys(ritadeFore).length > 0, "en äldre skapelse ritas före provet");
         await page.getByTestId("stang-bok").click(); await page.getByTestId("bok-skarm").waitFor({ state:"hidden" });
-        await page.waitForFunction(() => !window.__trollvy?.oppen && !window.__trollholo);
+        await page.waitForFunction(() => {
+          let holo = 0; window.__tredScen.scene.traverse((o) => { if (o.userData.holo) holo++; });
+          return !window.__trollvy?.oppen && !window.__trollholo && holo === 0;
+        });
         assert.deepEqual(await ritadeLagen(), ritadeFore, "avbruten förhandsvisning återställer äldre djurs verkliga ritläge");
         assert.deepEqual(JSON.parse(JSON.stringify(await alla())), varldFore, "avbryt lämnar hela sparvärlden orörd");
         await page.getByTestId("pennans-bok").click(); await page.getByTestId("tangentbord").waitFor();
