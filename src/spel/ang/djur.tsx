@@ -1,160 +1,37 @@
 import { useFrame, type ThreeEvent } from "@react-three/fiber";
-import { Component, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { brygga, type Sparad } from "../brygga.ts";
 import type { Plats } from "../platser.ts";
-import { byggPack, forma } from "../djurmesh.ts";
 import { replik } from "../replik.ts";
 import { ljud } from "../ljud.ts";
 import { GltfDjur, GltfSak, squashSkala, type DjurSignal } from "../gltfDjur.tsx";
 import { arPlagg, arSak, fotKant, harDjurGltf, hoppHojd, malhojd, svavar, takSkala } from "../entiteter.ts";
 import { regelFor, ritSkala } from "../placering.ts";
-import { faestTillbehor, procAnkare } from "../tillbehor/index.ts";
-import { bollOffset, largoSkala, monteraLargoDel, rapportPos, skuttBeslut } from "../tillbehor/largo.ts";
-import { AnsiktsUttryck, sattUttryck } from "../tillbehor/AnsiktsUttryck.tsx";
+import { procAnkare } from "../tillbehor/index.ts";
+import { bollOffset, largoSkala, rapportPos, skuttBeslut } from "../tillbehor/largo.ts";
+import { sattUttryck } from "../tillbehor/AnsiktsUttryck.tsx";
 import { useMinne } from "../minne.ts";
 import { DjurEffekter } from "../effekter.tsx";
-import { MILJO } from "../miljo.ts";
 import { synligKedja } from "../pekare.ts";
 import { AGG_KROPP, OrdAgg, ReservAgg } from "../ordagg.tsx";
 import { HumorIkon } from "./humorIkon.tsx";
 import { Ljusken } from "./ljusken.tsx";
 import type { Ljuskalla } from "../ljuskalla.ts";
-import { _mal, djurFarg, djurIStall, djurKrymp, djurPlats, djurVand, flygare, normDuk, PLATTFORM_SAKER, simmare, synMatt } from "./delat.ts";
+import { _mal, djurIStall, djurKrymp, djurPlats, djurVand, flygare, normDuk, PLATTFORM_SAKER, simmare, synMatt } from "./delat.ts";
 import { sakLage } from "../landning.ts";
 import { torrKropp } from "../platsYta.ts";
 import { malTillDuk } from "../ui/hjalp.ts";
 import { SolstjarnaPlopp } from "../solstjarna.ts";
 import { frigoraKontaktSkugga, skapaKontaktSkugga } from "../grafikKvalitet.ts";
 
+import { DjurForm, ModellGren } from "./djurForm.tsx";
+import { Hjartan } from "./Hjartan.tsx";
+export { DjurForm, ModellGren, TOON_MAP, Formdel } from "./djurForm.tsx";
+export { Hjartan } from "./Hjartan.tsx";
+
 function pausaAnim(): boolean {
   return typeof window !== "undefined" && window.__PAUSE_ANIM === true;
-}
-
-function StjarnPuff() {
-  const g = useRef<THREE.Group>(null);
-  useFrame(({ clock }) => { if (g.current) g.current.position.y = Math.sin(clock.elapsedTime * 1.6) * 0.06; });
-  return (
-    <group ref={g}>
-      <mesh><sphereGeometry args={[0.16, 10, 8]} /><meshStandardMaterial color="#F2B632" emissive="#FFE082" emissiveIntensity={0.35} roughness={0.5} /></mesh>
-      {[0, 1, 2, 3].map((i) => <mesh key={i} position={[Math.cos(i * 1.5708) * 0.28, 0.05, Math.sin(i * 1.5708) * 0.28]}><sphereGeometry args={[0.09, 8, 6]} /><meshStandardMaterial color="#FFF6E5" roughness={0.7} /></mesh>)}
-    </group>
-  );
-}
-
-export class ModellGren extends Component<{ spec: Sparad; children: ReactNode }, { fel: boolean }> {
-  state = { fel: false };
-  componentDidCatch() {
-    window.dispatchEvent(new CustomEvent("trollpennan:model-fallback", { detail: { kropp: this.props.spec.kropp } }));
-  }
-  static getDerivedStateFromError() { return { fel: true }; }
-  render() {
-    if (!this.state.fel) return this.props.children;
-    return arSak(this.props.spec.kropp) ? <StjarnPuff /> : <DjurForm spec={this.props.spec} />;
-  }
-}
-
-export const TOON_MAP = (() => {
-  const data = new Uint8Array([124, 172, 218, 255]);
-  const t = new THREE.DataTexture(data, 4, 1, THREE.RedFormat);
-  t.minFilter = THREE.NearestFilter;
-  t.magFilter = THREE.NearestFilter;
-  t.colorSpace = THREE.NoColorSpace;
-  t.needsUpdate = true;
-  return t;
-})();
-const KONTUR_MAT = new THREE.MeshBasicMaterial({ color: MILJO.kontur.farg, side: THREE.BackSide });
-
-export function Formdel({ geo, color, position, scale, rotation, kontur = true, skugga = false, glans = false }: {
-  geo: THREE.BufferGeometry; color: string; position?: [number, number, number]; scale?: [number, number, number];
-  rotation?: [number, number, number]; kontur?: boolean; skugga?: boolean; glans?: boolean;
-}) {
-  const mat = useMemo(() => new THREE.MeshToonMaterial({ color, gradientMap: TOON_MAP, emissive: glans ? "#FFE082" : "#000000", emissiveIntensity: glans ? 0.45 : 0 }), [color, glans]);
-  useEffect(() => () => mat.dispose(), [mat]);
-  return (
-    <group position={position} scale={scale} rotation={rotation}>
-      <mesh geometry={geo} material={mat} castShadow={skugga} />
-      {kontur ? <mesh geometry={geo} material={KONTUR_MAT} scale={1.06} /> : null}
-    </group>
-  );
-}
-
-const KROPP_MAT = new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: TOON_MAP });
-const OGA_MAT = new THREE.MeshBasicMaterial({ vertexColors: true });
-
-export function DjurForm({ spec, signal, index = 0 }: { spec: Sparad; signal?: { current: DjurSignal }; index?: number }) {
-  const farg = djurFarg(spec);
-  const pack = useMemo(() => byggPack({ kropp: spec.kropp, farg, krona: false, horn: false, monster: Boolean(spec.monster), monsterFarg: spec.monsterfarg ?? "#6D4C41" }), [farg, spec]);
-  const extra = useMemo(() => { const g = new THREE.Group(); faestTillbehor(g, spec.kropp, spec.tillbehor); monteraLargoDel(g, spec, g.userData.ankare); return g; }, [spec]);
-  const mat = useMemo(() => spec.glans ? new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: TOON_MAP, emissive: "#FFE082", emissiveIntensity: 0.4 }) : KROPP_MAT, [spec.glans]);
-  const rok = useRef<THREE.Mesh>(null);
-  const andas = useRef<THREE.Group>(null);
-  useEffect(() => () => { pack.geo.dispose(); pack.outline.dispose(); pack.ogon.dispose(); if (mat !== KROPP_MAT) mat.dispose(); }, [pack, mat]);
-  useFrame((state) => {
-    const a = andas.current;
-    if (pausaAnim()) { if (a) a.scale.set(1, 1, 1); return; }
-    const t = state.clock.elapsedTime;
-    forma(pack, t, spec.kropp);
-    if (a) a.scale.set(1, 1 + Math.sin(t * 1.7) * 0.03, 1);
-    const r = rok.current;
-    if (!r) return;
-    const cykel = t % 6.5;
-    const syns = spec.kropp === "drake" && cykel > 4.6 && cykel < 5.7;
-    r.visible = syns;
-    if (!syns) return;
-    const u = (cykel - 4.6) / 1.1;
-    r.position.set(0.08, 0.95 + u * 0.45, 1.05);
-    r.scale.setScalar(0.04 + u * 0.16);
-    (r.material as THREE.MeshBasicMaterial).opacity = (1 - u) * 0.55;
-  });
-  return (
-    <group ref={andas}>
-      <mesh geometry={pack.outline} material={KONTUR_MAT} renderOrder={1} />
-      <mesh geometry={pack.geo} material={mat} castShadow renderOrder={2} />
-      <mesh geometry={pack.ogon} material={OGA_MAT} renderOrder={3} />
-      <AnsiktsUttryck ankare={procAnkare(spec.kropp)} signal={signal} index={index} />
-      <primitive object={extra} />
-      {spec.kropp === "drake" ? (
-        <mesh ref={rok} visible={false}><sphereGeometry args={[1, 6, 5]} /><meshBasicMaterial color="#F7FBFF" transparent opacity={0.4} depthWrite={false} /></mesh>
-      ) : null}
-    </group>
-  );
-}
-
-export function Hjartan({ puls }: { puls: number }) {
-  const grupp = useRef<THREE.Group>(null);
-  const start = useRef(-10);
-  useEffect(() => { if (puls > 0) start.current = performance.now(); }, [puls]);
-  useFrame(() => {
-    const g = grupp.current;
-    if (!g) return;
-    const t = (performance.now() - start.current) / 1000;
-    const syns = t >= 0 && t < 1.35;
-    g.visible = syns;
-    if (!syns) return;
-    g.position.y = 1.05 + t * 0.55;
-    if (puls >= 2) g.rotation.y += 0.08;
-    for (let i = 0; i < g.children.length; i++) {
-      const m = g.children[i] as THREE.Mesh;
-      const gnist = m.name === "gnist";
-      if (gnist && puls < 2) { m.visible = false; continue; }
-      m.visible = true;
-      const lokal = Math.max(0, t - i * 0.08);
-      m.position.y = lokal * (gnist ? 0.5 : 0.28);
-      const mat = m.material as THREE.MeshBasicMaterial | undefined;
-      if (mat) mat.opacity = Math.max(0, 1 - lokal / (gnist ? 0.85 : 1.2));
-    }
-  });
-  return (
-    <group ref={grupp} visible={false}>
-      {[-0.28, 0.02, 0.3].map((x) => (
-        <mesh key={x} position={[x, 0, 0]}><sphereGeometry args={[0.16, 8, 6]} /><meshBasicMaterial color="#F06292" transparent opacity={1} /></mesh>
-      ))}
-      {[[-0.16, 0.08], [0.18, -0.05], [0.02, 0.16], [-0.04, -0.12]].map(([x, z]) => (
-        <mesh key={`${x}${z}`} name="gnist" position={[x ?? 0, 0, z ?? 0]} visible={false}><sphereGeometry args={[0.045, 6, 5]} /><meshBasicMaterial color="#FFE082" transparent opacity={1} /></mesh>
-      ))}
-    </group>
-  );
 }
 
 export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Sparad[]; plats?: Plats; ljus?: { kalla: Ljuskalla; vad: string } }) {
