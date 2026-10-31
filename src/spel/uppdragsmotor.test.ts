@@ -127,7 +127,7 @@ test("guidande val: varje skriv-uppdrag har förslag, och varje förslag uppfyll
     }
     assert.equal(new Set(forslag.map((f) => f.fras)).size, forslag.length, `${u.id}: dubbletter`);
     // Ängens uppdrag har breda kravlistor (fritext). Platsernas (B2–B4, Copilot) får vara smalare men minst min.
-    if (u.omrade === "ang") assert.ok(u.krav!.ord.length >= 8, `${u.id}: fritext räknas fortfarande (kravlistan är kvar)`);
+    if (u.omrade === "ang" && !u.krav!.betydelse) assert.ok(u.krav!.ord.length >= 8, `${u.id}: fritext räknas fortfarande (kravlistan är kvar)`);
   }
 });
 

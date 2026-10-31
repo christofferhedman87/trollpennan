@@ -98,6 +98,48 @@
         "en blå katt",
         "en katt med en kall tröja och en brasa"
       ]
+    },
+    "vit-som-sno": {
+      "ja": [
+        "en vit kanin",
+        "ett vitt lamm",
+        "en vit gås",
+        "en vit enhörning"
+      ],
+      "nej": [
+        "en kanin",
+        "en vit boll",
+        "en brun kanin med en vit hatt",
+        "en isbjörn",
+        "en enhörning"
+      ]
+    },
+    "rod-kompis": {
+      "ja": [
+        "en röd drake",
+        "en röd fisk",
+        "en röd fågel"
+      ],
+      "nej": [
+        "en räv",
+        "en röd boll",
+        "en blå katt med en röd hatt"
+      ]
+    },
+    "gron-kompis": {
+      "ja": [
+        "en grön groda",
+        "en grön drake",
+        "en grön larv",
+        "en grön dinosaurie",
+        "en grönhund"
+      ],
+      "nej": [
+        "en groda",
+        "en grön boll",
+        "en blå katt med en grön hatt",
+        "en dinosaurie"
+      ]
     }
   }
 }

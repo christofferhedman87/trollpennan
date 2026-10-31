@@ -7,6 +7,9 @@
 
 // Textpaket 02: docs/en-varld/textpaket-02-granskad.md (SHA-256 1687e568…e539).
 export const GRANSKADE_UPPDRAG: Readonly<Record<string, string>> = {
+  "vit-som-sno": "3168de36df7a093984af52d0daa42eb8f95392f6ec30833fda14eb82581160e7",
+  "rod-kompis": "0a2e9d0e823b722087a8a6827342c47dec60c333dcd34b001363ab813bad00d1",
+  "gron-kompis": "ce512d79833c929dab9b1fab6b8241a5f6db76ddfb70cd94b3972468ffd57b29",
   "kanin-fryser": "0f238cbe17d651ead76f1acccfdd462e43acbc849f264c5f19e9373944af5f50",
   "vingar-i-luften": "836377d238dbb0028886c531a4bde6edf0da10a18cc95e7c9b79bffcee0e319a",
   "solgul-van": "91f0fe652814181f1f2ab349ac1b14800c4c905ace3aacb10ce4b164727cca11",
