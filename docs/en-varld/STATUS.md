@@ -104,3 +104,11 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 ## T-14/T-35, E3/G4 (PR #287)
 
 Manifest/ikoner och best-effort persist vid start, utan blockerad start eller ny överföring. Föräldrar får ärliga Safari-/hemskärmsråd och tidpunkt för senaste startade nedladdning; grodlicensen bevaras under Tack till längst ner. Alla sju grindar gröna,553/553. UI persist true/false/fel/saknas och verklig kopienedladdning/korrekt licensordning gröna,375×812 och812×375; interna bilder granskade. Oberoende Codex-granskare godkände2f3a40e. Publicerad somf425a41, CF124383463197 och6/6SHA-256 gröna. Svagaste punkter: fysisk Safari-långtid, faktisk iPad-hemskärmsinstallation, ingen garanti att föräldern behåller en nedladdad fil. Ingen ny röst krävs för föräldratexterna.
+
+## Aktiva PR:er 2026-10-31
+
+A2/F4 [#289](https://github.com/christofferhedman87/trollpennan/pull/289), senaste9617f47: gemensamt mål, skyddade nya målkort, Idé/Gåta, fri-världstips och liggande bok. Röd verklig klippning/rotation/markerad X har lett till rättningar; nya slutgrindar och geometriprov inklusive borttagning körs. T-03 är partiell (157 mål och äldre gåvohylla kvar). Inget sparformat eller testid-baslinje ändrat.
+
+B0 [#290](https://github.com/christofferhedman87/trollpennan/pull/290), senastefe06419: sex betydelsekontrollerade uppdrag,85 kvar. Tolkade egenskaper, antal/skilda individer, temperatur-/storleksöverstyrning och faktiska uppdragsförsök i kvittot. Alla sju grindar gröna,560/560; fyra UI-fall körs. T-05/T-18 är fortsatt öppna. Före utflyktsmålen måste ändrade djur i platsSkapelser också få kvitto.
+
+C1a [#291](https://github.com/christofferhedman87/trollpennan/pull/291): oförändrad tolk delas till107–310rader per modul;1726 kompletta före/efter-utfall byteidentiska och sju grindar gröna. T-07/T-08 är ännu öppna. Nästa agent samordnar mot origin/main efter A2/B0, granskar och provar innan fortsatt relation/formel/placering och återstående uppdragsdata. Ingen force-push.

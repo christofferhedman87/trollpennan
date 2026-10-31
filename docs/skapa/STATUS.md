@@ -55,3 +55,11 @@ Trolla-tangenten, Enter och Pennan använder samma synliga handling/animation. T
 ## A0/A2 + tidigarelagt F4 (PR #289, pågår)
 
 Samma framräknade mål för lapp/tips/hjälp/Idé. Härledda föremål/plagg får hjälpkort i rätt roll; fulla förslag kräver ett uttryckligt byte när egna ord finns, med Ångra. Separat Gåta och minskat panoreringstips. Fyra Node-prov och samtliga sju slutgrindar gröna på87d21fc,557/557. De första klickproven var gröna men bilderna visade klippning; därför flyttas T-27 fram. Fast remsa, kompakt lapp med full läsvy och separata arbetsytor införs. Bokmål/modalflöde grönt375×812/812×375, verklig geometri inklusive hel läsvy och stavningssvar grönt375×812/812×375/667×375. Befintliga kontext-/guld-/platsregressioner och slutgranskning körs före merge. T-03 stängs inte: betydelse och minst två fungerande vägar för alla157mål verifieras i B. Tre svagaste punkter: semantiken i äldre förslag, vissa bildfallbackar samt låg568×320/nya godkända inspelningar som inte verifierats här.
+
+## Aktiva PR:er 2026-10-31
+
+A2/F4 [#289](https://github.com/christofferhedman87/trollpennan/pull/289), senaste9617f47: gemensamt mål, skyddade nya målkort, Idé/Gåta, fri-världstips och liggande bok. Röd verklig klippning/rotation/markerad X har lett till rättningar; nya slutgrindar och geometriprov inklusive borttagning körs. T-03 är partiell (157 mål och äldre gåvohylla kvar). Inget sparformat eller testid-baslinje ändrat.
+
+B0 [#290](https://github.com/christofferhedman87/trollpennan/pull/290), senastefe06419: sex betydelsekontrollerade uppdrag,85 kvar. Tolkade egenskaper, antal/skilda individer, temperatur-/storleksöverstyrning och faktiska uppdragsförsök i kvittot. Alla sju grindar gröna,560/560; fyra UI-fall körs. T-05/T-18 är fortsatt öppna. Före utflyktsmålen måste ändrade djur i platsSkapelser också få kvitto.
+
+C1a [#291](https://github.com/christofferhedman87/trollpennan/pull/291): oförändrad tolk delas till107–310rader per modul;1726 kompletta före/efter-utfall byteidentiska och sju grindar gröna. T-07/T-08 är ännu öppna. Nästa agent samordnar mot origin/main efter A2/B0, granskar och provar innan fortsatt relation/formel/placering och återstående uppdragsdata. Ingen force-push.
