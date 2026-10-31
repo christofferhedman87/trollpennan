@@ -83,6 +83,21 @@
         "två varma glassar",
         "en katt med en kall tröja och kall glass"
       ]
+    },
+    "kanin-fryser": {
+      "ja": [
+        "en kanin med mössa",
+        "en hund med halsduk",
+        "en katt med tröja",
+        "en katt med jacka",
+        "en hund med sockor"
+      ],
+      "nej": [
+        "en kanin vid en lägereld",
+        "en katt med en kall mössa",
+        "en blå katt",
+        "en katt med en kall tröja och en brasa"
+      ]
     }
   }
 }

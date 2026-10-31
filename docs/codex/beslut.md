@@ -44,3 +44,7 @@ Christoffer har i den aktuella beställningen uttryckligen godkänt den friståe
 ## Ny uttrycklig paus efter Codex pass, 2026-10-31
 
 Christoffer begär strukturerad paus eftersom endast 10 % sessionsanvändning återstår. #299 och #300 är levererade och verifierade; #301 lämnas som utkast utan merge/slutapproval. Pågående slutprov stoppades och nästa steg står i överlämningsrutan. Den godkända bifogade källgranskningen är nu sparad byteoförändrad i `docs/en-varld/textpaket-02-granskad.md` (SHA-256 ovan), så Claude behöver ingen ny uppladdning eller nytt godkännande. Det är granskningsunderlag till B1/BC, inte ett nytt checkpointdokument.
+
+## Röstproduktion överlämnad till Grok, 2026-10-31
+
+Christoffer meddelar att Grok senare i kväll genererar och implementerar de TTS-inspelningar som saknas. Codex dokumenterar de saknade replikerna för Grok i `docs/en-varld/nya-repliker.md` men ska fortsätta blockserien utan att vänta på inspelningarna. Saknat ljud får inte beskrivas som uppläst eller inspelat.

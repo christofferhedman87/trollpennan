@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { test } from "node:test";
 import { FIR } from "./ui/spelData.ts";
-import { NPC, OMR, SKATTER, SKYLTAR, UPP, nyttUppdragRad, skyltText, uppdragKlart, uppdragText, type Uppdrag } from "./aventyr.ts";
+import { NPC, OMR, SKATTER, SKYLTAR, SKRIV, UPP, nyttUppdragRad, skyltText, uppdragKlart, uppdragText, type Uppdrag } from "./aventyr.ts";
 
 /** Ögonblicksbild av uppdrag.json före R6A (mål, regler och de ursprungliga, granskade texterna). */
 const FORE: Record<string, { omrade: string; typ: string; mal: unknown; stjarnor: number; skatt: string | null; text: string; klart: string }> = {
@@ -206,4 +206,16 @@ test("önskningar visas i Bengtssons röst: mallar i firande.json, originaltexte
   assert.match(FIR.onskan.fran_bengtsson_djur, /^Doktor Bengtsson: \{djur\} .*\{text\}/);
   assert.ok(FIR.onskan.knapp_bengtsson.length > 0 && FIR.onskan.knapp, "originalknappen finns kvar i datan");
   assert.equal(FIR.onskan.onskar, "{djur} önskar:", "ursprungsmallen orörd");
+});
+
+test("B1: värmeuppdraget talar begripligt om andra djur än kaninen", () => {
+  const u = SKRIV.find((x) => x.id === "kanin-fryser")!;
+  assert.equal(uppdragText(u, "kanin"), u.text_bengtsson);
+  assert.equal(u.text_bengtsson_annat_djur?.granskad, false);
+  assert.equal(u.klart_bengtsson_annat_djur?.granskad, false);
+  for (const djur of ["hund", "bi", "fisk"]) {
+    const text = uppdragText(u, djur);
+    assert.equal(text, "Brr! Ditt djur fryser. Kan du skriva fram något varmt att ha på sig?", djur);
+    assert.equal(uppdragKlart(u, undefined, djur), "Så skönt! Nu kan ditt djur sluta huttra.", djur);
+  }
 });

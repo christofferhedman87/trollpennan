@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { tolka } from "./tolka.ts";
+import { delaOchMening } from "./ochMening.ts";
 import { tolkaMedReserv } from "./reserv.ts";
 
 const fall = [
@@ -69,4 +70,62 @@ test("T-08: en överhoppad upprepad sak får inte beskriva nästa sak", () => {
     assert.equal(u.typ, "skapad");
     if (u.typ === "skapad") assert.ok(u.varelse.formel.endsWith(nastaSak!), "nästa sak får inget av föregående saks adjektiv");
   }
+});
+
+test("B1: omvänt placerade föremål behåller läget i båda tolkarna", () => {
+  for (const tolk of [tolka, tolkaMedReserv]) for (const [text, relation] of [
+    ["en mössa under en kanin", "på"],
+    ["en mössa bredvid en kanin", "bredvid"],
+    ["en mössa vid en kanin", "vid"],
+  ] as const) {
+    const u = tolk(text, { noteraBlandning: false });
+    assert.equal(u.typ, "skapad", text);
+    if (u.typ === "skapad") assert.equal(u.varelse.tillbehor.find((t) => t.id === "alvmossa")?.relation, relation, text);
+  }
+});
+
+test("B1: en omvänd relation får inte flyttas till ett annat djur", () => {
+  for (const text of ["en mössa under en kanin och en katt", "en mössa bredvid en kanin och en katt", "en mössa under en kanin och en kanin"]) {
+    const u = tolkaMedReserv(text, { noteraBlandning: false });
+    assert.equal(u.typ, "skapad", text);
+    if (u.typ === "skapad") {
+      assert.equal(u.varelse.kropp, text.endsWith("en katt") ? "katt" : "kanin", text);
+      assert.equal(u.varelse.tillbehor.find((t) => t.id === "alvmossa")?.relation, undefined, text);
+    }
+  }
+});
+
+test("B1: omvänd relation behålls även för sammansatt huvuddjur", () => {
+  for (const [text, relation] of [["en mössa under en blåkanin", "på"], ["en mössa bredvid en blåkanin", "bredvid"]] as const) {
+    const u = tolkaMedReserv(text, { noteraBlandning: false });
+    assert.equal(u.typ, "skapad", text);
+    if (u.typ === "skapad") assert.equal(u.varelse.tillbehor.find((t) => t.id === "alvmossa")?.relation, relation, text);
+  }
+});
+
+test("B1: omvänd inneslutning är osäker utan att sparformatet ändras", () => {
+  for (const tolk of [tolka, tolkaMedReserv]) {
+    for (const text of ["en mössa i en kanin", "en mössa i en blåkanin"]) {
+      const u = tolk(text, { noteraBlandning: false });
+      assert.equal(u.typ, "skapad", text);
+      if (u.typ !== "skapad") continue;
+      assert.deepEqual(u.osakraRelationer, [0], text);
+      assert.ok(!JSON.stringify(u.varelse).includes("osakraRelationer"), "bedömningens metadata sparas inte i varelse");
+    }
+    const flera = tolk("en mössa och en filt i en kanin", { noteraBlandning: false });
+    assert.equal(flera.typ, "skapad");
+    if (flera.typ === "skapad") assert.deepEqual(flera.osakraRelationer, [0, 1]);
+    const tydlig = tolk("en kanin i en mössa", { noteraBlandning: false });
+    assert.equal(tydlig.typ, "skapad");
+    if (tydlig.typ === "skapad") assert.equal(tydlig.osakraRelationer, undefined);
+  }
+});
+
+
+test("B1: samordnade saker med gemensam relation delas inte från målet", () => {
+  for (const text of ["en mössa och en filt och en jacka i en kanin", "en mössa och en filt och en jacka under en kanin"]) {
+    assert.deepEqual(delaOchMening(text), [text]);
+  }
+  assert.deepEqual(delaOchMening("en katt och en hund"), ["en katt", "en hund"]);
+  assert.deepEqual(delaOchMening("en mössa och en filt och en hund"), ["en mössa", "en filt och en hund"]);
 });

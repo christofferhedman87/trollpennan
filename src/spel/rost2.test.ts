@@ -131,3 +131,14 @@ test("TTS-2: alla filer har samma ljudnivå (loudnorm till data/rost.json ljudni
   assert.equal(MANIFEST.intro?.n, mal, "introt");
   assert.deepEqual(ojamna.map((r) => r.f).slice(0, 5), [], `${ojamna.length} filer är inte normaliserade`);
 });
+
+test("B1: Groks röstkälla omfattar båda omarkerade djurvarianterna", () => {
+  const k = R.kallor.lista.find((x) => x.fil === "bengtsson.json" && x.talare === "bengtsson" && x.falt?.some((f) => new RegExp(f).test(".uppdrag[].text_bengtsson_annat_djur.text")));
+  assert.ok(k, "Bengtssons alternativa repliker saknas som generatorkälla");
+  const rader = texter(k);
+  const vantar = new Set((rostJson as { vantar_rost?: string[] }).vantar_rost ?? []);
+  for (const text of ["Brr! Ditt djur fryser. Kan du skriva fram något varmt att ha på sig?", "Så skönt! Nu kan ditt djur sluta huttra."]) {
+    assert.ok(rader.includes(text), text);
+    assert.ok(vantar.has(text) || rostFor(text), `raden är varken dokumenterad eller inspelad: ${text}`);
+  }
+});

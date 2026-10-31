@@ -21,13 +21,12 @@ test("ordTraffar: exakt, böjt och sammansatt, men korta ord bara exakt", () => 
   assert.ok(!ordTraffar("tak", "ta") && !ordTraffar("takåsen", "tak"), "tre bokstäver eller färre: bara exakt");
   assert.ok(!ordTraffar("film", "filt"));
   assert.deepEqual(ordIText("En RÖD Filt, åäö!"), ["en", "röd", "filt", "åäö"]);
+  assert.ok(kravUppfyllt({ ord: ["mössa"] }, "en kanin med ullmössa"), "äldre ordkrav behåller sammansättningar");
 });
 
 test("kravet läser det barnet skrev: ägg, böjning och sammansättning räknas, fel ord ger ingen träff", () => {
   const ja: [string, string][] = [
     ["kanin-fryser", "en filt"],
-    ["kanin-fryser", "en kanin med ullmössa"],
-    ["kanin-fryser", "en varm brasa"],
     ["kanin-fryser", "två filtar"],
     ["regn-skydd", "ett paraply"],
     ["regn-skydd", "en kanin med regnkappa"],
@@ -66,7 +65,7 @@ test("data: skriv-uppdragen följer reglerna och krockar inte med äventyrsuppdr
     assert.ok(u.stjarnor >= 1);
     assert.ok(!kravUppfyllt(u.krav!, u.text_bengtsson!), `${u.id}: ledtråden läcker inte svaret`);
   }
-  assert.equal(SKRIV[0]!.text_bengtsson, "Det verkar som att din kanin fryser. Se om du kan skriva fram något som värmer.", "Christoffers egen formulering, oförändrad");
+  assert.equal(SKRIV[0]!.text_bengtsson, "Brr! Din kanin fryser om öronen. Kan du skriva fram något varmt att ha på sig?", "godkänd formulering i Textpaket 02");
 });
 
 test("motorns lägen: nästa, aktivt, bara äventyr, allt klart", () => {

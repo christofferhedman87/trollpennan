@@ -21,6 +21,21 @@ function harEgetForemal(del: string): boolean {
   return tokens(del).some((t) => ordFranForm(t)?.klass === "foremal");
 }
 
+/** Flera föremål före en gemensam relation till ett djur är ett och samma led. */
+function gemensamRelation(vanster: string, resterande: string): boolean {
+  if (harEgetDjur(vanster) || !harEgetForemal(vanster)) return false;
+  const m = /(?:^|\s)(?:med|på|under|i|vid|bredvid)(?=\s|$)/iu.exec(resterande);
+  if (!m) return false;
+  const fore = resterande.slice(0, m.index), efter = resterande.slice(m.index + m[0].length);
+  if (!harEgetForemal(fore) || harEgetDjur(fore)) return false;
+  for (const t of tokens(efter)) {
+    const o = ordFranForm(t);
+    if (o?.klass === "djur" || langstaSuffix(t)?.kind === "djur") return true;
+    if (o?.klass === "foremal" || o?.klass === "tillbehor") return false;
+  }
+  return false;
+}
+
 /** Högerled som börjar med bisats, hjälpverb eller preposition hör till samma skapelse. */
 function skaDela(vanster: string, hoger: string): boolean {
   if (BISATS.test(hoger)) return false;
@@ -51,7 +66,7 @@ export function delaOchMening(raw: string): string[] {
     const hoger = rena[i]!;
     const grupp = grupper[grupper.length - 1]!;
     const vanster = text.slice(grupp[0]!.start, grupp[grupp.length - 1]!.end).trim();
-    if (skaDela(vanster, hoger.text)) grupper.push([hoger]);
+    if (skaDela(vanster, hoger.text) && !gemensamRelation(vanster, text.slice(hoger.start))) grupper.push([hoger]);
     else grupp.push(hoger);
   }
   if (grupper.length < 2) return [text];

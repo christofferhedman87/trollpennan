@@ -164,6 +164,8 @@ export type Utfall =
       typ: "skapad";
       varelse: Varelse;
       antal: number;
+      /** Tillbehör vars omvända relation inte kan representeras; sparas inte. */
+      osakraRelationer?: number[];
       funna: string[];
       guld: string[];
       okanda: string[];

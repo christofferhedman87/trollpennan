@@ -8,7 +8,7 @@
 
 - **#298 · C2b-1:** redan levererad före detta pass, main `64297f3`, oberoende Claude-underagent, CF `124517533701` och sex SHA-256 gröna enligt PR-kommentaren. Full C2b-korpus/migration återstår.
 - **#299 · T-18/B4:** mergad som `0e6fe9b4d7b08318c4197cde63bf8f7402fc4f6f`. Main-Cloudflare `124530012914` grön; sex serverade start-/spelfiler byteidentiska/SHA-256-identiska med provat bygge (sista kommentaren i #299 har alla hashvärden). Fristående Codex `/root/review_299` godkände exakt app-/testhuvud `f75c6ad5693d0069e8845b6a8bd301574bac9b16`, 60/60 riktade delprov och 41/41 negativa minnesprov. Sex grindar gröna, bara känt P3a-fel i parallell produktkörning (separat 9/9 grönt, 50 ms-gränsen orörd). Riktiga start-/skapelse-/omladdningsprov gröna i stående, liggande och datorvy. Endast sex granskad-flaggor/hashlås; övriga 85 uppdrag oförändrade.
-- **#300 · F2/T-22:** mergad som `b051e6ed8feaaca15d352bfc886a5fa4432408db` (**aktuell main**). Main-Cloudflare `124535056279` grön, sex serverade filer byteidentiska/SHA-256-identiska (sista kommentaren i #300 har hashvärden). Fristående Codex `/root/review_300` godkände exakt `03ed2775b763d372b1c49a44ff52ca84bec8bc74`. Alla sju slutgrindar gröna, 84/84 produktprovfiler inklusive oförändrat P3a; hela `prov-min-bok.mjs` grönt i 375×812 och 812×375. Bildkontrollen hittade coach/HUD över Stäng; egna röda→gröna prov och rättningar finns i PR. Tomma ordlistor, annan riktig Ordboksingång, fri Stäng, Escape och spärrad fysisk skrivning/profilbevarande är oberoende provade. Interna slutbilder lästa.
+- **#300 · F2/T-22:** mergad som `b051e6ed8feaaca15d352bfc886a5fa4432408db` (dåvarande main). Main-Cloudflare `124535056279` grön, sex serverade filer byteidentiska/SHA-256-identiska (sista kommentaren i #300 har hashvärden). Fristående Codex `/root/review_300` godkände exakt `03ed2775b763d372b1c49a44ff52ca84bec8bc74`. Alla sju slutgrindar gröna, 84/84 produktprovfiler inklusive oförändrat P3a; hela `prov-min-bok.mjs` grönt i 375×812 och 812×375. Bildkontrollen hittade coach/HUD över Stäng; egna röda→gröna prov och rättningar finns i PR. Tomma ordlistor, annan riktig Ordboksingång, fri Stäng, Escape och spärrad fysisk skrivning/profilbevarande är oberoende provade. Interna slutbilder lästa.
 
 ### Levererat: #301 · G1/T-29/T-32
 
@@ -18,13 +18,25 @@ Branch `claude/g1-guldchans-kvitto`, app oförändrad sedan `179bcfe`; slutligt 
 - `scripts/prov-guldord-kvitto.mjs` grönt i 375×812 och 812×375 med normal rörelse: två feltryck per vy (samma DOM, inga nya animationer/klasser, text och spökord bevarade), häst, hjälpord utan chip, ”sprutar eld” (9060 ms) och fem byggguldord (7260 ms = `lasbarTid` av hela texten). `7d9a96e` mäter kvittot i sidan vid full opacitet och tar CDP-bilden direkt: i liggande programvaru-GPU tog fjärranropen annars så lång tid att spelets oförändrade 5,6 s gick ut före bild. Ingen timer, animation eller gräns ändrad. Interna slutbilder lästa i båda vyer.
 - Oberoende Claude-underagent (fristående granskare, egen worktree och port 4180) **godkände exakt `7d9a96e`** utan blockerare efter egna sju grindar, båda UI-vyer och egen bildläsning. Icke-blockerande: `Spok.fel` och `Kvitto.guld` är nu döda fält (städas vid tillfälle).
 - Iakttaget, inte orsakat av #301 (D0/T-17): i flerordsfallet visas djurets pratbubbla samtidigt som kvittot med samma replik; i 812 täcker kvittot delvis byggen och målremsan; ”Du skrev: ”en som sprutar eld”” läser lite konstigt (C2/BC).
-- Merge och main-Cloudflare/SHA-256 för sex serverade start-/spelfiler redovisas i sista kommentaren i #301.
+- Mergad som `82ebaade7301b0d159e8a22552960b7fce26b166`. Main-Cloudflare **Workers Builds: trollpennan** check `124563857841` är grön på exakt denna commit; alla **sju** serverade filer är SHA-256-identiska med bygget, inklusive ändrad Spel-CSS. `index.html` hämtades med omdirigeringen till `/` följd. Resultatet finns i [kommentaren i #301](https://github.com/christofferhedman87/trollpennan/pull/301#issuecomment-6544863846).
+
+### B1 · kaninens varma kläder (#303, slutprovad före merge)
+
+Branch `codex/b1-angen` utgår från `82ebaad`. Denna första B1-PR omfattar **ett** uppdrag (`kanin-fryser`); 84 återstår. Det godkända Textpaket 02:s fyra kanintexter är oförändrade och hashlåsta. De två separata, generella start-/tackvarianterna för andra djur är uttryckligen `granskad:false` och listas i `nya-repliker.md`. Grok har enligt Christoffers besked hand om att generera och implementera saknade TTS-inspelningar; rader och övriga upptäckta saknade röstplaner är dokumenterade där. Befintlig tyst reserv ändras inte och inget ljud påstås finnas.
+
+Betydelsekravet accepterar tolkade varma kläder och avvisar exempelvis lägereld och uttryckligen kalla plagg. Omvända relationer för samordnade saker knyts till rätt huvuddjur; omvänd `i` som inte kan representeras säkert markeras endast i tolkningsresultatet, aldrig i sparad varelse, och får inte lösa ett relationskrav. Flera röda→gröna prov omfattar även sammansatta djur, flera individer och samordnade föremål. Granskaren jämförde 4 440 två-/treledsfraser; bara de 324 avsedda treledsfallen ändrade meningsdelning och inga av dessa ändrade de sex B0-uppdragens bedömning. Det är inte fullständig språktäckning. Kvar: `i` ritas som en behållare även för vissa klädfraser; den visuella begränsningen hör till fortsatt C/D-arbete. `relationer` som tillåten lista räcker inte som krav på obligatoriska småord i de återstående uppdragen.
+
+Sex grindar gröna på apphuvud `e9f841019215ec1ef0aab236a9dcd715fe2ba1cb`: typecheck, typecheck:pages, check:struktur, lint, build:pages och check:pages-output. `test:product` kördes färdigt: 84/85 provfiler gröna, endast känt P3a-prestandaprov föll. Separat P3a: 8/9 gröna, Skogen median 68,0 ms mot oförändrade 50 ms; samma kända miljöfel är tidigare reproducerat på orörd main. Tolkar-, röst-, uppdrags- och betydelseprov gröna.
+
+Baslinjen på `82ebaad` är röd i 375×812: lägereld markerar felaktigt uppdraget klart. `scripts/prov-b1-kanin.mjs` på provhuvud `aed98e32293c479cc0d9ff98219f71ff30abe966` är grönt i 375×812 och 812×375 med riktiga klick/tangenter och normal rörelse: samma djur och tillbehör kontrolleras, nära miss följs av godkänt svar. Kvittots text och geometri mäts i sidan vid full opacitet utan timerändring. Alla fyra interna slutbilder är lästa av både Codex och granskaren. Liggande vy visar en annan banderoll bakom kvittot (D0) och djuret delvis bakom pennan (D2/F5). Separat UI-kedja för andra djur och omvänd relation är inte körd; de är Node-provade.
+
+Fristående Codex-granskare `/root/granskning_b1_kanin` **godkände exakt app-/provhuvud `aed98e32293c479cc0d9ff98219f71ff30abe966`** utan kvarstående kodblockerare i detta avgränsade delblock. Senare ändringar är enbart dokument. Merge och verifiering av main-Cloudflare/SHA-256 redovisas i #303 när de har skett. Ingen slutgranskning av hela serien är påbörjad.
 
 ### Textpaket 02 och resten av serien
 
 **Christoffers godkända granskning av alla 85 återstående uppdrag är sparad oförändrad i `docs/en-varld/textpaket-02-granskad.md`**, SHA-256 `1687e568520fff417a98edfe5135d2d860fb450d94d7191f6e75dfd50002e539`. Detta är källgranskningen, inte ett nytt checkpointdokument. Ingen ny uppladdning eller godkännandefråga krävs. Använd i B1/BC, men kontrollera varje förslag mot faktisk tolk och modeller; flagga/hashlås bara exakt granskad text. Inget annat block väntar på detta.
 
-Efter #301 (levererad): följ blockplanen; B1 först. Torr kontroll 2026-10-31: 239 av 255 föreslagna hjälpfraser i Textpaket 02 ger redan riktiga modeller; 16 fastnar på okända ord (långhalsad, lång, gunga, utanför, ”vid sjön”, eko/ropar/hör) och måste lösas i B1 innan flagga/hashlås. Orörda: B1 (85 uppdrag), B3, C3, C4, BC, D0–D3, F1, F3, F5, F6/T-36, G2 och G3. Delvis: C1d och resten av C2b. F6 ska visa alla synliga djur, hem/flyttbekräftelse, skäl för fel hustyp och verklig tomorsak. **Före slutgranskningen av hela blockserien: stoppa och meddela Christoffer.** Han väljer Claude/Codex och sätter ansträngning=max. Ingen sådan slutgranskning har påbörjats.
+Efter #301 (levererad): följ blockplanen; B1 först. Torr kontroll 2026-10-31: 239 av 255 föreslagna hjälpfraser i Textpaket 02 ger redan riktiga modeller; 16 fastnar på okända ord (långhalsad, lång, gunga, utanför, ”vid sjön”, eko/ropar/hör) och måste lösas i B1 innan flagga/hashlås. Ej färdiga: B1 (ett uppdrag slutprovat i #303, 84 återstår), B3, C3, C4, BC, D0–D3, F1, F3, F5, F6/T-36, G2 och G3. Delvis: C1d och resten av C2b. F6 ska visa alla synliga djur, hem/flyttbekräftelse, skäl för fel hustyp och verklig tomorsak. **Före slutgranskningen av hela blockserien: stoppa och meddela Christoffer.** Han väljer Claude/Codex och sätter ansträngning=max. Ingen sådan slutgranskning har påbörjats.
 
 Tre svagaste punkter: molnets programvaru-GPU kräver provmätning i sidan för korta meddelanden; den dubbla repliken bubbla+kvitto kvarstår till D0; stora B/C/D/F/G-delar återstår; fysisk Safari/iPad, barns faktiska upplevelse och nya röstinspelningar är inte verifierade.
 
@@ -249,7 +261,7 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 | T-02 | A1 | Verifierad/granskad #288,20UI-fall båda vyer och44px-yta; publicerad f425a41, CF124383463197/6SHA-256 gröna |
 | T-03 | A0/A2/B | A0/A2 publicerad #289/eec3b27; delresultat tills B/C verifierar alla 157 mål och den äldre gåvohyllan |
 | T-04 | A0/A2 | Publicerad #289/eec3b27; målanpassat tips/Idé, sju grindar och faktisk kontextkontroll gröna |
-| T-05 | B0/B1 | B0 #290 publicerad fbfe48f;560/560, fyra UI-fall, CF124411312834/6SHA gröna;85uppdrag och455+total-fixtures återstår |
+| T-05 | B0/B1 | B0 #290 publicerad fbfe48f;560/560, fyra UI-fall, CF124411312834/6SHA gröna;B1 #303: ett uppdrag slutprovat och oberoende godkänt; 84 uppdrag återstår, merge/CF/SHA redovisas i PR |
 | T-06 | B2 | Publicerad #295/bdadc09, 585/585, båda vyer/legacy och main-CF/SHA gröna. T17/D2/F5 fortsätter separat |
 | T-07 | C1 | C1a/C1b/C1c publicerade (#291/#294/#297); #297 main ed0449c, 638/638 och CF124493270814/10SHA gröna. Sekundära djur C1d återstår |
 | T-08 | C2 | C2a och C1c publicerade. C2b-1 #298: skrivna siffror når tolken, spärren håller; 2 hattar grönt i båda vyer; oberoende Claude-underagent granskade. Full korpus/migration återstår |
@@ -262,7 +274,7 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 | T-15 | B3 | Planerad; B1 godkänt |
 | T-16 | D3 | Planerad |
 | T-17 | D0/D3 | Planerad; B5 godkänt |
-| T-18 | B1/BC | Sex flaggor/hashlås publicerade #299/0e6fe9b, CF124530012914/6SHA gröna. Textpaket 02:s 85 texter godkända som underlag; tolk-/modellkontroll och införande i B1/BC återstår |
+| T-18 | B1/BC | Sex flaggor/hashlås publicerade #299/0e6fe9b, CF124530012914/6SHA gröna. Textpaket 02:s 85 texter godkända som underlag; ett uppdrag slutprovat och oberoende godkänt i #303; 84 återstår |
 | T-19 | BC | Planerad; B+C först |
 | T-20 | C4 | Planerad; B2 godkänt |
 | T-21 | F1 | Planerad; B7 godkänt |
@@ -273,10 +285,10 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 | T-26 | A2 | Publicerad #289/eec3b27; gemensamt mål, separat Gåta och textbevarande Idé |
 | T-27 | A2/F4 | Publicerad #289/eec3b27; hela geometri-/stavnings-/markeringsflödet grönt i fyra telefonformat |
 | T-28 | F5 | Planerad |
-| T-29 | G1 | Levererad #301, app179bcfe/prov7d9a96e; röd main-baslinje båda vyer, grönt slutprov 375/812 utan reducerad rörelse; oberoende Claude-underagent godkände 7d9a96e. Merge/CF/SHA i #301 |
+| T-29 | G1 | Levererad #301, app179bcfe/prov7d9a96e; röd main-baslinje båda vyer, grönt slutprov 375/812 utan reducerad rörelse; oberoende Claude-underagent godkände 7d9a96e. Main 82ebaad, CF 124563857841 och 7/7 SHA-256 gröna (#301) |
 | T-30 | G2 | Planerad; B8 godkänt |
 | T-31 | A1 | Verifierad/granskad #288, även efterföljande fysisk text+Enter; publicerad f425a41, CF124383463197/6SHA-256 gröna |
-| T-32 | G1 | Levererad #301; verkliga guldord i kvittot, lästid för hela texten (7260ms för fem byggord), 5 nodprov, båda vyer och bilder gröna; oberoende godkänd 7d9a96e. Merge/CF/SHA i #301 |
+| T-32 | G1 | Levererad #301; verkliga guldord i kvittot, lästid för hela texten (7260ms för fem byggord), 5 nodprov, båda vyer och bilder gröna; oberoende godkänd 7d9a96e. Main 82ebaad, CF 124563857841 och 7/7 SHA-256 gröna (#301) |
 | T-33 | G3 | Planerad |
 | T-34 | G3 | Planerad |
 | T-35 | E3/G4 | Publicerad f1e38d3 (#287), båda vyer, CF124377043349/6SHA-256 gröna |

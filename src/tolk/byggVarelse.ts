@@ -30,6 +30,34 @@ export function nastaArSak(sem: Sem[], i: number, ensamSak?: Ord | null): boolea
   return !!n && n.t === "ord" && n.o.klass === "foremal";
 }
 
+/** Föremål före huvuddjuret: vänd riktningen när det följande relationsordet gäller djuret. */
+function omvandRelation(sem: Sem[], index: number, huvud: Sem): Relation | "omvand-i" | undefined {
+  let rel: Relation | undefined;
+  let vantarPaSak = false;
+  let osakertLed = false;
+  for (const s of sem.slice(index + 1)) {
+    if (s.t === "funk") {
+      if (s.v === "och" && !rel && !vantarPaSak) { vantarPaSak = true; continue; }
+      if (!s.relation || rel || vantarPaSak) return undefined;
+      rel = s.relation;
+    } else if (s === huvud) {
+      if (vantarPaSak) return undefined;
+      if (rel === "i") return "omvand-i";
+      if (osakertLed) return undefined;
+      if (rel === "under") return "på";
+      if (rel === "vid" || rel === "bredvid") return rel;
+      return undefined;
+    } else if (s.t === "ord" && (s.o.klass === "foremal" || s.o.klass === "tillbehor") || s.t === "komp" && s.suffix.kind !== "djur") {
+      if (rel) return undefined;
+      vantarPaSak = false;
+    } else if (s.t === "okand") {
+      if (rel) return undefined;
+      osakertLed = true;
+    } else if (s.t === "ord" && s.o.klass === "djur" || s.t === "komp" || s.t === "blanda") return undefined;
+  }
+  return undefined;
+}
+
 export function sattDjur(b: Bygg, o: Ord, form: string) {
   b.djur = o;
   b.djurForm = form;
@@ -45,7 +73,7 @@ export function sattDjur(b: Bygg, o: Ord, form: string) {
   b.storlek = null;
 }
 
-type TillbehorYta = Pick<Bygg["tillbehor"][number], "form" | "artikel" | "relation" | "egenskaper" | "antal" | "antalOrd">;
+type TillbehorYta = Pick<Bygg["tillbehor"][number], "form" | "artikel" | "relation" | "egenskaper" | "antal" | "antalOrd" | "omvandInuti">;
 
 export function laggTillbehor(b: Bygg, o: Ord, yta: TillbehorYta = {}) {
   const bild = o.del?.tillbehor ?? o.id;
@@ -124,20 +152,20 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
   const b = tomBygg();
   let mode: Mode = "fore";
   // Sista djuret före med/som blir kroppen.
-  let sist: { o: Ord; form: string; komp: Extract<Sem, { t: "komp" }> | null } | null = null;
+  let sist: { o: Ord; form: string; komp: Extract<Sem, { t: "komp" }> | null; sem: Sem } | null = null;
   for (const s of sem) {
     if (s.t === "funk") {
       mode = modeAv(s.v, mode);
       continue;
     }
     if (mode !== "fore") continue;
-    if (s.t === "ord" && s.o.klass === "djur") sist = { o: s.o, form: s.form, komp: null };
-    if (s.t === "komp" && s.suffix.kind === "djur") sist = { o: s.suffix.ord, form: s.suffix.form, komp: s };
+    if (s.t === "ord" && s.o.klass === "djur") sist = { o: s.o, form: s.form, komp: null, sem: s };
+    if (s.t === "komp" && s.suffix.kind === "djur") sist = { o: s.suffix.ord, form: s.suffix.form, komp: s, sem: s };
   }
   if (!sist) {
     for (const s of sem) {
-      if (s.t === "ord" && s.o.klass === "djur") sist = { o: s.o, form: s.form, komp: null };
-      if (s.t === "komp" && s.suffix.kind === "djur") sist = { o: s.suffix.ord, form: s.suffix.form, komp: s };
+      if (s.t === "ord" && s.o.klass === "djur") sist = { o: s.o, form: s.form, komp: null, sem: s };
+      if (s.t === "komp" && s.suffix.kind === "djur") sist = { o: s.suffix.ord, form: s.suffix.form, komp: s, sem: s };
     }
   }
   // R3G: inget djur alls → första föremålet blir det som står på ängen ("ett lok", "en ek").
@@ -192,6 +220,9 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       b.okanda.push(s.raw);
       continue;
     }
+    const omvand = !huvudSett && sist && (s.t === "komp" || s.t === "ord" && (s.o.klass === "foremal" || s.o.klass === "tillbehor")) ? omvandRelation(sem, i, sist.sem) : undefined;
+    const omvandInuti = omvand === "omvand-i";
+    const tolkadRelation = relation ?? (omvandInuti ? undefined : omvand);
     if (s.t === "komp") {
       if (sist?.komp && s === sist.komp) { huvudSett = true; artikel = undefined; continue; }
       if (s.suffix.kind === "djur") {
@@ -204,7 +235,7 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
         }
         continue;
       }
-      const sparr = applyKomp(b, s, mode, true, { artikel, relation, egenskaper: sakEgenskaper, antal: sakAntal, antalOrd: sakAntalOrd });
+      const sparr = applyKomp(b, s, mode, true, { artikel, relation: tolkadRelation, omvandInuti, egenskaper: sakEgenskaper, antal: sakAntal, antalOrd: sakAntalOrd });
       artikel = undefined;
       sakEgenskaper = []; sakAntal = undefined; sakAntalOrd = undefined;
       if (sparr === "sparr") return "sparr";
@@ -229,7 +260,7 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       if (o === ensamSak && !huvudSett) { huvudSett = true; artikel = undefined; continue; }
       const bild = o.del?.kropp ?? o.id;
       const fargOrd = b.vantande;
-      b.tillbehor.push({ ord: o, bild, fargOrd, fargHex: fargOrd?.del?.farg?.startsWith("#") ? fargOrd.del.farg : null, glans: false, form: s.form, artikel, relation, egenskaper: sakEgenskaper, antal: sakAntal, antalOrd: sakAntalOrd });
+      b.tillbehor.push({ ord: o, bild, fargOrd, fargHex: fargOrd?.del?.farg?.startsWith("#") ? fargOrd.del.farg : null, glans: false, form: s.form, artikel, relation: tolkadRelation, omvandInuti, egenskaper: sakEgenskaper, antal: sakAntal, antalOrd: sakAntalOrd });
       sakEgenskaper = []; sakAntal = undefined; sakAntalOrd = undefined;
       artikel = undefined;
       b.vantande = null;
@@ -262,7 +293,7 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       continue;
     }
     if (o.klass === "tillbehor") {
-      laggTillbehor(b, o, { form: s.form, artikel, relation, egenskaper: sakEgenskaper, antal: sakAntal, antalOrd: sakAntalOrd });
+      laggTillbehor(b, o, { form: s.form, artikel, relation: tolkadRelation, omvandInuti, egenskaper: sakEgenskaper, antal: sakAntal, antalOrd: sakAntalOrd });
       artikel = undefined;
       sakEgenskaper = []; sakAntal = undefined; sakAntalOrd = undefined;
       continue;

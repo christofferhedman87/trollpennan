@@ -12,8 +12,10 @@
    "klart": "Åh, vad skönt!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Det verkar som att din kanin fryser. Se om du kan skriva fram något som värmer.",
-   "klart_bengtsson": "Ahh, så skönt! Nu är kaninen varm igen. Tack för hjälpen!",
+   "text_bengtsson": "Brr! Din kanin fryser om öronen. Kan du skriva fram något varmt att ha på sig?",
+   "text_bengtsson_annat_djur": { "text": "Brr! Ditt djur fryser. Kan du skriva fram något varmt att ha på sig?", "granskad": false },
+   "klart_bengtsson": "Så skönt! Nu kan öronen sluta huttra.",
+   "klart_bengtsson_annat_djur": { "text": "Så skönt! Nu kan ditt djur sluta huttra.", "granskad": false },
    "krav": {
     "ord": [
      "filt",
@@ -28,28 +30,44 @@
      "mantel",
      "vantar",
      "strumpor",
-     "päls",
-     "varm",
-     "eld",
-     "brasa",
-     "kamin",
-     "lägereld",
-     "ljus",
-     "kakao",
-     "soppa",
-     "te",
      "luva",
-     "stuga",
-     "sol",
-     "solen",
-     "solsken",
-     "värme",
      "toppluva",
-     "vintermössa"
+     "vintermössa",
+     "sockor"
     ],
-    "min": 1
+    "min": 1,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "varma_klader",
+       "nagon_av": [
+        "kropp:filt",
+        "kropp:tacke",
+        "kropp:alvmossa",
+        "kropp:halsduk",
+        "kropp:troja",
+        "kropp:jacka",
+        "kropp:kofta",
+        "kropp:mantel",
+        "kropp:vante",
+        "kropp:strumpa",
+        "kropp:luva",
+        "kropp:hatt",
+        "kropp:stovlar",
+        "kropp:gummistovel"
+       ],
+       "alla": [
+        "varm"
+       ],
+       "subjekt": "sak",
+       "egna": true,
+       "relationer": ["med", "i"],
+       "beskrivning": "något varmt att ha på sig"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -71,20 +89,26 @@
       ]
      },
      {
-      "etikett": "Något varmt",
+      "etikett": "Fler varma kläder",
       "forslag": [
        {
-        "ord": "lägereld",
-        "fras": "en kanin vid en lägereld"
+        "ord": "halsduk",
+        "fras": "en hund med halsduk"
        },
        {
-        "ord": "stuga",
-        "fras": "en kanin i en stuga"
+        "ord": "jacka",
+        "fras": "en katt med jacka"
        }
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter något varmt att ha på sig, som mössa eller halsduk.",
+   "hjalp": [
+    "en kanin med mössa",
+    "en hund med halsduk",
+    "en katt med tröja"
+   ]
   },
   {
    "id": "regn-skydd",
