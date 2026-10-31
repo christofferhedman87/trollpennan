@@ -30,6 +30,8 @@ import { Hjartan } from "./Hjartan.tsx";
 export { DjurForm, ModellGren, TOON_MAP, Formdel } from "./djurForm.tsx";
 export { Hjartan } from "./Hjartan.tsx";
 
+import { matSkapelseProv } from "./skapelseGeometriProv.ts";
+
 function pausaAnim(): boolean {
   return typeof window !== "undefined" && window.__PAUSE_ANIM === true;
 }
@@ -41,6 +43,8 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
   const iStall = djurIStall(spec, alla, plats);
   const grupp = useRef<THREE.Group>(null);
   const kroppRef = useRef<THREE.Group>(null);
+  const sakRefs = useRef<(THREE.Group | null)[]>([]);
+  const provRam = useRef(0);
   const skal = useRef(0.2);
   const fod = useRef(-1);
   const landad = useRef(false);
@@ -183,6 +187,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
         (ring.material as THREE.MeshBasicMaterial).opacity = Math.max(0, hopp.current * 0.55);
       }
     }
+    if (++provRam.current % 12 === 0 && kroppRef.current && g.parent) matSkapelseProv(spec.uid, g.parent, kroppRef.current, medSaker.map((id, i) => ({ id, nod: sakRefs.current[i] ?? null })), state.camera, state.gl.domElement.getBoundingClientRect());
     if (t % 0.2 < d) {
       g.getWorldPosition(_mal);
       (window.__tredPos ??= {})[spec.uid] = { x: Math.round(_mal.x * 100) / 100, z: Math.round(_mal.z * 100) / 100, y: Math.round(_mal.y * 100) / 100, sim, flyg, stall: iStall, k: krymp, syn: Math.round((synS / (regelFor(plats).skala ?? 1)) * 100) / 100 };
@@ -256,7 +261,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       </group>
       {ljus && ljus.vad === spec.kropp ? <Ljusken uid={spec.uid} kalla={ljus.kalla} hojd={y + malhojd(spec.kropp) * (spec.skala || 1) * 0.75} /> : null}
       {medSaker.map((id, i) => (
-        <group key={`${id}-${i}`} position={sakPos(id, i)}>
+        <group key={`${id}-${i}`} ref={(nod) => { sakRefs.current[i] = nod; }} position={sakPos(id, i)}>
           {ljus && ljus.vad === id ? <Ljusken uid={spec.uid} kalla={ljus.kalla} hojd={malhojd(id) * 0.75} /> : null}
           <ModellGren spec={{ ...spec, kropp: id }}><Suspense fallback={null}><GltfSak id={id} /></Suspense></ModellGren>
         </group>
