@@ -232,7 +232,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
                   {TEXTER.lada.ta_fram}: {b.formel}
                 </button>
               ))}
-              <button type="button" data-t22="lada-stang" onClick={() => setLadaOpp(false)}>
+              <button type="button" data-dialog-close data-t22="lada-stang" onClick={() => setLadaOpp(false)}>
                 {TEXTER.lada.stang}
               </button>
             </div>

@@ -38,6 +38,28 @@ try {
       await page.getByTestId("ordbok-sida").waitFor({ state: "detached" });
     };
 
+    // Tom Låda: tomvy som förklarar lådan, och Stäng.
+    await oppnaMinBok();
+    assert.equal(tal(await rutaText("lada")), 0);
+    await page.locator('[data-dal="minbok-lada"]').click();
+    await page.getByTestId("lada-panel").waitFor();
+    // Guiden läser öppna lager var 250 ms. Låt den kontrollen ske även på den röda baslinjen.
+    await page.waitForTimeout(600);
+    assert.equal(await page.getByTestId("coach").count(), 0, "Guiden ska pausa medan Lådans dialog är öppen, så Stäng-texten är fri");
+    const tom = await page.locator('[data-t22="lada-tom"]').innerText();
+    assert.match(tom, /Lådan är tom/);
+    const panel = await page.getByTestId("lada-panel").boundingBox();
+    assert.ok(panel && panel.y >= 0 && panel.y + panel.height <= viewport.height && panel.x >= 0 && panel.x + panel.width <= viewport.width, "hela lådan syns");
+    if (bilder) await page.screenshot({ path: `${bilder}/lada-${viewport.width}.png` });
+    await page.locator('[data-t22="lada-stang"]').click();
+    await page.getByTestId("lada-panel").waitFor({ state: "detached" });
+    await oppnaMinBok();
+    await page.locator('[data-dal="minbok-lada"]').click();
+    await page.getByTestId("lada-panel").waitFor();
+    await page.keyboard.press("Escape");
+    await page.getByTestId("lada-panel").waitFor({ state: "detached" });
+
+
     // Ordjakten: rätt del och samma siffra som rutan.
     await oppnaMinBok();
     const skrivordRuta = tal(await rutaText("ordjakten"));
@@ -83,18 +105,6 @@ try {
     await page.locator(".sk-stall").waitFor();
     await page.locator('[data-testid="meny-panel"] .sk-stang').click();
 
-    // Tom Låda: tomvy som förklarar lådan, och Stäng.
-    await oppnaMinBok();
-    assert.equal(tal(await rutaText("lada")), 0);
-    await page.locator('[data-dal="minbok-lada"]').click();
-    await page.getByTestId("lada-panel").waitFor();
-    const tom = await page.locator('[data-t22="lada-tom"]').innerText();
-    assert.match(tom, /Lådan är tom/);
-    const panel = await page.getByTestId("lada-panel").boundingBox();
-    assert.ok(panel && panel.y >= 0 && panel.y + panel.height <= viewport.height && panel.x >= 0 && panel.x + panel.width <= viewport.width, "hela lådan syns");
-    if (bilder) await page.screenshot({ path: `${bilder}/lada-${viewport.width}.png` });
-    await page.locator('[data-t22="lada-stang"]').click();
-    await page.getByTestId("lada-panel").waitFor({ state: "detached" });
 
     assert.deepEqual(sidfel, [], "inga sidfel");
     console.log("Grönt Min bok", viewport.width, JSON.stringify({ skrivordRuta, guldRuta }));

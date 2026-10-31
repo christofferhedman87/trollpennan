@@ -11,7 +11,7 @@ import { useStart } from "../start.ts";
 import "./coach-p2.css";
 
 type Ruta = { x: number; y: number; b: number; h: number };
-const UPPTAGEN = ".bok, .sk-ark, .sk-kvitto, .skarm, .titel, [data-testid=intro], [data-testid=meny-panel], [data-testid=onska-bubbla], [role=alertdialog]";
+const UPPTAGEN = ".bok, .sk-ark, .sk-kvitto, .skarm, .titel, [data-testid=intro], [data-testid=meny-panel], [data-testid=onska-bubbla], [data-testid=lada-panel], [role=alertdialog]";
 
 function hittaMal(pekar: string): Ruta | null {
   const m = malFor(pekar);

@@ -93,7 +93,7 @@ export function useSpelTillstand() {
     setBanners(b ? [{ id: b.id, text: b.text, slag: b.slag, ...(b.ms ? { ms: b.ms, tryck: true } : {}) }] : []);
   }), []);
   gavaRef.current = gavaTill;
-  overlayRef.current = ordbok || foralder || !!visKort || !!kop || stjarnInfo || kopia != null || kartaOpp || !!omrade || !!valj || !!skylt || !!gavaTill || panel === "uppdrag" || albumOpp || mossaOpp;
+  overlayRef.current = ordbok || foralder || !!visKort || !!kop || stjarnInfo || kopia != null || kartaOpp || !!omrade || !!valj || !!skylt || !!gavaTill || panel === "uppdrag" || albumOpp || mossaOpp || ladaOpp;
   const funna = useMinne((s) => s.funna);
   const kortGang = useMinne((s) => s.kortGang);
   const startLage = useMinne((s) => s.startLage);
