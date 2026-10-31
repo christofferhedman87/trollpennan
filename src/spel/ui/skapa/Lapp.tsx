@@ -38,7 +38,7 @@ function IdeRam({ ide, kompakt }: { ide: IdeLapp; kompakt: boolean }) {
   const { sk } = useSpel();
   const har = new Set(sk.remsa.brickor.map((b) => b.id).filter(Boolean));
   if (ide.slag === "gata") return <LappRam kompakt={kompakt} bild={ikon("ui", "agg")} fran={UI.lapp.gata_fran ?? ""} text={`${ide.gata} ${ide.streck}`} las={ide.gata} />;
-  const kort = ide.slag === "mal" ? onskeKort([ide.fras]) : ideKort(ide.ide);
+  const kort = (ide.slag === "mal" ? onskeKort([ide.fras]) : ideKort(ide.ide)).filter((k) => k.bild !== ikon("ui", "agg"));
   const text = ide.slag === "mal" ? ide.fras : ideText(ide.ide);
   return <LappRam kompakt={kompakt} bild={null} fran={UI.ide.rubrik ?? ""} text={text} las={text}>
     <div className="sk-ide-rad">

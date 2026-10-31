@@ -20,7 +20,9 @@ test("bokmål: idéer följer målets förslag, upprepar inte samma val och skri
   const s = { onskan: kalla("varm", ["med strumpor", "med vantar", "med strumpor", " "]) };
   const fore = JSON.stringify(s); const mal = aktivtMal(s);
   assert.deepEqual(mal.losningar, ["med strumpor", "med vantar"]);
+  assert.deepEqual(mal.ideer, mal.losningar, "tomma och upprepade idéer tas bort även i ren logik");
   assert.equal(ideForMal(mal, "med strumpor", 0), "med vantar");
+  assert.equal(ideForMal({ ...mal, ideer: ["med strumpor"] }, null, 0), "med strumpor", "adapterns bildurval används utan att byta mål");
   assert.equal(JSON.stringify(s), fore);
 });
 test("bokmål: modellerade föremål och plagg finns i hjälpen och sätts in i rätt roll", () => {

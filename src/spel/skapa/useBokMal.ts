@@ -11,7 +11,9 @@ import { gavoNamn, gavoRuta } from "../ui/gavoRuta.ts";
 import { bestamdAv } from "../ui/hjalp.ts";
 import { fyll } from "../fyll.ts";
 import { dalStyr } from "../dal/dalStyr.ts";
-import { ikon, kortBild } from "./ikoner.ts";
+import { onskeKort } from "./hjalpord.ts";
+import { kortIkon } from "../ui/hjalp.ts";
+import { harKortBild, ikon, kortBild } from "./ikoner.ts";
 import { platsLapp } from "./platsLapp.ts";
 import uiJson from "../../../data/skapa-ui.json" with { type: "json" };
 import vaktarJson from "../../../data/vaktardjur.json" with { type: "json" };
@@ -41,5 +43,7 @@ export function useBokMal() {
   if (ark === "vaktare" && v) kallor.vaktare = { id: v.id, lapp: { fran: v.namn, text: v.gata, bild: kortBild(v.djur) }, losningar: v.hjalp };
   const p = platsLapp(plats);
   if (p) kallor.plats = { id: plats, lapp: { ...p, bild: ikon("ui", "karta") }, losningar: UI.bokmal.plats_ideer[plats] ?? [] };
-  return aktivtMal(kallor);
+  const mal = aktivtMal(kallor);
+  const medBild = mal.losningar.filter((fras) => onskeKort([fras]).some((kort) => (kort.fraga === "vad" || kort.fraga === "har") && (harKortBild(kort.id) || !!kortIkon(kort.id))));
+  return { ...mal, ideer: medBild.length ? medBild : mal.losningar };
 }

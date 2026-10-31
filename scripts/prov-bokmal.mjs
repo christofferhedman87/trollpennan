@@ -26,6 +26,8 @@ try {
       for (let i = 0; i < 5; i++) {
         await page.locator('[data-dal="ide"]').click();
         await page.locator(".sk-ide-rad").waitFor();
+        assert.ok(await page.locator(".sk-ide-rad img").count() >= 1, "målidén använder en befintlig bild");
+        assert.equal(await page.locator('.sk-ide-rad img[src="/ikoner/skapa/ui/agg.svg"]').count(), 0);
         assert.equal(await page.getByTestId("ord-input").inputValue(), text);
         assert.equal(await page.locator('[data-dal="lapp"]').filter({ hasText: "Bengtsson" }).count(), 1, "uppdragslappen ska finnas kvar ovanför idén");
       }

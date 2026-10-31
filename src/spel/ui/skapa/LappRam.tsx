@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
+import "./LappRam.css";
 import { createPortal } from "react-dom";
 import ui from "../../../../data/skapa-ui.json" with { type: "json" };
 import { fyll } from "../../fyll.ts";
