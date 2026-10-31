@@ -95,6 +95,27 @@ test("B1: hjälpuppdrag hänger bara saken på ängens djur – inte ett nytt dj
   } finally { useMinne.setState({ ang: fore.ang, plats: fore.plats }); }
 });
 
+test("B1: sittplatser och ljus – saken ska vara rätt sorts sak och höra till djuret", () => {
+  const nej: Record<string, string[]> = {
+    "skog-vila-benen": ["en hund som heter stubbe", "en hund bredvid en stol", "en hund med en sten"],
+    "grotta-sittpaus": ["en groda under en stol", "en hund bredvid en sten", "en sten"],
+    "ljus-i-kvallen": ["en hund med en sol", "en hund med en stjärna", "en hund som heter lykta", "en katt i en lampa"],
+    "skog-kvallsljus": ["en räv med en sol", "en lykta"],
+    "grotta-forsta-skenet": ["en hund som heter ljus", "en lykta"],
+  };
+  const ja: Record<string, string[]> = {
+    "skog-vila-benen": ["en räv på en bänk", "en katt på en gungstol", "en hund på en skolbänk", "en hund på en sittsäck"],
+    "grotta-sittpaus": ["en hund på ett stenblock", "en mus på en klippa", "en hund på en kontorsstol", "en mus i en barnstol", "en katt i en sittsäck", "en mus på en gunghäst"],
+    "ljus-i-kvallen": ["en hund med en pannlampa", "en katt med en fackla", "en kanin med en ljuslykta", "en hund med en glödlampa"],
+    "skog-kvallsljus": ["en räv med en pannlampa", "en räv med en pumpalykta"],
+    "grotta-forsta-skenet": ["en hund med en fackla", "en hund med en ljusstake", "en hund med en skrivbordslampa"],
+  };
+  for (const u of SKRIV.filter((x) => x.id in nej)) {
+    for (const fras of nej[u.id]!) assert.equal(bedomUppdragsSvar(u.krav!, fras).ok, false, `${u.id}: ${fras}`);
+    for (const fras of [...ja[u.id]!, ...(u.hjalp ?? []), ...(u.val?.grupper ?? []).flatMap((g) => g.forslag.map((f) => f.fras))]) assert.equal(bedomUppdragsSvar(u.krav!, fras).ok, true, `${u.id}: ${fras}`);
+  }
+});
+
 test("T05: varje migrerat uppdrag har minst tre ja och två nej genom spelets riktiga tolk", () => {
   const migrerade = SKRIV.filter((u) => u.krav?.betydelse);
   assert.equal(migrerade.length, Object.keys(prov.uppdrag).length, "inget migrerat uppdrag får sakna svarsprov");

@@ -498,6 +498,99 @@
         "en hund med en mössa",
         "en hund som heter paket"
       ]
+    },
+    "skog-vila-benen": {
+      "ja": [
+        "en kanin på en stubbe",
+        "en räv på en stock",
+        "en katt på en sten",
+        "en räv på en bänk",
+        "en uggla på en stol",
+        "en katt på en gungstol",
+        "en hund på en skolbänk",
+        "en hund på en sittsäck"
+      ],
+      "nej": [
+        "en hund bredvid en stol",
+        "en stubbe",
+        "en hund som heter stubbe",
+        "en hund med en sten",
+        "en räv under en stubbe"
+      ]
+    },
+    "grotta-sittpaus": {
+      "ja": [
+        "en groda på en sten",
+        "en katt på en stol",
+        "en kanin i en fåtölj",
+        "en hund på ett stenblock",
+        "en mus på en klippa",
+        "en hund på en kontorsstol",
+        "en mus i en barnstol",
+        "en katt i en sittsäck",
+        "en mus på en gunghäst"
+      ],
+      "nej": [
+        "en sten",
+        "en groda under en stol",
+        "en hund bredvid en sten",
+        "en hund som heter stol",
+        "en hund med en stol"
+      ]
+    },
+    "ljus-i-kvallen": {
+      "ja": [
+        "en hund med en lykta",
+        "en kanin med en ficklampa",
+        "en katt vid en lampa",
+        "en lykta",
+        "en hund med en pannlampa",
+        "en katt med en fackla",
+        "en kanin med en ljuslykta",
+        "en hund med en glödlampa"
+      ],
+      "nej": [
+        "en hund med en sol",
+        "en hund med en stjärna",
+        "en hund som heter lykta",
+        "en katt i en lampa",
+        "en hund med en måne"
+      ]
+    },
+    "skog-kvallsljus": {
+      "ja": [
+        "en räv med en lykta",
+        "en kanin med en ficklampa",
+        "en hund med en lampa",
+        "en räv med en pannlampa",
+        "en räv med ett stearinljus",
+        "en räv med en pumpalykta"
+      ],
+      "nej": [
+        "en lykta",
+        "en räv med en sol",
+        "en räv som heter lykta",
+        "en räv i en lampa",
+        "en räv med en sten"
+      ]
+    },
+    "grotta-forsta-skenet": {
+      "ja": [
+        "en kanin med en lykta",
+        "en katt vid en lampa",
+        "en hund med en ficklampa",
+        "en hund med en pannlampa",
+        "en hund med en fackla",
+        "en hund med en ljusstake",
+        "en hund med en skrivbordslampa"
+      ],
+      "nej": [
+        "en lykta",
+        "en hund som heter ljus",
+        "en hund i en lampa",
+        "en hund med en sol",
+        "en hund med en kristall"
+      ]
     }
   }
 }

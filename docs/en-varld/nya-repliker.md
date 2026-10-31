@@ -437,3 +437,23 @@ Sex uppdrag ur Textpaket 02: `magen-kurrar`, `skog-magen-kurrar`, `sjo-fruktpaus
 | | bengtsson | `data/bengtsson.json` `dags-att-vila.nastan` | Din skapelse får stanna! Jag letar efter en viloplats, som en säng eller soffa. |
 | | bengtsson | `data/bengtsson.json` `grotta-mjuk-vila.nastan` | Din skapelse får stanna! Jag letar efter en mjuk sovplats, som en säng eller madrass. |
 | | bengtsson | `data/bengtsson.json` `present-till-en-van.nastan` | Din skapelse får stanna! Jag letar efter en present, som en blomma, bok eller leksak. |
+
+### B1: sittplatser och ljus — inspelningar till Grok
+
+Fem uppdrag ur Textpaket 02: `skog-vila-benen`, `grotta-sittpaus`, `ljus-i-kvallen`, `skog-kvallsljus` och `grotta-forsta-skenet`. Tacktexterna är oförändrade och inspelade. De fem nya starttexterna och formeln ”ett klippblock” finns också i `vantar_rost`. Formeln var tidigare felaktigt ”en klippblock”, som har en inspelning; den rättade formen har ingen. Nästan-replikerna saknar källa i `kallor`.
+
+| Klar | Röst | Datafil och nyckel | Text |
+|---|---|---|---|
+| | bengtsson | `data/bengtsson.json` `skog-vila-benen.text_bengtsson` | En vän är trött i benen. Kan du ordna något att sitta på i skogen? |
+| | bengtsson | `data/bengtsson.json` `skog-vila-benen.nastan` | Din skapelse får stanna! Jag letar efter en sittplats, som en stubbe eller stock. |
+| | bengtsson | `data/bengtsson.json` `grotta-sittpaus.text_bengtsson` | En vän vill sitta och titta på allt som glimmar! Vad kan den sitta på? |
+| | bengtsson | `data/bengtsson.json` `grotta-sittpaus.nastan` | Din skapelse får stanna! Jag letar efter en sittplats, som en sten eller stol. |
+| | bengtsson | `data/bengtsson.json` `ljus-i-kvallen.text_bengtsson` | Ditt djur vill se bättre i kvällsmörkret! Kan du ge det en lampa? |
+| | bengtsson | `data/bengtsson.json` `ljus-i-kvallen.nastan` | Din skapelse får stanna! Jag letar efter något som lyser, som en lykta eller ficklampa. |
+| | bengtsson | `data/bengtsson.json` `skog-kvallsljus.text_bengtsson` | Det blir mörkt mellan träden! Kan du ge en vän något som lyser? |
+| | bengtsson | `data/bengtsson.json` `skog-kvallsljus.nastan` | Din skapelse får stanna! Jag letar efter ljus, som en lykta eller ficklampa. |
+| | bengtsson | `data/bengtsson.json` `grotta-forsta-skenet.text_bengtsson` | Här inne i grottan är det mörkt! Kan du ge en vän något som lyser? |
+| | bengtsson | `data/bengtsson.json` `grotta-forsta-skenet.nastan` | Din skapelse får stanna! Jag letar efter något som lyser, som en lykta eller lampa. |
+| | modellformel | spelets formel för klippblock | ett klippblock |
+
+Åtta hjälpfraser har en sammansatt `rostPlan` men ingen hel inspelning, till exempel ”en katt på en sten” och ”en kanin med en ficklampa”.
