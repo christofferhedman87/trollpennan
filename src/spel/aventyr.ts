@@ -67,6 +67,7 @@ export type Uppdrag = {
   text_bengtsson?: string;
   text_bengtsson_annat_djur?: { text: string; granskad: false };
   klart_bengtsson?: string;
+  klart_bengtsson_annat_djur?: { text: string; granskad: false };
   /** false = Copilot har inte granskat texten. */
   granskad?: boolean;
   stjarnor: number;
@@ -269,11 +270,11 @@ export function uppdragText(u: Pick<Uppdrag, "givare" | "text" | "text_bengtsson
   return djur && djur !== "kanin" ? u.text_bengtsson_annat_djur?.text ?? bytFrysDjur(bas, djur) : bas;
 }
 
-export function uppdragKlart(u: Pick<Uppdrag, "givare" | "klart" | "klart_bengtsson"> & { id?: string }, s = hamtaAng(), malDjur?: string): string {
+export function uppdragKlart(u: Pick<Uppdrag, "givare" | "klart" | "klart_bengtsson" | "klart_bengtsson_annat_djur"> & { id?: string }, s = hamtaAng(), malDjur?: string): string {
   const bas = fyll(u.givare && u.klart_bengtsson ? u.klart_bengtsson : u.klart, { djur: foljeNamn(s) });
   if (u.id !== "kanin-fryser") return bas;
   const djur = (malDjur ?? forstaDjurKropp(s?.ang)).toLocaleLowerCase("sv");
-  return djur && djur !== "kanin" ? bytFrysDjur(bas, djur) : bas;
+  return djur && djur !== "kanin" ? u.klart_bengtsson_annat_djur?.text ?? bytFrysDjur(bas, djur) : bas;
 }
 
 /** Raden "Nytt uppdrag …" med givarens namn när uppdraget har en givare. */

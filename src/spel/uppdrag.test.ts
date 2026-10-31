@@ -211,8 +211,11 @@ test("önskningar visas i Bengtssons röst: mallar i firande.json, originaltexte
 test("B1: värmeuppdraget talar begripligt om andra djur än kaninen", () => {
   const u = SKRIV.find((x) => x.id === "kanin-fryser")!;
   assert.equal(uppdragText(u, "kanin"), u.text_bengtsson);
+  assert.equal(u.text_bengtsson_annat_djur?.granskad, false);
+  assert.equal(u.klart_bengtsson_annat_djur?.granskad, false);
   for (const djur of ["hund", "bi", "fisk"]) {
     const text = uppdragText(u, djur);
     assert.equal(text, "Brr! Ditt djur fryser. Kan du skriva fram något varmt att ha på sig?", djur);
+    assert.equal(uppdragKlart(u, undefined, djur), "Så skönt! Nu kan ditt djur sluta huttra.", djur);
   }
 });
