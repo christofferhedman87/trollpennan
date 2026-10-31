@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { tolka } from "../tolk/tolka.ts";
+import { ordLista, tolka } from "../tolk/tolka.ts";
 import { tolkaByggFormel } from "../tolk/byggform.ts";
 import { byggTraff, gePassar, geTraff, kompisTraff, laggPa, ONSK, ONSK_BYGG } from "./onska.ts";
+import { taggarAv } from "./taggar.ts";
 import { djurMedUid, uppdateraDjurSpar } from "./minneDjur.ts";
 import { harKvittoAndring } from "./skapa/kvittoSkapelser.ts";
 import { hamtaOnskeMiss, noteraOnskeMiss, tystaBannrar } from "./skapa/kvitto.ts";
@@ -75,7 +76,7 @@ test("frusna öron får rätt regional värme", () => {
 
 test("kompisönskan kräver ett djur och avvisar saker", () => {
   const o = ONSK.onskningar.find((o) => o.id === "ensam")!;
-  for (const [fras, ok] of [["en kanin", true], ["en hund", true], ["en robot", true], ["en boll", false], ["en stol", false]] as const) {
+  for (const [fras, ok] of [["en kanin", true], ["en hund", true], ["en robot", true], ["en räv", true], ["ett får", true], ["en örn", true], ["en isbjörn", true], ["en sköldpadda", true], ["en boll", false], ["en stol", false]] as const) {
     const u = tolka(fras); assert.equal(u.typ, "skapad"); if (u.typ !== "skapad") continue;
     assert.equal(kompisTraff(u.varelse, o), ok, fras);
   }
@@ -136,4 +137,67 @@ test("alla djurönskningar har en egen läsbar ledtråd och minst två provade h
     assert.ok(o.nastan && o.nastan.length > 12, o.id);
     assert.ok(new Set(o.exempel).size >= 2, o.id);
   }
+});
+
+
+test("vanliga glasögon hjälper även efter solglasögon, med och utan äldre v2-metadata", () => {
+  const o = ONSK.onskningar.find((o) => o.id === "suddigt")!;
+  const sol = laggPa(katt(), "med solglasögon")!;
+  for (const fore of [sol, { ...sol, tillbehor: sol.tillbehor.map(({ id, farg, glans }) => ({ id, farg, glans })) }]) {
+    assert.ok(gePassar(fore, o));
+    const efter = laggPa(fore, "med glasögon")!;
+    assert.equal(geTraff(fore, efter, o), true, efter.formel);
+    const gammal = { ...efter, tillbehor: efter.tillbehor.map(({ id, farg, glans }) => ({ id, farg, glans })) };
+    assert.equal(geTraff(fore, gammal, o), true, "äldre v2 med två tillbehör som delar modell");
+  }
+});
+
+test("uttryckligen kalla plagg värmer inte, men senare varma plagg kan lösa önskan", () => {
+  for (const [id, kallt, varmt] of [["frusna-tassar", "med kalla strumpor", "med varma strumpor"], ["frusna-oron", "med kall luva", "med varm luva"]] as const) {
+    const o = ONSK.onskningar.find((o) => o.id === id)!;
+    const bas = katt(); const kall = laggPa(bas, kallt)!;
+    assert.equal(geTraff(bas, kall, o), false, kallt);
+    const legacy = { ...kall, tillbehor: kall.tillbehor.map(({ id, farg, glans }) => ({ id, farg, glans })) };
+    assert.equal(geTraff(bas, legacy, o), false, "äldre v2 följer också sitt uttryckliga ord kall");
+    assert.ok(gePassar(kall, o));
+    assert.equal(geTraff(kall, laggPa(kall, varmt)!, o), true, varmt);
+  }
+});
+
+
+test("kompisar använder kroppens interna id för alla faktiskt skapade djurord", () => {
+  const o = ONSK.onskningar.find((o) => o.id === "ensam")!;
+  let antal = 0;
+  for (const ord of ordLista().filter((o) => o.klass === "djur")) {
+    const u = tolka(`${ord.genus === "n" ? "ett" : "en"} ${ord.visa}`);
+    if (u.typ !== "skapad") continue;
+    assert.ok(kompisTraff(u.varelse, o), `${ord.visa} → ${u.varelse.kropp}`); antal++;
+  }
+  assert.ok(antal > 50, "provet täcker den riktiga djurordlistan");
+});
+
+test("äldre kvarstående tassönskan går att lösa med ett korrekt svar men inte med hatt", () => {
+  const o = ONSK.onskningar.find((o) => o.id === "frusna-tassar")!;
+  const varm = laggPa(katt(), "med strumpor")!;
+  const legacy = { ...varm, tillbehor: varm.tillbehor.map(({ id, farg, glans }) => ({ id, farg, glans })) };
+  for (const [fras, ok] of [["med strumpor", true], ["med stövlar", true], ["med hatt", false], ["med kalla strumpor", false]] as const) {
+    assert.equal(geTraff(legacy, laggPa(legacy, fras)!, o, fras), ok, fras);
+  }
+});
+
+
+test("äldre tillbehör läses utan mutation eller lagringsskrivning", (t) => {
+  const gamla = Object.getOwnPropertyDescriptor(globalThis, "localStorage");
+  let skrivningar = 0;
+  Object.defineProperty(globalThis, "localStorage", { configurable: true, value: { getItem: () => null, setItem: () => { skrivningar++; } } });
+  t.after(() => { if (gamla) Object.defineProperty(globalThis, "localStorage", gamla); else Reflect.deleteProperty(globalThis, "localStorage"); });
+  const d = laggPa(katt(), "med kalla strumpor och solglasögon och glasögon")!;
+  const legacy = { ...d, tillbehor: d.tillbehor.map(({ id, farg, glans }) => ({ id, farg, glans })) };
+  const sparat = JSON.stringify(legacy);
+  for (let i = 0; i < 2; i++) {
+    const taggar = taggarAv(legacy, false);
+    assert.ok(taggar.has("sol") && taggar.has("se") && taggar.has("kall"));
+    assert.equal(taggar.has("varm:tassar"), false);
+  }
+  assert.equal(JSON.stringify(legacy), sparat); assert.equal(skrivningar, 0);
 });

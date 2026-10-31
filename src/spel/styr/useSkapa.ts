@@ -73,7 +73,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
       if (u.typ !== "skapad") { if (u.typ === "behover_djur") { useMinne.getState().sparaOkanda(u.okanda); for (const m of u.meddelanden) visaBanner(m, "okand", "okand_inget");
         }
         return; }
-      useMinne.getState().uppdateraDjur(aktiv.uid, u.varelse); belona(u, aktiv.uid, opt.hand); noteraSolSkapelse(u.varelse); if (geTraff(bas, u.varelse, ons)) uppfyll(aktiv, ons.tack, ons.stjarnor, aktiv.uid);
+      useMinne.getState().uppdateraDjur(aktiv.uid, u.varelse); belona(u, aktiv.uid, opt.hand); noteraSolSkapelse(u.varelse); if (geTraff(bas, u.varelse, ons, raw)) uppfyll(aktiv, ons.tack, ons.stjarnor, aktiv.uid);
       else {
         const text = nastanRad(nastanRef.current++, ons);
         noteraOnskeMiss({ id: aktiv.id, uid: aktiv.uid, nastan: text }); ljud.nastan();
@@ -118,7 +118,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
       }
     }
     if (varldRef.current === "gard") visaVarld("ang"); if (aktiv?.kalla === "djur" && aktiv.typ === "kompis" && sista) { const ons = ONSK.onskningar.find((o) => o.id === aktiv.id); if (ons && kompisTraff(sista, ons)) uppfyll(aktiv, ons.tack, ons.stjarnor, sista.uid);
-      else if (ons) { const text = nastanRad(nastanRef.current++, ons); noteraOnskeMiss({ id: aktiv.id, uid: aktiv.uid, nastan: text }); if (!skaparKvitto()) visaBubbla(text, 0.5, 0.3, false, true, false, "nastan"); }
+      else if (ons && k.t.onskaOpp) { const text = nastanRad(nastanRef.current++, ons); noteraOnskeMiss({ id: aktiv.id, uid: aktiv.uid, nastan: text }); if (!skaparKvitto()) visaBubbla(text, 0.5, 0.3, false, true, false, "nastan"); }
       setOnskaOpp(false);
     }
     const vant = vantarRef.current; if (vant && sista && passarDjur(sista, vant.taggar)) { vantarRef.current = null; if (vant.slag === "oppna") {
