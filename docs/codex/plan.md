@@ -4,16 +4,29 @@
 
 
 
+
+## A2: senaste slutverifiering före merge
+
+Den gemensamma målmodulen, målkort med uttryckligt textbyte, separat Gåta, fri-världstips och boklayouten finns i #289. T-03 är delresultat: alla 157 mål och den äldre gåvohyllan återstår i B/C/D. Barnets text och sparformat v2 ändras inte av layouten.
+
+Kritisk granskning hittade och rättade verklig rems-/X-klippning, rotation, Väktaröverlapp, avsaknad av världsyta i375×667, CSS-kaskad, för bred hjälphylla, klippt Idé/stavningssvar och dold guldinstruktion. Idé och svar rullas fram, guldskrivandet prioriteras med befintlig instruktion, och nya ord/vald bricka hålls hela i remsan. Senaste guldprovet med föregående Idé är grönt i375×667: Idé/Gåta ändrar inte ordet, Mellanslag/sudda fungerar, hela frasen blir guld och önskan uppfylls/sparas. Hela layoutprovet är också grönt i375×667, inklusive hjälp/full lapp/stavning och44px-X. Interna bilder granskade.
+
+Hologrammet passar sin faktiska modellruta mellan HUD och bokkontroller. Den separata shaderfixen #293 är publicerad; förhandsvisningen ändrar inga sparpositioner. Skogens hela hologramflöden i375×667 och667×375 är gröna, inklusive fyra modeller, stenens90bildrutor med1–1egna ritanrop, rotation, skapande och sparinvarians. Datorfallback1280×720 och återstående Sjön/Grottan812×375 körs. Standardtelefonens tidigare bok-/guld-/platsprov är gröna; senaste samordnade sju grindar på6f2c9ac var565/565, och en ny fullomgång körs på sista koden före godkännande/merge.
+
+Geometriprovet har valfri QA_TANGENTER=fysiska: riktiga ASCII-tangenter och faktiska skärmtryck på å/ä/ö, med exakt läsback efter inmatning/radering. Standardläget behåller samtliga skärmtryck. Synlighets- och ritanropsgränser är oförändrade. Tre svagaste punkter:157måls semantik/gåvohjälp kvar, fysisk Safari/hårdvara inte provad, nya godkända inspelningar återstår.
+
+C1a #291 och C1b #294 samordnas därefter. C1b:s appkod e61cbd3 har572/572 och kritisk kodgranskning; sju fraser och omladdning är gröna i vardera huvudvyn. Fysisk placering och C2:s antal/upprepade saker är öppna. Textpaket01 i #292 väntar fortfarande på Christoffers faktiska läsning; inga granskad-flaggor är ändrade.
+
 ## C1a slutverifiering efter A2 och hologramrättningen
 
-#291 är samordnad med A2:s `9d247ba` och den publicerade grafikfixen, utan språkändringar. Kod `0e656bf`: alla sju slutgrindar gröna, 565/565 produkttester. Samma 1 726 fraser ger fortfarande byteidentiska fulla utfall för båda tolkarna, SHA-256 `aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3`. Oberoende granskare har kontrollerat att de sex modulerna är identiska med godkända `d2a5d29`; C1b ingår inte. Riktigt UI-prov körs mot ett fryst separat bygge i stående, liggande och datorvy. T-07/T-08 är fortfarande öppna; funktionsändringen finns separat i utkast #294. Före leverans: invänta A2, samordna dokumentationen mot main, slutgranska och kontrollera publiceringen. Tre svagaste punkter: detta förarbete rättar inga språkfel, UI är ännu inte färdigkontrollerat, fysisk svensk hårdvara/Safari är inte provad.
+#291 är samordnad med A2:s `9d247ba` och den publicerade grafikfixen, utan språkändringar. Kod `0e656bf`: alla sju slutgrindar gröna, 565/565 produkttester. Samma 1 726 fraser ger fortfarande byteidentiska fulla utfall för båda tolkarna, SHA-256 `aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3`. Oberoende granskare har kontrollerat att de sex modulerna är identiska med godkända `d2a5d29`; C1b ingår inte. Riktigt UI-prov är grönt mot ett fryst separat bygge i stående, liggande och datorvy: första skapelsen sparas och återkommer efter omladdning, utan sidrullning eller externa anrop. T-07/T-08 är fortfarande öppna; funktionsändringen finns separat i utkast #294. Före leverans: invänta A2, samordna dokumentationen mot main, slutgranska och kontrollera publiceringen. Tre svagaste punkter: detta förarbete rättar inga språkfel, UI-provet täcker första skapelsen men inte fysisk iPad, fysisk svensk hårdvara/Safari är inte provad.
 
 
 ## Steg 0: hologrammets shader bevaras, 2026-10-31
 
 Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var 40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.
 
-Kod `9a1b211`: faktisk shader-regression röd före och grön efter; alla sju grindar gröna, 561/561. Provet täcker delat original, materialarray, 200 materialpass och samma solid-uniform vid Trolla. `prov-platsforhand.mjs` är rött mot baslinjen (90 nollvärden) och grönt i hela Grottan-flödet i 375×812 och 812×375: stenens egna WebGL-anrop är 1–1 i var och en av 90 bildrutor, och även rotation, sparinvarians, skapande samt platsbyte är gröna. Interna bilder granskade, blå och linjerad sten. Inga mätgränser lättade. Oberoende slutgodkännande och main-Cloudflare/SHA-kontroll återstår före publicering. Tre svagaste punkter: molnets mjukvarurendering säger inget om fysisk mobilprestanda; Safari/GPU-variationer är inte provade; nya shader-varianter behöver fortsatt samma mätning.
+Kod `9a1b211`: faktisk shader-regression röd före och grön efter; alla sju grindar gröna, 561/561. Provet täcker delat original, materialarray, 200 materialpass och samma solid-uniform vid Trolla. `prov-platsforhand.mjs` är rött mot baslinjen (90 nollvärden) och grönt i hela Grottan-flödet i 375×812 och 812×375: stenens egna WebGL-anrop är 1–1 i var och en av 90 bildrutor, och även rotation, sparinvarians, skapande samt platsbyte är gröna. Interna bilder granskade, blå och linjerad sten. Inga mätgränser lättade. Oberoende Codex-granskare slutgodkände exakt `6c0cb00`. #293 är mergad som `d743ad7` och publicerad: main-Cloudflare `124422225436` grön, alla sex serverade start-/spel-filer byteidentiska med det lokala bygget (SHA-256). Tre svagaste punkter: molnets mjukvarurendering säger inget om fysisk mobilprestanda; Safari/GPU-variationer är inte provade; nya shader-varianter behöver fortsatt samma mätning.
 
 
 ## Mandat och statusord

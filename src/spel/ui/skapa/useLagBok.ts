@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+const kortYta = () => window.innerHeight <= 420 || window.innerWidth <= window.innerHeight && window.innerHeight <= 720;
 export function useLagBok() {
-  const [lag, setLag] = useState(() => typeof window !== "undefined" && window.innerHeight <= 420);
-  useEffect(() => { const synka = () => setLag(window.innerHeight <= 420); window.addEventListener("resize", synka); return () => window.removeEventListener("resize", synka); }, []);
+  const [lag, setLag] = useState(() => typeof window !== "undefined" && kortYta());
+  useEffect(() => { const synka = () => setLag(kortYta()); window.addEventListener("resize", synka); return () => window.removeEventListener("resize", synka); }, []);
   return lag;
 }

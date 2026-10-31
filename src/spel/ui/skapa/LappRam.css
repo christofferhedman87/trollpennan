@@ -10,3 +10,35 @@
 
 .sk-lapp-visa::after { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); flex: none; margin-right: 3px; }
 .sk-lapp-visa .sk-lapp-text { flex: 1; }
+
+
+/* Kort porträtt efter rotation: ett riktigt världsfönster ovanför boken, utan mindre text/tangenter. */
+@media (orientation: portrait) and (max-height: 720px) {
+  .sk-lager .sk-ark { height: calc(100dvh - 200px); max-height: calc(100dvh - 200px); gap: 6px; }
+  .sk-lager .sk-topp { flex: 0 0 22px; }
+  .sk-lager .sk-penn-knapp { width: 64px; height: 64px; }
+  .sk-lager .sk-penn-knapp img { width: 56px; height: 56px; }
+  .sk-lager .sk-boklayout { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 60px minmax(52px, 1fr) auto; gap: 6px; flex: 1; min-width: 0; min-height: 0; }
+  .sk-lager .sk-boklayout > .sk-remsa { grid-row: 1; order: 0; min-height: 60px; max-height: 60px; padding: 0 104px 0 8px; }
+  .sk-lager .sk-remsa-ord { display: flex; align-items: center; gap: 4px; width: 100%; height: 52px; min-width: 0; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+  .sk-lager .sk-remsa-ord .sk-ord.flerord { max-width: 100%; white-space: normal; line-height: 1; }
+  .sk-lager .sk-remsa-ord .sk-ord, .sk-lager .sk-remsa-ord .sk-skrivbricka { flex-shrink: 0; }
+  .sk-lager .sk-remsa-verktyg { flex-direction: row; top: 6px; right: 6px; bottom: auto; width: 92px; height: 44px; gap: 4px; }
+  .sk-lager .sk-innehall { grid-row: 2; display: flex; flex-direction: column; gap: 4px; min-width: 0; min-height: 0; overflow-y: auto; }
+  .sk-lager .sk-innehall .sk-lapp { margin: 0; transform: none; }
+  .sk-lager .sk-inmatning { grid-row: 3; display: flex; flex-direction: column; gap: 4px; min-width: 0; min-height: 0; }
+  .sk-lager .sk-inmatning .sk-tangenter { margin-top: 0; gap: 4px; }
+  .sk-lager .sk-hjalprad { min-height: 44px; }
+  .sk-lager .sk-ide-rad { gap: 4px; margin: 0; }
+  .sk-lager .sk-ide-bit { width: 32px; height: 32px; }
+  .sk-lager .sk-ide-bit img { width: 26px; height: 26px; }
+  .sk-lager .sk-ark:has(.sk-svar) .sk-hjalprad { display: none; }
+  .sk-lager .sk-svar { margin: 0; padding: 6px; gap: 4px; }
+  .sk-lager .sk-ark[data-vy="hjalp"] .sk-boklayout { grid-template-rows: 60px auto minmax(0, 1fr); }
+  .sk-lager .sk-ark:has(.sk-ide-rad):not(:has(.sk-spok)) .sk-tips { display: none; }
+  .sk-lager .sk-hylla-ram { min-width: 0; min-height: 0; flex: 1; }
+  .sk-lager .sk-hylla { height: 100%; box-sizing: border-box; grid-template-rows: minmax(0, 1fr); }
+  .sk-lager .sk-sektion, .sk-lager .sk-prefix { grid-row: auto; }
+  .sk-lager .sk-kort { height: 100%; min-height: 88px; }
+  .sk-lager .sk-mal-losning { min-height: 88px; }
+}
