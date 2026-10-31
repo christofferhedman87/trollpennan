@@ -83,3 +83,26 @@ test("T08: siffror mitt i ett ord öppnar aldrig spärren", () => {
     for (const s of [`en katt med ${n} hatt`, `en katt med ${n} hattar`, `${n} katter`, `en katt med ${n} röda äpplen`]) assert.equal(arSparrat(s), false, s);
   }
 });
+
+// Före 58aea12 tog inmatningen bort alla siffror innan spärren. Det som då spärrades ska fortfarande spärras,
+// även när en fristående siffra står mellan två ordhalvor ("pi 0 stol").
+test("T08: en fristående siffra mellan ordhalvor öppnar aldrig det som spärrades utan siffror", () => {
+  let antal = 0;
+  const luckor: string[] = [];
+  for (const term of [...BLOCK.ord, ...BLOCK.stammar]) {
+    const w = term.toLocaleLowerCase("sv");
+    for (let i = 1; i < w.length; i++) {
+      const a = w.slice(0, i);
+      const b = w.slice(i);
+      for (const d of ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "22", "0 0"]) {
+        for (const v of [`${a} ${d} ${b}`, `${a}${d} ${b}`, `${a} ${d}${b}`, `en katt med ${a} ${d} ${b}`]) {
+          if (!arSparrat(v.replace(/[0-9]/g, ""))) continue;
+          antal++;
+          if (!arSparrat(v) || tolka(v, { kalla: "skriv" }).typ !== "sparr") luckor.push(v);
+        }
+      }
+    }
+  }
+  assert.ok(antal > 3000, `för få delade varianter provade: ${antal}`);
+  assert.deepEqual(luckor.slice(0, 12), [], `${luckor.length} delade varianter kom förbi spärren`);
+});

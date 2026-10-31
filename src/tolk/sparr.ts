@@ -62,6 +62,14 @@ function arOrdform(token: string): boolean {
 }
 
 export function arSparrat(raw: string): boolean {
+  if (sparratLasning(raw)) return true;
+  // Före T-08 tog inmatningen bort alla siffror innan spärren. Den läsningen prövas fortfarande, så att en skriven
+  // siffra aldrig öppnar något som spärrades förut, till exempel en fristående siffra mellan ordhalvor ("f 0 an").
+  const utanSiffror = raw.replace(/[0-9]/g, "");
+  return utanSiffror !== raw && sparratLasning(utanSiffror);
+}
+
+function sparratLasning(raw: string): boolean {
   const tokens = raw
     .toLocaleLowerCase("sv")
     .split(/\s+/)
