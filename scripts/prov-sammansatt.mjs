@@ -17,6 +17,7 @@ const fraser = [
   { text: "en katt bredvid en cykel", relation: "bredvid", id: "cykel", antal: 1, vand: true },
   { text: "en katt bredvid en boll", relation: "bredvid", id: "boll", antal: 1 },
   { text: "en katt med två röda äpplen", relation: "med", id: "apple", antal: 2 },
+  { text: "en kanin med en filt", relation: "plagg", id: "filt", antal: 1 },
   { text: "en kanin med två strumpor", relation: "plagg", id: "strumpa", antal: 2 },
   { text: "en katt med tio hattar", relation: "plagg", id: "hatt", antal: 10 },
   { text: "en katt i en hatt", relation: "i", id: "hatt", antal: 1 },
@@ -44,7 +45,7 @@ function geometri(g, p) {
     for (const sak of saker) assert.ok(sak.lokal.min[0] > k.max[0] || sak.lokal.max[0] < k.min[0], "separata saker står bredvid kroppen");
   }
   if (p.vand) assert.ok(o.max[0] - o.min[0] > o.max[2] - o.min[2], "cykelns framaxel stämmer med placeringsmåtten");
-  if (p.relation === "plagg") assert.ok(saker[0].lokal.min.reduce((s, x, i) => s + Math.abs(x - saker[1].lokal.min[i]), 0) > 0.03, "flera plagg har skilda fästpunkter");
+  if (p.relation === "plagg" && p.antal > 1) assert.ok(saker[0].lokal.min.reduce((s, x, i) => s + Math.abs(x - saker[1].lokal.min[i]), 0) > 0.03, "flera plagg har skilda fästpunkter");
 }
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || "/usr/bin/chromium", args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader"] });
 let provSida = null, provText = "";
@@ -67,7 +68,9 @@ try {
     await page.goto(adress, { timeout: 120000 }); await page.waitForFunction(() => !!window.__trollMinne);
     const alla = () => page.evaluate(() => { const s = window.__trollMinne.getState(); return [...s.ang, ...s.sovande, ...s.hemma.map((h) => h.spec), ...Object.values(s.platsSkapelser).flat(), ...s.garden]; });
     const skapade = [];
-    for (const p of fraser.filter((p) => process.env.QA_FALL ? process.env.QA_FALL.split("|").includes(p.text) : !p.extra)) {
+    const valda = fraser.filter((p) => process.env.QA_FALL ? process.env.QA_FALL.split("|").includes(p.text) : !p.extra);
+    assert.ok(valda.length > 0, "QA_FALL måste välja minst ett faktiskt provfall");
+    for (const p of valda) {
       provText = p.text;
       await page.getByTestId("pennans-bok").click(); await page.getByTestId("tangentbord").waitFor();
       await page.locator('[data-dal="skrivbricka"]').click();
@@ -84,7 +87,7 @@ try {
         if (process.env.QA_MATT) console.log("MODELLMÅTT", JSON.stringify(await page.evaluate(() => window.__holoGeometri)));
         await page.waitForFunction(() => !document.querySelector(".sk-ark")?.classList.contains("sk-ark--trollar"));
         await page.evaluate(() => { window.__qaHoloVanta = { senaste: null, antal: 0 }; });
-        await page.waitForFunction(({ text, extra }) => {
+        await page.waitForFunction(({ text, relation }) => {
           const g = window.__holoGeometri, v = window.__qaHoloVanta;
           if (!g || g.formel !== text || !window.__trollholo?.nyckel?.endsWith(text) || v.senaste === g) return v.antal >= 2;
           v.senaste = g;
@@ -92,7 +95,7 @@ try {
           const r = [g.kropp, ...g.saker, ...g.plagg].map((x) => x.skarm);
           const w = Math.max(...r.map((x) => x.x1)) - Math.min(...r.map((x) => x.x0)), h = Math.max(...r.map((x) => x.y1)) - Math.min(...r.map((x) => x.y0));
           const hinder = [...document.querySelectorAll(".sk-penn-ora, .sk-stang, .sk-gata")].map((e) => e.getBoundingClientRect());
-          const storlek = extra ? h >= 20 && w >= 12 : Math.max(w, h) >= 64;
+          const storlek = relation === "kropp" ? h >= 20 && w >= 12 : Math.max(w, h) >= 64;
           const hel = r.every((x) => x.x0 >= 0 && x.x1 <= (liggande ? a.left : innerWidth) && x.y0 >= 90 && x.y1 <= (liggande ? innerHeight : a.top) && hinder.every((o) => Math.max(0, Math.min(x.x1,o.right)-Math.max(x.x0,o.left))*Math.max(0,Math.min(x.y1,o.bottom)-Math.max(x.y0,o.top)) <= 1));
           v.antal = storlek && hel ? v.antal + 1 : 0;
           return v.antal >= 2;
@@ -102,7 +105,7 @@ try {
         if (process.env.QA_MATT) console.log("Holo-ruta", await page.evaluate(() => ({ holo:window.__trollholo, ring:window.__trollring, vy:window.__trollvy, rutor:Object.fromEntries(["canvas", ".sk-ark", ".sk-penn-ora", ".sk-stang", ".sk-gata"].map((s)=>[s, document.querySelector(s)?.getBoundingClientRect().toJSON()])) })));
         geometri(holo, p);
         const rutor = [holo.kropp, ...holo.saker, ...holo.plagg].map((x) => x.skarm);
-        assert.ok(Math.max(Math.max(...rutor.map((r) => r.x1)) - Math.min(...rutor.map((r) => r.x0)), Math.max(...rutor.map((r) => r.y1)) - Math.min(...rutor.map((r) => r.y0))) >= (p.extra ? 20 : 64), "förhandsvisningen går att urskilja");
+        assert.ok(Math.max(Math.max(...rutor.map((r) => r.x1)) - Math.min(...rutor.map((r) => r.x0)), Math.max(...rutor.map((r) => r.y1)) - Math.min(...rutor.map((r) => r.y0))) >= (p.relation === "kropp" ? 20 : 64), "förhandsvisningen går att urskilja");
         const ark = await page.locator(".sk-ark").boundingBox();
         const hinder = await page.locator(".sk-penn-ora, .sk-stang, .sk-gata").evaluateAll((list) => list.map((e) => e.getBoundingClientRect().toJSON()));
         for (const ruta of rutor) {
