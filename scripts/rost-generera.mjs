@@ -5,6 +5,7 @@
 //   Idempotent: filnamnet är en hash av text (efter 'uttal') + röst + modell + inställningar + format; finns filen görs inget anrop.
 //   Skriver public/ljud/rost/<hash>.mp3 (ffmpeg, mono, 'kbps') och data/rost-manifest.json. Tar bort föräldralösa mp3.
 //   --tak = max krediter i den här körningen (svarshuvudet character-cost); --torr = bara räkna, inga anrop.
+//   --behall = ta inte bort föräldralösa mp3 (filer utan källtext ligger kvar). --torr listar vad som skulle tas bort ('bort').
 //   TTS-2: normaliserar alla filer till data/rost.json 'ljudniva' (loudnorm, lokalt; --utan-jamning hoppar över) och skriver
 //   data/rost-klient.json (det enda spelet bundlar). Nyckeln skrivs aldrig ut.
 import crypto from "node:crypto";
@@ -20,6 +21,7 @@ const arg = (n, d) => {
   return i >= 0 ? process.argv[i + 1] : d;
 };
 const TORR = process.argv.includes("--torr");
+const BEHALL = process.argv.includes("--behall");
 const TAK = Number(arg("tak", "15000"));
 const ROT = process.cwd();
 const las = (f) => JSON.parse(fs.readFileSync(path.join(ROT, f), "utf8"));
@@ -341,18 +343,15 @@ else if (!process.argv.includes("--utan-jamning")) {
   behov.jamnat = Object.fromEntries(Object.entries(snitt).map(([k, v]) => [k, `${v.length} filer, före ${Math.round((v.reduce((a, b) => a + b, 0) / v.length) * 10) / 10} LUFS`]));
 }
 
+// 3) föräldralösa filer bort (inte med --behall), manifest ut
+const anvanda = new Set([intro?.f, ...Object.values(rader).map((r) => r.f)].filter(Boolean).map((f) => path.basename(f)));
+const foraldralosa = BEHALL ? [] : fs.readdirSync(UT).filter((f) => f.endsWith(".mp3") && !anvanda.has(f)).sort();
 if (TORR) {
-  console.log(JSON.stringify({ jamna: behov.jamna, texter: texter.length, mallar: K.mallar.length, saknas: behov.rader, tecken_kvar: behov.tecken }, null, 1));
+  console.log(JSON.stringify({ jamna: behov.jamna, texter: texter.length, mallar: K.mallar.length, saknas: behov.rader, tecken_kvar: behov.tecken, behall: BEHALL, bort: foraldralosa }, null, 1));
   process.exit(0);
 }
-// 3) föräldralösa filer bort, manifest ut
-const anvanda = new Set([intro?.f, ...Object.values(rader).map((r) => r.f)].filter(Boolean).map((f) => path.basename(f)));
-let bort = 0;
-for (const f of fs.readdirSync(UT)) {
-  if (!f.endsWith(".mp3") || anvanda.has(f)) continue;
-  fs.rmSync(path.join(UT, f));
-  bort++;
-}
+for (const f of foraldralosa) fs.rmSync(path.join(UT, f));
+const bort = foraldralosa.length;
 const sorterad = Object.fromEntries(Object.entries(rader).sort(([a], [b]) => a.localeCompare(b)));
 const manifest = {
   version: 1,
