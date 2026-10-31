@@ -3528,7 +3528,10 @@
         "kropp:barnstol",
         "kropp:rullstol",
         "kropp:skolbank",
-        "kropp:lastpall"
+        "kropp:lastpall",
+        "kropp:sittsack",
+        "kropp:gunghast",
+        "kropp:gungbrada"
        ],
        "subjekt": "sak",
        "relationer": [
@@ -5654,7 +5657,10 @@
         "kropp:barnstol",
         "kropp:rullstol",
         "kropp:skolbank",
-        "kropp:lastpall"
+        "kropp:lastpall",
+        "kropp:sittsack",
+        "kropp:gunghast",
+        "kropp:gungbrada"
        ],
        "subjekt": "sak",
        "relationer": [

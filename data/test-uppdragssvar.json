@@ -507,7 +507,8 @@
         "en räv på en bänk",
         "en uggla på en stol",
         "en katt på en gungstol",
-        "en hund på en skolbänk"
+        "en hund på en skolbänk",
+        "en hund på en sittsäck"
       ],
       "nej": [
         "en hund bredvid en stol",
@@ -525,7 +526,9 @@
         "en hund på ett stenblock",
         "en mus på en klippa",
         "en hund på en kontorsstol",
-        "en mus i en barnstol"
+        "en mus i en barnstol",
+        "en katt i en sittsäck",
+        "en mus på en gunghäst"
       ],
       "nej": [
         "en sten",
