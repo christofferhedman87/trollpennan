@@ -36,6 +36,16 @@ test("B1: leksak ritas som en riktig modell (presentens godkända tips)", () => 
   assert.match(skapad("en hund med två leksaker").varelse.formel, /två leksaker$/);
 });
 
+test("B1: pannlampa och stenblock har riktiga modeller och rätt böjning", () => {
+  assert.equal(skapad("en hund med en pannlampa").varelse.tillbehor[0]?.id, "ficklampa");
+  assert.equal(skapad("två pannlampor").varelse.formel, "två pannlampor");
+  assert.equal(skapad("en hund på ett stenblock").varelse.tillbehor[0]?.id, "klippblock");
+  // Ett-ord: "två stenblock" och "två klippblock", inte reservregelns "-ar".
+  assert.equal(skapad("två stenblock").varelse.formel, "två stenblock");
+  assert.equal(skapad("två klippblock").varelse.formel, "två klippblock");
+  assert.equal(skapad("stenblocket").varelse.formel, "ett stenblock");
+});
+
 test("rosa kanin som flyger", () => {
   const u = skapad("rosa kanin som flyger");
   assert.equal(u.varelse.formel, "en rosa kanin som flyger");

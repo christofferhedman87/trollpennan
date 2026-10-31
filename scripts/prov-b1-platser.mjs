@@ -12,6 +12,9 @@ const FALL = [
   // Ett namn är ingen mat; logisk mat utanför den gamla ordlistan räknas.
   { id: "skog-magen-kurrar", plats: "skogen", miss: "en räv som heter morot", missKropp: "rav", ratt: "en räv med en ost", kvitto: "Jag letar efter mat till en skogsgäst",
     koll: ([v]) => v.kropp === "rav" && v.tillbehor.some((t) => t.id === "ost") },
+  // Att sitta under en stol är ingen sittplats; en klippa är det, fast den inte stod i den gamla ordlistan.
+  { id: "grotta-sittpaus", plats: "grottan", miss: "en groda under en stol", missKropp: "groda", ratt: "en mus på en klippa", kvitto: "Jag letar efter en sittplats",
+    koll: ([v]) => v.kropp === "mus" && v.tillbehor.some((t) => t.id === "klippa" && t.relation === "på") },
   // Två vänner: storleken på ett plagg räknas inte; varsin storlek ska sitta på varsitt djur.
   { id: "grotta-stor-och-liten", plats: "grottan", miss: "en stor hund med en liten mössa", missKropp: "hund", ratt: "en stor hund och en liten katt", kvitto: "Jag letar efter två vänner: en stor och en liten",
     koll: (nya) => nya.some((v) => v.kropp === "hund" && v.skala >= 1.3) && nya.some((v) => v.kropp === "katt" && v.skala <= 0.75) },

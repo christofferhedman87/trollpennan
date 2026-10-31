@@ -3,7 +3,10 @@
   "_om": "Sanningen om vilka djur som finns i 3D-ängen: modell (nyckel i tillgangar.json), måttet, färger, rörelse. En rad per kropp. Saknas ett fält gäller standarden i src/spel/entiteter.ts (inga fält per djur krävs för att ett nytt djur ska stå vänt mot kameran).",
   "_om_former": "Böjningsformer för synonymer i fältet ord som inte följer reservregeln i src/tolk/entitetslexikon.ts: singular obestämd, bestämd, plural obestämd, bestämd. kalla \"hand\" = handgranskade tillägg, som i ord.json.",
   "former": [
-    { "former": ["leksak", "leksaken", "leksaker", "leksakerna"], "genus": "en", "kalla": "hand" }
+    { "former": ["leksak", "leksaken", "leksaker", "leksakerna"], "genus": "en", "kalla": "hand" },
+    { "former": ["pannlampa", "pannlampan", "pannlampor", "pannlamporna"], "genus": "en", "kalla": "hand" },
+    { "former": ["stenblock", "stenblocket", "stenblock", "stenblocken"], "genus": "ett", "kalla": "hand" },
+    { "former": ["klippblock", "klippblocket", "klippblock", "klippblocken"], "genus": "ett", "kalla": "hand" }
   ],
   "entiteter": {
     "kanin": {
@@ -481,7 +484,7 @@
     "ek": { "typ": "natur", "kategori": "växt", "modell": "ek", "malhojd": 1.2, "art": "#66BB6A", "forladda": false, "ord": ["ek", "träd"], "inlagd": "R3F-M5" },
     "bjork": { "typ": "natur", "kategori": "växt", "modell": "bjork", "malhojd": 1.2, "art": "#66BB6A", "forladda": false, "ord": ["björk"], "inlagd": "R3F-M5" },
     "tall": { "typ": "natur", "kategori": "växt", "modell": "tall", "malhojd": 1.2, "art": "#66BB6A", "forladda": false, "ord": ["tall"], "inlagd": "R3F-M5" },
-    "klippblock": { "typ": "natur", "kategori": "sten", "modell": "klippblock", "malhojd": 0.8, "art": "#B0BEC5", "forladda": false, "ord": ["klippblock"], "inlagd": "R3F-M5" },
+    "klippblock": { "typ": "natur", "kategori": "sten", "modell": "klippblock", "malhojd": 0.8, "art": "#B0BEC5", "forladda": false, "ord": ["klippblock", "stenblock"], "inlagd": "R3F-M5" },
     "vedstapel": { "typ": "natur", "kategori": "växt", "modell": "vedstapel", "malhojd": 1.2, "art": "#66BB6A", "forladda": false, "ord": ["vedstapel", "vedtrave"], "inlagd": "R3F-M5" },
     "melon": { "typ": "natur", "kategori": "växt", "modell": "melon", "malhojd": 1.2, "art": "#66BB6A", "forladda": false, "ord": ["melon"], "inlagd": "R3F-M5" },
     "rova": { "typ": "natur", "kategori": "växt", "modell": "rova", "malhojd": 1.2, "art": "#66BB6A", "forladda": false, "ord": ["rova", "kålrot"], "inlagd": "R3F-M5" },
@@ -941,7 +944,7 @@
     "byra": { "typ": "foremal", "kategori": "möbel", "modell": "byra", "malhojd": 0.8, "art": "#BCAAA4", "framAxel": "+z", "forladda": false, "ord": ["byrå"], "inlagd": "R3F-M20b" },
     "dammsugare": { "typ": "foremal", "kategori": "föremål", "modell": "dammsugare", "malhojd": 0.6, "art": "#FFD54F", "framAxel": "+x", "forladda": false, "ord": ["dammsugare"], "inlagd": "R3F-M20b" },
     "dockskap": { "typ": "foremal", "kategori": "föremål", "modell": "dockskap", "malhojd": 0.9, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["dockskåp"], "inlagd": "R3F-M20b" },
-    "ficklampa": { "typ": "foremal", "kategori": "föremål", "modell": "ficklampa", "malhojd": 0.4, "art": "#FFD54F", "framAxel": "+x", "forladda": false, "ord": ["ficklampa"], "inlagd": "R3F-M20b" },
+    "ficklampa": { "typ": "foremal", "kategori": "föremål", "modell": "ficklampa", "malhojd": 0.4, "art": "#FFD54F", "framAxel": "+x", "forladda": false, "ord": ["ficklampa", "pannlampa"], "inlagd": "R3F-M20b" },
     "garderob": { "typ": "foremal", "kategori": "möbel", "modell": "garderob", "malhojd": 1.4, "art": "#BCAAA4", "framAxel": "+z", "forladda": false, "ord": ["garderob"], "inlagd": "R3F-M20b" },
     "glodlampa": { "typ": "foremal", "kategori": "föremål", "modell": "glodlampa", "malhojd": 0.5, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["glödlampa"], "inlagd": "R3F-M20b" },
     "gokur": { "typ": "foremal", "kategori": "föremål", "modell": "gokur", "malhojd": 0.9, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["gökur"], "inlagd": "R3F-M20b" },

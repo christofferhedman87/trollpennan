@@ -73,13 +73,15 @@ test("TTS-2: varje fast text i kallor har fil, och varje mall har filer för all
 
 test("TTS-2: 'en kanin' (spelets egen formel) har fil för alla modeller, och tal 1–30 finns", () => {
   const E = (entiteterJson as { entiteter: Record<string, { ord?: string[] }> }).entiteter;
+  // Samma väntelista som övriga röstprov: en rättad formel ("ett klippblock") väntar på Grok.
+  const vantar = new Set((rostJson as { vantar_rost?: string[] }).vantar_rost ?? []);
   const saknas: string[] = [];
   let n = 0;
   for (const [k, v] of Object.entries(E)) {
     const t = tolkaMedReserv(`en ${v.ord?.[0] ?? k}`) as { typ: string; varelse?: { formel?: string } };
     if (t.typ !== "skapad" || !t.varelse?.formel) continue;
     n++;
-    if (!rostFor(t.varelse.formel)) saknas.push(t.varelse.formel);
+    if (!rostFor(t.varelse.formel) && !vantar.has(t.varelse.formel)) saknas.push(t.varelse.formel);
   }
   assert.ok(n > 20, `bara ${n} modeller`);
   assert.deepEqual(saknas, []);

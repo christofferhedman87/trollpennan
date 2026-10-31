@@ -1358,7 +1358,7 @@
    "klart": "Nu ser vi ju våra egna näsor!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Ditt djur vill se bättre i kvällsmörkret! Vad kan hjälpa?",
+   "text_bengtsson": "Ditt djur vill se bättre i kvällsmörkret! Kan du ge det en lampa?",
    "klart_bengtsson": "Nu ser vi ju våra egna näsor!",
    "krav": {
     "ord": [
@@ -1370,14 +1370,43 @@
      "ljusslinga",
      "taklampa",
      "bordslampa",
-     "sol",
-     "måne",
-     "stjärna",
-     "ljus"
+     "ljus",
+     "pannlampa"
     ],
-    "min": 1
+    "min": 1,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "ljus",
+       "nagon_av": [
+        "kropp:lykta",
+        "kropp:golvlampa",
+        "kropp:lampa",
+        "kropp:ficklampa",
+        "kropp:nattlampa",
+        "kropp:ljusslinga",
+        "kropp:bordslampa",
+        "kropp:vagglampa",
+        "kropp:ljus",
+        "kropp:stearinljus",
+        "kropp:adventsljus",
+        "kropp:fackla",
+        "kropp:gatlykta"
+       ],
+       "subjekt": "sak",
+       "relationer": [
+        "med",
+        "vid",
+        "bredvid",
+        "under",
+        "på"
+       ],
+       "beskrivning": "något som lyser"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -1403,12 +1432,18 @@
        },
        {
         "ord": "golvlampa",
-        "fras": "en apa under en golvlampa"
+        "fras": "en apa vid en golvlampa"
        }
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter något som lyser, som en lykta eller ficklampa.",
+   "hjalp": [
+    "en hund med en lykta",
+    "en kanin med en ficklampa",
+    "en katt vid en lampa"
+   ]
   },
   {
    "id": "redo-for-fest",
@@ -3444,7 +3479,7 @@
    "klart": "Här sitter vi som två nöjda potatisar!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "Puh, mina ben vill pausa! Kan en vän också få vila utan att stå?",
+   "text_bengtsson": "En vän är trött i benen. Kan du ordna något att sitta på i skogen?",
    "klart_bengtsson": "Här sitter vi som två nöjda potatisar!",
    "krav": {
     "ord": [
@@ -3460,9 +3495,42 @@
      "kudde"
     ],
     "min": 1,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "sitta",
+       "nagon_av": [
+        "kropp:stubbe",
+        "kropp:stock",
+        "kropp:sten",
+        "kropp:stenar",
+        "kropp:klippblock",
+        "kropp:klippa",
+        "kropp:stol",
+        "kropp:soffa",
+        "kropp:hornsoffa",
+        "kropp:soffbank",
+        "kropp:fatolj",
+        "kropp:designfatolj",
+        "kropp:bank",
+        "kropp:pall",
+        "kropp:barstol",
+        "kropp:kudde"
+       ],
+       "subjekt": "sak",
+       "relationer": [
+        "på",
+        "i"
+       ],
+       "beskrivning": "en sittplats"
+      }
+     ],
+     "djur": 1,
+     "antal_text": "en vän"
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -3480,20 +3548,26 @@
       ]
      },
      {
-      "etikett": "Mjukt och bekvämt",
+      "etikett": "Sittplatser i skogen",
       "forslag": [
        {
-        "ord": "soffa",
-        "fras": "en hund på en soffa"
+        "ord": "stock",
+        "fras": "en hund på en stock"
        },
        {
-        "ord": "fåtölj",
-        "fras": "en katt i en fåtölj"
+        "ord": "sten",
+        "fras": "en katt på en sten"
        }
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en sittplats, som en stubbe eller stock.",
+   "hjalp": [
+    "en kanin på en stubbe",
+    "en räv på en stock",
+    "en katt på en sten"
+   ]
   },
   {
    "id": "skog-regnpaus",
@@ -3627,7 +3701,7 @@
    "klart": "Där är ju näsan, precis där vi lämnade den!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Skymningen är här! Vad kan hjälpa en vän att se sin egen nos?",
+   "text_bengtsson": "Det blir mörkt mellan träden! Kan du ge en vän något som lyser?",
    "klart_bengtsson": "Där är ju näsan, precis där vi lämnade den!",
    "krav": {
     "ord": [
@@ -3640,12 +3714,45 @@
      "bordslampa",
      "taklampa",
      "ljus",
-     "sol"
+     "pannlampa"
     ],
     "min": 1,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "ljus",
+       "nagon_av": [
+        "kropp:lykta",
+        "kropp:golvlampa",
+        "kropp:lampa",
+        "kropp:ficklampa",
+        "kropp:nattlampa",
+        "kropp:ljusslinga",
+        "kropp:bordslampa",
+        "kropp:vagglampa",
+        "kropp:ljus",
+        "kropp:stearinljus",
+        "kropp:adventsljus",
+        "kropp:fackla",
+        "kropp:gatlykta"
+       ],
+       "subjekt": "sak",
+       "relationer": [
+        "med",
+        "vid",
+        "bredvid",
+        "under",
+        "på"
+       ],
+       "beskrivning": "något som lyser"
+      }
+     ],
+     "djur": 1,
+     "antal_text": "en vän"
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -3663,20 +3770,26 @@
       ]
      },
      {
-      "etikett": "Ljust vid läsplatsen",
+      "etikett": "Ljus att bära",
       "forslag": [
        {
-        "ord": "golvlampa",
-        "fras": "en katt vid en golvlampa"
+        "ord": "ficklampa",
+        "fras": "en katt med en ficklampa"
        },
        {
-        "ord": "golvlampa",
-        "fras": "en hund vid en golvlampa"
+        "ord": "lykta",
+        "fras": "en hund med en lykta"
        }
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter ljus, som en lykta eller ficklampa.",
+   "hjalp": [
+    "en räv med en lykta",
+    "en kanin med en ficklampa",
+    "en hund med en lampa"
+   ]
   },
   {
    "id": "skog-over-backen",
@@ -5233,7 +5346,7 @@
    "klart": "Nu ser jag både vägen och min mustasch!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "Här inne är det skymning hela dagen! Vad hjälper en vän att se bättre?",
+   "text_bengtsson": "Här inne i grottan är det mörkt! Kan du ge en vän något som lyser?",
    "klart_bengtsson": "Nu ser jag både vägen och min mustasch!",
    "krav": {
     "ord": [
@@ -5243,12 +5356,46 @@
      "ficklampa",
      "nattlampa",
      "ljusslinga",
-     "ljus"
+     "ljus",
+     "pannlampa"
     ],
     "min": 1,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "ljus",
+       "nagon_av": [
+        "kropp:lykta",
+        "kropp:golvlampa",
+        "kropp:lampa",
+        "kropp:ficklampa",
+        "kropp:nattlampa",
+        "kropp:ljusslinga",
+        "kropp:bordslampa",
+        "kropp:vagglampa",
+        "kropp:ljus",
+        "kropp:stearinljus",
+        "kropp:adventsljus",
+        "kropp:fackla",
+        "kropp:gatlykta"
+       ],
+       "subjekt": "sak",
+       "relationer": [
+        "med",
+        "vid",
+        "bredvid",
+        "under",
+        "på"
+       ],
+       "beskrivning": "något som lyser"
+      }
+     ],
+     "djur": 1,
+     "antal_text": "en vän"
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -5266,20 +5413,26 @@
       ]
      },
      {
-      "etikett": "Ljust i hörnet",
+      "etikett": "Ljus att bära",
       "forslag": [
        {
-        "ord": "golvlampa",
-        "fras": "en hund vid en golvlampa"
+        "ord": "ficklampa",
+        "fras": "en hund med en ficklampa"
        },
        {
-        "ord": "golvlampa",
-        "fras": "en groda vid en golvlampa"
+        "ord": "lykta",
+        "fras": "en groda med en lykta"
        }
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter något som lyser, som en lykta eller lampa.",
+   "hjalp": [
+    "en kanin med en lykta",
+    "en katt vid en lampa",
+    "en hund med en ficklampa"
+   ]
   },
   {
    "id": "grotta-gul-van",
@@ -5435,7 +5588,7 @@
    "klart": "Här kan vi sitta och klura en stund!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "Puh, benen vill vila medan vi tittar på allt som glimmar!",
+   "text_bengtsson": "En vän vill sitta och titta på allt som glimmar! Vad kan den sitta på?",
    "klart_bengtsson": "Här kan vi sitta och klura en stund!",
    "krav": {
     "ord": [
@@ -5447,12 +5600,46 @@
      "fåtölj",
      "bänk",
      "pall",
-     "kudde"
+     "kudde",
+     "stenblock"
     ],
     "min": 1,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "sitta",
+       "nagon_av": [
+        "kropp:stubbe",
+        "kropp:stock",
+        "kropp:sten",
+        "kropp:stenar",
+        "kropp:klippblock",
+        "kropp:klippa",
+        "kropp:stol",
+        "kropp:soffa",
+        "kropp:hornsoffa",
+        "kropp:soffbank",
+        "kropp:fatolj",
+        "kropp:designfatolj",
+        "kropp:bank",
+        "kropp:pall",
+        "kropp:barstol",
+        "kropp:kudde"
+       ],
+       "subjekt": "sak",
+       "relationer": [
+        "på",
+        "i"
+       ],
+       "beskrivning": "en sittplats"
+      }
+     ],
+     "djur": 1,
+     "antal_text": "en vän"
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -5483,7 +5670,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en sittplats, som en sten eller stol.",
+   "hjalp": [
+    "en groda på en sten",
+    "en katt på en stol",
+    "en kanin i en fåtölj"
+   ]
   },
   {
    "id": "grotta-varma-oron",
