@@ -93,3 +93,11 @@ test("B1: en omvänd relation får inte flyttas till ett annat djur", () => {
     }
   }
 });
+
+test("B1: omvänd relation behålls även för sammansatt huvuddjur", () => {
+  for (const [text, relation] of [["en mössa under en blåkanin", "på"], ["en mössa bredvid en blåkanin", "bredvid"]] as const) {
+    const u = tolkaMedReserv(text, { noteraBlandning: false });
+    assert.equal(u.typ, "skapad", text);
+    if (u.typ === "skapad") assert.equal(u.varelse.tillbehor.find((t) => t.id === "alvmossa")?.relation, relation, text);
+  }
+});

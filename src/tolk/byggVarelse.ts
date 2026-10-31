@@ -37,12 +37,12 @@ function omvandRelation(sem: Sem[], index: number, huvud: Sem): Relation | undef
     if (s.t === "funk") {
       if (!s.relation || rel) return undefined;
       rel = s.relation;
-    } else if (s.t === "ord" && (s.o.klass === "djur" || s.o.klass === "foremal" || s.o.klass === "tillbehor")) {
-      if (s.o.klass !== "djur" || s !== huvud) return undefined;
+    } else if (s === huvud) {
       if (rel === "under") return "på";
       if (rel === "vid" || rel === "bredvid") return rel;
       return undefined;
-    } else if (s.t === "komp" || s.t === "okand" || s.t === "blanda") return undefined;
+    } else if (s.t === "ord" && (s.o.klass === "djur" || s.o.klass === "foremal" || s.o.klass === "tillbehor")) return undefined;
+    else if (s.t === "komp" || s.t === "okand" || s.t === "blanda") return undefined;
   }
   return undefined;
 }
