@@ -20,11 +20,21 @@ export function Trollremsa() {
   useLayoutEffect(() => {
     if (!remsa.skriv && !spok?.ord) return;
     // Håll det barnet skriver synligt även när önskelappen behöver rulla undan i liggande läge.
-    const visa = () => skrivRef.current?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" });
+    let ram = 0;
+    const visa = () => {
+      cancelAnimationFrame(ram);
+      ram = requestAnimationFrame(() => skrivRef.current?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" }));
+    };
+    const observator = new ResizeObserver(visa);
+    const remsaEl = skrivRef.current?.closest(".sk-remsa");
+    if (remsaEl) observator.observe(remsaEl);
     visa();
     window.addEventListener("resize", visa);
-    return () => window.removeEventListener("resize", visa);
+    return () => { cancelAnimationFrame(ram); observator.disconnect(); window.removeEventListener("resize", visa); };
   }, [remsa.skriv, spok?.ord, spok?.buf]);
+  useLayoutEffect(() => {
+    if (vald !== null) skrivRef.current?.closest(".sk-remsa")?.querySelector<HTMLElement>(".sk-ord.vald")?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" });
+  }, [vald]);
   useEffect(() => {
     setAnim(rorelse);
     const id = window.setTimeout(() => setAnim({ ny: null, bojda: [], id: 0 }), 760);
@@ -38,6 +48,7 @@ export function Trollremsa() {
   const tom = !b.length && !remsa.skriv && !spok;
   return (
     <div className="sk-remsa" data-testid="remsa" role="group" aria-label={UI.ark.aria} aria-live="polite" onClick={(e) => { if (e.target === e.currentTarget) setVy("skriv"); }}>
+      <div className="sk-remsa-ord" onClick={(e) => { if (e.target === e.currentTarget) setVy("skriv"); }}>
       {b.map((x, i) => (
         <span key={`${x.i}-${x.t}`} style={{ display: "contents" }}>
           <OrdBricka
@@ -69,6 +80,7 @@ export function Trollremsa() {
         {spok ? <span className="sk-spok">{spok.ord.slice(spok.buf.length)}</span> : null}
         {tom ? <span className="sk-uppmaning">{vy === "hjalp" ? UI.ark.tom_hjalp : UI.ark.tom}</span> : null}
       </button>
+      </div>
       <span className="sk-remsa-verktyg">
         <button type="button" className="sk-rund" aria-label={UI.ark.lyssna_aria} data-p4="lyssna-mening" disabled={!lasText} onClick={() => rostKo.lasUpp(lasText)}>
           <img alt="" src={ikon("ui", "lyssna")} />

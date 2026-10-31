@@ -74,7 +74,7 @@ async function nabar(locator, namn) {
     const traff = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
     // Fasta överlägg med pointer-events:none (Väktarens remsa, returskylten) syns inte för elementFromPoint, så de provas geometriskt:
     // inget synligt överlägg får skära elementets ruta, annars är det dolt för barnet fast det går att trycka på.
-    const tackt = [...document.querySelectorAll('[data-s4="vaktar-aptitbubbla"], .tp-vagvisare-hud button, .banderoller .banner')]
+    const tackt = [...document.querySelectorAll('[data-s4="vaktar-aptitbubbla"], .tp-vagvisare-hud button, .banderoller .banner, .sk-stang')]
       .filter((o) => !el.contains(o) && !o.contains(el))
       .map((o) => ({ o, b: o.getBoundingClientRect(), css: getComputedStyle(o) }))
       .filter(({ b, css }) => b.width > 0 && b.height > 0 && css.visibility !== "hidden" && css.display !== "none" && Number(css.opacity) > 0.05)
@@ -126,6 +126,7 @@ async function kontrolleraFriLapp(page, id, namn) {
   await nabar(page.locator(".sk-lapp").getByRole("button", { name: ui.lapp.lyssna_aria, exact: true }), `${namn}: Lyssna`);
   await nabar(page.locator(".sk-tangenter"), `${namn}: tangenterna`);
   await nabar(page.getByTestId("vakna"), `${namn}: Trolla`);
+  await nabar(page.locator(".sk-penn-etikett"), `${namn}: Trolla-etiketten`);
   await kontrolleraRemsa(page, namn);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true, "ingen sidrullning");
 }
