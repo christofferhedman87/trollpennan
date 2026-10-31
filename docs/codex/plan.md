@@ -4,6 +4,13 @@
 
 **Aktuell startpunkt; går före äldre ”Fortsätt”-texter nedan.** #301 är slutförd enligt nedan. Nästa steg är blockplanen (B1 först). Ingen force-push, inget input-fill/forceklick eller reducerad rörelse i UI-prov. Bevara sparformat v2, markmigrering och Cloudflare. Bilder endast internt; inga nya checkpointdokument.
 
+### R-A röstinspelningar (Grok, `grok/rost-ra`) — lärdom och tak
+
+- **Lärdom (omstart 2026-10-31 ca 21:07):** arbetskopian låg under `/tmp/rost-ra` och grenen var inte pushad; omstarten raderade alla R-A-commits och de 76 färdiga mp3-filerna (2 602 krediter). Regel: arbetskopian ligger alltid under `/workspace`, aldrig under `/tmp`, och grenen pushas direkt efter varje betald generering och varje commit med ljud.
+- **Tak (Arkitekten):** resten av serien (R-A igen, R-B, R-C) högst 15 000 krediter totalt; R-A-återställningen får generera högst 1 900. Läs saldot (`GET /v1/user/subscription`: `character_count`/`character_limit`) före varje körning.
+- **Läge:** koden och `data/rost.json` (omtag för 19 rader, helmeningsnyckel för igelkott-raden) är återskapade så att torrkörningen `--behall --bara texter-R-A.txt` ger exakt filnamnen i `whisper-ra-slut.tsv` (76/76). Ljudet hämtas först gratis ur ElevenLabs-historiken (`/workspace/rost-ra-historik.mjs`), inte genom ny generering. R-A-provet är rött tills ljudet är återställt. De sex rader som inte klarade maskinkontrollen står kvar i `vantar_rost`.
+- **Öppen produktfråga:** Bengtssons nästan-repliker (källa `nastan`) slås ut av rostKo-kön i kvittoflödet (svar `baste_fore_ms` 3000, tak 2, efter ”Hej!” och uppläsningen av barnets mening) och hörs därför inte där. Fanns före R-A och har inte ändrats.
+
 ### Levererat under Codex pass — gör inte om
 
 - **#298 · C2b-1:** redan levererad före detta pass, main `64297f3`, oberoende Claude-underagent, CF `124517533701` och sex SHA-256 gröna enligt PR-kommentaren. Full C2b-korpus/migration återstår.
