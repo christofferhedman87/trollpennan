@@ -51,6 +51,9 @@ const FUNK = new Set<string>();
 }
 
 function arOrdform(token: string): boolean {
+  // Samma fristående heltalsantal som tolken: de får inte bli ett tomt, okänt
+  // led när spärren slår ihop ”2 hattar” till den kända ordformen ”hattar”.
+  if (/^(?:[1-9]|10)$/.test(token)) return true;
   const t = token.toLocaleLowerCase("sv").replace(/[^a-zåäö]/g, "");
   if (TILLATNA_ORD.has(t)) return true;
   return !!t && (FUNK.has(t) || !!ordFranForm(t));
