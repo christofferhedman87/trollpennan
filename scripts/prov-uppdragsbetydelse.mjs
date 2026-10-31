@@ -6,10 +6,11 @@ import { chromium } from "playwright";
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || "/usr/bin/chromium", args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader"] });
 try {
   for (const viewport of [{ width: 375, height: 812 }, { width: 812, height: 375 }]) {
+    if (process.env.QA_LAGE && viewport.width !== Number(process.env.QA_LAGE)) continue;
     for (const [id, nej, ja, antal, ledtrad] of [
       ["vingar-i-luften", "en hund", "en hund som flyger", 1, "en vän som kan flyga"],
       ["tva-farger", "en röd katt", "en röd katt och en blå hund", 2, "två vänner: en röd och en blå"],
-    ]) {
+    ].filter(([id]) => !process.env.QA_FALL || id === process.env.QA_FALL)) {
       const context = await browser.newContext({ viewport, reducedMotion: "reduce" });
       const page = await context.newPage(); page.setDefaultTimeout(45000);
       const fel = []; page.on("pageerror", (e) => fel.push(e.message));
@@ -38,7 +39,11 @@ try {
       await skriv(nej);
       await page.waitForFunction((n) => window.__trollMinne.getState().ang.length === n + 1, fore.antal);
       assert.equal(await page.evaluate((id) => window.__trollMinne.getState().uppdrag[id], id), "pagar", "en nära miss får aldrig räknas som färdigt uppdrag");
-      await page.getByText(ledtrad, { exact: false }).first().waitFor({ state: "visible" });
+      await page.getByText(ledtrad, { exact: false }).first().waitFor({ state: "visible" }).catch(async (e) => {
+        console.log(JSON.stringify(await page.evaluate(() => ({ text: document.body.innerText, rost: window.__rost }))));
+        if (process.env.QA_SCREENSHOTS) { await mkdir(process.env.QA_SCREENSHOTS, { recursive: true }); await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/saknad-ledtrad-${viewport.width}.png` }); }
+        throw e;
+      });
       if (process.env.QA_SCREENSHOTS) {
         await mkdir(process.env.QA_SCREENSHOTS, { recursive: true });
         await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/${id}-${viewport.width}.png` });
