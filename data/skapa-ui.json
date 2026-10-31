@@ -117,7 +117,7 @@
     "trollade": "Du trollade fram {mening}!",
     "stjarna_en": "+{n} stjärna",
     "stjarna_flera": "+{n} stjärnor",
-    "guld": "{n} ord skrev du själv",
+    "guld": "{n} guldord: {ord}",
     "tillagg": "Du skrev: ”{mening}”."
   },
   "min_bok": {

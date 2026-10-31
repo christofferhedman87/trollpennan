@@ -316,3 +316,9 @@ Nya barntexter. Webbläsarens talsyntes läser dem tills inspelning finns.
 | | pennan | data/skapa-ui.json `ordbok.guldord_tom` | Inga guldord än. Skriv ett ord själv med tangenterna, så blir det guld. |
 | | pennan | data/texter-gard.json `lada.tom_hjalp` | Här hamnar byggen som du lägger undan. Håll fingret på ett bygge och välj Lägg i lådan. |
 | | pennan | data/texter-gard.json `lada.stang` | Stäng |
+
+## G1 · T-29/T-32: vänlig guldchans och tydligt kvitto
+
+- `data/skapa-ui.json kvitto.guld` (ändrad): {n} guldord: {ord}
+
+Orden kommer från samma guldmarkering som understrykningen. Ett flerordsuttryck som ”sprutar eld” visas som ett guldord. Ingen ny inspelning påstås finnas.

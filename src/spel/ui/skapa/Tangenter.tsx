@@ -1,5 +1,6 @@
 // Nya Skapa 6.6: tangenterna (data/tangentbord.json). Vokalerna är rosa, skift gäller nästa bokstav,
 // ⌫ suddar (och flyttar sista ordet tillbaka in i skrivbrickan). Under guldchansen lyser nästa tangent efter en stund.
+// T-29: en fel tangent ger ingen reaktion alls, ingen skakning (ingen skam).
 import { useEffect, useState } from "react";
 import uiJson from "../../../../data/skapa-ui.json" with { type: "json" };
 import { ikon } from "../../skapa/ikoner.ts";
@@ -14,7 +15,6 @@ export function Tangenter({ klar }: { klar: () => void }) {
   const { skrivTecken, sudda, spok, sistaTangent } = sk;
   const [versal, setVersal] = useState(false);
   const [tips, setTips] = useState<string | null>(null);
-  const [fel, setFel] = useState<{ t: string; n: number } | null>(null);
   const nasta = spok ? spok.ord[spok.buf.length] ?? null : null;
   useEffect(() => {
     setTips(null);
@@ -23,7 +23,6 @@ export function Tangenter({ klar }: { klar: () => void }) {
     return () => window.clearTimeout(id);
   }, [nasta, sistaTangent]);
   const tryck = (t: string) => {
-    if (spok && nasta && t !== nasta) setFel({ t, n: (fel?.n ?? 0) + 1 });
     skrivTecken(versal ? t.toLocaleUpperCase("sv") : t);
     if (versal) setVersal(false);
   };
@@ -43,9 +42,9 @@ export function Tangenter({ klar }: { klar: () => void }) {
               </button>
             ) : t === "{mellanslag}" ? null : (
               <button
-                key={t + (fel?.t === t ? fel.n : "")}
+                key={t}
                 type="button"
-                className={["sk-tangent", VOKALER.has(t) ? "vokal" : "", tips === t ? "tips" : "", fel?.t === t ? "fel" : ""].filter(Boolean).join(" ")}
+                className={["sk-tangent", VOKALER.has(t) ? "vokal" : "", tips === t ? "tips" : ""].filter(Boolean).join(" ")}
                 aria-label={versal ? t.toLocaleUpperCase("sv") : t}
                 onClick={() => tryck(t)}
               >
@@ -56,7 +55,7 @@ export function Tangenter({ klar }: { klar: () => void }) {
         </div>
       ))}
       <div className="sk-tangent-rad">
-        <button key={fel?.t === " " ? fel.n : "mellanslag"} type="button" className={["sk-tangent mellan", tips === " " ? "tips" : "", fel?.t === " " ? "fel" : ""].filter(Boolean).join(" ")} data-testid="mellanslag" aria-label={UI.tangentbord.mellanslag} onClick={() => tryck(" ")}>
+        <button type="button" className={["sk-tangent mellan", tips === " " ? "tips" : ""].filter(Boolean).join(" ")} data-testid="mellanslag" aria-label={UI.tangentbord.mellanslag} onClick={() => tryck(" ")}>
           {UI.tangentbord.mellanslag}
         </button>
         <button type="button" className="sk-tangent klar" data-dal="klar" onClick={klar}>

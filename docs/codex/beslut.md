@@ -40,3 +40,7 @@ Christoffer svarade **”Godkänn hela paketet”** på det samlade B1–B8-för
 ## Textpaket 02 mottaget, 2026-10-31
 
 Christoffer har i den aktuella beställningen uttryckligen godkänt den fristående chattens färdiga granskning av alla 85 texter: ”Denna granskning gäller. Dvs, inget ytterligare godkännande krävs av mig.” Källfil: `Trollpennan-textpaket-02-granskad.md`, SHA-256 `1687e568520fff417a98edfe5135d2d860fb450d94d7191f6e75dfd50002e539`. Dess 85 unika id:n motsvarar exakt de återstående ogranskade uppdragen efter Textpaket 01. Detta ersätter väntan på svaret, men inte kravet att pröva varje förslag mot tolken och modellerna i B1/BC. Sätt flagga och hashlås bara för exakt granskad text. Inget ytterligare textgodkännande ska begäras för den bifogade granskningen.
+
+## Ny uttrycklig paus efter Codex pass, 2026-10-31
+
+Christoffer begär strukturerad paus eftersom endast 10 % sessionsanvändning återstår. #299 och #300 är levererade och verifierade; #301 lämnas som utkast utan merge/slutapproval. Pågående slutprov stoppades och nästa steg står i överlämningsrutan. Den godkända bifogade källgranskningen är nu sparad byteoförändrad i `docs/en-varld/textpaket-02-granskad.md` (SHA-256 ovan), så Claude behöver ingen ny uppladdning eller nytt godkännande. Det är granskningsunderlag till B1/BC, inte ett nytt checkpointdokument.
