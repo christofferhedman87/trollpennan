@@ -46,6 +46,14 @@ try {
     // Guiden läser öppna lager var 250 ms. Låt den kontrollen ske även på den röda baslinjen.
     await page.waitForTimeout(600);
     assert.equal(await page.getByTestId("coach").count(), 0, "Guiden ska pausa medan Lådans dialog är öppen, så Stäng-texten är fri");
+    const hudKrock = await page.locator('[data-t22="lada-stang"]').evaluate((knapp) => {
+      const k = knapp.getBoundingClientRect();
+      return Array.from(document.querySelectorAll('.sk-hud-botten button')).some((b) => {
+        const r = b.getBoundingClientRect();
+        return r.width > 0 && r.height > 0 && r.left < k.right && r.right > k.left && r.top < k.bottom && r.bottom > k.top;
+      });
+    });
+    assert.equal(hudKrock, false, "Hela Lådans Stäng-knapp ska vara fri från världens HUD");
     const tom = await page.locator('[data-t22="lada-tom"]').innerText();
     assert.match(tom, /Lådan är tom/);
     const panel = await page.getByTestId("lada-panel").boundingBox();
