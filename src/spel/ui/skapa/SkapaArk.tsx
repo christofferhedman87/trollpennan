@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import uiJson from "../../../../data/skapa-ui.json" with { type: "json" };
 import * as rostKo from "../../rostKo.ts";
+import { fyll } from "../../fyll.ts";
 import { harBoksvar } from "../../skapa/svarsLage.ts";
 import { ideForMal } from "../../skapa/bokMal.ts";
 import { useBokMal } from "../../skapa/useBokMal.ts";
@@ -95,7 +96,13 @@ export function SkapaArk() {
   const tryckPennaRef = useRef(tryckPenna);
   tryckPennaRef.current = tryckPenna;
   useEffect(() => kopplaTrollaKnapp(() => tryckPennaRef.current()), []);
+  const skrivGuldForst = () => {
+    if (!k.sk.spok) return false;
+    k.sk.puffa(fyll(uiJson.hjalprad.tips_spok, { ord: k.sk.spok.ord }));
+    return true;
+  };
   const visaGata = () => {
+    if (skrivGuldForst()) return;
     if (harBoksvar(k.sk, k.t)) { k.sk.puffa(uiJson.puffar.svara_forst); return; }
     const g = nyGata();
     if (g) setIde(g); else k.sk.puffa(uiJson.puffar.inga_gator);
@@ -134,6 +141,7 @@ export function SkapaArk() {
             <Hjalprad gata={visaGata}
               oppnaHjalp={() => oppnaHjalp()}
               ide={() => {
+                if (skrivGuldForst()) return;
                 if (harBoksvar(k.sk, k.t)) { k.sk.puffa(uiJson.puffar.svara_forst); return; }
                 const fras = ideForMal(mal, ide?.slag === "mal" ? ide.fras : null);
                 if (fras) setIde({ slag: "mal", fras });

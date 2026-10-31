@@ -31,16 +31,16 @@ export function Lapp({ ide }: { ide: IdeLapp | null }) {
   let lapp: ReactNode = l ? <LappRam {...l} las={l.text} kompakt={kompakt} /> : null;
   if (mal.slag === "gava" && k.t.gavaTill) lapp = <GavoLapp key={k.t.gavaTill} gavaTill={k.t.gavaTill} kompakt={kompakt} />;
   else if (mal.slag === "onskan") lapp = <div data-testid="onska-remsa" style={{ display: "contents" }}>{lapp}</div>;
-  return <>{lapp}{ide && !svar ? <IdeRam ide={ide} kompakt={lag} /> : null}</>;
+  return <>{lapp}{ide && !svar && !k.sk.spok ? <IdeRam ide={ide} kompakt={lag} /> : null}</>;
 }
 
 function IdeRam({ ide, kompakt }: { ide: IdeLapp; kompakt: boolean }) {
   const { sk } = useSpel();
   const har = new Set(sk.remsa.brickor.map((b) => b.id).filter(Boolean));
-  if (ide.slag === "gata") return <LappRam kompakt={kompakt} bild={ikon("ui", "agg")} fran={UI.lapp.gata_fran ?? ""} text={`${ide.gata} ${ide.streck}`} las={ide.gata} />;
+  if (ide.slag === "gata") return <LappRam kompakt={kompakt} rullaFram={kompakt} bild={ikon("ui", "agg")} fran={UI.lapp.gata_fran ?? ""} text={`${ide.gata} ${ide.streck}`} las={ide.gata} />;
   const kort = (ide.slag === "mal" ? onskeKort([ide.fras]) : ideKort(ide.ide)).filter((k) => k.bild !== ikon("ui", "agg"));
   const text = ide.slag === "mal" ? ide.fras : ideText(ide.ide);
-  return <LappRam kompakt={kompakt} bild={null} fran={UI.ide.rubrik ?? ""} text={text} las={text}>
+  return <LappRam kompakt={kompakt} rullaFram={kompakt} bild={null} fran={UI.ide.rubrik ?? ""} text={text} las={text}>
     <div className="sk-ide-rad">
       {kort.map((k) => <span key={k.nyckel} className={har.has(k.id) ? "sk-ide-bit klar" : "sk-ide-bit"}>
         <img alt={k.visa} src={k.bild} />

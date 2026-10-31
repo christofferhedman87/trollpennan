@@ -18,12 +18,18 @@ export function Trollremsa() {
   const [anim, setAnim] = useState(rorelse);
   const skrivRef = useRef<HTMLButtonElement>(null);
   useLayoutEffect(() => {
-    if (!remsa.skriv && !spok?.ord) return;
     // Håll det barnet skriver synligt även när önskelappen behöver rulla undan i liggande läge.
     let ram = 0;
     const visa = () => {
       cancelAnimationFrame(ram);
-      ram = requestAnimationFrame(() => skrivRef.current?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" }));
+      ram = requestAnimationFrame(() => {
+        const skriv = skrivRef.current;
+        const remsaEl = skriv?.closest(".sk-remsa");
+        const brickor = remsaEl?.querySelectorAll<HTMLElement>(".sk-ord");
+        const mal = vald !== null ? remsaEl?.querySelector<HTMLElement>(".sk-ord.vald")
+          : remsa.skriv || spok?.ord ? skriv : brickor?.item(brickor.length - 1) ?? skriv;
+        mal?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" });
+      });
     };
     const observator = new ResizeObserver(visa);
     const remsaEl = skrivRef.current?.closest(".sk-remsa");
@@ -31,7 +37,7 @@ export function Trollremsa() {
     visa();
     window.addEventListener("resize", visa);
     return () => { cancelAnimationFrame(ram); observator.disconnect(); window.removeEventListener("resize", visa); };
-  }, [remsa.skriv, spok?.ord, spok?.buf]);
+  }, [remsa.skriv, spok?.ord, spok?.buf, rorelse.id, vald]);
   useLayoutEffect(() => {
     if (vald !== null) skrivRef.current?.closest(".sk-remsa")?.querySelector<HTMLElement>(".sk-ord.vald")?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" });
   }, [vald]);
@@ -40,7 +46,9 @@ export function Trollremsa() {
     const id = window.setTimeout(() => setAnim({ ny: null, bojda: [], id: 0 }), 760);
     return () => window.clearTimeout(id);
   }, [rorelse]);
-  useEffect(() => setVald(null), [remsa.ord.length]);
+  // Ett tryck får visa en gammal bricka. Nästa skrivtecken lämnar den markeringen
+  // före nästa bildruta, så att scrollningen följer den nya texten igen.
+  useLayoutEffect(() => setVald(null), [remsa.skriv, spok?.buf, remsa.ord.length]);
   const b = remsa.brickor;
   // Tom plats: ett kort har lagt ett adjektiv men det finns inget Vad än.
   const sistaAdj = remsa.harVad ? -1 : b.reduce((m, x, i) => (x.klass === "hurdan" && x.kalla !== "skriv" ? i : m), -1);
@@ -95,7 +103,7 @@ export function Trollremsa() {
 
 function OrdBricka({ x, vald, ny, bojs, onTryck, onTaBort }: { x: Bricka; vald: boolean; ny: boolean; bojs: boolean; onTryck: () => void; onTaBort: () => void }) {
   const farg = FARG[x.klass];
-  const kl = ["sk-ord", x.klass, x.guld ? "guld" : "", x.boj ? "boj" : "", vald ? "vald" : "", ny ? "ny" : "", bojs ? "bojs" : ""].filter(Boolean).join(" ");
+  const kl = ["sk-ord", x.klass, x.t.includes(" ") ? "flerord" : "", x.guld ? "guld" : "", x.boj ? "boj" : "", vald ? "vald" : "", ny ? "ny" : "", bojs ? "bojs" : ""].filter(Boolean).join(" ");
   return (
     <span className={kl} style={farg ? ({ "--k": farg } as CSSProperties) : undefined} role="button" tabIndex={0} data-klass={x.klass} data-guld={x.guld ? "ja" : "nej"} data-boj={x.boj ?? undefined} onClick={onTryck} onKeyDown={(e) => { if (e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onTryck(); } }}>
       {farg ? <img className="sk-markor" alt="" src={ikon("ordklass", x.klass)} /> : null}
