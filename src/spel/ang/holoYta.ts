@@ -17,16 +17,16 @@ export function friHoloYta(bas: HoloYta, hinder: HoloYta[]): HoloYta | null {
   }
   return rutor.sort((a, b) => (b.right - b.left) * (b.bottom - b.top) - (a.right - a.left) * (a.bottom - a.top))[0] ?? null;
 }
-export function bokHoloYta(canvas: DOMRect, sammansatt = false): HoloYta | null {
+export function bokHoloYta(canvas: DOMRect, verkligModell = false): HoloYta | null {
   const portratt = canvas.width <= canvas.height;
-  if (!sammansatt && (portratt ? canvas.height > 720 : canvas.height > 600)) return null;
+  if (!verkligModell && (portratt ? canvas.height > 720 : canvas.height > 600)) return null;
   const bubbla = document.querySelector('[data-s4="vaktar-aptitbubbla"]')?.getBoundingClientRect();
   const ark = document.querySelector(".sk-ark")?.getBoundingClientRect();
   const penna = document.querySelector(".sk-penn-ora")?.getBoundingClientRect();
   const stang = document.querySelector(".sk-stang")?.getBoundingClientRect();
   const gata = document.querySelector(".sk-gata")?.getBoundingClientRect();
   if (!ark || !penna || !stang) return null;
-  if (sammansatt) return friHoloYta({
+  if (verkligModell) return friHoloYta({
     left: canvas.left + 8, right: (portratt ? canvas.right : ark.left) - 8,
     top: Math.max(canvas.top + 90, (bubbla?.bottom ?? canvas.top + 82) + 8),
     bottom: (portratt ? ark.top : canvas.bottom) - 8,

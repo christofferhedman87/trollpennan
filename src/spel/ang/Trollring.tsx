@@ -171,7 +171,7 @@ function Hologram() {
     // Modell och svävhöjd anpassas kring samma markpunkt; ringens verkliga plats ändras aldrig.
     const hojd = l.spec?.typ === "djur" ? synY(l.holoY) + 0.08 + Math.sin(t * 2.4) * 0.04 : 0;
     const duk = gl.domElement.getBoundingClientRect();
-    const yta = bokHoloYta(duk, l.spec?.typ === "djur" && l.spec.spec.tillbehor.length > 0);
+    const yta = bokHoloYta(duk, l.spec?.typ === "djur");
     if (yta && ring) {
       g.scale.set(sx, sy, sx);
       g.position.y = hojd;
@@ -217,7 +217,7 @@ function ArkKamera() {
       const sx = (_v.x * 0.5 + 0.5) * w + cur.current.x;
       const sy = (-_v.y * 0.5 + 0.5) * h + cur.current.y;
       const sammansatt = l.spec?.typ === "djur" && l.spec.spec.tillbehor.length > 0;
-      const friYta = bokHoloYta(r, sammansatt);
+      const friYta = bokHoloYta(r, l.spec?.typ === "djur");
       if (friYta) {
         mx = sx - ((friYta.left + friYta.right) / 2 - r.left);
         // En sammansättning har även markyta framför ringen, som behöver rum nedåt.
