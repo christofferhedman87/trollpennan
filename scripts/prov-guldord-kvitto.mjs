@@ -61,36 +61,26 @@ async function felTangent(page, tecken, namn) {
 }
 
 async function kvitto(page, guldord, namn) {
+  // Sidan mäter själv kvittot när det nått full opacitet. I liggande programvaru-GPU tar varje fjärranrop
+  // annars så lång tid att spelets oförändrade 5,6 s hinner ta slut före mätning och bild.
+  await page.evaluate(() => { window.__g1Matt = null; });
+  const cdp = bilder ? await page.context().newCDPSession(page) : null;
   await page.getByTestId("vakna").click();
-  const ruta = page.locator('[data-dal="kvitto"]');
-  await ruta.waitFor();
-  await page.waitForFunction(() => {
-    const el = document.querySelector('[data-dal="kvitto"]');
-    return el && window.__g1KvittoTider.some((t) => t.text === window.__g1Lastext(el));
-  });
-  const r = await ruta.evaluate((el) => {
-    const chip = el.querySelector(".sk-kvitto-chip.guld");
-    const q = (chip ?? el).getBoundingClientRect();
-    return { text: chip?.textContent.trim() ?? null, guld: [...el.querySelectorAll(".sk-kvitto-rad .gul")].map((e) => e.textContent),
-      inom: q.left >= 0 && q.top >= 0 && q.right <= innerWidth && q.bottom <= innerHeight && el.scrollWidth <= el.clientWidth,
-      lastext: window.__g1Lastext(el), tider: window.__g1KvittoTider.filter((t) => t.text === window.__g1Lastext(el)).map((t) => t.ms) };
-  });
-  console.log(namn, "kvitto", JSON.stringify(r));
-  const { lastext, tider, ...synligt } = r;
-  prova(namn, () => assert.deepEqual(synligt, { text: guldord.length ? `${guldord.length} guldord: ${guldord.join(", ")}` : null, guld: guldord, inom: true }));
-  prova(`${namn} lästid`, () => assert.ok(tider.length && tider.every((ms) => ms >= lasbarTid(lastext)), `schemalagd ${tider} ms, hela synliga texten kräver ${lasbarTid(lastext)} ms enligt befintlig policy`));
-  if (bilder) {
-    await page.waitForFunction(() => {
-      const el = document.querySelector('[data-dal="kvitto"]');
-      return el && getComputedStyle(el).opacity === "1";
-    });
-    const cdp = await page.context().newCDPSession(page);
+  await page.waitForFunction(() => window.__g1Matt, null, { polling: 50 });
+  if (cdp) {
     const bild = await cdp.send("Page.captureScreenshot", { format: "png", captureBeyondViewport: false });
+    const kvar = await page.evaluate(() => !!document.querySelector('[data-dal="kvitto"]'));
     await writeFile(`${bilder}/${namn}.png`, Buffer.from(bild.data, "base64"));
     await cdp.detach();
+    console.log(namn, "bild", kvar ? "med kvitto i DOM efter tagning" : "OBS: kvittot borta efter tagning, läs bilden");
   }
-  // Behåll spelets vanliga lästid; kvittot kan hinna försvinna medan molnets klickkontroll väntar på stabilitet.
-  await ruta.waitFor({ state: "detached" });
+  const { lastext, ...synligt } = await page.evaluate(() => window.__g1Matt);
+  const tider = await page.evaluate((t) => window.__g1KvittoTider.filter((x) => x.text === t).map((x) => x.ms), lastext);
+  console.log(namn, "kvitto", JSON.stringify({ ...synligt, lastext, tider }));
+  prova(namn, () => assert.deepEqual(synligt, { text: guldord.length ? `${guldord.length} guldord: ${guldord.join(", ")}` : null, guld: guldord, inom: true }));
+  prova(`${namn} lästid`, () => assert.ok(tider.length && tider.every((ms) => ms >= lasbarTid(lastext)), `schemalagd ${tider} ms, hela synliga texten kräver ${lasbarTid(lastext)} ms enligt befintlig policy`));
+  // Behåll spelets vanliga lästid; vänta tills kvittot går bort av sig självt.
+  await page.locator('[data-dal="kvitto"]').waitFor({ state: "detached" });
 }
 
 try {
@@ -107,6 +97,19 @@ try {
         if (el && ms >= 5600 && ms <= 12000) window.__g1KvittoTider.push({ text: window.__g1Lastext(el), ms });
         return sattTid(fn, ms, ...args);
       };
+      // Första läget med full opacitet för varje nytt kvitto, mätt i sidan utan att röra animation eller timer.
+      let sett = null;
+      setInterval(() => {
+        const el = document.querySelector('[data-dal="kvitto"]');
+        if (el !== sett && el && getComputedStyle(el).opacity === "1") {
+          sett = el;
+          const chip = el.querySelector(".sk-kvitto-chip.guld");
+          const q = (chip ?? el).getBoundingClientRect();
+          window.__g1Matt = { text: chip?.textContent.trim() ?? null, guld: [...el.querySelectorAll(".sk-kvitto-rad .gul")].map((e) => e.textContent),
+            inom: q.left >= 0 && q.top >= 0 && q.right <= innerWidth && q.bottom <= innerHeight && el.scrollWidth <= el.clientWidth,
+            lastext: window.__g1Lastext(el) };
+        }
+      }, 50);
     });
     page.on("pageerror", (e) => fel.push(`${viewport.width}: ${e.message}`));
     await page.addInitScript(() => localStorage.setItem("trollpennan-v2", JSON.stringify({
