@@ -93,16 +93,22 @@ try {
       if (bilder) await page.screenshot({ path: `${bilder}/${fall}-${plats}-${viewport.width}-ledtrad.png` });
       console.log("Grönt önskesvar nära miss", fall, plats, viewport.width);
       await page.locator('[data-dal="kvitto"]').waitFor({ state: "hidden", timeout: 15000 });
+      const vidMiss = JSON.parse(JSON.stringify(await djuret()));
       await page.reload(); await page.getByTestId("pennans-bok").waitFor();
       assert.equal(await page.evaluate(() => window.__trollMinne.getState().onskan?.uid), uid, "önskan kvar efter riktig omladdning");
+      assert.deepEqual(JSON.parse(JSON.stringify(await djuret())), vidMiss, "även det oönskade tillägget och dess egna egenskaper sparas");
       await svara(scenario.ja);
       assert.equal(await page.evaluate(() => window.__trollMinne.getState().onskan), null);
       assert.ok((await djuret()).tillbehor.some((t) => t.id === scenario.rattDel));
       await page.waitForFunction((text) => window.__onskeKvitto?.includes(text), onskan.tack, { timeout: 15000 });
       if (bilder) await page.screenshot({ path: `${bilder}/${fall}-${plats}-${viewport.width}-tack.png` });
+      const klart = JSON.parse(JSON.stringify(await djuret()));
+      if (fall === "kalla") assert.ok(klart.tillbehor.some((t) => t.id === "strumpa" && t.egenskaper?.includes("varma")));
+      if (fall === "syn") assert.ok(klart.tillbehor.some((t) => t.ord === "glasögon") && klart.tillbehor.some((t) => t.ord === "solglasögon"));
       await page.reload(); await page.getByTestId("pennans-bok").waitFor();
       assert.equal(await page.evaluate(() => window.__trollMinne.getState().onskan), null);
       assert.ok((await djuret()).tillbehor.some((t) => t.id === scenario.rattDel));
+      assert.deepEqual(JSON.parse(JSON.stringify(await djuret())), klart, "hela rätta djuret och varje tillbehörs metadata överlever omladdning");
       assert.deepEqual(fel, []); assert.deepEqual(konsolfel, []); console.log("Grönt önskesvar rätt svar och omladdning", fall, plats, viewport.width);
       await context.close();
      }

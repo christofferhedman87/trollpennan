@@ -68,7 +68,7 @@ test("frusna tassar behöver värme på tassarna, även om djuret redan har hatt
 test("frusna öron får rätt regional värme", () => {
   const o = ONSK.onskningar.find((o) => o.id === "frusna-oron")!;
   const bas = katt();
-  for (const [fras, ok] of [["med luva", true], ["med röd luva", true], ["med strumpor", false], ["med halsduk", false], ["med hatt", false]] as const) {
+  for (const [fras, ok] of [["med mössa", true], ["med röd mössa", true], ["med luva", true], ["med röd luva", true], ["med kall mössa", false], ["med strumpor", false], ["med halsduk", false], ["med hatt", false]] as const) {
     const efter = laggPa(bas, fras); assert.ok(efter, fras);
     assert.equal(geTraff(bas, efter, o), ok, fras);
   }

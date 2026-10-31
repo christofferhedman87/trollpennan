@@ -205,7 +205,7 @@ Inga nya inspelningar påstås finnas. Fullständiga nya barntexter i `data/beng
 
 ## T-06: situationsriktiga önskesvar
 
-Önsketexterna och tacken bevaras. Ändrade exempel: frusna tassar → ”med strumpor”, ”med stövlar”, ”med tofflor”; frusna öron → ”med luva”, ”med röd luva”, ”med blå luva”; stark sol → ”med hatt”, ”med solglasögon”, ”med röd hatt”; suddig syn → ”med glasögon”, ”med röda glasögon”, ”med blå glasögon”; sjöresan → ”som flyger”, ”som simmar”, ”med vingar”. Vanliga glasögon ger synhjälp, solglasögon solskydd, och en ryggsäck löser inte vattenöverfarten. Inga nya inspelningar påstås finnas.
+Önsketexterna och tacken bevaras. Ändrade exempel: frusna tassar → ”med strumpor”, ”med stövlar”, ”med tofflor”; frusna öron → ”med mössa”, ”med luva”, ”med röd mössa”; stark sol → ”med hatt”, ”med solglasögon”, ”med röd hatt”; suddig syn → ”med glasögon”, ”med röda glasögon”, ”med blå glasögon”; sjöresan → ”som flyger”, ”som simmar”, ”med vingar”. Vanliga glasögon ger synhjälp, solglasögon solskydd, och en ryggsäck löser inte vattenöverfarten. Inga nya inspelningar påstås finnas.
 
 Nya ledtrådar vid ett faktiskt bedömt önskesvar:
 
