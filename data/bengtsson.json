@@ -1391,7 +1391,12 @@
         "kropp:stearinljus",
         "kropp:adventsljus",
         "kropp:fackla",
-        "kropp:gatlykta"
+        "kropp:gatlykta",
+        "kropp:glodlampa",
+        "kropp:ljuslykta",
+        "kropp:skrivbordslampa",
+        "kropp:ljusstake",
+        "kropp:pumpalykta"
        ],
        "subjekt": "sak",
        "relationer": [
@@ -3516,7 +3521,14 @@
         "kropp:bank",
         "kropp:pall",
         "kropp:barstol",
-        "kropp:kudde"
+        "kropp:kudde",
+        "kropp:gungstol",
+        "kropp:kontorsstol",
+        "kropp:skrivbordsstol",
+        "kropp:barnstol",
+        "kropp:rullstol",
+        "kropp:skolbank",
+        "kropp:lastpall"
        ],
        "subjekt": "sak",
        "relationer": [
@@ -3735,7 +3747,12 @@
         "kropp:stearinljus",
         "kropp:adventsljus",
         "kropp:fackla",
-        "kropp:gatlykta"
+        "kropp:gatlykta",
+        "kropp:glodlampa",
+        "kropp:ljuslykta",
+        "kropp:skrivbordslampa",
+        "kropp:ljusstake",
+        "kropp:pumpalykta"
        ],
        "subjekt": "sak",
        "relationer": [
@@ -5378,7 +5395,12 @@
         "kropp:stearinljus",
         "kropp:adventsljus",
         "kropp:fackla",
-        "kropp:gatlykta"
+        "kropp:gatlykta",
+        "kropp:glodlampa",
+        "kropp:ljuslykta",
+        "kropp:skrivbordslampa",
+        "kropp:ljusstake",
+        "kropp:pumpalykta"
        ],
        "subjekt": "sak",
        "relationer": [
@@ -5625,7 +5647,14 @@
         "kropp:bank",
         "kropp:pall",
         "kropp:barstol",
-        "kropp:kudde"
+        "kropp:kudde",
+        "kropp:gungstol",
+        "kropp:kontorsstol",
+        "kropp:skrivbordsstol",
+        "kropp:barnstol",
+        "kropp:rullstol",
+        "kropp:skolbank",
+        "kropp:lastpall"
        ],
        "subjekt": "sak",
        "relationer": [

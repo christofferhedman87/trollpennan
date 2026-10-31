@@ -505,7 +505,9 @@
         "en räv på en stock",
         "en katt på en sten",
         "en räv på en bänk",
-        "en uggla på en stol"
+        "en uggla på en stol",
+        "en katt på en gungstol",
+        "en hund på en skolbänk"
       ],
       "nej": [
         "en hund bredvid en stol",
@@ -521,7 +523,9 @@
         "en katt på en stol",
         "en kanin i en fåtölj",
         "en hund på ett stenblock",
-        "en mus på en klippa"
+        "en mus på en klippa",
+        "en hund på en kontorsstol",
+        "en mus i en barnstol"
       ],
       "nej": [
         "en sten",
@@ -538,7 +542,9 @@
         "en katt vid en lampa",
         "en lykta",
         "en hund med en pannlampa",
-        "en katt med en fackla"
+        "en katt med en fackla",
+        "en kanin med en ljuslykta",
+        "en hund med en glödlampa"
       ],
       "nej": [
         "en hund med en sol",
@@ -554,7 +560,8 @@
         "en kanin med en ficklampa",
         "en hund med en lampa",
         "en räv med en pannlampa",
-        "en räv med ett stearinljus"
+        "en räv med ett stearinljus",
+        "en räv med en pumpalykta"
       ],
       "nej": [
         "en lykta",
@@ -570,7 +577,9 @@
         "en katt vid en lampa",
         "en hund med en ficklampa",
         "en hund med en pannlampa",
-        "en hund med en fackla"
+        "en hund med en fackla",
+        "en hund med en ljusstake",
+        "en hund med en skrivbordslampa"
       ],
       "nej": [
         "en lykta",

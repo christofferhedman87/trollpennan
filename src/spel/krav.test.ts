@@ -104,11 +104,11 @@ test("B1: sittplatser och ljus – saken ska vara rätt sorts sak och höra till
     "grotta-forsta-skenet": ["en hund som heter ljus", "en lykta"],
   };
   const ja: Record<string, string[]> = {
-    "skog-vila-benen": ["en räv på en bänk"],
-    "grotta-sittpaus": ["en hund på ett stenblock", "en mus på en klippa"],
-    "ljus-i-kvallen": ["en hund med en pannlampa", "en katt med en fackla"],
-    "skog-kvallsljus": ["en räv med en pannlampa"],
-    "grotta-forsta-skenet": ["en hund med en fackla"],
+    "skog-vila-benen": ["en räv på en bänk", "en katt på en gungstol", "en hund på en skolbänk"],
+    "grotta-sittpaus": ["en hund på ett stenblock", "en mus på en klippa", "en hund på en kontorsstol", "en mus i en barnstol"],
+    "ljus-i-kvallen": ["en hund med en pannlampa", "en katt med en fackla", "en kanin med en ljuslykta", "en hund med en glödlampa"],
+    "skog-kvallsljus": ["en räv med en pannlampa", "en räv med en pumpalykta"],
+    "grotta-forsta-skenet": ["en hund med en fackla", "en hund med en ljusstake", "en hund med en skrivbordslampa"],
   };
   for (const u of SKRIV.filter((x) => x.id in nej)) {
     for (const fras of nej[u.id]!) assert.equal(bedomUppdragsSvar(u.krav!, fras).ok, false, `${u.id}: ${fras}`);
