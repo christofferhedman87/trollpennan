@@ -4,7 +4,7 @@
 
 ## C1c · T-07/T-08: synlig placering och tillbehör (slutverifiering)
 
-Branch `codex/t07-c1c-placering`, PR #297 (utkast), bas publicerad `origin/main c878218`. Sista appkod `16b6d36`; alla sju grindar är gröna, **638/638 produkttester**, med oförändrad 50 ms-gräns. Förarbetena delade stora filer utan beteendebyte: oberoende 35/35 deklarationer/initierare i `fee7b1a`, 57/57 placerings- och 11/11 scendeklarationer i `cc1b12b`, bevarat API och inga importcykler. Alla ändrade kodfiler håller 400-radersgränsen.
+Branch `codex/t07-c1c-placering`, PR #297 (utkast), bas publicerad `origin/main c878218`. Sista appkod `e1c3033`; alla sju grindar är gröna, **638/638 produkttester**, med oförändrad 50 ms-gräns. Förarbetena delade stora filer utan beteendebyte: oberoende 35/35 deklarationer/initierare i `fee7b1a`, 57/57 placerings- och 11/11 scendeklarationer i `cc1b12b`, bevarat API och inga importcykler. Alla ändrade kodfiler håller 400-radersgränsen.
 
 Gemensam `skapelsePlan`/`SammansattDjur` styr värld, hologram och placeringsmått. Relation, färg, antal och varje exemplar bevaras; på-saker stöder kroppen, under-saker står över den, i-behållare omsluter den och fria saker står bredvid på marken. Plagg har gemensam exemplarordning och mått. Äldre djur använder samma tillfälliga torra placeringskarta som hologrammet; avbryt återgår utan sparmutation. Värmehjälpen kräver rätt fruset måldjur eller värmeuppdrag och bevarar relation/antal/ord/egenskaper/färg/glans, även flera och fristående plagg.
 
@@ -14,7 +14,9 @@ Kroppens eget id-pass avslöjade att en synlig bordsskiva dolde katten: föregå
 
 **Hela 11-fallskedjan är grön i 375×812 och 812×375** på visningsbygget före sista glans-/skalgolvsrättningen: under/på/i, cykel/boll, två röda äpplen, filt, två strumpor, tio hattar, i hatt och under två bord. Riktiga tangenter/åäö-knappar, faktisk GLB och exemplar, minst 64 px sammansättning, P3a:s 70 % kropp/90 % övre halva, verkligt avbryt/återställt ritläge och hela sparvärldens bevarande vid omladdning provas. Inga sid-, konsol- eller modellreservfel. Interna bilder har granskats; de publiceras inte.
 
-**Fortsätt:** sista bygget `16b6d36` provas nu separat med de fyra lagade djuren samt filt/tio hattar/två bord i båda vyer, följt av hela Grottans shader-/rotation-/skapa-/sparprov. Stenens egna ritanrop ska fortsatt vara 1–1 i var och en av 90 bildrutor; senaste tidigare hela shaderprov var grönt på `02bc129` i båda vyer. Granska bilderna internt och låt oberoende granskare slutgodkänna exakt appkod. Merga sedan #297 och kontrollera main-Cloudflare samt SHA-256 för sex start-/spel-filer och fyra ändrade GLB:er. Tidigare kandidater är inte slutgodkända.
+Extraprovet på `16b6d36` hittade ensamma fiskens/grisens överlapp med Pennans kontroll. `e1c3033` aktiverar samma redan granskade fria DOM-yta även för ensamma djur; sammansättningarnas väg är oförändrad. Alla sju grindar är åter gröna, 638/638.
+
+**Fortsätt:** sista bygget `e1c3033` provas nu separat med de fyra lagade djuren samt filt/tio hattar/två bord i båda vyer, följt av hela Grottans shader-/rotation-/skapa-/sparprov. Stenens egna ritanrop ska fortsatt vara 1–1 i var och en av 90 bildrutor; senaste tidigare hela shaderprov var grönt på `02bc129` i båda vyer. Granska bilderna internt och låt oberoende granskare slutgodkänna exakt appkod. Merga sedan #297 och kontrollera main-Cloudflare samt SHA-256 för sex start-/spel-filer och fyra ändrade GLB:er. Tidigare kandidater är inte slutgodkända.
 
 Reproducera skymningens röda baslinje med bygge på `e8ef8fd` och slutgrenens `scripts/prov-sammansatt.mjs`: `QA_LAGE=812 QA_FALL='en katt under ett bord' node scripts/prov-sammansatt.mjs <preview-url>`. Slutprovet körs utan urval för alla 11; `QA_FALL` måste välja ett verkligt fall. Extra modeller väljs uttryckligen. `CHROMIUM=/usr/bin/chromium` vid behov. Inga lokala scratch-filer krävs som källa.
 
@@ -22,9 +24,9 @@ T-07/T-08 är delresultat: sekundära djur återstår i C1d; full formelkorpus, 
 
 ## C2b-1 · T-08: sifferantal utan falska spärrträffar (förberedd)
 
-Branch `codex/t08-c2b1-siffror`, utkast #298, app `2d427d1`, bas `origin/main c878218`. Det fristående sifferledet i ”en katt med 2 hattar” blev tomt och okänt i spärrens ordformsbedömning. Den känner nu igen exakt lexikonets heltal 1–10. Spärrlista och normalisering är oförändrade.
+Branch `codex/t08-c2b1-siffror`, utkast #298, app `3f8c4d2`, bas `origin/main c878218`. Det fristående sifferledet i ”en katt med 2 hattar” blev tomt och okänt i spärrens ordformsbedömning. Erkända heltalsantal vars spärrnormalisering saknar bokstäver behandlas nu som avskiljare. Siffror som kan maskera bokstäver behåller sin tidigare kontroll. Spärrlista och normalisering är oförändrade.
 
-Röd baslinje och grön rättning finns i `antalBojning.test.ts`. **73/73 riktade språk-/spärrprov är gröna**: alla tio antal bevarar formel/antal, hela BLOCK.ord och BLOCK.stammar förblir spärrade med 1/2/6/10 före/efter, även maskerade/splittrade uttryck. Kod och prov finns i GitHub. Oberoende granskning pågår; inga slutgrindar eller UI-påståenden ännu.
+Röd baslinje och grön rättning finns i `antalBojning.test.ts`. **73/73 riktade språk-/spärrprov är gröna**: alla tio antal bevarar formel/antal, hela BLOCK.ord och BLOCK.stammar förblir spärrade med 1/2/6/10 före/efter, även maskerade/splittrade uttryck. Första kandidaten `2d427d1` avvisades av oberoende granskare eftersom siffermaskning kunde kringgå spärren mellan kända ord. Fem fasta regressioner täcker dessa fynd. Rättningen `3f8c4d2` är preliminärt läsgranskad utan kvarstående blockerare; granskarens 9 920 egna jämförelser hittade inga nya luckor. Reproduktionskod sparas innan resultatet används i slutleveransen. Inga slutgrindar eller UI-påståenden ännu.
 
 Fortsätt efter #297: hämta/merga färsk origin/main utan force-push, lägg det faktiska två-hattar-fallet i sammansättningsprovet och kör det rött mot C1c-bygget, grönt mot C2b-1 i båda telefonvyerna. Kör sju grindar, slutgranska, merga och kontrollera main-Cloudflare/SHA-256. Detta stänger inte C2b:s fulla korpus/migration eller T-08.
 
