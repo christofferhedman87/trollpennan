@@ -73,6 +73,30 @@
    "regn",
    "kunglig",
    "magi"
+  ],
+  "strumpa": [
+   "varm",
+   "varm:tassar"
+  ],
+  "vante": [
+   "varm",
+   "varm:tassar"
+  ],
+  "tofflor": [
+   "varm",
+   "varm:tassar"
+  ],
+  "stovlar": [
+   "varm",
+   "varm:tassar"
+  ],
+  "gummistovel": [
+   "varm",
+   "varm:tassar"
+  ],
+  "luva": [
+   "varm",
+   "varm:öron"
   ]
  },
  "monster": {
@@ -207,6 +231,56 @@
   "#CFD8DC": [
    "farg:silvrig",
    "farg:silver"
+  ]
+ },
+ "sak": {
+  "filt": [
+   "varm"
+  ],
+  "troja": [
+   "varm"
+  ],
+  "alvmossa": [
+   "varm"
+  ],
+  "halsduk": [
+   "varm"
+  ],
+  "brasa": [
+   "varm"
+  ],
+  "lagereld": [
+   "varm"
+  ],
+  "sol": [
+   "varm"
+  ],
+  "kamin": [
+   "varm"
+  ],
+  "soppa": [
+   "varm"
+  ],
+  "kakao": [
+   "varm"
+  ],
+  "glasstrut": [
+   "kall"
+  ],
+  "glass": [
+   "kall"
+  ],
+  "isglass": [
+   "kall"
+  ],
+  "snohog": [
+   "kall"
+  ],
+  "snoflinga": [
+   "kall"
+  ],
+  "snoboll": [
+   "kall"
   ]
  }
 }

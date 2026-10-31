@@ -60,13 +60,25 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 | G3 · T-33/T-34 | Verkliga kartplatser, stora högtalare/fylld karta; läsbara världsskyltar från start | B6 för namn | M · karta/alias, 44 px, projection och riktiga skyltklick |
 | G4 · T-35 | Fullständigt bevarade licenser sist under Tack till | Oberoende | S · föräldrasidans ordning och åtkomlig attribution |
 
+## B0 · T-05, sex betydelsekontrollerade uppdrag (#290)
+
+Branch `codex/t05-betydelsegrund` utgår från origin/mainf425a41. Sex röda verkliga baslinjefall är reproducerade: flygande hund/lysande kanin/strumpor underkänns, ensam röd katt/stor hund/varm tröja godkänns felaktigt. Ren kravmotor använder samma tolk och meningsdelning som skapandet, grupper, antal och skilda individer. Kroppsfärg binds till kroppen. Temperaturen på samma sak och uttrycklig djurstorlek överstyr motsatt standardegenskap. Matchningen redovisar faktiskt omatchade grupper. Torr tolkning avstår från blandningsnotering och gör0lagringsskrivningar i provet.
+
+De första sex uppdragen har minst tre distinkta ja/två distinkta nej var, egna provade hjälpfraser och konkreta nästan-repliker. Resterande85uppdrag behåller tillfällig äldre kontroll tills B1/BC; T-05/T-03/T-18 stängs inte och inga granskad-flaggor ändras.
+
+UI-provet hittade två verkliga återkopplingsfel: den gamla röstkön strök nästan-ledtråden, och efter prioritetsrättningen ersatte albumrepliken den efter444ms. Senastefe06419 återanvänder kvittot: bara den aktuella Trolla-handlingens verkliga bedömning följer med, önsketack prioriteras och befintlig lästidsregel ger barnet tid att läsa. En obesvarad ge-önskan får inte en annan pågående quests ledtråd. Ingen global meddelandekö byggs om här; T-17 återstår.
+
+Alla sju slutgrindar gröna påfe06419,560/560 produkttester och18befintliga lintvarningar. `prov-uppdragsbetydelse.mjs` grönt i375×812 och812×375, både flyg- och tvåfärgsuppdrag: nära miss → bevarad skapelse och synlig ledtråd → verkligt rätt svar, korrekt antal djur och belöning. Interna bilder granskade. Sju nya Node-prov täcker fixtures, subjekt/antal, temperatur/storlek, matchning, önskeprioritet, försökslivscykel och torr lagring. Oberoende Codex-granskare slutgodkände exaktfe064194455583c28aef668e2a60a4dc7123c934. #290 är publicerad somfbfe48f; main-Cloudflare124411312834 och6/6SHA-256 gröna. Kodens sparformat och testid-baslinje är oförändrade.
+
+Tre svagaste punkter:85uppdrag/önskeregioner återstår; övriga samtidiga meddelanden och kvitto för uppdaterade djur i platsSkapelser måste rättas före motsvarande B1-flöden; Christoffers faktiska textläsning, godkända nya inspelningar och fysisk hårdvara är inte ersatta av molnprov. En sjuåring kan nu förstå varför en ensam röd vän inte löser uppdraget och direkt försöka skapa den blå vännen; övriga äldre uppdrag kan fortfarande frustrera tills B1/BC är klart.
+
 ## Täckning och leveranslogg
 
 - A0/A2+F4 i #289: samma framräknade mål styr lapp, tips, första målsektion och Idé. De nya målkorten kräver uttryckligt byte när egna ord finns; Ångra återställer originalet. Separat Gåta och panoreringstips endast i fri värld. Röda baslinjer för de fyra bokfynden, verklig klippning, Väktaröverlapp, Penna/Stäng och rotation är reproducerade. Kritisk bild-/kodgranskning rättade smal skrivyta, dialogisolering och geometrin. De åtta skärpta liggande platsfallen var gröna på b5834a0, inklusive667×375; alla sju grindar och guldflödena (stående/liggande med rotation samt fem enordsval) var gröna på5b6f29b. Därefter hittade granskaren en verklig klippning av ordbrickans32px-X i den nya rullraden. Senaste9617f47 ger den en hel44px-yta inuti brickan, rullar fram markerad bricka och lägger guldbadgen inom raden. Nya geometriprov omfattar faktisk markering/borttagning och hela Mellanslag/Trolla. Nya sju grindar och skärmprov körs före slutgodkännande/merge. Testid-baslinjen är oförändrad; inga sparfält ändras.
 
 - T-03 är fortsatt delresultat: betydelsen och minst två fungerande lösningar för alla157mål verifieras i B/C. Gåvohjälpens äldre separata hylla behöver samma skyddade bytesväg i B/D. Tre svagaste punkter i A2: kvarvarande äldre hjälpförslags betydelse/gåvoväg; vissa bildfallbackar och568×320 som inte provats; fysisk svensk hårdvara och nya godkända inspelningar som återstår. Bilderna används endast internt.
 
-- B0 #290 (`codex/t05-betydelsegrund`, separat arbetskatalog) har sex migrerade uppdrag med ja/nej-data och konkreta ledtrådar;85återstår, T-05/T-18 stängs inte. Oberoende fynd om temperaturer, djurstorlek och utebliven ledtråd rättas före merge. Senastefe06419 använder faktisk bedömning under samma Trolla-transaktion till kvittot; önsketack prioriteras, kvittot får befintlig lästidsregel och saknas innehåller verkligt omatchade grupper. Alla sju grindar gröna,560/560, slutliga fyra verkliga UI-fall körs. Inför B1: kvittots ändrat-kontroll måste också omfatta uppdaterade djur i platsSkapelser innan bannerundertryckning används där. Inga granskad-flaggor ändrade.
+- B0 #290 är publicerad somfbfe48f(main-Cloudflare124411312834 och6SHA gröna) och har sex migrerade uppdrag med ja/nej-data och konkreta ledtrådar;85återstår, T-05/T-18 stängs inte. Oberoende fynd om temperaturer, djurstorlek och utebliven ledtråd rättas före merge. Senastefe06419 använder faktisk bedömning under samma Trolla-transaktion till kvittot; önsketack prioriteras, kvittot får befintlig lästidsregel och saknas innehåller verkligt omatchade grupper. Alla sju grindar gröna,560/560, slutliga fyra verkliga UI-fall körs. Inför B1: kvittots ändrat-kontroll måste också omfatta uppdaterade djur i platsSkapelser innan bannerundertryckning används där. Inga granskad-flaggor ändrade.
 
 - C1a #291 (`codex/t07-t08-tolkmoduler`) är ett beteendebevarande förarbete för400-radersregeln:1192raders tolk delas i sex moduler på107–310rader, med samma publika fasad.1726fraser ger byteidentiska kompletta utfall före/efter för både tolka och tolkaMedReserv; alla sju grindar gröna. Inga språkregler/formler/relationer/placeringar ändrade ännu. T-07/T-08 står kvar öppna. Samordning mot publicerade A2/B0, kritisk granskning och verkligt UI återstår före merge. C1:s relationer behövs för B1/BC:s sammansatta uppdrag.
 
@@ -86,7 +98,7 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 slutverifieras i#289; återståend
 | T-02 | A1 | Verifierad/granskad #288,20UI-fall båda vyer och44px-yta; publicerad f425a41, CF124383463197/6SHA-256 gröna |
 | T-03 | A0/A2/B | A0/A2 implementerad och slutverifieras i#289; delresultat tills B/C verifierar157mål |
 | T-04 | A0/A2 | Implementerad i#289; målanpassat tips och idé gröna i båda vyer, slutgranskning kvar |
-| T-05 | B0/B1 | Planerad; ≥455 ja/nej-fixtures |
+| T-05 | B0/B1 | B0 #290 publicerad fbfe48f;560/560, fyra UI-fall, CF124411312834/6SHA gröna;85uppdrag och455+total-fixtures återstår |
 | T-06 | B2 | Planerad |
 | T-07 | C1 | Planerad; faktisk värld och gamla v2/kopior |
 | T-08 | C2 | Planerad |

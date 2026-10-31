@@ -92,10 +92,11 @@ const HJALP_FORSLAG: Record<string, string[]> = {
 };
 
 export function uppdragForslag(
-  u: { id?: string; exempel?: string[]; krav?: { ord: string[]; min?: number; djur?: boolean } } | null | undefined,
+  u: { id?: string; exempel?: string[]; hjalp?: string[]; krav?: { ord: string[]; min?: number; djur?: boolean } } | null | undefined,
   djurKropp?: string,
 ): string[] {
   if (!u) return [];
+  if (u.hjalp?.length) return u.hjalp;
   if (u.id && HJALP_FORSLAG[u.id]) return HJALP_FORSLAG[u.id]!;
   const djur = djurKropp ?? "kanin";
   const ord = u.krav?.ord ?? [];
