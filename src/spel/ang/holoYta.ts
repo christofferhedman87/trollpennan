@@ -8,9 +8,10 @@ export function bokHoloYta(canvas: DOMRect): HoloYta | null {
   const ark = document.querySelector(".sk-ark")?.getBoundingClientRect();
   const penna = document.querySelector(".sk-penn-ora")?.getBoundingClientRect();
   const stang = document.querySelector(".sk-stang")?.getBoundingClientRect();
+  const gata = document.querySelector(".sk-gata")?.getBoundingClientRect();
   if (!ark || !penna || !stang || !portratt && !bubbla) return null;
   const yta = {
-    left: Math.max(canvas.left + 8, (portratt ? stang.right : penna.right) + 8),
+    left: Math.max(canvas.left + 8, (portratt ? Math.max(stang.right, gata?.right ?? 0) : penna.right) + 8),
     right: Math.min(canvas.right - 8, (portratt ? penna.left : ark.left) - 8),
     top: Math.max(canvas.top + 90, (bubbla?.bottom ?? canvas.top + 82) + 8),
     bottom: Math.min(canvas.bottom - 8, (portratt ? ark.top : stang.top) - 8),

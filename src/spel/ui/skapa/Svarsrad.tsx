@@ -23,7 +23,7 @@ export function Svarsrad() {
   useLayoutEffect(() => {
     if (skriverGuld || !svarRef.current) return;
     const visa = () => {
-      if (window.matchMedia("(orientation: landscape) and (max-height: 600px)").matches) {
+      if (window.matchMedia("(orientation: landscape) and (max-height: 600px), (orientation: portrait) and (max-height: 720px)").matches) {
         svarRef.current?.scrollIntoView({ block: "start", inline: "nearest", behavior: "instant" });
       }
     };

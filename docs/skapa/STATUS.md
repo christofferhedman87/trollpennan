@@ -15,6 +15,8 @@ Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först
 
 
 
+Senaste kortporträttsprovet bekräftar att CSS-kaskaden nu fungerar. Idé-lappen rullas fram automatiskt och dess bildrad har samma kompakta storlek som i liggande. Hjälpgalleriets inneboende bredd kunde därefter göra remsan 8 384 px bred; detta rättas med en uttryckligt begränsad gridkolumn och min-width:0. Stavningssvaret får samma framrullning som i liggande och kompakt padding med bibehållna 44 px-knappar. Dessa nya ändringar är byggda; riktat UI-prov pågår fortfarande och senaste samordnade slutgrindar återstår.
+
 ## A2: kort porträtt och slutkaskad, pågår
 
 Skogen i 812×375 klarade hela det skärpta hologramflödet på `7a6663f`. Även 667×375 klarade alla fyra modeller och stenens 90 bildrutor, men rotation till 375×667 blev röd: boken lämnade ingen fri yta under Väktaren. `5a975ab` inför därför kompakt läslapp, en 60 px hög rullremsa, separata arbetsytor och en verklig yta för hologrammet i kort porträtt. Alla sju grindar var gröna (565/565), men den oberoende granskaren fann att grundstilarna skrev över den nya CSS-layouten. Senaste rättningen ger kortlayouten konsekvent högre specificitet och en enda kortrad i Ordhjälpen. Bygget är grönt; faktiska skriv-/Idé-/hjälp-/hel-lapp-/stavningsprov i 375×667 samt nya hologramprov och slutgrindar återstår. Ingen ny kandidat räknas slutgodkänd enbart för att äldre prov var gröna.

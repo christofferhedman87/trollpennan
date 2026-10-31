@@ -83,7 +83,7 @@ const diag = (page) => page.evaluate(() => {
   const r = (s) => { const e = document.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0 && getComputedStyle(e).opacity !== "0" ? { left: b.left, top: b.top, right: b.right, bottom: b.bottom } : null; };
   return {
     ring: window.__trollring ?? null, holo: window.__trollholo ?? null, vy: window.__trollvy ?? null, W: innerWidth, H: innerHeight,
-    overlag: [".sk-penn-knapp", ".sk-penn-etikett", ".sk-stang"].map(r).filter(Boolean),
+    overlag: [".sk-penn-knapp", ".sk-penn-etikett", ".sk-stang", ".sk-gata", ".sk-gata-inline"].map(r).filter(Boolean),
     ark: a ? { left: a.left, top: a.top } : null, remsa: r('[data-s4="vaktar-aptitbubbla"]'), skylt: r(".tp-vagvisare-hud button"), calls: window.__trollvy?.calls ?? null, holoCalls: window.__holoRitanrop?.senast ?? null,
   };
 });
