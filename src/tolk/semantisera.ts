@@ -299,7 +299,7 @@ export function semantisera(tokens: string[]): Sem[] | Utfall {
       sem.push({ t: "ord", o: { ...en.o, genus: n ? "n" : "u" }, form: token });
       continue;
     }
-    if (en.t === "antal") sem.push({ t: "antal", n: en.n });
+    if (en.t === "antal") sem.push({ t: "antal", n: en.n, form: token });
     else if (en.t === "boost") {
       const djurOrd = ordFranForm(token);
       const efter = tokens[i + 1] === undefined ? null : lasToken(tokens[i + 1]!);

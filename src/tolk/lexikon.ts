@@ -315,7 +315,7 @@ export function hemligaAntal(): number {
 }
 
 export function arPluralForm(o: Ord, form: string): boolean {
-  if (o.klass === "foremal") return !!o.plural?.includes(form);
+  if (o.klass === "foremal") return form !== o.visa && form !== o.id && !!o.plural?.includes(form);
   if (o.genus === "pl") return true;
   if (form === o.visa || form === o.id) return false;
   if (!o.former.includes(form) && form !== o.visa) {
@@ -328,6 +328,7 @@ export function arPluralForm(o: Ord, form: string): boolean {
 }
 
 export function pluralOrd(o: Ord): string {
+  if (o.klass === "foremal" && o.plural?.length) return o.plural[0]!;
   const visa = o.visa;
   for (const f of o.former) {
     if (f !== visa && arPluralForm(o, f) && !f.endsWith("na")) return f;

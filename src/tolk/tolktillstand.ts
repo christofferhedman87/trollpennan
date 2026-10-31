@@ -29,7 +29,7 @@ export const KROPPS_LAGEN = new Set([
 ]);
 
 export type Sem =
-  | { t: "antal"; n: number }
+  | { t: "antal"; n: number; form?: string }
   | { t: "artikel"; form: string }
   | { t: "boost"; dir: string; skala: number }
   | { t: "funk"; v: "som" | "med" | "och" | "kan" | "fore"; relation?: Relation }
@@ -68,7 +68,7 @@ export type Bygg = {
   monsterDolj: boolean;
   randAuto: boolean;
   formagor: { nyckel: string; ord: Ord | null; vis: FormVis }[];
-  tillbehor: { ord: Ord; bild: string; fargOrd: Ord | null; fargHex: string | null; glans: boolean; recept?: boolean; relation?: Relation; form?: string; artikel?: string; egenskaper?: string[] }[];
+  tillbehor: { ord: Ord; bild: string; fargOrd: Ord | null; fargHex: string | null; glans: boolean; recept?: boolean; relation?: Relation; form?: string; artikel?: string; egenskaper?: string[]; antal?: number; antalOrd?: string }[];
   skala: number;
   glans: boolean;
   alpha: number;

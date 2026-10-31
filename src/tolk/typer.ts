@@ -114,7 +114,7 @@ export type Relation = typeof RELATIONER[number];
 export type TillbehorSpec = {
   id: string; farg: string | null; glans: boolean; relation?: Relation;
   /** Ord och uttryckliga egenskaper hör till just detta tillbehör; äldre v2 saknar dem. */
-  ord?: string; egenskaper?: string[];
+  ord?: string; egenskaper?: string[]; antal?: number;
 };
 
 /** Ett ord som tolka() inte känner, ritat som ett ägg (data/reserv.json, src/tolk/reserv.ts). */

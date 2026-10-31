@@ -1,6 +1,8 @@
 // Ord som härleds ur de befintliga entiteterna. Uppdelat utan regeländring inför C2.
 import { ORD } from "./data.ts";
 import entiteterJson from "../../data/entiteter.json" with { type: "json" };
+import gavorJson from "../../data/gavor.json" with { type: "json" };
+import byggJson from "../../data/bygg.json" with { type: "json" };
 import type { Ord } from "./typer.ts";
 
 export const ALLA = ORD.ord;
@@ -20,6 +22,9 @@ for (const o of ALLA) {
 // Härleds ur entiteter.json (fältet ord, annars nyckeln) och böjs med en regel för båda genus. Ett ord som redan finns i ord.json vinner alltid.
 const VOKAL = /[aeiouyåäö]$/;
 export function foremalsFormer(w: string): { singular: string[]; plural: string[] } {
+  const kand = KANDA_FORMER.get(w);
+  if (kand && kand.former.length >= 4) return { singular: [...new Set(kand.former.slice(0, 2))], plural: [...new Set(kand.former.slice(2, 4))] };
+  if (NEUTRUM_ORD.has(w) && !VOKAL.test(w)) return { singular: [w, w + "et"], plural: [w, w + "en"] };
   const v = VOKAL.test(w);
   const singular = [w, v ? w + "n" : w + "en", v ? w + "t" : w + "et"];
   const plural = new Set<string>();
@@ -47,6 +52,10 @@ export const NEUTRUM_ORD = new Set([
   "får", "bi", "troll", "skelett", "spjut", "block", "vattenfall", "bord", "glas",
   "bröd", "hjärta", "paraply", "lok", "vrak", "piano", "bälte", "halsband", "armband",
 ]);
+
+// Återanvänd projektets befintliga, källangivna SALDO-former före reservregeln.
+const KANDA_FORMER = new Map([...gavorJson.gavor, ...byggJson.bygg_ord, ...byggJson.delar].map((o) => [o.former[0]!, o]));
+function neutrum(w: string): boolean { return KANDA_FORMER.get(w)?.genus === "ett" || NEUTRUM_ORD.has(w); }
 
 type EntRad = { typ: string; modell: string | null; ord?: string[] };
 export const FOREMAL: Ord[] = [];
@@ -81,7 +90,7 @@ for (const [id, w] of sakOrd) {
     former: [...singular, ...plural],
     plural,
     del: { kropp: id },
-    ...(NEUTRUM_ORD.has(w) ? { genus: "n" as const } : {}),
+    ...(neutrum(w) ? { genus: "n" as const } : {}),
   };
   FOREMAL.push(o);
   for (const f of o.former) if (!formMap.has(f) && !reserverade.has(f)) formMap.set(f, o);
@@ -94,7 +103,7 @@ const forledNycklar = new Set(Object.keys(ORD.sammansattningar.forled));
 for (const [id, w] of sakOrd) {
   if (!forledNycklar.has(w) || LED_SAK.has(w)) continue;
   const { singular, plural } = foremalsFormer(w);
-  const o: Ord = { id: w, klass: "foremal", niva: "fritt", visa: w, former: [...singular, ...plural], plural, del: { kropp: id }, ...(NEUTRUM_ORD.has(w) ? { genus: "n" as const } : {}) };
+  const o: Ord = { id: w, klass: "foremal", niva: "fritt", visa: w, former: [...singular, ...plural], plural, del: { kropp: id }, ...(neutrum(w) ? { genus: "n" as const } : {}) };
   LED_SAK.set(w, o);
   for (const f of o.former) if (f !== w && !formMap.has(f) && !reserverade.has(f)) formMap.set(f, o);
 }
@@ -118,7 +127,7 @@ for (const [id, w] of sakOrd) {
     former: [...new Set([...annan.former, ...singular, ...plural])],
     plural,
     del: { kropp: id },
-    ...(NEUTRUM_ORD.has(w) ? { genus: "n" as const } : {}),
+    ...(neutrum(w) ? { genus: "n" as const } : {}),
   };
   for (const f of o.former) if (!DUBBEL_SAK.has(f)) DUBBEL_SAK.set(f, o);
 }

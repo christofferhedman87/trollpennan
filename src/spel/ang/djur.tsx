@@ -186,7 +186,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
   const ritSpec = krymp !== 1 ? { ...spec, skala: (spec.skala || 1) * krymp } : spec;
   const synS = ritSkala(ritSpec, z, plats);
   const sak = arSak(spec.kropp);
-  const medSaker = spec.tillbehor.map((t) => t.id).filter((id) => id !== spec.kropp && arSak(id) && !arPlagg(id));
+  const medSaker = spec.tillbehor.flatMap((t) => Array.from({ length: t.antal ?? 1 }, () => t.id)).filter((id) => arSak(id) && !arPlagg(id));
   const harPlattform = medSaker.some((id) => PLATTFORM_SAKER.has(id));
   const sakPos = (id: string, i: number): [number, number, number] => {
     if (PLATTFORM_SAKER.has(id) && i === 0) return [0, 0, 0];

@@ -77,11 +77,12 @@ export function formelAv(b: Bygg): string {
   let forra = med.length ? "med" : "";
   for (const t of b.tillbehor) {
     if (t.recept) continue;
-    const plural = t.ord.genus === "pl" || !!t.form && arPluralForm(t.ord, t.form);
+    const plural = (t.antal ?? 1) > 1 || t.ord.genus === "pl" || !!t.form && arPluralForm(t.ord, t.form);
     const genus = plural ? "pl" : t.ord.genus === "n" ? "n" : "u";
     const f = t.fargOrd ? boj(fargAdjektiv(t.fargOrd) ?? t.fargOrd, genus) : "";
-    const artikel = t.artikel && !plural ? t.artikel : "";
-    const fras = [artikel, ...(t.egenskaper ?? []), f, t.form ?? t.ord.visa].filter(Boolean).join(" ");
+    const artikel = t.antal ? (t.antalOrd ?? String(t.antal)) : t.artikel && !plural ? (genus === "n" ? "ett" : "en") : "";
+    const namn = (t.antal ?? 1) > 1 && !arPluralForm(t.ord, t.form ?? t.ord.visa) ? pluralOrd(t.ord) : t.form ?? t.ord.visa;
+    const fras = [artikel, ...(t.egenskaper ?? []), f, namn].filter(Boolean).join(" ");
     const relation = t.relation ?? "med";
     delar.push(relation === forra ? "och" : relation, fras);
     forra = relation;
