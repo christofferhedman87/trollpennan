@@ -48,6 +48,12 @@ try {
     await page.locator('[data-dal="skrivbricka"]').click(); await page.keyboard.type("en kanim ");
     const forslag = page.getByTestId("forslag"); await forslag.waitFor(); await ryms(forslag, "hela stavningssvaret");
     await ryms(page.getByTestId("remsa"), "remsa med stavningsfråga"); await ryms(page.getByTestId("nej"), "Behåll");
+    await page.getByTestId("forslag-kanin").click();
+    await page.locator('.sk-ord[data-klass="vad"]').last().click();
+    const bort = page.locator(".sk-ta-bort");
+    await ryms(bort, "hela Ta bort-knappen på markerad ordbricka");
+    const ruta = await bort.boundingBox(); assert.ok(ruta && ruta.width >= 44 && ruta.height >= 44, "Ta bort har44px tryckyta");
+    await bort.click(); assert.equal((await page.getByTestId("ord-input").inputValue()).includes("kanin"), false);
     assert.deepEqual(sidfel, []); console.log(`Grönt T-27: ${viewport.width}×${viewport.height}, skriv/idé/hjälp/full lapp/stavning`);
     await context.close();
   }

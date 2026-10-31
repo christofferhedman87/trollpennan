@@ -52,7 +52,7 @@ async function kontrolleraSkrivyta(page, aktiv = ".sk-skrivbricka") {
     return document.querySelector(".sk-remsa").contains(aktivt)
       && ord.top >= Math.max(0, remsa.top) - 1
       && ord.bottom <= Math.min(innerHeight, remsa.bottom) + 1
-      && [aktivt, ...[".sk-remsa", ".sk-hjalprad", ".sk-tips", ".sk-tangenter"].map((s) => document.querySelector(s))].every(inomKlipp)
+      && [aktivt, ...[".sk-remsa", ".sk-hjalprad", ".sk-tips", ".sk-tangenter", '[data-dal="klar"]', '[data-testid="mellanslag"]'].map((s) => document.querySelector(s))].every(inomKlipp)
       && hjalp.bottom <= tangenter.top + 1 && tips.bottom <= hjalp.bottom + 1;
   }, aktiv, { timeout: 8000 }).catch(async (e) => {
     const rutor = await page.evaluate((selektor) => Object.fromEntries([selektor, ".sk-remsa", ".sk-innehall", ".sk-hjalprad", ".sk-tips", ".sk-tangenter"].map((s) => {

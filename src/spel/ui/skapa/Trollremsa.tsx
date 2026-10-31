@@ -32,6 +32,9 @@ export function Trollremsa() {
     window.addEventListener("resize", visa);
     return () => { cancelAnimationFrame(ram); observator.disconnect(); window.removeEventListener("resize", visa); };
   }, [remsa.skriv, spok?.ord, spok?.buf]);
+  useLayoutEffect(() => {
+    if (vald !== null) skrivRef.current?.closest(".sk-remsa")?.querySelector<HTMLElement>(".sk-ord.vald")?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" });
+  }, [vald]);
   useEffect(() => {
     setAnim(rorelse);
     const id = window.setTimeout(() => setAnim({ ny: null, bojda: [], id: 0 }), 760);
