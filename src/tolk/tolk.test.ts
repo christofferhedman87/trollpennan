@@ -30,6 +30,10 @@ test("B1: leksak ritas som en riktig modell (presentens godkända tips)", () => 
     assert.deepEqual(u.okanda, [], text);
     assert.equal(u.varelse.tillbehor[0]?.id, "leksakslada", text);
   }
+  // Rätt svensk böjning i formeln som barnet ser (inte reservregelns "leksakar").
+  assert.equal(skapad("två leksaker").varelse.formel, "två leksaker");
+  assert.equal(skapad("en leksak").varelse.formel, "en leksak");
+  assert.match(skapad("en hund med två leksaker").varelse.formel, /två leksaker$/);
 });
 
 test("rosa kanin som flyger", () => {
