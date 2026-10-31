@@ -1,24 +1,19 @@
 # Åtgärdsplan T-01–T-35 för Codex och Claude Code
 
-## Överlämning från Claude till Codex, 2026-10-31
+## Överlämning: Codex fortsätter efter Claude, 2026-10-31
 
-Claude tog över efter Codex-pausen och lämnar nu tillbaka. Detta är aktuell startpunkt och går före äldre ”Fortsätt”-texter nedan. Granskaren under Claudes pass var en **oberoende Claude-underagent** (fristående, utan tidigare kontext), inte Codex.
+Detta är aktuell startpunkt och går före äldre ”Fortsätt”-texter nedan. Ta en PR i taget: #299 → #300 → #301, därefter återstående block enligt planen. Ingen force-push. Bevara sparformat v2, markmigrering och Cloudflare. Bilder används endast internt; inga nya checkpointdokument.
 
-**#298 · C2b-1 (T-08, P1):** barnet kan nu skriva siffror. Alla inmatningsvägar (fysiskt tangentbord, dold input, `trollApi.skriv`, guldchansen) går genom `src/spel/skapa/skrivtecken.ts` (bokstäver, 0–9, mellanslag; `bokstav` i `hjalp.ts` återexporterar den). Spärren `src/tolk/sparr.ts` klarar siffror som maskerar ord (0/1/3/4/5/7) och siffror inne i ord. Sedan `53c756f` prövar `arSparrat` också texten utan siffror, och sedan `1046e03` gör `tolka` samma sak, så att även sammansättningar som spärras först när ordet delas i led (”idiot2katt”) spärras. Allt main spärrade för samma tangenttryck spärras alltså fortfarande. Commits: `58aea12` inmatning, `0f49605`/`fd990c3`/`53c756f`/`1046e03` spärr, `2181382`/`9e1a3d2` provskriptet (`9e1a3d2` fick av misstag också med ett första utkast av dessa dokument). Oberoende granskare hittade två verkliga luckor, båda rättade med nya röda→gröna prov: fristående siffra mellan ordhalvor (”pi 0 stol”, 6 748 varianter) och siffra i sammansättning (2 430 varianter). Prov på `9e1a3d2`: alla sju grindar gröna utom det kända P3a-tidstestet (644 tester, 643 gröna; 50 ms-gränsen orörd), `prov-siffermask.mjs` 9 920 försök/0 nya luckor, och `QA_FALL='en katt med 2 hattar' node scripts/prov-sammansatt.mjs` grönt med riktiga tangenter, två hattar och omladdning i 375×812 och 812×375 (rött före `58aea12`: texten blev ”en katt med hattar”). Main-Cloudflare och serverade filer kontrolleras efter merge; se PR #298.
+- **#298 · C2b-1 (T-08, P1) är redan levererad:** main `64297f3`, oberoende Claude-underagent godkände. Main-Cloudflare `124517533701` och sex serverade SHA-256 är gröna enligt sista kommentaren i #298. Skrivna siffror når tolken; både `arSparrat` och `tolka` prövar även text utan siffror. Gör inte om detta. Full korpus/migration återstår i C2b.
+- **#299 · T-18/B4:** samordnad med `origin/main d5eb71a` genom vanlig merge till `f75c6ad`. Oberoende Codex-granskare `/root/review_299` godkänner exakt `f75c6ad5693d0069e8845b6a8bd301574bac9b16` utan blockerare: historiska sex texter/hashar stämmer, 60/60 riktade delprov gröna och 41/41 negativa minnesprov korrekt röda. Sex grindar gröna; `test:product` har 82/83 testfiler gröna med endast känt P3a-fel under parallell körning. Separat P3a är 9/9 grönt med oförändrad 50 ms-gräns. Start-/skapelseprov med riktiga skärmtryck och omladdning är grönt i 375×812 och 812×375; interna bilder granskade. Merge/CF/SHA återstår före leverans. Endast sex godkända flaggor ändras; övriga 85 uppdrag är oförändrade.
+- **#300 · F2/T-22:** utkast `claude/f2-min-bok`, HEAD `7abc2a5`; Ordjakten/Guldord och tom Låda. Claudes sju grindar och `scripts/prov-min-bok.mjs` är provade. Kvar: vanlig merge av färsk main, sju grindar och UI-prov på samordnat bygge, oberoende granskning, merge och main-CF/SHA.
+- **#301 · G1/T-29/T-32:** oprovat utkast `claude/g1-guldchans-kvitto`, HEAD `d4a66ed`. Följ PR-textens exakta nod-/UI-prov rött mot main och grönt på grenen i 375×812 och 812×375 utan reducerad rörelse, dokumentera ändrad replik, kör grindar/granskning/merge/CF/SHA.
 
-**Sparat, inte mergat (utkast-PR:er, bas `f9d6270`):**
-- **#299** `claude/t18-textpaket01-granskad` (T-18/B4): endast de sex läsgodkända uppdragens `granskad` = true; `src/spel/textgranskning.ts` låser SHA-256 av deras text/tack/nästan/hjälp. Sju grindar gröna på `1444cb5`. Kvar: merga main, oberoende granskning, merge, CF/SHA.
-- **#300** `claude/f2-min-bok` (F2 · T-22): Ordjakten/Guldord öppnar rätt del med samma räkning som rutan; tom Låda har tomvy och Stäng. Sju grindar gröna på `a40ac4c`; `scripts/prov-min-bok.mjs` rött på main, grönt i båda vyer. Nya texter i nya-repliker.md. Kvar: merga main, oberoende granskning, merge, CF/SHA.
-- **#301** `claude/g1-guldchans-kvitto` (G1 · T-29/T-32): **oprovat utkast**. Skakningen vid fel tangent borttagen; kvittot visar ”{n} guldord: {ord}”. Kvar: nodprov, UI-prov (rött/grönt, båda vyer, utan reducerad rörelse), nya-repliker.md, grindar, granskning. PR-texten listar exakt vad.
+**Textpaket 02 är mottaget och godkänt av Christoffer:** `Trollpennan-textpaket-02-granskad.md` innehåller exakt de 85 återstående uppdrags-id:na (SHA-256 och beslut i beslut.md). Ingen ytterligare godkännandefråga krävs. Använd som underlag i B1/BC, kontrollera varje förslag mot faktisk tolk och modeller. `granskad:true`/hashlås gäller endast exakt granskad text. Inget annat block väntar på detta.
 
-**Christoffers beslut efter Claudes pass:** se beslut.md. Textpaket 02 (85 uppdrag) granskas av en fristående AI-chatt och svaret blir underlag i B1/BC. Före slutgranskningen av hela blockserien: stoppa och meddela Christoffer (han väljer granskare och sätter ansträngning=max). Nytt fynd T-36 ligger som block F6.
+**Kvar:** B1 (85 uppdrag), B3, C1d, resten av C2b, C3, C4, BC, D0–D3, F1, F3, F5, F6/T-36, G2 och G3. F6 ska visa alla synliga djur, hem/flyttbekräftelse, skäl för fel hustyp och verklig tomorsak; se F6-avsnittet i `docs/codex/plan.md`. **Före slutgranskningen av hela blockserien: stoppa och meddela Christoffer.** Han väljer Claude/Codex och sätter ansträngning=max. Påbörja inte den granskningen utan hans val.
 
-**Omfattning kvar:** av 36 fynd (35 + T-36) är 11 levererade, 6 delvis klara och 19 öppna. #299–#301 skulle leverera T-22, T-29 och T-32 och flytta T-18 framåt (85 texter kvar). Av blockplanens 29 block är 10 klara (E1–E3, A0–A2, B0, B2, F4, G4), 2 delvis (C1: C1d; C2: resten av C2b), 2 i PR (F2, G1) och 15 orörda: B1 (85 uppdrag, L), B3, C3, C4 (L), BC, D0–D3, F1, F3, F5, F6, G2, G3.
-
-Börja med `git status`, `git fetch origin` och läs #298–#301. Använd origin/main, ingen force-push. Bevara sparformat v2, markmigreringen och Cloudflare. Bilder är endast intern kontroll. Inga nya checkpointdokument. Granskaren godkände exakt `9e1a3d293343bfe6a2f7ecde96f921a845e48e5b` (8 682 slumpfall och 14 490 sammansättningar: 0 luckor mot main; legitima antal 1–10 skapas). Kända icke-blockerande anmärkningar: ”1 katter” blir 3 katter som ”en katter”; en siffra under guldchansen räknas som fel tangent; gåvovägen och `sparaOkanda` saknar egen spärrkontroll (fanns före #298); i 812×375 hamnar den nyss trollade katten bakom HUD:ens Skriv-knapp efter att boken stängts (D2/F5).
-
-Tre svagaste punkter: C2b:s fulla korpus/migration och sekundära djur (C1d) återstår; B1:s 85 uppdrag och stora D/F/G-delar återstår; fysisk Safari/iPad, mänsklig textläsning och nya inspelningar är inte gjorda.
-
+Tre svagaste punkter: sekundära djur/full korpus/migration återstår; B1:s betydelsekrav och stora D/F/G-delar återstår; fysisk Safari/iPad, barns faktiska upplevelse och nya röstinspelningar är inte verifierade.
 
 > **Aktuellt 2026-10-31:** uppdraget omfattar samtliga 35 fynd i [granskning.md](granskning.md). E1/E2 (#286), E3/G4 (#287) och A1 (#288) är publicerade och görs inte om. B0:s första sex uppdrag är publicerade i #290 som fbfe48f (main-Cloudflare 124411312834 och 6/6 SHA-256 gröna); 85 uppdrag återstår. A0/A2/F4 (#289, main `eec3b27`) är publicerade och verifierade med Cloudflare/SHA-256. Dess hologramregression hittade ett befintligt grafikfel även på main; den separata rättningen är publicerad i #293. Beteendebevarande tolkdelning #291 är publicerad som `f69c3e9`. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1. Denna aktiva plan går före historiken längre ner.
 
@@ -254,7 +249,7 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 | T-15 | B3 | Planerad; B1 godkänt |
 | T-16 | D3 | Planerad |
 | T-17 | D0/D3 | Planerad; B5 godkänt |
-| T-18 | B1/BC | Sex pilottexter godkända av Christoffer 2026-10-31 (d9f2752); flaggorna satta och hashlåsta i utkast #299, ej mergat. 85 texter kvar |
+| T-18 | B1/BC | #299 samordnad/granskad på f75c6ad, sex flaggor/hashlås; merge/CF/SHA återstår. Textpaket 02:s 85 texter granskade och godkända som underlag; tolk-/modellkontroll och införande i B1/BC återstår |
 | T-19 | BC | Planerad; B+C först |
 | T-20 | C4 | Planerad; B2 godkänt |
 | T-21 | F1 | Planerad; B7 godkänt |
@@ -286,7 +281,7 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 8. Kritisk granskning enligt beslutad P1-regel före merge. Kontrollera Cloudflare **på main** och SHA-256 på de serverade filerna mot motsvarande lokala bygge. Branch-checkens omedelbara Cloudflare-fel är känt. Redovisa merge och publicering separat.
 9. Avsluta varje block med kvarvarande arbete och tre svagaste punkter. Nästa agent uppdaterar samma filer; skapa inga nya överlämningsdokument. Alla prov och nödvändiga instruktioner ska vara committade i GitHub.
 
-**Svagaste punkter just nu:** 1) Betydelsekrav och relationer berör många flöden och kräver gemensam regression. 2) T-18 kan förberedas men kräver Christoffers faktiska textläsning; nya röster kräver godkända inspelningar. 3) Safari långtidslagring, fysisk mobilprestanda och barns upplevelse kan inte bevisas i molnets syntetiska prov.
+**Svagaste punkter just nu:** 1) Betydelsekrav och relationer berör många flöden och kräver gemensam regression. 2) T-18:s Textpaket 02 är godkänt, men tolk-/modellkontroll och införande återstår; nya röster kräver godkända inspelningar. 3) Safari långtidslagring, fysisk mobilprestanda och barns upplevelse kan inte bevisas i molnets syntetiska prov.
 
 ---
 
