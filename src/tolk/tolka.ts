@@ -26,6 +26,9 @@ export function tolka(raw: string, opts: TolkaOpts = {}): Utfall {
   if (arSparrat(raw) || arSparrat(renText)) return { typ: "sparr", text: SPARR_TEXT };
   const tokens = tokensAv(renText);
   if (arSparrat(tokens.join(" "))) return { typ: "sparr", text: SPARR_TEXT };
+  // T-08: före sifferinmatningen nådde texten tolken utan siffror. Det som då spärrades, även sammansättningar som
+  // spärras först när ordet delas i led ("idiotkatt"), spärras fortfarande med en siffra i ordet ("idiot2katt").
+  if (/[0-9]/.test(raw) && tolka(raw.replace(/[0-9]/g, ""), { ...opts, noteraBlandning: false }).typ === "sparr") return { typ: "sparr", text: SPARR_TEXT };
   if (!tokens.length) {
     return { typ: "behover_djur", text: BEHOVER_TEXT, djur: kortDjur(3), okanda: [], meddelanden: [] };
   }
