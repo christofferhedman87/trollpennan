@@ -5,6 +5,7 @@ import uiJson from "../../../../data/skapa-ui.json" with { type: "json" };
 import { fyll } from "../../fyll.ts";
 import { ikon } from "../../skapa/ikoner.ts";
 import { useKvitto } from "../../skapa/kvitto.ts";
+import { lasbarTid } from "../../rost.ts";
 import "./skapa.css";
 
 const UI = uiJson as unknown as { kvitto: Record<string, string>; tider_ms: Record<string, number> };
@@ -14,7 +15,8 @@ export function Kvitto() {
   const satt = useKvitto((s) => s.satt);
   useEffect(() => {
     if (!kvitto) return;
-    const id = window.setTimeout(() => satt(null), UI.tider_ms.kvitto ?? 5600);
+    const text = [kvitto.tack, kvitto.ord.map((o) => o.t).join(" ")].filter(Boolean).join(" ");
+    const id = window.setTimeout(() => satt(null), Math.max(UI.tider_ms.kvitto ?? 5600, lasbarTid(text)));
     return () => window.clearTimeout(id);
   }, [kvitto, satt]);
   if (!kvitto) return null;

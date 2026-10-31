@@ -165,6 +165,8 @@ export type Utfall =
 
 export type TolkaOpts = {
   kalla?: "kort" | "skriv";
+  /** Torr bedömning ska inte notera blandningar som om barnet skapade dem. */
+  noteraBlandning?: boolean;
   inteGuld?: string[];
   /** Nya Skapa: ord som barnet valt att behålla ("Behåll mitt ord"). Reservkedjan gör ordägg av dem utan att fråga igen. */
   behall?: string[];

@@ -1,6 +1,6 @@
 # Åtgärdsplan T-01–T-35 för Codex och Claude Code
 
-> **Aktuellt 2026-10-31:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. T-12/T-13 är mergade och publicerade (#286, main06f057e). A1 T-01/T-02/T-31 är verifierat och oberoende granskat i #288, ännu inte mergat. Nästa arbete: **A0/A2 i #289**, som redan har röda baslinjeprov och sparad målgrund. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1.
+> **Aktuellt 2026-10-31:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. T-12/T-13 är mergade och publicerade (#286, main06f057e). A1 T-01/T-02/T-31 är verifierat och oberoende granskat i #288, ännu inte mergat. A0/A2/F4 slutverifieras i **#289**. **B0 #290** är självständigt leveransklart på f425a41 med sex semantikrättade uppdrag och läsbar återkoppling; **C1a #291** är ett beteendebevarande förarbete för400-radersregeln. B0 kan publiceras före A2, eftersom dess kod och fyra verkliga UI-fall är verifierade mot nuvarande main. Samordna därefter A2/C1a mot ny origin/main utan force-push. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1.
 
 ## Mandat och statusord
 
@@ -60,6 +60,18 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 | G3 · T-33/T-34 | Verkliga kartplatser, stora högtalare/fylld karta; läsbara världsskyltar från start | B6 för namn | M · karta/alias, 44 px, projection och riktiga skyltklick |
 | G4 · T-35 | Fullständigt bevarade licenser sist under Tack till | Oberoende | S · föräldrasidans ordning och åtkomlig attribution |
 
+## B0 · T-05, sex betydelsekontrollerade uppdrag (#290)
+
+Branch `codex/t05-betydelsegrund` utgår från origin/mainf425a41. Sex röda verkliga baslinjefall är reproducerade: flygande hund/lysande kanin/strumpor underkänns, ensam röd katt/stor hund/varm tröja godkänns felaktigt. Ren kravmotor använder samma tolk och meningsdelning som skapandet, grupper, antal och skilda individer. Kroppsfärg binds till kroppen. Temperaturen på samma sak och uttrycklig djurstorlek överstyr motsatt standardegenskap. Matchningen redovisar faktiskt omatchade grupper. Torr tolkning avstår från blandningsnotering och gör0lagringsskrivningar i provet.
+
+De första sex uppdragen har minst tre distinkta ja/två distinkta nej var, egna provade hjälpfraser och konkreta nästan-repliker. Resterande85uppdrag behåller tillfällig äldre kontroll tills B1/BC; T-05/T-03/T-18 stängs inte och inga granskad-flaggor ändras.
+
+UI-provet hittade två verkliga återkopplingsfel: den gamla röstkön strök nästan-ledtråden, och efter prioritetsrättningen ersatte albumrepliken den efter444ms. Senastefe06419 återanvänder kvittot: bara den aktuella Trolla-handlingens verkliga bedömning följer med, önsketack prioriteras och befintlig lästidsregel ger barnet tid att läsa. En obesvarad ge-önskan får inte en annan pågående quests ledtråd. Ingen global meddelandekö byggs om här; T-17 återstår.
+
+Alla sju slutgrindar gröna påfe06419,560/560 produkttester och18befintliga lintvarningar. `prov-uppdragsbetydelse.mjs` grönt i375×812 och812×375, både flyg- och tvåfärgsuppdrag: nära miss → bevarad skapelse och synlig ledtråd → verkligt rätt svar, korrekt antal djur och belöning. Interna bilder granskade. Sju nya Node-prov täcker fixtures, subjekt/antal, temperatur/storlek, matchning, önskeprioritet, försökslivscykel och torr lagring. Oberoende granskning har följt och verifierat rättningarna; slutbesked inväntas före merge. Kodens sparformat och testid-baslinje är oförändrade.
+
+Tre svagaste punkter:85uppdrag/önskeregioner återstår; övriga samtidiga meddelanden och kvitto för uppdaterade djur i platsSkapelser måste rättas före motsvarande B1-flöden; Christoffers faktiska textläsning, godkända nya inspelningar och fysisk hårdvara är inte ersatta av molnprov. En sjuåring kan nu förstå varför en ensam röd vän inte löser uppdraget och direkt försöka skapa den blå vännen; övriga äldre uppdrag kan fortfarande frustrera tills B1/BC är klart.
+
 ## Täckning och leveranslogg
 
 - E3/G4 samordnar T-14 och den oberoende T-35 eftersom båda gäller föräldrasidans information. Webmanifest och rasteriserade kopior av befintlig favicon till hemskärmsikoner, best-effort `navigator.storage.persist()` utan väntan vid start, ärliga Safari-/hemskärmsråd samt tidpunkt för senaste startade kopienedladdning. Ingen garanti att en fil behållits eller att Safari aldrig rensar. Grodlicensen ligger ordagrant kvar sist under Tack till. Baslinje: manifest saknas och licensordningen röda. Två rena nya lagringsprov gröna; alla sju grindar gröna, 553/553. `prov-bestandig-lagring.mjs` grönt för persist=true/false/fel/saknas, samt verklig föräldraöppning, nedladdning/kopiedatum och licensordning i375×812 och812×375. Interna bilder granskade. Oberoende `/root/t12_t13_review` godkände exakt2f3a40e605bbc902192d7de25f6f05cfcd724ad4 utan blockerare. Provets relativa request-URL:er och väntan på försidan rättades; spelkoden9a1d361 är oförändrad sedan sju gröna grindar; lint grönt igen. Tre svagaste punkter: fysisk iPad/långt uppehåll, faktisk hemskärmsinstallation på fysisk enhet och nya föräldratexter är bara lästa visuellt i molnets browser.
@@ -78,7 +90,7 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 | T-02 | A1 | Verifierad/granskad #288,20UI-fall båda vyer och44px-yta; väntar merge/live |
 | T-03 | A0/A2/B | Planerad; kräver alla 133 måls hjälpvägar |
 | T-04 | A0/A2 | Planerad |
-| T-05 | B0/B1 | Planerad; ≥455 ja/nej-fixtures |
+| T-05 | B0/B1 | B0 #290 verifierad: sex uppdrag och fyra UI-fall,560/560;85uppdrag och455+total-fixtures återstår |
 | T-06 | B2 | Planerad |
 | T-07 | C1 | Planerad; faktisk värld och gamla v2/kopior |
 | T-08 | C2 | Planerad |

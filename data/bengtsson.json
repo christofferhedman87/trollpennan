@@ -238,7 +238,22 @@
      "lejon",
      "bi"
     ],
-    "min": 1
+    "min": 1,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "solsken",
+       "nagon_av": [
+        "lysa",
+        "farg:gul"
+       ],
+       "beskrivning": "en vän som är gul eller lyser",
+       "subjekt": "djur"
+      }
+     ],
+     "djur": true,
+     "antal_text": "en vän"
+    }
    },
    "granskad": false,
    "val": {
@@ -271,7 +286,13 @@
       ]
      }
     ]
-   }
+   },
+   "hjalp": [
+    "en gul kyckling",
+    "en kanin som lyser",
+    "en gul hund"
+   ],
+   "nastan": "Din skapelse får stanna! Jag letar efter en vän som är gul eller kan lysa."
   },
   {
    "id": "vingar-i-luften",
@@ -300,7 +321,21 @@
      "gås",
      "drake"
     ],
-    "min": 1
+    "min": 1,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "flyga",
+       "nagon_av": [
+        "flyga"
+       ],
+       "beskrivning": "en vän som kan flyga",
+       "subjekt": "djur"
+      }
+     ],
+     "djur": true,
+     "antal_text": "en vän"
+    }
    },
    "granskad": false,
    "val": {
@@ -333,7 +368,13 @@
       ]
      }
     ]
-   }
+   },
+   "hjalp": [
+    "en fågel",
+    "en hund som flyger",
+    "en katt med vingar"
+   ],
+   "nastan": "Din skapelse får stanna! Jag letar efter en vän som kan flyga. Vingar kan hjälpa."
   },
   {
    "id": "pytteliten-kompis",
@@ -968,7 +1009,19 @@
      "hus",
      "varm"
     ],
-    "min": 1
+    "min": 1,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "varme",
+       "nagon_av": [
+        "varm",
+        "egenskap:varm"
+       ],
+       "beskrivning": "något som värmer"
+      }
+     ]
+    }
    },
    "granskad": false,
    "val": {
@@ -1001,7 +1054,13 @@
       ]
      }
     ]
-   }
+   },
+   "hjalp": [
+    "en hund med strumpor",
+    "en varm tröja",
+    "en kanin med halsduk"
+   ],
+   "nastan": "Din skapelse får stanna! Jag letar efter något som värmer. Strumpor, en tröja eller en halsduk kan hjälpa."
   },
   {
    "id": "trakig-eftermiddag",
@@ -1771,7 +1830,30 @@
      "apa",
      "elefant"
     ],
-    "min": 2
+    "min": 2,
+    "betydelse": {
+     "grupper": [],
+     "djur": 2,
+     "antal_text": "två vänner",
+     "olika": [
+      {
+       "id": "rod",
+       "nagon_av": [
+        "farg:röd"
+       ],
+       "beskrivning": "en röd vän",
+       "subjekt": "djur"
+      },
+      {
+       "id": "bla",
+       "nagon_av": [
+        "farg:blå"
+       ],
+       "beskrivning": "en blå vän",
+       "subjekt": "djur"
+      }
+     ]
+    }
    },
    "granskad": false,
    "val": {
@@ -1804,7 +1886,13 @@
       ]
      }
     ]
-   }
+   },
+   "hjalp": [
+    "en röd katt och en blå hund",
+    "en röd kanin och en blå häst",
+    "en röd fisk och en blå fisk"
+   ],
+   "nastan": "Din skapelse får stanna! Jag letar efter två vänner: en röd och en blå."
   },
   {
    "id": "sol-och-gras",
@@ -1891,7 +1979,30 @@
      "bi",
      "flodhäst"
     ],
-    "min": 2
+    "min": 2,
+    "betydelse": {
+     "grupper": [],
+     "djur": 2,
+     "antal_text": "två vänner",
+     "olika": [
+      {
+       "id": "stor",
+       "nagon_av": [
+        "stor"
+       ],
+       "beskrivning": "en stor vän",
+       "subjekt": "djur"
+      },
+      {
+       "id": "liten",
+       "nagon_av": [
+        "liten"
+       ],
+       "beskrivning": "en liten vän",
+       "subjekt": "djur"
+      }
+     ]
+    }
    },
    "granskad": false,
    "val": {
@@ -1924,7 +2035,13 @@
       ]
      }
     ]
-   }
+   },
+   "hjalp": [
+    "en stor hund och en liten katt",
+    "en jättestor kanin och en pytteliten häst",
+    "en stor fisk och en liten fisk"
+   ],
+   "nastan": "Din skapelse får stanna! Jag letar efter två vänner: en stor och en liten."
   },
   {
    "id": "hogt-och-lagt",
@@ -2253,7 +2370,30 @@
      "halsduk",
      "snö"
     ],
-    "min": 2
+    "min": 2,
+    "betydelse": {
+     "grupper": [],
+     "olika": [
+      {
+       "id": "varmt",
+       "nagon_av": [
+        "varm",
+        "egenskap:varm"
+       ],
+       "beskrivning": "något som värmer",
+       "subjekt": "sak"
+      },
+      {
+       "id": "kallt",
+       "nagon_av": [
+        "kall",
+        "egenskap:kall"
+       ],
+       "beskrivning": "något som kyler",
+       "subjekt": "sak"
+      }
+     ]
+    }
    },
    "granskad": false,
    "val": {
@@ -2286,7 +2426,13 @@
       ]
      }
     ]
-   }
+   },
+   "hjalp": [
+    "en varm tröja och en kall glass",
+    "en hund med tröja och en glass",
+    "en filt och en snöhög"
+   ],
+   "nastan": "Din skapelse får stanna! Jag letar efter två saker: något som värmer och något som kyler."
   },
   {
    "id": "snabb-och-langsam",
