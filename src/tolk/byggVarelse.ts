@@ -33,17 +33,22 @@ export function nastaArSak(sem: Sem[], i: number, ensamSak?: Ord | null): boolea
 /** Föremål före huvuddjuret: vänd riktningen när det följande relationsordet gäller djuret. */
 function omvandRelation(sem: Sem[], index: number, huvud: Sem): Relation | "omvand-i" | undefined {
   let rel: Relation | undefined;
+  let vantarPaSak = false;
   for (const s of sem.slice(index + 1)) {
     if (s.t === "funk") {
-      if (!s.relation || rel) return undefined;
+      if (s.v === "och" && !rel && !vantarPaSak) { vantarPaSak = true; continue; }
+      if (!s.relation || rel || vantarPaSak) return undefined;
       rel = s.relation;
     } else if (s === huvud) {
+      if (vantarPaSak) return undefined;
       if (rel === "under") return "på";
       if (rel === "i") return "omvand-i";
       if (rel === "vid" || rel === "bredvid") return rel;
       return undefined;
-    } else if (s.t === "ord" && (s.o.klass === "djur" || s.o.klass === "foremal" || s.o.klass === "tillbehor")) return undefined;
-    else if (s.t === "komp" || s.t === "okand" || s.t === "blanda") return undefined;
+    } else if (s.t === "ord" && (s.o.klass === "foremal" || s.o.klass === "tillbehor") || s.t === "komp" && s.suffix.kind !== "djur") {
+      if (rel || !vantarPaSak) return undefined;
+      vantarPaSak = false;
+    } else if (s.t === "ord" && s.o.klass === "djur" || s.t === "komp" || s.t === "okand" || s.t === "blanda") return undefined;
   }
   return undefined;
 }

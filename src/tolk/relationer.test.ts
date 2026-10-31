@@ -111,6 +111,9 @@ test("B1: omvänd inneslutning är osäker utan att sparformatet ändras", () =>
       assert.deepEqual(u.osakraRelationer, [0], text);
       assert.ok(!JSON.stringify(u.varelse).includes("osakraRelationer"), "bedömningens metadata sparas inte i varelse");
     }
+    const flera = tolk("en mössa och en filt i en kanin", { noteraBlandning: false });
+    assert.equal(flera.typ, "skapad");
+    if (flera.typ === "skapad") assert.deepEqual(flera.osakraRelationer, [0, 1]);
     const tydlig = tolk("en kanin i en mössa", { noteraBlandning: false });
     assert.equal(tydlig.typ, "skapad");
     if (tydlig.typ === "skapad") assert.equal(tydlig.osakraRelationer, undefined);
