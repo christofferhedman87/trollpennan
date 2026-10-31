@@ -51,3 +51,35 @@ test("T08: sifferantal kring spärrade eller maskerade ord öppnar inte spärren
     assert.equal(tolka(text).typ, "sparr");
   }
 });
+
+// Siffror mitt i ord kan skrivas sedan 58aea12. Varje maskering av ett spärrat ord eller en stam ska spärras,
+// både med sifferbokstäver (0/1/3/4/5/7) och med siffror som skjuts in, utan att vanliga antal spärras.
+const MASK: Record<string, string> = { o: "0", i: "1", e: "3", a: "4", s: "5", t: "7" };
+function maskeringar(w: string): string[] {
+  const pos = [...w].map((c, i) => (MASK[c] ? i : -1)).filter((i) => i >= 0).slice(0, 8);
+  const ut = new Set<string>();
+  for (let m = 1; m < 1 << pos.length; m++) {
+    const a = [...w];
+    pos.forEach((p, b) => { if (m & (1 << b)) a[p] = MASK[a[p]!]!; });
+    ut.add(a.join(""));
+  }
+  for (let i = 1; i < w.length; i++) for (const d of ["2", "6", "8", "9", "22"]) ut.add(w.slice(0, i) + d + w.slice(i));
+  return [...ut];
+}
+
+test("T08: siffror mitt i ett ord öppnar aldrig spärren", () => {
+  let antal = 0;
+  const luckor: string[] = [];
+  for (const term of [...BLOCK.ord, ...BLOCK.stammar]) {
+    if (!arSparrat(term)) continue;
+    for (const v of maskeringar(term.toLocaleLowerCase("sv"))) {
+      antal++;
+      if (!arSparrat(v) || !arSparrat(`en katt med ${v}`) || tolka(`en katt med ${v}`, { kalla: "skriv" }).typ !== "sparr") luckor.push(v);
+    }
+  }
+  assert.ok(antal > 3000, `för få maskeringar provade: ${antal}`);
+  assert.deepEqual(luckor.length, 0, `${luckor.length} maskerade varianter kom förbi spärren`);
+  for (let n = 1; n <= 10; n++) {
+    for (const s of [`en katt med ${n} hatt`, `en katt med ${n} hattar`, `${n} katter`, `en katt med ${n} röda äpplen`]) assert.equal(arSparrat(s), false, s);
+  }
+});

@@ -2,15 +2,13 @@ import { ordFranForm } from "./lexikon.ts";
 import { BLOCK, ORD } from "./data.ts";
 
 /** Bara för spärrlistan. Ordlistan jämförs aldrig så här. */
+/** Siffror som ser ut som bokstäver läses som bokstäverna (0→o, 1→i, 3→e, 4→a, 5→s, 7→t). */
+function sifferbokstaver(t: string): string {
+  return t.replace(/0/g, "o").replace(/1/g, "i").replace(/3/g, "e").replace(/4/g, "a").replace(/5/g, "s").replace(/7/g, "t");
+}
+
 export function normSparr(s: string): string {
-  let t = s.toLocaleLowerCase("sv");
-  t = t
-    .replace(/0/g, "o")
-    .replace(/1/g, "i")
-    .replace(/3/g, "e")
-    .replace(/4/g, "a")
-    .replace(/5/g, "s")
-    .replace(/7/g, "t");
+  let t = sifferbokstaver(s.toLocaleLowerCase("sv"));
   t = t.replace(/[^a-zåäö]/g, "");
   t = t.replace(/(.)\1+/g, "$1");
   return t;
@@ -18,7 +16,7 @@ export function normSparr(s: string): string {
 
 /** Samma bokstäver som normSparr, utan att slå ihop dubbeltecken. */
 function renSparr(s: string): string {
-  return s.toLocaleLowerCase("sv").replace(/[^a-zåäö]/g, "");
+  return sifferbokstaver(s.toLocaleLowerCase("sv")).replace(/[^a-zåäö]/g, "");
 }
 
 const EXAKT = new Set(BLOCK.ord.map(normSparr));
@@ -54,6 +52,8 @@ function arOrdform(token: string): boolean {
   // Ett erkänt antal utan bokstäver i spärrnormaliseringen är bara en avskiljare.
   // Siffror som kan maskera bokstäver måste fortfarande gå genom maskkontrollen.
   if (/^(?:[1-9]|10)$/.test(token) && !normSparr(token)) return true;
+  // En siffra inne i ett ord gör det aldrig till en känd ordform ("hor4n" är inte "horn"); maskkontrollen avgör.
+  if (/[0-9]/.test(token)) return false;
   const t = token.toLocaleLowerCase("sv").replace(/[^a-zåäö]/g, "");
   if (TILLATNA_ORD.has(t)) return true;
   return !!t && (FUNK.has(t) || !!ordFranForm(t));
