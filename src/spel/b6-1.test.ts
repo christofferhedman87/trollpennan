@@ -101,13 +101,14 @@ test("B6.1 (5): djur:true och final:true används – platsuppdragen kräver dju
 });
 
 test("B6.1 (C): färguppdragen säger rakt ut vilken sak färgen finns på – inget 'lånar färg'", () => {
-  const farg = SKRIV.filter((u) => /färg/i.test(u.text_bengtsson ?? ""));
+  const farg = SKRIV.filter((u) => /färg|(röd|blå|grön|gul|vit) som (tomaten|himlen|gräset|solen|snö)/i.test(u.text_bengtsson ?? ""));
   assert.ok(farg.length >= 7);
   for (const u of SKRIV) assert.doesNotMatch(u.text_bengtsson ?? "", /lån(a|ar)\b.*färg|varsin färg/i, `${u.id}: "${u.text_bengtsson}"`);
   for (const id of ["tva-farger", "sjo-tva-farger", "grotta-tva-farger", "sol-och-gras"]) {
     const u = SKRIV.find((x) => x.id === id)!;
     assert.equal(u.granskad, id in GRANSKADE_UPPDRAG, `${id}: granskad bara efter Christoffers läsgodkännande (B4)`);
-    assert.match(u.text_bengtsson!, /en (vän )?i (tomatens|himlens|solens|gräsets) färg/i, id);
+    // Textpaket 02 (granskad): "en röd som tomaten" säger lika rakt ut vilken färg som "i tomatens färg".
+    assert.match(u.text_bengtsson!, /en (vän )?i (tomatens|himlens|solens|gräsets) färg|en (röd|blå|grön|gul) som (tomaten|himlen|gräset|solen)\b.*en (röd|blå|grön|gul) som (tomaten|himlen|gräset|solen)\b/i, id);
   }
 });
 

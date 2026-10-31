@@ -38,6 +38,21 @@ test("B1: färg och storlek i Skogen, Sjön och Grottan gäller själva djuret",
   }
 });
 
+test("B1: två vänner på platserna – varsin storlek eller färg hör till varsitt djur", () => {
+  const nej: Record<string, string[]> = {
+    "skog-stor-och-liten": ["en stor sten och en liten kanin", "en stor räv med en liten mössa", "en stor liten räv"],
+    "sjo-tva-storlekar": ["en stor båt och en liten fisk", "en stor fisk bredvid en liten sten", "en stor fisk"],
+    "grotta-stor-och-liten": ["en stor sten och en liten mus", "en stor hund med en liten mössa", "en hund och en katt"],
+    "sjo-tva-farger": ["en röd boll och en blå fisk", "en röd fisk med en blå mössa", "en röd och blå fisk"],
+    "grotta-tva-farger": ["en grön sten och en gul mus", "en grön groda med en gul mössa", "en grön och gul katt"],
+  };
+  for (const u of SKRIV.filter((x) => x.id in nej)) {
+    for (const fras of nej[u.id]!) assert.equal(bedomUppdragsSvar(u.krav!, fras).ok, false, `${u.id}: ${fras}`);
+    // Christoffers godkända hjälpfraser och de befintliga idéerna ska alltid räcka.
+    for (const fras of [...(u.hjalp ?? []), ...(u.val?.grupper ?? []).flatMap((g) => g.forslag.map((f) => f.fras))]) assert.equal(bedomUppdragsSvar(u.krav!, fras).ok, true, `${u.id}: ${fras}`);
+  }
+});
+
 test("T05: varje migrerat uppdrag har minst tre ja och två nej genom spelets riktiga tolk", () => {
   const migrerade = SKRIV.filter((u) => u.krav?.betydelse);
   assert.equal(migrerade.length, Object.keys(prov.uppdrag).length, "inget migrerat uppdrag får sakna svarsprov");

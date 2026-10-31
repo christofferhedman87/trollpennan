@@ -3543,7 +3543,7 @@
    "klart": "Olika storlek, lika välkomna på fikat!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Jag vill se två vänner. En ska vara stor som ett hus. En ska vara pytte, som en myra!",
+   "text_bengtsson": "Skapa två skogsvänner: en stor och en liten!",
    "klart_bengtsson": "Olika storlek, lika välkomna på fikat!",
    "krav": {
     "ord": [
@@ -3551,9 +3551,34 @@
      "liten"
     ],
     "min": 2,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [],
+     "djur": 2,
+     "antal_text": "två vänner",
+     "olika": [
+      {
+       "id": "stor",
+       "nagon_av": [
+        "stor"
+       ],
+       "subjekt": "djur",
+       "egna": true,
+       "beskrivning": "en stor vän"
+      },
+      {
+       "id": "liten",
+       "nagon_av": [
+        "liten"
+       ],
+       "subjekt": "djur",
+       "egna": true,
+       "beskrivning": "en liten vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -3584,7 +3609,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter två vänner: en stor och en liten.",
+   "hjalp": [
+    "en stor räv och en liten kanin",
+    "en stor varg och en liten igelkott",
+    "en stor uggla och en liten hund"
+   ]
   },
   {
    "id": "skog-hitta-riktningen",
@@ -4468,17 +4499,42 @@
    "klart": "Olika stora plask, samma glada bad!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Två vänner vill simma. En är stor som en båt. En är pytte, som en myra!",
-   "klart_bengtsson": "Olika stora plask, samma glada bad!",
+   "text_bengtsson": "Skapa två vänner vid sjön: en stor och en liten!",
+   "klart_bengtsson": "Olika stora vänner vid samma glada sjö!",
    "krav": {
     "ord": [
      "stor",
      "liten"
     ],
     "min": 2,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [],
+     "djur": 2,
+     "antal_text": "två vänner",
+     "olika": [
+      {
+       "id": "stor",
+       "nagon_av": [
+        "stor"
+       ],
+       "subjekt": "djur",
+       "egna": true,
+       "beskrivning": "en stor vän"
+      },
+      {
+       "id": "liten",
+       "nagon_av": [
+        "liten"
+       ],
+       "subjekt": "djur",
+       "egna": true,
+       "beskrivning": "en liten vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -4509,7 +4565,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter två vänner: en stor och en liten.",
+   "hjalp": [
+    "en stor fisk och en liten fisk",
+    "en stor anka och en liten anka",
+    "en stor groda och en liten fisk"
+   ]
   },
   {
    "id": "sjo-tva-farger",
@@ -4521,17 +4583,44 @@
    "klart": "Nu har både stranden och vattnet fått färg!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "En vän i tomatens färg badar i vattnet. En vän i himlens färg sitter på stranden.",
-   "klart_bengtsson": "Nu har både stranden och vattnet fått färg!",
+   "text_bengtsson": "Skapa två vänner vid sjön: en röd som tomaten och en blå som himlen!",
+   "klart_bengtsson": "Vilket färgglatt kompispar vid sjön!",
    "krav": {
     "ord": [
      "röd",
      "blå"
     ],
     "min": 2,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [],
+     "djur": 2,
+     "antal_text": "två vänner",
+     "olika": [
+      {
+       "id": "röd",
+       "nagon_av": [
+        "skriven_farg:röd",
+        "skriven_farg:ljusröd",
+        "skriven_farg:mörkröd"
+       ],
+       "subjekt": "djur",
+       "beskrivning": "en röd vän"
+      },
+      {
+       "id": "blå",
+       "nagon_av": [
+        "skriven_farg:blå",
+        "skriven_farg:ljusblå",
+        "skriven_farg:mörkblå"
+       ],
+       "subjekt": "djur",
+       "beskrivning": "en blå vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -4562,7 +4651,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter två vänner: en röd och en blå.",
+   "hjalp": [
+    "en röd fisk och en blå katt",
+    "en röd anka och en blå kanin",
+    "en röd groda och en blå gås"
+   ]
   },
   {
    "id": "sjo-las-och-lys",
@@ -5340,7 +5435,7 @@
    "klart": "Olika stora vänner får plats i samma saga!",
    "stjarnor": 2,
    "skatt": null,
-   "text_bengtsson": "Två vänner vill bo här inne. En är stor som en björn. En är pytte, som en myra!",
+   "text_bengtsson": "Skapa två vänner i grottan: en stor och en liten!",
    "klart_bengtsson": "Olika stora vänner får plats i samma saga!",
    "krav": {
     "ord": [
@@ -5348,9 +5443,34 @@
      "liten"
     ],
     "min": 2,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [],
+     "djur": 2,
+     "antal_text": "två vänner",
+     "olika": [
+      {
+       "id": "stor",
+       "nagon_av": [
+        "stor"
+       ],
+       "subjekt": "djur",
+       "egna": true,
+       "beskrivning": "en stor vän"
+      },
+      {
+       "id": "liten",
+       "nagon_av": [
+        "liten"
+       ],
+       "subjekt": "djur",
+       "egna": true,
+       "beskrivning": "en liten vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -5381,7 +5501,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter två vänner: en stor och en liten.",
+   "hjalp": [
+    "en stor hund och en liten katt",
+    "en stor kanin och en liten mus",
+    "en stor mus och en liten hund"
+   ]
   },
   {
    "id": "grotta-sken-och-saga",
@@ -5446,7 +5572,7 @@
    "klart": "Vilken färgglad liten samling!",
    "stjarnor": 3,
    "skatt": null,
-   "text_bengtsson": "En vän i gräsets färg sitter på en sten. En vän i solens färg står bredvid stenen.",
+   "text_bengtsson": "Skapa två vänner i grottan: en grön som gräset och en gul som solen!",
    "klart_bengtsson": "Vilken färgglad liten samling!",
    "krav": {
     "ord": [
@@ -5454,9 +5580,34 @@
      "gul"
     ],
     "min": 2,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [],
+     "djur": 2,
+     "antal_text": "två vänner",
+     "olika": [
+      {
+       "id": "grön",
+       "nagon_av": [
+        "skriven_farg:grön",
+        "skriven_farg:ljusgrön",
+        "skriven_farg:mörkgrön"
+       ],
+       "subjekt": "djur",
+       "beskrivning": "en grön vän"
+      },
+      {
+       "id": "gul",
+       "nagon_av": [
+        "skriven_farg:gul"
+       ],
+       "subjekt": "djur",
+       "beskrivning": "en gul vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -5487,7 +5638,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter två vänner: en grön och en gul.",
+   "hjalp": [
+    "en grön groda och en gul mus",
+    "en grön kanin och en gul katt",
+    "en grön hund och en gul kanin"
+   ]
   },
   {
    "id": "grotta-ljus-utanfor",

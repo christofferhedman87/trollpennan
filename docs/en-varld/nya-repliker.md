@@ -408,3 +408,19 @@ Sex uppdrag ur Textpaket 02: `skog-rod-van`, `sjo-bla-van`, `grotta-gul-van`, `s
 | | bengtsson | `data/bengtsson.json` `sjo-stor-simmare.nastan` | Din skapelse får stanna! Jag letar efter en stor vän, som en jättestor fisk. |
 
 Hjälpfraserna `en liten uggla`, `en jättestor anka` och `en stor gås` har ingen hel inspelning men en sammansatt `rostPlan`; Grok kan komplettera med hela fraser om en sammanhängande inläsning önskas. Övriga femton hjälpfraser och de fem oförändrade start-/tacktexterna har hela inspelningar.
+
+### B1: två vänner på platserna (storlek och färg) — inspelningar till Grok
+
+Fem uppdrag ur Textpaket 02: `skog-stor-och-liten`, `sjo-tva-storlekar`, `grotta-stor-och-liten`, `sjo-tva-farger` och `grotta-tva-farger`. De sju start-/tacktexterna nedan saknar hel inspelning och finns också i `data/rost.json` → `vantar_rost`. Övriga start-/tacktexter har hela inspelningar.
+
+| Klar | Röst | Datafil och nyckel | Text |
+|---|---|---|---|
+| | bengtsson | `data/bengtsson.json` `skog-stor-och-liten.text_bengtsson` | Skapa två skogsvänner: en stor och en liten! |
+| | bengtsson | `data/bengtsson.json` `sjo-tva-storlekar.text_bengtsson` | Skapa två vänner vid sjön: en stor och en liten! |
+| | bengtsson | `data/bengtsson.json` `sjo-tva-storlekar.klart_bengtsson` | Olika stora vänner vid samma glada sjö! |
+| | bengtsson | `data/bengtsson.json` `grotta-stor-och-liten.text_bengtsson` | Skapa två vänner i grottan: en stor och en liten! |
+| | bengtsson | `data/bengtsson.json` `sjo-tva-farger.text_bengtsson` | Skapa två vänner vid sjön: en röd som tomaten och en blå som himlen! |
+| | bengtsson | `data/bengtsson.json` `sjo-tva-farger.klart_bengtsson` | Vilket färgglatt kompispar vid sjön! |
+| | bengtsson | `data/bengtsson.json` `grotta-tva-farger.text_bengtsson` | Skapa två vänner i grottan: en grön som gräset och en gul som solen! |
+
+Nästan-replikerna (”Jag letar efter två vänner: en stor och en liten.”, ”… en röd och en blå.”, ”… en grön och en gul.”) och de sex tvåfärgade hjälpfraserna har ingen hel inspelning men en sammansatt `rostPlan`; Grok kan komplettera med hela fraser om en sammanhängande inläsning önskas. Nästan-replikerna saknar ännu källa i `kallor`.
