@@ -8,7 +8,7 @@ import { franTolk, type SparatBygge } from "../bygge.ts";
 import { byggaPaAngen } from "../dal/byggVal.ts";
 import { dalStyr } from "../dal/dalStyr.ts";
 import { DALEN, ledigTomt, TOMTER } from "../dal/tomter.ts";
-import { placera } from "../placering.ts";
+import { placeraMedMinne, type Lage } from "../placering.ts";
 import { platsMed, START_PLATS, type Plats } from "../platser.ts";
 import type { ForhandSpec } from "./forhand.ts";
 import { platsForhand } from "./platsForhand.ts";
@@ -30,13 +30,15 @@ export type Forhand = {
   plats?: string;
   y?: number;
   krymp?: number;
+  placering?: ReadonlyMap<string, Lage>;
 };
 
-function djurRing(v: Varelse, ang: readonly Sparad[]): { x: number; z: number; r: number } | null {
+function djurForhand(v: Varelse, ang: readonly Sparad[]) {
   const holo: Sparad = { ...v, uid: "forhand", skapad: Number.MAX_SAFE_INTEGER };
-  const l = placera([...ang, holo], ANG).get("forhand");
-  return l ? { x: l.x, z: l.z, r: 0.8 * Math.max(0.8, Math.min(1.5, v.skala || 1)) } : null;
+  const placering = placeraMedMinne([...ang, holo], ANG), l = placering.get("forhand");
+  return { ring: l ? { x: l.x, z: l.z, r: 0.8 * Math.max(0.8, Math.min(1.5, v.skala || 1)) } : null, krymp: l?.krymp ?? 1, placering };
 }
+const djurRing = (v: Varelse, ang: readonly Sparad[]) => djurForhand(v, ang).ring;
 
 export function forhandFor(text: string, ang: readonly Sparad[], garden: readonly SparatBygge[], oppna: ReadonlySet<number>): Forhand {
   const trim = text.trim();
@@ -53,7 +55,7 @@ export function forhandFor(text: string, ang: readonly Sparad[], garden: readonl
     const u = tolkaMedReserv(trim, { kalla: "kort" });
     if (u.typ === "skapad") {
       const spec: Sparad = { ...u.varelse, uid: "forhand", skapad: 0 };
-      return { spec: { typ: "djur", spec }, nyckel: `d:${u.varelse.formel}`, ring: djurRing(u.varelse, ang) };
+      return { spec: { typ: "djur", spec }, nyckel: `d:${u.varelse.formel}`, ...djurForhand(u.varelse, ang) };
     }
   }
   // Tryckte barnet på en tomt visar den tomma ringen tomten.
@@ -82,5 +84,5 @@ export function forhandForPlats(text: string, plats: Plats | undefined, lista: r
   if (u.typ !== "skapad") return tomt(standardDjur());
   const p = platsForhand(plats, u.varelse, lista, sovande);
   if (!p) return tomt(standardDjur());
-  return { spec: { typ: "djur", spec: p.spec }, nyckel: `${plats?.id}:d:${u.varelse.formel}`, ring: p.ring, plats: plats?.id, y: p.y, krymp: p.krymp };
+  return { spec: { typ: "djur", spec: p.spec }, nyckel: `${plats?.id}:d:${u.varelse.formel}`, ring: p.ring, plats: plats?.id, y: p.y, krymp: p.krymp, placering: p.placering };
 }

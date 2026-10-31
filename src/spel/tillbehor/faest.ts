@@ -7,6 +7,8 @@ import { ankareFor, procAnkare, type Ankare } from "./ankare.ts";
 import { byggTillbehor } from "./bygg.ts";
 import { largoParGrupp } from "./largo.ts";
 
+import { kladesExemplar, exemplarOffset } from "./exemplar.ts";
+
 const _qRot = new THREE.Quaternion();
 const _qFram = new THREE.Quaternion();
 const _v = new THREE.Vector3();
@@ -66,7 +68,7 @@ export function faestTillbehor(
   const a = rum === "modell" ? ankareFor(rot, kropp, "modell") : procAnkare(kropp);
   rot.userData.ankare = a;
   const parent = a.ben ?? rot;
-  for (const t of tillbehor) {
+  for (const { t, ankare, index, antal } of kladesExemplar(tillbehor, kropp)) {
     const rad: TillbehorRad | null = tillbehorRad(t.id, kropp);
     if (!rad) continue;
     const obj = byggTillbehor(t.id, rad, t.farg);
@@ -75,6 +77,9 @@ export function faestTillbehor(
     const p = a.varld ? rad.plats : (rad.platsMesh ?? rad.plats);
     const q = a.varld ? orientFor(rot, kropp).clone() : null;
     const pos = platsFor(p, a, q);
+    const off = new THREE.Vector3(...exemplarOffset(ankare, index, antal, a.bredd, a.hojd));
+    if (q) off.applyQuaternion(q);
+    pos.add(off);
     const skala = skalaVarde(rad.skala, a.bredd, a.hojd);
     if (a.varld) fastVarld(parent, rot, kropp, obj, pos, skala);
     else {
@@ -121,17 +126,20 @@ export function faestPlaggKlon(
   plaggId: string,
   plaggScen: THREE.Object3D,
   farg?: string | null,
+  exemplar?: { index: number; antal: number; bevara?: boolean },
 ): THREE.Object3D | null {
   const cfg = plaggKonfig(plaggId);
   if (!cfg) return null;
   const a = ankareFor(rot, kropp, "modell");
   rot.userData.ankare = a;
   const parent = (cfg.ankare === "huvudTopp" ? a.ben : null) ?? rot;
-  taBortPar(rot, plaggId, cfg.par);
+  if (!exemplar?.bevara) taBortPar(rot, plaggId, cfg.par);
   const rotPos = rot.getWorldPosition(new THREE.Vector3());
   const bas = basFor(cfg.ankare, a, rotPos);
   const off = new THREE.Vector3(-cfg.ut * a.bredd, cfg.upp * a.hojd, cfg.fram * a.bredd);
   off.applyQuaternion(orientFor(rot, kropp));
+  const extra = exemplarOffset(cfg.ankare, exemplar?.index ?? 0, exemplar?.antal ?? 1, a.bredd, a.hojd);
+  off.add(new THREE.Vector3(...extra).applyQuaternion(orientFor(rot, kropp)));
   const pos = bas.add(off);
   const klon = SkeletonUtils.clone(plaggScen);
   klon.updateMatrixWorld(true);

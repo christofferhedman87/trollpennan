@@ -3,6 +3,7 @@
 import type { Sparad } from "../brygga.ts";
 import type { SparatBygge } from "../bygge.ts";
 import { START_PLATS } from "../platser.ts";
+import type { Lage } from "../placering.ts";
 
 export type ForhandSpec = { typ: "djur"; spec: Sparad } | { typ: "bygg"; bygge: SparatBygge } | null;
 type Lyssnare = () => void;
@@ -20,6 +21,8 @@ const lage = {
   /** Hologrammets höjd över ringen och krympning, ur platsens placeringsregel (ängen: 0 och 1). */
   holoY: 0,
   krymp: 1,
+  /** Samma torra placering för hologrammet och äldre djurs tillfälliga visning. Sparas aldrig. */
+  placering: null as ReadonlyMap<string, Lage> | null,
   /** Arkets överkant i CSS-px (null = stängt). Kameran förskjuter bilden så att ringen syns ovanför. */
   arkKant: null as number | null,
   /** Liggande: arkets vänsterkant i CSS-px. */
@@ -55,6 +58,7 @@ export const forhand = {
       lage.plats = START_PLATS;
       lage.holoY = 0;
       lage.krymp = 1;
+      lage.placering = null;
       lage.arkKant = null;
       lage.arkVanster = null;
       lage.ringSkarm = null;
@@ -62,11 +66,12 @@ export const forhand = {
     meddela();
   },
   /** brygga.forhandsvisa: byt hologram. `nyckel` = tolkningens formel; samma nyckel ritar inte om. */
-  visa(spec: ForhandSpec, nyckel: string, ring: { x: number; z: number; r: number } | null, extra: { plats?: string; y?: number; krymp?: number } = {}) {
+  visa(spec: ForhandSpec, nyckel: string, ring: { x: number; z: number; r: number } | null, extra: { plats?: string; y?: number; krymp?: number; placering?: ReadonlyMap<string, Lage> } = {}) {
     const plats = extra.plats ?? START_PLATS;
     const y = extra.y ?? 0;
     const krymp = extra.krymp ?? 1;
-    const ringByt = JSON.stringify(ring) !== JSON.stringify(lage.ring) || plats !== lage.plats || y !== lage.holoY || krymp !== lage.krymp;
+    const placering = extra.placering ?? null;
+    const ringByt = JSON.stringify(ring) !== JSON.stringify(lage.ring) || plats !== lage.plats || y !== lage.holoY || krymp !== lage.krymp || placering !== lage.placering;
     if (nyckel === lage.nyckel && !ringByt) return;
     if (nyckel !== lage.nyckel) lage.studs += 1;
     lage.spec = spec;
@@ -75,6 +80,7 @@ export const forhand = {
     lage.plats = plats;
     lage.holoY = y;
     lage.krymp = krymp;
+    lage.placering = placering;
     meddela();
   },
   sattArkKant(topp: number | null, vanster: number | null = null) {

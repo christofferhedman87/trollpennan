@@ -38,12 +38,12 @@ export function useForhandArk(arkRef: RefObject<HTMLElement | null>, text: strin
         const pd = platsMed(plats);
         if (!pd) return;
         const p = forhandForPlats(text, pd, s.platsSkapelser[plats] ?? [], s.sovande);
-        forhand.visa(p.spec, p.nyckel, p.ring, { plats: p.plats, y: p.y, krymp: p.krymp });
+        forhand.visa(p.spec, p.nyckel, p.ring, { plats: p.plats, y: p.y, krymp: p.krymp, placering: p.placering });
         return;
       }
       const f = forhandFor(text, s.ang, s.garden, oppnaTomter(useDal.getState().utbyggnader));
       const forra = forhand.lage().ring;
-      forhand.visa(f.spec, f.nyckel, f.ring);
+      forhand.visa(f.spec, f.nyckel, f.ring, { krymp: f.krymp, placering: f.placering });
       // Ett bygge hamnar på en tomt som kanske inte syns: kameran glider dit (samma som efter Trolla).
       if ((f.spec?.typ === "bygg" || f.nyckel.startsWith("t:")) && f.ring && (forra?.x !== f.ring.x || forra?.z !== f.ring.z)) dalStyr.fokusera(f.ring.x, f.ring.z, f.ring.z < -1 ? DALEN.kamera.vy_bak : DALEN.kamera.vy_fram);
     }, MS);

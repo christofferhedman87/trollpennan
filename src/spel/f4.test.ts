@@ -1,4 +1,5 @@
 // F4: värmeplagg på djuret som redan står på ängen, och en klickbar 3D-Bengtsson inom 375×812.
+import { normaliseraPlaggId, plaggModellUrl } from "./modeller/plaggModell.ts";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
@@ -12,6 +13,7 @@ import { ENTITETER, modellUrl } from "./entiteter.ts";
 import { useMinne } from "./minne.ts";
 import { arVarmePlagg, mossaPaFrysKanin, mossaPaKanin } from "./mossaKanin.ts";
 import { arVarmePlagg as arVarmeStyr, mossaPaFrysKanin as mossaStyr } from "./styr/mossaKanin.ts";
+import { tolka } from "../tolk/tolka.ts";
 import { faestPlaggKlon, faestTillbehor } from "./tillbehor/faest.ts";
 import { plaggKonfig } from "./tillbehor/data.ts";
 
@@ -115,10 +117,9 @@ test("F4: kalibrering, modeller, Bengtsson och datainvarianter", () => {
   assert.match(skapa, /useMinne\.getState\(\)\.ang\.length > 0/);
   assert.match(skapa, /\$\{useMinne\.getState\(\)\.ang\[0\]!\.kropp\} med \$\{text\}/);
 
-  const gltf = las("src/spel/gltfDjur.tsx");
-  assert.match(gltf, /function plaggModellUrl\(id: string\): string \| null/);
-  assert.match(gltf, /plaggModellUrl\(plaggId\)/);
-  assert.match(gltf, /plaggModellUrl\(normaliseraPlaggId\(t\.id\)\)/);
+  assert.equal(plaggModellUrl(normaliseraPlaggId("mössa")), "/models/bulk/f-mossa-vinter-cc0.glb");
+  assert.equal(plaggModellUrl("halsduk"), "/models/bulk/f-halsduk-cc0.glb");
+  assert.equal(plaggModellUrl("kanin"), null);
 
   const faest = las("src/spel/tillbehor/faest.ts");
   assert.match(faest, /rot\.userData\.ankare = a/);
@@ -139,7 +140,7 @@ test("F4: värmeplagg kläder djuret på ängen, oavsett art", () => {
 
     const mossa = mossaPaFrysKanin(varelse("mössa", [], "#E53935"));
     assert.equal(mossa?.uid, katt!.uid);
-    assert.deepEqual(mossa?.spec.tillbehor, [plagg("alvmossa", "#E53935")]);
+    assert.deepEqual(mossa?.spec.tillbehor, [{ ...plagg("alvmossa", "#E53935"), ord: "mössa", relation: "med" }]);
     assert.equal(mossa?.spec.kropp, "katt");
     useMinne.getState().uppdateraDjur(katt!.uid, mossa!.spec);
 
@@ -183,6 +184,48 @@ test("F4: värmeplagg kläder djuret på ängen, oavsett art", () => {
   } finally {
     useMinne.getState().aterstall();
   }
+});
+
+test("F4: en hel filtmening skapar nytt utanför värmehjälpen", () => {
+  useMinne.getState().aterstall();
+  try {
+    const kanin = useMinne.getState().laggPaAng(varelse("kanin"), 1).nya[0]!;
+    const mening = varelse("kanin", [plagg("filt")]);
+    const fore = JSON.stringify(useMinne.getState().ang);
+    assert.equal(mossaPaFrysKanin(mening), null, "ett gammalt djur tar inte över fritt skapande");
+    assert.equal(JSON.stringify(useMinne.getState().ang), fore);
+    const katt = useMinne.getState().laggPaAng(varelse("katt"), 1).nya[0]!;
+    const kall = useMinne.getState();
+    useMinne.setState({ liv: { ...kall.liv, [katt.uid]: { ...kall.liv[katt.uid]!, humor: "fryser" } } });
+    assert.equal(mossaPaFrysKanin(mening), null, "en kall katt får inte låta en glad kanin ta över meningen");
+    const s = useMinne.getState();
+    useMinne.setState({ liv: { ...s.liv, [kanin.uid]: { ...s.liv[kanin.uid]!, humor: "fryser" } } });
+    assert.equal(mossaPaFrysKanin(mening)?.uid, kanin.uid, "ett uttryckligen fruset djur får fortfarande hjälp");
+  } finally {
+    useMinne.getState().aterstall();
+  }
+});
+
+test("F4: värmehjälpen bevarar riktiga relationer, antal och egenskaper", () => {
+  const lasMening = (text: string) => { const u = tolka(text, { kalla: "kort" }); assert.equal(u.typ, "skapad"); return (u as { varelse: Varelse }).varelse; };
+  useMinne.getState().aterstall();
+  try {
+    const kanin = useMinne.getState().laggPaAng(lasMening("en kanin"), 1).nya[0]!;
+    const s = useMinne.getState();
+    useMinne.setState({ liv: { ...s.liv, [kanin.uid]: { ...s.liv[kanin.uid]!, humor: "fryser" } } });
+    assert.equal(mossaPaFrysKanin(lasMening("en kanin bredvid en filt")), null, "en fristående filt får inte kläs på djuret");
+    for (const text of ["en kanin med två filtar", "en kanin med en kall filt", "en kanin med en filt och en filt"]) {
+      const v = lasMening(text), h = mossaPaFrysKanin(v);
+      assert.equal(h?.uid, kanin.uid);
+      assert.deepEqual(h?.spec.tillbehor, v.tillbehor, text);
+    }
+    const fristaende = mossaPaFrysKanin(lasMening("två kalla filtar"));
+    assert.deepEqual(fristaende?.spec.tillbehor, lasMening("en kanin med två kalla filtar").tillbehor);
+    for (const text of ["en röd filt med en blå filt", "en glittrig filt med en blå filt", "en röd filt med en blå hatt", "en filt bredvid en boll", "en filt med en guldkrona"]) {
+      assert.deepEqual(mossaPaFrysKanin(lasMening(text))?.spec.tillbehor, lasMening(`en kanin med ${text}`).tillbehor, "varje plagg behåller egen färg och glans");
+    }
+    assert.deepEqual(useMinne.getState().ang[0]?.tillbehor, [], "hjälpberäkningen skriver inte i minnet");
+  } finally { useMinne.getState().aterstall(); }
 });
 
 test("F4: GLB-klon ersätter procedur-halsduk och par-grupper krockar inte", () => {
