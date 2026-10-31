@@ -7,6 +7,7 @@ import { stavningsFeedback } from "../../lasniva.ts";
 import { ikon, kortBild } from "../../skapa/ikoner.ts";
 import { huvudord } from "../../skapa/meningsbrickor.ts";
 import { useSpel } from "../SpelKontext.ts";
+import { harBoksvar } from "../../skapa/svarsLage.ts";
 import { Fet } from "./Hjalprad.tsx";
 
 const UI = uiJson as unknown as { svar: Record<string, string> };
@@ -30,7 +31,7 @@ export function Svarsrad() {
     window.addEventListener("resize", visa);
     return () => window.removeEventListener("resize", visa);
   }, [forslag, behover, erbjud, bi, skriverGuld]);
-  if (spok) return null;
+  if (!harBoksvar(k.sk, k.t)) return null;
   if (forslag && forslag.forslag.length) {
     const f0 = forslag.forslag[0]!.visa;
     const fb = stavningsFeedback(forslag.token, f0);

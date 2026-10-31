@@ -1,99 +1,56 @@
 // Nya Skapa 6.9: lappen överst i arket säger vad som är speciellt just nu: en önskan, en gåva, en idé från tärningen.
 // Allt annat i boken är likadant. Lappen läses upp när den visas och med högtalaren.
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import uiJson from "../../../../data/skapa-ui.json" with { type: "json" };
 import { fyll } from "../../fyll.ts";
 import { djurMedUid } from "../../liv.ts";
 import { useMinne } from "../../minne.ts";
-import * as rostKo from "../../rostKo.ts";
 import { ideKort, ideText } from "../../skapa/idetarning.ts";
 import { ikon, kortBild } from "../../skapa/ikoner.ts";
 import { forsokDopaText, gavoRuta } from "../gavoRuta.ts";
 import { bestamdAv } from "../hjalp.ts";
 import { useSpel } from "../SpelKontext.ts";
 import { GavaStallKnapp } from "../Stall.tsx";
-import { uppdragText } from "../../aventyr.ts";
-import { dalStyr } from "../../dal/dalStyr.ts";
-import { useArkLapp } from "../../skapa/arkLapp.ts";
-import { platsLapp } from "../../skapa/platsLapp.ts";
-import { aktivtUppdrag, BENGTSSON_BILD } from "../../skapa/uppdragLapp.ts";
+import { useBokMal } from "../../skapa/useBokMal.ts";
+import { onskeKort } from "../../skapa/hjalpord.ts";
+import { LappRam } from "./LappRam.tsx";
+import { useLagBok } from "./useLagBok.ts";
+import { harBoksvar } from "../../skapa/svarsLage.ts";
 import type { IdeLapp } from "./gataLapp.ts";
 
-const UI = uiJson as unknown as { lapp: Record<string, string>; ide: Record<string, string> };
+const UI = uiJson as unknown as { lapp: Record<string, string>; ide: Record<string, string>; gata_knapp: string };
 const SNABB_NAMN = ["Skuttis", "Misse", "Blixten"] as const;
-
-function LappRam({ bild, fran, text, las, children, portratt = false }: { bild: string | null; fran: string; text: string; las: string; children?: ReactNode; portratt?: boolean }) {
-  useEffect(() => {
-    if (las) rostKo.lasUpp(las);
-  }, [las]);
-  return (
-    <div className={bild ? "sk-lapp" : "sk-lapp utan-bild"} data-dal="lapp">
-      {bild ? <span className={portratt ? "sk-lapp-bild portratt" : "sk-lapp-bild"}><img alt="" src={bild} /></span> : null}
-      <p className="sk-lapp-text">
-        <small>{fran}</small>
-        {text}
-      </p>
-      <button type="button" className="sk-rund" aria-label={UI.lapp.lyssna_aria} data-p4="lyssna-onska" onClick={() => rostKo.lasUpp(las)}>
-        <img alt="" src={ikon("ui", "lyssna")} />
-      </button>
-      {children ? <div className="sk-lapp-extra">{children}</div> : null}
-    </div>
-  );
-}
 
 export function Lapp({ ide }: { ide: IdeLapp | null }) {
   const k = useSpel();
-  const { gavaTill, onskan, ang } = k.t;
-  const { remsa } = k.sk;
-  const arkLapp = useArkLapp((s) => s.lapp);
-  const spar = useMinne((s) => s.uppdrag);
-  const plats = useMinne((s) => s.plats);
-  if (gavaTill) return <GavoLapp key={gavaTill} gavaTill={gavaTill} />;
-  if (arkLapp === "uppdrag") {
-    const u = aktivtUppdrag(spar);
-    if (u) {
-      const text = uppdragText(u, ang[0]?.kropp);
-      return <LappRam bild={BENGTSSON_BILD} portratt fran={UI.lapp.uppdrag_fran ?? ""} text={text} las={text} />;
-    }
-  }
-  if (k.vy.visaOnskaHjalp && onskan) {
-    const djur = k.vy.onskaDjur;
-    const namn = djur ? bestamdAv(djur.kropp, true) : "";
-    return (
-      <div data-testid="onska-remsa" style={{ display: "contents" }}>
-        <LappRam bild={djur ? kortBild(djur.kropp) : ikon("ui", "stjarna")} fran={fyll(UI.lapp.onskan_fran ?? "", { djur: namn || "Ett djur" })} text={onskan.text} las={onskan.text} />
-      </div>
-    );
-  }
-  if (arkLapp === "tomt") {
-    const t = dalStyr.lage().vald;
-    return <LappRam bild={kortBild("hage")} fran={UI.lapp.tomt_fran ?? ""} text={fyll(UI.lapp.tomt_text ?? "", { n: t != null ? t + 1 : "" })} las={fyll(UI.lapp.tomt_text ?? "", { n: t != null ? t + 1 : "" })} />;
-  }
-  if (ide?.slag === "gata") {
-    return <LappRam bild={ikon("ui", "agg")} fran={UI.lapp.gata_fran ?? ""} text={`${ide.gata} ${ide.streck}`} las={ide.gata} />;
-  }
-  if (ide) {
-    const har = new Set(remsa.brickor.map((b) => b.id).filter(Boolean));
-    const text = ideText(ide.ide);
-    return (
-      <LappRam bild={null} fran={UI.ide.rubrik ?? ""} text={UI.ide.fraga ?? ""} las={text}>
-        <div className="sk-ide-rad">
-          {ideKort(ide.ide).map((kort) => (
-            <span key={kort.nyckel} className={har.has(kort.id) ? "sk-ide-bit klar" : "sk-ide-bit"}>
-              <img alt="" src={kort.bild} />
-            </span>
-          ))}
-        </div>
-      </LappRam>
-    );
-  }
-  // Barnets valda sammanhang ovan går alltid före platsens vanliga skrivinbjudan.
-  const lapp = platsLapp(plats);
-  return lapp ? <LappRam bild={ikon("ui", "karta")} fran={lapp.fran} text={lapp.text} las={lapp.text} /> : null;
+  const mal = useBokMal();
+  const lag = useLagBok();
+  const svar = harBoksvar(k.sk, k.t);
+  const kompakt = lag || !!ide || svar;
+  const l = mal.lapp;
+  let lapp: ReactNode = l ? <LappRam {...l} las={l.text} kompakt={kompakt} /> : null;
+  if (mal.slag === "gava" && k.t.gavaTill) lapp = <GavoLapp key={k.t.gavaTill} gavaTill={k.t.gavaTill} kompakt={kompakt} />;
+  else if (mal.slag === "onskan") lapp = <div data-testid="onska-remsa" style={{ display: "contents" }}>{lapp}</div>;
+  return <>{lapp}{ide && !svar ? <IdeRam ide={ide} kompakt={lag} /> : null}</>;
+}
+
+function IdeRam({ ide, kompakt }: { ide: IdeLapp; kompakt: boolean }) {
+  const { sk } = useSpel();
+  const har = new Set(sk.remsa.brickor.map((b) => b.id).filter(Boolean));
+  if (ide.slag === "gata") return <LappRam kompakt={kompakt} bild={ikon("ui", "agg")} fran={UI.lapp.gata_fran ?? ""} text={`${ide.gata} ${ide.streck}`} las={ide.gata} />;
+  const kort = (ide.slag === "mal" ? onskeKort([ide.fras]) : ideKort(ide.ide)).filter((k) => k.bild !== ikon("ui", "agg"));
+  const text = ide.slag === "mal" ? ide.fras : ideText(ide.ide);
+  return <LappRam kompakt={kompakt} bild={null} fran={UI.ide.rubrik ?? ""} text={text} las={text}>
+    <div className="sk-ide-rad">
+      {kort.map((k) => <span key={k.nyckel} className={har.has(k.id) ? "sk-ide-bit klar" : "sk-ide-bit"}>
+        <img alt={k.visa} src={k.bild} />
+      </span>)}
+    </div>
+  </LappRam>;
 }
 
 /** Gåva till ett djur ("egen:<uid>" eller ett vilt djur). Döp-knappen och snabbnamnen från förra boken finns kvar. */
-function GavoLapp({ gavaTill }: { gavaTill: string }) {
+function GavoLapp({ gavaTill, kompakt }: { gavaTill: string; kompakt: boolean }) {
   const k = useSpel();
   const { visaBanner } = k.b;
   const { stangBok } = k.o;
@@ -128,7 +85,7 @@ function GavoLapp({ gavaTill }: { gavaTill: string }) {
   }
   return (
     <div data-testid="gava-remsa" style={{ display: "contents" }}>
-      <LappRam bild={kropp ? kortBild(kropp) : ikon("ui", "agg")} fran={fyll(UI.lapp.gava_fran ?? "", { djur: kropp ? bestamdAv(kropp, false) : "" })} text={text} las={text}>
+      <LappRam kompakt={kompakt} bild={kropp ? kortBild(kropp) : ikon("ui", "agg")} fran={fyll(UI.lapp.gava_fran ?? "", { djur: kropp ? bestamdAv(kropp, false) : "" })} text={text} las={text}>
         {egen ? (
           <>
             <button type="button" className="sk-knapp" data-d3="dop-knapp" ref={(el) => el?.setAttribute("data-testid", "dop-knapp")} onClick={dopa}>
