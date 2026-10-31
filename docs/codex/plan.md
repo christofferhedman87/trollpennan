@@ -1,12 +1,12 @@
-# Åtgärdsplan T-01–T-35 för Codex och Claude Code
+# Åtgärdsplan T-01–T-36 för Codex och Claude Code
 
 ## Överlämning: Codex fortsätter efter Claude, 2026-10-31
 
 Detta är aktuell startpunkt och går före äldre ”Fortsätt”-texter nedan. Ta en PR i taget: #299 → #300 → #301, därefter återstående block enligt planen. Ingen force-push. Bevara sparformat v2, markmigrering och Cloudflare. Bilder används endast internt; inga nya checkpointdokument.
 
 - **#298 · C2b-1 (T-08, P1) är redan levererad:** main `64297f3`, oberoende Claude-underagent godkände. Main-Cloudflare `124517533701` och sex serverade SHA-256 är gröna enligt sista kommentaren i #298. Skrivna siffror når tolken; både `arSparrat` och `tolka` prövar även text utan siffror. Gör inte om detta. Full korpus/migration återstår i C2b.
-- **#299 · T-18/B4:** samordnad med `origin/main d5eb71a` genom vanlig merge till `f75c6ad`. Oberoende Codex-granskare `/root/review_299` godkänner exakt `f75c6ad5693d0069e8845b6a8bd301574bac9b16` utan blockerare: historiska sex texter/hashar stämmer, 60/60 riktade delprov gröna och 41/41 negativa minnesprov korrekt röda. Sex grindar gröna; `test:product` har 82/83 testfiler gröna med endast känt P3a-fel under parallell körning. Separat P3a är 9/9 grönt med oförändrad 50 ms-gräns. Start-/skapelseprov med riktiga skärmtryck och omladdning är grönt i 375×812 och 812×375; interna bilder granskade. Merge/CF/SHA återstår före leverans. Endast sex godkända flaggor ändras; övriga 85 uppdrag är oförändrade.
-- **#300 · F2/T-22:** utkast `claude/f2-min-bok`, HEAD `7abc2a5`; Ordjakten/Guldord och tom Låda. Claudes sju grindar och `scripts/prov-min-bok.mjs` är provade. Kvar: vanlig merge av färsk main, sju grindar och UI-prov på samordnat bygge, oberoende granskning, merge och main-CF/SHA.
+- **#299 · T-18/B4 är levererad:** mergad som `0e6fe9b`, main-Cloudflare `124530012914` grön och sex start-/spelfiler byteidentiska/SHA-256-identiska med provat bygge. Fristående Codex-granskare `/root/review_299` godkände exakt app-/testhuvud `f75c6ad5693d0069e8845b6a8bd301574bac9b16`; senare commits var bara dokument. Sex flaggor/hashlås, 60/60 riktade delprov och 41/41 negativa hash-/flaggprov. Sex grindar gröna, enbart känt P3a-fel i parallell produktkörning (separat 9/9 grönt, gräns orörd). Riktiga start-/skapelse-/omladdningsprov gröna i stående, liggande och datorvy; interna bilder granskade. Övriga 85 uppdrag är oförändrade.
+- **#300 · F2/T-22:** samordnad med `main 0e6fe9b`; exakt app-/provhuvud `03ed2775b763d372b1c49a44ff52ca84bec8bc74` är godkänt av fristående Codex-granskare `/root/review_300` utan blockerare. Alla sju slutgrindar gröna, 84/84 produktprovfiler inklusive P3a med oförändrad 50 ms-gräns. `scripts/prov-min-bok.mjs` är rött mot main och helt grönt på slutbygget i 375×812 och 812×375. Bildgranskningen hittade coach-/HUD-överlapp över Stäng; separata röda→gröna skärmprov kräver nu fri hel knapp, pausad guide samt Stäng/Escape. Granskaren provade även tomma ordlistor, riktig annan Ordboksingång och spärrad fysisk skrivning; profilerna bevaras. Interna slutbilder i båda vyer är lästa. Kvar före leverans: merge och main-CF/SHA.
 - **#301 · G1/T-29/T-32:** oprovat utkast `claude/g1-guldchans-kvitto`, HEAD `d4a66ed`. Följ PR-textens exakta nod-/UI-prov rött mot main och grönt på grenen i 375×812 och 812×375 utan reducerad rörelse, dokumentera ändrad replik, kör grindar/granskning/merge/CF/SHA.
 
 **Textpaket 02 är mottaget och godkänt av Christoffer:** `Trollpennan-textpaket-02-granskad.md` innehåller exakt de 85 återstående uppdrags-id:na (SHA-256 och beslut i beslut.md). Ingen ytterligare godkännandefråga krävs. Använd som underlag i B1/BC, kontrollera varje förslag mot faktisk tolk och modeller. `granskad:true`/hashlås gäller endast exakt granskad text. Inget annat block väntar på detta.
@@ -15,7 +15,7 @@ Detta är aktuell startpunkt och går före äldre ”Fortsätt”-texter nedan.
 
 Tre svagaste punkter: sekundära djur/full korpus/migration återstår; B1:s betydelsekrav och stora D/F/G-delar återstår; fysisk Safari/iPad, barns faktiska upplevelse och nya röstinspelningar är inte verifierade.
 
-> **Aktuellt 2026-10-31:** uppdraget omfattar samtliga 35 fynd i [granskning.md](granskning.md). E1/E2 (#286), E3/G4 (#287) och A1 (#288) är publicerade och görs inte om. B0:s första sex uppdrag är publicerade i #290 som fbfe48f (main-Cloudflare 124411312834 och 6/6 SHA-256 gröna); 85 uppdrag återstår. A0/A2/F4 (#289, main `eec3b27`) är publicerade och verifierade med Cloudflare/SHA-256. Dess hologramregression hittade ett befintligt grafikfel även på main; den separata rättningen är publicerad i #293. Beteendebevarande tolkdelning #291 är publicerad som `f69c3e9`. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1. Denna aktiva plan går före historiken längre ner.
+> **Aktuellt 2026-10-31:** uppdraget omfattar samtliga 36 fynd (T-01–T-36) i [granskning.md](granskning.md). E1/E2 (#286), E3/G4 (#287) och A1 (#288) är publicerade och görs inte om. B0:s första sex uppdrag är publicerade i #290 som fbfe48f (main-Cloudflare 124411312834 och 6/6 SHA-256 gröna); 85 uppdrag återstår. A0/A2/F4 (#289, main `eec3b27`) är publicerade och verifierade med Cloudflare/SHA-256. Dess hologramregression hittade ett befintligt grafikfel även på main; den separata rättningen är publicerad i #293. Beteendebevarande tolkdelning #291 är publicerad som `f69c3e9`. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1. Denna aktiva plan går före historiken längre ner.
 
 ## C1c · T-07/T-08: synlig placering och tillbehör (publicerad)
 
@@ -127,7 +127,7 @@ Christoffer har beställt hela granskningen. Bevara sparformat v2, testad markmi
 | B1 | Väktarens dröm avgör vilka svar som räknas; vänlig nästan-ledtråd | B3 |
 | B2 | Barnets uttryckligen skrivna ledsen/arg tillåts; inga självalstrade negativa behov | C4 |
 | B3 | Slumpad tvåsiffrig multiplikation och minst 30 dagars lokalt arkiv | E1:s räknespärr, E2 |
-| B4 | Christoffer läser de 91 uppdragen i omgångar före `granskad:true` | B4/BC |
+| B4 | Textpaket 01 godkänt; Textpaket 02:s AI-granskning godkänd av Christoffer som underlag. Tolk-/modellkontroll och exakt text krävs före flagga/hashlås | B4/BC |
 | B5 | Pausa Mossa tills hon introduceras | D1/D3 |
 | B6 | Skogen/Sjön/Grottan; Vad?/Hurdan?/Vad har den?/Vad gör den? | D3/F3 |
 | B7 | Byggidéer i Pennans bok; avveckla separat Byggbok | F1 |
@@ -249,11 +249,11 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 | T-15 | B3 | Planerad; B1 godkänt |
 | T-16 | D3 | Planerad |
 | T-17 | D0/D3 | Planerad; B5 godkänt |
-| T-18 | B1/BC | #299 samordnad/granskad på f75c6ad, sex flaggor/hashlås; merge/CF/SHA återstår. Textpaket 02:s 85 texter granskade och godkända som underlag; tolk-/modellkontroll och införande i B1/BC återstår |
+| T-18 | B1/BC | Sex flaggor/hashlås publicerade #299/0e6fe9b, CF124530012914/6SHA gröna. Textpaket 02:s 85 texter godkända som underlag; tolk-/modellkontroll och införande i B1/BC återstår |
 | T-19 | BC | Planerad; B+C först |
 | T-20 | C4 | Planerad; B2 godkänt |
 | T-21 | F1 | Planerad; B7 godkänt |
-| T-22 | F2 | Utkast #300, sju grindar och UI-prov gröna; granskning/merge kvar |
+| T-22 | F2 | #300 slutgranskad 03ed277, sju grindar/84 produktprovfiler och båda UI-vyer gröna; coach/HUD fri från Stäng. Merge/CF/SHA återstår |
 | T-23 | D3 | Planerad; B6 godkänt |
 | T-24 | A2 | Publicerad #289/eec3b27; tipset tas ur DOM vid upptagen vy och avaktiveras efter faktisk panorering/zoom |
 | T-25 | F3 | Planerad; B6 godkänt |
@@ -273,7 +273,7 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 
 1. Läs AGENTS/regler och befintliga Skapa-/En värld-statusar, sedan denna aktiva plan och det fullständiga underlaget i `granskning.md`. Läs `beslut.md`; använd inte förslag som beslut. Bevara redan levererade gamla block.
 2. `git status`, `git fetch origin` och utgå från aktuella `origin/main`; ingen reset eller force-push. PR #247 ingår inte. Kontrollera öppna T-id-PR:er före ny branch så arbete inte dubbleras. Planens ursprungsbaslinje är 2c761d3.
-3. E1–E3/G4, A1, A0/A2/F4, B0:s sex pilotuppdrag och shaderfixen är publicerade. C1a #291 är också publicerad. C1b #294 är också publicerad. B2 #295 är publicerad som bdadc09 med gröna main-Cloudflare/SHA. C2a #296 är publicerad som c878218 med grön main-Cloudflare 124460880743 och sex SHA-256; app b9f7be5 slutgranskad, 614/614. Fortsätt sedan C1c:s riktiga placering i egen branch/PR, C2b och resterande B1/BC-data. B1 behöver relationerna. Textpaket 01 i #292 väntar på Christoffers faktiska läsning; sätt inga granskad-flaggor utan svar. Reproducera rött, rätta, prova grönt och låt beslutad oberoende granskare läsa P1 före merge.
+3. Följ aktuell överlämning överst: #299 är publicerad och verifierad; slutför #300 före #301, därefter återstående B/C/D/F/G-block enligt blockplanen. Levererade block görs inte om. Textpaket 01 och den bifogade granskningen av Textpaket 02 är godkända, se beslut.md; införande kräver tolk-/modellkontroll. Reproducera rött, rätta, prova grönt och låt beslutad oberoende granskare läsa före merge.
 4. Alla kodblock kör sju grindar: `typecheck`, `typecheck:pages`, `check:struktur`, `lint`, `test:product`, `build:pages`, `check:pages-output`. Testid ändras bara avsiktligt; känd P3a-tidströskel höjs aldrig. Nya Node-prov läggs i befintliga `test:product`. `npm ci` kördes grönt på baslinjen; upprepa vid saknade/ändrade beroenden.
 5. Förhandsvisa bygget: `node node_modules/vite/bin/vite.js preview --config vite.pages.config.ts --port 4173 --strictPort`. Browserprov med `TROLLPENNAN_REPO=<repo>` och `CHROMIUM=<chromium>`. Använd verkliga klick, inga force-klick. Kontrollera stående/liggande och vid F4 även 667×375. Spara aldrig skärmbilder i GitHub eller svar.
 6. Valfria sparfält får säkra standardvärden. Prova gammal v2, export/import/omladdning och felaktig kopia utan mutation. Arkiv måste skrivas före återställning; lagringsfel får inte radera något.
