@@ -4,7 +4,7 @@ import { ORD } from "./data.ts";
 import { arOchSa, forledKant, langstaAtom, langstaSuffix, lasToken, skarKandOrd, matchaFras, ordFranForm, forslagTill, ledSak, dubbelSak } from "./lexikon.ts";
 import attributJson from "../../data/attribut.json" with { type: "json" };
 import katJson from "../../data/kategori-ord.json" with { type: "json" };
-import type { Forled, Ord, Utfall } from "./typer.ts";
+import { RELATIONER, type Forled, type Ord, type Utfall, type Relation } from "./typer.ts";
 import { KROPPS_LAGEN, POSITIONS_VERB, type Sem } from "./tolktillstand.ts";
 import { matchBlandning } from "./tolkBlandning.ts";
 
@@ -204,6 +204,10 @@ export function semantisera(tokens: string[]): Sem[] | Utfall {
       continue;
     }
     const token = tokens[i] ?? "";
+    if ((RELATIONER as readonly string[]).includes(token)) {
+      sem.push({ t: "funk", v: "med", relation: token as Relation });
+      continue;
+    }
     if (KROPPS_LAGEN.has(token) || POSITIONS_VERB.has(token)) {
       const kand = lasToken(token);
       if (kand?.t !== "ord") {
@@ -271,7 +275,7 @@ export function semantisera(tokens: string[]): Sem[] | Utfall {
       sem.push({ t: "okand", raw: token });
       continue;
     }
-    if (en.t === "artikel") continue;
+    if (en.t === "artikel") { sem.push({ t: "artikel", form: token }); continue; }
     // B6.2: "en regnbåge", "en eld", "regnbågen" – ett mönster-/förmågeord som står fristående (artikel, antal eller först,
     // och inget innehållsord efter) och har en modell blir saken. "en drake med eld", "en eldig drake",
     // "en katt med regnbåge" behåller sin gamla betydelse.

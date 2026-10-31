@@ -2,7 +2,7 @@
 import entiteterJson from "../../data/entiteter.json" with { type: "json" };
 import { ORD } from "./data.ts";
 import { arPluralForm, forledTillOrd, ordMedId, type Suffix } from "./lexikon.ts";
-import type { Del, Forled, Ord } from "./typer.ts";
+import type { Del, Forled, Ord, Relation } from "./typer.ts";
 
 export const ART = (entiteterJson as { entiteter: Record<string, { art?: string }> }).entiteter;
 
@@ -30,8 +30,9 @@ export const KROPPS_LAGEN = new Set([
 
 export type Sem =
   | { t: "antal"; n: number }
+  | { t: "artikel"; form: string }
   | { t: "boost"; dir: string; skala: number }
-  | { t: "funk"; v: "som" | "med" | "och" | "kan" | "fore" }
+  | { t: "funk"; v: "som" | "med" | "och" | "kan" | "fore"; relation?: Relation }
   | { t: "ord"; o: Ord; form: string }
   | {
       t: "komp";
@@ -67,7 +68,7 @@ export type Bygg = {
   monsterDolj: boolean;
   randAuto: boolean;
   formagor: { nyckel: string; ord: Ord | null; vis: FormVis }[];
-  tillbehor: { ord: Ord; bild: string; fargOrd: Ord | null; fargHex: string | null; glans: boolean; recept?: boolean }[];
+  tillbehor: { ord: Ord; bild: string; fargOrd: Ord | null; fargHex: string | null; glans: boolean; recept?: boolean; relation?: Relation; form?: string; artikel?: string; egenskaper?: string[] }[];
   skala: number;
   glans: boolean;
   alpha: number;

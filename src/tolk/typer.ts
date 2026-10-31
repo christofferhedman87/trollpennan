@@ -108,7 +108,10 @@ export type BlockData = {
   undantag_fran_stammar: string[];
 };
 
-export type TillbehorSpec = { id: string; farg: string | null; glans: boolean };
+export const RELATIONER = ["med", "på", "under", "i", "vid", "bredvid"] as const;
+export type Relation = typeof RELATIONER[number];
+/** Saknat relationsfält i äldre v2 betyder det befintliga med-beteendet. */
+export type TillbehorSpec = { id: string; farg: string | null; glans: boolean; relation?: Relation };
 
 /** Ett ord som tolka() inte känner, ritat som ett ägg (data/reserv.json, src/tolk/reserv.ts). */
 export type ReservDel = {
