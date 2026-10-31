@@ -51,3 +51,7 @@ Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först
 ## A1 T-01/T-02/T-31 (2026-10-31, PR #288)
 
 Trolla-tangenten, Enter och Pennan använder samma synliga handling/animation. Tom mening ger puff. Hjälpens skrivyta är en riktig knapp (minst44px), har korrekt tomtext och ingen falsk markör; vad-luckan behåller tangenterna och uppmuntrar egen text. Fysisk skrivning får skrivfokus; Enter på ordbrickan lyssnar och skapar inte ett djur. Alla sju grindar gröna,553/553;20kontrollfall gröna i375×812/812×375, interna bilder granskade. Oberoende Codex-granskare godkände484e4a8; efter det endast prov/dokument, lint grönt igen. Merge/live återstår. Tre svagaste punkter: fysisk svensk hårdvara/IME, låg liggande lapp (T-27), godkända nya repliker. Nästa är den påbörjade gemensamma målmodulen A0/A2 i#289.
+
+## A0/A2 + tidigarelagt F4 (PR #289, pågår)
+
+Samma framräknade mål för lapp/tips/hjälp/Idé. Härledda föremål/plagg får hjälpkort i rätt roll; fulla förslag kräver ett uttryckligt byte när egna ord finns, med Ångra. Separat Gåta och minskat panoreringstips. Fyra Node-prov gröna,557/557 i grindbygget före sista justeringar. De första klickproven var gröna men bilderna visade klippning; därför flyttas T-27 fram. Fast remsa, kompakt lapp med full läsvy och separata arbetsytor införs. Slutverifiering och oberoende granskning kvar. T-03 stängs inte: betydelse och minst två fungerande vägar för alla157mål verifieras i B. Tre svagaste punkter: slutlig geometri, semantiken i äldre förslag, nya godkända inspelningar.

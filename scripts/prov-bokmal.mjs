@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // A0/A2: sammanhanget styr tips, hjälplösningar och idéer. Inget skriver text åt barnet av sig självt.
 import assert from "node:assert/strict";
+import { mkdir } from "node:fs/promises";
 import { chromium } from "playwright";
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || "/usr/bin/chromium", args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader"] });
 try {
@@ -28,12 +29,34 @@ try {
         assert.equal(await page.getByTestId("ord-input").inputValue(), text);
         assert.equal(await page.locator('[data-dal="lapp"]').filter({ hasText: "Bengtsson" }).count(), 1, "uppdragslappen ska finnas kvar ovanför idén");
       }
+      if (process.env.QA_SCREENSHOTS) {
+        await mkdir(process.env.QA_SCREENSHOTS, { recursive: true });
+        await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/mal-ide-${viewport.width}.png` });
+      }
       await page.getByRole("button", { name: "Gåta", exact: true }).click();
     }
-    if (!fall || fall === "hjalp") {
+    if (!fall || fall === "hjalp" || fall === "egna") {
+      if (!fall || fall === "egna") {
+        await page.locator('[data-dal="skrivbricka"]').click(); await page.keyboard.type("en kanin");
+        assert.equal(await page.getByTestId("ord-input").inputValue(), "en kanin");
+      }
       await page.locator('[data-dal="ordhjalp"]').click();
       await page.getByRole("heading", { name: "Till uppdraget", exact: true }).waitFor();
       assert.ok(await page.locator('[data-mal="losning"]').count() >= 2);
+      if (!fall || fall === "egna") {
+        await page.locator('[data-mal="losning"]').first().click();
+        assert.equal(await page.getByTestId("ord-input").inputValue(), "en kanin", "egen text ersätts aldrig tyst");
+        await page.keyboard.press("Backspace"); await page.keyboard.type("abc");
+        assert.equal(await page.getByTestId("ord-input").inputValue(), "en kanin", "dialogens tangenter får inte ändra meningen bakom");
+        await page.keyboard.press("Escape");
+        assert.equal(await page.getByTestId("bok-skarm").isVisible(), true, "Escape stänger bara bytesfrågan");
+        assert.equal(await page.getByTestId("ord-input").inputValue(), "en kanin");
+        await page.locator('[data-mal="losning"]').first().click();
+        await page.getByRole("button", { name: "Byt till förslaget", exact: true }).click();
+        assert.notEqual(await page.getByTestId("ord-input").inputValue(), "en kanin");
+        await page.getByRole("button", { name: "Ångra", exact: true }).click();
+        assert.equal(await page.getByTestId("ord-input").inputValue(), "en kanin", "Ångra bevarar originalmeningen");
+      }
     }
     assert.deepEqual(fel, []); console.log(`Grönt bokmål: ${viewport.width}×${viewport.height}`); await context.close();
   }

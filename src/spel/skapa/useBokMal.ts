@@ -5,7 +5,9 @@ import { aktivtMal, type MalIndata } from "./bokMal.ts";
 import { aktivtUppdrag, BENGTSSON_BILD } from "./uppdragLapp.ts";
 import { uppdragText } from "../aventyr.ts";
 import { uppdragForslag } from "../ideRad.ts";
-import { gavoRuta } from "../ui/gavoRuta.ts";
+import { ordFranForm } from "../../tolk/lexikon.ts";
+import { ONSK_BYGG } from "../onska.ts";
+import { gavoNamn, gavoRuta } from "../ui/gavoRuta.ts";
 import { bestamdAv } from "../ui/hjalp.ts";
 import { fyll } from "../fyll.ts";
 import { dalStyr } from "../dal/dalStyr.ts";
@@ -21,12 +23,15 @@ export function useBokMal() {
   const plats = useMinne((s) => s.plats);
   const { onskan, gavaTill, ang } = k.t;
   const kallor: MalIndata = {};
-  if (gavaTill) kallor.gava = { id: gavaTill, lapp: { fran: UI.lapp.gava_fran, text: gavoRuta(gavaTill), bild: ikon("ui", "agg") }, losningar: UI.bokmal.gavo_ideer, malDjur: gavaTill.startsWith("egen:") ? gavaTill.slice(5) : null };
+  if (gavaTill) kallor.gava = { id: gavaTill, lapp: { fran: fyll(UI.lapp.gava_fran, { djur: gavoNamn(gavaTill) }), text: gavoRuta(gavaTill), bild: ikon("ui", "agg") }, losningar: UI.bokmal.gavo_ideer, malDjur: gavaTill.startsWith("egen:") ? gavaTill.slice(5) : null };
   const u = ark === "uppdrag" ? aktivtUppdrag(spar) : undefined;
   if (u) kallor.uppdrag = { id: u.id, lapp: { fran: UI.lapp.uppdrag_fran, text: uppdragText(u, ang[0]?.kropp), bild: BENGTSSON_BILD, portratt: true }, losningar: uppdragForslag(u, ang[0]?.kropp), malDjur: ang[0]?.uid, krav: u.krav };
   if (k.vy.visaOnskaHjalp && onskan) {
     const d = k.vy.onskaDjur;
-    kallor.onskan = { id: onskan.id, lapp: { fran: fyll(UI.lapp.onskan_fran, { djur: d ? bestamdAv(d.kropp, true) : UI.lapp.djur_reserv }), text: onskan.text, bild: d ? kortBild(d.kropp) : ikon("ui", "stjarna") }, losningar: k.vy.onskaEx, malDjur: onskan.uid };
+    const djurord = d ? `${ordFranForm(d.kropp)?.genus === "n" ? "ett" : "en"} ${d.kropp}` : "";
+    const exempel = [...k.vy.onskaEx, ...(onskan.kalla === "bygg" ? ONSK_BYGG.onskningar.find((o) => o.id === onskan.id)?.exempel ?? [] : [])]
+      .filter((e) => !e.includes("{djur}") || !!djurord).map((e) => fyll(e, { djur: djurord }));
+    kallor.onskan = { id: onskan.id, lapp: { fran: fyll(UI.lapp.onskan_fran, { djur: d ? bestamdAv(d.kropp, true) : UI.lapp.djur_reserv }), text: onskan.text, bild: d ? kortBild(d.kropp) : ikon("ui", "stjarna") }, losningar: exempel, malDjur: onskan.uid };
   }
   if (ark === "tomt") {
     const t = dalStyr.lage().vald;

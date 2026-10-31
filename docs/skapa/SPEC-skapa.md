@@ -246,9 +246,9 @@ En pappersgul lapp med pratbubbelpil överst i arket. Bild 52 px, avsändare (d�
 | Gåva | djurets kortbild | *Present till kaninen* | knappen **Döp** och snabbnamnen (från `GavoPanel`) |
 | Tomt | `kort/hage` | *Här ska det byggas* | tomtens nummer |
 | Idé (tärningen) | – | *Idé från tärningen* | 2–4 bilder som bockas av när ordet finns i meningen |
-| Gåta (tärningen, varannan gång) | `ui/agg` | *Hemligt ord* | gåtan ur `ledtradar.json` + `ledtradsSteg` (*K _ _ _ _ _ _ _*) |
+| Gåta (egen knapp) | `ui/agg` | *Hemligt ord* | gåtan ur `ledtradar.json` + `ledtradsSteg` (*K _ _ _ _ _ _ _*) |
 
-**Idétärningen skriver aldrig åt barnet.** Den visar en bildgåta och läser upp meningen, eller en gåta om ett hemligt ord. Barnet skriver själv.
+**Idé skriver aldrig åt barnet.** Den visar en bildidé från samma mål som lappen och hjälpen, även när en bestående uppdrags-/önskelapp finns. Gåtor öppnas med en separat knapp som heter Gåta. Barnet skriver själv.
 
 ### 6.10 Trollringen och hologrammet (3D)
 
@@ -587,3 +587,11 @@ Kopiera `public/` rakt in i repot. Alla filnamn är ASCII.
 - 3D-modeller för nya former (äpplehus, pumpahus osv.) är block 6. Ikonerna finns redan, modellerna inte.
 - Platsernas egna skrivytor (`platsUi.forsokSkriv`, Skogen/Sjön/Grottan) använder samma ark men får inga egna lappar här.
 - Byggbokens prislista för mark (block 8) och kvällsljuset i fönster (block 4).
+
+## Åtgärdsblock A0/A2 + T-27 (2026-10-31)
+
+Bokens mål räknas fram i `skapa/bokMal.ts`, från befintlig gåva/uppdrag/önskan/tomt/explicit Väktare/plats. Lapp, tips, hjälp och Idé använder samma källa. Målens hela förslag ligger först i Ordhjälpen. Finns egna ord krävs ett uttryckligt byte innan ett helt förslag ersätter meningen, och Ångra återställer originalet. T-03 är ett delresultat tills B har verifierat betydelsen för alla 91 uppdrag, 42 djurönskningar och 24 byggönskningar.
+
+I låg liggande vy har boken en fast hel remsa och två arbetsytor: sammanhang/svar samt hjälp/tangenter. Lappen är kompakt med knapp för hela texten. När en idé visas komprimeras den bestående lappen även stående. En ordfråga prioriteras framför den frivilliga idébilden. Ingen text blir mindre än18px; tangenterna är minst44px höga. Bredd-undantaget B8 gäller fortsatt bara bokstavstangenter.
+
+Panoreringstipset kommer efter3500ms i ostörd fri värld. Det finns inte i DOM under bok, dialog, guide eller andra meddelanden. Första panorerings-/zoomgesten avfärdar det beständigt med det befintliga `dragit`-fältet.

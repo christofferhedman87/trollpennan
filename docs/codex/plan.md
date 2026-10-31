@@ -1,6 +1,6 @@
 # Åtgärdsplan T-01–T-35 för Codex och Claude Code
 
-> **Aktuellt 2026-10-31:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. T-12/T-13 är mergade och publicerade (#286, main06f057e). A1 T-01/T-02/T-31 är verifierat och oberoende granskat i #288, ännu inte mergat. Nästa arbete: **A0/A2 i #289**, som redan har röda baslinjeprov och sparad målgrund. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1.
+> **Aktuellt 2026-10-31:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. T-12/T-13 är mergade och publicerade (#286, main06f057e). A1 T-01/T-02/T-31 är publicerat (#288, mainf425a41, Cloudflare124383463197 och6/6SHA-256 gröna). Nästa arbete: **A0/A2 i #289**, som redan har röda baslinjeprov och sparad målgrund. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1.
 
 ## Mandat och statusord
 
@@ -36,7 +36,7 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 | E3 · T-14 | Manifest, försök till persistent storage, ärlig hemskärms-/kopieinformation och senaste nedladdade kopia | Oberoende | S · nekat/ej stött persist påverkar inte sparning; manuellt iPad-långtidstest kvar |
 | A0 · T-03/T-04 | Ren `bokMal`: aktivt uppdrag/önskan/gåva/tomt/plats i gemensam prioritetsordning | Befintliga flöden | M · prioritets- och livscykelprov, inget nytt parallellt måltillstånd |
 | A1 · T-01/T-02/T-31 | Samma Trolla-väg för tangenter/Enter/Penna; klickbar tom remsa i hjälp; vad-lucka behåller skrivläget | Oberoende | M · faktiska klick, tom mening, textbevarande och egen text → skapelse |
-| A2 · T-03/T-04/T-24/T-26 | Målanpassade kort/tips/idéer, separerad gåta, panoreringstips endast i fri värld | A0; T-03 slutverifieras med B | M · alla 91+42 mål får minst två fungerande hjälpvägar; riktiga kontextbyten |
+| A2 · T-03/T-04/T-24/T-26 | Målanpassade kort/tips/idéer, separerad gåta, panoreringstips endast i fri värld | A0; T-03 slutverifieras med B | M · alla 91+42+24 mål får minst två fungerande hjälpvägar; riktiga kontextbyten |
 | B0 · T-05 | Delad ren betydelsemotor: kravgrupper, antal, olika subjekt, taggar/böjningar; saknat krav från data | A0 | L · actual parser + `data/test-uppdragssvar.json`, minst 3 ja/2 nej per uppdrag |
 | B1 · T-05/T-18 | Gå igenom samtliga 91 uppdrag och matcha mål, krav, förslag och nästan-text | B0; B4 för mänsklig textgranskning | L · 455+ fixtures, inga godkända enstaka ord för sammansatta krav |
 | B2 · T-06 | Kroppsdelsriktiga önskningar; stäng boken och visa tack/ledtråd även vid miss | B0, A0 | M · kall kanin + strumpor ja, hatt nej, synlig reaktion och kvarstående önskan |
@@ -62,6 +62,8 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 
 ## Täckning och leveranslogg
 
+- A0/A2+F4: komponenterna är nu kopplade till målmodulen. Fyra rena Node-prov gröna och införda i test:product; de sju grindarna var gröna före sista dialog-/layoutjusteringen,557/557. Klickflödet och panorering/zoom är gröna i båda grundvyer men bildkontrollen visade verklig klippning: liggande kunde dölja både idé och remsa, stående kunde lapp+idé täcka nästan hela världen. Därför flyttas T-27 fram till detta block. Geometriprovet kontrollerar klippande föräldrar, inte bara DOM-synlighet, och ska bli grönt i375×812,812×375 och667×375. Kompakt lapp har full läsvy, remsan får fast plats och övrig yta delas i sammanhang/svar och hjälp/tangenter. Bytesdialogens tangentbordsisolering rättas efter oberoende fynd. Slutgrindar, utökade geometri-/tangentprov och slutgranskning återstår; PR#289 är fortsatt utkast. Inga nya sparfält.
+
 - A0/A2 är påbörjat i separat branch, staplad på A1 utan force-push. `bokMal.ts` räknar fram gällande mål utan mutation; `useBokMal.ts` är adapter till befintliga källor. UI-konsumenter/prov är ännu inte kopplade/färdiga. Fyra röda skärmprov på före-bygget: generiskt tips trots aktivt uppdrag, panoreringstips i DOM med öppen bok, dold idé under uppdragslappen och saknad första målsektion i hjälpen. Detta är sparat pågående arbete, inte färdig rättning eller granskad leverans.
 
 - E3/G4 samordnar T-14 och den oberoende T-35 eftersom båda gäller föräldrasidans information. Webmanifest och rasteriserade kopior av befintlig favicon till hemskärmsikoner, best-effort `navigator.storage.persist()` utan väntan vid start, ärliga Safari-/hemskärmsråd samt tidpunkt för senaste startade kopienedladdning. Ingen garanti att en fil behållits eller att Safari aldrig rensar. Grodlicensen ligger ordagrant kvar sist under Tack till. Baslinje: manifest saknas och licensordningen röda. Två rena nya lagringsprov gröna; alla sju grindar gröna, 553/553. `prov-bestandig-lagring.mjs` grönt för persist=true/false/fel/saknas, samt verklig föräldraöppning, nedladdning/kopiedatum och licensordning i375×812 och812×375. Interna bilder granskade. Oberoende `/root/t12_t13_review` godkände exakt2f3a40e605bbc902192d7de25f6f05cfcd724ad4 utan blockerare. Provets relativa request-URL:er och väntan på försidan rättades; spelkoden9a1d361 är oförändrad sedan sju gröna grindar; lint grönt igen. Tre svagaste punkter: fysisk iPad/långt uppehåll, faktisk hemskärmsinstallation på fysisk enhet och nya föräldratexter är bara lästa visuellt i molnets browser.
@@ -76,9 +78,9 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 
 | T-id | Huvudblock | Status / kvarvarande acceptans |
 |---|---|---|
-| T-01 | A1 | Verifierad/granskad #288, kod62c3001/prov484e4a8 + tom-hjälpyta; väntar merge/live |
-| T-02 | A1 | Verifierad/granskad #288,20UI-fall båda vyer och44px-yta; väntar merge/live |
-| T-03 | A0/A2/B | A0/A2 pågår; UI-fynd rött, ren målmodul och adaptern under uppbyggnad; 133 mål slutverifieras i B |
+| T-01 | A1 | Verifierad/granskad #288, kod62c3001/prov484e4a8 + tom-hjälpyta; publicerad f425a41, CF124383463197/6SHA-256 gröna |
+| T-02 | A1 | Verifierad/granskad #288,20UI-fall båda vyer och44px-yta; publicerad f425a41, CF124383463197/6SHA-256 gröna |
+| T-03 | A0/A2/B | A0/A2 pågår; UI-fynd rött, ren målmodul och adaptern under uppbyggnad; 157 mål slutverifieras i B |
 | T-04 | A0/A2 | Pågår; generiskt tips i aktivt uppdrag reproducerat rött |
 | T-05 | B0/B1 | Planerad; ≥455 ja/nej-fixtures |
 | T-06 | B2 | Planerad |
@@ -102,11 +104,11 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 | T-24 | A2 | Pågår; panoreringstipsets DOM finns felaktigt med öppen bok, reproducerat rött |
 | T-25 | F3 | Planerad; B6 godkänt |
 | T-26 | A2 | Pågår; idé saknas under uppdragslappen, reproducerat rött |
-| T-27 | F4 | Planerad |
+| T-27 | A2/F4 | Flyttad fram: visuellt/geometriskt rött i A2 trots gröna klickprov. Kompakt lapp/full läsvy och fast remsa + två arbetsytor implementeras före merge i#289 |
 | T-28 | F5 | Planerad |
 | T-29 | G1 | Planerad |
 | T-30 | G2 | Planerad; B8 godkänt |
-| T-31 | A1 | Verifierad/granskad #288, även efterföljande fysisk text+Enter; väntar merge/live |
+| T-31 | A1 | Verifierad/granskad #288, även efterföljande fysisk text+Enter; publicerad f425a41, CF124383463197/6SHA-256 gröna |
 | T-32 | G1 | Planerad |
 | T-33 | G3 | Planerad |
 | T-34 | G3 | Planerad |

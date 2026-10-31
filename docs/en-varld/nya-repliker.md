@@ -148,3 +148,14 @@ Alla nya textkällor nedan. Exakt befintlig inspelning återanvänds när den fi
 - `data/vaktardjur.json sjon.hjalp[1]`: en studsboll
 - `data/vaktardjur.json grottan.hjalp[0]`: en glittrig kaka
 - `data/vaktardjur.json grottan.hjalp[1]`: en kristall
+
+- `data/skapa-ui.json puffar.inga_gator`: Du har hittat alla gåtdjur här. Prova en egen idé!
+- `data/skapa-ui.json puffar.ide_lapp`: Titta på lappen. Vad skulle kunna hjälpa?
+
+- `data/skapa-ui.json bokmal.byt_rubrik`: Prova hela förslaget
+- `data/skapa-ui.json bokmal.byt_text`: Vill du byta till den här meningen? Du kan ångra efteråt.
+- `data/skapa-ui.json bokmal.byt_ja`: Byt till förslaget
+- `data/skapa-ui.json bokmal.byt_nej`: Behåll min mening
+
+- `data/skapa-ui.json lapp.las_hela`: Läs hela lappen: {text}
+- `data/skapa-ui.json lapp.tillbaka`: Tillbaka till boken

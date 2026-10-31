@@ -93,6 +93,8 @@
   },
 
   "puffar": {
+    "inga_gator": "Du har hittat alla gåtdjur här. Prova en egen idé!",
+    "ide_lapp": "Titta på lappen. Vad skulle kunna hjälpa?",
     "valj_forst": "Skriv vad du vill trolla fram först. Ett djur, ett hus eller något helt eget!",
     "svara_forst": "Pennan undrar vilket ord du menade. Tryck på ett av orden.",
     "agg": "Pennan kan inte rita {ord} än. Den gör ett ordägg och sparar ordet!",
@@ -109,6 +111,8 @@
   },
 
   "lapp": {
+    "las_hela": "Läs hela lappen: {text}",
+    "tillbaka": "Tillbaka till boken",
     "onskan_fran": "{djur} önskar sig",
     "uppdrag_fran": "Uppdrag från Doktor Bengtsson",
     "djur_reserv": "Ett djur",
@@ -200,6 +204,7 @@
   },
 
   "tider_ms": {
+    "pan_hint": 3500,
     "_om": "Tidsgränser i Skapa-arket.",
     "fast_puls": 7000,
     "spok_ledtrad": 3500,
@@ -209,6 +214,10 @@
     "holo_omritning": 180
   },
   "bokmal": {
+    "byt_rubrik": "Prova hela förslaget",
+    "byt_text": "Vill du byta till den här meningen? Du kan ångra efteråt.",
+    "byt_ja": "Byt till förslaget",
+    "byt_nej": "Behåll min mening",
     "tips": {
       "fri": "Skriv ett djur eller ett hus.",
       "uppdrag": "Skriv något som hjälper Bengtsson.",
