@@ -1,6 +1,6 @@
 # Status: Nya Skapa (spec: SPEC-skapa.md)
 
-> **Aktuellt 2026-10-31:** alla T-01–T-35 följer [gemensam plan](../codex/plan.md). E1/E2(#286), E3/G4(#287) och A1(#288) är publicerade med gröna Cloudflare-checkar och SHA-256-bevis. B0 [#290](https://github.com/christofferhedman87/trollpennan/pull/290) är verifierad på fe06419: sex semantikrättade uppdrag, alla sju grindar gröna(560/560) och fyra verkliga Trolla-fall gröna i375×812/812×375. B0 kan levereras självständigt före A2. A0/A2/F4 [#289](https://github.com/christofferhedman87/trollpennan/pull/289) slutverifieras; beteendebevarande tolkdelning [#291](https://github.com/christofferhedman87/trollpennan/pull/291) är sparad. Produktbeslut B1–B8 och oberoende Codex-granskare är godkända. T-03/T-05/T-07/T-08/T-18 är fortfarande partiella/öppna; ingen granskad-flagga ändras.
+> **Aktuellt 2026-10-31:** alla T-01–T-35 följer [gemensam plan](../codex/plan.md). E1/E2 (#286), E3/G4 (#287), A1 (#288) och B0:s första sex uppdrag (#290, main fbfe48f) är publicerade med gröna main-Cloudflare-checkar och SHA-256-bevis. A0/A2/F4 i #289 slutverifieras. En befintlig överskrivning av hologrammets shader rättas separat i #293. Tolkens beteendebevarande uppdelning finns i #291. B1–B8 och oberoende Codex-granskare är godkända. T-03/T-05/T-07/T-08/T-18 är fortsatt partiella eller öppna; inga granskad-flaggor ändras utan Christoffers faktiska textläsning.
 
 Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först.
 
@@ -11,6 +11,14 @@ Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först
 | C Trollringen, hologrammet och kameran | Klar | #262 | `src/spel/ang/Trollring.tsx` och `holoMaterial.ts`, samt `skapa/forhand.ts` och `forhandTolk.ts`. Kameran använder setViewOffset. Gnistor och stjärnregn vid Trolla. Kvittot ersätter bannrarna Klart, stjärnor och guldord |
 | D Lappen, idétärningen och uppdragen | Klar | #263 | Lapp för önskan, gåva, uppdrag, tomt, bildgåta och gåta. UppdragArk med Svara med pennan. UppdragVy är borttagen. En tomt öppnar Pennans bok |
 | E HUD och Min bok | Klar | se git-logg | HudBotten (Uppdrag, Skriv, Min bok) och toppens ikonknappar (lås, stjärnor, Se hela dalen, Karta). MinBok har sex rutor. Föräldrasidan har startläget och bokstavsljudet. MenyPanel och hamburgern är borttagna. BokSkarm är bara Byggboken (Mark) |
+
+
+## Steg 0: hologrammets shader bevaras, 2026-10-31
+
+Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var 40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.
+
+Kod `9a1b211`: faktisk shader-regression röd före och grön efter; alla sju grindar gröna, 561/561. Provet täcker delat original, materialarray, 200 materialpass och samma solid-uniform vid Trolla. `prov-platsforhand.mjs` är rött mot baslinjen (90 nollvärden) och grönt i hela Grottan-flödet i 375×812 och 812×375: stenens egna WebGL-anrop är 1–1 i var och en av 90 bildrutor, och även rotation, sparinvarians, skapande samt platsbyte är gröna. Interna bilder granskade, blå och linjerad sten. Inga mätgränser lättade. Oberoende slutgodkännande och main-Cloudflare/SHA-kontroll återstår före publicering. Tre svagaste punkter: molnets mjukvarurendering säger inget om fysisk mobilprestanda; Safari/GPU-variationer är inte provade; nya shader-varianter behöver fortsatt samma mätning.
+
 
 ## Beslut (2026-10-29)
 - E: projektregler.md är uppdaterad. Att skriva själv är förstahandsvalet, och hjälporden räcker för att spela.
