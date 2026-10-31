@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { tolka } from "./tolka.ts";
+import { delaOchMening } from "./ochMening.ts";
 import { tolkaMedReserv } from "./reserv.ts";
 
 const fall = [
@@ -118,4 +119,13 @@ test("B1: omvänd inneslutning är osäker utan att sparformatet ändras", () =>
     assert.equal(tydlig.typ, "skapad");
     if (tydlig.typ === "skapad") assert.equal(tydlig.osakraRelationer, undefined);
   }
+});
+
+
+test("B1: samordnade saker med gemensam relation delas inte från målet", () => {
+  for (const text of ["en mössa och en filt och en jacka i en kanin", "en mössa och en filt och en jacka under en kanin"]) {
+    assert.deepEqual(delaOchMening(text), [text]);
+  }
+  assert.deepEqual(delaOchMening("en katt och en hund"), ["en katt", "en hund"]);
+  assert.deepEqual(delaOchMening("en mössa och en filt och en hund"), ["en mössa", "en filt och en hund"]);
 });

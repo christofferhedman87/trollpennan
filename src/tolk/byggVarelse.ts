@@ -34,6 +34,7 @@ export function nastaArSak(sem: Sem[], i: number, ensamSak?: Ord | null): boolea
 function omvandRelation(sem: Sem[], index: number, huvud: Sem): Relation | "omvand-i" | undefined {
   let rel: Relation | undefined;
   let vantarPaSak = false;
+  let osakertLed = false;
   for (const s of sem.slice(index + 1)) {
     if (s.t === "funk") {
       if (s.v === "och" && !rel && !vantarPaSak) { vantarPaSak = true; continue; }
@@ -41,14 +42,18 @@ function omvandRelation(sem: Sem[], index: number, huvud: Sem): Relation | "omva
       rel = s.relation;
     } else if (s === huvud) {
       if (vantarPaSak) return undefined;
-      if (rel === "under") return "på";
       if (rel === "i") return "omvand-i";
+      if (osakertLed) return undefined;
+      if (rel === "under") return "på";
       if (rel === "vid" || rel === "bredvid") return rel;
       return undefined;
     } else if (s.t === "ord" && (s.o.klass === "foremal" || s.o.klass === "tillbehor") || s.t === "komp" && s.suffix.kind !== "djur") {
-      if (rel || !vantarPaSak) return undefined;
+      if (rel) return undefined;
       vantarPaSak = false;
-    } else if (s.t === "ord" && s.o.klass === "djur" || s.t === "komp" || s.t === "okand" || s.t === "blanda") return undefined;
+    } else if (s.t === "okand") {
+      if (rel) return undefined;
+      osakertLed = true;
+    } else if (s.t === "ord" && s.o.klass === "djur" || s.t === "komp" || s.t === "blanda") return undefined;
   }
   return undefined;
 }
