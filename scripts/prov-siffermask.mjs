@@ -18,7 +18,8 @@ const git = (...args) => execFileSync("git", args, { encoding:"utf8" }).trimEnd(
 git("merge-base", "--is-ancestor", kandidat, "HEAD");
 assert.equal(readFileSync("src/tolk/sparr.ts", "utf8").trimEnd(), git("show", `${kandidat}:src/tolk/sparr.ts`), "kandidatens spärrkod används");
 // Baslinjen körs med samma orddata/lexikon. Placering och prov påverkar inte dem.
-const tillatna = new Set(["src/tolk/sparr.ts", "src/tolk/antalBojning.test.ts", "data/placering.json"]);
+// tolka.ts importeras inte av sparr.ts; dess extra spärrkontroll provas i antalBojning.test.ts.
+const tillatna = new Set(["src/tolk/sparr.ts", "src/tolk/tolka.ts", "src/tolk/antalBojning.test.ts", "data/placering.json"]);
 const andrade = git("diff", "--name-only", baslinje, "--", "src/tolk", "data").split("\n").filter(Boolean);
 assert.deepEqual(andrade.filter((p) => !tillatna.has(p)), [], "orddata/lexikon får inte ändras mellan jämförelserna");
 
