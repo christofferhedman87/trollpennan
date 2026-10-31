@@ -419,7 +419,7 @@
    "klart": "Där är du ju, lilla kompis!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "Min stora kikare söker en vän som är minst i hela världen!",
+   "text_bengtsson": "Jag vill träffa en riktigt liten vän. Kan du skapa en?",
    "klart_bengtsson": "Där är du ju, lilla kompis!",
    "krav": {
     "ord": [
@@ -432,11 +432,25 @@
      "myra",
      "loppa",
      "nyckelpiga",
-     "kolibri"
+     "kolibri",
+     "små"
     ],
-    "min": 1
+    "min": 1,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "storlek",
+       "nagon_av": [
+        "liten"
+       ],
+       "subjekt": "djur",
+       "egna": true,
+       "beskrivning": "en liten vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -467,7 +481,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en liten vän, som en myra eller en pytteliten mus.",
+   "hjalp": [
+    "en liten mus",
+    "en pytteliten larv",
+    "en liten myra"
+   ]
   },
   {
    "id": "jattestor-van",
@@ -479,7 +499,7 @@
    "klart": "Oj, nu behöver jag en större kamera!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "Här behövs en vän som knappt får plats på mitt foto!",
+   "text_bengtsson": "Jag vill träffa en riktigt stor vän. Kan du skapa en?",
    "klart_bengtsson": "Oj, nu behöver jag en större kamera!",
    "krav": {
     "ord": [
@@ -492,11 +512,26 @@
      "val",
      "drake",
      "triceratops",
-     "dinosaurie"
+     "dinosaurie",
+     "enorm",
+     "jättelik"
     ],
-    "min": 1
+    "min": 1,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "storlek",
+       "nagon_av": [
+        "stor"
+       ],
+       "subjekt": "djur",
+       "egna": true,
+       "beskrivning": "en stor vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -527,7 +562,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en stor vän, som en elefant eller jättestor drake.",
+   "hjalp": [
+    "en stor elefant",
+    "en jättestor drake",
+    "en stor giraff"
+   ]
   },
   {
    "id": "randig-kompis",

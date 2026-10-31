@@ -376,3 +376,16 @@ Textpaket 02; exakta granskade repliker. **Till Grok:** start, tack och näramis
 - Tack: Vilken härligt grön kompis!
 - Nästan: Din skapelse får stanna! Jag letar efter en grön vän, som en grön groda.
 - Hjälp: en grön groda; en grön drake; en grön larv.
+
+### B1: liten och stor vän — inspelningar till Grok
+
+Starttexterna och nästan-replikerna nedan saknar sammanhängande `rostPlan`; de båda tacken har redan hela inspelningar. Starttexterna finns också i `data/rost.json` → `vantar_rost`. Nästan-replikerna har ännu ingen källa i `kallor`; Grok behöver lägga till rätt källa och genomföra inspelning/implementation när arbetet med TTS görs.
+
+| Klar | Röst | Datafil och nyckel | Text |
+|---|---|---|---|
+| | bengtsson | `data/bengtsson.json` `pytteliten-kompis.text_bengtsson` | Jag vill träffa en riktigt liten vän. Kan du skapa en? |
+| | bengtsson | `data/bengtsson.json` `pytteliten-kompis.nastan` | Din skapelse får stanna! Jag letar efter en liten vän, som en myra eller en pytteliten mus. |
+| | bengtsson | `data/bengtsson.json` `jattestor-van.text_bengtsson` | Jag vill träffa en riktigt stor vän. Kan du skapa en? |
+| | bengtsson | `data/bengtsson.json` `jattestor-van.nastan` | Din skapelse får stanna! Jag letar efter en stor vän, som en elefant eller jättestor drake. |
+
+Hjälpfraserna `en liten myra` och `en stor giraff` har ingen hel inspelning men har en sammansatt `rostPlan`; Grok kan komplettera med hela fraser om en sammanhängande inläsning önskas. De fyra övriga hjälpfraserna har hela inspelningar.

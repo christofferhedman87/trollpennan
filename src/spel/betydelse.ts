@@ -24,6 +24,9 @@ function sakTaggar(taggar: Set<string>, id: string): void {
 /** Färg gäller kroppen. En röd mössa får aldrig göra en blå hund röd. */
 export function betydelseAv(v: Varelse, antal = 1): TolkadSkapelse {
   const taggar = taggarAv(v, true);
+  // Exempel som "en myra" och "en elefant" har en naturlig storlek även utan adjektiv.
+  if ((egenJson.storlek.liten.arter as readonly string[]).includes(v.kropp)) taggar.add("liten");
+  if ((egenJson.storlek.stor.arter as readonly string[]).includes(v.kropp)) taggar.add("stor");
   // Barnets uttryckliga skala går före artens standardstorlek.
   if (v.skala <= 0.75) taggar.delete("stor");
   if (v.skala >= 1.3) taggar.delete("liten");

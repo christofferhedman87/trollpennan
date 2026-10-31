@@ -164,6 +164,40 @@
         "en dinosaurie",
         "en hund med gröna vingar"
       ]
+    },
+    "pytteliten-kompis": {
+      "ja": [
+        "en liten mus",
+        "en pytteliten larv",
+        "en liten myra",
+        "en myra",
+        "en liten dinosaurie",
+        "en mus"
+      ],
+      "nej": [
+        "en liten sten",
+        "en stor myra",
+        "en hund",
+        "en hund med en liten mössa",
+        "en liten mössa på en hund"
+      ]
+    },
+    "jattestor-van": {
+      "ja": [
+        "en stor elefant",
+        "en jättestor drake",
+        "en stor giraff",
+        "en elefant",
+        "en stor myra",
+        "en dinosaurie"
+      ],
+      "nej": [
+        "en stor sten",
+        "en liten elefant",
+        "en hund",
+        "en hund med en stor boll",
+        "en stor mössa på en hund"
+      ]
     }
   }
 }
