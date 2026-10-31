@@ -19,8 +19,9 @@ import { kollaOrd, sammansatt } from "../skapa/ordKoll.ts";
 import { sagBokstav } from "../skapa/installning.ts";
 import { bokstav, utanSparratSuffix } from "../ui/hjalp.ts";
 import type { SpelKarna } from "./typer.ts";
+import { harKvittoAndring } from "../skapa/kvittoSkapelser.ts";
 import { kvittotack } from "../skapa/tack.ts";
-import { tystaBannrar, useKvitto, hamtaUppdragsSvar } from "../skapa/kvitto.ts";
+import { tystaBannrar, useKvitto, hamtaUppdragsSvar, hamtaOnskeMiss } from "../skapa/kvitto.ts";
 import { useSkrivTangentbord } from "./useSkrivTangentbord.ts";
 import { skrivGuldTecken, type Spok } from "../skapa/guldchans.ts";
 const ANGRA_MAX = 24;
@@ -312,7 +313,6 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "s">) {
     setErbjud(null);
     rostKo.handling();
     const fore = useMinne.getState();
-    const nycklar = new Set([...fore.ang.map((a) => a.uid), ...fore.garden.map((g) => g.uid)]);
     tystaBannrar(true);
     try {
       utfor(textRef.current, { hand, inteGuld, behall: behallRef.current });
@@ -320,11 +320,9 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "s">) {
       tystaBannrar(false);
     }
     const efter = useMinne.getState();
-    const ny = [...efter.ang.map((a) => a.uid), ...efter.garden.map((g) => g.uid)].some((u) => !nycklar.has(u));
-    const andrat = efter.ang.some((a) => fore.ang.find((x) => x.uid === a.uid)?.formel !== a.formel && nycklar.has(a.uid));
-    if (ny || andrat) {
+    if (harKvittoAndring(fore, efter) || hamtaOnskeMiss()) {
       const kv = innehall.length ? br.filter((b) => b.klass !== "vantar").map((b) => ({ t: b.t, guld: b.guld })) : [];
-      useKvitto.getState().satt({ id: Date.now(), ord: kv, stj: Math.max(0, efter.stjarnor - fore.stjarnor), guld: innehall.filter((b) => b.guld).length, tack: kvittotack(fore.onskan, efter.onskan, hamtaUppdragsSvar()) });
+      useKvitto.getState().satt({ id: Date.now(), ord: kv, stj: Math.max(0, efter.stjarnor - fore.stjarnor), guld: innehall.filter((b) => b.guld).length, tack: kvittotack(fore.onskan, efter.onskan, hamtaUppdragsSvar(), hamtaOnskeMiss()) });
     }
     return "ok";
   }

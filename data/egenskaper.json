@@ -50,8 +50,7 @@
    "huvud"
   ],
   "glasögon": [
-   "se",
-   "sol"
+   "se"
   ],
   "halsduk": [
    "varm",
@@ -281,6 +280,11 @@
   ],
   "snoboll": [
    "kall"
+  ]
+ },
+ "tillbehorsord": {
+  "solglasögon": [
+   "sol"
   ]
  }
 }

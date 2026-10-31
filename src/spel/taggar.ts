@@ -1,9 +1,11 @@
 import egenJson from "../../data/egenskaper.json" with { type: "json" };
+import { ordFranForm } from "../tolk/lexikon.ts";
 import type { Varelse } from "../tolk/typer.ts";
 
 type Egen = {
   formaga: Record<string, string[]>;
   tillbehor: Record<string, string[]>;
+  tillbehorsord?: Record<string, string[]>;
   monster: Record<string, string[]>;
   genomskinlighet: { taggar: string[] };
   storlek: { stor: { taggar: string[] }; liten: { taggar: string[] } };
@@ -29,7 +31,11 @@ export function taggarAv(v: Varelse, medKropp: boolean): Set<string> {
   }
   for (const tb of v.tillbehor) {
     s.add(`tillbehor:${tb.id}`);
-    for (const t of E.tillbehor[tb.id] ?? []) s.add(t);
+    // Flera ord kan dela modell. Solglasögon och vanliga glasögon gör olika
+    // saker, även i äldre v2 som bara sparar modell-id och den färdiga formeln.
+    const alias = v.formel.toLocaleLowerCase("sv").split(/[^a-zåäöéü]+/).map(ordFranForm)
+      .find((o) => o?.del?.tillbehor === tb.id && E.tillbehorsord?.[o.id]);
+    for (const t of (alias && E.tillbehorsord?.[alias.id]) ?? E.tillbehor[tb.id] ?? []) s.add(t);
   }
   if (v.monster) {
     s.add(`monster:${v.monster}`);

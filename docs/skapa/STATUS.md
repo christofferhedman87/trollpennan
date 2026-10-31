@@ -13,6 +13,15 @@ Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först
 | E HUD och Min bok | Klar | se git-logg | HudBotten (Uppdrag, Skriv, Min bok) och toppens ikonknappar (lås, stjärnor, Se hela dalen, Karta). MinBok har sex rutor. Föräldrasidan har startläget och bokstavsljudet. MenyPanel och hamburgern är borttagna. BokSkarm är bara Byggboken (Mark) |
 
 
+
+## B2 · T-06: önskans betydelse och synligt svar (pågår)
+
+Branch `codex/t06-onskesvar` började på `origin/main d743ad7` och samordnas med A2/C1 före slutprov. Röda→gröna Node-prov visar regional värme (tassar/öron), glasögon kontra solglasögon och verklig överfart över sjön. En sak räknas inte som djurkompis; roboten fungerar fortfarande. Alla 42 djurönskningar har minst två provade hjälpfraser och en egen ledtråd i data, listad i nya-repliker.md.
+
+Ge-svaret stänger boken även vid nära miss och behåller tillägget/önskan. Den aktuella bedömningen följer med det befintliga kvittot utan ett nytt varaktigt tillstånd. Samma uid hittar/uppdaterar djuret även i hem och platsSkapelser; kvittot omfattar dessa skapelser. En återställd önskan tar inte över ett annat uttryckligen öppnat mål. Sju nya produktprov täcker betydelse, orörd föregående värld, rätt uid och faktisk försökslivscykel. Riktigt browserprov för nära miss → omladdning → strumpor → tack/sparning är skrivet men ännu inte grönt. Slutgrindar och oberoende granskning återstår; ingen publicering påstås.
+
+Tre svagaste punkter: verklig UI-koppling/utflykt måste slutprovas; T-17:s gemensamma kö/avsändare återstår; fysisk Safari och nya godkända inspelningar återstår.
+
 ## Steg 0: hologrammets shader bevaras, 2026-10-31
 
 Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var 40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.

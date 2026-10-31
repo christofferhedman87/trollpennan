@@ -123,3 +123,55 @@ Inga nya inspelningar påstås finnas. Fullständiga nya barntexter i `data/beng
 - `varmt-och-kallt.hjalp[2]`: en filt och en snöhög
 - `varmt-och-kallt.krav.betydelse.varmt.beskrivning`: något som värmer
 - `varmt-och-kallt.krav.betydelse.kallt.beskrivning`: något som kyler
+
+
+## T-06: situationsriktiga önskesvar
+
+Önsketexterna och tacken bevaras. Ändrade exempel: frusna tassar → ”med strumpor”, ”med stövlar”, ”med tofflor”; frusna öron → ”med luva”, ”med röd luva”, ”med blå luva”; stark sol → ”med hatt”, ”med solglasögon”, ”med röd hatt”; suddig syn → ”med glasögon”, ”med röda glasögon”, ”med blå glasögon”; sjöresan → ”som flyger”, ”som simmar”, ”med vingar”. Vanliga glasögon ger synhjälp, solglasögon solskydd, och en ryggsäck löser inte vattenöverfarten. Inga nya inspelningar påstås finnas.
+
+Nya ledtrådar vid ett faktiskt bedömt önskesvar:
+
+| Önskan | Ledtråd |
+|---|---|
+| frusna-tassar | Mina tassar är fortfarande kalla. Vad kan jag ha på fötterna? |
+| frusna-oron | Mina öron är fortfarande kalla. Vad kan täcka dem? |
+| stark-sol | Jag kisar fortfarande. Vad kan skugga ögonen? |
+| regn | Jag vill hålla mig torr. Vad kan skydda mig mot regnet? |
+| kalas | Jag ska på kalas. Kan du ge mig något festligt? |
+| kung | Jag vill känna mig kunglig. Vad brukar en kung ha på sig? |
+| suddigt | Jag ser fortfarande suddigt. Jag behöver glasögon att se med. |
+| se-uppifran | Jag vill upp bland molnen. Hur kan jag ta mig dit? |
+| simma | Jag vill röra mig i vattnet. Vad hjälper mig att simma? |
+| morkradd | Det är fortfarande mörkt. Kan du göra så att jag lyser? |
+| kull | Jag vill hinna med i leken. Kan du göra mig snabbare? |
+| appel | Äpplet är högt uppe. Kan jag hoppa, flyga eller bli större? |
+| kurragomma | Jag vill gömma mig. Kan jag bli osynlig eller riktigt liten? |
+| resa | Sjön är i vägen. Hur kan jag ta mig genom vattnet eller över det? |
+| magisk | Jag önskar mig något magiskt, som ett horn eller ett skimmer. |
+| stjarnor | Jag vill glittra som stjärnorna. Hur kan jag skimra? |
+| fler-farger | Jag vill ha många färger på en gång, som en regnbåge. |
+| for-liten | Jag vill bli större. Kan du skriva hur stor jag ska bli? |
+| for-stor | Jag vill bli mindre. Kan du skriva hur liten jag ska bli? |
+| rod | Jag vill ha en röd eller orange färg på kroppen. |
+| gul | Jag vill ha en gul färg, eller glänsa som guld. |
+| bla | Jag önskar mig en blå färg på kroppen. |
+| gron | Jag önskar mig en grön färg på kroppen. |
+| lila | Jag vill bli lila eller mörkblå. |
+| prickar | Jag vill ha prickar på kroppen. Kan du göra mig prickig? |
+| ranger | Jag vill ha ränder på kroppen, som en tiger. |
+| staketet | Jag vill komma över staketet. Kan du hjälpa mig att hoppa? |
+| modig | Jag vill kunna spruta eld. Kan du ge mig den förmågan? |
+| huvud | Jag vill ha något fint på huvudet, som en hatt eller rosett. |
+| blixt | Jag vill vara snabb som blixten. Kan du göra mig snabbare? |
+| ensam | Jag längtar efter en djurkompis. Vem kan du trolla fram? |
+| kompis-simma | Jag längtar efter en djurkompis som kan simma. |
+| kompis-flyga | Jag längtar efter en djurkompis som kan flyga. |
+| kompis-liten | Jag längtar efter en liten djurkompis. |
+| kompis-fisk | Jag längtar efter en fiskkompis. Vem simmar härnäst? |
+| kompis-hatt | Jag längtar efter en djurkompis med hatt eller krona. |
+| kompis-drake | Jag längtar efter en drakkompis. |
+| kompis-snabb | Jag längtar efter en djurkompis som är snabb. |
+| kompis-lysa | Jag längtar efter en djurkompis som kan lysa i mörkret. |
+| kompis-rosa | Jag längtar efter en rosa djurkompis. |
+| kompis-enhorning | Jag längtar efter en hästkompis med horn. |
+| kompis-urtid | Jag längtar efter en dinosauriekompis. |

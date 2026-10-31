@@ -14,6 +14,7 @@ export type DjurOnska = {
   alla: string[];
   exempel: string[];
   tack: string;
+  nastan?: string;
   stjarnor: number;
   bara_for?: string[];
 };
@@ -42,6 +43,7 @@ export type ByggOnska = {
   krav: ByggKrav;
   exempel: string[];
   tack: string;
+  nastan?: string;
   stjarnor: number;
 };
 
@@ -51,7 +53,8 @@ type ByggFil = { onskningar: ByggOnska[] };
 export const ONSK = onskJson as OnskFil;
 export const ONSK_BYGG = byggOnskJson as ByggFil;
 
-export function nastanRad(i: number): string {
+export function nastanRad(i: number, onskan?: { nastan?: string }): string {
+  if (onskan?.nastan) return onskan.nastan;
   const r = ONSK.nastan;
   return r[i % r.length] ?? r[0]!;
 }
@@ -59,7 +62,7 @@ export function nastanRad(i: number): string {
 export function gePassar(v: Varelse, o: DjurOnska): boolean {
   if (o.typ !== "ge") return true;
   const har = taggarAv(v, false);
-  return !o.nagon_av.some((t) => har.has(t));
+  return !uppfyller(har, o.nagon_av, o.alla);
 }
 
 export function matchBygg(b: ByggeTolk, krav: ByggKrav, kropp?: string): boolean {
@@ -169,6 +172,7 @@ export function geTraff(fore: Varelse, efter: Varelse, o: DjurOnska): boolean {
 }
 
 export function kompisTraff(ny: Varelse, o: DjurOnska): boolean {
+  if (ordFranForm(ny.kropp)?.klass !== "djur") return false;
   const t = taggarAv(ny, true);
   t.add("kompis");
   return uppfyller(t, o.nagon_av, o.alla);
