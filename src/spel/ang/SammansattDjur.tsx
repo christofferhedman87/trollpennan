@@ -41,7 +41,7 @@ export function SammansattDjur({ spec, signal, index = 0, holo = false, ljus }: 
   const saker = useRef<(THREE.Group | null)[]>([]), ram = useRef(0);
   useFrame((state) => {
     if (++ram.current % 12 || !rot.current || !kropp.current) return;
-    matSkapelseProv(spec.uid, rot.current, kropp.current, plan.saker.map((d, i) => ({ id: d.t.id, nod: saker.current[i] ?? null })), state.camera, state.gl.domElement.getBoundingClientRect(), holo);
+    matSkapelseProv(spec.uid, rot.current, kropp.current, plan.saker.map((d, i) => ({ id: d.t.id, nod: saker.current[i] ?? null })), state.camera, state.gl.domElement.getBoundingClientRect(), holo, spec.formel, spec.kropp);
   });
   return <group ref={rot}>
     <group ref={kropp} position={plan.kropp}>

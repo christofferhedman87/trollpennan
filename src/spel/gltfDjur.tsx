@@ -146,7 +146,7 @@ export function GltfDjur({ spec, signal, index = 0 }: { spec: Sparad; signal: { 
   });
 
   return (
-    <group ref={rot}>
+    <group ref={rot} userData={{ gltfKropp: spec.kropp }}>
       <group ref={inre}>
         <GltfInnehall klon={klon} spec={spec} fram={fram} signal={signal} index={index} />
       </group>

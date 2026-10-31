@@ -24,6 +24,8 @@ const fraser = [
 ];
 function geometri(g, p) {
   assert.ok(g, "faktisk renderad geometri finns");
+  assert.equal(g.formel, p.text, "geometrin gäller den aktuella formeln");
+  assert.ok(g.kropp.modeller.includes(g.kroppId), "huvudets riktiga GLB är laddad");
   const saker = (p.relation === "plagg" ? g.plagg : g.saker).filter((s) => s.id === p.id);
   assert.equal(saker.length, p.antal, "varje skrivet exemplar har en verklig modell");
   assert.ok(g.kropp.mesh > 0 && saker.every((s) => s.mesh > 0));
@@ -49,9 +51,11 @@ try {
   for (const viewport of [{ width: 375, height: 812 }, { width: 812, height: 375 }].filter((v) => !process.env.QA_LAGE || String(v.width) === process.env.QA_LAGE)) {
     const context = await browser.newContext({ viewport, reducedMotion: "reduce" });
     const page = await context.newPage(); page.setDefaultTimeout(60000);
-    const fel = [], konsolfel = [];
+    const fel = [], konsolfel = [], modellfel = [];
+    await page.exposeFunction("__qaModellFel", (id) => { modellfel.push(id); });
     page.on("pageerror", (e) => fel.push(e.message)); page.on("console", (m) => { if (m.type() === "error") konsolfel.push(m.text()); });
     await page.addInitScript(() => {
+      window.addEventListener("trollpennan:model-fallback", (e) => { void window.__qaModellFel(e.detail?.kropp); });
       if (sessionStorage.getItem("c1c-prov")) return;
       sessionStorage.setItem("c1c-prov", "1");
       localStorage.setItem("trollpennan-v2", JSON.stringify({ version: 2, introSedd: true, startLage: "skriv", startLageVald: true,
@@ -74,12 +78,12 @@ try {
       await page.evaluate(() => { window.__PAUSE_ANIM = true; });
       const fore = new Set((await alla()).map((d) => d.uid));
       if (process.env.QA_HOLO !== "0") {
-        await page.waitForFunction(({ id, antal, relation }) => { const g = window.__holoGeometri; return g && g.kropp.mesh > 0 && (relation === "plagg" ? g.plagg : g.saker).filter((s) => s.id === id && s.mesh > 0).length === antal; }, p);
+        await page.waitForFunction(({ id, antal, relation, text }) => { const g = window.__holoGeometri; return g && g.uid === "forhand" && g.formel === text && g.kropp.modeller.includes(g.kroppId) && g.kropp.mesh > 0 && (relation === "plagg" ? g.plagg : g.saker).filter((s) => s.id === id && s.mesh > 0).length === antal; }, p);
         await page.waitForFunction(() => !document.querySelector(".sk-ark")?.classList.contains("sk-ark--trollar"));
         await page.evaluate(() => { window.__qaHoloVanta = { senaste: null, antal: 0 }; });
         await page.waitForFunction(({ text, extra }) => {
           const g = window.__holoGeometri, v = window.__qaHoloVanta;
-          if (!g || !window.__trollholo?.nyckel?.endsWith(text) || v.senaste === g) return v.antal >= 2;
+          if (!g || g.formel !== text || !window.__trollholo?.nyckel?.endsWith(text) || v.senaste === g) return v.antal >= 2;
           v.senaste = g;
           const a = document.querySelector(".sk-ark").getBoundingClientRect(), liggande = innerWidth > innerHeight;
           const r = [g.kropp, ...g.saker, ...g.plagg].map((x) => x.skarm);
@@ -109,7 +113,7 @@ try {
       assert.equal(nya.length, 1);
       const d = nya[0]; assert.equal(d.formel, p.text);
       skapade.push(JSON.parse(JSON.stringify(d)));
-      await page.waitForFunction(({ uid, id, antal, relation }) => { const g = window.__skapelseGeometri?.[uid]; return g && g.kropp.mesh > 0 && (relation === "plagg" ? g.plagg : g.saker).filter((s) => s.id === id && s.mesh > 0).length === antal; }, { ...p, uid: d.uid });
+      await page.waitForFunction(({ uid, id, antal, relation, text }) => { const g = window.__skapelseGeometri?.[uid]; return g && g.uid === uid && g.formel === text && g.kropp.modeller.includes(g.kroppId) && g.kropp.mesh > 0 && (relation === "plagg" ? g.plagg : g.saker).filter((s) => s.id === id && s.mesh > 0).length === antal; }, { ...p, uid: d.uid });
       geometri(await page.evaluate((uid) => window.__skapelseGeometri[uid], d.uid), p);
       // Låt vanligt kvitto löpa ut. Inget klick tvingas mot en redan utgången replik.
       await page.locator('[data-dal="kvitto"]').waitFor({ state: "hidden", timeout: 15000 });
@@ -119,7 +123,7 @@ try {
     await page.reload(); await page.getByTestId("pennans-bok").waitFor();
     const efter = JSON.parse(JSON.stringify(await alla()));
     for (const d of skapade) assert.deepEqual(efter.find((x) => x.uid === d.uid), d, "hela skapelsen med antal/ord/egenskaper sparas");
-    assert.deepEqual(fel, []); assert.deepEqual(konsolfel, []);
+    assert.deepEqual(fel, []); assert.deepEqual(konsolfel, []); assert.deepEqual(modellfel, [], "ingen modell får ha ersatts efter laddfel");
     console.log("Grönt antal/formel efter omladdning", viewport.width, skapade.length);
     await context.close();
   }
