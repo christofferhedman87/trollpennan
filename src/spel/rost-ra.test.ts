@@ -6,6 +6,7 @@ import { test } from "node:test";
 import bengtssonJson from "../../data/bengtsson.json" with { type: "json" };
 import byggJson from "../../data/onskningar-bygg.json" with { type: "json" };
 import manifestJson from "../../data/rost-manifest.json" with { type: "json" };
+import platserJson from "../../data/platser.json" with { type: "json" };
 import rostJson from "../../data/rost.json" with { type: "json" };
 import { sammanhallenRostText } from "./rost.ts";
 import { normalisera, nyckel, rostPlan } from "./rostManifest.ts";
@@ -33,6 +34,8 @@ function rader(): { kalla: string; t: string; talare: string }[] {
     ut.push({ kalla: `bygg:${o.id}.text`, t: o.text, talare: "pennan" }, { kalla: `bygg:${o.id}.tack`, t: o.tack, talare: "pennan" });
   }
   for (const h of HJALPFRASER) ut.push({ kalla: `hjalp:${h}`, t: h, talare: "pennan" });
+  // #310: den rättade formeln (entiteter.json) – ett värde, läses av pennan.
+  ut.push({ kalla: "formel:klippblock", t: "ett klippblock", talare: "pennan" });
   return ut;
 }
 
@@ -68,4 +71,20 @@ test("R-A: nästan (bengtsson) och hjälpfraser (pennan) är egna generatorkäll
   const hitta = (re: string) => lista.filter((k) => k.falt?.includes(re)).map((k) => `${k.fil}:${k.talare}`);
   assert.deepEqual(hitta("^\\.uppdrag\\[\\]\\.nastan$"), ["bengtsson.json:bengtsson"]);
   assert.deepEqual(hitta("^\\.uppdrag\\[\\]\\.hjalp\\[\\]$"), ["bengtsson.json:pennan"]);
+});
+
+test("R-A: kartans 🔊 spelar en hel fil – skogen, sjön och grottan med platsens egen inbjudan (Bengtsson), ängen och gården med pennan", () => {
+  // V1 (#204) valde rost_text bland befintliga inspelningar. För skogen, sjön och grottan är det platsens intro.text, som
+  // Bengtsson säger när barnet kommer fram och som platslappen (#278) läser. Nyckeln är bara texten, så samma replik = samma röst.
+  const P = (platserJson as unknown as { varldskarta: { id: string; rost_text: string }[]; platser: { id: string; intro?: { text?: string } }[] });
+  const intro = new Map(P.platser.map((p) => [p.id, p.intro?.text]));
+  const fel: string[] = [];
+  for (const o of P.varldskarta) {
+    const rad = RADER[nyckel(o.rost_text)];
+    const plan = rostPlan(sammanhallenRostText(o.rost_text));
+    const vantat = intro.get(o.id) === o.rost_text ? "bengtsson" : "pennan";
+    if (!rad || !plan || plan.delar.length !== 1 || !("f" in plan.delar[0]!) || plan.delar[0].f !== rad.f) fel.push(`${o.id}: inte en hel fil`);
+    else if (rad.r !== vantat) fel.push(`${o.id}: ${rad.r}, väntat ${vantat}`);
+  }
+  assert.deepEqual(fel, []);
 });
