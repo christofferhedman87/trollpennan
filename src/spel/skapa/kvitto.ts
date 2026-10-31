@@ -1,6 +1,7 @@
 // Nya Skapa 6.11: kvittot efter Trolla. Ersätter bannrarna "Klart! …", "+1 stjärna!" och guldordsbannern, som
 // tystas medan meningen trollas fram (kvittot visar samma sak, med guldorden understrukna).
 import { create } from "zustand";
+import { fyll } from "../fyll.ts";
 
 export type KvittoOrd = { t: string; guld: boolean };
 export type Kvitto = { id: number; ord: KvittoOrd[]; stj: number; guld: number; tack: string | null; tillagg?: boolean };
@@ -10,6 +11,17 @@ export type OnskeMiss = { id: string; uid: string; nastan: string };
 /** T-32: kvittots guldord är exakt de guldmarkerade orden i meningen, så att siffran och orden alltid stämmer. */
 export function kvittoGuldord(ord: readonly KvittoOrd[]): string[] {
   return ord.filter((o) => o.guld).map((o) => o.t);
+}
+
+/** Samma formaterade delar visas och får lästid, även när guldlistan är lång. */
+export function kvittoInnehall(k: Kvitto, mallar: Readonly<Record<string, string>>) {
+  const [fore = "", efter = ""] = (mallar[k.tillagg ? "tillagg" : "trollade"] ?? "{mening}").split("{mening}");
+  const guldord = kvittoGuldord(k.ord);
+  const stjarntext = k.stj > 0 ? fyll((k.stj === 1 ? mallar.stjarna_en : mallar.stjarna_flera) ?? "", { n: k.stj }) : "";
+  const guldtext = guldord.length ? fyll(mallar.guld ?? "", { n: guldord.length, ord: guldord.join(", ") }) : "";
+  const huvudtext = [k.tack, `${fore}${k.ord.map((o) => o.t).join(" ")}${efter}`].filter(Boolean).join(" ");
+  const lastext = [huvudtext, stjarntext, guldtext].filter(Boolean).join(" ");
+  return { fore, efter, guldord, stjarntext, guldtext, lastext };
 }
 
 export const useKvitto = create<{ kvitto: Kvitto | null; satt: (k: Kvitto | null) => void }>((set) => ({

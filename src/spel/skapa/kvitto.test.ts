@@ -2,7 +2,9 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { meningsbrickor } from "./meningsbrickor.ts";
 import type { MOrd } from "./mening.ts";
-import { kvittoGuldord } from "./kvitto.ts";
+import uiJson from "../../../data/skapa-ui.json" with { type: "json" };
+import { kvittoGuldord, kvittoInnehall } from "./kvitto.ts";
+import { lasbarTid } from "../rost.ts";
 
 const ord = (text: string, k: MOrd["k"] = "skriv"): MOrd[] => text.split(" ").map((t) => ({ t, k }));
 const kvitto = (mening: MOrd[]) => meningsbrickor(mening).filter((b) => b.klass !== "vantar").map(({ t, guld }) => Object.freeze({ t, guld }));
@@ -30,4 +32,11 @@ test("T-32: flera egna ord listas i meningsordning och hjälpord lämnas utanfö
   assert.deepEqual(kvittoGuldord(underlag), ["stor", "grön", "drake"]);
   assert.equal(JSON.stringify(underlag), fore, "kvittots underlag ändras inte");
   assert.deepEqual(kvittoGuldord(kvitto(ord("en katt och en katt"))), ["katt", "katt"], "varje faktiskt guldmarkerad förekomst visas");
+});
+
+test("T-32: lästexten omfattar samma huvudrad, stjärnor och långa guldlista som visas", () => {
+  const innehall = kvittoInnehall({ id: 1, ord: kvitto(ord("ett stort rött hus av guld med två dörrar")), stj: 3, guld: 999, tack: "Tack för huset!" }, uiJson.kvitto);
+  assert.equal(innehall.guldtext, "5 guldord: stort, rött, hus, guld, dörrar", "den faktiska understrykningen styr även vid fel gammal räknare");
+  assert.equal(innehall.lastext, "Tack för huset! Du trollade fram ett stort rött hus av guld med två dörrar! +3 stjärnor 5 guldord: stort, rött, hus, guld, dörrar");
+  assert.ok(lasbarTid(innehall.lastext) > 5600, "en lång guldlista behöver mer än basens lästid");
 });
