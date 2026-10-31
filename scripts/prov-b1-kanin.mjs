@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // B1: kaninens uppdrag med verkliga klick och tangenter, utan reducerad rörelse.
 import assert from "node:assert/strict";
-import { mkdir } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || "/usr/bin/chromium", args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader"] });
 try {
@@ -13,8 +13,16 @@ try {
       const context = await browser.newContext({ viewport, reducedMotion: "no-preference" });
       const page = await context.newPage(); page.setDefaultTimeout(45000);
       const fel = []; page.on("pageerror", (e) => fel.push(e.message));
-      await page.addInitScript(() => {
+      await page.addInitScript((needle) => {
         window.__qaBanners = [];
+        window.__b1Matt = null;
+        setInterval(() => {
+          const el = document.querySelector('[data-dal="kvitto"]');
+          if (window.__b1Matt || !el || getComputedStyle(el).opacity !== "1" || !el.innerText.includes(needle)) return;
+          const r = el.getBoundingClientRect();
+          window.__b1Matt = { text: el.innerText, inom: r.left >= 0 && r.top >= 0 && r.right <= innerWidth && r.bottom <= innerHeight,
+            hel: el.scrollWidth <= el.clientWidth && el.scrollHeight <= el.clientHeight };
+        }, 50);
         document.addEventListener("DOMContentLoaded", () => {
           let fore = "";
           new MutationObserver(() => {
@@ -24,7 +32,8 @@ try {
         }, { once: true });
         localStorage.setItem("trollpennan-v2", JSON.stringify({ version: 2, introSedd: true, ang: [], garden: [], stjarnor: 17, ljudPa: false, rostPa: false, effektPa: false }));
         localStorage.setItem("trollpennan-skapa-v1", '{"bokstavsljud":false}');
-      });
+      }, ledtrad);
+      const cdp = process.env.QA_SCREENSHOTS ? await context.newCDPSession(page) : null;
       await page.goto(process.argv[2] ?? "http://127.0.0.1:4174/", { timeout: 120000 });
       await page.waitForFunction(() => !!window.__troll);
       await page.evaluate((id) => { window.__troll.vakna("en kanin"); window.__trollMinne.setState({ uppdrag: { [id]: "pagar" } }); }, id);
@@ -55,14 +64,16 @@ try {
       assert.equal(efterMiss[0].kropp, fore.ang[0].kropp);
       assert.deepEqual(efterMiss[0].tillbehor.map((t) => t.id), [...fore.ang[0].tillbehor.map((t) => t.id), "lagereld"]);
       assert.equal(await page.evaluate((id) => window.__trollMinne.getState().uppdrag[id], id), "pagar", "en nära miss får aldrig räknas som färdigt uppdrag");
-      await page.getByText(ledtrad, { exact: false }).first().waitFor({ state: "visible" }).catch(async (e) => {
-        console.log(JSON.stringify(await page.evaluate(() => ({ text: document.body.innerText, rost: window.__rost, banners: window.__qaBanners }))));
-        if (process.env.QA_SCREENSHOTS) { await mkdir(process.env.QA_SCREENSHOTS, { recursive: true }); await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/saknad-ledtrad-${viewport.width}.png` }); }
-        throw e;
-      });
-      if (process.env.QA_SCREENSHOTS) {
+      await page.waitForFunction(() => window.__b1Matt);
+      const matt = await page.evaluate(() => window.__b1Matt);
+      assert.ok(matt.text.includes(ledtrad), "den faktiska ledtråden är synlig vid full opacitet");
+      assert.equal(matt.inom, true, "hela kvittot ryms i vyn");
+      assert.equal(matt.hel, true, "kvittots innehåll är inte klippt");
+      console.log(`Synligt kvitto ${viewport.width}:`, JSON.stringify(matt));
+      if (cdp && process.env.QA_SCREENSHOTS) {
         await mkdir(process.env.QA_SCREENSHOTS, { recursive: true });
-        await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/${id}-${viewport.width}.png` });
+        const bild = await cdp.send("Page.captureScreenshot", { format: "png", captureBeyondViewport: false });
+        await writeFile(`${process.env.QA_SCREENSHOTS}/${id}-${viewport.width}.png`, Buffer.from(bild.data, "base64"));
       }
       await page.getByTestId("bengtsson-ikon").click(); await page.getByTestId("uppdrag-los-i-boken").click();
       await skriv(ja);
@@ -74,6 +85,7 @@ try {
       assert.deepEqual(efterRatt[0].tillbehor.map((t) => t.id), [...efterMiss[0].tillbehor.map((t) => t.id), "halsduk"]);
       assert.ok(await page.evaluate(() => window.__trollMinne.getState().stjarnor) > fore.stjarnor);
       if (process.env.QA_SCREENSHOTS) await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/${id}-ratt-${viewport.width}.png` });
+      if (cdp) await cdp.detach();
       assert.deepEqual(fel, []); console.log(`Grönt T05 ${id}: nära miss → bevarad skapelse/ledtråd → rätt svar, ${viewport.width}×${viewport.height}`);
       await context.close();
     }

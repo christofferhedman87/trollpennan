@@ -338,3 +338,16 @@ Textpaket 02, godkänt av Christoffer och sparat i `textpaket-02-granskad.md`:
 - `data/bengtsson.json`, `kanin-fryser.text_bengtsson_annat_djur.text`: Brr! Ditt djur fryser. Kan du skriva fram något varmt att ha på sig? (visas när det första djuret inte är en kanin; separat omarkerad text, ingår inte i Textpaket 02:s hashlås). **Till Grok:** även denna startreplik saknar inspelning.
 
 - `data/bengtsson.json`, `kanin-fryser.klart_bengtsson_annat_djur.text`: Så skönt! Nu kan ditt djur sluta huttra. (separat omarkerad tackreplik för andra djur än kanin, inte del av Textpaket 02:s hashlås). **Till Grok:** även denna replik saknar inspelning.
+
+### Ytterligare saknade röstplaner för Grok (B0/B1)
+
+Kontrollerat med `rostPlan` mot befintligt manifest: följande hela texter har ännu varken en inspelning eller en uppspelbar plan. Befintliga filer ska bevaras. Grok behöver ta med dessa källfält i sin generering/implementation och kontrollera uttalet.
+
+- `kanin-fryser.nastan`: Din skapelse får stanna! Jag letar efter något varmt att ha på sig, som mössa eller halsduk.
+- `solgul-van.nastan`: Din skapelse får stanna! Jag letar efter en vän som är gul eller kan lysa.
+- `vingar-i-luften.nastan`: Din skapelse får stanna! Jag letar efter en vän som kan flyga. Vingar kan hjälpa.
+- `kalla-tassar.nastan`: Din skapelse får stanna! Jag letar efter något som värmer. Strumpor, en tröja eller en halsduk kan hjälpa.
+- `varmt-och-kallt.nastan`: Din skapelse får stanna! Jag letar efter två saker: något som värmer och något som kyler.
+- `kalla-tassar.hjalp`: en hund med strumpor
+
+Övriga två B1-hjälpfraser utan egen hel fil, ”en hund med halsduk” och ”en katt med tröja”, har uppspelningsplaner som består av befintliga ljuddelar. Det är inte samma sak som en ny inspelning av hela frasen.
