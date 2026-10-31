@@ -19,7 +19,7 @@ async function ryms(el, namn) {
   assert.equal(fel, null, namn);
 }
 try {
-  for (const viewport of [{ width: 375, height: 812 }, { width: 812, height: 375 }, { width: 667, height: 375 }]) {
+  for (const viewport of [{ width: 375, height: 812 }, { width: 812, height: 375 }, { width: 667, height: 375 }, { width: 375, height: 667 }].filter((v) => !process.env.QA_LAGE || `${v.width}x${v.height}` === process.env.QA_LAGE)) {
     const context = await browser.newContext({ viewport, reducedMotion: "reduce" }); const page = await context.newPage(); page.setDefaultTimeout(45000);
     const sidfel = []; page.on("pageerror", (e) => sidfel.push(e.message));
     await page.addInitScript(() => {
@@ -33,7 +33,7 @@ try {
     await ryms(page.locator('[data-dal="klar"]'), "Trolla-tangenten");
     await page.locator('[data-dal="ide"]').click();
     await ryms(remsa, "skrivrutan med uppdrag och idé"); await ryms(page.locator(".sk-ide-rad"), "bildidén");
-    if (process.env.QA_SCREENSHOTS) { await mkdir(process.env.QA_SCREENSHOTS, { recursive: true }); await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/skriv-${viewport.width}.png` }); }
+    if (process.env.QA_SCREENSHOTS) { await mkdir(process.env.QA_SCREENSHOTS, { recursive: true }); await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/skriv-${viewport.width}x${viewport.height}.png` }); }
     const las = page.getByRole("button", { name: /^Läs hela lappen:/ }).first();
     if (await las.count()) {
       await las.click(); const hela = page.locator(".sk-lapp-full"); await ryms(hela, "hela läsbara lappen");
@@ -43,7 +43,7 @@ try {
     await page.locator('[data-dal="ordhjalp"]').click();
     await ryms(page.getByTestId("remsa"), "remsa i hjälpläge");
     await ryms(page.locator('[data-mal="losning"]').first(), "en hel lösningsrad");
-    if (process.env.QA_SCREENSHOTS) await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/hjalp-${viewport.width}.png` });
+    if (process.env.QA_SCREENSHOTS) await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/hjalp-${viewport.width}x${viewport.height}.png` });
     await page.getByTestId("pennan").click();
     await page.locator('[data-dal="skrivbricka"]').click(); await page.keyboard.type("en kanim ");
     const forslag = page.getByTestId("forslag"); await forslag.waitFor(); await ryms(forslag, "hela stavningssvaret");
