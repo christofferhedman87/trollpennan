@@ -365,7 +365,7 @@ test("R3G: föremål efter med står bredvid djuret; djuret är kvar som kropp",
   if (u.typ !== "skapad") return;
   assert.equal(u.varelse.kropp, "kanin");
   assert.deepEqual(u.varelse.tillbehor.map((t) => t.id), ["hink"]);
-  assert.equal(u.varelse.formel, "en kanin med hink");
+  assert.equal(u.varelse.formel, "en kanin med en hink");
   const h = tolka("en hatt");
   assert.notEqual(h.typ === "skapad" ? h.varelse.kropp : "", "hatt", "ord.json-tillbehör ändras inte");
   const t = tolka("tre hinkar");

@@ -35,7 +35,7 @@ test("ny storlek ersätter den gamla, och resten av djuret står kvar", () => {
 test("motsatser: det sista ordet gäller, och adjektiv på en sak hamnar inte på djuret", () => {
   assert.equal(djur("en hög låg hund").formel, "en låg hund");
   assert.equal(djur("en varm kall katt").formel, "en kall katt");
-  assert.equal(djur("en hund vid ett högt torn och en låg stubbe").formel, "en hund med torn och stubbe");
+  assert.equal(djur("en hund vid ett högt torn och en låg stubbe").formel, "en hund vid ett högt torn och en låg stubbe");
   assert.equal(djur("en mjuk kanin").formel, "en mjuk kanin");
 });
 

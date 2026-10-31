@@ -158,12 +158,13 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
   mode = "fore";
   let relation: Relation | undefined;
   let artikel: string | undefined;
+  let sakEgenskaper: string[] = [];
   for (let i = 0; i < sem.length; i++) {
     const s = sem[i]!;
     if (s.t === "funk") {
       if (s.v === "och" && mode === "med") b.vantande = null;
       mode = modeAv(s.v, mode);
-      if (s.v === "med") { relation = s.relation; artikel = undefined; }
+      if (s.v === "med") { relation = s.relation; artikel = undefined; sakEgenskaper = []; }
       else if (s.v === "fore" || s.v === "som" || s.v === "kan") { relation = undefined; artikel = undefined; }
       continue;
     }
@@ -217,13 +218,15 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       const bild = o.del?.kropp ?? o.id;
       if (bild === b.kropp || b.tillbehor.some((t) => t.bild === bild)) continue;
       const fargOrd = b.vantande;
-      b.tillbehor.push({ ord: o, bild, fargOrd, fargHex: fargOrd?.del?.farg?.startsWith("#") ? fargOrd.del.farg : null, glans: false, form: s.form, artikel, relation });
+      b.tillbehor.push({ ord: o, bild, fargOrd, fargHex: fargOrd?.del?.farg?.startsWith("#") ? fargOrd.del.farg : null, glans: false, form: s.form, artikel, relation, egenskaper: sakEgenskaper });
+      sakEgenskaper = [];
       artikel = undefined;
       b.vantande = null;
       continue;
     }
     // R9F: storlek/egenskap efter "med"/"vid"/"i" … eller direkt före en sak ("ett högt torn") beskriver saken, inte djuret
     if ((o.klass === "egenskap" || o.klass === "storlek") && (mode === "med" || nastaArSak(sem, i, ensamSak))) {
+      sakEgenskaper.push(s.form);
       markera(b, o.id, false);
       if (o.klass === "egenskap" && !b.inteDjur.includes(o.id)) b.inteDjur.push(o.id);
       continue;

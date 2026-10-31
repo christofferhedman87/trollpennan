@@ -81,7 +81,7 @@ export function formelAv(b: Bygg): string {
     const genus = plural ? "pl" : t.ord.genus === "n" ? "n" : "u";
     const f = t.fargOrd ? boj(fargAdjektiv(t.fargOrd) ?? t.fargOrd, genus) : "";
     const artikel = t.artikel && !plural ? t.artikel : "";
-    const fras = [artikel, f, t.form ?? t.ord.visa].filter(Boolean).join(" ");
+    const fras = [artikel, ...(t.egenskaper ?? []), f, t.form ?? t.ord.visa].filter(Boolean).join(" ");
     const relation = t.relation ?? "med";
     delar.push(relation === forra ? "och" : relation, fras);
     forra = relation;
