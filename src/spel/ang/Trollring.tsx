@@ -17,7 +17,8 @@ import { SammansattDjur } from "./SammansattDjur.tsx";
 import { gorHolo, HOLO_TID } from "./holoMaterial.ts";
 import { bokHoloYta, passaHolo } from "./holoYta.ts";
 
-import { skapelsePlan } from "../skapelsePlan.ts";
+
+import { synligModellRuta } from "../modeller/synligRuta.ts";
 
 const _v = new THREE.Vector3();
 const _a = new THREE.Vector3();
@@ -28,7 +29,7 @@ const _hx = [0, 0, 0, 0, 0, 0, 0, 0].map(() => new THREE.Vector3());
 const PROV = import.meta.env.DEV || (typeof navigator !== "undefined" && navigator.webdriver === true);
 let provRam = 0;
 function holoRuta(g: THREE.Group, camera: THREE.Camera, gl: THREE.WebGLRenderer) {
-  _box.setFromObject(g);
+  synligModellRuta(g, _box);
   if (_box.isEmpty()) return;
   const r = gl.domElement.getBoundingClientRect();
   const { min, max } = _box;
@@ -164,7 +165,7 @@ function Hologram() {
     // Både modell och svävhöjd krymper kring samma markpunkt; ringens verkliga plats ändras aldrig.
     const hojd = l.spec?.typ === "djur" ? synY(l.holoY) + 0.08 + Math.sin(t * 2.4) * 0.04 : 0;
     const duk = gl.domElement.getBoundingClientRect();
-    const yta = bokHoloYta(duk, l.spec?.typ === "djur" && skapelsePlan(l.spec.spec).saker.length > 0);
+    const yta = bokHoloYta(duk, l.spec?.typ === "djur" && l.spec.spec.tillbehor.length > 0);
     if (yta && ring) {
       g.scale.set(sx, sy, sx);
       g.position.y = hojd;
@@ -208,7 +209,7 @@ function ArkKamera() {
       // Ringens läge utan nuvarande förskjutning.
       const sx = (_v.x * 0.5 + 0.5) * w + cur.current.x;
       const sy = (-_v.y * 0.5 + 0.5) * h + cur.current.y;
-      const friYta = bokHoloYta(r, l.spec?.typ === "djur" && skapelsePlan(l.spec.spec).saker.length > 0);
+      const friYta = bokHoloYta(r, l.spec?.typ === "djur" && l.spec.spec.tillbehor.length > 0);
       if (friYta) {
         mx = sx - ((friYta.left + friYta.right) / 2 - r.left);
         my = sy - (friYta.bottom - 12 - r.top);

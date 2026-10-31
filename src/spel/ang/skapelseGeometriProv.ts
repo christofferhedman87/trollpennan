@@ -1,5 +1,6 @@
 // Enbart passiv avläsning för dev/webdriver. Ändrar inga modeller eller speltillstånd.
 import * as THREE from "three";
+import { synligModellRuta } from "../modeller/synligRuta.ts";
 const PROV = import.meta.env.DEV || (typeof navigator !== "undefined" && navigator.webdriver);
 const box = new THREE.Box3(), v = new THREE.Vector3(), inv = new THREE.Matrix4();
 type Nod = { id: string; nod: THREE.Object3D | null };
@@ -9,14 +10,7 @@ export function matSkapelseProv(uid: string, rot: THREE.Object3D, kropp: THREE.O
   rot.updateWorldMatrix(true, true);
   inv.copy(rot.matrixWorld).invert();
   const mat = (nod: THREE.Object3D) => {
-    box.makeEmpty();
-    nod.traverseVisible((o) => {
-      if (!(o instanceof THREE.Mesh)) return;
-      const material = Array.isArray(o.material) ? o.material : [o.material];
-      if (!material.some((m) => m.visible && m.opacity > 0)) return;
-      if (o instanceof THREE.SkinnedMesh) { o.computeBoundingBox(); if (o.boundingBox) box.union(o.boundingBox.clone().applyMatrix4(o.matrixWorld)); }
-      else { o.geometry.computeBoundingBox(); if (o.geometry.boundingBox) box.union(o.geometry.boundingBox.clone().applyMatrix4(o.matrixWorld)); }
-    });
+    synligModellRuta(nod, box);
     const min = box.min.toArray(), max = box.max.toArray();
     let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity, mesh = 0;
     const farger = new Set<string>();

@@ -1,5 +1,5 @@
 import type { TillbehorSpec } from "../../tolk/typer.ts";
-import { barsPaKropp } from "../skapelsePlan.ts";
+import { barsPaKropp } from "./bars.ts";
 import { plaggKonfig, tillbehorRad } from "./data.ts";
 
 /** Procedurreserv och GLB delar ordning även när flera plagg använder samma kroppsdel. */

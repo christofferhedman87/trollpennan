@@ -211,7 +211,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
       signal.current.klapp = performance.now();
       hopp.current = sammansatt ? 0 : 1;
       kisa.current = 1;
-      if (klapp.current >= 2) snurr.current = 1;
+      if (klapp.current >= 2 && spec.tillbehor.length === 0) snurr.current = 1;
       setPuls((n) => n + 1);
       brygga.skicka({ typ: "tryck", uid: spec.uid, text: replik(spec, "tryck"), x: bx, y: by, klapp: klapp.current });
     };

@@ -9,10 +9,13 @@ if (bilder) await mkdir(bilder, { recursive: true });
 const fraser = [
   { text: "en katt under ett bord", relation: "under", id: "bord", antal: 1 },
   { text: "en katt på en sten", relation: "på", id: "sten", antal: 1 },
-  { text: "en katt i en låda", relation: "i", id: "lada", antal: 1 },
+  { text: "en katt i en låda", relation: "i", id: "kartong", antal: 1 },
   { text: "en katt bredvid en boll", relation: "bredvid", id: "boll", antal: 1 },
   { text: "en katt med två röda äpplen", relation: "med", id: "apple", antal: 2 },
   { text: "en kanin med två strumpor", relation: "plagg", id: "strumpa", antal: 2 },
+  { text: "en katt med tio hattar", relation: "plagg", id: "hatt", antal: 10 },
+  { text: "en katt i en hatt", relation: "i", id: "hatt", antal: 1 },
+  { text: "en katt under två bord", relation: "under", id: "bord", antal: 2 },
 ];
 function geometri(g, p) {
   assert.ok(g, "faktisk renderad geometri finns");
@@ -31,7 +34,7 @@ function geometri(g, p) {
   if (["bredvid", "med"].includes(p.relation)) {
     for (const sak of saker) assert.ok(sak.lokal.min[0] > k.max[0] || sak.lokal.max[0] < k.min[0], "separata saker står bredvid kroppen");
   }
-  if (p.relation === "plagg") assert.ok(Math.abs(saker[0].lokal.min[0] - saker[1].lokal.min[0]) > 0.03, "två strumpor har skilda fästpunkter");
+  if (p.relation === "plagg") assert.ok(saker[0].lokal.min.reduce((s, x, i) => s + Math.abs(x - saker[1].lokal.min[i]), 0) > 0.03, "flera plagg har skilda fästpunkter");
 }
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || "/usr/bin/chromium", args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader"] });
 try {
@@ -67,8 +70,9 @@ try {
         await page.waitForFunction(() => !document.querySelector(".sk-ark")?.classList.contains("sk-ark--trollar"));
         if (bilder) await page.screenshot({ path: `${bilder}/holo-${viewport.width}-${skapade.length}.png` });
         const holo = await page.evaluate(() => window.__holoGeometri);
+        if (process.env.QA_MATT) console.log("Holo-ruta", await page.evaluate(() => window.__trollholo));
         geometri(holo, p);
-        for (const ruta of [holo.kropp, ...holo.saker].map((x) => x.skarm)) {
+        for (const ruta of [holo.kropp, ...holo.saker, ...holo.plagg].map((x) => x.skarm)) {
           assert.ok(ruta.x0 >= 0 && ruta.x1 <= viewport.width, "hela hologrammet ryms i sidled");
           assert.ok(ruta.y0 >= 90 && ruta.y1 <= (await page.locator(".sk-ark").boundingBox()).y, "hela hologrammet är ovanför boken och under HUD");
         }

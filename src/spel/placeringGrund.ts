@@ -77,7 +77,7 @@ export function kroppMatt(d: Pick<Sparad, "kropp" | "skala"> & Partial<Pick<Spar
   // vridning djur.tsx ger den: ett djur som vandrar vrider sig upp till 0,35·π·vandring, en flygare ±0,14 (och rullar
   // 0,28), en svävare 0,35, en sak inte alls. Rutan är den axelparallella lådan runt den vridna kroppen.
   const r = plan?.ruta;
-  const mm = sammansatt && r ? [2 * Math.max(-r.min[0], r.max[0]), r.max[1] - r.min[1], 2 * Math.max(-r.min[2], r.max[2]), r.min[1]] : MODELLMATT[d.kropp];
+  const mm = plan && r ? [2 * Math.max(-r.min[0], r.max[0]), r.max[1] - r.min[1], 2 * Math.max(-r.min[2], r.max[2]), r.min[1]] : MODELLMATT[d.kropp];
   if (mm && (harModell(d.kropp) || mm.length > 3)) {
     const k = takSkala(d.kropp, d.skala || 1) * f;
     const [a, b] = [(mm[0] * k) / 2, (mm[2] * k) / 2];

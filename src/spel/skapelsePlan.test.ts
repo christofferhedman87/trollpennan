@@ -114,3 +114,46 @@ test("Placeringsrutan omfattar föremålen och cachen följer ändrat antal/rela
   const b = placeraMedMinne([annan]); assert.notEqual(a, b);
   assert.equal(JSON.stringify(v), fore);
 });
+
+test("Varje under-exemplar och ett blandat på/under följer relationen", async () => {
+  for (const text of ["en katt under två bord", "en katt på en sten och under ett bord"]) {
+    const v = varelse(text), p = skapelsePlan(v), katt = await stall(v.kropp, p.kropp);
+    for (const d of p.saker.filter((s) => s.t.relation === "under")) {
+      const bord = await stall(d.t.id, d.position, d.skala);
+      assert.ok(katt.box.max.y < bord.box.max.y - 0.06, text);
+      assert.ok(katt.box.min.x > bord.box.min.x && katt.box.max.x < bord.box.max.x, text);
+      assert.ok(katt.box.min.z > bord.box.min.z && katt.box.max.z < bord.box.max.z, text);
+    }
+  }
+});
+
+test("Alla i-behållare omsluter kroppen och flera på-saker blir ett stöd", async () => {
+  const v = varelse("en katt i två lådor"), p = skapelsePlan(v), katt = await stall(v.kropp, p.kropp);
+  assert.equal(p.saker.length, 2);
+  for (const d of p.saker) {
+    const lada = await stall(d.t.id, d.position, d.skala);
+    for (const axel of ["x", "y", "z"] as const) assert.ok(katt.box.min[axel] > lada.box.min[axel] && katt.box.max[axel] < lada.box.max[axel]);
+  }
+  const pa = skapelsePlan(varelse("en katt på två stenar"));
+  assert.equal(pa.saker.length, 2);
+  for (const d of pa.saker) assert.ok(pa.kropp[1] >= (await stall(d.t.id, d.position, d.skala)).box.max.y);
+});
+
+test("Legacy-plattformen följer första fria saken även efter ett plagg", () => {
+  const v = varelse("en katt med en hatt och en sten");
+  for (const t of v.tillbehor) delete t.relation;
+  assert.ok(skapelsePlan(v).kropp[1] > 0);
+});
+
+test("Flera verkliga hattar ligger inom hela placeringsrutan", async () => {
+  for (const antal of [2, 10]) {
+    const v = varelse(`en katt med ${antal === 2 ? "två" : "tio"} hattar`), p = skapelsePlan(v), djur = await stall(v.kropp);
+    faestTillbehor(djur.nod, v.kropp, v.tillbehor, "modell"); djur.ytter.updateMatrixWorld(true);
+    const b = new THREE.Box3().setFromObject(djur.ytter);
+    for (const [i, axel] of ["x", "y", "z"].entries()) {
+      assert.ok(b.min[axel as "x"] >= p.ruta.min[i]! - 0.005, `${antal} hattar min ${axel}`);
+      assert.ok(b.max[axel as "x"] <= p.ruta.max[i]! + 0.005, `${antal} hattar max ${axel}`);
+    }
+    assert.ok(kroppMatt(sparad(v), 0).hojd >= b.max.y - b.min.y);
+  }
+});
