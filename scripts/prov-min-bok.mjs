@@ -42,11 +42,11 @@ try {
     await oppnaMinBok();
     const skrivordRuta = tal(await rutaText("ordjakten"));
     await page.locator('[data-dal="minbok-ordjakten"]').click();
-    await page.getByTestId("ordbok-ordjakten").waitFor();
+    await page.locator('[data-t22="ordbok-ordjakten"]').waitFor();
     assert.equal(await page.getByTestId("ordbok-sida").getAttribute("data-start"), "ordjakten");
     assert.equal(await page.locator('[data-testid="ordbok-sida"] h2').first().innerText(), "Ordjakten");
-    assert.equal(tal(await page.getByTestId("ordbok-del-text").innerText()), skrivordRuta, "Ordjaktens siffra stämmer med rutan");
-    assert.equal(await page.locator('[data-testid="ordbok-ordjakten"] li').count(), skrivordRuta);
+    assert.equal(tal(await page.locator('[data-t22="ordbok-del-text"]').innerText()), skrivordRuta, "Ordjaktens siffra stämmer med rutan");
+    assert.equal(await page.locator('[data-t22="ordbok-ordjakten"] li').count(), skrivordRuta);
     if (bilder) await page.screenshot({ path: `${bilder}/ordjakten-${viewport.width}.png` });
     await stangOrdbok();
 
@@ -54,10 +54,10 @@ try {
     await oppnaMinBok();
     const guldRuta = tal(await rutaText("guldord"));
     await page.locator('[data-dal="minbok-guldord"]').click();
-    await page.getByTestId("ordbok-guldord").waitFor();
+    await page.locator('[data-t22="ordbok-guldord"]').waitFor();
     assert.equal(await page.getByTestId("ordbok-sida").getAttribute("data-start"), "guldord");
     assert.equal(await page.locator('[data-testid="ordbok-sida"] h2').first().innerText(), "Mina guldord");
-    assert.equal(tal(await page.getByTestId("ordbok-del-text").innerText()), guldRuta, "guldordens siffra stämmer med rutan");
+    assert.equal(tal(await page.locator('[data-t22="ordbok-del-text"]').innerText()), guldRuta, "guldordens siffra stämmer med rutan");
     assert.equal(guldRuta, 2);
     if (bilder) await page.screenshot({ path: `${bilder}/guldord-${viewport.width}.png` });
     await stangOrdbok();
@@ -66,7 +66,7 @@ try {
     await page.evaluate(() => window.__troll.ordbok(true));
     await page.getByTestId("ordbok-sida").waitFor();
     assert.equal(await page.getByTestId("ordbok-sida").getAttribute("data-start"), "alla");
-    assert.equal(await page.locator('[data-testid="ordbok-guldord"], [data-testid="ordbok-ordjakten"]').count(), 0);
+    assert.equal(await page.locator('[data-t22="ordbok-guldord"], [data-t22="ordbok-ordjakten"]').count(), 0);
     await stangOrdbok();
 
     // Djuralbum.
@@ -88,12 +88,12 @@ try {
     assert.equal(tal(await rutaText("lada")), 0);
     await page.locator('[data-dal="minbok-lada"]').click();
     await page.getByTestId("lada-panel").waitFor();
-    const tom = await page.getByTestId("lada-tom").innerText();
+    const tom = await page.locator('[data-t22="lada-tom"]').innerText();
     assert.match(tom, /Lådan är tom/);
     const panel = await page.getByTestId("lada-panel").boundingBox();
     assert.ok(panel && panel.y >= 0 && panel.y + panel.height <= viewport.height && panel.x >= 0 && panel.x + panel.width <= viewport.width, "hela lådan syns");
     if (bilder) await page.screenshot({ path: `${bilder}/lada-${viewport.width}.png` });
-    await page.getByTestId("lada-stang").click();
+    await page.locator('[data-t22="lada-stang"]').click();
     await page.getByTestId("lada-panel").waitFor({ state: "detached" });
 
     assert.deepEqual(sidfel, [], "inga sidfel");

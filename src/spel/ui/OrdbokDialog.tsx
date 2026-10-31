@@ -71,8 +71,8 @@ export function OrdbokDialog({ hittatAntal, totalOrd, stjarnor, kopRad, koptaSid
             </div>
             <h2>{rubrik}</h2>
             {del ? (
-              <section className="ordbok-hittade-topp" data-testid={del.id}>
-                <p data-testid="ordbok-del-text">{del.text}</p>
+              <section className="ordbok-hittade-topp" data-t22={del.id}>
+                <p data-t22="ordbok-del-text">{del.text}</p>
                 <ul className="ord-lista">
                   {del.ord.map((o) => (
                     <li key={o} className={start === "guldord" ? "guld" : ""}>

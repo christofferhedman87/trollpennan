@@ -220,7 +220,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
           {ladaOpp ? (
             <div className="lada-panel" data-testid="lada-panel" role="dialog" aria-label={TEXTER.lada.rubrik}>
               <p>{TEXTER.lada.rubrik}</p>
-              {lada.length === 0 ? <p data-testid="lada-tom">{TEXTER.lada.tom} {TEXTER.lada.tom_hjalp}</p> : null}
+              {lada.length === 0 ? <p data-t22="lada-tom">{TEXTER.lada.tom} {TEXTER.lada.tom_hjalp}</p> : null}
               {lada.map((b) => (
                 <button
                   key={b.uid}
@@ -232,7 +232,7 @@ export function AngLager({ natt, varld, omrade, panel, ang, hemma, liv, fotoMal,
                   {TEXTER.lada.ta_fram}: {b.formel}
                 </button>
               ))}
-              <button type="button" data-testid="lada-stang" onClick={() => setLadaOpp(false)}>
+              <button type="button" data-t22="lada-stang" onClick={() => setLadaOpp(false)}>
                 {TEXTER.lada.stang}
               </button>
             </div>
