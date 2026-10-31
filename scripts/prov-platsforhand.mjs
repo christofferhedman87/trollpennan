@@ -108,6 +108,25 @@ async function vantaHolo(page, id, namn, ordText) {
   await page.waitForTimeout(1600);
 }
 
+// Scenens globala materialpass kör var 40:e bildruta. Ett enstaka positivt prov direkt efter
+// montering missar därför att passet senare kan skriva över hologrammets shader.
+async function kontrolleraVaraktighet(page, namn) {
+  const rutor = await page.evaluate(() => new Promise((resolve) => {
+    const nyckel = window.__trollholo?.nyckel;
+    const rader = [];
+    const prov = () => {
+      rader.push({ nyckel: window.__trollholo?.nyckel, calls: window.__holoRitanrop?.senast });
+      if (rader.length === 90) resolve({ nyckel, rader });
+      else requestAnimationFrame(prov);
+    };
+    requestAnimationFrame(prov);
+  }));
+  assert.ok(rutor.nyckel, `${namn}: varaktighetsprovet gäller ett hologram`);
+  assert.ok(rutor.rader.every((r) => r.nyckel === rutor.nyckel), `${namn}: samma hologram under hela provet`);
+  assert.ok(rutor.rader.every((r) => r.calls > 0 && r.calls <= 30), `${namn}: hologrammet behåller sin shader i 90 bildrutor: ${JSON.stringify(rutor.rader.map((r) => r.calls))}`);
+  logg(`${namn}: 90 bildrutor med hologrammets egna WebGL-anrop, ${Math.min(...rutor.rader.map((r) => r.calls))}–${Math.max(...rutor.rader.map((r) => r.calls))}`);
+}
+
 async function provaPlats(page, id, lage, liggande) {
   const namn = `${lage}-${id}`;
   await resMedKartan(page, id);
@@ -141,6 +160,7 @@ async function provaPlats(page, id, lage, liggande) {
     logg(`${namn}: ${text}: hologrammets egna WebGL-ritanrop ${d.holoCalls}`);
     assert.ok(d.holoCalls > 0 && d.holoCalls <= 30, `${namn}: ${text}: hologrammet kostar högst 30 egna ritanrop (${d.holoCalls})`);
     assert.ok(d.calls == null || d.calls <= 140, `${namn}: ${text}: högst 140 ritanrop med boken öppen (${d.calls})`);
+    if (text === "en sten") await kontrolleraVaraktighet(page, `${namn}: ${text}`);
     await bild(page, `${namn}-${text.replace(/^en /, "")}`);
     await sudda(page, text.length);
     await page.waitForFunction(() => window.__trollholo == null, null, { timeout: 15000 });

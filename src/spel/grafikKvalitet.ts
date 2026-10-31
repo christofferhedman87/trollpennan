@@ -70,7 +70,8 @@ export function useSagomiljo(natt = false): void {
 export function forbattraModellMaterial(rot: THREE.Object3D): void {
   rot.traverse((o) => {
     const mesh = o as THREE.Mesh;
-    if (!mesh.isMesh || !mesh.material) return;
+    // Hologram har en egen shader; sagoytan skulle ersätta den efter högst 40 bildrutor.
+    if (!mesh.isMesh || !mesh.material || mesh.userData.holo) return;
     const lista = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
     for (const raw of lista) {
       const m = raw as THREE.MeshStandardMaterial;
