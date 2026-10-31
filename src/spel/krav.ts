@@ -1,9 +1,12 @@
 // Betydelsekrav över redan tolkade skapelser. Ingen råtext, lagring eller UI.
+import type { Relation } from "../tolk/typer.ts";
 export type KravGrupp = {
   id: string;
   nagon_av: string[];
   alla?: string[];
   subjekt?: "djur" | "sak";
+  egna?: boolean;
+  relationer?: Relation[];
   beskrivning: string;
 };
 export type BetydelseKrav = {
@@ -13,13 +16,15 @@ export type BetydelseKrav = {
   djur?: boolean | number;
   antal_text?: string;
 };
-export type TolkadSkapelse = { taggar: ReadonlySet<string>; antal: number; djur: boolean };
+export type TolkadSkapelse = { taggar: ReadonlySet<string>; egnaTaggar?: ReadonlySet<string>; antal: number; djur: boolean; relation?: Relation };
 export type KravSvar = { ok: boolean; saknas: string[] };
 
 function passar(s: TolkadSkapelse, g: KravGrupp): boolean {
   if (g.subjekt === "djur" && !s.djur || g.subjekt === "sak" && s.djur) return false;
-  if (g.alla?.some((t) => !s.taggar.has(t))) return false;
-  return g.nagon_av.length > 0 ? g.nagon_av.some((t) => s.taggar.has(t)) : !!g.alla?.length;
+  if (g.relationer && s.relation && !g.relationer.includes(s.relation)) return false;
+  const taggar = g.egna ? s.egnaTaggar ?? s.taggar : s.taggar;
+  if (g.alla?.some((t) => !taggar.has(t))) return false;
+  return g.nagon_av.length > 0 ? g.nagon_av.some((t) => taggar.has(t)) : !!g.alla?.length;
 }
 
 /** Bipartit matchning: ett djur får inte räknas som båda vännerna. Ingen girig ordningsfälla. */

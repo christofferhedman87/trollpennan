@@ -49,12 +49,17 @@
         "kropp:mantel",
         "kropp:vante",
         "kropp:strumpa",
-        "kropp:luva"
+        "kropp:luva",
+        "kropp:hatt",
+        "kropp:stovlar",
+        "kropp:gummistovel"
        ],
        "alla": [
         "varm"
        ],
        "subjekt": "sak",
+       "egna": true,
+       "relationer": ["med", "i"],
        "beskrivning": "något varmt att ha på sig"
       }
      ]

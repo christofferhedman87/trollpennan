@@ -7,8 +7,8 @@ const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || 
 try {
   for (const viewport of [{ width: 375, height: 812 }, { width: 812, height: 375 }]) {
     if (process.env.QA_LAGE && viewport.width !== Number(process.env.QA_LAGE)) continue;
-    for (const [id, nej, ja, antal, ledtrad] of [
-      ["kanin-fryser", "en kanin vid en lägereld", "en hund med halsduk", 1, "Jag letar efter något varmt att ha på sig"],
+    for (const [id, nej, ja, ledtrad] of [
+      ["kanin-fryser", "en kanin vid en lägereld", "en hund med halsduk", "Jag letar efter något varmt att ha på sig"],
     ].filter(([id]) => !process.env.QA_FALL || id === process.env.QA_FALL)) {
       const context = await browser.newContext({ viewport, reducedMotion: "no-preference" });
       const page = await context.newPage(); page.setDefaultTimeout(45000);
@@ -29,6 +29,7 @@ try {
       await page.waitForFunction(() => !!window.__troll);
       await page.evaluate((id) => { window.__troll.vakna("en kanin"); window.__trollMinne.setState({ uppdrag: { [id]: "pagar" } }); }, id);
       await page.waitForFunction(() => window.__trollMinne.getState().ang.length >= 1);
+      await page.waitForFunction(() => window.__trollMinne.getState().ang.length === 1);
       const skriv = async (text) => {
         await page.getByTestId("tangentbord").waitFor();
         // Fysisk ASCII och riktiga å/ä/ö-knappar, aldrig insertText som hoppar över det egna tangentbordet.
@@ -43,9 +44,16 @@ try {
         await page.getByTestId("bok-skarm").waitFor({ state: "hidden" });
       };
       await page.getByTestId("bengtsson-ikon").click(); await page.getByTestId("uppdrag-los-i-boken").click();
-      const fore = await page.evaluate(() => ({ antal: window.__trollMinne.getState().ang.length, stjarnor: window.__trollMinne.getState().stjarnor }));
+      const fore = await page.evaluate(() => ({ ang: window.__trollMinne.getState().ang, stjarnor: window.__trollMinne.getState().stjarnor }));
+      assert.equal(fore.ang.length, 1);
+      assert.equal(fore.ang[0].kropp, "kanin");
       await skriv(nej);
-      await page.waitForFunction((n) => window.__trollMinne.getState().ang.length === n + 1, fore.antal);
+      await page.waitForFunction(() => window.__trollMinne.getState().ang[0]?.tillbehor.some((t) => t.id === "lagereld"));
+      const efterMiss = await page.evaluate(() => window.__trollMinne.getState().ang);
+      assert.equal(efterMiss.length, 1);
+      assert.equal(efterMiss[0].uid, fore.ang[0].uid);
+      assert.equal(efterMiss[0].kropp, fore.ang[0].kropp);
+      assert.deepEqual(efterMiss[0].tillbehor.map((t) => t.id), [...fore.ang[0].tillbehor.map((t) => t.id), "lagereld"]);
       assert.equal(await page.evaluate((id) => window.__trollMinne.getState().uppdrag[id], id), "pagar", "en nära miss får aldrig räknas som färdigt uppdrag");
       await page.getByText(ledtrad, { exact: false }).first().waitFor({ state: "visible" }).catch(async (e) => {
         console.log(JSON.stringify(await page.evaluate(() => ({ text: document.body.innerText, rost: window.__rost, banners: window.__qaBanners }))));
@@ -59,7 +67,11 @@ try {
       await page.getByTestId("bengtsson-ikon").click(); await page.getByTestId("uppdrag-los-i-boken").click();
       await skriv(ja);
       await page.waitForFunction((id) => window.__trollMinne.getState().uppdrag[id] === "klar", id);
-      assert.equal(await page.evaluate(() => window.__trollMinne.getState().ang.length), fore.antal + 1 + antal);
+      const efterRatt = await page.evaluate(() => window.__trollMinne.getState().ang);
+      assert.equal(efterRatt.length, 1);
+      assert.equal(efterRatt[0].uid, fore.ang[0].uid);
+      assert.equal(efterRatt[0].kropp, fore.ang[0].kropp);
+      assert.deepEqual(efterRatt[0].tillbehor.map((t) => t.id), [...efterMiss[0].tillbehor.map((t) => t.id), "halsduk"]);
       assert.ok(await page.evaluate(() => window.__trollMinne.getState().stjarnor) > fore.stjarnor);
       assert.deepEqual(fel, []); console.log(`Grönt T05 ${id}: nära miss → bevarad skapelse/ledtråd → rätt svar, ${viewport.width}×${viewport.height}`);
       await context.close();

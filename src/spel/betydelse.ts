@@ -53,11 +53,11 @@ export function betydelseFranText(text: string): TolkadSkapelse[] {
     const v = u.varelse;
     // Riktiga medföljande modeller är också saker. Räkna dem var för sig när
     // uppdraget ber om två saker, men gör aldrig ett påklätt djur till två djur.
-    const saker = v.tillbehor.filter((t) => ENT[t.id]?.typ !== "djur").map((t) => medTemperatur(betydelseAv({
+    const saker = v.tillbehor.filter((t) => ENT[t.id]?.typ !== "djur").map((t) => ({ ...medTemperatur(betydelseAv({
       ...v, kropp: t.id, farg: t.farg, monster: null, monsterfarg: null,
       formagor: [], tillbehor: [], skala: 1, alpha: 1, kontur: false,
       glans: t.glans, formel: "", reserv: [],
-    }, u.antal * (t.antal ?? 1)), temperaturFranOrd(t.egenskaper ?? [])));
+    }, u.antal * (t.antal ?? 1)), temperaturFranOrd(t.egenskaper ?? [])), relation: t.relation ?? "med" }));
     const huvudfras = v.formel.split(/\s+(?:med|som|på|under|i|vid|bredvid)\s+/i)[0] ?? "";
     const huvud = medTemperatur(betydelseAv({ ...v, tillbehor: [] }, u.antal), temperaturer(huvudfras, v).get(v.kropp));
     const taggar = new Set(huvud.taggar);
@@ -65,6 +65,6 @@ export function betydelseFranText(text: string): TolkadSkapelse[] {
       if (t !== "farg" && !t.startsWith("farg:") && !t.startsWith("kropp:")) taggar.add(t);
     }
     for (const t of v.tillbehor) taggar.add(`tillbehor:${t.id}`);
-    return [{ ...huvud, taggar }, ...saker];
+    return [{ ...huvud, egnaTaggar: huvud.taggar, taggar }, ...saker];
   });
 }
