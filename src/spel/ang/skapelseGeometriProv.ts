@@ -9,7 +9,14 @@ export function matSkapelseProv(uid: string, rot: THREE.Object3D, kropp: THREE.O
   rot.updateWorldMatrix(true, true);
   inv.copy(rot.matrixWorld).invert();
   const mat = (nod: THREE.Object3D) => {
-    box.setFromObject(nod);
+    box.makeEmpty();
+    nod.traverseVisible((o) => {
+      if (!(o instanceof THREE.Mesh)) return;
+      const material = Array.isArray(o.material) ? o.material : [o.material];
+      if (!material.some((m) => m.visible && m.opacity > 0)) return;
+      if (o instanceof THREE.SkinnedMesh) { o.computeBoundingBox(); if (o.boundingBox) box.union(o.boundingBox.clone().applyMatrix4(o.matrixWorld)); }
+      else { o.geometry.computeBoundingBox(); if (o.geometry.boundingBox) box.union(o.geometry.boundingBox.clone().applyMatrix4(o.matrixWorld)); }
+    });
     const min = box.min.toArray(), max = box.max.toArray();
     let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity, mesh = 0;
     const farger = new Set<string>();

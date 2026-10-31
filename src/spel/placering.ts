@@ -87,7 +87,7 @@ let senastPlats = "";
 const cache = new Map<string, Map<string, Lage>>();
 /** placera med minne: samma skapelser på samma plats ger samma svar utan ny uträkning. */
 export function placeraMedMinne(alla: readonly Sparad[], plats?: Plats): Map<string, Lage> {
-  const nyckel = `${plats?.id ?? START_PLATS}|${alla.map((d) => `${d.uid}:${d.kropp}:${d.skala}:${d.skapad}:${d.formagor.includes("vingar") ? 1 : 0}`).join(",")}`;
+  const nyckel = `${plats?.id ?? START_PLATS}|${alla.map((d) => `${d.uid}:${d.kropp}:${d.skala}:${d.skapad}:${d.formagor.includes("vingar") ? 1 : 0}:${d.tillbehor?.length ? JSON.stringify(d.tillbehor) : ""}`).join(",")}`;
   let k = cache.get(nyckel);
   if (!k) {
     k = placera(alla, plats);

@@ -1,6 +1,6 @@
 import { type Sparad } from "./brygga.ts";
 import { type Plats } from "./platser.ts";
-import { arSmasak, simmar } from "./entiteter.ts";
+import { arSmasak } from "./entiteter.ts";
 import { tacker, xSkala, type Ruta } from "./skarm.ts";
 import { framfor, sakRuta } from "./skymning.ts";
 import { PLACERING, regelFor, rollFor, kroppMatt, kameraFor, SKARM, GOLV, KANT_PX, RESERV_MAX, SKARM_RESERVERAT, type Roll, type Lage } from "./placeringGrund.ts";
@@ -46,8 +46,9 @@ export function placeraNiva(alla: readonly Sparad[], plats: Plats | undefined, v
     if (d0.uid === nyastBakUid || d0.kropp === "sjukhus") grans = Math.min(nyGrans, byggMax);
     const fh0 = huvudFyllnad(d0.kropp);
     const underFor = (d: Sparad) => {
-      let perKropp = underMinne.get(d.kropp);
-      if (!perKropp) underMinne.set(d.kropp, (perKropp = new Map()));
+      const kroppNyckel = d.tillbehor?.length ? `${d.kropp}|${JSON.stringify(d.tillbehor)}` : d.kropp;
+      let perKropp = underMinne.get(kroppNyckel);
+      if (!perKropp) underMinne.set(kroppNyckel, (perKropp = new Map()));
       const rollN = roll === "mark" ? 0 : roll === "vatten" ? 1 : roll === "luft" ? 2 : 3;
       const z0 = Math.round(band.z[0] * 1000) + 30000;
       const z1 = Math.round(band.z[1] * 1000) + 30000;

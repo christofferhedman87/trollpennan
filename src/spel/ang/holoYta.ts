@@ -1,9 +1,9 @@
 // Den fria delen av världen när Pennans bok är öppen på en låg skärm.
 // Alla koordinater är sidans CSS-pixlar; kameran drar bort canvasens vänster/topp.
 export type HoloYta = { left: number; top: number; right: number; bottom: number };
-export function bokHoloYta(canvas: DOMRect): HoloYta | null {
+export function bokHoloYta(canvas: DOMRect, sammansatt = false): HoloYta | null {
   const portratt = canvas.width <= canvas.height;
-  if (portratt ? canvas.height > 720 : canvas.height > 600) return null;
+  if (!sammansatt && (portratt ? canvas.height > 720 : canvas.height > 600)) return null;
   const bubbla = document.querySelector('[data-s4="vaktar-aptitbubbla"]')?.getBoundingClientRect();
   const ark = document.querySelector(".sk-ark")?.getBoundingClientRect();
   const penna = document.querySelector(".sk-penn-ora")?.getBoundingClientRect();

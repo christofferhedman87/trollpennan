@@ -6,16 +6,18 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import type { DjurSignal } from "../gltfDjur.tsx";
-import { GltfDjur } from "../gltfDjur.tsx";
-import { harDjurGltf, malhojd, takSkala } from "../entiteter.ts";
+import type { GltfDjur } from "../gltfDjur.tsx";
+import { malhojd, takSkala } from "../entiteter.ts";
 import { ritSkala } from "../placering.ts";
 import { platsMed, START_PLATS } from "../platser.ts";
 
 import { Byggverk } from "../dal/Byggverk.tsx";
 import { forhand } from "../skapa/forhand.ts";
-import { DjurForm, ModellGren } from "./djur.tsx";
+import { SammansattDjur } from "./SammansattDjur.tsx";
 import { gorHolo, HOLO_TID } from "./holoMaterial.ts";
 import { bokHoloYta, passaHolo } from "./holoYta.ts";
+
+import { skapelsePlan } from "../skapelsePlan.ts";
 
 const _v = new THREE.Vector3();
 const _a = new THREE.Vector3();
@@ -104,15 +106,7 @@ function HoloDjur({ spec, z, plats, krymp }: { spec: Parameters<typeof GltfDjur>
   // Samma storlek som djuret får på sin plats (djur.tsx: krymp först, sedan takSkala × ritSkala för platsen).
   const rit = krymp !== 1 ? { ...spec, skala: (spec.skala || 1) * krymp } : spec;
   const s = takSkala(spec.kropp, rit.skala || 1) * ritSkala(rit, z, platsMed(plats));
-  return <group scale={s}>{harDjurGltf(spec.kropp) ? (
-    <ModellGren spec={spec}>
-      <Suspense fallback={<DjurForm spec={spec} signal={signal} />}>
-        <GltfDjur spec={spec} signal={signal} />
-      </Suspense>
-    </ModellGren>
-  ) : (
-    <DjurForm spec={spec} signal={signal} />
-  )}</group>;
+  return <group scale={s}><SammansattDjur spec={spec} signal={signal} holo /></group>;
 }
 
 /** Hologrammet: studsar när meningen ändras, svävar lätt, blir solitt när barnet trollar. */
@@ -170,7 +164,7 @@ function Hologram() {
     // Både modell och svävhöjd krymper kring samma markpunkt; ringens verkliga plats ändras aldrig.
     const hojd = l.spec?.typ === "djur" ? synY(l.holoY) + 0.08 + Math.sin(t * 2.4) * 0.04 : 0;
     const duk = gl.domElement.getBoundingClientRect();
-    const yta = bokHoloYta(duk);
+    const yta = bokHoloYta(duk, l.spec?.typ === "djur" && skapelsePlan(l.spec.spec).saker.length > 0);
     if (yta && ring) {
       g.scale.set(sx, sy, sx);
       g.position.y = hojd;
@@ -214,7 +208,7 @@ function ArkKamera() {
       // Ringens läge utan nuvarande förskjutning.
       const sx = (_v.x * 0.5 + 0.5) * w + cur.current.x;
       const sy = (-_v.y * 0.5 + 0.5) * h + cur.current.y;
-      const friYta = bokHoloYta(r);
+      const friYta = bokHoloYta(r, l.spec?.typ === "djur" && skapelsePlan(l.spec.spec).saker.length > 0);
       if (friYta) {
         mx = sx - ((friYta.left + friYta.right) / 2 - r.left);
         my = sy - (friYta.bottom - 12 - r.top);

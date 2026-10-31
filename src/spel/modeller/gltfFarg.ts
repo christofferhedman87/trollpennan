@@ -123,7 +123,7 @@ function ljusare(hex: string) {
   return "#" + c.getHexString();
 }
 
-function fargAv(spec: Sparad) {
+function fargAv(spec: Pick<Sparad, "kropp" | "farg">) {
   if (spec.farg?.startsWith("#")) return spec.farg;
   return entitet(spec.kropp)?.standardfarg ?? null;
 }
@@ -159,7 +159,7 @@ type Kalla = { src: THREE.MeshStandardMaterial; yta: number; karn: Karn | null; 
  *  (vit/grå kropp: gråskala × färg); materialfärg → färgordets nyans med materialets ljushet relativt kroppens (skuggor och
  *  ljusare mage bevaras), förkompenserad för scenens ljus. Glansen (guldord) lyser i färgordets egen nyans och bara på kroppen.
  *  Utan färgord (hex null): ingenting ändras (B6.4). */
-export function fargaKlon(rot: THREE.Object3D, spec: Sparad) {
+export function fargaKlon(rot: THREE.Object3D, spec: Pick<Sparad, "kropp" | "farg" | "glans" | "monster" | "monsterfarg">) {
   const hex = fargAv(spec);
   const ent = entitet(spec.kropp);
   const pal = ent?.palett && !ent.inlagd ? ent.palett : null; // de handjusterade första djuren (katt, hund …) behåller sin palett

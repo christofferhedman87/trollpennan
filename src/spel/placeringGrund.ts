@@ -5,6 +5,8 @@ import { arSak, ENTITETER, flyger, harModell, halvBredd, malhojd, simmar, storle
 import { START_PLATS, type Plats } from "./platser.ts";
 import { KAMERA_ANG, KAMERA_PLATS, type Kamera, type Ruta } from "./skarm.ts";
 
+import { skapelsePlan } from "./skapelsePlan.ts";
+
 export type Roll = "mark" | "vatten" | "luft" | "bak";
 export type Band = { z: [number, number]; y?: [number, number] };
 type Fast = { namn: string; x: number; z: number; halv: number; djup: number; hojd: number; plan?: boolean; /** egen gräns (grinden: förbjuden zon) */ max_skymd?: number };
@@ -64,27 +66,29 @@ export function rollFor(d: Pick<Sparad, "kropp" | "formagor">, plats?: Plats): R
 export type Lage = { x: number; y: number; z: number; roll: Roll; /** skärmrutan som regeln räknade med */ r: Ruta; stall: boolean; /** ritas så här mycket mindre (äldre när det är trångt; den nya bara om den inte ryms i bild alls) */ krymp?: number; /** del av full vandring (djur.tsx), 1 = fritt bete */ vand?: number; /** kroppen själv i vila på sin ruta (r är rutan den rör sig inom) */ kropp?: Ruta; /** regelns räknade skymning i värsta läget (kalibrering mot skärmprovet) */ skymd?: { tackt: number; huvud: number } };
 
 /** Kroppens mått på djupet z: halva bredden, höjden och djupet (barnets storleksord, taket och minsta synliga storlek). */
-export function kroppMatt(d: Pick<Sparad, "kropp" | "skala">, z: number, plats?: Plats, roll?: Roll, vandDel = 1): { halv: number; hojd: number; djup: number; f: number; vand: [number, number]; /** lådans botten över foten */ y0: number; /** kroppen själv i varje ögonblick, minsta läget: halva bredden, höjden, halva djupet, botten (P3a torr 4) */ kx: number; kh: number; kd: number; ky0: number } {
+export function kroppMatt(d: Pick<Sparad, "kropp" | "skala"> & Partial<Pick<Sparad, "tillbehor">>, z: number, plats?: Plats, roll?: Roll, vandDel = 1): { halv: number; hojd: number; djup: number; f: number; vand: [number, number]; /** lådans botten över foten */ y0: number; /** kroppen själv i varje ögonblick, minsta läget: halva bredden, höjden, halva djupet, botten (P3a torr 4) */ kx: number; kh: number; kd: number; ky0: number } {
   const f = ritSkala(d, z, plats);
+  const plan = d.tillbehor?.length ? skapelsePlan(d) : null, sammansatt = !!plan?.saker.length;
   const djur = ENTITETER[d.kropp]?.typ === "djur";
-  const ror = djur && roll !== "luft" ? vandDel : djur ? 1 : 0;
+  const ror = sammansatt ? 0 : djur && roll !== "luft" ? vandDel : djur ? 1 : 0;
   const V = PLACERING.vandra;
-  const vand: [number, number] = djur && roll !== "luft" && V ? [V.x * vandDel, V.z * vandDel] : [0, 0];
+  const vand: [number, number] = !sammansatt && djur && roll !== "luft" && V ? [V.x * vandDel, V.z * vandDel] : [0, 0];
   // P3a (Arkitekten 20:40): modellens egna mått (data/modellmatt.json, samma Box3 och skala som gltfDjur) och den
   // vridning djur.tsx ger den: ett djur som vandrar vrider sig upp till 0,35·π·vandring, en flygare ±0,14 (och rullar
   // 0,28), en svävare 0,35, en sak inte alls. Rutan är den axelparallella lådan runt den vridna kroppen.
-  const mm = MODELLMATT[d.kropp];
+  const r = plan?.ruta;
+  const mm = sammansatt && r ? [2 * Math.max(-r.min[0], r.max[0]), r.max[1] - r.min[1], 2 * Math.max(-r.min[2], r.max[2]), r.min[1]] : MODELLMATT[d.kropp];
   if (mm && (harModell(d.kropp) || mm.length > 3)) {
     const k = takSkala(d.kropp, d.skala || 1) * f;
     const [a, b] = [(mm[0] * k) / 2, (mm[2] * k) / 2];
-    const th = arSak(d.kropp) ? 0 : roll === "luft" ? 0.14 : svavar(d.kropp) ? 0.35 : djur ? 0.35 * Math.PI * ror : 0;
+    const th = sammansatt ? 0 : arSak(d.kropp) ? 0 : roll === "luft" ? 0.14 : svavar(d.kropp) ? 0.35 : djur ? 0.35 * Math.PI * ror : 0;
     const halv = vriden(a, b, th);
     const djup = vriden(b, a, th);
-    const rull = roll === "luft" ? Math.sin(0.28) * halv : 0; // flygaren rullar: lite högre
-    const bob = arSak(d.kropp) ? 0 : roll === "luft" ? 0.16 : roll === "vatten" ? 0.08 : 0.04; // djur.tsx: guppar upp och ned
+    const rull = !sammansatt && roll === "luft" ? Math.sin(0.28) * halv : 0; // flygaren rullar: lite högre
+    const bob = sammansatt ? 0 : arSak(d.kropp) ? 0 : roll === "luft" ? 0.16 : roll === "vatten" ? 0.08 : 0.04; // djur.tsx: guppar upp och ned
     // P3a-fix torr 4 (Doodle 7): ett djur som hoppar av sig själv (entiteter.json hopp: kaninen) lyfter upp till 0,45 m
     // (djur.tsx lyft) – rutan det rör sig inom räknar med hoppet, annars skymde kaninen grinden mitt i ett hopp (86 %)
-    const lyft = !arSak(d.kropp) && ENTITETER[d.kropp]?.hopp ? 0.45 : 0;
+    const lyft = !sammansatt && !arSak(d.kropp) && ENTITETER[d.kropp]?.hopp ? 0.45 : 0;
     // kärnan: kroppen i ett ögonblick, i sitt smalaste läge (vridningen gör den bara bredare, ändpunkterna är minst)
     const [kx, kd] = [Math.min(a, a * Math.cos(th) + b * Math.sin(th)), Math.min(b, b * Math.cos(th) + a * Math.sin(th))];
     return { halv, hojd: mm[1] * k + rull + 2 * bob + lyft, djup: Math.max(0.05, djup), f, vand, y0: (mm[3] ?? 0) * k - bob, kx, kh: mm[1] * k, kd: Math.max(0.05, kd), ky0: (mm[3] ?? 0) * k };

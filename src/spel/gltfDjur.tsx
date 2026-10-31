@@ -24,7 +24,7 @@ export function GltfDjur({ spec, signal, index = 0 }: { spec: Sparad; signal: { 
   const fas = useRef<"skapas" | "idle" | "gar" | "klapp">("skapas");
   const senKlapp = useRef(0);
   const klappTid = useRef(0);
-  const sign = `${spec.kropp}|${spec.farg ?? ""}|${spec.glans ? 1 : 0}|${spec.tillbehor.map((t) => `${t.id}:${t.farg ?? ""}`).join(",")}`;
+  const sign = JSON.stringify(spec);
   const klon = useMemo(() => {
     belysScen(gltf.scene);
     const c = SkeletonUtils.clone(gltf.scene) as THREE.Object3D;
@@ -156,13 +156,19 @@ export function GltfDjur({ spec, signal, index = 0 }: { spec: Sparad; signal: { 
 /** R3G: en sak (entitet med modell, inte djur) bredvid ett djur – "en kanin med en hink". Hämtas först när den används (lazyload). */
 /** `vand` (R8-2b): modellen vänds upp och ner med botten kvar på marken (droppsten → stalagmit). */
 /** R9K: `farger` = materialnamn → färg ur platsens data (klonat material, delas inte med andra kopior). */
-export function GltfSak({ id, vand = false, farger }: { id: string; vand?: boolean; farger?: Record<string, string> }) {
+export function GltfSak({ id, vand = false, farger, farg, glans = false, alpha = 1 }: { id: string; vand?: boolean; farger?: Record<string, string>; farg?: string | null; glans?: boolean; alpha?: number }) {
   const gltf = useGLTF(modellUrlAv(id)!);
   const fargNyckel = farger ? JSON.stringify(farger) : "";
   const klon = useMemo(() => {
     belysScen(gltf.scene);
     const c = SkeletonUtils.clone(gltf.scene) as THREE.Object3D;
     if (farger) fargaOm(c, farger);
+    if (farg || glans) fargaKlon(c, { kropp: id, farg: farg ?? null, glans, monster: null, monsterfarg: null });
+    if (alpha < 1) c.traverse((o) => {
+      if (!(o instanceof THREE.Mesh)) return;
+      const byt = (m: THREE.Material) => { const k = m.clone(); k.transparent = true; k.opacity *= alpha; k.depthWrite = false; return k; };
+      o.material = Array.isArray(o.material) ? o.material.map(byt) : byt(o.material);
+    });
     metallNoll(c);
     c.updateMatrixWorld(true);
     const box = new THREE.Box3().setFromObject(c);
@@ -175,6 +181,6 @@ export function GltfSak({ id, vand = false, farger }: { id: string; vand?: boole
     slimePaKlon(c, modellUrlAv(id) ?? "");
     return c;
   // eslint-disable-next-line react-hooks/exhaustive-deps -- fargNyckel bär innehållet i farger
-  }, [gltf.scene, id, vand, fargNyckel]);
+  }, [gltf.scene, id, vand, fargNyckel, farg, glans, alpha]);
   return <primitive object={klon} />;
 }
