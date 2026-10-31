@@ -85,7 +85,7 @@ function OrdBricka({ x, vald, ny, bojs, onTryck, onTaBort }: { x: Bricka; vald: 
   const farg = FARG[x.klass];
   const kl = ["sk-ord", x.klass, x.guld ? "guld" : "", x.boj ? "boj" : "", vald ? "vald" : "", ny ? "ny" : "", bojs ? "bojs" : ""].filter(Boolean).join(" ");
   return (
-    <span className={kl} style={farg ? ({ "--k": farg } as CSSProperties) : undefined} role="button" tabIndex={0} data-klass={x.klass} data-guld={x.guld ? "ja" : "nej"} data-boj={x.boj ?? undefined} onClick={onTryck} onKeyDown={(e) => { if (e.key === "Enter") onTryck(); }}>
+    <span className={kl} style={farg ? ({ "--k": farg } as CSSProperties) : undefined} role="button" tabIndex={0} data-klass={x.klass} data-guld={x.guld ? "ja" : "nej"} data-boj={x.boj ?? undefined} onClick={onTryck} onKeyDown={(e) => { if (e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onTryck(); } }}>
       {farg ? <img className="sk-markor" alt="" src={ikon("ordklass", x.klass)} /> : null}
       {x.klass === "agg" ? <img alt="" src={ikon("ui", "agg")} /> : null}
       {x.t}

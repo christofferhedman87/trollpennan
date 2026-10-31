@@ -331,5 +331,5 @@
 .sk-hud-skapa:active .sk-hud-skapa-cirkel { transform: translateY(5px); box-shadow: 0 2px 0 var(--tp-blck); }
 
 /* A1: skrivytan är en egen knapp, utan att fånga ordbrickornas knappar. */
-button.sk-skrivbricka { font-family: inherit; text-align: left; cursor: text; min-height: 44px; }
+button.sk-skrivbricka { font-family: inherit; text-align: left; cursor: text; min-width: 44px; min-height: 44px; }
 button.sk-skrivbricka:focus-visible { outline: 3px solid var(--tp-penna); outline-offset: 2px; }
