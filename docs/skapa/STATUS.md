@@ -12,27 +12,23 @@ Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först
 | D Lappen, idétärningen och uppdragen | Klar | #263 | Lapp för önskan, gåva, uppdrag, tomt, bildgåta och gåta. UppdragArk med Svara med pennan. UppdragVy är borttagen. En tomt öppnar Pennans bok |
 | E HUD och Min bok | Klar | se git-logg | HudBotten (Uppdrag, Skriv, Min bok) och toppens ikonknappar (lås, stjärnor, Se hela dalen, Karta). MinBok har sex rutor. Föräldrasidan har startläget och bokstavsljudet. MenyPanel och hamburgern är borttagna. BokSkarm är bara Byggboken (Mark) |
 
+## A2: slutverifiering före merge
 
+Den gemensamma målmodulen, målkort med uttryckligt textbyte, separat Gåta, fri-världstips och boklayouten finns i #289. T-03 är delresultat: täckningen av alla 157 mål och den äldre gåvohyllan återstår i B/C/D. Barnets text och sparformat v2 ändras inte av layouten.
 
+Kritisk granskning hittade och rättade verklig klippning av remsa/X, rotation, Väktaröverlapp, avsaknad av världsyta i 375×667, CSS-kaskad, för bred hjälphylla, klippt Idé/stavningssvar och dold guldinstruktion. Idé och svar rullas fram, guldskrivandet prioriteras med befintlig instruktion, och nya ord/vald bricka hålls hela i remsan. Senaste guldprovet med föregående Idé är grönt i 375×667: Idé/Gåta ändrar inte ordet, Mellanslag/sudda fungerar, hela frasen blir guld och önskan uppfylls/sparas. Hela layoutprovet är också grönt i 375×667, inklusive hjälp/full lapp/stavning och 44 px-X. Interna bilder granskade.
 
-## A2: senaste slutverifiering före merge
+Hologrammet passar sin faktiska modellruta mellan HUD och bokkontroller. Den separata shaderfixen #293 är publicerad; förhandsvisningen ändrar inga sparpositioner. Skogens hela hologramflöden i 375×667, 667×375 och datorfallback 1280×720 är gröna, liksom Sjön/Grottan i 812×375: fyra modeller, stenens 90 bildrutor med 1–1 egna ritanrop, rotation, skapande och sparinvarians. Standardtelefonens tidigare bok-/guld-/platsprov är gröna. Alla sju slutgrindar på appkoden `ca538799` är gröna, 565/565 produkttester och 18 befintliga lintvarningar. Första skapelsen provas även på sista frysta bygget i stående, liggande och datorvy före merge.
 
-Den gemensamma målmodulen, målkort med uttryckligt textbyte, separat Gåta, fri-världstips och boklayouten finns i #289. T-03 är delresultat: alla 157 mål och den äldre gåvohyllan återstår i B/C/D. Barnets text och sparformat v2 ändras inte av layouten.
+Geometriprovet har valfri `QA_TANGENTER=fysiska`: riktiga ASCII-tangenter och faktiska skärmtryck på å/ä/ö, med exakt läsback efter inmatning/radering. Standardläget behåller samtliga skärmtryck. Synlighets- och ritanropsgränser är oförändrade. Tre svagaste punkter: semantik/gåvohjälp för 157 mål återstår; fysisk Safari/hårdvara är inte provad; nya godkända inspelningar återstår. En sjuåring kan skriva, be om en idé och återgå till sin text, men äldre målsvar kan fortfarande frustrera tills B/C är klart.
 
-Kritisk granskning hittade och rättade verklig rems-/X-klippning, rotation, Väktaröverlapp, avsaknad av världsyta i375×667, CSS-kaskad, för bred hjälphylla, klippt Idé/stavningssvar och dold guldinstruktion. Idé och svar rullas fram, guldskrivandet prioriteras med befintlig instruktion, och nya ord/vald bricka hålls hela i remsan. Senaste guldprovet med föregående Idé är grönt i375×667: Idé/Gåta ändrar inte ordet, Mellanslag/sudda fungerar, hela frasen blir guld och önskan uppfylls/sparas. Hela layoutprovet är också grönt i375×667, inklusive hjälp/full lapp/stavning och44px-X. Interna bilder granskade.
-
-Hologrammet passar sin faktiska modellruta mellan HUD och bokkontroller. Den separata shaderfixen #293 är publicerad; förhandsvisningen ändrar inga sparpositioner. Skogens hela hologramflöden i375×667 och667×375 är gröna, inklusive fyra modeller, stenens90bildrutor med1–1egna ritanrop, rotation, skapande och sparinvarians. Datorfallback1280×720 och återstående Sjön/Grottan812×375 körs. Standardtelefonens tidigare bok-/guld-/platsprov är gröna; senaste samordnade sju grindar på6f2c9ac var565/565, och en ny fullomgång körs på sista koden före godkännande/merge.
-
-Geometriprovet har valfri QA_TANGENTER=fysiska: riktiga ASCII-tangenter och faktiska skärmtryck på å/ä/ö, med exakt läsback efter inmatning/radering. Standardläget behåller samtliga skärmtryck. Synlighets- och ritanropsgränser är oförändrade. Tre svagaste punkter:157måls semantik/gåvohjälp kvar, fysisk Safari/hårdvara inte provad, nya godkända inspelningar återstår.
-
-C1a #291 och C1b #294 samordnas därefter. C1b:s appkod e61cbd3 har572/572 och kritisk kodgranskning; sju fraser och omladdning är gröna i vardera huvudvyn. Fysisk placering och C2:s antal/upprepade saker är öppna. Textpaket01 i #292 väntar fortfarande på Christoffers faktiska läsning; inga granskad-flaggor är ändrade.
+C1a #291 och C1b #294 samordnas därefter. C1b:s appkod `e61cbd3` har 572/572 och kritisk kodgranskning; sju fraser och omladdning är gröna i vardera huvudvyn. Fysisk placering och C2:s antal/upprepade saker är öppna. Textpaket 01 i #292 väntar fortfarande på Christoffers faktiska läsning; inga `granskad`-flaggor är ändrade.
 
 ## Steg 0: hologrammets shader bevaras, 2026-10-31
 
 Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var 40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.
 
 Kod `9a1b211`: faktisk shader-regression röd före och grön efter; alla sju grindar gröna, 561/561. Provet täcker delat original, materialarray, 200 materialpass och samma solid-uniform vid Trolla. `prov-platsforhand.mjs` är rött mot baslinjen (90 nollvärden) och grönt i hela Grottan-flödet i 375×812 och 812×375: stenens egna WebGL-anrop är 1–1 i var och en av 90 bildrutor, och även rotation, sparinvarians, skapande samt platsbyte är gröna. Interna bilder granskade, blå och linjerad sten. Inga mätgränser lättade. Oberoende Codex-granskare slutgodkände exakt `6c0cb00`. #293 är mergad som `d743ad7` och publicerad: main-Cloudflare `124422225436` grön, alla sex serverade start-/spel-filer byteidentiska med det lokala bygget (SHA-256). Tre svagaste punkter: molnets mjukvarurendering säger inget om fysisk mobilprestanda; Safari/GPU-variationer är inte provade; nya shader-varianter behöver fortsatt samma mätning.
-
 
 ## Beslut (2026-10-29)
 - E: projektregler.md är uppdaterad. Att skriva själv är förstahandsvalet, och hjälporden räcker för att spela.
