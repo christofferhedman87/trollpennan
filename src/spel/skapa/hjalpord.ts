@@ -27,6 +27,7 @@ function franOrd(o: Ord): HyllKort | null {
   const b = o.bojning?.u && o.bojning?.n ? { en: o.bojning.u, ett: o.bojning.n } : undefined;
   switch (o.klass) {
     case "djur":
+    case "foremal":
       return med({ id: o.id, visa: o.visa, fraga: "vad", slot: "vad", lex: "ord", genus: genusAv(o) });
     case "farg":
     case "storlek":
@@ -145,8 +146,9 @@ export function kortFor(id: string, slot: Slot, lex?: Kalla): HyllKort | null {
   if (lex === "del") return delKort(id);
   if (lex === "material") return materialKort(id);
   if (lex === "egenskap") return egenskapKort(id);
-  const o = ALLA.find((x) => x.id === id);
-  return o ? franOrd(o) : null;
+  const o = ALLA.find((x) => x.id === id) ?? ordFranForm(id);
+  const kort = o ? franOrd(o) : null;
+  return kort && o?.klass === "foremal" && slot === "har" ? { ...kort, slot: "har", fraga: "har" } : kort;
 }
 
 /** Sektionen som ett kort hör hemma i, för korten en önskan lägger till. */

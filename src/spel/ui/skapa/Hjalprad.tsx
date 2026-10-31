@@ -5,6 +5,7 @@ import uiJson from "../../../../data/skapa-ui.json" with { type: "json" };
 import { fyll } from "../../fyll.ts";
 import * as rostKo from "../../rostKo.ts";
 import { ikon } from "../../skapa/ikoner.ts";
+import { useBokMal } from "../../skapa/useBokMal.ts";
 import { useSpel } from "../SpelKontext.ts";
 
 const UI = uiJson as unknown as { hjalprad: Record<string, string>; tider_ms: Record<string, number> };
@@ -15,8 +16,9 @@ export function Fet({ text }: { text: string }) {
   return <>{delar.map((d, i) => (d.startsWith("<b>") ? <b key={i}>{d.slice(3, -4)}</b> : <span key={i}>{d}</span>))}</>;
 }
 
-export function Hjalprad({ oppnaHjalp, ide }: { oppnaHjalp: () => void; ide: () => void }) {
+export function Hjalprad({ oppnaHjalp, ide, gata }: { oppnaHjalp: () => void; ide: () => void; gata: () => void }) {
   const { sk } = useSpel();
+  const mal = useBokMal();
   const { remsa, spok, sistaTangent } = sk;
   const [fast, setFast] = useState(false);
   const skriver = !!remsa.skriv.trim();
@@ -34,13 +36,14 @@ export function Hjalprad({ oppnaHjalp, ide }: { oppnaHjalp: () => void; ide: () 
         ? UI.hjalprad.tips_skriver
         : remsa.harVad
           ? UI.hjalprad.tips_klar
-          : UI.hjalprad.tips_tom;
+          : mal.tips;
   return (
     <div className="sk-hjalprad">
       <button type="button" className="sk-knapp guld" aria-label={UI.hjalprad.ide_aria} data-dal="ide" onClick={ide}>
         <img alt="" src={ikon("ui", "tarning")} />
         {UI.hjalprad.ide}
       </button>
+      <button type="button" className="sk-knapp sk-gata-inline" onClick={gata}>{uiJson.gata_knapp}</button>
       <p className="sk-tips">
         <Fet text={tips ?? ""} />
       </p>

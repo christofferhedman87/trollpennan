@@ -2,5 +2,5 @@
 // (Uppdrag → Svara med pennan, tryck på en ledig tomt). Stängs boken försvinner lappen.
 import { create } from "zustand";
 
-export type ArkLapp = "uppdrag" | "tomt" | null;
+export type ArkLapp = "uppdrag" | "tomt" | "vaktare" | null;
 export const useArkLapp = create<{ lapp: ArkLapp; satt: (l: ArkLapp) => void }>((set) => ({ lapp: null, satt: (lapp) => set({ lapp }) }));

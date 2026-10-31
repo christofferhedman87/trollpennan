@@ -1,4 +1,4 @@
-// Nya Skapa 6.9: varannan gång ger idétärningen en gåta om ett hemligt ord (samma urval som Ledtrådsytan).
+// Frivillig Gåta-knapp: samma hemliga ord och urval som Ledtrådsytan, oberoende av Idé.
 import { aktivGata } from "../../gata.ts";
 import { aktuellLasniva, lasnivaUrval, ledtradsSteg } from "../../lasniva.ts";
 import { useMinne } from "../../minne.ts";
@@ -6,7 +6,7 @@ import { platsMed } from "../../platser.ts";
 import { LED } from "../spelData.ts";
 import { hemligaDjur } from "../hemliga.ts";
 
-export type IdeLapp = { slag: "bild"; ide: string[] } | { slag: "gata"; id: string; gata: string; streck: string };
+export type IdeLapp = { slag: "mal"; fras: string } | { slag: "bild"; ide: string[] } | { slag: "gata"; id: string; gata: string; streck: string };
 
 export function nyGata(): IdeLapp | null {
   const s = useMinne.getState();
