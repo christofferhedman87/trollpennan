@@ -45,7 +45,9 @@ export function sattDjur(b: Bygg, o: Ord, form: string) {
   b.storlek = null;
 }
 
-export function laggTillbehor(b: Bygg, o: Ord, yta: { form?: string; artikel?: string; relation?: Relation } = {}) {
+type TillbehorYta = Pick<Bygg["tillbehor"][number], "form" | "artikel" | "relation" | "egenskaper">;
+
+export function laggTillbehor(b: Bygg, o: Ord, yta: TillbehorYta = {}) {
   const bild = o.del?.tillbehor ?? o.id;
   const fargOrd = b.vantande;
   const fargHex = fargOrd?.del?.farg?.startsWith("#")
@@ -63,7 +65,7 @@ export function laggTillbehor(b: Bygg, o: Ord, yta: { form?: string; artikel?: s
   if (o.del?.glans) b.glans = true;
 }
 
-export function applyKomp(b: Bygg, k: Extract<Sem, { t: "komp" }>, mode: Mode, visaLed = true) {
+export function applyKomp(b: Bygg, k: Extract<Sem, { t: "komp" }>, mode: Mode, visaLed = true, yta: TillbehorYta = {}) {
   for (const bit of k.okanda) {
     if (arSparrat(bit)) return "sparr" as const;
     // En förledsbit ("en" i enkatt, "mål" i målvakt) är inte barnets hela ord.
@@ -92,7 +94,7 @@ export function applyKomp(b: Bygg, k: Extract<Sem, { t: "komp" }>, mode: Mode, v
       if (ord) markera(b, ord.id, true);
     } else applyForled(b, m.key, m.del, visaLed);
   }
-  laggTillbehor(b, k.suffix.ord);
+  laggTillbehor(b, k.suffix.ord, { form: k.suffix.form, ...yta });
   markera(b, k.suffix.ord.id, false);
 }
 
@@ -187,7 +189,7 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       continue;
     }
     if (s.t === "komp") {
-      if (sist?.komp && s === sist.komp) continue;
+      if (sist?.komp && s === sist.komp) { artikel = undefined; continue; }
       if (s.suffix.kind === "djur") {
         markera(b, s.suffix.ord.id, false);
         for (const d of s.djur) {
@@ -196,7 +198,9 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
         }
         continue;
       }
-      const sparr = applyKomp(b, s, mode);
+      const sparr = applyKomp(b, s, mode, true, { artikel, relation, egenskaper: sakEgenskaper });
+      artikel = undefined;
+      sakEgenskaper = [];
       if (sparr === "sparr") return "sparr";
       continue;
     }
@@ -251,8 +255,9 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       continue;
     }
     if (o.klass === "tillbehor") {
-      laggTillbehor(b, o, { form: s.form, artikel, relation });
+      laggTillbehor(b, o, { form: s.form, artikel, relation, egenskaper: sakEgenskaper });
       artikel = undefined;
+      sakEgenskaper = [];
       continue;
     }
     if (o.klass === "monster" || o.klass === "formaga" || o.klass === "egenskap") {

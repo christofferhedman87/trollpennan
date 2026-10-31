@@ -41,3 +41,20 @@ test("T-07: flera relationer behåller sitt eget mål", () => {
   assert.equal(u.varelse.formel, "en katt med en hatt under ett bord");
   assert.deepEqual(u.varelse.tillbehor.map((t) => [t.id, t.relation]), [["hatt", "med"], ["bord", "under"]]);
 });
+
+test("T-08: tillbehörets adjektiv får inte flytta till nästa sak", () => {
+  for (const fras of ["en katt med en varm hatt och en filt", "en katt med en varm hatt och en kall filt"]) {
+    const u = tolkaMedReserv(fras);
+    assert.equal(u.typ, "skapad");
+    if (u.typ === "skapad") assert.equal(u.varelse.formel, fras);
+  }
+});
+
+test("T-07: kända sammansatta tillbehör behåller sin relation och artikel", () => {
+  const u = tolkaMedReserv("en katt under en blåhatt");
+  assert.equal(u.typ, "skapad");
+  if (u.typ !== "skapad") return;
+  assert.deepEqual(u.okanda, []);
+  assert.equal(u.varelse.formel, "en katt under en blå hatt");
+  assert.deepEqual(u.varelse.tillbehor.map((t) => [t.id, t.relation, t.farg]), [["hatt", "under", "#1E88E5"]]);
+});
