@@ -53,7 +53,7 @@ export function formelAv(b: Bygg): string {
   if (farg) delar.push(boj(farg, key));
   if (farg2) delar.push("och", boj(farg2, key));
   const mon = monsterVisas(b);
-  if (mon?.bojning && mon.efter !== "med") delar.push(boj(mon, key));
+  if (mon?.bojning && mon.efter !== "med") delar.push(`${b.monsterFargOrd?.visa ?? ""}${boj(mon, key)}`);
   for (const e of ORD.ord) {
     if (e.klass !== "egenskap") continue;
     if (!b.funna.some((f) => f.id === e.id)) continue;
@@ -72,8 +72,8 @@ export function formelAv(b: Bygg): string {
       : djur.visa;
   delar.push(namn);
   const med: string[] = [];
-  if (mon && mon.efter === "med" && !mon.bojning) med.push([b.monsterAntal ? b.monsterAntalOrd ?? String(b.monsterAntal) : "", mon.visa].filter(Boolean).join(" "));
-  for (const f of b.formagor) if (f.vis === "som" && f.ord?.efter === "med") med.push([f.antal ? f.antalOrd ?? String(f.antal) : "", f.ord.visa].filter(Boolean).join(" "));
+  if (mon && mon.efter === "med" && !mon.bojning) med.push([b.monsterAntal ? b.monsterAntalOrd ?? String(b.monsterAntal) : "", b.monsterFargOrd ? boj(b.monsterFargOrd, "pl") : "", mon.visa].filter(Boolean).join(" "));
+  for (const f of b.formagor) if (f.vis === "som" && f.ord?.efter === "med") med.push([f.antal ? f.antalOrd ?? String(f.antal) : "", f.fargOrd ? boj(f.fargOrd, "pl") : "", f.ord.visa].filter(Boolean).join(" "));
   if (med.length) delar.push("med", med.join(" och "));
   let forra = med.length ? "med" : "";
   for (const t of b.tillbehor) {

@@ -104,7 +104,8 @@
         "en vit kanin",
         "ett vitt lamm",
         "en vit gås",
-        "en vit enhörning"
+        "en vit enhörning",
+        "en grön mössa bredvid en vit katt"
       ],
       "nej": [
         "en kanin",
@@ -124,7 +125,9 @@
         "en mörkröd hund",
         "en ljusröd hund",
         "en röd liten hund",
-        "en rödvit hund"
+        "en rödvit hund",
+        "en mössa på en röd hund",
+        "en vit stor mössa på en röd hund"
       ],
       "nej": [
         "en räv",
@@ -136,7 +139,10 @@
         "en röd varm mössa på en hund",
         "en röd stor jacka bredvid en hund",
         "en hund och en röd liten mössa",
-        "en rödvit mössa på en hund"
+        "en rödvit mössa på en hund",
+        "en röd mysig mössa på en hund",
+        "en röd vacker mössa på en hund",
+        "en röd rolig mössa på en hund"
       ]
     },
     "gron-kompis": {
@@ -147,7 +153,9 @@
         "en grön dinosaurie",
         "en grönhund",
         "en ljusgrön hund",
-        "en mörkgrön hund"
+        "en mörkgrön hund",
+        "en röd mössa på en grön hund",
+        "en röd boll under en grön hund"
       ],
       "nej": [
         "en groda",

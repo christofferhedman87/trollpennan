@@ -165,3 +165,17 @@ test("B1: färgförled binds till rätt sak eller mönster", () => {
     }
   }
 });
+
+test("B1: färgord för vingar och mönster försvinner inte ur formeln", () => {
+  for (const tolk of [tolka, tolkaMedReserv]) {
+    const vingar = tolk("en hund med gröna vingar", { noteraBlandning: false });
+    assert.equal(vingar.typ, "skapad");
+    if (vingar.typ === "skapad") {
+      assert.equal(vingar.varelse.farg, null);
+      assert.ok(vingar.varelse.formel.includes("gröna vingar"), vingar.varelse.formel);
+    }
+    const monster = tolk("en rödprickig katt", { noteraBlandning: false });
+    assert.equal(monster.typ, "skapad");
+    if (monster.typ === "skapad") assert.ok(monster.varelse.formel.includes("rödprickig"), monster.varelse.formel);
+  }
+});

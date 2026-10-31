@@ -36,7 +36,7 @@ Fristående Codex-granskare `/root/granskning_b1_kanin` **godkände exakt app-/p
 
 Branch `codex/b1-fargade-vanner` utgår från färsk main `76a599e`. Den omfattar `vit-som-sno`, `rod-kompis` och `gron-kompis`. Baslinjen godkänner felaktigt en ofärgad kanin/räv/groda och en röd boll; riktigt UI-prov på main är rött för röd boll. De exakta godkända texterna har hashlås, samtliga 12 befintliga idéfraser ger kända djurmodeller och de nio godkända hjälpfraserna är kontrollerade. Den tillfälliga färgtaggen kräver att tolkens semantiska led anger kroppens faktiska färg; den avvisar standardgrön dinosaurie och standardvit enhörning utan färgord. Minst tre ja och två nej per uppdrag finns i provdata. De nya inspelningsbehoven är listade för Grok i `nya-repliker.md` och `vantar_rost`.
 
-Riktade Node-prov är gröna, men samtliga slutgrindar, grönt slut-UI i båda vyer, bildläsning och oberoende granskning av exakt sista apphuvudet återstår. #303:s main-Cloudflare är fortfarande röd och serverad #303 ännu inte verifierad; merga inte detta block förrän den leveransfrågan har klarlagts.
+Riktade Node-prov är gröna, men samtliga slutgrindar, grönt slut-UI i båda vyer, bildläsning och oberoende granskning av exakt sista apphuvudet återstår. #303:s main-Cloudflare är fortfarande röd och serverad #303 ännu inte verifierad. Christoffer har beslutat att Cloudflare-felet dokumenteras och undersöks parallellt av Claude utan att hindra fortsatt arbete; ingen publicering påstås innan den verifierats.
 
 ### Textpaket 02 och resten av serien
 
