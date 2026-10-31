@@ -22,12 +22,14 @@ try {
       if (["tangent", "enter", "enter-skrivyta", "penna"].includes(fall)) {
         if (fall === "enter-skrivyta") {
           await page.locator('[data-dal="skrivbricka"]').click();
-          await page.keyboard.type("en häst");
+          // Playwright type skickar å/ä/ö som insertText utan keydown; fysiskt skrivprov använder ASCII.
+          await page.keyboard.type("en kanin");
+          assert.equal(await page.getByTestId("ord-input").inputValue(), "en kanin");
         } else await skriv("en häst"); // sista ordet är ännu inte avslutat
         if (fall === "tangent") await page.locator('[data-dal="klar"]').click();
         else if (fall.startsWith("enter")) await page.keyboard.press("Enter");
         else await page.getByTestId("vakna").click();
-        await page.waitForFunction(() => window.__trollMinne.getState().ang.some((x) => x.kropp === "häst"), null, { timeout: 12000 });
+        await page.waitForFunction((kropp) => window.__trollMinne.getState().ang.some((x) => x.kropp === kropp), fall === "enter-skrivyta" ? "kanin" : "häst", { timeout: 12000 });
         await page.getByTestId("bok-skarm").waitFor({ state: "hidden" });
       } else if (fall === "ordbricka") {
         await skriv("en häst ");
@@ -58,8 +60,8 @@ try {
         assert.equal(await page.getByTestId("tangentbord").isVisible(), true, "vad-luckan ska behålla tangenterna");
         await page.locator(".sk-puff").waitFor();
         if (fall === "enter-vad") {
-          await page.keyboard.type("häst"); await page.keyboard.press("Enter");
-          await page.waitForFunction(() => window.__trollMinne.getState().ang.some((x) => x.kropp === "häst"));
+          await page.keyboard.type("kanin"); await page.keyboard.press("Enter");
+          await page.waitForFunction(() => window.__trollMinne.getState().ang.some((x) => x.kropp === "kanin"));
         }
       }
       assert.deepEqual(fel, []);
