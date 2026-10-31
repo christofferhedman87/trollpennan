@@ -9,6 +9,7 @@ const bilder = process.env.QA_SCREENSHOTS;
 const scenarier = {
   tassar: { id: "frusna-tassar", nej: "med hatt", ja: "med strumpor", felDel: "hatt", rattDel: "strumpa" },
   kalla: { id: "frusna-tassar", nej: "med kalla strumpor", ja: "med varma strumpor", felDel: "strumpa", rattDel: "strumpa" },
+  oron: { id: "frusna-oron", nej: "med halsduk", ja: "med mössa", felDel: "halsduk", rattDel: "alvmossa" },
   syn: { id: "suddigt", nej: "med hatt", ja: "med glasögon", felDel: "hatt", rattDel: "glasögon", grund: "solglasögon" },
   aldre: { id: "frusna-tassar", nej: "med hatt", ja: "med stövlar", felDel: "hatt", rattDel: "stovlar", grund: "strumpa" },
   upprepa: { id: "frusna-tassar", nej: "med hatt", ja: "med strumpor", felDel: "hatt", rattDel: "strumpa", grund: "strumpa" },
