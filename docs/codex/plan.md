@@ -1,25 +1,21 @@
-# Åtgärdsplan T-01–T-35 för Codex och Claude Code
+# Åtgärdsplan T-01–T-36 för Codex och Claude Code
 
-## Tillfällig paus och överlämning till Claude, 2026-10-31
+## Överlämning: Codex fortsätter efter Claude, 2026-10-31
 
-Christoffer har lite Codex-kvot kvar och begärde: slutför/spara pågående arbete, påbörja inget nytt block och lämna över till Claude. Detta är aktuell startpunkt och går före äldre ”Fortsätt”-texter nedan. Ingen ny produktkod har påbörjats efter pausinstruktionen.
+Detta är aktuell startpunkt och går före äldre ”Fortsätt”-texter nedan. Ta en PR i taget: #299 → #300 → #301, därefter återstående block enligt planen. Ingen force-push. Bevara sparformat v2, markmigrering och Cloudflare. Bilder används endast internt; inga nya checkpointdokument.
 
-**Publicerat:** C1c #297 är mergad som `ed0449c366189a891bc362e723eb3f468b17ed58`. App `e1c303393511d9ae416ca89f877b6c89c60ba151` är oberoende slutgodkänd; sju grindar gröna, 638/638. Main-Cloudflare **124493270814** är grön. Alla sex serverade start-/spel-filer och fyra ändrade GLB-filer är byteidentiska med det provade bygget (SHA-256). Gör inte om leveransen. De tidigare 11-fallsproven, sista sju modell-/extremfallen, omladdning och Grottans hela shaderprov är gröna i båda telefonvyerna; stenens egna anrop är 1–1 i varje 90 bildrutor.
+- **#298 · C2b-1 (T-08, P1) är redan levererad:** main `64297f3`, oberoende Claude-underagent godkände. Main-Cloudflare `124517533701` och sex serverade SHA-256 är gröna enligt sista kommentaren i #298. Skrivna siffror når tolken; både `arSparrat` och `tolka` prövar även text utan siffror. Gör inte om detta. Full korpus/migration återstår i C2b.
+- **#299 · T-18/B4 är levererad:** mergad som `0e6fe9b`, main-Cloudflare `124530012914` grön och sex start-/spelfiler byteidentiska/SHA-256-identiska med provat bygge. Fristående Codex-granskare `/root/review_299` godkände exakt app-/testhuvud `f75c6ad5693d0069e8845b6a8bd301574bac9b16`; senare commits var bara dokument. Sex flaggor/hashlås, 60/60 riktade delprov och 41/41 negativa hash-/flaggprov. Sex grindar gröna, enbart känt P3a-fel i parallell produktkörning (separat 9/9 grönt, gräns orörd). Riktiga start-/skapelse-/omladdningsprov gröna i stående, liggande och datorvy; interna bilder granskade. Övriga 85 uppdrag är oförändrade.
+- **#300 · F2/T-22:** samordnad med `main 0e6fe9b`; exakt app-/provhuvud `03ed2775b763d372b1c49a44ff52ca84bec8bc74` är godkänt av fristående Codex-granskare `/root/review_300` utan blockerare. Alla sju slutgrindar gröna, 84/84 produktprovfiler inklusive P3a med oförändrad 50 ms-gräns. `scripts/prov-min-bok.mjs` är rött mot main och helt grönt på slutbygget i 375×812 och 812×375. Bildgranskningen hittade coach-/HUD-överlapp över Stäng; separata röda→gröna skärmprov kräver nu fri hel knapp, pausad guide samt Stäng/Escape. Granskaren provade även tomma ordlistor, riktig annan Ordboksingång och spärrad fysisk skrivning; profilerna bevaras. Interna slutbilder i båda vyer är lästa. Kvar före leverans: merge och main-CF/SHA.
+- **#301 · G1/T-29/T-32:** oprovat utkast `claude/g1-guldchans-kvitto`, HEAD `d4a66ed`. Följ PR-textens exakta nod-/UI-prov rött mot main och grönt på grenen i 375×812 och 812×375 utan reducerad rörelse, dokumentera ändrad replik, kör grindar/granskning/merge/CF/SHA.
 
-**Sparat men inte mergat:** #298, branch `codex/t08-c2b1-siffror`, HEAD `261b480`, redan samordnad med `origin/main ed0449c`. Spärrfixens kod är `3f8c4d2`; den första osäkra kandidaten `2d427d1` ska inte användas ensam. Alla sju grindar på samordnade 261b480 är gröna, **640/640**. Oberoende läsgranskning och det committade `scripts/prov-siffermask.mjs` har 9 920 jämförelser utan nya luckor i den avgränsade uppsättningen, fem fasta maskningsregressioner och tio legitima antal. Ingen slutapproval eller grön UI-leverans påstås för #298.
+**Textpaket 02 är mottaget och godkänt av Christoffer:** `Trollpennan-textpaket-02-granskad.md` innehåller exakt de 85 återstående uppdrags-id:na (SHA-256 och beslut i beslut.md). Ingen ytterligare godkännandefråga krävs. Använd som underlag i B1/BC, kontrollera varje förslag mot faktisk tolk och modeller. `granskad:true`/hashlås gäller endast exakt granskad text. Inget annat block väntar på detta.
 
-**Exakt kvarstående hinder i #298:** det riktiga UI-provet för ”en katt med 2 hattar” blir rött redan vid exakt inmatningskontroll: faktisk text blir ”en katt med hattar”. `src/spel/styr/useSkrivTangentbord.ts` omkring rad 59 tillåter bara bokstäver/mellanslag och filtrerar siffran. Detta är inte en grön före/efter-verifikation av parserfixen. Claude ska granska och rätta den verkliga inmatningsvägen, sedan köra `QA_FALL='en katt med 2 hattar' node scripts/prov-sammansatt.mjs <preview-url>` med riktiga tangenter i 375×812 och 812×375, före/efter rättning. Inget input-fill, forceklick, dolt fel eller sänkt gräns. Därefter sju grindar, oberoende slutgranskning, merge och main-Cloudflare/SHA. Kvarvarande korpus/migration i C2b är ett senare delsteg.
+**Kvar:** B1 (85 uppdrag), B3, C1d, resten av C2b, C3, C4, BC, D0–D3, F1, F3, F5, F6/T-36, G2 och G3. F6 ska visa alla synliga djur, hem/flyttbekräftelse, skäl för fel hustyp och verklig tomorsak; se F6-avsnittet i `docs/codex/plan.md`. **Före slutgranskningen av hela blockserien: stoppa och meddela Christoffer.** Han väljer Claude/Codex och sätter ansträngning=max. Påbörja inte den granskningen utan hans val.
 
-**Mänskligt godkännande mottaget:** Christoffer svarade ”Jag har läst och godkänner dessa sex” på exakt Textpaket 01 i `d9f2752ce441847d6d6ca02cb0237e254380127e`. Det gäller `vingar-i-luften`, `solgul-van`, `kalla-tassar`, `tva-farger`, `stor-och-liten`, `varmt-och-kallt`, inklusive paketets uppdrag/tack/ledtrådar/hjälpfraser. Fråga inte igen om samma oförändrade texter. #292 bevarar paketet och detta beslut. Vid pausen är spelets granskad-flaggor fortfarande false: Claude ska först kontrollera att de sex texterna är oförändrade, sätta endast deras flaggor och uppdatera de gamla tester som generellt kräver false. Godkännandet är inte en ny röstinspelning och omfattar inte övriga 85 uppdrag.
+Tre svagaste punkter: sekundära djur/full korpus/migration återstår; B1:s betydelsekrav och stora D/F/G-delar återstår; fysisk Safari/iPad, barns faktiska upplevelse och nya röstinspelningar är inte verifierade.
 
-**Omfattning kvar:** av 35 fynd är 11 levererade, 6 delvis klara och 18 ännu öppna — alltså 24 återstår helt/delvis. Levererade: T-01/02/04/06/12/13/24/26/27/31/35. Delvisa: T-03/05/07/08/14/18. Öppna: T-09/10/11/15/16/17/19/20/21/22/23/25/28/29/30/32/33/34. Detta är fyndräkning, ingen tidsprognos. B/C återstår delvis; D och återstående F/G är stora fortsättningsdelar. 85 av 91 uppdrag behöver fortsatt genomgång. Sekundära djur C1d, full formel-/barnmeningskorpus och försiktig migration, Väktardrömmar B3, meddelandekö/humör/fokus D, byggbok/flikar/skyltar och tangentfeedback följer samma blockplan nedan.
-
-Börja med `git status`, `git fetch origin` och läs öppna #292/#298 innan ny kod. Använd origin/main, ingen force-push. Bevara sparformat v2, testad markmigrering och Cloudflare. Alla nödvändiga källor/prov finns i GitHub; lokala loggar och bilder behövs inte för att återuppta. Bilder är endast intern kontroll. Inga nya checkpointdokument.
-
-Tre svagaste punkter: #298 saknar färdig faktisk sifferinmatning och slut-UI; betydelse-/formelkorpus och stora D/F/G-delar återstår; fysisk Safari/mobilprestanda, återstående mänsklig textläsning och nya godkända inspelningar är inte gjorda.
-
-
-> **Aktuellt 2026-10-31:** uppdraget omfattar samtliga 35 fynd i [granskning.md](granskning.md). E1/E2 (#286), E3/G4 (#287) och A1 (#288) är publicerade och görs inte om. B0:s första sex uppdrag är publicerade i #290 som fbfe48f (main-Cloudflare 124411312834 och 6/6 SHA-256 gröna); 85 uppdrag återstår. A0/A2/F4 (#289, main `eec3b27`) är publicerade och verifierade med Cloudflare/SHA-256. Dess hologramregression hittade ett befintligt grafikfel även på main; den separata rättningen är publicerad i #293. Beteendebevarande tolkdelning #291 är publicerad som `f69c3e9`. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1. Denna aktiva plan går före historiken längre ner.
+> **Aktuellt 2026-10-31:** uppdraget omfattar samtliga 36 fynd (T-01–T-36) i [granskning.md](granskning.md). E1/E2 (#286), E3/G4 (#287) och A1 (#288) är publicerade och görs inte om. B0:s första sex uppdrag är publicerade i #290 som fbfe48f (main-Cloudflare 124411312834 och 6/6 SHA-256 gröna); 85 uppdrag återstår. A0/A2/F4 (#289, main `eec3b27`) är publicerade och verifierade med Cloudflare/SHA-256. Dess hologramregression hittade ett befintligt grafikfel även på main; den separata rättningen är publicerad i #293. Beteendebevarande tolkdelning #291 är publicerad som `f69c3e9`. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1. Denna aktiva plan går före historiken längre ner.
 
 ## C1c · T-07/T-08: synlig placering och tillbehör (publicerad)
 
@@ -43,7 +39,9 @@ Reproducera skymningens röda baslinje med bygge på `e8ef8fd` och slutgrenens `
 
 T-07/T-08 är delresultat: sekundära djur återstår i C1d; full formelkorpus, äldre vingform, värmehjälpens fulla formeluppdatering och cirka 200 barnmeningar/täckningsmått i C2b/C3/C4. Bredare friläggning av måldjur efter skapande under HUD är D2/F5; där ingår även små ensamma förhandsdjur i trånga lägen och äldre djur/ikoner vid bok/HUD. Det räknas inte som löst av C1c. Tre svagaste punkter: full semantik/formelkorpus är inte färdig; fysisk bild-/mobilprestanda och Safari är inte bevisade; faktisk text- och röstgranskning återstår.
 
-## C2b-1 · T-08: sifferantal utan falska spärrträffar (pausad i utkast #298)
+## C2b-1 · T-08: sifferantal utan falska spärrträffar (#298, slutförd av Claude)
+
+Slutläge: se överlämningsrutan överst. Texten nedan är Codex historik före pausen.
 
 Branch `codex/t08-c2b1-siffror`, utkast #298, app `3f8c4d2`, bas `origin/main c878218`. Det fristående sifferledet i ”en katt med 2 hattar” blev tomt och okänt i spärrens ordformsbedömning. Erkända heltalsantal vars spärrnormalisering saknar bokstäver behandlas nu som avskiljare. Siffror som kan maskera bokstäver behåller sin tidigare kontroll. Spärrlista och normalisering är oförändrade.
 
@@ -129,7 +127,7 @@ Christoffer har beställt hela granskningen. Bevara sparformat v2, testad markmi
 | B1 | Väktarens dröm avgör vilka svar som räknas; vänlig nästan-ledtråd | B3 |
 | B2 | Barnets uttryckligen skrivna ledsen/arg tillåts; inga självalstrade negativa behov | C4 |
 | B3 | Slumpad tvåsiffrig multiplikation och minst 30 dagars lokalt arkiv | E1:s räknespärr, E2 |
-| B4 | Christoffer läser de 91 uppdragen i omgångar före `granskad:true` | B4/BC |
+| B4 | Textpaket 01 godkänt; Textpaket 02:s AI-granskning godkänd av Christoffer som underlag. Tolk-/modellkontroll och exakt text krävs före flagga/hashlås | B4/BC |
 | B5 | Pausa Mossa tills hon introduceras | D1/D3 |
 | B6 | Skogen/Sjön/Grottan; Vad?/Hurdan?/Vad har den?/Vad gör den? | D3/F3 |
 | B7 | Byggidéer i Pennans bok; avveckla separat Byggbok | F1 |
@@ -167,10 +165,18 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 | F3 · T-25 | Fyra riktiga frågor, korrekta kategorier och separat skrivknapp | A2, B6 | S · frågetecken, horn/kroppsdelar, rubrikkort och fokus |
 | F4 · T-27 | Låg liggande bok med kompakt läsbar lapp, fast remsa och hel kortrad | A1/A2, D | M · 375×812, 812×375 och 667×375, även stavning/guld |
 | F5 · T-28 | Platsspecifika tips och geometriskt reservutrymme för Väktare/returskylt | A2, D2 | M · nya djur och skylt skymmer inte Väktaren i båda vyer |
+| F6 · T-36 | Djur som redan bor i ett hus kan väljas och flytta (med bekräftelse); ett djur som inte passar huset visas med skäl; tomtexten säger den verkliga orsaken | Oberoende | M · bo i ett hus → välj till annat hus → flyttar; passar inte → skäl; tom lista per orsak; v2 och omladdning |
 | G1 · T-29/T-32 | Ingen skakning vid felslag; kvitto anger verkliga guldord | A1 | S · eget ord/hjälpord/flerordsfras och positiv fortsättning |
 | G2 · T-30 | Tangentpopup och dokumenterat beslutat undantag, övriga mål ≥44 px | B8 | S · pointer cancel/leave, popup i skärm, annan UI oförminskad |
 | G3 · T-33/T-34 | Verkliga kartplatser, stora högtalare/fylld karta; läsbara världsskyltar från start | B6 för namn | M · karta/alias, 44 px, projection och riktiga skyltklick |
 | G4 · T-35 | Fullständigt bevarade licenser sist under Tack till | Oberoende | S · föräldrasidans ordning och åtkomlig attribution |
+
+## F6 · T-36: ett djur som redan bor i ett hus (Christoffers fynd 2026-10-31)
+
+- **Var:** `TEXTER.bo` i `data/texter-gard.json` (`valj`, `ingen`, `passar_inte`), listan `boDjur` i `src/spel/styr/useVyData.ts` (bara djur i `ang` vars kropp passar huset), panelen i `src/spel/ui/AngLager.tsx` och `flyttaIn` i minnet.
+- **Problem:** Ett djur som redan bor i ett hus syns fortfarande på ängen men finns inte i listan ”Tryck på ett djur som ska bo här.”. Barnet får ingen förklaring. När listan är tom står det ”Inget djur kan bo här än. Väck ett djur på ängen först!”, fast det finns vakna djur. Spelet räknar med att barnet själv förstår att djuret redan har ett hem, eller att djuret inte passar huset.
+- **Så bör det fungera:** Alla barnets djur som syns visas i listan. Ett djur som bor i ett annat hus står med sitt hem (”bor i stugan”) och kan väljas; då frågar spelet ”Ska {djur} flytta hit från {hem}?” och flyttar vid ja. Ett djur som inte passar huset står med ett vänligt skäl (vilka djur huset passar för). Tomtexten säger den verkliga orsaken: inga djur alls → skapa ett djur; bara sovande → väck ett djur; alla passar inte → vilka djur huset passar för. Ett tryck på ett djur som bor i ett hus säger var det bor.
+- **Prov:** rött på main, grönt i 375×812 och 812×375 med riktiga tryck: djur i hus A väljs till hus B och bor sedan i B (även efter omladdning); djur som inte passar visar skäl; varje tomorsak visar rätt text; sparformat v2 oförändrat. Nya texter i `docs/en-varld/nya-repliker.md`.
 
 ## B0 · T-05, sex betydelsekontrollerade uppdrag (#290)
 
@@ -233,7 +239,7 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 | T-05 | B0/B1 | B0 #290 publicerad fbfe48f;560/560, fyra UI-fall, CF124411312834/6SHA gröna;85uppdrag och455+total-fixtures återstår |
 | T-06 | B2 | Publicerad #295/bdadc09, 585/585, båda vyer/legacy och main-CF/SHA gröna. T17/D2/F5 fortsätter separat |
 | T-07 | C1 | C1a/C1b/C1c publicerade (#291/#294/#297); #297 main ed0449c, 638/638 och CF124493270814/10SHA gröna. Sekundära djur C1d återstår |
-| T-08 | C2 | C2a och C1c publicerade. C2b-1 #298 sparad med 640/640, men verklig sifferinmatning/UI och slutapproval återstår. Full korpus/migration återstår |
+| T-08 | C2 | C2a och C1c publicerade. C2b-1 #298: skrivna siffror når tolken, spärren håller; 2 hattar grönt i båda vyer; oberoende Claude-underagent granskade. Full korpus/migration återstår |
 | T-09 | D1 | Planerad |
 | T-10 | D2 | Planerad |
 | T-11 | C3 | Planerad |
@@ -243,30 +249,31 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 | T-15 | B3 | Planerad; B1 godkänt |
 | T-16 | D3 | Planerad |
 | T-17 | D0/D3 | Planerad; B5 godkänt |
-| T-18 | B1/BC | Sex pilottexter faktiskt lästa/godkända av Christoffer 2026-10-31, exakt d9f2752; flaggor återstår att sätta enligt pausrutan. 85 texter kvar |
+| T-18 | B1/BC | Sex flaggor/hashlås publicerade #299/0e6fe9b, CF124530012914/6SHA gröna. Textpaket 02:s 85 texter godkända som underlag; tolk-/modellkontroll och införande i B1/BC återstår |
 | T-19 | BC | Planerad; B+C först |
 | T-20 | C4 | Planerad; B2 godkänt |
 | T-21 | F1 | Planerad; B7 godkänt |
-| T-22 | F2 | Planerad |
+| T-22 | F2 | #300 slutgranskad 03ed277, sju grindar/84 produktprovfiler och båda UI-vyer gröna; coach/HUD fri från Stäng. Merge/CF/SHA återstår |
 | T-23 | D3 | Planerad; B6 godkänt |
 | T-24 | A2 | Publicerad #289/eec3b27; tipset tas ur DOM vid upptagen vy och avaktiveras efter faktisk panorering/zoom |
 | T-25 | F3 | Planerad; B6 godkänt |
 | T-26 | A2 | Publicerad #289/eec3b27; gemensamt mål, separat Gåta och textbevarande Idé |
 | T-27 | A2/F4 | Publicerad #289/eec3b27; hela geometri-/stavnings-/markeringsflödet grönt i fyra telefonformat |
 | T-28 | F5 | Planerad |
-| T-29 | G1 | Planerad |
+| T-29 | G1 | Oprovat utkast #301 |
 | T-30 | G2 | Planerad; B8 godkänt |
 | T-31 | A1 | Verifierad/granskad #288, även efterföljande fysisk text+Enter; publicerad f425a41, CF124383463197/6SHA-256 gröna |
-| T-32 | G1 | Planerad |
+| T-32 | G1 | Oprovat utkast #301 |
 | T-33 | G3 | Planerad |
 | T-34 | G3 | Planerad |
 | T-35 | E3/G4 | Publicerad f1e38d3 (#287), båda vyer, CF124377043349/6SHA-256 gröna |
+| T-36 | F6 | Planerad; Christoffers fynd 2026-10-31 |
 
 ## Fortsätt här — gäller både Codex och Claude
 
 1. Läs AGENTS/regler och befintliga Skapa-/En värld-statusar, sedan denna aktiva plan och det fullständiga underlaget i `granskning.md`. Läs `beslut.md`; använd inte förslag som beslut. Bevara redan levererade gamla block.
 2. `git status`, `git fetch origin` och utgå från aktuella `origin/main`; ingen reset eller force-push. PR #247 ingår inte. Kontrollera öppna T-id-PR:er före ny branch så arbete inte dubbleras. Planens ursprungsbaslinje är 2c761d3.
-3. E1–E3/G4, A1, A0/A2/F4, B0:s sex pilotuppdrag och shaderfixen är publicerade. C1a #291 är också publicerad. C1b #294 är också publicerad. B2 #295 är publicerad som bdadc09 med gröna main-Cloudflare/SHA. C2a #296 är publicerad som c878218 med grön main-Cloudflare 124460880743 och sex SHA-256; app b9f7be5 slutgranskad, 614/614. Fortsätt sedan C1c:s riktiga placering i egen branch/PR, C2b och resterande B1/BC-data. B1 behöver relationerna. Textpaket 01 i #292 väntar på Christoffers faktiska läsning; sätt inga granskad-flaggor utan svar. Reproducera rött, rätta, prova grönt och låt beslutad oberoende granskare läsa P1 före merge.
+3. Följ aktuell överlämning överst: #299 är publicerad och verifierad; slutför #300 före #301, därefter återstående B/C/D/F/G-block enligt blockplanen. Levererade block görs inte om. Textpaket 01 och den bifogade granskningen av Textpaket 02 är godkända, se beslut.md; införande kräver tolk-/modellkontroll. Reproducera rött, rätta, prova grönt och låt beslutad oberoende granskare läsa före merge.
 4. Alla kodblock kör sju grindar: `typecheck`, `typecheck:pages`, `check:struktur`, `lint`, `test:product`, `build:pages`, `check:pages-output`. Testid ändras bara avsiktligt; känd P3a-tidströskel höjs aldrig. Nya Node-prov läggs i befintliga `test:product`. `npm ci` kördes grönt på baslinjen; upprepa vid saknade/ändrade beroenden.
 5. Förhandsvisa bygget: `node node_modules/vite/bin/vite.js preview --config vite.pages.config.ts --port 4173 --strictPort`. Browserprov med `TROLLPENNAN_REPO=<repo>` och `CHROMIUM=<chromium>`. Använd verkliga klick, inga force-klick. Kontrollera stående/liggande och vid F4 även 667×375. Spara aldrig skärmbilder i GitHub eller svar.
 6. Valfria sparfält får säkra standardvärden. Prova gammal v2, export/import/omladdning och felaktig kopia utan mutation. Arkiv måste skrivas före återställning; lagringsfel får inte radera något.
@@ -274,7 +281,7 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 8. Kritisk granskning enligt beslutad P1-regel före merge. Kontrollera Cloudflare **på main** och SHA-256 på de serverade filerna mot motsvarande lokala bygge. Branch-checkens omedelbara Cloudflare-fel är känt. Redovisa merge och publicering separat.
 9. Avsluta varje block med kvarvarande arbete och tre svagaste punkter. Nästa agent uppdaterar samma filer; skapa inga nya överlämningsdokument. Alla prov och nödvändiga instruktioner ska vara committade i GitHub.
 
-**Svagaste punkter just nu:** 1) Betydelsekrav och relationer berör många flöden och kräver gemensam regression. 2) T-18 kan förberedas men kräver Christoffers faktiska textläsning; nya röster kräver godkända inspelningar. 3) Safari långtidslagring, fysisk mobilprestanda och barns upplevelse kan inte bevisas i molnets syntetiska prov.
+**Svagaste punkter just nu:** 1) Betydelsekrav och relationer berör många flöden och kräver gemensam regression. 2) T-18:s Textpaket 02 är godkänt, men tolk-/modellkontroll och införande återstår; nya röster kräver godkända inspelningar. 3) Safari långtidslagring, fysisk mobilprestanda och barns upplevelse kan inte bevisas i molnets syntetiska prov.
 
 ---
 

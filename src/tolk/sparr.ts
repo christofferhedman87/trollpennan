@@ -2,34 +2,34 @@ import { ordFranForm } from "./lexikon.ts";
 import { BLOCK, ORD } from "./data.ts";
 
 /** Bara för spärrlistan. Ordlistan jämförs aldrig så här. */
+/** Siffror som ser ut som bokstäver läses som bokstäverna (0→o, 1→i, 3→e, 4→a, 5→s, 7→t). */
+function sifferbokstaver(t: string): string {
+  return t.replace(/0/g, "o").replace(/1/g, "i").replace(/3/g, "e").replace(/4/g, "a").replace(/5/g, "s").replace(/7/g, "t");
+}
+
 export function normSparr(s: string): string {
-  let t = s.toLocaleLowerCase("sv");
-  t = t
-    .replace(/0/g, "o")
-    .replace(/1/g, "i")
-    .replace(/3/g, "e")
-    .replace(/4/g, "a")
-    .replace(/5/g, "s")
-    .replace(/7/g, "t");
+  let t = sifferbokstaver(s.toLocaleLowerCase("sv"));
   t = t.replace(/[^a-zåäö]/g, "");
   t = t.replace(/(.)\1+/g, "$1");
   return t;
 }
 
-/** Samma bokstäver som normSparr, utan att slå ihop dubbeltecken. */
-function renSparr(s: string): string {
-  return s.toLocaleLowerCase("sv").replace(/[^a-zåäö]/g, "");
+/** Bokstäverna utan att slå ihop dubbeltecken, läst på två sätt: siffran som bokstav ("f1tt") och
+ *  siffran som inskjutet tecken ("f3itta"). Båda läsningarna prövas mot de korta stammarna. */
+function renSparr(s: string): string[] {
+  const t = s.toLocaleLowerCase("sv");
+  return [sifferbokstaver(t).replace(/[^a-zåäö]/g, ""), t.replace(/[^a-zåäö]/g, "")];
 }
 
 const EXAKT = new Set(BLOCK.ord.map(normSparr));
 const STAMMAR = BLOCK.stammar
   .filter((s) => s.length >= 4)
-  .map((s) => ({ norm: normSparr(s), ren: renSparr(s) }));
+  .map((s) => ({ norm: normSparr(s), ren: renSparr(s)[0]! }));
 const UNDANTAG = new Set(BLOCK.undantag_fran_stammar.map(normSparr));
 
-function stamTraff(norm: string, ren: string): boolean {
+function stamTraff(norm: string, ren: readonly string[]): boolean {
   if (!norm || UNDANTAG.has(norm)) return false;
-  return STAMMAR.some((s) => (s.norm.length >= 4 ? norm.includes(s.norm) : s.ren.length >= 4 && ren.includes(s.ren)));
+  return STAMMAR.some((s) => (s.norm.length >= 4 ? norm.includes(s.norm) : s.ren.length >= 4 && ren.some((r) => r.includes(s.ren))));
 }
 
 /** Trygga sammansättningar som innehåller ett spärrat led ("kniv", "pistol"). */
@@ -51,12 +51,25 @@ const FUNK = new Set<string>();
 }
 
 function arOrdform(token: string): boolean {
+  // Ett erkänt antal utan bokstäver i spärrnormaliseringen är bara en avskiljare.
+  // Siffror som kan maskera bokstäver måste fortfarande gå genom maskkontrollen.
+  if (/^(?:[1-9]|10)$/.test(token) && !normSparr(token)) return true;
+  // En siffra inne i ett ord gör det aldrig till en känd ordform ("hor4n" är inte "horn"); maskkontrollen avgör.
+  if (/[0-9]/.test(token)) return false;
   const t = token.toLocaleLowerCase("sv").replace(/[^a-zåäö]/g, "");
   if (TILLATNA_ORD.has(t)) return true;
   return !!t && (FUNK.has(t) || !!ordFranForm(t));
 }
 
 export function arSparrat(raw: string): boolean {
+  if (sparratLasning(raw)) return true;
+  // Före T-08 tog inmatningen bort alla siffror innan spärren. Den läsningen prövas fortfarande, så att en skriven
+  // siffra aldrig öppnar något som spärrades förut, till exempel en fristående siffra mellan ordhalvor ("f 0 an").
+  const utanSiffror = raw.replace(/[0-9]/g, "");
+  return utanSiffror !== raw && sparratLasning(utanSiffror);
+}
+
+function sparratLasning(raw: string): boolean {
   const tokens = raw
     .toLocaleLowerCase("sv")
     .split(/\s+/)
@@ -70,17 +83,20 @@ export function arSparrat(raw: string): boolean {
     return EXAKT.has(n) || stamTraff(n, renSparr(text));
   };
 
-  for (const t of tokens) {
-    if (arOrdform(t)) continue;
-    if (kolla(t)) return true;
-  }
-  for (let n = 2; n <= Math.min(4, tokens.length); n++) {
-    for (let i = 0; i + n <= tokens.length; i++) {
-      const bit = tokens.slice(i, i + n);
-      if (bit.every(arOrdform)) continue;
-      if (kolla(bit.join(" "))) return true;
+  const kand = tokens.map(arOrdform);
+  // En siffra inne i ett ord kan stå för en bokstav ("f1tt") eller vara inskjuten ("f0an"). Den andra läsningen tar
+  // bort siffror inne i ord men låter fristående antal stå kvar, så att "med 5 hattar" inte bildar nya ord.
+  const utanInskjutna = tokens.map((t) => (/[0-9]/.test(t) && /[a-zåäö]/.test(t) ? t.replace(/[0-9]/g, "") : t));
+  const lasningar = utanInskjutna.some((t, i) => t !== tokens[i]) ? [tokens, utanInskjutna] : [tokens];
+  for (const lista of lasningar) {
+    for (let i = 0; i < lista.length; i++) if (!kand[i] && kolla(lista[i]!)) return true;
+    for (let n = 2; n <= Math.min(4, lista.length); n++) {
+      for (let i = 0; i + n <= lista.length; i++) {
+        if (kand.slice(i, i + n).every(Boolean)) continue;
+        if (kolla(lista.slice(i, i + n).join(" "))) return true;
+      }
     }
+    if (!kand.every(Boolean) && kolla(lista.join(""))) return true;
   }
-  if (!tokens.every(arOrdform) && kolla(tokens.join(""))) return true;
   return false;
 }

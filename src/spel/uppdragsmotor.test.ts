@@ -1,10 +1,12 @@
 // R6A-2: kravkontrollen, Bengtssons miner och bilderna (data/npc.json, data/bengtsson.json, public/npc/).
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
 import { tolkaMedReserv } from "../tolk/reserv.ts";
 import { ALLA_UPPDRAG, SKRIV, UPP } from "./aventyr.ts";
+import { GRANSKADE_UPPDRAG, granskadeTexter } from "./textgranskning.ts";
 import { NPC_DEL, mineUrl, valjMine } from "./npc.ts";
 import { TAKT, aktivtSkrivUppdrag, aventyrKvar, bengtssonLagen, kravTraffar, kravUppfyllt, kravUppfylltTolkat, nastaSkrivUppdrag, ordIText, ordTraffar, sekTillRedo, type Status } from "./uppdragsmotor.ts";
 
@@ -58,7 +60,7 @@ test("data: skriv-uppdragen följer reglerna och krockar inte med äventyrsuppdr
     // B2–B4: platsernas uppdrag ligger i samma lista (omrade = platsens id)
     assert.ok(["ang", "skogen", "sjon", "grottan"].includes(u.omrade), `${u.id}: okänt område ${u.omrade}`);
     assert.equal(u.typ, "skriv");
-    assert.equal(u.granskad, false, `${u.id}: utkast tills Copilot granskat`);
+    assert.equal(u.granskad, u.id in GRANSKADE_UPPDRAG, `${u.id}: granskad bara efter Christoffers läsgodkännande (B4)`);
     assert.ok(u.text_bengtsson!.length <= 130 && u.klart_bengtsson!.length <= 100, u.id);
     assert.ok(u.krav!.ord.length >= Math.max(u.krav!.min ?? 1, (u.krav!.min ?? 1) > 1 ? 2 : 1), `${u.id}: minst så många godkända ord som min`);
     assert.ok(u.stjarnor >= 1);
@@ -154,4 +156,14 @@ test("B1.2: uppdragen följer platsen och final kräver finalOk", () => {
   if (skog) assert.equal(skog.omrade, "skogen");
   assert.equal(aktivtSkrivUppdrag({ [forst.id]: "pagar" }, "ang")?.id, forst.id);
   assert.equal(sekTillRedo({}, { djur: 99, spelSek: 999, sekSedanKlart: null }, TAKT, "ingenstans"), null, "inget att bjuda in till på en plats utan uppdrag");
+});
+
+test("B4: bara läsgodkända uppdrag är granskade, och deras texter är exakt de godkända", () => {
+  const granskade = SKRIV.filter((u) => u.granskad).map((u) => u.id).sort();
+  assert.deepEqual(granskade, Object.keys(GRANSKADE_UPPDRAG).sort());
+  for (const [id, avtryck] of Object.entries(GRANSKADE_UPPDRAG)) {
+    const u = SKRIV.find((x) => x.id === id);
+    assert.ok(u, `${id} finns`);
+    assert.equal(createHash("sha256").update(granskadeTexter(u)).digest("hex"), avtryck, `${id}: texten har ändrats sedan Christoffers godkännande och måste läsas igen`);
+  }
 });

@@ -2,11 +2,11 @@
 // Se introt och Ljud: på/av. Inget i Min bok är mer än ett tryck bort. För vuxna finns bara bakom låset (håll inne).
 import { useState } from "react";
 import uiJson from "../../../data/skapa-ui.json" with { type: "json" };
-import { ordLista } from "../../tolk/tolka.ts";
 import { fyll } from "../fyll.ts";
 import { ljud } from "../ljud.ts";
 import { useMinne } from "../minne.ts";
 import { ikon, kortBild } from "../skapa/ikoner.ts";
+import { raknaOrd, useOrdbokStart, type OrdbokStart } from "./ordRakning.ts";
 import { StallMeny } from "./Stall.tsx";
 import "./skapa/skapa.css";
 
@@ -28,13 +28,17 @@ export function MinBok({ stang, oppnaAlbum, oppnaOrdbok, oppnaMark, oppnaLada, s
   const lada = useMinne((s) => s.lada.length);
   const ljudPa = useMinne((s) => s.ljudPa);
   const [visaStall, setVisaStall] = useState(false);
-  const fritt = new Set(ordLista().filter((o) => o.niva === "fritt").map((o) => o.id));
-  const skrivord = Object.keys(funna).filter((id) => fritt.has(id)).length;
-  const guldord = Object.values(funna).filter((f) => f.guld).length;
+  const rakning = raknaOrd(funna);
+  const skrivord = rakning.skrivord.length;
+  const guldord = rakning.guldord.length;
+  const ordbok = (start: OrdbokStart) => () => {
+    useOrdbokStart.getState().satt(start);
+    oppnaOrdbok();
+  };
   const rutor: { id: string; bild: string; namn: string; rakna: string; gor: () => void }[] = [
     { id: "album", bild: ikon("ui", "album"), namn: UI.min_bok.album ?? "", rakna: fyll(UI.min_bok.album_rakna ?? "", { n: album }), gor: oppnaAlbum },
-    { id: "ordjakten", bild: ikon("ui", "ordbok"), namn: UI.min_bok.ordjakten ?? "", rakna: fyll(UI.min_bok.ordjakten_rakna ?? "", { n: skrivord }), gor: oppnaOrdbok },
-    { id: "guldord", bild: ikon("ui", "guldord"), namn: UI.min_bok.guldord ?? "", rakna: fyll(UI.min_bok.guldord_rakna ?? "", { n: guldord }), gor: oppnaOrdbok },
+    { id: "ordjakten", bild: ikon("ui", "ordbok"), namn: UI.min_bok.ordjakten ?? "", rakna: fyll(UI.min_bok.ordjakten_rakna ?? "", { n: skrivord }), gor: ordbok("ordjakten") },
+    { id: "guldord", bild: ikon("ui", "guldord"), namn: UI.min_bok.guldord ?? "", rakna: fyll(UI.min_bok.guldord_rakna ?? "", { n: guldord }), gor: ordbok("guldord") },
     { id: "mark", bild: kortBild("hage"), namn: UI.min_bok.mark ?? "", rakna: UI.min_bok.mark_rakna ?? "", gor: oppnaMark },
     { id: "stall", bild: ikon("ui", "stall"), namn: UI.min_bok.stallet ?? "", rakna: fyll(UI.min_bok.stallet_rakna ?? "", { n: stall }), gor: () => setVisaStall((v) => !v) },
     { id: "lada", bild: ikon("ui", "lada"), namn: UI.min_bok.ladan ?? "", rakna: fyll(UI.min_bok.ladan_rakna ?? "", { n: lada }), gor: oppnaLada },

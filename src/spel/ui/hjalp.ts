@@ -248,9 +248,8 @@ export function onskaAnkare(x: number, topp: number): { x: number; y: number; va
   return { x: ax, y: ay, vanster };
 }
 
-export function bokstav(s: string) {
-  return s.replace(/[^a-zA-ZåäöÅÄÖ ]/g, "").slice(0, 80);
-}
+/** Barnets text med bara skrivbara tecken (bokstäver, siffror och mellanslag). */
+export { skrivbarText as bokstav } from "../skapa/skrivtecken.ts";
 
 export function bytOrd(text: string, gammal: string, ny: string) {
   const delar = text.split(" ");

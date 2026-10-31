@@ -301,3 +301,18 @@ B4: Christoffer har läst och godkänt exakt dessa sex texter 2026-10-31, från 
 - Tack: Vilken fin motsatsblandning!
 - Nästan: Din skapelse får stanna! Jag letar efter två saker: något som värmer och något som kyler.
 - Hjälp: en varm tröja och en kall glass; en hund med tröja och en glass; en filt och en snöhög.
+
+## F2 · T-22: Min bok, Ordboken och Lådan, 2026-10-31
+
+Nya barntexter. Webbläsarens talsyntes läser dem tills inspelning finns.
+
+| Klar | Röst | Datafil och nyckel | Text |
+|---|---|---|---|
+| | pennan | data/skapa-ui.json `ordbok.ordjakten_rubrik` | Ordjakten |
+| | pennan | data/skapa-ui.json `ordbok.ordjakten_text` | Du har hittat {n} skrivord. {kvar} skrivord finns kvar att hitta! |
+| | pennan | data/skapa-ui.json `ordbok.ordjakten_tom` | Inga skrivord än. Skrivord finns bara för den som skriver dem själv med tangenterna. |
+| | pennan | data/skapa-ui.json `ordbok.guldord_rubrik` | Mina guldord |
+| | pennan | data/skapa-ui.json `ordbok.guldord_text` | Du har skrivit {n} guldord själv! |
+| | pennan | data/skapa-ui.json `ordbok.guldord_tom` | Inga guldord än. Skriv ett ord själv med tangenterna, så blir det guld. |
+| | pennan | data/texter-gard.json `lada.tom_hjalp` | Här hamnar byggen som du lägger undan. Håll fingret på ett bygge och välj Lägg i lådan. |
+| | pennan | data/texter-gard.json `lada.stang` | Stäng |
