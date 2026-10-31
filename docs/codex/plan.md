@@ -2,6 +2,14 @@
 
 > **Aktuellt 2026-10-31:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. T-12/T-13 är mergade och publicerade (#286, main06f057e). A1 T-01/T-02/T-31 är verifierat och oberoende granskat i #288, ännu inte mergat. A0/A2/F4 slutverifieras i **#289**. **B0 #290** är självständigt leveransklart på f425a41 med sex semantikrättade uppdrag och läsbar återkoppling; **C1a #291** är ett beteendebevarande förarbete för400-radersregeln. B0 kan publiceras före A2, eftersom dess kod och fyra verkliga UI-fall är verifierade mot nuvarande main. Samordna därefter A2/C1a mot ny origin/main utan force-push. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1.
 
+
+## Steg 0: hologrammets shader bevaras, 2026-10-31
+
+Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.
+
+Kod9a1b211: faktisk shader-regression röd före och grön efter; alla sju grindar gröna,561/561. Provet täcker delat original, materialarray,200materialpass och samma solid-uniform vid Trolla. `prov-platsforhand.mjs` kräver dessutom samma stenhologram och1–30egna WebGL-anrop i var och en av90bildrutor. Baslinje/grön browserkörning, kritiskt slutgodkännande och publiceringskontroll pågår. Tre svagaste punkter: molnets mjukvarurendering säger inget om fysisk mobilprestanda; Safari/GPU-variationer är inte provade; nya shader-varianter behöver fortsatt samma mätning.
+
+
 ## Mandat och statusord
 
 Christoffer har beställt hela granskningen. Bevara sparformat v2, testad markmigrering, sparade världar, Cloudflare och befintliga användbara tillgångar. Inga nya beroenden, hemligheter, checkpointdokument eller ändringar i `recovery/`. Svenska namn och texter från data. Befintliga statusdokument är gemensamt arbetsminne; nästa agent ska inte behöva chatten eller lokala scratch-filer.

@@ -12,6 +12,14 @@ Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först
 | D Lappen, idétärningen och uppdragen | Klar | #263 | Lapp för önskan, gåva, uppdrag, tomt, bildgåta och gåta. UppdragArk med Svara med pennan. UppdragVy är borttagen. En tomt öppnar Pennans bok |
 | E HUD och Min bok | Klar | se git-logg | HudBotten (Uppdrag, Skriv, Min bok) och toppens ikonknappar (lås, stjärnor, Se hela dalen, Karta). MinBok har sex rutor. Föräldrasidan har startläget och bokstavsljudet. MenyPanel och hamburgern är borttagna. BokSkarm är bara Byggboken (Mark) |
 
+
+## Steg 0: hologrammets shader bevaras, 2026-10-31
+
+Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.
+
+Kod9a1b211: faktisk shader-regression röd före och grön efter; alla sju grindar gröna,561/561. Provet täcker delat original, materialarray,200materialpass och samma solid-uniform vid Trolla. `prov-platsforhand.mjs` kräver dessutom samma stenhologram och1–30egna WebGL-anrop i var och en av90bildrutor. Baslinje/grön browserkörning, kritiskt slutgodkännande och publiceringskontroll pågår. Tre svagaste punkter: molnets mjukvarurendering säger inget om fysisk mobilprestanda; Safari/GPU-variationer är inte provade; nya shader-varianter behöver fortsatt samma mätning.
+
+
 ## Beslut (2026-10-29)
 - E: projektregler.md är uppdaterad. Att skriva själv är förstahandsvalet, och hjälporden räcker för att spela.
 - F: *sprutar eld* och *springer snabbt* är skrivord (`niva: "fritt"`). Önskningar som behöver dem (modig, kull, blixt) får korten i Ordhjälpen genom `onskeKort`, så regel 7.6 håller.

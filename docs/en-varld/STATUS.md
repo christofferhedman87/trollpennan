@@ -17,6 +17,14 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 | 8 Uppdrag, Byggboken och röster | Klar (första versionen) | se git-logg | Var tredje önskan är nu en byggönskan (den fanns men valdes aldrig). Sex nya önskningar använder byggformeln: "ett hus som ser ut som jag", flygande hus, slottsstall, frukthus, dansande hus och något som lyser (`onska.ts`: krav form, form_som_djuret och egenskap). Byggboken visar önskans exempel först. En aktiv byggönskan går före regeln för småsaker. Röster: 12 nya repliker finns i `nya-repliker.md` (beslut D) |
 | 9 Städning | Klar | se git-logg | Garden3D och MarkPlan är borttagna, och `window.__gard3d` är flyttad till `gard/gard3dDiag.ts`. Köpt mark följer med "Spara en kopia" och "Läs in en kopia". PROJECT.md har en sektion om En värld. Alla prov är gröna utom det kända tidtestet P3a i molnmiljön |
 
+
+## Steg 0: hologrammets shader bevaras, 2026-10-31
+
+Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.
+
+Kod9a1b211: faktisk shader-regression röd före och grön efter; alla sju grindar gröna,561/561. Provet täcker delat original, materialarray,200materialpass och samma solid-uniform vid Trolla. `prov-platsforhand.mjs` kräver dessutom samma stenhologram och1–30egna WebGL-anrop i var och en av90bildrutor. Baslinje/grön browserkörning, kritiskt slutgodkännande och publiceringskontroll pågår. Tre svagaste punkter: molnets mjukvarurendering säger inget om fysisk mobilprestanda; Safari/GPU-variationer är inte provade; nya shader-varianter behöver fortsatt samma mätning.
+
+
 ## Nästa steg
 **Blockserien En värld är klar (2026-10-29).** Kvar att göra senare:
 1. Skapamenyns nya design är implementerad (fas A–E, se `docs/skapa/STATUS.md`).
