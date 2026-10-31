@@ -80,6 +80,8 @@ export function byggSkapelsePlan(spec: Spec, matt = modellMatt): SkapelsePlan {
     const topp = kropp[1] + kroppRuta.max[1] + regel.glipa + (regel.rorelsemarginal ?? 0);
     if (fri) d.skala = Math.max(d.skala, (topp - underY) / (m[1] * fri), (kroppRuta.max[0] - kroppRuta.min[0] + 2 * regel.glipa) / (m[0] * 0.8), (kroppRuta.max[2] - kroppRuta.min[2] + 2 * regel.glipa) / (m[2] * 0.8));
     else underY = Math.max(underY, topp);
+    // Framkanten ligger strax framför hela kroppen: huvudet syns även från spelets höga kamera.
+    d.position[2] = kroppRuta.max[2] + regel.glipa - m[2] * d.skala / 2;
     d.position[1] = underY; underY += m[1] * d.skala + regel.glipa;
   }
   const ruta: Ruta3 = { min: [...kroppRuta.min], max: [...kroppRuta.max] };

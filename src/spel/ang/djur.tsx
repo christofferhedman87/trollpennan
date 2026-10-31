@@ -2,7 +2,7 @@ import { useFrame, type ThreeEvent } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { brygga, type Sparad } from "../brygga.ts";
-import type { Plats } from "../platser.ts";
+import { START_PLATS, type Plats } from "../platser.ts";
 import { replik } from "../replik.ts";
 import { ljud } from "../ljud.ts";
 import { squashSkala, type DjurSignal } from "../gltfDjur.tsx";
@@ -29,16 +29,18 @@ export { Hjartan } from "./Hjartan.tsx";
 
 import { SammansattDjur } from "./SammansattDjur.tsx";
 import { skapelsePlan } from "../skapelsePlan.ts";
+import { useForhandsLage } from "./useForhandsLage.ts";
 
 function pausaAnim(): boolean {
   return typeof window !== "undefined" && window.__PAUSE_ANIM === true;
 }
 
 export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Sparad[]; plats?: Plats; ljus?: { kalla: Ljuskalla; vad: string } }) {
-  const [x, y, z] = djurPlats(spec, alla, plats);
-  const krymp = djurKrymp(spec, alla, plats);
-  const vand = djurVand(spec, alla, plats);
-  const iStall = djurIStall(spec, alla, plats);
+  const forhandsLage = useForhandsLage(spec.uid, plats?.id ?? START_PLATS);
+  const [x, y, z] = forhandsLage ? [forhandsLage.x, forhandsLage.y, forhandsLage.z] : djurPlats(spec, alla, plats);
+  const krymp = forhandsLage ? forhandsLage.krymp ?? 1 : djurKrymp(spec, alla, plats);
+  const vand = forhandsLage ? forhandsLage.vand ?? 1 : djurVand(spec, alla, plats);
+  const iStall = forhandsLage ? forhandsLage.stall : djurIStall(spec, alla, plats);
   const grupp = useRef<THREE.Group>(null);
   const kroppRef = useRef<THREE.Group>(null);
   const skal = useRef(0.2);
@@ -55,8 +57,8 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
   const upp = useRef<((ev: PointerEvent) => void) | null>(null);
   const [puls, setPuls] = useState(0);
   const index = alla.findIndex((d) => d.uid === spec.uid);
-  const flyg = flygare(spec, plats, alla);
-  const sim = simmare(spec, plats, alla);
+  const flyg = forhandsLage ? forhandsLage.roll === "luft" : flygare(spec, plats, alla);
+  const sim = forhandsLage ? forhandsLage.roll === "vatten" : simmare(spec, plats, alla);
   const ankare = useMemo(() => procAnkare(spec.kropp), [spec.kropp]);
   const markSkugga = useMemo(() => skapaKontaktSkugga(0.55), []);
   useEffect(() => () => frigoraKontaktSkugga(markSkugga), [markSkugga]);
@@ -71,7 +73,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
   }, [spec.uid]);
   useFrame((state, delta) => {
     const g = grupp.current;
-    if (!g) return;
+    if (!g || forhandsLage === null) return;
     const d = Math.min(delta, 0.1);
     const t = state.clock.elapsedTime;
     const pause = pausaAnim();
@@ -219,7 +221,7 @@ export function DjurIScen({ spec, alla, plats, ljus }: { spec: Sparad; alla: Spa
     window.addEventListener("pointerup", klar, { once: true });
   }
   return (
-    <group position={[x, 0, z]} onPointerDown={ned} userData={{ trollDel: spec.uid }}>
+    <group position={[x, 0, z]} visible={forhandsLage !== null} onPointerDown={ned} userData={{ trollDel: spec.uid }}>
       <primitive object={markSkugga} dispose={null} />
       {sim ? (
         <mesh ref={plask} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.08, 0]} visible={false}>

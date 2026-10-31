@@ -17,6 +17,10 @@ import type { Sparad } from "./brygga.ts";
 import { friHoloYta } from "./ang/holoYta.ts";
 import { synligModellRuta } from "./modeller/synligRuta.ts";
 import { gorHolo } from "./ang/holoMaterial.ts";
+import { forhand } from "./skapa/forhand.ts";
+import { forhandFor, forhandForPlats } from "./skapa/forhandTolk.ts";
+import { lageForVisning } from "./skapa/forhandsLage.ts";
+import { platsMed, START_PLATS, TAK_PER_PLATS } from "./platser.ts";
 
 (globalThis as { self?: unknown }).self ??= globalThis;
 const loader = new GLTFLoader();
@@ -54,6 +58,7 @@ test("Relationen under: hela katten ryms under den verkliga bordsskivan", async 
   assert.ok(katt.box.max.y < bord.box.max.y - 0.06);
   assert.ok(katt.box.min.x > bord.box.min.x && katt.box.max.x < bord.box.max.x);
   assert.ok(katt.box.min.z > bord.box.min.z && katt.box.max.z < bord.box.max.z);
+  assert.ok(bord.box.max.z - katt.box.max.z < 0.12, "kroppen står under framkanten så att bordsskivan inte döljer ansiktet");
   const ray = new THREE.Raycaster(new THREE.Vector3(0, katt.box.max.y, 0), new THREE.Vector3(0, 1, 0));
   const traff = ray.intersectObject(bord.ytter, true);
   assert.ok(traff.length > 0 && traff[0]!.distance > 0, "en verklig bordsskiva finns ovanför huvudet");
@@ -211,6 +216,36 @@ test("Opak GLB med opacity=0 syns även som hologram; avsiktlig transparens beva
     assert.equal(mesh.material.opacity, vantat); assert.equal(m.opacity, opacity);
     assert.notEqual(mesh.material, m);
   }
+});
+
+test("Äldre djur delar hologrammets torra placering, och stängning återgår utan sparmutation", () => {
+  const lista = [sparad(varelse("en kanin"))], fore = JSON.stringify(lista);
+  const tidigare = placeraMedMinne(lista, platsMed(START_PLATS)).get(lista[0]!.uid)!;
+  const f = forhandFor("en katt under ett bord", lista, [], new Set());
+  assert.ok(f.placering && f.spec?.typ === "djur");
+  forhand.oppna(true);
+  try {
+    forhand.visa(f.spec, f.nyckel, f.ring, { placering: f.placering, krymp: f.krymp });
+    assert.equal(forhand.lage().placering, f.placering, "exakt samma torra resultat");
+    const aldre = lageForVisning(lista[0]!.uid, START_PLATS, forhand.lage());
+    assert.deepEqual(aldre, f.placering.get(lista[0]!.uid));
+    assert.notDeepEqual(aldre, tidigare, "kaninen lämnar plats åt kattens hela sammansättning");
+    assert.equal(lageForVisning(lista[0]!.uid, "skogen", forhand.lage()), undefined);
+    assert.equal(JSON.stringify(lista), fore);
+  } finally { forhand.oppna(false); }
+  assert.equal(lageForVisning(lista[0]!.uid, START_PLATS, forhand.lage()), undefined);
+  assert.equal(JSON.stringify(lista), fore);
+  assert.deepEqual(placeraMedMinne(lista, platsMed(START_PLATS)).get(lista[0]!.uid), tidigare);
+});
+
+test("En utflykt döljer bara dem som skulle somna i samma torra skapandeflöde", () => {
+  const lista = Array.from({ length: TAK_PER_PLATS }, (_, i) => ({ ...sparad(varelse("en kanin")), uid: `aldre-${i}`, skapad: i }));
+  const fore = JSON.stringify(lista), f = forhandForPlats("en katt under ett bord", platsMed("skogen"), lista, []);
+  assert.ok(f.placering);
+  const l = { oppen: true, plats: "skogen", spec: f.spec, placering: f.placering };
+  const dolda = lista.filter((d) => lageForVisning(d.uid, "skogen", l) === null);
+  assert.ok(dolda.length > 0, "full plats räknar den verkliga sövningen");
+  assert.equal(JSON.stringify(lista), fore);
 });
 
 test("Flera verkliga hattar ligger inom hela placeringsrutan", async () => {

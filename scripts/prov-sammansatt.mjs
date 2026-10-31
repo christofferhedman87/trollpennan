@@ -72,6 +72,7 @@ try {
     assert.ok(valda.length > 0, "QA_FALL måste välja minst ett faktiskt provfall");
     for (const p of valda) {
       provText = p.text;
+      const varldFore = JSON.parse(JSON.stringify(await alla()));
       await page.getByTestId("pennans-bok").click(); await page.getByTestId("tangentbord").waitFor();
       await page.locator('[data-dal="skrivbricka"]').click();
       for (const del of p.text.split(/([åäö])/)) {
@@ -104,6 +105,25 @@ try {
         const holo = await page.evaluate(() => window.__holoGeometri);
         if (process.env.QA_MATT) console.log("Holo-ruta", await page.evaluate(() => ({ holo:window.__trollholo, ring:window.__trollring, vy:window.__trollvy, rutor:Object.fromEntries(["canvas", ".sk-ark", ".sk-penn-ora", ".sk-stang", ".sk-gata"].map((s)=>[s, document.querySelector(s)?.getBoundingClientRect().toJSON()])) })));
         geometri(holo, p);
+        const synlighet = await page.evaluate(() => {
+          let kropp = null;
+          window.__tredScen.scene.traverse((o) => {
+            if (!o.userData.holo) return;
+            for (let q = o; q; q = q.parent) if (q.userData.gltfKropp === window.__holoGeometri.kroppId) { kropp = q; break; }
+          });
+          if (!kropp) throw new Error("Hologrammets verkliga kropp saknas i scenen");
+          const fore = kropp.userData.trollUid;
+          kropp.userData.trollUid = "prov:holo-kropp";
+          const hud = [...document.querySelectorAll(".sk-ark, .sk-penn-ora, .sk-stang, .sk-gata")].map((e) => {
+            const r = e.getBoundingClientRect(); return { x:r.x, y:r.y, w:r.width, h:r.height };
+          });
+          try { return window.__idPass(hud)["prov:holo-kropp"]; }
+          finally { if (fore === undefined) delete kropp.userData.trollUid; else kropp.userData.trollUid = fore; }
+        });
+        console.log("Kroppens synliga pixlar", viewport.width, p.text, JSON.stringify(synlighet));
+        assert.ok(synlighet?.sil > 0, "huvuddjuret har en egen verklig siluett");
+        assert.ok(synlighet.syn / synlighet.sil >= 0.7, "minst 70 % av det nya djuret syns enligt P3a");
+        assert.ok(synlighet.silHuvud > 0 && Math.round(100 * synlighet.synHuvud / synlighet.silHuvud) >= 90, "minst 90 % av huvudet syns enligt P3a");
         const rutor = [holo.kropp, ...holo.saker, ...holo.plagg].map((x) => x.skarm);
         assert.ok(Math.max(Math.max(...rutor.map((r) => r.x1)) - Math.min(...rutor.map((r) => r.x0)), Math.max(...rutor.map((r) => r.y1)) - Math.min(...rutor.map((r) => r.y0))) >= (p.relation === "kropp" ? 20 : 64), "förhandsvisningen går att urskilja");
         const ark = await page.locator(".sk-ark").boundingBox();
@@ -114,6 +134,7 @@ try {
           for (const h of hinder) assert.ok(Math.max(0, Math.min(ruta.x1, h.right) - Math.max(ruta.x0, h.left)) * Math.max(0, Math.min(ruta.y1, h.bottom) - Math.max(ruta.y0, h.top)) <= 1, "hologrammet undviker verkliga kontrollrutor");
         }
       }
+      assert.deepEqual(JSON.parse(JSON.stringify(await alla())), varldFore, "förhandsvisningen ändrar inget sparat djur eller bygge");
       await page.getByTestId("vakna").click(); await page.getByTestId("bok-skarm").waitFor({ state: "hidden" });
       const nya = (await alla()).filter((d) => !fore.has(d.uid));
       assert.equal(nya.length, 1);
