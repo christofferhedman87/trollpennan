@@ -7,6 +7,11 @@ export type Kvitto = { id: number; ord: KvittoOrd[]; stj: number; guld: number; 
 export type UppdragsSvar = { id: string; resultat: "klar" | "fel"; nastan: string | null };
 export type OnskeMiss = { id: string; uid: string; nastan: string };
 
+/** T-32: kvittots guldord är exakt de guldmarkerade orden i meningen, så att siffran och orden alltid stämmer. */
+export function kvittoGuldord(ord: readonly KvittoOrd[]): string[] {
+  return ord.filter((o) => o.guld).map((o) => o.t);
+}
+
 export const useKvitto = create<{ kvitto: Kvitto | null; satt: (k: Kvitto | null) => void }>((set) => ({
   kvitto: null,
   satt: (k) => set({ kvitto: k }),

@@ -82,7 +82,7 @@ export function Trollremsa() {
           ) : null}
         </span>
       ))}
-      <button type="button" onClick={() => setVy("skriv")} aria-label={UI.ark.skriv_aria} ref={skrivRef} key={spok?.fel ?? 0} className={`sk-skrivbricka${remsa.skriv || spok ? "" : " vilar"}${spok?.fel ? " skaka" : ""}`} data-dal="skrivbricka">
+      <button type="button" onClick={() => setVy("skriv")} aria-label={UI.ark.skriv_aria} ref={skrivRef} className={`sk-skrivbricka${remsa.skriv || spok ? "" : " vilar"}`} data-dal="skrivbricka">
         {spok ? spok.buf : remsa.skriv}
         {vy === "skriv" ? <i className="sk-blink" aria-hidden="true" /> : null}
         {spok ? <span className="sk-spok">{spok.ord.slice(spok.buf.length)}</span> : null}

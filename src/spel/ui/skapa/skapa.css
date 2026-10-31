@@ -120,9 +120,7 @@
 .sk-skrivbricka.vilar { border-color: transparent; background: transparent; padding-left: 2px; padding-right: 2px; }
 .sk-skrivbricka .sk-spok { color: rgba(42, 26, 58, .24); }
 .sk-skrivbricka .sk-blink { width: 2px; height: 26px; background: var(--tp-penna); margin-left: 2px; animation: sk-blink 1s steps(2) infinite; }
-.sk-skrivbricka.skaka { animation: sk-skaka 380ms; }
 .sk-uppmaning { color: #7A6E96; font-weight: 500; margin-left: 8px; letter-spacing: 0; white-space: normal; font-size: 1.25rem; line-height: 1.2; }
-@keyframes sk-skaka { 25% { transform: translateX(-4px) } 75% { transform: translateX(4px) } }
 @keyframes sk-blink { 50% { opacity: 0; } }
 
 /* ------------------------------------------------------------------ Svarsraden */
@@ -165,7 +163,6 @@
 .sk-tangent img { width: 26px; height: 26px; pointer-events: none; }
 .sk-tangent.vokal { background: var(--tp-vokal-bg); color: var(--tp-vokal); }
 .sk-tangent.tips { background: #FFF2B8; box-shadow: 0 0 0 4px var(--tp-guld), 0 3px 0 var(--tp-blck); animation: sk-studs 1.2s ease-in-out infinite; }
-.sk-tangent.fel { animation: sk-skaka 300ms; }
 .sk-tangent.skift-pa { background: var(--tp-guld); }
 @keyframes sk-studs { 50% { transform: scale(1.12); } }
 

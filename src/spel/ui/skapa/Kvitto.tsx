@@ -1,10 +1,10 @@
 // Nya Skapa 6.11: kvittot under HUD:en efter Trolla (5,6 s eller tryck). Guldorden är understrukna i guld,
-// och under står stjärnorna och hur många ord barnet skrev själv. Uppfyllde det en önskan står tacket först.
+// och under står stjärnorna och vilka guldord barnet skrev själv (T-32). Uppfyllde det en önskan står tacket först.
 import { useEffect } from "react";
 import uiJson from "../../../../data/skapa-ui.json" with { type: "json" };
 import { fyll } from "../../fyll.ts";
 import { ikon } from "../../skapa/ikoner.ts";
-import { useKvitto } from "../../skapa/kvitto.ts";
+import { kvittoGuldord, useKvitto } from "../../skapa/kvitto.ts";
 import { lasbarTid } from "../../rost.ts";
 import "./skapa.css";
 
@@ -21,6 +21,7 @@ export function Kvitto() {
   }, [kvitto, satt]);
   if (!kvitto) return null;
   const [fore, efter] = (UI.kvitto[kvitto.tillagg ? "tillagg" : "trollade"] ?? "{mening}").split("{mening}");
+  const guldord = kvittoGuldord(kvitto.ord);
   return (
     <button type="button" className="sk-kvitto" data-dal="kvitto" onClick={() => satt(null)}>
       <p className="sk-kvitto-rad">
@@ -43,10 +44,10 @@ export function Kvitto() {
             {fyll(kvitto.stj === 1 ? (UI.kvitto.stjarna_en ?? "") : (UI.kvitto.stjarna_flera ?? ""), { n: kvitto.stj })}
           </span>
         ) : null}
-        {kvitto.guld > 0 ? (
-          <span className="sk-kvitto-chip guld">
+        {guldord.length > 0 ? (
+          <span className="sk-kvitto-chip guld" data-g1="kvitto-guld">
             <img alt="" src={ikon("ui", "guldord")} />
-            {fyll(UI.kvitto.guld ?? "", { n: kvitto.guld })}
+            {fyll(UI.kvitto.guld ?? "", { n: guldord.length, ord: guldord.join(", ") })}
           </span>
         ) : null}
       </span>
