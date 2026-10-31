@@ -1,3 +1,4 @@
+import type { Krav } from "./uppdragsmotor.ts";
 import bengtssonJson from "../../data/bengtsson.json" with { type: "json" };
 import npcJson from "../../data/npc.json" with { type: "json" };
 import omradenJson from "../../data/omraden.json" with { type: "json" };
@@ -70,7 +71,11 @@ export type Uppdrag = {
   stjarnor: number;
   skatt: string | null;
   /** R6A-2: löses genom att barnet skriver. Minst `min` olika ord ur `ord` (data/bengtsson.json). */
-  krav?: { ord: string[]; min?: number; djur?: boolean };
+  krav?: Krav;
+  /** Vänlig konkret ledtråd tills alla krav är uppfyllda. */
+  nastan?: string;
+  /** Fulla, provade lösningar till Pennans bok. */
+  hjalp?: string[];
   /** B1.2: platsens sista uppdrag, ges bara när finalOk. */
   final?: boolean;
   /** R6A-3: guidande förslag (knappar) under uppdraget. Varje fras ska uppfylla `krav`; fritext är kvar som alternativ. */

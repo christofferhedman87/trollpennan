@@ -19,15 +19,13 @@ import { kollaOrd, sammansatt } from "../skapa/ordKoll.ts";
 import { sagBokstav } from "../skapa/installning.ts";
 import { bokstav, utanSparratSuffix } from "../ui/hjalp.ts";
 import type { SpelKarna } from "./typer.ts";
-import { tackFor } from "../skapa/tack.ts";
-import { tystaBannrar, useKvitto } from "../skapa/kvitto.ts";
+import { kvittotack } from "../skapa/tack.ts";
+import { tystaBannrar, useKvitto, hamtaUppdragsSvar } from "../skapa/kvitto.ts";
 import { useSkrivTangentbord } from "./useSkrivTangentbord.ts";
 import { skrivGuldTecken, type Spok } from "../skapa/guldchans.ts";
-
 const ANGRA_MAX = 24;
 const UI = uiJson as unknown as { puffar: Record<string, string>; tider_ms: Record<string, number> };
 export type SkrivVy = "skriv" | "hjalp";
-
 export function useSkriv(k: Pick<SpelKarna, "t" | "s">) {
   const { text, setText, setVal, setHand, forslag, setForslag, behover, setBehover, bokOpp, setBokOpp, onskaOpp, gavaTill, setGavaTill, textRef, handRef, gavaRef, setByggPuff } = k.t;
   const { utfor } = k.s;
@@ -326,7 +324,7 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "s">) {
     const andrat = efter.ang.some((a) => fore.ang.find((x) => x.uid === a.uid)?.formel !== a.formel && nycklar.has(a.uid));
     if (ny || andrat) {
       const kv = innehall.length ? br.filter((b) => b.klass !== "vantar").map((b) => ({ t: b.t, guld: b.guld })) : [];
-      useKvitto.getState().satt({ id: Date.now(), ord: kv, stj: Math.max(0, efter.stjarnor - fore.stjarnor), guld: innehall.filter((b) => b.guld).length, tack: tackFor(fore.onskan, efter.onskan) });
+      useKvitto.getState().satt({ id: Date.now(), ord: kv, stj: Math.max(0, efter.stjarnor - fore.stjarnor), guld: innehall.filter((b) => b.guld).length, tack: kvittotack(fore.onskan, efter.onskan, hamtaUppdragsSvar()) });
     }
     return "ok";
   }

@@ -1,6 +1,6 @@
 # Åtgärdsplan T-01–T-35 för Codex och Claude Code
 
-> **Aktuellt 2026-10-31:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. T-12/T-13 är mergade och publicerade (#286, main06f057e). A1 T-01/T-02/T-31 är verifierat och oberoende granskat i #288, ännu inte mergat. Nästa arbete: **A0/A2 i #289**, som redan har röda baslinjeprov och sparad målgrund. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1.
+> **Aktuellt 2026-10-31:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. T-12/T-13 är mergade och publicerade (#286, main06f057e). A1 T-01/T-02/T-31 är publicerad somf425a41(#288), CF124383463197 och6SHA gröna. A0/A2/F4 slutverifieras i **#289**. **B0 #290** är publicerad somfbfe48f, CF124411312834 och6SHA gröna, med sex semantikrättade uppdrag och läsbar återkoppling; **C1a #291** är ett beteendebevarande förarbete för400-radersregeln. B0 kan publiceras före A2, eftersom dess kod och fyra verkliga UI-fall är verifierade mot nuvarande main. Samordna därefter A2/C1a mot ny origin/main utan force-push. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1.
 
 ## Mandat och statusord
 
@@ -60,11 +60,23 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 | G3 · T-33/T-34 | Verkliga kartplatser, stora högtalare/fylld karta; läsbara världsskyltar från start | B6 för namn | M · karta/alias, 44 px, projection och riktiga skyltklick |
 | G4 · T-35 | Fullständigt bevarade licenser sist under Tack till | Oberoende | S · föräldrasidans ordning och åtkomlig attribution |
 
+## B0 · T-05, sex betydelsekontrollerade uppdrag (#290)
+
+Branch `codex/t05-betydelsegrund` utgår från origin/mainf425a41. Sex röda verkliga baslinjefall är reproducerade: flygande hund/lysande kanin/strumpor underkänns, ensam röd katt/stor hund/varm tröja godkänns felaktigt. Ren kravmotor använder samma tolk och meningsdelning som skapandet, grupper, antal och skilda individer. Kroppsfärg binds till kroppen. Temperaturen på samma sak och uttrycklig djurstorlek överstyr motsatt standardegenskap. Matchningen redovisar faktiskt omatchade grupper. Torr tolkning avstår från blandningsnotering och gör0lagringsskrivningar i provet.
+
+De första sex uppdragen har minst tre distinkta ja/två distinkta nej var, egna provade hjälpfraser och konkreta nästan-repliker. Resterande85uppdrag behåller tillfällig äldre kontroll tills B1/BC; T-05/T-03/T-18 stängs inte och inga granskad-flaggor ändras.
+
+UI-provet hittade två verkliga återkopplingsfel: den gamla röstkön strök nästan-ledtråden, och efter prioritetsrättningen ersatte albumrepliken den efter444ms. Senastefe06419 återanvänder kvittot: bara den aktuella Trolla-handlingens verkliga bedömning följer med, önsketack prioriteras och befintlig lästidsregel ger barnet tid att läsa. En obesvarad ge-önskan får inte en annan pågående quests ledtråd. Ingen global meddelandekö byggs om här; T-17 återstår.
+
+Alla sju slutgrindar gröna påfe06419,560/560 produkttester och18befintliga lintvarningar. `prov-uppdragsbetydelse.mjs` grönt i375×812 och812×375, både flyg- och tvåfärgsuppdrag: nära miss → bevarad skapelse och synlig ledtråd → verkligt rätt svar, korrekt antal djur och belöning. Interna bilder granskade. Sju nya Node-prov täcker fixtures, subjekt/antal, temperatur/storlek, matchning, önskeprioritet, försökslivscykel och torr lagring. Oberoende Codex-granskare slutgodkände exaktfe064194455583c28aef668e2a60a4dc7123c934. Publicerad somfbfe48f(#290), main-Cloudflare124411312834 och6SHA gröna. Kodens sparformat och testid-baslinje är oförändrade.
+
+Tre svagaste punkter:85uppdrag/önskeregioner återstår; övriga samtidiga meddelanden och kvitto för uppdaterade djur i platsSkapelser måste rättas före motsvarande B1-flöden; Christoffers faktiska textläsning, godkända nya inspelningar och fysisk hårdvara är inte ersatta av molnprov. En sjuåring kan nu förstå varför en ensam röd vän inte löser uppdraget och direkt försöka skapa den blå vännen; övriga äldre uppdrag kan fortfarande frustrera tills B1/BC är klart.
+
 ## C1a · T-07/T-08: gör tolken möjlig att ändra säkert (pågår)
 
 B1:s relationsuppdrag behöver C1. Före språkändringarna delas därför `tolka.ts`(1192rader) i sex moduler: tillstånd, semantisering, blandning, skapelsebygge, formel och befintlig publik fasad. Det följer PROJECT:s krav att ändrade kodfiler håller högst400rader. Alla namn/signaturer i den publika fasaden behålls. Ingen språkregel, barntext, sparning eller placering ändras i detta delsteg; T-07/T-08 stängs inte.
 
-`codex/t07-t08-tolkmoduler` utgår från origin/mainf425a41 i separat arbetskatalog. Ett differentialprov på1726fraser från aktuella test-/uppdrags-/önske-/idédata och ordformer ger byteidentiska kompletta utfall från både tolka och tolkaMedReserv före/efter(SHA-256aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3). Samtliga sex filer är107–310rader och den virtuella TypeScript-kontrollen har0fynd. Sju riktiga grindar körs; samordning med A2/B0, kritisk granskning och UI/publicering återstår. Efter detta: C1:s verkliga relation/formel/placering och C2:s böjningar, sedan B1/BC:s återstående85uppdrag med ja/nej-data. Rättningar i B0/A2 får inte tappas när main samordnas.
+`codex/t07-t08-tolkmoduler` utgår från origin/mainf425a41 i separat arbetskatalog. Ett differentialprov på1726fraser från aktuella test-/uppdrags-/önske-/idédata och ordformer ger byteidentiska kompletta utfall från både tolka och tolkaMedReserv före/efter(SHA-256aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3). Samtliga sex filer är107–310rader och den virtuella TypeScript-kontrollen har0fynd. Sju grindar gröna påd2a5d29; oberoende Codex-granskare godkände även20abab1 och fann70/70AST-delar oförändrade. Nu samordnad med publiceradeB0/mainfbfe48f utan kodkonflikt; samma1726-utfall och sju grindar körs igen. A2:s slutliga huvud behöver samordnas före C1a-leveransen, därefter UI/publicering. Efter detta: C1:s verkliga relation/formel/placering och C2:s böjningar, sedan B1/BC:s återstående85uppdrag med ja/nej-data. Rättningar i B0/A2 får inte tappas när main samordnas.
 
 ### Återskapa C1a:s jämförelse utan scratchfiler
 
@@ -99,7 +111,7 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 | T-02 | A1 | Verifierad/granskad #288,20UI-fall båda vyer och44px-yta; väntar merge/live |
 | T-03 | A0/A2/B | Planerad; kräver alla 133 måls hjälpvägar |
 | T-04 | A0/A2 | Planerad |
-| T-05 | B0/B1 | Planerad; ≥455 ja/nej-fixtures |
+| T-05 | B0/B1 | B0 #290 verifierad: sex uppdrag och fyra UI-fall,560/560;85uppdrag och455+total-fixtures återstår |
 | T-06 | B2 | Planerad |
 | T-07 | C1 | Planerad; faktisk värld och gamla v2/kopior |
 | T-08 | C2 | Planerad |
