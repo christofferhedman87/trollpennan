@@ -2927,9 +2927,21 @@
      "röd"
     ],
     "min": 1,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "farg",
+       "nagon_av": [
+        "skriven_farg:röd"
+       ],
+       "subjekt": "djur",
+       "beskrivning": "en röd vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -2960,7 +2972,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en röd vän, som en röd kanin.",
+   "hjalp": [
+    "en röd kanin",
+    "en röd räv",
+    "en röd uggla"
+   ]
   },
   {
    "id": "skog-liten-van",
@@ -2972,18 +2990,32 @@
    "klart": "Så liten vän, så stor glädje!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "Vem kan få plats bredvid min allra minsta kaffekopp?",
+   "text_bengtsson": "Kan du skapa en liten vän som får plats bredvid min minsta kaffekopp?",
    "klart_bengtsson": "Så liten vän, så stor glädje!",
    "krav": {
     "ord": [
      "liten",
      "pytteliten",
-     "minimal"
+     "minimal",
+     "små"
     ],
     "min": 1,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "storlek",
+       "nagon_av": [
+        "liten"
+       ],
+       "subjekt": "djur",
+       "egna": true,
+       "beskrivning": "en liten vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -3014,7 +3046,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en liten vän, som en pytteliten igelkott.",
+   "hjalp": [
+    "en liten kanin",
+    "en pytteliten igelkott",
+    "en liten uggla"
+   ]
   },
   {
    "id": "skog-magen-kurrar",
@@ -3831,9 +3869,23 @@
      "blå"
     ],
     "min": 1,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "farg",
+       "nagon_av": [
+        "skriven_farg:blå",
+        "skriven_farg:ljusblå",
+        "skriven_farg:mörkblå"
+       ],
+       "subjekt": "djur",
+       "beskrivning": "en blå vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -3864,7 +3916,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en blå vän, som en blå fisk.",
+   "hjalp": [
+    "en blå fisk",
+    "en blå anka",
+    "en blå groda"
+   ]
   },
   {
    "id": "sjo-stor-simmare",
@@ -3876,17 +3934,31 @@
    "klart": "Oj, nu blev det gott om vän i vattnet!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "Jag vill se en simmande vän som tar riktigt mycket plats!",
-   "klart_bengtsson": "Oj, nu blev det gott om vän i vattnet!",
+   "text_bengtsson": "Jag vill träffa en riktigt stor vän vid sjön. Kan du skapa en?",
+   "klart_bengtsson": "Oj, vilken stor vän som kom till sjön!",
    "krav": {
     "ord": [
      "stor",
-     "jättestor"
+     "jättestor",
+     "enorm"
     ],
     "min": 1,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "storlek",
+       "nagon_av": [
+        "stor"
+       ],
+       "subjekt": "djur",
+       "egna": true,
+       "beskrivning": "en stor vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -3917,7 +3989,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en stor vän, som en jättestor fisk.",
+   "hjalp": [
+    "en stor fisk",
+    "en jättestor anka",
+    "en stor gås"
+   ]
   },
   {
    "id": "sjo-sitt-vid-vattnet",
@@ -4774,9 +4852,21 @@
      "gul"
     ],
     "min": 1,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "farg",
+       "nagon_av": [
+        "skriven_farg:gul"
+       ],
+       "subjekt": "djur",
+       "beskrivning": "en gul vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -4807,7 +4897,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en gul vän, som en gul mus eller groda.",
+   "hjalp": [
+    "en gul kanin",
+    "en gul mus",
+    "en gul groda"
+   ]
   },
   {
    "id": "grotta-liten-upptackare",
@@ -4819,18 +4915,32 @@
    "klart": "Vilken liten upptäckare med stora idéer!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "Vem kan kika in i ett hål som är mindre än min kaffekopp?",
+   "text_bengtsson": "Det finns ett pyttelitet hål i grottan! Kan du skapa en vän som får plats?",
    "klart_bengtsson": "Vilken liten upptäckare med stora idéer!",
    "krav": {
     "ord": [
      "liten",
      "pytteliten",
-     "minimal"
+     "minimal",
+     "små"
     ],
     "min": 1,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "storlek",
+       "nagon_av": [
+        "liten"
+       ],
+       "subjekt": "djur",
+       "egna": true,
+       "beskrivning": "en liten vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -4861,7 +4971,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en liten vän, som en pytteliten mus.",
+   "hjalp": [
+    "en pytteliten mus",
+    "en liten kanin",
+    "en pytteliten groda"
+   ]
   },
   {
    "id": "grotta-sittpaus",
