@@ -179,3 +179,13 @@ test("B1: färgord för vingar och mönster försvinner inte ur formeln", () => 
     if (monster.typ === "skapad") assert.ok(monster.varelse.formel.includes("rödprickig"), monster.varelse.formel);
   }
 });
+
+test("B1: ett okänt mellanord tar inte bort färgen från ett känt djur", () => {
+  for (const tolk of [tolka, tolkaMedReserv]) {
+    for (const text of ["en röd mysig hund", "en röd vacker hund", "en röd rolig hund"]) {
+      const u = tolk(text, { noteraBlandning: false });
+      assert.equal(u.typ, "skapad");
+      if (u.typ === "skapad") assert.equal(u.skrivenKroppsFarg, "röd", text);
+    }
+  }
+});
