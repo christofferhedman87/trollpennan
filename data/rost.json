@@ -183,6 +183,22 @@
         ]
       },
       {
+        "_om": "R-A: Bengtssons nästan-repliker (useBengtsson.prova, kalla 'nastan') – hela repliken är en fil, inte bara delen efter ': '.",
+        "fil": "bengtsson.json",
+        "talare": "bengtsson",
+        "falt": [
+          "^\\.uppdrag\\[\\]\\.nastan$"
+        ]
+      },
+      {
+        "_om": "R-A: uppdragens hjälpfraser (Ordhjälpens lösningskort). Hörs när barnet trycker Lyssna i Trollremsan med frasen som mening – pennan läser. Bara fasta fraser ur data, aldrig barnets egen text.",
+        "fil": "bengtsson.json",
+        "talare": "pennan",
+        "falt": [
+          "^\\.uppdrag\\[\\]\\.hjalp\\[\\]$"
+        ]
+      },
+      {
         "fil": "vilda-djur.json",
         "talare": "pennan",
         "falt": [
