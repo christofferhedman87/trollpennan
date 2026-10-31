@@ -66,6 +66,21 @@ B1:s relationsuppdrag behöver C1. Före språkändringarna delas därför `tolk
 
 `codex/t07-t08-tolkmoduler` utgår från origin/mainf425a41 i separat arbetskatalog. Ett differentialprov på1726fraser från aktuella test-/uppdrags-/önske-/idédata och ordformer ger byteidentiska kompletta utfall från både tolka och tolkaMedReserv före/efter(SHA-256aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3). Samtliga sex filer är107–310rader och den virtuella TypeScript-kontrollen har0fynd. Sju riktiga grindar körs; samordning med A2/B0, kritisk granskning och UI/publicering återstår. Efter detta: C1:s verkliga relation/formel/placering och C2:s böjningar, sedan B1/BC:s återstående85uppdrag med ja/nej-data. Rättningar i B0/A2 får inte tappas när main samordnas.
 
+### Återskapa C1a:s jämförelse utan scratchfiler
+
+Kör med Node24 eller senare. Skapa två tillfälliga, fristående worktrees (inga återställningar av egna grenar):
+
+```sh
+git worktree add --detach /tmp/trollpennan-fore 5b6f29b
+git worktree add --detach /tmp/trollpennan-efter d2a5d29
+node --experimental-strip-types scripts/prov-tolkmoduler.mjs /tmp/trollpennan-fore /tmp/trollpennan-fore.json
+node --experimental-strip-types scripts/prov-tolkmoduler.mjs /tmp/trollpennan-efter /tmp/trollpennan-efter.json /tmp/trollpennan-fore.json
+cmp /tmp/trollpennan-fore.json /tmp/trollpennan-efter.json
+sha256sum /tmp/trollpennan-fore.json /tmp/trollpennan-efter.json
+```
+
+Förväntat:1726fraser, båda SHA-256aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3. Före-commiten har A2:s aktuella frasdata; efter-commiten har den oförändrade tolken uppdelad. Fjärde argumentet låser samma fraser i efter-körningen. Inga nya beroenden eller npm-installationer behövs för de rena tolkarna. En senare ändring av språkregler jämförs med avsiktliga nya ja/nej-krav och får naturligtvis inte påstås byteidentisk.
+
 ## Täckning och leveranslogg
 
 - E3/G4 samordnar T-14 och den oberoende T-35 eftersom båda gäller föräldrasidans information. Webmanifest och rasteriserade kopior av befintlig favicon till hemskärmsikoner, best-effort `navigator.storage.persist()` utan väntan vid start, ärliga Safari-/hemskärmsråd samt tidpunkt för senaste startade kopienedladdning. Ingen garanti att en fil behållits eller att Safari aldrig rensar. Grodlicensen ligger ordagrant kvar sist under Tack till. Baslinje: manifest saknas och licensordningen röda. Två rena nya lagringsprov gröna; alla sju grindar gröna, 553/553. `prov-bestandig-lagring.mjs` grönt för persist=true/false/fel/saknas, samt verklig föräldraöppning, nedladdning/kopiedatum och licensordning i375×812 och812×375. Interna bilder granskade. Oberoende `/root/t12_t13_review` godkände exakt2f3a40e605bbc902192d7de25f6f05cfcd724ad4 utan blockerare. Provets relativa request-URL:er och väntan på försidan rättades; spelkoden9a1d361 är oförändrad sedan sju gröna grindar; lint grönt igen. Tre svagaste punkter: fysisk iPad/långt uppehåll, faktisk hemskärmsinstallation på fysisk enhet och nya föräldratexter är bara lästa visuellt i molnets browser.
