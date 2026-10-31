@@ -396,6 +396,108 @@
         "en groda och en kyckling",
         "en grön groda"
       ]
+    },
+    "magen-kurrar": {
+      "ja": [
+        "en kanin med en morot",
+        "en häst med ett äpple",
+        "en apa med en banan",
+        "en morot",
+        "en hund med en pizza",
+        "två kaniner med tre morötter",
+        "en ko med hö"
+      ],
+      "nej": [
+        "en hund som heter morot",
+        "en hund med en mössa",
+        "en hund med en spatel",
+        "ett äppelträd",
+        "en äppelröd hund"
+      ]
+    },
+    "skog-magen-kurrar": {
+      "ja": [
+        "en kanin med en morot",
+        "en get med ett äpple",
+        "en apa med en banan",
+        "en räv med en ost",
+        "en igelkott bredvid ett äpple"
+      ],
+      "nej": [
+        "en morot",
+        "en räv som heter morot",
+        "en hund med en sten",
+        "en hund med en spatel",
+        "en räv med en mössa"
+      ]
+    },
+    "sjo-fruktpaus": {
+      "ja": [
+        "en kanin med ett äpple",
+        "en apa med en banan",
+        "en groda med en apelsin",
+        "en anka med en vattenmelon",
+        "en groda med jordgubbar"
+      ],
+      "nej": [
+        "ett äpple",
+        "en apa med en pizza",
+        "en groda med en morot",
+        "en anka som heter banan",
+        "en groda med en boll"
+      ]
+    },
+    "dags-att-vila": {
+      "ja": [
+        "en hund i en säng",
+        "en katt på en soffa",
+        "en kanin i en fåtölj",
+        "en katt under ett täcke",
+        "en hund i en sovsäck",
+        "en säng"
+      ],
+      "nej": [
+        "en hund bredvid en säng",
+        "en hund på en stol",
+        "en hund i en bil",
+        "en hund som heter säng",
+        "en hund med en mössa"
+      ]
+    },
+    "grotta-mjuk-vila": {
+      "ja": [
+        "en hund i en säng",
+        "en katt på en soffa",
+        "en kanin i en fåtölj",
+        "en mus i en liten säng",
+        "en hund i en sovsäck"
+      ],
+      "nej": [
+        "en säng",
+        "en hund på en sten",
+        "en hund bredvid en säng",
+        "en katt i en bil",
+        "en hund som heter soffa"
+      ]
+    },
+    "present-till-en-van": {
+      "ja": [
+        "en kanin med en blomma",
+        "en katt med en bok",
+        "en hund med en nallebjörn",
+        "en apa med en julklapp",
+        "en blomma",
+        "en katt med en docka",
+        "en hund med en tårta",
+        "en hund med en leksak"
+      ],
+      "nej": [
+        "en hund i en bok",
+        "en hund på en present",
+        "en hund med en sten",
+        "en hund med en mössa",
+        "en hund som heter paket"
+      ]
     }
   }
 }

@@ -424,3 +424,16 @@ Fem uppdrag ur Textpaket 02: `skog-stor-och-liten`, `sjo-tva-storlekar`, `grotta
 | | bengtsson | `data/bengtsson.json` `grotta-tva-farger.text_bengtsson` | Skapa två vänner i grottan: en grön som gräset och en gul som solen! |
 
 Nästan-replikerna (”Jag letar efter två vänner: en stor och en liten.”, ”… en röd och en blå.”, ”… en grön och en gul.”) och de sex tvåfärgade hjälpfraserna har ingen hel inspelning men en sammansatt `rostPlan`; Grok kan komplettera med hela fraser om en sammanhängande inläsning önskas. Nästan-replikerna saknar ännu källa i `kallor`.
+
+### B1: mat, vila och presenter — inspelningar till Grok
+
+Sex uppdrag ur Textpaket 02: `magen-kurrar`, `skog-magen-kurrar`, `sjo-fruktpaus`, `dags-att-vila`, `grotta-mjuk-vila` och `present-till-en-van`. Alla start- och tacktexter är oförändrade och har hela inspelningar. De sex nästan-replikerna saknar inspelning och källa i `kallor`:
+
+| Klar | Röst | Datafil och nyckel | Text |
+|---|---|---|---|
+| | bengtsson | `data/bengtsson.json` `magen-kurrar.nastan` | Din skapelse får stanna! Jag letar efter mat till det hungriga djuret, som en morot eller ett äpple. |
+| | bengtsson | `data/bengtsson.json` `skog-magen-kurrar.nastan` | Din skapelse får stanna! Jag letar efter mat till en skogsgäst, som en morot eller ett äpple. |
+| | bengtsson | `data/bengtsson.json` `sjo-fruktpaus.nastan` | Din skapelse får stanna! Jag letar efter frukt, som ett äpple, en banan eller en melon. |
+| | bengtsson | `data/bengtsson.json` `dags-att-vila.nastan` | Din skapelse får stanna! Jag letar efter en viloplats, som en säng eller soffa. |
+| | bengtsson | `data/bengtsson.json` `grotta-mjuk-vila.nastan` | Din skapelse får stanna! Jag letar efter en mjuk sovplats, som en säng eller madrass. |
+| | bengtsson | `data/bengtsson.json` `present-till-en-van.nastan` | Din skapelse får stanna! Jag letar efter en present, som en blomma, bok eller leksak. |

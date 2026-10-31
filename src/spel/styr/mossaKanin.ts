@@ -4,6 +4,8 @@ import { tolka } from "../../tolk/tolka.ts";
 import type { Sparad } from "../brygga.ts";
 import { useMinne } from "../minne.ts";
 import { barsPaKropp } from "../tillbehor/bars.ts";
+import { ENTITETER } from "../entiteter.ts";
+import { START_PLATS } from "../platser.ts";
 
 const VARME_PLAGG_LISTA = ["alvmossa", "mossa", "mössa", "luva", "halsduk", "filt", "troja", "tröja"] as const;
 const VARME_PLAGG = new Set<string>(VARME_PLAGG_LISTA);
@@ -96,6 +98,11 @@ export function hjalpDjurPaAngen(
   if (varm) return varm;
   const s = useMinne.getState();
   if (s.ang.length === 0) return null;
+  // B1: på en utflykt står det barnet skriver på platsen, och ett nytt djur av en
+  // annan sort blir en egen skapelse. Annars försvinner "en räv med en ost" in i
+  // ängens kanin och syns aldrig.
+  if (s.plats && s.plats !== START_PLATS) return null;
+  if (ENTITETER[v.kropp]?.typ === "djur" && !s.ang.some((d) => d.kropp === v.kropp)) return null;
   const arHjalpUppdrag = Boolean(aktivtUppdragId && HJALP_UPPDRAG_IDS.has(aktivtUppdragId));
   if (!arHjalpUppdrag) return null;
 

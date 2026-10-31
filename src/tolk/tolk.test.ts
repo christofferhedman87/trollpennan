@@ -24,6 +24,14 @@ test("B1: SALDO-formerna av jättelik och befintliga storleksord känns igen", (
   assert.equal(skapad("två jättelika katter").varelse.formel, "två jättelika katter");
 });
 
+test("B1: leksak ritas som en riktig modell (presentens godkända tips)", () => {
+  for (const text of ["en hund med en leksak", "en hund med leksaken", "en hund med två leksaker"]) {
+    const u = skapad(text);
+    assert.deepEqual(u.okanda, [], text);
+    assert.equal(u.varelse.tillbehor[0]?.id, "leksakslada", text);
+  }
+});
+
 test("rosa kanin som flyger", () => {
   const u = skapad("rosa kanin som flyger");
   assert.equal(u.varelse.formel, "en rosa kanin som flyger");

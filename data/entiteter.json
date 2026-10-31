@@ -947,7 +947,7 @@
     "hatthylla": { "typ": "foremal", "kategori": "möbel", "modell": "hatthylla", "malhojd": 1.5, "art": "#BCAAA4", "framAxel": "+z", "forladda": false, "ord": ["hatthylla"], "inlagd": "R3F-M20b" },
     "kontorsstol": { "typ": "foremal", "kategori": "möbel", "modell": "kontorsstol", "malhojd": 0.9, "art": "#BCAAA4", "framAxel": "+z", "forladda": false, "ord": ["kontorsstol"], "inlagd": "R3F-M20b" },
     "kvast": { "typ": "foremal", "kategori": "verktyg", "modell": "kvast", "malhojd": 1.2, "art": "#90A4AE", "framAxel": "+z", "forladda": false, "ord": ["kvast"], "inlagd": "R3F-M20b" },
-    "leksakslada": { "typ": "foremal", "kategori": "föremål", "modell": "leksakslada", "malhojd": 0.5, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["leksakslåda"], "inlagd": "R3F-M20b" },
+    "leksakslada": { "typ": "foremal", "kategori": "föremål", "modell": "leksakslada", "malhojd": 0.5, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["leksakslåda", "leksak"], "inlagd": "R3F-M20b" },
     "ljuslykta": { "typ": "foremal", "kategori": "föremål", "modell": "ljuslykta", "malhojd": 0.5, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["ljuslykta"], "inlagd": "R3F-M20b" },
     "pendelur": { "typ": "foremal", "kategori": "möbel", "modell": "pendelur", "malhojd": 1.6, "art": "#BCAAA4", "framAxel": "+z", "forladda": false, "ord": ["pendelur"], "inlagd": "R3F-M20b" },
     "sittsack": { "typ": "foremal", "kategori": "möbel", "modell": "sittsack", "malhojd": 0.5, "art": "#BCAAA4", "framAxel": "+z", "forladda": false, "ord": ["sittsäck"], "inlagd": "R3F-M20b" },

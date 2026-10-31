@@ -7,6 +7,12 @@
 
 // Textpaket 02: docs/en-varld/textpaket-02-granskad.md (SHA-256 1687e568…e539).
 export const GRANSKADE_UPPDRAG: Readonly<Record<string, string>> = {
+  "magen-kurrar": "21810ea70ec4c8eba6d93013f0f82b10b4a32a8a76c9589e43df16258405dc1f",
+  "skog-magen-kurrar": "d717782c3f50e6f9764caba64ecf52e6776b8d17e8ace172e7587ffd29799482",
+  "sjo-fruktpaus": "38f2235903c94975f45d83b233e56e0b805b793364e0ed5b172b52907b2ff737",
+  "dags-att-vila": "a1754d06255a6f4588bd28c31900b51b1453ea7747156a6a740bd339ff18e9a0",
+  "grotta-mjuk-vila": "2744e59fa54cff8006a09d199df3f780952739eaf765d2d4f12cbe181a8bb8fc",
+  "present-till-en-van": "3073a8975c27d84ac7cb25d248ae8ad9d024c182aff96478dfa2cc7a62622e3e",
   "skog-stor-och-liten": "0bd238f76dd94ee85f776627a5a53e0b237610b64c522029451758a0b3f31a45",
   "sjo-tva-storlekar": "2b489fc745fd5fbb8e247343a07e41999d689c2884fedd35dacc09dc84428540",
   "grotta-stor-och-liten": "3b87784579db06b99230b88d1fe5a86da3801ee29cf04f13d5d47dd02cfac401",

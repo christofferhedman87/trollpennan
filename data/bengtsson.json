@@ -991,9 +991,121 @@
      "sallad",
      "päron"
     ],
-    "min": 1
+    "min": 1,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "mat",
+       "nagon_av": [
+        "kropp:pizza",
+        "kropp:apple",
+        "kropp:fodelsedagstarta",
+        "kropp:banan",
+        "kropp:brod",
+        "kropp:broccoli",
+        "kropp:hamburgare",
+        "kropp:morot",
+        "kropp:ost",
+        "kropp:kaka",
+        "kropp:croissant",
+        "kropp:munk",
+        "kropp:druvor",
+        "kropp:varmkorv",
+        "kropp:glasstrut",
+        "kropp:citron",
+        "kropp:klubba",
+        "kropp:apelsin",
+        "kropp:pannkakor",
+        "kropp:ananas",
+        "kropp:pumpa",
+        "kropp:jordgubbe",
+        "kropp:sushi",
+        "kropp:taco",
+        "kropp:tomat",
+        "kropp:vattenmelon",
+        "kropp:pepparkaksgubbe",
+        "kropp:polkagris",
+        "kropp:mjolk",
+        "kropp:middag",
+        "kropp:gryta",
+        "kropp:sallad",
+        "kropp:potatis",
+        "kropp:skinka",
+        "kropp:biff",
+        "kropp:korsbar",
+        "kropp:paron",
+        "kropp:kokosnot",
+        "kropp:avokado",
+        "kropp:kal",
+        "kropp:majs",
+        "kropp:aubergine",
+        "kropp:paprika",
+        "kropp:radisa",
+        "kropp:blomkal",
+        "kropp:purjolok",
+        "kropp:rodbeta",
+        "kropp:baguette",
+        "kropp:tarta",
+        "kropp:muffins",
+        "kropp:muffin",
+        "kropp:paj",
+        "kropp:vaffla",
+        "kropp:pepparkaka",
+        "kropp:pudding",
+        "kropp:glass",
+        "kropp:isglass",
+        "kropp:godis",
+        "kropp:choklad",
+        "kropp:honung",
+        "kropp:smorgas",
+        "kropp:korv",
+        "kropp:stek",
+        "kropp:agg",
+        "kropp:lask",
+        "kropp:glassbagare",
+        "kropp:pommes",
+        "kropp:lokmat",
+        "kropp:flingor",
+        "kropp:grillspett",
+        "kropp:limpa",
+        "kropp:gradde",
+        "kropp:milkshake",
+        "kropp:selleri",
+        "kropp:jordnotssmor",
+        "kropp:nudlar",
+        "kropp:ris",
+        "kropp:kott",
+        "kropp:bacon",
+        "kropp:bulle",
+        "kropp:glasspinne",
+        "kropp:gurka",
+        "kropp:juice",
+        "kropp:kakao",
+        "kropp:korvbrod",
+        "kropp:kottbullar",
+        "kropp:lakrits",
+        "kropp:lussekatt",
+        "kropp:pannkaka",
+        "kropp:pasta",
+        "kropp:persika",
+        "kropp:popcorn",
+        "kropp:risboll",
+        "kropp:saft",
+        "kropp:semla",
+        "kropp:smoothie",
+        "kropp:smor",
+        "kropp:spagetti",
+        "kropp:sylt",
+        "kropp:hostack",
+        "kropp:gras"
+       ],
+       "subjekt": "sak",
+       "beskrivning": "mat till det hungriga djuret"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -1024,7 +1136,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter mat till det hungriga djuret, som en morot eller ett äpple.",
+   "hjalp": [
+    "en kanin med en morot",
+    "en häst med ett äpple",
+    "en apa med en banan"
+   ]
   },
   {
    "id": "regn-pa-nosen",
@@ -1566,9 +1684,41 @@
      "sovplats",
      "hundbädd"
     ],
-    "min": 1
+    "min": 1,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "vila",
+       "nagon_av": [
+        "kropp:sang",
+        "kropp:dubbelsang",
+        "kropp:vaningssang",
+        "kropp:soffa",
+        "kropp:hornsoffa",
+        "kropp:soffbank",
+        "kropp:fatolj",
+        "kropp:designfatolj",
+        "kropp:kudde",
+        "kropp:madrass",
+        "kropp:filt",
+        "kropp:tacke",
+        "kropp:hangmatta",
+        "kropp:hundbadd",
+        "kropp:sovsack"
+       ],
+       "subjekt": "sak",
+       "relationer": [
+        "i",
+        "på",
+        "under",
+        "med"
+       ],
+       "beskrivning": "en viloplats"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -1599,7 +1749,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en viloplats, som en säng eller soffa.",
+   "hjalp": [
+    "en hund i en säng",
+    "en katt på en soffa",
+    "en kanin i en fåtölj"
+   ]
   },
   {
    "id": "badlangtan",
@@ -1814,9 +1970,46 @@
      "pärlband",
      "kort"
     ],
-    "min": 1
+    "min": 1,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "present",
+       "nagon_av": [
+        "kropp:blomma",
+        "kropp:bok",
+        "kropp:nallebjorn",
+        "kropp:julklapp",
+        "kropp:kaka",
+        "kropp:apple",
+        "kropp:teckning",
+        "kropp:present",
+        "kropp:paket",
+        "kropp:leksakslada",
+        "kropp:docka",
+        "kropp:leksaksbil",
+        "kropp:boll",
+        "kropp:fotboll",
+        "kropp:basketboll",
+        "kropp:godis",
+        "kropp:choklad",
+        "kropp:tarta",
+        "kropp:fodelsedagstarta",
+        "kropp:halsband",
+        "kropp:trollbok"
+       ],
+       "subjekt": "sak",
+       "relationer": [
+        "med",
+        "vid",
+        "bredvid"
+       ],
+       "beskrivning": "en present"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -1847,7 +2040,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en present, som en blomma, bok eller leksak.",
+   "hjalp": [
+    "en kanin med en blomma",
+    "en katt med en bok",
+    "en hund med en nallebjörn"
+   ]
   },
   {
    "id": "hitta-till-picknicken",
@@ -3080,9 +3279,123 @@
      "mat"
     ],
     "min": 1,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "mat",
+       "nagon_av": [
+        "kropp:pizza",
+        "kropp:apple",
+        "kropp:fodelsedagstarta",
+        "kropp:banan",
+        "kropp:brod",
+        "kropp:broccoli",
+        "kropp:hamburgare",
+        "kropp:morot",
+        "kropp:ost",
+        "kropp:kaka",
+        "kropp:croissant",
+        "kropp:munk",
+        "kropp:druvor",
+        "kropp:varmkorv",
+        "kropp:glasstrut",
+        "kropp:citron",
+        "kropp:klubba",
+        "kropp:apelsin",
+        "kropp:pannkakor",
+        "kropp:ananas",
+        "kropp:pumpa",
+        "kropp:jordgubbe",
+        "kropp:sushi",
+        "kropp:taco",
+        "kropp:tomat",
+        "kropp:vattenmelon",
+        "kropp:pepparkaksgubbe",
+        "kropp:polkagris",
+        "kropp:mjolk",
+        "kropp:middag",
+        "kropp:gryta",
+        "kropp:sallad",
+        "kropp:potatis",
+        "kropp:skinka",
+        "kropp:biff",
+        "kropp:korsbar",
+        "kropp:paron",
+        "kropp:kokosnot",
+        "kropp:avokado",
+        "kropp:kal",
+        "kropp:majs",
+        "kropp:aubergine",
+        "kropp:paprika",
+        "kropp:radisa",
+        "kropp:blomkal",
+        "kropp:purjolok",
+        "kropp:rodbeta",
+        "kropp:baguette",
+        "kropp:tarta",
+        "kropp:muffins",
+        "kropp:muffin",
+        "kropp:paj",
+        "kropp:vaffla",
+        "kropp:pepparkaka",
+        "kropp:pudding",
+        "kropp:glass",
+        "kropp:isglass",
+        "kropp:godis",
+        "kropp:choklad",
+        "kropp:honung",
+        "kropp:smorgas",
+        "kropp:korv",
+        "kropp:stek",
+        "kropp:agg",
+        "kropp:lask",
+        "kropp:glassbagare",
+        "kropp:pommes",
+        "kropp:lokmat",
+        "kropp:flingor",
+        "kropp:grillspett",
+        "kropp:limpa",
+        "kropp:gradde",
+        "kropp:milkshake",
+        "kropp:selleri",
+        "kropp:jordnotssmor",
+        "kropp:nudlar",
+        "kropp:ris",
+        "kropp:kott",
+        "kropp:bacon",
+        "kropp:bulle",
+        "kropp:glasspinne",
+        "kropp:gurka",
+        "kropp:juice",
+        "kropp:kakao",
+        "kropp:korvbrod",
+        "kropp:kottbullar",
+        "kropp:lakrits",
+        "kropp:lussekatt",
+        "kropp:pannkaka",
+        "kropp:pasta",
+        "kropp:persika",
+        "kropp:popcorn",
+        "kropp:risboll",
+        "kropp:saft",
+        "kropp:semla",
+        "kropp:smoothie",
+        "kropp:smor",
+        "kropp:spagetti",
+        "kropp:sylt",
+        "kropp:hostack",
+        "kropp:gras"
+       ],
+       "subjekt": "sak",
+       "beskrivning": "mat till en skogsgäst"
+      }
+     ],
+     "djur": 1,
+     "antal_text": "en vän"
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -3113,7 +3426,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter mat till en skogsgäst, som en morot eller ett äpple.",
+   "hjalp": [
+    "en kanin med en morot",
+    "en get med ett äpple",
+    "en apa med en banan"
+   ]
   },
   {
    "id": "skog-vila-benen",
@@ -4113,9 +4432,35 @@
      "melon"
     ],
     "min": 1,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "frukt",
+       "nagon_av": [
+        "kropp:apple",
+        "kropp:banan",
+        "kropp:druvor",
+        "kropp:citron",
+        "kropp:apelsin",
+        "kropp:ananas",
+        "kropp:jordgubbe",
+        "kropp:vattenmelon",
+        "kropp:korsbar",
+        "kropp:paron",
+        "kropp:kokosnot",
+        "kropp:persika",
+        "kropp:melon"
+       ],
+       "subjekt": "sak",
+       "beskrivning": "frukt"
+      }
+     ],
+     "djur": 1,
+     "antal_text": "en vän"
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -4146,7 +4491,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter frukt, som ett äpple, en banan eller en melon.",
+   "hjalp": [
+    "en kanin med ett äpple",
+    "en apa med en banan",
+    "en groda med en apelsin"
+   ]
   },
   {
    "id": "sjo-skugga-pa-stranden",
@@ -5220,9 +5571,43 @@
      "hängmatta"
     ],
     "min": 1,
-    "djur": true
+    "djur": true,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "vila",
+       "nagon_av": [
+        "kropp:sang",
+        "kropp:dubbelsang",
+        "kropp:vaningssang",
+        "kropp:soffa",
+        "kropp:hornsoffa",
+        "kropp:soffbank",
+        "kropp:fatolj",
+        "kropp:designfatolj",
+        "kropp:kudde",
+        "kropp:madrass",
+        "kropp:filt",
+        "kropp:tacke",
+        "kropp:hangmatta",
+        "kropp:hundbadd",
+        "kropp:sovsack"
+       ],
+       "subjekt": "sak",
+       "relationer": [
+        "i",
+        "på",
+        "under",
+        "med"
+       ],
+       "beskrivning": "en mjuk sovplats"
+      }
+     ],
+     "djur": 1,
+     "antal_text": "en vän"
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -5253,7 +5638,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en mjuk sovplats, som en säng eller madrass.",
+   "hjalp": [
+    "en hund i en säng",
+    "en katt på en soffa",
+    "en kanin i en fåtölj"
+   ]
   },
   {
    "id": "grotta-eget-krypin",
