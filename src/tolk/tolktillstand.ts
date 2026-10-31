@@ -70,7 +70,7 @@ export type Bygg = {
   monsterDolj: boolean;
   randAuto: boolean;
   formagor: { nyckel: string; ord: Ord | null; vis: FormVis; antal?: number; antalOrd?: string }[];
-  tillbehor: { ord: Ord; bild: string; fargOrd: Ord | null; fargHex: string | null; glans: boolean; recept?: boolean; relation?: Relation; form?: string; artikel?: string; egenskaper?: string[]; antal?: number; antalOrd?: string }[];
+  tillbehor: { ord: Ord; bild: string; fargOrd: Ord | null; fargHex: string | null; glans: boolean; recept?: boolean; relation?: Relation; form?: string; artikel?: string; egenskaper?: string[]; antal?: number; antalOrd?: string; omvandInuti?: boolean }[];
   skala: number;
   glans: boolean;
   alpha: number;

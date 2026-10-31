@@ -16,12 +16,12 @@ export type BetydelseKrav = {
   djur?: boolean | number;
   antal_text?: string;
 };
-export type TolkadSkapelse = { taggar: ReadonlySet<string>; egnaTaggar?: ReadonlySet<string>; antal: number; djur: boolean; relation?: Relation };
+export type TolkadSkapelse = { taggar: ReadonlySet<string>; egnaTaggar?: ReadonlySet<string>; antal: number; djur: boolean; relation?: Relation; osakerRelation?: boolean };
 export type KravSvar = { ok: boolean; saknas: string[] };
 
 function passar(s: TolkadSkapelse, g: KravGrupp): boolean {
   if (g.subjekt === "djur" && !s.djur || g.subjekt === "sak" && s.djur) return false;
-  if (g.relationer && s.relation && !g.relationer.includes(s.relation)) return false;
+  if (g.relationer && (s.osakerRelation || s.relation && !g.relationer.includes(s.relation))) return false;
   const taggar = g.egna ? s.egnaTaggar ?? s.taggar : s.taggar;
   if (g.alla?.some((t) => !taggar.has(t))) return false;
   return g.nagon_av.length > 0 ? g.nagon_av.some((t) => taggar.has(t)) : !!g.alla?.length;

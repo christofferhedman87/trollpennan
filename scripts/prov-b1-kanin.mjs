@@ -73,6 +73,7 @@ try {
       assert.equal(efterRatt[0].kropp, fore.ang[0].kropp);
       assert.deepEqual(efterRatt[0].tillbehor.map((t) => t.id), [...efterMiss[0].tillbehor.map((t) => t.id), "halsduk"]);
       assert.ok(await page.evaluate(() => window.__trollMinne.getState().stjarnor) > fore.stjarnor);
+      if (process.env.QA_SCREENSHOTS) await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/${id}-ratt-${viewport.width}.png` });
       assert.deepEqual(fel, []); console.log(`Grönt T05 ${id}: nära miss → bevarad skapelse/ledtråd → rätt svar, ${viewport.width}×${viewport.height}`);
       await context.close();
     }

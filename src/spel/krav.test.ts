@@ -109,7 +109,7 @@ test("B1: kaninens värmeuppdrag söker varma kläder, inte eld eller kalla plag
   for (const fras of ["en kanin med mössa", "en hund med halsduk", "en katt med tröja", "en kanin med en varm hatt", "en hund med varma stövlar"]) {
     assert.equal(bedomUppdragsSvar(krav, fras).ok, true, fras);
   }
-  for (const fras of ["en kanin vid en lägereld", "en katt med en kall mössa", "en blå katt", "en kall mössa med en brasa", "en kanin på en mössa", "en kanin bredvid en mössa", "en mössa under en kanin", "en mössa bredvid en kanin", "en mössa under en blåkanin", "en mössa bredvid en blåkanin"]) {
+  for (const fras of ["en kanin vid en lägereld", "en katt med en kall mössa", "en blå katt", "en kall mössa med en brasa", "en kanin på en mössa", "en kanin bredvid en mössa", "en mössa under en kanin", "en mössa bredvid en kanin", "en mössa under en blåkanin", "en mössa bredvid en blåkanin", "en mössa i en kanin", "en filt i en kanin", "en mössa i en blåkanin"]) {
     assert.equal(bedomUppdragsSvar(krav, fras).ok, false, fras);
   }
 });

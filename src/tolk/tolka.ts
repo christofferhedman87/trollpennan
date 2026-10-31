@@ -80,6 +80,7 @@ export function tolka(raw: string, opts: TolkaOpts = {}): Utfall {
     typ: "skapad",
     varelse,
     antal,
+    ...(byggd.tillbehor.some((t) => t.omvandInuti) ? { osakraRelationer: byggd.tillbehor.flatMap((t, i) => t.omvandInuti ? [i] : []) } : {}),
     funna,
     guld,
     okanda,

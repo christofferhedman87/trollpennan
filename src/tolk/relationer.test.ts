@@ -101,3 +101,18 @@ test("B1: omvänd relation behålls även för sammansatt huvuddjur", () => {
     if (u.typ === "skapad") assert.equal(u.varelse.tillbehor.find((t) => t.id === "alvmossa")?.relation, relation, text);
   }
 });
+
+test("B1: omvänd inneslutning är osäker utan att sparformatet ändras", () => {
+  for (const tolk of [tolka, tolkaMedReserv]) {
+    for (const text of ["en mössa i en kanin", "en mössa i en blåkanin"]) {
+      const u = tolk(text, { noteraBlandning: false });
+      assert.equal(u.typ, "skapad", text);
+      if (u.typ !== "skapad") continue;
+      assert.deepEqual(u.osakraRelationer, [0], text);
+      assert.ok(!JSON.stringify(u.varelse).includes("osakraRelationer"), "bedömningens metadata sparas inte i varelse");
+    }
+    const tydlig = tolk("en kanin i en mössa", { noteraBlandning: false });
+    assert.equal(tydlig.typ, "skapad");
+    if (tydlig.typ === "skapad") assert.equal(tydlig.osakraRelationer, undefined);
+  }
+});
