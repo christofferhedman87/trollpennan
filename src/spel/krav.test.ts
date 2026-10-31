@@ -15,9 +15,9 @@ test("B1: storleken gäller ett djur och uttrycklig storlek väger tyngre än ar
   const liten = SKRIV.find((u) => u.id === "pytteliten-kompis")!.krav!;
   const stor = SKRIV.find((u) => u.id === "jattestor-van")!.krav!;
   for (const fras of ["en liten sten", "en hund med en liten mössa", "en liten röd mössa på en hund", "en liten varm mössa på en hund", "en stor myra"]) assert.equal(bedomUppdragsSvar(liten, fras).ok, false, fras);
-  for (const fras of ["en stor sten", "en hund med en stor mössa", "en stor röd boll bredvid en hund", "en liten elefant"]) assert.equal(bedomUppdragsSvar(stor, fras).ok, false, fras);
-  for (const fras of ["en liten mus", "en pytteliten larv", "en liten myra", "en myra", "en liten dinosaurie", "en stor mössa på en liten hund"]) assert.equal(bedomUppdragsSvar(liten, fras).ok, true, fras);
-  for (const fras of ["en stor elefant", "en jättestor drake", "en stor giraff", "en elefant", "en stor myra", "en liten mössa på en stor hund"]) assert.equal(bedomUppdragsSvar(stor, fras).ok, true, fras);
+  for (const fras of ["en stor sten", "en hund med en stor mössa", "en stor röd boll bredvid en hund", "en liten elefant", "en liten drake"]) assert.equal(bedomUppdragsSvar(stor, fras).ok, false, fras);
+  for (const fras of ["en liten mus", "en pytteliten larv", "en liten myra", "en myra", "en loppa", "en liten dinosaurie", "en stor mössa på en liten hund"]) assert.equal(bedomUppdragsSvar(liten, fras).ok, true, fras);
+  for (const fras of ["en stor elefant", "en jättestor drake", "en jättelik hund", "ett jättelikt lamm", "två jättelika katter", "en drake", "en stor giraff", "en elefant", "en blåval", "en stor myra", "en liten mössa på en stor hund"]) assert.equal(bedomUppdragsSvar(stor, fras).ok, true, fras);
 });
 
 test("T05: varje migrerat uppdrag har minst tre ja och två nej genom spelets riktiga tolk", () => {
