@@ -1,3 +1,5 @@
+import { djurMedUid } from "../minneDjur.ts";
+import { noteraOnskeMiss, skaparKvitto } from "../skapa/kvitto.ts";
 import { useRef } from "react"; import { KAN_INTE_RITA_MS, kanInteRita } from "@/tolk/aterkoppling.ts"; import { BYGG } from "@/tolk/byggtolk.ts"; import { formelByggForm, tolkaByggFormel, type ByggFormUtfall } from "@/tolk/byggform.ts"; import { tolkaGava } from "@/tolk/gavotolk.ts";
 import { tolkaMedReserv } from "@/tolk/reserv.ts"; import { noteraSaknade } from "@/tolk/saknade.ts"; import { delaOchMening, tolka } from "@/tolk/tolka.ts"; import type { Utfall, Varelse } from "@/tolk/typer.ts";
 import { passarDjur, TEXTER_AV, uppdragKlart } from "../aventyr.ts"; import { aktivtSkrivUppdrag } from "../uppdragsmotor.ts"; import { platsNu } from "../ui/useBengtsson.ts"; import { geGavor, oppnaMed, oppnaOn, skickaDjur } from "../avflode.ts";
@@ -12,7 +14,7 @@ function laggEllerVarma(v: Varelse, antal: number): { nya: Sparad[]; somnade: Sp
   const liv = upp ? useMinne.getState().liv[upp.uid] : undefined; if (upp && liv) useMinne.setState({ liv: { ...useMinne.getState().liv, [upp.uid]: { ...liv, humor: "glad" } } }); return { nya: upp ? [upp] : [], somnade: [] }; }
 
 export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { const { setText, textRef, setVal, setHand, setForslag, setBehover, setByggPuff, setBokOpp, omUidRef, onskaSkrivRef, nastanRef, introRef, setFotoMal, varldRef, vantarRef, gavaRef, setGavaTill,
-    omradeRef, } = k.t; const { visaBubbla, visaBanner, bjud, visaMossa, rensaVidHandling } = k.b; const { visaPlatsRen, visaVarld } = k.v;
+    omradeRef, setOnskaOpp, } = k.t; const { visaBubbla, visaBanner, bjud, visaMossa, rensaVidHandling } = k.b; const { visaPlatsRen, visaVarld } = k.v;
   const { bengtsson, gaIn, belonaFlode, platsUi } = k.a; const { uppfyll, belona } = k.be; function rensaSkriv() { setText("");
     textRef.current = ""; setVal({}); setHand(false); setForslag(null);
     setBehover(null); }
@@ -30,7 +32,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
   function djurMedUidKropp(uid: string | undefined): string | undefined {
     if (!uid) return undefined;
     const s = useMinne.getState();
-    return (s.ang.find((a) => a.uid === uid) ?? s.hemma.find((h) => h.spec.uid === uid)?.spec)?.kropp;
+    return djurMedUid(s, uid)?.kropp;
   }
   function hanteraBygg(utfall: Extract<ByggFormUtfall, { typ: "bygge" }>, mening = "") { useMinne.getState().sparaOkanda(utfall.okanda); rostKo.handling(); rensaVidHandling(); // Beslut B (2026-10-29): kreativiteten låses aldrig – alla byggord fungerar, Byggboken ger ord att jaga.
 
@@ -53,7 +55,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
     const visat = useMinne.getState().garden.find((g) => g.uid === gjorda[0]?.uid) ?? gjorda[0]; if (visat) { fokusPaBygge(visat.uid); const mall = TEXTER.byggt.find((r) => r.startsWith("Klart!") && r.includes("{formel}")) ?? TEXTER.byggt[0]!; const klarText = fyll(mall, { formel: visat.formel });
       visaBanner(klarText, "ovr", "tapp"); ljud.uppfylld(); }
     setByggPuff(null); const aktiv = useMinne.getState().onskan; if (aktiv?.kalla === "bygg") { const ons = ONSK_BYGG.onskningar.find((o) => o.id === aktiv.id);
-      const djur = useMinne.getState().ang.find((a) => a.uid === aktiv.uid) ?? useMinne.getState().hemma.find((h) => h.spec.uid === aktiv.uid)?.spec; const traff = ons ? byggTraff(utfall.byggen, ons, djur?.kropp) : null;
+      const djur = djurMedUid(useMinne.getState(), aktiv.uid); const traff = ons ? byggTraff(utfall.byggen, ons, djur?.kropp) : null;
       if (ons && traff) { const hem = useMinne.getState().garden.find((g) => gjorda.some((x) => x.uid === g.uid) && g.bygg === traff.bygg); let ok = true; if (ons.krav.hem_for_djuret && djur && hem) {
           const res = useMinne.getState().flyttaIn(djur.uid, hem.uid); ok = res === "ok"; if (res === "ok") visaBanner(fyll(TEXTER.bo.flyttar_in[0]!, { djur: djur.formel, hem: bestamdHem(hem) }), "ovr", "tapp");
           else if (res === "full") visaBanner(TEXTER.bo.full, "ovr", "tapp");
@@ -63,7 +65,7 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
     if (utfall.byggen.some((b) => BYGG_ORD.find((o) => o.id === b.bygg)?.typ === "lek")) bjud("lek"); visaMossa({ byggen: utfall.byggen }); rensaSkriv(); setBokOpp(false);
   }
   function hanteraDjur(raw: string, opt: { hand: boolean; inteGuld?: string[]; behall?: string[] }) { const aktiv = useMinne.getState().onskan; const ge = onskaSkrivRef.current && aktiv?.kalla === "djur" && aktiv.typ === "ge"; if (ge && aktiv) {
-      const bas = useMinne.getState().ang.find((a) => a.uid === aktiv.uid) ?? useMinne.getState().hemma.find((h) => h.spec.uid === aktiv.uid)?.spec; const ons = ONSK.onskningar.find((o) => o.id === aktiv.id);
+      const bas = djurMedUid(useMinne.getState(), aktiv.uid); const ons = ONSK.onskningar.find((o) => o.id === aktiv.id);
       const fras = bas ? tillaggFras(bas, raw) : null; if (!bas || !fras || !ons) { rensaSkriv(); return; }
       const u = tolka(fras, { kalla: opt.hand ? "skriv" : "kort", inteGuld: opt.inteGuld }); if (u.typ === "sparr") { rensaSkriv(); visaBanner(u.text, "sparr", "sparr"); ljud.puff(); return; }
       if (u.typ === "forslag") { setForslag({ token: u.token, text: u.text, forslag: u.forslag }); setBehover(null); return;
@@ -71,10 +73,14 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
       if (u.typ !== "skapad") { if (u.typ === "behover_djur") { useMinne.getState().sparaOkanda(u.okanda); for (const m of u.meddelanden) visaBanner(m, "okand", "okand_inget");
         }
         return; }
-      useMinne.getState().uppdateraDjur(aktiv.uid, u.varelse); belona(u, aktiv.uid, opt.hand); noteraSolSkapelse(u.varelse); if (geTraff(bas, u.varelse, ons)) uppfyll(aktiv, ons.tack, ons.stjarnor, aktiv.uid);
-      else { ljud.nastan(); const p = brygga.platser().find((x) => x.uid === aktiv.uid); visaBubbla(nastanRad(nastanRef.current), p?.x ?? 0.5, p?.topp ?? 0.3, false, true, false, "nastan");
-        nastanRef.current += 1; }
-      rensaSkriv(); return; }
+      useMinne.getState().uppdateraDjur(aktiv.uid, u.varelse); belona(u, aktiv.uid, opt.hand); noteraSolSkapelse(u.varelse); if (geTraff(bas, u.varelse, ons, raw)) uppfyll(aktiv, ons.tack, ons.stjarnor, aktiv.uid);
+      else {
+        const text = nastanRad(nastanRef.current++, ons);
+        noteraOnskeMiss({ id: aktiv.id, uid: aktiv.uid, nastan: text }); ljud.nastan();
+        if (!skaparKvitto()) { const p = brygga.platser().find((x) => x.uid === aktiv.uid); visaBubbla(text, p?.x ?? 0.5, p?.topp ?? 0.3, false, true, false, "nastan"); }
+      }
+      rensaSkriv(); onskaSkrivRef.current = false; setOnskaOpp(false); setBokOpp(false); return; }
+
 
     const [huvud, ...fler] = delaOchMening(raw); const text = huvud && huvud.length > 0 ? huvud : raw; const utfall: Utfall = tolkaMedReserv(text, { kalla: opt.hand ? "skriv" : "kort", inteGuld: opt.inteGuld, behall: opt.behall }); if (utfall.typ === "sparr") { rensaSkriv(); visaBanner(utfall.text, "sparr", "sparr"); ljud.puff(); return; }
     if (utfall.typ === "forslag") { setForslag({ token: utfall.token, text: utfall.text, forslag: utfall.forslag }); setBehover(null); return;
@@ -112,6 +118,8 @@ export function useSkapa(k: Pick<SpelKarna, "t" | "b" | "v" | "a" | "be">) { con
       }
     }
     if (varldRef.current === "gard") visaVarld("ang"); if (aktiv?.kalla === "djur" && aktiv.typ === "kompis" && sista) { const ons = ONSK.onskningar.find((o) => o.id === aktiv.id); if (ons && kompisTraff(sista, ons)) uppfyll(aktiv, ons.tack, ons.stjarnor, sista.uid);
+      else if (ons && k.t.onskaOpp) { const text = nastanRad(nastanRef.current++, ons); noteraOnskeMiss({ id: aktiv.id, uid: aktiv.uid, nastan: text }); if (!skaparKvitto()) visaBubbla(text, 0.5, 0.3, false, true, false, "nastan"); }
+      setOnskaOpp(false);
     }
     const vant = vantarRef.current; if (vant && sista && passarDjur(sista, vant.taggar)) { vantarRef.current = null; if (vant.slag === "oppna") {
         visaBanner(oppnaMed(vant.omrade, sista), "ovr", "oppnas"); gaIn(vant.omrade); } else if (vant.slag === "del") { visaBanner(oppnaOn(sista), "ovr", "oppnas");

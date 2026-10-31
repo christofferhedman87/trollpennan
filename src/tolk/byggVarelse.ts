@@ -220,7 +220,10 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       // R3G: ett föremål bredvid djuret ("en kanin med en hink"). Bilden är entitetens nyckel; ängen ritar modellen.
       if (o === ensamSak) { artikel = undefined; continue; }
       const bild = o.del?.kropp ?? o.id;
-      if (bild === b.kropp || b.tillbehor.some((t) => t.bild === bild)) {
+      const samma = b.tillbehor.some((t) => t.bild === bild && t.ord.id === o.id && t.form === s.form &&
+        (t.relation ?? "med") === (relation ?? "med") && t.fargOrd?.id === b.vantande?.id &&
+        (t.egenskaper ?? []).join("|") === sakEgenskaper.join("|"));
+      if (bild === b.kropp || samma) {
         artikel = undefined; sakEgenskaper = []; b.vantande = null;
         continue;
       }

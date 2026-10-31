@@ -65,7 +65,10 @@ export function arDjur(v: unknown): boolean {
     typeof v.skala === "number" && v.skala > 0 && Number.isFinite(v.skala) &&
     typeof v.alpha === "number" && v.alpha >= 0 && v.alpha <= 1 &&
     Array.isArray(v.formagor) && v.formagor.every(x => typeof x === "string") &&
-    Array.isArray(v.tillbehor) && v.tillbehor.every(x => objekt(x) && typeof x.id === "string" && (x.relation === undefined || (RELATIONER as readonly unknown[]).includes(x.relation))) &&
+    Array.isArray(v.tillbehor) && v.tillbehor.every(x => objekt(x) && typeof x.id === "string" &&
+      (x.relation === undefined || (RELATIONER as readonly unknown[]).includes(x.relation)) &&
+      (x.ord === undefined || typeof x.ord === "string") &&
+      (x.egenskaper === undefined || Array.isArray(x.egenskaper) && x.egenskaper.every(e => typeof e === "string"))) &&
     Array.isArray(v.overraskningar) && v.overraskningar.every(x => objekt(x) && typeof x.text === "string" && typeof x.effekt === "string");
 }
 export function arBygge(v: unknown): boolean {

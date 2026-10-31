@@ -1,4 +1,5 @@
 import egenJson from "../../data/egenskaper.json" with { type: "json" };
+import { taggarForTillbehor, tillbehorMedBetydelse } from "./tillbehorsTaggar.ts";
 import type { Varelse } from "../tolk/typer.ts";
 
 type Egen = {
@@ -27,9 +28,9 @@ export function taggarAv(v: Varelse, medKropp: boolean): Set<string> {
     s.add(`formaga:${id}`);
     for (const t of E.formaga[id] ?? []) s.add(t);
   }
-  for (const tb of v.tillbehor) {
+  for (const tb of tillbehorMedBetydelse(v)) {
     s.add(`tillbehor:${tb.id}`);
-    for (const t of E.tillbehor[tb.id] ?? []) s.add(t);
+    for (const t of taggarForTillbehor(tb)) s.add(t);
   }
   if (v.monster) {
     s.add(`monster:${v.monster}`);
