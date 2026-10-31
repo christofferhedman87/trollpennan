@@ -8,7 +8,8 @@ import { useMinne } from "./minne.ts";
 import { malTillDuk } from "./ui/hjalp.ts";
 import { KenneyNatur } from "./kenneyNatur.tsx";
 import { KV, MILJO } from "./miljo.ts";
-import { HINT, SNART } from "./ang/delat.ts";
+import { DraHint } from "./ui/DraHint.tsx";
+import { SNART } from "./ang/delat.ts";
 import { DAMM } from "./ang/damm.ts";
 import { Eldflugor, FagelFlyg, Fjarilar, Forgrund, Glitter, GrasTuvor, Ljusflackar, Moln, Nackrosor, Ringar, Solkorn, Sond, Stenar, TradOchBlommor, VindGras } from "./ang/dekor.tsx";
 import { Skogsstig, SpokHus } from "./ang/byggnader.tsx";
@@ -254,10 +255,9 @@ function Scen({ natt, onSnart, saga, aktivPlats = "ang", onValjPlats, onVagvisar
   );
 }
 
-export function Angen3D({ natt, saga = false, pausad = false, onGrind, aktivPlats = "ang", onValjPlats, onVagvisarePunkter, vyFlygAktiv = false, resaMal = null, dalEtiketter = false }: { natt: number; saga?: boolean; /** Introts bilder täcker ängen helt: rita ingenting (sparar batteri och processor). */ pausad?: boolean; onGrind?: () => boolean; aktivPlats?: VagvisarePlatsId; onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void; vyFlygAktiv?: boolean; resaMal?: VagvisarePlatsId | null; dalEtiketter?: boolean }) {
+export function Angen3D({ natt, saga = false, pausad = false, onGrind, aktivPlats = "ang", onValjPlats, onVagvisarePunkter, vyFlygAktiv = false, resaMal = null, dalEtiketter = false, ledigtForHint = false }: { natt: number; saga?: boolean; /** Introts bilder täcker ängen helt: rita ingenting (sparar batteri och processor). */ pausad?: boolean; onGrind?: () => boolean; aktivPlats?: VagvisarePlatsId; onValjPlats?: (id: VagvisarePlatsId) => void; onVagvisarePunkter?: (p: VagvisareSkarmPunkt[]) => void; vyFlygAktiv?: boolean; resaMal?: VagvisarePlatsId | null; dalEtiketter?: boolean; ledigtForHint?: boolean }) {
   const djur = useMinne((s) => s.ang);
   const garden = useMinne((s) => s.garden);
-  const interagerat = useMinne((s) => s.dragit);
   const plats = useMinne((s) => s.plats);
   const [prat, setPrat] = useState(false);
   const [dpr, setDpr] = useState<[number, number] | number>([1, KV.dpr_max]);
@@ -271,11 +271,13 @@ export function Angen3D({ natt, saga = false, pausad = false, onGrind, aktivPlat
   useEffect(() => {
     const el = rot.current;
     if (!el) return;
+    const pekare = new Set<number>();
     let aktiv = false;
     let sx = 0;
     let sy = 0;
     const ned = (e: PointerEvent) => {
       aktiv = true;
+      pekare.add(e.pointerId);
       sx = e.clientX;
       sy = e.clientY;
     };
@@ -283,19 +285,23 @@ export function Angen3D({ natt, saga = false, pausad = false, onGrind, aktivPlat
       if (!aktiv || useMinne.getState().dragit) return;
       const dx = e.clientX - sx;
       const dy = e.clientY - sy;
-      if (dx * dx + dy * dy > 24 * 24) {
+      if (dx * dx + dy * dy > (pekare.size > 1 ? 4 : 24) ** 2) {
         aktiv = false;
         useMinne.getState().sattTittat();
       }
     };
-    const upp = () => {
+    const upp = (e: PointerEvent) => {
+      pekare.delete(e.pointerId);
       aktiv = false;
     };
+    const hjul = () => useMinne.getState().sattTittat();
+    el.addEventListener("wheel", hjul, { passive: true });
     el.addEventListener("pointerdown", ned);
     window.addEventListener("pointermove", flytta);
     window.addEventListener("pointerup", upp);
     window.addEventListener("pointercancel", upp);
     return () => {
+      el.removeEventListener("wheel", hjul);
       el.removeEventListener("pointerdown", ned);
       window.removeEventListener("pointermove", flytta);
       window.removeEventListener("pointerup", upp);
@@ -332,11 +338,7 @@ export function Angen3D({ natt, saga = false, pausad = false, onGrind, aktivPlat
   }, [onGrind]);
   return (
     <div ref={rot} className="angen-3d" data-testid="angen-3d" data-v9b-r3f="adaptive-bvh" data-v9b-dpr={Array.isArray(dpr) ? dpr.join("-") : String(dpr)} style={{ "--grad-m": KV.farggrad ? MILJO.farggrad.mattnad : 1, "--grad-k": KV.farggrad ? MILJO.farggrad.kontrast : 1, "--vinjett": MILJO.vinjett.styrka } as React.CSSProperties} data-djur={djur.length} data-byggen={garden.length} data-saga={saga ? "ja" : "nej"} data-plats={plats}>
-      {!saga && !interagerat && djur.length > 0 ? (
-        <p className="tred-hint" data-testid="tred-hint">
-          {HINT}
-        </p>
-      ) : null}
+      <DraHint ledigt={!saga && ledigtForHint && !prat} />
       {prat ? (
         <p className="teaser-bubbla" data-testid="kommer-snart">
           {SNART}

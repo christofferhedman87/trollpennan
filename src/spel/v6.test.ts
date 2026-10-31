@@ -54,7 +54,7 @@ test("V6: bubbla, banner och medaljong har läsbar stil", () => {
   const lager = las("src/spel/ui/AngLager.tsx");
   assert.match(lager, /banners\.slice\(0,\s*1\)/);
   assert.match(lager, /bubblor\.slice\(-1\)/);
-  const djur = las("src/spel/ang/djur.tsx");
+  const djur = las("src/spel/ang/djur.tsx") + las("src/spel/ang/djurForm.tsx");
   assert.match(djur, /malTillDuk\(spec\.uid\)/);
   assert.match(djur, /function StjarnPuff/);
   assert.match(djur, /#F2B632/);

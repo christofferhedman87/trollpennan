@@ -3,7 +3,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import uiJson from "../../../../data/skapa-ui.json" with { type: "json" };
 import * as rostKo from "../../rostKo.ts";
-import { nyIde } from "../../skapa/idetarning.ts";
+import { fyll } from "../../fyll.ts";
+import { harBoksvar } from "../../skapa/svarsLage.ts";
+import { ideForMal } from "../../skapa/bokMal.ts";
+import { useBokMal } from "../../skapa/useBokMal.ts";
 import { ikon } from "../../skapa/ikoner.ts";
 import type { Fraga } from "../../skapa/lexikon.ts";
 import { useSpel } from "../SpelKontext.ts";
@@ -34,7 +37,8 @@ export function SkapaArk() {
   const { remsa, vy, setVy, trolla, puff } = k.sk;
   const [flik, setFlik] = useState<Fraga>("vad");
   const [ide, setIde] = useState<IdeLapp | null>(null);
-  const ideNr = useRef(0);
+  const mal = useBokMal();
+  useEffect(() => setIde(null), [mal.id]);
   const [penna, setPenna] = useState<{ lage: "vilar" | "puttar" | "blinka" | "trollar"; n: number }>({ lage: "vilar", n: 0 });
   const arkRef = useRef<HTMLElement>(null);
   const lagerRef = useRef<HTMLDivElement>(null);
@@ -92,6 +96,17 @@ export function SkapaArk() {
   const tryckPennaRef = useRef(tryckPenna);
   tryckPennaRef.current = tryckPenna;
   useEffect(() => kopplaTrollaKnapp(() => tryckPennaRef.current()), []);
+  const skrivGuldForst = () => {
+    if (!k.sk.spok) return false;
+    k.sk.puffa(fyll(uiJson.hjalprad.tips_spok, { ord: k.sk.spok.ord }));
+    return true;
+  };
+  const visaGata = () => {
+    if (skrivGuldForst()) return;
+    if (harBoksvar(k.sk, k.t)) { k.sk.puffa(uiJson.puffar.svara_forst); return; }
+    const g = nyGata();
+    if (g) setIde(g); else k.sk.puffa(uiJson.puffar.inga_gator);
+  };
   const oppnaHjalp = (f?: Fraga) => {
     if (f) setFlik(f);
     setVy("hjalp");
@@ -106,6 +121,7 @@ export function SkapaArk() {
           <button type="button" className="sk-stang" data-testid="stang-bok" data-v3="bok-stang" aria-label={UI.ark.stang_aria} onClick={stangBok}>
             <img alt="" src={ikon("ui", "stang")} ref={(el) => el?.setAttribute("data-testid", "bok-stang")} />
           </button>
+          <button type="button" className="sk-knapp sk-gata" onClick={visaGata}>{uiJson.gata_knapp}</button>
           <Pennan key={penna.n} redo={redo} lage={penna.lage === "vilar" ? (redo ? "redo" : "vilar") : penna.lage} onTryck={tryckPenna} />
         </div>
         {puff ? (
@@ -113,20 +129,23 @@ export function SkapaArk() {
             {puff.text}
           </p>
         ) : null}
-        <div className="sk-innehall">
-          <Lapp ide={ide} />
+        <div className="sk-boklayout">
           <Trollremsa />
-          <Svarsrad />
-        </div>
+          <div className="sk-innehall">
+            <Lapp ide={ide} />
+            <Svarsrad />
+          </div>
+          <div className="sk-inmatning">
         {vy === "skriv" ? (
           <>
-            <Hjalprad
+            <Hjalprad gata={visaGata}
               oppnaHjalp={() => oppnaHjalp()}
               ide={() => {
-                // Varannan gång en bildgåta, varannan en gåta om ett hemligt ord. Tärningen skriver aldrig åt barnet.
-                ideNr.current += 1;
-                const gata = ideNr.current % 2 === 0 ? nyGata() : null;
-                setIde(gata ?? { slag: "bild", ide: nyIde(ide?.slag === "bild" ? ide.ide : null) });
+                if (skrivGuldForst()) return;
+                if (harBoksvar(k.sk, k.t)) { k.sk.puffa(uiJson.puffar.svara_forst); return; }
+                const fras = ideForMal(mal, ide?.slag === "mal" ? ide.fras : null);
+                if (fras) setIde({ slag: "mal", fras });
+                else k.sk.puffa(uiJson.puffar.ide_lapp);
               }}
             />
             <Tangenter klar={tryckPenna} />
@@ -134,6 +153,8 @@ export function SkapaArk() {
         ) : (
           <Ordhjalp flik={flik} setFlik={setFlik} />
         )}
+          </div>
+        </div>
         <input
           type="text"
           inputMode="none"

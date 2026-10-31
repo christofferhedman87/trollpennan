@@ -24,3 +24,9 @@ Christoffer svarade **”Godkänn hela paketet”** på det samlade B1–B8-för
 - B7: byggidéerna flyttar in i Pennans bok; separat Byggbok avvecklas. Markköp behåller den atomära sparvägen.
 - B8: dokumenterat undantag från 44 px för bokstavstangenter, med förstorad bokstav vid tryck. Alla andra tryckytor följer fortsatt 44 px.
 - P1: oberoende Codex-agent får vara andra granskare före merge i stället för Claude. Faktisk granskare och synpunkter ska dokumenteras, och kvarstående blockerare ska rättas före merge.
+
+## Tillfällig paus och faktisk textläsning, 2026-10-31
+
+- Christoffer har begärt strukturerad paus på grund av låg Codex-kvot: spara pågående arbete och nästa steg i GitHub, påbörja inget nytt block och lämna över till Claude.
+- Christoffer svarade **”Jag har läst och godkänner dessa sex”** på exakt [Textpaket 01](https://github.com/christofferhedman87/trollpennan/blob/d9f2752ce441847d6d6ca02cb0237e254380127e/docs/en-varld/nya-repliker.md#textgranskning-01-sex-publicerade-pilotuppdrag). Godkända ID:n: vingar-i-luften, solgul-van, kalla-tassar, tva-farger, stor-och-liten, varmt-och-kallt. Paketet omfattar uppdrag, tack, ledtrådar och hjälpfraser. Samma oförändrade texter behöver inte godkännas igen.
+- Detta är faktisk B4-läsning av sex texter, inte bara det tidigare paketbeslutet. Flaggorna är ännu false vid pausen; nästa agent ska kontrollera oförändrade texter, sätta endast dessa sex granskad-flaggor och anpassa gamla false-förväntningar. Övriga 85 uppdrag och nya röstinspelningar är inte godkända här.

@@ -1,3 +1,4 @@
+import { djurMedUid } from "../minneDjur.ts";
 import { useEffect } from "react";
 import { byggMedId } from "@/tolk/byggtolk.ts";
 import { GAVOR } from "@/tolk/gavotolk.ts";
@@ -23,8 +24,9 @@ function gavaKortLista(humor?: string): Ord[] {
 }
 
 export function useVyData(k: Pick<SpelKarna, "t">) {
-  const { flik, varld, meny, boUid, byggSidaId, onskaOpp, onskaPos, onskaSyns, kartaOpp, omrade, gavaTill, angRef, funna, onskan, byggSidor, garden, ang, hemma, allaOrd, panel } = k.t;
+  const { flik, varld, meny, boUid, byggSidaId, onskaOpp, onskaPos, kartaOpp, omrade, gavaTill, angRef, funna, onskan, byggSidor, garden, ang, hemma, allaOrd, panel } = k.t;
   const liv = useMinne((s) => s.liv);
+  const platsSkapelser = useMinne((s) => s.platsSkapelser);
 
   useEffect(() => {
     const rot = angRef.current;
@@ -59,11 +61,11 @@ export function useVyData(k: Pick<SpelKarna, "t">) {
     };
   }, []);
 
-  const visaOnskaHjalp = Boolean(onskan && (onskaOpp || !onskaSyns));
+  const visaOnskaHjalp = Boolean(onskan && onskaOpp);
 
   const onskaDjur =
     visaOnskaHjalp && onskan
-      ? (ang.find((a) => a.uid === onskan.uid) ?? hemma.find((h) => h.spec.uid === onskan.uid)?.spec)
+      ? djurMedUid({ ang, hemma, platsSkapelser }, onskan.uid)
       : undefined;
 
   const andrar = Boolean(visaOnskaHjalp && onskan?.kalla === "djur" && onskaDjur);

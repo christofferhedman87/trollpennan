@@ -178,3 +178,69 @@ test("lagring: giltig explicit import släpper spärren efter läsfel, ogiltig i
   assert.equal(JSON.parse(sparat).stjarnor, 23);
   assert.equal(lagringsStatus(), "ok");
 });
+
+test("T-07: valfri relation överlever faktisk export/import och gammal v2 accepteras", (t) => {
+  const original = useMinne.getState();
+  t.after(() => useMinne.setState(original, true));
+  const varld = kopiaVarld();
+  for (const d of [varld.ang[0]!, varld.platsSkapelser.skogen![0]!, varld.sovande[0]!, varld.formler[0]!.spec]) {
+    d.tillbehor = [{ id: "bord", farg: null, glans: false, relation: "under" }];
+  }
+  useMinne.setState(varld);
+  const kopia = JSON.parse(JSON.stringify(exportera()));
+  useMinne.setState(tom());
+  assert.equal(useMinne.getState().importera(kopia), true);
+  assert.deepEqual(exportera(), varld);
+  const aldre = kopiaDjur("aldre");
+  aldre.tillbehor = [{ id: "hatt", farg: null, glans: false }];
+  assert.equal(useMinne.getState().importera({ version: 2, ang: [aldre], garden: [], stjarnor: 17 }), true);
+  assert.deepEqual(useMinne.getState().ang[0]!.tillbehor, aldre.tillbehor);
+  const fore = useMinne.getState();
+  for (const relation of ["ovanpå", "", 3, null, {}, ["under"]]) {
+    const fel = { ...aldre, tillbehor: [{ id: "bord", relation }] };
+    assert.equal(useMinne.getState().importera({ version: 2, ang: [fel], garden: [], stjarnor: 17 }), false);
+    assert.equal(useMinne.getState(), fore, "ogiltig relation får inte ändra världen");
+  }
+});
+
+
+import { tolka } from "../tolk/tolka.ts";
+test("T06: tillbehörets egna ord/egenskaper överlever v2-export/import och felaktig metadata avvisas atomärt", (t) => {
+  const original = useMinne.getState(); t.after(() => useMinne.setState(original, true));
+  const u = tolka("en kanin med kalla strumpor och solglasögon och glasögon");
+  assert.equal(u.typ, "skapad"); if (u.typ !== "skapad") return;
+  assert.equal(u.varelse.tillbehor[0]!.ord, "strumpa");
+  assert.deepEqual(u.varelse.tillbehor[0]!.egenskaper, ["kalla"]);
+  assert.deepEqual(u.varelse.tillbehor.slice(1).map((t) => t.ord), ["solglasögon", "glasögon"]);
+  const varld = kopiaVarld();
+  for (const d of [varld.ang[0]!, varld.hemma[0]!.spec, varld.platsSkapelser.skogen![0]!, varld.sovande[0]!, varld.formler[0]!.spec]) Object.assign(d, u.varelse);
+  useMinne.setState(varld);
+  const kopia = JSON.parse(JSON.stringify(exportera()));
+  useMinne.setState(tom()); assert.equal(useMinne.getState().importera(kopia), true);
+  assert.deepEqual(exportera(), varld);
+  const fore = useMinne.getState();
+  for (const [falt, fel] of [["ord", null], ["ord", 3], ["ord", {}], ["ord", []], ["egenskaper", null], ["egenskaper", "kall"], ["egenskaper", {}], ["egenskaper", [3]], ["egenskaper", [null]]]) {
+    const trasig = JSON.parse(JSON.stringify(kopia)); trasig.ang[0].tillbehor[0][falt as string] = fel;
+    assert.equal(useMinne.getState().importera(trasig), false, `${falt}: ${JSON.stringify(fel)}`);
+    assert.equal(useMinne.getState(), fore);
+  }
+});
+
+
+test("T08: tillbehörsantal bevaras i v2 på alla platser; äldre kopior och ogiltigt antal hanteras säkert", (t) => {
+  const original = useMinne.getState(); t.after(() => useMinne.setState(original, true));
+  const u = tolka("en kanin med två äpplen"); assert.equal(u.typ, "skapad"); if (u.typ !== "skapad") return;
+  assert.equal(u.antal, 1); assert.equal(u.varelse.tillbehor[0]!.antal, 2);
+  const varld = kopiaVarld();
+  for (const d of [varld.ang[0]!, varld.hemma[0]!.spec, varld.platsSkapelser.skogen![0]!, varld.sovande[0]!, varld.formler[0]!.spec]) Object.assign(d, u.varelse);
+  useMinne.setState(varld); const kopia = JSON.parse(JSON.stringify(exportera()));
+  useMinne.setState(tom()); assert.equal(useMinne.getState().importera(kopia), true); assert.deepEqual(exportera(), varld);
+  const fore = useMinne.getState();
+  for (const antal of [0, -1, 1.5, 11, Infinity, "2", null, {}, []]) {
+    const trasig = JSON.parse(JSON.stringify(kopia)); trasig.ang[0].tillbehor[0].antal = antal;
+    assert.equal(useMinne.getState().importera(trasig), false, String(antal)); assert.equal(useMinne.getState(), fore);
+  }
+  const aldre = JSON.parse(JSON.stringify(kopia));
+  for (const d of [aldre.ang[0], aldre.hemma[0].spec, aldre.platsSkapelser.skogen[0], aldre.sovande[0], aldre.formler[0].spec]) delete d.tillbehor[0].antal;
+  assert.equal(useMinne.getState().importera(aldre), true); assert.deepEqual(exportera(), aldre);
+});

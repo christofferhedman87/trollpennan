@@ -1,7 +1,8 @@
+import entiteterJson from "../../data/entiteter.json" with { type: "json" };
 import onskJson from "../../data/onskningar.json" with { type: "json" };
 import byggOnskJson from "../../data/onskningar-bygg.json" with { type: "json" };
 import { lasToken, ordFranForm } from "../tolk/lexikon.ts";
-import { tolka } from "../tolk/tolka.ts";
+import { ordLista, tolka } from "../tolk/tolka.ts";
 import { byggMedId, type ByggeTolk } from "../tolk/byggtolk.ts";
 import type { Varelse } from "../tolk/typer.ts";
 import { nyaTaggar, taggarAv, uppfyller } from "./taggar.ts";
@@ -14,6 +15,7 @@ export type DjurOnska = {
   alla: string[];
   exempel: string[];
   tack: string;
+  nastan?: string;
   stjarnor: number;
   bara_for?: string[];
 };
@@ -42,6 +44,7 @@ export type ByggOnska = {
   krav: ByggKrav;
   exempel: string[];
   tack: string;
+  nastan?: string;
   stjarnor: number;
 };
 
@@ -50,8 +53,13 @@ type ByggFil = { onskningar: ByggOnska[] };
 
 export const ONSK = onskJson as OnskFil;
 export const ONSK_BYGG = byggOnskJson as ByggFil;
+const DJUR_KROPPAR = new Set([
+  ...Object.entries(entiteterJson.entiteter).filter(([, e]) => e.typ === "djur").map(([id]) => id),
+  ...ordLista().filter((o) => o.klass === "djur").map((o) => o.del?.kropp ?? o.id),
+]);
 
-export function nastanRad(i: number): string {
+export function nastanRad(i: number, onskan?: { nastan?: string }): string {
+  if (onskan?.nastan) return onskan.nastan;
   const r = ONSK.nastan;
   return r[i % r.length] ?? r[0]!;
 }
@@ -59,7 +67,7 @@ export function nastanRad(i: number): string {
 export function gePassar(v: Varelse, o: DjurOnska): boolean {
   if (o.typ !== "ge") return true;
   const har = taggarAv(v, false);
-  return !o.nagon_av.some((t) => har.has(t));
+  return !uppfyller(har, o.nagon_av, o.alla);
 }
 
 export function matchBygg(b: ByggeTolk, krav: ByggKrav, kropp?: string): boolean {
@@ -164,11 +172,19 @@ export function tillaggFras(bas: Varelse, tillagg: string): string | null {
   return ny.join(" ").replace(/\s+/g, " ").trim();
 }
 
-export function geTraff(fore: Varelse, efter: Varelse, o: DjurOnska): boolean {
-  return uppfyller(nyaTaggar(fore, efter), o.nagon_av, o.alla);
+export function geTraff(fore: Varelse, efter: Varelse, o: DjurOnska, tillagg?: string): boolean {
+  if (uppfyller(nyaTaggar(fore, efter), o.nagon_av, o.alla)) return true;
+  // Äldre v2 kan ha en kvarstående önskan trots att rätt plagg redan sparats.
+  // Kräv både det verkliga måltillståndet och ett nytt, passande svar; en hatt
+  // får inte lösa tassönskan bara för att gamla strumpor finns på djuret.
+  if (!tillagg || !uppfyller(taggarAv(fore, false), o.nagon_av, o.alla) || !uppfyller(taggarAv(efter, false), o.nagon_av, o.alla)) return false;
+  const bas = tolka("en katt", { kalla: "kort", noteraBlandning: false });
+  const svar = bas.typ === "skapad" ? laggPa(bas.varelse, tillagg) : null;
+  return !!svar && uppfyller(taggarAv(svar, false), o.nagon_av, o.alla);
 }
 
 export function kompisTraff(ny: Varelse, o: DjurOnska): boolean {
+  if (!DJUR_KROPPAR.has(ny.kropp)) return false;
   const t = taggarAv(ny, true);
   t.add("kompis");
   return uppfyller(t, o.nagon_av, o.alla);

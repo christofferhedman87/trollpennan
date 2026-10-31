@@ -4,7 +4,7 @@
 import type { Varelse } from "../../tolk/typer.ts";
 import type { Sparad } from "../brygga.ts";
 import { laggPaAngSpar } from "../minneSparning.ts";
-import { placera } from "../placering.ts";
+import { placeraMedMinne, type Lage } from "../placering.ts";
 import type { Plats } from "../platser.ts";
 
 /** Samma uid och "nyast"-stämpel som ängens hologram (forhandTolk.djurRing), så att placeringen ser den som den nyaste. */
@@ -22,6 +22,7 @@ export type PlatsForhand = {
   roll: string;
   /** uid för de äldre skapelser som skulle somna för att göra plats (tak eller trångt). */
   somnar: string[];
+  placering: ReadonlyMap<string, Lage>;
 };
 
 /**
@@ -35,10 +36,12 @@ export function platsForhand(plats: Plats | undefined, v: Varelse, lista: readon
   const slut = patch.platsSkapelser?.[plats.id];
   if (!ny || !slut) return null;
   const spec: Sparad = { ...ny, uid: HOLO_UID, skapad: Number.MAX_SAFE_INTEGER };
-  const l = placera(slut.map((d) => (d.uid === ny.uid ? spec : d)), plats).get(HOLO_UID);
+  const placering = placeraMedMinne(slut.map((d) => (d.uid === ny.uid ? spec : d)), plats);
+  const l = placering.get(HOLO_UID);
   if (!l) return null;
   return {
     spec,
+    placering,
     ring: { x: l.x, z: l.z, r: 0.8 * Math.max(0.8, Math.min(1.5, v.skala || 1)) },
     y: l.y,
     krymp: l.krymp ?? 1,

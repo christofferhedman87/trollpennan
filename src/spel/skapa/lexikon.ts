@@ -128,7 +128,10 @@ export function slaUpp(tokens: string[], i: number, ctx: Sammanhang, typ: "djur"
   const ord = ordFranForm(w);
   const ordU = ord ? franOrd(ord, w, 1) : null;
   const ordEj = ord && ord.klass !== "foremal" ? ordU : null;
-  if (ctx === "med") return franDel(w) ?? ordEj ?? franBygg(w) ?? ordU ?? franMaterial(w);
+  if (ctx === "med") {
+    const u = franDel(w) ?? ordEj ?? franBygg(w) ?? ordU ?? franMaterial(w);
+    return u?.kalla === "ord" && ord?.klass === "foremal" ? { ...u, fraga: "har", slot: "har" } : u;
+  }
   if (ctx === "av") return franMaterial(w) ?? ordEj ?? franBygg(w) ?? ordU;
   if (ctx === "som") {
     if (typ === "bygg") return franEgenskapVerb(w) ?? franEgenskap(tokens, i) ?? ordEj ?? franBygg(w) ?? ordU;

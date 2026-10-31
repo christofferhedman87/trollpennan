@@ -4,41 +4,112 @@
     "plats": "skogen",
     "namn": "Bamse-Bum",
     "djur": "björn",
-    "tillbehor": ["hatt"],
-    "position": [0.0, 0.0, -2.5],
+    "tillbehor": [
+      "hatt"
+    ],
+    "position": [
+      0.0,
+      0.0,
+      -2.5
+    ],
     "skala": 2.1,
     "svallFaktor": 0.12,
     "kravAntal": 3,
     "gata": "Jag drömmer om något rött eller sött med honung!",
-    "favoriter": ["jordgubbe", "jordgubbar", "honung", "äpple", "bär", "blåbär", "hallon", "svamp", "paj", "kaka"],
-    "beloning": { "stjarnor": 5, "ritning": "hage-soltak" }
+    "favoriter": [
+      "jordgubbe",
+      "jordgubbar",
+      "honung",
+      "äpple",
+      "bär",
+      "blåbär",
+      "hallon",
+      "svamp",
+      "paj",
+      "kaka"
+    ],
+    "beloning": {
+      "stjarnor": 5,
+      "ritning": "hage-soltak"
+    },
+    "hjalp": [
+      "en röd jordgubbe",
+      "en kaka med honung"
+    ]
   },
   "sjon": {
     "id": "kapten-plask",
     "plats": "sjon",
     "namn": "Kapten Plask",
     "djur": "sköldpadda",
-    "tillbehor": ["hatt"],
-    "position": [0.0, 0.0, -2.5],
+    "tillbehor": [
+      "hatt"
+    ],
+    "position": [
+      0.0,
+      0.0,
+      -2.5
+    ],
     "skala": 2.1,
     "svallFaktor": 0.12,
     "kravAntal": 3,
     "gata": "Jag drömmer om en gul frukt eller en studsboll!",
-    "favoriter": ["banan", "studsboll", "boll", "fisk", "snäcka", "melon", "äpple", "glass", "saft"],
-    "beloning": { "stjarnor": 5, "ritning": "musikfontan" }
+    "favoriter": [
+      "banan",
+      "studsboll",
+      "boll",
+      "fisk",
+      "snäcka",
+      "melon",
+      "äpple",
+      "glass",
+      "saft"
+    ],
+    "beloning": {
+      "stjarnor": 5,
+      "ritning": "musikfontan"
+    },
+    "hjalp": [
+      "en gul banan",
+      "en studsboll"
+    ]
   },
   "grottan": {
     "id": "glitter-glim",
     "plats": "grottan",
     "namn": "Glitter-Glim",
     "djur": "drake",
-    "tillbehor": ["krona"],
-    "position": [0.0, 0.0, -2.5],
+    "tillbehor": [
+      "krona"
+    ],
+    "position": [
+      0.0,
+      0.0,
+      -2.5
+    ],
     "skala": 2.1,
     "svallFaktor": 0.12,
     "kravAntal": 3,
     "gata": "Jag drömmer om en glittrig kaka eller en kristall!",
-    "favoriter": ["kaka", "kristall", "diamant", "stjärna", "guld", "bulle", "glass", "skatt", "ädelsten", "honung"],
-    "beloning": { "stjarnor": 5, "ritning": "kristall-lykta" }
+    "favoriter": [
+      "kaka",
+      "kristall",
+      "diamant",
+      "stjärna",
+      "guld",
+      "bulle",
+      "glass",
+      "skatt",
+      "ädelsten",
+      "honung"
+    ],
+    "beloning": {
+      "stjarnor": 5,
+      "ritning": "kristall-lykta"
+    },
+    "hjalp": [
+      "en glittrig kaka",
+      "en kristall"
+    ]
   }
 }

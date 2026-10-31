@@ -1,0 +1,169 @@
+{
+  "kalla": "Språkregressioner T-08. Kända substantiv använder projektets befintliga SALDO-former.",
+  "fraser": [
+    {
+      "fras": "en kanin med två strumpor",
+      "antal": 1,
+      "formel": "en kanin med två strumpor",
+      "saker": {
+        "strumpa": 2
+      }
+    },
+    {
+      "fras": "en katt med två äpplen",
+      "antal": 1,
+      "formel": "en katt med två äpplen",
+      "saker": {
+        "apple": 2
+      }
+    },
+    {
+      "fras": "två kaniner med tre morötter",
+      "antal": 2,
+      "formel": "två kaniner med tre morötter",
+      "saker": {
+        "morot": 3
+      }
+    },
+    {
+      "fras": "tre morötter",
+      "antal": 3,
+      "formel": "tre morötter",
+      "saker": {}
+    },
+    {
+      "fras": "ett päron",
+      "antal": 1,
+      "formel": "ett päron",
+      "saker": {}
+    },
+    {
+      "fras": "två päron",
+      "antal": 2,
+      "formel": "två päron",
+      "saker": {}
+    },
+    {
+      "fras": "en katt med en morot och en morot",
+      "antal": 1,
+      "formel": "en katt med en morot och en morot",
+      "saker": {
+        "morot": 2
+      }
+    },
+    {
+      "fras": "en katt under två bord",
+      "antal": 1,
+      "formel": "en katt under två bord",
+      "saker": {
+        "bord": 2
+      }
+    },
+    {
+      "fras": "en katt med två strumpor och en mössa",
+      "antal": 1,
+      "formel": "en katt med två strumpor och en mössa",
+      "saker": {
+        "strumpa": 2,
+        "alvmossa": 1
+      }
+    },
+    {
+      "fras": "en katt med en strumpa och två mössor",
+      "antal": 1,
+      "formel": "en katt med en strumpa och två mössor",
+      "saker": {
+        "strumpa": 1,
+        "alvmossa": 2
+      }
+    },
+    {
+      "fras": "en katt med många äpplen",
+      "antal": 1,
+      "formel": "en katt med många äpplen",
+      "saker": {
+        "apple": 5
+      }
+    },
+    {
+      "fras": "en katt med 2 äpplen",
+      "antal": 1,
+      "formel": "en katt med 2 äpplen",
+      "saker": {
+        "apple": 2
+      }
+    },
+    {
+      "fras": "en katt med två vingar och en hatt",
+      "antal": 1,
+      "formel": "en katt med två vingar och en hatt",
+      "saker": {
+        "hatt": 1
+      }
+    },
+    {
+      "fras": "en katt med två vingar och blå hatt",
+      "antal": 1,
+      "formel": "en katt med två vingar och blå hatt",
+      "saker": {
+        "hatt": 1
+      }
+    },
+    {
+      "fras": "en katt med två prickar och en hatt",
+      "antal": 1,
+      "formel": "en katt med två prickar och en hatt",
+      "saker": {
+        "hatt": 1
+      }
+    },
+    {
+      "fras": "en katt under det stora bordet",
+      "antal": 1,
+      "formel": "en katt under det stora bordet",
+      "saker": {
+        "bord": 1
+      }
+    },
+    {
+      "fras": "en katt under det röda bordet",
+      "antal": 1,
+      "formel": "en katt under det röda bordet",
+      "saker": {
+        "bord": 1
+      }
+    },
+    {
+      "fras": "en katt under den stora stenen",
+      "antal": 1,
+      "formel": "en katt under den stora stenen",
+      "saker": {
+        "sten": 1
+      }
+    },
+    {
+      "fras": "en katt under de stora borden",
+      "antal": 1,
+      "formel": "en katt under de stora borden",
+      "saker": {
+        "bord": 1
+      }
+    },
+    {
+      "fras": "en katt under de två stora borden",
+      "antal": 1,
+      "formel": "en katt under de två stora borden",
+      "saker": {
+        "bord": 2
+      }
+    },
+    {
+      "fras": "en katt under de två röda borden",
+      "antal": 1,
+      "formel": "en katt under de två röda borden",
+      "saker": {
+        "bord": 2
+      }
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import { RELATIONER } from "../tolk/typer.ts";
 /** Ren, testbar lagringsgräns. Inga nätverksanrop eller beroenden. */
 export type LagringsStatus = "ok" | "otillganglig" | "skadad";
 let status: LagringsStatus = "ok";
@@ -64,7 +65,11 @@ export function arDjur(v: unknown): boolean {
     typeof v.skala === "number" && v.skala > 0 && Number.isFinite(v.skala) &&
     typeof v.alpha === "number" && v.alpha >= 0 && v.alpha <= 1 &&
     Array.isArray(v.formagor) && v.formagor.every(x => typeof x === "string") &&
-    Array.isArray(v.tillbehor) && v.tillbehor.every(x => objekt(x) && typeof x.id === "string") &&
+    Array.isArray(v.tillbehor) && v.tillbehor.every(x => objekt(x) && typeof x.id === "string" &&
+      (x.relation === undefined || (RELATIONER as readonly unknown[]).includes(x.relation)) &&
+      (x.ord === undefined || typeof x.ord === "string") &&
+      (x.antal === undefined || typeof x.antal === "number" && Number.isInteger(x.antal) && x.antal >= 1 && x.antal <= 10) &&
+      (x.egenskaper === undefined || Array.isArray(x.egenskaper) && x.egenskaper.every(e => typeof e === "string"))) &&
     Array.isArray(v.overraskningar) && v.overraskningar.every(x => objekt(x) && typeof x.text === "string" && typeof x.effekt === "string");
 }
 export function arBygge(v: unknown): boolean {

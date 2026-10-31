@@ -82,6 +82,84 @@ Föräldratexter, ingen ny barnreplik. Befintlig grod-attribution bevaras ordagr
 
 Befintliga korrekta inspelningar återanvänds genom exakt textmatchning där de finns. Nya texter inväntar godkänd inspelning; ingen ny rösttäckning påstås.
 
+## A0/A2: bokens gemensamma mål (pågående)
+
+Alla nya textkällor nedan. Exakt befintlig inspelning återanvänds när den finns; ny rösttäckning påstås inte.
+
+- `data/skapa-ui.json bokmal.tips.fri`: Skriv ett djur eller ett hus.
+- `data/skapa-ui.json bokmal.tips.uppdrag`: Skriv något som hjälper Bengtsson.
+- `data/skapa-ui.json bokmal.tips.onskan`: Skriv något som passar djurets önskan.
+- `data/skapa-ui.json bokmal.tips.gava`: Skriv en gåva till din vän.
+- `data/skapa-ui.json bokmal.tips.tomt`: Skriv vad du vill bygga på tomten.
+- `data/skapa-ui.json bokmal.tips.plats`: Skriv en vän eller något som hör till platsen.
+- `data/skapa-ui.json bokmal.tips.vaktare`: Skriv något som passar Väktardjurets dröm.
+- `data/skapa-ui.json bokmal.rubriker.uppdrag`: Till uppdraget
+- `data/skapa-ui.json bokmal.rubriker.onskan`: Till önskan
+- `data/skapa-ui.json bokmal.rubriker.gava`: Till gåvan
+- `data/skapa-ui.json bokmal.rubriker.tomt`: Till tomten
+- `data/skapa-ui.json bokmal.rubriker.plats`: På den här platsen
+- `data/skapa-ui.json bokmal.rubriker.vaktare`: Till Väktardjuret
+- `data/skapa-ui.json bokmal.rubriker.fri`: Idéer
+- `data/skapa-ui.json bokmal.fria_ideer[0]`: en röd kanin
+- `data/skapa-ui.json bokmal.fria_ideer[1]`: en stor hund
+- `data/skapa-ui.json bokmal.fria_ideer[2]`: en blå häst
+- `data/skapa-ui.json bokmal.fria_ideer[3]`: en katt med vingar
+- `data/skapa-ui.json bokmal.fria_ideer[4]`: en gul groda
+- `data/skapa-ui.json bokmal.fria_ideer[5]`: en prickig drake
+- `data/skapa-ui.json bokmal.fria_ideer[6]`: ett litet hus
+- `data/skapa-ui.json bokmal.fria_ideer[7]`: ett blått stall
+- `data/skapa-ui.json bokmal.fria_ideer[8]`: en röd blomma
+- `data/skapa-ui.json bokmal.fria_ideer[9]`: ett stort träd
+- `data/skapa-ui.json bokmal.fria_ideer[10]`: en glad katt
+- `data/skapa-ui.json bokmal.fria_ideer[11]`: en kanin med hatt
+- `data/skapa-ui.json bokmal.fria_ideer[12]`: en randig zebra
+- `data/skapa-ui.json bokmal.fria_ideer[13]`: en lysande uggla
+- `data/skapa-ui.json bokmal.fria_ideer[14]`: en gul banan
+- `data/skapa-ui.json bokmal.fria_ideer[15]`: ett rött äpple
+- `data/skapa-ui.json bokmal.fria_ideer[16]`: en liten fisk
+- `data/skapa-ui.json bokmal.fria_ideer[17]`: en anka med halsduk
+- `data/skapa-ui.json bokmal.fria_ideer[18]`: ett grönt hus
+- `data/skapa-ui.json bokmal.fria_ideer[19]`: en stor elefant
+- `data/skapa-ui.json bokmal.gavo_ideer[0]`: en morot
+- `data/skapa-ui.json bokmal.gavo_ideer[1]`: ett äpple
+- `data/skapa-ui.json bokmal.gavo_ideer[2]`: en kaka
+- `data/skapa-ui.json bokmal.gavo_ideer[3]`: en boll
+- `data/skapa-ui.json bokmal.tomt_ideer[0]`: ett rött hus
+- `data/skapa-ui.json bokmal.tomt_ideer[1]`: ett blått stall
+- `data/skapa-ui.json bokmal.tomt_ideer[2]`: en stor hage
+- `data/skapa-ui.json bokmal.tomt_ideer[3]`: ett litet hönshus
+- `data/skapa-ui.json bokmal.plats_ideer.skogen[0]`: en röd räv
+- `data/skapa-ui.json bokmal.plats_ideer.skogen[1]`: en liten uggla
+- `data/skapa-ui.json bokmal.plats_ideer.skogen[2]`: en stor björn
+- `data/skapa-ui.json bokmal.plats_ideer.skogen[3]`: en grön buske
+- `data/skapa-ui.json bokmal.plats_ideer.sjon[0]`: en blå fisk
+- `data/skapa-ui.json bokmal.plats_ideer.sjon[1]`: en gul anka
+- `data/skapa-ui.json bokmal.plats_ideer.sjon[2]`: en stor delfin
+- `data/skapa-ui.json bokmal.plats_ideer.sjon[3]`: en liten groda
+- `data/skapa-ui.json bokmal.plats_ideer.grottan[0]`: en lysande drake
+- `data/skapa-ui.json bokmal.plats_ideer.grottan[1]`: en liten fladdermus
+- `data/skapa-ui.json bokmal.plats_ideer.grottan[2]`: en glittrande kristall
+- `data/skapa-ui.json bokmal.plats_ideer.grottan[3]`: en stor sten
+- `data/skapa-ui.json gata_knapp`: Gåta
+- `data/skapa-ui.json lapp.djur_reserv`: Ett djur
+- `data/vaktardjur.json skogen.hjalp[0]`: en röd jordgubbe
+- `data/vaktardjur.json skogen.hjalp[1]`: en kaka med honung
+- `data/vaktardjur.json sjon.hjalp[0]`: en gul banan
+- `data/vaktardjur.json sjon.hjalp[1]`: en studsboll
+- `data/vaktardjur.json grottan.hjalp[0]`: en glittrig kaka
+- `data/vaktardjur.json grottan.hjalp[1]`: en kristall
+
+- `data/skapa-ui.json puffar.inga_gator`: Du har hittat alla gåtdjur här. Prova en egen idé!
+- `data/skapa-ui.json puffar.ide_lapp`: Titta på lappen. Vad skulle kunna hjälpa?
+
+- `data/skapa-ui.json bokmal.byt_rubrik`: Prova hela förslaget
+- `data/skapa-ui.json bokmal.byt_text`: Vill du byta till den här meningen? Du kan ångra efteråt.
+- `data/skapa-ui.json bokmal.byt_ja`: Byt till förslaget
+- `data/skapa-ui.json bokmal.byt_nej`: Behåll min mening
+
+- `data/skapa-ui.json lapp.las_hela`: Läs hela lappen: {text}
+- `data/skapa-ui.json lapp.tillbaka`: Tillbaka till boken
+
 ## B0 · T-05: sex betydelsekontrollerade uppdrag
 
 Inga nya inspelningar påstås finnas. Fullständiga nya barntexter i `data/bengtsson.json`:
@@ -123,6 +201,60 @@ Inga nya inspelningar påstås finnas. Fullständiga nya barntexter i `data/beng
 - `varmt-och-kallt.hjalp[2]`: en filt och en snöhög
 - `varmt-och-kallt.krav.betydelse.varmt.beskrivning`: något som värmer
 - `varmt-och-kallt.krav.betydelse.kallt.beskrivning`: något som kyler
+
+
+## T-06: situationsriktiga önskesvar
+
+Önsketexterna och tacken bevaras. Ändrade exempel: frusna tassar → ”med strumpor”, ”med stövlar”, ”med tofflor”; frusna öron → ”med mössa”, ”med luva”, ”med röd mössa”; stark sol → ”med hatt”, ”med solglasögon”, ”med röd hatt”; suddig syn → ”med glasögon”, ”med röda glasögon”, ”med blå glasögon”; sjöresan → ”som flyger”, ”som simmar”, ”med vingar”. Vanliga glasögon ger synhjälp, solglasögon solskydd, och en ryggsäck löser inte vattenöverfarten. Inga nya inspelningar påstås finnas.
+
+Nya ledtrådar vid ett faktiskt bedömt önskesvar:
+
+| Önskan | Ledtråd |
+|---|---|
+| frusna-tassar | Mina tassar är fortfarande kalla. Vad kan jag ha på fötterna? |
+| frusna-oron | Mina öron är fortfarande kalla. Vad kan täcka dem? |
+| stark-sol | Jag kisar fortfarande. Vad kan skugga ögonen? |
+| regn | Jag vill hålla mig torr. Vad kan skydda mig mot regnet? |
+| kalas | Jag ska på kalas. Kan du ge mig något festligt? |
+| kung | Jag vill känna mig kunglig. Vad brukar en kung ha på sig? |
+| suddigt | Jag ser fortfarande suddigt. Jag behöver glasögon att se med. |
+| se-uppifran | Jag vill upp bland molnen. Hur kan jag ta mig dit? |
+| simma | Jag vill röra mig i vattnet. Vad hjälper mig att simma? |
+| morkradd | Det är fortfarande mörkt. Kan du göra så att jag lyser? |
+| kull | Jag vill hinna med i leken. Kan du göra mig snabbare? |
+| appel | Äpplet är högt uppe. Kan jag hoppa, flyga eller bli större? |
+| kurragomma | Jag vill gömma mig. Kan jag bli osynlig eller riktigt liten? |
+| resa | Sjön är i vägen. Hur kan jag ta mig genom vattnet eller över det? |
+| magisk | Jag önskar mig något magiskt, som ett horn eller ett skimmer. |
+| stjarnor | Jag vill glittra som stjärnorna. Hur kan jag skimra? |
+| fler-farger | Jag vill ha många färger på en gång, som en regnbåge. |
+| for-liten | Jag vill bli större. Kan du skriva hur stor jag ska bli? |
+| for-stor | Jag vill bli mindre. Kan du skriva hur liten jag ska bli? |
+| rod | Jag vill ha en röd eller orange färg på kroppen. |
+| gul | Jag vill ha en gul färg, eller glänsa som guld. |
+| bla | Jag önskar mig en blå färg på kroppen. |
+| gron | Jag önskar mig en grön färg på kroppen. |
+| lila | Jag vill bli lila eller mörkblå. |
+| prickar | Jag vill ha prickar på kroppen. Kan du göra mig prickig? |
+| ranger | Jag vill ha ränder på kroppen, som en tiger. |
+| staketet | Jag vill komma över staketet. Kan du hjälpa mig att hoppa? |
+| modig | Jag vill kunna spruta eld. Kan du ge mig den förmågan? |
+| huvud | Jag vill ha något fint på huvudet, som en hatt eller rosett. |
+| blixt | Jag vill vara snabb som blixten. Kan du göra mig snabbare? |
+| ensam | Jag längtar efter en djurkompis. Vem kan du trolla fram? |
+| kompis-simma | Jag längtar efter en djurkompis som kan simma. |
+| kompis-flyga | Jag längtar efter en djurkompis som kan flyga. |
+| kompis-liten | Jag längtar efter en liten djurkompis. |
+| kompis-fisk | Jag längtar efter en fiskkompis. Vem simmar härnäst? |
+| kompis-hatt | Jag längtar efter en djurkompis med hatt eller krona. |
+| kompis-drake | Jag längtar efter en drakkompis. |
+| kompis-snabb | Jag längtar efter en djurkompis som är snabb. |
+| kompis-lysa | Jag längtar efter en djurkompis som kan lysa i mörkret. |
+| kompis-rosa | Jag längtar efter en rosa djurkompis. |
+| kompis-enhorning | Jag längtar efter en hästkompis med horn. |
+| kompis-urtid | Jag längtar efter en dinosauriekompis. |
+
+T-06:s kvitto för ett tillägg eller en ändring använder nu `skapa-ui.json → kvitto.tillagg`: **Du skrev: ”{mening}”.** Barnets egna ord behålls i citatet, även ”med glasögon”, ”lila” och ”som flyger”. En helt ny skapelse behåller den befintliga ramen. Ny inspelning återstår.
 
 ## Textgranskning 01: sex publicerade pilotuppdrag
 

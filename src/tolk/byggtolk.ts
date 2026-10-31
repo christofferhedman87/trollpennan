@@ -345,7 +345,7 @@ export function formelBygg(b: ByggeTolk): string {
       const info = BYGG.delar.find((x) => x.id === d.del)!;
       const dpl = d.antal > 1;
       const a = d.adj.map((x) => bojBygg(x.id, info.genus, dpl)).join(" ");
-      const num = dpl ? d.antalOrd || "" : d.del === "tak" ? "" : info.genus;
+      const num = dpl ? d.antalOrd || "" : d.del === "tak" && !d.antalOrd ? "" : info.genus;
       const namn = dpl ? info.former[2] : info.former[0];
       return [num, a, namn].filter(Boolean).join(" ") + (d.material ? " av " + d.material : "");
     });
