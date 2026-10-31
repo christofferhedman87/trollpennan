@@ -7,7 +7,7 @@ const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || 
 const val = process.env.QA_FALL;
 try {
   for (const viewport of [{ width: 375, height: 812 }, { width: 812, height: 375 }]) {
-    for (const fall of ["tangent", "enter", "enter-skrivyta", "penna", "tom", "remsa", "vad", "enter-vad", "ordbricka"].filter((x) => !val || x === val)) {
+    for (const fall of ["tangent", "enter", "enter-skrivyta", "penna", "tom", "tom-hjalp", "remsa", "vad", "enter-vad", "ordbricka"].filter((x) => !val || x === val)) {
       const context = await browser.newContext({ viewport, reducedMotion: "reduce" });
       const page = await context.newPage(); page.setDefaultTimeout(45000);
       const fel = []; page.on("pageerror", (e) => fel.push(e.message));
@@ -37,6 +37,16 @@ try {
         await page.keyboard.press("Enter"); await page.waitForTimeout(1500);
         assert.equal(await page.evaluate(() => window.__trollMinne.getState().ang.length), 0, "Enter på en ordbricka får bara aktivera brickan");
         assert.equal(await page.getByTestId("tangentbord").isVisible(), true);
+      } else if (fall === "tom-hjalp") {
+        await page.locator('[data-dal="ordhjalp"]').click();
+        const skrivyta = page.locator('[data-dal="skrivbricka"]');
+        assert.match(await skrivyta.innerText(), /Välj ett kort/);
+        if (process.env.QA_SCREENSHOTS) {
+          await mkdir(process.env.QA_SCREENSHOTS, { recursive: true });
+          await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/tom-hjalp-${viewport.width}.png` });
+        }
+        await skrivyta.click(); await page.getByTestId("tangentbord").waitFor();
+        assert.equal(await page.getByTestId("ord-input").inputValue(), "");
       } else if (fall === "tom") {
         await page.locator('[data-dal="klar"]').click();
         await page.locator(".sk-puff").waitFor();
