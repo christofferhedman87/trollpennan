@@ -221,6 +221,9 @@ test("F4: värmehjälpen bevarar riktiga relationer, antal och egenskaper", () =
     }
     const fristaende = mossaPaFrysKanin(lasMening("två kalla filtar"));
     assert.deepEqual(fristaende?.spec.tillbehor, lasMening("en kanin med två kalla filtar").tillbehor);
+    for (const text of ["en röd filt med en blå filt", "en glittrig filt med en blå filt", "en röd filt med en blå hatt", "en filt bredvid en boll"]) {
+      assert.deepEqual(mossaPaFrysKanin(lasMening(text))?.spec.tillbehor, lasMening(`en kanin med ${text}`).tillbehor, "varje plagg behåller egen färg och glans");
+    }
     assert.deepEqual(useMinne.getState().ang[0]?.tillbehor, [], "hjälpberäkningen skriver inte i minnet");
   } finally { useMinne.getState().aterstall(); }
 });

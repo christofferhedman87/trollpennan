@@ -67,12 +67,19 @@ try {
     });
     await page.goto(adress, { timeout: 120000 }); await page.waitForFunction(() => !!window.__trollMinne);
     const alla = () => page.evaluate(() => { const s = window.__trollMinne.getState(); return [...s.ang, ...s.sovande, ...s.hemma.map((h) => h.spec), ...Object.values(s.platsSkapelser).flat(), ...s.garden]; });
+    const ritadeLagen = () => page.evaluate(() => {
+      const r = {};
+      window.__tredScen.scene.traverse((o) => { const uid = o.userData.trollDel; if (typeof uid === "string" && !r[uid]) r[uid] = { position:o.position.toArray(), synlig:o.visible }; });
+      return r;
+    });
     const skapade = [];
     const valda = fraser.filter((p) => process.env.QA_FALL ? process.env.QA_FALL.split("|").includes(p.text) : !p.extra);
     assert.ok(valda.length > 0, "QA_FALL måste välja minst ett faktiskt provfall");
     for (const p of valda) {
       provText = p.text;
       const varldFore = JSON.parse(JSON.stringify(await alla()));
+      await page.waitForFunction(() => !!window.__tredScen);
+      const ritadeFore = skapade.length === 0 ? await ritadeLagen() : null;
       await page.getByTestId("pennans-bok").click(); await page.getByTestId("tangentbord").waitFor();
       await page.locator('[data-dal="skrivbricka"]').click();
       for (const del of p.text.split(/([åäö])/)) {
@@ -135,6 +142,17 @@ try {
         }
       }
       assert.deepEqual(JSON.parse(JSON.stringify(await alla())), varldFore, "förhandsvisningen ändrar inget sparat djur eller bygge");
+      if (skapade.length === 0 && process.env.QA_HOLO !== "0") {
+        assert.ok(Object.keys(ritadeFore).length > 0, "en äldre skapelse ritas före provet");
+        await page.getByTestId("stang-bok").click(); await page.getByTestId("bok-skarm").waitFor({ state:"hidden" });
+        await page.waitForFunction(() => !window.__trollvy?.oppen && !window.__trollholo);
+        assert.deepEqual(await ritadeLagen(), ritadeFore, "avbruten förhandsvisning återställer äldre djurs verkliga ritläge");
+        assert.deepEqual(JSON.parse(JSON.stringify(await alla())), varldFore, "avbryt lämnar hela sparvärlden orörd");
+        await page.getByTestId("pennans-bok").click(); await page.getByTestId("tangentbord").waitFor();
+        assert.equal(await page.getByTestId("ord-input").inputValue(), p.text, "barnets text finns kvar efter avbryt");
+        await page.waitForFunction((text) => window.__trollholo?.nyckel?.endsWith(text), p.text);
+        console.log("Grönt avbryt utan sparmutation", viewport.width);
+      }
       await page.getByTestId("vakna").click(); await page.getByTestId("bok-skarm").waitFor({ state: "hidden" });
       const nya = (await alla()).filter((d) => !fore.has(d.uid));
       assert.equal(nya.length, 1);

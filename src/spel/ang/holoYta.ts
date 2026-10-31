@@ -41,13 +41,17 @@ export function bokHoloYta(canvas: DOMRect, sammansatt = false): HoloYta | null 
   return yta.right > yta.left && yta.bottom > yta.top ? yta : null;
 }
 
-/** Skala kring ringens markpunkt. Perspektivets lilla skillnad får en extra marginal. */
-export function passaHolo(r: { x0: number; y0: number; x1: number; y1: number }, x: number, y: number, yta: HoloYta): number {
-  const tak = [1];
-  if (r.x0 < x) tak.push((x - yta.left) / (x - r.x0));
-  if (r.x1 > x) tak.push((yta.right - x) / (r.x1 - x));
-  if (r.y0 < y) tak.push((y - yta.top) / (y - r.y0));
-  if (r.y1 > y) tak.push((yta.bottom - y) / (r.y1 - y));
-  const skala = Math.min(...tak);
-  return Math.max(0.1, skala < 1 ? skala * 0.96 : 1);
+type SkarmRuta = { x0: number; y0: number; x1: number; y1: number };
+/** Prova den verkliga perspektivprojektionen, kring ringens oförändrade markpunkt. */
+export function passaHolo(projicera: (skala: number) => SkarmRuta, yta: HoloYta, minsta = 0): number {
+  const r = projicera(1);
+  const onskad = Math.max(1, minsta / Math.max(1, r.x1 - r.x0, r.y1 - r.y0));
+  const ryms = (s: number) => {
+    const q = projicera(s);
+    return Object.values(q).every(Number.isFinite) && q.x0 >= yta.left && q.x1 <= yta.right && q.y0 >= yta.top && q.y1 <= yta.bottom;
+  };
+  if (ryms(onskad)) return onskad;
+  let lag = 0, hog = onskad;
+  for (let i = 0; i < 10; i++) { const mitt = (lag + hog) / 2; if (ryms(mitt)) lag = mitt; else hog = mitt; }
+  return Math.max(0.1, lag * 0.98);
 }

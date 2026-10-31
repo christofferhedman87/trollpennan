@@ -24,6 +24,7 @@ const _v = new THREE.Vector3();
 const _a = new THREE.Vector3();
 const _b = new THREE.Vector3();
 const _box = new THREE.Box3();
+const _holoMitt = new THREE.Vector3();
 const _hx = [0, 0, 0, 0, 0, 0, 0, 0].map(() => new THREE.Vector3());
 /** Bara dev och prov (aldrig för barn): hologrammets ruta på skärmen i CSS-px, för att provet ska kunna se att det syns. */
 const PROV = import.meta.env.DEV || (typeof navigator !== "undefined" && navigator.webdriver === true);
@@ -31,11 +32,15 @@ let provRam = 0;
 function holoRuta(g: THREE.Group, camera: THREE.Camera, gl: THREE.WebGLRenderer) {
   synligModellRuta(g, _box);
   if (_box.isEmpty()) return;
-  const r = gl.domElement.getBoundingClientRect();
+  return projiceradHoloRuta(camera, gl.domElement.getBoundingClientRect());
+}
+function projiceradHoloRuta(camera: THREE.Camera, r: DOMRect, mitt?: THREE.Vector3, skala = 1) {
   const { min, max } = _box;
   let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
   [0, 1].forEach((i) => [0, 1].forEach((j) => [0, 1].forEach((k) => {
-    const p = _hx[i * 4 + j * 2 + k]!.set(i ? max.x : min.x, j ? max.y : min.y, k ? max.z : min.z).project(camera);
+    const p = _hx[i * 4 + j * 2 + k]!.set(i ? max.x : min.x, j ? max.y : min.y, k ? max.z : min.z);
+    if (mitt) p.sub(mitt).multiplyScalar(skala).add(mitt);
+    p.project(camera);
     const sx = r.left + ((p.x + 1) / 2) * r.width;
     const sy = r.top + ((1 - p.y) / 2) * r.height;
     x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy);
@@ -162,16 +167,17 @@ function Hologram() {
       if (behov > 0 && plats > 0) pass = Math.max(minst, Math.min(1, plats / behov));
     }
     // Använd den riktiga modellens ruta när den fria ytan också avgränsas av Pennan och Stäng.
-    // Både modell och svävhöjd krymper kring samma markpunkt; ringens verkliga plats ändras aldrig.
+    // Modell och svävhöjd anpassas kring samma markpunkt; ringens verkliga plats ändras aldrig.
     const hojd = l.spec?.typ === "djur" ? synY(l.holoY) + 0.08 + Math.sin(t * 2.4) * 0.04 : 0;
     const duk = gl.domElement.getBoundingClientRect();
     const yta = bokHoloYta(duk, l.spec?.typ === "djur" && l.spec.spec.tillbehor.length > 0);
     if (yta && ring) {
       g.scale.set(sx, sy, sx);
       g.position.y = hojd;
-      const ruta = holoRuta(g, camera, gl);
-      _v.set(ring.x, 0, ring.z).project(camera);
-      if (ruta) pass = passaHolo(ruta, duk.left + (_v.x + 1) * duk.width / 2, duk.top + (1 - _v.y) * duk.height / 2, yta);
+      synligModellRuta(g, _box);
+      _holoMitt.set(ring.x, 0, ring.z);
+      // Även en trång plats med krympning 0,25 får en läsbar förhandsbild, med marginal till 64 px.
+      if (!_box.isEmpty()) pass = passaHolo((skala) => projiceradHoloRuta(camera, duk, _holoMitt, skala), yta, l.spec?.typ === "djur" && l.spec.spec.tillbehor.length ? 72 : 0);
     }
     g.scale.set(sx * pass, sy * pass, sx * pass);
     g.position.y = hojd * pass;

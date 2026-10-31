@@ -14,7 +14,7 @@ import { ankareFor } from "./tillbehor/ankare.ts";
 import { kladesExemplar } from "./tillbehor/exemplar.ts";
 import { kroppMatt, placeraMedMinne } from "./placering.ts";
 import type { Sparad } from "./brygga.ts";
-import { friHoloYta } from "./ang/holoYta.ts";
+import { friHoloYta, passaHolo } from "./ang/holoYta.ts";
 import { synligModellRuta } from "./modeller/synligRuta.ts";
 import { gorHolo } from "./ang/holoMaterial.ts";
 import { forhand } from "./skapa/forhand.ts";
@@ -191,6 +191,20 @@ test("Hologrammet använder ytan ovanför låga kontroller och Ängens liggande 
     { left: 12, right: 116, top: 12, bottom: 104 },
   ]);
   assert.ok(l && l.left === 8 && l.right === 244 && l.top >= 112 && l.bottom === 367);
+});
+
+test("En liten sammansatt förhandsbild förstoras bara inom den fria ytan", () => {
+  const liten = { x0: 68, y0: 231, x1: 94, y1: 274 }, yta = { left: 8, top: 190, right: 155, bottom: 305 };
+  const mat = (s: number) => ({ x0:81 + (liten.x0 - 81) * s, x1:81 + (liten.x1 - 81) * s, y0:280 + (liten.y0 - 280) * s, y1:280 + (liten.y1 - 280) * s });
+  assert.equal(passaHolo(mat, yta), 1, "gammal anpassning bevaras utan önskad minsta storlek");
+  const k = passaHolo(mat, yta, 72);
+  assert.ok(k > 1 && (liten.y1 - liten.y0) * k >= 64);
+  for (const [v, mitt, min, max] of [[liten.x0, 81, yta.left, yta.right], [liten.x1, 81, yta.left, yta.right], [liten.y0, 280, yta.top, yta.bottom], [liten.y1, 280, yta.top, yta.bottom]]) {
+    const synlig = mitt! + (v! - mitt!) * k; assert.ok(synlig >= min! && synlig <= max!);
+  }
+  const perspektiv = (s: number) => ({ x0:81 - 100 * s / (1 - 0.3 * s), x1:81 + 100 * s / (1 - 0.3 * s), y0:280 - 200 * s / (1 - 0.3 * s), y1:280 + 20 * s / (1 - 0.3 * s) });
+  const s = passaHolo(perspektiv, yta, 72), synlig = perspektiv(s);
+  assert.ok(s < 1 && synlig.x0 >= yta.left && synlig.x1 <= yta.right && synlig.y0 >= yta.top && synlig.y1 <= yta.bottom, "även en stor ruta med perspektiv ryms efter faktisk projektion");
 });
 
 test("Skinnade modellmått följer aktuell skala utan minne av förra bildrutan", async () => {

@@ -28,8 +28,8 @@ function sammaPlagg(a: TillbehorSpec, b: TillbehorSpec): boolean {
 
 function fristaendePlagg(v: Varelse): TillbehorSpec[] {
   const u = tolka(`en kanin med ${v.formel}`, { kalla: "kort", noteraBlandning: false });
-  const t = u.typ === "skapad" ? u.varelse.tillbehor.filter((t) => arVarmePlagg(t.id) && barsPaKropp(t)) : [];
-  return t.length ? t.map((t) => ({ ...t, farg: v.farg, glans: v.glans })) : [{ id: normPlagg(v.kropp), farg: v.farg, glans: v.glans }];
+  const t = u.typ === "skapad" ? u.varelse.tillbehor : [];
+  return t.length ? t.map((t, i) => i === 0 ? { ...t, farg: t.farg ?? v.farg, glans: t.glans || v.glans } : t) : [{ id: normPlagg(v.kropp), farg: v.farg, glans: v.glans }, ...v.tillbehor];
 }
 
 /**
@@ -41,8 +41,8 @@ export function mossaPaFrysKanin(v: Varelse): { uid: string; spec: Varelse } | n
   const s = useMinne.getState();
   if (s.plats !== "ang") return null;
   const fristaende = arVarmePlagg(v.kropp);
-  const plaggen = (fristaende ? fristaendePlagg(v) : v.tillbehor.filter((t) => arVarmePlagg(t.id) && barsPaKropp(t)))
-    .map((t) => ({ ...t, id: normPlagg(t.id) }));
+  const nya = (fristaende ? fristaendePlagg(v) : v.tillbehor).map((t) => ({ ...t, id: arVarmePlagg(t.id) ? normPlagg(t.id) : t.id }));
+  const plaggen = nya.filter((t) => arVarmePlagg(t.id) && barsPaKropp(t));
   if (plaggen.length === 0) return null;
   const art = fristaende ? null : v.kropp;
   const saknar = (d: Sparad) => {
@@ -56,7 +56,6 @@ export function mossaPaFrysKanin(v: Varelse): { uid: string; spec: Varelse } | n
     pool.find((d) => s.liv[d.uid]?.humor === "fryser") ??
     (fristaende ? (pool.find((d) => d.kropp === "kanin") ?? pool[0]) : pool[0]);
   if (!mal) return null;
-  const nya = fristaende ? plaggen : v.tillbehor.map((t) => ({ ...t, id: arVarmePlagg(t.id) ? normPlagg(t.id) : t.id }));
   const tillbehor = [...mal.tillbehor.filter((t) => !nya.some((n) => normPlagg(n.id) === normPlagg(t.id) && (n.relation ?? "med") === (t.relation ?? "med"))), ...nya];
   const spec: Varelse = { ...mal, tillbehor };
   return { uid: mal.uid, spec };
