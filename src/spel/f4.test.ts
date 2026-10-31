@@ -115,7 +115,7 @@ test("F4: kalibrering, modeller, Bengtsson och datainvarianter", () => {
   assert.match(skapa, /useMinne\.getState\(\)\.ang\.length > 0/);
   assert.match(skapa, /\$\{useMinne\.getState\(\)\.ang\[0\]!\.kropp\} med \$\{text\}/);
 
-  const gltf = las("src/spel/gltfDjur.tsx");
+  const gltf = las("src/spel/modeller/gltfPlagg.tsx");
   assert.match(gltf, /function plaggModellUrl\(id: string\): string \| null/);
   assert.match(gltf, /plaggModellUrl\(plaggId\)/);
   assert.match(gltf, /plaggModellUrl\(normaliseraPlaggId\(t\.id\)\)/);
