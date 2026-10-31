@@ -11,7 +11,9 @@ Claude tog över efter Codex-pausen och lämnar nu tillbaka. Detta är aktuell s
 - **#300** `claude/f2-min-bok` (F2 · T-22): Ordjakten/Guldord öppnar rätt del med samma räkning som rutan; tom Låda har tomvy och Stäng. Sju grindar gröna på `a40ac4c`; `scripts/prov-min-bok.mjs` rött på main, grönt i båda vyer. Nya texter i nya-repliker.md. Kvar: merga main, oberoende granskning, merge, CF/SHA.
 - **#301** `claude/g1-guldchans-kvitto` (G1 · T-29/T-32): **oprovat utkast**. Skakningen vid fel tangent borttagen; kvittot visar ”{n} guldord: {ord}”. Kvar: nodprov, UI-prov (rött/grönt, båda vyer, utan reducerad rörelse), nya-repliker.md, grindar, granskning. PR-texten listar exakt vad.
 
-**Omfattning kvar:** av 35 fynd är 11 levererade, 6 delvis klara och 18 öppna. #299–#301 skulle leverera T-22, T-29 och T-32 och flytta T-18 framåt (85 texter kvar). Av blockplanens 28 block är 10 klara (E1–E3, A0–A2, B0, B2, F4, G4), 2 delvis (C1: C1d; C2: resten av C2b), 2 i PR (F2, G1) och 14 orörda: B1 (85 uppdrag, L), B3, C3, C4 (L), BC, D0–D3, F1, F3, F5, G2, G3.
+**Christoffers beslut efter Claudes pass:** se beslut.md. Textpaket 02 (85 uppdrag) granskas av en fristående AI-chatt och svaret blir underlag i B1/BC. Före slutgranskningen av hela blockserien: stoppa och meddela Christoffer (han väljer granskare och sätter ansträngning=max). Nytt fynd T-36 ligger som block F6.
+
+**Omfattning kvar:** av 36 fynd (35 + T-36) är 11 levererade, 6 delvis klara och 19 öppna. #299–#301 skulle leverera T-22, T-29 och T-32 och flytta T-18 framåt (85 texter kvar). Av blockplanens 29 block är 10 klara (E1–E3, A0–A2, B0, B2, F4, G4), 2 delvis (C1: C1d; C2: resten av C2b), 2 i PR (F2, G1) och 15 orörda: B1 (85 uppdrag, L), B3, C3, C4 (L), BC, D0–D3, F1, F3, F5, F6, G2, G3.
 
 Börja med `git status`, `git fetch origin` och läs #298–#301. Använd origin/main, ingen force-push. Bevara sparformat v2, markmigreringen och Cloudflare. Bilder är endast intern kontroll. Inga nya checkpointdokument. Granskaren godkände exakt `9e1a3d293343bfe6a2f7ecde96f921a845e48e5b` (8 682 slumpfall och 14 490 sammansättningar: 0 luckor mot main; legitima antal 1–10 skapas). Kända icke-blockerande anmärkningar: ”1 katter” blir 3 katter som ”en katter”; en siffra under guldchansen räknas som fel tangent; gåvovägen och `sparaOkanda` saknar egen spärrkontroll (fanns före #298); i 812×375 hamnar den nyss trollade katten bakom HUD:ens Skriv-knapp efter att boken stängts (D2/F5).
 
@@ -168,10 +170,18 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 | F3 · T-25 | Fyra riktiga frågor, korrekta kategorier och separat skrivknapp | A2, B6 | S · frågetecken, horn/kroppsdelar, rubrikkort och fokus |
 | F4 · T-27 | Låg liggande bok med kompakt läsbar lapp, fast remsa och hel kortrad | A1/A2, D | M · 375×812, 812×375 och 667×375, även stavning/guld |
 | F5 · T-28 | Platsspecifika tips och geometriskt reservutrymme för Väktare/returskylt | A2, D2 | M · nya djur och skylt skymmer inte Väktaren i båda vyer |
+| F6 · T-36 | Djur som redan bor i ett hus kan väljas och flytta (med bekräftelse); ett djur som inte passar huset visas med skäl; tomtexten säger den verkliga orsaken | Oberoende | M · bo i ett hus → välj till annat hus → flyttar; passar inte → skäl; tom lista per orsak; v2 och omladdning |
 | G1 · T-29/T-32 | Ingen skakning vid felslag; kvitto anger verkliga guldord | A1 | S · eget ord/hjälpord/flerordsfras och positiv fortsättning |
 | G2 · T-30 | Tangentpopup och dokumenterat beslutat undantag, övriga mål ≥44 px | B8 | S · pointer cancel/leave, popup i skärm, annan UI oförminskad |
 | G3 · T-33/T-34 | Verkliga kartplatser, stora högtalare/fylld karta; läsbara världsskyltar från start | B6 för namn | M · karta/alias, 44 px, projection och riktiga skyltklick |
 | G4 · T-35 | Fullständigt bevarade licenser sist under Tack till | Oberoende | S · föräldrasidans ordning och åtkomlig attribution |
+
+## F6 · T-36: ett djur som redan bor i ett hus (Christoffers fynd 2026-10-31)
+
+- **Var:** `TEXTER.bo` i `data/texter-gard.json` (`valj`, `ingen`, `passar_inte`), listan `boDjur` i `src/spel/styr/useVyData.ts` (bara djur i `ang` vars kropp passar huset), panelen i `src/spel/ui/AngLager.tsx` och `flyttaIn` i minnet.
+- **Problem:** Ett djur som redan bor i ett hus syns fortfarande på ängen men finns inte i listan ”Tryck på ett djur som ska bo här.”. Barnet får ingen förklaring. När listan är tom står det ”Inget djur kan bo här än. Väck ett djur på ängen först!”, fast det finns vakna djur. Spelet räknar med att barnet själv förstår att djuret redan har ett hem, eller att djuret inte passar huset.
+- **Så bör det fungera:** Alla barnets djur som syns visas i listan. Ett djur som bor i ett annat hus står med sitt hem (”bor i stugan”) och kan väljas; då frågar spelet ”Ska {djur} flytta hit från {hem}?” och flyttar vid ja. Ett djur som inte passar huset står med ett vänligt skäl (vilka djur huset passar för). Tomtexten säger den verkliga orsaken: inga djur alls → skapa ett djur; bara sovande → väck ett djur; alla passar inte → vilka djur huset passar för. Ett tryck på ett djur som bor i ett hus säger var det bor.
+- **Prov:** rött på main, grönt i 375×812 och 812×375 med riktiga tryck: djur i hus A väljs till hus B och bor sedan i B (även efter omladdning); djur som inte passar visar skäl; varje tomorsak visar rätt text; sparformat v2 oförändrat. Nya texter i `docs/en-varld/nya-repliker.md`.
 
 ## B0 · T-05, sex betydelsekontrollerade uppdrag (#290)
 
@@ -262,6 +272,7 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 | T-33 | G3 | Planerad |
 | T-34 | G3 | Planerad |
 | T-35 | E3/G4 | Publicerad f1e38d3 (#287), båda vyer, CF124377043349/6SHA-256 gröna |
+| T-36 | F6 | Planerad; Christoffers fynd 2026-10-31 |
 
 ## Fortsätt här — gäller både Codex och Claude
 
