@@ -24,6 +24,9 @@ function sakTaggar(taggar: Set<string>, id: string): void {
 /** Färg gäller kroppen. En röd mössa får aldrig göra en blå hund röd. */
 export function betydelseAv(v: Varelse, antal = 1): TolkadSkapelse {
   const taggar = taggarAv(v, true);
+  // Barnets uttryckliga skala går före artens standardstorlek.
+  if (v.skala <= 0.75) taggar.delete("stor");
+  if (v.skala >= 1.3) taggar.delete("liten");
   const e = ENT[v.kropp];
   const djur = e?.typ === "djur";
   if (djur && e.rorelse === "flyg") taggar.add("flyga");
