@@ -54,6 +54,17 @@ try {
     await ryms(bort, "hela Ta bort-knappen på markerad ordbricka");
     const ruta = await bort.boundingBox(); assert.ok(ruta && ruta.width >= 44 && ruta.height >= 44, "Ta bort har44px tryckyta");
     await bort.click(); assert.equal((await page.getByTestId("ord-input").inputValue()).includes("kanin"), false);
+    await page.locator('[data-dal="skrivbricka"]').click();
+    const kvar = await page.getByTestId("ord-input").inputValue();
+    for (let i = 0; i < kvar.length; i++) await page.keyboard.press("Backspace");
+    await page.keyboard.type("en kanin med en hatt ");
+    await page.locator('.sk-ord[data-klass="vad"]').filter({ hasText: "kanin" }).click();
+    await ryms(page.locator(".sk-ta-bort"), "markerad tidigare bricka");
+    await page.keyboard.type("som");
+    assert.equal(await page.getByTestId("ord-input").inputValue(), "en kanin med en hatt som");
+    await ryms(page.locator('[data-dal="skrivbricka"]'), "nya bokstäver efter brickmarkering");
+    assert.equal(await page.locator(".sk-ord.vald").count(), 0, "fortsatt skrivning lämnar markeringen");
+    if (process.env.QA_SCREENSHOTS) await page.screenshot({ path: `${process.env.QA_SCREENSHOTS}/fortsatt-${viewport.width}x${viewport.height}.png` });
     assert.deepEqual(sidfel, []); console.log(`Grönt T-27: ${viewport.width}×${viewport.height}, skriv/idé/hjälp/full lapp/stavning`);
     await context.close();
   }
