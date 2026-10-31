@@ -46,7 +46,9 @@ export function Trollremsa() {
     const id = window.setTimeout(() => setAnim({ ny: null, bojda: [], id: 0 }), 760);
     return () => window.clearTimeout(id);
   }, [rorelse]);
-  useEffect(() => setVald(null), [remsa.ord.length]);
+  // Ett tryck får visa en gammal bricka. Nästa skrivtecken lämnar den markeringen
+  // före nästa bildruta, så att scrollningen följer den nya texten igen.
+  useLayoutEffect(() => setVald(null), [remsa.skriv, spok?.buf, remsa.ord.length]);
   const b = remsa.brickor;
   // Tom plats: ett kort har lagt ett adjektiv men det finns inget Vad än.
   const sistaAdj = remsa.harVad ? -1 : b.reduce((m, x, i) => (x.klass === "hurdan" && x.kalla !== "skriv" ? i : m), -1);
