@@ -107,7 +107,11 @@ export function applyKomp(b: Bygg, k: Extract<Sem, { t: "komp" }>, mode: Mode, v
       if (!visaLed && k.okanda.length === 0) b.djurRaw = k.raw;
     }
     markera(b, k.suffix.ord.id, false);
-    for (const m of k.mods) applyForled(b, m.key, m.del, visaLed);
+    for (const m of k.mods) {
+      applyForled(b, m.key, m.del, visaLed);
+      const farg = !visaLed && m.del.farg ? forledTillOrd(m.key) : null;
+      if (farg?.klass === "farg") b.skrivenKroppsFarg = farg.id;
+    }
     for (const d of k.djur) {
       markera(b, d.id, false);
       if (d.signatur) laggFormaga(b, d.signatur, null, "dolj");
@@ -280,9 +284,10 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
     }
     markera(b, o.id, true);
     if (o.klass === "farg") {
-      if (mode === "med" || nastaArTillbehor(sem, i)) b.vantande = o;
+      if (mode === "med" || nastaArSak(sem, i, ensamSak)) b.vantande = o;
       else if (!b.fargOrd) {
         b.fargOrd = o;
+        b.skrivenKroppsFarg = o.id;
         if (o.del?.farg) b.fargHex = o.del.farg;
       } else if (!b.fargOrd2) b.fargOrd2 = o;
       continue;
@@ -299,6 +304,10 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       continue;
     }
     if (o.klass === "monster" || o.klass === "formaga" || o.klass === "egenskap") {
+      if (mode === "med" && b.vantande && (o.klass === "monster" || o.klass === "formaga")) {
+        if (o.klass === "monster") b.monsterfarg = b.vantande.del?.farg ?? null;
+        b.vantande = null;
+      }
       applyDel(b, o.del, o, false);
       if (o.klass === "monster") { b.monsterOrd = o; if (o.efter === "med") { b.monsterAntal = sakAntal; b.monsterAntalOrd = sakAntalOrd; } }
       if (o.klass === "formaga") {

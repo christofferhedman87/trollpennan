@@ -60,6 +60,8 @@ export type Bygg = {
   plural: boolean;
   storlek: Ord | null;
   fargOrd: Ord | null;
+  /** Kroppsfärg som faktiskt knöts till huvuddjuret av tolken. Sparas inte. */
+  skrivenKroppsFarg?: string;
   fargOrd2: Ord | null;
   fargHex: string | null;
   monster: string | null;

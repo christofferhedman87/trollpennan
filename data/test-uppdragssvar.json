@@ -111,19 +111,26 @@
         "en vit boll",
         "en brun kanin med en vit hatt",
         "en isbjörn",
-        "en enhörning"
+        "en enhörning",
+        "en vit tröja på en hund",
+        "en hund och en vit jacka"
       ]
     },
     "rod-kompis": {
       "ja": [
         "en röd drake",
         "en röd fisk",
-        "en röd fågel"
+        "en röd fågel",
+        "en mörkröd hund",
+        "en ljusröd hund"
       ],
       "nej": [
         "en räv",
         "en röd boll",
-        "en blå katt med en röd hatt"
+        "en blå katt med en röd hatt",
+        "en röd mössa på en hund",
+        "en röd mössa bredvid en hund",
+        "en hund och en röd mössa"
       ]
     },
     "gron-kompis": {
@@ -132,13 +139,16 @@
         "en grön drake",
         "en grön larv",
         "en grön dinosaurie",
-        "en grönhund"
+        "en grönhund",
+        "en ljusgrön hund",
+        "en mörkgrön hund"
       ],
       "nej": [
         "en groda",
         "en grön boll",
         "en blå katt med en grön hatt",
-        "en dinosaurie"
+        "en dinosaurie",
+        "en hund med gröna vingar"
       ]
     }
   }

@@ -612,13 +612,10 @@
       {
        "id": "farg",
        "nagon_av": [
-        "farg:vit"
+        "skriven_farg:vit"
        ],
        "subjekt": "djur",
-       "beskrivning": "en vit vän",
-       "alla": [
-        "skriven_farg"
-       ]
+       "beskrivning": "en vit vän"
       }
      ]
     }
@@ -744,13 +741,12 @@
       {
        "id": "farg",
        "nagon_av": [
-        "farg:röd"
+        "skriven_farg:röd",
+        "skriven_farg:ljusröd",
+        "skriven_farg:mörkröd"
        ],
        "subjekt": "djur",
-       "beskrivning": "en röd vän",
-       "alla": [
-        "skriven_farg"
-       ]
+       "beskrivning": "en röd vän"
       }
      ]
     }
@@ -816,13 +812,12 @@
       {
        "id": "farg",
        "nagon_av": [
-        "farg:grön"
+        "skriven_farg:grön",
+        "skriven_farg:ljusgrön",
+        "skriven_farg:mörkgrön"
        ],
        "subjekt": "djur",
-       "beskrivning": "en grön vän",
-       "alla": [
-        "skriven_farg"
-       ]
+       "beskrivning": "en grön vän"
       }
      ]
     }

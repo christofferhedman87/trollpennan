@@ -4,8 +4,6 @@ import egenJson from "../../data/egenskaper.json" with { type: "json" };
 import { delaOchMening } from "../tolk/ochMening.ts";
 import { ordFranForm } from "../tolk/lexikon.ts";
 import { tolkaMedReserv } from "../tolk/reserv.ts";
-import { semantisera } from "../tolk/semantisera.ts";
-import { tokensAv } from "../tolk/tolktillstand.ts";
 import type { Varelse } from "../tolk/typer.ts";
 import { taggarAv } from "./taggar.ts";
 import type { TolkadSkapelse } from "./krav.ts";
@@ -41,12 +39,6 @@ export function betydelseAv(v: Varelse, antal = 1): TolkadSkapelse {
   // Beskrivande egenskaper saknar eget sparfält. Läs bara tolkarens färdiga formel,
   // och bara dess huvudfras, så att en varm mössa inte blir en varm kropp.
   const huvud = v.formel.split(/\s+(?:med|som|på|under|i|vid|bredvid)\s+/i)[0] ?? "";
-  // Artens standardfärg är inte ett skrivet färgord. Använd tolkens semantiska
-  // led och kräv att den uttryckta färgen faktiskt är den färg kroppen fick.
-  const sem = semantisera(tokensAv(huvud));
-  if (v.farg && Array.isArray(sem) && sem.some((s) =>
-    s.t === "ord" && s.o.klass === "farg" && s.o.del?.farg === v.farg ||
-    s.t === "komp" && s.mods.some((m) => m.del.farg === v.farg))) taggar.add("skriven_farg");
   for (const token of huvud.toLocaleLowerCase("sv").match(/[a-zåäöéü]+/g) ?? []) {
     const ord = ordFranForm(token);
     if (ord?.klass === "egenskap") taggar.add(`egenskap:${ord.id}`);
@@ -69,6 +61,7 @@ export function betydelseFranText(text: string): TolkadSkapelse[] {
     const huvudfras = v.formel.split(/\s+(?:med|som|på|under|i|vid|bredvid)\s+/i)[0] ?? "";
     const huvud = medTemperatur(betydelseAv({ ...v, tillbehor: [] }, u.antal), temperaturer(huvudfras, v).get(v.kropp));
     const taggar = new Set(huvud.taggar);
+    if (u.skrivenKroppsFarg) taggar.add(`skriven_farg:${u.skrivenKroppsFarg}`);
     for (const sak of saker) for (const t of sak.taggar) {
       if (t !== "farg" && !t.startsWith("farg:") && !t.startsWith("kropp:")) taggar.add(t);
     }

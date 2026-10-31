@@ -129,3 +129,18 @@ test("B1: samordnade saker med gemensam relation delas inte från målet", () =>
   assert.deepEqual(delaOchMening("en katt och en hund"), ["en katt", "en hund"]);
   assert.deepEqual(delaOchMening("en mössa och en filt och en hund"), ["en mössa", "en filt och en hund"]);
 });
+
+test("B1: sakens färg flyttas inte till djuret", () => {
+  for (const tolk of [tolka, tolkaMedReserv]) for (const text of ["en röd mössa på en hund", "en hund och en röd mössa", "en röd mössa bredvid en hund"]) {
+    const u = tolk(text, { noteraBlandning: false });
+    assert.equal(u.typ, "skapad", text);
+    if (u.typ !== "skapad") continue;
+    assert.equal(u.varelse.farg, null, text);
+    assert.equal(u.varelse.tillbehor.find((t) => t.id === "alvmossa")?.farg, "#E53935", text);
+  }
+  for (const text of ["en hund med gröna vingar", "en hund med röda prickar"]) {
+    const u = tolkaMedReserv(text, { noteraBlandning: false });
+    assert.equal(u.typ, "skapad", text);
+    if (u.typ === "skapad") assert.equal(u.varelse.farg, null, text);
+  }
+});
