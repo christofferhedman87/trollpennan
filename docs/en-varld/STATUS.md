@@ -104,3 +104,7 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 ## T-14/T-35, E3/G4 (PR #287)
 
 Manifest/ikoner och best-effort persist vid start, utan blockerad start eller ny överföring. Föräldrar får ärliga Safari-/hemskärmsråd och tidpunkt för senaste startade nedladdning; grodlicensen bevaras under Tack till längst ner. Alla sju grindar gröna,553/553. UI persist true/false/fel/saknas och verklig kopienedladdning/korrekt licensordning gröna,375×812 och812×375; interna bilder granskade. Oberoende Codex-granskare godkände2f3a40e. Merge/live återstår. Svagaste punkter: fysisk Safari-långtid, faktisk iPad-hemskärmsinstallation, ingen garanti att föräldern behåller en nedladdad fil. Ingen ny röst krävs för föräldratexterna.
+
+## C1a · förbered T-07/T-08 (pågår)
+
+Tolken delas i sex moduler på107–310rader för att följa400-radersregeln före språkändringarna.1726fraser ger byteidentiska kompletta tolkningsutfall före/efter, både ordinarie tolk och reservkedja. Branch codex/t07-t08-tolkmoduler från origin/mainf425a41; sju grindar körs. Ingen relation/formel/sparning ändras ännu. T-07/T-08 är öppna. Samordna först med publicerade A2/B0, granska och verifiera, fortsätt sedan verkliga relationer, böjningar och återstående uppdragsbetydelse.

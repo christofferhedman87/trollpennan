@@ -51,3 +51,7 @@ Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först
 ## A1 T-01/T-02/T-31 (2026-10-31, PR #288)
 
 Trolla-tangenten, Enter och Pennan använder samma synliga handling/animation. Tom mening ger puff. Hjälpens skrivyta är en riktig knapp (minst44px), har korrekt tomtext och ingen falsk markör; vad-luckan behåller tangenterna och uppmuntrar egen text. Fysisk skrivning får skrivfokus; Enter på ordbrickan lyssnar och skapar inte ett djur. Alla sju grindar gröna,553/553;20kontrollfall gröna i375×812/812×375, interna bilder granskade. Oberoende Codex-granskare godkände484e4a8; efter det endast prov/dokument, lint grönt igen. Merge/live återstår. Tre svagaste punkter: fysisk svensk hårdvara/IME, låg liggande lapp (T-27), godkända nya repliker. Nästa är den påbörjade gemensamma målmodulen A0/A2 i#289.
+
+## C1a · förbered T-07/T-08 (pågår)
+
+Tolken delas i sex moduler på107–310rader för att följa400-radersregeln före språkändringarna.1726fraser ger byteidentiska kompletta tolkningsutfall före/efter, både ordinarie tolk och reservkedja. Branch codex/t07-t08-tolkmoduler från origin/mainf425a41; sju grindar körs. Ingen relation/formel/sparning ändras ännu. T-07/T-08 är öppna. Samordna först med publicerade A2/B0, granska och verifiera, fortsätt sedan verkliga relationer, böjningar och återstående uppdragsbetydelse.
