@@ -14,6 +14,16 @@ function skapad(text: string, opts?: { kalla?: "kort" | "skriv"; inteGuld?: stri
   return u;
 }
 
+test("B1: SALDO-formerna av jättelik och befintliga storleksord känns igen", () => {
+  for (const text of ["en jättelik hund", "ett jättelikt lamm", "två jättelika katter", "den jättelike hunden", "en enorm hund", "en jättestor hund"]) {
+    const u = skapad(text);
+    assert.deepEqual(u.okanda, [], text);
+    assert.ok(u.varelse.skala >= 1.3, text);
+  }
+  assert.equal(skapad("ett jättelikt lamm").varelse.formel, "ett jättelikt lamm");
+  assert.equal(skapad("två jättelika katter").varelse.formel, "två jättelika katter");
+});
+
 test("rosa kanin som flyger", () => {
   const u = skapad("rosa kanin som flyger");
   assert.equal(u.varelse.formel, "en rosa kanin som flyger");

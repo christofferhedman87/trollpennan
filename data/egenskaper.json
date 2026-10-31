@@ -131,12 +131,42 @@
    "regel": "skala >= 1.3",
    "taggar": [
     "stor"
+   ],
+   "arter": [
+    "elefant",
+    "giraff",
+    "flodhast",
+    "noshorning",
+    "valfisk",
+    "dinosaurie",
+    "triceratops",
+    "blaval",
+    "spackhuggare",
+    "isbjorn",
+    "bjorn",
+    "drake"
    ]
   },
   "liten": {
    "regel": "skala <= 0.75",
    "taggar": [
     "liten"
+   ],
+   "arter": [
+    "myra",
+    "mus",
+    "larv",
+    "bi",
+    "spindel",
+    "nyckelpiga",
+    "kolibri",
+    "loppa",
+    "geting",
+    "humla",
+    "blomfluga",
+    "fjaril",
+    "skalbagge",
+    "grashoppa"
    ]
   }
  },

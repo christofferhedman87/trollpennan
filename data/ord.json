@@ -98,10 +98,29 @@
   "antal_tak": 10,
   "antal_not": "Högst antal_tak djur per mening. 'tio katter' ger 10 katter.",
   "blanda": {
-   "efter_a": ["blandad", "blandat", "blandade", "korsad", "korsat", "korsade", "mixad", "mixat"],
-   "fore": ["blandning", "korsning", "mix"],
-   "koppla": ["av", "mellan"],
-   "halften": ["hälften", "halva"]
+   "efter_a": [
+    "blandad",
+    "blandat",
+    "blandade",
+    "korsad",
+    "korsat",
+    "korsade",
+    "mixad",
+    "mixat"
+   ],
+   "fore": [
+    "blandning",
+    "korsning",
+    "mix"
+   ],
+   "koppla": [
+    "av",
+    "mellan"
+   ],
+   "halften": [
+    "hälften",
+    "halva"
+   ]
   }
  },
  "sammansattningar": {
@@ -298,9 +317,13 @@
   }
  ],
  "dansande": {
-  "former": ["dansande"],
+  "former": [
+   "dansande"
+  ],
   "klass": "formaga",
-  "del": { "formaga": "studs" }
+  "del": {
+   "formaga": "studs"
+  }
  },
  "ord": [
   {
@@ -1147,6 +1170,27 @@
    "kalla": "SALDO",
    "del": {
     "skala": 2
+   }
+  },
+  {
+   "id": "jättelik",
+   "klass": "storlek",
+   "niva": "fritt",
+   "visa": "jättelik",
+   "former": [
+    "jättelik",
+    "jättelikt",
+    "jättelika",
+    "jättelike"
+   ],
+   "bojning": {
+    "u": "jättelik",
+    "n": "jättelikt",
+    "pl": "jättelika"
+   },
+   "kalla": "SALDO",
+   "del": {
+    "skala": 1.8
    }
   },
   {
@@ -8171,19 +8215,39 @@
    "klass": "formaga",
    "niva": "fritt",
    "visa": "dansande",
-   "former": ["dansande"],
-   "bojning": { "u": "dansande", "n": "dansande", "pl": "dansande" },
+   "former": [
+    "dansande"
+   ],
+   "bojning": {
+    "u": "dansande",
+    "n": "dansande",
+    "pl": "dansande"
+   },
    "ordklass": "adjektiv",
    "kalla": "hand",
-   "del": { "formaga": "studs", "glans": true }
+   "del": {
+    "formaga": "studs",
+    "glans": true
+   }
   },
   {
    "id": "glad",
    "visa": "glad",
-   "former": ["glad", "glatt", "glada"],
+   "former": [
+    "glad",
+    "glatt",
+    "glada"
+   ],
    "klass": "egenskap",
    "niva": "start",
-   "bojning": { "en": "glad", "ett": "glatt", "flera": "glada", "u": "glad", "n": "glatt", "pl": "glada" },
+   "bojning": {
+    "en": "glad",
+    "ett": "glatt",
+    "flera": "glada",
+    "u": "glad",
+    "n": "glatt",
+    "pl": "glada"
+   },
    "motsats": "ledsen",
    "del": {}
   }

@@ -287,7 +287,9 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       continue;
     }
     // R9F: storlek/egenskap efter "med"/"vid"/"i" … eller direkt före en sak ("ett högt torn") beskriver saken, inte djuret
-    if ((o.klass === "egenskap" || o.klass === "storlek") && (mode === "med" || nastaArSak(sem, i, ensamSak))) {
+    const storleksmal = o.klass === "storlek" ? nastaFargmal(sem, i, ensamSak, sist?.sem) : null;
+    if (storleksmal === "annat" || storleksmal === "osakert") { markera(b, o.id, false); continue; }
+    if ((o.klass === "egenskap" || o.klass === "storlek") && (o.klass === "storlek" ? storleksmal === "sak" || mode === "med" && storleksmal !== "huvud" : mode === "med" || nastaArSak(sem, i, ensamSak))) {
       sakEgenskaper.push(s.form);
       markera(b, o.id, false);
       if (o.klass === "egenskap" && !b.inteDjur.includes(o.id)) b.inteDjur.push(o.id);
