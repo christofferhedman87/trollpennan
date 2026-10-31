@@ -5,7 +5,8 @@
 //   Idempotent: filnamnet är en hash av text (efter 'uttal') + röst + modell + inställningar + format; finns filen görs inget anrop.
 //   Skriver public/ljud/rost/<hash>.mp3 (ffmpeg, mono, 'kbps') och data/rost-manifest.json. Tar bort föräldralösa mp3.
 //   --tak = max krediter i den här körningen (svarshuvudet character-cost); --torr = bara räkna, inga anrop.
-//   --behall = ta inte bort föräldralösa mp3 (filer utan källtext ligger kvar). --torr listar vad som skulle tas bort ('bort').
+//   --behall = ta inte bort föräldralösa mp3 (filer utan källtext ligger kvar). --rensa = ta bort dem. En skarp körning måste ange
+//   en av dem (inget tyst standardval som raderar). --torr listar vad som skulle tas bort ('bort'). Introt räknas mot --tak.
 //   TTS-2: normaliserar alla filer till data/rost.json 'ljudniva' (loudnorm, lokalt; --utan-jamning hoppar över) och skriver
 //   data/rost-klient.json (det enda spelet bundlar). Nyckeln skrivs aldrig ut.
 import crypto from "node:crypto";
@@ -22,6 +23,11 @@ const arg = (n, d) => {
 };
 const TORR = process.argv.includes("--torr");
 const BEHALL = process.argv.includes("--behall");
+const RENSA = process.argv.includes("--rensa");
+if (!TORR && BEHALL === RENSA) {
+  console.error("Ange exakt en av --behall (inga filer tas bort) eller --rensa (föräldralösa mp3 tas bort).");
+  process.exit(2);
+}
 const TAK = Number(arg("tak", "15000"));
 const ROT = process.cwd();
 const las = (f) => JSON.parse(fs.readFileSync(path.join(ROT, f), "utf8"));
@@ -235,6 +241,7 @@ const behov = { tecken: 0, rader: 0 };
   const fil = path.join(UT, `${h}.mp3`);
   if (fs.existsSync(fil) && gammal.intro?.f === `/ljud/rost/${h}.mp3`) intro = gammal.intro;
   else if (TORR) behov.tecken += I.tal.length;
+  else if (anvant + I.tal.length > TAK) stopp = `taket ${TAK} krediter nått före introt`;
   else {
     const svar = await api(rost, I.tal, true);
     koda(Buffer.from(svar.audio_base64, "base64"), fil);
