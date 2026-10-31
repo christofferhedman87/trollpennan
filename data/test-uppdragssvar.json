@@ -98,6 +98,72 @@
         "en blå katt",
         "en katt med en kall tröja och en brasa"
       ]
+    },
+    "vit-som-sno": {
+      "ja": [
+        "en vit kanin",
+        "ett vitt lamm",
+        "en vit gås",
+        "en vit enhörning",
+        "en grön mössa bredvid en vit katt"
+      ],
+      "nej": [
+        "en kanin",
+        "en vit boll",
+        "en brun kanin med en vit hatt",
+        "en isbjörn",
+        "en enhörning",
+        "en vit tröja på en hund",
+        "en hund och en vit jacka"
+      ]
+    },
+    "rod-kompis": {
+      "ja": [
+        "en röd drake",
+        "en röd fisk",
+        "en röd fågel",
+        "en mörkröd hund",
+        "en ljusröd hund",
+        "en röd liten hund",
+        "en rödvit hund",
+        "en mössa på en röd hund",
+        "en vit stor mössa på en röd hund"
+      ],
+      "nej": [
+        "en räv",
+        "en röd boll",
+        "en blå katt med en röd hatt",
+        "en röd mössa på en hund",
+        "en röd mössa bredvid en hund",
+        "en hund och en röd mössa",
+        "en röd varm mössa på en hund",
+        "en röd stor jacka bredvid en hund",
+        "en hund och en röd liten mössa",
+        "en rödvit mössa på en hund",
+        "en röd mysig mössa på en hund",
+        "en röd vacker mössa på en hund",
+        "en röd rolig mössa på en hund"
+      ]
+    },
+    "gron-kompis": {
+      "ja": [
+        "en grön groda",
+        "en grön drake",
+        "en grön larv",
+        "en grön dinosaurie",
+        "en grönhund",
+        "en ljusgrön hund",
+        "en mörkgrön hund",
+        "en röd mössa på en grön hund",
+        "en röd boll under en grön hund"
+      ],
+      "nej": [
+        "en groda",
+        "en grön boll",
+        "en blå katt med en grön hatt",
+        "en dinosaurie",
+        "en hund med gröna vingar"
+      ]
     }
   }
 }

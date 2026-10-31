@@ -351,3 +351,28 @@ Kontrollerat med `rostPlan` mot befintligt manifest: följande hela texter har �
 - `kalla-tassar.hjalp`: en hund med strumpor
 
 Övriga två B1-hjälpfraser utan egen hel fil, ”en hund med halsduk” och ”en katt med tröja”, har uppspelningsplaner som består av befintliga ljuddelar. Det är inte samma sak som en ny inspelning av hela frasen.
+
+## B1 · Färgade vänner (vit, röd och grön)
+
+Textpaket 02; exakta granskade repliker. **Till Grok:** start, tack och näramiss nedan saknar inspelning och röstplan; de är inlagda i `vantar_rost`. De nio hjälpfraserna har uppspelningsplaner.
+
+### vit-som-sno
+
+- Uppdrag: Jag vill träffa en vit vän, lika vit som snö. Kan du skapa en?
+- Tack: Vilken fin, vit vän!
+- Nästan: Din skapelse får stanna! Jag letar efter en vit vän, som en vit kanin.
+- Hjälp: en vit kanin; ett vitt lamm; en vit gås.
+
+### rod-kompis
+
+- Uppdrag: Jag vill träffa en röd vän, lika röd som en tomat!
+- Tack: Vilken härlig röd färgklick!
+- Nästan: Din skapelse får stanna! Jag letar efter en röd vän, till exempel en röd drake.
+- Hjälp: en röd drake; en röd fisk; en röd fågel.
+
+### gron-kompis
+
+- Uppdrag: Jag vill träffa en grön vän, lika grön som gräset!
+- Tack: Vilken härligt grön kompis!
+- Nästan: Din skapelse får stanna! Jag letar efter en grön vän, som en grön groda.
+- Hjälp: en grön groda; en grön drake; en grön larv.

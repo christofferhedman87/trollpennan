@@ -166,6 +166,8 @@ export type Utfall =
       antal: number;
       /** Tillbehör vars omvända relation inte kan representeras; sparas inte. */
       osakraRelationer?: number[];
+      /** Uttrycklig kroppsfärg i tolkningen; sparas inte separat. */
+      skrivenKroppsFarg?: string;
       funna: string[];
       guld: string[];
       okanda: string[];

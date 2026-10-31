@@ -13,9 +13,15 @@
    "stjarnor": 2,
    "skatt": null,
    "text_bengtsson": "Brr! Din kanin fryser om öronen. Kan du skriva fram något varmt att ha på sig?",
-   "text_bengtsson_annat_djur": { "text": "Brr! Ditt djur fryser. Kan du skriva fram något varmt att ha på sig?", "granskad": false },
+   "text_bengtsson_annat_djur": {
+    "text": "Brr! Ditt djur fryser. Kan du skriva fram något varmt att ha på sig?",
+    "granskad": false
+   },
    "klart_bengtsson": "Så skönt! Nu kan öronen sluta huttra.",
-   "klart_bengtsson_annat_djur": { "text": "Så skönt! Nu kan ditt djur sluta huttra.", "granskad": false },
+   "klart_bengtsson_annat_djur": {
+    "text": "Så skönt! Nu kan ditt djur sluta huttra.",
+    "granskad": false
+   },
    "krav": {
     "ord": [
      "filt",
@@ -61,7 +67,10 @@
        ],
        "subjekt": "sak",
        "egna": true,
-       "relationer": ["med", "i"],
+       "relationer": [
+        "med",
+        "i"
+       ],
        "beskrivning": "något varmt att ha på sig"
       }
      ]
@@ -590,24 +599,28 @@
    "klart": "Så fint, en liten vinterhälsning!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "Kan en vän få samma färg som ett snöigt vinterland?",
-   "klart_bengtsson": "Så fint, en liten vinterhälsning!",
+   "text_bengtsson": "Jag vill träffa en vit vän, lika vit som snö. Kan du skapa en?",
+   "klart_bengtsson": "Vilken fin, vit vän!",
    "krav": {
     "ord": [
      "vit",
-     "isbjörn",
-     "lamm",
-     "gås",
-     "kanin",
-     "katt",
-     "hund",
-     "svan",
-     "fjällräv",
-     "snö"
+     "isbjörn"
     ],
-    "min": 1
+    "min": 1,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "farg",
+       "nagon_av": [
+        "skriven_farg:vit"
+       ],
+       "subjekt": "djur",
+       "beskrivning": "en vit vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -638,7 +651,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en vit vän, som en vit kanin.",
+   "hjalp": [
+    "en vit kanin",
+    "ett vitt lamm",
+    "en vit gås"
+   ]
   },
   {
    "id": "lang-hals",
@@ -710,24 +729,29 @@
    "klart": "Vilken härlig färgklick!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "Jag önskar mig en vän i samma färg som en mogen tomat!",
-   "klart_bengtsson": "Vilken härlig färgklick!",
+   "text_bengtsson": "Jag vill träffa en röd vän, lika röd som en tomat!",
+   "klart_bengtsson": "Vilken härlig röd färgklick!",
    "krav": {
     "ord": [
-     "röd",
-     "ara",
-     "papegoja",
-     "fågel",
-     "drake",
-     "fisk",
-     "krabba",
-     "nyckelpiga",
-     "räv",
-     "kardinal"
+     "röd"
     ],
-    "min": 1
+    "min": 1,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "farg",
+       "nagon_av": [
+        "skriven_farg:röd",
+        "skriven_farg:ljusröd",
+        "skriven_farg:mörkröd"
+       ],
+       "subjekt": "djur",
+       "beskrivning": "en röd vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -758,7 +782,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en röd vän, till exempel en röd drake.",
+   "hjalp": [
+    "en röd drake",
+    "en röd fisk",
+    "en röd fågel"
+   ]
   },
   {
    "id": "gron-kompis",
@@ -770,24 +800,29 @@
    "klart": "Nu får jag leta noga i gräset!",
    "stjarnor": 1,
    "skatt": null,
-   "text_bengtsson": "Vem kan få samma färg som gräset på ängen?",
-   "klart_bengtsson": "Nu får jag leta noga i gräset!",
+   "text_bengtsson": "Jag vill träffa en grön vän, lika grön som gräset!",
+   "klart_bengtsson": "Vilken härligt grön kompis!",
    "krav": {
     "ord": [
-     "grön",
-     "groda",
-     "larv",
-     "papegoja",
-     "drake",
-     "ödla",
-     "gräshoppa",
-     "krokodil",
-     "kameleont",
-     "orm"
+     "grön"
     ],
-    "min": 1
+    "min": 1,
+    "betydelse": {
+     "grupper": [
+      {
+       "id": "farg",
+       "nagon_av": [
+        "skriven_farg:grön",
+        "skriven_farg:ljusgrön",
+        "skriven_farg:mörkgrön"
+       ],
+       "subjekt": "djur",
+       "beskrivning": "en grön vän"
+      }
+     ]
+    }
    },
-   "granskad": false,
+   "granskad": true,
    "val": {
     "rubrik": "Idéer:",
     "grupper": [
@@ -818,7 +853,13 @@
       ]
      }
     ]
-   }
+   },
+   "nastan": "Din skapelse får stanna! Jag letar efter en grön vän, som en grön groda.",
+   "hjalp": [
+    "en grön groda",
+    "en grön drake",
+    "en grön larv"
+   ]
   },
   {
    "id": "mjuk-kompis",

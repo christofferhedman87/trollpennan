@@ -61,6 +61,7 @@ export function betydelseFranText(text: string): TolkadSkapelse[] {
     const huvudfras = v.formel.split(/\s+(?:med|som|på|under|i|vid|bredvid)\s+/i)[0] ?? "";
     const huvud = medTemperatur(betydelseAv({ ...v, tillbehor: [] }, u.antal), temperaturer(huvudfras, v).get(v.kropp));
     const taggar = new Set(huvud.taggar);
+    if (u.skrivenKroppsFarg) taggar.add(`skriven_farg:${u.skrivenKroppsFarg}`);
     for (const sak of saker) for (const t of sak.taggar) {
       if (t !== "farg" && !t.startsWith("farg:") && !t.startsWith("kropp:")) taggar.add(t);
     }

@@ -60,16 +60,19 @@ export type Bygg = {
   plural: boolean;
   storlek: Ord | null;
   fargOrd: Ord | null;
+  /** Kroppsfärg som faktiskt knöts till huvuddjuret av tolken. Sparas inte. */
+  skrivenKroppsFarg?: string;
   fargOrd2: Ord | null;
   fargHex: string | null;
   monster: string | null;
   monsterOrd: Ord | null;
+  monsterFargOrd?: Ord;
   monsterAntal?: number;
   monsterAntalOrd?: string;
   monsterfarg: string | null;
   monsterDolj: boolean;
   randAuto: boolean;
-  formagor: { nyckel: string; ord: Ord | null; vis: FormVis; antal?: number; antalOrd?: string }[];
+  formagor: { nyckel: string; ord: Ord | null; vis: FormVis; antal?: number; antalOrd?: string; fargOrd?: Ord }[];
   tillbehor: { ord: Ord; bild: string; fargOrd: Ord | null; fargHex: string | null; glans: boolean; recept?: boolean; relation?: Relation; form?: string; artikel?: string; egenskaper?: string[]; antal?: number; antalOrd?: string; omvandInuti?: boolean }[];
   skala: number;
   glans: boolean;

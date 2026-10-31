@@ -2,6 +2,7 @@
 import { ORD } from "./data.ts";
 import { arPluralForm, forledTillOrd, forledKant, ordMedId } from "./lexikon.ts";
 import { arSparrat } from "./sparr.ts";
+import { nastaFargmal } from "./fargmal.ts";
 import type { Ord, Relation } from "./typer.ts";
 import { applyDel, applyForled, type Bygg, type FormVis, laggFormaga, laggRecept, markera, type Mode, OKAND_TEXT, type Sem, tomBygg } from "./tolktillstand.ts";
 import { KAT_ORD, TALA_VIDARE } from "./semantisera.ts";
@@ -107,7 +108,11 @@ export function applyKomp(b: Bygg, k: Extract<Sem, { t: "komp" }>, mode: Mode, v
       if (!visaLed && k.okanda.length === 0) b.djurRaw = k.raw;
     }
     markera(b, k.suffix.ord.id, false);
-    for (const m of k.mods) applyForled(b, m.key, m.del, visaLed);
+    for (const m of k.mods) {
+      applyForled(b, m.key, m.del, visaLed);
+      const farg = !visaLed && m.del.farg ? forledTillOrd(m.key) : null;
+      if (farg?.klass === "farg") b.skrivenKroppsFarg = farg.id;
+    }
     for (const d of k.djur) {
       markera(b, d.id, false);
       if (d.signatur) laggFormaga(b, d.signatur, null, "dolj");
@@ -213,7 +218,22 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       continue;
     }
     if (s.t === "led") {
-      applyForled(b, s.key, s.del);
+      const farg = s.del.farg ? forledTillOrd(s.key) : null;
+      const nasta = sem[i + 1];
+      if (farg?.klass === "farg" && nasta?.t === "ord" && nasta.o.klass === "monster") {
+        b.monsterfarg = s.del.farg ?? null;
+        b.monsterFargOrd = farg;
+        markera(b, farg.id, false);
+      } else if (farg?.klass === "farg" && nastaFargmal(sem, i, ensamSak, sist?.sem) === "sak") {
+        b.vantande = farg;
+        if (nasta?.t === "ord" && nasta.o.klass === "farg") sakEgenskaper.push(farg.visa);
+        markera(b, farg.id, false);
+      } else if (farg?.klass === "farg" && ["annat", "osakert"].includes(nastaFargmal(sem, i, ensamSak, sist?.sem))) {
+        markera(b, farg.id, false);
+      } else {
+        applyForled(b, s.key, s.del);
+        if (farg?.klass === "farg" && !b.skrivenKroppsFarg) b.skrivenKroppsFarg = farg.id;
+      }
       continue;
     }
     if (s.t === "okand") {
@@ -280,9 +300,12 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
     }
     markera(b, o.id, true);
     if (o.klass === "farg") {
-      if (mode === "med" || nastaArTillbehor(sem, i)) b.vantande = o;
+      const mal = nastaFargmal(sem, i, ensamSak, sist?.sem);
+      if (mal === "annat" || mal === "osakert") continue;
+      if (mal === "sak" || mode === "med" && mal !== "huvud") b.vantande = o;
       else if (!b.fargOrd) {
         b.fargOrd = o;
+        b.skrivenKroppsFarg = o.id;
         if (o.del?.farg) b.fargHex = o.del.farg;
       } else if (!b.fargOrd2) b.fargOrd2 = o;
       continue;
@@ -299,6 +322,11 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       continue;
     }
     if (o.klass === "monster" || o.klass === "formaga" || o.klass === "egenskap") {
+      const delFarg = b.vantande && (mode === "med" || o.efter === "med") && (o.klass === "monster" || o.klass === "formaga") ? b.vantande : null;
+      if (delFarg) {
+        if (o.klass === "monster") { b.monsterfarg = delFarg.del?.farg ?? null; b.monsterFargOrd = delFarg; }
+        b.vantande = null;
+      }
       applyDel(b, o.del, o, false);
       if (o.klass === "monster") { b.monsterOrd = o; if (o.efter === "med") { b.monsterAntal = sakAntal; b.monsterAntalOrd = sakAntalOrd; } }
       if (o.klass === "formaga") {
@@ -308,6 +336,7 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
         if (f) {
           f.vis = vis;
           f.ord = o;
+          if (delFarg) f.fargOrd = delFarg;
           if (o.efter === "med") { f.antal = sakAntal; f.antalOrd = sakAntalOrd; }
         }
       }

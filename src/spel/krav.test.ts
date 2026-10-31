@@ -113,3 +113,15 @@ test("B1: kaninens värmeuppdrag söker varma kläder, inte eld eller kalla plag
     assert.equal(bedomUppdragsSvar(krav, fras).ok, false, fras);
   }
 });
+
+test("B1: färgade vänner kräver skriven kroppsfärg på ett djur", () => {
+  for (const [id, ja, nej] of [
+    ["vit-som-sno", ["en vit kanin", "ett vitt lamm", "en vit gås"], ["en kanin", "en vit boll", "en brun kanin med en vit hatt"]],
+    ["rod-kompis", ["en röd drake", "en röd fisk", "en röd fågel"], ["en räv", "en röd boll", "en blå katt med en röd hatt"]],
+    ["gron-kompis", ["en grön groda", "en grön drake", "en grön larv"], ["en groda", "en grön boll", "en blå katt med en grön hatt"]],
+  ] as const) {
+    const u = SKRIV.find((x) => x.id === id)!;
+    for (const text of ja) assert.equal(bedomUppdragsSvar(u.krav!, text).ok, true, `${id}: ${text}`);
+    for (const text of nej) assert.equal(bedomUppdragsSvar(u.krav!, text).ok, false, `${id}: ${text}`);
+  }
+});

@@ -81,6 +81,7 @@ export function tolka(raw: string, opts: TolkaOpts = {}): Utfall {
     varelse,
     antal,
     ...(byggd.tillbehor.some((t) => t.omvandInuti) ? { osakraRelationer: byggd.tillbehor.flatMap((t, i) => t.omvandInuti ? [i] : []) } : {}),
+    ...(byggd.skrivenKroppsFarg ? { skrivenKroppsFarg: byggd.skrivenKroppsFarg } : {}),
     funna,
     guld,
     okanda,
