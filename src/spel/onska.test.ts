@@ -5,7 +5,7 @@ import { tolkaByggFormel } from "../tolk/byggform.ts";
 import { byggTraff, gePassar, geTraff, kompisTraff, laggPa, ONSK, ONSK_BYGG } from "./onska.ts";
 import { taggarAv } from "./taggar.ts";
 import { djurMedUid, uppdateraDjurSpar } from "./minneDjur.ts";
-import { harKvittoAndring } from "./skapa/kvittoSkapelser.ts";
+import { kvittoLage } from "./skapa/kvittoSkapelser.ts";
 import { hamtaOnskeMiss, noteraOnskeMiss, tystaBannrar } from "./skapa/kvitto.ts";
 import { kvittotack } from "./skapa/tack.ts";
 import type { OnskaSpar } from "./minne.ts";
@@ -110,11 +110,12 @@ test("önskans uid ändrar rätt djur på ängen, i hemmet och på utflykten uta
     assert.equal(r.djur.uid, uid); assert.equal(r.djur.skapad, 123); assert.equal(r.djur.smeknamn, "Maja");
     assert.ok(djurMedUid(efter, uid)!.tillbehor.some((t) => t.id === "strumpa"));
     for (const annan of ["ang", "hem", "sjon", "skogen"].filter((u) => u !== uid)) assert.deepEqual(djurMedUid(efter, annan), djurMedUid(fore, annan));
-    assert.ok(harKvittoAndring(fore, efter), `${uid} får också kvitto`);
+    assert.equal(kvittoLage(fore, efter), "andrad", `${uid} får kvitto för ett ändrat djur`);
     assert.equal(JSON.stringify(fore), sparat, "föregående sparvärld lämnas orörd");
   }
   assert.equal(uppdateraDjurSpar(fore, "finns-inte", katt()), null);
-  assert.equal(harKvittoAndring(fore, fore), false);
+  assert.equal(kvittoLage(fore, fore), null);
+  assert.equal(kvittoLage(fore, { ...fore, ang: [...fore.ang, d("ny")] }), "ny");
 });
 
 test("nära miss ger bara den faktiskt bedömda önskans ledtråd, inte en annan eller ett gammalt försök", () => {

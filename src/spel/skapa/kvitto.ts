@@ -3,7 +3,7 @@
 import { create } from "zustand";
 
 export type KvittoOrd = { t: string; guld: boolean };
-export type Kvitto = { id: number; ord: KvittoOrd[]; stj: number; guld: number; tack: string | null };
+export type Kvitto = { id: number; ord: KvittoOrd[]; stj: number; guld: number; tack: string | null; tillagg?: boolean };
 export type UppdragsSvar = { id: string; resultat: "klar" | "fel"; nastan: string | null };
 export type OnskeMiss = { id: string; uid: string; nastan: string };
 

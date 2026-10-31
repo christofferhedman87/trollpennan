@@ -11,6 +11,7 @@ const scenarier = {
   kalla: { id: "frusna-tassar", nej: "med kalla strumpor", ja: "med varma strumpor", felDel: "strumpa", rattDel: "strumpa" },
   syn: { id: "suddigt", nej: "med hatt", ja: "med glasögon", felDel: "hatt", rattDel: "glasögon", grund: "solglasögon" },
   aldre: { id: "frusna-tassar", nej: "med hatt", ja: "med stövlar", felDel: "hatt", rattDel: "stovlar", grund: "strumpa" },
+  upprepa: { id: "frusna-tassar", nej: "med hatt", ja: "med strumpor", felDel: "hatt", rattDel: "strumpa", grund: "strumpa" },
   fritt: { id: "kompis-fisk" },
 };
 const valda = (process.env.QA_FALL || "tassar").split(",");
@@ -81,6 +82,7 @@ try {
         assert.equal(await page.getByTestId("onska-remsa").count(), 0, "vanlig bok har inget uttryckligen öppnat önskemål");
         await skriv("en boll");
         await page.waitForFunction(() => window.__onskeKvitto?.includes("en boll"));
+        assert.match(await page.evaluate(() => window.__onskeKvitto), /Du trollade fram en boll/);
         assert.equal((await page.evaluate(() => window.__onskeKvitto)).includes(onskan.nastan), false, "fritt skapande bedöms inte som en negativ kompisönskan");
         assert.equal(await page.evaluate(() => window.__trollMinne.getState().onskan?.uid), uid);
         assert.deepEqual(fel, []); assert.deepEqual(konsolfel, []); console.log("Grönt oöppnad önskan i fri bok", plats, viewport.width);
@@ -90,6 +92,7 @@ try {
       assert.equal(await page.evaluate(() => window.__trollMinne.getState().onskan?.uid), uid, "nära miss behåller just denna önskan");
       assert.ok((await djuret()).tillbehor.some((t) => t.id === (process.env.QA_NEJ ? "glasögon" : scenario.felDel)), "även det oönskade tillägget bevaras på rätt djur");
       await page.waitForFunction((text) => window.__onskeKvitto?.includes(text), onskan.nastan, { timeout: 15000 });
+      assert.match(await page.evaluate(() => window.__onskeKvitto), /Du skrev: ”/);
       if (bilder) await page.screenshot({ path: `${bilder}/${fall}-${plats}-${viewport.width}-ledtrad.png` });
       console.log("Grönt önskesvar nära miss", fall, plats, viewport.width);
       await page.locator('[data-dal="kvitto"]').waitFor({ state: "hidden", timeout: 15000 });
@@ -101,6 +104,7 @@ try {
       assert.equal(await page.evaluate(() => window.__trollMinne.getState().onskan), null);
       assert.ok((await djuret()).tillbehor.some((t) => t.id === scenario.rattDel));
       await page.waitForFunction((text) => window.__onskeKvitto?.includes(text), onskan.tack, { timeout: 15000 });
+      assert.ok((await page.evaluate(() => window.__onskeKvitto)).includes(`Du skrev: ”${scenario.ja}”.`));
       if (bilder) await page.screenshot({ path: `${bilder}/${fall}-${plats}-${viewport.width}-tack.png` });
       const klart = JSON.parse(JSON.stringify(await djuret()));
       if (fall === "kalla") assert.ok(klart.tillbehor.some((t) => t.id === "strumpa" && t.egenskaper?.includes("varma")));

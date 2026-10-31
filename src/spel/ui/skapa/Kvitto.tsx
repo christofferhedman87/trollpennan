@@ -20,7 +20,7 @@ export function Kvitto() {
     return () => window.clearTimeout(id);
   }, [kvitto, satt]);
   if (!kvitto) return null;
-  const [fore, efter] = (UI.kvitto.trollade ?? "{mening}").split("{mening}");
+  const [fore, efter] = (UI.kvitto[kvitto.tillagg ? "tillagg" : "trollade"] ?? "{mening}").split("{mening}");
   return (
     <button type="button" className="sk-kvitto" data-dal="kvitto" onClick={() => satt(null)}>
       <p className="sk-kvitto-rad">

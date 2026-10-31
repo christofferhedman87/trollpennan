@@ -253,3 +253,5 @@ Nya ledtrådar vid ett faktiskt bedömt önskesvar:
 | kompis-rosa | Jag längtar efter en rosa djurkompis. |
 | kompis-enhorning | Jag längtar efter en hästkompis med horn. |
 | kompis-urtid | Jag längtar efter en dinosauriekompis. |
+
+T-06:s kvitto för ett tillägg eller en ändring använder nu `skapa-ui.json → kvitto.tillagg`: **Du skrev: ”{mening}”.** Barnets egna ord behålls i citatet, även ”med glasögon”, ”lila” och ”som flyger”. En helt ny skapelse behåller den befintliga ramen. Ny inspelning återstår.

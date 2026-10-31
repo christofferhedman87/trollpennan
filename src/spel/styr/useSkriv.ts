@@ -19,7 +19,7 @@ import { kollaOrd, sammansatt } from "../skapa/ordKoll.ts";
 import { sagBokstav } from "../skapa/installning.ts";
 import { bokstav, utanSparratSuffix } from "../ui/hjalp.ts";
 import type { SpelKarna } from "./typer.ts";
-import { harKvittoAndring } from "../skapa/kvittoSkapelser.ts";
+import { kvittoLage } from "../skapa/kvittoSkapelser.ts";
 import { kvittotack } from "../skapa/tack.ts";
 import { tystaBannrar, useKvitto, hamtaUppdragsSvar, hamtaOnskeMiss } from "../skapa/kvitto.ts";
 import { useSkrivTangentbord } from "./useSkrivTangentbord.ts";
@@ -320,9 +320,11 @@ export function useSkriv(k: Pick<SpelKarna, "t" | "s">) {
       tystaBannrar(false);
     }
     const efter = useMinne.getState();
-    if (harKvittoAndring(fore, efter) || hamtaOnskeMiss()) {
+    const lage = kvittoLage(fore, efter);
+    const uppfylldOnskan = fore.onskan && !efter.onskan;
+    if (lage || hamtaOnskeMiss() || uppfylldOnskan) {
       const kv = innehall.length ? br.filter((b) => b.klass !== "vantar").map((b) => ({ t: b.t, guld: b.guld })) : [];
-      useKvitto.getState().satt({ id: Date.now(), ord: kv, stj: Math.max(0, efter.stjarnor - fore.stjarnor), guld: innehall.filter((b) => b.guld).length, tack: kvittotack(fore.onskan, efter.onskan, hamtaUppdragsSvar(), hamtaOnskeMiss()) });
+      useKvitto.getState().satt({ id: Date.now(), ord: kv, stj: Math.max(0, efter.stjarnor - fore.stjarnor), guld: innehall.filter((b) => b.guld).length, tillagg: lage !== "ny", tack: kvittotack(fore.onskan, efter.onskan, hamtaUppdragsSvar(), hamtaOnskeMiss()) });
     }
     return "ok";
   }
