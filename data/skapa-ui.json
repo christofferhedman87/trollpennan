@@ -138,6 +138,17 @@
     "ljud_pa": "Ljud: på",
     "ljud_av": "Ljud: av"
   },
+  "ordbok": {
+    "_om": "T-22: Ordboken öppnad från Min bok visar först rutans innehåll, med samma siffror som rutan.",
+    "rubrik": "Ordboken",
+    "ordjakten_rubrik": "Ordjakten",
+    "ordjakten_text": "Du har hittat {n} skrivord. {kvar} skrivord finns kvar att hitta!",
+    "ordjakten_tom": "Inga skrivord än. Skrivord finns bara för den som skriver dem själv med tangenterna.",
+    "guldord_rubrik": "Mina guldord",
+    "guldord_text": "Du har skrivit {n} guldord själv!",
+    "guldord_tom": "Inga guldord än. Skriv ett ord själv med tangenterna, så blir det guld."
+  },
+
   "uppdrag_ark": {
     "rubrik": "Uppdrag",
     "svara": "Svara med pennan",

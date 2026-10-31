@@ -173,7 +173,7 @@ export function SpelVy() {
         {varld === "ang" && aktivPlats !== "ang" && !omrade && !bokOpp && !menyOpp && !intro && !overlayRef.current && bengtsson.synlig ? (
           <NpcFigur npc={bengtsson.npcId} mine={bengtsson.mine} nytt={bengtsson.nytt} onClick={bengtsson.klicka} />
         ) : null}
-        {intro || bokOpp || menyOpp ? null : <HudBotten pahemma={!omrade && !kartaOpp} oppnaSkriv={() => { setPanel("spel"); setBokOpp(true); }} oppnaMinBok={() => { stangModaler(); setMenyOpp(true); }} minBokOpp={menyOpp} npc={aktivPlats === "ang" && varld === "ang" ? bengtsson : undefined} />}
+        {intro || bokOpp || menyOpp || ladaOpp ? null : <HudBotten pahemma={!omrade && !kartaOpp} oppnaSkriv={() => { setPanel("spel"); setBokOpp(true); }} oppnaMinBok={() => { stangModaler(); setMenyOpp(true); }} minBokOpp={menyOpp} npc={aktivPlats === "ang" && varld === "ang" ? bengtsson : undefined} />}
         <VyPlats plats="scen" onValjPlats={resa.startaResa} onVagvisarePunkter={resa.setVagvisarePunkter} />
         {/* På Ängen står namnen på skyltarna i 3D (Stigar.tsx). Knappen "Till Ängen" på de andra platserna ligger i ett eget lager
             över allt annat och göms när en dialog är öppen, annars ritas den ovanpå t.ex. Ordboken utan att gå att trycka på. */}
