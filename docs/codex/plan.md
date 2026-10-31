@@ -2,6 +2,14 @@
 
 > **Aktuellt 2026-10-31:** ny beställning att åtgärda samtliga 35 fynd i [granskning.md](granskning.md). Baslinjen är `origin/main = 2c761d382f1368bd08c2d726563a5b9c375fc6ce`, ren arbetskatalog. `npm ci` och alla sju grindar gröna, 546/546 produkttester. Tidigare block 1–5 är redan live och görs inte om. Den aktiva planen nedan går före den historiska fortsättningen längre ner. T-12/T-13 är mergade och publicerade (#286, main06f057e). A1 T-01/T-02/T-31 är publicerad somf425a41(#288), CF124383463197 och6SHA gröna. A0/A2/F4 slutverifieras i **#289**. **B0 #290** är publicerad somfbfe48f, CF124411312834 och6SHA gröna, med sex semantikrättade uppdrag och läsbar återkoppling; **C1a #291** är ett beteendebevarande förarbete för400-radersregeln. B0 kan publiceras före A2, eftersom dess kod och fyra verkliga UI-fall är verifierade mot nuvarande main. Samordna därefter A2/C1a mot ny origin/main utan force-push. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1.
 
+
+## C1b pågår: relation och egen formel, T-07/T-08
+
+På `codex/t07-t08-egen-formel`, ovanpå C1a #291: tolkens semantiska led behåller nu de sex relationerna med/på/under/i/vid/bredvid, tillbehörets skrivna artikel och ordform. Formeln kan säga ”en katt under ett bord”, ”med strumpor” och ”med vingar”. Valfritt validerat `TillbehorSpec.relation` bevaras i v2; äldre skapelser utan fältet godtas med befintlig placering. Riktiga export/import-prov täcker ängen, utflykten, sovande och sparad formel samt avvisad ogiltig relation utan mutation.
+
+Tre riktade språkprov var röda före och gröna efter; typecheck och full produktregression körs. Ingen fysisk placering har ännu ändrats: T-07 och T-08 är fortfarande öppna. Nästa: rätta eventuella regressioner, slutgrindar och faktisk UI/formel/omladdning, oberoende granskning; därefter C1c:s synliga relationer och C2:s oregelbundna böjningar. Inga nya fasta barnrepliker, testid eller sparversion. Tre svagaste punkter: inga förändrade världspositioner ännu; kopplingen mellan flera tillbehör och mål behöver fortsatt prov; böjningar/artiklar utanför dessa kända former återstår.
+
+
 ## Mandat och statusord
 
 Christoffer har beställt hela granskningen. Bevara sparformat v2, testad markmigrering, sparade världar, Cloudflare och befintliga användbara tillgångar. Inga nya beroenden, hemligheter, checkpointdokument eller ändringar i `recovery/`. Svenska namn och texter från data. Befintliga statusdokument är gemensamt arbetsminne; nästa agent ska inte behöva chatten eller lokala scratch-filer.

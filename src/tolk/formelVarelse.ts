@@ -1,6 +1,6 @@
 // T-07/T-08: oförändrad tolklogik, uppdelad före språkändringarna.
 import { ORD } from "./data.ts";
-import { boj, pluralOrd } from "./lexikon.ts";
+import { arPluralForm, boj, pluralOrd } from "./lexikon.ts";
 import type { Ord } from "./typer.ts";
 import { type Bygg, singularYta, ytaMedForm } from "./tolktillstand.ts";
 
@@ -72,16 +72,23 @@ export function formelAv(b: Bygg): string {
   delar.push(namn);
   const med: string[] = [];
   if (mon && mon.efter === "med" && !mon.bojning) med.push(mon.visa);
+  for (const f of b.formagor) if (f.vis === "som" && f.ord?.efter === "med") med.push(f.ord.visa);
+  if (med.length) delar.push("med", med.join(" och "));
+  let forra = med.length ? "med" : "";
   for (const t of b.tillbehor) {
     if (t.recept) continue;
-    const genus = t.ord.genus === "n" ? "n" : t.ord.genus === "pl" ? "pl" : "u";
-    const f = t.fargOrd ? boj(fargAdjektiv(t.fargOrd) ?? t.fargOrd, genus === "pl" ? "pl" : genus) : "";
-    med.push([f, t.ord.visa].filter(Boolean).join(" "));
+    const plural = t.ord.genus === "pl" || !!t.form && arPluralForm(t.ord, t.form);
+    const genus = plural ? "pl" : t.ord.genus === "n" ? "n" : "u";
+    const f = t.fargOrd ? boj(fargAdjektiv(t.fargOrd) ?? t.fargOrd, genus) : "";
+    const artikel = t.artikel && !plural ? t.artikel : "";
+    const fras = [artikel, f, t.form ?? t.ord.visa].filter(Boolean).join(" ");
+    const relation = t.relation ?? "med";
+    delar.push(relation === forra ? "och" : relation, fras);
+    forra = relation;
   }
-  if (med.length) delar.push("med", med.join(" och "));
-  if (b.formagor.some((f) => f.vis === "som")) {
+  if (b.formagor.some((f) => f.vis === "som" && f.ord?.efter !== "med")) {
     const verb = b.formagor
-      .filter((f) => f.vis === "som")
+      .filter((f) => f.vis === "som" && f.ord?.efter !== "med")
       .map((f) => {
         if (f.ord?.visa) return f.ord.visa;
         const kort = ORD.ord.find((o) => o.niva === "kort" && o.klass === "formaga" && o.del?.formaga === f.nyckel);

@@ -2,7 +2,7 @@
 import { ORD } from "./data.ts";
 import { arPluralForm, forledTillOrd, forledKant, ordMedId } from "./lexikon.ts";
 import { arSparrat } from "./sparr.ts";
-import type { Ord } from "./typer.ts";
+import type { Ord, Relation } from "./typer.ts";
 import { applyDel, applyForled, type Bygg, type FormVis, laggFormaga, laggRecept, markera, type Mode, OKAND_TEXT, type Sem, tomBygg } from "./tolktillstand.ts";
 import { KAT_ORD, TALA_VIDARE } from "./semantisera.ts";
 import { appliceraLan, laggKannetecken, lanAv } from "./tolkBlandning.ts";
@@ -45,7 +45,7 @@ export function sattDjur(b: Bygg, o: Ord, form: string) {
   b.storlek = null;
 }
 
-export function laggTillbehor(b: Bygg, o: Ord) {
+export function laggTillbehor(b: Bygg, o: Ord, yta: { form?: string; artikel?: string; relation?: Relation } = {}) {
   const bild = o.del?.tillbehor ?? o.id;
   const fargOrd = b.vantande;
   const fargHex = fargOrd?.del?.farg?.startsWith("#")
@@ -57,6 +57,7 @@ export function laggTillbehor(b: Bygg, o: Ord) {
     fargOrd,
     fargHex,
     glans: !!o.del?.glans,
+    ...yta,
   });
   b.vantande = null;
   if (o.del?.glans) b.glans = true;
@@ -155,13 +156,18 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
   }
 
   mode = "fore";
+  let relation: Relation | undefined;
+  let artikel: string | undefined;
   for (let i = 0; i < sem.length; i++) {
     const s = sem[i]!;
     if (s.t === "funk") {
       if (s.v === "och" && mode === "med") b.vantande = null;
       mode = modeAv(s.v, mode);
+      if (s.v === "med") { relation = s.relation; artikel = undefined; }
+      else if (s.v === "fore" || s.v === "som" || s.v === "kan") { relation = undefined; artikel = undefined; }
       continue;
     }
+    if (s.t === "artikel") { artikel = s.form; continue; }
     if (s.t === "antal") {
       b.antal = s.n;
       b.antalSatt = true;
@@ -197,6 +203,7 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
     if (s.t === "blanda") continue;
     const o = s.o;
     if (o.klass === "djur") {
+      artikel = undefined;
       if (!(sist && o.id === sist.o.id && s.form === sist.form)) markera(b, o.id, true);
       else if (sist && !sist.komp && s.form === sist.form) {
         /* redan markerad */
@@ -206,11 +213,12 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
     }
     if (o.klass === "foremal") {
       // R3G: ett föremål bredvid djuret ("en kanin med en hink"). Bilden är entitetens nyckel; ängen ritar modellen.
-      if (o === ensamSak) continue;
+      if (o === ensamSak) { artikel = undefined; continue; }
       const bild = o.del?.kropp ?? o.id;
       if (bild === b.kropp || b.tillbehor.some((t) => t.bild === bild)) continue;
       const fargOrd = b.vantande;
-      b.tillbehor.push({ ord: o, bild, fargOrd, fargHex: fargOrd?.del?.farg?.startsWith("#") ? fargOrd.del.farg : null, glans: false });
+      b.tillbehor.push({ ord: o, bild, fargOrd, fargHex: fargOrd?.del?.farg?.startsWith("#") ? fargOrd.del.farg : null, glans: false, form: s.form, artikel, relation });
+      artikel = undefined;
       b.vantande = null;
       continue;
     }
@@ -240,7 +248,8 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       continue;
     }
     if (o.klass === "tillbehor") {
-      laggTillbehor(b, o);
+      laggTillbehor(b, o, { form: s.form, artikel, relation });
+      artikel = undefined;
       continue;
     }
     if (o.klass === "monster" || o.klass === "formaga" || o.klass === "egenskap") {

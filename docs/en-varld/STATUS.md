@@ -17,6 +17,14 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 | 8 Uppdrag, Byggboken och röster | Klar (första versionen) | se git-logg | Var tredje önskan är nu en byggönskan (den fanns men valdes aldrig). Sex nya önskningar använder byggformeln: "ett hus som ser ut som jag", flygande hus, slottsstall, frukthus, dansande hus och något som lyser (`onska.ts`: krav form, form_som_djuret och egenskap). Byggboken visar önskans exempel först. En aktiv byggönskan går före regeln för småsaker. Röster: 12 nya repliker finns i `nya-repliker.md` (beslut D) |
 | 9 Städning | Klar | se git-logg | Garden3D och MarkPlan är borttagna, och `window.__gard3d` är flyttad till `gard/gard3dDiag.ts`. Köpt mark följer med "Spara en kopia" och "Läs in en kopia". PROJECT.md har en sektion om En värld. Alla prov är gröna utom det kända tidtestet P3a i molnmiljön |
 
+
+## C1b pågår: relation och egen formel, T-07/T-08
+
+På `codex/t07-t08-egen-formel`, ovanpå C1a #291: tolkens semantiska led behåller nu de sex relationerna med/på/under/i/vid/bredvid, tillbehörets skrivna artikel och ordform. Formeln kan säga ”en katt under ett bord”, ”med strumpor” och ”med vingar”. Valfritt validerat `TillbehorSpec.relation` bevaras i v2; äldre skapelser utan fältet godtas med befintlig placering. Riktiga export/import-prov täcker ängen, utflykten, sovande och sparad formel samt avvisad ogiltig relation utan mutation.
+
+Tre riktade språkprov var röda före och gröna efter; typecheck och full produktregression körs. Ingen fysisk placering har ännu ändrats: T-07 och T-08 är fortfarande öppna. Nästa: rätta eventuella regressioner, slutgrindar och faktisk UI/formel/omladdning, oberoende granskning; därefter C1c:s synliga relationer och C2:s oregelbundna böjningar. Inga nya fasta barnrepliker, testid eller sparversion. Tre svagaste punkter: inga förändrade världspositioner ännu; kopplingen mellan flera tillbehör och mål behöver fortsatt prov; böjningar/artiklar utanför dessa kända former återstår.
+
+
 ## Nästa steg
 **Blockserien En värld är klar (2026-10-29).** Kvar att göra senare:
 1. Skapamenyns nya design är implementerad (fas A–E, se `docs/skapa/STATUS.md`).

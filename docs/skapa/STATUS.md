@@ -12,6 +12,14 @@ Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först
 | D Lappen, idétärningen och uppdragen | Klar | #263 | Lapp för önskan, gåva, uppdrag, tomt, bildgåta och gåta. UppdragArk med Svara med pennan. UppdragVy är borttagen. En tomt öppnar Pennans bok |
 | E HUD och Min bok | Klar | se git-logg | HudBotten (Uppdrag, Skriv, Min bok) och toppens ikonknappar (lås, stjärnor, Se hela dalen, Karta). MinBok har sex rutor. Föräldrasidan har startläget och bokstavsljudet. MenyPanel och hamburgern är borttagna. BokSkarm är bara Byggboken (Mark) |
 
+
+## C1b pågår: relation och egen formel, T-07/T-08
+
+På `codex/t07-t08-egen-formel`, ovanpå C1a #291: tolkens semantiska led behåller nu de sex relationerna med/på/under/i/vid/bredvid, tillbehörets skrivna artikel och ordform. Formeln kan säga ”en katt under ett bord”, ”med strumpor” och ”med vingar”. Valfritt validerat `TillbehorSpec.relation` bevaras i v2; äldre skapelser utan fältet godtas med befintlig placering. Riktiga export/import-prov täcker ängen, utflykten, sovande och sparad formel samt avvisad ogiltig relation utan mutation.
+
+Tre riktade språkprov var röda före och gröna efter; typecheck och full produktregression körs. Ingen fysisk placering har ännu ändrats: T-07 och T-08 är fortfarande öppna. Nästa: rätta eventuella regressioner, slutgrindar och faktisk UI/formel/omladdning, oberoende granskning; därefter C1c:s synliga relationer och C2:s oregelbundna böjningar. Inga nya fasta barnrepliker, testid eller sparversion. Tre svagaste punkter: inga förändrade världspositioner ännu; kopplingen mellan flera tillbehör och mål behöver fortsatt prov; böjningar/artiklar utanför dessa kända former återstår.
+
+
 ## Beslut (2026-10-29)
 - E: projektregler.md är uppdaterad. Att skriva själv är förstahandsvalet, och hjälporden räcker för att spela.
 - F: *sprutar eld* och *springer snabbt* är skrivord (`niva: "fritt"`). Önskningar som behöver dem (modig, kull, blixt) får korten i Ordhjälpen genom `onskeKort`, så regel 7.6 håller.

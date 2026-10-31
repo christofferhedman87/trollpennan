@@ -53,7 +53,7 @@ export function tolka(raw: string, opts: TolkaOpts = {}): Utfall {
     monster: byggd.monster,
     monsterfarg: byggd.monsterfarg,
     formagor: byggd.formagor.map((f) => f.nyckel),
-    tillbehor: byggd.tillbehor.map((t) => ({ id: t.bild, farg: t.fargHex, glans: t.glans })),
+    tillbehor: byggd.tillbehor.map((t) => ({ id: t.bild, farg: t.fargHex, glans: t.glans, ...(t.relation ? { relation: t.relation } : {}) })),
     skala: byggd.skala,
     alpha: byggd.alpha,
     kontur: byggd.kontur,
