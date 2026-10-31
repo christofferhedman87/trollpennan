@@ -46,7 +46,7 @@ test("T08: sifferantal kring spärrade eller maskerade ord öppnar inte spärren
     assert.equal(arSparrat(`${n} ${ord}`), true);
     assert.equal(arSparrat(`${ord} ${n}`), true);
   }
-  for (const text of ["pistol", "p1st0l", "p i s t o l", "pi 2 stol", "2 pistol", "pistol 2", "en katt med 2 pistoler"]) {
+  for (const text of ["pistol", "p1st0l", "p i s t o l", "pi 2 stol", "2 pistol", "pistol 2", "en katt med 2 pistoler", "svart 5 kalle", "svart 5 kall", "1 5 1 5", "en katt med svart 5 kalle", "en katt som 1 5 1 5"]) {
     assert.equal(arSparrat(text), true, text);
     assert.equal(tolka(text).typ, "sparr");
   }
