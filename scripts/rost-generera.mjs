@@ -7,6 +7,7 @@
 //   --tak = max krediter i den här körningen (svarshuvudet character-cost); --torr = bara räkna, inga anrop.
 //   --behall = ta inte bort föräldralösa mp3 (filer utan källtext ligger kvar). --rensa = ta bort dem. En skarp körning måste ange
 //   en av dem (inget tyst standardval som raderar). --torr listar vad som skulle tas bort ('bort'). Introt räknas mot --tak.
+//   --bara <fil> = generera bara saknade rader vars text står i filen (en text per rad); övriga saknade hoppas över ('utanfor').
 //   TTS-2: normaliserar alla filer till data/rost.json 'ljudniva' (loudnorm, lokalt; --utan-jamning hoppar över) och skriver
 //   data/rost-klient.json (det enda spelet bundlar). Nyckeln skrivs aldrig ut.
 import crypto from "node:crypto";
@@ -24,6 +25,7 @@ const arg = (n, d) => {
 const TORR = process.argv.includes("--torr");
 const BEHALL = process.argv.includes("--behall");
 const RENSA = process.argv.includes("--rensa");
+const BARA = arg("bara", null) ? new Set(fs.readFileSync(arg("bara"), "utf8").split("\n").map((t) => normalisera(t)).filter(Boolean)) : null;
 if (!TORR && BEHALL === RENSA) {
   console.error("Ange exakt en av --behall (inga filer tas bort) eller --rensa (föräldralösa mp3 tas bort).");
   process.exit(2);
@@ -286,6 +288,10 @@ for (const r of texter) {
     rader[k] = { f, ms: g?.ms ? g.ms : ms(fil), r: r.talare, id: r.id, t: r.t, ...(r.tal ? { tal: r.tal } : {}), n: g?.n ?? NIVA.lufs };
     continue;
   }
+  if (BARA && !BARA.has(r.t)) {
+    behov.utanfor = (behov.utanfor ?? 0) + 1;
+    continue;
+  }
   if (TORR) {
     behov.tecken += (r.tal ?? r.t).length;
     behov.rader++;
@@ -354,7 +360,7 @@ else if (!process.argv.includes("--utan-jamning")) {
 const anvanda = new Set([intro?.f, ...Object.values(rader).map((r) => r.f)].filter(Boolean).map((f) => path.basename(f)));
 const foraldralosa = BEHALL ? [] : fs.readdirSync(UT).filter((f) => f.endsWith(".mp3") && !anvanda.has(f)).sort();
 if (TORR) {
-  console.log(JSON.stringify({ jamna: behov.jamna, texter: texter.length, mallar: K.mallar.length, saknas: behov.rader, tecken_kvar: behov.tecken, behall: BEHALL, bort: foraldralosa }, null, 1));
+  console.log(JSON.stringify({ jamna: behov.jamna, texter: texter.length, mallar: K.mallar.length, saknas: behov.rader, tecken_kvar: behov.tecken, utanfor: behov.utanfor ?? 0, behall: BEHALL, bort: foraldralosa }, null, 1));
   process.exit(0);
 }
 for (const f of foraldralosa) fs.rmSync(path.join(UT, f));
