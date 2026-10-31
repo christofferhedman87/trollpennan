@@ -34,13 +34,15 @@ Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först 
 
 Kod `9a1b211`: faktisk shader-regression röd före och grön efter; alla sju grindar gröna, 561/561. Provet täcker delat original, materialarray, 200 materialpass och samma solid-uniform vid Trolla. `prov-platsforhand.mjs` är rött mot baslinjen (90 nollvärden) och grönt i hela Grottan-flödet i 375×812 och 812×375: stenens egna WebGL-anrop är 1–1 i var och en av 90 bildrutor, och även rotation, sparinvarians, skapande samt platsbyte är gröna. Interna bilder granskade, blå och linjerad sten. Inga mätgränser lättade. Oberoende Codex-granskare slutgodkände exakt `6c0cb00`. #293 är mergad som `d743ad7` och publicerad: main-Cloudflare `124422225436` grön, alla sex serverade start-/spel-filer byteidentiska med det lokala bygget (SHA-256). Tre svagaste punkter: molnets mjukvarurendering säger inget om fysisk mobilprestanda; Safari/GPU-variationer är inte provade; nya shader-varianter behöver fortsatt samma mätning.
 
-## C2 · T-08: antal och böjningar (förarbete pågår)
+## C2 · T-08: antal och böjningar (pågår)
 
 Branch `codex/t08-antal-och-bojning` utgår från publicerade `origin/main 0453079`. Den gamla lexikonfilen var 470 rader och får inte utökas så. Beteendebevarande commit `74ba8de` skiljer därför ut entitetsorden: lexikon 349 rader, entitetslexikon 128 rader. 1 735 färska fullständiga före/efter-utfall för båda tolkarna är byteidentiska, SHA-256 `9654161c1d30de5ad7a1bf672074df55a10ea9dc7f7a4a230fa06750d7d23b80`. Förarbetet ändrar ingen språkregel.
 
 Reproducera med befintliga `scripts/prov-tolkmoduler.mjs`: skapa en separat worktree på `0453079`, generera före-filen därifrån och använd dess absoluta sökväg som fjärde argument när samma skript körs på `74ba8de`; jämför utfallen med `cmp` och SHA-256 (samma kommandosyntax som C1a nedan). Inga lokala scratch-filer krävs som källa.
 
-Nästa steg: reproducera antal som spiller till huvuddjuret, borttappade upprepningar och kända felaktiga föremålspluraler. Återanvänd befintliga SALDO-former i data/gavor.json. Samordna med B2:s tillbehörsmetadata före funktionsändring och slutprov. Därefter C1c:s faktiska placering/antal på skärmen. T-08 är fortfarande öppet; sju grindar, skärmprov och oberoende granskning återstår. Tre svagaste punkter: ännu ingen rättad språkregel; C1c:s fysiska relationer återstår; fysisk svensk hårdvara och röstgranskning återstår.
+Baslinjen bekräftar att ”en kanin med två strumpor” blir två kaniner, att ”tre morötter” saknar skapelse och att två uttryckliga morötter slås ihop. Takets uttryckliga artikel försvinner också. Den sista detaljen är nu rättad i byggformeln, med rött→grönt prov genom den verkliga tolkaByggFormel: ”ett hus med ett tak av guld” och ”ett hus med två dörrar och ett tak av guld” behålls, medan ”med tak av guld” utan artikel fortsatt fungerar. Sex byggregressioner är gröna.
+
+Nästa steg: rätta antal som spiller till huvuddjuret, borttappade upprepningar och kända felaktiga föremålspluraler. Återanvänd befintliga SALDO-former i data/gavor.json. Samordna med B2:s tillbehörsmetadata före funktionsändring och slutprov. Därefter C1c:s faktiska placering/antal på skärmen. T-08 är fortfarande öppet; sju grindar, skärmprov och oberoende granskning återstår. Tre svagaste punkter: antal och substantivböjningar är ännu öppna; C1c:s fysiska relationer återstår; fysisk svensk hårdvara och röstgranskning återstår.
 
 ## Mandat och statusord
 
