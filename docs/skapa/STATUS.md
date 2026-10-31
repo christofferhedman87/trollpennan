@@ -59,3 +59,7 @@ Trolla-tangenten, Enter och Pennan använder samma synliga handling/animation. T
 ## B0 slutverifiering, kod fe06419
 
 Alla sju grindar gröna,560/560; fyra UI-fall gröna: flyg- och tvåfärgsuppdrag i375×812/812×375, med bevarad nära-miss-skapelse, synlig läsbar ledtråd, riktigt rätt svar, rätt antal och belöning. Bilder endast internt. Temperatur-/storleksmotexempel och faktisk försökslivscykel rättade efter kritisk granskning. Nästan-ledtråden står i befintligt kvitto för det verkliga försöket; önsketack prioriteras. Merge/Cloudflare/SHA-256 återstår tills uttryckligen noterat. Tre svagaste punkter:85uppdrag/önskeregioner kvar, T-17 och kvitto för ändrade platsSkapelser kvar, fysisk/human språk- och röstgranskning kvar. Nästa: publicera B0 efter slutgodkännande, samordna A2/C1a mot main och fortsätt språk-/betydelseplanen.
+
+## B4 · textpaket01 väntar på Christoffers läsning
+
+De sex publicerade pilotuppdragens exakta barntexter är samlade i befintliga nya-repliker.md under Textgranskning01. Alla sex granskad-flaggor är false tills Christoffer faktiskt godkänt dem. Ingen spelkod eller barntext ändras i förberedelsen. Arbetet med A2/C1/B1 fortsätter under tiden;85uppdrag återstår efter detta paket.

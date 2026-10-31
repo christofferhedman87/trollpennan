@@ -123,3 +123,49 @@ Inga nya inspelningar påstås finnas. Fullständiga nya barntexter i `data/beng
 - `varmt-och-kallt.hjalp[2]`: en filt och en snöhög
 - `varmt-och-kallt.krav.betydelse.varmt.beskrivning`: något som värmer
 - `varmt-och-kallt.krav.betydelse.kallt.beskrivning`: något som kyler
+
+## Textgranskning 01: sex publicerade pilotuppdrag
+
+B4: Christoffer läser dessa faktiska barntexter före granskad:true. Underlaget är publicerade mainfbfe48f(#290). Alla sex flaggor är fortfarandefalse. Krav/prov är gröna; det ersätter inte den mänskliga textläsningen. Dessa sex texter kan godkännas separat medan övriga85 förbereds i B1/BC.
+
+### vingar-i-luften
+
+- Uppdrag: Vem kan hälsa på molnen utan att klättra?
+- Tack: Nu får molnen äntligen besök!
+- Nästan: Din skapelse får stanna! Jag letar efter en vän som kan flyga. Vingar kan hjälpa.
+- Hjälp: en fågel; en hund som flyger; en katt med vingar.
+
+### solgul-van
+
+- Uppdrag: Jag längtar efter en vän som lyser som solen!
+- Tack: Vilken solstråle till kompis!
+- Nästan: Din skapelse får stanna! Jag letar efter en vän som är gul eller kan lysa.
+- Hjälp: en gul kyckling; en kanin som lyser; en gul hund.
+
+### kalla-tassar
+
+- Uppdrag: Brr, ditt djur huttrar! Kan du hjälpa det så att det slutar frysa?
+- Tack: Så skönt, nu slutar tänderna spela trumma!
+- Nästan: Din skapelse får stanna! Jag letar efter något som värmer. Strumpor, en tröja eller en halsduk kan hjälpa.
+- Hjälp: en hund med strumpor; en varm tröja; en kanin med halsduk.
+
+### tva-farger
+
+- Uppdrag: Jag vill se två vänner: en i tomatens färg och en i himlens färg!
+- Tack: Vilket färgglatt kompispar!
+- Nästan: Din skapelse får stanna! Jag letar efter två vänner: en röd och en blå.
+- Hjälp: en röd katt och en blå hund; en röd kanin och en blå häst; en röd fisk och en blå fisk.
+
+### stor-och-liten
+
+- Uppdrag: Jag vill se två vänner i helt olika storlekar!
+- Tack: Vänskap finns visst i alla storlekar!
+- Nästan: Din skapelse får stanna! Jag letar efter två vänner: en stor och en liten.
+- Hjälp: en stor hund och en liten katt; en jättestor kanin och en pytteliten häst; en stor fisk och en liten fisk.
+
+### varmt-och-kallt
+
+- Uppdrag: Ditt djur vill ha något som värmer och något som kyler, som is!
+- Tack: Vilken fin motsatsblandning!
+- Nästan: Din skapelse får stanna! Jag letar efter två saker: något som värmer och något som kyler.
+- Hjälp: en varm tröja och en kall glass; en hund med tröja och en glass; en filt och en snöhög.
