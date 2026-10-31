@@ -7,6 +7,7 @@
 //   --tak = max krediter i den här körningen (svarshuvudet character-cost); --torr = bara räkna, inga anrop.
 //   --behall = ta inte bort föräldralösa mp3 (filer utan källtext ligger kvar). --rensa = ta bort dem. En skarp körning måste ange
 //   en av dem (inget tyst standardval som raderar). --torr listar vad som skulle tas bort ('bort'). Introt räknas mot --tak.
+//   --behall behåller också de gamla manifestraderna för filer som ligger kvar.
 //   --bara <fil> = generera bara saknade rader vars text står i filen (en text per rad); övriga saknade hoppas över ('utanfor').
 //   TTS-2: normaliserar alla filer till data/rost.json 'ljudniva' (loudnorm, lokalt; --utan-jamning hoppar över) och skriver
 //   data/rost-klient.json (det enda spelet bundlar). Nyckeln skrivs aldrig ut.
@@ -357,6 +358,15 @@ else if (!process.argv.includes("--utan-jamning")) {
 }
 
 // 3) föräldralösa filer bort (inte med --behall), manifest ut
+// --behall: filerna ligger kvar, så deras gamla manifestrader följer med (annars blir de föräldralösa i manifestet).
+let behallnaRader = 0;
+if (BEHALL) {
+  for (const [k, r] of Object.entries(gammal.rader ?? {})) {
+    if (rader[k] || !fs.existsSync(path.join(ROT, "public", r.f))) continue;
+    rader[k] = r;
+    behallnaRader++;
+  }
+}
 const anvanda = new Set([intro?.f, ...Object.values(rader).map((r) => r.f)].filter(Boolean).map((f) => path.basename(f)));
 const foraldralosa = BEHALL ? [] : fs.readdirSync(UT).filter((f) => f.endsWith(".mp3") && !anvanda.has(f)).sort();
 if (TORR) {
@@ -387,4 +397,4 @@ const klient = {
 };
 fs.writeFileSync(KLIENT, JSON.stringify(klient) + "\n");
 const mb = [...anvanda].reduce((s, f) => s + fs.statSync(path.join(UT, f)).size, 0) / 1e6;
-console.log(JSON.stringify({ jamnat: behov.jamnat, klient_kb: Math.round(fs.statSync(KLIENT).size / 1024), anrop, krediter: anvant, mallar: K.mallar.length, filer: anvanda.size, rader: Object.keys(rader).length, saknas: texter.length - Object.keys(rader).length, mb: Math.round(mb * 100) / 100, bort, stopp }, null, 1));
+console.log(JSON.stringify({ jamnat: behov.jamnat, klient_kb: Math.round(fs.statSync(KLIENT).size / 1024), anrop, krediter: anvant, mallar: K.mallar.length, filer: anvanda.size, rader: Object.keys(rader).length, saknas: texter.length - Object.keys(rader).length + behallnaRader, behallna_rader: behallnaRader, mb: Math.round(mb * 100) / 100, bort, stopp }, null, 1));
