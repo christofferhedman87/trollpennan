@@ -1,7 +1,9 @@
 // Värmeplagg på djuret som redan står på ängen, i stället för en dubblett.
 import type { TillbehorSpec, Varelse } from "../../tolk/typer.ts";
+import { tolka } from "../../tolk/tolka.ts";
 import type { Sparad } from "../brygga.ts";
 import { useMinne } from "../minne.ts";
+import { barsPaKropp } from "../tillbehor/bars.ts";
 
 const VARME_PLAGG_LISTA = ["alvmossa", "mossa", "mössa", "luva", "halsduk", "filt", "troja", "tröja"] as const;
 const VARME_PLAGG = new Set<string>(VARME_PLAGG_LISTA);
@@ -18,46 +20,43 @@ function normPlagg(id: string): string {
   return id;
 }
 
-function harPlagg(d: { tillbehor: TillbehorSpec[] }, id: string): boolean {
-  const ny = normPlagg(id);
-  return d.tillbehor.some((t) => normPlagg(t.id) === ny);
+function sammaPlagg(a: TillbehorSpec, b: TillbehorSpec): boolean {
+  return normPlagg(a.id) === normPlagg(b.id) && (a.relation ?? "med") === (b.relation ?? "med") &&
+    (a.antal ?? 1) === (b.antal ?? 1) && (!b.farg || a.farg === b.farg) && (!b.glans || a.glans) &&
+    JSON.stringify(a.egenskaper ?? []) === JSON.stringify(b.egenskaper ?? []);
+}
+
+function fristaendePlagg(v: Varelse): TillbehorSpec[] {
+  const u = tolka(`en kanin med ${v.formel}`, { kalla: "kort", noteraBlandning: false });
+  const t = u.typ === "skapad" ? u.varelse.tillbehor : [];
+  return t.length ? t.map((t, i) => i === 0 ? { ...t, farg: t.farg ?? v.farg } : t) : [{ id: normPlagg(v.kropp), farg: v.farg, glans: v.glans }, ...v.tillbehor];
 }
 
 /**
  * Fristående värmeplagg (`en mössa`, `en filt`, `en luva`, `en tröja`, `en halsduk`)
- * eller `en <djur> med <plagg>`: klä djuret som redan står på ängen.
+ * eller `en <djur> med <plagg>`: klä ett fruset djur eller hjälp i värmeuppdraget.
  * null betyder att meningen ska skapa något nytt.
  */
 export function mossaPaFrysKanin(v: Varelse): { uid: string; spec: Varelse } | null {
   const s = useMinne.getState();
   if (s.plats !== "ang") return null;
   const fristaende = arVarmePlagg(v.kropp);
-  const plaggen = fristaende
-    ? [normPlagg(v.kropp)]
-    : [...new Set(v.tillbehor.filter((t) => arVarmePlagg(t.id)).map((t) => normPlagg(t.id)))];
+  const nya = (fristaende ? fristaendePlagg(v) : v.tillbehor).map((t) => ({ ...t, id: arVarmePlagg(t.id) ? normPlagg(t.id) : t.id }));
+  const plaggen = nya.filter((t) => arVarmePlagg(t.id) && barsPaKropp(t));
   if (plaggen.length === 0) return null;
   const art = fristaende ? null : v.kropp;
-  const saknar = (d: Sparad) => plaggen.some((id) => !harPlagg(d, id));
-  const pool = s.ang.filter((d) => (art === null || d.kropp === art) && saknar(d));
-  const fryser = s.uppdrag["kanin-fryser"] === "pagar" || s.ang.some((d) => s.liv[d.uid]?.humor === "fryser");
-  if (fristaende && !fryser) return null;
+  const saknar = (d: Sparad) => {
+    const kvar = [...d.tillbehor];
+    return plaggen.some((t) => { const i = kvar.findIndex((g) => sammaPlagg(g, t)); if (i < 0) return true; kvar.splice(i, 1); return false; });
+  };
+  const varmeUppdrag = s.uppdrag["kanin-fryser"] === "pagar";
+  const pool = s.ang.filter((d) => (art === null || d.kropp === art) && saknar(d) && (varmeUppdrag || s.liv[d.uid]?.humor === "fryser"));
   if (pool.length === 0) return null;
   const mal =
     pool.find((d) => s.liv[d.uid]?.humor === "fryser") ??
     (fristaende ? (pool.find((d) => d.kropp === "kanin") ?? pool[0]) : pool[0]);
   if (!mal) return null;
-  const tillbehor = [...mal.tillbehor];
-  for (const id of plaggen) {
-    if (harPlagg({ tillbehor }, id)) continue;
-    const kalla = fristaende ? null : v.tillbehor.find((t) => normPlagg(t.id) === id);
-    tillbehor.push({ id, farg: fristaende ? v.farg : (kalla?.farg ?? null), glans: kalla?.glans ?? false });
-  }
-  if (!fristaende) {
-    for (const t of v.tillbehor) {
-      if (arVarmePlagg(t.id) || tillbehor.some((e) => e.id === t.id)) continue;
-      tillbehor.push(t);
-    }
-  }
+  const tillbehor = [...mal.tillbehor.filter((t) => !nya.some((n) => normPlagg(n.id) === normPlagg(t.id) && (n.relation ?? "med") === (t.relation ?? "med"))), ...nya];
   const spec: Varelse = { ...mal, tillbehor };
   return { uid: mal.uid, spec };
 }

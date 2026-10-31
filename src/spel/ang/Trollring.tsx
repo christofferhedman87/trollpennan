@@ -6,33 +6,41 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import type { DjurSignal } from "../gltfDjur.tsx";
-import { GltfDjur } from "../gltfDjur.tsx";
-import { harDjurGltf, malhojd, takSkala } from "../entiteter.ts";
+import type { GltfDjur } from "../gltfDjur.tsx";
+import { malhojd, takSkala } from "../entiteter.ts";
 import { ritSkala } from "../placering.ts";
 import { platsMed, START_PLATS } from "../platser.ts";
 
 import { Byggverk } from "../dal/Byggverk.tsx";
 import { forhand } from "../skapa/forhand.ts";
-import { DjurForm, ModellGren } from "./djur.tsx";
+import { SammansattDjur } from "./SammansattDjur.tsx";
 import { gorHolo, HOLO_TID } from "./holoMaterial.ts";
 import { bokHoloYta, passaHolo } from "./holoYta.ts";
+
+
+import { synligModellRuta } from "../modeller/synligRuta.ts";
 
 const _v = new THREE.Vector3();
 const _a = new THREE.Vector3();
 const _b = new THREE.Vector3();
 const _box = new THREE.Box3();
+const _holoMitt = new THREE.Vector3();
 const _hx = [0, 0, 0, 0, 0, 0, 0, 0].map(() => new THREE.Vector3());
 /** Bara dev och prov (aldrig för barn): hologrammets ruta på skärmen i CSS-px, för att provet ska kunna se att det syns. */
 const PROV = import.meta.env.DEV || (typeof navigator !== "undefined" && navigator.webdriver === true);
 let provRam = 0;
 function holoRuta(g: THREE.Group, camera: THREE.Camera, gl: THREE.WebGLRenderer) {
-  _box.setFromObject(g);
+  synligModellRuta(g, _box);
   if (_box.isEmpty()) return;
-  const r = gl.domElement.getBoundingClientRect();
+  return projiceradHoloRuta(camera, gl.domElement.getBoundingClientRect());
+}
+function projiceradHoloRuta(camera: THREE.Camera, r: DOMRect, mitt?: THREE.Vector3, skala = 1) {
   const { min, max } = _box;
   let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
   [0, 1].forEach((i) => [0, 1].forEach((j) => [0, 1].forEach((k) => {
-    const p = _hx[i * 4 + j * 2 + k]!.set(i ? max.x : min.x, j ? max.y : min.y, k ? max.z : min.z).project(camera);
+    const p = _hx[i * 4 + j * 2 + k]!.set(i ? max.x : min.x, j ? max.y : min.y, k ? max.z : min.z);
+    if (mitt) p.sub(mitt).multiplyScalar(skala).add(mitt);
+    p.project(camera);
     const sx = r.left + ((p.x + 1) / 2) * r.width;
     const sy = r.top + ((1 - p.y) / 2) * r.height;
     x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy);
@@ -104,15 +112,7 @@ function HoloDjur({ spec, z, plats, krymp }: { spec: Parameters<typeof GltfDjur>
   // Samma storlek som djuret får på sin plats (djur.tsx: krymp först, sedan takSkala × ritSkala för platsen).
   const rit = krymp !== 1 ? { ...spec, skala: (spec.skala || 1) * krymp } : spec;
   const s = takSkala(spec.kropp, rit.skala || 1) * ritSkala(rit, z, platsMed(plats));
-  return <group scale={s}>{harDjurGltf(spec.kropp) ? (
-    <ModellGren spec={spec}>
-      <Suspense fallback={<DjurForm spec={spec} signal={signal} />}>
-        <GltfDjur spec={spec} signal={signal} />
-      </Suspense>
-    </ModellGren>
-  ) : (
-    <DjurForm spec={spec} signal={signal} />
-  )}</group>;
+  return <group scale={s}><SammansattDjur spec={spec} signal={signal} holo /></group>;
 }
 
 /** Hologrammet: studsar när meningen ändras, svävar lätt, blir solitt när barnet trollar. */
@@ -129,6 +129,7 @@ function Hologram() {
   }, [l.nyckel]);
   useEffect(() => {
     if (PROV && !l.spec) (window as unknown as { __trollholo?: unknown }).__trollholo = null;
+    return () => { if (PROV) (window as unknown as { __trollholo?: unknown }).__trollholo = null; };
   }, [l.spec]);
   useFrame(({ clock, camera, gl }) => {
     const g = grupp.current;
@@ -167,16 +168,17 @@ function Hologram() {
       if (behov > 0 && plats > 0) pass = Math.max(minst, Math.min(1, plats / behov));
     }
     // Använd den riktiga modellens ruta när den fria ytan också avgränsas av Pennan och Stäng.
-    // Både modell och svävhöjd krymper kring samma markpunkt; ringens verkliga plats ändras aldrig.
+    // Modell och svävhöjd anpassas kring samma markpunkt; ringens verkliga plats ändras aldrig.
     const hojd = l.spec?.typ === "djur" ? synY(l.holoY) + 0.08 + Math.sin(t * 2.4) * 0.04 : 0;
     const duk = gl.domElement.getBoundingClientRect();
-    const yta = bokHoloYta(duk);
+    const yta = bokHoloYta(duk, l.spec?.typ === "djur");
     if (yta && ring) {
       g.scale.set(sx, sy, sx);
       g.position.y = hojd;
-      const ruta = holoRuta(g, camera, gl);
-      _v.set(ring.x, 0, ring.z).project(camera);
-      if (ruta) pass = passaHolo(ruta, duk.left + (_v.x + 1) * duk.width / 2, duk.top + (1 - _v.y) * duk.height / 2, yta);
+      synligModellRuta(g, _box);
+      _holoMitt.set(ring.x, 0, ring.z);
+      // Även en trång plats med krympning 0,25 får en läsbar förhandsbild, med marginal till 64 px.
+      if (!_box.isEmpty()) pass = passaHolo((skala) => projiceradHoloRuta(camera, duk, _holoMitt, skala), yta, l.spec?.typ === "djur" && l.spec.spec.tillbehor.length ? 72 : 0);
     }
     g.scale.set(sx * pass, sy * pass, sx * pass);
     g.position.y = hojd * pass;
@@ -214,10 +216,13 @@ function ArkKamera() {
       // Ringens läge utan nuvarande förskjutning.
       const sx = (_v.x * 0.5 + 0.5) * w + cur.current.x;
       const sy = (-_v.y * 0.5 + 0.5) * h + cur.current.y;
-      const friYta = bokHoloYta(r);
+      const sammansatt = l.spec?.typ === "djur" && l.spec.spec.tillbehor.length > 0;
+      const friYta = bokHoloYta(r, l.spec?.typ === "djur");
       if (friYta) {
         mx = sx - ((friYta.left + friYta.right) / 2 - r.left);
-        my = sy - (friYta.bottom - 12 - r.top);
+        // En sammansättning har även markyta framför ringen, som behöver rum nedåt.
+        const ringY = sammansatt ? friYta.top + (friYta.bottom - friYta.top) * 0.65 : friYta.bottom - 12;
+        my = sy - (ringY - r.top);
       } else if (w > h && l.arkVanster != null) {
         mx = sx - (l.arkVanster - r.left) / 2;
         my = Math.max(0, sy - h * 0.7);

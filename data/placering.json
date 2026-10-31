@@ -1,4 +1,60 @@
 {
+  "relationer": {
+    "med": {
+      "lage": "bredvid",
+      "glipa": 0.16
+    },
+    "på": {
+      "lage": "ovanpa",
+      "glipa": 0.02
+    },
+    "under": {
+      "lage": "under",
+      "glipa": 0.08,
+      "rorelsemarginal": 0.4
+    },
+    "i": {
+      "lage": "inuti",
+      "glipa": 0.08,
+      "genomskinlighet": 0.4
+    },
+    "vid": {
+      "lage": "bredvid",
+      "glipa": 0.1
+    },
+    "bredvid": {
+      "lage": "bredvid",
+      "glipa": 0.16
+    }
+  },
+  "relationsformer": {
+    "bord": {
+      "undersida": 0.78
+    },
+    "stol": {
+      "undersida": 0.38
+    },
+    "bank": {
+      "undersida": 0.65
+    },
+    "korg": {
+      "botten": 0.1
+    },
+    "hink": {
+      "botten": 0.08
+    },
+    "lada": {
+      "botten": 0.1
+    }
+  },
+  "med_plattform": [
+    "sten",
+    "stubbe",
+    "kudde",
+    "matta",
+    "bank",
+    "bro"
+  ],
  "_om": "P3a: EN placeringsregel för alla platser (ängen, sjön, skogen, grottan). Varje plats har band per roll (mark, vatten, luft, bak) i världskoordinater; banden delas i rutor (steg). Varje sak får en ledig ruta efter sin roll: simmare på vattenytan, flygare i luftbandet, stora saker (storlek.json zon bak) i det bakre bandet, övriga på marken (platsens land-zoner, platser.json). En ruta är ledig om kroppen ryms hel på skärmen (stående kamera 375 × 812, skarm.ts), inte står i en reserverad världsruta, inte går in i en annan kropp, och om ingen – varken den nya eller någon redan placerad – skyms mer än max_skymd av sin skärmruta (de framför, fasta saker och de reserverade skärmrutorna inräknade). Den nyaste får den främsta lediga rutan (störst z, sedan närmast mitten), sedan de andra från nyast till äldst; den äldsta hamnar därför längst bak. Finns ingen ledig ruta går den till stallet (somnar), aldrig över någon annan.",
  "bak_lucka": 0.5,
   "matfel_px": 3,
