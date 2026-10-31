@@ -4,6 +4,14 @@
 
 
 
+
+### C1b:s kritiska språkgranskning
+
+Kodgranskningen hittade en ny adjektivläcka mellan tillbehör och nästa sak samt en missad relationsbindning för sammansatta tillbehör. Rättade i `e00664a`, med två egna regressioner. En ytterligare variant vid en överhoppad, redan förekommande sak är nu också rättad: väntande artikel/adjektiv/färg förbrukas där. Sex riktade språkprov är gröna. Den faktiska UI-baslinjen är röd: barnet skrev ”en katt under ett bord”, men den skapade formeln var ”en katt med bord”. Slutgrindar och grön UI-körning återstår.
+
+Befintliga antal/upprepningsfel hör till nästa C2-del: ”med två strumpor” får ännu inte tillbehörets eget antal, och flera identiska saker slås ännu ihop. De beteendena markeras öppna och låses inte av de nya proven. T-07:s synliga placering är fortfarande C1c, och T-08 är fortsatt delresultat.
+
+
 ## C1a slutverifiering efter A2 och hologramrättningen
 
 #291 är samordnad med A2:s `9d247ba` och den publicerade grafikfixen, utan språkändringar. Kod `0e656bf`: alla sju slutgrindar gröna, 565/565 produkttester. Samma 1 726 fraser ger fortfarande byteidentiska fulla utfall för båda tolkarna, SHA-256 `aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3`. Oberoende granskare har kontrollerat att de sex modulerna är identiska med godkända `d2a5d29`; C1b ingår inte. Riktigt UI-prov körs mot ett fryst separat bygge i stående, liggande och datorvy. T-07/T-08 är fortfarande öppna; funktionsändringen finns separat i utkast #294. Före leverans: invänta A2, samordna dokumentationen mot main, slutgranska och kontrollera publiceringen. Tre svagaste punkter: detta förarbete rättar inga språkfel, UI är ännu inte färdigkontrollerat, fysisk svensk hårdvara/Safari är inte provad.

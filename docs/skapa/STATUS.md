@@ -13,6 +13,14 @@ Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först
 | E HUD och Min bok | Klar | se git-logg | HudBotten (Uppdrag, Skriv, Min bok) och toppens ikonknappar (lås, stjärnor, Se hela dalen, Karta). MinBok har sex rutor. Föräldrasidan har startläget och bokstavsljudet. MenyPanel och hamburgern är borttagna. BokSkarm är bara Byggboken (Mark) |
 
 
+
+### C1b:s kritiska språkgranskning
+
+Kodgranskningen hittade en ny adjektivläcka mellan tillbehör och nästa sak samt en missad relationsbindning för sammansatta tillbehör. Rättade i `e00664a`, med två egna regressioner. En ytterligare variant vid en överhoppad, redan förekommande sak är nu också rättad: väntande artikel/adjektiv/färg förbrukas där. Sex riktade språkprov är gröna. Den faktiska UI-baslinjen är röd: barnet skrev ”en katt under ett bord”, men den skapade formeln var ”en katt med bord”. Slutgrindar och grön UI-körning återstår.
+
+Befintliga antal/upprepningsfel hör till nästa C2-del: ”med två strumpor” får ännu inte tillbehörets eget antal, och flera identiska saker slås ännu ihop. De beteendena markeras öppna och låses inte av de nya proven. T-07:s synliga placering är fortfarande C1c, och T-08 är fortsatt delresultat.
+
+
 ## C1b pågår: relation och egen formel, T-07/T-08
 
 På `codex/t07-t08-egen-formel`, ovanpå C1a #291: tolkens semantiska led behåller nu de sex relationerna med/på/under/i/vid/bredvid, tillbehörets skrivna artikel och ordform. Formeln kan säga ”en katt under ett bord”, ”med strumpor” och ”med vingar”. Valfritt validerat `TillbehorSpec.relation` bevaras i v2; äldre skapelser utan fältet godtas med befintlig placering. Riktiga export/import-prov täcker ängen, utflykten, sovande och sparad formel samt avvisad ogiltig relation utan mutation.

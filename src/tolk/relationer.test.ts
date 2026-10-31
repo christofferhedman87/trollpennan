@@ -58,3 +58,15 @@ test("T-07: kända sammansatta tillbehör behåller sin relation och artikel", (
   assert.equal(u.varelse.formel, "en katt under en blå hatt");
   assert.deepEqual(u.varelse.tillbehor.map((t) => [t.id, t.relation, t.farg]), [["hatt", "under", "#1E88E5"]]);
 });
+
+
+test("T-08: en överhoppad upprepad sak får inte beskriva nästa sak", () => {
+  for (const [fras, nastaSak] of [
+    ["en katt med en varm filt och en kall filt och ett bord", "ett bord"],
+    ["en katt med en hög sten och en låg sten och en hink", "en hink"],
+  ]) {
+    const u = tolkaMedReserv(fras!);
+    assert.equal(u.typ, "skapad");
+    if (u.typ === "skapad") assert.ok(u.varelse.formel.endsWith(nastaSak!), "nästa sak får inget av föregående saks adjektiv");
+  }
+});
