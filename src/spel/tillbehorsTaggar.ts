@@ -1,8 +1,7 @@
 import egenJson from "../../data/egenskaper.json" with { type: "json" };
 import { tolka } from "../tolk/tolka.ts";
-import { ordFranForm } from "../tolk/lexikon.ts";
 import type { TillbehorSpec, Varelse } from "../tolk/typer.ts";
-import { medTemperatur } from "./temperatur.ts";
+import { medTemperatur, temperaturFranOrd } from "./temperatur.ts";
 const E = egenJson as typeof egenJson & { tillbehorsord?: Record<string, string[]> };
 const aldre = new WeakMap<Varelse, TillbehorSpec[]>();
 
@@ -25,10 +24,5 @@ export function tillbehorMedBetydelse(v: Varelse): TillbehorSpec[] {
 
 export function taggarForTillbehor(t: TillbehorSpec): ReadonlySet<string> {
   const taggar = new Set((t.ord && E.tillbehorsord?.[t.ord]) ?? (E.tillbehor as Record<string, string[]>)[t.id] ?? []);
-  let temperatur: "varm" | "kall" | undefined;
-  for (const e of t.egenskaper ?? []) {
-    const id = ordFranForm(e)?.id;
-    if (id === "varm" || id === "kall") temperatur = id;
-  }
-  return medTemperatur({ taggar, antal: 1, djur: false }, temperatur).taggar;
+  return medTemperatur({ taggar, antal: 1, djur: false }, temperaturFranOrd(t.egenskaper ?? [])).taggar;
 }

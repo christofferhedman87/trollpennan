@@ -148,6 +148,22 @@
       "saker": {
         "bord": 1
       }
+    },
+    {
+      "fras": "en katt under de två stora borden",
+      "antal": 1,
+      "formel": "en katt under de två stora borden",
+      "saker": {
+        "bord": 2
+      }
+    },
+    {
+      "fras": "en katt under de två röda borden",
+      "antal": 1,
+      "formel": "en katt under de två röda borden",
+      "saker": {
+        "bord": 2
+      }
     }
   ]
 }

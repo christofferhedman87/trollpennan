@@ -14,6 +14,7 @@ const fraser = [
   { text: "ett hus med ett tak av guld", bygg: true },
   { text: "en katt med två vingar och en hatt", antal: 1, saker: { hatt: 1 } },
   { text: "en katt under det stora bordet", antal: 1, saker: { bord: 1 } },
+  { text: "en katt under de två stora borden", antal: 1, saker: { bord: 2 } },
 ];
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || "/usr/bin/chromium", args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader"] });
 try {

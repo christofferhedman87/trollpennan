@@ -195,6 +195,8 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
     if (s.t === "komp") {
       if (sist?.komp && s === sist.komp) { huvudSett = true; artikel = undefined; continue; }
       if (s.suffix.kind === "djur") {
+        artikel = undefined; sakAntal = undefined; sakAntalOrd = undefined;
+        sakEgenskaper = []; b.vantande = null;
         markera(b, s.suffix.ord.id, false);
         for (const d of s.djur) {
           markera(b, d.id, false);

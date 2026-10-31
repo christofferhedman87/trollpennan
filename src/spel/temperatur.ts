@@ -3,6 +3,12 @@ import { ordFranForm } from "../tolk/lexikon.ts";
 import type { Varelse } from "../tolk/typer.ts";
 import type { TolkadSkapelse } from "./krav.ts";
 type Temperatur = "varm" | "kall";
+export function temperaturFranOrd(ord: readonly string[]): Temperatur | undefined {
+  let temperatur: Temperatur | undefined;
+  for (const w of ord) { const id = ordFranForm(w)?.id; if (id === "varm" || id === "kall") temperatur = id; }
+  return temperatur;
+}
+
 export function temperaturer(text: string, v: Varelse): Map<string, Temperatur> {
   const finns = new Set([v.kropp, ...v.tillbehor.map((t) => t.id)]);
   const ut = new Map<string, Temperatur>();

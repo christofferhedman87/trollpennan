@@ -20,3 +20,10 @@ test("T08: antal vid ett sekundärt djur får inte flyttas till en efterföljand
   assert.equal(u.antal, 1); assert.equal(u.varelse.tillbehor.find((t) => t.id === "hatt")?.antal ?? 1, 1);
   // Sekundära djurs egen placering/representation är öppet i C1c; lås inte dess gamla bortfall.
 });
+
+
+for (const djur of ["blåhundar", "drakhundar", "regnbågskatter"]) test(`T08: sekundära ${djur} släpper inte sitt antal till en hatt`, () => {
+  const u = tolka(`en katt med två ${djur} och hatt`);
+  assert.equal(u.typ, "skapad"); if (u.typ !== "skapad") return;
+  assert.equal(u.antal, 1); assert.equal(u.varelse.tillbehor.find((t) => t.id === "hatt")?.antal ?? 1, 1);
+});

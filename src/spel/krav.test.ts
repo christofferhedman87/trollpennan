@@ -88,3 +88,18 @@ test("T05: torr betydelsebedömning ändrar aldrig lokal lagring, inte heller f�
     else Reflect.deleteProperty(globalThis, "localStorage");
   }
 });
+
+
+test("T08: betydelsekontrollen räknar tillbehörens antal på varje huvuddjur", () => {
+  const grupp: KravGrupp = { id: "apple", nagon_av: ["ord:äpple"], subjekt: "sak", beskrivning: "ett äpple" };
+  assert.equal(bedomKrav({ grupper: [], olika: [grupp, grupp] }, betydelseFranText("en katt med två äpplen")).ok, true);
+  assert.equal(bedomKrav({ grupper: [], olika: [grupp, grupp] }, betydelseFranText("en katt med ett äpple")).ok, false);
+  assert.equal(bedomKrav({ grupper: [], olika: [grupp, grupp, grupp, grupp] }, betydelseFranText("två katter med två äpplen")).ok, true);
+});
+
+test("T08: två föremål som delar modell behåller sin egen temperatur", () => {
+  const krav = SKRIV.find((u) => u.id === "varmt-och-kallt")!.krav!;
+  assert.equal(bedomUppdragsSvar(krav, "en katt med varm filt och kall filt").ok, true);
+  assert.equal(bedomUppdragsSvar(krav, "en varm filt med en kall filt").ok, true);
+  assert.equal(bedomUppdragsSvar(krav, "en katt med två kalla filtar").ok, false);
+});
