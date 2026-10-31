@@ -1,6 +1,6 @@
 # Status: En värld (plan: ../plan-en-varld-2026-10-29.md)
 
-> **Aktuellt 2026-10-31:** hela T-01–T-35 följer [gemensam plan](../codex/plan.md) och [underlag](../codex/granskning.md). E1/E2(#286,main06f057e), E3/G4(#287,mainf1e38d3) och A1(#288,mainf425a41) är publicerade med gröna main-Cloudflare-checkar och byteidentiska serverade filer(SHA-256). B1–B8 och oberoende Codex-granskare är godkända. Nästa är slutverifiering av#289(A0/A2+F4), därefter betydelsemotorn B0/B1. Bevara alla tidigare levererade block. Fysisk iPad/långtid, fysisk svensk inmatning och godkända nya inspelningar återstår.
+> **Aktuellt 2026-10-31:** alla T-01–T-35 följer [gemensam plan](../codex/plan.md). E1/E2 (#286), E3/G4 (#287), A1 (#288) och B0:s första sex uppdrag (#290, main fbfe48f) är publicerade med gröna main-Cloudflare-checkar och SHA-256-bevis. A0/A2/F4 i #289 slutverifieras. En befintlig överskrivning av hologrammets shader rättas separat i #293. Tolkens beteendebevarande uppdelning finns i #291. B1–B8 och oberoende Codex-granskare är godkända. T-03/T-05/T-07/T-08/T-18 är fortsatt partiella eller öppna; inga granskad-flaggor ändras utan Christoffers faktiska textläsning.
 
 Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen först och fortsätter vid **Nästa steg**.
 
@@ -16,6 +16,14 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 | 7 Slime Rancher-magi | Första delen klar | se git-logg | Utbyggnader (beslut B): åtta tomter är öppna från start. Kvarnbacken (vänster, ★5) och Sjöstranden (höger, ★8) köps genom att trycka på deras skylt eller på en låst tomt (`src/spel/dal/utbyggnad.ts`). Köpen följer med "Spara en kopia". Från #277 sparas mark atomärt med stjärnorna i v2:s `dal.utbyggnader`; den äldre marknyckeln migreras utan att ändras. Nya byggen får först en byggnadsställning i tre steg (KayKit building_stage A–C) och studsar sedan fram. Kvar: rörelse vid platserna i fjärran (kvarnvingar, segel, kristallglitter) |
 | 8 Uppdrag, Byggboken och röster | Klar (första versionen) | se git-logg | Var tredje önskan är nu en byggönskan (den fanns men valdes aldrig). Sex nya önskningar använder byggformeln: "ett hus som ser ut som jag", flygande hus, slottsstall, frukthus, dansande hus och något som lyser (`onska.ts`: krav form, form_som_djuret och egenskap). Byggboken visar önskans exempel först. En aktiv byggönskan går före regeln för småsaker. Röster: 12 nya repliker finns i `nya-repliker.md` (beslut D) |
 | 9 Städning | Klar | se git-logg | Garden3D och MarkPlan är borttagna, och `window.__gard3d` är flyttad till `gard/gard3dDiag.ts`. Köpt mark följer med "Spara en kopia" och "Läs in en kopia". PROJECT.md har en sektion om En värld. Alla prov är gröna utom det kända tidtestet P3a i molnmiljön |
+
+
+## Steg 0: hologrammets shader bevaras, 2026-10-31
+
+Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var 40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.
+
+Kod `9a1b211`: faktisk shader-regression röd före och grön efter; alla sju grindar gröna, 561/561. Provet täcker delat original, materialarray, 200 materialpass och samma solid-uniform vid Trolla. `prov-platsforhand.mjs` är rött mot baslinjen (90 nollvärden) och grönt i hela Grottan-flödet i 375×812 och 812×375: stenens egna WebGL-anrop är 1–1 i var och en av 90 bildrutor, och även rotation, sparinvarians, skapande samt platsbyte är gröna. Interna bilder granskade, blå och linjerad sten. Inga mätgränser lättade. Oberoende slutgodkännande och main-Cloudflare/SHA-kontroll återstår före publicering. Tre svagaste punkter: molnets mjukvarurendering säger inget om fysisk mobilprestanda; Safari/GPU-variationer är inte provade; nya shader-varianter behöver fortsatt samma mätning.
+
 
 ## Nästa steg
 **Blockserien En värld är klar (2026-10-29).** Kvar att göra senare:

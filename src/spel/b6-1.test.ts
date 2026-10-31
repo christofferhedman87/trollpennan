@@ -6,6 +6,8 @@ import * as THREE from "three";
 import entJson from "../../data/entiteter.json" with { type: "json" };
 import { SKRIV } from "./aventyr.ts";
 import { belysMaterial, belysScen } from "./belys.ts";
+import { forbattraModellMaterial } from "./grafikKvalitet.ts";
+import { gorHolo } from "./ang/holoMaterial.ts";
 import { gatUrval } from "./gata.ts";
 import { PLATSER, klaraPerPlats, platsMed } from "./platser.ts";
 import { kravUppfylltTolkat, nastaSkrivUppdrag } from "./uppdragsmotor.ts";
@@ -144,4 +146,43 @@ test("B6.1 (F): varje känt ord ger något synligt – ett djur/en sak, ett ägg
   // B6.2: "en regnbåge" är nu en sak (modellen kopplades in); ett mönster utan djur ger fortfarande banderollen
   assert.ok(kanInteRita(tolkaMedReserv("randig"), "randig"), "randig");
   assert.equal(kanInteRita(tolkaMedReserv("en katt"), "en katt"), null);
+});
+
+
+test("hologrammets shader och solid-uniform överlever upprepade globala materialpass", () => {
+  const rot = new THREE.Group();
+  const kalla = new THREE.MeshStandardMaterial({ color: "#8d6e63" });
+  const sten = new THREE.Mesh(new THREE.BoxGeometry(), kalla);
+  const fler = new THREE.Mesh(new THREE.BoxGeometry(), [kalla, new THREE.MeshBasicMaterial()]);
+  const holo = new THREE.Group();
+  holo.add(sten, fler);
+  rot.add(holo);
+  const vanlig = new THREE.Mesh(new THREE.BoxGeometry(), kalla);
+  rot.add(vanlig);
+  const solid = { value: 0 };
+  gorHolo(holo, solid);
+  const material = [sten.material, ...fler.material];
+  const program = material.map((m) => m.onBeforeCompile);
+  const nycklar = material.map((m) => m.customProgramCacheKey());
+  for (let i = 0; i < 200; i++) {
+    forbattraModellMaterial(rot);
+    gorHolo(holo, solid);
+  }
+  assert.equal(vanlig.material, kalla, "världens originalmaterial är kvar");
+  assert.equal(kalla.userData.slimeGlod, true, "vanliga modeller får fortfarande sagoyta");
+  assert.equal(sten.material, material[0], "hologrammet klonas bara en gång");
+  const shaders: Parameters<THREE.Material["onBeforeCompile"]>[0][] = [];
+  for (const [i, m] of material.entries()) {
+    assert.equal(m.onBeforeCompile, program[i], "hologramprogrammets funktion bevaras");
+    assert.equal(m.customProgramCacheKey(), nycklar[i]);
+    const shader = { uniforms: {}, fragmentShader: "void main() {\n#include <opaque_fragment>\n}" } as Parameters<THREE.Material["onBeforeCompile"]>[0];
+    m.onBeforeCompile(shader, {} as THREE.WebGLRenderer);
+    assert.match(shader.fragmentShader, /uniform float holoTid/);
+    assert.equal(shader.uniforms.holoSolid, solid);
+    assert.equal(m.transparent, true);
+    shaders.push(shader);
+  }
+  solid.value = 1;
+  for (const shader of shaders) assert.equal(shader.uniforms.holoSolid!.value, 1, "Trolla når samma uniform");
+  assert.notEqual(sten.material, kalla, "delade GLB-material får aldrig bli hologram");
 });
