@@ -1,5 +1,5 @@
 // R-A (röstinspelningar 2026-10-31): Bengtssons kända uppdragsrepliker (uppdrag, tack, andra djur-varianter och nästan),
-// byggönskningarna och de fem hjälpfraserna ska spelas som EN hel inspelning med rätt talare – inte tyst, inte ihopsatt av
+// byggönskningarna och uppdragens hjälpfraser (alla, även de 23 som i dag sätts ihop av lösa klipp) ska spelas som EN hel inspelning med rätt talare – inte tyst, inte ihopsatt av
 // främmande klipp och inte ersatt av en annan replik. Granskad-flaggorna ändras inte här.
 import assert from "node:assert/strict";
 import { test } from "node:test";
@@ -11,12 +11,12 @@ import { sammanhallenRostText } from "./rost.ts";
 import { normalisera, nyckel, rostPlan } from "./rostManifest.ts";
 
 type Variant = { text: string; granskad: boolean };
-type U = { id: string; givare?: string; text_bengtsson?: string; klart_bengtsson?: string; nastan?: string; text_bengtsson_annat_djur?: Variant; klart_bengtsson_annat_djur?: Variant };
+type U = { id: string; givare?: string; text_bengtsson?: string; klart_bengtsson?: string; nastan?: string; hjalp?: string[]; text_bengtsson_annat_djur?: Variant; klart_bengtsson_annat_djur?: Variant };
 const UPPDRAG = (bengtssonJson as unknown as { uppdrag: U[] }).uppdrag;
 const RADER = (manifestJson as unknown as { rader: Record<string, { f: string; r: string }> }).rader;
 const VANTAR = new Set(((rostJson as { vantar_rost?: string[] }).vantar_rost ?? []).map(normalisera));
 
-const HJALPFRASER = ["en hund med strumpor", "en hund med halsduk", "en katt med tröja", "en liten myra", "en stor giraff"];
+const HJALPFRASER = [...new Set(UPPDRAG.flatMap((u) => u.hjalp ?? []))];
 
 function rader(): { kalla: string; t: string; talare: string }[] {
   const ut: { kalla: string; t: string; talare: string }[] = [];
@@ -60,4 +60,12 @@ test("R-A: kanin-fryser:s varianter för andra djur förblir granskad:false", ()
   const u = UPPDRAG.find((x) => x.id === "kanin-fryser")!;
   assert.equal(u.text_bengtsson_annat_djur?.granskad, false);
   assert.equal(u.klart_bengtsson_annat_djur?.granskad, false);
+});
+
+test("R-A: nästan (bengtsson) och hjälpfraser (pennan) är egna generatorkällor, bara fasta fält i bengtsson.json", () => {
+  type Kalla = { fil?: string; talare?: string; falt?: string[] };
+  const lista = (rostJson as unknown as { kallor: { lista: Kalla[] } }).kallor.lista;
+  const hitta = (re: string) => lista.filter((k) => k.falt?.includes(re)).map((k) => `${k.fil}:${k.talare}`);
+  assert.deepEqual(hitta("^\\.uppdrag\\[\\]\\.nastan$"), ["bengtsson.json:bengtsson"]);
+  assert.deepEqual(hitta("^\\.uppdrag\\[\\]\\.hjalp\\[\\]$"), ["bengtsson.json:pennan"]);
 });
