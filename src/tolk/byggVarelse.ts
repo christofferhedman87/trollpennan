@@ -169,11 +169,11 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
     if (s.t === "funk") {
       if (s.v === "och" && mode === "med") b.vantande = null;
       mode = modeAv(s.v, mode);
-      if (s.v === "med") { relation = s.relation; artikel = undefined; sakEgenskaper = []; }
-      else if (s.v === "fore" || s.v === "som" || s.v === "kan") { relation = undefined; artikel = undefined; }
+      if (s.v === "med") { relation = s.relation; artikel = undefined; sakEgenskaper = []; sakAntal = undefined; sakAntalOrd = undefined; }
+      else if (s.v === "fore" || s.v === "som" || s.v === "kan") { relation = undefined; artikel = undefined; sakAntal = undefined; sakAntalOrd = undefined; }
       continue;
     }
-    if (s.t === "artikel") { artikel = s.form; continue; }
+    if (s.t === "artikel") { artikel = s.form; sakAntal = undefined; sakAntalOrd = undefined; continue; }
     if (s.t === "antal") {
       if (huvudSett) { sakAntal = s.n; sakAntalOrd = s.form; continue; }
       b.antal = s.n;
@@ -213,7 +213,8 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
     const o = s.o;
     if (o.klass === "djur") {
       if (sist && o.id === sist.o.id && s.form === sist.form) huvudSett = true;
-      artikel = undefined;
+      artikel = undefined; sakAntal = undefined; sakAntalOrd = undefined;
+      sakEgenskaper = []; b.vantande = null;
       if (!(sist && o.id === sist.o.id && s.form === sist.form)) markera(b, o.id, true);
       else if (sist && !sist.komp && s.form === sist.form) {
         /* redan markerad */
@@ -266,7 +267,7 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
     }
     if (o.klass === "monster" || o.klass === "formaga" || o.klass === "egenskap") {
       applyDel(b, o.del, o, false);
-      if (o.klass === "monster") b.monsterOrd = o;
+      if (o.klass === "monster") { b.monsterOrd = o; if (o.efter === "med") { b.monsterAntal = sakAntal; b.monsterAntalOrd = sakAntalOrd; } }
       if (o.klass === "formaga") {
         const adj = !!(o.bojning || o.ordklass === "adjektiv");
         const vis: FormVis = mode === "fore" && adj ? "adj" : "som";
@@ -274,8 +275,10 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
         if (f) {
           f.vis = vis;
           f.ord = o;
+          if (o.efter === "med") { f.antal = sakAntal; f.antalOrd = sakAntalOrd; }
         }
       }
+      sakAntal = undefined; sakAntalOrd = undefined;
     }
   }
   for (const boost of b.boosts) {

@@ -19,6 +19,7 @@ export function monsterVisas(b: Bygg): Ord | null {
   if ((b.randAuto || b.monsterDolj) && !b.monsterOrd) return null;
   const o = b.monsterOrd;
   if (o?.bojning && o.efter !== "med") return o;
+  if (o?.efter === "med" && b.monsterAntal) return o;
   if (!b.monster) return o;
   const adj = ORD.ord.filter(
     (x) => x.klass === "monster" && x.del?.monster === b.monster && x.bojning && x.efter !== "med",
@@ -71,16 +72,17 @@ export function formelAv(b: Bygg): string {
       : djur.visa;
   delar.push(namn);
   const med: string[] = [];
-  if (mon && mon.efter === "med" && !mon.bojning) med.push(mon.visa);
-  for (const f of b.formagor) if (f.vis === "som" && f.ord?.efter === "med") med.push(f.ord.visa);
+  if (mon && mon.efter === "med" && !mon.bojning) med.push([b.monsterAntal ? b.monsterAntalOrd ?? String(b.monsterAntal) : "", mon.visa].filter(Boolean).join(" "));
+  for (const f of b.formagor) if (f.vis === "som" && f.ord?.efter === "med") med.push([f.antal ? f.antalOrd ?? String(f.antal) : "", f.ord.visa].filter(Boolean).join(" "));
   if (med.length) delar.push("med", med.join(" och "));
   let forra = med.length ? "med" : "";
   for (const t of b.tillbehor) {
     if (t.recept) continue;
     const plural = (t.antal ?? 1) > 1 || t.ord.genus === "pl" || !!t.form && arPluralForm(t.ord, t.form);
     const genus = plural ? "pl" : t.ord.genus === "n" ? "n" : "u";
-    const f = t.fargOrd ? boj(fargAdjektiv(t.fargOrd) ?? t.fargOrd, genus) : "";
-    const artikel = t.antal ? (t.antalOrd ?? String(t.antal)) : t.artikel && !plural ? (genus === "n" ? "ett" : "en") : "";
+    const bestamd = !!t.artikel && !["en", "ett"].includes(t.artikel);
+    const f = t.fargOrd ? boj(fargAdjektiv(t.fargOrd) ?? t.fargOrd, bestamd ? "pl" : genus) : "";
+    const artikel = t.antal ? (t.antalOrd ?? String(t.antal)) : bestamd ? t.artikel : t.artikel && !plural ? (genus === "n" ? "ett" : "en") : "";
     const namn = (t.antal ?? 1) > 1 && !arPluralForm(t.ord, t.form ?? t.ord.visa) ? pluralOrd(t.ord) : t.form ?? t.ord.visa;
     const fras = [artikel, ...(t.egenskaper ?? []), f, namn].filter(Boolean).join(" ");
     const relation = t.relation ?? "med";
