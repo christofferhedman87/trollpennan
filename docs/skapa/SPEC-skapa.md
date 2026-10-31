@@ -590,7 +590,7 @@ Kopiera `public/` rakt in i repot. Alla filnamn är ASCII.
 
 ## Åtgärdsblock A0/A2 + T-27 (2026-10-31)
 
-Bokens mål räknas fram i `skapa/bokMal.ts`, från befintlig gåva/uppdrag/önskan/tomt/explicit Väktare/plats. Lapp, tips, hjälp och Idé använder samma källa. Målens hela förslag ligger först i Ordhjälpen. Finns egna ord krävs ett uttryckligt byte innan ett helt förslag ersätter meningen, och Ångra återställer originalet. T-03 är ett delresultat tills B har verifierat betydelsen för alla 91 uppdrag, 42 djurönskningar och 24 byggönskningar.
+Bokens mål räknas fram i `skapa/bokMal.ts`, från befintlig gåva/uppdrag/önskan/tomt/explicit Väktare/plats. Lapp, tips, hjälp och Idé använder samma källa. De nya målkorten ligger först i den vanliga Ordhjälpen. Finns egna ord krävs ett uttryckligt byte innan ett nytt målkort ersätter meningen, och Ångra återställer originalet. Gåvohjälpens äldre separata hylla återstår att flytta till samma skyddade väg i B/D; detta är ännu ingen verifierad invariant för alla hjälpkort. T-03 är ett delresultat tills B har verifierat betydelsen för alla 91 uppdrag, 42 djurönskningar och 24 byggönskningar.
 
 I låg liggande vy har boken en fast hel remsa och två arbetsytor: sammanhang/svar samt hjälp/tangenter. Lappen är kompakt med knapp för hela texten. När en idé visas komprimeras den bestående lappen även stående. En ordfråga prioriteras framför den frivilliga idébilden. Ingen text blir mindre än18px; tangenterna är minst44px höga. Bredd-undantaget B8 gäller fortsatt bara bokstavstangenter.
 

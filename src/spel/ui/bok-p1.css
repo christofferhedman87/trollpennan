@@ -145,17 +145,18 @@ body:has([data-s4="vaktar-aptitbubbla"]) .tred-hint{display:none !important}
 body:has([data-s4="vaktar-aptitbubbla"]) .bok-skarm{background:transparent;backdrop-filter:none;pointer-events:none}
 body:has([data-s4="vaktar-aptitbubbla"]) .bok-skarm .bok{max-height:446px;height:446px;pointer-events:auto}
 
-/* Liggande (2026-10-30, block 4a): arket är en panel till höger (skapa.css, bredd min(400px, 52%)) och vänster om den står
-   Trolla-knappen (top 70 px). Väktarens remsa (zon A) gick över hela bredden och täckte panelens överdel (lappen, den skrivna
-   meningen) och Trolla; returskylten låg dessutom över panelens kant. Remsan slutar nu vid panelen, Trolla flyttas under
-   remsan, och returskylten tonas bort medan boken är öppen (på samma sätt som när en banderoll visas). Stående är oförändrat. */
+/* T-27: samma panelbredd som skapa.css. Väktarens text har egen hel rad med
+   läsbar typ; knapparna ryms på nästa rad. Pennan ligger nedanför remsan. */
 @media (orientation: landscape) and (max-height: 600px) {
-  body:has(.sk-lager) [data-s4="vaktar-aptitbubbla"] { right: calc(min(400px, 52%) + 12px); }
-  body:has(.sk-lager):has([data-s4="vaktar-aptitbubbla"]) .sk-penn-ora { top: 130px; }
-  /* Den smalare remsan rymmer Väktarens text (högst ca 50 tecken) genom lite mindre typ och högst tre rader; 🔊 läser upp hela. */
+  body:has(.sk-lager) [data-s4="vaktar-aptitbubbla"] {
+    right: calc(min(560px, calc(100vw - 190px)) + 12px); height: auto; max-height: none;
+    display: grid; grid-template-columns: minmax(0, 1fr) 44px 44px; gap: 4px; padding: 6px;
+  }
+  body:has(.sk-lager):has([data-s4="vaktar-aptitbubbla"]) .sk-penn-ora { top: auto; bottom: 12px; }
   body:has(.sk-lager) [data-s4="vaktar-aptitbubbla"] p,
-  body:has(.sk-lager) [data-s4="vaktar-aptitbubbla"] [data-s4-progress] { font-size: clamp(11px, 1.9vw, 14px); line-height: 1.15; }
-  body:has(.sk-lager) [data-s4="vaktar-aptitbubbla"] p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+  body:has(.sk-lager) [data-s4="vaktar-aptitbubbla"] [data-s4-progress] { font-size: 18px; line-height: 1.2; }
+  body:has(.sk-lager) [data-s4="vaktar-aptitbubbla"] p { grid-column: 1 / -1; grid-row: 1; }
+  body:has(.sk-lager) [data-s4="vaktar-aptitbubbla"] [data-s4-progress] { grid-column: 1; grid-row: 2; white-space: normal; }
 }
 
 /* Block 4b: medan en bok- eller menypanel är öppen står returskylten inte kvar ovanför arket (stående likaväl som liggande):
