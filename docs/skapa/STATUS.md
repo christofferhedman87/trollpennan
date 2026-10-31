@@ -1,6 +1,6 @@
 # Status: Nya Skapa (spec: SPEC-skapa.md)
 
-> **Aktuellt 2026-10-31:** alla T-01–T-35 följer [gemensam plan](../codex/plan.md). E1/E2 (#286), E3/G4 (#287), A1 (#288) och B0:s första sex uppdrag (#290, main fbfe48f) är publicerade med gröna main-Cloudflare-checkar och SHA-256-bevis. A0/A2/F4 (#289, main `eec3b27`) är publicerade och verifierade med Cloudflare/SHA-256. Hologrammets separata shaderfix #293 är också publicerad. Tolkens beteendebevarande uppdelning finns i #291. B1–B8 och oberoende Codex-granskare är godkända. T-03/T-05/T-07/T-08/T-18 är fortsatt partiella eller öppna; inga granskad-flaggor ändras utan Christoffers faktiska textläsning.
+> **Aktuellt 2026-10-31:** alla T-01–T-35 följer [gemensam plan](../codex/plan.md). E1/E2 (#286), E3/G4 (#287), A1 (#288) och B0:s första sex uppdrag (#290, main fbfe48f) är publicerade med gröna main-Cloudflare-checkar och SHA-256-bevis. A0/A2/F4 (#289, main `eec3b27`) är publicerade och verifierade med Cloudflare/SHA-256. Hologrammets separata shaderfix #293 är också publicerad. Tolkens beteendebevarande uppdelning #291 är publicerad som `f69c3e9`. B1–B8 och oberoende Codex-granskare är godkända. T-03/T-05/T-07/T-08/T-18 är fortsatt partiella eller öppna; inga granskad-flaggor ändras utan Christoffers faktiska textläsning.
 
 Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först.
 
@@ -24,19 +24,19 @@ Geometriprovet har valfri `QA_TANGENTER=fysiska`: riktiga ASCII-tangenter och fa
 
 C1a #291 och C1b #294 samordnas därefter. C1b:s appkod `e61cbd3` har 572/572 och kritisk kodgranskning; sju fraser och omladdning är gröna i vardera huvudvyn. Fysisk placering och C2:s antal/upprepade saker är öppna. Textpaket 01 i #292 väntar fortfarande på Christoffers faktiska läsning; inga `granskad`-flaggor är ändrade.
 
-## C1b: ord och relationer verifierade, samordning inför merge
+## C1b: slutverifierade ord och relationer inför merge
 
 #294 är samordnad med `origin/main f69c3e9` genom vanlig merge. Appändringarna från `e61cbd3` behåller de sex relationerna med/på/under/i/vid/bredvid, tillbehörets artikel, adjektiv och skrivna ordform samt ”med vingar”. Ett valfritt validerat relationsfält följer v2; äldre kopior och ogiltig relation utan mutation är provade genom faktisk export/import, även för utflykter, sovande och sparade formler.
 
-Oberoende Codex-granskare slutgodkände `ad1cc35` efter rättade adjektivläckor och relation vid sammansatt tillbehör. Appkod `e61cbd3` har alla sju grindar gröna, 572/572. Rena slut-UI-prov har sju verkligt skrivna och skapade fraser i vardera 375×812 och 812×375; alla sju i varje vy bevaras efter riktig omladdning. Baslinjen var röd: ”en katt under ett bord” skapades som ”en katt med bord”. Kvittot läses bara när det verkligen är helt synligt och har fri träffyta, med oförändrad normal lästid. Den senare samordningen tar in A2:s granskade UI-rättningar; C1b:s tolk-/lagringsändringar är oförändrade. Nya sju slutgrindar körs på samordningen före merge.
+Oberoende Codex-granskare slutgodkände `ad1cc35` efter rättade adjektivläckor och relation vid sammansatt tillbehör. Appkod `e61cbd3` har alla sju grindar gröna, 572/572. Rena slut-UI-prov har sju verkligt skrivna och skapade fraser i vardera 375×812 och 812×375; alla sju i varje vy bevaras efter riktig omladdning. Baslinjen var röd: ”en katt under ett bord” skapades som ”en katt med bord”. Kvittot läses bara när det verkligen är helt synligt och har fri träffyta, med oförändrad normal lästid. Den senare samordningen tar in A2:s granskade UI-rättningar; C1b:s tolk-/lagringsändringar är oförändrade. Alla sju slutgrindar på samordnade `16de11b` är gröna, 572/572. Oberoende Codex-granskare slutgodkände exakt `16de11b3372421a6a3c732d810b53842eb491420`. Nästa steg är merge och main-Cloudflare/SHA-256.
 
 T-07/T-08 är fortfarande delresultat. Fysisk placering hör till C1c; tillbehörsantal, identiska saker och övriga böjningar hör till C2. Inga `granskad`-flaggor eller fasta barnrepliker ändras. Tre svagaste punkter: relationsdata syns ännu inte som rätt fysisk placering; antal och identiska saker återstår; fysisk Safari/svensk hårdvara är inte provad.
 
-## C1a: slutverifierat efter publicerat A2
+## C1a: publicerad beteendebevarande uppdelning
 
 #291 är samordnad med `origin/main eec3b27` genom vanlig merge, utan C1b eller språkändringar. Appkod `eb4b3ad`: alla sju slutgrindar gröna, 565/565 produkttester. Samma 1 726 fraser ger fortfarande byteidentiska fulla utfall för båda tolkarna, SHA-256 `aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3`. De sex tolkmodulerna är fortsatt identiska med godkända `d2a5d29`. Ett mellanprov på `bc97600` föll på känt P3a-tidstest (50,2 ms); gränsen är oförändrad och slutomgången är helt grön.
 
-Riktigt första-skapelsen-prov på det frysta `0e656bf`-bygget är grönt i stående, liggande och datorvy: skapelsen sparas och återkommer efter omladdning, utan sidrullning, konsolfel eller externa anrop. Den senare samordningen tar in A2:s fullständigt provade UI-rättning; tolkmodulerna ändras inte. T-07/T-08 är öppna; funktionsändringen finns separat i #294. Nästa steg: oberoende slutgodkännande, merge och main-Cloudflare/SHA-256. Tre svagaste punkter: detta förarbete rättar inga språkfel; fysiska relationer/antal återstår; fysisk svensk hårdvara/Safari är inte provad.
+Riktigt första-skapelsen-prov på det frysta `0e656bf`-bygget är grönt i stående, liggande och datorvy: skapelsen sparas och återkommer efter omladdning, utan sidrullning, konsolfel eller externa anrop. Den senare samordningen tar in A2:s fullständigt provade UI-rättning; tolkmodulerna ändras inte. T-07/T-08 är öppna; funktionsändringen finns separat i #294. Oberoende Codex-granskare slutgodkände `eb4b3ad`. #291 är mergad som `f69c3e9` och publicerad: main-Cloudflare `124443122813` grön och alla sex serverade start-/spel-filer byteidentiska med det provade bygget (SHA-256). Tre svagaste punkter: detta förarbete rättar inga språkfel; fysiska relationer/antal återstår; fysisk svensk hårdvara/Safari är inte provad.
 
 ## Steg 0: hologrammets shader bevaras, 2026-10-31
 
@@ -90,7 +90,7 @@ Samma framräknade mål för lapp/tips/hjälp/Idé. Härledda föremål/plagg f�
 
 ## Fortsatt arbete 2026-10-31
 
-#289/#290/#293 är publicerade och görs inte om. Samordnade C1a #291 har gröna slutgrindar och inväntar slutgranskning/merge; C1b #294 är separat provad med 572/572 och sju fraser plus omladdning i båda vyer. B2 förbereds på `codex/t06-onskesvar`: regional värme, situationsriktiga exempel och synligt önskesvar, även för djur i platsSkapelser. Ingen av dessa PR:er stänger ännu hela T-03/T-05/T-07/T-08/T-18. Följ den gemensamma planen för återstående block.
+#289/#290/#293 är publicerade och görs inte om. C1a #291 är publicerad med gröna main-Cloudflare/SHA-256; samordnade C1b #294 är slutgodkänd med 572/572 och sju fraser plus omladdning i båda vyer. B2 förbereds på `codex/t06-onskesvar`: regional värme, situationsriktiga exempel och synligt önskesvar, även för djur i platsSkapelser. Ingen av dessa PR:er stänger ännu hela T-03/T-05/T-07/T-08/T-18. Följ den gemensamma planen för återstående block.
 
 ## B0 slutverifiering, kod fe06419
 
