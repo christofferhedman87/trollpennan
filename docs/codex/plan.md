@@ -267,7 +267,7 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 | T-02 | A1 | Verifierad/granskad #288,20UI-fall båda vyer och44px-yta; publicerad f425a41, CF124383463197/6SHA-256 gröna |
 | T-03 | A0/A2/B | A0/A2 publicerad #289/eec3b27; delresultat tills B/C verifierar alla 157 mål och den äldre gåvohyllan |
 | T-04 | A0/A2 | Publicerad #289/eec3b27; målanpassat tips/Idé, sju grindar och faktisk kontextkontroll gröna |
-| T-05 | B0/B1 | B0 #290 publicerad fbfe48f;560/560, fyra UI-fall, CF124411312834/6SHA gröna;B1 #303: ett uppdrag mergat 76a599e och oberoende godkänt; CF 124578165001 röd (uppladdning 401); servern ännu #301; 84 återstår. #304: tre färguppdrag granskade och slutprovade, merge återstår |
+| T-05 | B0/B1 | B0 #290 publicerad fbfe48f;560/560, fyra UI-fall, CF124411312834/6SHA gröna;B1 #303: ett uppdrag mergat 76a599e och oberoende godkänt; CF 124578165001 röd (uppladdning 401); servern ännu #301; 84 återstår. #304: tre färguppdrag granskade och slutprovade; se PR:ns leveranskommentar för merge/publicering |
 | T-06 | B2 | Publicerad #295/bdadc09, 585/585, båda vyer/legacy och main-CF/SHA gröna. T17/D2/F5 fortsätter separat |
 | T-07 | C1 | C1a/C1b/C1c publicerade (#291/#294/#297); #297 main ed0449c, 638/638 och CF124493270814/10SHA gröna. Sekundära djur C1d återstår |
 | T-08 | C2 | C2a och C1c publicerade. C2b-1 #298: skrivna siffror når tolken, spärren håller; 2 hattar grönt i båda vyer; oberoende Claude-underagent granskade. Full korpus/migration återstår |
@@ -280,7 +280,7 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 | T-15 | B3 | Planerad; B1 godkänt |
 | T-16 | D3 | Planerad |
 | T-17 | D0/D3 | Planerad; B5 godkänt |
-| T-18 | B1/BC | Sex flaggor/hashlås publicerade #299/0e6fe9b, CF124530012914/6SHA gröna. Textpaket 02:s 85 texter godkända som underlag; ett uppdrag mergat och oberoende godkänt i #303; publicering ej verifierad, 84 återstår. #304: tre exakt granskade texter, merge återstår |
+| T-18 | B1/BC | Sex flaggor/hashlås publicerade #299/0e6fe9b, CF124530012914/6SHA gröna. Textpaket 02:s 85 texter godkända som underlag; ett uppdrag mergat och oberoende godkänt i #303; publicering ej verifierad, 84 återstår. #304: tre exakt granskade texter; se PR:ns leveranskommentar för merge/publicering |
 | T-19 | BC | Planerad; B+C först |
 | T-20 | C4 | Planerad; B2 godkänt |
 | T-21 | F1 | Planerad; B7 godkänt |
