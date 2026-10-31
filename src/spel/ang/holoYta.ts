@@ -1,4 +1,4 @@
-// Den fria delen av världen när Väktaren och Pennans bok delar en liggande telefon.
+// Den fria delen av världen när Pennans bok är öppen på en låg skärm.
 // Alla koordinater är sidans CSS-pixlar; kameran drar bort canvasens vänster/topp.
 export type HoloYta = { left: number; top: number; right: number; bottom: number };
 export function bokHoloYta(canvas: DOMRect): HoloYta | null {

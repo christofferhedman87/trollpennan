@@ -5,21 +5,17 @@
 
 
 
-Senaste kortporträttsprovet bekräftar att CSS-kaskaden nu fungerar. Idé-lappen rullas fram automatiskt och dess bildrad har samma kompakta storlek som i liggande. Hjälpgalleriets inneboende bredd kunde därefter göra remsan 8 384 px bred; detta rättas med en uttryckligt begränsad gridkolumn och min-width:0. Stavningssvaret får samma framrullning som i liggande och kompakt padding med bibehållna 44 px-knappar. Dessa nya ändringar är byggda; riktat UI-prov pågår fortfarande och senaste samordnade slutgrindar återstår.
+## A2: senaste slutverifiering före merge
 
-Guldgranskningen reproducerade också ett faktiskt fel på `6f2c9ac`: en tidigare Idé dolde den aktiva spökskrivningens instruktion (0×0 px). Rättningen prioriterar guldskrivandet: frivillig Idé tar paus, och Idé/Gåta ger den befintliga konkreta guldinstruktionen utan att byta ord. Tipsregeln begränsas till vanligt måltips. Ingen ny barnreplik behövs. Ett särskilt rött/grönt prov `QA_LAGE=kort-ide` kontrollerar föregående Idé, båda riktiga hjälpknapparna, synlig instruktion och hela flerordsguldflödet i375×667; grönt resultat återstår.
+Den gemensamma målmodulen, målkort med uttryckligt textbyte, separat Gåta, fri-världstips och boklayouten finns i #289. T-03 är delresultat: alla 157 mål och den äldre gåvohyllan återstår i B/C/D. Barnets text och sparformat v2 ändras inte av layouten.
 
-## A2: kort porträtt och slutkaskad, pågår
+Kritisk granskning hittade och rättade verklig rems-/X-klippning, rotation, Väktaröverlapp, avsaknad av världsyta i375×667, CSS-kaskad, för bred hjälphylla, klippt Idé/stavningssvar och dold guldinstruktion. Idé och svar rullas fram, guldskrivandet prioriteras med befintlig instruktion, och nya ord/vald bricka hålls hela i remsan. Senaste guldprovet med föregående Idé är grönt i375×667: Idé/Gåta ändrar inte ordet, Mellanslag/sudda fungerar, hela frasen blir guld och önskan uppfylls/sparas. Hela layoutprovet är också grönt i375×667, inklusive hjälp/full lapp/stavning och44px-X. Interna bilder granskade.
 
-Skogen i 812×375 klarade hela det skärpta hologramflödet på `7a6663f`. Även 667×375 klarade alla fyra modeller och stenens 90 bildrutor, men rotation till 375×667 blev röd: boken lämnade ingen fri yta under Väktaren. `5a975ab` inför därför kompakt läslapp, en 60 px hög rullremsa, separata arbetsytor och en verklig yta för hologrammet i kort porträtt. Alla sju grindar var gröna (565/565), men den oberoende granskaren fann att grundstilarna skrev över den nya CSS-layouten. Senaste rättningen ger kortlayouten konsekvent högre specificitet och en enda kortrad i Ordhjälpen. Bygget är grönt; faktiska skriv-/Idé-/hjälp-/hel-lapp-/stavningsprov i 375×667 samt nya hologramprov och slutgrindar återstår. Ingen ny kandidat räknas slutgodkänd enbart för att äldre prov var gröna.
+Hologrammet passar sin faktiska modellruta mellan HUD och bokkontroller. Den separata shaderfixen #293 är publicerad; förhandsvisningen ändrar inga sparpositioner. Skogens hela hologramflöden i375×667 och667×375 är gröna, inklusive fyra modeller, stenens90bildrutor med1–1egna ritanrop, rotation, skapande och sparinvarians. Datorfallback1280×720 och återstående Sjön/Grottan812×375 körs. Standardtelefonens tidigare bok-/guld-/platsprov är gröna; senaste samordnade sju grindar på6f2c9ac var565/565, och en ny fullomgång körs på sista koden före godkännande/merge.
 
-Parallellt är C1b #294 kodgranskad på `e61cbd3` med 572/572 och sju gröna grindar; verkligt relations-UI pågår. T-07:s fysiska placering och C2:s antal/upprepade saker är öppna. Textpaket 01 för de första sex uppdragen finns i #292; Christoffers faktiska läsning/godkännande är fortfarande obesvarat och inga granskad-flaggor är ändrade. Fortsätt i samma statusfiler, utan nya överlämningsdokument.
+Geometriprovet har valfri QA_TANGENTER=fysiska: riktiga ASCII-tangenter och faktiska skärmtryck på å/ä/ö, med exakt läsback efter inmatning/radering. Standardläget behåller samtliga skärmtryck. Synlighets- och ritanropsgränser är oförändrade. Tre svagaste punkter:157måls semantik/gåvohjälp kvar, fysisk Safari/hårdvara inte provad, nya godkända inspelningar återstår.
 
-
-## A2:s sista kamerafynd, före merge
-
-Den samordnade kandidaten `9d247ba` har sju gröna grindar (565/565) och grönt stående Grottan-hologram. Liggande Skogen stoppade rött: fiskens ruta 114,156–138,197 täcktes av Väktarens bubbla till y187. En enkel nedåtflyttning hade riskerat att täcka Pennan; den används inte. Ny kandidat avgränsar i stället den faktiska fria ytan till höger om Pennan, under Väktaren och ovanför Stäng. Kameran centrerar ringens markpunkt där; den riktiga projicerade modellen skalas till samma yta. Ingen sparposition ändras. Provet kontrollerar nu även Penna/etikett/Stäng och har `QA_LAGE=smal` för 667×375. Typecheck och bygge gröna; verkliga 812/667-prov, slutgrindar och oberoende slutgranskning körs innan merge. 375×812 och högre skärmar behåller sin tidigare kameraväg; kort porträtt hanteras i nästa avsnitt.
-
+C1a #291 och C1b #294 samordnas därefter. C1b:s appkod e61cbd3 har572/572 och kritisk kodgranskning; sju fraser och omladdning är gröna i vardera huvudvyn. Fysisk placering och C2:s antal/upprepade saker är öppna. Textpaket01 i #292 väntar fortfarande på Christoffers faktiska läsning; inga granskad-flaggor är ändrade.
 
 ## Steg 0: hologrammets shader bevaras, 2026-10-31
 

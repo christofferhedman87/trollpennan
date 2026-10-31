@@ -3,6 +3,7 @@
 // Ingen riktig profil eller sparfil används (syntetiska isolerade profiler). Kör mot en förhandsvisning av build:pages:
 //   npm run build:pages && npx vite preview --config vite.pages.config.ts --port 4173 --strictPort
 //   TROLLPENNAN_REPO=. CHROMIUM=/sökväg/till/chrome node scripts/prov-platsforhand.mjs [url]
+// QA_TANGENTER=fysiska använder riktiga ASCII-tangenter och skärmknappar för å/ä/ö; standard är alla skärmknappar.
 // QA_PLATS=skogen|sjon|grottan och QA_LAGE=staende|liggande|smal|kort|dator begränsar körningen. QA_SCREENSHOTS=mapp sparar bilder för egen kontroll.
 //
 // Provet kräver per plats och format: en tom ring där ett djur skulle landa; hologram för kanin, fisk, fågel och sak med ringen och
@@ -62,13 +63,27 @@ async function oppnaBok(page) {
   await page.getByTestId("bok-skarm").waitFor({ state: "visible" });
 }
 async function skriv(page, text) {
-  for (const b of text) {
+  const fore = await page.getByTestId("ord-input").inputValue();
+  if (process.env.QA_TANGENTER === "fysiska") {
+    await page.locator('[data-dal="skrivbricka"]').click();
+    for (const bit of text.split(/([åäö])/)) {
+      if (!bit) continue;
+      if (/^[åäö]$/.test(bit)) await page.locator(".sk-tangenter").getByRole("button", { name: bit, exact: true }).click();
+      else await page.keyboard.type(bit);
+    }
+  } else for (const b of text) {
     if (b === " ") await page.getByTestId("mellanslag").click();
     else await page.locator(".sk-tangenter").getByRole("button", { name: b, exact: true }).click();
   }
+  assert.equal(await page.getByTestId("ord-input").inputValue(), fore + text, "exakt text före förhandsvisningen");
 }
 async function sudda(page, antal) {
-  for (let i = 0; i < antal; i++) await page.getByTestId("radera").click();
+  const fore = await page.getByTestId("ord-input").inputValue();
+  if (process.env.QA_TANGENTER === "fysiska") {
+    await page.locator('[data-dal="skrivbricka"]').click();
+    for (let i = 0; i < antal; i++) await page.keyboard.press("Backspace");
+  } else for (let i = 0; i < antal; i++) await page.getByTestId("radera").click();
+  assert.equal(await page.getByTestId("ord-input").inputValue(), fore.slice(0, -antal), "exakt radering efter förhandsvisningen");
 }
 // Det skapandet rör: djurlistorna, de sovande, stall, hem, tomter, stjärnor och mark. (Övriga fält, t.ex. räknare för skrivna ord,
 // ändras av vanliga tangenttryck och hör inte till förhandsvisningen.)
