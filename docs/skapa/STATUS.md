@@ -26,9 +26,9 @@ Kroppens eget id-pass avslöjade att en synlig bordsskiva dolde katten: föregå
 
 Extraprovet på `16b6d36` hittade ensamma fiskens/grisens överlapp med Pennans kontroll. `e1c3033` aktiverar samma redan granskade fria DOM-yta även för ensamma djur; sammansättningarnas väg är oförändrad. Alla sju grindar är åter gröna, 638/638.
 
-Sista exakta appbygget `e1c3033` är nu grönt för alla sju ytterligare fall i båda vyer: fisk/gris/dinosaurie/haj samt filt/tio hattar/två bord, inklusive hela skapelsens omladdning. Hela Grottans shader-/rotation-/skapa-/sparprov är också grönt i båda vyer: stenens egna WebGL-anrop är 1–1 i var och en av 90 bildrutor. Interna bilder av alla fyra modeller i båda vyer är lästa. Oberoende slutbesked för exakt `e1c303393511d9ae416ca89f877b6c89c60ba151` är begärt.
+Sista exakta appbygget `e1c3033` är nu grönt för alla sju ytterligare fall i båda vyer: fisk/gris/dinosaurie/haj samt filt/tio hattar/två bord, inklusive hela skapelsens omladdning. Hela Grottans shader-/rotation-/skapa-/sparprov är också grönt i båda vyer: stenens egna WebGL-anrop är 1–1 i var och en av 90 bildrutor. Interna bilder av alla fyra modeller i båda vyer är lästa. Oberoende Codex-granskare har slutgodkänt exakt `e1c303393511d9ae416ca89f877b6c89c60ba151` utan kvarstående blockerare inom C1c. Senare ändringar är endast dessa statusdokument.
 
-**Fortsätt:** invänta kritiskt slutbesked, rätta eventuell blockerare, merga #297 och kontrollera main-Cloudflare samt SHA-256 för sex start-/spel-filer och fyra ändrade GLB:er. Tidigare kandidater är inte slutgodkända.
+**Fortsätt:** merga slutgodkända #297 och kontrollera main-Cloudflare samt SHA-256 för sex start-/spel-filer och fyra ändrade GLB:er. Tidigare kandidater är inte slutgodkända.
 
 Reproducera skymningens röda baslinje med bygge på `e8ef8fd` och slutgrenens `scripts/prov-sammansatt.mjs`: `QA_LAGE=812 QA_FALL='en katt under ett bord' node scripts/prov-sammansatt.mjs <preview-url>`. Slutprovet körs utan urval för alla 11; `QA_FALL` måste välja ett verkligt fall. Extra modeller väljs uttryckligen. `CHROMIUM=/usr/bin/chromium` vid behov. Inga lokala scratch-filer krävs som källa.
 
