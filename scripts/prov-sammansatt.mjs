@@ -7,6 +7,10 @@ const adress = process.argv[2] || "http://127.0.0.1:4186/";
 const bilder = process.env.QA_SCREENSHOTS;
 if (bilder) await mkdir(bilder, { recursive: true });
 const fraser = [
+  { text: "en fisk", relation: "kropp", id: "", antal: 0, extra: true },
+  { text: "en gris", relation: "kropp", id: "", antal: 0, extra: true },
+  { text: "en dinosaurie", relation: "kropp", id: "", antal: 0, extra: true },
+  { text: "en haj", relation: "kropp", id: "", antal: 0, extra: true },
   { text: "en katt under ett bord", relation: "under", id: "bord", antal: 1 },
   { text: "en katt på en sten", relation: "på", id: "sten", antal: 1 },
   { text: "en katt i en låda", relation: "i", id: "kartong", antal: 1 },
@@ -23,6 +27,7 @@ function geometri(g, p) {
   const saker = (p.relation === "plagg" ? g.plagg : g.saker).filter((s) => s.id === p.id);
   assert.equal(saker.length, p.antal, "varje skrivet exemplar har en verklig modell");
   assert.ok(g.kropp.mesh > 0 && saker.every((s) => s.mesh > 0));
+  if (p.relation === "kropp") return;
   const k = g.kropp.lokal, o = saker[0].lokal;
   if (process.env.QA_MATT) console.log(JSON.stringify({text:p.text,kropp:k,saker:saker.map((s)=>s.lokal)}));
   if (p.relation === "under") for (const sak of saker) {
@@ -57,7 +62,7 @@ try {
     await page.goto(adress, { timeout: 120000 }); await page.waitForFunction(() => !!window.__trollMinne);
     const alla = () => page.evaluate(() => { const s = window.__trollMinne.getState(); return [...s.ang, ...s.sovande, ...s.hemma.map((h) => h.spec), ...Object.values(s.platsSkapelser).flat(), ...s.garden]; });
     const skapade = [];
-    for (const p of fraser.filter((p) => !process.env.QA_FALL || process.env.QA_FALL.split("|").includes(p.text))) {
+    for (const p of fraser.filter((p) => process.env.QA_FALL ? process.env.QA_FALL.split("|").includes(p.text) : !p.extra)) {
       await page.getByTestId("pennans-bok").click(); await page.getByTestId("tangentbord").waitFor();
       await page.locator('[data-dal="skrivbricka"]').click();
       for (const del of p.text.split(/([åäö])/)) {
@@ -71,21 +76,26 @@ try {
       if (process.env.QA_HOLO !== "0") {
         await page.waitForFunction(({ id, antal, relation }) => { const g = window.__holoGeometri; return g && g.kropp.mesh > 0 && (relation === "plagg" ? g.plagg : g.saker).filter((s) => s.id === id && s.mesh > 0).length === antal; }, p);
         await page.waitForFunction(() => !document.querySelector(".sk-ark")?.classList.contains("sk-ark--trollar"));
-        await page.evaluate(async () => {
-          const start = performance.now(); let fore = null, stilla = 0;
-          while (performance.now() - start < 5000) {
-            await new Promise(requestAnimationFrame); const nu = window.__trollvy;
-            stilla = fore && nu && Math.abs(nu.x - fore.x) + Math.abs(nu.y - fore.y) < 0.5 ? stilla + 1 : 0;
-            if (stilla >= 12) return; fore = nu ? { x: nu.x, y: nu.y } : null;
-          }
-          throw new Error("kameran kom inte till vila");
-        });
+        await page.evaluate(() => { window.__qaHoloVanta = { senaste: null, antal: 0 }; });
+        await page.waitForFunction(({ text, extra }) => {
+          const g = window.__holoGeometri, v = window.__qaHoloVanta;
+          if (!g || !window.__trollholo?.nyckel?.endsWith(text) || v.senaste === g) return v.antal >= 2;
+          v.senaste = g;
+          const a = document.querySelector(".sk-ark").getBoundingClientRect(), liggande = innerWidth > innerHeight;
+          const r = [g.kropp, ...g.saker, ...g.plagg].map((x) => x.skarm);
+          const w = Math.max(...r.map((x) => x.x1)) - Math.min(...r.map((x) => x.x0)), h = Math.max(...r.map((x) => x.y1)) - Math.min(...r.map((x) => x.y0));
+          const hinder = [...document.querySelectorAll(".sk-penn-ora, .sk-stang, .sk-gata")].map((e) => e.getBoundingClientRect());
+          const storlek = extra ? h >= 20 && w >= 12 : Math.max(w, h) >= 64;
+          const hel = r.every((x) => x.x0 >= 0 && x.x1 <= (liggande ? a.left : innerWidth) && x.y0 >= 90 && x.y1 <= (liggande ? innerHeight : a.top) && hinder.every((o) => Math.max(0, Math.min(x.x1,o.right)-Math.max(x.x0,o.left))*Math.max(0,Math.min(x.y1,o.bottom)-Math.max(x.y0,o.top)) <= 1));
+          v.antal = storlek && hel ? v.antal + 1 : 0;
+          return v.antal >= 2;
+        }, p);
         if (bilder) await page.screenshot({ path: `${bilder}/holo-${viewport.width}-${skapade.length}.png` });
         const holo = await page.evaluate(() => window.__holoGeometri);
         if (process.env.QA_MATT) console.log("Holo-ruta", await page.evaluate(() => ({ holo:window.__trollholo, ring:window.__trollring, vy:window.__trollvy, rutor:Object.fromEntries(["canvas", ".sk-ark", ".sk-penn-ora", ".sk-stang", ".sk-gata"].map((s)=>[s, document.querySelector(s)?.getBoundingClientRect().toJSON()])) })));
         geometri(holo, p);
         const rutor = [holo.kropp, ...holo.saker, ...holo.plagg].map((x) => x.skarm);
-        assert.ok(Math.max(Math.max(...rutor.map((r) => r.x1)) - Math.min(...rutor.map((r) => r.x0)), Math.max(...rutor.map((r) => r.y1)) - Math.min(...rutor.map((r) => r.y0))) >= 64, "förhandsvisningen går att urskilja");
+        assert.ok(Math.max(Math.max(...rutor.map((r) => r.x1)) - Math.min(...rutor.map((r) => r.x0)), Math.max(...rutor.map((r) => r.y1)) - Math.min(...rutor.map((r) => r.y0))) >= (p.extra ? 20 : 64), "förhandsvisningen går att urskilja");
         const ark = await page.locator(".sk-ark").boundingBox();
         const hinder = await page.locator(".sk-penn-ora, .sk-stang, .sk-gata").evaluateAll((list) => list.map((e) => e.getBoundingClientRect().toJSON()));
         for (const ruta of rutor) {
