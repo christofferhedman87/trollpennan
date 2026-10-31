@@ -15,6 +15,7 @@ import { platsLapp } from "./platsLapp.ts";
 import { platsMed } from "../platser.ts";
 import { rostFor } from "../rostManifest.ts";
 import { kanTrollas } from "./kanTrollas.ts";
+import { arSkrivtangent, skrivbarText } from "./skrivtecken.ts";
 import { tolkaMedReserv } from "../../tolk/reserv.ts";
 
 const skrivet = (s: string, k: MOrd["k"] = "skriv"): MOrd[] => (s ? s.split(" ").map((t) => ({ t, k })) : []);
@@ -213,4 +214,17 @@ test("Skapa: utflyktens platslapp återanvänder rätt plats och befintlig inspe
 
 test("Skapa: Ängen och okända platser får ingen utflyktslapp", () => {
   for (const id of ["ang", "garden", "saknas", ""]) assert.equal(platsLapp(id), null);
+});
+
+test("T-08: en skriven siffra når tolken, men andra tecken tas bort", () => {
+  for (const t of ["2", "0", "9", "a", "Z", "å", "Ä", "ö"]) assert.equal(arSkrivtangent(t), true, t);
+  for (const t of [" ", "!", "-", "+", "Enter", "Shift", "F2", "22", ""]) assert.equal(arSkrivtangent(t), false, t);
+  assert.equal(skrivbarText("en katt med 2 hattar!"), "en katt med 2 hattar");
+  assert.equal(skrivbarText("tio: 10 hattar?"), "tio 10 hattar");
+  assert.equal(skrivbarText("x".repeat(90)).length, 80);
+  // Siffran blir en egen bricka och räknas som känd, så den varken stryks eller blir ett ordägg.
+  const d = delaText(skrivbarText("en katt med 2 hattar"));
+  assert.deepEqual(d.ord, ["en", "katt", "med", "2"]);
+  assert.equal(d.skriv, "hattar");
+  assert.deepEqual(kollaOrd("en katt med 2", "2", []), { typ: "kand" });
 });

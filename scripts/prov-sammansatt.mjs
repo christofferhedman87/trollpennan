@@ -11,6 +11,7 @@ const fraser = [
   { text: "en gris", relation: "kropp", id: "", antal: 0, extra: true },
   { text: "en dinosaurie", relation: "kropp", id: "", antal: 0, extra: true },
   { text: "en haj", relation: "kropp", id: "", antal: 0, extra: true },
+  { text: "en katt med 2 hattar", relation: "plagg", id: "hatt", antal: 2, extra: true },
   { text: "en katt under ett bord", relation: "under", id: "bord", antal: 1 },
   { text: "en katt på en sten", relation: "på", id: "sten", antal: 1 },
   { text: "en katt i en låda", relation: "i", id: "kartong", antal: 1 },

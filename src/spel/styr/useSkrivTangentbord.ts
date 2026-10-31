@@ -1,5 +1,6 @@
 // Nya Skapa: det fysiska tangentbordet (dator) skriver i Pennans bok precis som skärmtangenterna.
 // Enter = Trolla i boken, Backspace = sudda, Escape stänger boken utan att sudda.
+import { arSkrivtangent } from "../skapa/skrivtecken.ts";
 import { trollaMedKnapp } from "../skapa/trollaKontroll.ts";
 import { useEffect, useRef, type RefObject } from "react";
 import type { SpelTillstand } from "./useSpelTillstand.ts";
@@ -56,7 +57,7 @@ export function useSkrivTangentbord(t: SpelTillstand, op: Op) {
         o.sudda();
         return;
       }
-      if (e.key === " " || /^[a-zA-ZåäöÅÄÖ]$/.test(e.key)) {
+      if (e.key === " " || arSkrivtangent(e.key)) {
         e.preventDefault();
         // När barnet börjar skriva flyttas fokus till skrivytan; Enter där betyder sedan Trolla.
         if (e.key !== " ") target?.closest(".sk-ark")?.querySelector<HTMLButtonElement>('[data-dal="skrivbricka"]')?.focus({ preventScroll: true });
