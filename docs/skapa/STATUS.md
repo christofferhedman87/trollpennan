@@ -13,6 +13,12 @@ Uppdateras efter varje fas. Den som tar upp arbetet läser den här filen först
 | E HUD och Min bok | Klar | se git-logg | HudBotten (Uppdrag, Skriv, Min bok) och toppens ikonknappar (lås, stjärnor, Se hela dalen, Karta). MinBok har sex rutor. Föräldrasidan har startläget och bokstavsljudet. MenyPanel och hamburgern är borttagna. BokSkarm är bara Byggboken (Mark) |
 
 
+
+## A2:s sista kamerafynd, före merge
+
+Den samordnade kandidaten `9d247ba` har sju gröna grindar (565/565) och grönt stående Grottan-hologram. Liggande Skogen stoppade rött: fiskens ruta 114,156–138,197 täcktes av Väktarens bubbla till y187. En enkel nedåtflyttning hade riskerat att täcka Pennan; den används inte. Ny kandidat avgränsar i stället den faktiska fria ytan till höger om Pennan, under Väktaren och ovanför Stäng. Kameran centrerar ringens markpunkt där; den riktiga projicerade modellen skalas till samma yta. Ingen sparposition ändras. Provet kontrollerar nu även Penna/etikett/Stäng och har `QA_LAGE=smal` för 667×375. Typecheck och bygge gröna; verkliga 812/667-prov, slutgrindar och oberoende slutgranskning körs innan merge. Porträtt och bok utan Väktare behåller sin tidigare kameraväg.
+
+
 ## Steg 0: hologrammets shader bevaras, 2026-10-31
 
 Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var 40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.

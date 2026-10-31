@@ -3,6 +3,12 @@
 > **Aktuellt 2026-10-31:** uppdraget omfattar samtliga 35 fynd i [granskning.md](granskning.md). E1/E2 (#286), E3/G4 (#287) och A1 (#288) är publicerade och görs inte om. B0:s första sex uppdrag är publicerade i #290 som fbfe48f (main-Cloudflare 124411312834 och 6/6 SHA-256 gröna); 85 uppdrag återstår. A0/A2/F4 i #289 slutverifieras. Dess hologramregression hittade ett befintligt grafikfel även på main; den separata rättningen finns i #293. Beteendebevarande tolkdelning finns i #291. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1. Denna aktiva plan går före historiken längre ner.
 
 
+
+## A2:s sista kamerafynd, före merge
+
+Den samordnade kandidaten `9d247ba` har sju gröna grindar (565/565) och grönt stående Grottan-hologram. Liggande Skogen stoppade rött: fiskens ruta 114,156–138,197 täcktes av Väktarens bubbla till y187. En enkel nedåtflyttning hade riskerat att täcka Pennan; den används inte. Ny kandidat avgränsar i stället den faktiska fria ytan till höger om Pennan, under Väktaren och ovanför Stäng. Kameran centrerar ringens markpunkt där; den riktiga projicerade modellen skalas till samma yta. Ingen sparposition ändras. Provet kontrollerar nu även Penna/etikett/Stäng och har `QA_LAGE=smal` för 667×375. Typecheck och bygge gröna; verkliga 812/667-prov, slutgrindar och oberoende slutgranskning körs innan merge. Porträtt och bok utan Väktare behåller sin tidigare kameraväg.
+
+
 ## Steg 0: hologrammets shader bevaras, 2026-10-31
 
 Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var 40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.

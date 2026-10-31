@@ -15,6 +15,7 @@ import { Byggverk } from "../dal/Byggverk.tsx";
 import { forhand } from "../skapa/forhand.ts";
 import { DjurForm, ModellGren } from "./djur.tsx";
 import { gorHolo, HOLO_TID } from "./holoMaterial.ts";
+import { bokHoloYta, passaHolo } from "./holoYta.ts";
 
 const _v = new THREE.Vector3();
 const _a = new THREE.Vector3();
@@ -24,9 +25,7 @@ const _hx = [0, 0, 0, 0, 0, 0, 0, 0].map(() => new THREE.Vector3());
 /** Bara dev och prov (aldrig för barn): hologrammets ruta på skärmen i CSS-px, för att provet ska kunna se att det syns. */
 const PROV = import.meta.env.DEV || (typeof navigator !== "undefined" && navigator.webdriver === true);
 let provRam = 0;
-function provHologram(g: THREE.Group, camera: THREE.Camera, gl: THREE.WebGLRenderer) {
-  provRam += 1;
-  if (provRam % 6 !== 0) return;
+function holoRuta(g: THREE.Group, camera: THREE.Camera, gl: THREE.WebGLRenderer) {
   _box.setFromObject(g);
   if (_box.isEmpty()) return;
   const r = gl.domElement.getBoundingClientRect();
@@ -38,6 +37,13 @@ function provHologram(g: THREE.Group, camera: THREE.Camera, gl: THREE.WebGLRende
     const sy = r.top + ((1 - p.y) / 2) * r.height;
     x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy);
   })));
+  return { x0, y0, x1, y1 };
+}
+function provHologram(g: THREE.Group, camera: THREE.Camera, gl: THREE.WebGLRenderer) {
+  if (++provRam % 6 !== 0) return;
+  const ruta = holoRuta(g, camera, gl);
+  if (!ruta) return;
+  const { x0, y0, x1, y1 } = ruta;
   const l = forhand.lage();
   (window as unknown as { __trollholo?: unknown }).__trollholo = {
     plats: l.plats, nyckel: l.nyckel, kropp: l.spec?.typ === "djur" ? l.spec.spec.kropp : null, y: l.holoY, krymp: l.krymp,
@@ -160,11 +166,21 @@ function Hologram() {
       const minst = hud.current.botten > 90 ? 0.4 : 0.55;
       if (behov > 0 && plats > 0) pass = Math.max(minst, Math.min(1, plats / behov));
     }
+    // Använd den riktiga modellens ruta när den fria ytan också avgränsas av Pennan och Stäng.
+    // Både modell och svävhöjd krymper kring samma markpunkt; ringens verkliga plats ändras aldrig.
+    const hojd = l.spec?.typ === "djur" ? synY(l.holoY) + 0.08 + Math.sin(t * 2.4) * 0.04 : 0;
+    const duk = gl.domElement.getBoundingClientRect();
+    const yta = bokHoloYta(duk);
+    if (yta && ring) {
+      g.scale.set(sx, sy, sx);
+      g.position.y = hojd;
+      const ruta = holoRuta(g, camera, gl);
+      _v.set(ring.x, 0, ring.z).project(camera);
+      if (ruta) pass = passaHolo(ruta, duk.left + (_v.x + 1) * duk.width / 2, duk.top + (1 - _v.y) * duk.height / 2, yta);
+    }
     g.scale.set(sx * pass, sy * pass, sx * pass);
+    g.position.y = hojd * pass;
     if (PROV) provHologram(g, camera, gl);
-    // Höjden över ringen ur platsens regel: 0 på marken och ängen, ca 0,16 på vattnet, 1,6–2,4 för en fågel i luften.
-    // Höjden skalas med resten, så att en fågel i luften krymper mot ringen i stället för att sväva kvar ovanför.
-    g.position.y = l.spec?.typ === "djur" ? (synY(l.holoY) + 0.08 + Math.sin(t * 2.4) * 0.04) * pass : 0;
   });
   if (!l.spec || !l.ring) return null;
   return (
@@ -200,7 +216,11 @@ function ArkKamera() {
       const sy = (-_v.y * 0.5 + 0.5) * h + cur.current.y;
       if (w > h && l.arkVanster != null) {
         mx = sx - (l.arkVanster - r.left) / 2;
-        my = Math.max(0, sy - h * 0.7);
+        const yta = bokHoloYta(r);
+        if (yta) {
+          mx = sx - ((yta.left + yta.right) / 2 - r.left);
+          my = sy - (yta.bottom - 12 - r.top);
+        } else my = Math.max(0, sy - h * 0.7);
       }
       else if (l.arkKant != null) {
         my = Math.max(0, sy - (l.arkKant - r.top - 40));

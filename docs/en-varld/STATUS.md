@@ -18,6 +18,12 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 | 9 Städning | Klar | se git-logg | Garden3D och MarkPlan är borttagna, och `window.__gard3d` är flyttad till `gard/gard3dDiag.ts`. Köpt mark följer med "Spara en kopia" och "Läs in en kopia". PROJECT.md har en sektion om En värld. Alla prov är gröna utom det kända tidtestet P3a i molnmiljön |
 
 
+
+## A2:s sista kamerafynd, före merge
+
+Den samordnade kandidaten `9d247ba` har sju gröna grindar (565/565) och grönt stående Grottan-hologram. Liggande Skogen stoppade rött: fiskens ruta 114,156–138,197 täcktes av Väktarens bubbla till y187. En enkel nedåtflyttning hade riskerat att täcka Pennan; den används inte. Ny kandidat avgränsar i stället den faktiska fria ytan till höger om Pennan, under Väktaren och ovanför Stäng. Kameran centrerar ringens markpunkt där; den riktiga projicerade modellen skalas till samma yta. Ingen sparposition ändras. Provet kontrollerar nu även Penna/etikett/Stäng och har `QA_LAGE=smal` för 667×375. Typecheck och bygge gröna; verkliga 812/667-prov, slutgrindar och oberoende slutgranskning körs innan merge. Porträtt och bok utan Väktare behåller sin tidigare kameraväg.
+
+
 ## Steg 0: hologrammets shader bevaras, 2026-10-31
 
 Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var 40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.
