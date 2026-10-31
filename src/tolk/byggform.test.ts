@@ -67,3 +67,11 @@ test("Block 2: material- och färgsammansättningar blir inte former", () => {
   const rod = tolkaByggFormel("ett rödhus");
   assert.equal(rod.typ, "forslag");
 });
+
+test("T08: byggdelens uttryckliga artikel bevaras även för tak av guld", () => {
+  for (const fras of ["ett hus med tak av guld", "ett hus med ett tak av guld", "ett hus med två dörrar och ett tak av guld"]) {
+    const u = tolkaByggFormel(fras);
+    assert.equal(u.typ, "bygge");
+    if (u.typ === "bygge") assert.equal(u.formel, fras);
+  }
+});

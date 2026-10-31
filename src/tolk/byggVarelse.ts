@@ -45,7 +45,7 @@ export function sattDjur(b: Bygg, o: Ord, form: string) {
   b.storlek = null;
 }
 
-type TillbehorYta = Pick<Bygg["tillbehor"][number], "form" | "artikel" | "relation" | "egenskaper">;
+type TillbehorYta = Pick<Bygg["tillbehor"][number], "form" | "artikel" | "relation" | "egenskaper" | "antal" | "antalOrd">;
 
 export function laggTillbehor(b: Bygg, o: Ord, yta: TillbehorYta = {}) {
   const bild = o.del?.tillbehor ?? o.id;
@@ -161,17 +161,21 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
   let relation: Relation | undefined;
   let artikel: string | undefined;
   let sakEgenskaper: string[] = [];
+  let huvudSett = false;
+  let sakAntal: number | undefined;
+  let sakAntalOrd: string | undefined;
   for (let i = 0; i < sem.length; i++) {
     const s = sem[i]!;
     if (s.t === "funk") {
       if (s.v === "och" && mode === "med") b.vantande = null;
       mode = modeAv(s.v, mode);
-      if (s.v === "med") { relation = s.relation; artikel = undefined; sakEgenskaper = []; }
-      else if (s.v === "fore" || s.v === "som" || s.v === "kan") { relation = undefined; artikel = undefined; }
+      if (s.v === "med") { relation = s.relation; artikel = undefined; sakEgenskaper = []; sakAntal = undefined; sakAntalOrd = undefined; }
+      else if (s.v === "fore" || s.v === "som" || s.v === "kan") { relation = undefined; artikel = undefined; sakAntal = undefined; sakAntalOrd = undefined; }
       continue;
     }
-    if (s.t === "artikel") { artikel = s.form; continue; }
+    if (s.t === "artikel") { artikel = s.form; sakAntal = undefined; sakAntalOrd = undefined; continue; }
     if (s.t === "antal") {
+      if (huvudSett) { sakAntal = s.n; sakAntalOrd = s.form; continue; }
       b.antal = s.n;
       b.antalSatt = true;
       continue;
@@ -189,8 +193,10 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       continue;
     }
     if (s.t === "komp") {
-      if (sist?.komp && s === sist.komp) { artikel = undefined; continue; }
+      if (sist?.komp && s === sist.komp) { huvudSett = true; artikel = undefined; continue; }
       if (s.suffix.kind === "djur") {
+        artikel = undefined; sakAntal = undefined; sakAntalOrd = undefined;
+        sakEgenskaper = []; b.vantande = null;
         markera(b, s.suffix.ord.id, false);
         for (const d of s.djur) {
           markera(b, d.id, false);
@@ -198,9 +204,9 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
         }
         continue;
       }
-      const sparr = applyKomp(b, s, mode, true, { artikel, relation, egenskaper: sakEgenskaper });
+      const sparr = applyKomp(b, s, mode, true, { artikel, relation, egenskaper: sakEgenskaper, antal: sakAntal, antalOrd: sakAntalOrd });
       artikel = undefined;
-      sakEgenskaper = [];
+      sakEgenskaper = []; sakAntal = undefined; sakAntalOrd = undefined;
       if (sparr === "sparr") return "sparr";
       continue;
     }
@@ -208,7 +214,9 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
     if (s.t === "blanda") continue;
     const o = s.o;
     if (o.klass === "djur") {
-      artikel = undefined;
+      if (sist && o.id === sist.o.id && s.form === sist.form) huvudSett = true;
+      artikel = undefined; sakAntal = undefined; sakAntalOrd = undefined;
+      sakEgenskaper = []; b.vantande = null;
       if (!(sist && o.id === sist.o.id && s.form === sist.form)) markera(b, o.id, true);
       else if (sist && !sist.komp && s.form === sist.form) {
         /* redan markerad */
@@ -218,18 +226,11 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
     }
     if (o.klass === "foremal") {
       // R3G: ett föremål bredvid djuret ("en kanin med en hink"). Bilden är entitetens nyckel; ängen ritar modellen.
-      if (o === ensamSak) { artikel = undefined; continue; }
+      if (o === ensamSak && !huvudSett) { huvudSett = true; artikel = undefined; continue; }
       const bild = o.del?.kropp ?? o.id;
-      const samma = b.tillbehor.some((t) => t.bild === bild && t.ord.id === o.id && t.form === s.form &&
-        (t.relation ?? "med") === (relation ?? "med") && t.fargOrd?.id === b.vantande?.id &&
-        (t.egenskaper ?? []).join("|") === sakEgenskaper.join("|"));
-      if (bild === b.kropp || samma) {
-        artikel = undefined; sakEgenskaper = []; b.vantande = null;
-        continue;
-      }
       const fargOrd = b.vantande;
-      b.tillbehor.push({ ord: o, bild, fargOrd, fargHex: fargOrd?.del?.farg?.startsWith("#") ? fargOrd.del.farg : null, glans: false, form: s.form, artikel, relation, egenskaper: sakEgenskaper });
-      sakEgenskaper = [];
+      b.tillbehor.push({ ord: o, bild, fargOrd, fargHex: fargOrd?.del?.farg?.startsWith("#") ? fargOrd.del.farg : null, glans: false, form: s.form, artikel, relation, egenskaper: sakEgenskaper, antal: sakAntal, antalOrd: sakAntalOrd });
+      sakEgenskaper = []; sakAntal = undefined; sakAntalOrd = undefined;
       artikel = undefined;
       b.vantande = null;
       continue;
@@ -261,14 +262,14 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
       continue;
     }
     if (o.klass === "tillbehor") {
-      laggTillbehor(b, o, { form: s.form, artikel, relation, egenskaper: sakEgenskaper });
+      laggTillbehor(b, o, { form: s.form, artikel, relation, egenskaper: sakEgenskaper, antal: sakAntal, antalOrd: sakAntalOrd });
       artikel = undefined;
-      sakEgenskaper = [];
+      sakEgenskaper = []; sakAntal = undefined; sakAntalOrd = undefined;
       continue;
     }
     if (o.klass === "monster" || o.klass === "formaga" || o.klass === "egenskap") {
       applyDel(b, o.del, o, false);
-      if (o.klass === "monster") b.monsterOrd = o;
+      if (o.klass === "monster") { b.monsterOrd = o; if (o.efter === "med") { b.monsterAntal = sakAntal; b.monsterAntalOrd = sakAntalOrd; } }
       if (o.klass === "formaga") {
         const adj = !!(o.bojning || o.ordklass === "adjektiv");
         const vis: FormVis = mode === "fore" && adj ? "adj" : "som";
@@ -276,8 +277,10 @@ export function byggFran(sem: Sem[]): Bygg | "sparr" {
         if (f) {
           f.vis = vis;
           f.ord = o;
+          if (o.efter === "med") { f.antal = sakAntal; f.antalOrd = sakAntalOrd; }
         }
       }
+      sakAntal = undefined; sakAntalOrd = undefined;
     }
   }
   for (const boost of b.boosts) {

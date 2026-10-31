@@ -225,3 +225,22 @@ test("T06: tillbehörets egna ord/egenskaper överlever v2-export/import och fel
     assert.equal(useMinne.getState(), fore);
   }
 });
+
+
+test("T08: tillbehörsantal bevaras i v2 på alla platser; äldre kopior och ogiltigt antal hanteras säkert", (t) => {
+  const original = useMinne.getState(); t.after(() => useMinne.setState(original, true));
+  const u = tolka("en kanin med två äpplen"); assert.equal(u.typ, "skapad"); if (u.typ !== "skapad") return;
+  assert.equal(u.antal, 1); assert.equal(u.varelse.tillbehor[0]!.antal, 2);
+  const varld = kopiaVarld();
+  for (const d of [varld.ang[0]!, varld.hemma[0]!.spec, varld.platsSkapelser.skogen![0]!, varld.sovande[0]!, varld.formler[0]!.spec]) Object.assign(d, u.varelse);
+  useMinne.setState(varld); const kopia = JSON.parse(JSON.stringify(exportera()));
+  useMinne.setState(tom()); assert.equal(useMinne.getState().importera(kopia), true); assert.deepEqual(exportera(), varld);
+  const fore = useMinne.getState();
+  for (const antal of [0, -1, 1.5, 11, Infinity, "2", null, {}, []]) {
+    const trasig = JSON.parse(JSON.stringify(kopia)); trasig.ang[0].tillbehor[0].antal = antal;
+    assert.equal(useMinne.getState().importera(trasig), false, String(antal)); assert.equal(useMinne.getState(), fore);
+  }
+  const aldre = JSON.parse(JSON.stringify(kopia));
+  for (const d of [aldre.ang[0], aldre.hemma[0].spec, aldre.platsSkapelser.skogen[0], aldre.sovande[0], aldre.formler[0].spec]) delete d.tillbehor[0].antal;
+  assert.equal(useMinne.getState().importera(aldre), true); assert.deepEqual(exportera(), aldre);
+});
