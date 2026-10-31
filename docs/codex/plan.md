@@ -3,6 +3,12 @@
 > **Aktuellt 2026-10-31:** uppdraget omfattar samtliga 35 fynd i [granskning.md](granskning.md). E1/E2 (#286), E3/G4 (#287) och A1 (#288) är publicerade och görs inte om. B0:s första sex uppdrag är publicerade i #290 som fbfe48f (main-Cloudflare 124411312834 och 6/6 SHA-256 gröna); 85 uppdrag återstår. A0/A2/F4 i #289 slutverifieras. Dess hologramregression hittade ett befintligt grafikfel även på main; den separata rättningen finns i #293. Beteendebevarande tolkdelning finns i #291. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1. Denna aktiva plan går före historiken längre ner.
 
 
+
+## C1a slutverifiering efter A2 och hologramrättningen
+
+#291 är samordnad med A2:s `9d247ba` och den publicerade grafikfixen, utan språkändringar. Kod `0e656bf`: alla sju slutgrindar gröna, 565/565 produkttester. Samma 1 726 fraser ger fortfarande byteidentiska fulla utfall för båda tolkarna, SHA-256 `aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3`. Oberoende granskare har kontrollerat att de sex modulerna är identiska med godkända `d2a5d29`; C1b ingår inte. Riktigt UI-prov körs mot ett fryst separat bygge i stående, liggande och datorvy. T-07/T-08 är fortfarande öppna; funktionsändringen finns separat i utkast #294. Före leverans: invänta A2, samordna dokumentationen mot main, slutgranska och kontrollera publiceringen. Tre svagaste punkter: detta förarbete rättar inga språkfel, UI är ännu inte färdigkontrollerat, fysisk svensk hårdvara/Safari är inte provad.
+
+
 ## Steg 0: hologrammets shader bevaras, 2026-10-31
 
 Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var 40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.

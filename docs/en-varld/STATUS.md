@@ -18,6 +18,12 @@ Uppdateras efter varje steg. Den som tar upp arbetet läser den här filen förs
 | 9 Städning | Klar | se git-logg | Garden3D och MarkPlan är borttagna, och `window.__gard3d` är flyttad till `gard/gard3dDiag.ts`. Köpt mark följer med "Spara en kopia" och "Läs in en kopia". PROJECT.md har en sektion om En värld. Alla prov är gröna utom det kända tidtestet P3a i molnmiljön |
 
 
+
+## C1a slutverifiering efter A2 och hologramrättningen
+
+#291 är samordnad med A2:s `9d247ba` och den publicerade grafikfixen, utan språkändringar. Kod `0e656bf`: alla sju slutgrindar gröna, 565/565 produkttester. Samma 1 726 fraser ger fortfarande byteidentiska fulla utfall för båda tolkarna, SHA-256 `aff5d76ab8befa378f0f8433c87c578d6901d9e0bd1d6a714c56514340c738f3`. Oberoende granskare har kontrollerat att de sex modulerna är identiska med godkända `d2a5d29`; C1b ingår inte. Riktigt UI-prov körs mot ett fryst separat bygge i stående, liggande och datorvy. T-07/T-08 är fortfarande öppna; funktionsändringen finns separat i utkast #294. Före leverans: invänta A2, samordna dokumentationen mot main, slutgranska och kontrollera publiceringen. Tre svagaste punkter: detta förarbete rättar inga språkfel, UI är ännu inte färdigkontrollerat, fysisk svensk hårdvara/Safari är inte provad.
+
+
 ## Steg 0: hologrammets shader bevaras, 2026-10-31
 
 Slutprovet för A2 hittade ett befintligt grafikfel: Grottans sten visas först som hologram men tappar sin shader när scenens globala materialpass körs var 40:e bildruta. Samma fel reproducerat på publicerade B0/main och på A2; A2 skapade det inte. `forbattraModellMaterial` lämnar nu hologrammets klonade material i fred, medan vanliga modeller fortsatt får sagoyta. Inga sparfält, texter eller testid ändras.
