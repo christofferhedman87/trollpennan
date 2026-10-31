@@ -111,6 +111,7 @@
   "lapp": {
     "onskan_fran": "{djur} önskar sig",
     "uppdrag_fran": "Uppdrag från Doktor Bengtsson",
+    "djur_reserv": "Ett djur",
     "gava_fran": "Present till {djur}",
     "tomt_fran": "Här ska det byggas",
     "gata_fran": "Hemligt ord",
@@ -206,5 +207,80 @@
     "kvitto": 5600,
     "puff": 2600,
     "holo_omritning": 180
-  }
+  },
+  "bokmal": {
+    "tips": {
+      "fri": "Skriv ett djur eller ett hus.",
+      "uppdrag": "Skriv något som hjälper Bengtsson.",
+      "onskan": "Skriv något som passar djurets önskan.",
+      "gava": "Skriv en gåva till din vän.",
+      "tomt": "Skriv vad du vill bygga på tomten.",
+      "plats": "Skriv en vän eller något som hör till platsen.",
+      "vaktare": "Skriv något som passar Väktardjurets dröm."
+    },
+    "rubriker": {
+      "uppdrag": "Till uppdraget",
+      "onskan": "Till önskan",
+      "gava": "Till gåvan",
+      "tomt": "Till tomten",
+      "plats": "På den här platsen",
+      "vaktare": "Till Väktardjuret",
+      "fri": "Idéer"
+    },
+    "fria_ideer": [
+      "en röd kanin",
+      "en stor hund",
+      "en blå häst",
+      "en katt med vingar",
+      "en gul groda",
+      "en prickig drake",
+      "ett litet hus",
+      "ett blått stall",
+      "en röd blomma",
+      "ett stort träd",
+      "en glad katt",
+      "en kanin med hatt",
+      "en randig zebra",
+      "en lysande uggla",
+      "en gul banan",
+      "ett rött äpple",
+      "en liten fisk",
+      "en anka med halsduk",
+      "ett grönt hus",
+      "en stor elefant"
+    ],
+    "gavo_ideer": [
+      "en morot",
+      "ett äpple",
+      "en kaka",
+      "en boll"
+    ],
+    "tomt_ideer": [
+      "ett rött hus",
+      "ett blått stall",
+      "en stor hage",
+      "ett litet hönshus"
+    ],
+    "plats_ideer": {
+      "skogen": [
+        "en röd räv",
+        "en liten uggla",
+        "en stor björn",
+        "en grön buske"
+      ],
+      "sjon": [
+        "en blå fisk",
+        "en gul anka",
+        "en stor delfin",
+        "en liten groda"
+      ],
+      "grottan": [
+        "en lysande drake",
+        "en liten fladdermus",
+        "en glittrande kristall",
+        "en stor sten"
+      ]
+    }
+  },
+  "gata_knapp": "Gåta"
 }

@@ -62,6 +62,8 @@ Storlek S/M/L avser relativ komplexitet; L delas enligt delblocken nedan. En avg
 
 ## Täckning och leveranslogg
 
+- A0/A2 är påbörjat i separat branch, staplad på A1 utan force-push. `bokMal.ts` räknar fram gällande mål utan mutation; `useBokMal.ts` är adapter till befintliga källor. UI-konsumenter/prov är ännu inte kopplade/färdiga. Fyra röda skärmprov på före-bygget: generiskt tips trots aktivt uppdrag, panoreringstips i DOM med öppen bok, dold idé under uppdragslappen och saknad första målsektion i hjälpen. Detta är sparat pågående arbete, inte färdig rättning eller granskad leverans.
+
 - E3/G4 samordnar T-14 och den oberoende T-35 eftersom båda gäller föräldrasidans information. Webmanifest och rasteriserade kopior av befintlig favicon till hemskärmsikoner, best-effort `navigator.storage.persist()` utan väntan vid start, ärliga Safari-/hemskärmsråd samt tidpunkt för senaste startade kopienedladdning. Ingen garanti att en fil behållits eller att Safari aldrig rensar. Grodlicensen ligger ordagrant kvar sist under Tack till. Baslinje: manifest saknas och licensordningen röda. Två rena nya lagringsprov gröna; alla sju grindar gröna, 553/553. `prov-bestandig-lagring.mjs` grönt för persist=true/false/fel/saknas, samt verklig föräldraöppning, nedladdning/kopiedatum och licensordning i375×812 och812×375. Interna bilder granskade. Oberoende `/root/t12_t13_review` godkände exakt2f3a40e605bbc902192d7de25f6f05cfcd724ad4 utan blockerare. Provets relativa request-URL:er och väntan på försidan rättades; spelkoden9a1d361 är oförändrad sedan sju gröna grindar; lint grönt igen. Tre svagaste punkter: fysisk iPad/långt uppehåll, faktisk hemskärmsinstallation på fysisk enhet och nya föräldratexter är bara lästa visuellt i molnets browser.
 
 - A1 T-01/T-02/T-31: röda UI-baslinjer för Trolla-tangenten, falsk skrivmarkör i hjälp och vad-luckans modebyte. Gemensam Trolla-handling för skärmtangent, Enter och Penna; separat inmatningsknapp i remsan; vad-lucka väljer tangenter + vänlig datatext. Alla sju grindar gröna på rättad spelkod,553/553. Oberoende granskaren hittade för smal tom skrivknapp och Enter-fokusfällor i ordbricka/skrivyta/vad-lucka; rättat med minst44px, respekt för role=button och fokus till skrivytan när fysisk skrivning börjar. Enter på en ordbricka reproducerades också rött (skapade ett djur). UI-provet utökas med faktisk keyboard.type, vanlig brickaktivering och geometrimätning; slutprov och slutgranskning återstår. Inget sparformat ändras. Ändrade barntexter samlade i nya-repliker.md; godkända inspelningar för nya texter återstår.
@@ -76,8 +78,8 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 |---|---|---|
 | T-01 | A1 | Implementerad; tangent-/Enter-/Penna-prov väntar ombygge, baslinjen röd |
 | T-02 | A1 | Implementerad; baslinjen röd (falsk markör), browseromprov väntar |
-| T-03 | A0/A2/B | Planerad; kräver alla 133 måls hjälpvägar |
-| T-04 | A0/A2 | Planerad |
+| T-03 | A0/A2/B | A0/A2 pågår; UI-fynd rött, ren målmodul och adaptern under uppbyggnad; 133 mål slutverifieras i B |
+| T-04 | A0/A2 | Pågår; generiskt tips i aktivt uppdrag reproducerat rött |
 | T-05 | B0/B1 | Planerad; ≥455 ja/nej-fixtures |
 | T-06 | B2 | Planerad |
 | T-07 | C1 | Planerad; faktisk värld och gamla v2/kopior |
@@ -97,9 +99,9 @@ E1/E2 (T-12/T-13) är verifierade och granskade i #286; övriga punkter är plan
 | T-21 | F1 | Planerad; B7 godkänt |
 | T-22 | F2 | Planerad |
 | T-23 | D3 | Planerad; B6 godkänt |
-| T-24 | A2 | Planerad |
+| T-24 | A2 | Pågår; panoreringstipsets DOM finns felaktigt med öppen bok, reproducerat rött |
 | T-25 | F3 | Planerad; B6 godkänt |
-| T-26 | A2 | Planerad |
+| T-26 | A2 | Pågår; idé saknas under uppdragslappen, reproducerat rött |
 | T-27 | F4 | Planerad |
 | T-28 | F5 | Planerad |
 | T-29 | G1 | Planerad |

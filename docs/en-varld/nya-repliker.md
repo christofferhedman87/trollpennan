@@ -81,3 +81,70 @@ Föräldratexter, ingen ny barnreplik. Befintlig grod-attribution bevaras ordagr
 | | pennan | data/skapa-ui.json ark.skriv_vad | Skriv vad det är! |
 
 Befintliga korrekta inspelningar återanvänds genom exakt textmatchning där de finns. Nya texter inväntar godkänd inspelning; ingen ny rösttäckning påstås.
+
+## A0/A2: bokens gemensamma mål (pågående)
+
+Alla nya textkällor nedan. Exakt befintlig inspelning återanvänds när den finns; ny rösttäckning påstås inte.
+
+- `data/skapa-ui.json bokmal.tips.fri`: Skriv ett djur eller ett hus.
+- `data/skapa-ui.json bokmal.tips.uppdrag`: Skriv något som hjälper Bengtsson.
+- `data/skapa-ui.json bokmal.tips.onskan`: Skriv något som passar djurets önskan.
+- `data/skapa-ui.json bokmal.tips.gava`: Skriv en gåva till din vän.
+- `data/skapa-ui.json bokmal.tips.tomt`: Skriv vad du vill bygga på tomten.
+- `data/skapa-ui.json bokmal.tips.plats`: Skriv en vän eller något som hör till platsen.
+- `data/skapa-ui.json bokmal.tips.vaktare`: Skriv något som passar Väktardjurets dröm.
+- `data/skapa-ui.json bokmal.rubriker.uppdrag`: Till uppdraget
+- `data/skapa-ui.json bokmal.rubriker.onskan`: Till önskan
+- `data/skapa-ui.json bokmal.rubriker.gava`: Till gåvan
+- `data/skapa-ui.json bokmal.rubriker.tomt`: Till tomten
+- `data/skapa-ui.json bokmal.rubriker.plats`: På den här platsen
+- `data/skapa-ui.json bokmal.rubriker.vaktare`: Till Väktardjuret
+- `data/skapa-ui.json bokmal.rubriker.fri`: Idéer
+- `data/skapa-ui.json bokmal.fria_ideer[0]`: en röd kanin
+- `data/skapa-ui.json bokmal.fria_ideer[1]`: en stor hund
+- `data/skapa-ui.json bokmal.fria_ideer[2]`: en blå häst
+- `data/skapa-ui.json bokmal.fria_ideer[3]`: en katt med vingar
+- `data/skapa-ui.json bokmal.fria_ideer[4]`: en gul groda
+- `data/skapa-ui.json bokmal.fria_ideer[5]`: en prickig drake
+- `data/skapa-ui.json bokmal.fria_ideer[6]`: ett litet hus
+- `data/skapa-ui.json bokmal.fria_ideer[7]`: ett blått stall
+- `data/skapa-ui.json bokmal.fria_ideer[8]`: en röd blomma
+- `data/skapa-ui.json bokmal.fria_ideer[9]`: ett stort träd
+- `data/skapa-ui.json bokmal.fria_ideer[10]`: en glad katt
+- `data/skapa-ui.json bokmal.fria_ideer[11]`: en kanin med hatt
+- `data/skapa-ui.json bokmal.fria_ideer[12]`: en randig zebra
+- `data/skapa-ui.json bokmal.fria_ideer[13]`: en lysande uggla
+- `data/skapa-ui.json bokmal.fria_ideer[14]`: en gul banan
+- `data/skapa-ui.json bokmal.fria_ideer[15]`: ett rött äpple
+- `data/skapa-ui.json bokmal.fria_ideer[16]`: en liten fisk
+- `data/skapa-ui.json bokmal.fria_ideer[17]`: en anka med halsduk
+- `data/skapa-ui.json bokmal.fria_ideer[18]`: ett grönt hus
+- `data/skapa-ui.json bokmal.fria_ideer[19]`: en stor elefant
+- `data/skapa-ui.json bokmal.gavo_ideer[0]`: en morot
+- `data/skapa-ui.json bokmal.gavo_ideer[1]`: ett äpple
+- `data/skapa-ui.json bokmal.gavo_ideer[2]`: en kaka
+- `data/skapa-ui.json bokmal.gavo_ideer[3]`: en boll
+- `data/skapa-ui.json bokmal.tomt_ideer[0]`: ett rött hus
+- `data/skapa-ui.json bokmal.tomt_ideer[1]`: ett blått stall
+- `data/skapa-ui.json bokmal.tomt_ideer[2]`: en stor hage
+- `data/skapa-ui.json bokmal.tomt_ideer[3]`: ett litet hönshus
+- `data/skapa-ui.json bokmal.plats_ideer.skogen[0]`: en röd räv
+- `data/skapa-ui.json bokmal.plats_ideer.skogen[1]`: en liten uggla
+- `data/skapa-ui.json bokmal.plats_ideer.skogen[2]`: en stor björn
+- `data/skapa-ui.json bokmal.plats_ideer.skogen[3]`: en grön buske
+- `data/skapa-ui.json bokmal.plats_ideer.sjon[0]`: en blå fisk
+- `data/skapa-ui.json bokmal.plats_ideer.sjon[1]`: en gul anka
+- `data/skapa-ui.json bokmal.plats_ideer.sjon[2]`: en stor delfin
+- `data/skapa-ui.json bokmal.plats_ideer.sjon[3]`: en liten groda
+- `data/skapa-ui.json bokmal.plats_ideer.grottan[0]`: en lysande drake
+- `data/skapa-ui.json bokmal.plats_ideer.grottan[1]`: en liten fladdermus
+- `data/skapa-ui.json bokmal.plats_ideer.grottan[2]`: en glittrande kristall
+- `data/skapa-ui.json bokmal.plats_ideer.grottan[3]`: en stor sten
+- `data/skapa-ui.json gata_knapp`: Gåta
+- `data/skapa-ui.json lapp.djur_reserv`: Ett djur
+- `data/vaktardjur.json skogen.hjalp[0]`: en röd jordgubbe
+- `data/vaktardjur.json skogen.hjalp[1]`: en kaka med honung
+- `data/vaktardjur.json sjon.hjalp[0]`: en gul banan
+- `data/vaktardjur.json sjon.hjalp[1]`: en studsboll
+- `data/vaktardjur.json grottan.hjalp[0]`: en glittrig kaka
+- `data/vaktardjur.json grottan.hjalp[1]`: en kristall
