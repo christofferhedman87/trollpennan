@@ -214,13 +214,13 @@ function ArkKamera() {
       // Ringens läge utan nuvarande förskjutning.
       const sx = (_v.x * 0.5 + 0.5) * w + cur.current.x;
       const sy = (-_v.y * 0.5 + 0.5) * h + cur.current.y;
-      if (w > h && l.arkVanster != null) {
+      const friYta = bokHoloYta(r);
+      if (friYta) {
+        mx = sx - ((friYta.left + friYta.right) / 2 - r.left);
+        my = sy - (friYta.bottom - 12 - r.top);
+      } else if (w > h && l.arkVanster != null) {
         mx = sx - (l.arkVanster - r.left) / 2;
-        const yta = bokHoloYta(r);
-        if (yta) {
-          mx = sx - ((yta.left + yta.right) / 2 - r.left);
-          my = sy - (yta.bottom - 12 - r.top);
-        } else my = Math.max(0, sy - h * 0.7);
+        my = Math.max(0, sy - h * 0.7);
       }
       else if (l.arkKant != null) {
         my = Math.max(0, sy - (l.arkKant - r.top - 40));

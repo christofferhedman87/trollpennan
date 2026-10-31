@@ -3,7 +3,7 @@
 // Ingen riktig profil eller sparfil används (syntetiska isolerade profiler). Kör mot en förhandsvisning av build:pages:
 //   npm run build:pages && npx vite preview --config vite.pages.config.ts --port 4173 --strictPort
 //   TROLLPENNAN_REPO=. CHROMIUM=/sökväg/till/chrome node scripts/prov-platsforhand.mjs [url]
-// QA_PLATS=skogen|sjon|grottan och QA_LAGE=staende|liggande|smal begränsar körningen. QA_SCREENSHOTS=mapp sparar bilder för egen kontroll.
+// QA_PLATS=skogen|sjon|grottan och QA_LAGE=staende|liggande|smal|kort|dator begränsar körningen. QA_SCREENSHOTS=mapp sparar bilder för egen kontroll.
 //
 // Provet kräver per plats och format: en tom ring där ett djur skulle landa; hologram för kanin, fisk, fågel och sak med ringen och
 // hologrammet helt i bild och inte under arket (stående: ovanför arkets överkant, liggande: vänster om arket); höjden följer rollen
@@ -22,7 +22,9 @@ const lagen = [
   ["staende", { width: 375, height: 812 }],
   ["liggande", { width: 812, height: 375 }],
   ["smal", { width: 667, height: 375 }],
-].filter(([namn]) => process.env.QA_LAGE ? namn === process.env.QA_LAGE : namn !== "smal");
+  ["kort", { width: 375, height: 667 }],
+  ["dator", { width: 1280, height: 720 }],
+].filter(([namn]) => process.env.QA_LAGE ? namn === process.env.QA_LAGE : ["staende", "liggande"].includes(namn));
 const platser = ["skogen", "sjon", "grottan"].filter((p) => !process.env.QA_PLATS || p === process.env.QA_PLATS);
 assert.ok(lagen.length && platser.length, "QA_LAGE och QA_PLATS måste matcha ett provfall");
 // [mening, förväntad roll]. Fisken ligger i vattnet på Sjön men på marken i Skogen/Grottan om platsen saknar vatten.
