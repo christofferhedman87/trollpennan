@@ -82,3 +82,14 @@ test("B1: omvänt placerade föremål behåller läget i båda tolkarna", () => 
     if (u.typ === "skapad") assert.equal(u.varelse.tillbehor.find((t) => t.id === "alvmossa")?.relation, relation, text);
   }
 });
+
+test("B1: en omvänd relation får inte flyttas till ett annat djur", () => {
+  for (const text of ["en mössa under en kanin och en katt", "en mössa bredvid en kanin och en katt", "en mössa under en kanin och en kanin"]) {
+    const u = tolkaMedReserv(text, { noteraBlandning: false });
+    assert.equal(u.typ, "skapad", text);
+    if (u.typ === "skapad") {
+      assert.equal(u.varelse.kropp, text.endsWith("en katt") ? "katt" : "kanin", text);
+      assert.equal(u.varelse.tillbehor.find((t) => t.id === "alvmossa")?.relation, undefined, text);
+    }
+  }
+});
