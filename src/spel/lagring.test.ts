@@ -202,3 +202,26 @@ test("T-07: valfri relation överlever faktisk export/import och gammal v2 accep
     assert.equal(useMinne.getState(), fore, "ogiltig relation får inte ändra världen");
   }
 });
+
+
+import { tolka } from "../tolk/tolka.ts";
+test("T06: tillbehörets egna ord/egenskaper överlever v2-export/import och felaktig metadata avvisas atomärt", (t) => {
+  const original = useMinne.getState(); t.after(() => useMinne.setState(original, true));
+  const u = tolka("en kanin med kalla strumpor och solglasögon och glasögon");
+  assert.equal(u.typ, "skapad"); if (u.typ !== "skapad") return;
+  assert.equal(u.varelse.tillbehor[0]!.ord, "strumpa");
+  assert.deepEqual(u.varelse.tillbehor[0]!.egenskaper, ["kalla"]);
+  assert.deepEqual(u.varelse.tillbehor.slice(1).map((t) => t.ord), ["solglasögon", "glasögon"]);
+  const varld = kopiaVarld();
+  for (const d of [varld.ang[0]!, varld.hemma[0]!.spec, varld.platsSkapelser.skogen![0]!, varld.sovande[0]!, varld.formler[0]!.spec]) Object.assign(d, u.varelse);
+  useMinne.setState(varld);
+  const kopia = JSON.parse(JSON.stringify(exportera()));
+  useMinne.setState(tom()); assert.equal(useMinne.getState().importera(kopia), true);
+  assert.deepEqual(exportera(), varld);
+  const fore = useMinne.getState();
+  for (const [falt, fel] of [["ord", null], ["ord", 3], ["ord", {}], ["ord", []], ["egenskaper", null], ["egenskaper", "kall"], ["egenskaper", {}], ["egenskaper", [3]], ["egenskaper", [null]]]) {
+    const trasig = JSON.parse(JSON.stringify(kopia)); trasig.ang[0].tillbehor[0][falt as string] = fel;
+    assert.equal(useMinne.getState().importera(trasig), false, `${falt}: ${JSON.stringify(fel)}`);
+    assert.equal(useMinne.getState(), fore);
+  }
+});

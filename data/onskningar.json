@@ -22,31 +22,34 @@
    "typ": "ge",
    "text": "Brr, jag fryser så om tassarna …",
    "nagon_av": [
-    "varm"
+    "varm:tassar"
    ],
    "alla": [],
    "exempel": [
-    "med halsduk",
-    "med mantel",
-    "som sprutar eld"
+    "med strumpor",
+    "med stövlar",
+    "med tofflor"
    ],
    "tack": "Åh, nu är jag varm ända ut i tårna!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Mina tassar är fortfarande kalla. Vad kan jag ha på fötterna?"
   },
   {
    "id": "frusna-oron",
    "typ": "ge",
    "text": "Mina öron är alldeles kalla i vinden.",
    "nagon_av": [
-    "varm"
+    "varm:öron"
    ],
    "alla": [],
    "exempel": [
-    "med hatt",
-    "med halsduk"
+    "med mössa",
+    "med luva",
+    "med röd mössa"
    ],
    "tack": "Tack! Nu fryser jag inte om öronen.",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Mina öron är fortfarande kalla. Vad kan täcka dem?"
   },
   {
    "id": "stark-sol",
@@ -57,12 +60,13 @@
    ],
    "alla": [],
    "exempel": [
-    "med glasögon",
     "med hatt",
-    "med solglasögon"
+    "med solglasögon",
+    "med röd hatt"
    ],
    "tack": "Skönt! Nu kan jag titta på molnen igen.",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag kisar fortfarande. Vad kan skugga ögonen?"
   },
   {
    "id": "regn",
@@ -77,7 +81,8 @@
     "med mantel"
    ],
    "tack": "Nu får det regna bäst det vill!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag vill hålla mig torr. Vad kan skydda mig mot regnet?"
   },
   {
    "id": "kalas",
@@ -93,7 +98,8 @@
     "med krona"
    ],
    "tack": "Jag är finast på hela kalaset!",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag ska på kalas. Kan du ge mig något festligt?"
   },
   {
    "id": "kung",
@@ -108,7 +114,8 @@
     "med mantel"
    ],
    "tack": "Hör upp, alla djur! Här kommer kungen!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag vill känna mig kunglig. Vad brukar en kung ha på sig?"
   },
   {
    "id": "suddigt",
@@ -120,10 +127,12 @@
    "alla": [],
    "exempel": [
     "med glasögon",
-    "med solglasögon"
+    "med röda glasögon",
+    "med blå glasögon"
    ],
    "tack": "Oj! Det var ju en blomma. Nu ser jag allt!",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag ser fortfarande suddigt. Jag behöver glasögon att se med."
   },
   {
    "id": "se-uppifran",
@@ -138,7 +147,8 @@
     "med vingar"
    ],
    "tack": "Wiii! Allt ser så litet ut härifrån!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag vill upp bland molnen. Hur kan jag ta mig dit?"
   },
   {
    "id": "simma",
@@ -153,7 +163,8 @@
     "med fenor"
    ],
    "tack": "Plask! Vattnet är alldeles lagom varmt.",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag vill röra mig i vattnet. Vad hjälper mig att simma?"
   },
   {
    "id": "morkradd",
@@ -169,7 +180,8 @@
     "som sprutar eld"
    ],
    "tack": "Nu lyser jag som en lykta. Jag är inte rädd längre!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Det är fortfarande mörkt. Kan du göra så att jag lyser?"
   },
   {
    "id": "kull",
@@ -184,7 +196,8 @@
     "supersnabb"
    ],
    "tack": "Kull på dig! Nu är det jag som är snabbast!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag vill hinna med i leken. Kan du göra mig snabbare?"
   },
   {
    "id": "appel",
@@ -202,7 +215,8 @@
     "jättestor"
    ],
    "tack": "Mums! Det var det godaste äpplet jag har ätit.",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Äpplet är högt uppe. Kan jag hoppa, flyga eller bli större?"
   },
   {
    "id": "kurragomma",
@@ -218,26 +232,26 @@
     "pytteliten"
    ],
    "tack": "Hihi, ingen kommer att hitta mig nu!",
-   "stjarnor": 3
+   "stjarnor": 3,
+   "nastan": "Jag vill gömma mig. Kan jag bli osynlig eller riktigt liten?"
   },
   {
    "id": "resa",
    "typ": "ge",
    "text": "Jag ska ut på en lång resa till andra sidan sjön. Hur ska jag ta mig dit?",
    "nagon_av": [
-    "packa",
     "flyga",
-    "simma",
-    "snabb"
+    "simma"
    ],
    "alla": [],
    "exempel": [
-    "med ryggsäck",
     "som flyger",
-    "som simmar"
+    "som simmar",
+    "med vingar"
    ],
    "tack": "Hej då! Jag skickar ett vykort!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Sjön är i vägen. Hur kan jag ta mig genom vattnet eller över det?"
   },
   {
    "id": "magisk",
@@ -253,7 +267,8 @@
     "glittrig"
    ],
    "tack": "Pling! Kände du? Nu är jag magisk!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag önskar mig något magiskt, som ett horn eller ett skimmer."
   },
   {
    "id": "stjarnor",
@@ -269,7 +284,8 @@
     "gnistrande"
    ],
    "tack": "Titta så jag glittrar!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag vill glittra som stjärnorna. Hur kan jag skimra?"
   },
   {
    "id": "fler-farger",
@@ -284,7 +300,8 @@
     "med regnbåge"
    ],
    "tack": "Alla färger på en gång! Det är ju jag!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag vill ha många färger på en gång, som en regnbåge."
   },
   {
    "id": "for-liten",
@@ -300,7 +317,8 @@
     "enorm"
    ],
    "tack": "Hallå där nere! Nu ser alla mig!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag vill bli större. Kan du skriva hur stor jag ska bli?"
   },
   {
    "id": "for-stor",
@@ -315,7 +333,8 @@
     "pytteliten"
    ],
    "tack": "Perfekt! Nu får jag plats överallt.",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag vill bli mindre. Kan du skriva hur liten jag ska bli?"
   },
   {
    "id": "rod",
@@ -331,7 +350,8 @@
     "orange"
    ],
    "tack": "Nu är jag lika fin som ett höstlöv!",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag vill ha en röd eller orange färg på kroppen."
   },
   {
    "id": "gul",
@@ -349,7 +369,8 @@
     "guld"
    ],
    "tack": "Nu strålar jag som solen!",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag vill ha en gul färg, eller glänsa som guld."
   },
   {
    "id": "bla",
@@ -367,7 +388,8 @@
     "turkos"
    ],
    "tack": "Nu ser jag ut som en bit av himlen!",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag önskar mig en blå färg på kroppen."
   },
   {
    "id": "gron",
@@ -385,7 +407,8 @@
     "mörkgrön"
    ],
    "tack": "Grön som gräset! Nu kan jag gömma mig i det.",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag önskar mig en grön färg på kroppen."
   },
   {
    "id": "lila",
@@ -401,7 +424,8 @@
     "mörkblå"
    ],
    "tack": "Precis som kvällshimlen! Nu kan stjärnorna komma.",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag vill bli lila eller mörkblå."
   },
   {
    "id": "prickar",
@@ -417,7 +441,8 @@
     "spräcklig"
    ],
    "tack": "Räkna mina prickar! Jag tror att jag har hundra.",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag vill ha prickar på kroppen. Kan du göra mig prickig?"
   },
   {
    "id": "ranger",
@@ -433,7 +458,8 @@
     "med ränder"
    ],
    "tack": "Raaaw! Jag är lika randig som en tiger.",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag vill ha ränder på kroppen, som en tiger."
   },
   {
    "id": "staketet",
@@ -448,7 +474,8 @@
     "som studsar"
    ],
    "tack": "Boing! Jag kom ända upp över staketet!",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag vill komma över staketet. Kan du hjälpa mig att hoppa?"
   },
   {
    "id": "modig",
@@ -463,7 +490,8 @@
     "eldsprutande"
    ],
    "tack": "Fff! Titta, jag sprutar eld. Men jag är försiktig med blommorna.",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag vill kunna spruta eld. Kan du ge mig den förmågan?"
   },
   {
    "id": "huvud",
@@ -479,7 +507,8 @@
     "med rosett"
    ],
    "tack": "Snyggt! Den ska jag ha på mig varje dag.",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag vill ha något fint på huvudet, som en hatt eller rosett."
   },
   {
    "id": "blixt",
@@ -494,7 +523,8 @@
     "som springer snabbt"
    ],
    "tack": "Svisch! Såg du mig? Inte? Jag var för snabb!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag vill vara snabb som blixten. Kan du göra mig snabbare?"
   },
   {
    "id": "ensam",
@@ -509,7 +539,8 @@
     "en rosa gris"
    ],
    "tack": "En kompis! Nu kan vi leka hela dagen.",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag längtar efter en djurkompis. Vem kan du trolla fram?"
   },
   {
    "id": "kompis-simma",
@@ -527,7 +558,8 @@
     "en haj"
    ],
    "tack": "Kom, vi simmar ett varv runt dammen!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag längtar efter en djurkompis som kan simma."
   },
   {
    "id": "kompis-flyga",
@@ -545,7 +577,8 @@
     "en katt som flyger"
    ],
    "tack": "Vi flyger upp till molnen tillsammans!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag längtar efter en djurkompis som kan flyga."
   },
   {
    "id": "kompis-liten",
@@ -563,7 +596,8 @@
     "en pytteliten groda"
    ],
    "tack": "Vi är lika små! Vi kan gömma oss i blommorna.",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag längtar efter en liten djurkompis."
   },
   {
    "id": "kompis-fisk",
@@ -582,7 +616,8 @@
     "en haj"
    ],
    "tack": "Hej fisken! Bubbel, bubbel!",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag längtar efter en fiskkompis. Vem simmar härnäst?"
   },
   {
    "id": "kompis-hatt",
@@ -600,7 +635,8 @@
     "en uggla med trollkarlshatt"
    ],
    "tack": "Vilken hatt! Får jag låna den någon gång?",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag längtar efter en djurkompis med hatt eller krona."
   },
   {
    "id": "kompis-drake",
@@ -617,7 +653,8 @@
     "en liten grön drake"
    ],
    "tack": "En riktig drake! Den är ju jättesnäll.",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag längtar efter en drakkompis."
   },
   {
    "id": "kompis-snabb",
@@ -635,7 +672,8 @@
     "en supersnabb häst"
    ],
    "tack": "Klara, färdiga, gå! Vi springer i kapp!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag längtar efter en djurkompis som är snabb."
   },
   {
    "id": "kompis-lysa",
@@ -652,7 +690,8 @@
     "en självlysande fisk"
    ],
    "tack": "Nu är det mysigt även när det blir mörkt.",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag längtar efter en djurkompis som kan lysa i mörkret."
   },
   {
    "id": "kompis-rosa",
@@ -671,7 +710,8 @@
     "en ljusrosa häst"
    ],
    "tack": "Rosa är verkligen finast!",
-   "stjarnor": 1
+   "stjarnor": 1,
+   "nastan": "Jag längtar efter en rosa djurkompis."
   },
   {
    "id": "kompis-enhorning",
@@ -689,7 +729,8 @@
     "en vit häst med horn"
    ],
    "tack": "En enhörning! Jag trodde att de bara fanns i sagor.",
-   "stjarnor": 3
+   "stjarnor": 3,
+   "nastan": "Jag längtar efter en hästkompis med horn."
   },
   {
    "id": "kompis-urtid",
@@ -706,7 +747,8 @@
     "en dino"
    ],
    "tack": "Wow, en riktig dinosaurie! Den är större än huset!",
-   "stjarnor": 2
+   "stjarnor": 2,
+   "nastan": "Jag längtar efter en dinosauriekompis."
   }
  ]
 }

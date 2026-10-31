@@ -1,5 +1,6 @@
 import { tillatSkrivning } from "./lagring.ts";
 import { create } from "zustand";
+import { uppdateraDjurIMinne } from "./minneDjur.ts";
 import type { Varelse } from "../tolk/typer.ts";
 import { byggMedId } from "../tolk/byggtolk.ts";
 import { brygga, type Sparad } from "./brygga.ts";
@@ -292,21 +293,7 @@ export const useMinne = create<Store>((set, get) => ({
     brygga.synkaGard();
     return "ok";
   },
-  uppdateraDjur: (uid, spec) => {
-    const ang = get().ang.find((a) => a.uid === uid);
-    if (ang) {
-      const next = { ...ang, ...spec, uid, skapad: ang.skapad, smeknamn: spec.smeknamn ?? ang.smeknamn };
-      set({ ang: get().ang.map((a) => (a.uid === uid ? next : a)) });
-      brygga.andra(next);
-      return next;
-    }
-    const hem = get().hemma.find((h) => h.spec.uid === uid);
-    if (!hem) return null;
-    const next = { ...hem.spec, ...spec, uid, skapad: hem.spec.skapad, smeknamn: spec.smeknamn ?? hem.spec.smeknamn };
-    set({ hemma: get().hemma.map((h) => (h.spec.uid === uid ? { ...h, spec: next } : h)) });
-    brygga.synkaGard();
-    return next;
-  },
+  uppdateraDjur: (uid, spec) => uppdateraDjurIMinne(get(), uid, spec, (patch) => set(patch)),
   bytSmeknamn: (uid, smeknamn) => {
     const r = bytSmeknamnSpar(get(), uid, smeknamn);
     if (!r) return null;

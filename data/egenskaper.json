@@ -50,8 +50,7 @@
    "huvud"
   ],
   "glasögon": [
-   "se",
-   "sol"
+   "se"
   ],
   "halsduk": [
    "varm",
@@ -95,6 +94,10 @@
    "varm:tassar"
   ],
   "luva": [
+   "varm",
+   "varm:öron"
+  ],
+  "alvmossa": [
    "varm",
    "varm:öron"
   ]
@@ -281,6 +284,11 @@
   ],
   "snoboll": [
    "kall"
+  ]
+ },
+ "tillbehorsord": {
+  "solglasögon": [
+   "sol"
   ]
  }
 }
