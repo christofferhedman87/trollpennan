@@ -9,6 +9,9 @@ import { bedomUppdragsSvar, kravUppfylltTolkat } from "./uppdragsmotor.ts";
 import { kvittotack } from "./skapa/tack.ts";
 import { hamtaUppdragsSvar, noteraUppdragsSvar, tystaBannrar, type UppdragsSvar } from "./skapa/kvitto.ts";
 import { ONSK } from "./onska.ts";
+import { hjalpDjurPaAngen } from "./styr/mossaKanin.ts";
+import { useMinne } from "./minne.ts";
+import { tolka } from "../tolk/tolka.ts";
 import type { OnskaSpar } from "./minne.ts";
 
 test("B1: storleken gäller ett djur och uttrycklig storlek väger tyngre än art", () => {
@@ -51,6 +54,45 @@ test("B1: två vänner på platserna – varsin storlek eller färg hör till va
     // Christoffers godkända hjälpfraser och de befintliga idéerna ska alltid räcka.
     for (const fras of [...(u.hjalp ?? []), ...(u.val?.grupper ?? []).flatMap((g) => g.forslag.map((f) => f.fras))]) assert.equal(bedomUppdragsSvar(u.krav!, fras).ok, true, `${u.id}: ${fras}`);
   }
+});
+
+test("B1: mat, vila och presenter bedöms efter saken och hur den hör till djuret", () => {
+  const nej: Record<string, string[]> = {
+    "magen-kurrar": ["en hund som heter morot", "en hund med en spatel"],
+    "skog-magen-kurrar": ["en morot", "en räv som heter morot"],
+    "sjo-fruktpaus": ["en apa med en pizza", "en anka som heter banan"],
+    "dags-att-vila": ["en hund bredvid en säng", "en hund som heter säng"],
+    "grotta-mjuk-vila": ["en säng", "en hund bredvid en säng"],
+    "present-till-en-van": ["en hund i en bok", "en hund som heter paket"],
+  };
+  // Logiska svar som den gamla ordlistan underkände.
+  const ja: Record<string, string[]> = {
+    "magen-kurrar": ["en hund med en pizza", "två kaniner med tre morötter"],
+    "skog-magen-kurrar": ["en räv med en ost"],
+    "sjo-fruktpaus": ["en groda med jordgubbar"],
+    "dags-att-vila": ["en hund i en sovsäck"],
+    "grotta-mjuk-vila": ["en hund i en sovsäck"],
+    "present-till-en-van": ["en katt med en docka", "en hund med en tårta", "en hund med en leksak"],
+  };
+  for (const u of SKRIV.filter((x) => x.id in nej)) {
+    for (const fras of nej[u.id]!) assert.equal(bedomUppdragsSvar(u.krav!, fras).ok, false, `${u.id}: ${fras}`);
+    for (const fras of [...ja[u.id]!, ...(u.hjalp ?? []), ...(u.val?.grupper ?? []).flatMap((g) => g.forslag.map((f) => f.fras))]) assert.equal(bedomUppdragsSvar(u.krav!, fras).ok, true, `${u.id}: ${fras}`);
+  }
+});
+
+test("B1: hjälpuppdrag hänger bara saken på ängens djur – inte ett nytt djur och inte på utflykt", () => {
+  const v = (text: string) => { const u = tolka(text, { kalla: "kort", noteraBlandning: false }); assert.equal(u.typ, "skapad", text); return (u as Extract<typeof u, { typ: "skapad" }>).varelse; };
+  const kanin = { ...v("en kanin"), uid: "b1-kanin", skapad: 1 };
+  const fore = useMinne.getState();
+  try {
+    useMinne.setState({ ang: [kanin], plats: "ang" });
+    assert.ok(hjalpDjurPaAngen(v("en morot"), "magen-kurrar"), "en morot ges till kaninen på ängen");
+    assert.ok(hjalpDjurPaAngen(v("en kanin med en morot"), "magen-kurrar"), "samma sorts djur får moroten");
+    assert.equal(hjalpDjurPaAngen(v("en hund med en morot"), "magen-kurrar"), null, "en ny hund blir en egen skapelse");
+    useMinne.setState({ plats: "skogen" });
+    assert.equal(hjalpDjurPaAngen(v("en räv med en ost"), "skog-magen-kurrar"), null, "på Skogen står räven kvar på Skogen");
+    assert.equal(hjalpDjurPaAngen(v("en kanin med en morot"), "skog-magen-kurrar"), null);
+  } finally { useMinne.setState({ ang: fore.ang, plats: fore.plats }); }
 });
 
 test("T05: varje migrerat uppdrag har minst tre ja och två nej genom spelets riktiga tolk", () => {

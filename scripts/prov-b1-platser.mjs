@@ -9,6 +9,9 @@ const bilder = process.env.QA_SCREENSHOTS;
 const FALL = [
   { id: "sjo-stor-simmare", plats: "sjon", miss: "en stor sten bredvid en anka", missKropp: "anka", ratt: "en stor fisk", rattKropp: "fisk", kvitto: "Jag letar efter en stor vän", koll: ([v]) => v.kropp === "fisk" && v.skala >= 1.3 },
   { id: "skog-rod-van", plats: "skogen", miss: "en röd boll bredvid en räv", missKropp: "rav", ratt: "en röd räv", rattKropp: "rav", kvitto: "Jag letar efter en röd vän", koll: ([v]) => v.kropp === "rav" && /^#E53935$/i.test(v.farg ?? "") },
+  // Ett namn är ingen mat; logisk mat utanför den gamla ordlistan räknas.
+  { id: "skog-magen-kurrar", plats: "skogen", miss: "en räv som heter morot", missKropp: "rav", ratt: "en räv med en ost", kvitto: "Jag letar efter mat till en skogsgäst",
+    koll: ([v]) => v.kropp === "rav" && v.tillbehor.some((t) => t.id === "ost") },
   // Två vänner: storleken på ett plagg räknas inte; varsin storlek ska sitta på varsitt djur.
   { id: "grotta-stor-och-liten", plats: "grottan", miss: "en stor hund med en liten mössa", missKropp: "hund", ratt: "en stor hund och en liten katt", kvitto: "Jag letar efter två vänner: en stor och en liten",
     koll: (nya) => nya.some((v) => v.kropp === "hund" && v.skala >= 1.3) && nya.some((v) => v.kropp === "katt" && v.skala <= 0.75) },

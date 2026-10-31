@@ -1,6 +1,10 @@
 {
   "version": 1,
   "_om": "Sanningen om vilka djur som finns i 3D-ängen: modell (nyckel i tillgangar.json), måttet, färger, rörelse. En rad per kropp. Saknas ett fält gäller standarden i src/spel/entiteter.ts (inga fält per djur krävs för att ett nytt djur ska stå vänt mot kameran).",
+  "_om_former": "Böjningsformer för synonymer i fältet ord som inte följer reservregeln i src/tolk/entitetslexikon.ts: singular obestämd, bestämd, plural obestämd, bestämd. kalla \"hand\" = handgranskade tillägg, som i ord.json.",
+  "former": [
+    { "former": ["leksak", "leksaken", "leksaker", "leksakerna"], "genus": "en", "kalla": "hand" }
+  ],
   "entiteter": {
     "kanin": {
       "typ": "djur", "kategori": "djur", "modell": "animal-bunny", "rundModell": "s-djur-kanin-rund", "malhojd": 1,
@@ -947,7 +951,7 @@
     "hatthylla": { "typ": "foremal", "kategori": "möbel", "modell": "hatthylla", "malhojd": 1.5, "art": "#BCAAA4", "framAxel": "+z", "forladda": false, "ord": ["hatthylla"], "inlagd": "R3F-M20b" },
     "kontorsstol": { "typ": "foremal", "kategori": "möbel", "modell": "kontorsstol", "malhojd": 0.9, "art": "#BCAAA4", "framAxel": "+z", "forladda": false, "ord": ["kontorsstol"], "inlagd": "R3F-M20b" },
     "kvast": { "typ": "foremal", "kategori": "verktyg", "modell": "kvast", "malhojd": 1.2, "art": "#90A4AE", "framAxel": "+z", "forladda": false, "ord": ["kvast"], "inlagd": "R3F-M20b" },
-    "leksakslada": { "typ": "foremal", "kategori": "föremål", "modell": "leksakslada", "malhojd": 0.5, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["leksakslåda"], "inlagd": "R3F-M20b" },
+    "leksakslada": { "typ": "foremal", "kategori": "föremål", "modell": "leksakslada", "malhojd": 0.5, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["leksakslåda", "leksak"], "inlagd": "R3F-M20b" },
     "ljuslykta": { "typ": "foremal", "kategori": "föremål", "modell": "ljuslykta", "malhojd": 0.5, "art": "#FFD54F", "framAxel": "+z", "forladda": false, "ord": ["ljuslykta"], "inlagd": "R3F-M20b" },
     "pendelur": { "typ": "foremal", "kategori": "möbel", "modell": "pendelur", "malhojd": 1.6, "art": "#BCAAA4", "framAxel": "+z", "forladda": false, "ord": ["pendelur"], "inlagd": "R3F-M20b" },
     "sittsack": { "typ": "foremal", "kategori": "möbel", "modell": "sittsack", "malhojd": 0.5, "art": "#BCAAA4", "framAxel": "+z", "forladda": false, "ord": ["sittsäck"], "inlagd": "R3F-M20b" },

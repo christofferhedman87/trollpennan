@@ -54,7 +54,8 @@ export const NEUTRUM_ORD = new Set([
 ]);
 
 // Återanvänd projektets befintliga, källangivna SALDO-former före reservregeln.
-const KANDA_FORMER = new Map([...gavorJson.gavor, ...byggJson.bygg_ord, ...byggJson.delar].map((o) => [o.former[0]!, o]));
+// entiteter.json → former: handgranskade böjningar för synonymer (t.ex. leksak → leksaker, inte "leksakar").
+const KANDA_FORMER = new Map([...gavorJson.gavor, ...byggJson.bygg_ord, ...byggJson.delar, ...(entiteterJson as { former?: { former: string[]; genus: string }[] }).former ?? []].map((o) => [o.former[0]!, o]));
 function neutrum(w: string): boolean { return KANDA_FORMER.get(w)?.genus === "ett" || NEUTRUM_ORD.has(w); }
 
 type EntRad = { typ: string; modell: string | null; ord?: string[] };
