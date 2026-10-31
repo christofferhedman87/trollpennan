@@ -5,7 +5,6 @@ import uiJson from "../../../../data/skapa-ui.json" with { type: "json" };
 import { fyll } from "../../fyll.ts";
 import { djurMedUid } from "../../liv.ts";
 import { useMinne } from "../../minne.ts";
-import * as rostKo from "../../rostKo.ts";
 import { ideKort, ideText } from "../../skapa/idetarning.ts";
 import { ikon, kortBild } from "../../skapa/ikoner.ts";
 import { forsokDopaText, gavoRuta } from "../gavoRuta.ts";
@@ -14,7 +13,8 @@ import { useSpel } from "../SpelKontext.ts";
 import { GavaStallKnapp } from "../Stall.tsx";
 import { useBokMal } from "../../skapa/useBokMal.ts";
 import { onskeKort } from "../../skapa/hjalpord.ts";
-import { LappRam, useLagBok } from "./LappRam.tsx";
+import { LappRam } from "./LappRam.tsx";
+import { useLagBok } from "./useLagBok.ts";
 import { harBoksvar } from "../../skapa/svarsLage.ts";
 import type { IdeLapp } from "./gataLapp.ts";
 

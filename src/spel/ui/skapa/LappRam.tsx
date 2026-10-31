@@ -5,11 +5,6 @@ import ui from "../../../../data/skapa-ui.json" with { type: "json" };
 import { fyll } from "../../fyll.ts";
 import * as rostKo from "../../rostKo.ts";
 import { ikon } from "../../skapa/ikoner.ts";
-export function useLagBok() {
-  const [lag, setLag] = useState(() => typeof window !== "undefined" && window.innerHeight <= 420);
-  useEffect(() => { const synka = () => setLag(window.innerHeight <= 420); window.addEventListener("resize", synka); return () => window.removeEventListener("resize", synka); }, []);
-  return lag;
-}
 type Props = { bild: string | null; fran: string; text: string; las: string; children?: ReactNode; portratt?: boolean; kompakt?: boolean };
 export function LappRam({ bild, fran, text, las, children, portratt = false, kompakt = false }: Props) {
   const [hela, setHela] = useState(false);
