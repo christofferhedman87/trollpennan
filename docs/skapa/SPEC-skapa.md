@@ -233,7 +233,7 @@ En streckad guldram mellan remsan och tangenterna. Ligger alltid ovanför tangen
 1. **Menade du …?** när ett ord nästan matchar. Det skrivna ordet visas med det rätta början i grönt och resten vågigt understruket (`stavningsFeedback` i `lasniva.ts` ger förklaringen). Knappar: förslagen med bild (högst 3) och *Behåll mitt ord* (blir ordägg). Valt förslag blir ett vanligt ord (inte guld, som `inteGuld` i dag).
 2. **Böjningshjälp** när barnet skrivit fel form av ett känt ord (*ett stor hus*, *en rött bil*, *ett kanin*): *Det heter **stort** här, för det är **ett hus**.* + knapp **stort**. Brickan behåller sin guldfärg om barnet rättar själv genom att sudda och skriva om.
 3. **Pennan behöver …** (`behover` i dag) när meningen saknar ett Vad men har ett Har: *Vem ska ha hatten?* + djurkort.
-4. **Guldchansen** när ett hjälpkort valts för tredje gången: *Skriv **kanin** själv, så blir det ett guldord!* + **Ja, jag skriver!** / **Nej tack**. Ja → tangenterna med spökbokstäver för ordet. Rätt bokstav fylls i, fel bokstav skakar tangenten och brickan mjukt (inget ljud). Står barnet still 3,5 s lyser nästa tangent. När ordet är klart blir brickan guld.
+4. **Guldchansen** när ett hjälpkort valts för tredje gången: *Skriv **kanin** själv, så blir det ett guldord!* + **Ja, jag skriver!** / **Nej tack**. Ja → tangenterna med spökbokstäver för ordet. Rätt bokstav fylls i. En fel bokstav lämnar texten och brickan kvar utan skakning eller felljud (T-29). Står barnet still 3,5 s lyser nästa tangent. När ordet är klart blir brickan guld.
 
 ### 6.9 Lappen
 
@@ -264,7 +264,7 @@ En pappersgul lapp med pratbubbelpil överst i arket. Bild 52 px, avsändare (d�
 2. Varje innehållsord lyfter som en gnista i sin ordklassfärg (guldord: guldgnista, `ui/skapa/gnista-*.svg`) och flyger i en båge in i ringen, 70 ms förskjutning per ord, 700 ms per gnista. Brickorna bleknar.
 3. Hologrammet blir solitt med en stor studs, ringen blinkar vitt och 12 stjärnor sprutar ut (`ljud.uppfylld()` eller motsvarande).
 4. Skapelsen står kvar i världen (befintlig `brygga.skapa` / `hanteraBygg`). Arket glider ner.
-5. **Kvittot** (klistermärke under HUD:en, 5,6 s eller tryck): *Du trollade fram **en grön drake med krona som sprutar eld**!* där guldorden är understrukna i guld. Under: `[⭐ +1 stjärna] [guldpenna 3 ord skrev du själv]`. Uppfyllde det en önskan står tacket först (*Kaninen blev jätteglad!*). Ersätter dagens banner *Klart! …* och *+1 stjärna!*.
+5. **Kvittot** (klistermärke under HUD:en, 5,6 s eller tryck): *Du trollade fram **en grön drake med krona som sprutar eld**!* där guldorden är understrukna i guld. Under: `[⭐ +1 stjärna] [guldpenna 4 guldord: grön, drake, krona, sprutar eld]`. Uppfyllde det en önskan står tacket först (*Kaninen blev jätteglad!*). Ersätter dagens banner *Klart! …* och *+1 stjärna!*.
 6. Svaret från djuret (`visaBubbla(replik …)`) kommer som i dag efter kvittot.
 
 ### 6.12 Min bok

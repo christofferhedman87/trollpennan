@@ -1,19 +1,43 @@
 # Åtgärdsplan T-01–T-36 för Codex och Claude Code
 
-## Överlämning: Codex fortsätter efter Claude, 2026-10-31
+## Paus och överlämning till Claude, 2026-10-31
 
-Detta är aktuell startpunkt och går före äldre ”Fortsätt”-texter nedan. Ta en PR i taget: #299 → #300 → #301, därefter återstående block enligt planen. Ingen force-push. Bevara sparformat v2, markmigrering och Cloudflare. Bilder används endast internt; inga nya checkpointdokument.
+**Christoffer har uttryckligen begärt paus eftersom endast 10 % sessionsanvändning återstår. Påbörja inget nytt block vid pausen.** Detta är aktuell startpunkt och går före äldre ”Fortsätt”-texter nedan. Nästa agent återupptar #301 först, därefter blockplanen. Ingen force-push, inget input-fill/forceklick eller reducerad rörelse i G1-provet. Bevara sparformat v2, markmigrering och Cloudflare. Bilder endast internt; inga nya checkpointdokument.
 
-- **#298 · C2b-1 (T-08, P1) är redan levererad:** main `64297f3`, oberoende Claude-underagent godkände. Main-Cloudflare `124517533701` och sex serverade SHA-256 är gröna enligt sista kommentaren i #298. Skrivna siffror når tolken; både `arSparrat` och `tolka` prövar även text utan siffror. Gör inte om detta. Full korpus/migration återstår i C2b.
-- **#299 · T-18/B4 är levererad:** mergad som `0e6fe9b`, main-Cloudflare `124530012914` grön och sex start-/spelfiler byteidentiska/SHA-256-identiska med provat bygge. Fristående Codex-granskare `/root/review_299` godkände exakt app-/testhuvud `f75c6ad5693d0069e8845b6a8bd301574bac9b16`; senare commits var bara dokument. Sex flaggor/hashlås, 60/60 riktade delprov och 41/41 negativa hash-/flaggprov. Sex grindar gröna, enbart känt P3a-fel i parallell produktkörning (separat 9/9 grönt, gräns orörd). Riktiga start-/skapelse-/omladdningsprov gröna i stående, liggande och datorvy; interna bilder granskade. Övriga 85 uppdrag är oförändrade.
-- **#300 · F2/T-22:** samordnad med `main 0e6fe9b`; exakt app-/provhuvud `03ed2775b763d372b1c49a44ff52ca84bec8bc74` är godkänt av fristående Codex-granskare `/root/review_300` utan blockerare. Alla sju slutgrindar gröna, 84/84 produktprovfiler inklusive P3a med oförändrad 50 ms-gräns. `scripts/prov-min-bok.mjs` är rött mot main och helt grönt på slutbygget i 375×812 och 812×375. Bildgranskningen hittade coach-/HUD-överlapp över Stäng; separata röda→gröna skärmprov kräver nu fri hel knapp, pausad guide samt Stäng/Escape. Granskaren provade även tomma ordlistor, riktig annan Ordboksingång och spärrad fysisk skrivning; profilerna bevaras. Interna slutbilder i båda vyer är lästa. Kvar före leverans: merge och main-CF/SHA.
-- **#301 · G1/T-29/T-32:** oprovat utkast `claude/g1-guldchans-kvitto`, HEAD `d4a66ed`. Följ PR-textens exakta nod-/UI-prov rött mot main och grönt på grenen i 375×812 och 812×375 utan reducerad rörelse, dokumentera ändrad replik, kör grindar/granskning/merge/CF/SHA.
+### Levererat under Codex pass — gör inte om
 
-**Textpaket 02 är mottaget och godkänt av Christoffer:** `Trollpennan-textpaket-02-granskad.md` innehåller exakt de 85 återstående uppdrags-id:na (SHA-256 och beslut i beslut.md). Ingen ytterligare godkännandefråga krävs. Använd som underlag i B1/BC, kontrollera varje förslag mot faktisk tolk och modeller. `granskad:true`/hashlås gäller endast exakt granskad text. Inget annat block väntar på detta.
+- **#298 · C2b-1:** redan levererad före detta pass, main `64297f3`, oberoende Claude-underagent, CF `124517533701` och sex SHA-256 gröna enligt PR-kommentaren. Full C2b-korpus/migration återstår.
+- **#299 · T-18/B4:** mergad som `0e6fe9b4d7b08318c4197cde63bf8f7402fc4f6f`. Main-Cloudflare `124530012914` grön; sex serverade start-/spelfiler byteidentiska/SHA-256-identiska med provat bygge (sista kommentaren i #299 har alla hashvärden). Fristående Codex `/root/review_299` godkände exakt app-/testhuvud `f75c6ad5693d0069e8845b6a8bd301574bac9b16`, 60/60 riktade delprov och 41/41 negativa minnesprov. Sex grindar gröna, bara känt P3a-fel i parallell produktkörning (separat 9/9 grönt, 50 ms-gränsen orörd). Riktiga start-/skapelse-/omladdningsprov gröna i stående, liggande och datorvy. Endast sex granskad-flaggor/hashlås; övriga 85 uppdrag oförändrade.
+- **#300 · F2/T-22:** mergad som `b051e6ed8feaaca15d352bfc886a5fa4432408db` (**aktuell main**). Main-Cloudflare `124535056279` grön, sex serverade filer byteidentiska/SHA-256-identiska (sista kommentaren i #300 har hashvärden). Fristående Codex `/root/review_300` godkände exakt `03ed2775b763d372b1c49a44ff52ca84bec8bc74`. Alla sju slutgrindar gröna, 84/84 produktprovfiler inklusive oförändrat P3a; hela `prov-min-bok.mjs` grönt i 375×812 och 812×375. Bildkontrollen hittade coach/HUD över Stäng; egna röda→gröna prov och rättningar finns i PR. Tomma ordlistor, annan riktig Ordboksingång, fri Stäng, Escape och spärrad fysisk skrivning/profilbevarande är oberoende provade. Interna slutbilder lästa.
 
-**Kvar:** B1 (85 uppdrag), B3, C1d, resten av C2b, C3, C4, BC, D0–D3, F1, F3, F5, F6/T-36, G2 och G3. F6 ska visa alla synliga djur, hem/flyttbekräftelse, skäl för fel hustyp och verklig tomorsak; se F6-avsnittet i `docs/codex/plan.md`. **Före slutgranskningen av hela blockserien: stoppa och meddela Christoffer.** Han väljer Claude/Codex och sätter ansträngning=max. Påbörja inte den granskningen utan hans val.
+### Sparat, inte mergat: #301 · G1/T-29/T-32
 
-Tre svagaste punkter: sekundära djur/full korpus/migration återstår; B1:s betydelsekrav och stora D/F/G-delar återstår; fysisk Safari/iPad, barns faktiska upplevelse och nya röstinspelningar är inte verifierade.
+Branch `claude/g1-guldchans-kvitto`, app-/provhuvud **`179bcfeb721109df05098d2deabd5222d622bf7c`**, samordnad med main `b051e6e` genom vanlig merge `a2b6c14`. Senare pauscommit är endast dokument och den oförändrade källgranskningen av Textpaket 02. PR lämnas som **utkast**. Ingen slutapproval, merge eller publicering påstås.
+
+- Claudes ursprungliga `d4a66ed` tar bort fel-/skakklasser, omonterande tangenter/skrivbricka och skaknings-CSS; kvittot listar sina verkliga guldmarkerade ord.
+- `7cc0a7e` lägger till `src/spel/skapa/kvitto.test.ts` i `test:product`, `scripts/prov-guldord-kvitto.mjs` och ändrad replik i `nya-repliker.md`. På detta huvud: alla sju grindar gröna, **85/85 produktprovfiler**. Full röd UI-baslinje mot main i BÅDA vyer utan reducerad rörelse: två feltryck + fem kvittofall per vy, 14 observationer, inga oväntade timeouter. Hjälpord ger redan korrekt inget chip; övriga förväntade T-29/T-32-fel är dokumenterade i #301.
+- Fristående Codex `/root/review_301` hittade ett verkligt **P2-fynd före merge**: kvittots nya långa lista saknade lästid. Riktat rött prov på `7cc0a7e` mätte verkligt schemalagda **5600 ms mot 7260 ms** som hela synliga femordsbyggkvittot kräver enligt befintlig policy.
+- `179bcfe` rättar detta lokalt: ren `kvittoInnehall` formaterar samma huvudrad/stjärnor/guldlista för UI och lästid. Befintlig `lasbarTid`, dess 12 s-tak och basen 5600 ms är orörda. Nodprov **5/5 gröna**. Granskaren har läst den avgränsade diffen utan nya kodfynd och har 14 egna gröna formatprov, men **ny slut-UI/tid/bild och slutapproval återstår**.
+- Granskarens egna åtta UI-tillägg mot FÖREGÅENDE `7cc0a7e` är gröna i båda vyer med normal rörelse: fysisk felknapp mitt i ord, alla tangent-/skrivnoder, Backspace/slutförande, dubbla egna ord, fem byggguldord och blandat skrivet/hjälpkort, inga sidfel. Detta ersätter inte slutprovet på `179bcfe`.
+- På **`179bcfe` är sex statiska/bygggrindar gröna**: typecheck, typecheck:pages, check:struktur, lint (18 befintliga varningar), build:pages och check:pages-output. **test:product avbröts vid Christoffers paus**; kör den igen. Det fulla slut-UI-provet avbröts också: hittills är två skärmfeltryck i 375 gröna med samma DOM, text/spökord bevarade och noll nya animationer/felklasser. Inga fulla slut-UI-påståenden för `179bcfe`.
+- Provklockan för feltryck börjar på **faktisk click-capture före React**, inte före Playwrights klickväntan. Annars räknades den oberoende 3,5 s-ledtrådens `sk-studs` felaktigt som felreaktion under lång väntan. **Inga animationstyper filtreras bort och inga gränser sänks.** Samma sista prov har åter blivit rött mot separat main-baslinje i 375: `sk-skaka`/ny `sk-blink`, ersatta noder och felklasser. Den separata baslinjens sex byggfiler var SHA-identiska med publicerade `b051e6e`; den återstående 812-omgången avbröts vid pausen. Ursprungliga fulla main-baslinjen är redan röd i båda vyer.
+- Vanlig Playwright-screenshot hann ibland vänta tills kvittot försvann. De gamla `301-ui`-bilderna som bara visar världen är **inte bildbevis**. Slutskriptet använder nu direkt CDP `Page.captureScreenshot` efter full opacity, utan pausad animation/ändrad timer. **Öppna och läs de nya bilderna själv innan något kallas klart.**
+
+### Exakt fortsättning för #301
+
+1. `git status`, `git fetch origin`; återanvänd utkast #301 och ovanstående branch. Merga färsk main om den flyttat sig, utan force-push. Läs PR-text/kommentarer och diffen, inklusive sista lästidsrättningen. Inget input-fill, forceklick, bortfiltrerad animation eller reducerad rörelse.
+2. Bygg med `npm run build:pages` och förhandsvisa på 4173. Kör `CHROMIUM=/usr/bin/chromium QA_SCREENSHOTS=<intern-mapp> node --experimental-strip-types scripts/prov-guldord-kvitto.mjs`. Alla fem fall i 375×812/812×375 ska passera: skärmfeltryck/DOM/animation/positiv ledtråd, eget häst-ord, hjälpord utan chip, flerordsfras, fem egna byggord. Scriptet kontrollerar faktiskt schemalagd lästid mot hela synliga texten. `QA_FALL` och `QA_LAGE` väljer uttryckliga delprov. Normala klick kan ta tid i molnets programvaru-GPU; tvinga dem inte och stäng inte av rörelse. Läs slutbilderna visuellt.
+3. Kör fem nodprov (`node --experimental-strip-types src/spel/skapa/kvitto.test.ts`) och sju slutgrindar på samma sista apphuvud. P3a:s kända 50 ms-gräns höjs aldrig. Full `test:product` återstår efter avbrottet; vid saknad miljöuppgift kör alla sju igen.
+4. Ny oberoende granskare ska godkänna exakt sista apphuvudet, särskilt verklig lång lästid/bild i 812. Dokumentera faktisk granskare. Rätta alla blockerare. `SPEC-skapa.md` är redan anpassad i pauscommit för T-29 och kvittoexemplet; nya datarepliken står i nya-repliker.md.
+5. Först därefter: uppdatera samma överlämning/T-tabell, markera PR redo, merga och kontrollera **main-Cloudflare** samt SHA-256/byteidentitet för sex serverade start-/spelfiler mot provat bygge. Jämför gärna även ändrad Spel-CSS. Branch-Cloudflare kan vara röd enligt känt upplägg; ändra inte Cloudflare-kopplingen.
+
+### Textpaket 02 och resten av serien
+
+**Christoffers godkända granskning av alla 85 återstående uppdrag är sparad oförändrad i `docs/en-varld/textpaket-02-granskad.md`**, SHA-256 `1687e568520fff417a98edfe5135d2d860fb450d94d7191f6e75dfd50002e539`. Detta är källgranskningen, inte ett nytt checkpointdokument. Ingen ny uppladdning eller godkännandefråga krävs. Använd i B1/BC, men kontrollera varje förslag mot faktisk tolk och modeller; flagga/hashlås bara exakt granskad text. Inget annat block väntar på detta.
+
+Efter #301: följ blockplanen. Orörda: B1 (85 uppdrag), B3, C3, C4, BC, D0–D3, F1, F3, F5, F6/T-36, G2 och G3. Delvis: C1d och resten av C2b. F6 ska visa alla synliga djur, hem/flyttbekräftelse, skäl för fel hustyp och verklig tomorsak. **Före slutgranskningen av hela blockserien: stoppa och meddela Christoffer.** Han väljer Claude/Codex och sätter ansträngning=max. Ingen sådan slutgranskning har påbörjats.
+
+Tre svagaste punkter vid pausen: #301:s sista produkt-/UI-/lästids-/bildprov och approval är ofärdiga; stora B/C/D/F/G-delar återstår; fysisk Safari/iPad, barns faktiska upplevelse och nya röstinspelningar är inte verifierade.
 
 > **Aktuellt 2026-10-31:** uppdraget omfattar samtliga 36 fynd (T-01–T-36) i [granskning.md](granskning.md). E1/E2 (#286), E3/G4 (#287) och A1 (#288) är publicerade och görs inte om. B0:s första sex uppdrag är publicerade i #290 som fbfe48f (main-Cloudflare 124411312834 och 6/6 SHA-256 gröna); 85 uppdrag återstår. A0/A2/F4 (#289, main `eec3b27`) är publicerade och verifierade med Cloudflare/SHA-256. Dess hologramregression hittade ett befintligt grafikfel även på main; den separata rättningen är publicerad i #293. Beteendebevarande tolkdelning #291 är publicerad som `f69c3e9`. Christoffer har godkänt B1–B8 och oberoende Codex-granskare för P1. Denna aktiva plan går före historiken längre ner.
 
@@ -253,17 +277,17 @@ E1/E2, E3/G4 och A1 är publicerade. A0/A2/F4 är publicerade i #289; återståe
 | T-19 | BC | Planerad; B+C först |
 | T-20 | C4 | Planerad; B2 godkänt |
 | T-21 | F1 | Planerad; B7 godkänt |
-| T-22 | F2 | #300 slutgranskad 03ed277, sju grindar/84 produktprovfiler och båda UI-vyer gröna; coach/HUD fri från Stäng. Merge/CF/SHA återstår |
+| T-22 | F2 | Publicerad #300/b051e6e, CF124535056279/6SHA gröna; sju grindar/84 produktprovfiler, båda UI-vyer och oberoende slutgranskning 03ed277 gröna. Coach/HUD fri från Stäng |
 | T-23 | D3 | Planerad; B6 godkänt |
 | T-24 | A2 | Publicerad #289/eec3b27; tipset tas ur DOM vid upptagen vy och avaktiveras efter faktisk panorering/zoom |
 | T-25 | F3 | Planerad; B6 godkänt |
 | T-26 | A2 | Publicerad #289/eec3b27; gemensamt mål, separat Gåta och textbevarande Idé |
 | T-27 | A2/F4 | Publicerad #289/eec3b27; hela geometri-/stavnings-/markeringsflödet grönt i fyra telefonformat |
 | T-28 | F5 | Planerad |
-| T-29 | G1 | Oprovat utkast #301 |
+| T-29 | G1 | Pausat utkast #301, app179bcfe. Röda main-prov båda vyer; sista provets click-capture åter rött375. Nya DOM/animationsprov gröna375; fulla slut-UI/grindar/approval/merge/CF återstår |
 | T-30 | G2 | Planerad; B8 godkänt |
 | T-31 | A1 | Verifierad/granskad #288, även efterföljande fysisk text+Enter; publicerad f425a41, CF124383463197/6SHA-256 gröna |
-| T-32 | G1 | Oprovat utkast #301 |
+| T-32 | G1 | Pausat utkast #301, app179bcfe.5nodprov gröna, röd faktisk lästid5600<7260 rättad; sista UI/tid/bild, produktgrind och approval/merge/CF återstår |
 | T-33 | G3 | Planerad |
 | T-34 | G3 | Planerad |
 | T-35 | E3/G4 | Publicerad f1e38d3 (#287), båda vyer, CF124377043349/6SHA-256 gröna |
